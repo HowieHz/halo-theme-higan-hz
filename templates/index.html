@@ -18,7 +18,7 @@
     </section>
 
     <p>
-      Find me on
+
       <th:block th:with="sns=${theme?.config?.sns}">
         <a
           class="icon"
@@ -91,7 +91,12 @@
         >
           <i class="iconify iconify-middle" data-icon="ic:baseline-telegram"></i>
         </a>
-        <a class="icon" target="_blank" th:href="'mailto:'+${sns?.email}" th:if="${not #strings.isEmpty(sns?.email)}">
+        <a 
+          class="icon" 
+          target="_blank" 
+          aria-label="Find me on email"
+          th:href="'mailto:'+${sns?.email}" 
+          th:if="${not #strings.isEmpty(sns?.email)}">
           <i class="iconify iconify-middle" data-icon="ph:envelope-simple-bold"></i>
         </a>
         <a
@@ -107,7 +112,7 @@
     </p>
 
     <th:block th:if="${theme?.config.styles?.post_list_layout=='post-list-summary'}">
-      <h1 class="h1"><a th:href="@{/archives}">Writing</a></h1>
+      <h1 class="h1"><a th:href="@{/archives}">近期发布</a></h1>
       <th:block th:insert="~{fragments/posts :: post-list-summary(${posts})}"></th:block>
     </th:block>
     <th:block th:unless="${theme?.config.styles?.post_list_layout=='post-list-summary'}">

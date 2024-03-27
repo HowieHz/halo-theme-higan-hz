@@ -17,7 +17,7 @@
 
 <th:block th:fragment="simple-post-list(posts)">
   <section id="writing" class="flex-auto flex flex-col">
-    <h2 class="h1"><a th:href="@{/archives}">Writing</a></h2>
+    <h2 class="h1"><a th:href="@{/archives}">近期发布</a></h2>
     <ul class="post-list flex-auto">
       <th:block th:each="item : ${posts.items}">
         <li class="post-item">
@@ -71,7 +71,7 @@
             </time>
             <p class="p-0 mb-0 relative z-10 mt-2 text-sm color-accent-3" th:text="${post.status?.excerpt}"></p>
             <div aria-hidden="true" class="relative z-10 mt-4 flex items-center text-sm font-medium color-accent-1">
-              Read article
+              阅读全文
             </div>
           </div>
           <time
