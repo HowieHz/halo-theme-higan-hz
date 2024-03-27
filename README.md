@@ -4,6 +4,17 @@
 
 该主题是 guqing 的 [halo-theme-higan](https://github.com/guqing/halo-theme-higan) 进行了个人的定制化修改后的主题
 
+### 相较于原始主题的修改
+
+1. 页面底部的 `Theme is higan Powered by Halo © 2024 sitename` 进行了分行避免在小屏上排版错乱
+2. 对于主页上的一些固定文字进行了修改 [#86](https://github.com/guqing/halo-theme-higan/issues/86)
+    - `Writing` -> `近期发布`
+    - `Read article` -> `阅读全文`
+    - `Find me on` -> ``
+3. 补充了部分缺失的aria-label属性 [#83](https://github.com/guqing/halo-theme-higan/issues/83)
+
+以及修改原项目链接指向fork后的项目链接，修改元数据避免与原主题冲突
+
 ## 原项目说明
 
 该主题的原作者为 Pieter Robberechts，非常感谢做出这么优秀的主题。
