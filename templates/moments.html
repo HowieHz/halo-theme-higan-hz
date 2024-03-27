@@ -130,7 +130,7 @@
           </ul>
         </div>
         <div class="pagination" style="margin-top: 0">
-          <a th:href="@{${moments.prevUrl}}" th:if="${moments.hasPrevious()}">
+          <a th:href="@{${moments.prevUrl}}" th:if="${moments.hasPrevious()}" aria-label="Previous page">
             <i class="iconify iconify-middle" data-icon="material-symbols:chevron-left"></i>
           </a>
           <span
@@ -139,7 +139,7 @@
             th:text="'Page ' + ${moments.page} + ' of ' + ${totalPage}"
             >Page 1 of 1</span
           >
-          <a th:href="@{${moments.nextUrl}}" th:if="${moments.hasNext()}">
+          <a th:href="@{${moments.nextUrl}}" th:if="${moments.hasNext()}" aria-label="Next Page">
             <i class="iconify iconify-middle" data-icon="material-symbols:chevron-right"></i>
           </a>
         </div>
