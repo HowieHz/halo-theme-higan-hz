@@ -10,7 +10,7 @@
 2. 对于主页上的一些固定文字进行了修改 [#86](https://github.com/guqing/halo-theme-higan/issues/86)
     - `Writing` -> `近期发布`
     - `Read article` -> `阅读全文`
-    - `Find me on` -> ``
+    - `Find me on` -> `与我联系：`
 3. 补充了部分缺失的aria-label属性 [#83](https://github.com/guqing/halo-theme-higan/issues/83)
 
 以及修改原项目链接指向fork后的项目链接，修改元数据避免与原主题冲突
