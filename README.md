@@ -2,6 +2,10 @@
 
 ## 说明
 
+该主题是 guqing 的 [halo-theme-higan](https://github.com/guqing/halo-theme-higan) 进行了个人的定制化修改后的主题
+
+## 原项目说明
+
 该主题的原作者为 Pieter Robberechts，非常感谢做出这么优秀的主题。
 
 原主题地址：[hexo-theme-cactus](https://github.com/probberechts/hexo-theme-cactus.git)
