@@ -1,4 +1,4 @@
-# halo-theme-higan
+# halo-theme-higan-hz
 
 ## 说明
 

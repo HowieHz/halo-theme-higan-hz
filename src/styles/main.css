@@ -1773,10 +1773,10 @@ article .content .caption {
   text-align: center;
   font-size: var(--text-xs);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   flex-wrap: wrap;
-  align-items: end;
+  align-items: center;
   gap: 1.25rem;
   margin-bottom: 1.25rem;
   margin-top: 1.25rem;
