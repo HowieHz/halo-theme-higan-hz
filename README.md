@@ -6,7 +6,7 @@
 
 ### 相较于原始主题的修改
 
-1. 页面底部的 `Theme is higan Powered by Halo © 2024 sitename` 进行了分行避免在小屏上排版错乱
+1. 页面底部的 `Theme is higan Powered by Halo © 2024 sitename` 进行了分行避免在小屏上排版错乱 [#87](https://github.com/guqing/halo-theme-higan/issues/87)
 2. 对于主页上的一些固定文字进行了修改 [#86](https://github.com/guqing/halo-theme-higan/issues/86)
     - `Writing` -> `近期发布`
     - `Read article` -> `阅读全文`
@@ -38,6 +38,17 @@
 
 - [plugin-highlightjs](https://github.com/halo-sigs/plugin-highlightjs)
 - [plugin-lightgallery](https://github.com/halo-sigs/plugin-lightgallery)
+
+## 进行此项目的开发
+
+> 对前端开发没什么经验，是一晚上摸索出来的，可能有误
+
+首先确保你的开发环境中安装好了`pnpm`
+在项目根目录运行`pnpm install`完成依赖的安装
+
+vscode打开资源管理器页面，找到右边三个点
+勾选其中`NPM 脚本`
+每次开发后进行`lint`检查，`prettier`格式化代码，`build`构建样式之后再提交
 
 ## 迁移
 
