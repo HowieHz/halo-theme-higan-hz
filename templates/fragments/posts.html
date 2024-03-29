@@ -30,7 +30,7 @@
             </time>
           </div>
           <span>
-            <a th:href="@{${item.status?.permalink}}" th:text="${item.spec.title}">文章标题</a>
+            <a th:href="@{${item.status?.permalink}}" th:text="${item.spec.title}">文章标题替换位</a>
             <i
               class="iconify iconify-middle"
               data-icon="typcn:pin-outline"
@@ -57,8 +57,14 @@
               ></div>
               <a th:href="@{${post.status?.permalink}}">
                 <span class="absolute -inset-x-4 -inset-y-2 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                <span class="relative z-10" th:text="${post.spec.title}"></span>
+                <span class="relative z-10" th:text="${post.spec.title}">文章标题替换位</span>
               </a>
+              <i
+                class="iconify iconify-middle"
+                data-icon="typcn:pin-outline"
+                th:if="${post.spec.pinned}"
+                style="color: var(--color-link)"
+              ></i>
             </h2>
             <time
               class="md:hidden relative z-10 order-first mb-3 flex items-center text-sm color-accent-3 pl-3.5"
