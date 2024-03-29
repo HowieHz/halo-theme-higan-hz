@@ -12,6 +12,7 @@
     - `Read article` -> `阅读全文`
     - `Find me on` -> `与我联系：`
 3. 补充了部分缺失的aria-label属性 [#83](https://github.com/guqing/halo-theme-higan/issues/83)
+4. 使用多元列表模式时，在首页添加了置顶文章标识（图标与简洁列表模式一致）
 
 以及修改原项目链接指向fork后的项目链接，修改元数据避免与原主题冲突
 
