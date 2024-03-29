@@ -44,7 +44,9 @@
         </div>
       </header>
 
-      <div class="content flex-auto" itemprop="articleBody" th:utext="${post.content?.content}">post formatted content</div>
+      <div class="content flex-auto" itemprop="articleBody" th:utext="${post.content?.content}">
+        post formatted content
+      </div>
       <halo:comment
         group="content.halo.run"
         kind="Post"

@@ -1,6 +1,6 @@
 <th:block xmlns:th="https://www.thymeleaf.org" th:fragment="footerNav">
-<div id="footer-post-container">
-  <div id="footer-post">
+  <div id="footer-post-container">
+    <div id="footer-post">
       <div id="nav-footer" style="display: none">
         <th:block th:insert="~{fragments/common :: menu(showIcon=false)}"></th:block>
       </div>
@@ -10,19 +10,29 @@
         <th:block th:insert="~{fragments/common :: share}"></th:block>
       </div>
       <div id="actions-footer">
-          <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;">
-              <i class="iconify" data-icon="ic:baseline-menu" aria-hidden="true"></i>
-              菜单</a>
-          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;">
-              <i class="iconify" data-icon="ic:baseline-toc" aria-hidden="true"></i>
-              目录</a>
-          <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;">
-            <i class="iconify" data-icon="ic:baseline-share" aria-hidden="true"></i>
-              分享</a>
-          <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
-            <i class="iconify" data-icon="ic:baseline-arrow-upward" aria-hidden="true"></i>
-              返回顶部</a>
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;">
+          <i class="iconify" data-icon="ic:baseline-menu" aria-hidden="true"></i>
+          菜单</a
+        >
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;">
+          <i class="iconify" data-icon="ic:baseline-toc" aria-hidden="true"></i>
+          目录</a
+        >
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;">
+          <i class="iconify" data-icon="ic:baseline-share" aria-hidden="true"></i>
+          分享</a
+        >
+        <a
+          id="top"
+          style="display: none"
+          class="icon"
+          href="#"
+          onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
+        >
+          <i class="iconify" data-icon="ic:baseline-arrow-upward" aria-hidden="true"></i>
+          返回顶部</a
+        >
       </div>
+    </div>
   </div>
-</div>
 </th:block>

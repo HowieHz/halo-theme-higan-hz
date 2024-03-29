@@ -1,6 +1,6 @@
 * {
   scrollbar-width: thin;
-  scrollbar-color: #86898C #c3c4c5;
+  scrollbar-color: #86898c #c3c4c5;
 }
 
 *::-webkit-scrollbar {
@@ -18,16 +18,15 @@
 
 /* 当鼠标悬停时滑块的样式 */
 *::-webkit-scrollbar-thumb:hover {
-  background: #86898C;
+  background: #86898c;
 }
 
 /* 修改滚动条轨道的样式 */
 *::-webkit-scrollbar-track {
   background-color: none;
-  
 }
 
 *::-webkit-scrollbar-button {
-  background-color: #86898C;
+  background-color: #86898c;
   border-radius: 5px;
 }

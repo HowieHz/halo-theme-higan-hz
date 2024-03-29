@@ -1,4 +1,3 @@
-
 import { unified } from "unified";
 import parse from "rehype-parse";
 import slug from "rehype-slug";
@@ -6,7 +5,7 @@ import toc, { HtmlElementNode } from "@jsdevtools/rehype-toc";
 import stringify from "rehype-stringify";
 
 export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
-  if(!inputHTML) {
+  if (!inputHTML) {
     return;
   }
   // Create a Rehype processor with the TOC plugin
@@ -36,7 +35,7 @@ export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
       },
       customizeTOCItem(tocItem, heading) {
         let headingNumber = parseInt(heading.tagName.slice(-1), 10);
-        let depth = headingNumber
+        let depth = headingNumber;
         return {
           type: "element",
           tagName: "li",
@@ -53,10 +52,12 @@ export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
                   properties: {
                     class: "toc-number",
                   },
-                  children: [{
-                    type: "text",
-                    value: `${depth++}.`
-                  }]
+                  children: [
+                    {
+                      type: "text",
+                      value: `${depth++}.`,
+                    },
+                  ],
                 },
                 {
                   type: "element",
@@ -83,7 +84,7 @@ export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
     const doc = document.createRange().createContextualFragment(outputHTML.toString());
     // @ts-ignore
     targetDom.appendChild(doc.getElementById("toc-container"));
-    return
+    return;
   }
-  console.warn(`Failed to generate toc to targetDom ${targetDom}, processed html is: ${outputHTML}`)
+  console.warn(`Failed to generate toc to targetDom ${targetDom}, processed html is: ${outputHTML}`);
 };

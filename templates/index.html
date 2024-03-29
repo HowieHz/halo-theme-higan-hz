@@ -91,12 +91,13 @@
         >
           <i class="iconify iconify-middle" data-icon="ic:baseline-telegram"></i>
         </a>
-        <a 
-          class="icon" 
-          target="_blank" 
+        <a
+          class="icon"
+          target="_blank"
           aria-label="Find me on email"
-          th:href="'mailto:'+${sns?.email}" 
-          th:if="${not #strings.isEmpty(sns?.email)}">
+          th:href="'mailto:'+${sns?.email}"
+          th:if="${not #strings.isEmpty(sns?.email)}"
+        >
           <i class="iconify iconify-middle" data-icon="ph:envelope-simple-bold"></i>
         </a>
         <a
