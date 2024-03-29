@@ -12,7 +12,7 @@
     - `Read article` -> `阅读全文`
     - `Find me on` -> `与我联系：`
 3. 补充了部分缺失的aria-label属性 [#83](https://github.com/guqing/halo-theme-higan/issues/83)
-4. 使用多元列表模式时，在首页添加了置顶文章标识（图标与简洁列表模式一致）
+4. 添加了使用多元列表模式时，置顶文章在首页列表的标识（图标与简洁列表模式一致）
 
 以及修改原项目链接指向fork后的项目链接，修改元数据避免与原主题冲突
 
@@ -26,9 +26,11 @@
 
 ## 预览截图
 
-![主题预览图1](./screenshots/Theme20220325-221824@2x.png)
-![主题预览图1](./screenshots/Theme20220325-221950@2x.png)
-![主题预览图1](./screenshots/Theme20220325-221912@2x.png)
+待添加...
+
+## 主题应用实例
+
+[howiehz.top](https://howiehz.top)
 
 ## 使用方法
 
