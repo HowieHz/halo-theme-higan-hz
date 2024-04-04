@@ -19,6 +19,7 @@
 3. 补充了部分缺失的aria-label属性 [guqing/halo-theme-higan#83](https://github.com/guqing/halo-theme-higan/issues/83)
 4. 添加了使用多元列表模式时，置顶文章在首页列表的标识（图标与简洁列表模式一致）
 5. 修改html标签lang属性值，`lang='en'`改为`lang='zh'`
+6. 样式-配色方案添加`跟随系统`
 
 以及修改原项目链接指向fork后的项目链接，修改元数据避免与原主题冲突
 

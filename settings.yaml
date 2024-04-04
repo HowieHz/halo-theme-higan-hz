@@ -60,14 +60,16 @@ spec:
         - $formkit: select
           name: color_schema
           label: 配色方案
-          value: "dark"
+          value: "system"
           options:
-            - label: "暗黑"
+            - label: 跟随系统
+              value: system
+            - label: "暗色"
               value: "dark"
             - label: "亮色"
               value: "light"
-            - label: "白色"
-              value: "white"
+            - label: "灰粉"
+              value: "gray"
         - $formkit: select
           name: text_size
           label: 字体大小
