@@ -9,20 +9,30 @@
 
 该主题是 guqing 的 [halo-theme-higan](https://github.com/guqing/halo-theme-higan) 进行了个人的定制化修改后的主题
 
-### 相较于原始主题的修改
+## 相较于原始主题的修改
 
-1. 页面底部的 `Theme is higan Powered by Halo © 2024 sitename` 进行了分行避免在小屏上排版错乱 [guqing/halo-theme-higan#87](https://github.com/guqing/halo-theme-higan/issues/87)
-2. 对于主页上的一些固定文字进行了修改 [guqing/halo-theme-higan#86](https://github.com/guqing/halo-theme-higan/issues/86)
+### 样式
+
+1. 添加了使用多元列表模式时，置顶文章在首页列表的标识（图标与简洁列表模式一致）
+2. 页面底部的 `Theme is higan Powered by Halo © 2024 sitename` 进行了分行避免在小屏上排版错乱 [guqing/halo-theme-higan#87](https://github.com/guqing/halo-theme-higan/issues/87)
+3. 对于主页上的一些固定文字进行了修改 [guqing/halo-theme-higan#86](https://github.com/guqing/halo-theme-higan/issues/86)
     - `Writing` -> `近期发布`
     - `Read article` -> `阅读全文`
     - `Find me on` -> `与我联系`
-3. 补充了部分缺失的aria-label属性 [guqing/halo-theme-higan#83](https://github.com/guqing/halo-theme-higan/issues/83)
-4. 添加了使用多元列表模式时，置顶文章在首页列表的标识（图标与简洁列表模式一致）
-5. 修改html标签lang属性值，`lang='en'`改为`lang='zh'`
-6. 样式-配色方案添加`跟随系统`
-7. 样式-配色方案对应的配置名 `暗黑` -> `暗色`  `白色` -> `亮色` `亮色` -> `灰粉`
+4. 补充了部分缺失的aria-label属性 [guqing/halo-theme-higan#83](https://github.com/guqing/halo-theme-higan/issues/83)
 
-以及修改原项目链接指向fork后的项目链接，修改元数据避免与原主题冲突
+### 可配置项增加
+
+1. `样式-配色方案`添加`跟随系统`
+
+### 可配置项修改
+
+1. `样式-配色方案`对应的配置名修改: `暗黑` -> `暗色`, `白色` -> `亮色`, `亮色` -> `灰粉`
+
+### 其他
+
+1. 修改html标签lang属性值，`lang='en'`改为`lang='zh'`
+2. 修改原项目链接指向fork后的项目链接，修改元数据避免与原主题冲突
 
 ## 原项目说明
 
