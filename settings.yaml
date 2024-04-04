@@ -81,6 +81,12 @@ spec:
               value: "normal"
             - label: "大字体"
               value: "large"
+        - $formkit: text
+          name: max_width
+          label: 内容区域最大宽度
+          value: 48rem
+          placeholder: "48rem"
+          help: "允许全部CSS长度单位, 如: 48rem, 780px, 70vw, 70%"
         - $formkit: attachment
           name: icon
           label: 首页头像
