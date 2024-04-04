@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" th:fragment="html (title, content, header, navbar)">
+<html
+  lang="zh"
+  th:fragment="html (title, content, header, navbar)"
+  data-color-scheme="need-to-replace"
+  theme="need-to-replace"
+>
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,6 +19,8 @@
     <script th:src="@{/assets/lib/jquery/jquery.min.js(v=${theme.spec.version})}"></script>
     <script th:src="@{/assets/dist/main.iife.js(v=${theme.spec.version})}"></script>
     <script>
+      // html标签的data-color-scheme属性值 决定官方评论组件样式
+      // 文档: https://www.halo.run/store/apps/app-YXyaD
       // 此处 colorScheme 除了用于决定全局样式以外 也用于决定评论组件样式 对应模板中<halo:comment>标签
       // 文档: https://docs.halo.run/developer-guide/theme/template-tag#halocomment
 
@@ -33,24 +40,14 @@
 
       const colorScheme = colorSchemeDic["[[${theme.config?.styles?.color_schema}]]"]["theme"];
       const commentColorScheme = colorSchemeDic["[[${theme.config?.styles?.color_schema}]]"]["comment"];
+      document.documentElement.setAttribute("theme", colorScheme);
+      document.documentElement.setAttribute("data-color-scheme", commentColorScheme);
     </script>
   </head>
-  <!-- 此处 body标签的data-color-scheme属性值 决定官方评论组件样式
-  文档: https://www.halo.run/store/apps/app-YXyaD
--->
-  <body
-    th:class="|text-size-${theme.config?.styles?.text_size}|"
-    data-color-scheme="need-to-replace"
-    theme="need-to-replace"
-  >
-    <script>
-      // 设定样式 由于加载顺序，这段代码不能放在head标签内
-      document.body.setAttribute("theme", colorScheme);
-      document.body.setAttribute("data-color-scheme", commentColorScheme);
-    </script>
+  <body th:class="|text-size-${theme.config?.styles?.text_size}|">
     <style type="text/css" th:inline="css">
       .max-width {
-        max-width: [(${theme.config?.styles?.max_width})];
+        max-width: [(${theme.config?.styles?.max_width}) ];
       }
     </style>
     <div class="max-width mx-auto px3 ltr">
