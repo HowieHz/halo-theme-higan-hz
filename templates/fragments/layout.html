@@ -25,9 +25,9 @@
     th:class="|text-size-${theme.config?.styles?.text_size}|"
     th:attr="data-color-scheme=${theme.config?.styles?.color_schema['comment']},theme=${theme.config?.styles?.color_schema['theme']}"
   >
-    <style type="text/css" th:inline="css">
+    <style th:inline="css">
       .max-width {
-        max-width: [(${theme.config?.styles?.max_width})];
+        max-width: /*[(${theme.config?.styles?.max_width})]*/ 48rem;
       }
     </style>
     <div class="max-width mx-auto px3 ltr">
