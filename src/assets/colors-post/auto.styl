@@ -1,0 +1,14 @@
+@import "dark"
+@import "light"
+
+@media (prefers-color-scheme: no-preference)
+  body[theme="auto"]
+    theme-light()
+
+@media (prefers-color-scheme: light)
+  body[theme="auto"]
+    theme-light()
+
+@media (prefers-color-scheme: dark)
+  body[theme="auto"]
+    theme-dark()

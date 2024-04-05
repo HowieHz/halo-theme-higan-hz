@@ -1,4 +1,4 @@
-html[theme="dark"] {
+body[theme="dark"] {
   --color-background: #1d1f21;
   --color-footer-mobile-1: #a4a3a3;
   --color-footer-mobile-2: #27292b;
@@ -7,11 +7,11 @@ html[theme="dark"] {
   --color-scrollbar: #999;
   --color-meta: #908d8d;
   --color-meta-code: #908d8d;
-  --color-link: rgba(212, 128, 170, 1);
+  --color-link: #d480aa;
   --color-text: #d5d7d8;
   --color-time: #adaeaf;
-  --color-accent-3: #cccccc;
-  --color-accent-2: #eeeeee;
+  --color-accent-3: #ccc;
+  --color-accent-2: #eee;
   --color-accent-1: #2bbc8a;
   --color-quote: #ccffb6;
   --color-highlight-background: #212326;

@@ -1,4 +1,5 @@
 import "unfonts.css";
+import "./assets/colors/auto.css";
 import "./assets/colors/gray.css";
 import "./assets/colors/light.css";
 import "./assets/colors/dark.css";

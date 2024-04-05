@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<html
-  lang="zh"
-  th:fragment="html (title, content, header, navbar)"
-  data-color-scheme="need-to-replace"
-  theme="need-to-replace"
->
+<html lang="zh" th:fragment="html (title, content, header, navbar)">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -19,32 +14,17 @@
     <script th:src="@{/assets/lib/jquery/jquery.min.js(v=${theme.spec.version})}"></script>
     <script th:src="@{/assets/dist/main.iife.js(v=${theme.spec.version})}"></script>
     <script>
-      // html标签的data-color-scheme属性值 决定官方评论组件样式
-      // 文档: https://www.halo.run/store/apps/app-YXyaD
-      // 此处 colorScheme 除了用于决定全局样式以外 也用于决定评论组件样式 对应模板中<halo:comment>标签
-      // 文档: https://docs.halo.run/developer-guide/theme/template-tag#halocomment
-
-      const colorSchemeDic = {
-        system: { theme: "auto", comment: "auto" },
-        light: { theme: "light", comment: "light" },
-        dark: { theme: "dark", comment: "dark" },
-        gray: { theme: "gray", comment: "light" },
-      };
-      if (matchMedia("(prefers-color-scheme: dark)").matches) {
-        colorSchemeDic["system"]["theme"] = "dark";
-        colorSchemeDic["system"]["comment"] = "dark";
-      } else {
-        colorSchemeDic["system"]["theme"] = "light";
-        colorSchemeDic["system"]["comment"] = "light";
-      }
-
-      const colorScheme = colorSchemeDic["[[${theme.config?.styles?.color_schema}]]"]["theme"];
-      const commentColorScheme = colorSchemeDic["[[${theme.config?.styles?.color_schema}]]"]["comment"];
-      document.documentElement.setAttribute("theme", colorScheme);
-      document.documentElement.setAttribute("data-color-scheme", commentColorScheme);
+      const commentColorScheme = "[[${theme.config?.styles?.color_schema['comment']}]]";
     </script>
   </head>
-  <body th:class="|text-size-${theme.config?.styles?.text_size}|">
+  <!-- body标签的data-color-scheme属性值 决定官方评论组件样式
+  文档: https://www.halo.run/store/apps/app-YXyaD
+  上面 commentColorScheme常量 用于决定评论组件样式 对应模板中<halo:comment>标签
+  文档: https://docs.halo.run/developer-guide/theme/template-tag#halocomment -->
+  <body
+    th:class="|text-size-${theme.config?.styles?.text_size}|"
+    th:attr="data-color-scheme=${theme.config?.styles?.color_schema['comment']},theme=${theme.config?.styles?.color_schema['theme']}"
+  >
     <style type="text/css" th:inline="css">
       .max-width {
         max-width: [(${theme.config?.styles?.max_width})];
