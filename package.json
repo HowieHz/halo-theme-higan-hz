@@ -1,9 +1,9 @@
 {
   "scripts": {
     "dev": "vite build --watch",
-    "build": "tsc && vite build",
+    "build": "stylus ./src/assets/colors-post/ --out ./src/assets/colors/ && tsc && vite build",
     "lint": "eslint ./src --ext .js,.cjs,.mjs,.ts,.cts,.mts --ignore-path .gitignore",
-    "prettier": "prettier --write './src/**/*.{js,ts,css,json,ml,yaml,html}' './templates/**/*.html'"
+    "prettier": "prettier --write ./src/**/*.{js,ts,css,json,ml,yaml,html,styl} ./templates/**/*.html"
   },
   "keywords": [
     "halo",
@@ -57,6 +57,7 @@
     "rehype-parse": "^8.0.4",
     "rehype-slug": "^5.1.0",
     "rehype-stringify": "^9.0.3",
+    "stylus": "^0.63.0",
     "unified": "^10.1.2"
   }
 }
