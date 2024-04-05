@@ -128,7 +128,16 @@ spec:
               label: 关闭
         - $formkit: radio
           name: hitokoto
-          label: 博客描述开启一言
+          label: 首页开启一言 (hitokoto)
+          value: false
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: radio
+          name: is_resume_show
+          label: 首页开启个人简介
           value: false
           options:
             - label: 开启
@@ -137,7 +146,7 @@ spec:
               value: false
         - $formkit: code
           name: resume
-          if: '$hitokoto===false'
+          if: '$is_resume_show===true'
           label: 个人简介
           language: html
           height: 100px

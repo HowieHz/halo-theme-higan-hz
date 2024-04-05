@@ -9,7 +9,7 @@
         <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script>
         <p id="hitokoto"></p>
       </th:block>
-      <th:block th:unless="${theme.config?.styles?.hitokoto}">
+      <th:block th:if="${theme.config?.styles?.is_resume_show}">
         <p
           class="blog-description"
           th:with="defaultResume=${#strings.defaultString(site?.seo?.description, '')}"
