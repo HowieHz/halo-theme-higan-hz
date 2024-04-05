@@ -85,7 +85,7 @@ spec:
           name: max_width
           label: 内容区域最大宽度
           value: 48rem
-          placeholder: "48rem"
+          placeholder: "默认值: 48rem"
           help: "允许全部CSS长度单位, 如: 48rem, 780px, 70vw, 70%"
         - $formkit: attachment
           name: icon
@@ -149,4 +149,4 @@ spec:
           if: '$is_resume_show===true'
           label: 个人简介
           language: html
-          height: 100px
+          height: 150px
