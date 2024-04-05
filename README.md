@@ -21,14 +21,17 @@
     - `Find me on` -> `与我联系`
 4. 补充了部分缺失的aria-label属性 [guqing/halo-theme-higan#83](https://github.com/guqing/halo-theme-higan/issues/83)
 
-### 可配置项增加
+### 配置项增加
 
 1. `样式-配色方案`添加`跟随系统`
 2. `样式` 添加 `内容区域最大宽度`, 默认值与原主题一致为`48rem`
+3. `样式` 允许同时开启一言和个人简介
 
-### 可配置项修改
+### 配置项修改
 
 1. `样式-配色方案`对应的配置名修改: `暗黑` -> `暗色`, `白色` -> `亮色`, `亮色` -> `灰粉`
+2. `样式-配色方案`对应的配置值修改: [v1.0.1](https://github.com/HowieHz/halo-theme-higan-hz/releases/tag/v1.0.1)
+3. `样式-个人简介`输入框高度修改: `100px` -> `150px`
 
 ### 其他
 
@@ -41,8 +44,6 @@
 该主题的原作者为 Pieter Robberechts，非常感谢做出这么优秀的主题。
 
 原主题地址：[hexo-theme-cactus](https://github.com/probberechts/hexo-theme-cactus.git)
-
-全局搜索功能需要先安装插件: [plugin-search-widget](https://github.com/halo-sigs/plugin-search-widget)
 
 ## 预览截图
 
@@ -66,15 +67,18 @@ Release版本获取方法:
 2. 选择`Download ZIP`下载最新代码
 3. 在 Console 端的主题菜单直接上传安装即可使用
 
-2.0 版本去掉了代码高亮和内容页图片点击放大预览功能，可以通过安装以下两个插件来实现：
+### 可选插件
 
-代码块高亮插件: [plugin-highlightjs](https://github.com/halo-sigs/plugin-highlightjs)
+- 评论功能，需插件 [plugin-comment-widget](https://github.com/halo-sigs/plugin-comment-widget/releases)
+- 搜索功能，需插件 [plugin-search-widget](https://github.com/halo-sigs/plugin-search-widget/releases)
+- 友链页面，需插件 [plugin-links](https://github.com/halo-sigs/plugin-links)
+- 图库页面，需插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)
+- 瞬间页面，需插件 [plugin-moments](https://github.com/halo-sigs/plugin-moments)
+- 代码渲染，需插件: [plugin-highlightjs](https://github.com/halo-sigs/plugin-highlightjs)
+- - 暗黑模式下，代码块高亮主题推荐选择`an-old-hope.min.css`  
+- 图片灯箱，需插件: [plugin-lightgallery](https://github.com/halo-sigs/plugin-lightgallery)
 
-- 暗黑模式下，代码块高亮主题推荐选择`an-old-hope.min.css`  
-
-图片点击放大预览功能: [plugin-lightgallery](https://github.com/halo-sigs/plugin-lightgallery)
-
-页面匹配规则 推荐设置为
+- - 页面匹配规则 推荐设置为
 
 | 路径匹配       | 匹配区域                   |
 | -------------- | -------------------------- |
