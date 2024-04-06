@@ -69,11 +69,11 @@ Release版本获取方法:
 
 ### 可选插件
 
+- 友链页面（/links），需插件 [plugin-links](https://github.com/halo-sigs/plugin-links)
+- 图库页面（/photos），需插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)
+- 瞬间页面（/moments），需插件 [plugin-moments](https://github.com/halo-sigs/plugin-moments)
 - 评论功能，需插件 [plugin-comment-widget](https://github.com/halo-sigs/plugin-comment-widget/releases)
 - 搜索功能，需插件 [plugin-search-widget](https://github.com/halo-sigs/plugin-search-widget/releases)
-- 友链页面，需插件 [plugin-links](https://github.com/halo-sigs/plugin-links)
-- 图库页面，需插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)
-- 瞬间页面，需插件 [plugin-moments](https://github.com/halo-sigs/plugin-moments)
 - 代码渲染，需插件: [plugin-highlightjs](https://github.com/halo-sigs/plugin-highlightjs)
 - - 暗黑模式下，代码块高亮主题推荐选择`an-old-hope.min.css`  
 - 图片灯箱，需插件: [plugin-lightgallery](https://github.com/halo-sigs/plugin-lightgallery)
@@ -88,16 +88,16 @@ Release版本获取方法:
 
 ## 进行此项目的开发
 
-> 对前端开发没什么经验，是一晚上摸索出来的，可能有误
-
 首先请确保你的编辑器支持`EditorConfig`
 
-首先确保你的开发环境中安装好了`pnpm`
+之后确保你的开发环境中安装好了`pnpm`
 在项目根目录运行`pnpm install`完成依赖的安装
 
-vscode打开资源管理器页面，找到右边三个点
-勾选其中`NPM 脚本`
-每次开发后进行`lint`检查，`prettier`格式化代码，`build`构建样式之后再提交
+开发时在项目根目录运行运行`pnpm dev`可实时渲染修改
+
+开发完成后进行`pnpm lint`检查 (请确保无 error)
+`pnpm prettier`格式化代码
+`pnpm build`构建样式之后再提交
 
 ## 迁移
 
