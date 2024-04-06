@@ -3,7 +3,7 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(title = ${title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
 >
-<th:block th:fragment="content">
+  <th:block th:fragment="content">
     <article class="photos post" itemscope itemtype="http://schema.org/BlogPosting">
       <div class="content">
         <div class="photo-groups" th:each="group : ${groups}">
@@ -11,11 +11,17 @@
           <ul class="photo-list">
             <th:block th:each="photo : ${group.photos}">
               <li class="photo-image">
-                <img th:alt="${photo.spec.description}" th:src="@{${photo.spec.url}}" th:title="${photo.spec.displayName}" />
+                <img
+                  th:alt="${photo.spec.description}"
+                  th:src="@{${photo.spec.url}}"
+                  th:title="${photo.spec.displayName}"
+                  aria-label="photo image"
+                />
               </li>
             </th:block>
           </ul>
         </div>
+      </div>
     </article>
   </th:block>
 </th:block>
