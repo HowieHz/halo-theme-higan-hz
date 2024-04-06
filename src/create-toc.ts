@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { unified } from "unified";
 import parse from "rehype-parse";
 import slug from "rehype-slug";
@@ -34,7 +35,7 @@ export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
         };
       },
       customizeTOCItem(tocItem, heading) {
-        let headingNumber = parseInt(heading.tagName.slice(-1), 10);
+        const headingNumber = parseInt(heading.tagName.slice(-1), 10);
         let depth = headingNumber;
         return {
           type: "element",

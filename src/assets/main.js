@@ -1,7 +1,11 @@
 /**
  * Sets up Justified Gallery.
  */
-if (!!$.prototype.justifiedGallery) {
+function isPrototypeJustifiedGallery() {
+  return !!$.prototype.justifiedGallery;
+}
+
+if (isPrototypeJustifiedGallery()) {
   var options = {
     rowHeight: 140,
     margins: 4,

@@ -7,6 +7,5 @@ export {};
 declare global {
   interface Window {
     Alpine: Alpine;
-    SearchWidget: any;
   }
 }
