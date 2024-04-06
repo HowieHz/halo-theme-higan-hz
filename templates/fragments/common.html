@@ -31,8 +31,8 @@
     <li>
       <a
         class="icon"
-        aria-label="Share post to twitter"
-        th:href="'https://twitter.com/share?url=' + ${permalink} + '&amp;title=' + ${title}"
+        aria-label="Share post to x"
+        th:href="'https://x.com/share?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
         <i class="iconify" data-icon="mdi:twitter-circle"></i
       ></a>
@@ -53,6 +53,15 @@
         th:href="'https://pinterest.com/pin/create/bookmarklet/?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
         <i class="iconify" data-icon="mdi:pinterest"></i
+      ></a>
+    </li>
+    <li>
+      <a
+        class="icon"
+        aria-label="Share post to qzone"
+        th:href="@{|https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${permalink}&title=${title}|}"
+      >
+        <i class="iconify" data-icon="cib:qzone"></i
       ></a>
     </li>
     <li>
