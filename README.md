@@ -9,17 +9,25 @@
 
 该主题是 guqing 的 [halo-theme-higan](https://github.com/guqing/halo-theme-higan) 进行了个人的定制化修改后的主题
 
+快捷跳转: [使用方法](#使用方法)
+
 ## 相较于原始主题的修改
 
-### 样式
+### 样式修复
+
+1. 修复行内代码渲染问题 [guqing/halo-theme-higan#85](https://github.com/guqing/halo-theme-higan/issues/85)
+2. 补充了部分缺失的aria-label属性 [guqing/halo-theme-higan#83](https://github.com/guqing/halo-theme-higan/issues/83)
+
+### 样式修改
 
 1. 添加了使用多元列表模式时，置顶文章在首页列表的标识（图标与简洁列表模式一致）
-2. 页面底部的 `Theme is higan Powered by Halo © 2024 sitename` 进行了分行避免在小屏上排版错乱 [guqing/halo-theme-higan#87](https://github.com/guqing/halo-theme-higan/issues/87)
-3. 对于主页上的一些固定文字进行了修改 [guqing/halo-theme-higan#86](https://github.com/guqing/halo-theme-higan/issues/86)
+2. 新增文章顶部分享栏分享方式: qq空间
+3. 页面底部的 `Theme is higan Powered by Halo © 2024 sitename` 进行了分行避免在小屏上排版错乱 [guqing/halo-theme-higan#87](https://github.com/guqing/halo-theme-higan/issues/87)
+4. 修改主页上的一些固定文字 [guqing/halo-theme-higan#86](https://github.com/guqing/halo-theme-higan/issues/86)
     - `Writing` -> `近期发布`
     - `Read article` -> `阅读全文`
     - `Find me on` -> `与我联系`
-4. 补充了部分缺失的aria-label属性 [guqing/halo-theme-higan#83](https://github.com/guqing/halo-theme-higan/issues/83)
+5. 修改文章顶部分享栏 twitter 的链接为 x
 
 ### 配置项增加
 
@@ -36,8 +44,9 @@
 ### 其他
 
 1. 修改html标签lang属性值，`lang='en'`改为`lang='zh'`
-2. 重构样式切换方式
+2. 重构样式切换方式 (原来是`body`标签的class决定样式，现在是`body`标签的`theme`属性的值决定样式)
 3. 修改原项目链接指向fork后的项目链接，修改元数据避免与原主题冲突
+4. 修复原项目不可用的格式化脚本 (package.json内的npm脚本)
 
 ## 原项目说明
 
