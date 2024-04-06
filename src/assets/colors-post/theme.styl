@@ -1,5 +1,13 @@
-@import "dark"
-@import "light"
+@import "mixins"
+
+body[theme="dark"]
+  theme-dark()
+
+body[theme="gray"]
+  theme-gray()
+
+body[theme="light"]
+  theme-light()
 
 @media (prefers-color-scheme: no-preference)
   body[theme="auto"]
