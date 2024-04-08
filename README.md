@@ -99,14 +99,63 @@ Release版本获取方法:
 
 首先请确保你的编辑器支持`EditorConfig`
 
-之后确保你的开发环境中安装好了`pnpm`
-在项目根目录运行`pnpm install`完成依赖的安装
+### 开发前准备
 
-开发时在项目根目录运行运行`pnpm dev`可实时渲染修改
+#### 安装pnpm
 
-开发完成后进行`pnpm lint`检查 (请确保无 error)
-`pnpm prettier`格式化代码
-`pnpm build`构建样式之后再提交
+需要提前安装 `Node.js`，然后运行以下指令安装 `pnpm`
+
+```bash
+npm install -g pnpm
+```
+
+#### 安装项目依赖
+
+之后在项目根目录运行以下指令完成依赖的安装
+
+```bash
+pnpm install
+```
+
+### 开发主题
+
+开发时在项目根目录运行运行以下指令可实时渲染修改
+
+```bash
+pnpm dev
+```
+
+### 开发之后
+
+#### 求疵
+
+开发完成后请运行以下的指令进行检查（请确保无 error）
+
+```bash
+pnpm lint
+```
+
+#### 格式化代码
+
+提交前请运行以下的指令的指令格式化代码
+
+```bash
+pnpm prettier
+```
+
+#### 构建主题
+
+最后在提交前请不要忘记运行以下的指令构建主题
+
+```bash
+pnpm build
+```
+
+<!-- #### 打包主题
+
+```bash
+pnpm release
+``` -->
 
 ## 迁移
 
