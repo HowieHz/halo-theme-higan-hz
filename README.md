@@ -9,7 +9,34 @@
 
 该主题是 guqing 的 [halo-theme-higan](https://github.com/guqing/halo-theme-higan) 进行了个人的定制化修改后的主题
 
-快捷跳转: [使用方法](#使用方法)
+快捷跳转:  
+
+- [halo-theme-higan-hz](#halo-theme-higan-hz)
+  - [说明](#说明)
+  - [相较于原始主题的修改](#相较于原始主题的修改)
+    - [样式修复](#样式修复)
+    - [样式修改](#样式修改)
+    - [配置项增加](#配置项增加)
+    - [配置项修改](#配置项修改)
+    - [其他](#其他)
+  - [已合并至上游的内容](#已合并至上游的内容)
+  - [原项目说明](#原项目说明)
+  - [预览截图](#预览截图)
+  - [主题应用实例](#主题应用实例)
+  - [使用方法](#使用方法)
+    - [可选插件](#可选插件)
+  - [进行此项目的开发](#进行此项目的开发)
+    - [开发前准备](#开发前准备)
+      - [安装pnpm](#安装pnpm)
+      - [安装项目依赖](#安装项目依赖)
+    - [开发主题](#开发主题)
+    - [开发之后](#开发之后)
+      - [求疵](#求疵)
+      - [格式化代码](#格式化代码)
+      - [构建主题](#构建主题)
+  - [版本适用说明](#版本适用说明)
+  - [项目状态](#项目状态)
+  - [Star History](#star-history)
 
 ## 相较于原始主题的修改
 
@@ -38,7 +65,7 @@
 ### 配置项修改
 
 1. `样式-配色方案`对应的配置名修改: `暗黑` -> `暗色`, `白色` -> `亮色`, `亮色` -> `灰粉`
-2. `样式-配色方案`对应的配置值修改: [v1.0.1](https://github.com/HowieHz/halo-theme-higan-hz/releases/tag/v1.0.1)
+2. `样式-配色方案`对应的配置值修改，修改值详情请看 [v1.0.1](https://github.com/HowieHz/halo-theme-higan-hz/releases/tag/v1.0.1)
 3. `样式-个人简介`输入框高度修改: `100px` -> `150px`
 
 ### 其他
@@ -47,6 +74,10 @@
 2. 重构样式切换方式 (原来是`body`标签的class决定样式，现在是`body`标签的`theme`属性的值决定样式)
 3. 修改原项目链接指向fork后的项目链接，修改元数据避免与原主题冲突
 4. 修复原项目不可用的格式化脚本 (package.json内的npm脚本)
+
+## 已合并至上游的内容
+
+1. 关闭未关闭的label，使得prettier能正常格式化文件 [guqing/halo-theme-higan#92](https://github.com/guqing/halo-theme-higan/pull/92)
 
 ## 原项目说明
 
@@ -72,7 +103,7 @@ Release版本获取方法:
 
 最新开发版本获取方法:
 
-1. 点击项目主页[HowieHz/halo-theme-higan-hz](https://github.com/HowieHz/halo-theme-higan-hz/tree/main)绿色的`<> Code`按钮
+1. 点击项目主页 [HowieHz/halo-theme-higan-hz](https://github.com/HowieHz/halo-theme-higan-hz/tree/main) 绿色的`<> Code`按钮
 2. 选择`Download ZIP`下载最新代码
 3. 在 Console 端的主题菜单直接上传安装即可使用
 
@@ -157,11 +188,11 @@ pnpm build
 pnpm release
 ``` -->
 
-## 迁移
-
-适用于 Halo 1.x 版本的主题位于分支 [halo-theme-higan 1.x](https://github.com/HowieHz/halo-theme-higan-hz/tree/1.x)
+## 版本适用说明
 
 当前 main 分支适用于 Halo 2.0 版本
+
+适用于 Halo 1.x 版本的主题位于分支 [halo-theme-higan 1.x](https://github.com/HowieHz/halo-theme-higan-hz/tree/1.x)
 
 ## 项目状态
 
