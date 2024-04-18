@@ -73,11 +73,11 @@
 1. 修改html标签lang属性值，`lang='en'`改为`lang='zh'`
 2. 重构样式切换方式 (原来是`body`标签的class决定样式，现在是`body`标签的`theme`属性的值决定样式)
 3. 修改原项目链接指向fork后的项目链接，修改元数据避免与原主题冲突
-4. 修复原项目不可用的格式化脚本 (package.json内的npm脚本)
 
 ## 已合并至上游的内容
 
 1. 关闭未关闭的label，使得prettier能正常格式化文件 [guqing/halo-theme-higan#92](https://github.com/guqing/halo-theme-higan/pull/92)
+2. 修复原项目不可用的格式化脚本 (package.json内的npm脚本) [guqing/halo-theme-higan#91](https://github.com/guqing/halo-theme-higan/pull/91)
 
 ## 原项目说明
 
