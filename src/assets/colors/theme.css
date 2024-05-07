@@ -18,6 +18,7 @@ body[theme="dark"] {
   --color-background-code: #d5d7d8;
   --color-avatar-border: #212326;
   --color-card-hover: #212326;
+  --color-divide: #616161;
   --toc-level-2: #e3e3e3;
   --toc-level-3: #b0b0b0;
   --toc-level-4: #636363;
@@ -42,6 +43,7 @@ body[theme="gray"] {
   --color-highlight-background: #212326;
   --color-card-hover: #dddbd9;
   --color-avatar-border: #dddbd9;
+  --color-divide: #c3c3c3;
   --toc-level-2: #333;
   --toc-level-3: #333;
   --toc-level-4: #555;
@@ -66,6 +68,7 @@ body[theme="light"] {
   --color-highlight-background: #212326;
   --color-card-hover: #fafafa;
   --color-avatar-border: #fafafa;
+  --color-divide: #e5e7eb;
   --toc-level-2: #383838;
   --toc-level-3: #666;
   --toc-level-4: #888;
@@ -91,6 +94,7 @@ body[theme="light"] {
     --color-highlight-background: #212326;
     --color-card-hover: #fafafa;
     --color-avatar-border: #fafafa;
+    --color-divide: #e5e7eb;
     --toc-level-2: #383838;
     --toc-level-3: #666;
     --toc-level-4: #888;
@@ -117,6 +121,7 @@ body[theme="light"] {
     --color-highlight-background: #212326;
     --color-card-hover: #fafafa;
     --color-avatar-border: #fafafa;
+    --color-divide: #e5e7eb;
     --toc-level-2: #383838;
     --toc-level-3: #666;
     --toc-level-4: #888;
@@ -143,6 +148,7 @@ body[theme="light"] {
     --color-background-code: #d5d7d8;
     --color-avatar-border: #212326;
     --color-card-hover: #212326;
+    --color-divide: #616161;
     --toc-level-2: #e3e3e3;
     --toc-level-3: #b0b0b0;
     --toc-level-4: #636363;

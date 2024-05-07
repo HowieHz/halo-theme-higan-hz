@@ -7,6 +7,22 @@
     "Noto Color Emoji";
 }
 
+.color-scheme-light,
+.light,
+[data-color-scheme="light"] comment-widget {
+  color-scheme: light;
+  --halo-comment-widget-component-form-input-bg-color: #e2e0de !important;
+  --halo-comment-widget-component-form-input-border-color: #908d8d !important;
+}
+
+.color-scheme-dark,
+.dark,
+[data-color-scheme="dark"] comment-widget {
+  color-scheme: dark;
+  --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
+  --halo-comment-widget-component-form-input-border-color: #636363 !important;
+}
+
 /*iconify样式开始*/
 .iconify {
   font-size: 1rem;
@@ -199,6 +215,11 @@
 .my2 {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.my-10 {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .m3 {
@@ -449,6 +470,10 @@
 
 .flex-auto {
   flex: auto;
+}
+
+.flex-1 {
+  flex: 1;
 }
 
 .aspect-w-1 > * {
@@ -869,6 +894,33 @@ body {
   }
 }
 
+.max-width {
+  max-width: 48rem;
+}
+
+@media (max-width: 767px) {
+  .max-width {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1199px) and (max-width: 1536px) {
+  .max-width {
+    max-width: 56rem;
+  }
+}
+@media (min-width: 1537px) and (max-width: 2000px) {
+  .max-width {
+    max-width: 64rem;
+  }
+}
+
+@media (min-width: 2001px) {
+  .max-width {
+    max-width: 60%;
+  }
+}
+
 @media (max-width: 480px) {
   .px3 {
     padding-right: 1rem;
@@ -878,6 +930,12 @@ body {
   .my4 {
     margin-top: 2rem;
     margin-bottom: 2rem;
+  }
+}
+
+@media (min-width: 480px) {
+  p {
+    text-align: start;
   }
 }
 
@@ -1593,6 +1651,14 @@ article .content video {
   height: auto;
 }
 
+a img {
+  display: inherit !important;
+}
+
+a:has(img) {
+  background-image: none !important;
+}
+
 article .content .video-container {
   position: relative;
   overflow: hidden;
@@ -1684,6 +1750,16 @@ article .content .caption {
   font-size: 0.9em;
 }
 
+.divide {
+  height: 0;
+  color: inherit;
+  border-color: var(--color-divide);
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-top-width: 1px !important;
+}
+
 .posttitle {
   text-transform: none;
   font-size: 1.5em;
@@ -1770,6 +1846,21 @@ article .content .caption {
   gap: 1.25rem;
   margin-bottom: 1.25rem;
   margin-top: 1.25rem;
+}
+
+#footer .info {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+#footer .copyright {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+#footer .copyright::before {
+  content: "\A";
+  white-space: pre;
 }
 
 #footer ul {

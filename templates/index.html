@@ -18,7 +18,7 @@
       </th:block>
     </section>
 
-    <p>
+    <p id="findMe">
       与我联系
       <th:block th:with="sns=${theme?.config?.sns}">
         <a
@@ -60,6 +60,7 @@
         <a
           class="icon"
           target="_blank"
+          aria-label="Find me on dribbble"
           th:href="'https://dribbble.com/'+${sns?.dribbble}"
           th:if="${not #strings.isEmpty(sns?.dribbble)}"
         >
@@ -112,6 +113,14 @@
         </a>
       </th:block>
     </p>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const socialProfiles = document.querySelector("#findMe a") || [];
+        if (socialProfiles.length === 0) {
+          document.querySelector("#findMe").style.display = "none";
+        }
+      });
+    </script>
 
     <th:block th:if="${theme?.config.styles?.post_list_layout=='post-list-summary'}">
       <h1 class="h1"><a th:href="@{/archives}">近期发布</a></h1>
