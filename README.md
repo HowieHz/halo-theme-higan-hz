@@ -9,7 +9,7 @@
 
 该主题是 guqing 的 [halo-theme-higan](https://github.com/guqing/halo-theme-higan) 进行了定制化修改后的主题
 
-> 更激进的修改，更多的配置自由度！
+> 更激进的修改，更高的配置自由度！
 
 ### 目录
 
@@ -61,7 +61,7 @@
 ### 配置项增加
 
 1. `样式-配色方案`添加`跟随系统`
-2. `样式` 添加 `内容区域最大宽度`, 默认值与原主题一致为`48rem`
+2. `样式` 添加 `内容区域最大宽度`, 默认值为`48rem`
 3. `样式` 允许同时开启一言和个人简介
 
 ### 配置项修改
@@ -78,10 +78,10 @@
 
 ## 已合并至上游的内容/上游也已修复的内容
 
-1. 关闭未关闭的label，使得prettier能正常格式化文件 *guqing/halo-theme-higan [#92](https://github.com/guqing/halo-theme-higan/pull/92)*
-2. 修复原项目不可用的格式化脚本 (package.json内的npm脚本) *guqing/halo-theme-higan [#91](https://github.com/guqing/halo-theme-higan/pull/91)*
-3. 页面底部的 `Theme is higan Powered by Halo © 2024 sitename` 进行了分行避免在小屏上排版错乱 *guqing/halo-theme-higan [#87](https://github.com/guqing/halo-theme-higan/issues/87) [#108](https://github.com/guqing/halo-theme-higan/pull/108)*
-4. 补充了部分缺失的aria-label属性 *guqing/halo-theme-higan [#83](https://github.com/guqing/halo-theme-higan/issues/83) [#110](https://github.com/guqing/halo-theme-higan/pull/110)*
+1. 关闭未关闭的 `label`，使得 `prettier` 能正常格式化文件 *guqing/halo-theme-higan [#92](https://github.com/guqing/halo-theme-higan/pull/92)*
+2. 修复原项目不可用的格式化脚本 (`package.json` 内的 `npm` 脚本) *guqing/halo-theme-higan [#91](https://github.com/guqing/halo-theme-higan/pull/91)*
+3. 页面底部的版权信息进行了分行避免在小屏上排版错乱 *guqing/halo-theme-higan [#87](https://github.com/guqing/halo-theme-higan/issues/87) [#108](https://github.com/guqing/halo-theme-higan/pull/108)*
+4. 补充了部分缺失的 `aria-label` 属性 *guqing/halo-theme-higan [#83](https://github.com/guqing/halo-theme-higan/issues/83) [#110](https://github.com/guqing/halo-theme-higan/pull/110)*
 5. 修复行内代码渲染问题 *guqing/halo-theme-higan [#85](https://github.com/guqing/halo-theme-higan/issues/85) [#109](https://github.com/guqing/halo-theme-higan/pull/109)*
 
 ## 原项目说明
