@@ -52,7 +52,7 @@
 
 1. 添加了使用多元列表模式时，置顶文章在首页列表的标识（图标与简洁列表模式一致）
 2. 新增文章顶部分享栏分享方式: qq空间
-3. 修改主页上的一些固定文字 *guqing/halo-theme-higan [#86](https://github.com/guqing/halo-theme-higan/issues/86)*
+3. 修改主页上的一些固定文字 *[guqing/halo-theme-higan#86](https://github.com/guqing/halo-theme-higan/issues/86)*
     - `Writing` -> `近期发布`
     - `Read article` -> `阅读全文`
     - `Find me on` -> `与我联系`
@@ -78,11 +78,11 @@
 
 ## 已合并至上游的内容/上游也已修复的内容
 
-1. 关闭未关闭的 `label`，使得 `prettier` 能正常格式化文件 *guqing/halo-theme-higan [#92](https://github.com/guqing/halo-theme-higan/pull/92)*
-2. 修复原项目不可用的格式化脚本 (`package.json` 内的 `npm` 脚本) *guqing/halo-theme-higan [#91](https://github.com/guqing/halo-theme-higan/pull/91)*
-3. 页面底部的版权信息进行了分行避免在小屏上排版错乱 *guqing/halo-theme-higan [#87](https://github.com/guqing/halo-theme-higan/issues/87) [#108](https://github.com/guqing/halo-theme-higan/pull/108)*
-4. 补充了部分缺失的 `aria-label` 属性 *guqing/halo-theme-higan [#83](https://github.com/guqing/halo-theme-higan/issues/83) [#110](https://github.com/guqing/halo-theme-higan/pull/110)*
-5. 修复行内代码渲染问题 *guqing/halo-theme-higan [#85](https://github.com/guqing/halo-theme-higan/issues/85) [#109](https://github.com/guqing/halo-theme-higan/pull/109)*
+1. 关闭未关闭的 `label`，使得 `prettier` 能正常格式化文件 *[guqing/halo-theme-higan#92](https://github.com/guqing/halo-theme-higan/pull/92)*
+2. 修复原项目不可用的格式化脚本 (`package.json` 内的 `npm` 脚本) *[guqing/halo-theme-higan#91](https://github.com/guqing/halo-theme-higan/pull/91)*
+3. 页面底部的版权信息进行了分行避免在小屏上排版错乱 *[guqing/halo-theme-higan#87](https://github.com/guqing/halo-theme-higan/issues/87)[#108](https://github.com/guqing/halo-theme-higan/pull/108)*
+4. 补充了部分缺失的 `aria-label` 属性 *[guqing/halo-theme-higan#83](https://github.com/guqing/halo-theme-higan/issues/83)[#110](https://github.com/guqing/halo-theme-higan/pull/110)*
+5. 修复行内代码渲染问题 *[guqing/halo-theme-higan#85](https://github.com/guqing/halo-theme-higan/issues/85)[#109](https://github.com/guqing/halo-theme-higan/pull/109)*
 
 ## 原项目说明
 
