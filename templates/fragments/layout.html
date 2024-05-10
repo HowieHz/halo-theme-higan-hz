@@ -14,16 +14,37 @@
     <script th:src="@{/assets/lib/jquery/jquery.min.js(v=${theme.spec.version})}"></script>
     <script th:src="@{/assets/dist/main.iife.js(v=${theme.spec.version})}"></script>
     <script>
-      const commentColorScheme = "[[${theme.config?.styles?.color_schema['comment']}]]";
+      var commentColorScheme = "[[${theme.config?.styles?.color_schema['comment']}]]";
+      // var colorScheme = "[[${theme.config?.styles?.color_schema['color-scheme']}]]";
+      // var themeColorScheme = "[[${theme.config?.styles?.color_schema['theme']}]]";
     </script>
   </head>
-  <!-- body标签的data-color-scheme属性值 决定官方评论组件样式
+  <!--
+  本主题的样式切换说明：
+  用哪套样式看 body 标签内的 theme 属性值：auto，dark，light，gray
+  
+  注意：当本主题开启自动切换明暗，@media 查询为 no-preference，则应用明亮样式
+  
+
+  本主题标识明暗模式说明：
+
+  1. 用于给 css 样式读取，放在 body 标签内的 data-color-scheme 属性值：auto，dark，light
+  当前用于：决定官方评论组件样式
   文档: https://www.halo.run/store/apps/app-YXyaD
-  上面 commentColorScheme常量 用于决定评论组件样式 对应模板中<halo:comment>标签
-  文档: https://docs.halo.run/developer-guide/theme/template-tag#halocomment -->
+
+  2. 用于给 js 读取，commentColorScheme 用于决定评论组件样式：auto，dark，light
+  对应模板中 <halo:comment> 标签，用作评论组件的扩展点，支持 light 和 dark 两种
+  #TODO 更多值适配等待官方处理issue halo-dev/halo#5890
+  文档: https://docs.halo.run/developer-guide/theme/template-tag#halocomment 
+  colorScheme 和 themeColorScheme 仅仅是为了符合样式也一起加上了，实际上没有读取这个值工作的地方
+  
+  3. main.css 样式中还写了一个 color-scheme，由 body 标签内的 data-color-scheme 决定，默认是 normal，亮色是 only light，暗色是 only dark
+  应用于 :root 加上 only 效果是关闭由 Chrome 的自动深色主题引起的颜色覆盖。上游应用于 body 标签，所以此处也应用于 body 标签（实际是应用在有 data-color-scheme 属性的地方，本主题仅有 body 标签有这个属性）
+  https://developer.mozilla.org/zh-CN/docs/Web/CSS/color-scheme
+-->
   <body
     th:class="|text-size-${theme.config?.styles?.text_size}|"
-    th:attr="data-color-scheme=${theme.config?.styles?.color_schema['comment']},theme=${theme.config?.styles?.color_schema['theme']}"
+    th:attr="data-color-scheme=${theme.config?.styles?.color_schema['color-scheme']}, theme=${theme.config?.styles?.color_schema['theme']}"
   >
     <style th:inline="css">
       .max-width {

@@ -60,16 +60,16 @@ spec:
         - $formkit: select
           name: color_schema
           label: 配色方案
-          value: { theme: "auto", comment: "auto" }
+          value: { theme: "auto", comment: "auto", color-scheme: "auto" }
           options:
             - label: 跟随系统
-              value: { theme: "auto", comment: "auto" }
+              value: { theme: "auto", comment: "auto", color-scheme: "auto" }
             - label: "暗色"
-              value: { theme: "dark", comment: "dark" }
+              value: { theme: "dark", comment: "dark", color-scheme: "dark" }
             - label: "亮色"
-              value: { theme: "light", comment: "light" }
+              value: { theme: "light", comment: "light", color-scheme: "light" }
             - label: "灰粉"
-              value: { theme: "gray", comment: "light" }
+              value: { theme: "gray", comment: "light", color-scheme: "light" }
         - $formkit: select
           name: text_size
           label: 字体大小
