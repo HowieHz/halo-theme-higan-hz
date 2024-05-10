@@ -59,7 +59,7 @@
       <a
         class="icon"
         aria-label="Share post to qzone"
-        th:href="@{|https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${permalink}&title=${title}|}"
+        th:href="'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
         <i class="iconify" data-icon="cib:qzone"></i
       ></a>
