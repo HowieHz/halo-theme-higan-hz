@@ -5,128 +5,49 @@
 >
   <th:block th:fragment="content">
     <section id="about">
-      <th:block th:if="${theme.config?.styles?.hitokoto}">
+      <th:block th:if="${theme.config?.index_styles?.hitokoto}">
         <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script>
         <p id="hitokoto"></p>
       </th:block>
-      <th:block th:if="${theme.config?.styles?.is_resume_show}">
+      <th:block th:if="${theme.config?.index_styles?.is_resume_show}">
         <p
           class="blog-description"
           th:with="defaultResume=${#strings.defaultString(site?.seo?.description, '')}"
-          th:utext="${#strings.defaultString(theme.config?.styles?.resume, defaultResume)}"
+          th:utext="${#strings.defaultString(theme.config?.index_styles?.resume, defaultResume)}"
         ></p>
       </th:block>
     </section>
 
-    <p id="findMe">
+    <p id="findMe" th:if="${theme?.config?.rss?.index_rss or not #arrays.isEmpty(theme?.config?.sns?.index_sns)}">
       与我联系
       <th:block th:with="sns=${theme?.config?.sns}">
         <a
           class="icon"
           target="_blank"
-          th:href="@{/rss.xml}"
+          th:href="@{${theme?.config?.rss?.rss_url}}"
           aria-label="Find me on rss"
-          th:if="${theme?.config?.sns?.rss}"
+          th:if="${theme?.config?.rss?.index_rss}"
         >
           <i class="iconify iconify-middle" data-icon="heroicons-outline:rss"></i>
         </a>
+
         <a
           class="icon"
+          th:each="item : ${theme?.config?.sns?.index_sns}"
+          th:href="@{${item?.type['url']}+${item?.input_value}}"
           target="_blank"
-          aria-label="Find me on twitter"
-          th:href="@{'https://twitter.com/'+${sns?.twitter}}"
-          th:if="${not #strings.isEmpty(sns?.twitter)}"
+          th:attr="aria-label=${item?.type['aria-label']}"
         >
-          <i class="iconify iconify-middle" data-icon="mdi:twitter"></i>
-        </a>
-        <a
-          class="icon"
-          target="_blank"
-          aria-label="Find me on facebook"
-          th:href="'https://www.facebook.com/'+${sns?.facebook}"
-          th:if="${not #strings.isEmpty(sns?.facebook)}"
-        >
-          <i class="iconify iconify-middle" data-icon="ic:baseline-facebook"></i>
-        </a>
-        <a
-          class="icon"
-          target="_blank"
-          aria-label="Find me on instagram"
-          th:href="'https://www.instagram.com/'+${sns?.instagram}"
-          th:if="${not #strings.isEmpty(sns?.instagram)}"
-        >
-          <i class="iconify iconify-middle" data-icon="mdi:instagram"></i>
-        </a>
-        <a
-          class="icon"
-          target="_blank"
-          aria-label="Find me on dribbble"
-          th:href="'https://dribbble.com/'+${sns?.dribbble}"
-          th:if="${not #strings.isEmpty(sns?.dribbble)}"
-        >
-          <i class="iconify iconify-middle" data-icon="mdi:dribbble"></i>
-        </a>
-        <a
-          class="icon"
-          target="_blank"
-          aria-label="Find me on weibo"
-          th:href="'https://weibo.com/'+${sns?.weibo}"
-          th:if="${not #strings.isEmpty(sns?.weibo)}"
-        >
-          <i class="iconify iconify-middle" data-icon="bi:sina-weibo"></i>
-        </a>
-        <a
-          class="icon"
-          target="_blank"
-          aria-label="Find me on QQ"
-          th:href="'tencent://message/?uin='+${sns?.qq} + '&Site=&Menu=yes'"
-          th:if="${not #strings.isEmpty(sns?.qq)}"
-        >
-          <i class="iconify iconify-middle" data-icon="ant-design:qq-circle-filled"></i>
-        </a>
-        <a
-          class="icon"
-          target="_blank"
-          aria-label="Find me on telegram"
-          th:href="'https://t.me/'+${sns?.telegram}"
-          th:if="${not #strings.isEmpty(sns?.telegram)}"
-        >
-          <i class="iconify iconify-middle" data-icon="ic:baseline-telegram"></i>
-        </a>
-        <a
-          class="icon"
-          target="_blank"
-          aria-label="Find me on email"
-          th:href="'mailto:'+${sns?.email}"
-          th:if="${not #strings.isEmpty(sns?.email)}"
-        >
-          <i class="iconify iconify-middle" data-icon="ph:envelope-simple-bold"></i>
-        </a>
-        <a
-          class="icon"
-          target="_blank"
-          aria-label="Find me on github"
-          th:href="'https://github.com/'+${sns?.github}"
-          th:if="${not #strings.isEmpty(sns?.github)}"
-        >
-          <i class="iconify iconify-middle" data-icon="mdi:github"></i>
+          <i class="iconify iconify-middle" th:attr="data-icon=${item?.type['data-icon']}"></i>
         </a>
       </th:block>
     </p>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const socialProfiles = document.querySelector("#findMe a") || [];
-        if (socialProfiles.length === 0) {
-          document.querySelector("#findMe").style.display = "none";
-        }
-      });
-    </script>
 
-    <th:block th:if="${theme?.config.styles?.post_list_layout=='post-list-summary'}">
+    <th:block th:if="${theme?.config.index_styles?.post_list_layout=='post-list-summary'}">
       <h1 class="h1"><a th:href="@{/archives}">近期发布</a></h1>
       <th:block th:insert="~{fragments/posts :: post-list-summary(${posts})}"></th:block>
     </th:block>
-    <th:block th:unless="${theme?.config.styles?.post_list_layout=='post-list-summary'}">
+    <th:block th:unless="${theme?.config.index_styles?.post_list_layout=='post-list-summary'}">
       <th:block th:insert="~{fragments/posts :: simple-post-list(${posts})}"></th:block>
     </th:block>
   </th:block>

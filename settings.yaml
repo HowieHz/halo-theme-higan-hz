@@ -4,58 +4,8 @@ metadata:
   name: howiehz-higan-setting
 spec:
   forms:
-    - group: sns
-      label: 社交资料
-      formSchema:
-        - $formkit: radio
-          name: rss
-          label: RSS
-          value: true
-          attrs:
-            icon: rss
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: text
-          name: twitter
-          label: Twitter
-          placeholder: "只需填入 Twitter 用户名即可"
-        - $formkit: text
-          name: facebook
-          label: Facebook
-          placeholder: "只需填入 Facebook 用户名即可"
-        - $formkit: text
-          name: instagram
-          label: Instagram
-          placeholder: "只需填入 Instagram 用户名即可"
-        - $formkit: text
-          name: dribbble
-          label: Dribbble
-          placeholder: "只需填入 Dribbble 用户名即可"
-        - $formkit: text
-          name: weibo
-          label: 微博
-          placeholder: "只需填入微博 Id 即可"
-        - $formkit: text
-          name: email
-          label: Email
-          placeholder: "只需填入邮箱地址即可"
-        - $formkit: text
-          name: github
-          label: Github
-          placeholder: "只需填入 Github 用户名即可"
-        - $formkit: text
-          name: qq
-          label: QQ
-          placeholder: "只需填入 QQ 号即可"
-        - $formkit: text
-          name: telegram
-          label: Telegram
-          placeholder: "只需填入 Telegram Id 即可"
     - group: styles
-      label: 样式
+      label: 总体样式
       formSchema:
         - $formkit: select
           name: color_schema
@@ -108,6 +58,9 @@ spec:
               label: 开启
             - value: false
               label: 关闭
+    - group: index_styles
+      label: 首页样式
+      formSchema:
         - $formkit: select
           name: post_list_layout
           label: 文章列表布局
@@ -118,17 +71,8 @@ spec:
             - label: "多元列表"
               value: "post-list-summary"
         - $formkit: radio
-          name: post_title_uppper
-          label: 文章标题大写
-          value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
           name: hitokoto
-          label: 首页开启一言 (hitokoto)
+          label: 开启一言 (hitokoto)
           value: false
           options:
             - label: 开启
@@ -137,7 +81,7 @@ spec:
               value: false
         - $formkit: radio
           name: is_resume_show
-          label: 首页开启个人简介
+          label: 开启个人简介
           value: false
           options:
             - label: 开启
@@ -146,7 +90,92 @@ spec:
               value: false
         - $formkit: code
           name: resume
-          if: '$is_resume_show===true'
+          if: "$is_resume_show===true"
           label: 个人简介
           language: html
           height: 150px
+    - group: post_styles
+      label: 文章页样式
+      formSchema:
+        - $formkit: radio
+          name: post_title_uppper
+          label: 文章标题大写
+          value: false
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+    - group: rss
+      label: RSS
+      formSchema:
+        - $formkit: radio
+          name: index_rss
+          label: 首页RSS展示
+          value: true
+          attrs:
+            icon: rss
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: text
+          name: rss_url
+          label: "RSS地址"
+          value: "/rss.xml"
+    - group: sns
+      label: 社交资料
+      formSchema:
+        - $formkit: repeater
+          name: index_sns
+          label: 首页社交资料展示
+          value: []
+          children:
+            - $formkit: select
+              name: type
+              label: 类型
+              placeholder: "选择你要展示的社交资料"
+              options:
+                - label: X
+                  help: "只需填入 X 用户名即可"
+                  value: { url: "https://x.com/", aria-label: "Find me on X", data-icon: mdi:twitter }
+                - label: Facebook
+                  help: "只需填入 Facebook 用户名即可"
+                  value:
+                    {
+                      url: "https://www.facebook.com/",
+                      aria-label: "Find me on facebook",
+                      data-icon: ic:baseline-facebook,
+                    }
+                - label: Instagram
+                  help: "只需填入 Instagram 用户名即可"
+                  value:
+                    { url: "https://www.instagram.com/", aria-label: "Find me on instagram", data-icon: mdi:instagram }
+                - label: Dribbble
+                  help: "只需填入 Dribbble 用户名即可"
+                  value: { url: "https://dribbble.com/", aria-label: "Find me on dribbble", data-icon: mdi:dribbble }
+                - label: 微博
+                  help: "只需填入微博 Id 即可"
+                  value: { url: "https://weibo.com/", aria-label: "Find me on weibo", data-icon: bi:sina-weibo }
+                - label: Email
+                  help: "只需填入邮箱地址即可"
+                  value: { url: "mailto:", aria-label: "Find me on email", data-icon: ph:envelope-simple-bold }
+                - label: Github
+                  help: "只需填入 Github 用户名即可"
+                  value: { url: "https://github.com/", aria-label: "Find me on github", data-icon: mdi:github }
+                - label: QQ
+                  help: "只需填入 QQ 号即可"
+                  value:
+                    {
+                      url: "tencent://message/?Site=&Menu=yes&uin=",
+                      aria-label: "Find me on QQ",
+                      data-icon: ant-design:qq-circle-filled,
+                    }
+                - label: Telegram
+                  help: "只需填入 Telegram Id 即可"
+                  value: { url: "https://t.me/", aria-label: "Find me on telegram", data-icon: ic:baseline-telegram }
+            - $formkit: text
+              name: input_value
+              label: 值
+              validation: "required"
