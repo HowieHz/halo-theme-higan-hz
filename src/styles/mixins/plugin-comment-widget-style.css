@@ -1,0 +1,35 @@
+/*plugin-comment-widget 插件适配样式开始*/
+/* .color-scheme-light, */
+[data-color-scheme="light"] comment-widget {
+  --halo-comment-widget-component-form-input-bg-color: #e2e0de !important;
+  --halo-comment-widget-component-form-input-border-color: #908d8d !important;
+}
+
+/* .color-scheme-dark, */
+[data-color-scheme="dark"] comment-widget {
+  --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
+  --halo-comment-widget-component-form-input-border-color: #636363 !important;
+}
+
+@media (prefers-color-scheme: no-preference) {
+  [data-color-scheme="auto"] comment-widget {
+    --halo-comment-widget-component-form-input-bg-color: #e2e0de !important;
+    --halo-comment-widget-component-form-input-border-color: #908d8d !important;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  [data-color-scheme="auto"] comment-widget {
+    --halo-comment-widget-component-form-input-bg-color: #e2e0de !important;
+    --halo-comment-widget-component-form-input-border-color: #908d8d !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-color-scheme="auto"] comment-widget {
+    --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
+    --halo-comment-widget-component-form-input-border-color: #636363 !important;
+  }
+}
+
+/*plugin-comment-widget 插件适配样式结束*/

@@ -1,47 +1,13 @@
 @import "../assets/fonts/text-size.css";
-@import "./scrollbar.css";
+@import "./mixins/scrollbar.css";
+@import "./mixins/plugin-comment-widget-style.css";
+@import "./mixins/iconify.css";
 
 :root {
   --higan-font-family: Menlo, Meslo LG, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol,
     "Noto Color Emoji";
 }
-
-/*plugin-comment-widget 插件适配样式开始*/
-/* .color-scheme-light, */
-[data-color-scheme="light"] comment-widget {
-  --halo-comment-widget-component-form-input-bg-color: #e2e0de !important;
-  --halo-comment-widget-component-form-input-border-color: #908d8d !important;
-}
-
-/* .color-scheme-dark, */
-[data-color-scheme="dark"] comment-widget {
-  --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
-  --halo-comment-widget-component-form-input-border-color: #636363 !important;
-}
-
-@media (prefers-color-scheme: no-preference) {
-  [data-color-scheme="auto"] comment-widget {
-    --halo-comment-widget-component-form-input-bg-color: #e2e0de !important;
-    --halo-comment-widget-component-form-input-border-color: #908d8d !important;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  [data-color-scheme="auto"] comment-widget {
-    --halo-comment-widget-component-form-input-bg-color: #e2e0de !important;
-    --halo-comment-widget-component-form-input-border-color: #908d8d !important;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  [data-color-scheme="auto"] comment-widget {
-    --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
-    --halo-comment-widget-component-form-input-border-color: #636363 !important;
-  }
-}
-
-/*plugin-comment-widget 插件适配样式结束*/
 
 body[data-color-scheme="light"] {
   color-scheme: only light;
@@ -68,28 +34,6 @@ body[data-color-scheme="dark"] {
     color-scheme: only dark;
   }
 }
-
-/*iconify样式开始*/
-.iconify {
-  font-size: 1rem;
-  text-align: center;
-  vertical-align: middle;
-  /* color: var(--color-text); */
-}
-
-.iconify-middle {
-  font-size: 1.2rem;
-}
-
-.iconify-large {
-  font-size: 1.5rem;
-}
-
-.iconify-huge {
-  font-size: 1.8rem;
-}
-
-/*iconify样式结束*/
 
 /*初始化样式*/
 .inline {
