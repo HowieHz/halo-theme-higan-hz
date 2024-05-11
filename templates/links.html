@@ -21,7 +21,7 @@
                   />
                   <figcaption>
                     <div class="fig-author-figure-title" th:text="${link.spec.displayName}"></div>
-                    <div class="fig-author-figure-description" th:text="${link.spec.description}"></div>
+                    <div class="fig-author-figure-description" th:utext="${link.spec.description}"></div>
                   </figcaption>
                 </figure>
               </a>
