@@ -9,7 +9,7 @@
         <div
           class="moment-header"
           style="margin-top: 1.25rem"
-          th:if="${moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"
+          th:if="${moment.metadata?.labels?.get('howiehz.top/type')=='github-user-public-event'}"
         >
           <div class="color-fg-muted">
             <span>
@@ -24,20 +24,21 @@
                   th:src="${#strings.defaultString(moment.owner?.avatar, defaultAvatar)}"
                   width="32"
                   height="32"
+                  alt="moment author avatar"
                   th:alt="|@${moment.owner?.name}|"
                 />
               </a>
             </span>
             <span
               class="no-underline color-fg-muted"
-              th:utext="${moment.metadata?.annotations?.get('guqing.github.io/customize-title')}"
+              th:utext="${moment.metadata?.annotations?.get('howiehz.top/customize-title')}"
             >
             </span>
           </div>
         </div>
         <div
           class="moment-header"
-          th:unless="${moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"
+          th:unless="${moment.metadata?.labels?.get('howiehz.top/type')=='github-user-public-event'}"
         >
           <div class="color-fg-muted">
             <span>
@@ -52,6 +53,7 @@
                   th:src="${#strings.defaultString(moment.owner?.avatar, defaultAvatar)}"
                   width="32"
                   height="32"
+                  alt="moment author avatar"
                   th:alt="|@${moment.owner?.name}|"
                 />
               </a>
