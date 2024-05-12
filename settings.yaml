@@ -160,7 +160,12 @@ spec:
                       data-icon: simple-icons:bilibili,
                     }
                 - label: Dribbble
-                  value: { url: "https://dribbble.com/", aria-label: "Find me on Dribbble", data-icon: mdi:dribbble }
+                  value:
+                    {
+                      url: "https://dribbble.com/",
+                      aria-label: "Find me on Dribbble",
+                      data-icon: ant-design:dribbble-circle-filled,
+                    }
                 - label: Email
                   value: { url: "mailto:", aria-label: "Find me on Email", data-icon: ph:envelope-simple-bold }
                 - label: Facebook
@@ -174,7 +179,11 @@ spec:
                   value: { url: "https://github.com/", aria-label: "Find me on Github", data-icon: mdi:github }
                 - label: Instagram
                   value:
-                    { url: "https://www.instagram.com/", aria-label: "Find me on Instagram", data-icon: mdi:instagram }
+                    {
+                      url: "https://www.instagram.com/",
+                      aria-label: "Find me on Instagram",
+                      data-icon: ant-design:instagram-filled,
+                    }
                 - label: QQ
                   value:
                     {
@@ -187,7 +196,7 @@ spec:
                     {
                       url: "https://www.reddit.com/user/",
                       aria-label: "Find me on Reddit",
-                      data-icon: ic:baseline-reddit,
+                      data-icon: ant-design:reddit-circle-filled,
                     }
                 - label: "Stack Overflow"
                   value:
@@ -199,20 +208,21 @@ spec:
                 - label: Telegram
                   value: { url: "https://t.me/", aria-label: "Find me on Telegram", data-icon: ic:baseline-telegram }
                 - label: X
-                  value: { url: "https://x.com/", aria-label: "Find me on X", data-icon: mdi:twitter }
+                  value:
+                    { url: "https://x.com/", aria-label: "Find me on X", data-icon: ant-design:twitter-circle-filled }
                 - label: YouTube
                   value:
                     {
                       url: "https://www.youtube.com/channel/",
                       aria-label: "Find me on YouTube",
-                      data-icon: mdi:youtube,
+                      data-icon: ant-design:youtube-filled,
                     }
                 - label: 豆瓣
                   value:
                     {
                       url: "https://www.douban.com/people/",
                       aria-label: "Find me on douban",
-                      data-icon: simple-icons:douban,
+                      data-icon: ri:douban-line,
                     }
                 - label: 网易云音乐
                   value:
@@ -222,13 +232,18 @@ spec:
                       data-icon: simple-icons:neteasecloudmusic,
                     }
                 - label: 微博
-                  value: { url: "https://weibo.com/", aria-label: "Find me on weibo", data-icon: bi:sina-weibo }
+                  value:
+                    {
+                      url: "https://weibo.com/",
+                      aria-label: "Find me on weibo",
+                      data-icon: ant-design:weibo-circle-filled,
+                    }
                 - label: 知乎
                   value:
                     {
                       url: "https://www.zhihu.com/people/",
                       aria-label: "Find me on zhihu",
-                      data-icon: simple-icons:zhihu,
+                      data-icon: ant-design:zhihu-circle-filled,
                     }
             - $formkit: text
               name: input_value
