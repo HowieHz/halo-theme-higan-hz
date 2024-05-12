@@ -52,7 +52,7 @@
 
 ### 样式修复
 
-...
+1. 修复错误的大纲定位样式 *[guqing/halo-theme-higan#69](https://github.com/guqing/halo-theme-higan/issues/69)*
 
 ### 样式修改
 
