@@ -31,17 +31,17 @@
           </div>
           <span>
             <i
+              id="post-list-pin-icon"
               class="iconify iconify-middle"
               data-icon="typcn:pin-outline"
               th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='left'"
-              style="color: var(--color-link)"
             ></i>
             <a th:href="@{${post.status?.permalink}}" th:text="${post.spec.title}">文章标题替换位</a>
             <i
+              id="post-list-pin-icon"
               class="iconify iconify-middle"
               data-icon="typcn:pin-outline"
               th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='right'"
-              style="color: var(--color-link)"
             ></i>
           </span>
         </li>
@@ -62,20 +62,20 @@
                 class="absolute opacity-0 -inset-x-4 -inset-y-2 z-0 sm:-inset-x-6 sm:rounded-2xl post-card-hover"
               ></div>
               <i
+                id="post-list-pin-icon"
                 class="iconify iconify-middle relative z-10"
                 data-icon="typcn:pin-outline"
                 th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='left'"
-                style="color: var(--color-link)"
               ></i>
               <a th:href="@{${post.status?.permalink}}">
                 <span class="absolute -inset-x-4 -inset-y-2 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
                 <span class="relative z-10" th:text="${post.spec.title}">文章标题替换位</span>
               </a>
               <i
+                id="post-list-pin-icon"
                 class="iconify iconify-middle relative z-10"
                 data-icon="typcn:pin-outline"
                 th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='right'"
-                style="color: var(--color-link)"
               ></i>
             </h2>
             <time
