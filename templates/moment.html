@@ -7,8 +7,7 @@
     <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
       <div class="content post-list">
         <div
-          class="moment-header"
-          style="margin-top: 1.25rem"
+          class="moment-header mt-5"
           th:if="${moment.metadata?.labels?.get('howiehz.top/type')=='github-user-public-event'}"
         >
           <div class="color-fg-muted">
@@ -106,7 +105,7 @@
               </span>
               <span th:data-moment-name="${moment.metadata.name}" th:text="${moment.stats.upvote}"></span>
             </a>
-            <a href="javascript: void(0);" style="margin-left: 5px">
+            <a href="javascript: void(0);" class="ml-1">
               <span class="iconify">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24">
                   <path

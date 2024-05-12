@@ -108,7 +108,7 @@
                     </span>
                     <span th:data-moment-name="${moment.metadata.name}" th:text="${moment.stats.upvote}"></span>
                   </a>
-                  <a @click="setCurrent(name)" style="margin-left: 5px; cursor: pointer">
+                  <a @click="setCurrent(name)" class="cursor-pointer ml-1">
                     <span class="iconify">
                       <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24">
                         <path
@@ -132,7 +132,7 @@
             </li>
           </ul>
         </div>
-        <div class="pagination" style="margin-top: 0">
+        <div class="pagination mt0">
           <a th:href="@{${moments.prevUrl}}" th:if="${moments.hasPrevious()}" aria-label="Previous page">
             <i class="iconify iconify-middle" data-icon="material-symbols:chevron-left"></i>
           </a>
