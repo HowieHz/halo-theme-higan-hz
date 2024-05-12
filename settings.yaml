@@ -173,21 +173,21 @@ spec:
     - group: sns
       label: 社交资料
       formSchema:
-        - $formkit: text
-          name: help
+        - $formkit: code
+          name: guide
           label: 填写指南
-          value: 此项无需填写
-          help: "X, Facebook, Instagram, Dribbble, Github 仅需填入用户名；
-            微博, Telegram, Reddit 仅需填入 ID;
-            bilibili 仅需填入 uid;
-            QQ 仅需填入 QQ 号;
-            邮箱仅需填入邮箱地址;
-            Stack Overflow 仅需填写个人主页网址在 users/ 后的部分;
-            知乎仅需填写个人主页网址在 people/ 后的部分;
-            YouTube 仅需填写频道网址在 channel/ 后的部分;
-            网易云音乐仅需填写个人主页网址在 ?id= 后的部分;
-            豆瓣仅需填写个人主页网址在 people/ 后的部分;
-            "
+          value: " X, Facebook, Instagram, Dribbble, Github 仅需填入用户名；\n
+          微博, Telegram, Reddit 仅需填入 ID；\n
+          bilibili 仅需填入 uid；\n
+          QQ 仅需填入 QQ 号；\n
+          邮箱仅需填入邮箱地址；\n
+          Stack Overflow 仅需填写个人主页网址在 users/ 后的部分；\n
+          知乎仅需填写个人主页网址在 people/ 后的部分；\n
+          YouTube 仅需填写频道网址在 channel/ 后的部分；\n
+          网易云音乐仅需填写个人主页网址在 ?id= 后的部分；\n
+          豆瓣仅需填写个人主页网址在 people/ 后的部分；\n"
+          language: html
+          height: 210px
         - $formkit: repeater
           name: index_sns
           label: 首页社交资料展示
@@ -196,7 +196,8 @@ spec:
             - $formkit: select
               name: type
               label: 类型
-              placeholder: "选择你要展示的社交资料"
+              validation: "required"
+              placeholder: "请选择你要展示的社交资料"
               options:
                 - label: BiliBili
                   value:
