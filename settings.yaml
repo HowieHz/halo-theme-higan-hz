@@ -127,6 +127,21 @@ spec:
     - group: sns
       label: 社交资料
       formSchema:
+        - $formkit: text
+          name: help
+          label: 填写指南
+          value: 此项无需填写
+          help: "X, Facebook, Instagram, Dribbble, Github 仅需填入用户名；
+            微博, Telegram, Reddit 仅需填入 ID;
+            bilibili 仅需填入 uid;
+            QQ 仅需填入 QQ 号;
+            邮箱仅需填入邮箱地址;
+            Stack Overflow 仅需填写个人主页网址在 users/ 后的部分;
+            知乎仅需填写个人主页网址在 people/ 后的部分;
+            YouTube 仅需填写频道网址在 channel/ 后的部分;
+            网易云音乐仅需填写个人主页网址在 ?id= 后的部分;
+            豆瓣仅需填写个人主页网址在 people/ 后的部分;
+            "
         - $formkit: repeater
           name: index_sns
           label: 首页社交资料展示
@@ -137,44 +152,84 @@ spec:
               label: 类型
               placeholder: "选择你要展示的社交资料"
               options:
-                - label: X
-                  help: "只需填入 X 用户名即可"
-                  value: { url: "https://x.com/", aria-label: "Find me on X", data-icon: mdi:twitter }
+                - label: BiliBili
+                  value:
+                    {
+                      url: "https://space.bilibili.com/",
+                      aria-label: "Find me on BiliBili",
+                      data-icon: simple-icons:bilibili,
+                    }
+                - label: Dribbble
+                  value: { url: "https://dribbble.com/", aria-label: "Find me on Dribbble", data-icon: mdi:dribbble }
+                - label: Email
+                  value: { url: "mailto:", aria-label: "Find me on Email", data-icon: ph:envelope-simple-bold }
                 - label: Facebook
-                  help: "只需填入 Facebook 用户名即可"
                   value:
                     {
                       url: "https://www.facebook.com/",
                       aria-label: "Find me on facebook",
                       data-icon: ic:baseline-facebook,
                     }
-                - label: Instagram
-                  help: "只需填入 Instagram 用户名即可"
-                  value:
-                    { url: "https://www.instagram.com/", aria-label: "Find me on instagram", data-icon: mdi:instagram }
-                - label: Dribbble
-                  help: "只需填入 Dribbble 用户名即可"
-                  value: { url: "https://dribbble.com/", aria-label: "Find me on dribbble", data-icon: mdi:dribbble }
-                - label: 微博
-                  help: "只需填入微博 Id 即可"
-                  value: { url: "https://weibo.com/", aria-label: "Find me on weibo", data-icon: bi:sina-weibo }
-                - label: Email
-                  help: "只需填入邮箱地址即可"
-                  value: { url: "mailto:", aria-label: "Find me on email", data-icon: ph:envelope-simple-bold }
                 - label: Github
-                  help: "只需填入 Github 用户名即可"
-                  value: { url: "https://github.com/", aria-label: "Find me on github", data-icon: mdi:github }
+                  value: { url: "https://github.com/", aria-label: "Find me on Github", data-icon: mdi:github }
+                - label: Instagram
+                  value:
+                    { url: "https://www.instagram.com/", aria-label: "Find me on Instagram", data-icon: mdi:instagram }
                 - label: QQ
-                  help: "只需填入 QQ 号即可"
                   value:
                     {
                       url: "tencent://message/?Site=&Menu=yes&uin=",
                       aria-label: "Find me on QQ",
                       data-icon: ant-design:qq-circle-filled,
                     }
+                - label: Reddit
+                  value:
+                    {
+                      url: "https://www.reddit.com/user/",
+                      aria-label: "Find me on Reddit",
+                      data-icon: ic:baseline-reddit,
+                    }
+                - label: "Stack Overflow"
+                  value:
+                    {
+                      url: "https://stackoverflow.com/users/",
+                      aria-label: "Find me on Stack Overflow",
+                      data-icon: mdi:stack-overflow,
+                    }
                 - label: Telegram
-                  help: "只需填入 Telegram Id 即可"
-                  value: { url: "https://t.me/", aria-label: "Find me on telegram", data-icon: ic:baseline-telegram }
+                  value: { url: "https://t.me/", aria-label: "Find me on Telegram", data-icon: ic:baseline-telegram }
+                - label: X
+                  value: { url: "https://x.com/", aria-label: "Find me on X", data-icon: mdi:twitter }
+                - label: YouTube
+                  value:
+                    {
+                      url: "https://www.youtube.com/channel/",
+                      aria-label: "Find me on YouTube",
+                      data-icon: mdi:youtube,
+                    }
+                - label: 豆瓣
+                  value:
+                    {
+                      url: "https://www.douban.com/people/",
+                      aria-label: "Find me on douban",
+                      data-icon: simple-icons:douban,
+                    }
+                - label: 网易云音乐
+                  value:
+                    {
+                      url: "https://music.163.com/#/user/home?id=",
+                      aria-label: "Find me on NetEase CloudMusic",
+                      data-icon: simple-icons:neteasecloudmusic,
+                    }
+                - label: 微博
+                  value: { url: "https://weibo.com/", aria-label: "Find me on weibo", data-icon: bi:sina-weibo }
+                - label: 知乎
+                  value:
+                    {
+                      url: "https://www.zhihu.com/people/",
+                      aria-label: "Find me on zhihu",
+                      data-icon: simple-icons:zhihu,
+                    }
             - $formkit: text
               name: input_value
               label: 值
