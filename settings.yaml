@@ -31,8 +31,18 @@ spec:
               value: "normal"
             - label: "大字体"
               value: "large"
+        - $formkit: radio
+          name: is_max_width_settings
+          label: 自定义内容区域最大宽度
+          value: false
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
         - $formkit: text
           name: max_width
+          if: "$is_max_width_settings===true"
           label: 内容区域最大宽度
           value: 48rem
           placeholder: "默认值: 48rem"
