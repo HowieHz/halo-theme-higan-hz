@@ -79,7 +79,10 @@
 #### 增加于`首页样式`
 
 1. `首页样式`（`样式`）允许同时开启一言和个人简介
-2. 允许用户自由选择是否开关文章列表置顶图标，以及选择图标位置
+2. 允许自由选择是否开关文章列表置顶图标，以及选择图标位置
+3. 允许关闭页面底部主题信息
+4. 允许关闭页面底部版权信息
+5. 允许关闭页面底部菜单
 
 #### 增加于 `RSS`
 
@@ -87,9 +90,9 @@
 
 #### 增加于 `社交资料`
 
-1. 现允许用户设置多个重复的社交平台
-2. 现允许用户设置社交平台的排列顺序
-3. 现在原支持 Dribbble, Email, Facebook, Github, Instagram, QQ, Telegram, X, 微博的基础上
+1. 允许设置多个重复的社交平台
+2. 允许设置社交平台的排列顺序
+3. 在原支持 Dribbble, Email, Facebook, Github, Instagram, QQ, Telegram, X, 微博的基础上
   额外增加对 BiliBili, Reddit, Stack Overflow, YouTube, 豆瓣, 网易云音乐, 知乎的支持
   没有简书和 CSDN(Copy, Steal and pay-Download Net) 的原因是 iconify 找不到它们的图标
 
