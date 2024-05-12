@@ -19,22 +19,28 @@
   <section id="writing" class="flex-auto flex flex-col">
     <h2 class="h1"><a th:href="@{/archives}">近期发布</a></h2>
     <ul class="post-list flex-auto">
-      <th:block th:each="item : ${posts.items}">
+      <th:block th:each="post : ${posts.items}">
         <li class="post-item">
           <div class="meta">
             <time
-              th:datetime="${item.spec.publishTime}"
+              th:datetime="${post.spec.publishTime}"
               itemprop="datePublished"
-              th:text="${#temporals.format(item.spec.publishTime, 'yyyy-MM-dd')}"
+              th:text="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
             >
             </time>
           </div>
           <span>
-            <a th:href="@{${item.status?.permalink}}" th:text="${item.spec.title}">文章标题替换位</a>
             <i
               class="iconify iconify-middle"
               data-icon="typcn:pin-outline"
-              th:if="${item.spec.pinned}"
+              th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='left'"
+              style="color: var(--color-link)"
+            ></i>
+            <a th:href="@{${post.status?.permalink}}" th:text="${post.spec.title}">文章标题替换位</a>
+            <i
+              class="iconify iconify-middle"
+              data-icon="typcn:pin-outline"
+              th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='right'"
               style="color: var(--color-link)"
             ></i>
           </span>
@@ -55,6 +61,12 @@
               <div
                 class="absolute opacity-0 -inset-x-4 -inset-y-2 z-0 sm:-inset-x-6 sm:rounded-2xl post-card-hover"
               ></div>
+              <i
+                class="iconify iconify-middle relative z-10"
+                data-icon="typcn:pin-outline"
+                th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='left'"
+                style="color: var(--color-link)"
+              ></i>
               <a th:href="@{${post.status?.permalink}}">
                 <span class="absolute -inset-x-4 -inset-y-2 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
                 <span class="relative z-10" th:text="${post.spec.title}">文章标题替换位</span>
@@ -62,7 +74,7 @@
               <i
                 class="iconify iconify-middle relative z-10"
                 data-icon="typcn:pin-outline"
-                th:if="${post.spec.pinned}"
+                th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='right'"
                 style="color: var(--color-link)"
               ></i>
             </h2>
