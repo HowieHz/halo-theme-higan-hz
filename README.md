@@ -74,7 +74,7 @@
 #### 增加于`总体样式`
 
 1. `配色方案`（`样式-配色方案`）添加`跟随系统`
-2. 添加 `内容区域最大宽度`, 默认值为`48rem`
+2. 可自定义内容区域最大宽度
 
 #### 增加于`首页样式`
 
@@ -155,7 +155,7 @@ Release版本获取方法:
 - 友链页面（/links），需插件 [plugin-links](https://github.com/halo-sigs/plugin-links)
 - 图库页面（/photos），需插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)
 - 瞬间页面（/moments），需插件 [plugin-moments](https://github.com/halo-sigs/plugin-moments)
-  <!-- - 瞬间页面可用于同步 github 活动， 特殊用法请看 [howiehz/ghu-events-moments](https://github.com/howiehz/ghu-events-moments) -->
+  - 瞬间页面可用于展示 github 活动， 此用法请看 [howiehz/ghu-events-moments](https://github.com/howiehz/ghu-events-moments)
 - 评论功能，需插件 [plugin-comment-widget](https://github.com/halo-sigs/plugin-comment-widget/releases)
 - 搜索功能，需插件 [plugin-search-widget](https://github.com/halo-sigs/plugin-search-widget/releases)
 - 代码渲染，需插件: [plugin-highlightjs](https://github.com/halo-sigs/plugin-highlightjs)
