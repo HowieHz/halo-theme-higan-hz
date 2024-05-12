@@ -23,6 +23,10 @@ body[theme="dark"] {
   --toc-level-3: #b0b0b0;
   --toc-level-4: #636363;
 }
+body[theme="dark"] comment-widget {
+  --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
+  --halo-comment-widget-component-form-input-border-color: #636363 !important;
+}
 body[theme="gray"] {
   --color-background: #e2e0de;
   --color-footer-mobile-1: #666;
@@ -47,6 +51,10 @@ body[theme="gray"] {
   --toc-level-2: #333;
   --toc-level-3: #333;
   --toc-level-4: #555;
+}
+body[theme="gray"] comment-widget {
+  --halo-comment-widget-component-form-input-bg-color: #e2e0de !important;
+  --halo-comment-widget-component-form-input-border-color: #908d8d !important;
 }
 body[theme="light"] {
   --color-background: #fff;
@@ -73,6 +81,9 @@ body[theme="light"] {
   --toc-level-3: #666;
   --toc-level-4: #888;
 }
+body[theme="light"] comment-widget {
+  --halo-comment-widget-component-form-input-bg-color: #fff !important;
+}
 @media (prefers-color-scheme: no-preference) {
   body[theme="auto"] {
     --color-background: #fff;
@@ -98,6 +109,9 @@ body[theme="light"] {
     --toc-level-2: #383838;
     --toc-level-3: #666;
     --toc-level-4: #888;
+  }
+  body[theme="auto"] comment-widget {
+    --halo-comment-widget-component-form-input-bg-color: #fff !important;
   }
 }
 @media (prefers-color-scheme: light) {
@@ -126,6 +140,9 @@ body[theme="light"] {
     --toc-level-3: #666;
     --toc-level-4: #888;
   }
+  body[theme="auto"] comment-widget {
+    --halo-comment-widget-component-form-input-bg-color: #fff !important;
+  }
 }
 @media (prefers-color-scheme: dark) {
   body[theme="auto"] {
@@ -152,5 +169,9 @@ body[theme="light"] {
     --toc-level-2: #e3e3e3;
     --toc-level-3: #b0b0b0;
     --toc-level-4: #636363;
+  }
+  body[theme="auto"] comment-widget {
+    --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
+    --halo-comment-widget-component-form-input-border-color: #636363 !important;
   }
 }
