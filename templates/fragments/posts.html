@@ -17,7 +17,14 @@
 
 <th:block th:fragment="simple-post-list(posts)">
   <section id="writing" class="flex-auto flex flex-col">
-    <h2 class="h1"><a th:href="@{/archives}">近期发布</a></h2>
+    <h2 class="h1">
+      <a
+        th:href="@{/archives}"
+        th:if="${theme.config?.index_styles?.index_post_list_title} != ''"
+        th:text="${theme.config?.index_styles?.index_post_list_title}"
+        >首页文章列表标题替换位</a
+      >
+    </h2>
     <ul class="post-list flex-auto">
       <th:block th:each="post : ${posts.items}">
         <li class="post-item">
@@ -88,8 +95,12 @@
               <th:block th:text="${#temporals.format(post.spec.publishTime, 'MMMM dd yyyy')}"></th:block>
             </time>
             <p class="p-0 mb-0 relative z-10 mt-2 text-sm color-accent-3" th:text="${post.status?.excerpt}"></p>
-            <div aria-hidden="true" class="relative z-10 mt-4 flex items-center text-sm font-medium color-accent-1">
-              阅读全文
+            <div
+              class="relative z-10 mt-4 flex items-center text-sm font-medium color-accent-1"
+              th:if="${theme.config?.index_styles?.index_post_list_permalink_text} != ''"
+              th:text="${theme.config?.index_styles?.index_post_list_permalink_text}"
+            >
+              跳转文章链接所用提示文字替换位
             </div>
           </div>
           <time
