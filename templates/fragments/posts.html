@@ -96,6 +96,7 @@
             </time>
             <p class="p-0 mb-0 relative z-10 mt-2 text-sm color-accent-3" th:text="${post.status?.excerpt}"></p>
             <div
+              aria-hidden="true"
               class="relative z-10 mt-4 flex items-center text-sm font-medium color-accent-1"
               th:if="${theme.config?.index_styles?.index_post_list_permalink_text} != ''"
               th:text="${theme.config?.index_styles?.index_post_list_permalink_text}"
