@@ -118,7 +118,7 @@ spec:
               value: false
         - $formkit: code
           name: resume
-          if: "$is_resume_show===true"
+          if: "$is_resume_show === true"
           label: 个人简介/公告栏内容（支持 html 代码块）
           language: html
           height: 150px
@@ -144,7 +144,7 @@ spec:
               value: "post-list-summary"
         - $formkit: text
           name: index_post_list_permalink_text
-          if: "$post_list_layout===true"
+          if: "$post_list_layout === 'post-list-summary'"
           label: "跳转文章链接所用提示文字"
           help: "默认：阅读全文；\n原主题默认：Read article"
           value: "阅读全文"
