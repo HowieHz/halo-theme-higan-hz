@@ -48,12 +48,7 @@
         post formatted content
       </div>
       <hr class="divide my-10" />
-      <halo:comment
-        group="content.halo.run"
-        kind="Post"
-        th:name="${post.metadata?.name}"
-        colorScheme="commentColorScheme"
-      />
+      <halo:comment group="content.halo.run" kind="Post" th:name="${post.metadata?.name}" />
     </article>
     <div th:insert="~{fragments/footer-nav :: footerNav}"></div>
 
