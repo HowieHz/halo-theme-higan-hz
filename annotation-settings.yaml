@@ -10,3 +10,17 @@ spec:
     - $formkit: attachment
       name: "higan.howiehz.top/author-header-image"
       label: 作者页头图
+
+---
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: howiehz-higan-post-annotation-setting
+spec:
+  targetRef:
+    group: content.halo.run
+    kind: Post
+  formSchema:
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-title"
+      label: "页面标题"
