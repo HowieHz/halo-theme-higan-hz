@@ -11,7 +11,7 @@
             <li th:each="moment : ${moments.items}" class="moment-item" th:id="${moment.metadata.name}">
               <div
                 class="moment-header"
-                th:if="${moment.metadata?.labels?.get('howiehz.top/type')=='github-user-public-event'}"
+                th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event' or moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"
               >
                 <div class="color-fg-muted">
                   <span>
@@ -33,14 +33,21 @@
                   </span>
                   <span
                     class="no-underline color-fg-muted"
-                    th:utext="${moment.metadata?.annotations?.get('howiehz.top/customize-title')}"
+                    th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event'}"
+                    th:utext="${moment.metadata?.annotations?.get('higan.howiehz.top/customize-title')}"
+                  >
+                  </span>
+                  <span
+                    class="no-underline color-fg-muted"
+                    th:if="${moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"
+                    th:utext="${moment.metadata?.annotations?.get('guqing.github.io/customize-title')}"
                   >
                   </span>
                 </div>
               </div>
               <div
                 class="moment-header"
-                th:unless="${moment.metadata?.labels?.get('howiehz.top/type')=='github-user-public-event'}"
+                th:unless="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event' or moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"
               >
                 <div class="color-fg-muted">
                   <span>
