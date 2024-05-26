@@ -53,7 +53,7 @@
 
 ### 样式修复
 
-1. 修复错误的大纲定位样式 *[guqing/halo-theme-higan#69](https://github.com/guqing/halo-theme-higan/issues/69)*
+...
 
 ### 样式修改
 
@@ -131,6 +131,7 @@
 3. 页面底部的版权信息进行了分行避免在小屏上排版错乱 *[guqing/halo-theme-higan#87](https://github.com/guqing/halo-theme-higan/issues/87)[#108](https://github.com/guqing/halo-theme-higan/pull/108)*
 4. 补充了部分缺失的 `aria-label` 属性 *[guqing/halo-theme-higan#83](https://github.com/guqing/halo-theme-higan/issues/83)[#110](https://github.com/guqing/halo-theme-higan/pull/110)*
 5. 修复行内代码渲染问题 *[guqing/halo-theme-higan#85](https://github.com/guqing/halo-theme-higan/issues/85)[#109](https://github.com/guqing/halo-theme-higan/pull/109)*
+6. 修复错误的大纲定位样式 *[guqing/halo-theme-higan#69](https://github.com/guqing/halo-theme-higan/issues/69)[#112](https://github.com/guqing/halo-theme-higan/pull/112)*
 
 ## 原项目说明
 
