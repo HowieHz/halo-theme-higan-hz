@@ -1005,6 +1005,7 @@ body {
   padding: 0;
   list-style-type: none;
   line-height: 0.9375rem;
+  display: flex;
 }
 
 #header #nav ul a {
@@ -1875,6 +1876,7 @@ article .content .caption {
   padding: 0;
   list-style: none;
   line-height: 1.25rem;
+  display: flex;
 }
 
 #footer li {
