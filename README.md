@@ -53,7 +53,7 @@
 
 ### 样式修复
 
-...
+1. 移除导航栏文字前出现的空白 *[guqing/halo-theme-higan#113](https://github.com/guqing/halo-theme-higan/issues/113)*
 
 ### 样式修改
 
