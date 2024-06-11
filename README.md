@@ -45,6 +45,7 @@
       - [格式化代码](#格式化代码)
       - [构建主题](#构建主题)
   - [版本适用说明](#版本适用说明)
+  - [TODO](#todo)
   - [Lighthouse](#lighthouse)
   - [项目状态](#项目状态)
   - [Star History](#star-history)
@@ -250,6 +251,11 @@ pnpm release
 当前 main 分支适用于 Halo 2.0 版本
 
 适用于 Halo 1.x 版本的主题位于分支 [halo-theme-higan 1.x](https://github.com/HowieHz/halo-theme-higan-hz/tree/1.x)
+
+## TODO
+
+见 [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues)  
+注：社区意愿较大的 Issue 会列为优先项
 
 ## Lighthouse
 
