@@ -227,7 +227,7 @@ pnpm lint
 提交前请运行以下的指令的指令格式化代码
 
 ```bash
-pnpm prettier
+pnpm format
 ```
 
 #### 构建主题

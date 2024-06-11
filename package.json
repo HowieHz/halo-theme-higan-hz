@@ -1,10 +1,16 @@
 {
   "scripts": {
-    "dev": "vite build --watch",
-    "dev-stylus": "stylus ./src/assets/colors-post/ --out ./src/assets/colors/ --watch",
-    "build": "stylus ./src/assets/colors-post/ --out ./src/assets/colors/ && tsc && vite build",
+    "dev": "pnpm run \"/^watch:.*/\"",
+    "watch:vite": "vite build --watch",
+    "watch:stylus": "stylus ./src/assets/colors/theme.styl --out ./tmp/styles/ --watch",
+    "neo-watch:stylus": "stylus ./src/assets/colors/theme.styl ./src/styles/main.styl --out ./tmp/styles/ --watch",
+    "neo-watch:post-css": "postcss ./src/assets/tailwind.css -o ./tmp/styles/tailwind.css --watch",
+    "neo-build": "set NODE_ENV=777 && postcss ./src/assets/tailwind.css -o ./tmp/styles/tailwind.css && stylus ./src/assets/colors/theme.styl ./src/styles/main.styl --out ./tmp/styles/ --compress && tsc && vite build",
+    "build": "set NODE_ENV=777 && stylus ./src/assets/colors/theme.styl --out ./tmp/styles/ --compress && tsc && vite build",
     "lint": "eslint ./src --ext .js,.cjs,.mjs,.ts,.cts,.mts --ignore-path .gitignore",
-    "prettier": "prettier --write \"./src/**/*.{js,ts,css,json,ml,yaml,html}\" \"./templates/**/*.html\""
+    "neo-format": "prettier --write \"./src/**/*.{js,ts,css,json,ml,yaml,html}\" \"./templates/**/*.html\" && stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
+    "format": "prettier --write \"./src/**/*.{js,ts,css,json,ml,yaml,html}\" \"./templates/**/*.html\"",
+    "prepare": "husky"
   },
   "keywords": [
     "halo",
@@ -41,8 +47,10 @@
     "eslint": "^8.24.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^9.0.11",
     "prettier": "^2.7.1",
     "stylus": "^0.63.0",
+    "stylus-supremacy": "^2.17.5",
     "typescript": "^4.6.4",
     "unplugin-fonts": "^1.0.3",
     "vite": "^3.1.8",
