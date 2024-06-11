@@ -115,7 +115,10 @@
 
 #### 调整于`总体样式`
 
-1. `配色方案`（`样式-配色方案`）对应的配置名修改: `暗黑` -> `暗色`, `白色` -> `亮色`, `亮色` -> `灰粉`
+1. `配色方案`（`样式-配色方案`）对应的配置名修改:
+   - `暗黑` -> `暗色`
+   - `白色` -> `亮色`
+   - `亮色` -> `灰粉`
 
 #### 调整于`首页样式`
 
@@ -123,9 +126,9 @@
 
 ### 杂项
 
-1. 修改html标签lang属性值，`lang='en'` 改为 `lang='zh'`
+1. 修改html标签lang属性值，`lang='en'` -> `lang='zh'`
 2. 重构样式切换方式 (原来是 `body` 标签的 `class` 决定样式，现在是 `body` 标签的 `theme` 属性的值决定样式)
-3. 修改原项目内各种链接指向 `fork` 后的项目链接，并修改元数据避免与原主题冲突
+3. 修改项目内各种链接指向 `fork` 后的项目链接，并修改元数据避免与原主题冲突
 
 #### 杂项于`总体样式`
 
@@ -133,12 +136,16 @@
 
 ## 已合并至上游的内容/上游也已修复的内容
 
+<details><summary>点我展开详情</summary>
+
 1. 关闭未关闭的 `label`，使得 `prettier` 能正常格式化文件 *[guqing/halo-theme-higan#92](https://github.com/guqing/halo-theme-higan/pull/92)*
 2. 修复原项目不可用的格式化脚本 (`package.json` 内的 `npm` 脚本) *[guqing/halo-theme-higan#91](https://github.com/guqing/halo-theme-higan/pull/91)*
 3. 页面底部的版权信息进行了分行避免在小屏上排版错乱 *[guqing/halo-theme-higan#87](https://github.com/guqing/halo-theme-higan/issues/87)[#108](https://github.com/guqing/halo-theme-higan/pull/108)*
 4. 补充了部分缺失的 `aria-label` 属性 *[guqing/halo-theme-higan#83](https://github.com/guqing/halo-theme-higan/issues/83)[#110](https://github.com/guqing/halo-theme-higan/pull/110)*
 5. 修复行内代码渲染问题 *[guqing/halo-theme-higan#85](https://github.com/guqing/halo-theme-higan/issues/85)[#109](https://github.com/guqing/halo-theme-higan/pull/109)*
 6. 修复错误的大纲定位样式 *[guqing/halo-theme-higan#69](https://github.com/guqing/halo-theme-higan/issues/69)[#112](https://github.com/guqing/halo-theme-higan/pull/112)*
+
+</details>
 
 ## 原项目说明
 
