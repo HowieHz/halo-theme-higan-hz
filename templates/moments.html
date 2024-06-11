@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(title = ${title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
@@ -136,7 +136,7 @@
         </div>
         <div class="pagination mt0">
           <a th:href="@{${moments.prevUrl}}" th:if="${moments.hasPrevious()}" aria-label="Previous page">
-            <i class="iconify iconify-middle" data-icon="material-symbols:chevron-left"></i>
+            <i class="iconify iconify-middle material-symbols:chevron-left"></i>
           </a>
           <span
             class="page-number"
@@ -145,7 +145,7 @@
             >Page 1 of 1</span
           >
           <a th:href="@{${moments.nextUrl}}" th:if="${moments.hasNext()}" aria-label="Next Page">
-            <i class="iconify iconify-middle" data-icon="material-symbols:chevron-right"></i>
+            <i class="iconify iconify-middle material-symbols:chevron-right"></i>
           </a>
         </div>
       </div>
@@ -181,7 +181,7 @@
               group: "moment.halo.run",
               plural: "moments",
               name: momentName,
-            })
+            }),
           );
         }
         function activeUpvote(momentName) {

@@ -1,10 +1,10 @@
 import "unfonts.css";
+import "virtual:uno.css";
 import "./assets/main.js";
-import "./styles/main.css";
-import "../tmp/styles/tailwind.css";
+// import "./assets/tailwind.css";
 import "../tmp/styles/theme.css";
-import "@purge-icons/generated";
 import "github-syntax-light/lib/github-light.css";
+import "./styles/main.css";
 export * from "./create-toc";
 import Alpine from "alpinejs";
 import momentComment from "./alpine-data/moment-comment";
