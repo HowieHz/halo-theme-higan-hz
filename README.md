@@ -45,6 +45,7 @@
       - [格式化代码](#格式化代码)
       - [构建主题](#构建主题)
   - [版本适用说明](#版本适用说明)
+  - [TODO](#todo)
   - [Lighthouse](#lighthouse)
   - [项目状态](#项目状态)
   - [Star History](#star-history)
@@ -64,14 +65,18 @@
 
 ### 配置项修改
 
-将选项分类到多栏目下，而不是集中在一个`样式`栏下
-现分类为`总体样式`，`首页样式`，`文章页样式`，`RSS`，`社交资料`（请以实际为准）
-说明：`现主题设置项位置`（`原主题设置项位置`）-> 小括号内的为`现主题设置项位置`对应的`原主题设置项位置`
+为方便查找，本主题将选项分类到多栏目下，而不是像原主题集中在一个`样式`栏下。  
+现分类为`总体样式`，`首页样式`，`文章页样式`，`RSS`，`社交资料`。  
+
+解释：`现主题设置项位置`（`原主题设置项位置`）-> 小括号内的为`现主题设置项位置`对应的`原主题设置项位置`。
+例：在[`增加于总体样式`](#增加于总体样式)有提到 `配色方案`（`样式-配色方案`），含义为`总体样式-配色方案`对应原主题`样式-配色方案`选项。
 
 #### 增加于`总体样式`
 
 1. `配色方案`（`样式-配色方案`）添加`跟随系统`
-2. 可自定义内容区域最大宽度（默认为 48rem。允许全部CSS长度单位, 如: 48rem, 780px, 70vw, 70%）（原主题虽然更新后适配了宽屏，但是在我 2560px 宽的屏幕上，适配后会导致整体内容偏左，非常的不美观。远不如原主题先前限制内容宽度 48rem 来的美观（或者自己设置个 70% 也不错）。所以这项我设置为默认启用。如想体验原主题的最大宽度*自适应*，只需要去设置关闭`总体样式-自定义内容区域最大宽度`这一项就可以了）
+2. 可自定义内容区域最大宽度  
+   （默认为 48rem。允许全部CSS长度单位, 如: 48rem, 780px, 70vw, 70%）  
+   （原主题虽然更新后适配了宽屏，但是在我 2560px 宽的屏幕上，适配后会导致整体内容偏左，非常的不美观。远不如原主题先前限制内容宽度 48rem 来的美观。所以这项我设置为默认启用。如想体验原主题的最大宽度*自适应*，只需要去设置关闭`总体样式-自定义内容区域最大宽度`这一项就可以了）
 
 #### 增加于`首页样式`
 
@@ -95,9 +100,9 @@
 
 1. 允许设置多个重复的社交平台
 2. 允许设置社交平台的排列顺序
-3. 在原支持 Dribbble, Email, Facebook, Github, Instagram, QQ, Telegram, X, 微博的基础上
-  额外增加对 BiliBili, Reddit, Stack Overflow, YouTube, 豆瓣, 网易云音乐, 知乎的支持
-  没有简书和 CSDN(Copy, Steal and pay-Download Net) 的原因是 iconify 找不到它们的图标
+3. 在原支持 Dribbble, Email, Facebook, Github, Instagram, QQ, Telegram, X, 微博的基础上  
+  额外增加对 BiliBili, Reddit, Stack Overflow, YouTube, 豆瓣, 网易云音乐, 知乎的支持  
+  注：没有简书和 CSDN(Copy, Steal and pay-Download Net) 的原因是平台过于小众，甚至 iconify 找不到它们的图标
 
 #### 增加于`文章`元数据
 
@@ -110,7 +115,10 @@
 
 #### 调整于`总体样式`
 
-1. `配色方案`（`样式-配色方案`）对应的配置名修改: `暗黑` -> `暗色`, `白色` -> `亮色`, `亮色` -> `灰粉`
+1. `配色方案`（`样式-配色方案`）对应的配置名修改:
+   - `暗黑` -> `暗色`
+   - `白色` -> `亮色`
+   - `亮色` -> `灰粉`
 
 #### 调整于`首页样式`
 
@@ -118,9 +126,9 @@
 
 ### 杂项
 
-1. 修改html标签lang属性值，`lang='en'` 改为 `lang='zh'`
+1. 修改html标签lang属性值，`lang='en'` -> `lang='zh'`
 2. 重构样式切换方式 (原来是 `body` 标签的 `class` 决定样式，现在是 `body` 标签的 `theme` 属性的值决定样式)
-3. 修改原项目内各种链接指向 `fork` 后的项目链接，并修改元数据避免与原主题冲突
+3. 修改项目内各种链接指向 `fork` 后的项目链接，并修改元数据避免与原主题冲突
 
 #### 杂项于`总体样式`
 
@@ -128,12 +136,16 @@
 
 ## 已合并至上游的内容/上游也已修复的内容
 
+<details><summary>点我展开详情</summary>
+
 1. 关闭未关闭的 `label`，使得 `prettier` 能正常格式化文件 *[guqing/halo-theme-higan#92](https://github.com/guqing/halo-theme-higan/pull/92)*
 2. 修复原项目不可用的格式化脚本 (`package.json` 内的 `npm` 脚本) *[guqing/halo-theme-higan#91](https://github.com/guqing/halo-theme-higan/pull/91)*
 3. 页面底部的版权信息进行了分行避免在小屏上排版错乱 *[guqing/halo-theme-higan#87](https://github.com/guqing/halo-theme-higan/issues/87)[#108](https://github.com/guqing/halo-theme-higan/pull/108)*
 4. 补充了部分缺失的 `aria-label` 属性 *[guqing/halo-theme-higan#83](https://github.com/guqing/halo-theme-higan/issues/83)[#110](https://github.com/guqing/halo-theme-higan/pull/110)*
 5. 修复行内代码渲染问题 *[guqing/halo-theme-higan#85](https://github.com/guqing/halo-theme-higan/issues/85)[#109](https://github.com/guqing/halo-theme-higan/pull/109)*
 6. 修复错误的大纲定位样式 *[guqing/halo-theme-higan#69](https://github.com/guqing/halo-theme-higan/issues/69)[#112](https://github.com/guqing/halo-theme-higan/pull/112)*
+
+</details>
 
 ## 原项目说明
 
@@ -250,6 +262,11 @@ pnpm release
 当前 main 分支适用于 Halo 2.0 版本
 
 适用于 Halo 1.x 版本的主题位于分支 [halo-theme-higan 1.x](https://github.com/HowieHz/halo-theme-higan-hz/tree/1.x)
+
+## TODO
+
+见 [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues)  
+注：社区意愿较大的 Issue 会列为优先项
 
 ## Lighthouse
 
