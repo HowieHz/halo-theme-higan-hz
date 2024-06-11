@@ -98,6 +98,11 @@ spec:
     - group: index_styles
       label: 首页样式
       formSchema:
+        - $formkit: text
+          name: page_html_title
+          label: "主页 HTML 标题"
+          help: "如置空则取值自“Halo设置-基本设置-站点标题”"
+          value: ""
         - $formkit: radio
           name: hitokoto
           label: 一言 (hitokoto)
