@@ -1,5 +1,5 @@
 import "unfonts.css";
-import "./tmp/styles/theme.css";
+import "../tmp/styles/theme.css";
 import "./assets/main.js";
 import "./styles/main.css";
 import "@purge-icons/generated";
