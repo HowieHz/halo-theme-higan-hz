@@ -1,7 +1,7 @@
-import UnoCSS from "unocss/vite";
 import { defineConfig } from "vite";
 import { fileURLToPath } from "url";
 import path from "path";
+import UnoCSS from "unocss/vite";
 // vite.config.js
 import Unfonts from "unplugin-fonts/vite";
 
