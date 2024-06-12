@@ -1,7 +1,7 @@
 <th:block th:fragment="menu(showIcon)">
   <ul>
     <li class="icon" th:if="${showIcon}">
-      <a href="#"><i class="iconify iconify-huge material-symbols:menu"></i></a>
+      <a href="#"><i class="iconify iconify-huge i-material-symbols:menu"></i></a>
     </li>
     <li th:each="menuItem : ${menuFinder.getPrimary().menuItems}">
       <a
@@ -25,7 +25,7 @@
         aria-label="Share post to facebook"
         th:href="'http://www.facebook.com/sharer.php?u=' + ${permalink} + '&amp;title=' + ${permalink}"
       >
-        <i class="iconify ic:baseline-facebook"></i
+        <i class="iconify i-ic:baseline-facebook"></i
       ></a>
     </li>
     <li>
@@ -34,7 +34,7 @@
         aria-label="Share post to x"
         th:href="'https://x.com/share?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
-        <i class="iconify mdi:twitter-circle"></i
+        <i class="iconify i-mdi:twitter-circle"></i
       ></a>
     </li>
     <li>
@@ -43,7 +43,7 @@
         aria-label="Share post to linkedin"
         th:href="'http://www.linkedin.com/shareArticle?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
-        <i class="iconify mdi:linkedin"></i
+        <i class="iconify i-mdi:linkedin"></i
       ></a>
     </li>
     <li>
@@ -52,7 +52,7 @@
         aria-label="Share post to pinterest"
         th:href="'https://pinterest.com/pin/create/bookmarklet/?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
-        <i class="iconify mdi:pinterest"></i
+        <i class="iconify i-mdi:pinterest"></i
       ></a>
     </li>
     <li>
@@ -61,7 +61,7 @@
         aria-label="Share post to qzone"
         th:href="'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
-        <i class="iconify cib:qzone"></i
+        <i class="iconify i-cib:qzone"></i
       ></a>
     </li>
     <li>
@@ -70,7 +70,7 @@
         aria-label="Share post with email"
         th:href="'mailto:?subject=' + ${title} + '&amp;body=Check out this article: ' + ${permalink}"
       >
-        <i class="iconify ph:envelope-simple-bold"></i
+        <i class="iconify i-ph:envelope-simple-bold"></i
       ></a>
     </li>
   </ul>

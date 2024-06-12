@@ -1,11 +1,11 @@
 <th:block xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
   <div id="header-post">
     <a id="menu-icon" href="#" aria-label="Expand more menus">
-      <i class="iconify iconify-middle material-symbols:menu"></i>
+      <i class="iconify iconify-middle i-material-symbols:menu"></i>
     </a>
-    <a id="menu-icon-tablet" href="#"><i class="iconify iconify-middle material-symbols:menu"></i></a>
+    <a id="menu-icon-tablet" href="#"><i class="iconify iconify-middle i-material-symbols:menu"></i></a>
     <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display: none"
-      ><i class="iconify iconify-middle material-symbols:keyboard-arrow-up"></i
+      ><i class="iconify iconify-middle i-material-symbols:keyboard-arrow-up"></i
     ></a>
     <span id="menu">
       <span id="nav">
@@ -23,7 +23,7 @@
               onmouseover="$('#i-home').toggle();"
               onmouseout="$('#i-home').toggle();"
             >
-              <i class="iconify iconify-large mdi:home-circle"></i>
+              <i class="iconify iconify-large i-mdi:home-circle"></i>
             </a>
           </li>
           <li th:if="${postCursor.hasPrevious()}">
@@ -33,7 +33,7 @@
               th:href="@{${postCursor.previous?.status?.permalink}}"
             >
               <i
-                class="iconify iconify-large mdi:chevron-left"
+                class="iconify iconify-large i-mdi:chevron-left"
                 onmouseover="$('#i-prev').toggle();"
                 onmouseout="$('#i-prev').toggle();"
               ></i>
@@ -43,7 +43,7 @@
           <li th:if="${postCursor.hasNext()}">
             <a class="icon" aria-label="Navigate to the next post" th:href="@{${postCursor.next?.status?.permalink}}">
               <i
-                class="iconify iconify-large ic:round-chevron-right"
+                class="iconify iconify-large i-ic:round-chevron-right"
                 onmouseover="$('#i-next').toggle();"
                 onmouseout="$('#i-next').toggle();"
               ></i>
@@ -58,7 +58,7 @@
               aria-label="Back to top"
             >
               <i
-                class="iconify iconify-large material-symbols:keyboard-arrow-up"
+                class="iconify iconify-large i-material-symbols:keyboard-arrow-up"
                 onmouseover="$('#i-top').toggle();"
                 onmouseout="$('#i-top').toggle();"
               ></i>
@@ -67,7 +67,7 @@
           <li>
             <a class="icon" href="#" aria-label="Share post to social media">
               <i
-                class="iconify iconify-middle mdi:share-variant-outline"
+                class="iconify iconify-middle i-mdi:share-variant-outline"
                 onmouseover="$('#i-share').toggle();"
                 onmouseout="$('#i-share').toggle();"
                 onclick="$('#share').toggle();return false;"
