@@ -40,10 +40,10 @@
         max-width: /*[(${theme.config?.styles?.max_width})]*/ 48rem;
       }
     </style>
-    <div class="max-width mx-auto px3 ltr">
+    <div class="max-width mx-auto px-8 ltr">
       <th:block th:replace="${navbar}" />
 
-      <div class="mh-full content index py4">
+      <div class="min-h-screen content index pt-16">
         <th:block th:replace="${header}" />
 
         <th:block th:replace="${content}" />
