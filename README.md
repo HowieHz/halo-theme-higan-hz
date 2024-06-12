@@ -56,6 +56,7 @@
 ### 样式修复
 
 1. 移除导航栏文字前出现的空白 _[guqing/halo-theme-higan#113](https://github.com/guqing/halo-theme-higan/issues/113)_
+2. 使用 `PostCSS` + `Tailwind CSS` + `daisyUI` 重构，修复上游标注在标签的 class 内但没有正常引入的样式，以及没有正常工作的样式。
 
 ### 样式修改
 
@@ -130,6 +131,7 @@
 1. 修改 html 标签 lang 属性值，`lang='en'` -> `lang='zh'`
 2. 重构样式切换方式 (原来是 `body` 标签的 `class` 决定样式，现在是 `body` 标签的 `theme` 属性的值决定样式)
 3. 修改项目内各种链接指向 `fork` 后的项目链接，并修改元数据避免与原主题冲突
+4. 清除无用样式，减小最终文件体积
 
 #### 杂项于`总体样式`
 
