@@ -1813,45 +1813,7 @@ article .content .caption {
   color: var(--color-accent-3);
 }
 
-/* 和 tailwind 不同 */
-.text-base {
-  font-size: 1rem;
-  line-height: 1.75rem;
-}
-
-/* 和 tailwind 不同 */
-.text-sm {
-  font-size: 0.875rem;
-}
-
-.text-sm,
-.text-xs {
-  line-height: 1.5rem;
-}
-
-@media (max-width: 768px) {
-  .md\:grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 768px) {
-  .md\:col-span-3 {
-    grid-column: span 3 / span 3;
-  }
-}
-
 /* 作者页面样式结束 */
-/* 和 tailwind 不同 */
-.no-underline {
-  text-decoration: none !important;
-}
-.wb-break-all {
-  word-break: break-all !important;
-}
-.d-inline-block {
-  display: inline-block !important;
-}
 .highlight {
   overflow-x: auto;
   margin: 0;

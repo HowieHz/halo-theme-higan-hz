@@ -18,7 +18,7 @@
                     <a
                       th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
                       th:href="@{${authorPage}}"
-                      class="d-inline-block"
+                      class="inline-block"
                     >
                       <img
                         class="avatar avatar-user"
@@ -54,7 +54,7 @@
                     <a
                       th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
                       th:href="@{${authorPage}}"
-                      class="d-inline-block"
+                      class="inline-block"
                     >
                       <img
                         class="avatar avatar-user"
@@ -68,7 +68,7 @@
                     </a>
                   </span>
                   <a
-                    class="no-underline wb-break-all d-inline-block"
+                    class="no-underline break-all inline-block"
                     th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
                     th:href="@{${authorPage}}"
                     th:text="${moment.owner?.displayName}"

@@ -1,1 +1,13 @@
 @tailwind utilities;
+
+@layer utilities {
+  .no-underline {
+    text-decoration: none !important;
+  }
+  .break-all {
+    word-break: break-all !important;
+  }
+  .inline-block {
+    display: inline-block !important;
+  }
+}
