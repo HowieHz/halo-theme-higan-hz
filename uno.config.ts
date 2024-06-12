@@ -5,10 +5,7 @@ import presetIcons from "@unocss/preset-icons";
 
 export default defineConfig({
   content: {
-    filesystem: ["/src/**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}", "/templates/**/*.html", "/templates/*.html"],
-    pipeline: {
-      include: ["/src/**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}", "/templates/**/*.html", "/templates/*.html"],
-    },
+    filesystem: ["./src/**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}", "./templates/**/*.html"]
   },
   presets: [presetIcons({})],
   cli: {
@@ -16,8 +13,5 @@ export default defineConfig({
       patterns: ["./src/**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}", "./templates/**/*.html", "./templates/*.html"],
       outFile: './tmp/styles/uno.css'
     }
-  },
-  safelist: [
-    "i-heroicons-outline:rss", "i-heroicons-outline", "heroicons-outline", "i-heroicons-outline-rss", "heroicons-outline-rss", "heroicons-outline:rss"
-  ]
+  }
 });
