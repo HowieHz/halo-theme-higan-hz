@@ -1,6 +1,6 @@
 import "unfonts.css";
 import "./assets/main.js";
-import "./assets/tailwind.css";
+import "./styles/tailwind.css";
 import "../tmp/styles/theme.css";
 import "./styles/main.css";
 import "@purge-icons/generated";
