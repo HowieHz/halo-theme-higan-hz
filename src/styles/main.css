@@ -2,34 +2,9 @@
 @import "./mixins/scrollbar.css";
 @import "./mixins/iconify.css";
 @import "./mixins/font-family.css";
+@import "./mixins/color-scheme.css";
 
-body[data-color-scheme="light"] {
-  color-scheme: only light;
-}
-
-body[data-color-scheme="dark"] {
-  color-scheme: only dark;
-}
-
-@media (prefers-color-scheme: no-preference) {
-  [data-color-scheme="auto"] {
-    color-scheme: normal;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  [data-color-scheme="auto"] {
-    color-scheme: only light;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  [data-color-scheme="auto"] {
-    color-scheme: only dark;
-  }
-}
-
-/*初始化样式*/
+/* 初始化样式 */
 .aspect-w-1 > * {
   position: absolute;
   height: 100%;

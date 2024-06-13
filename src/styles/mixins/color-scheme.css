@@ -1,0 +1,26 @@
+/* 设定 color-scheme */
+body[data-color-scheme="light"] {
+  color-scheme: only light;
+}
+
+body[data-color-scheme="dark"] {
+  color-scheme: only dark;
+}
+
+@media (prefers-color-scheme: no-preference) {
+  [data-color-scheme="auto"] {
+    color-scheme: normal;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  [data-color-scheme="auto"] {
+    color-scheme: only light;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-color-scheme="auto"] {
+    color-scheme: only dark;
+  }
+}
