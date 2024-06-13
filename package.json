@@ -2,10 +2,10 @@
   "scripts": {
     "dev": "pnpm run \"/^watch:.*/\"",
     "watch:vite": "vite build --watch",
-    "watch:stylus": "stylus ./src/assets/colors/theme.styl --out ./tmp/styles/ --watch",
+    "watch:stylus": "stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --watch",
     "watch:post-css": "postcss ./src/assets/tailwind.css -o ./tmp/styles/tailwind.css --watch",
-    "dev-build": "postcss ./src/assets/tailwind.css -o ./tmp/styles/tailwind.css && stylus ./src/assets/colors/theme.styl --out ./tmp/styles/ && tsc && vite build",
-    "build": "set NODE_ENV=777 && stylus ./src/assets/colors/theme.styl --out ./tmp/styles/ --compress && tsc && vite build",
+    "dev-build": "postcss ./src/assets/tailwind.css -o ./tmp/styles/tailwind.css && stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ && tsc && vite build",
+    "build": "set NODE_ENV=777 && stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --compress && tsc && vite build",
     "lint": "eslint ./src --ext .js,.cjs,.mjs,.ts,.cts,.mts --ignore-path .gitignore",
     "neo-format": "prettier --write \"./src/**/*.{js,ts,css,json,ml,yaml,html}\" \"./templates/**/*.html\" && stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
     "format": "prettier --write \"*.{js,ts,json,yaml,md,cjs}\" \"./src/**/*.{js,ts,css,json,ml,yaml,html}\" \"./templates/**/*.html\"",
