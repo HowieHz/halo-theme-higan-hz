@@ -18,7 +18,7 @@
 - [halo-theme-higan-hz](#halo-theme-higan-hz)
   - [说明](#说明)
     - [目录](#目录)
-  - [相较于原始主题的修改](#相较于原始主题的修改)
+  - [相较于原始主题 最新开发版 的修改](#相较于原始主题-最新开发版-的修改)
     - [样式修复](#样式修复)
     - [样式修改](#样式修改)
     - [配置项修改](#配置项修改)
@@ -52,7 +52,10 @@
   - [项目状态](#项目状态)
   - [Star History](#star-history)
 
-## 相较于原始主题的修改
+## 相较于原始主题 最新开发版 的修改
+
+原主题最新版本为：[v2.8.0](https://github.com/guqing/halo-theme-higan/releases/tag/v2.8.0)
+而本主题修改基于最新开发版：[上游提交日志](https://github.com/guqing/halo-theme-higan/commits/main/)
 
 ### 样式修复
 
