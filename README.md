@@ -11,6 +11,8 @@
 
 > 更激进的修改，更高的配置自由度！
 
+![preview](./screenshots/preview-1.png)
+
 ### 目录
 
 - [halo-theme-higan-hz](#halo-theme-higan-hz)
@@ -31,7 +33,6 @@
       - [杂项于`总体样式`](#杂项于总体样式)
   - [已合并至上游的内容/上游也已修复的内容](#已合并至上游的内容上游也已修复的内容)
   - [原项目说明](#原项目说明)
-  - [预览截图](#预览截图)
   - [主题应用实例](#主题应用实例)
   - [使用方法](#使用方法)
     - [可选插件](#可选插件)
@@ -155,10 +156,6 @@
 该主题的原作者为 Pieter Robberechts，非常感谢做出这么优秀的主题。
 
 原主题地址：[hexo-theme-cactus](https://github.com/probberechts/hexo-theme-cactus.git)
-
-## 预览截图
-
-待添加...
 
 ## 主题应用实例
 
