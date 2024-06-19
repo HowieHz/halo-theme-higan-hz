@@ -202,6 +202,27 @@ spec:
               label: 开启
             - value: false
               label: 关闭
+    - group: moments_styles
+      label: 瞬间页样式
+      formSchema:
+        - $formkit: radio
+          name: is_moment_upvote_button_show
+          label: 是否启用点赞按钮
+          value: true
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: radio
+          name: is_moment_comment_section_show
+          label: 是否启用评论区
+          value: true
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
     - group: rss
       label: RSS
       formSchema:
