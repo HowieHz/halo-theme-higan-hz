@@ -202,6 +202,27 @@ spec:
               label: 开启
             - value: false
               label: 关闭
+    - group: custom_page_styles
+      label: 自定义页面样式
+      formSchema:
+        - $formkit: radio
+          name: is_dividing_line_at_the_end_of_content_show
+          label: 是否启用正文内容与评论区间的分隔线
+          value: true
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: radio
+          name: is_custom_page_comment_section_show
+          label: 是否启用评论区
+          value: true
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
     - group: moments_styles
       label: 瞬间页样式
       formSchema:

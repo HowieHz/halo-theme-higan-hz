@@ -9,9 +9,14 @@
       <div class="content flex-auto" itemprop="articleBody" th:utext="${singlePage.content?.content}">
         singlePage formatted content
       </div>
-      <div class="post-comment">
-        <halo:comment group="content.halo.run" kind="SinglePage" th:name="${singlePage.metadata?.name}" />
-      </div>
+      <th:block th:if="${theme.config?.custom_page_styles?.is_dividing_line_at_the_end_of_content_show}">
+        <hr class="divide my-10" />
+      </th:block>
+      <th:block th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show}">
+        <div class="post-comment">
+          <halo:comment group="content.halo.run" kind="SinglePage" th:name="${singlePage.metadata?.name}" />
+        </div>
+      </th:block>
 
       <!-- clipboard -->
       <script th:src="@{/assets/lib/clipboard/clipboard.min.js}"></script>
