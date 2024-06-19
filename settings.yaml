@@ -184,6 +184,24 @@ spec:
               label: 开启
             - value: false
               label: 关闭
+        - $formkit: radio
+          name: is_dividing_line_at_the_end_of_post_show
+          label: 是否启用文章与评论区间的分隔线
+          value: true
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: radio
+          name: is_post_comment_section_show
+          label: 是否启用文章评论区
+          value: true
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
     - group: rss
       label: RSS
       formSchema:

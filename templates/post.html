@@ -44,11 +44,13 @@
         </div>
       </header>
 
-      <div class="content flex-auto" itemprop="articleBody" th:utext="${post.content?.content}">
-        post formatted content
-      </div>
-      <hr class="divide my-10" />
-      <halo:comment group="content.halo.run" kind="Post" th:name="${post.metadata?.name}" />
+      <div class="content flex-auto" itemprop="articleBody" th:utext="${post.content?.content}">文章内容填充处</div>
+      <th:block th:if="${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show}">
+        <hr class="divide my-10" />
+      </th:block>
+      <th:block th:if="${theme.config?.post_styles?.is_post_comment_section_show}">
+        <halo:comment group="content.halo.run" kind="Post" th:name="${post.metadata?.name}" />
+      </th:block>
     </article>
     <div th:insert="~{fragments/footer-nav :: footerNav}"></div>
 
