@@ -249,7 +249,7 @@ spec:
       formSchema:
         - $formkit: radio
           name: index_rss
-          label: 首页RSS展示
+          label: 首页 RSS 展示
           value: true
           attrs:
             icon: rss
