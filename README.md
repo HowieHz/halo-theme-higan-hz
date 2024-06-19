@@ -37,8 +37,10 @@
   - [已合并至上游的内容/上游也已修复的内容](#已合并至上游的内容上游也已修复的内容)
   - [原项目说明](#原项目说明)
   - [主题应用实例](#主题应用实例)
-  - [使用方法](#使用方法)
-    - [可选插件（主题使用者必看章节！）](#可选插件主题使用者必看章节)
+  - [如何获取主题包](#如何获取主题包)
+    - [稳定版获取方法](#稳定版获取方法)
+    - [最新开发版获取方法](#最新开发版获取方法)
+  - [可选插件（主题使用者必看章节！）](#可选插件主题使用者必看章节)
   - [进行此项目的开发](#进行此项目的开发)
     - [开发前准备](#开发前准备)
       - [安装 pnpm](#安装-pnpm)
@@ -188,20 +190,24 @@
 
 [howiehz.top](https://howiehz.top)
 
-## 使用方法
+## 如何获取主题包
 
-Release 版本获取方法:
+### 稳定版获取方法
 
 1. 到 [Release](https://github.com/HowieHz/halo-theme-higan-hz/releases) 下载最新版的 “Source code (zip)”
 2. 在 Console 端的主题菜单直接上传安装即可使用
 
-最新开发版本获取方法:
+Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商店页面下载即可
+
+- 市场链接：[应用：彼岸-皓改](https://www.halo.run/store/apps/app-homxf?tab=releases)
+
+### 最新开发版获取方法
 
 1. 点击项目主页 [HowieHz/halo-theme-higan-hz](https://github.com/HowieHz/halo-theme-higan-hz/tree/main) 绿色的 “<> Code” 按钮
 2. 选择 “Download ZIP” 下载最新代码
 3. 在 Console 端的主题菜单直接上传安装即可使用
 
-### 可选插件（主题使用者必看章节！）
+## 可选插件（主题使用者必看章节！）
 
 - 友链页面（/links），需插件 [plugin-links](https://github.com/halo-sigs/plugin-links)
 - 图库页面（/photos），需插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)
@@ -223,7 +229,7 @@ Release 版本获取方法:
 
 ## 进行此项目的开发
 
-首先请确保你的编辑器支持 EditorConfig
+首先请确保你的编辑器支持 EditorConfig，这保证了项目代码格式的统一。
 
 ### 开发前准备
 
