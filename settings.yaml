@@ -4,6 +4,14 @@ metadata:
   name: howiehz-higan-setting
 spec:
   forms:
+    - group: global
+      label: 全局
+      formSchema:
+        - $formkit: checkbox
+          name: upgrade_insecure_requests
+          label: CSP:upgrade-insecure-requests
+          value: false
+          help: 如启用此项，非跳转 （non-navigational） 的不安全资源请求将会自动升级到 HTTPS（包括第当前域名以及第三方请求）
     - group: styles
       label: 总体样式
       formSchema:
