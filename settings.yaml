@@ -210,6 +210,37 @@ spec:
               label: 开启
             - value: false
               label: 关闭
+    - group: categories_page_styles
+      label: 分类集合页样式
+      formSchema:
+        - $formkit: radio
+          name: is_show_the_number_of_articles_per_category
+          label: 是否显示每个分类下的文章数量
+          value: true
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: text
+          name: characters_to_the_left_of_the_number_of_articles
+          if: "$is_show_the_number_of_articles_per_category === true"
+          label: "在“文章数量”左侧的字符"
+          value: "("
+        - $formkit: text
+          name: characters_to_the_right_of_the_number_of_articles
+          if: "$is_show_the_number_of_articles_per_category === true"
+          label: "在“文章数量”右侧的字符"
+          value: ")"
+        - $formkit: radio
+          name: is_show_multi_layer_categories
+          label: 是否显示多层分类
+          value: true
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
     - group: custom_page_styles
       label: 自定义页面样式
       formSchema:

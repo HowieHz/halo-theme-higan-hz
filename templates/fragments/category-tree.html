@@ -1,0 +1,14 @@
+<ul th:fragment="next (categories)" class="flex-auto">
+  <li th:fragment="single (categories)" th:each="category : ${categories}">
+    <a th:href="@{${category.status?.permalink}}">
+      <th:block
+        th:text="${category.spec?.displayName} + (${theme.config?.categories_page_styles?.is_show_the_number_of_articles_per_category}? ( ${theme.config?.categories_page_styles?.characters_to_the_left_of_the_number_of_articles} + ${category.postCount} + ${theme.config?.categories_page_styles?.characters_to_the_right_of_the_number_of_articles} ) : '')"
+      ></th:block>
+    </a>
+    <th:block
+      th:if="${not #lists.isEmpty(category.children) and theme.config?.categories_page_styles?.is_show_multi_layer_categories}"
+    >
+      <th:block th:replace="~{fragments/category-tree :: next(categories=${category.children})}"></th:block>
+    </th:block>
+  </li>
+</ul>

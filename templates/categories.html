@@ -6,13 +6,7 @@
   <th:block th:fragment="content">
     <h1>分类列表</h1>
     <ul th:if="${!#lists.isEmpty(categories)}" class="flex-auto">
-      <th:block th:each="category : ${categories}">
-        <li>
-          <a th:href="@{${category.status?.permalink}}">
-            <th:block th:text="${category.spec?.displayName} + '(' + ${category.postCount} +')'"></th:block>
-          </a>
-        </li>
-      </th:block>
+      <li th:replace="~{fragments/category-tree :: single(categories=${categories})}"></li>
     </ul>
   </th:block>
 </th:block>
