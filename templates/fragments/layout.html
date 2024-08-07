@@ -91,6 +91,9 @@
               </li>
             </ul>
           </div>
+          <div class="footer-bottom" th:if="${theme.config?.styles?.is_footer_content_show}">
+            <p th:utext="${theme.config?.styles?.footer_content}"></p>
+          </div>
         </footer>
       </div>
     </div>

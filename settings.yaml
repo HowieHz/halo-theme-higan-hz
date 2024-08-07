@@ -103,6 +103,22 @@ spec:
               label: 开启
             - value: false
               label: 关闭
+        - $formkit: radio
+          name: is_footer_content_show
+          label: 添加内容到页脚最底部
+          help: "Halo 设置-代码注入-页脚 的内容显示位置在“主题信息”、“版权信息”、“底部菜单”之上。\n而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。"
+          value: false
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: code
+          name: footer_content
+          if: "$is_footer_content_show === true"
+          label: 页脚最底部内容（支持 html 代码块）
+          language: html
+          height: 150px
     - group: index_styles
       label: 首页样式
       formSchema:
