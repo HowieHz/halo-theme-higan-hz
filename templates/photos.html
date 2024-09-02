@@ -12,10 +12,17 @@
             <th:block th:each="photo : ${group.photos}">
               <li class="photo-image">
                 <img
-                  th:alt="${photo.spec.description}"
                   th:src="@{${photo.spec.url}}"
+                  th:srcset="|
+                    ${thumbnail.gen(photo.spec.url, 's')} 400w,
+                    ${thumbnail.gen(photo.spec.url, 'm')} 800w,
+                    ${thumbnail.gen(photo.spec.url, 'l')} 1200w,
+                    ${thumbnail.gen(photo.spec.url, 'xl')} 1600w
+                  |"
+                  sizes="(max-width: 1600px) 100vw, 1600px"
                   th:title="${photo.spec.displayName}"
-                  aria-label="photo image"
+                  th:alt="${photo.spec.description}"
+                  loading="lazy"
                 />
               </li>
             </th:block>

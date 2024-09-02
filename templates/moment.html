@@ -19,8 +19,9 @@
               >
                 <img
                   class="avatar avatar-user"
-                  th:with="defaultAvatar=${#theme.assets('/images/logo.png')}"
-                  th:src="${#strings.defaultString(moment.owner?.avatar, defaultAvatar)}"
+                  th:with="defaultAvatar=${#theme.assets('/images/logo.png')}, avatarUri=${#strings.defaultString(moment.owner?.avatar, defaultAvatar)}"
+                  th:src="${avatarUri}"
+                  size="400px"
                   width="32"
                   height="32"
                   alt="moment author avatar"
@@ -55,8 +56,9 @@
               >
                 <img
                   class="avatar avatar-user"
-                  th:with="defaultAvatar=${#theme.assets('/images/logo.png')}"
-                  th:src="${#strings.defaultString(moment.owner?.avatar, defaultAvatar)}"
+                  th:with="defaultAvatar=${#theme.assets('/images/logo.png')}, avatarUri=${#strings.defaultString(moment.owner?.avatar, defaultAvatar)}"
+                  th:src="${avatarUri}"
+                  size="400px"
                   width="32"
                   height="32"
                   alt="moment author avatar"
@@ -90,6 +92,13 @@
                 <img
                   th:if="${#strings.equals(media.type, 'PHOTO')}"
                   th:src="${media?.url}"
+                  th:srcset="|
+                    ${thumbnail.gen(media?.url, 's')} 400w,
+                    ${thumbnail.gen(media?.url, 'm')} 800w,
+                    ${thumbnail.gen(media?.url, 'l')} 1200w,
+                    ${thumbnail.gen(media?.url, 'xl')} 1600w
+                  |"
+                  sizes="(max-width: 1600px) 100vw, 1600px"
                   alt="moment image"
                   loading="lazy"
                 />
