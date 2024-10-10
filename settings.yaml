@@ -41,6 +41,7 @@ spec:
           value: "bG9jYWxob3N0"
         - $formkit: radio
           name: is_keep_path_and_query
+          if: "$anti_mirror_site === true"
           label: "跳转后是否保留路径和查询参数"
           help: "例：假设当前页面为 localhost/a/b?a=1，目标链接为 https://p.com。关闭此项会跳转到 https://p.com，而开启此项会跳转到 https://p.com/a/b?a=1"
           value: true
