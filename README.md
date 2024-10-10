@@ -13,7 +13,7 @@
 
 ![preview](./screenshots/preview-1.png)
 
-文档版本: `1.7.0`  
+文档版本: `1.8.0`  
 （如此处文档版本小于您正在使用的主题版本，说明您正在阅读一份过时的文档，请到[项目原地址](https://github.com/HowieHz/halo-theme-higan-hz/blob/main/README.md)阅读最新版本。）
 
 ### 目录
@@ -96,6 +96,7 @@
 #### 增加于“全局”
 
 1. 添加“CSP:upgrade-insecure-requests”选项，避免 HTTPS 协议网页引用 HTTP 资源时报错。相关文档：[CSP: upgrade-insecure-requests - HTTP | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
+2. 增加“仅允许使用指定域名访问”。使用场景：防止站点被恶意镜像后的流量流失
 
 #### 增加于“总体样式”
 

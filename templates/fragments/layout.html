@@ -10,6 +10,32 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="${#strings.defaultString(title, site.title)}"></title>
+    <script th:if="${theme.config?.global?.anti_mirror_site}" th:inline="javascript">
+      (function () {
+        // 获取被编码后的目标链接
+        var encodedRedirectUrl = /*[[${theme?.config?.global?.target_url}]]*/ "bG9jYWxob3N0";
+
+        // 获取域名白名单
+        var rawDomainWhiteList = /*[[${theme?.config?.global?.allow_site_whitelist}]]*/ null;
+        if (rawDomainWhiteList == null) {
+          return;
+        }
+        var domainWhiteList = rawDomainWhiteList.map((item) => atob(item.realNode.input_domain));
+
+        // 检查是否保留路径和查询参数，并且生成跳转后的目标链接
+        var is_keep_path_and_query = /*[[${theme?.config?.global?.is_keep_path_and_query}]]*/ true;
+        if (is_keep_path_and_query) {
+          var targetRedirectUrl = atob(encodedRedirectUrl) + window.location.pathname + window.location.search;
+        } else {
+          var targetRedirectUrl = atob(encodedRedirectUrl);
+        }
+
+        // 如果当前域名不在域名白名单中就跳转
+        if (!domainWhiteList.includes(document.location.hostname)) {
+          window.location.href = targetRedirectUrl;
+        }
+      })();
+    </script>
     <link
       rel="stylesheet"
       th:href="@{/assets/dist/style.css(v=${theme.spec.version})}"

@@ -12,6 +12,43 @@ spec:
           label: CSP:upgrade-insecure-requests
           value: false
           help: 如启用此项，非跳转 （non-navigational） 的不安全资源请求将会自动升级到 HTTPS（包括第当前域名以及第三方请求）
+        - $formkit: radio
+          name: anti_mirror_site
+          label: 仅允许使用指定域名访问
+          help: 使用场景：防止站点被恶意镜像后的流量流失
+          value: false
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: repeater
+          name: allow_site_whitelist
+          if: "$anti_mirror_site === true"
+          label: 域名白名单列表
+          value: []
+          children:
+            - $formkit: text
+              name: input_domain
+              label: "Base64 编码后的域名"
+              validation: "required"
+              help: "可使用 Base64 在线编码工具进行编码（编码前的内容仅包括域名，不包括协议（如 https://），端口（如 :8080），路径（如 /archive/1.html）。请在输入框输入编码后的内容！）\n例1编码前：howiehz.top\n编码后：aG93aWVoei50b3A=\n例2编码前：localhost\n编码后：bG9jYWxob3N0"
+        - $formkit: text
+          name: target_url
+          if: "$anti_mirror_site === true"
+          label: "Base64 编码后的目标链接"
+          help: "检测到当前页面域名不在白名单中，就会跳转到目标链接（编码前的内容包括完整域名。请在输入框仅输入编码后的内容！）\n例1编码前：https://howiehz.top\n编码后：aHR0cHM6Ly9ob3dpZWh6LnRvcA=="
+          value: "bG9jYWxob3N0"
+        - $formkit: radio
+          name: is_keep_path_and_query
+          label: "跳转后是否保留路径和查询参数"
+          help: "例：假设当前页面为 localhost/a/b?a=1，目标链接为 https://p.com。关闭此项会跳转到 https://p.com，而开启此项会跳转到 https://p.com/a/b?a=1"
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
     - group: styles
       label: 总体样式
       formSchema:
