@@ -71,7 +71,17 @@
         max-width: /*[(${theme.config?.styles?.max_width})]*/ 48rem;
       }
     </style>
-    <div class="max-width mx-auto px-8 ltr">
+    <style th:inline="css" th:if="${theme.config?.styles?.is_min_width_settings}">
+      .min-width {
+        min-width: /*[(${theme.config?.styles?.min_width})]*/ 48rem;
+      }
+    </style>
+    <style th:inline="css" th:if="${theme.config?.styles?.is_content_width_style_settings}">
+      .content-width {
+        width: /*[(${theme.config?.styles?.content_width_style})]*/ fit-content;
+      }
+    </style>
+    <div class="max-width min-width mx-auto px-8 ltr content-width">
       <th:block th:replace="${navbar}" />
 
       <div class="!min-h-screen content index pt-16">
