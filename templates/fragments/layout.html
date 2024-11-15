@@ -62,24 +62,26 @@
   应用于 :root 加上 only 效果是关闭由 Chrome 的自动深色主题引起的颜色覆盖。上游应用于 body 标签，所以此处也应用于 body 标签（实际是应用在有 data-color-scheme 属性的地方，本主题仅有 body 标签有这个属性）
   https://developer.mozilla.org/zh-CN/docs/Web/CSS/color-scheme
 -->
+
   <body
     th:class="|text-size-${theme.config?.styles?.text_size}|"
     th:attr="data-color-scheme=${theme.config?.styles?.color_schema['color-scheme']}, theme=${theme.config?.styles?.color_schema['theme']}"
   >
     <style th:inline="css" th:if="${theme.config?.styles?.is_max_width_settings}">
       .max-width {
-        max-width: /*[(${theme.config?.styles?.max_width})]*/ 48rem;
+        max-width:
+      /*[(${theme.config?.styles?.max_width})]*/ 48rem;
       }
     </style>
     <style th:inline="css" th:if="${theme.config?.styles?.is_min_width_settings}">
       :root {
-        --content-min-width: /*[(${theme.config?.styles?.min_width})]*/ 48rem;
+        --content-min-width:
+      /*[(${theme.config?.styles?.min_width})]*/ 48rem;
       }
+
       .min-width {
-        min-width: min(
-          100%,
-          var(--content-min-width)
-        ); /* 缩小窗口时优先缩小 margin，触发这个取小函数肯定是 margin=0，此时 100vw 和 100% 应相等 */
+        min-width: min(100%, var(--content-min-width));
+        /* 缩小窗口时优先缩小 margin，触发这个取小函数肯定是 margin=0，此时 100vw 和 100% 应相等 */
       }
     </style>
     <style th:inline="css" th:if="${theme.config?.styles?.is_force_min_width_settings}">
@@ -89,7 +91,8 @@
     </style>
     <style th:inline="css" th:if="${theme.config?.styles?.is_content_width_style_settings}">
       .content-width {
-        width: /*[(${theme.config?.styles?.content_width_style})]*/ fit-content;
+        width:
+      /*[(${theme.config?.styles?.content_width_style})]*/ fit-content;
       }
     </style>
     <div class="max-width min-width mx-auto px-8 ltr content-width">

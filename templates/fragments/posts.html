@@ -91,7 +91,9 @@
               </span>
               <th:block th:text="${#temporals.format(post.spec.publishTime, 'MMMM dd yyyy')}"></th:block>
             </time>
-            <p class="p-0 mb-0 relative z-10 mt-2 text-sm color-accent-3" th:text="${post.status?.excerpt}"></p>
+            <p class="p-0 mb-0 relative z-10 mt-2 text-sm color-accent-3" th:text="${post.status?.excerpt}">
+              文章概要替换位
+            </p>
             <div
               aria-hidden="true"
               class="relative z-10 mt-4 flex items-center text-sm font-medium color-accent-1"
