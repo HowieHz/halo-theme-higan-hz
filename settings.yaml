@@ -11,7 +11,18 @@ spec:
           name: defalut_page_language
           label: 默认页面语言
           value: "zh"
-          help: "默认页面语言，如：zh、en"
+          help: "默认页面语言，如：zh、en。 此项置空则取 zh"
+        - $formkit: checkbox
+          name: is_i18n_menu_show
+          label: 多语言菜单支持
+          value: false
+          help: 如启用此项，将启用多语言菜单支持，具体使用方法请看文档。
+        - $formkit: checkbox
+          if: "$is_i18n_menu_show === true"
+          name: is_i18n_menu_prefix_match_mode
+          label: 多语言菜单前缀匹配模式
+          value: true
+          help: 如启用此项，则启用前缀匹配模式，具体使用方法请看文档。
         - $formkit: checkbox
           name: upgrade_insecure_requests
           label: CSP:upgrade-insecure-requests

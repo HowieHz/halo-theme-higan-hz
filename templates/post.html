@@ -48,7 +48,7 @@
       <th:block th:if="${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show}">
         <hr class="divide my-10" />
       </th:block>
-      <th:block th:if="${theme.config?.post_styles?.is_post_comment_section_show and haloCommentEnabled}">
+      <th:block th:if="${theme.config?.post_styles?.is_post_comment_section_show} and ${haloCommentEnabled}">
         <halo:comment group="content.halo.run" kind="Post" th:name="${post.metadata?.name}" />
       </th:block>
     </article>
