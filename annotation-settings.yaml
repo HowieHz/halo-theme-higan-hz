@@ -27,3 +27,54 @@ spec:
     - $formkit: "text"
       name: "higan.howiehz.top/page-language"
       label: "页面语言"
+
+---
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: howiehz-higan-single-page-annotation-setting
+spec:
+  targetRef:
+    group: content.halo.run
+    kind: SinglePage
+  formSchema:
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-title"
+      label: "页面标题"
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-language"
+      label: "页面语言"
+
+---
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: howiehz-higan-category-annotation-setting
+spec:
+  targetRef:
+    group: content.halo.run
+    kind: Category
+  formSchema:
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-title"
+      label: "页面标题"
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-language"
+      label: "页面语言"
+
+---
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: howiehz-higan-tag-annotation-setting
+spec:
+  targetRef:
+    group: content.halo.run
+    kind: Tag
+  formSchema:
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-title"
+      label: "页面标题"
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-language"
+      label: "页面语言"
