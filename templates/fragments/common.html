@@ -5,6 +5,7 @@
     </li>
 
     <th:block th:unless="${theme.config?.global?.is_i18n_menu_show}">
+      <!-- 普通 menu -->
       <li th:each="menuItem : ${menuFinder.getPrimary().menuItems}">
         <a
           th:href="@{${menuItem.status?.href}}"
@@ -15,10 +16,10 @@
       </li>
     </th:block>
 
-    <!-- i18n menu 全等匹配模式 -->
     <th:block
       th:if="${theme.config?.global?.is_i18n_menu_show} and not ${theme.config?.global?.is_i18n_menu_prefix_match_mode}"
     >
+      <!-- i18n menu 全等匹配模式 -->
       <th:block th:each="menuItem : ${menuFinder.getPrimary().menuItems}">
         <th:block th:if="${#strings.equals(menuItem.spec.displayName, #locale)}">
           <li th:each="menuItemChildren : ${menuItem.children}">
@@ -33,10 +34,10 @@
       </th:block>
     </th:block>
 
-    <!-- i18n menu 前缀匹配模式 -->
     <th:block
       th:if="${theme.config?.global?.is_i18n_menu_show} and ${theme.config?.global?.is_i18n_menu_prefix_match_mode}"
     >
+      <!-- i18n menu 前缀匹配模式 -->
       <th:block th:each="menuItem : ${menuFinder.getPrimary().menuItems}">
         <th:block th:if="${#strings.startsWith(#locale, menuItem.spec.displayName)}">
           <li th:each="menuItemChildren : ${menuItem.children}">

@@ -114,23 +114,23 @@
 
 1. 添加“默认页面语言”，允许指定站点默认的页面语言（HTML lang 属性）（如配置值为空，则设置为 "zh"）
 2. 添加“多语言菜单支持”，允许用户定义多套菜单适用于不同语言。
-  - 启用此选项后，主菜单应设置形如以下形式：
-  - （注：“zh_CN”项可选择自定义链接，链接为 /，名称为 zh_CN。其中名称为关键设置，其他不影响）
-  - zh_CN
-  - - 首页
-  - - 关于
-  - en_US
-  - - Home
-  - - About
-  - 添加“多语言菜单前缀匹配模式”，启用此项将允许菜单名符合 navigator.language 值前缀即显示，而无需完全匹配。（注：按 f12 打开开发者控制台，上面选择控制台，输入 navigator.language 后回车即可查看你浏览器的 navigator.language 值）
-  - 以上菜单可改为：
-  - （注：开启了这项之后，下面的“zh”可匹配 zh_CN，zh_TW 等 navigator.language 值。）
-  - zh
-  - - 首页
-  - - 关于
-  - en
-  - - Home
-  - - About
+   - 启用此选项后，主菜单应设置形如以下形式：
+   - （注：“zh_CN”项可选择自定义链接，链接为 /，名称为 zh_CN。其中名称为关键设置，其他不影响）
+   - zh_CN
+     - 首页
+     - 关于
+   - en_US
+     - Home
+     - About
+   - 添加“多语言菜单前缀匹配模式”，启用此项将允许菜单名符合 navigator.language 值前缀即显示，而无需完全匹配。（注：按 f12 打开开发者控制台，上面选择控制台，输入 navigator.language 后回车即可查看你浏览器的 navigator.language 值）
+   - 以上菜单可改为：
+   - （注：开启了这项之后，下面的“zh”可匹配 zh_CN，zh_TW 等 navigator.language 值。）
+   - zh
+     - 首页
+     - 关于
+   - en
+     - Home
+     - About
 3. 添加“CSP:upgrade-insecure-requests”选项，避免 HTTPS 协议网页引用 HTTP 资源时报错。相关文档：[CSP: upgrade-insecure-requests - HTTP | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
 4. 增加“仅允许使用指定域名访问”。使用场景：防止站点被恶意镜像后的流量流失
 
