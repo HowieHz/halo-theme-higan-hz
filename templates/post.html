@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(title=${#strings.defaultString(#annotations.get(post, 'higan.howiehz.top/page-title'), post.spec.title)}, content = ~{::content}, header = ~{}, navbar = ~{fragments/post-nav::navbar})}, language=${#strings.defaultString(#annotations.get(post, 'higan.howiehz.top/page-language'), #strings.defaultString(theme.config?.global?.defalut_page_language, 'zh'))}"
+  th:replace="~{fragments/layout :: html(title=${#strings.defaultString(#annotations.get(post, 'higan.howiehz.top/page-title'), post.spec.title)}, content = ~{::content}, header = ~{}, navbar = ~{fragments/post-nav::navbar}, language=${#annotations.get(post, 'higan.howiehz.top/page-language')} )}"
 >
   <th:block th:fragment="content">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">

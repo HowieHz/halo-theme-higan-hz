@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html
-  th:lang="${#strings.defaultString(language, theme.config?.global?.defalut_page_language)}"
+  th:lang="${language ?: (theme.config?.global?.defalut_page_language ?: 'zh')}"
   xmlns:th="http://www.thymeleaf.org"
-  th:fragment="html (title, content, header, navbar, language)"
+  th:fragment="html"
 >
   <head>
+    <!-- th:fragment="html (title, content, header, navbar, language)" -->
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta
@@ -49,7 +50,11 @@
     <script th:src="@{/assets/lib/jquery/jquery.min.js(v=${theme.spec.version})}"></script>
     <script th:src="@{/assets/dist/main.iife.js(v=${theme.spec.version})}"></script>
   </head>
-  <!--
+  <body
+    th:class="|text-size-${theme.config?.styles?.text_size}|"
+    th:attr="data-color-scheme=${theme.config?.styles?.color_schema['color-scheme']}, theme=${theme.config?.styles?.color_schema['theme']}"
+  >
+    <!--
   本主题的样式切换说明：
   用哪套样式看 body 标签内的 theme 属性值：auto，dark，light，gray
   
@@ -66,11 +71,6 @@
   应用于 :root 加上 only 效果是关闭由 Chrome 的自动深色主题引起的颜色覆盖。上游应用于 body 标签，所以此处也应用于 body 标签（实际是应用在有 data-color-scheme 属性的地方，本主题仅有 body 标签有这个属性）
   https://developer.mozilla.org/zh-CN/docs/Web/CSS/color-scheme
 -->
-
-  <body
-    th:class="|text-size-${theme.config?.styles?.text_size}|"
-    th:attr="data-color-scheme=${theme.config?.styles?.color_schema['color-scheme']}, theme=${theme.config?.styles?.color_schema['theme']}"
-  >
     <style th:inline="css" th:if="${theme.config?.styles?.is_max_width_settings}">
       .max-width {
         max-width:
