@@ -24,3 +24,6 @@ spec:
     - $formkit: "text"
       name: "higan.howiehz.top/page-title"
       label: "页面标题"
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-language"
+      label: "页面语言"

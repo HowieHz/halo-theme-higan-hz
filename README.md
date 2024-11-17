@@ -21,6 +21,7 @@
    - 防止站点被恶意镜像
    - CSP: upgrade-insecure-requests
    - 文章页标题自定义
+   - 多语言支持！
 4. 更多功能等您来探索...
 
 ![preview](./screenshots/preview-1.png)
@@ -108,8 +109,9 @@
 
 #### 增加于“全局”
 
-1. 添加“CSP:upgrade-insecure-requests”选项，避免 HTTPS 协议网页引用 HTTP 资源时报错。相关文档：[CSP: upgrade-insecure-requests - HTTP | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
-2. 增加“仅允许使用指定域名访问”。使用场景：防止站点被恶意镜像后的流量流失
+1. 添加“默认页面语言”，允许指定站点默认的页面语言（HTML lang 属性）（如配置值为空，则设置为 "zh"）
+2. 添加“CSP:upgrade-insecure-requests”选项，避免 HTTPS 协议网页引用 HTTP 资源时报错。相关文档：[CSP: upgrade-insecure-requests - HTTP | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
+3. 增加“仅允许使用指定域名访问”。使用场景：防止站点被恶意镜像后的流量流失
 
 #### 增加于“总体样式”
 
@@ -184,7 +186,8 @@
 - 方法一：进入后台管理页面 -> 找到文章管理页 -> 点击一篇文章右边的三个点 -> 弹出的上下文菜单中选择“设置” -> 拉到底部即可见元数据设置位
 - 方法二：进入后台管理页面 -> 找到文章管理页 -> 进入一篇文章的编辑页 -> 点击右上角“发布”按钮左侧的“设置”按钮 -> 拉到底部即可见元数据设置位
 
-1. 增加“页面标题”配置项，可设定此文章的在浏览页的 HTML 标题（如配置值为空，则 HTML 标题取此文章的标题）
+1. 增加“页面标题”配置项，可设定此文章在浏览页的 HTML 标题（如配置值为空，则 HTML 标题取此文章的标题）
+2. 添加“页面语言”配置项，可指定此文章的页面语言（HTML lang 属性）（如配置值为空，则取“全局-默认页面语言”的值）
 
 #### 调整于“总体样式”
 

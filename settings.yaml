@@ -7,6 +7,11 @@ spec:
     - group: global
       label: 全局
       formSchema:
+        - $formkit: text
+          name: defalut_page_language
+          label: 默认页面语言
+          value: "zh"
+          help: "默认页面语言，如：zh、en"
         - $formkit: checkbox
           name: upgrade_insecure_requests
           label: CSP:upgrade-insecure-requests

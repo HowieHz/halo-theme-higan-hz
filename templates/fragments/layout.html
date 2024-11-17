@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh" th:fragment="html (title, content, header, navbar)">
+<html
+  th:lang="${#strings.defaultString(language, theme.config?.global?.defalut_page_language)}"
+  xmlns:th="http://www.thymeleaf.org"
+  th:fragment="html (title, content, header, navbar, language)"
+>
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
