@@ -4,61 +4,65 @@
       <a href="#"><i class="iconify iconify-huge" data-icon="material-symbols:menu"></i></a>
     </li>
 
-    <th:block th:unless="${theme.config?.global?.is_i18n_menu_show}">
-      <!-- 普通 menu -->
-      <li th:each="menuItem : ${menuFinder.getPrimary().menuItems}">
-        <a
-          th:href="@{${menuItem.status?.href}}"
-          th:target="${menuItem.spec.target?.value}"
-          th:aria-label="'Menu named ' + ${menuItem.status?.displayName}"
-          th:text="${menuItem.status?.displayName}"
-          >目录项填充位置</a
-        >
-      </li>
-    </th:block>
-
-    <th:block
-      th:if="${theme.config?.global?.is_i18n_menu_show} and not ${theme.config?.global?.is_i18n_menu_prefix_match_mode}"
-    >
-      <!-- i18n menu 全等匹配模式 -->
-      <th:block th:each="menuItem : ${menuFinder.getPrimary().menuItems}">
-        <th:block th:if="${#strings.equals(menuItem.spec.displayName, #locale)}">
-          <li th:each="menuItemChildren : ${menuItem.children}">
-            <a
-              th:href="@{${menuItemChildren.status?.href}}"
-              th:target="${menuItemChildren.spec.target?.value}"
-              th:aria-label="'Menu named ' + ${menuItemChildren.status?.displayName}"
-              th:text="${menuItemChildren.status?.displayName}"
-              >目录项填充位置</a
-            >
-          </li>
-        </th:block>
-      </th:block>
-    </th:block>
-
-    <th:block
-      th:if="${theme.config?.global?.is_i18n_menu_show} and ${theme.config?.global?.is_i18n_menu_prefix_match_mode}"
-    >
-      <!-- i18n menu 前缀匹配模式 -->
-      <th:block th:each="menuItem : ${menuFinder.getPrimary().menuItems}">
-        <th:block th:if="${#strings.startsWith(#locale, menuItem.spec.displayName)}">
-          <li th:each="menuItemChildren : ${menuItem.children}">
-            <a
-              th:href="@{${menuItemChildren.status?.href}}"
-              th:target="${menuItemChildren.spec.target?.value}"
-              th:aria-label="'Menu named ' + ${menuItemChildren.status?.displayName}"
-              th:text="${menuItemChildren.status?.displayName}"
-              >目录项填充位置</a
-            >
-          </li>
-        </th:block>
-      </th:block>
-    </th:block>
+    <th:block th:insert="~{fragments/common :: base-menu}"></th:block>
 
     <li th:if="${pluginFinder.available('PluginSearchWidget')}">
       <a href="javascript:SearchWidget.open();" aria-label="Search in site">[(#{fragment.menu.search})]</a>
     </li>
   </ul>
+</th:block>
+
+<th:block th:fragment="base-menu">
+  <th:block th:unless="${theme.config?.global?.is_i18n_menu_show}">
+    <!-- 普通 menu -->
+    <li th:each="menuItem : ${menuFinder.getPrimary().menuItems}">
+      <a
+        th:href="@{${menuItem.status?.href}}"
+        th:target="${menuItem.spec.target?.value}"
+        th:aria-label="'Menu named ' + ${menuItem.status?.displayName}"
+        th:text="${menuItem.status?.displayName}"
+        >目录项填充位置</a
+      >
+    </li>
+  </th:block>
+
+  <th:block
+    th:if="${theme.config?.global?.is_i18n_menu_show} and not ${theme.config?.global?.is_i18n_menu_prefix_match_mode}"
+  >
+    <!-- i18n menu 全等匹配模式 -->
+    <th:block th:each="menuItem : ${menuFinder.getPrimary().menuItems}">
+      <th:block th:if="${#strings.equals(menuItem.spec.displayName, #locale)}">
+        <li th:each="menuItemChildren : ${menuItem.children}">
+          <a
+            th:href="@{${menuItemChildren.status?.href}}"
+            th:target="${menuItemChildren.spec.target?.value}"
+            th:aria-label="'Menu named ' + ${menuItemChildren.status?.displayName}"
+            th:text="${menuItemChildren.status?.displayName}"
+            >目录项填充位置</a
+          >
+        </li>
+      </th:block>
+    </th:block>
+  </th:block>
+
+  <th:block
+    th:if="${theme.config?.global?.is_i18n_menu_show} and ${theme.config?.global?.is_i18n_menu_prefix_match_mode}"
+  >
+    <!-- i18n menu 前缀匹配模式 -->
+    <th:block th:each="menuItem : ${menuFinder.getPrimary().menuItems}">
+      <th:block th:if="${#strings.startsWith(#locale, menuItem.spec.displayName)}">
+        <li th:each="menuItemChildren : ${menuItem.children}">
+          <a
+            th:href="@{${menuItemChildren.status?.href}}"
+            th:target="${menuItemChildren.spec.target?.value}"
+            th:aria-label="'Menu named ' + ${menuItemChildren.status?.displayName}"
+            th:text="${menuItemChildren.status?.displayName}"
+            >目录项填充位置</a
+          >
+        </li>
+      </th:block>
+    </th:block>
+  </th:block>
 </th:block>
 
 <th:block th:fragment="share">
