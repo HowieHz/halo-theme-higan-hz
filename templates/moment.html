@@ -139,7 +139,7 @@
                 </span>
                 <span th:text="${moment.stats.approvedComment}"></span>
               </a>
-              <div class="moment-comment">
+              <div class="moment-comment" th:if="${haloCommentEnabled}">
                 <halo:comment group="moment.halo.run" kind="Moment" th:name="${moment.metadata?.name}" />
               </div>
             </th:block>

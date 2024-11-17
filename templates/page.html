@@ -19,7 +19,7 @@
         <hr class="divide my-10" />
       </th:block>
       <th:block th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show}">
-        <div class="post-comment">
+        <div class="post-comment" th:if="${haloCommentEnabled}">
           <halo:comment group="content.halo.run" kind="SinglePage" th:name="${singlePage.metadata?.name}" />
         </div>
       </th:block>
