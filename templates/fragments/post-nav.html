@@ -80,12 +80,12 @@
           </li>
         </ul>
 
-        <span id="i-prev" class="info" style="display: none">上一篇</span>
-        <span id="i-next" class="info" style="display: none">下一篇</span>
+        <span id="i-prev" class="info" style="display: none">[(#{fragment.footer-nav.prev})]</span>
+        <span id="i-next" class="info" style="display: none">[(#{fragment.footer-nav.next})]</span>
 
-        <span id="i-top" class="info" style="display: none">回到顶部</span>
-        <span id="i-share" class="info" style="display: none">分享文章</span>
-        <span id="i-home" class="info" style="display: none">返回首页</span>
+        <span id="i-top" class="info" style="display: none">[(#{fragment.footer-nav.toTop})]</span>
+        <span id="i-share" class="info" style="display: none">[(#{fragment.footer-nav.sharePost})]</span>
+        <span id="i-home" class="info" style="display: none">[(#{fragment.footer-nav.backToHome})]</span>
       </span>
       <br />
       <div id="share" style="display: none" th:with="permalink=${post?.status?.permalink}, title=${post?.spec?.title}">

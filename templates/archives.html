@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(title='归档', content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
+  th:replace="~{fragments/layout :: html(title=#{page.archives.page-title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
 >
   <th:block th:fragment="content">
     <div id="archive" class="flex-auto content">
