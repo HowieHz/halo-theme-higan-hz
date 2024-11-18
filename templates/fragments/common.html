@@ -7,9 +7,11 @@
     <th:block th:insert="~{fragments/common :: base-menu}"></th:block>
 
     <li th:if="${pluginFinder.available('PluginSearchWidget')}">
-      <a href="javascript:SearchWidget.open();" aria-label="#{fragment.menu.search-button.aria-label}"
-        >[(#{fragment.menu.search})]</a
-      >
+      <a
+        href="javascript:SearchWidget.open();"
+        th:aria-label="#{fragment.menu.search-button.aria-label}"
+        th:text="#{fragment.menu.search}"
+      ></a>
     </li>
   </ul>
 </th:block>
