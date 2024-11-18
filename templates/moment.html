@@ -146,7 +146,7 @@
           </div>
         </div>
       </div>
-      <script>
+      <script th:inline="javascript">
         const likes_localstorage_key = "higan.likes.moment.ids";
         let likedMomentNames = JSON.parse(localStorage.getItem(likes_localstorage_key) || "[]");
         likedMomentNames.forEach((momentName) => {
@@ -170,7 +170,7 @@
             activeUpvote(momentName);
           };
           xhr.onerror = function () {
-            alert("网络请求失败，请稍后再试");
+            alert(/*[[#{common.error.networkRequestFailed}]]*/ "网络请求失败，请稍后再试");
           };
           xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
           xhr.send(

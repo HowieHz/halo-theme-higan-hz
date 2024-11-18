@@ -28,7 +28,7 @@
                         sizes="400px"
                         width="32"
                         height="32"
-                        alt="moment author avatar"
+                        alt="Moment 作者头像 alt 填充位"
                         th:alt="|@${moment.owner?.name}|"
                       />
                     </a>
@@ -66,7 +66,7 @@
                         sizes="400px"
                         width="32"
                         height="32"
-                        alt="moment author avatar"
+                        alt="Moment 作者头像 alt 填充位"
                         th:alt="|@${moment.owner?.name}|"
                       />
                     </a>
@@ -154,21 +154,21 @@
           </ul>
         </div>
         <div class="pagination mt-0">
-          <a th:href="@{${moments.prevUrl}}" th:if="${moments.hasPrevious()}" aria-label="Previous page">
+          <a th:href="@{${moments.prevUrl}}" th:if="${moments.hasPrevious()}" th:aria-label="#{common.previousPage.aria-label}">
             <i class="iconify iconify-middle" data-icon="material-symbols:chevron-left"></i>
           </a>
           <span
             class="page-number"
             th:with="totalPage=${moments.totalPages}"
-            th:text="'Page ' + ${moments.page} + ' of ' + ${totalPage}"
-            >Page 1 of 1</span
+            th:text="#{common.page-number.prefix} + ${moments.page} + #{common.page-number.middle} + ${totalPage} + #{common.page-number.suffix}"
+            >Page 1 of 1 填充位</span
           >
-          <a th:href="@{${moments.nextUrl}}" th:if="${moments.hasNext()}" aria-label="Next Page">
+          <a th:href="@{${moments.nextUrl}}" th:if="${moments.hasNext()}" th:aria-label="#{common.nextPage.aria-label}">
             <i class="iconify iconify-middle" data-icon="material-symbols:chevron-right"></i>
           </a>
         </div>
       </div>
-      <script>
+      <script th:inline="javascript">
         const likes_localstorage_key = "higan.likes.moment.ids";
         let likedMomentNames = JSON.parse(localStorage.getItem(likes_localstorage_key) || "[]");
         likedMomentNames.forEach((momentName) => {
@@ -192,7 +192,7 @@
             activeUpvote(momentName);
           };
           xhr.onerror = function () {
-            alert("网络请求失败，请稍后再试");
+            alert(/*[[#{common.error.networkRequestFailed}]]*/ "网络请求失败，请稍后再试");
           };
           xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
           xhr.send(
