@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(title='分类列表', content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
+  th:replace="~{fragments/layout :: html(title=#{page.categories.page-title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
 >
   <th:block th:fragment="content">
-    <h1>分类列表</h1>
+    <h1>[(#{page.categories.title})]</h1>
     <ul th:if="${!#lists.isEmpty(categories)}" class="flex-auto">
       <li th:replace="~{fragments/category-tree :: single(categories=${categories})}"></li>
     </ul>
