@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(title = '友情链接', content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
+  th:replace="~{fragments/layout :: html(title=#{page.links.page-title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
 >
   <th:block th:fragment="content">
     <article id="links" class="post" itemscope itemtype="http://schema.org/BlogPosting">
@@ -17,7 +17,7 @@
                     class="fir-author-image fir-clickcircle"
                     th:src="${link.spec.logo}"
                     th:alt="${link.spec.displayName}"
-                    aria-label="author image"
+                    th:aria-label="#{page.links.link-logo.aria-label}"
                   />
                   <figcaption>
                     <div class="fig-author-figure-title" th:text="${link.spec.displayName}"></div>
