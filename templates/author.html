@@ -21,7 +21,7 @@
                 class="profile-avatar"
                 width="100%"
                 height="100%"
-                alt="author avatar"
+                th:alt="${page.author.avatar-img.alt}"
               />
               <div class="profile-nickname-container">
                 <p class="profile-nickname" th:text="${author.spec.displayName}"></p>
