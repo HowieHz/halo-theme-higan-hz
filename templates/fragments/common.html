@@ -87,7 +87,7 @@
     <li>
       <a
         class="icon"
-        aria-label="Share post to facebook"
+        th:aria-label="#{common.shareModal.share.prefix} + 'facebook'"
         th:href="'http://www.facebook.com/sharer.php?u=' + ${permalink} + '&amp;title=' + ${permalink}"
       >
         <i class="iconify" data-icon="ic:baseline-facebook"></i
@@ -96,7 +96,7 @@
     <li>
       <a
         class="icon"
-        aria-label="Share post to x"
+        th:aria-label="#{common.shareModal.share.prefix} + 'X'"
         th:href="'https://x.com/share?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
         <i class="iconify" data-icon="mdi:twitter-circle"></i
@@ -105,7 +105,7 @@
     <li>
       <a
         class="icon"
-        aria-label="Share post to linkedin"
+        th:aria-label="#{common.shareModal.share.prefix} + 'linkedin'"
         th:href="'http://www.linkedin.com/shareArticle?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
         <i class="iconify" data-icon="mdi:linkedin"></i
@@ -114,7 +114,7 @@
     <li>
       <a
         class="icon"
-        aria-label="Share post to pinterest"
+        th:aria-label="#{common.shareModal.share.prefix} + 'pinterest'"
         th:href="'https://pinterest.com/pin/create/bookmarklet/?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
         <i class="iconify" data-icon="mdi:pinterest"></i
@@ -123,7 +123,7 @@
     <li>
       <a
         class="icon"
-        aria-label="Share post to qzone"
+        th:aria-label="#{common.shareModal.share.prefix} + 'qzone'"
         th:href="'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
         <i class="iconify" data-icon="cib:qzone"></i
@@ -132,7 +132,7 @@
     <li>
       <a
         class="icon"
-        aria-label="Share post with email"
+        th:aria-label="#{common.shareModal.share.prefix} + 'email'"
         th:href="'mailto:?subject=' + ${title} + '&amp;body=Check out this article: ' + ${permalink}"
       >
         <i class="iconify" data-icon="ph:envelope-simple-bold"></i
