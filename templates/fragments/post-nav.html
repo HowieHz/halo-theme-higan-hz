@@ -1,6 +1,6 @@
 <th:block xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
   <div id="header-post">
-    <a id="menu-icon" href="#" aria-label="Expand more menus">
+    <a id="menu-icon" href="#" th:aria-label="#{fragment.post-nav.menu-icon.aria-label}">
       <i class="iconify iconify-middle" data-icon="material-symbols:menu"></i>
     </a>
     <a id="menu-icon-tablet" href="#"><i class="iconify iconify-middle" data-icon="material-symbols:menu"></i></a>
@@ -19,7 +19,7 @@
             <a
               th:href="@{/}"
               class="icon"
-              aria-label="Back to home"
+              th:aria-label="#{fragment.post-nav.actions.home-icon.aria-label}"
               onmouseover="$('#i-home').toggle();"
               onmouseout="$('#i-home').toggle();"
             >
@@ -29,7 +29,7 @@
           <li th:if="${postCursor.hasPrevious()}">
             <a
               class="icon"
-              aria-label="Navigate to the previous post"
+              th:aria-label="#{fragment.post-nav.actions.prev-icon.aria-label}"
               th:href="@{${postCursor.previous?.status?.permalink}}"
             >
               <i
@@ -42,7 +42,11 @@
           </li>
 
           <li th:if="${postCursor.hasNext()}">
-            <a class="icon" aria-label="Navigate to the next post" th:href="@{${postCursor.next?.status?.permalink}}">
+            <a
+              class="icon"
+              th:aria-label="#{fragment.post-nav.actions.next-icon.aria-label}"
+              th:href="@{${postCursor.next?.status?.permalink}}"
+            >
               <i
                 class="iconify iconify-large"
                 data-icon="ic:round-chevron-right"
@@ -57,7 +61,7 @@
               class="icon"
               href="#"
               onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
-              aria-label="Back to top"
+              th:aria-label="#{fragment.post-nav.actions.to-top-icon.aria-label}"
             >
               <i
                 class="iconify iconify-large"
@@ -68,7 +72,7 @@
             </a>
           </li>
           <li>
-            <a class="icon" href="#" aria-label="Share post to social media">
+            <a class="icon" href="#" th:aria-label="#{fragment.post-nav.actions.share-icon.aria-label}">
               <i
                 class="iconify iconify-middle"
                 data-icon="mdi:share-variant-outline"
@@ -80,12 +84,12 @@
           </li>
         </ul>
 
-        <span id="i-prev" class="info" style="display: none">[(#{fragment.footer-nav.prev})]</span>
-        <span id="i-next" class="info" style="display: none">[(#{fragment.footer-nav.next})]</span>
+        <span id="i-prev" class="info" style="display: none">[(#{fragment.post-nav.prev})]</span>
+        <span id="i-next" class="info" style="display: none">[(#{fragment.post-nav.next})]</span>
 
-        <span id="i-top" class="info" style="display: none">[(#{fragment.footer-nav.toTop})]</span>
-        <span id="i-share" class="info" style="display: none">[(#{fragment.footer-nav.sharePost})]</span>
-        <span id="i-home" class="info" style="display: none">[(#{fragment.footer-nav.backToHome})]</span>
+        <span id="i-top" class="info" style="display: none">[(#{fragment.post-nav.toTop})]</span>
+        <span id="i-share" class="info" style="display: none">[(#{fragment.post-nav.sharePost})]</span>
+        <span id="i-home" class="info" style="display: none">[(#{fragment.post-nav.backToHome})]</span>
       </span>
       <br />
       <div id="share" style="display: none" th:with="permalink=${post?.status?.permalink}, title=${post?.spec?.title}">
