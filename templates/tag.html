@@ -5,7 +5,7 @@
 >
   <th:block th:fragment="content">
     <div id="archive" class="content">
-      <h2 th:text="#{page.tag.title-prefix}+ ${tag.spec?.displayName}">标签页标题替换位</h2>
+      <h2 th:text="#{page.tag.title-prefix} + ${tag.spec?.displayName}">标签页标题替换位</h2>
       <ul class="post-list flex-auto">
         <li class="post-item" th:each="post : ${posts}">
           <div class="meta">
