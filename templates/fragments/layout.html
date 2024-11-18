@@ -58,17 +58,9 @@
       document.addEventListener("DOMContentLoaded", function () {
         // 检查目标 li 标签是否具有 class="matched-menu"
         // 如果开了 i18n 菜单，如果没有菜单成功匹配，这里就会显示默认菜单
-        // 下面这个是页脚的目录项
-        const targetElement = document.querySelector("#footer > div.footer-right > ul > li:nth-child(1)");
-        // 下面这个是文章顶部的目录项
-        const targetElement2 = document.querySelector("#nav > ul > li:nth-child(1)");
-
         const targetElementList = document.querySelectorAll(".matched-menu");
 
-        if (
-          (targetElement && !targetElement.classList.contains("matched-menu")) ||
-          (targetElement2 && !targetElement2.classList.contains("matched-menu"))
-        ) {
+        if (targetElementList.length === 0) {
           // 找到所有 class="default-menu" 的元素
           const defaultMenus = document.querySelectorAll(".default-menu");
 
