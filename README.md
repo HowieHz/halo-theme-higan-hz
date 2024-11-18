@@ -205,10 +205,14 @@
 1. 允许设定主页 HTML 标题，而不是取值于“Halo 设置-基本设置-站点标题”
 2. 允许同时开启一言和个人简介
 3. 允许用户修改主页上的固定文本 _[guqing/halo-theme-higan#86](https://github.com/guqing/halo-theme-higan/issues/86)_
+
    - 默认值相较于原主题的变化
      - Writing -> 近期发布
      - Read article -> 阅读全文
      - Find me on -> 与我联系
+   - 注：此选项已加入被遗弃的选项
+   - 现为支持 i18n，如想编辑此文字，请到 halo 主题目录（themes），找到 howiehz-higan 文件夹里的 i18n 文件夹，找到对应语言的 properties 文件，修改保存即可（如中文是 zh.properties）
+
 4. 允许自由选择是否开关文章列表置顶图标，以及选择图标位置
 
 #### 增加于“文章页样式”
