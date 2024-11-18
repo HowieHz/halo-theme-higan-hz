@@ -70,6 +70,13 @@
               menu.style.display = ""; // 清空 display 样式
             }
           });
+        } else {
+          // targetElementList.length !== 0 的情况下，移除所有 class="default-menu" 的元素
+          const defaultMenus = document.querySelectorAll(".default-menu");
+    
+          defaultMenus.forEach((menu) => {
+            menu.remove();
+          });
         }
       });
     </script>
