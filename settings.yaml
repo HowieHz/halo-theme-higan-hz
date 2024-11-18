@@ -23,6 +23,12 @@ spec:
           label: 多语言菜单前缀匹配模式
           value: true
           help: 如启用此项，则启用前缀匹配模式，具体使用方法请看文档。
+        - $formkit: text
+          if: "$is_i18n_menu_show === true"
+          name: defalut_i18n_menu_name
+          label: 默认多语言菜单名称
+          value: "defalut"
+          help: "默认多语言菜单名称，如：defalut。此项将在没有一个菜单未被成功匹配后显示。此项置空则取 defalut"
         - $formkit: checkbox
           name: upgrade_insecure_requests
           label: CSP:upgrade-insecure-requests

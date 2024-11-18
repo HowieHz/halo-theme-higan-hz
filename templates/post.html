@@ -6,7 +6,7 @@
   <th:block th:fragment="content">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
-        <h1 class="posttitle" itemprop="name headline" th:text="${post.spec?.title}">post-title</h1>
+        <h1 class="posttitle" itemprop="name headline" th:text="${post.spec?.title}">文章标题替换位</h1>
         <div class="meta">
           <span class="author" itemprop="author" itemscope th:each="contributor : ${post?.contributors}">
             <a
@@ -24,7 +24,7 @@
               itemprop="datePublished"
               th:text="${#temporals.format(post.spec?.publishTime, 'yyyy-MM-dd')}"
             >
-              post publish time
+              文章发布时间替换位
             </time>
           </div>
 
@@ -32,12 +32,12 @@
             <span class="iconify" data-icon="fa-solid:tag" data-inline="false"></span>
             <th:block th:each="tag : ${post.tags}">
               <a class="tag-link" th:href="@{${tag.status?.permalink}}" th:text="${tag.spec?.displayName}">
-                post tag name
+                文章标签名替换位
               </a>
             </th:block>
           </div>
 
-          <span th:title="|浏览量 ${post.stats?.visit}|">
+          <span th:title="|#{page.post.visit-stats} ${post.stats?.visit}|">
             <span class="iconify" data-icon="mdi:eye-outline" data-inline="false"></span>
             <span th:text="${post.stats?.visit}"></span>
           </span>
@@ -80,7 +80,7 @@
           },
         });
         clip.on("success", function (e) {
-          e.trigger.setAttribute("aria-label", "Copied!");
+          e.trigger.setAttribute("aria-label", /*[[#{common.shareModal.clipboard.aria-label.copied}]]*/ "Copied!");
           e.clearSelection();
         });
 

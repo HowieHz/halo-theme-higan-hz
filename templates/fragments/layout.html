@@ -54,6 +54,33 @@
     th:class="|text-size-${theme.config?.styles?.text_size}|"
     th:attr="data-color-scheme=${theme.config?.styles?.color_schema['color-scheme']}, theme=${theme.config?.styles?.color_schema['theme']}"
   >
+    <script th:if="${theme.config?.global?.is_i18n_menu_show}" th:inline="javascript">
+      document.addEventListener("DOMContentLoaded", function () {
+        // 检查目标 li 标签是否具有 class="matched-menu"
+        // 如果开了 i18n 菜单，如果没有菜单成功匹配，这里就会显示默认菜单
+        // 下面这个是页脚的目录项
+        const targetElement = document.querySelector("#footer > div.footer-right > ul > li:nth-child(1)");
+        // 下面这个是文章顶部的目录项
+        const targetElement2 = document.querySelector("#nav > ul > li:nth-child(1)");
+
+        const targetElementList = document.querySelectorAll(".matched-menu");
+
+        if (
+          (targetElement && !targetElement.classList.contains("matched-menu")) ||
+          (targetElement2 && !targetElement2.classList.contains("matched-menu"))
+        ) {
+          // 找到所有 class="default-menu" 的元素
+          const defaultMenus = document.querySelectorAll(".default-menu");
+
+          // 遍历这些元素，移除 style="display: none;"
+          defaultMenus.forEach((menu) => {
+            if (menu.style.display === "none") {
+              menu.style.display = ""; // 清空 display 样式
+            }
+          });
+        }
+      });
+    </script>
     <!--
   本主题的样式切换说明：
   用哪套样式看 body 标签内的 theme 属性值：auto，dark，light，gray
