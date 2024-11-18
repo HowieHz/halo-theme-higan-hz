@@ -38,7 +38,7 @@
               data-icon="typcn:pin-outline"
               th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='left'"
             ></i>
-            <a th:href="@{${post.status?.permalink}}" th:text="${post.spec.title}">文章标题替换位</a>
+            <a th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}">文章标题替换位</a>
             <i
               id="post-list-pin-icon"
               class="iconify iconify-middle"
