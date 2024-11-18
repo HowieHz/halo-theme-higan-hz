@@ -19,7 +19,7 @@
     </section>
 
     <p id="findMe" th:if="${theme?.config?.rss?.index_rss or not #arrays.isEmpty(theme?.config?.sns?.index_sns)}">
-      [(${theme.config?.index_styles?.find_me_left_text})]
+      [(#{page.index.findMeLeftText})]
       <th:block th:with="sns=${theme?.config?.sns}">
         <a
           class="icon"
@@ -44,10 +44,8 @@
     </p>
 
     <th:block th:if="${theme?.config.index_styles?.post_list_layout=='post-list-summary'}">
-      <h2 class="h1" th:if="${not #strings.isEmpty(theme.config?.index_styles?.index_post_list_title)}">
-        <a th:href="@{/archives}" th:text="${theme.config?.index_styles?.index_post_list_title}"
-          >首页文章列表标题替换位</a
-        >
+      <h2 class="h1" th:if="${not #strings.isEmpty(page.index.indexPostListTitle)}">
+        <a th:href="@{/archives}" th:text="#{page.index.indexPostListTitle}">首页文章列表标题替换位</a>
       </h2>
       <th:block th:insert="~{fragments/posts :: post-list-summary(${posts})}"></th:block>
     </th:block>
