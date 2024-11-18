@@ -154,7 +154,11 @@
           </ul>
         </div>
         <div class="pagination mt-0">
-          <a th:href="@{${moments.prevUrl}}" th:if="${moments.hasPrevious()}" th:aria-label="#{common.previousPage.aria-label}">
+          <a
+            th:href="@{${moments.prevUrl}}"
+            th:if="${moments.hasPrevious()}"
+            th:aria-label="#{common.previousPage.aria-label}"
+          >
             <i class="iconify iconify-middle" data-icon="material-symbols:chevron-left"></i>
           </a>
           <span
