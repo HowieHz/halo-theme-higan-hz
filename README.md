@@ -9,6 +9,8 @@
 
 该主题是 guqing 的 [halo-theme-higan](https://github.com/guqing/halo-theme-higan) 进行了定制化修改后的主题
 
+主题交流群（QQ）：694413711
+
 > 更激进的修改，更高的配置自由度！
 
 ### 特色功能概要
