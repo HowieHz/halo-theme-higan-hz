@@ -506,13 +506,7 @@ spec:
                       data-icon: ant-design:dribbble-circle-filled,
                     }
                 - label: Email
-                  value:
-                    {
-                      type: "email",
-                      url: "mailto:",
-                      aria-label: "Find me on Email",
-                      data-icon: ph:envelope-simple-bold,
-                    }
+                  value: { type: "email", url: "mailto:", aria-label: "Find me on Email", data-icon: ic:outline-email }
                 - label: Facebook
                   value:
                     {
