@@ -21,14 +21,17 @@
     <p id="findMe" th:if="${not #arrays.isEmpty(theme?.config?.sns?.index_sns)}">
       [(#{page.index.findMeLeftText})]
       <th:block th:each="item : ${theme?.config?.sns?.index_sns}">
-        <a
-          class="icon"
-          th:href="@{${item?.type['url']}+${item?.input_value}}"
-          target="_blank"
-          th:attr="aria-label=${item?.type['aria-label']}"
-        >
-          <i class="iconify iconify-middle" th:attr="data-icon=${item?.type['data-icon']}"></i>
-        </a>
+        <th:block th:if="${not #strings.equals(item?.type['type'], 'text')}">
+          <a
+            class="icon"
+            th:href="@{${item?.type['url']}+${item?.input_value}}"
+            target="_blank"
+            th:attr="aria-label=${item?.type['aria-label']}"
+          >
+            <i class="iconify iconify-middle" th:attr="data-icon=${item?.type['data-icon']}"></i>
+          </a>
+        </th:block>
+        <th:block th:if="${#strings.equals(item?.type['type'], 'text')}"> [(${item?.input_value})] </th:block>
       </th:block>
     </p>
 
