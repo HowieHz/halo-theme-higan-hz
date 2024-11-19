@@ -415,26 +415,8 @@ spec:
               label: 开启
             - value: false
               label: 关闭
-    - group: rss
-      label: RSS
-      formSchema:
-        - $formkit: radio
-          name: index_rss
-          label: 首页 RSS 展示
-          value: true
-          attrs:
-            icon: rss
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: text
-          name: rss_url
-          label: "RSS地址"
-          value: "/rss.xml"
     - group: sns
-      label: 社交资料
+      label: 社交资料/RSS
       formSchema:
         - $formkit: repeater
           name: index_sns
@@ -448,55 +430,60 @@ spec:
               validation: "required"
               placeholder: "请选择你要展示的社交资料"
               help:
-                if: "$get(index_sns_type).value.type === 'bilibili'"
-                then: "只需填入 uid"
+                if: "$get(index_sns_type).value.type === 'rss'"
+                then: "填入 feed 地址, 示例: /rss.xml"
                 else:
-                  if: "$get(index_sns_type).value.type === 'dribbble'"
-                  then: "只需填入用户名"
+                  if: "$get(index_sns_type).value.type === 'bilibili'"
+                  then: "只需填入 uid"
                   else:
-                    if: "$get(index_sns_type).value.type === 'email'"
-                    then: "只需填入邮箱地址"
+                    if: "$get(index_sns_type).value.type === 'dribbble'"
+                    then: "只需填入用户名"
                     else:
-                      if: "$get(index_sns_type).value.type === 'facebook'"
-                      then: "只需填入用户名"
+                      if: "$get(index_sns_type).value.type === 'email'"
+                      then: "只需填入邮箱地址"
                       else:
-                        if: "$get(index_sns_type).value.type === 'github'"
+                        if: "$get(index_sns_type).value.type === 'facebook'"
                         then: "只需填入用户名"
                         else:
-                          if: "$get(index_sns_type).value.type === 'instagram'"
+                          if: "$get(index_sns_type).value.type === 'github'"
                           then: "只需填入用户名"
                           else:
-                            if: "$get(index_sns_type).value.type === 'qq'"
-                            then: "只需填入 QQ 号"
+                            if: "$get(index_sns_type).value.type === 'instagram'"
+                            then: "只需填入用户名"
                             else:
-                              if: "$get(index_sns_type).value.type === 'reddit'"
-                              then: "只需填入 ID"
+                              if: "$get(index_sns_type).value.type === 'qq'"
+                              then: "只需填入 QQ 号"
                               else:
-                                if: "$get(index_sns_type).value.type === 'stack_overflow'"
-                                then: "只需填入个人主页网址在 users/ 后的部分"
+                                if: "$get(index_sns_type).value.type === 'reddit'"
+                                then: "只需填入 ID"
                                 else:
-                                  if: "$get(index_sns_type).value.type === 'telegram'"
-                                  then: "只需填入 ID"
+                                  if: "$get(index_sns_type).value.type === 'stack_overflow'"
+                                  then: "只需填入个人主页网址在 users/ 后的部分"
                                   else:
-                                    if: "$get(index_sns_type).value.type === 'x'"
-                                    then: "只需填入用户名"
+                                    if: "$get(index_sns_type).value.type === 'telegram'"
+                                    then: "只需填入 ID"
                                     else:
-                                      if: "$get(index_sns_type).value.type === 'youtube'"
-                                      then: "只需填写频道网址在 channel/ 后的部分"
+                                      if: "$get(index_sns_type).value.type === 'x'"
+                                      then: "只需填入用户名"
                                       else:
-                                        if: "$get(index_sns_type).value.type === 'douban'"
-                                        then: "只需填写个人主页网址在 people/ 后的部分"
+                                        if: "$get(index_sns_type).value.type === 'youtube'"
+                                        then: "只需填写频道网址在 channel/ 后的部分"
                                         else:
-                                          if: "$get(index_sns_type).value.type === 'neteasecloudmusic'"
-                                          then: "只需填写个人主页网址在 ?id= 后的部分"
+                                          if: "$get(index_sns_type).value.type === 'douban'"
+                                          then: "只需填写个人主页网址在 people/ 后的部分"
                                           else:
-                                            if: "$get(index_sns_type).value.type === 'weibo'"
-                                            then: "只需填入 ID"
+                                            if: "$get(index_sns_type).value.type === 'neteasecloudmusic'"
+                                            then: "只需填写个人主页网址在 ?id= 后的部分"
                                             else:
-                                              if: "$get(index_sns_type).value.type === 'zhihu'"
-                                              then: "只需填写个人主页网址在 people/ 后的部分"
-                                              else: ""
+                                              if: "$get(index_sns_type).value.type === 'weibo'"
+                                              then: "只需填入 ID"
+                                              else:
+                                                if: "$get(index_sns_type).value.type === 'zhihu'"
+                                                then: "只需填写个人主页网址在 people/ 后的部分"
+                                                else: ""
               options:
+                - label: RSS
+                  value: { type: "rss", url: "", aria-label: "Find me on RSS", data-icon: heroicons-outline:rss }
                 - label: BiliBili
                   value:
                     {

@@ -18,22 +18,11 @@
       </th:block>
     </section>
 
-    <p id="findMe" th:if="${theme?.config?.rss?.index_rss or not #arrays.isEmpty(theme?.config?.sns?.index_sns)}">
+    <p id="findMe" th:if="${not #arrays.isEmpty(theme?.config?.sns?.index_sns)}">
       [(#{page.index.findMeLeftText})]
-      <th:block th:with="sns=${theme?.config?.sns}">
+      <th:block th:each="item : ${theme?.config?.sns?.index_sns}">
         <a
           class="icon"
-          target="_blank"
-          th:href="@{${theme?.config?.rss?.rss_url}}"
-          aria-label="Find me on rss"
-          th:if="${theme?.config?.rss?.index_rss}"
-        >
-          <i class="iconify iconify-middle" data-icon="heroicons-outline:rss"></i>
-        </a>
-
-        <a
-          class="icon"
-          th:each="item : ${theme?.config?.sns?.index_sns}"
           th:href="@{${item?.type['url']}+${item?.input_value}}"
           target="_blank"
           th:attr="aria-label=${item?.type['aria-label']}"
