@@ -23,7 +23,7 @@
       <a
         th:href="@{${menuItem.status?.href}}"
         th:target="${menuItem.spec.target?.value}"
-        th:aria-label="#{fragment.menu.menuItem.aria-label.prefix} + ${menuItem.status?.displayName}"
+        th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItem.status?.displayName})}"
         th:text="${menuItem.status?.displayName}"
         >目录项填充位置</a
       >
@@ -40,7 +40,7 @@
           <a
             th:href="@{${menuItemChildren.status?.href}}"
             th:target="${menuItemChildren.spec.target?.value}"
-            th:aria-label="#{fragment.menu.menuItem.aria-label.prefix} + ${menuItemChildren.status?.displayName}"
+            th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItemChildren.status?.displayName})}"
             th:text="${menuItemChildren.status?.displayName}"
             >目录项填充位置</a
           >
@@ -59,7 +59,7 @@
           <a
             th:href="@{${menuItemChildren.status?.href}}"
             th:target="${menuItemChildren.spec.target?.value}"
-            th:aria-label="#{fragment.menu.menuItem.aria-label.prefix} + ${menuItemChildren.status?.displayName}"
+            th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItemChildren.status?.displayName})}"
             th:text="${menuItemChildren.status?.displayName}"
             >目录项填充位置</a
           >
@@ -75,7 +75,7 @@
         <a
           th:href="@{${menuItemChildren.status?.href}}"
           th:target="${menuItemChildren.spec.target?.value}"
-          th:aria-label="#{fragment.menu.menuItem.aria-label.prefix} + ${menuItemChildren.status?.displayName}"
+          th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItemChildren.status?.displayName})}"
           th:text="${menuItemChildren.status?.displayName}"
           >目录项填充位置</a
         >
@@ -89,7 +89,7 @@
     <li>
       <a
         class="icon"
-        th:aria-label="#{common.shareModal.share.prefix} + 'facebook'"
+        th:aria-label="#{common.shareModal.share.aria-label('facebook')}"
         th:href="'http://www.facebook.com/sharer.php?u=' + ${permalink} + '&amp;title=' + ${permalink}"
       >
         <i class="iconify" data-icon="ic:baseline-facebook"></i
@@ -98,7 +98,7 @@
     <li>
       <a
         class="icon"
-        th:aria-label="#{common.shareModal.share.prefix} + 'X'"
+        th:aria-label="#{common.shareModal.share.aria-label('X')}"
         th:href="'https://x.com/share?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
         <i class="iconify" data-icon="mdi:twitter-circle"></i
@@ -107,7 +107,7 @@
     <li>
       <a
         class="icon"
-        th:aria-label="#{common.shareModal.share.prefix} + 'linkedin'"
+        th:aria-label="#{common.shareModal.share.aria-label('linkedin')}"
         th:href="'http://www.linkedin.com/shareArticle?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
         <i class="iconify" data-icon="mdi:linkedin"></i
@@ -116,7 +116,7 @@
     <li>
       <a
         class="icon"
-        th:aria-label="#{common.shareModal.share.prefix} + 'pinterest'"
+        th:aria-label="#{common.shareModal.share.aria-label('pinterest')}"
         th:href="'https://pinterest.com/pin/create/bookmarklet/?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
         <i class="iconify" data-icon="mdi:pinterest"></i
@@ -125,7 +125,7 @@
     <li>
       <a
         class="icon"
-        th:aria-label="#{common.shareModal.share.prefix} + 'qzone'"
+        th:aria-label="#{common.shareModal.share.aria-label('qzone')}"
         th:href="'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + ${permalink} + '&amp;title=' + ${title}"
       >
         <i class="iconify" data-icon="cib:qzone"></i
@@ -134,7 +134,7 @@
     <li>
       <a
         class="icon"
-        th:aria-label="#{common.shareModal.share.prefix} + 'email'"
+        th:aria-label="#{common.shareModal.share.aria-label('email')}"
         th:href="'mailto:?subject=' + ${title} + '&amp;body=Check out this article: ' + ${permalink}"
       >
         <i class="iconify" data-icon="ph:envelope-simple-bold"></i

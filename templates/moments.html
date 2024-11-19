@@ -164,7 +164,7 @@
           <span
             class="page-number"
             th:with="totalPage=${moments.totalPages}"
-            th:text="#{common.page-number.prefix} + ${moments.page} + #{common.page-number.middle} + ${totalPage} + #{common.page-number.suffix}"
+            th:text="#{common.page-number.text(${moments.page}, ${totalPage})}"
             >Page 1 of 1 填充位</span
           >
           <a th:href="@{${moments.nextUrl}}" th:if="${moments.hasNext()}" th:aria-label="#{common.nextPage.aria-label}">

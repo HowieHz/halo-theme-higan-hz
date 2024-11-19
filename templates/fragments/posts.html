@@ -6,7 +6,7 @@
     <span
       class="page-number"
       th:with="totalPage=${posts.totalPages}"
-      th:text="#{common.page-number.prefix} + ${posts.page} + #{common.page-number.middle} + ${totalPage} + #{common.page-number.suffix}"
+      th:text="#{common.page-number.text(${posts.page}, ${totalPage})}"
       >Page 1 of 1 填充位</span
     >
     <a th:href="@{${posts.nextUrl}}" th:if="${posts.hasNext()}" th:aria-label="#{common.nextPage.aria-label}">
