@@ -50,6 +50,7 @@
     <script th:src="@{/assets/lib/jquery/jquery.min.js(v=${theme.spec.version})}"></script>
     <script th:src="@{/assets/dist/main.iife.js(v=${theme.spec.version})}"></script>
   </head>
+
   <body
     th:class="|text-size-${theme.config?.styles?.text_size}|"
     th:attr="data-color-scheme=${theme.config?.styles?.color_schema['color-scheme']}, theme=${theme.config?.styles?.color_schema['theme']}"
@@ -78,6 +79,83 @@
             menu.remove();
           });
         }
+      });
+    </script>
+    <script>
+      function applyTheme(theme) {
+        if (typeof Storage !== "undefined") {
+          localStorage.setItem("pref-theme", theme);
+        } else {
+          console.log("Sorry, your browser does not support web storage...");
+        }
+        applyThemeNoSave(theme);
+      }
+
+      function applyThemeNoSave(theme) {
+        document.body.setAttribute("data-color-scheme", theme);
+        document.body.setAttribute("theme", theme);
+        updateThemeIcon(theme);
+      }
+
+      function updateThemeIcon(theme) {
+        const themeIcon = document.getElementById("theme-toggle-button-icon");
+        if (theme === "light") {
+          themeIcon.setAttribute("data-icon", "ph:sun-bold");
+        } else if (theme === "dark") {
+          themeIcon.setAttribute("data-icon", "ph:moon-bold");
+        } else {
+          themeIcon.setAttribute("data-icon", "ph:circle-bold");
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const prefTheme = localStorage.getItem("pref-theme");
+        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+        switch (prefTheme) {
+          case "dark":
+            applyThemeNoSave("dark");
+            break;
+          case "light":
+            applyThemeNoSave("light");
+            break;
+          case "auto":
+            applyThemeNoSave("auto");
+            break;
+          default:
+            applyThemeNoSave(prefersDarkScheme ? "dark" : "light");
+            break;
+        }
+      });
+
+      function getPreferredTheme() {
+        const storedTheme = localStorage.getItem("pref-theme");
+        if (storedTheme) {
+          return storedTheme;
+        }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
+      }
+
+      function toggleTheme(event) {
+        event.preventDefault(); // 阻止默认行为，防止页面刷新
+        const currentTheme = document.body.attributes["theme"].value;
+        let newTheme;
+        // light -> dark -> auto -> light
+        if (currentTheme === "light") {
+          newTheme = "dark";
+        } else if (currentTheme === "dark") {
+          newTheme = "auto";
+        } else {
+          newTheme = "light";
+        }
+        applyTheme(newTheme);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("theme-toggle-button").addEventListener("click", toggleTheme);
       });
     </script>
     <!--

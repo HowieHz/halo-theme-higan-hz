@@ -4,7 +4,10 @@
   th:replace="~{fragments/layout :: html(title=#{page.tags.page-title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
 >
   <th:block th:fragment="content">
-    <h1>[(#{page.tags.title})]</h1>
+    <h1>
+      <th:block th:text="${page.tags.title">标题替换位</th:block
+      ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
+    </h1>
     <ul th:if="${!#lists.isEmpty(tags)}" class="flex-auto">
       <th:block th:each="tag : ${tags}">
         <li>

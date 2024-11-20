@@ -11,7 +11,10 @@
 >
   <th:block th:fragment="content">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-      <h1 th:text="${singlePage.spec?.title}">标题替换位</h1>
+      <h1>
+        <th:block th:text="${singlePage.spec?.title">标题替换位</th:block
+        ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
+      </h1>
       <div class="content flex-auto" itemprop="articleBody" th:utext="${singlePage.content?.content}">
         singlePage formatted content
       </div>

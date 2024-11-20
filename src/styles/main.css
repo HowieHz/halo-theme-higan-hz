@@ -6,6 +6,16 @@
 @import "./mixins/base.css";
 
 /* 样式开始 */
+#theme-toggle-button {
+  background-color: transparent;
+  border: none;
+  vertical-align: middle;
+}
+
+#theme-toggle-button .icon:hover {
+  color: var(--color-link);
+}
+
 body h1,
 body .h1 {
   display: block;

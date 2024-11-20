@@ -10,7 +10,10 @@
       ></div>
 
       <div id="title">
-        <h1 th:text="${site?.title}"></h1>
+        <h1>
+          <th:block th:text="${site?.title}">站点标题替换位</th:block
+          ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
+        </h1>
       </div>
     </a>
     <div id="nav">
