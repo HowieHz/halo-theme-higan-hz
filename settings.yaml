@@ -92,7 +92,7 @@ spec:
           name: is_dark_mode_switch_show
           label: 明暗模式切换按钮
           value: false
-          help: 如启用此项，将在大标题旁显示明暗模式切换按钮（具体运行逻辑请看文档）
+          help: 如启用此项，将在大标题旁显示明暗模式切换按钮，并且配色方案将强制定义为“跟随系统”（具体运行逻辑请看文档）
           options:
             - label: 开启
               value: true
@@ -440,6 +440,7 @@ spec:
         - $formkit: repeater
           name: index_sns
           label: 首页社交资料展示
+          help: 注：刷新页面后发现下面选择的“类型“消失了是正常情况，数据实际是保存着的
           value: []
           children:
             - $formkit: select
@@ -449,61 +450,66 @@ spec:
               validation: "required"
               placeholder: "请选择你要展示的社交资料"
               help:
-                if: "$get(index_sns_type).value.type === 'text'"
-                then: "填入任意纯文本"
+                if: "$get(index_sns_type).value.type === 'custom_sns'"
+                then: "在此处填写在下方定义的识别码"
                 else:
-                  if: "$get(index_sns_type).value.type === 'rss'"
-                  then: "填入 feed 地址, 示例: /rss.xml"
+                  if: "$get(index_sns_type).value.type === 'text'"
+                  then: "填入任意纯文本"
                   else:
-                    if: "$get(index_sns_type).value.type === 'bilibili'"
-                    then: "只需填入 uid"
+                    if: "$get(index_sns_type).value.type === 'rss'"
+                    then: "填入 feed 地址, 示例: /rss.xml"
                     else:
-                      if: "$get(index_sns_type).value.type === 'dribbble'"
-                      then: "只需填入用户名"
+                      if: "$get(index_sns_type).value.type === 'bilibili'"
+                      then: "只需填入 uid"
                       else:
-                        if: "$get(index_sns_type).value.type === 'email'"
-                        then: "只需填入邮箱地址"
+                        if: "$get(index_sns_type).value.type === 'dribbble'"
+                        then: "只需填入用户名"
                         else:
-                          if: "$get(index_sns_type).value.type === 'facebook'"
-                          then: "只需填入用户名"
+                          if: "$get(index_sns_type).value.type === 'email'"
+                          then: "只需填入邮箱地址"
                           else:
-                            if: "$get(index_sns_type).value.type === 'github'"
+                            if: "$get(index_sns_type).value.type === 'facebook'"
                             then: "只需填入用户名"
                             else:
-                              if: "$get(index_sns_type).value.type === 'instagram'"
+                              if: "$get(index_sns_type).value.type === 'github'"
                               then: "只需填入用户名"
                               else:
-                                if: "$get(index_sns_type).value.type === 'qq'"
-                                then: "只需填入 QQ 号"
+                                if: "$get(index_sns_type).value.type === 'instagram'"
+                                then: "只需填入用户名"
                                 else:
-                                  if: "$get(index_sns_type).value.type === 'reddit'"
-                                  then: "只需填入 ID"
+                                  if: "$get(index_sns_type).value.type === 'qq'"
+                                  then: "只需填入 QQ 号"
                                   else:
-                                    if: "$get(index_sns_type).value.type === 'stack_overflow'"
-                                    then: "只需填入个人主页网址在 users/ 后的部分"
+                                    if: "$get(index_sns_type).value.type === 'reddit'"
+                                    then: "只需填入 ID"
                                     else:
-                                      if: "$get(index_sns_type).value.type === 'telegram'"
-                                      then: "只需填入 ID"
+                                      if: "$get(index_sns_type).value.type === 'stack_overflow'"
+                                      then: "只需填入个人主页网址在 users/ 后的部分"
                                       else:
-                                        if: "$get(index_sns_type).value.type === 'x'"
-                                        then: "只需填入用户名"
+                                        if: "$get(index_sns_type).value.type === 'telegram'"
+                                        then: "只需填入 ID"
                                         else:
-                                          if: "$get(index_sns_type).value.type === 'youtube'"
-                                          then: "只需填写频道网址在 channel/ 后的部分"
+                                          if: "$get(index_sns_type).value.type === 'x'"
+                                          then: "只需填入用户名"
                                           else:
-                                            if: "$get(index_sns_type).value.type === 'douban'"
-                                            then: "只需填写个人主页网址在 people/ 后的部分"
+                                            if: "$get(index_sns_type).value.type === 'youtube'"
+                                            then: "只需填写频道网址在 channel/ 后的部分"
                                             else:
-                                              if: "$get(index_sns_type).value.type === 'neteasecloudmusic'"
-                                              then: "只需填写个人主页网址在 ?id= 后的部分"
+                                              if: "$get(index_sns_type).value.type === 'douban'"
+                                              then: "只需填写个人主页网址在 people/ 后的部分"
                                               else:
-                                                if: "$get(index_sns_type).value.type === 'weibo'"
-                                                then: "只需填入 ID"
+                                                if: "$get(index_sns_type).value.type === 'neteasecloudmusic'"
+                                                then: "只需填写个人主页网址在 ?id= 后的部分"
                                                 else:
-                                                  if: "$get(index_sns_type).value.type === 'zhihu'"
-                                                  then: "只需填写个人主页网址在 people/ 后的部分"
-                                                  else: ""
+                                                  if: "$get(index_sns_type).value.type === 'weibo'"
+                                                  then: "只需填入 ID"
+                                                  else:
+                                                    if: "$get(index_sns_type).value.type === 'zhihu'"
+                                                    then: "只需填写个人主页网址在 people/ 后的部分"
+                                                    else: ""
               options:
+                - label: 自定义资料
+                  value: { type: "custom_sns", url: "", aria-label: "", data-icon: "" }
                 - label: 纯文本
                   value: { type: "text", url: "", aria-label: "", data-icon: "" }
                 - label: RSS
@@ -634,3 +640,29 @@ spec:
               name: input_value
               label: 值
               validation: "required"
+        - $formkit: repeater
+          name: custom_sns
+          label: 设定自定义资料
+          value: []
+          help: 上面预设的选项可能不能满足需求，那么来这自定义属于你的资料吧！（在此处自定义完后别忘记在上面添加“自定义资料”）
+          children:
+            - $formkit: text
+              name: id
+              label: 识别码
+              validation: "required"
+              help: 任意字母，数字，下划线组合，如：myBlog
+            - $formkit: text
+              name: url
+              label: 链接
+              validation: "required"
+              help: "如：https://howiehz.top"
+            - $formkit: text
+              name: icon
+              label: 图标
+              validation: "required"
+              help: "如：ant-design:github-filled, 请前往 https://icon-sets.iconify.design/ 寻找你所需的图标"
+            - $formkit: text
+              name: aria_label
+              label: aria-label
+              validation: "required"
+              help: 无障碍标签，方便视障人士读屏，如：Find me on my blog
