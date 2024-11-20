@@ -81,7 +81,7 @@
         }
       });
     </script>
-    <script>
+    <script th:if="${theme.config?.styles?.is_dark_mode_switch_show}">
       function applyTheme(theme) {
         if (typeof Storage !== "undefined") {
           localStorage.setItem("pref-theme", theme);
