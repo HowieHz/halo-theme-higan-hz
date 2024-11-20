@@ -5,7 +5,7 @@
 >
   <th:block th:fragment="content">
     <h1>
-      <th:block th:text="${page.categories.title}">标题替换位</th:block
+      <th:block th:text="#{page.categories.title}">标题替换位</th:block
       ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
     </h1>
     <ul th:if="${!#lists.isEmpty(categories)}" class="flex-auto">
