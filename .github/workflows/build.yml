@@ -1,0 +1,38 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  build:
+    name: Build and Upload Theme
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Install Dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Zip
+        run: |
+          zip -r howiehz-higan-cn.zip . -x .git/\* .github/\* node_modules/\* .gitignore .editorconfig .eslintignore .eslintrc.js .prettierrc.js .stylelintrc.js .vscode/\* .nuxt/\* .nuxtignore .env .env.development .env.production .env.test .env.local .env.development.local .env.production.local .env.test.local
+          zip -r howiehz-higan-en.zip . -x .git/\* .github/\* node_modules/\* .gitignore .editorconfig .eslintignore .eslintrc.js .prettierrc.js .stylelintrc.js .vscode/\* .nuxt/\* .nuxtignore .env .env.development .env.production .env.test .env.local .env.development.local .env.production.local .env.test.local settings.yaml
+          rm settings.yaml
+          mv i18n-settings/settings.en.yaml settings.yaml
+          zip -r howiehz-higan-en.zip settings.yaml
+          mkdir -p builds/target
+          mv howiehz-higan-cn.zip builds/target
+          mv howiehz-higan-en.zip builds/target
+      - name: Upload Theme Build Target
+        uses: actions/upload-artifact@v4
+        with:
+          name: theme-artifact
+          path: builds/target/*

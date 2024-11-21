@@ -1,0 +1,640 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: howiehz-higan-setting
+spec:
+  forms:
+    - group: global
+      label: Global
+      formSchema:
+        - $formkit: text
+          name: defalut_page_language
+          label: Default page language
+          value: "zh"
+          help: "The default language of the page, such as: zh, en."
+        - $formkit: checkbox
+          name: is_i18n_menu_show
+          label: Enable multi-language menu support
+          value: false
+          help: "If enabled, the theme will automatically generate a multi-language menu based on the menu name. For details, please refer to the documentation."
+        - $formkit: checkbox
+          if: "$is_i18n_menu_show === true"
+          name: is_i18n_menu_prefix_match_mode
+          label: Enable prefix match mode
+          value: true
+          help: "If enabled, the theme will match the menu name with the current language prefix. For example, if the current language is zh, the theme will match the menu name with zh-xxx."
+        - $formkit: text
+          if: "$is_i18n_menu_show === true"
+          name: defalut_i18n_menu_name
+          label: Default multi-language menu name
+          value: "defalut"
+          help: "The default menu name for multi-language menus."
+        - $formkit: checkbox
+          name: upgrade_insecure_requests
+          label: CSP:upgrade-insecure-requests
+          value: false
+          help: "If enabled, the theme will add the upgrade-insecure-requests directive to the Content-Security-Policy header."
+        - $formkit: radio
+          name: anti_mirror_site
+          label: Anti-mirror site
+          help: "If enabled, the theme will check the domain name of the current page. If the domain name is not in the whitelist, it will jump to the target link."
+          value: false
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: repeater
+          name: allow_site_whitelist
+          if: "$anti_mirror_site === true"
+          label: Domain whitelist
+          value: []
+          children:
+            - $formkit: text
+              name: input_domain
+              label: Domain (base64 encoded)
+              validation: "required"
+              help: "For example, the domain name is howiehz.top, the base64 encoding is aG93aWVoei50b3A="
+        - $formkit: text
+          name: target_url
+          if: "$anti_mirror_site === true"
+          label: Target link (base64 encoded)
+          help: "When the domain name of the current page is not in the whitelist, the theme will jump to the target link."
+          value: "bG9jYWxob3N0"
+        - $formkit: radio
+          name: is_keep_path_and_query
+          if: "$anti_mirror_site === true"
+          label: Keep path and query
+          help: "If enabled, the theme will keep the path and query parameters of the current page when jumping to the target link."
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+    - group: styles
+      label: Style
+      formSchema:
+        - $formkit: select
+          name: color_schema
+          label: Color scheme
+          value: { theme: "auto", comment: "auto", color-scheme: "auto" }
+          options:
+            - label: "Auto"
+              value: { theme: "auto", comment: "auto", color-scheme: "auto" }
+            - label: "Dark"
+              value: { theme: "dark", comment: "dark", color-scheme: "dark" }
+            - label: "Light"
+              value: { theme: "light", comment: "light", color-scheme: "light" }
+            - label: "Gray"
+              value: { theme: "gray", comment: "light", color-scheme: "light" }
+        - $formkit: radio
+          name: is_dark_mode_switch_show
+          label: Dark mode switch
+          value: false
+          help: "If enabled, the theme will display a dark mode switch on the right of the title."
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: select
+          name: text_size
+          label: Text size
+          value: "small"
+          options:
+            - label: "Small"
+              value: "small"
+            - label: "Normal"
+              value: "normal"
+            - label: "Large"
+              value: "large"
+        - $formkit: radio
+          name: is_max_width_settings
+          label: Custom content area maximum width
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+          help: "If enabled, you can customize the maximum width of the content area."
+        - $formkit: text
+          name: max_width
+          if: "$is_max_width_settings===true"
+          label: Maximum width of content area
+          value: 48rem
+          placeholder: "Default: 48rem"
+          help: "Allow all CSS length units, such as: 48rem, 780px, 70vw, 70%."
+        - $formkit: radio
+          name: is_min_width_settings
+          label: Custom content area minimum width
+          value: false
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: text
+          name: min_width
+          if: "$is_min_width_settings===true"
+          label: Minimum width of content area
+          value: 48rem
+          placeholder: "Default: 48rem"
+          help: "Allow all CSS length units, such as: 48rem, 780px, 70vw, 70%. When the screen width is less than the minimum width, content area will be less than the minimum width."
+        - $formkit: radio
+          name: is_force_min_width_settings
+          if: "$is_min_width_settings===true"
+          label: Force content area minimum width
+          value: false
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+          help: "If enabled, the content area will always be larger than the minimum width. So when the screen width is less than the minimum width, vertical scrolling will appear."
+        - $formkit: radio
+          name: is_content_width_style_settings
+          label: Custom content area width style
+          value: false
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+          help: "This determines the content area width style."
+        - $formkit: text
+          name: content_width_style
+          if: "$is_content_width_style_settings===true"
+          label: Width style of content area
+          value: fit-content
+          placeholder: "Default: fit-content"
+          help: "This determines the style value of the width attribute corresponding to the content area style."
+        - $formkit: attachment
+          name: icon
+          label: Custom icon
+        - $formkit: radio
+          name: avatar_circle
+          label: Circle avatar
+          value: false
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: avatar_grayout
+          label: Avatar grayscale
+          value: false
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_footer_theme_info_show
+          label: Theme information in the footer
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_footer_copyright_show
+          label: Footer theme copyright information in the footer
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_footer_force_bottom
+          label: Footer force to the bottom
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_footer_menu_show
+          label: Footer menu
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_footer_content_show
+          label: Footer content at the bottom
+          value: false
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: code
+          name: footer_content
+          if: "$is_footer_content_show === true"
+          label: Footer content at the bottom (support html code block)
+          language: html
+          height: 150px
+    - group: index_styles
+      label: Home page style
+      formSchema:
+        - $formkit: text
+          name: page_html_title
+          label: Page title
+          help: "The title of the page, which will be displayed in the browser title bar."
+          value: ""
+        - $formkit: radio
+          name: hitokoto
+          label: Hitokoto
+          value: false
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: radio
+          name: is_resume_show
+          label: Personal profile/Announcement content
+          value: false
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: code
+          name: resume
+          if: "$is_resume_show === true"
+          label: Personal profile/Announcement content (support html code block)
+          language: html
+          height: 150px
+        - $formkit: select
+          name: post_list_layout
+          id: index_post_list_layout
+          label: Post list layout
+          value: "simple-post-list"
+          options:
+            - label: "Simple list"
+              value: "simple-post-list"
+            - label: "Summary list"
+              value: "post-list-summary"
+        - $formkit: radio
+          name: is_pin_icon_show
+          label: Top icon display on the post list
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: select
+          name: pin_icon_position
+          if: "$is_pin_icon_show===true"
+          label: Top icon position
+          value: "right"
+          options:
+            - label: "Left side of the title"
+              value: "left"
+            - label: "Right side of the title"
+              value: "right"
+    - group: post_styles
+      label: Post page style
+      formSchema:
+        - $formkit: radio
+          name: post_title_uppper
+          label: Post title uppercase
+          value: false
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_dividing_line_at_the_end_of_post_show
+          label: Enable dividing line at the end of the post
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_post_comment_section_show
+          label: Enable comment section
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+    - group: categories_page_styles
+      label: Category page style
+      formSchema:
+        - $formkit: radio
+          name: is_show_the_number_of_articles_per_category
+          label: Display the number of articles per category
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: text
+          name: characters_to_the_left_of_the_number_of_articles
+          if: "$is_show_the_number_of_articles_per_category === true"
+          label: "Characters to the left of the number of articles"
+          value: "("
+        - $formkit: text
+          name: characters_to_the_right_of_the_number_of_articles
+          if: "$is_show_the_number_of_articles_per_category === true"
+          label: "Characters to the right of the number of articles"
+          value: ")"
+        - $formkit: radio
+          name: is_show_multi_layer_categories
+          label: Display multi-layer categories
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+    - group: custom_page_styles
+      label: Custom page style
+      formSchema:
+        - $formkit: radio
+          name: is_dividing_line_at_the_end_of_content_show
+          label: Enable dividing line at the end of the content
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_custom_page_comment_section_show
+          label: Enable comment section
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+    - group: moments_styles
+      label: Moments page style
+      formSchema:
+        - $formkit: radio
+          name: is_moment_upvote_button_show
+          label: Enable upvote button
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_moment_comment_section_show
+          label: Enable comment section
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+    - group: sns
+      label: Social media settings/RSS
+      formSchema:
+        - $formkit: repeater
+          name: index_sns
+          label: Social media settings
+          help: "You can set up your social media information here, and the theme will automatically generate the corresponding link."
+          value: []
+          children:
+            - $formkit: select
+              name: type
+              id: index_sns_type
+              label: Type
+              validation: "required"
+              placeholder: "Please select"
+              help:
+                if: "$get(index_sns_type).value.type === 'custom_sns'"
+                then: "Enter the id"
+                else:
+                  if: "$get(index_sns_type).value.type === 'text'"
+                  then: "Enter any text"
+                  else:
+                    if: "$get(index_sns_type).value.type === 'rss'"
+                    then: "Enter the feed address, e.g., /rss.xml"
+                    else:
+                      if: "$get(index_sns_type).value.type === 'bilibili'"
+                      then: "Enter the UID only"
+                      else:
+                        if: "$get(index_sns_type).value.type === 'dribbble'"
+                        then: "Enter the username only"
+                        else:
+                          if: "$get(index_sns_type).value.type === 'email'"
+                          then: "Enter the email address only"
+                          else:
+                            if: "$get(index_sns_type).value.type === 'facebook'"
+                            then: "Enter the username only"
+                            else:
+                              if: "$get(index_sns_type).value.type === 'github'"
+                              then: "Enter the username only"
+                              else:
+                                if: "$get(index_sns_type).value.type === 'instagram'"
+                                then: "Enter the username only"
+                                else:
+                                  if: "$get(index_sns_type).value.type === 'qq'"
+                                  then: "Enter the QQ number only"
+                                  else:
+                                    if: "$get(index_sns_type).value.type === 'reddit'"
+                                    then: "Enter the ID only"
+                                    else:
+                                      if: "$get(index_sns_type).value.type === 'stack_overflow'"
+                                      then: "Enter the part of the personal homepage URL after users/"
+                                      else:
+                                        if: "$get(index_sns_type).value.type === 'telegram'"
+                                        then: "Enter the ID only"
+                                        else:
+                                          if: "$get(index_sns_type).value.type === 'x'"
+                                          then: "Enter the username only"
+                                          else:
+                                            if: "$get(index_sns_type).value.type === 'youtube'"
+                                            then: "Enter the part of the channel URL after channel/"
+                                            else:
+                                              if: "$get(index_sns_type).value.type === 'douban'"
+                                              then: "Enter the part of the personal homepage URL after people/"
+                                              else:
+                                                if: "$get(index_sns_type).value.type === 'neteasecloudmusic'"
+                                                then: "Enter the part of the personal homepage URL after ?id="
+                                                else:
+                                                  if: "$get(index_sns_type).value.type === 'weibo'"
+                                                  then: "Enter the ID only"
+                                                  else:
+                                                    if: "$get(index_sns_type).value.type === 'zhihu'"
+                                                    then: "Enter the part of the personal homepage URL after people/"
+                                                    else: ""
+              options:
+                - label: Custom
+                  value: { type: "custom_sns", url: "", aria-label: "", data-icon: "" }
+                - label: Text
+                  value: { type: "text", url: "", aria-label: "", data-icon: "" }
+                - label: RSS
+                  value: { type: "rss", url: "", aria-label: "Find me on RSS", data-icon: heroicons-outline:rss }
+                - label: BiliBili
+                  value:
+                    {
+                      type: "bilibili",
+                      url: "https://space.bilibili.com/",
+                      aria-label: "Find me on BiliBili",
+                      data-icon: simple-icons:bilibili,
+                    }
+                - label: Dribbble
+                  value:
+                    {
+                      type: "dribbble",
+                      url: "https://dribbble.com/",
+                      aria-label: "Find me on Dribbble",
+                      data-icon: ant-design:dribbble-circle-filled,
+                    }
+                - label: Email
+                  value: { type: "email", url: "mailto:", aria-label: "Find me on Email", data-icon: ic:outline-email }
+                - label: Facebook
+                  value:
+                    {
+                      type: "facebook",
+                      url: "https://www.facebook.com/",
+                      aria-label: "Find me on facebook",
+                      data-icon: ic:baseline-facebook,
+                    }
+                - label: Github
+                  value:
+                    {
+                      type: "github",
+                      url: "https://github.com/",
+                      aria-label: "Find me on Github",
+                      data-icon: mdi:github,
+                    }
+                - label: Instagram
+                  value:
+                    {
+                      type: "instagram",
+                      url: "https://www.instagram.com/",
+                      aria-label: "Find me on Instagram",
+                      data-icon: ant-design:instagram-filled,
+                    }
+                - label: QQ
+                  value:
+                    {
+                      type: "qq",
+                      url: "tencent://message/?Site=&Menu=yes&uin=",
+                      aria-label: "Find me on QQ",
+                      data-icon: ant-design:qq-circle-filled,
+                    }
+                - label: Reddit
+                  value:
+                    {
+                      type: "reddit",
+                      url: "https://www.reddit.com/user/",
+                      aria-label: "Find me on Reddit",
+                      data-icon: ant-design:reddit-circle-filled,
+                    }
+                - label: "Stack Overflow"
+                  value:
+                    {
+                      type: "stack_overflow",
+                      url: "https://stackoverflow.com/users/",
+                      aria-label: "Find me on Stack Overflow",
+                      data-icon: mdi:stack-overflow,
+                    }
+                - label: Telegram
+                  value:
+                    {
+                      type: "telegram",
+                      url: "https://t.me/",
+                      aria-label: "Find me on Telegram",
+                      data-icon: ic:baseline-telegram,
+                    }
+                - label: X
+                  value:
+                    {
+                      type: "x",
+                      url: "https://x.com/",
+                      aria-label: "Find me on X",
+                      data-icon: ant-design:twitter-circle-filled,
+                    }
+                - label: YouTube
+                  value:
+                    {
+                      type: "youtube",
+                      url: "https://www.youtube.com/channel/",
+                      aria-label: "Find me on YouTube",
+                      data-icon: ant-design:youtube-filled,
+                    }
+                - label: Douban
+                  value:
+                    {
+                      type: "douban",
+                      url: "https://www.douban.com/people/",
+                      aria-label: "Find me on douban",
+                      data-icon: ri:douban-line,
+                    }
+                - label: NetEase CloudMusic
+                  value:
+                    {
+                      type: "neteasecloudmusic",
+                      url: "https://music.163.com/#/user/home?id=",
+                      aria-label: "Find me on NetEase CloudMusic",
+                      data-icon: simple-icons:neteasecloudmusic,
+                    }
+                - label: Weibo
+                  value:
+                    {
+                      type: "weibo",
+                      url: "https://weibo.com/",
+                      aria-label: "Find me on weibo",
+                      data-icon: ant-design:weibo-circle-filled,
+                    }
+                - label: Zhihu
+                  value:
+                    {
+                      type: "zhihu",
+                      url: "https://www.zhihu.com/people/",
+                      aria-label: "Find me on zhihu",
+                      data-icon: ant-design:zhihu-circle-filled,
+                    }
+            - $formkit: text
+              name: input_value
+              label: Value
+              validation: "required"
+        - $formkit: repeater
+          name: custom_sns
+          label: Custom social media information
+          value: []
+          help: "You can define your own social media information here."
+          children:
+            - $formkit: text
+              name: id
+              label: ID
+              validation: "required"
+              help: "The unique identifier of the social media information, such as: github2, twitter2."
+            - $formkit: text
+              name: url
+              label: URL
+              validation: "required"
+              help: "The URL of the social media information, such as: https://howiehz.top"
+            - $formkit: text
+              name: icon
+              label: Icon
+              validation: "required"
+              help: "The icon of the social media information, such as: ant-design:github-filled. You can find icon information in https://icon-sets.iconify.design/"
+            - $formkit: text
+              name: aria_label
+              label: aria-label
+              validation: "required"
+              help: "The aria-label of the social media information, such as: Find me on Github"
