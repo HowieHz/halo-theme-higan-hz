@@ -11,18 +11,48 @@ jobs:
     name: Upload Theme
     runs-on: ubuntu-latest
     steps:
+      - name: Make Build Directory
+        run: |
+          pwd
+          mkdir -p ~/builds/tmp ~/builds/target
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Zip
+      - name: Copy Theme Files from Original to Temp
         run: |
-          mkdir -p ~/builds/target
-          zip -r howiehz-higan-cn.zip . -x .eslintrc.cjs .hintrc .prettierignore index.html package.json pnpm-lock.yaml postcss.config.js prettier.config.js .husky/\* src/\* i18n-settings/\* screenshots/\* .git/\* .github/\* node_modules/\* .gitignore .editorconfig .eslintignore .eslintrc.js .prettierrc.js .stylelintrc.js .vscode/\* .nuxt/\* .nuxtignore .env .env.development .env.production .env.test .env.local .env.development.local .env.production.local .env.test.local
-          mv howiehz-higan-cn.zip ~/builds/target
-          zip -r howiehz-higan-en.zip . -x .eslintrc.cjs .hintrc .prettierignore index.html package.json pnpm-lock.yaml postcss.config.js prettier.config.js .husky/\* src/\* i18n-settings/\* screenshots/\* .git/\* .github/\* node_modules/\* .gitignore .editorconfig .eslintignore .eslintrc.js .prettierrc.js .stylelintrc.js .vscode/\* .nuxt/\* .nuxtignore .env .env.development .env.production .env.test .env.local .env.development.local .env.production.local .env.test.local settings.yaml
-          mv howiehz-higan-en.zip ~/builds/target
+          pwd
+          cp -r . ~/builds/tmp
+      - name: Remove excluded files
+        run: |
+          pwd
+          cd ~/builds/tmp
+          pwd
+          cat ~/work/halo-theme-higan-hz/halo-theme-higan-hz/.github/exclude-list.txt | xargs rm -rvf
+      - name: Zip Theme in Chinese
+        run: |
+          pwd
+          cd ~/builds/tmp
+          pwd
+
+          zip -9 -r howiehz-higan-cn.zip .
+
           rm settings.yaml
-          mv i18n-settings/settings.en.yaml settings.yaml
-          zip -r ~/builds/target/howiehz-higan-en.zip settings.yaml
+          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/settings.yaml settings.yaml
+          zip -9 -r howiehz-higan-cn.zip settings.yaml
+
+          mv howiehz-higan-cn.zip ~/builds/target
+      - name: Zip Theme in English
+        run: |
+          pwd
+          cd ~/builds/tmp
+          pwd
+
+          zip -9 -r howiehz-higan-en.zip .
+
+          rm settings.yaml
+          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/i18n-settings/settings.en.yaml settings.yaml
+          zip -9 -r howiehz-higan-en.zip settings.yaml
+
+          mv howiehz-higan-en.zip ~/builds/target
       - name: Upload Theme Build Target
         uses: actions/upload-artifact@v4
         with:
