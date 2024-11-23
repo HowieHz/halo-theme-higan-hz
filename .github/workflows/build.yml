@@ -36,8 +36,10 @@ jobs:
           zip -9 -r howiehz-higan-cn.zip .
 
           rm settings.yaml
+          rm annotation-settings.yaml
           mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/settings.yaml settings.yaml
-          zip -9 -r howiehz-higan-cn.zip settings.yaml
+          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/annotation-settings.yaml annotation-settings.yaml
+          zip -9 -r howiehz-higan-cn.zip settings.yaml annotation-settings.yaml
 
           mv howiehz-higan-cn.zip ~/builds/target
       - name: Zip Theme in English
@@ -49,8 +51,10 @@ jobs:
           zip -9 -r howiehz-higan-en.zip .
 
           rm settings.yaml
+          rm annotation-settings.yaml
           mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/i18n-settings/settings.en.yaml settings.yaml
-          zip -9 -r howiehz-higan-en.zip settings.yaml
+          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/i18n-settings/annotation-settings.en.yaml annotation-settings.yaml
+          zip -9 -r howiehz-higan-en.zip settings.yaml annotation-settings.yaml
 
           mv howiehz-higan-en.zip ~/builds/target
       - name: Upload Theme Build Target

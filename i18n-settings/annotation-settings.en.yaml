@@ -1,0 +1,80 @@
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: howiehz-higan-user-annotation-setting
+spec:
+  targetRef:
+    group: ""
+    kind: User
+  formSchema:
+    - $formkit: attachment
+      name: "higan.howiehz.top/author-header-image"
+      label: Auther Page Header Image
+
+---
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: howiehz-higan-post-annotation-setting
+spec:
+  targetRef:
+    group: content.halo.run
+    kind: Post
+  formSchema:
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-title"
+      label: Page Title
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-language"
+      label: Page Language
+
+---
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: howiehz-higan-single-page-annotation-setting
+spec:
+  targetRef:
+    group: content.halo.run
+    kind: SinglePage
+  formSchema:
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-title"
+      label: Page Title
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-language"
+      label: Page Language
+
+---
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: howiehz-higan-category-annotation-setting
+spec:
+  targetRef:
+    group: content.halo.run
+    kind: Category
+  formSchema:
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-title"
+      label: Page Title
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-language"
+      label: Page Language
+
+---
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: howiehz-higan-tag-annotation-setting
+spec:
+  targetRef:
+    group: content.halo.run
+    kind: Tag
+  formSchema:
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-title"
+      label: Page Title
+    - $formkit: "text"
+      name: "higan.howiehz.top/page-language"
+      label: Page Language
