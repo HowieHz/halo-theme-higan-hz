@@ -85,11 +85,11 @@ importers:
         specifier: ^2.8.8
         version: 2.8.8
       stylus:
-        specifier: ^0.63.0
-        version: 0.63.0
+        specifier: ^0.64.0
+        version: 0.64.0
       stylus-supremacy:
-        specifier: ^2.17.5
-        version: 2.17.5
+        specifier: ^4.0.0
+        version: 4.0.0
       tailwindcss:
         specifier: ^3.4.15
         version: 3.4.15
@@ -98,21 +98,18 @@ importers:
         version: 5.6.3
       unplugin-fonts:
         specifier: ^1.1.1
-        version: 1.1.1(vite@3.2.11(@types/node@16.18.119)(stylus@0.63.0))
+        version: 1.1.1(vite@3.2.11(@types/node@16.18.119)(stylus@0.64.0))
       vite:
         specifier: ^3.2.11
-        version: 3.2.11(@types/node@16.18.119)(stylus@0.63.0)
+        version: 3.2.11(@types/node@16.18.119)(stylus@0.64.0)
       vite-plugin-purge-icons:
         specifier: ^0.10.0
-        version: 0.10.0(vite@3.2.11(@types/node@16.18.119)(stylus@0.63.0))
+        version: 0.10.0(vite@3.2.11(@types/node@16.18.119)(stylus@0.64.0))
 
 packages:
 
   '@adobe/css-tools@4.3.3':
     resolution: {integrity: sha512-rE0Pygv0sEZ4vBWHlAgJLGDU7Pm8xoO6p3wsEceb7GYAjScrOHpEo8KK/eVkAcnSM+slAEtXjA2JpdjLp4fJQQ==}
-
-  '@adobe/css-tools@4.4.1':
-    resolution: {integrity: sha512-12WGKBQzjUAI4ayyF4IAtfw2QR/IDoqk6jTddXDhtYTJF9ASmoE1zst7cVtP0aL/F1jUJL5r+JxKXKEgHNbEUQ==}
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -955,11 +952,6 @@ packages:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
     deprecated: Glob versions prior to v9 are no longer supported
 
-  glob@8.1.0:
-    resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
-    engines: {node: '>=12'}
-    deprecated: Glob versions prior to v9 are no longer supported
-
   globals@13.24.0:
     resolution: {integrity: sha512-AhO5QUcj8llrbG09iWhPU2B204J1xnPeL8kQmVorSsy+Sjj1sk8gIyh6cUocGmH4L0UuhAJy+hJMRA4mgA4mFQ==}
     engines: {node: '>=8'}
@@ -1194,10 +1186,6 @@ packages:
 
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
-
-  minimatch@5.1.6:
-    resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
-    engines: {node: '>=10'}
 
   minimatch@9.0.5:
     resolution: {integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==}
@@ -1684,11 +1672,11 @@ packages:
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
 
-  sax@1.2.4:
-    resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
-
   sax@1.3.0:
     resolution: {integrity: sha512-0s+oAmw9zLl1V1cS9BtZN7JAd0cW5e0QH4W3LWEK6a4LaLEA2OTpGYWDY+6XasBLtz6wkm3u1xRw95mRuJ59WA==}
+
+  sax@1.4.1:
+    resolution: {integrity: sha512-+aWOz7yVScEGoKNd4PA10LZ8sk0A/z5+nXQG5giUO5rprX9jgYsTdov9qCchZiPIZezbZH+jRut8nPodFAX4Jg==}
 
   semver@5.7.2:
     resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
@@ -1793,17 +1781,18 @@ packages:
     resolution: {integrity: sha512-luHn2OAMGJouOnadm6Fim6WXodQ2AWDkWjYq0rMdyEwzO5PdE4LzoXAEn9LL2snmBAlwUp1URVOTF7lZR3KU+Q==}
     hasBin: true
 
-  stylus-supremacy@2.17.5:
-    resolution: {integrity: sha512-nanFS1zuIWe3pXJisST5myI+B90wQbAg4dvvgrjZ9pLmzZvMwRzIufMmu52T4nv6Df9430leUL/UljfbNsGQtw==}
-    engines: {node: '>=14'}
-    hasBin: true
-
-  stylus@0.59.0:
-    resolution: {integrity: sha512-lQ9w/XIOH5ZHVNuNbWW8D822r+/wBSO/d6XvtyHLF7LW4KaCIDeVbvn5DF8fGCJAUCwVhVi/h6J0NUcnylUEjg==}
+  stylus-supremacy@4.0.0:
+    resolution: {integrity: sha512-LQ2ke+xrG6r/MkxA5P2OULP3YfKr0KbUMIOoL9F1vJKG4V1S8MLTTWa4O8+aLfePQWX3eEs83iENYP35KENeIw==}
+    engines: {node: '>=18.0.0'}
     hasBin: true
 
   stylus@0.63.0:
     resolution: {integrity: sha512-OMlgrTCPzE/ibtRMoeLVhOY0RcNuNWh0rhAVqeKnk/QwcuUKQbnqhZ1kg2vzD8VU/6h3FoPTq4RJPHgLBvX6Bw==}
+    hasBin: true
+
+  stylus@0.64.0:
+    resolution: {integrity: sha512-ZIdT8eUv8tegmqy1tTIdJv9We2DumkNZFdCF5mz/Kpq3OcTaxSuCAYZge6HKK2CmNC02G1eJig2RV7XTw5hQrA==}
+    engines: {node: '>=16'}
     hasBin: true
 
   sucrase@3.35.0:
@@ -2059,8 +2048,6 @@ packages:
 snapshots:
 
   '@adobe/css-tools@4.3.3': {}
-
-  '@adobe/css-tools@4.4.1': {}
 
   '@alloc/quick-lru@5.2.0': {}
 
@@ -2935,14 +2922,6 @@ snapshots:
       once: 1.4.0
       path-is-absolute: 1.0.1
 
-  glob@8.1.0:
-    dependencies:
-      fs.realpath: 1.0.0
-      inflight: 1.0.6
-      inherits: 2.0.4
-      minimatch: 5.1.6
-      once: 1.4.0
-
   globals@13.24.0:
     dependencies:
       type-fest: 0.20.2
@@ -3184,10 +3163,6 @@ snapshots:
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.11
-
-  minimatch@5.1.6:
-    dependencies:
-      brace-expansion: 2.0.1
 
   minimatch@9.0.5:
     dependencies:
@@ -3641,9 +3616,9 @@ snapshots:
     dependencies:
       queue-microtask: 1.2.3
 
-  sax@1.2.4: {}
-
   sax@1.3.0: {}
+
+  sax@1.4.1: {}
 
   semver@5.7.2: {}
 
@@ -3747,24 +3722,14 @@ snapshots:
       user-home: 2.0.0
       yargs: 4.7.1
 
-  stylus-supremacy@2.17.5:
+  stylus-supremacy@4.0.0:
     dependencies:
-      glob: 8.1.0
+      glob: 10.4.5
       js-yaml: 4.1.0
       json5: 2.2.3
       lodash: 4.17.21
       stylint: 2.0.0
-      stylus: 0.59.0
-    transitivePeerDependencies:
-      - supports-color
-
-  stylus@0.59.0:
-    dependencies:
-      '@adobe/css-tools': 4.4.1
-      debug: 4.3.7
-      glob: 7.2.3
-      sax: 1.2.4
-      source-map: 0.7.4
+      stylus: 0.63.0
     transitivePeerDependencies:
       - supports-color
 
@@ -3774,6 +3739,16 @@ snapshots:
       debug: 4.3.7
       glob: 7.2.3
       sax: 1.3.0
+      source-map: 0.7.4
+    transitivePeerDependencies:
+      - supports-color
+
+  stylus@0.64.0:
+    dependencies:
+      '@adobe/css-tools': 4.3.3
+      debug: 4.3.7
+      glob: 10.4.5
+      sax: 1.4.1
       source-map: 0.7.4
     transitivePeerDependencies:
       - supports-color
@@ -3906,11 +3881,11 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unplugin-fonts@1.1.1(vite@3.2.11(@types/node@16.18.119)(stylus@0.63.0)):
+  unplugin-fonts@1.1.1(vite@3.2.11(@types/node@16.18.119)(stylus@0.64.0)):
     dependencies:
       fast-glob: 3.3.2
       unplugin: 1.16.0
-      vite: 3.2.11(@types/node@16.18.119)(stylus@0.63.0)
+      vite: 3.2.11(@types/node@16.18.119)(stylus@0.64.0)
 
   unplugin@1.16.0:
     dependencies:
@@ -3955,17 +3930,17 @@ snapshots:
       unist-util-stringify-position: 3.0.3
       vfile-message: 3.1.4
 
-  vite-plugin-purge-icons@0.10.0(vite@3.2.11(@types/node@16.18.119)(stylus@0.63.0)):
+  vite-plugin-purge-icons@0.10.0(vite@3.2.11(@types/node@16.18.119)(stylus@0.64.0)):
     dependencies:
       '@purge-icons/core': 0.10.0
       '@purge-icons/generated': 0.10.0
       rollup-plugin-purge-icons: 0.10.0
-      vite: 3.2.11(@types/node@16.18.119)(stylus@0.63.0)
+      vite: 3.2.11(@types/node@16.18.119)(stylus@0.64.0)
     transitivePeerDependencies:
       - encoding
       - supports-color
 
-  vite@3.2.11(@types/node@16.18.119)(stylus@0.63.0):
+  vite@3.2.11(@types/node@16.18.119)(stylus@0.64.0):
     dependencies:
       esbuild: 0.15.18
       postcss: 8.4.49
@@ -3974,7 +3949,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 16.18.119
       fsevents: 2.3.3
-      stylus: 0.63.0
+      stylus: 0.64.0
 
   wcwidth@1.0.1:
     dependencies:
