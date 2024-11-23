@@ -1,0 +1,21 @@
+apiVersion: theme.halo.run/v1alpha1
+kind: Theme
+metadata:
+  name: howiehz-higan
+spec:
+  displayName: higan-HowieHz-Modified
+  author:
+    name: HowieHz
+    website: https://howiehz.top
+  description: "Life and death are for this shore, nirvana is for the other shore; suffering without joy is for this shore, no suffering and no joy is for the other shore... It represents the spiritual pursuit of all good things, and also represents the endless cycle of life and death, just as this theme is divided into black and white, yin and yang, towards death and rebirth."
+  logo: /themes/howiehz-higan/assets/images/logo.png
+  homepage: https://github.com/howiehz/halo-theme-higan-hz
+  repo: https://github.com/howiehz/halo-theme-higan-hz.git
+  issues: https://github.com/howiehz/halo-theme-higan-hz/issues
+  settingName: howiehz-higan-setting
+  configMapName: howiehz-higan-configmap
+  version: 1.12.0
+  requires: ">=2.1.0"
+  license:
+    - name: "MIT"
+      url: "https://github.com/howiehz/halo-theme-higan-hz/blob/main/LICENSE"
