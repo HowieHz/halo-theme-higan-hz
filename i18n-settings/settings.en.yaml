@@ -72,6 +72,16 @@ spec:
               value: true
             - label: Disable
               value: false
+        - $formkit: radio
+          name: is_instant_page_enable
+          label: instant.page support
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+          help: "If enabled, the theme will automatically load the instant.page script to improve the page loading speed."
     - group: styles
       label: Style
       formSchema:

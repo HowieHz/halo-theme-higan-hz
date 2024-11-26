@@ -72,6 +72,16 @@ spec:
               value: true
             - label: 关闭
               value: false
+        - $formkit: radio
+          name: is_instant_page_enable
+          label: instant.page 支持
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+          help: 如启用此项，主题将自动加载 instant.page 脚本，以提升页面加载速度。
     - group: styles
       label: 总体样式
       formSchema:
