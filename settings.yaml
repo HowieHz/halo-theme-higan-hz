@@ -11,7 +11,7 @@ spec:
           name: defalut_page_language
           label: 默认页面语言
           value: "zh"
-          help: "默认页面语言，如：zh、en。 此项置空则取 zh"
+          help: "默认页面语言，如：zh、en，此项置空则取 zh。此项设定的是 html 标签的 lang 属性值"
         - $formkit: checkbox
           name: is_i18n_menu_show
           label: 多语言菜单支持

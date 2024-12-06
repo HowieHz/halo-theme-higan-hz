@@ -11,7 +11,7 @@ spec:
           name: defalut_page_language
           label: Default page language
           value: "zh"
-          help: "The default language of the page, such as: zh, en."
+          help: "The default language of the page, such as: zh, en. The setting set the html lang attribute."
         - $formkit: checkbox
           name: is_i18n_menu_show
           label: Enable multi-language menu support
