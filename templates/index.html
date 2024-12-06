@@ -19,7 +19,9 @@
     </section>
 
     <p id="findMe" th:if="${not #arrays.isEmpty(theme?.config?.sns?.index_sns)}">
-      [(#{page.index.findMeLeftText})]
+      <th:block th:text="#{page.index.findMeLeftText}" th:if="${theme.config?.index_styles?.is_show_find_me_left_text}"
+        >社交资料图标左侧文字替换位</th:block
+      >
       <th:block th:each="item : ${theme?.config?.sns?.index_sns}">
         <th:block
           th:if="${not #strings.equals(item?.type['type'], 'text')} and ${not #strings.equals(item?.type['type'], 'custom_sns')}"
@@ -53,7 +55,7 @@
     </p>
 
     <th:block th:if="${theme?.config.index_styles?.post_list_layout=='post-list-summary'}">
-      <h2 class="h1">
+      <h2 class="h1" th:if="${theme.config?.index_styles?.is_show_index_post_list_title}">
         <a th:href="@{/archives}" th:text="#{page.index.indexPostListTitle}">首页文章列表标题替换位</a>
       </h2>
       <th:block th:insert="~{fragments/posts :: post-list-summary(${posts})}"></th:block>

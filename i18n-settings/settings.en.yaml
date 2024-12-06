@@ -240,6 +240,7 @@ spec:
         - $formkit: radio
           name: is_footer_content_show
           label: Footer content at the bottom
+          help: "If enabled, the theme will display the content at the bottom."
           value: false
           options:
             - label: Enable
@@ -284,6 +285,26 @@ spec:
           label: Personal profile/Announcement content (support html code block)
           language: html
           height: 150px
+        - $formkit: radio
+          name: is_show_find_me_left_text
+          label: Display the text on the left side of the social media information
+          help: "If enabled, the theme will display the text on the left side of the social media information."
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: radio
+          name: is_show_index_post_list_title
+          label: Enable post list title
+          help: "If enabled, the theme will display the title of the post list."
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
         - $formkit: select
           name: post_list_layout
           id: index_post_list_layout
@@ -294,6 +315,17 @@ spec:
               value: "simple-post-list"
             - label: "Summary list"
               value: "post-list-summary"
+        - $formkit: radio
+          name: is_show_index_post_list_permalink_text
+          if: "$post_list_layout === 'post-list-summary'"
+          label: Display the text of the post list permalink
+          help: "If enabled, the theme will display the text of the post list permalink."
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
         - $formkit: radio
           name: is_pin_icon_show
           label: Top icon display on the post list
