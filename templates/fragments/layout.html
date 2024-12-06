@@ -151,7 +151,7 @@
     </script>
   </head>
 
-  <body th:class="|text-size-${theme.config?.styles?.text_size}|">
+  <body class="transition-colors" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
     <script th:if="${theme.config?.global?.is_i18n_menu_show}" th:inline="javascript">
       document.addEventListener("DOMContentLoaded", function () {
         // 检查目标 li 标签是否具有 class="matched-menu"
