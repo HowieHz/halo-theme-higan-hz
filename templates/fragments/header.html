@@ -7,6 +7,7 @@
         th:class="${styles?.avatar_circle == true ? 'circle-avatar' : ''}"
         th:classappend="${styles?.avatar_grayout == true ? 'avatar-grayscale' : ''}"
         th:style="|background-image: url('/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?size=s&uri=${#strings.defaultString(logo, fallbackLogo)}')|"
+        th:if="${theme.config?.styles?.is_show_header_icon}"
       ></div>
 
       <div id="title">

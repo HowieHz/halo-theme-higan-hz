@@ -180,11 +180,22 @@ spec:
           value: fit-content
           placeholder: "默认值: fit-content"
           help: "此项决定了内容区域宽度。默认值效果为：使内容区域宽度=最宽的内容的宽度。（此项实际是在设置内容区域的 width 属性对应的样式值）"
+        - $formkit: radio
+          name: is_show_header_icon
+          label: 是否显示页眉头像
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
         - $formkit: attachment
           name: icon
-          label: 首页头像
+          if: "$is_show_header_icon===true"
+          label: 自定义页眉头像
         - $formkit: radio
           name: avatar_circle
+          if: "$is_show_header_icon===true"
           label: 圆形头像
           value: false
           options:
@@ -194,6 +205,7 @@ spec:
               label: 关闭
         - $formkit: radio
           name: avatar_grayout
+          if: "$is_show_header_icon===true"
           label: 灰度头像
           value: false
           options:

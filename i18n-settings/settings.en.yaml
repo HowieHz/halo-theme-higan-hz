@@ -180,11 +180,22 @@ spec:
           value: fit-content
           placeholder: "Default: fit-content"
           help: "This determines the style value of the width attribute corresponding to the content area style."
+         - $formkit: radio
+          name: is_show_header_icon
+          label: Header icon
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
         - $formkit: attachment
           name: icon
-          label: Custom icon
+          if: "$is_show_header_icon===true"
+          label: Custom header icon
         - $formkit: radio
           name: avatar_circle
+          if: "$is_show_header_icon===true"
           label: Circle avatar
           value: false
           options:
@@ -194,6 +205,7 @@ spec:
               label: Disable
         - $formkit: radio
           name: avatar_grayout
+          if: "$is_show_header_icon===true"
           label: Avatar grayscale
           value: false
           options:
