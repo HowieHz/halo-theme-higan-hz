@@ -214,6 +214,15 @@ spec:
             - value: false
               label: Disable
         - $formkit: radio
+          name: is_show_header_menu
+          label: Header menu
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: radio
           name: is_footer_theme_info_show
           label: Theme information in the footer
           value: true
