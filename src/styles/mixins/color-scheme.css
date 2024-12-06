@@ -1,9 +1,9 @@
 /* 设定 color-scheme */
-body[data-color-scheme="light"] {
+[data-color-scheme="light"] {
   color-scheme: only light;
 }
 
-body[data-color-scheme="dark"] {
+[data-color-scheme="dark"] {
   color-scheme: only dark;
 }
 
