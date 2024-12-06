@@ -251,7 +251,7 @@ spec:
               label: 关闭
         - $formkit: radio
           name: is_footer_force_bottom
-          label: 强制页脚在页面最底部
+          label: 强制页脚、页码在页面最底部
           value: true
           options:
             - value: true

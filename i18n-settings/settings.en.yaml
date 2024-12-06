@@ -251,7 +251,7 @@ spec:
               label: Disable
         - $formkit: radio
           name: is_footer_force_bottom
-          label: Footer force to the bottom
+          label: Footer, Page number force to the bottom
           value: true
           options:
             - value: true
