@@ -165,6 +165,7 @@
             class="page-number"
             th:with="totalPage=${moments.totalPages}"
             th:text="#{common.page-number.text(${moments.page}, ${totalPage})}"
+            th:if="${moments.totalPages > 1 and theme.config?.styles?.is_show_page_number}"
             >Page 1 of 1 填充位</span
           >
           <a th:href="@{${moments.nextUrl}}" th:if="${moments.hasNext()}" th:aria-label="#{common.nextPage.aria-label}">

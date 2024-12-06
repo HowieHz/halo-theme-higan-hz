@@ -223,6 +223,15 @@ spec:
             - label: Disable
               value: false
         - $formkit: radio
+          name: is_show_page_number
+          label: Display page number
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: radio
           name: is_footer_theme_info_show
           label: Theme information in the footer
           value: true
