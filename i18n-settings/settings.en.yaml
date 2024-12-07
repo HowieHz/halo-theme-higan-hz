@@ -405,6 +405,15 @@ spec:
               label: Enable
             - value: false
               label: Disable
+        - $formkit: radio
+          name: is_show_footer_nav
+          label: Display mobile footer navigation
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
     - group: categories_page_styles
       label: Category page style
       formSchema:

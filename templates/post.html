@@ -55,7 +55,10 @@
         <halo:comment group="content.halo.run" kind="Post" th:name="${post.metadata?.name}" />
       </th:block>
     </article>
-    <div th:insert="~{fragments/footer-nav :: footerNav}"></div>
+    <div
+      th:insert="~{fragments/footer-nav :: footerNav}"
+      th:if="${theme.config?.post_styles?.is_show_footer_nav}"
+    ></div>
 
     <!-- clipboard -->
     <script th:src="@{/assets/lib/clipboard/clipboard.min.js}"></script>

@@ -405,6 +405,15 @@ spec:
               label: 开启
             - value: false
               label: 关闭
+        - $formkit: radio
+          name: is_show_footer_nav
+          label: 是否启用移动端底部导航栏
+          value: true
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
     - group: categories_page_styles
       label: 分类集合页样式
       formSchema:
