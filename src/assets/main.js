@@ -40,20 +40,20 @@ $(function () {
      * Display the menu on hi-res laptops and desktops.
      */
     if ($(document).width() >= 1440) {
-      menu.css("visibility", "visible");
-      menuIcon.addClass("active");
+      menuIcon.addClass("active"); // for #header-post .active style
+      menu.show();
     }
 
     /**
      * Display the menu if the menu icon is clicked.
      */
     menuIcon.on("click", function () {
-      if (menu.css("visibility") === "hidden") {
-        menu.css("visibility", "visible");
-        menuIcon.addClass("active");
-      } else {
-        menu.css("visibility", "hidden");
+      if (menu.is(":visible")) {
         menuIcon.removeClass("active");
+        menu.fadeOut(50);
+      } else {
+        menuIcon.addClass("active");
+        menu.fadeIn(50);
       }
       return false;
     });
@@ -63,7 +63,7 @@ $(function () {
      */
     if (menu.length) {
       $(window).on("scroll", function () {
-        var topDistance = menu.offset().top;
+        var topDistance = $(window).scrollTop();
 
         // hide only the navigation links on desktop
         // if (!nav.is(":visible") && topDistance < 50) {
@@ -72,14 +72,18 @@ $(function () {
         //   nav.hide();
         // }
 
-        // on tablet, hide the navigation icon as well and show a "scroll to top
-        // icon" instead
-        if (!$("#menu-icon").is(":visible") && topDistance < 50) {
-          $("#menu-icon-tablet").fadeIn(200);
-          $("#top-icon-tablet").fadeOut(200);
-        } else if (!$("#menu-icon").is(":visible") && topDistance > 100) {
-          $("#menu-icon-tablet").fadeOut(200);
-          $("#top-icon-tablet").fadeIn(200);
+        // on tablet, hide the navigation icon as well and
+        // show a "scroll to top icon" instead
+        const topIcon = $("#top-icon-tablet");
+        const menuIconTablet = $("#menu-icon-tablet");
+        const menuIcon = $("#menu-icon");
+        if (!menuIcon.is(":visible") && topDistance < 50) {
+          menuIconTablet.fadeIn(200);
+          topIcon.fadeOut(200);
+        } else if (!menuIcon.is(":visible") && topDistance > 100) {
+          menuIconTablet.fadeOut(200);
+          menu.fadeOut(200);
+          topIcon.fadeIn(200);
         }
       });
     }
@@ -94,9 +98,9 @@ $(function () {
         var topDistance = $(window).scrollTop();
 
         // close all submenu"s on scroll
-        var navFooter = $("#nav-footer");
-        var tocFooter = $("#toc-footer");
-        var shareFooter = $("#share-footer");
+        const navFooter = $("#nav-footer");
+        const tocFooter = $("#toc-footer");
+        const shareFooter = $("#share-footer");
         navFooter.slideUp(200);
         tocFooter.slideUp(200);
         shareFooter.slideUp(200);
@@ -131,7 +135,7 @@ $(function () {
 // fotter-nav button events
 $(document).ready(function () {
   $("#actions-footer > #menu").click(function () {
-    var navFooter = $("#nav-footer");
+    const navFooter = $("#nav-footer");
     if (navFooter.is(":visible")) {
       navFooter.slideUp(200);
     } else {
@@ -139,7 +143,7 @@ $(document).ready(function () {
     }
   });
   $("#actions-footer > #toc").click(function () {
-    var tocFooter = $("#toc-footer");
+    const tocFooter = $("#toc-footer");
     if (tocFooter.is(":visible")) {
       tocFooter.slideUp(200);
     } else {
@@ -147,7 +151,7 @@ $(document).ready(function () {
     }
   });
   $("#actions-footer > #share").click(function () {
-    var shareFooter = $("#share-footer");
+    const shareFooter = $("#share-footer");
     if (shareFooter.is(":visible")) {
       shareFooter.slideUp(200);
     } else {
