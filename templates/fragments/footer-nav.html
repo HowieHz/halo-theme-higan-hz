@@ -10,15 +10,15 @@
         <th:block th:insert="~{fragments/common :: share}"></th:block>
       </div>
       <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;">
+        <a id="menu" class="icon" href="#" onclick="return false;">
           <i class="iconify" data-icon="ic:baseline-menu" aria-hidden="true"></i>
           [(#{fragment.footer-nav.menu})]</a
         >
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;">
+        <a id="toc" class="icon" href="#" onclick="return false;">
           <i class="iconify" data-icon="ic:baseline-toc" aria-hidden="true"></i>
           [(#{fragment.footer-nav.toc})]</a
         >
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;">
+        <a id="share" class="icon" href="#" onclick="return false;">
           <i class="iconify" data-icon="ic:baseline-share" aria-hidden="true"></i>
           [(#{fragment.footer-nav.share})]</a
         >

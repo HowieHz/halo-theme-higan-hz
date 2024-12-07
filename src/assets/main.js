@@ -93,19 +93,24 @@ $(function () {
       $(window).on("scroll", function () {
         var topDistance = $(window).scrollTop();
 
+        // close all submenu"s on scroll
+        var navFooter = $("#nav-footer");
+        var tocFooter = $("#toc-footer");
+        var shareFooter = $("#share-footer");
+        navFooter.slideUp(200);
+        tocFooter.slideUp(200);
+        shareFooter.slideUp(200);
+
         if (topDistance > lastScrollTop) {
-          // downscroll -> show menu
-          $("#footer-post").hide();
+          // 向下滚动
+          // downscroll -> hide menu
+          $("#footer-post").slideUp(200);
         } else {
-          // upscroll -> hide menu
-          $("#footer-post").show();
+          // 向上滚动
+          // upscroll -> show menu
+          $("#footer-post").slideDown(200);
         }
         lastScrollTop = topDistance;
-
-        // close all submenu"s on scroll
-        $("#nav-footer").hide();
-        $("#toc-footer").hide();
-        $("#share-footer").hide();
 
         // show a "navigation" icon when close to the top of the page,
         // otherwise show a "scroll to the top" icon
@@ -121,4 +126,32 @@ $(function () {
   // mount it!
   $("article .content pre").wrap('<figure class="highlight"></figure>');
   $("figure.highlight pre code").addClass("hljs");
+});
+
+// fotter-nav button events
+$(document).ready(function () {
+  $("#actions-footer > #menu").click(function () {
+    var navFooter = $("#nav-footer");
+    if (navFooter.is(":visible")) {
+      navFooter.slideUp(200);
+    } else {
+      navFooter.slideDown(200);
+    }
+  });
+  $("#actions-footer > #toc").click(function () {
+    var tocFooter = $("#toc-footer");
+    if (tocFooter.is(":visible")) {
+      tocFooter.slideUp(200);
+    } else {
+      tocFooter.slideDown(200);
+    }
+  });
+  $("#actions-footer > #share").click(function () {
+    var shareFooter = $("#share-footer");
+    if (shareFooter.is(":visible")) {
+      shareFooter.slideUp(200);
+    } else {
+      shareFooter.slideDown(200);
+    }
+  });
 });
