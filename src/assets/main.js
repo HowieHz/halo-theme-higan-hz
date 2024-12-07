@@ -75,11 +75,11 @@ $(function () {
         // on tablet, hide the navigation icon as well and show a "scroll to top
         // icon" instead
         if (!$("#menu-icon").is(":visible") && topDistance < 50) {
-          $("#menu-icon-tablet").show();
-          $("#top-icon-tablet").hide();
+          $("#menu-icon-tablet").fadeIn(200);
+          $("#top-icon-tablet").fadeOut(200);
         } else if (!$("#menu-icon").is(":visible") && topDistance > 100) {
-          $("#menu-icon-tablet").hide();
-          $("#top-icon-tablet").show();
+          $("#menu-icon-tablet").fadeOut(200);
+          $("#top-icon-tablet").fadeIn(200);
         }
       });
     }
