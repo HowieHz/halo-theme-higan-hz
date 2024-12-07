@@ -1,7 +1,7 @@
 <th:block th:fragment="menu(showIcon)">
   <ul>
     <li class="icon" th:if="${showIcon}">
-      <a href="#"><i class="iconify iconify-huge" data-icon="material-symbols:menu"></i></a>
+      <a href="javascript:void(0);"><i class="iconify iconify-huge" data-icon="material-symbols:menu"></i></a>
     </li>
 
     <th:block th:insert="~{fragments/common :: base-menu}"></th:block>

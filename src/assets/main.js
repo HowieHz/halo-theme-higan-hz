@@ -23,8 +23,15 @@ $(function () {
   /**
    * Shows the responsive navigation menu on mobile.
    */
-  $("#header > #nav > ul > .icon").on("click", function () {
-    $("#header > #nav > ul").toggleClass("responsive");
+  // 移动端页眉菜单按钮
+  const mobileMenuIcon = $("#header > #nav > ul > .icon");
+  mobileMenuIcon.on("click", function () {
+    const mobileMenu = $("#header > #nav > ul");
+    if (mobileMenu.hasClass("responsive")) {
+      mobileMenu.removeClass("responsive");
+    } else {
+      mobileMenu.addClass("responsive");
+    }
   });
 
   /**
