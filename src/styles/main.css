@@ -617,14 +617,14 @@ body {
   font-style: italic;
 }
 
-#header-post #share {
+#header-post #share-list {
   clear: both;
   padding-top: 1rem;
   padding-right: 2rem;
   text-align: right;
 }
 
-#header-post #share li {
+#header-post #share-list li {
   display: block;
   margin: 0;
 }

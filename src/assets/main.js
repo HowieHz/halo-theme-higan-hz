@@ -158,4 +158,12 @@ $(document).ready(function () {
       shareFooter.slideDown(200);
     }
   });
+  $("#actions #action-share").click(function () {
+    const shareMenu = $("#share-list");
+    if (shareMenu.is(":visible")) {
+      shareMenu.slideUp(200);
+    } else {
+      shareMenu.slideDown(200);
+    }
+  });
 });

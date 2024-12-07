@@ -65,7 +65,7 @@
           <li>
             <a
               class="icon"
-              href="#"
+              href="javascript:void(0);"
               onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
               th:aria-label="#{fragment.post-nav.actions.to-top-icon.aria-label}"
             >
@@ -80,11 +80,12 @@
           <li>
             <a class="icon" href="#" th:aria-label="#{fragment.post-nav.actions.share-icon.aria-label}">
               <i
+                id="action-share"
                 class="iconify iconify-middle"
                 data-icon="mdi:share-variant-outline"
                 onmouseover="$('#i-share').toggle();"
                 onmouseout="$('#i-share').toggle();"
-                onclick="$('#share').toggle();return false;"
+                onclick="return false;"
               ></i>
             </a>
           </li>
@@ -98,7 +99,11 @@
         <span id="i-home" class="info" style="display: none">[(#{fragment.post-nav.backToHome})]</span>
       </span>
       <br />
-      <div id="share" style="display: none" th:with="permalink=${post?.status?.permalink}, title=${post?.spec?.title}">
+      <div
+        id="share-list"
+        style="display: none"
+        th:with="permalink=${post?.status?.permalink}, title=${post?.spec?.title}"
+      >
         <th:block th:insert="~{fragments/common :: share}"></th:block>
       </div>
       <div id="toc"></div>
