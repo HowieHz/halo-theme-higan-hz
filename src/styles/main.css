@@ -448,10 +448,18 @@ body {
   }
 
   #header #nav ul li {
+    /* display: none; 为了覆盖上面的 display: inline-block; */
     display: none;
     border-right: 0;
   }
 
+  #header #nav ul li:not(:first-child) {
+    padding-top: 1rem;
+    padding-left: 4.375rem;
+    font-size: 1rem;
+  }
+
+  /* 菜单按钮样式 */
   #header #nav ul li.icon {
     position: absolute;
     top: 4.8125rem;
@@ -462,14 +470,8 @@ body {
     color: var(--color-accent-1);
   }
 
-  #header #nav ul.responsive li {
+  #header #nav ul li.responsive {
     display: block;
-  }
-
-  #header #nav li:not(:first-child) {
-    padding-top: 1rem;
-    padding-left: 4.375rem;
-    font-size: 1rem;
   }
 }
 

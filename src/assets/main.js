@@ -20,17 +20,57 @@ window.isMobile = () => {
 };
 
 $(function () {
+  // 移动端页脚导航栏按钮事件
+  $("#actions-footer > #menu").click(function () {
+    const navFooter = $("#nav-footer");
+    if (navFooter.is(":visible")) {
+      navFooter.slideUp(200);
+    } else {
+      navFooter.slideDown(200);
+    }
+  });
+  $("#actions-footer > #toc").click(function () {
+    const tocFooter = $("#toc-footer");
+    if (tocFooter.is(":visible")) {
+      tocFooter.slideUp(200);
+    } else {
+      tocFooter.slideDown(200);
+    }
+  });
+  $("#actions-footer > #share").click(function () {
+    const shareFooter = $("#share-footer");
+    if (shareFooter.is(":visible")) {
+      shareFooter.slideUp(200);
+    } else {
+      shareFooter.slideDown(200);
+    }
+  });
+
+  // 桌面端文章页导航栏按钮事件
+  $("#actions #action-share").click(function () {
+    const shareMenu = $("#share-list");
+    if (shareMenu.is(":visible")) {
+      shareMenu.slideUp(200);
+    } else {
+      shareMenu.slideDown(200);
+    }
+  });
+
   /**
    * Shows the responsive navigation menu on mobile.
    */
-  // 移动端页眉菜单按钮
+  // 移动端页眉菜单按钮事件
   const mobileMenuIcon = $("#header > #nav > ul > .icon");
+  const mobileMenu = $("#header > #nav > ul > li:not(:first-child)");
   mobileMenuIcon.on("click", function () {
-    const mobileMenu = $("#header > #nav > ul");
-    if (mobileMenu.hasClass("responsive")) {
-      mobileMenu.removeClass("responsive");
+    if (mobileMenu.is(":visible")) {
+      mobileMenu.slideUp(200, function () {
+        mobileMenu.removeClass("responsive").css("display", "");
+      });
     } else {
-      mobileMenu.addClass("responsive");
+      mobileMenu.slideDown(200, function () {
+        mobileMenu.addClass("responsive").css("display", "");
+      });
     }
   });
 
@@ -68,6 +108,7 @@ $(function () {
     /**
      * Add a scroll listener to the menu to hide/show the navigation links.
      */
+    // 平板端文章页导航栏、回到顶部按钮 页面滚动相关逻辑
     if (menu.length) {
       $(window).on("scroll", function () {
         var topDistance = $(window).scrollTop();
@@ -99,7 +140,9 @@ $(function () {
      * Show mobile navigation menu after scrolling upwards,
      * hide it again after scrolling downwards.
      */
-    if ($("#footer-post").length) {
+    // 移动端文章页底部导航栏 页面滚动相关逻辑
+    const footerNav = $("#footer-post");
+    if (footerNav.length) {
       var lastScrollTop = 0;
       $(window).on("scroll", function () {
         var topDistance = $(window).scrollTop();
@@ -115,11 +158,11 @@ $(function () {
         if (topDistance > lastScrollTop) {
           // 向下滚动
           // downscroll -> hide menu
-          $("#footer-post").slideUp(200);
+          footerNav.slideUp(200);
         } else {
           // 向上滚动
           // upscroll -> show menu
-          $("#footer-post").slideDown(200);
+          footerNav.slideDown(200);
         }
         lastScrollTop = topDistance;
 
@@ -137,40 +180,4 @@ $(function () {
   // mount it!
   $("article .content pre").wrap('<figure class="highlight"></figure>');
   $("figure.highlight pre code").addClass("hljs");
-});
-
-// fotter-nav button events
-$(document).ready(function () {
-  $("#actions-footer > #menu").click(function () {
-    const navFooter = $("#nav-footer");
-    if (navFooter.is(":visible")) {
-      navFooter.slideUp(200);
-    } else {
-      navFooter.slideDown(200);
-    }
-  });
-  $("#actions-footer > #toc").click(function () {
-    const tocFooter = $("#toc-footer");
-    if (tocFooter.is(":visible")) {
-      tocFooter.slideUp(200);
-    } else {
-      tocFooter.slideDown(200);
-    }
-  });
-  $("#actions-footer > #share").click(function () {
-    const shareFooter = $("#share-footer");
-    if (shareFooter.is(":visible")) {
-      shareFooter.slideUp(200);
-    } else {
-      shareFooter.slideDown(200);
-    }
-  });
-  $("#actions #action-share").click(function () {
-    const shareMenu = $("#share-list");
-    if (shareMenu.is(":visible")) {
-      shareMenu.slideUp(200);
-    } else {
-      shareMenu.slideDown(200);
-    }
-  });
 });
