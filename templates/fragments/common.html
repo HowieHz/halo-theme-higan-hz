@@ -19,7 +19,7 @@
 <th:block th:fragment="base-menu">
   <th:block th:with="menuItems = ${menuFinder.getPrimary().menuItems}">
     <th:block th:unless="${theme.config?.global?.is_i18n_menu_show}">
-      <!-- 普通 menu -->
+      <!--/* 普通 menu */-->
       <li th:each="menuItem : ${menuItems}" class="matched-menu">
         <a
           th:href="@{${menuItem?.status?.href}}"
@@ -34,7 +34,7 @@
     <th:block
       th:if="${theme.config?.global?.is_i18n_menu_show} and not ${theme.config?.global?.is_i18n_menu_prefix_match_mode}"
     >
-      <!-- i18n menu 全等匹配模式 -->
+      <!--/* i18n menu 全等匹配模式 */-->
       <th:block th:each="menuItem : ${menuItems}">
         <th:block th:if="${#strings.equals(menuItem.spec.displayName, #locale)}">
           <li th:each="menuItemChildren : ${menuItem?.children}" class="matched-menu">
@@ -53,7 +53,7 @@
     <th:block
       th:if="${theme.config?.global?.is_i18n_menu_show} and ${theme.config?.global?.is_i18n_menu_prefix_match_mode}"
     >
-      <!-- i18n menu 前缀匹配模式 -->
+      <!--/* i18n menu 前缀匹配模式 */-->
       <th:block th:each="menuItem : ${menuItems}">
         <th:block th:if="${#strings.startsWith(#locale, menuItem.spec.displayName)}">
           <li th:each="menuItemChildren : ${menuItem?.children}" class="matched-menu">
@@ -69,7 +69,7 @@
       </th:block>
     </th:block>
 
-    <!-- i18n menu 全等匹配模式 匹配默认菜单 -->
+    <!--/* i18n menu 全等匹配模式 匹配默认菜单 */-->
     <th:block th:each="menuItem : ${menuItems}">
       <th:block th:if="${#strings.equals(menuItem.spec.displayName, theme.config?.global?.defalut_i18n_menu_name)}">
         <li th:each="menuItemChildren : ${menuItem.children}" style="display: none" class="default-menu">

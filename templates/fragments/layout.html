@@ -48,11 +48,11 @@
       th:href="@{/assets/dist/style.css(v=${theme.spec.version})}"
       href="./assets/dist/style.css"
     />
-    <!-- jquery -->
+    <!--/* jquery */-->
     <script th:src="@{/assets/lib/jquery/jquery.min.js(v=${theme.spec.version})}"></script>
-    <!-- main -->
+    <!--/* main */-->
     <script th:src="@{/assets/dist/main.iife.js(v=${theme.spec.version})}" defer></script>
-    <!-- instant.page -->
+    <!--/* instant.page */-->
     <script
       th:src="@{/assets/lib/instantpage/5.2.0.js(v=${theme.spec.version})}"
       th:if="${theme.config?.global?.is_instant_page_enable}"
@@ -178,7 +178,7 @@
         }
       });
     </script>
-    <!--
+    <!--/*
   本主题的样式切换说明：
   用哪套样式看 html 标签内的 theme 属性值：auto，dark，light，gray
   
@@ -194,7 +194,7 @@
   2. main.css 样式中还写了一个 color-scheme，由标签内的 data-color-scheme 决定，默认是 normal，亮色是 only light，暗色是 only dark
   应用于 :root 加上 only 效果是关闭由 Chrome 的自动深色主题引起的颜色覆盖。上游应用于 body 标签，本主题应用于 html 标签（实际是应用在有 data-color-scheme 属性的地方，本主题仅有 html 标签有这个属性）
   https://developer.mozilla.org/zh-CN/docs/Web/CSS/color-scheme
--->
+*/-->
     <style th:inline="css" th:if="${theme.config?.styles?.is_max_width_settings}">
       .max-width {
         max-width:
