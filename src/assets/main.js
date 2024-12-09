@@ -112,6 +112,9 @@ $(function () {
      */
     // 平板端 文章页 导航栏、回到顶部按钮 页面滚动相关逻辑
     if (menu.length) {
+      const topIcon = $("#top-icon-tablet");
+      const menuIconTablet = $("#menu-icon-tablet");
+      const menuIcon = $("#menu-icon");
       $(window).on("scroll", function () {
         var topDistance = $(window).scrollTop();
 
@@ -124,9 +127,6 @@ $(function () {
 
         // on tablet, hide the navigation icon as well and
         // show a "scroll to top icon" instead
-        const topIcon = $("#top-icon-tablet");
-        const menuIconTablet = $("#menu-icon-tablet");
-        const menuIcon = $("#menu-icon");
 
         // 顶部菜单按钮、顶部菜单、回到顶部按钮 根据页面滚动距离 显示/隐藏
         if (!menuIcon.is(":visible") && topDistance < 50) {
