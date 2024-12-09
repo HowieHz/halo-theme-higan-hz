@@ -148,13 +148,14 @@ $(function () {
     const footerNav = $("#footer-post");
     if (footerNav.length) {
       var lastScrollTop = 0;
+      const navFooter = $("#nav-footer");
+      const tocFooter = $("#toc-footer");
+      const shareFooter = $("#share-footer");
+      const footerTopIcon = $("#actions-footer > #top");
       $(window).on("scroll", function () {
         var topDistance = $(window).scrollTop();
 
         // 在滚动时，关闭全部底部导航栏子菜单
-        const navFooter = $("#nav-footer");
-        const tocFooter = $("#toc-footer");
-        const shareFooter = $("#share-footer");
         navFooter.slideUp(200);
         tocFooter.slideUp(200);
         shareFooter.slideUp(200);
@@ -172,9 +173,9 @@ $(function () {
         // otherwise show a "scroll to the top" icon
         // 回到顶部按钮 根据页面滚动距离 显示/隐藏
         if (topDistance < 50) {
-          $("#actions-footer > #top").hide();
+          footerTopIcon.css("transform", "scale(0)");
         } else if (topDistance > 100) {
-          $("#actions-footer > #top").show();
+          footerTopIcon.css("transform", "scale(1)");
         }
       });
     }
