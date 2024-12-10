@@ -1140,6 +1140,42 @@ article .content .caption {
   font-size: 0.9em;
 }
 
+/* language-mermaid style start */
+/* 默认样式 */
+article .content div.language-mermaid {
+  display: none;
+}
+
+/* 自动模式 */
+@media (prefers-color-scheme: no-preference) {
+  html[theme="auto"] article .content div.language-mermaid.light {
+    display: block;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  html[theme="auto"] article .content div.language-mermaid.light {
+    display: block;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html[theme="auto"] article .content div.language-mermaid.dark {
+    display: block;
+  }
+}
+
+/* 明亮模式 */
+html[theme="light"] article .content div.language-mermaid.light {
+  display: block;
+}
+
+/* 暗黑模式 */
+html[theme="dark"] article .content div.language-mermaid.dark {
+  display: block;
+}
+/* language-mermaid style end */
+
 .divide {
   height: 0;
   color: inherit;
