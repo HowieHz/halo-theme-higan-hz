@@ -59,6 +59,39 @@
       type="module"
       defer
     ></script>
+    <!--/* Mermaid */-->
+    <script type="module" th:inline="javascript" th:if="${theme.config?.global?.is_mermaid_enable}">
+      import mermaid from /*[[${theme.config?.global?.mermaid_script_url}]]*/ "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      function genUUID() {
+        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+          (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
+        );
+      }
+      const config = { startOnLoad: false };
+      mermaid.initialize(config);
+      const mermaidElements = document.querySelectorAll(
+        /*[[${theme.config?.global?.mermaid_selector}]]*/ ".content .mermaid"
+      );
+      mermaidElements.forEach(async (item) => {
+        const code = item.textContent;
+        if (item.getAttribute("data-processed") === "true" || code.trim() === "") {
+          return;
+        }
+        const id = "mermaid" + genUUID();
+        mermaid
+          .render(id, item.textContent)
+          .then((mermaidData) => {
+            item.innerHTML = mermaidData.svg;
+          })
+          .catch((e) => {
+            const errorElement = document.querySelector("#" + id);
+            item.innerHTML = `${errorElement.outerHTML}<br>
+<div style="text-align: left"><small>${e.message.replace(/\n/, "<br>")}</small></div>`;
+            errorElement.parentElement.remove();
+          });
+        item.setAttribute("data-processed", "true");
+      });
+    </script>
 
     <script th:if="${theme.config?.styles?.is_dark_mode_switch_show}">
       function updateThemeIcon(theme) {

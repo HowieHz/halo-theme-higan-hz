@@ -82,6 +82,28 @@ spec:
             - label: 关闭
               value: false
           help: 如启用此项，主题将自动加载 instant.page 脚本，以提升页面加载速度。
+        - $formkit: radio
+          name: is_mermaid_enable
+          label: Mermaid 支持
+          value: false
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+          help: 如启用此项，主题将自动加载 Mermaid 脚本，以启用对应支持。
+        - $formkit: text
+          name: mermaid_selector
+          if: "$is_mermaid_enable === true"
+          label: "Mermaid CSS 选择器"
+          help: "CSS 选择器，用于指定 Mermaid 渲染的区域。默认值为 .content .mermaid"
+          value: ".content .mermaid"
+        - $formkit: text
+          name: mermaid_script_url
+          if: "$is_mermaid_enable === true"
+          label: "Mermaid 脚本地址"
+          help: "指定脚本地址，默认值：https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
+          value: "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
     - group: styles
       label: 总体样式
       formSchema:

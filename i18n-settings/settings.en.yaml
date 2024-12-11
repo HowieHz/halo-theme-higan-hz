@@ -82,6 +82,28 @@ spec:
             - label: Disable
               value: false
           help: "If enabled, the theme will automatically load the instant.page script to improve the page loading speed."
+        - $formkit: radio
+          name: is_mermaid_enable
+          label: Mermaid support
+          value: false
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+          help: If enabled, the theme will automatically load the Mermaid script
+        - $formkit: text
+          name: mermaid_selector
+          if: "$is_mermaid_enable === true"
+          label: Mermaid CSS selector
+          help: CSS selector for Mermaid diagrams
+          value: ".content .mermaid"
+        - $formkit: text
+          name: mermaid_script_url
+          if: "$is_mermaid_enable === true"
+          label: Mermaid Script URL
+          help: "URL to the Mermaid script. Example: https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
+          value: "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
     - group: styles
       label: Style
       formSchema:
