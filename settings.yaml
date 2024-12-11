@@ -104,6 +104,14 @@ spec:
           label: "Mermaid 脚本地址"
           help: "指定脚本地址，默认值：https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
           value: "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
+        - $formkit: code
+          name: mermaid_config
+          if: "$is_mermaid_enable === true"
+          label: Mermaid Config 属性
+          help: 文档：https://mermaid.js.org/config/schema-docs/config.html#mermaid-config-properties
+          language: javascript
+          height: 150px
+          value: "{ startOnLoad: false }"
     - group: styles
       label: 总体样式
       formSchema:

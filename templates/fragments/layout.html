@@ -67,7 +67,7 @@
           (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
         );
       }
-      const config = { startOnLoad: false };
+      const config = /*[(${theme.config?.global?.mermaid_config})]*/ { startOnLoad: false };
       mermaid.initialize(config);
       const mermaidElements = document.querySelectorAll(
         /*[[${theme.config?.global?.mermaid_selector}]]*/ ".content .mermaid"
