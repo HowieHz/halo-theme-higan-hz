@@ -79,7 +79,7 @@
           .render(`${theme}-${id}`, darkContent)
           .then((mermaidData) => {
             const darkDiv = document.createElement("div");
-            darkDiv.classList.add("mermaid", theme);
+            darkDiv.classList.add("rendered-mermaid", theme);
             darkDiv.innerHTML = mermaidData.svg;
             item.parentElement.insertBefore(darkDiv, item.nextSibling);
             darkDiv.setAttribute("data-processed", "true");
@@ -106,7 +106,9 @@
 
         // 不是 auto 模式（class 没 auto），直接渲染
         if (!item.classList.contains("auto")) {
-          renderMermaid(item, id, "default");
+          // 如果 class 有 dark 或者 light，就渲染对应主题
+          renderMermaid(item, id, item.classList.contains("dark") ? "dark" : "light");
+          item.setAttribute("data-processed", "true");
           return;
         }
 
