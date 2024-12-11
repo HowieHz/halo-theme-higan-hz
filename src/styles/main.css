@@ -1150,35 +1150,35 @@ article .content text-diagram[data-type="mermaid"] {
 
 /* 自动模式 */
 @media (prefers-color-scheme: no-preference) {
-  html[theme="auto"] article .content div.light,
-  html[theme="auto"] article .content text-diagram[data-type="mermaid"].light {
+  html[data-color-scheme="auto"] article .content div.light,
+  html[data-color-scheme="auto"] article .content text-diagram[data-type="mermaid"].light {
     display: block;
   }
 }
 
 @media (prefers-color-scheme: light) {
-  html[theme="auto"] article .content div.light,
-  html[theme="auto"] article .content text-diagram[data-type="mermaid"].light {
+  html[data-color-scheme="auto"] article .content div.light,
+  html[data-color-scheme="auto"] article .content text-diagram[data-type="mermaid"].light {
     display: block;
   }
 }
 
 @media (prefers-color-scheme: dark) {
-  html[theme="auto"] article .content div.dark,
-  html[theme="auto"] article .content text-diagram[data-type="mermaid"].dark {
+  html[data-color-scheme="auto"] article .content div.dark,
+  html[data-color-scheme="auto"] article .content text-diagram[data-type="mermaid"].dark {
     display: block;
   }
 }
 
 /* 明亮模式 */
-html[theme="light"] article .content div.light,
-html[theme="light"] article .content text-diagram[data-type="mermaid"].light {
+html[data-color-scheme="light"] article .content div.light,
+html[data-color-scheme="light"] article .content text-diagram[data-type="mermaid"].light {
   display: block;
 }
 
 /* 暗黑模式 */
-html[theme="dark"] article .content div.dark,
-html[theme="dark"] article .content text-diagram[data-type="mermaid"].dark {
+html[data-color-scheme="dark"] article .content div.dark,
+html[data-color-scheme="dark"] article .content text-diagram[data-type="mermaid"].dark {
   display: block;
 }
 /* language-mermaid style end */
