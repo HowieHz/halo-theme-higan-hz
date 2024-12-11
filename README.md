@@ -429,9 +429,6 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 ```
 
 <div class="mermaid auto">
----
-title: The Open(RSS3) Universe
----
 flowchart TD
 A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
 A -->|组成部分| RSS3{RSS3}
@@ -457,9 +454,6 @@ RSS3 -->|发 Token| $POWER{{$POWER}}
 ```
 
 <div class="mermaid dark">
----
-title: The Open(RSS3) Universe
----
 %%{init: { "theme": "dark" } }%%
 flowchart TD
 A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
@@ -480,9 +474,6 @@ RSS3 -->|发 Token| $POWER{{$POWER}}
 </div>
 
 <div class="mermaid light">
----
-title: The Open(RSS3) Universe
----
 %%{init: { "theme": "light" } }%%
 flowchart TD
 A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
@@ -519,9 +510,6 @@ RSS3 -->|发 Token| $POWER{{$POWER}}
 
 ```
 <div class="mermaid auto">
----
-title: [[图表标题]]
----
 [[图表正文]]
 </div>
 ```
@@ -530,17 +518,11 @@ title: [[图表标题]]
 
 ```
 <div class="mermaid dark">
----
-title: [[图表标题]]
----
 %%{init: { "theme": "dark" } }%%
 [[图表正文]]
 </div>
 
 <div class="mermaid light">
----
-title: [[图表标题]]
----
 %%{init: { "theme": "light" } }%%
 [[图表正文]]
 </div>
