@@ -1141,37 +1141,44 @@ article .content .caption {
 }
 
 /* language-mermaid style start */
-/* 默认样式 */
-article .content div.language-mermaid {
+/* 默认样式 第一二行适配 halo-plugin-vditor 第三行适配 plugin-text-diagram*/
+article .content div.light,
+article .content div.dark,
+article .content text-diagram[data-type="mermaid"] {
   display: none;
 }
 
 /* 自动模式 */
 @media (prefers-color-scheme: no-preference) {
-  html[theme="auto"] article .content div.language-mermaid.light {
+  html[theme="auto"] article .content div.light,
+  html[theme="auto"] article .content text-diagram[data-type="mermaid"].light {
     display: block;
   }
 }
 
 @media (prefers-color-scheme: light) {
-  html[theme="auto"] article .content div.language-mermaid.light {
+  html[theme="auto"] article .content div.light,
+  html[theme="auto"] article .content text-diagram[data-type="mermaid"].light {
     display: block;
   }
 }
 
 @media (prefers-color-scheme: dark) {
-  html[theme="auto"] article .content div.language-mermaid.dark {
+  html[theme="auto"] article .content div.dark,
+  html[theme="auto"] article .content text-diagram[data-type="mermaid"].dark {
     display: block;
   }
 }
 
 /* 明亮模式 */
-html[theme="light"] article .content div.language-mermaid.light {
+html[theme="light"] article .content div.light,
+html[theme="light"] article .content text-diagram[data-type="mermaid"].light {
   display: block;
 }
 
 /* 暗黑模式 */
-html[theme="dark"] article .content div.language-mermaid.dark {
+html[theme="dark"] article .content div.dark,
+html[theme="dark"] article .content text-diagram[data-type="mermaid"].dark {
   display: block;
 }
 /* language-mermaid style end */

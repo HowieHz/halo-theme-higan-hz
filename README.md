@@ -86,7 +86,6 @@
     - [最新开发版获取方法](#最新开发版获取方法)
   - [可选插件（主题使用者必看章节！）](#可选插件主题使用者必看章节)
     - [Mermaid 明暗切换支持](#mermaid-明暗切换支持)
-      - [使用默认编辑器](#使用默认编辑器)
       - [使用 Vditor 编辑器](#使用-vditor-编辑器)
   - [进行此项目的开发](#进行此项目的开发)
     - [开发前准备](#开发前准备)
@@ -407,7 +406,7 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 
 ### Mermaid 明暗切换支持
 
-#### 使用默认编辑器
+<!-- #### 使用默认编辑器
 
 1. 需插件 [plugin-text-diagram](https://github.com/halo-sigs/plugin-text-diagram), [plugin-hybrid-edit-block](https://github.com/halo-sigs/plugin-hybrid-edit-block)
 2. 进入 [plugin-text-diagram](https://github.com/halo-sigs/plugin-text-diagram) 插件配置，`mermaid-CSS选择器` 需添加 `div.language-mermaid` （例：`text-diagram[data-type=mermaid],div.language-mermaid`）
@@ -432,30 +431,38 @@ title: [[图表标题]]
 %%{init: { "theme": "light" } }%%
 [[图表正文]]
 </div>
-```
+``` -->
 
 #### 使用 [Vditor 编辑器](https://github.com/justice2001/halo-plugin-vditor)
 
 输入以下内容，将 `[[图表标题]]` 和 `[[图表正文]]` 换成你自己的内容，
 即可适配明暗切换
 
-```
-<div class="language-mermaid dark">
----
-title: [[图表标题]]
----
-%%{init: { "theme": "dark" } }%%
-[[图表正文]]
-</div>
+````
+<div class="light">
 
-<div class="language-mermaid light">
+```mermaid
 ---
 title: [[图表标题]]
 ---
 %%{init: { "theme": "light" } }%%
 [[图表正文]]
-</div>
 ```
+
+</div>
+
+<div class="dark">
+
+```mermaid
+---
+title: [[图表标题]]
+---
+%%{init: { "theme": "dark" } }%%
+[[图表正文]]
+```
+
+</div>
+````
 
 ## 进行此项目的开发
 
