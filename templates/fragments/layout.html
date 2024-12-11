@@ -72,23 +72,50 @@
       const mermaidElements = document.querySelectorAll(
         /*[[${theme.config?.global?.mermaid_selector}]]*/ ".content .mermaid"
       );
-      mermaidElements.forEach(async (item) => {
-        const code = item.textContent;
-        if (item.getAttribute("data-processed") === "true" || code.trim() === "") {
-          return;
-        }
-        const id = "mermaid" + genUUID();
-        mermaid
-          .render(id, item.textContent)
+
+      function renderMermaid(item, id, theme) {
+        const darkContent = `%%{init: { "theme": "${theme}" } }%%\n${item.textContent}`;
+        return mermaid
+          .render(`${theme}-${id}`, darkContent)
           .then((mermaidData) => {
-            item.innerHTML = mermaidData.svg;
+            const darkDiv = document.createElement("div");
+            darkDiv.classList.add("mermaid", theme);
+            darkDiv.innerHTML = mermaidData.svg;
+            item.parentElement.insertBefore(darkDiv, item.nextSibling);
+            darkDiv.setAttribute("data-processed", "true");
+            // 隐藏原始 class="auto" 的元素
+            item.style.display = "none";
           })
           .catch((e) => {
-            const errorElement = document.querySelector("#" + id);
+            const errorElement = document.querySelector(`#${theme}-${id}`);
             item.innerHTML = `${errorElement.outerHTML}<br>
 <div style="text-align: left"><small>${e.message.replace(/\n/, "<br>")}</small></div>`;
             errorElement.parentElement.remove();
           });
+      }
+
+      mermaidElements.forEach(async (item) => {
+        const originalContent = item.textContent;
+
+        // 如果已经处理过或者内容为空，就不再处理
+        if (item.getAttribute("data-processed") === "true" || originalContent.trim() === "") {
+          return;
+        }
+
+        const id = "mermaid" + genUUID(); // 生成唯一 id
+
+        // 不是 auto 模式（class 没 auto），直接渲染
+        if (!item.classList.contains("auto")) {
+          renderMermaid(item, id, "default");
+          return;
+        }
+
+        // auto 模式下，渲染两种主题
+        // 渲染暗黑模式
+        renderMermaid(item, id, "dark");
+        // 渲染明亮模式
+        renderMermaid(item, id, "light");
+
         item.setAttribute("data-processed", "true");
       });
     </script>

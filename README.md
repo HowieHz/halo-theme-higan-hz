@@ -88,7 +88,11 @@
   - [可选插件（主题使用者必看章节！）](#可选插件主题使用者必看章节)
     - [Mermaid 明暗切换支持](#mermaid-明暗切换支持)
       - [使用默认编辑器](#使用默认编辑器)
+        - [示例](#示例)
+        - [使用说明](#使用说明)
       - [使用 Vditor 编辑器](#使用-vditor-编辑器)
+        - [示例](#示例-1)
+        - [使用说明](#使用说明-1)
   - [设置内容仅在浅色/深色模式下显示](#设置内容仅在浅色深色模式下显示)
     - [使用默认编辑器](#使用默认编辑器-1)
     - [使用 Vditor 编辑器](#使用-vditor-编辑器-1)
@@ -413,12 +417,116 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 
 #### 使用默认编辑器
 
+##### 示例
+
+<details><summary>点我展开示例 展示使用方法</summary>
+
+本图原始作者为 [欧雷流](https://ourai.ws/)
+授权 [HowieHz](https://howiehz.top/) 重绘
+
+第一种方式
+
+```
+
+<div class="mermaid auto">
+---
+title: The Open(RSS3) Universe
+---
+flowchart TD
+A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
+A -->|组成部分| RSS3{RSS3}
+A -->|组成部分| Crossbell{Crossbell}
+Crossbell -->|构建应用| xLog([xLog])
+Crossbell -->|构建应用| xSync([xSync])
+Crossbell -->|构建应用| xLhar([xLhar])
+Crossbell -->|构建应用| xFeed([xFeed])
+RSSHub -->|构建应用| Follow([Follow])
+xLog -->|经济系统| $CSB
+xLog -->|经济系统| $MIRA
+Follow -->|经济系统| $POWER
+Crossbell -->|发 Token| $CSB{{$CSB}}
+Crossbell -->|发 Token| $MIRA{{$MIRA}}
+RSS3 -->|发 Token| $RSS3{{$RSS3}}
+RSS3 -->|发 Token| $POWER{{$POWER}}
+</div>
+
+```
+
+第二种方式
+
+```
+
+<div class="mermaid dark">
+---
+title: The Open(RSS3) Universe
+---
+%%{init: { "theme": "dark" } }%%
+flowchart TD
+A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
+A -->|组成部分| RSS3{RSS3}
+A -->|组成部分| Crossbell{Crossbell}
+Crossbell -->|构建应用| xLog([xLog])
+Crossbell -->|构建应用| xSync([xSync])
+Crossbell -->|构建应用| xLhar([xLhar])
+Crossbell -->|构建应用| xFeed([xFeed])
+RSSHub -->|构建应用| Follow([Follow])
+xLog -->|经济系统| $CSB
+xLog -->|经济系统| $MIRA
+Follow -->|经济系统| $POWER
+Crossbell -->|发 Token| $CSB{{$CSB}}
+Crossbell -->|发 Token| $MIRA{{$MIRA}}
+RSS3 -->|发 Token| $RSS3{{$RSS3}}
+RSS3 -->|发 Token| $POWER{{$POWER}}
+</div>
+
+<div class="mermaid light">
+---
+title: The Open(RSS3) Universe
+---
+%%{init: { "theme": "light" } }%%
+flowchart TD
+A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
+A -->|组成部分| RSS3{RSS3}
+A -->|组成部分| Crossbell{Crossbell}
+Crossbell -->|构建应用| xLog([xLog])
+Crossbell -->|构建应用| xSync([xSync])
+Crossbell -->|构建应用| xLhar([xLhar])
+Crossbell -->|构建应用| xFeed([xFeed])
+RSSHub -->|构建应用| Follow([Follow])
+xLog -->|经济系统| $CSB
+xLog -->|经济系统| $MIRA
+Follow -->|经济系统| $POWER
+Crossbell -->|发 Token| $CSB{{$CSB}}
+Crossbell -->|发 Token| $MIRA{{$MIRA}}
+RSS3 -->|发 Token| $RSS3{{$RSS3}}
+RSS3 -->|发 Token| $POWER{{$POWER}}
+</div>
+
+```
+
+</details>
+
+##### 使用说明
+
 1. 需插件 [plugin-hybrid-edit-block](https://github.com/halo-sigs/plugin-hybrid-edit-block)
 2. 进入主题配置，启用 `全局-Mermaid 支持`
 3. 默认编辑器中输入 `/html` 选择插入 html 代码块
 
-输入以下内容，将 `[[图表标题]]` 和 `[[图表正文]]` 换成你自己的内容，
+输入以下内容，将 `[[图表标题]]` 和 `[[图表正文]]` 换成你自己的内容，  
 即可适配明暗切换
+
+> 第一种方式：只写一遍，自动生成浅色/深色模式下两种图表
+
+```
+<div class="mermaid auto">
+---
+title: [[图表标题]]
+---
+[[图表正文]]
+</div>
+```
+
+> 第二种方式：手动管理浅色/深色模式下的图表
 
 ```
 <div class="mermaid dark">
@@ -440,8 +548,154 @@ title: [[图表标题]]
 
 #### 使用 [Vditor 编辑器](https://github.com/justice2001/halo-plugin-vditor)
 
-输入以下内容，将 `[[图表标题]]` 和 `[[图表正文]]` 换成你自己的内容，
-即可适配明暗切换
+##### 示例
+
+<details><summary>点我展开示例 展示使用方法</summary>
+
+````markdown
+本图原始作者为 [欧雷流](https://ourai.ws/)
+授权 [HowieHz](https://howiehz.top/) 重绘
+
+## 第一种方式
+
+<div class="mermaid auto">
+flowchart TD
+A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
+A -->|组成部分| RSS3{RSS3}
+A -->|组成部分| Crossbell{Crossbell}
+Crossbell -->|构建应用| xLog([xLog])
+Crossbell -->|构建应用| xSync([xSync])
+Crossbell -->|构建应用| xLhar([xLhar])
+Crossbell -->|构建应用| xFeed([xFeed])
+RSSHub -->|构建应用| Follow([Follow])
+xLog -->|经济系统| $CSB
+xLog -->|经济系统| $MIRA
+Follow -->|经济系统| $POWER
+Crossbell -->|发 Token| $CSB{{$CSB}}
+Crossbell -->|发 Token| $MIRA{{$MIRA}}
+RSS3 -->|发 Token| $RSS3{{$RSS3}}
+RSS3 -->|发 Token| $POWER{{$POWER}}
+</div>
+
+## 第二种方式
+
+<div class="mermaid auto">
+
+```mermaid
+flowchart TD
+A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
+A -->|组成部分| RSS3{RSS3}
+A -->|组成部分| Crossbell{Crossbell}
+Crossbell -->|构建应用| xLog([xLog])
+Crossbell -->|构建应用| xSync([xSync])
+Crossbell -->|构建应用| xLhar([xLhar])
+Crossbell -->|构建应用| xFeed([xFeed])
+RSSHub -->|构建应用| Follow([Follow])
+xLog -->|经济系统| $CSB
+xLog -->|经济系统| $MIRA
+Follow -->|经济系统| $POWER
+Crossbell -->|发 Token| $CSB{{$CSB}}
+Crossbell -->|发 Token| $MIRA{{$MIRA}}
+RSS3 -->|发 Token| $RSS3{{$RSS3}}
+RSS3 -->|发 Token| $POWER{{$POWER}}
+```
+
+</div>
+
+## 第三种方式
+
+<div class="light">
+
+```mermaid
+---
+title: The Open(RSS3) Universe
+---
+%%{init: { "theme": "light" } }%%
+flowchart TD
+A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
+A -->|组成部分| RSS3{RSS3}
+A -->|组成部分| Crossbell{Crossbell}
+Crossbell -->|构建应用| xLog([xLog])
+Crossbell -->|构建应用| xSync([xSync])
+Crossbell -->|构建应用| xLhar([xLhar])
+Crossbell -->|构建应用| xFeed([xFeed])
+RSSHub -->|构建应用| Follow([Follow])
+xLog -->|经济系统| $CSB
+xLog -->|经济系统| $MIRA
+Follow -->|经济系统| $POWER
+Crossbell -->|发 Token| $CSB{{$CSB}}
+Crossbell -->|发 Token| $MIRA{{$MIRA}}
+RSS3 -->|发 Token| $RSS3{{$RSS3}}
+RSS3 -->|发 Token| $POWER{{$POWER}}
+```
+
+</div>
+
+<div class="dark">
+
+```mermaid
+---
+title: The Open(RSS3) Universe
+---
+%%{init: { "theme": "dark" } }%%
+flowchart TD
+A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
+A -->|组成部分| RSS3{RSS3}
+A -->|组成部分| Crossbell{Crossbell}
+Crossbell -->|构建应用| xLog([xLog])
+Crossbell -->|构建应用| xSync([xSync])
+Crossbell -->|构建应用| xLhar([xLhar])
+Crossbell -->|构建应用| xFeed([xFeed])
+RSSHub -->|构建应用| Follow([Follow])
+xLog -->|经济系统| $CSB
+xLog -->|经济系统| $MIRA
+Follow -->|经济系统| $POWER
+Crossbell -->|发 Token| $CSB{{$CSB}}
+Crossbell -->|发 Token| $MIRA{{$MIRA}}
+RSS3 -->|发 Token| $RSS3{{$RSS3}}
+RSS3 -->|发 Token| $POWER{{$POWER}}
+```
+
+</div>
+````
+
+</details>
+
+##### 使用说明
+
+输入以下内容，将 `[[图表标题]]` 和 `[[图表正文]]` 换成你自己的内容，  
+即可适配明暗切换。  
+注意：下列模板中出现的空行不可省略，没出现空行的也不能多添加空行。建议使用分屏预览模式编辑。
+
+> 第一种方式：只写一遍，自动生成浅色/深色模式下两种图表
+> 此方式需要进入主题配置，启用 `全局-Mermaid 支持`
+> 缺点：不兼容 Vditor 编辑器的实时预览
+
+```
+<div class="mermaid auto">
+[[图表正文]]
+</div>
+```
+
+> 第二种方式：只写一遍，自动生成浅色/深色模式下两种图表
+> 此方式需要进入主题配置，启用 `全局-Mermaid 支持`
+> 此方式原理：由于主题的 Mermaid 初始化先加载，可在 Vditor 自带的 Mermaid 渲染前抢先渲染生成
+> 缺点：一张图会多被渲染一遍（被 Vditor 自带的 Mermaid 多渲染一遍）
+> 优点：兼容 Vditor 编辑器的实时预览
+
+````
+<div class="mermaid auto">
+
+```mermaid
+[[图表正文]]
+```
+
+</div>
+````
+
+> 第三种方式：手动管理浅色/深色模式下的图表
+> 缺点：同样内容要复制粘贴一遍
+> 优点：兼容 Vditor 编辑器的实时预览，兼容性最好
 
 ````
 <div class="light">
