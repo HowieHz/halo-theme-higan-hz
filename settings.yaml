@@ -102,8 +102,8 @@ spec:
           name: mermaid_script_url
           if: "$is_mermaid_enable === true"
           label: "Mermaid 脚本地址"
-          help: "指定脚本地址，默认值：https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
-          value: "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
+          help: "指定脚本地址，示例：https://registry.npmmirror.com/mermaid/11.4.1/files/dist/mermaid.esm.min.mjs, https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs, https://unpkg.com/mermaid@11.4.1/dist/mermaid.esm.min.mjs"
+          value: "https://registry.npmmirror.com/mermaid/11.4.1/files/dist/mermaid.esm.min.mjs"
         - $formkit: code
           name: mermaid_config
           if: "$is_mermaid_enable === true"
