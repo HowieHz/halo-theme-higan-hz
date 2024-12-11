@@ -424,10 +424,9 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 本图原始作者为 [欧雷流](https://ourai.ws/)
 授权 [HowieHz](https://howiehz.top/) 重绘
 
-第一种方式（以下内容作为 HTML 代码块插入默认编辑器）
+> 第一种方式（以下内容作为 HTML 代码块插入默认编辑器）
 
 ```
-
 <div class="mermaid auto">
 flowchart TD
 A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
@@ -446,13 +445,11 @@ Crossbell -->|发 Token| $MIRA{{$MIRA}}
 RSS3 -->|发 Token| $RSS3{{$RSS3}}
 RSS3 -->|发 Token| $POWER{{$POWER}}
 </div>
-
 ```
 
-第二种方式（以下内容作为 HTML 代码块插入默认编辑器）
+> 第二种方式（以下内容作为 HTML 代码块插入默认编辑器）
 
 ```
-
 <div class="mermaid dark">
 %%{init: { "theme": "dark" } }%%
 flowchart TD
@@ -492,7 +489,6 @@ Crossbell -->|发 Token| $MIRA{{$MIRA}}
 RSS3 -->|发 Token| $RSS3{{$RSS3}}
 RSS3 -->|发 Token| $POWER{{$POWER}}
 </div>
-
 ```
 
 </details>
