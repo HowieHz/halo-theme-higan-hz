@@ -96,11 +96,12 @@
   - [设置内容仅在浅色/深色模式下显示](#设置内容仅在浅色深色模式下显示)
     - [使用默认编辑器](#使用默认编辑器-1)
     - [使用 Vditor 编辑器](#使用-vditor-编辑器-1)
-  - [版本适用说明](#版本适用说明)
-  - [TODO](#todo)
+  - [开发指南/贡献指南](#开发指南贡献指南)
   - [Lighthouse](#lighthouse)
+  - [TODO](#todo)
   - [项目状态](#项目状态)
-  - [Star History](#star-history)
+    - [Repobeats analytics](#repobeats-analytics)
+    - [Star History](#star-history)
 
 ## i18n 支持指南
 
@@ -734,25 +735,25 @@ title: [[图表标题]]
 </div>
 ```
 
-## 版本适用说明
+## 开发指南/贡献指南
 
-当前 main 分支适用于 Halo 2.0 版本
+见 [CONTRIBUTING](./CONTRIBUTING)
 
-适用于 Halo 1.x 版本的主题位于分支 [halo-theme-higan 1.x](https://github.com/HowieHz/halo-theme-higan-hz/tree/1.x)
+## Lighthouse
+
+![Lighthouse-result-2024-04-15-post](./screenshots/Lighthouse-result-2024-04-15-post.png)
 
 ## TODO
 
 见 [项目 Issue 页面](https://github.com/HowieHz/halo-theme-higan-hz/issues)  
 注：社区意愿较大的 Issue 会列为优先项。如果你对某功能有需求，请一定要在对应 Issue 下回复，或进入我的博客通过其他联系方式联系我，谢谢！
 
-## Lighthouse
-
-![Lighthouse-result-2024-04-15-post](./screenshots/Lighthouse-result-2024-04-15-post.png)
-
 ## 项目状态
+
+### Repobeats analytics
 
 ![Alt](https://repobeats.axiom.co/api/embed/b02231ee758d8477f8fdb3b166fcf0488cbe7377.svg "Repobeats analytics image")
 
-## Star History
+### Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=HowieHz/halo-theme-higan-hz&type=Date)](https://star-history.com/#HowieHz/halo-theme-higan-hz&Date)

@@ -4,6 +4,12 @@
 
 - 待补充
 
+## 版本适用说明
+
+当前 main 分支适用于 Halo 2.0 版本
+
+适用于 Halo 1.x 版本的主题位于分支 [halo-theme-higan 1.x](https://github.com/HowieHz/halo-theme-higan-hz/tree/1.x)
+
 ## 开发指南
 
 首先请确保你的编辑器支持 EditorConfig，这保证了项目代码格式的统一。
