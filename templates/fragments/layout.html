@@ -74,15 +74,15 @@
       );
 
       function renderMermaid(item, id, theme) {
-        const darkContent = `%%{init: { "theme": "${theme}" } }%%\n${item.textContent}`;
+        const content = `%%{init: { "theme": "${theme}" } }%%\n${item.textContent}`;
         return mermaid
-          .render(`${theme}-${id}`, darkContent)
+          .render(`${theme}-${id}`, content)
           .then((mermaidData) => {
-            const darkDiv = document.createElement("div");
-            darkDiv.classList.add("rendered-mermaid", theme);
-            darkDiv.innerHTML = mermaidData.svg;
-            item.parentElement.insertBefore(darkDiv, item.nextSibling);
-            darkDiv.setAttribute("data-processed", "true");
+            const div = document.createElement("div");
+            div.classList.add("rendered-mermaid", theme);
+            div.innerHTML = mermaidData.svg;
+            item.parentElement.insertBefore(div, item.nextSibling);
+            div.setAttribute("data-processed", "true");
             // 隐藏原始 class="auto" 的元素
             item.style.display = "none";
           })
