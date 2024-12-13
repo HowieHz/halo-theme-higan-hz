@@ -74,7 +74,20 @@
       );
 
       function renderMermaid(item, id, theme) {
-        const content = `%%{init: { "theme": "${theme}" } }%%\n${item.textContent}`;
+        let rawContent = item.textContent;
+        // 如果标签为 text-diagram  data-type为mermaid 读取data-content 为 rawContent，适配文本绘图插件在默认编辑器的插入
+        if (item.tagName === "TEXT-DIAGRAM" && item.getAttribute("data-type") === "mermaid") {
+          rawContent = item.getAttribute("data-content");
+          console.log("text-diagram\n\n", rawContent);
+        }
+
+        let content = null;
+        if (theme === null) {
+          content = rawContent;
+        } else {
+          content = `%%{init: { "theme": "${theme}" } }%%\n${rawContent}`;
+        }
+
         return mermaid
           .render(`${theme}-${id}`, content)
           .then((mermaidData) => {
@@ -95,10 +108,10 @@
       }
 
       mermaidElements.forEach(async (item) => {
-        const originalContent = item.textContent;
+        const rawContent = item.textContent;
 
         // 如果已经处理过或者内容为空，就不再处理
-        if (item.getAttribute("data-processed") === "true" || originalContent.trim() === "") {
+        if (item.getAttribute("data-processed") === "true" || rawContent.trim() === "") {
           return;
         }
 
@@ -106,8 +119,14 @@
 
         // 不是 auto 模式（class 没 auto），直接渲染
         if (!item.classList.contains("auto")) {
-          // 如果 class 有 dark 或者 light，就渲染对应主题
-          renderMermaid(item, id, item.classList.contains("dark") ? "dark" : "light");
+          // 如果 class 有 dark 或者 light，就渲染对应主题，否则为 theme 设为 null
+          if (item.classList.contains("dark")) {
+            renderMermaid(item, id, "dark");
+          } else if (item.classList.contains("light")) {
+            renderMermaid(item, id, "light");
+          } else {
+            renderMermaid(item, id, null);
+          }
           item.setAttribute("data-processed", "true");
           return;
         }
