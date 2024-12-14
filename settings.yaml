@@ -313,6 +313,16 @@ spec:
           label: 页脚最底部内容（支持 html 代码块）
           language: html
           height: 150px
+        - $formkit: radio
+          name: is_show_the_quote_after_blockquote
+          label: 引用块后添加引号
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+          help: 如启用此项，将在引用块后添加引号。引用块在 Markdown 中使用 > 表示。
     - group: index_styles
       label: 首页样式
       formSchema:

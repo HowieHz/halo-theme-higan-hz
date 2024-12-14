@@ -313,6 +313,16 @@ spec:
           label: Footer content at the bottom (support html code block)
           language: html
           height: 150px
+        - $formkit: radio
+          name: is_show_the_quote_after_blockquote
+          label: Show the quote after Blockquote 
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+          help: "If enabled, the theme will display the quote after the blockquote. In Markdown, you can use the > symbol to create a blockquote."
     - group: index_styles
       label: Home page style
       formSchema:
