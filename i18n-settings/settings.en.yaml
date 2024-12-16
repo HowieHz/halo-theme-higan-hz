@@ -314,6 +314,16 @@ spec:
           language: html
           height: 150px
         - $formkit: radio
+          name: is_show_the_quote_before_blockquote
+          label: Show the quote before Blockquote 
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+          help: "If enabled, the theme will display the quote before the blockquote. In Markdown, you can use the > symbol to create a blockquote."
+        - $formkit: radio
           name: is_show_the_quote_after_blockquote
           label: Show the quote after Blockquote 
           value: true
