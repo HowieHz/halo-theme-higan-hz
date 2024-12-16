@@ -314,6 +314,16 @@ spec:
           language: html
           height: 150px
         - $formkit: radio
+          name: is_show_the_quote_before_blockquote
+          label: 引用块前添加引号
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+          help: 如启用此项，将在引用块前添加引号。引用块在 Markdown 中使用 > 表示。
+        - $formkit: radio
           name: is_show_the_quote_after_blockquote
           label: 引用块后添加引号
           value: true

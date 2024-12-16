@@ -337,6 +337,16 @@
       /*[(${theme.config?.styles?.content_width_style})]*/ fit-content;
       }
     </style>
+    <style th:inline="css" th:if="${theme.config?.styles?.is_show_the_quote_before_blockquote}">
+      article .content blockquote:before {
+        margin-right: 0.25em;
+        color: var(--color-quote);
+        content: "\201C";
+        vertical-align: -0.4em;
+        font-size: 2em;
+        line-height: 0.1em;
+      }
+    </style>
     <style th:inline="css" th:if="${theme.config?.styles?.is_show_the_quote_after_blockquote}">
       article .content blockquote:after {
         float: right;

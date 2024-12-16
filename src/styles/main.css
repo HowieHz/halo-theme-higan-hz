@@ -1080,15 +1080,6 @@ article .content blockquote p {
   margin: 0;
 }
 
-article .content blockquote:before {
-  margin-right: 0.25em;
-  color: var(--color-quote);
-  content: "\201C";
-  vertical-align: -0.4em;
-  font-size: 2em;
-  line-height: 0.1em;
-}
-
 article .content blockquote footer {
   margin: line-height 0;
   color: var(--color-meta);
