@@ -75,7 +75,7 @@
 
       function renderMermaid(item, id, theme) {
         let rawContent = item.textContent;
-        // 如果标签为 text-diagram  data-type为mermaid 读取data-content 为 rawContent，适配文本绘图插件在默认编辑器的插入
+        // 如果标签为 text-diagram  data-type 为 mermaid 读取 data-content 为 rawContent，适配文本绘图插件在默认编辑器的插入
         if (item.tagName === "TEXT-DIAGRAM" && item.getAttribute("data-type") === "mermaid") {
           rawContent = item.getAttribute("data-content");
           console.log("text-diagram\n\n", rawContent);
@@ -303,7 +303,7 @@
 
   1. 用于给 css 样式读取，放在 html 标签内的 data-color-scheme 属性值：auto，dark，light
   当前用于：决定官方评论组件样式
-  文档: https://www.halo.run/store/apps/app-YXyaD
+  文档：https://www.halo.run/store/apps/app-YXyaD
   
   2. main.css 样式中还写了一个 color-scheme，由标签内的 data-color-scheme 决定，默认是 normal，亮色是 only light，暗色是 only dark
   应用于 :root 加上 only 效果是关闭由 Chrome 的自动深色主题引起的颜色覆盖。上游应用于 body 标签，本主题应用于 html 标签（实际是应用在有 data-color-scheme 属性的地方，本主题仅有 html 标签有这个属性）
