@@ -33,7 +33,7 @@ spec:
           name: upgrade_insecure_requests
           label: CSP:upgrade-insecure-requests
           value: false
-          help: 如启用此项，非跳转 （non-navigational） 的不安全资源请求将会自动升级到 HTTPS（包括第当前域名以及第三方请求）
+          help: 如启用此项，非跳转（non-navigational）的不安全资源请求将会自动升级到 HTTPS（包括第当前域名以及第三方请求）
         - $formkit: radio
           name: anti_mirror_site
           label: 仅允许使用指定域名访问
@@ -59,7 +59,7 @@ spec:
           name: target_url
           if: "$anti_mirror_site === true"
           label: "Base64 编码后的目标链接"
-          help: "检测到当前页面域名不在白名单中，就会跳转到目标链接（编码前的内容包括完整域名。请在输入框仅输入编码后的内容！）\n例1编码前：https://howiehz.top\n编码后：aHR0cHM6Ly9ob3dpZWh6LnRvcA=="
+          help: "检测到当前页面域名不在白名单中，就会跳转到目标链接（编码前的内容包括完整域名。请在输入框仅输入编码后的内容！）\n示例：编码前 https://howiehz.top\n编码后 aHR0cHM6Ly9ob3dpZWh6LnRvcA=="
           value: "bG9jYWxob3N0"
         - $formkit: radio
           name: is_keep_path_and_query
@@ -164,8 +164,8 @@ spec:
           if: "$is_max_width_settings===true"
           label: 内容区域最大宽度
           value: 48rem
-          placeholder: "默认值: 48rem"
-          help: "允许全部CSS长度单位, 如: 48rem, 780px, 70vw, 70%。宽度最大值设置较大时可能会出现内容整体偏左的现象。为解决这个问题，可同时开启“内容区域最小宽度”，“自定义内容区域宽度属性”并保持默认值。"
+          placeholder: "默认值：48rem"
+          help: "允许全部 CSS 长度单位，如：48rem, 780px, 70vw, 70%。宽度最大值设置较大时可能会出现内容整体偏左的现象。为解决这个问题，可同时开启“内容区域最小宽度”，“自定义内容区域宽度属性”并保持默认值。"
         - $formkit: radio
           name: is_min_width_settings
           label: 自定义内容区域最小宽度
@@ -180,8 +180,8 @@ spec:
           if: "$is_min_width_settings===true"
           label: 内容区域最小宽度
           value: 48rem
-          placeholder: "默认值: 48rem"
-          help: "允许全部CSS长度单位, 如: 48rem, 780px, 70vw, 70%。当此设置宽度小于窗口宽度时，主题会使用窗口宽度。以避免出现横向滚动条。"
+          placeholder: "默认值：48rem"
+          help: "允许全部 CSS 长度单位，如：48rem, 780px, 70vw, 70%。当此设置宽度小于窗口宽度时，主题会使用窗口宽度。以避免出现横向滚动条。"
         - $formkit: radio
           name: is_force_min_width_settings
           if: "$is_min_width_settings===true"
@@ -208,7 +208,7 @@ spec:
           if: "$is_content_width_style_settings===true"
           label: 内容区域宽度样式
           value: fit-content
-          placeholder: "默认值: fit-content"
+          placeholder: "默认值：fit-content"
           help: "此项决定了内容区域宽度。默认值效果为：使内容区域宽度=最宽的内容的宽度。（此项实际是在设置内容区域的 width 属性对应的样式值）"
         - $formkit: radio
           name: is_show_header_icon
@@ -300,7 +300,7 @@ spec:
         - $formkit: radio
           name: is_footer_content_show
           label: 添加内容到页脚最底部
-          help: "Halo 设置-代码注入-页脚 的内容显示位置在“主题信息”、“版权信息”、“底部菜单”之上。\n而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。"
+          help: "Halo 设置 - 代码注入 - 页脚 的内容显示位置在“主题信息”、“版权信息”、“底部菜单”之上。\n而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。"
           value: false
           options:
             - label: 开启
@@ -339,7 +339,7 @@ spec:
         - $formkit: text
           name: page_html_title
           label: "主页 HTML 标题"
-          help: "如置空则取值自“Halo设置-基本设置-站点标题”"
+          help: "如置空则取值自“Halo 设置 - 基本设置 - 站点标题”"
           value: ""
         - $formkit: radio
           name: hitokoto
@@ -560,7 +560,7 @@ spec:
                   then: "填入任意纯文本"
                   else:
                     if: "$get(index_sns_type).value.type === 'rss'"
-                    then: "填入 feed 地址, 示例: /rss.xml"
+                    then: "填入 feed 地址，示例：/rss.xml"
                     else:
                       if: "$get(index_sns_type).value.type === 'bilibili'"
                       then: "只需填入 uid"
