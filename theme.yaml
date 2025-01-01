@@ -2,6 +2,8 @@ apiVersion: theme.halo.run/v1alpha1
 kind: Theme
 metadata:
   name: howiehz-higan
+  annotations:
+    store.halo.run/app-id: app-homxf
 spec:
   displayName: 彼岸 - 皓改
   author:
