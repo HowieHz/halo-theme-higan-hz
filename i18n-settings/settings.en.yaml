@@ -135,7 +135,7 @@ spec:
             - label: "Gray"
               value: { theme: "gray", color-scheme: "light" }
         - $formkit: radio
-          name: is_dark_mode_switch_show
+          name: is_show_color_scheme_toggle_button
           label: Dark mode switch
           value: false
           help: "If enabled, the theme will display a dark mode switch on the right of the title."
