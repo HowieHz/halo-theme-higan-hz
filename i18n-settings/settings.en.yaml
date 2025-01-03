@@ -120,12 +120,14 @@ spec:
           label: Color scheme
           value: { theme: "auto", color-scheme: "auto" }
           options:
-            - label: "Auto"
+            - label: "Follow system"
               value: { theme: "auto", color-scheme: "auto" }
             - label: "Dark"
               value: { theme: "dark", color-scheme: "dark" }
             - label: "Light"
               value: { theme: "light", color-scheme: "light" }
+            - label: "Follow system - Blue"
+              value: { theme: "auto-blue", color-scheme: "auto" }
             - label: "Dark Blue"
               value: { theme: "dark-blue", color-scheme: "dark" }
             - label: "Light Blue"
