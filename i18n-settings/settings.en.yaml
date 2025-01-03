@@ -326,7 +326,7 @@ spec:
         - $formkit: radio
           name: is_show_the_quote_after_blockquote
           label: Show the quote after Blockquote 
-          value: true
+          value: false
           options:
             - label: Enable
               value: true
