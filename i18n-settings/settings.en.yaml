@@ -118,20 +118,20 @@ spec:
         - $formkit: select
           name: color_schema
           label: Color scheme
-          value: { theme: "auto", comment: "auto", color-scheme: "auto" }
+          value: { theme: "auto", color-scheme: "auto" }
           options:
             - label: "Auto"
-              value: { theme: "auto", comment: "auto", color-scheme: "auto" }
+              value: { theme: "auto", color-scheme: "auto" }
             - label: "Dark"
-              value: { theme: "dark", comment: "dark", color-scheme: "dark" }
+              value: { theme: "dark", color-scheme: "dark" }
             - label: "Light"
-              value: { theme: "light", comment: "light", color-scheme: "light" }
+              value: { theme: "light", color-scheme: "light" }
             - label: "Dark Blue"
-              value: { theme: "dark-blue", comment: "dark", color-scheme: "dark" }
+              value: { theme: "dark-blue", color-scheme: "dark" }
             - label: "Light Blue"
-              value: { theme: "light-blue", comment: "light", color-scheme: "light" }
+              value: { theme: "light-blue", color-scheme: "light" }
             - label: "Gray"
-              value: { theme: "gray", comment: "light", color-scheme: "light" }
+              value: { theme: "gray", color-scheme: "light" }
         - $formkit: radio
           name: is_dark_mode_switch_show
           label: Dark mode switch
