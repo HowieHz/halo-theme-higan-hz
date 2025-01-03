@@ -126,6 +126,10 @@ spec:
               value: { theme: "dark", comment: "dark", color-scheme: "dark" }
             - label: "Light"
               value: { theme: "light", comment: "light", color-scheme: "light" }
+            - label: "Dark Blue"
+              value: { theme: "dark-blue", comment: "dark", color-scheme: "dark" }
+            - label: "Light Blue"
+              value: { theme: "light-blue", comment: "light", color-scheme: "light" }
             - label: "Gray"
               value: { theme: "gray", comment: "light", color-scheme: "light" }
         - $formkit: radio
