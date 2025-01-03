@@ -126,6 +126,8 @@ spec:
               value: { theme: "dark", color-scheme: "dark" }
             - label: "亮色"
               value: { theme: "light", color-scheme: "light" }
+            - label: "跟随系统 - 蓝"
+              value: { theme: "auto-blue", color-scheme: "auto" }
             - label: "深蓝"
               value: { theme: "dark-blue", color-scheme: "dark" }
             - label: "浅蓝"
