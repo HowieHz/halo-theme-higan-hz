@@ -117,33 +117,95 @@ spec:
       formSchema:
         - $formkit: select
           name: color_schema
+          if: "$is_show_color_scheme_toggle_button===false"
           label: Color scheme
+          help: "It is normal for the selected option not to be displayed; it will still take effect properly."
           value: { theme: "auto", color-scheme: "auto" }
           options:
-            - label: "Follow system"
+            - label: "Follow System - Green"
               value: { theme: "auto", color-scheme: "auto" }
-            - label: "Dark"
+            - label: "Dark - Green"
               value: { theme: "dark", color-scheme: "dark" }
-            - label: "Light"
+            - label: "Light - Green"
               value: { theme: "light", color-scheme: "light" }
-            - label: "Follow system - Blue"
+            - label: "Follow System - Blue"
               value: { theme: "auto-blue", color-scheme: "auto" }
-            - label: "Dark Blue"
+            - label: "Dark - Blue"
               value: { theme: "dark-blue", color-scheme: "dark" }
-            - label: "Light Blue"
+            - label: "Light - Blue"
               value: { theme: "light-blue", color-scheme: "light" }
-            - label: "Gray"
+            - label: "Light - Gray"
               value: { theme: "gray", color-scheme: "light" }
         - $formkit: radio
           name: is_show_color_scheme_toggle_button
-          label: Dark mode switch
+          label: Color Scheme Toggle Button
           value: false
-          help: "If enabled, the theme will display a dark mode switch on the right of the title."
+          help: "(After toggling this option, please click the save button below and then refresh the page.) If enabled, a light/dark mode toggle button will appear next to the main title. It will automatically cycle through Light Mode -> Dark Mode -> Auto Mode -> Light Mode. Note: Selecting a light color scheme for 'Auto Mode' will disable Auto Mode. (For detailed implementation logic, please refer to the documentation.)"
           options:
             - label: Enable
               value: true
             - label: Disable
               value: false
+        - $formkit: select
+          name: theme_auto
+          if: "$is_show_color_scheme_toggle_button===true"
+          label: Auto Mode Color Scheme
+          value: "auto"
+          options:
+            - label: "Follow System - Green"
+              value: "auto"
+            - label: "Light - Green"
+              value: "light"
+            - label: "Dark - Green"
+              value: "dark"
+            - label: "Follow System - Blue"
+              value: "auto-blue"
+            - label: "Light - Blue"
+              value: "light-blue"
+            - label: "Dark - Blue"
+              value: "dark-blue"
+            - label: "Light - Gray"
+              value: "gray"
+        - $formkit: select
+          name: theme_light
+          if: "$is_show_color_scheme_toggle_button===true"
+          label: Light Mode Color Scheme
+          value: "light"
+          options:
+            - label: "Follow System - Green"
+              value: "auto"
+            - label: "Light - Green"
+              value: "light"
+            - label: "Dark - Green"
+              value: "dark"
+            - label: "Follow System - Blue"
+              value: "auto-blue"
+            - label: "Light - Blue"
+              value: "light-blue"
+            - label: "Dark - Blue"
+              value: "dark-blue"
+            - label: "Light - Gray"
+              value: "gray"
+        - $formkit: select
+          name: theme_dark
+          if: "$is_show_color_scheme_toggle_button===true"
+          label: Dark Mode Color Scheme
+          value: "dark"
+          options:
+            - label: "Follow System - Green"
+              value: "auto"
+            - label: "Light - Green"
+              value: "light"
+            - label: "Dark - Green"
+              value: "dark"
+            - label: "Follow System - Blue"
+              value: "auto-blue"
+            - label: "Light - Blue"
+              value: "light-blue"
+            - label: "Dark - Blue"
+              value: "dark-blue"
+            - label: "Light - Gray"
+              value: "gray"
         - $formkit: select
           name: text_size
           label: Text size
