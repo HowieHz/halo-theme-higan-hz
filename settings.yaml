@@ -326,7 +326,7 @@ spec:
         - $formkit: radio
           name: is_show_the_quote_after_blockquote
           label: 引用块后添加引号
-          value: true
+          value: false
           options:
             - label: 开启
               value: true
