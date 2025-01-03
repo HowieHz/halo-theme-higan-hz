@@ -172,10 +172,11 @@
       });
     </script>
 
-    <script th:if="${theme.config?.styles?.is_dark_mode_switch_show}">
-      const THEME_DARK = "dark";
-      const THEME_LIGHT = "light";
-      const THEME_AUTO = "auto";
+    <script th:inline="javascript" th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      const THEME_DARK = /*[[${theme.config?.styles?.theme_dark}]]*/ "dark";
+      const THEME_LIGHT = /*[[${theme.config?.styles?.theme_light}]]*/ "light";
+      const THEME_AUTO = /*[[${theme.config?.styles?.theme_auto}]]*/ "auto";
+
       const themeColorSchemeMap = {
         auto: "auto",
         dark: "dark",
