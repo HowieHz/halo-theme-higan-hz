@@ -173,11 +173,23 @@
     </script>
 
     <script th:if="${theme.config?.styles?.is_dark_mode_switch_show}">
+      const THEME_DARK = "dark";
+      const THEME_LIGHT = "light";
+      const THEME_AUTO = "auto";
+      const themeColorSchemeMap = {
+        auto: "auto",
+        dark: "dark",
+        light: "light",
+        "dark-blue": "dark",
+        "light-blue": "light",
+        gray: "light",
+      };
+
       function updateThemeIcon(theme) {
         const themeIcon = document.getElementById("theme-toggle-button-icon");
-        if (theme === "light") {
+        if (theme === THEME_LIGHT) {
           themeIcon.setAttribute("data-icon", "ph:sun-bold");
-        } else if (theme === "dark") {
+        } else if (theme === THEME_DARK) {
           themeIcon.setAttribute("data-icon", "ph:moon-bold");
         } else {
           themeIcon.setAttribute("data-icon", "ph:circle-bold");
@@ -185,7 +197,7 @@
       }
 
       function updateTagAttribute(theme) {
-        document.documentElement.setAttribute("data-color-scheme", theme);
+        document.documentElement.setAttribute("data-color-scheme", themeColorSchemeMap[theme]);
         document.documentElement.setAttribute("theme", theme);
       }
 
@@ -196,7 +208,7 @@
 
       function applyTheme(theme) {
         if (typeof Storage !== "undefined") {
-          localStorage.setItem("pref-theme", theme);
+          localStorage.setItem("pref-theme", themeColorSchemeMap[theme]);
         } else {
           console.log("Sorry, your browser does not support web storage...");
         }
@@ -217,13 +229,13 @@
       (function () {
         switch (getPreferredTheme()) {
           case "dark":
-            updateTagAttribute("dark");
+            updateTagAttribute(THEME_DARK);
             break;
           case "light":
-            updateTagAttribute("light");
+            updateTagAttribute(THEME_LIGHT);
             break;
           case "auto":
-            updateTagAttribute("auto");
+            updateTagAttribute(THEME_AUTO);
             break;
         }
       })();
@@ -231,13 +243,13 @@
       document.addEventListener("DOMContentLoaded", function () {
         switch (getPreferredTheme()) {
           case "dark":
-            updateThemeIcon("dark");
+            updateThemeIcon(THEME_DARK);
             break;
           case "light":
-            updateThemeIcon("light");
+            updateThemeIcon(THEME_LIGHT);
             break;
           case "auto":
-            updateThemeIcon("auto");
+            updateThemeIcon(THEME_AUTO);
             break;
         }
       });
@@ -247,12 +259,12 @@
         const currentTheme = document.documentElement.attributes["theme"].value;
         let newTheme;
         // light -> dark -> auto -> light
-        if (currentTheme === "light") {
-          newTheme = "dark";
-        } else if (currentTheme === "dark") {
-          newTheme = "auto";
+        if (currentTheme === THEME_LIGHT) {
+          newTheme = THEME_DARK;
+        } else if (currentTheme === THEME_DARK) {
+          newTheme = THEME_AUTO;
         } else {
-          newTheme = "light";
+          newTheme = THEME_LIGHT;
         }
         applyTheme(newTheme);
       }
