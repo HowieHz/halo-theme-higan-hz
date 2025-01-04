@@ -838,11 +838,11 @@ spec:
               validation: "required"
               help: 无障碍标签，方便视障人士读屏，如：Find me on my blog
     - group: share
-      label: 页面分享按钮设置
+      label: 自定义分享按钮
       formSchema:
         - $formkit: repeater
           name: share
-          label: 分享设置
+          label: 分享按钮设置
           help: "@URL 和 @TITLE 是占位符，使用中会被替换为页面实际地址和标题"
           value:
             - name: E-mail
@@ -906,3 +906,4 @@ spec:
               label: aria-label
               value: ""
               help: 无障碍标签中的名称
+              validation: "required"
