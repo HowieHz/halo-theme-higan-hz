@@ -837,3 +837,73 @@ spec:
               label: aria-label
               validation: "required"
               help: "The aria-label of the social media information, such as: Find me on Github"
+    - group: share
+      label: Custom Share Buttons
+      formSchema:
+        - $formkit: repeater
+          name: share
+          label: Share Button Settings
+          help: "@URL and @TITLE are placeholders that will be replaced with the actual page URL and title."
+          value:
+            - name: E-mail
+              url: "mailto:?subject=@TITLE&body=Check out this article: @URL"
+              icon: icomoon-free:mail4
+              aria_label: E-mail
+            - name: Facebook
+              url: https://facebook.com/sharer/sharer.php?u=@URL&title=@TITLE
+              icon: ic:baseline-facebook
+              aria_label: Facebook
+            - name: X
+              url: https://x.com/share?url=@URL&title=@TITLE
+              icon: mdi:twitter-circle
+              aria_label: X
+            - name: LinkedIn
+              url: http://www.linkedin.com/shareArticle?url=@URL&title=@TITLE
+              icon: entypo-social:linkedin-with-circle
+              aria_label: LinkedIn
+            - name: Pinterest
+              url: https://pinterest.com/pin/create/bookmarklet/?url=@URL&title=@TITLE
+              icon: mdi:pinterest
+              aria_label: Pinterest
+            - name: Telegram
+              url: https://telegram.me/share/url?url=@URL&text=@TITLE
+              icon: uil:telegram
+              aria_label: Telegram
+            - name: QQ
+              url: https://connect.qq.com/widget/shareqq/iframe_index.html?url=@URL&title=@TITLE
+              icon: ant-design:qq-circle-filled
+              aria_label: QQ
+            - name: Weibo
+              url: http://service.weibo.com/share/share.php?url=@URL&title=@TITLE
+              icon: ant-design:weibo-circle-filled
+              aria_label: Weibo
+            - name: Qzone
+              url: https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=@URL&title=@TITLE
+              icon: cib:qzone
+              aria_label: Qzone
+            - name: Douban
+              url: https://www.douban.com/share/service?href=@URL&name=@TITLE
+              icon: tabler:brand-douban
+              aria_label: Douban
+          children:
+            - $formkit: text
+              name: name
+              label: Name
+              value: ""
+              validation: "required"
+            - $formkit: text
+              name: url
+              label: URL
+              value: ""
+              validation: "required"
+            - $formkit: text
+              name: icon
+              label: Icon
+              value: ""
+              validation: "required"
+            - $formkit: text
+              name: aria_label
+              label: aria-label
+              value: ""
+              help: The name in the aria-label
+              validation: "required"
