@@ -86,63 +86,68 @@
   </th:block>
 </th:block>
 
-<th:block th:fragment="share" th:with="permalink=${post?.status?.permalink}, title=${post?.spec?.title}">
-  <ul>
-    <li>
-      <a
-        class="icon"
-        th:aria-label="#{common.shareModal.share.aria-label('facebook')}"
-        th:href="'http://www.facebook.com/sharer.php?u=' + ${permalink} + '&amp;title=' + ${title}"
-      >
-        <i class="iconify" data-icon="ic:baseline-facebook"></i
-      ></a>
-    </li>
-    <li>
-      <a
-        class="icon"
-        th:aria-label="#{common.shareModal.share.aria-label('X')}"
-        th:href="'https://x.com/share?url=' + ${permalink} + '&amp;title=' + ${title}"
-      >
-        <i class="iconify" data-icon="mdi:twitter-circle"></i
-      ></a>
-    </li>
-    <li>
-      <a
-        class="icon"
-        th:aria-label="#{common.shareModal.share.aria-label('linkedin')}"
-        th:href="'http://www.linkedin.com/shareArticle?url=' + ${permalink} + '&amp;title=' + ${title}"
-      >
-        <i class="iconify" data-icon="mdi:linkedin"></i
-      ></a>
-    </li>
-    <li>
-      <a
-        class="icon"
-        th:aria-label="#{common.shareModal.share.aria-label('pinterest')}"
-        th:href="'https://pinterest.com/pin/create/bookmarklet/?url=' + ${permalink} + '&amp;title=' + ${title}"
-      >
-        <i class="iconify" data-icon="mdi:pinterest"></i
-      ></a>
-    </li>
-    <li>
-      <a
-        class="icon"
-        th:aria-label="#{common.shareModal.share.aria-label('qzone')}"
-        th:href="'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + ${permalink} + '&amp;title=' + ${title}"
-      >
-        <i class="iconify" data-icon="cib:qzone"></i
-      ></a>
-    </li>
-    <li>
-      <a
-        class="icon"
-        th:aria-label="#{common.shareModal.share.aria-label('email')}"
-        th:href="'mailto:?subject=' + ${title} + '&amp;body=Check out this article: ' + ${permalink}"
-      >
-        <i class="iconify" data-icon="ph:envelope-simple-bold"></i
-      ></a>
-    </li>
-  </ul>
+<th:block
+  th:fragment="share"
+  th:with="siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1)== '/'}? ${#strings.substring(site.url,0,#strings.length(site.url) - 1)}:${site.url}"
+>
+  <th:block th:with="permalink=${siteUrl}+${post.status.permalink}, title=${post?.spec?.title}">
+    <ul>
+      <li>
+        <a
+          class="icon"
+          th:aria-label="#{common.shareModal.share.aria-label('facebook')}"
+          th:href="'http://www.facebook.com/sharer.php?u=' + ${permalink} + '&amp;title=' + ${title}"
+        >
+          <i class="iconify" data-icon="ic:baseline-facebook"></i
+        ></a>
+      </li>
+      <li>
+        <a
+          class="icon"
+          th:aria-label="#{common.shareModal.share.aria-label('X')}"
+          th:href="'https://x.com/share?url=' + ${permalink} + '&amp;title=' + ${title}"
+        >
+          <i class="iconify" data-icon="mdi:twitter-circle"></i
+        ></a>
+      </li>
+      <li>
+        <a
+          class="icon"
+          th:aria-label="#{common.shareModal.share.aria-label('linkedin')}"
+          th:href="'http://www.linkedin.com/shareArticle?url=' + ${permalink} + '&amp;title=' + ${title}"
+        >
+          <i class="iconify" data-icon="mdi:linkedin"></i
+        ></a>
+      </li>
+      <li>
+        <a
+          class="icon"
+          th:aria-label="#{common.shareModal.share.aria-label('pinterest')}"
+          th:href="'https://pinterest.com/pin/create/bookmarklet/?url=' + ${permalink} + '&amp;title=' + ${title}"
+        >
+          <i class="iconify" data-icon="mdi:pinterest"></i
+        ></a>
+      </li>
+      <li>
+        <a
+          class="icon"
+          th:aria-label="#{common.shareModal.share.aria-label('qzone')}"
+          th:href="'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + ${permalink} + '&amp;title=' + ${title}"
+        >
+          <i class="iconify" data-icon="cib:qzone"></i
+        ></a>
+      </li>
+      <li>
+        <a
+          class="icon"
+          th:aria-label="#{common.shareModal.share.aria-label('email')}"
+          th:href="'mailto:?subject=' + ${title} + '&amp;body=Check out this article: ' + ${permalink}"
+        >
+          <i class="iconify" data-icon="ph:envelope-simple-bold"></i
+        ></a>
+      </li>
+    </ul>
+  </th:block>
 </th:block>
 
 <button
