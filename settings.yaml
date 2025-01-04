@@ -845,8 +845,12 @@ spec:
           label: 分享设置
           help: "@URL 和 @TITLE 是占位符，使用中会被替换为页面实际地址和标题"
           value:
+            - name: E-mail
+              url: "mailto:?subject=@TITLE&body=Check out this article: @URL"
+              icon: icomoon-free:mail4
+              aria_label: E-mail
             - name: Facebook
-              url: http://www.facebook.com/sharer.php?u=@URL&title=@TITLE
+              url: https://facebook.com/sharer/sharer.php?u=@URL&title=@TITLE
               icon: ic:baseline-facebook
               aria_label: Facebook
             - name: X
@@ -855,20 +859,32 @@ spec:
               aria_label: X
             - name: LinkedIn
               url: http://www.linkedin.com/shareArticle?url=@URL&title=@TITLE
-              icon: mdi:linkedin
+              icon: entypo-social:linkedin-with-circle
               aria_label: LinkedIn
             - name: Pinterest
               url: https://pinterest.com/pin/create/bookmarklet/?url=@URL&title=@TITLE
               icon: mdi:pinterest
               aria_label: Pinterest
+            - name: Telegram
+              url: https://telegram.me/share/url?url=@URL&text=@TITLE
+              icon: uil:telegram
+              aria_label: Telegram
+            - name: QQ
+              url: https://connect.qq.com/widget/shareqq/iframe_index.html?url=@URL&title=@TITLE
+              icon: ant-design:qq-circle-filled
+              aria_label: QQ
+            - name: Weibo
+              url: http://service.weibo.com/share/share.php?url=@URL&title=@TITLE
+              icon: ant-design:weibo-circle-filled
+              aria_label: Weibo
             - name: Qzone
               url: https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=@URL&title=@TITLE
               icon: cib:qzone
               aria_label: Qzone
-            - name: E-mail
-              url: "mailto:?subject=@TITLE&body=Check out this article: @URL"
-              icon: ph:envelope-simple-bold
-              aria_label: E-mail
+            - name: Douban
+              url: https://www.douban.com/share/service?href=@URL&name=@TITLE
+              icon: tabler:brand-douban
+              aria_label: Douban
           children:
             - $formkit: text
               name: name
