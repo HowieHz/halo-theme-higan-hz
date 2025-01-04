@@ -99,11 +99,7 @@
         <span id="i-home" class="info" style="display: none">[(#{fragment.post-nav.backToHome})]</span>
       </span>
       <br />
-      <div
-        id="share-list"
-        style="display: none"
-        th:with="permalink=${post?.status?.permalink}, title=${post?.spec?.title}"
-      >
+      <div id="share-list" style="display: none">
         <th:block th:insert="~{fragments/common :: share}"></th:block>
       </div>
       <div id="toc"></div>

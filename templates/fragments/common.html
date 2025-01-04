@@ -86,13 +86,13 @@
   </th:block>
 </th:block>
 
-<th:block th:fragment="share">
+<th:block th:fragment="share" th:with="permalink=${post?.status?.permalink}, title=${post?.spec?.title}">
   <ul>
     <li>
       <a
         class="icon"
         th:aria-label="#{common.shareModal.share.aria-label('facebook')}"
-        th:href="'http://www.facebook.com/sharer.php?u=' + ${permalink} + '&amp;title=' + ${permalink}"
+        th:href="'http://www.facebook.com/sharer.php?u=' + ${permalink} + '&amp;title=' + ${title}"
       >
         <i class="iconify" data-icon="ic:baseline-facebook"></i
       ></a>
