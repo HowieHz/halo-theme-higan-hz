@@ -837,3 +837,56 @@ spec:
               label: aria-label
               validation: "required"
               help: 无障碍标签，方便视障人士读屏，如：Find me on my blog
+    - group: share
+      label: 页面分享按钮设置
+      formSchema:
+        - $formkit: repeater
+          name: share
+          label: 分享设置
+          help: "@URL 和 @TITLE 是占位符，使用中会被替换为页面实际地址和标题"
+          value:
+            - name: Facebook
+              url: http://www.facebook.com/sharer.php?u=@URL&title=@TITLE
+              icon: ic:baseline-facebook
+              aria_label: Facebook
+            - name: X
+              url: https://x.com/share?url=@URL&title=@TITLE
+              icon: mdi:twitter-circle
+              aria_label: X
+            - name: LinkedIn
+              url: http://www.linkedin.com/shareArticle?url=@URL&title=@TITLE
+              icon: mdi:linkedin
+              aria_label: LinkedIn
+            - name: Pinterest
+              url: https://pinterest.com/pin/create/bookmarklet/?url=@URL&title=@TITLE
+              icon: mdi:pinterest
+              aria_label: Pinterest
+            - name: Qzone
+              url: https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=@URL&title=@TITLE
+              icon: cib:qzone
+              aria_label: Qzone
+            - name: E-mail
+              url: "mailto:?subject=@TITLE&body=Check out this article: @URL"
+              icon: ph:envelope-simple-bold
+              aria_label: E-mail
+          children:
+            - $formkit: text
+              name: name
+              label: 名称
+              value: ""
+              validation: "required"
+            - $formkit: text
+              name: url
+              label: 链接
+              value: ""
+              validation: "required"
+            - $formkit: text
+              name: icon
+              label: 图标
+              value: ""
+              validation: "required"
+            - $formkit: text
+              name: aria_label
+              label: aria-label
+              value: ""
+              help: 无障碍标签中的名称
