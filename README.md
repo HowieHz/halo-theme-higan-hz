@@ -425,6 +425,8 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 | `/archives/**` | `article .content`         |
 | `/moments`     | `article .content .medium` |
 | `/moments/**`  | `article .content .medium` |
+| `/photos`      | `article .content`         |
+| `/photos/**`   | `article .content`         |
 
 ### Mermaid 明暗切换支持
 
