@@ -584,6 +584,67 @@ spec:
               label: 开启
             - value: false
               label: 关闭
+    - group: photos_styles
+      label: 相册页样式
+      formSchema:
+        - $formkit: text
+          name: img_border_radius
+          label: 图片圆角宽度
+          value: "8px"
+          help: "设置图片的圆角宽度。允许使用所有 CSS 长度单位，如：0px, 5px, 10%, 1rem。"
+        - $formkit: radio
+          name: is_show_photo_group_name
+          if: "$is_enable_masonry_layout === false"
+          label: 是否启用分组标题
+          value: false
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: radio
+          name: is_enable_masonry_layout
+          label: 是否启用瀑布流布局
+          value: false
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: number
+          name: masonry_columns
+          if: "$is_enable_masonry_layout === true"
+          label: 瀑布流列数
+          value: 2
+          help: "设置瀑布流布局的列数。"
+        - $formkit: number
+          name: masonry_gap
+          if: "$is_enable_masonry_layout === true"
+          label: 瀑布流间隔宽度
+          value: 9
+          help: "设置瀑布流布局的间隔宽度。单位 px"
+        - $formkit: radio
+          name: is_enable_advanced_options
+          label: 进阶配置选项
+          value: false
+          help: 此处的配置项需要前端知识
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: text
+          name: img_onmouseover
+          if: "$is_enable_advanced_options === true"
+          label: 自定义图片 onmouseover 属性
+          help: "默认值：this.style.boxShadow='0 0 7.5px var(--color-link), 0 0 7.5px var(--color-link)';"
+          value: "this.style.boxShadow='0 0 7.5px var(--color-link), 0 0 7.5px var(--color-link)';"
+        - $formkit: text
+          name: img_onmouseout
+          if: "$is_enable_advanced_options === true"
+          label: 自定义图片 onmouseout 属性
+          help: "默认值：this.style.boxShadow='none';"
+          value: "this.style.boxShadow='none';"
     - group: moments_styles
       label: 瞬间页样式
       formSchema:

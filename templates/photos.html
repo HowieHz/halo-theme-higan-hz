@@ -5,24 +5,154 @@
 >
   <th:block th:fragment="content">
     <article class="photos post" itemscope itemtype="http://schema.org/BlogPosting">
+      <script type="module" th:inline="javascript" th:if="${theme.config?.photos_styles?.is_enable_masonry_layout}">
+        class Waterfall {
+          constructor(options) {
+            this.$el = options.$el || null; // 父容器
+            this.count = options.count || 4; // 列数
+            this.gap = options.gap || 10; // 间距
+            this.width = 0; // 列的宽度
+            this.items = []; // 子元素集合
+            this.H = []; // 存储每列的高度方便计算
+            this.flag = null; // 虚拟节点集合
+            this.init();
+          }
+          init() {
+            if (this.$el) {
+              this.items = Array.from(this.$el.children);
+            } else {
+              throw new Error("Parent container element not found");
+            }
+            this.reset();
+            this.render();
+          }
+          addChildren(children) {
+            if (!Array.isArray(children)) {
+              throw new Error("Children should be an array");
+            }
+            children.forEach((child) => {
+              if (!this.items.includes(child)) {
+                this.$el.appendChild(child);
+                this.items.push(child);
+              }
+            });
+            this.reset();
+            this.render();
+          }
+          reset() {
+            this.flag = document.createDocumentFragment();
+            this.width = this.$el.clientWidth / this.count;
+            this.H = new Array(this.count).fill(0);
+            this.$el.innerHTML = "";
+          }
+          render() {
+            const { width, items, flag, H, gap } = this;
+            items.forEach((item) => {
+              item.style.width = `${width}px`;
+              item.style.position = "absolute";
+              const img = item.querySelector("img");
+              if (img && img.complete) {
+                this.placeItem(item, img, H, width, gap, flag);
+              } else if (img) {
+                img.addEventListener("load", () => {
+                  this.placeItem(item, img, H, width, gap, flag);
+                  this.$el.append(flag);
+                  this.updateContainerHeight();
+                });
+              }
+            });
+            this.$el.append(flag);
+            this.updateContainerHeight();
+          }
+          placeItem(item, img, H, width, gap, flag) {
+            const tag = H.indexOf(Math.min(...H));
+            item.style.left = `${tag * (width + gap)}px`;
+            item.style.top = `${H[tag]}px`;
+            H[tag] += (img.height * width) / img.width + gap;
+            flag.appendChild(item);
+          }
+          updateContainerHeight() {
+            const maxHeight = Math.max(...this.H);
+            this.$el.style.height = `${maxHeight}px`;
+          }
+        }
+
+        window.onload = () => {
+          const waterfallInstance = new Waterfall({
+            $el: document.querySelector(".photo-list"),
+            count: /*[(${theme.config?.photos_styles?.masonry_columns})]*/ 4,
+            gap: /*[(${theme.config?.photos_styles?.masonry_gap})]*/ 10,
+          });
+          document.querySelectorAll(".photo-list").forEach((photoList) => {
+            const newChildren = Array.from(photoList.children);
+            waterfallInstance.addChildren(newChildren);
+          });
+          window.addEventListener("resize", () => {
+            waterfallInstance.reset();
+            waterfallInstance.render();
+          });
+        };
+
+        /*window.addEventListener("scroll", () => {
+          document.querySelectorAll(".photo-list").forEach((photoList) => {
+            const newChildren = Array.from(photoList.children);
+            waterfallInstance.addChildren(newChildren);
+          });
+        });*/
+      </script>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const content = document.querySelector(".content");
+
+          const handleEvent = (event, attr) => {
+            const img = event.target.closest(`img[${attr}]`);
+            if (img && content.contains(img)) {
+              const code = img.getAttribute(attr);
+              executeCustomCode(code, img);
+            }
+          };
+
+          content.addEventListener("mouseover", (event) => handleEvent(event, "data-img-onmouseover"));
+          content.addEventListener("mouseout", (event) => handleEvent(event, "data-img-onmouseout"));
+
+          const executeCustomCode = (code, element) => {
+            if (code) {
+              try {
+                eval(code.replace(/this/g, "element"));
+              } catch (error) {
+                console.error("Error executing custom code:", error);
+              }
+            }
+          };
+        });
+      </script>
       <div class="content">
         <div class="photo-groups" th:each="group : ${groups}">
-          <h2 th:text="${group.spec.displayName}"></h2>
+          <h2
+            th:text="${group.spec.displayName}"
+            th:if="${theme.config?.photos_styles?.is_show_photo_group_name} and not ${theme.config?.photos_styles?.is_enable_masonry_layout}"
+          ></h2>
           <ul class="photo-list">
             <th:block th:each="photo : ${group.photos}">
               <li class="photo-image">
                 <img
                   th:src="@{${photo.spec.url}}"
                   th:srcset="|
-                    ${thumbnail.gen(photo.spec.url, 's')} 400w,
-                    ${thumbnail.gen(photo.spec.url, 'm')} 800w,
-                    ${thumbnail.gen(photo.spec.url, 'l')} 1200w,
-                    ${thumbnail.gen(photo.spec.url, 'xl')} 1600w
+                  ${thumbnail.gen(photo.spec.url, 's')} 400w,
+                  ${thumbnail.gen(photo.spec.url, 'm')} 800w,
+                  ${thumbnail.gen(photo.spec.url, 'l')} 1200w,
+                  ${thumbnail.gen(photo.spec.url, 'xl')} 1600w
                   |"
                   sizes="(max-width: 1600px) 100vw, 1600px"
                   th:title="${photo.spec.displayName}"
                   th:alt="${photo.spec.description}"
                   loading="lazy"
+                  th:style="'width: 100%;
+                    height: auto;
+                    transition: box-shadow 0.1s ease-in, box-shadow 0.3s ease-out;
+                    border-radius:' + ${theme.config?.photos_styles?.img_border_radius} + ';'"
+                  th:data-img-onmouseover="${theme.config?.photos_styles?.img_onmouseover}"
+                  th:data-img-onmouseout="${theme.config?.photos_styles?.img_onmouseout}"
                 />
               </li>
             </th:block>
