@@ -612,11 +612,23 @@ spec:
             - value: false
               label: 关闭
         - $formkit: number
-          name: masonry_columns
+          name: max_masonry_columns
           if: "$is_enable_masonry_layout === true"
-          label: 瀑布流列数
+          label: 瀑布流最大列数
+          value: 3
+          help: "设置瀑布流布局的最大列数。"
+        - $formkit: number
+          name: min_masonry_columns
+          if: "$is_enable_masonry_layout === true"
+          label: 瀑布流最小列数
           value: 2
-          help: "设置瀑布流布局的列数。"
+          help: "设置瀑布流布局的最小列数。"
+        - $formkit: number
+          name: min_img_width
+          if: "$is_enable_masonry_layout === true"
+          label: 瀑布流最小图片宽度
+          value: 300
+          help: "设置瀑布流布局中图片的最小宽度。单位 px"
         - $formkit: number
           name: masonry_gap
           if: "$is_enable_masonry_layout === true"

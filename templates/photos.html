@@ -8,13 +8,13 @@
       <script type="module" th:inline="javascript" th:if="${theme.config?.photos_styles?.is_enable_masonry_layout}">
         class Waterfall {
           constructor(options) {
-            this.$el = options.$el || null; // 父容器
-            this.count = options.count || 4; // 列数
-            this.gap = options.gap || 10; // 间距
-            this.width = 0; // 列的宽度
-            this.items = []; // 子元素集合
-            this.H = []; // 存储每列的高度方便计算
-            this.flag = null; // 虚拟节点集合
+            this.$el = options.$el || null; // <!--/* 父容器 */-->
+            this.columns = options.columns || 4; // <!--/* 列数 */-->
+            this.gap = options.gap || 10; // <!--/* 间距 */-->
+            this.width = 0; // <!--/* 的宽度 */-->
+            this.items = []; // <!--/* 子元素集合 */-->
+            this.H = []; // <!--/* 存储每列的高度方便计算 */-->
+            this.flag = null; // <!--/* 虚拟节点集合 */-->
             this.init();
           }
           init() {
@@ -41,8 +41,8 @@
           }
           reset() {
             this.flag = document.createDocumentFragment();
-            this.width = this.$el.clientWidth / this.count;
-            this.H = new Array(this.count).fill(0);
+            this.width = this.$el.clientWidth / this.columns;
+            this.H = new Array(this.columns).fill(0);
             this.$el.innerHTML = "";
           }
           render() {
@@ -78,9 +78,18 @@
         }
 
         window.onload = () => {
+          const MAX_MASONRY_COLUMNS = /*[(${theme.config?.photos_styles?.max_masonry_columns})]*/ 4;
+          const MIN_MASONRY_COLUMNS = /*[(${theme.config?.photos_styles?.min_masonry_columns})]*/ 1;
+          const MIN_IMG_WIDTH = /*[(${theme.config?.photos_styles?.min_img_width})]*/ 300;
+          function calculateColumns() {
+            const width = window.innerWidth;
+            const columns = Math.floor(width / MIN_IMG_WIDTH);
+            return Math.max(MIN_MASONRY_COLUMNS, Math.min(columns, MAX_MASONRY_COLUMNS));
+          }
+
           const waterfallInstance = new Waterfall({
             $el: document.querySelector(".photo-list"),
-            count: /*[(${theme.config?.photos_styles?.masonry_columns})]*/ 4,
+            columns: calculateColumns(),
             gap: /*[(${theme.config?.photos_styles?.masonry_gap})]*/ 10,
           });
           document.querySelectorAll(".photo-list").forEach((photoList) => {
@@ -88,6 +97,7 @@
             waterfallInstance.addChildren(newChildren);
           });
           window.addEventListener("resize", () => {
+            waterfallInstance.columns = calculateColumns();
             waterfallInstance.reset();
             waterfallInstance.render();
           });
