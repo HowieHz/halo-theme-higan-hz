@@ -30,6 +30,7 @@
    - 完善的多语言支持（多语言文字支持，多语言菜单支持，详情请见文档[i18n 支持指南](#i18n-支持指南)）
    - [Mermaid 明暗切换支持](#mermaid-明暗切换支持)
    - [设置内容仅在浅色/深色模式下显示](#设置内容仅在浅色深色模式下显示)
+   - [适配相册插件](#增加于相册页样式)，支持瀑布流布局
 6. 更多功能等您来探索...
 
 ### 作者的碎碎语
@@ -72,6 +73,7 @@
       - [增加于“文章页样式”](#增加于文章页样式)
       - [添加于“分类集合页样式”](#添加于分类集合页样式)
       - [增加于“自定义页面样式”](#增加于自定义页面样式)
+      - [增加于“相册页样式”](#增加于相册页样式)
       - [增加于“瞬间页样式”](#增加于瞬间页样式)
       - [增加于“社交资料/RSS”](#增加于社交资料rss)
       - [添加于“页面分享按钮设置”](#添加于页面分享按钮设置)
@@ -283,7 +285,24 @@
 1. 允许选择是否启用正文内容与评论区间的分隔线
 2. 允许选择是否启用评论区
 
+#### 增加于“相册页样式”
+
+[适配对应 plugin-photos 插件](#plugin-photos)
+
+1. 允许设置图片圆角宽度
+2. 允许设置图片渐入动画时间
+3. 允许关闭分组标题
+4. 允许启用瀑布流布局
+   - 允许设置瀑布流最大最小列数
+   - 允许设置瀑布流最小图片宽度
+   - 允许设置瀑布流间隔宽度
+5. 进阶配置（此处的配置项需要前端知识）
+   - 自定义图片 onmouseover 属性
+   - 自定义图片 onmouseout 属性
+
 #### 增加于“瞬间页样式”
+
+[适配对应 plugin-moments 插件](#plugin-moments)
 
 1. 允许选择是否启用点赞按钮
 2. 允许选择是否启用评论区
@@ -409,8 +428,8 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 ## 可选插件（主题使用者必看章节！）
 
 - 友链页面（/links），需插件 [plugin-links](https://github.com/halo-sigs/plugin-links)
-- 图库页面（/photos），需插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)
-- 瞬间页面（/moments），需插件 [plugin-moments](https://github.com/halo-sigs/plugin-moments)
+- <a id="plugin-photos"></a>图库页面（/photos），需插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)
+- <a id="plugin-moments"></a>瞬间页面（/moments），需插件 [plugin-moments](https://github.com/halo-sigs/plugin-moments)
   - 瞬间页面可用于展示 github 活动，此用法请看 [howiehz/ghu-events-moments](https://github.com/howiehz/ghu-events-moments) 或 [guqing/ghu-events-moments](https://github.com/guqing/ghu-events-moments)（兼容原主题数据类型）
 - 评论功能，需插件 [plugin-comment-widget](https://github.com/halo-sigs/plugin-comment-widget/releases)
 - 搜索功能，需插件 [plugin-search-widget](https://github.com/halo-sigs/plugin-search-widget/releases)
