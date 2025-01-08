@@ -135,16 +135,41 @@
 
       <script type="module" th:inline="javascript" th:if="not ${theme.config?.photos_styles?.is_enable_masonry_layout}">
         const photos = document.querySelectorAll(".photo-groups img");
+        var nextImageIndex = 0; // <!--/* 存储下一个需要加载的图片的 index */-->
+        var totalImages = photos.length; // <!--/* 存储一共有多少张图片 */-->
+        var totalheight = 0; // <!--/* 最后一张图片下边缘的位置 */-->
+
         photos.forEach((img) => {
           const placeAndAnimate = () => {
+            // <!--/* 加载好一张图之后检查是否能继续加载 */-->
+            checkAndLoadMoreImages();
+            // <!--/* 加载动画 fade in */-->
             requestAnimationFrame(() => {
-              // <!--/* 加载动画 fade in */-->
               img.style.transition = "opacity [(${theme.config?.photos_styles?.img_transition_duration_after_load})]s";
               img.style.opacity = 1;
             });
           };
           img.complete ? placeAndAnimate() : img.addEventListener("load", placeAndAnimate);
         });
+
+        function checkAndLoadMoreImages() {
+          if (window.scrollY + window.innerHeight + 200 >= totalheight) {
+            // <!--/* 读取到的高度其实还可以 +300 提前多加载点。如果这里不设置提前量，出现长一点的图片很容易旁边都是空的 */-->
+            if (nextImageIndex < totalImages) {
+              const img = photos[nextImageIndex];
+              img.style.display = "block";
+              // <!--/* 因为上面设置了图片加载好自动重新排版(reset and render)，所以这里只需要让图片加载出来即可 */-->
+              img.loading = "eager";
+              totalheight = img.getBoundingClientRect().bottom;
+              nextImageIndex++;
+            }
+          }
+        }
+
+        window.addEventListener("scroll", () => checkAndLoadMoreImages());
+        window.addEventListener("resize", () => checkAndLoadMoreImages());
+
+        checkAndLoadMoreImages();
       </script>
 
       <script>
@@ -224,7 +249,8 @@
                   th:title="${photo.spec.displayName}"
                   th:alt="${photo.spec.description}"
                   loading="lazy"
-                  th:style="'opacity: 0;
+                  th:style="'display: none;
+                    opacity: 0;
                     width: 100%;
                     height: auto;
                     transition: box-shadow 0.1s ease-in, box-shadow 0.3s ease-out;
