@@ -132,6 +132,21 @@
           waterfallInstance.checkAndLoadMoreImages();
         };
       </script>
+
+      <script type="module" th:inline="javascript" th:if="not ${theme.config?.photos_styles?.is_enable_masonry_layout}">
+        const photos = document.querySelectorAll(".photo-groups img");
+        photos.forEach((img) => {
+          const placeAndAnimate = () => {
+            requestAnimationFrame(() => {
+              // <!--/* 加载动画 fade in */-->
+              img.style.transition = "opacity [(${theme.config?.photos_styles?.img_transition_duration_after_load})]s";
+              img.style.opacity = 1;
+            });
+          };
+          img.complete ? placeAndAnimate() : img.addEventListener("load", placeAndAnimate);
+        });
+      </script>
+
       <script>
         document.addEventListener("DOMContentLoaded", () => {
           const content = document.querySelector(".content");
@@ -209,7 +224,8 @@
                   th:title="${photo.spec.displayName}"
                   th:alt="${photo.spec.description}"
                   loading="lazy"
-                  th:style="'width: 100%;
+                  th:style="'opacity: 0;
+                    width: 100%;
                     height: auto;
                     transition: box-shadow 0.1s ease-in, box-shadow 0.3s ease-out;
                     border-radius:' + ${theme.config?.photos_styles?.img_border_radius} + ';'"
