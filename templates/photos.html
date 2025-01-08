@@ -13,7 +13,8 @@
             this.gap = options.gap || 10; // <!--/* 间距 */-->
             this.width = 0; // <!--/* 的宽度 */-->
             this.items = []; // <!--/* 子元素集合 */-->
-            this.displayStatus = []; // <!--/* 存储每个子元素的 display 状态 */-->
+            this.nextImageIndex = 0; // <!--/* 存储下一个需要加载的图片的 index */-->
+            this.totalImages = 0; // <!--/* 存储一共有多少张图片 */-->
             this.H = []; // <!--/* 存储每列的高度方便计算 */-->
             this.flag = null; // <!--/* 虚拟节点集合 */-->
             this.init();
@@ -33,7 +34,7 @@
               if (!this.items.includes(child)) {
                 this.$el.appendChild(child); // <!--/* appendChild 方法会将 child 元素从其当前父元素中移除（如果有的话），然后将其附加到新的父元素 this.$el 中 */-->
                 this.items.push(child);
-                this.displayStatus.push(child.children[0].style.display);
+                this.totalImages++;
               }
             });
             this.reset();
@@ -60,7 +61,8 @@
                   this.checkAndLoadMoreImages(); // <!--/* 检查是否可能要接着加载图片 */-->
                   requestAnimationFrame(() => {
                     // <!--/* 加载动画 fade in */-->
-                    item.style.transition = "opacity [(${theme.config?.photos_styles?.img_transition_duration_after_load})]s";
+                    item.style.transition =
+                      "opacity [(${theme.config?.photos_styles?.img_transition_duration_after_load})]s";
                     item.style.opacity = 1;
                   });
                 };
@@ -84,15 +86,15 @@
             this.$el.style.height = `${maxHeight}px`;
           }
           checkAndLoadMoreImages() {
-            const { items, displayStatus } = this;
-            if (window.scrollY + window.innerHeight >= this.getMaxHeight()) { // <!--/* 读取到的高度其实还可以 +300 提前多加载点 */-->
-              const index = displayStatus.indexOf("none");
-              if (index !== -1) {
-                const img = items[index].querySelector("img");
-                displayStatus[index] = "block";
+            var { nextImageIndex, totalImages } = this;
+            if (window.scrollY + window.innerHeight + 200 >= this.getMaxHeight()) {
+              // <!--/* 读取到的高度其实还可以 +300 提前多加载点。如果这里不设置提前量，出现长一点的图片很容易旁边都是空的 */-->
+              if (this.nextImageIndex < this.totalImages) {
+                const img = this.items[this.nextImageIndex].querySelector("img");
                 img.style.display = "block";
-                img.loading = "eager";
                 // <!--/* 因为上面设置了图片加载好自动重新排版(reset and render)，所以这里只需要让图片加载出来即可 */-->
+                img.loading = "eager";
+                this.nextImageIndex++;
               }
             }
           }
