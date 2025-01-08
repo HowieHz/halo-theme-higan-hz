@@ -137,11 +137,41 @@
         });
       </script>
       <div class="content">
-        <div class="photo-groups" th:each="group : ${groups}">
-          <h2
-            th:text="${group.spec.displayName}"
-            th:if="${theme.config?.photos_styles?.is_show_photo_group_name} and not ${theme.config?.photos_styles?.is_enable_masonry_layout}"
-          ></h2>
+        <ul class="photo-list">
+          <th:block th:each="group : ${groups}" th:if="${theme.config?.photos_styles?.is_enable_masonry_layout}">
+            <th:block th:each="photo : ${group.photos}">
+              <li class="photo-image">
+                <img
+                  th:src="@{${photo.spec.url}}"
+                  th:srcset="|
+                  ${thumbnail.gen(photo.spec.url, 's')} 400w,
+                  ${thumbnail.gen(photo.spec.url, 'm')} 800w,
+                  ${thumbnail.gen(photo.spec.url, 'l')} 1200w,
+                  ${thumbnail.gen(photo.spec.url, 'xl')} 1600w
+                  |"
+                  sizes="(max-width: 1600px) 100vw, 1600px"
+                  th:title="${photo.spec.displayName}"
+                  th:alt="${photo.spec.description}"
+                  loading="lazy"
+                  th:style="'display: block;
+                    width: 100%;
+                    height: auto;
+                    transition: box-shadow 0.1s ease-in, box-shadow 0.3s ease-out;
+                    border-radius:' + ${theme.config?.photos_styles?.img_border_radius} + ';'"
+                  th:data-img-onmouseover="${theme.config?.photos_styles?.img_onmouseover}"
+                  th:data-img-onmouseout="${theme.config?.photos_styles?.img_onmouseout}"
+                />
+              </li>
+            </th:block>
+          </th:block>
+        </ul>
+
+        <div
+          class="photo-groups"
+          th:each="group : ${groups}"
+          th:if="not ${theme.config?.photos_styles?.is_enable_masonry_layout}"
+        >
+          <h2 th:text="${group.spec.displayName}" th:if="${theme.config?.photos_styles?.is_show_photo_group_name}"></h2>
           <ul class="photo-list">
             <th:block th:each="photo : ${group.photos}">
               <li class="photo-image">
