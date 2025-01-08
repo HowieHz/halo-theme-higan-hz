@@ -13,18 +13,17 @@
             this.gap = options.gap || 10; // <!--/* 间距 */-->
             this.width = 0; // <!--/* 的宽度 */-->
             this.items = []; // <!--/* 子元素集合 */-->
+            this.displayStatus = []; // <!--/* 存储每个子元素的 display 状态 */-->
             this.H = []; // <!--/* 存储每列的高度方便计算 */-->
             this.flag = null; // <!--/* 虚拟节点集合 */-->
             this.init();
           }
           init() {
             if (this.$el) {
-              this.items = Array.from(this.$el.children);
+              this.addChildren(Array.from(this.$el.children));
             } else {
               throw new Error("Parent container element not found");
             }
-            this.reset();
-            this.render();
           }
           addChildren(children) {
             if (!Array.isArray(children)) {
@@ -32,8 +31,9 @@
             }
             children.forEach((child) => {
               if (!this.items.includes(child)) {
-                this.$el.appendChild(child);
+                this.$el.appendChild(child); // <!--/* appendChild 方法会将 child 元素从其当前父元素中移除（如果有的话），然后将其附加到新的父元素 this.$el 中 */-->
                 this.items.push(child);
+                this.displayStatus.push(child.children[0].style.display);
               }
             });
             this.reset();
@@ -51,18 +51,22 @@
               item.style.width = `${width}px`;
               item.style.position = "absolute";
               const img = item.querySelector("img");
-              if (img && img.complete) {
-                this.placeItem(item, img, H, width, gap, flag);
-              } else if (img) {
-                img.addEventListener("load", () => {
+
+              if (img) {
+                const placeAndAnimate = () => {
+                  item.style.opacity = 0; // <!--/* 为动画做准备 */-->
                   this.placeItem(item, img, H, width, gap, flag);
-                  this.$el.append(flag);
-                  this.updateContainerHeight();
-                });
+                  this.updateContainerHeight(); // <!--/* 拓展上级控件高度 使得底部内容不会跑到图片底下 */-->
+                  this.checkAndLoadMoreImages(); // <!--/* 检查是否可能要接着加载图片 */-->
+                  requestAnimationFrame(() => {
+                    // <!--/* 加载动画 fade in */-->
+                    item.style.transition = "opacity [(${theme.config?.photos_styles?.img_transition_duration_after_load})]s";
+                    item.style.opacity = 1;
+                  });
+                };
+                img.complete ? placeAndAnimate() : img.addEventListener("load", placeAndAnimate);
               }
             });
-            this.$el.append(flag);
-            this.updateContainerHeight();
           }
           placeItem(item, img, H, width, gap, flag) {
             const tag = H.indexOf(Math.min(...H));
@@ -70,10 +74,27 @@
             item.style.top = `${H[tag]}px`;
             H[tag] += (img.height * width) / img.width + gap;
             flag.appendChild(item);
+            this.$el.append(flag);
+          }
+          getMaxHeight() {
+            return Math.max(...this.H);
           }
           updateContainerHeight() {
-            const maxHeight = Math.max(...this.H);
+            const maxHeight = this.getMaxHeight();
             this.$el.style.height = `${maxHeight}px`;
+          }
+          checkAndLoadMoreImages() {
+            const { items, displayStatus } = this;
+            if (window.scrollY + window.innerHeight >= this.getMaxHeight()) { // <!--/* 读取到的高度其实还可以 +300 提前多加载点 */-->
+              const index = displayStatus.indexOf("none");
+              if (index !== -1) {
+                const img = items[index].querySelector("img");
+                displayStatus[index] = "block";
+                img.style.display = "block";
+                img.loading = "eager";
+                // <!--/* 因为上面设置了图片加载好自动重新排版(reset and render)，所以这里只需要让图片加载出来即可 */-->
+              }
+            }
           }
         }
 
@@ -81,6 +102,7 @@
           const MAX_MASONRY_COLUMNS = /*[(${theme.config?.photos_styles?.max_masonry_columns})]*/ 4;
           const MIN_MASONRY_COLUMNS = /*[(${theme.config?.photos_styles?.min_masonry_columns})]*/ 1;
           const MIN_IMG_WIDTH = /*[(${theme.config?.photos_styles?.min_img_width})]*/ 300;
+
           function calculateColumns() {
             const width = window.innerWidth;
             const columns = Math.floor(width / MIN_IMG_WIDTH);
@@ -92,23 +114,21 @@
             columns: calculateColumns(),
             gap: /*[(${theme.config?.photos_styles?.masonry_gap})]*/ 10,
           });
-          document.querySelectorAll(".photo-list").forEach((photoList) => {
-            const newChildren = Array.from(photoList.children);
-            waterfallInstance.addChildren(newChildren);
-          });
-          window.addEventListener("resize", () => {
-            waterfallInstance.columns = calculateColumns();
-            waterfallInstance.reset();
-            waterfallInstance.render();
-          });
-        };
 
-        /*window.addEventListener("scroll", () => {
-          document.querySelectorAll(".photo-list").forEach((photoList) => {
-            const newChildren = Array.from(photoList.children);
-            waterfallInstance.addChildren(newChildren);
+          window.addEventListener("resize", () => {
+            const newColumns = calculateColumns();
+            if (newColumns !== waterfallInstance.columns) {
+              waterfallInstance.columns = newColumns;
+              waterfallInstance.reset();
+              waterfallInstance.render();
+            }
           });
-        });*/
+          window.addEventListener("scroll", () => waterfallInstance.checkAndLoadMoreImages());
+          window.addEventListener("resize", () => waterfallInstance.checkAndLoadMoreImages());
+
+          // <!--/* 加载第一张图片，以及递归加载其他的图片 */-->
+          waterfallInstance.checkAndLoadMoreImages();
+        };
       </script>
       <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -153,7 +173,7 @@
                   th:title="${photo.spec.displayName}"
                   th:alt="${photo.spec.description}"
                   loading="lazy"
-                  th:style="'display: block;
+                  th:style="'display: none;
                     width: 100%;
                     height: auto;
                     transition: box-shadow 0.1s ease-in, box-shadow 0.3s ease-out;

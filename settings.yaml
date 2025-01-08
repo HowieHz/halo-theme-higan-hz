@@ -592,6 +592,11 @@ spec:
           label: 图片圆角宽度
           value: "8px"
           help: "设置图片的圆角宽度。允许使用所有 CSS 长度单位，如：0px, 5px, 10%, 1rem。"
+        - $formkit: number
+          name: img_transition_duration_after_load
+          label: 图片渐入动画时间
+          value: 0.2
+          help: "设置图片渐入动画时间，单位秒。"
         - $formkit: radio
           name: is_show_photo_group_name
           if: "$is_enable_masonry_layout === false"
