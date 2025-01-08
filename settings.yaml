@@ -610,7 +610,7 @@ spec:
         - $formkit: radio
           name: is_enable_masonry_layout
           label: 是否启用瀑布流布局
-          value: false
+          value: true
           options:
             - value: true
               label: 开启
