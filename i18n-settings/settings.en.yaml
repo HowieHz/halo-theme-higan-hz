@@ -584,6 +584,84 @@ spec:
               label: Enable
             - value: false
               label: Disable
+    - group: photos_styles
+      label: Photo Page Style
+      formSchema:
+        - $formkit: text
+          name: img_border_radius
+          label: Image border radius
+          value: "8px"
+          help: "Set the border radius of the image. All CSS length units are allowed, such as: 0px, 5px, 10%, 1rem."
+        - $formkit: number
+          name: img_transition_duration_after_load
+          label: Image fade-in animation duration
+          value: 0.2
+          help: "Set the image fade-in animation duration, in seconds."
+        - $formkit: radio
+          name: is_show_photo_group_name
+          if: "$is_enable_masonry_layout === false"
+          label: Group title
+          value: false
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_enable_masonry_layout
+          label: Masonry layout
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: number
+          name: max_masonry_columns
+          if: "$is_enable_masonry_layout === true"
+          label: Maximum number of masonry columns
+          value: 3
+          help: "Set the maximum number of masonry columns."
+        - $formkit: number
+          name: min_masonry_columns
+          if: "$is_enable_masonry_layout === true"
+          label: Minimum number of masonry columns
+          value: 2
+          help: "Set the minimum number of masonry columns."
+        - $formkit: number
+          name: min_img_width
+          if: "$is_enable_masonry_layout === true"
+          label: Minimum width of images in masonry layout
+          value: 300
+          help: "Set the minimum width of images in masonry layout. Unit: px"
+        - $formkit: number
+          name: masonry_gap
+          if: "$is_enable_masonry_layout === true"
+          label: Masonry gap width
+          value: 9
+          help: "Set the gap width for the masonry layout. Unit: px"
+        - $formkit: radio
+          name: is_enable_advanced_options
+          label: Advanced configuration options
+          value: false
+          help: "This configuration item requires frontend knowledge."
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: text
+          name: img_onmouseover
+          if: "$is_enable_advanced_options === true"
+          label: Custom image onmouseover attribute
+          help: "Default value: this.style.boxShadow='0 0 7.5px var(--color-link), 0 0 7.5px var(--color-link)';"
+          value: "this.style.boxShadow='0 0 7.5px var(--color-link), 0 0 7.5px var(--color-link)';"
+        - $formkit: text
+          name: img_onmouseout
+          if: "$is_enable_advanced_options === true"
+          label: Custom image onmouseout attribute
+          help: "Default value: this.style.boxShadow='none';"
+          value: "this.style.boxShadow='none';"
     - group: moments_styles
       label: Moments page style
       formSchema:
