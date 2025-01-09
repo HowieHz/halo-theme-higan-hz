@@ -255,16 +255,16 @@
 
 1. 允许设定主页 HTML 标题，而不是取值于“Halo 设置 - 基本设置 - 站点标题”
 2. 允许同时开启一言和个人简介
-3. 允许用户修改/隐藏主页上的固定文本 _[guqing/halo-theme-higan#86](https://github.com/guqing/halo-theme-higan/issues/86)_
-
-   - 中文默认值相较于原主题的变化
-     - Find me on -> 与我联系（首页样式 - 社交资料图标左侧文字）
-     - Writing -> 近期发布（首页样式 - 首页文章列表标题）
-     - Read article -> 阅读全文（首页样式 - 多元列表跳转文章链接所用提示文字）
-   - 注：目前版本设置此选项仅能控制开启或关闭
-   - 现为支持 i18n，如想编辑此文字，请到 halo 主题目录（themes），找到 howiehz-higan 文件夹里的 i18n 文件夹，找到对应语言的 properties 文件，修改保存即可（如中文是 zh.properties）
-
-4. 允许自由选择是否开关文章列表置顶图标，以及选择图标位置
+3. 允许隐藏社交资料图标左侧文字
+4. 允许隐藏文字列表标题
+5. 允许用户修改主页上的固定文本 _[guqing/halo-theme-higan#86](https://github.com/guqing/halo-theme-higan/issues/86)_
+   - 现为支持国际化（i18n），如想编辑固定文字，请到 halo 主题目录（themes），找到 howiehz-higan 文件夹里的 i18n 文件夹，找到对应语言的 properties 文件，修改保存即可（如中文是 zh.properties）
+6. 允许自定义多元列表
+   - 允许显示文章分类
+   - 允许显示文章标签
+   - 允许显示文章阅读量
+   - 允许隐藏跳转文章链接所用提示文字
+7. 允许自由选择是否开关文章列表置顶图标，以及选择图标位置
 
 #### 增加于“文章页样式”
 
