@@ -117,9 +117,8 @@ spec:
       formSchema:
         - $formkit: select
           name: color_schema
-          if: "$is_show_color_scheme_toggle_button===false"
           label: Color scheme
-          help: "It is normal for the selected option not to be displayed; it will still take effect properly."
+          help: "It is normal for the selected option not to be displayed; it will still take effect properly. (For the case where the 'Color Scheme Toggle Button' is enabled, this determines the color scheme when the website is first loaded.)"
           value: { theme: "auto", color-scheme: "auto" }
           options:
             - label: "Follow System - Green"
@@ -206,6 +205,28 @@ spec:
               value: "dark-blue"
             - label: "Light - Gray"
               value: "gray"
+        - $formkit: radio
+          name: is_auto_switch_color_scheme_based_on_browser_settings
+          if: "$is_show_color_scheme_toggle_button===true"
+          label: Automatically switch color scheme based on browser settings
+          value: true
+          help: "If enabled, it will first read the saved color scheme selection from the browser. If there is no saved selection, it will automatically switch to light/dark mode based on the browser theme settings."
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: radio
+          name: is_save_color_scheme_settings_to_browser
+          if: "$is_show_color_scheme_toggle_button===true"
+          label: Save color scheme settings to browser
+          value: true
+          help: "If enabled, the current color scheme selection will be saved to the browser storage after pressing the color scheme toggle button."
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
         - $formkit: select
           name: text_size
           label: Text size

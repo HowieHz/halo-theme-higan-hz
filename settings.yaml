@@ -117,9 +117,8 @@ spec:
       formSchema:
         - $formkit: select
           name: color_schema
-          if: "$is_show_color_scheme_toggle_button===false"
           label: 配色方案
-          help: 此项无法显示所选项是正常现象，实际会正常生效
+          help: 此项无法显示所选项是正常现象，实际会正常生效。（对于启用”浅色/深色模式切换按钮”的情况来说，这项决定了网站刚加载完成时的配色方案。）
           value: { theme: "auto", color-scheme: "auto" }
           options:
             - label: "跟随系统 - 绿"
@@ -206,6 +205,28 @@ spec:
               value: "dark-blue"
             - label: "浅色 - 灰粉"
               value: "gray"
+        - $formkit: radio
+          name: is_auto_switch_color_scheme_based_on_browser_settings
+          if: "$is_show_color_scheme_toggle_button===true"
+          label: 根据浏览器设置自动切换配色
+          value: true
+          help: 如果启用这项，首先会读取浏览器中已保存的配色选择，如果没有保存的选择，则会根据浏览器主题设置自动切换为浅/深色配色。
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: radio
+          name: is_save_color_scheme_settings_to_browser
+          if: "$is_show_color_scheme_toggle_button===true"
+          label: 保存配色设置到浏览器中
+          value: true
+          help: 如果启用这项，按下配色切换按钮后，将会保存当前的配色选择到浏览器存储中。
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
         - $formkit: select
           name: text_size
           label: 字体大小
