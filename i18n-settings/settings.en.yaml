@@ -515,6 +515,16 @@ spec:
             - label: Disable
               value: false
         - $formkit: radio
+          name: is_show_post_excerpt_in_post_list_summary
+          if: "$post_list_layout === 'post-list-summary'"
+          label: Display post excerpt in post list summary
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: radio
           name: is_show_index_post_list_permalink_text
           if: "$post_list_layout === 'post-list-summary'"
           label: Display the text of the post list permalink

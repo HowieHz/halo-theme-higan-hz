@@ -515,6 +515,16 @@ spec:
             - label: 关闭
               value: false
         - $formkit: radio
+          name: is_show_post_excerpt_in_post_list_summary
+          if: "$post_list_layout === 'post-list-summary'"
+          label: 多元列表显示文章摘要
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: radio
           name: is_show_index_post_list_permalink_text
           if: "$post_list_layout === 'post-list-summary'"
           label: 多元列表跳转文章链接所用提示文字
