@@ -506,6 +506,44 @@ spec:
             - value: false
               label: Disable
         - $formkit: radio
+          name: is_show_post_publish_time
+          label: Post publish time
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_show_post_publish_time_left_text
+          if: "$is_show_post_publish_time === true"
+          label: Post publish time left text
+          value: false
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_show_post_updated_time
+          label: Post update time
+          value: false
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_show_post_updated_time_left_text
+          if: "$is_show_post_updated_time === true"
+          label: Post update time left text
+          value: false
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
           name: is_show_post_nav_share_button
           label: Share button in desktop menu
           value: true
