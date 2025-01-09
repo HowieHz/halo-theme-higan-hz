@@ -506,8 +506,17 @@ spec:
             - value: false
               label: 关闭
         - $formkit: radio
+          name: is_show_post_nav_share_button
+          label: 桌面端菜单中的分享按钮
+          value: true
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: radio
           name: is_dividing_line_at_the_end_of_post_show
-          label: 是否启用文章与评论区间的分隔线
+          label: 文章与评论区间的分隔线
           value: true
           options:
             - value: true
@@ -516,7 +525,7 @@ spec:
               label: 关闭
         - $formkit: radio
           name: is_post_comment_section_show
-          label: 是否启用文章评论区
+          label: 文章评论区
           value: true
           options:
             - value: true
@@ -525,7 +534,17 @@ spec:
               label: 关闭
         - $formkit: radio
           name: is_show_footer_nav
-          label: 是否启用移动端底部导航栏
+          label: 移动端底部导航栏
+          value: true
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: radio
+          name: is_show_share_footer
+          if: "$is_show_footer_nav === true"
+          label: 移动端底部导航栏中的分享按钮
           value: true
           options:
             - value: true

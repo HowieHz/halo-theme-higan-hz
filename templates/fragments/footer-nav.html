@@ -6,7 +6,7 @@
       </div>
 
       <div id="toc-footer" style="display: none"></div>
-      <div id="share-footer" style="display: none">
+      <div id="share-footer" style="display: none" th:if="${theme.config?.post_styles?.is_show_share_footer}">
         <th:block th:insert="~{fragments/common :: share}"></th:block>
       </div>
       <div id="actions-footer">
@@ -18,7 +18,13 @@
           <i class="iconify" data-icon="ic:baseline-toc" aria-hidden="true"></i>
           [(#{fragment.footer-nav.toc})]</a
         >
-        <a id="share" class="icon" href="javascript:void(0);" onclick="return false;">
+        <a
+          id="share"
+          class="icon"
+          href="javascript:void(0);"
+          onclick="return false;"
+          th:if="${theme.config?.post_styles?.is_show_share_footer}"
+        >
           <i class="iconify" data-icon="ic:baseline-share" aria-hidden="true"></i>
           [(#{fragment.footer-nav.share})]</a
         >
