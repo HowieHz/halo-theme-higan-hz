@@ -506,6 +506,44 @@ spec:
             - value: false
               label: 关闭
         - $formkit: radio
+          name: is_show_post_publish_time
+          label: 文章发布时间
+          value: true
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: radio
+          name: is_show_post_publish_time_left_text
+          if: "$is_show_post_publish_time === true"
+          label: 文章发布时间左侧文字
+          value: false
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: radio
+          name: is_show_post_updated_time
+          label: 文章更新时间
+          value: false
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: radio
+          name: is_show_post_updated_time_left_text
+          if: "$is_show_post_updated_time === true"
+          label: 文章更新时间左侧文字
+          value: false
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: radio
           name: is_show_post_nav_share_button
           label: 桌面端菜单中的分享按钮
           value: true

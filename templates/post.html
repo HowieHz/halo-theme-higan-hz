@@ -21,14 +21,29 @@
             </a>
           </span>
 
-          <div class="postdate">
+          <div class="post-publish-time" th:if="${theme.config?.post_styles?.is_show_post_publish_time}">
+            <span
+              th:text="#{page.post.published-on}"
+              th:if="${theme.config?.post_styles?.is_show_post_publish_time_left_text}"
+            ></span>
             <time
               th:datetime="${post.spec?.publishTime}"
               itemprop="datePublished"
               th:text="${#temporals.format(post.spec?.publishTime, 'yyyy-MM-dd')}"
+              >文章发布时间替换位</time
             >
-              文章发布时间替换位
-            </time>
+          </div>
+          <div class="post-update-time" th:if="${theme.config?.post_styles?.is_show_post_updated_time}">
+            <span
+              th:text="#{page.post.updated-on}"
+              th:if="${theme.config?.post_styles?.is_show_post_updated_time_left_text}"
+            ></span>
+            <time
+              th:datetime="${post.status?.lastModifyTime}"
+              itemprop="dateModified"
+              th:text="${#temporals.format(post.status?.lastModifyTime, 'yyyy-MM-dd')}"
+              >文章更新时间替换位</time
+            >
           </div>
 
           <div class="article-tag" th:if="${!#lists.isEmpty(post.tags)}">

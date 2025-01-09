@@ -1019,7 +1019,7 @@ article header .author {
   font-weight: 700;
 }
 
-article header .postdate {
+article header .post-publish-time {
   display: inline;
 }
 
@@ -1202,12 +1202,24 @@ html[data-color-scheme="dark"] article .content div.dark {
   background-repeat: repeat-x;
 }
 
+@media (max-width: 480px) {
+  article header .post-update-time {
+    display: inline;
+  }
+
+  article header .post-publish-time + .post-update-time {
+    display: block;
+  }
+}
+
 @media (min-width: 480px) {
+  .post-update-time,
   .article-tag,
   .article-category {
     display: inline;
   }
 
+  .post-publish-time + .post-update-time:before,
   .article-tag:before,
   .article-category:before {
     content: "|";
