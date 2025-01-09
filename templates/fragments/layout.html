@@ -176,6 +176,8 @@
       const THEME_DARK = /*[[${theme.config?.styles?.theme_dark}]]*/ "dark";
       const THEME_LIGHT = /*[[${theme.config?.styles?.theme_light}]]*/ "light";
       const THEME_AUTO = /*[[${theme.config?.styles?.theme_auto}]]*/ "auto";
+      const is_save_color_scheme_settings_to_browser =
+        /*[[${theme.config?.styles?.is_save_color_scheme_settings_to_browser}]]*/ "true";
 
       const themeColorSchemeMap = {
         auto: "auto",
@@ -209,9 +211,9 @@
       }
 
       function applyTheme(theme) {
-        if (typeof Storage !== "undefined") {
+        if (is_save_color_scheme_settings_to_browser === true && typeof Storage !== "undefined") {
           localStorage.setItem("pref-theme", themeColorSchemeMap[theme]);
-        } else {
+        } else if (typeof Storage === "undefined") {
           console.log("Sorry, your browser does not support web storage...");
         }
         applyThemeNoSave(theme);
@@ -229,6 +231,14 @@
       }
 
       (function () {
+        if (is_save_color_scheme_settings_to_browser !== true && typeof Storage !== "undefined") {
+          localStorage.removeItem("pref-theme");
+        }
+        const is_auto_switch_color_scheme_based_on_browser_settings =
+          /*[[${theme.config?.styles?.is_auto_switch_color_scheme_based_on_browser_settings}]]*/ "true";
+        if (!is_auto_switch_color_scheme_based_on_browser_settings) {
+          return;
+        }
         switch (getPreferredTheme()) {
           case "dark":
             updateTagAttribute(THEME_DARK);
