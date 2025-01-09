@@ -90,6 +90,28 @@
               </span>
               <th:block th:text="${#temporals.format(post.spec.publishTime, 'MMMM dd yyyy')}"></th:block>
             </time>
+            <th:block th:if="${theme.config?.index_styles?.is_show_post_tags_in_post_list_summary}">
+              <div
+                class="article-tag p-0 mb-0 relative z-10 mt-0.5 text-sm color-accent-3"
+                th:if="${!#lists.isEmpty(post.tags)}"
+              >
+                <span class="iconify" data-icon="fa-solid:tag" data-inline="false"></span>
+                <th:block th:each="tag : ${post.tags}">
+                  <a class="tag-link" th:href="@{${tag.status?.permalink}}" th:text="${tag.spec?.displayName}">
+                    文章标签名替换位
+                  </a>
+                </th:block>
+              </div>
+            </th:block>
+            <th:block th:if="${theme.config?.index_styles?.is_show_post_views_in_post_list_summary}">
+              <div
+                class="p-0 mb-0 relative z-10 mt-0.5 text-sm color-accent-3"
+                th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
+              >
+                <span class="iconify" data-icon="mdi:eye-outline" data-inline="false"></span>
+                <span th:text="${post.stats?.visit}">文章阅读量替换位</span>
+              </div>
+            </th:block>
             <p class="p-0 mb-0 relative z-10 mt-2 text-sm color-accent-3" th:text="${post.status?.excerpt}">
               文章概要替换位
             </p>

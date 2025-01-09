@@ -485,6 +485,26 @@ spec:
             - label: "Summary list"
               value: "post-list-summary"
         - $formkit: radio
+          name: is_show_post_tags_in_post_list_summary
+          if: "$post_list_layout === 'post-list-summary'"
+          label: Display post tags in post list summary
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: radio
+          name: is_show_post_views_in_post_list_summary
+          if: "$post_list_layout === 'post-list-summary'"
+          label: Display post views in post list summary
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: radio
           name: is_show_index_post_list_permalink_text
           if: "$post_list_layout === 'post-list-summary'"
           label: Display the text of the post list permalink

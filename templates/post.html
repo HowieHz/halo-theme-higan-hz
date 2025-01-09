@@ -57,7 +57,7 @@
 
           <span th:title="|#{page.post.visit-stats} ${post.stats?.visit}|">
             <span class="iconify" data-icon="mdi:eye-outline" data-inline="false"></span>
-            <span th:text="${post.stats?.visit}"></span>
+            <span th:text="${post.stats?.visit}">文章阅读量替换位</span>
           </span>
         </div>
       </header>
