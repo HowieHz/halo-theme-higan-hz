@@ -506,6 +506,15 @@ spec:
             - value: false
               label: Disable
         - $formkit: radio
+          name: is_show_post_nav_share_button
+          label: Share button in desktop menu
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
           name: is_dividing_line_at_the_end_of_post_show
           label: Enable dividing line at the end of the post
           value: true
@@ -525,7 +534,17 @@ spec:
               label: Disable
         - $formkit: radio
           name: is_show_footer_nav
-          label: Display mobile footer navigation
+          label: Mobile footer navigation
+          value: true
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_show_share_footer
+          if: "$is_show_footer_nav === true"
+          label: Share buttons in the mobile footer navigation
           value: true
           options:
             - value: true
