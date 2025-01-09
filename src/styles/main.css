@@ -1219,9 +1219,9 @@ html[data-color-scheme="dark"] article .content div.dark {
     display: inline;
   }
 
-  .post-publish-time + .post-update-time:before,
-  .article-tag:before,
-  .article-category:before {
+  article header .post-publish-time + .post-update-time:before,
+  article header .article-tag:before,
+  article header .article-category:before {
     content: "|";
   }
 }

@@ -60,7 +60,7 @@
       </h2>
       <th:block th:insert="~{fragments/posts :: post-list-summary(${posts})}"></th:block>
     </th:block>
-    <th:block th:unless="${theme?.config.index_styles?.post_list_layout=='post-list-summary'}">
+    <th:block th:if="${theme?.config.index_styles?.post_list_layout=='simple-post-list'}">
       <th:block th:insert="~{fragments/posts :: simple-post-list(${posts})}"></th:block>
     </th:block>
   </th:block>
