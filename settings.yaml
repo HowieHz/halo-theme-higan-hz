@@ -554,6 +554,15 @@ spec:
               value: "left"
             - label: "标题右侧"
               value: "right"
+        - $formkit: radio
+          name: is_show_total_published_post
+          label: 在页脚展示文章发布数
+          value: false
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
     - group: post_styles
       label: 文章页样式
       formSchema:
