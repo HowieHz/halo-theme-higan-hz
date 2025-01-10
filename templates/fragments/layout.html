@@ -400,6 +400,8 @@
             <div
               th:if="${theme.config?.styles?.is_footer_theme_info_show} or ${theme.config?.styles?.is_footer_copyright_show}"
             >
+              <span th:text="#{page.index.totalPublishedPost(${posts?.total})}" th:if="${posts?.total != null}"></span
+              ><br />
               <span class="info" th:if="${theme.config?.styles?.is_footer_theme_info_show}">
                 Theme is
                 <a href="https://github.com/howiehz/halo-theme-higan-hz" rel="noopener noreferrer" target="_blank"
