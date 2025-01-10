@@ -188,8 +188,10 @@
           likedPostNames = [...likedPostNames, postName];
           localStorage.setItem(likes_localstorage_key, JSON.stringify(likedPostNames));
           const likesNode = document.querySelector('span[data-post-name="' + postName + '"]');
-          const likes = parseInt(likesNode.innerText);
-          likesNode.innerText = likes + 1;
+          if (likesNode) {
+            const likes = parseInt(likesNode.innerText);
+            likesNode.innerText = likes + 1;
+          }
           activeUpvote(postName);
         };
         xhr.onerror = function () {

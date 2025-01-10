@@ -192,8 +192,10 @@
             likedMomentNames = [...likedMomentNames, momentName];
             localStorage.setItem(likes_localstorage_key, JSON.stringify(likedMomentNames));
             const likesNode = document.querySelector('span[data-moment-name="' + momentName + '"]');
-            const likes = parseInt(likesNode.innerText);
-            likesNode.innerText = likes + 1;
+            if (likesNode) {
+              const likes = parseInt(likesNode.innerText);
+              likesNode.innerText = likes + 1;
+            }
             activeUpvote(momentName);
           };
           xhr.onerror = function () {
