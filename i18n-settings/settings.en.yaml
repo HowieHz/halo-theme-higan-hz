@@ -462,6 +462,16 @@ spec:
           language: html
           height: 150px
         - $formkit: radio
+          name: is_preserve_empty_lines_in_blockquote
+          label: Preserve empty lines in blockquote
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+          help: "If enabled, empty lines in blockquotes will be preserved; otherwise, they will be automatically removed. Blockquotes are represented by the > symbol in Markdown."
+        - $formkit: radio
           name: is_show_the_quote_before_blockquote
           label: Show the quote before Blockquote 
           value: true
