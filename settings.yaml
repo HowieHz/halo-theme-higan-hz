@@ -692,6 +692,15 @@ spec:
             - value: false
               label: 关闭
         - $formkit: radio
+          name: is_post_upvote_button_show
+          label: 文章底部的点赞按钮
+          value: false
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: radio
           name: is_post_comment_section_show
           label: 文章评论区
           value: true
