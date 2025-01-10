@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<th:block
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: html(title='QRCode Share') ? site.title : theme.config?.index_styles?.page_html_title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
+>
+  <th:block th:fragment="content">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+      <script th:src="@{/assets/lib/qrious/qrious.min.js(v=${theme.spec.version})}"></script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const params = new URLSearchParams(window.location.search);
+          const url = params.get("url");
+          const size = params.get("size");
+          new QRious({
+            element: document.getElementById("qrcode-canvas"),
+            size: size,
+            value: url,
+          });
+        });
+      </script>
+      <canvas id="qrcode-canvas"></canvas>
+    </article>
+  </th:block>
+</th:block>

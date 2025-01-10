@@ -1132,6 +1132,10 @@ spec:
               url: http://service.weibo.com/share/share.php?url=@URL&title=@TITLE
               icon: ant-design:weibo-circle-filled
               aria_label: Weibo
+            - name: WeChat
+              url: /themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL
+              icon: ant-design:wechat-filled
+              aria_label: WeChat
             - name: Qzone
               url: https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=@URL&title=@TITLE
               icon: cib:qzone
