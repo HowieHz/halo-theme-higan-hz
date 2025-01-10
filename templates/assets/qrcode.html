@@ -1,21 +1,24 @@
 <!DOCTYPE html>
-<th:block
-  xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(title='QRCode Share') ? site.title : theme.config?.index_styles?.page_html_title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
->
-  <th:block th:fragment="content">
+<html lang="en" style="border: 0px solid">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QRCode Share</title>
+    <style>
+      canvas {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      body {
+        background-color: #eceae7;
+      }
+    </style>
+  </head>
+  <body class="transition-colors">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-      <style>
-        canvas {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }
-        body {
-          background-color: #eceae7;
-        }
-      </style>
       <script src="/themes/howiehz-higan/assets/lib/qrious/qrious.min.js"></script>
       <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -32,5 +35,5 @@
       </script>
       <canvas id="qrcode-canvas"></canvas>
     </article>
-  </th:block>
-</th:block>
+  </body>
+</html>
