@@ -1096,7 +1096,7 @@ spec:
       label: 自定义分享按钮
       formSchema:
         - $formkit: repeater
-          name: share
+          name: share_menu_config
           label: 分享按钮设置
           help: "@URL 和 @TITLE 是占位符，使用中会被替换为页面实际地址和标题"
           value:

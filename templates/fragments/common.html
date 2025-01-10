@@ -92,7 +92,7 @@
 >
   <th:block th:with="permalink=${siteUrl}+${post.status.permalink}, title=${post?.spec?.title}">
     <ul>
-      <li th:each="item : ${theme?.config?.share?.share}">
+      <li th:each="item : ${theme?.config?.share?.share_menu_config}">
         <a
           class="icon"
           th:aria-label="#{common.shareModal.share.aria-label(${item?.aria_label})}"
