@@ -351,6 +351,65 @@ spec:
             - label: Disable
               value: false
         - $formkit: radio
+          name: is_footer_site_stats_show
+          label: Site statistics information at the bottom of the page
+          value: false
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: repeater
+          name: footer_site_stats
+          if: "$is_footer_site_stats_show === true"
+          label: Statistics settings
+          value:
+            - type: "visit"
+              icon: ""
+              i18n_text: true
+            - type: "post"
+              icon: ""
+              i18n_text: true
+            - type: "upvote"
+              icon: ""
+              i18n_text: true
+            - type: "comment"
+              icon: ""
+              i18n_text: true
+            - type: "category"
+              icon: ""
+              i18n_text: true
+          children:
+            - $formkit: select
+              name: type
+              label: Statistics item
+              value: ""
+              options:
+                - label: "Total Views"
+                  value: "visit"
+                - label: "Total number of articles"
+                  value: "post"
+                - label: "Total Upvotes"
+                  value: "upvote"
+                - label: "Total number of comments"
+                  value: "comment"
+                - label: "Total number of categories"
+                  value: "category"
+              validation: "required"
+            - $formkit: radio
+              name: i18n_text
+              label: Wrap text in multiple languages
+              value: true
+              options:
+                - value: true
+                  label: Enable
+                - value: false
+                  label: Disable
+            - $formkit: text
+              name: icon
+              label: Icon to the left of the text
+              value: ""
+        - $formkit: radio
           name: is_footer_theme_info_show
           label: Theme information in the footer
           value: true
@@ -554,15 +613,6 @@ spec:
               value: "left"
             - label: "Right side of the title"
               value: "right"
-        - $formkit: radio
-          name: is_show_total_published_post
-          label: Display the number of published posts in the footer
-          value: false
-          options:
-            - label: Enable
-              value: true
-            - label: Disable
-              value: false
     - group: post_styles
       label: Post page style
       formSchema:
