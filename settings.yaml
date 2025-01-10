@@ -1162,3 +1162,26 @@ spec:
               value: ""
               help: 无障碍标签中的名称
               validation: "required"
+    - group: error_page_styles
+      label: 错误页样式
+      formSchema:
+        - $formkit: radio
+          name: is_auto_redirect
+          label: 页面自动重定向
+          value: true
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: text
+          name: target_url
+          if: "$is_auto_redirect === true"
+          label: 跳转目标链接
+          value: "/"
+        - $formkit: number
+          name: redirect_wait_time
+          if: "$is_auto_redirect === true"
+          label: 跳转等待时间
+          value: 5
+          help: "设置跳转等待时间，单位秒。"

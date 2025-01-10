@@ -1162,3 +1162,26 @@ spec:
               value: ""
               help: The name in the aria-label
               validation: "required"
+    - group: error_page_styles
+      label: Error Page Style
+      formSchema:
+        - $formkit: radio
+          name: is_auto_redirect
+          label: Page auto-redirect
+          value: true
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: text
+          name: target_url
+          if: "$is_auto_redirect === true"
+          label: Redirect target URL
+          value: "/"
+        - $formkit: number
+          name: redirect_wait_time
+          if: "$is_auto_redirect === true"
+          label: Redirect wait time
+          value: 5
+          help: "Set the wait time for redirect, in seconds."
