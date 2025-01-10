@@ -1096,7 +1096,7 @@ spec:
       label: Custom Share Buttons
       formSchema:
         - $formkit: repeater
-          name: share
+          name: share_menu_config
           label: Share Button Settings
           help: "@URL and @TITLE are placeholders that will be replaced with the actual page URL and title."
           value:
