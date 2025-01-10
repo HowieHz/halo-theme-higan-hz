@@ -1108,6 +1108,10 @@ spec:
               url: /themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL
               icon: pepicons-pencil:qr-code-circle-filled
               aria_label: QRCode
+            - name: Native
+              url: ""
+              icon: mdi:share-circle
+              aria_label: Native
             - name: Facebook
               url: https://facebook.com/sharer/sharer.php?u=@URL&title=@TITLE
               icon: ic:baseline-facebook

@@ -92,11 +92,32 @@
 >
   <th:block th:with="permalink=${siteUrl}+${post.status.permalink}, title=${post?.spec?.title}">
     <ul>
+      <script th:inline="javascript">
+        function nativeShare() {
+          const postPermaLink = /*[[${permalink}]]*/ "";
+          const postTitle = /*[[${title}]]*/ "";
+          const shareData = { title: postTitle, url: postPermaLink };
+          if (navigator.canShare?.(shareData)) {
+            navigator.share(shareData);
+          } else {
+            console.error("Sharing not supported");
+          }
+        }
+      </script>
       <li th:each="item : ${theme?.config?.share?.share_menu_config}">
         <a
+          th:if="${item?.name!='Native'}"
           class="icon"
           th:aria-label="#{common.shareModal.share.aria-label(${item?.aria_label})}"
           th:href="${#strings.replace(#strings.replace(item?.url, '@URL', permalink), '@TITLE', title)}"
+        >
+          <i class="iconify" th:attr="data-icon=${item?.icon}"></i
+        ></a>
+        <a
+          th:if="${item?.name=='Native'}"
+          class="icon"
+          th:aria-label="#{common.shareModal.share.aria-label(${item?.aria_label})}"
+          href="javascript:nativeShare();"
         >
           <i class="iconify" th:attr="data-icon=${item?.icon}"></i
         ></a>
