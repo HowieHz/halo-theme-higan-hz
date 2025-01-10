@@ -335,7 +335,7 @@
 1. 允许多个重复的分享链接，并且允许任意排列，增减
 2. 支持完全自定义（图标，链接，无障碍标签）
 3. 在原支持 Facebook，E-mail，X，Pinterest，LinkedIn 的基础上
-   额外增加对 QQ，Qzone，Douban，Weibo，Telegram 的支持
+   额外增加对 QQ，WeChat/QRcode（二维码生成），Qzone，Douban，Weibo，Telegram，调用浏览器分享页面 的支持
 
 #### 添加于“错误页样式”
 
