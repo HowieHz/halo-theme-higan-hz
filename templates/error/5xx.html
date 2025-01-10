@@ -11,6 +11,10 @@
           ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
         </h1>
         <p th:text="${error?.detail}"></p>
+        <th:block
+          th:if="${theme.config?.error_page_styles?.is_auto_redirect}"
+          th:insert="~{fragments/common :: auto-redirect}"
+        ></th:block>
       </div>
     </article>
   </th:block>
