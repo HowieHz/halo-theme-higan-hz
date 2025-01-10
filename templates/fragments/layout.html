@@ -361,6 +361,21 @@
       /*[(${theme.config?.styles?.content_width_style})]*/ fit-content;
       }
     </style>
+    <style th:if="${theme.config?.styles?.is_preserve_empty_lines_in_blockquote}">
+      article .content blockquote p {
+        margin: inherit;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      article .content blockquote p:first-child {
+        margin-top: 0;
+      }
+
+      article .content blockquote p:last-child {
+        margin-bottom: 0;
+      }
+    </style>
     <style th:inline="css" th:if="${theme.config?.styles?.is_show_the_quote_before_blockquote}">
       article .content blockquote:before {
         margin-right: 0.25em;
