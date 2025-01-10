@@ -700,6 +700,40 @@ spec:
               label: 开启
             - value: false
               label: 关闭
+        - $formkit: text
+          name: post_upvote_button_width
+          if: "$is_post_upvote_button_show === true"
+          label: 点赞按钮宽度
+          value: "1rem"
+          help: "设置点赞按钮的宽度。允许使用所有 CSS 长度单位，如：5px, 1rem。"
+        - $formkit: text
+          name: post_upvote_button_height
+          if: "$is_post_upvote_button_show === true"
+          label: 点赞按钮高度
+          value: "1rem"
+          help: "设置点赞按钮的高度。允许使用所有 CSS 长度单位，如：5px, 1rem。"
+        - $formkit: radio
+          name: is_show_post_upvote_count
+          if: "$is_post_upvote_button_show === true"
+          label: 展示文章获赞数
+          value: false
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: select
+          name: post_upvote_button_position
+          if: "$is_post_upvote_button_show === true"
+          label: 点赞按钮位置
+          value: "center"
+          options:
+            - label: "靠左"
+              value: "left"
+            - label: "居中"
+              value: "center"
+            - label: "靠右"
+              value: "right"
         - $formkit: radio
           name: is_post_comment_section_show
           label: 文章评论区

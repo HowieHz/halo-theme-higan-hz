@@ -700,6 +700,40 @@ spec:
               label: Enable
             - value: false
               label: Disable
+        - $formkit: text
+          name: post_upvote_button_width
+          if: "$is_post_upvote_button_show === true"
+          label: Upvote button width
+          value: "1rem"
+          help: "Set the width of the upvote button. All CSS length units are allowed, such as: 5px, 1rem."
+        - $formkit: text
+          name: post_upvote_button_height
+          if: "$is_post_upvote_button_show === true"
+          label: Upvote button height
+          value: "1rem"
+          help: "Set the height of the upvote button. All CSS length units are allowed, such as: 5px, 1rem."
+        - $formkit: radio
+          name: is_show_post_upvote_count
+          if: "$is_post_upvote_button_show === true"
+          label: Display post upvote count
+          value: false
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: select
+          name: post_upvote_button_position
+          if: "$is_post_upvote_button_show === true"
+          label: Upvote button position
+          value: "center"
+          options:
+            - label: "Left"
+              value: "left"
+            - label: "Center"
+              value: "center"
+            - label: "Right"
+              value: "right"
         - $formkit: radio
           name: is_post_comment_section_show
           label: Enable comment section
