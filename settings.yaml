@@ -1104,6 +1104,10 @@ spec:
               url: "mailto:?subject=@TITLE&body=Check out this article: @URL"
               icon: icomoon-free:mail4
               aria_label: E-mail
+            - name: QRCode
+              url: /themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL
+              icon: pepicons-pencil:qr-code-circle-filled
+              aria_label: QRCode
             - name: Facebook
               url: https://facebook.com/sharer/sharer.php?u=@URL&title=@TITLE
               icon: ic:baseline-facebook
