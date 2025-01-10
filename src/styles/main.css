@@ -1316,7 +1316,8 @@ html[data-color-scheme="dark"] article .content div.dark {
   vertical-align: middle;
 }
 
-#footer li a {
+#footer li a,
+#footer li span {
   margin-right: 0.9375rem;
 }
 
@@ -1325,7 +1326,8 @@ html[data-color-scheme="dark"] article .content div.dark {
   border-right: 0;
 }
 
-#footer li:last-child a {
+#footer li:last-child a,
+#footer li:last-child span {
   margin-right: 0;
 }
 

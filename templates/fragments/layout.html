@@ -397,11 +397,45 @@
         <footer id="footer">
           <div class="footer-left">
             <halo:footer />
+            <div th:if="${theme.config?.styles?.is_footer_site_stats_show}">
+              <ul class="site-stats" th:with="stats = ${siteStatsFinder.getStats()}">
+                <li th:each="item : ${theme.config?.styles?.footer_site_stats}">
+                  <i
+                    class="iconify"
+                    th:attr="data-icon=${item?.icon}"
+                    th:if="${item?.icon != null} and ${item?.icon != ''}"
+                  ></i>
+                  <span th:text="${stats.visit}" th:if="${item?.type=='visit'} and not ${item?.i18n_text}"></span>
+                  <span th:text="${stats.post}" th:if="${item?.type=='post'} and not ${item?.i18n_text}"></span>
+                  <span th:text="${stats.upvote}" th:if="${item?.type=='upvote'} and not ${item?.i18n_text}"></span>
+                  <span th:text="${stats.comment}" th:if="${item?.type=='comment'} and not ${item?.i18n_text}"></span>
+                  <span th:text="${stats.category}" th:if="${item?.type=='category'} and not ${item?.i18n_text}"></span>
+                  <span
+                    th:text="#{common.siteTotalVisit(${stats.visit})}"
+                    th:if="${item?.type=='visit'} and ${item?.i18n_text}"
+                  ></span>
+                  <span
+                    th:text="#{common.siteTotalPost(${stats.post})}"
+                    th:if="${item?.type=='post'} and ${item?.i18n_text}"
+                  ></span>
+                  <span
+                    th:text="#{common.siteTotalUpvote(${stats.upvote})}"
+                    th:if="${item?.type=='upvote'} and ${item?.i18n_text}"
+                  ></span>
+                  <span
+                    th:text="#{common.siteTotalComment(${stats.comment})}"
+                    th:if="${item?.type=='comment'} and ${item?.i18n_text}"
+                  ></span>
+                  <span
+                    th:text="#{common.siteTotalCategory(${stats.category})}"
+                    th:if="${item?.type=='category'} and ${item?.i18n_text}"
+                  ></span>
+                </li>
+              </ul>
+            </div>
             <div
               th:if="${theme.config?.styles?.is_footer_theme_info_show} or ${theme.config?.styles?.is_footer_copyright_show}"
             >
-              <span th:text="#{page.index.totalPublishedPost(${posts?.total})}" th:if="${posts?.total != null}"></span
-              ><br />
               <span class="info" th:if="${theme.config?.styles?.is_footer_theme_info_show}">
                 Theme is
                 <a href="https://github.com/howiehz/halo-theme-higan-hz" rel="noopener noreferrer" target="_blank"
