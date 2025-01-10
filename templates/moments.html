@@ -173,7 +173,7 @@
           </a>
         </div>
       </div>
-      <script th:inline="javascript">
+      <script th:inline="javascript" th:if="${theme.config?.moments_styles?.is_moment_upvote_button_show}">
         const likes_localstorage_key = "higan.likes.moment.ids";
         let likedMomentNames = JSON.parse(localStorage.getItem(likes_localstorage_key) || "[]");
         likedMomentNames.forEach((momentName) => {

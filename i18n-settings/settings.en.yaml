@@ -692,6 +692,15 @@ spec:
             - value: false
               label: Disable
         - $formkit: radio
+          name: is_post_upvote_button_show
+          label: Upvote button at the bottom of the post
+          value: false
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
           name: is_post_comment_section_show
           label: Enable comment section
           value: true
