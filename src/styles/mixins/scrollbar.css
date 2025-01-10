@@ -1,8 +1,29 @@
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #86898c #c3c4c5;
+:root {
+  /* 滚动条滑块的颜色 */
+  --scrollbar-thumb-color: var(--color-scrollbar);
+  /* 滚动条滑块的颜色 鼠标悬停时 */
+  --scrollbar-thumb-hover-color: var(--color-scrollbar);
+  /* 滚动条滑块背景色 */
+  --scrollbar-thumb-background-color: transparent;
+
+  /* 滚动条轨道背景色 */
+  --scrollbar-track-background-color: transparent;
+
+  /* 滚动条上的按钮（上下箭头） 背景色 */
+  --scrollbar-button-background-color: transparent;
 }
 
+* {
+  scrollbar-width: thin;
+  /* 将第一种颜色应用于滚动条滑块，第二种颜色应用于滚动条轨道 */
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-background-color) !important;
+}
+
+*:hover {
+  scrollbar-color: var(--scrollbar-thumb-hover-color) var(--scrollbar-track-background-color) !important;
+}
+
+/* 整个滚动条 */
 *::-webkit-scrollbar {
   /* 垂直滚动条的宽度 */
   width: 8px;
@@ -10,23 +31,24 @@
   height: 8px;
 }
 
-/* 修改滚动条滑块的样式 */
+/* 滚动条上的按钮（上下箭头） */
+*::-webkit-scrollbar-button {
+  background-color: var(--scrollbar-button-background-color) !important;
+  border-radius: 5px;
+}
+
+/* 滚动条上的滚动滑块 */
 *::-webkit-scrollbar-thumb {
-  background: #c3c4c5;
+  background: var(--scrollbar-thumb-background-color) !important;
   border-radius: 10px;
 }
 
-/* 当鼠标悬停时滑块的样式 */
+/* 滚动条上的滚动滑块 鼠标悬停时 */
 *::-webkit-scrollbar-thumb:hover {
-  background: #86898c;
+  background: var(--scrollbar-thumb-background-color) !important;
 }
 
-/* 修改滚动条轨道的样式 */
+/* 滚动条轨道 */
 *::-webkit-scrollbar-track {
-  background-color: none;
-}
-
-*::-webkit-scrollbar-button {
-  background-color: #86898c;
-  border-radius: 5px;
+  background-color: var(--scrollbar-track-background-color) !important;
 }
