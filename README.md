@@ -11,8 +11,6 @@
 
 > 更激进的修改，更高的配置自由度！
 
-主题交流群（QQ）：694413711
-
 ### 特色功能概要
 
 1. 可自定义更多内容
@@ -35,13 +33,18 @@
 
 ### 作者的碎碎语
 
-如果你喜欢这个主题，就给项目点个 star 吧  
-用爱发电，你的 star 和支持就是我更新的动力！
+主题使用前必看章节：[可选插件](#可选插件)
 
-欢迎大家加入主题交流群  
-如果你想支持我也可以进群交流，让我知道这个主题除了我自己还有人在用 :)
+如果你喜欢这个主题，请给项目点个 Star 吧！  
+你的 Star 和支持将成为我持续更新的动力！
 
-欢迎在此项目基础上 fork，如果你能给我提个 issue 就更好了，不论多么诡谲的需求我都会尝试添加的 \^\_\^
+欢迎大家加入主题交流群（QQ）：[点击链接加入群聊 群号 694413711](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=QCcmLkzDHUT22qP_-MVYSYDwlL_Jf55Y&authKey=KWfge330T3nQAJy96gacr8eyp8u0egY3tNGBFAnNjqdBdMJKQLp9I9efUU9aMiGM&noverify=0&group_code=694413711)  
+如果你愿意支持我，也可以加入群聊，与我交流，让我知道除了我自己，还有其他人在使用这个主题 :)
+
+欢迎基于此项目进行 Fork，如果你能提个 Issue 那就更好了。无论需求多么奇特，我都会尽力添加 \^\_\^
+
+最初，这个项目只是为了满足自己的一些独特需求而创建。然而，如今已有许多小伙伴在使用这个主题，并通过各种渠道反馈意见，帮助我不断优化和改进。由衷感谢大家的支持与鼓励！  
+此外，我没想到还有小伙伴通过打赏支持这个项目，特此列出名单表示感谢！[赞助名单](#感谢赞助)
 
 ![preview](./screenshots/preview-1.png)
 
@@ -92,7 +95,7 @@
   - [如何获取主题包](#如何获取主题包)
     - [稳定版获取方法](#稳定版获取方法)
     - [最新开发版获取方法](#最新开发版获取方法)
-  - [可选插件（主题使用者必看章节！）](#可选插件主题使用者必看章节)
+  - [可选插件](#可选插件)
     - [Mermaid 明暗切换支持](#mermaid-明暗切换支持)
       - [使用默认编辑器](#使用默认编辑器)
         - [示例](#示例)
@@ -106,6 +109,7 @@
   - [开发指南/贡献指南](#开发指南贡献指南)
   - [Lighthouse](#lighthouse)
   - [TODO](#todo)
+  - [感谢赞助](#感谢赞助)
   - [项目状态](#项目状态)
     - [Repobeats analytics](#repobeats-analytics)
     - [Star History](#star-history)
@@ -447,7 +451,7 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 2. 选择“Download ZIP”下载最新代码
 3. 在 Console 端的主题菜单直接上传安装即可使用
 
-## 可选插件（主题使用者必看章节！）
+## 可选插件
 
 - 友链页面（/links），需插件 [plugin-links](https://github.com/halo-sigs/plugin-links)
 - <a id="plugin-photos"></a>图库页面（/photos），需插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)
@@ -812,6 +816,10 @@ title: [[图表标题]]
 
 见 [项目 Issue 页面](https://github.com/HowieHz/halo-theme-higan-hz/issues)  
 注：社区意愿较大的 Issue 会列为优先项。如果你对某功能有需求，请一定要在对应 Issue 下回复，或进入我的博客通过其他联系方式联系我，谢谢！
+
+## 感谢赞助
+
+- [bilibili@氵青一色但不是清一色](https://space.bilibili.com/37264956) 赞助 5 CNY 于 2025 年 1 月 12 日
 
 ## 项目状态
 
