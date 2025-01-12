@@ -20,16 +20,21 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="${#strings.defaultString(title, site.title)}"></title>
-    <script th:if="${theme_config['theme'] == 'custom'}" th:inline="javascript">
-      (function () {
-        const allCustomColorSchema = /*[(${custom_color_schema_config})]*/ "";
-        const customColorSchema = allCustomColorSchema.find(
-          (schema) => schema.id === /*[[${theme.config?.styles?.custom_color_schema_init_id}]]*/ "1"
-        );
-        document.documentElement.setAttribute("data-color-scheme", customColorSchema ? customColorSchema.type : null);
-      })();
+    <script
+      th:if="${theme_config['theme'] == 'custom'} or ${theme.config?.styles?.theme_dark == 'custom'} or ${theme.config?.styles?.theme_light == 'custom'} or ${theme.config?.styles?.theme_auto == 'custom'}"
+      th:inline="javascript"
+    >
+      const allCustomColorSchema = /*[(${custom_color_schema_config})]*/ "";
     </script>
-    <th:block th:if="${not #lists.isEmpty(custom_color_schema_config)}">
+    <script th:if="${theme_config['theme'] == 'custom'}" th:inline="javascript">
+      const customColorSchema = allCustomColorSchema.find(
+        (schema) => schema.id === /*[[${theme.config?.styles?.custom_color_schema_init_id}]]*/ "1"
+      );
+      document.documentElement.setAttribute("data-color-scheme", customColorSchema ? customColorSchema.type : null);
+    </script>
+    <th:block
+      th:if="${not #lists.isEmpty(custom_color_schema_config)} and (${theme_config['theme'] == 'custom'} or ${theme.config?.styles?.theme_dark == 'custom'} or ${theme.config?.styles?.theme_light == 'custom'} or ${theme.config?.styles?.theme_auto == 'custom'})"
+    >
       <th:block th:each="colorSchema : ${custom_color_schema_config}">
         <!--/*/
         <style th:inline="css">
@@ -195,13 +200,13 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </script>
 
     <script th:inline="javascript" th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
-      const THEME_DARK = /*[[${theme.config?.styles?.theme_dark}]]*/ "dark";
-      const THEME_LIGHT = /*[[${theme.config?.styles?.theme_light}]]*/ "light";
-      const THEME_AUTO = /*[[${theme.config?.styles?.theme_auto}]]*/ "auto";
+      var THEME_DARK = /*[[${theme.config?.styles?.theme_dark}]]*/ "dark";
+      var THEME_LIGHT = /*[[${theme.config?.styles?.theme_light}]]*/ "light";
+      var THEME_AUTO = /*[[${theme.config?.styles?.theme_auto}]]*/ "auto";
       const is_save_color_scheme_settings_to_browser =
         /*[[${theme.config?.styles?.is_save_color_scheme_settings_to_browser}]]*/ "true";
 
-      const themeColorSchemeMap = {
+      var themeColorSchemeMap = {
         auto: "auto",
         dark: "dark",
         light: "light",
@@ -210,6 +215,34 @@ html[theme="theme-[(${colorSchema.id})]"] {
         "light-blue": "light",
         gray: "light",
       };
+
+      if (THEME_DARK == "custom") {
+        let customColorSchema = allCustomColorSchema.find(
+          (schema) => schema.id === /*[[${theme.config?.styles?.custom_theme_dark_id}]]*/ "1"
+        );
+        if (customColorSchema) {
+          THEME_DARK = "theme-" + customColorSchema.id;
+          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        }
+      }
+      if (THEME_LIGHT == "custom") {
+        let customColorSchema = allCustomColorSchema.find(
+          (schema) => schema.id === /*[[${theme.config?.styles?.custom_theme_light_id}]]*/ "1"
+        );
+        if (customColorSchema) {
+          THEME_LIGHT = "theme-" + customColorSchema.id;
+          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        }
+      }
+      if (THEME_AUTO == "custom") {
+        let customColorSchema = allCustomColorSchema.find(
+          (schema) => schema.id === /*[[${theme.config?.styles?.custom_theme_auto_id}]]*/ "1"
+        );
+        if (customColorSchema) {
+          THEME_AUTO = "theme-" + customColorSchema.id;
+          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        }
+      }
 
       function updateThemeIcon(theme) {
         const themeIcon = document.getElementById("theme-toggle-button-icon");
