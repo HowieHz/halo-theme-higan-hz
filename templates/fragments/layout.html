@@ -36,12 +36,23 @@
       th:if="${not #lists.isEmpty(custom_color_schema_config)} and (${theme_config['theme'] == 'custom'} or ${theme.config?.styles?.theme_dark == 'custom'} or ${theme.config?.styles?.theme_light == 'custom'} or ${theme.config?.styles?.theme_auto == 'custom'})"
     >
       <th:block th:each="colorSchema : ${custom_color_schema_config}">
-        <!--/*/
-        <style th:inline="css">
+        <th:block th:switch="${colorSchema.is_raw_css_output_mode}">
+          <th:block th:case="true">
+            <!--/*/
+            <style th:inline="css">
+[(${colorSchema.custom_css})]
+            </style>
+            /*/-->
+          </th:block>
+          <th:block th:case="false">
+            <!--/*/
+            <style th:inline="css">
 html[theme="theme-[(${colorSchema.id})]"] {
 [(${colorSchema.custom_css})]}
-        </style>
-        /*/-->
+            </style>
+          /*/-->
+          </th:block>
+        </th:block>
       </th:block>
     </th:block>
     <script th:if="${theme.config?.global?.anti_mirror_site}" th:inline="javascript">
