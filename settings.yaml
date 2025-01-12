@@ -164,7 +164,19 @@ spec:
                   value: "dark"
                 - label: "浅色模式"
                   value: "light"
+                - label: "自动模式"
+                  value: "auto"
               validation: "required"
+            - $formkit: radio
+              name: is_raw_css_output_mode
+              label: CSS 原始输出模式
+              help: 关闭此项后，仅需填写自定义 CSS 变量的部分，输出时会自动输出在对应 CSS 选择器中（选择器为 html[theme="theme-{id}"]（填写的”识别码“替换 {id}））。
+              value: false
+              options:
+                - label: 开启
+                  value: true
+                - label: 关闭
+                  value: false
             - $formkit: code
               name: custom_css
               label: 自定义 CSS 变量
@@ -194,6 +206,10 @@ spec:
                 --toc-level-2: #e3e3e3;
                 --toc-level-3: #b0b0b0;
                 --toc-level-4: #636363;
+                comment-widget {
+                  --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
+                  --halo-comment-widget-component-form-input-border-color: #636363 !important;
+                }
         - $formkit: radio
           name: is_show_color_scheme_toggle_button
           label: 浅色/深色模式切换按钮
