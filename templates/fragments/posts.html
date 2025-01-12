@@ -129,8 +129,15 @@
                 <span th:text="${post.stats?.visit}">文章阅读量替换位</span>
               </div>
             </th:block>
-            <th:block th:if="${theme.config?.index_styles?.is_show_post_excerpt_in_post_list_summary}">
-              <p class="p-0 mb-0 relative z-10 mt-2 text-sm color-accent-3" th:text="${post.status?.excerpt}">
+            <th:block
+              th:if="${theme.config?.index_styles?.is_show_post_excerpt_in_post_list_summary}"
+              th:with="max_lines=${theme.config?.index_styles?.post_excerpt_max_lines}"
+            >
+              <p
+                class="p-0 mb-0 relative z-10 mt-2 text-sm color-accent-3"
+                th:text="${post.status?.excerpt}"
+                th:classappend="|${max_lines == '1' ? 'line-clamp-1' : ''} ${max_lines == '2' ? 'line-clamp-2' : ''} ${max_lines == '3' ? 'line-clamp-3' : ''} ${max_lines == '4' ? 'line-clamp-4' : ''} ${max_lines == '5' ? 'line-clamp-5' : ''}|"
+              >
                 文章概要替换位
               </p>
             </th:block>

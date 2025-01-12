@@ -593,6 +593,12 @@ spec:
               value: true
             - label: 关闭
               value: false
+        - $formkit: number
+          name: post_excerpt_max_lines
+          if: "$post_list_layout === 'post-list-summary'"
+          label: 多元列表文章摘要行数上限
+          value: 3
+          help: "填写值范围为 1-5"
         - $formkit: radio
           name: is_show_index_post_list_permalink_text
           if: "$post_list_layout === 'post-list-summary'"
