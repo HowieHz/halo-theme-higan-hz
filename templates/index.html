@@ -48,7 +48,7 @@
 
         <!--/* i18n 公告栏 全等匹配模式 匹配默认公告栏 */-->
         <th:block th:each="resumeItem : ${resumeItems}">
-          <th:block th:if="${#strings.equals(resumeItem.lang, theme.config?.index_styles?.defalut_i18n_resume_name)}">
+          <th:block th:if="${#strings.equals(resumeItem.lang, theme.config?.index_styles?.default_i18n_resume_name)}">
             <p
               class="blog-description default-resume"
               style="display: none"

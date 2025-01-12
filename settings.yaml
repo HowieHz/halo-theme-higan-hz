@@ -8,7 +8,7 @@ spec:
       label: 全局
       formSchema:
         - $formkit: text
-          name: defalut_page_language
+          name: default_page_language
           label: 默认页面语言
           value: "zh"
           help: "默认页面语言，如：zh、en，此项置空则取 zh。此项设定的是 html 标签的 lang 属性值"
@@ -25,10 +25,10 @@ spec:
           help: 如启用此项，则启用前缀匹配模式，具体使用方法请看文档。
         - $formkit: text
           if: "$is_i18n_menu_show === true"
-          name: defalut_i18n_menu_name
+          name: default_i18n_menu_name
           label: 默认多语言菜单名称
-          value: "defalut"
-          help: "默认多语言菜单名称，如：defalut。此项将在没有一个菜单未被成功匹配后显示。此项置空则取 defalut"
+          value: "default"
+          help: "默认多语言菜单名称，如：default。此项将在没有一个菜单未被成功匹配后显示。此项置空则取 default"
         - $formkit: checkbox
           name: upgrade_insecure_requests
           label: CSP:upgrade-insecure-requests
@@ -427,7 +427,7 @@ spec:
           value: true
         - $formkit: checkbox
           name: is_footer_force_bottom
-          label: 强制页脚、页码在页面最底部
+          label: 强制页脚、页码在页面底部
           value: true
         - $formkit: checkbox
           name: is_footer_menu_show
@@ -435,15 +435,48 @@ spec:
           value: true
         - $formkit: checkbox
           name: is_footer_content_show
-          label: 添加内容到页脚最底部
+          label: 添加内容到页面最底部
           help: "Halo 设置 - 代码注入 - 页脚 的内容显示位置在“主题信息”、“版权信息”、“底部菜单”之上。\n而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。"
           value: false
         - $formkit: code
           name: footer_content
           if: "$is_footer_content_show === true"
-          label: 页脚最底部内容（支持 html 代码块）
+          label: 页面最底部内容（支持 html 代码块）
           language: html
           height: 150px
+        - $formkit: checkbox
+          name: is_18n_footer_content_show
+          label: 多语言页面最底部内容支持
+          help: "Halo 设置 - 代码注入 - 页脚 的内容显示位置在“主题信息”、“版权信息”、“底部菜单”之上。\n而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。"
+          value: false
+        - $formkit: checkbox
+          if: "$is_18n_footer_content_show === true"
+          name: is_18n_footer_content_show_prefix_match_mode
+          label: 多语言页面最底部内容前缀匹配模式
+          value: true
+          help: 如启用此项，则启用前缀匹配模式，具体使用方法请看文档。
+        - $formkit: text
+          if: "$is_18n_footer_content_show === true"
+          name: default_i18n_footer_content_name
+          label: 默认多语言页面最底部内容的语言代码
+          value: "default"
+          help: "默认多语言页面最底部内容的语言代码，如：default。此项将在没有一个页面最底部内容未被成功匹配后显示。此项置空则取 default"
+        - $formkit: repeater
+          name: i18n_footer_content
+          if: "$is_18n_footer_content_show === true"
+          label: 自定义多语言页面最底部内容
+          value: []
+          children:
+            - $formkit: text
+              name: lang
+              label: 语言代码
+              value: "zh"
+              validation: "required"
+            - $formkit: code
+              name: footer_content
+              label: 页面最底部内容（支持 html 代码块）
+              language: html
+              height: 150px
         - $formkit: checkbox
           name: is_preserve_empty_lines_in_blockquote
           label: 引用块保留空行
@@ -493,10 +526,10 @@ spec:
           help: 如启用此项，则启用前缀匹配模式，具体使用方法请看文档。
         - $formkit: text
           if: "$is_18n_resume_show === true"
-          name: defalut_i18n_resume_name
-          label: 默认多语言公告栏名称
-          value: "defalut"
-          help: "默认多语言公告栏名称，如：defalut。此项将在没有一个公告栏未被成功匹配后显示。此项置空则取 defalut"
+          name: default_i18n_resume_name
+          label: 默认多语言公告栏语言代码
+          value: "default"
+          help: "默认多语言公告栏语言代码，如：default。此项将在没有一个公告栏未被成功匹配后显示。此项置空则取 default"
         - $formkit: repeater
           name: i18n_resume
           if: "$is_18n_resume_show === true"
@@ -505,7 +538,7 @@ spec:
           children:
             - $formkit: text
               name: lang
-              label: 语言
+              label: 语言代码
               value: "zh"
               validation: "required"
             - $formkit: code

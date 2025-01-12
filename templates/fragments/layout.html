@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html
-  th:lang="${language ?: (theme.config?.global?.defalut_page_language ?: 'zh')}"
+  th:lang="${language ?: (theme.config?.global?.default_page_language ?: 'zh')}"
   th:with="theme_config=${theme.config?.styles?.color_schema},
            custom_color_schema_config=${theme.config?.styles?.custom_color_schema}"
   th:attr="data-color-scheme=${theme_config['theme']} != 'custom' ? ${theme_config['color-scheme']} : null,
@@ -385,8 +385,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
     <script th:if="${theme.config?.index_styles?.is_18n_resume_show}" th:inline="javascript">
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/*
-        // 检查目标 li 标签是否具有 class="matched-resume"
-        // 如果开了 i18n 菜单，如果没有菜单成功匹配，这里就会显示默认菜单
+        // 检查目标标签是否具有 class="matched-resume"
+        // 如果开了 i18n 公告栏，如果没有公告栏成功匹配，这里就会显示默认公告栏
         // */-->
         const targetElementList = document.querySelectorAll(".matched-resume");
 
@@ -406,6 +406,34 @@ html[theme="theme-[(${colorSchema.id})]"] {
 
           defaultResumes.forEach((resume) => {
             resume.remove();
+          });
+        }
+      });
+    </script>
+    <script th:if="${theme.config?.styles?.is_18n_footer_content_show}" th:inline="javascript">
+      document.addEventListener("DOMContentLoaded", function () {
+        // <!--/*
+        // 检查目标标签是否具有 class="matched-footer-content"
+        // 如果开了 i18n 页面最底部内容，如果没有页面最底部内容成功匹配，这里就会显示默认页面最底部内容
+        // */-->
+        const targetElementList = document.querySelectorAll(".matched-footer-content");
+
+        if (targetElementList.length === 0) {
+          // <!--/* 找到所有 class="default-footer-content" 的元素 */-->
+          const defaultFooterContents = document.querySelectorAll(".default-footer-content");
+
+          // <!--/* 遍历这些元素，移除 style="display: none;" */-->
+          defaultFooterContents.forEach((footer_content) => {
+            if (footer_content.style.display === "none") {
+              footer_content.style.display = ""; // <!--/* 清空 display 样式 */-->
+            }
+          });
+        } else {
+          // <!--/* targetElementList.length !== 0 的情况下，移除所有 class="default-footer-content" 的元素 */-->
+          const defaultFooterContents = document.querySelectorAll(".default-footer-content");
+
+          defaultFooterContents.forEach((footer_content) => {
+            footer_content.remove();
           });
         }
       });
@@ -571,6 +599,43 @@ html[theme="theme-[(${colorSchema.id})]"] {
           <div class="footer-bottom" th:if="${theme.config?.styles?.is_footer_content_show}">
             <p th:utext="${theme.config?.styles?.footer_content}"></p>
           </div>
+          <th:block
+            th:if="${theme.config?.styles?.is_18n_footer_content_show}"
+            th:with="footerContentItems = ${theme.config?.styles?.i18n_footer_content}"
+          >
+            <th:block th:if="not ${theme.config?.styles?.is_18n_footer_content_show_prefix_match_mode}">
+              <!--/* i18n 页面底部内容 全等匹配模式 */-->
+              <th:block th:each="footerContentItem : ${footerContentItems}">
+                <th:block th:if="${#strings.equals(footerContentItem.lang, #locale)}">
+                  <div class="footer-bottom matched-footer-content">
+                    <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
+                  </div>
+                </th:block>
+              </th:block>
+            </th:block>
+
+            <th:block th:if="${theme.config?.styles?.is_18n_footer_content_show_prefix_match_mode}">
+              <!--/* i18n 页面底部内容 前缀匹配模式 */-->
+              <th:block th:each="footerContentItem : ${footerContentItems}">
+                <th:block th:if="${#strings.startsWith(#locale, footerContentItem.lang)}">
+                  <div class="footer-bottom matched-footer-content">
+                    <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
+                  </div>
+                </th:block>
+              </th:block>
+            </th:block>
+
+            <!--/* i18n 页面底部内容 全等匹配模式 匹配默认页面底部内容 */-->
+            <th:block th:each="footerContentItem : ${footerContentItems}">
+              <th:block
+                th:if="${#strings.equals(footerContentItem.lang, theme.config?.styles?.default_i18n_footer_content_name)}"
+              >
+                <div class="footer-bottom default-footer-content" style="display: none">
+                  <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
+                </div>
+              </th:block>
+            </th:block>
+          </th:block>
         </footer>
       </div>
     </div>
