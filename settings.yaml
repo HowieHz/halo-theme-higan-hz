@@ -117,6 +117,7 @@ spec:
       formSchema:
         - $formkit: select
           name: color_schema
+          id: color_schema_init
           label: 配色方案
           help: 此项无法显示所选项是正常现象，实际会正常生效。（对于启用”浅色/深色模式切换按钮”的情况来说，这项决定了网站刚加载完成时的配色方案。）
           value: { theme: "auto", color-scheme: "auto" }
@@ -135,6 +136,64 @@ spec:
               value: { theme: "dark-blue", color-scheme: "dark" }
             - label: "浅色 - 灰粉"
               value: { theme: "gray", color-scheme: "light" }
+            - label: "自定义配色"
+              value: { theme: "custom", color-scheme: "auto" }
+        - $formkit: number
+          name: custom_color_schema_init_id
+          if: "$get(color_schema_init).value.theme === 'custom'"
+          value: ""
+          help: "请先创建自定义配色方案，随后在此填写自定义配色方案识别码"
+          validation: "required"
+        - $formkit: repeater
+          name: custom_color_schema
+          label: 自定义配色方案
+          value: []
+          children:
+            - $formkit: number
+              name: id
+              label: 自定义配色方案识别码
+              value: "1"
+              help: "唯一识别码，请勿重复"
+              validation: "required"
+            - $formkit: select
+              name: type
+              label: 主题色彩模式
+              value: "dark"
+              options:
+                - label: "深色模式"
+                  value: "dark"
+                - label: "浅色模式"
+                  value: "light"
+              validation: "required"
+            - $formkit: code
+              name: custom_css
+              label: 自定义 CSS 变量
+              language: css
+              height: 150px
+              value: |
+                --color-accent-1: #2bbc8a;
+                --color-accent-2: #eee;
+                --color-accent-3: #ccc;
+                --color-avatar-border: #212326;
+                --color-background: #1d1f21;
+                --color-background-code: #d5d7d8;
+                --color-border: #908d8d;
+                --color-card-hover: #212326;
+                --color-divide: #616161;
+                --color-footer-mobile-1: #a4a3a3;
+                --color-footer-mobile-2: #27292b;
+                --color-footer-mobile-3: #1f2325;
+                --color-highlight-background: #212326;
+                --color-link: #d480aa;
+                --color-meta: #908d8d;
+                --color-meta-code: #908d8d;
+                --color-quote: #ccffb6;
+                --color-scrollbar: #999;
+                --color-text: #d5d7d8;
+                --color-time: #adaeaf;
+                --toc-level-2: #e3e3e3;
+                --toc-level-3: #b0b0b0;
+                --toc-level-4: #636363;
         - $formkit: radio
           name: is_show_color_scheme_toggle_button
           label: 浅色/深色模式切换按钮
@@ -147,6 +206,7 @@ spec:
               value: false
         - $formkit: select
           name: theme_auto
+          id: custom_theme_auto
           if: "$is_show_color_scheme_toggle_button===true"
           label: 自动模式配色方案
           value: "auto"
@@ -165,8 +225,17 @@ spec:
               value: "dark-blue"
             - label: "浅色 - 灰粉"
               value: "gray"
+            - label: "自定义配色"
+              value: "custom"
+        - $formkit: number
+          name: custom_theme_auto_id
+          if: "$get(custom_theme_auto).value === 'custom'"
+          value: ""
+          help: "请先创建自定义配色方案，随后在此填写自定义配色方案识别码"
+          validation: "required"
         - $formkit: select
           name: theme_light
+          id: custom_theme_light
           if: "$is_show_color_scheme_toggle_button===true"
           label: 浅色模式配色方案
           value: "light"
@@ -185,8 +254,17 @@ spec:
               value: "dark-blue"
             - label: "浅色 - 灰粉"
               value: "gray"
+            - label: "自定义配色"
+              value: "custom"
+        - $formkit: number
+          name: custom_theme_light_id
+          if: "$get(custom_theme_light).value === 'custom'"
+          value: ""
+          help: "请先创建自定义配色方案，随后在此填写自定义配色方案识别码"
+          validation: "required"
         - $formkit: select
           name: theme_dark
+          id: custom_theme_dark
           if: "$is_show_color_scheme_toggle_button===true"
           label: 深色模式配色方案
           value: "dark"
@@ -205,6 +283,14 @@ spec:
               value: "dark-blue"
             - label: "浅色 - 灰粉"
               value: "gray"
+            - label: "自定义配色"
+              value: "custom"
+        - $formkit: number
+          name: custom_theme_dark_id
+          if: "$get(custom_theme_dark).value === 'custom'"
+          value: ""
+          help: "请先创建自定义配色方案，随后在此填写自定义配色方案识别码"
+          validation: "required"
         - $formkit: radio
           name: is_auto_switch_color_scheme_based_on_browser_settings
           if: "$is_show_color_scheme_toggle_button===true"
