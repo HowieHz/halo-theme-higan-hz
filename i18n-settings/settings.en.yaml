@@ -584,6 +584,16 @@ spec:
             - label: Disable
               value: false
         - $formkit: radio
+          name: is_show_post_estimated_reading_time_in_post_list_summary
+          if: "$post_list_layout === 'post-list-summary'"
+          label: Display post estimated reading time in post list summary
+          value: false
+          options:
+            - label: Enable
+              value: true
+            - label: Disable
+              value: false
+        - $formkit: radio
           name: is_show_post_excerpt_in_post_list_summary
           if: "$post_list_layout === 'post-list-summary'"
           label: Display post excerpt in post list summary
@@ -673,6 +683,15 @@ spec:
           name: is_show_post_updated_time_left_text
           if: "$is_show_post_updated_time === true"
           label: Post update time left text
+          value: false
+          options:
+            - value: true
+              label: Enable
+            - value: false
+              label: Disable
+        - $formkit: radio
+          name: is_show_post_estimated_reading_time
+          label: Estimated reading time of the article
           value: false
           options:
             - value: true
