@@ -593,6 +593,12 @@ spec:
               value: true
             - label: Disable
               value: false
+        - $formkit: number
+          name: post_excerpt_max_lines
+          if: "$post_list_layout === 'post-list-summary'"
+          label: Maximum number of lines in the post list summary
+          value: 3
+          help: "The value range is 1-5"
         - $formkit: radio
           name: is_show_index_post_list_permalink_text
           if: "$post_list_layout === 'post-list-summary'"
