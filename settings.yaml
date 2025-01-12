@@ -584,6 +584,16 @@ spec:
             - label: 关闭
               value: false
         - $formkit: radio
+          name: is_show_post_estimated_reading_time_in_post_list_summary
+          if: "$post_list_layout === 'post-list-summary'"
+          label: 多元列表显示文章预计阅读时间
+          value: false
+          options:
+            - label: 开启
+              value: true
+            - label: 关闭
+              value: false
+        - $formkit: radio
           name: is_show_post_excerpt_in_post_list_summary
           if: "$post_list_layout === 'post-list-summary'"
           label: 多元列表显示文章摘要
@@ -673,6 +683,15 @@ spec:
           name: is_show_post_updated_time_left_text
           if: "$is_show_post_updated_time === true"
           label: 文章更新时间左侧文字
+          value: false
+          options:
+            - value: true
+              label: 开启
+            - value: false
+              label: 关闭
+        - $formkit: radio
+          name: is_show_post_estimated_reading_time
+          label: 文章预计阅读时间
           value: false
           options:
             - value: true
