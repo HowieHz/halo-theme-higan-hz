@@ -34,16 +34,11 @@ spec:
           label: CSP:upgrade-insecure-requests
           value: false
           help: 如启用此项，非跳转（non-navigational）的不安全资源请求将会自动升级到 HTTPS（包括第当前域名以及第三方请求）
-        - $formkit: radio
+        - $formkit: checkbox
           name: anti_mirror_site
           label: 仅允许使用指定域名访问
           help: 使用场景：防止站点被恶意镜像后的流量流失
           value: false
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
         - $formkit: repeater
           name: allow_site_whitelist
           if: "$anti_mirror_site === true"
@@ -61,36 +56,21 @@ spec:
           label: "Base64 编码后的目标链接"
           help: "检测到当前页面域名不在白名单中，就会跳转到目标链接（编码前的内容包括完整域名。请在输入框仅输入编码后的内容！）\n示例：编码前 https://howiehz.top\n编码后 aHR0cHM6Ly9ob3dpZWh6LnRvcA=="
           value: "bG9jYWxob3N0"
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_keep_path_and_query
           if: "$anti_mirror_site === true"
           label: "跳转后是否保留路径和查询参数"
           help: "例：假设当前页面为 localhost/a/b?a=1，目标链接为 https://p.com。关闭此项会跳转到 https://p.com，而开启此项会跳转到 https://p.com/a/b?a=1"
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_instant_page_enable
           label: instant.page 支持
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
           help: 如启用此项，主题将自动加载 instant.page 脚本，以提升页面加载速度。
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_mermaid_enable
           label: Mermaid 支持
           value: false
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
           help: 如启用此项，主题将自动加载 Mermaid 脚本，以启用对应支持。
         - $formkit: text
           name: mermaid_selector
@@ -167,16 +147,11 @@ spec:
                 - label: "自动模式"
                   value: "auto"
               validation: "required"
-            - $formkit: radio
+            - $formkit: checkbox
               name: is_raw_css_output_mode
               label: CSS 原始输出模式
               help: 关闭此项后，仅需填写自定义 CSS 变量的部分，输出时会自动输出在对应 CSS 选择器中（选择器为 html[theme="theme-{id}"]（填写的”识别码“替换 {id}））。
               value: false
-              options:
-                - label: 开启
-                  value: true
-                - label: 关闭
-                  value: false
             - $formkit: code
               name: custom_css
               label: 自定义 CSS 变量
@@ -211,16 +186,11 @@ spec:
                   --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
                   --halo-comment-widget-component-form-input-border-color: #636363 !important;
                 }
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_color_scheme_toggle_button
           label: 浅色/深色模式切换按钮
           value: false
           help: （切换此项后，请点击下方保存按钮，再之后刷新此页面）如启用此项，将在大标题旁显示明暗模式切换按钮。并且在 浅色模式 -> 深色模式 -> 自动模式 -> 浅色模式 中自动切换。注：“自动模式配色方案”选择一种浅色方案即可禁用自动模式。（具体运行逻辑请查看文档）
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
         - $formkit: select
           name: theme_auto
           id: custom_theme_auto
@@ -308,28 +278,18 @@ spec:
           value: ""
           help: "请先创建自定义配色方案，随后在此填写自定义配色方案识别码"
           validation: "required"
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_auto_switch_color_scheme_based_on_browser_settings
           if: "$is_show_color_scheme_toggle_button===true"
           label: 根据浏览器设置自动切换配色
           value: true
           help: 如果启用这项，首先会读取浏览器中已保存的配色选择，如果没有保存的选择，则会根据浏览器主题设置自动切换为浅/深色配色。
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_save_color_scheme_settings_to_browser
           if: "$is_show_color_scheme_toggle_button===true"
           label: 保存配色设置到浏览器中
           value: true
           help: 如果启用这项，按下配色切换按钮后，将会保存当前的配色选择到浏览器存储中。
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
         - $formkit: select
           name: text_size
           label: 字体大小
@@ -341,15 +301,10 @@ spec:
               value: "normal"
             - label: "大字体"
               value: "large"
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_max_width_settings
           label: 自定义内容区域最大宽度
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
           help: 如不开启此项，内容区域最大宽度会随着页面宽度变化而变化。但可能出现内容整体偏左的现象。建议关闭此项的同时开启“内容区域最小宽度”，“自定义内容区域宽度属性”并保持默认值。
         - $formkit: text
           name: max_width
@@ -358,15 +313,10 @@ spec:
           value: 48rem
           placeholder: "默认值：48rem"
           help: "允许全部 CSS 长度单位，如：48rem, 780px, 70vw, 70%。宽度最大值设置较大时可能会出现内容整体偏左的现象。为解决这个问题，可同时开启“内容区域最小宽度”，“自定义内容区域宽度属性”并保持默认值。"
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_min_width_settings
           label: 自定义内容区域最小宽度
           value: false
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
         - $formkit: text
           name: min_width
           if: "$is_min_width_settings===true"
@@ -374,26 +324,16 @@ spec:
           value: 48rem
           placeholder: "默认值：48rem"
           help: "允许全部 CSS 长度单位，如：48rem, 780px, 70vw, 70%。当此设置宽度小于窗口宽度时，主题会使用窗口宽度。以避免出现横向滚动条。"
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_force_min_width_settings
           if: "$is_min_width_settings===true"
           label: 强制应用内容区域最小宽度
           value: false
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
           help: "强制使内容显示区域不小于设定的最小宽度，即使出现横向滚动条。"
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_content_width_style_settings
           label: 自定义内容区域宽度属性
           value: false
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
           help: 如不开启此项，内容区域宽度默认设置为最大宽度
         - $formkit: text
           name: content_width_style
@@ -402,66 +342,36 @@ spec:
           value: fit-content
           placeholder: "默认值：fit-content"
           help: "此项决定了内容区域宽度。默认值效果为：使内容区域宽度=最宽的内容的宽度。（此项实际是在设置内容区域的 width 属性对应的样式值）"
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_header_icon
           label: 是否显示页眉头像
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
         - $formkit: attachment
           name: icon
           if: "$is_show_header_icon===true"
           label: 自定义页眉头像
-        - $formkit: radio
+        - $formkit: checkbox
           name: avatar_circle
           if: "$is_show_header_icon===true"
           label: 圆形头像
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: avatar_grayout
           if: "$is_show_header_icon===true"
           label: 灰度头像
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_header_menu
           label: 是否显示页眉菜单
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_page_number
           label: 是否显示页码
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_footer_site_stats_show
           label: 页面底部站点统计信息
           value: false
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
         - $formkit: repeater
           name: footer_site_stats
           if: "$is_footer_site_stats_show === true"
@@ -499,100 +409,55 @@ spec:
                 - label: "总分类数"
                   value: "category"
               validation: "required"
-            - $formkit: radio
+            - $formkit: checkbox
               name: i18n_text
               label: 多语言文本包裹数字
               value: true
-              options:
-                - value: true
-                  label: 开启
-                - value: false
-                  label: 关闭
             - $formkit: text
               name: icon
               label: 文字左侧的图标
               value: ""
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_footer_theme_info_show
           label: 页面底部主题信息
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_footer_copyright_show
           label: 页面底部版权信息
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_footer_force_bottom
           label: 强制页脚、页码在页面最底部
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_footer_menu_show
           label: 页面底部菜单
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_footer_content_show
           label: 添加内容到页脚最底部
           help: "Halo 设置 - 代码注入 - 页脚 的内容显示位置在“主题信息”、“版权信息”、“底部菜单”之上。\n而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。"
           value: false
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
         - $formkit: code
           name: footer_content
           if: "$is_footer_content_show === true"
           label: 页脚最底部内容（支持 html 代码块）
           language: html
           height: 150px
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_preserve_empty_lines_in_blockquote
           label: 引用块保留空行
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
           help: 如启用此项，将在保留引用块中的空行，否则将自动删除引用块中的空行。引用块在 Markdown 中使用 > 表示。
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_the_quote_before_blockquote
           label: 引用块前添加引号
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
           help: 如启用此项，将在引用块前添加引号。引用块在 Markdown 中使用 > 表示。
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_the_quote_after_blockquote
           label: 引用块后添加引号
           value: false
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
           help: 如启用此项，将在引用块后添加引号。引用块在 Markdown 中使用 > 表示。
     - group: index_styles
       label: 首页样式
@@ -602,50 +467,63 @@ spec:
           label: "主页 HTML 标题"
           help: "如置空则取值自“Halo 设置 - 基本设置 - 站点标题”"
           value: ""
-        - $formkit: radio
+        - $formkit: checkbox
           name: hitokoto
           label: 一言 (hitokoto)
           value: false
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_resume_show
           label: 个人简介/公告栏
           value: false
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
         - $formkit: code
           name: resume
           if: "$is_resume_show === true"
           label: 个人简介/公告栏内容（支持 html 代码块）
           language: html
           height: 150px
-        - $formkit: radio
+        - $formkit: checkbox
+          name: is_18n_resume_show
+          label: 多语言个人简介/公告栏支持
+          value: false
+        - $formkit: checkbox
+          if: "$is_18n_resume_show === true"
+          name: is_18n_resume_show_prefix_match_mode
+          label: 多语言公告栏前缀匹配模式
+          value: true
+          help: 如启用此项，则启用前缀匹配模式，具体使用方法请看文档。
+        - $formkit: text
+          if: "$is_18n_resume_show === true"
+          name: defalut_i18n_resume_name
+          label: 默认多语言公告栏名称
+          value: "defalut"
+          help: "默认多语言公告栏名称，如：defalut。此项将在没有一个公告栏未被成功匹配后显示。此项置空则取 defalut"
+        - $formkit: repeater
+          name: i18n_resume
+          if: "$is_18n_resume_show === true"
+          label: 自定义多语言公告栏内容
+          value: []
+          children:
+            - $formkit: text
+              name: lang
+              label: 语言
+              value: "zh"
+              validation: "required"
+            - $formkit: code
+              name: resume
+              if: "$is_resume_show === true"
+              label: 个人简介/公告栏内容（支持 html 代码块）
+              language: html
+              height: 150px
+        - $formkit: checkbox
           name: is_show_find_me_left_text
           label: 社交资料图标左侧文字
           help: "如关闭此项，将隐藏社交资料图标左侧文字"
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_index_post_list_title
           label: 首页文章列表标题
           help: "如关闭此项，首页文章列表将不显示标题"
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
         - $formkit: select
           name: post_list_layout
           id: index_post_list_layout
@@ -656,82 +534,47 @@ spec:
               value: "simple-post-list"
             - label: "多元列表"
               value: "post-list-summary"
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_post_categories_in_post_list_summary
           if: "$post_list_layout === 'post-list-summary'"
           label: 多元列表显示文章分类
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_post_tags_in_post_list_summary
           if: "$post_list_layout === 'post-list-summary'"
           label: 多元列表显示文章标签
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_post_views_in_post_list_summary
           if: "$post_list_layout === 'post-list-summary'"
           label: 多元列表显示文章阅读量
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_post_estimated_reading_time_in_post_list_summary
           if: "$post_list_layout === 'post-list-summary'"
           label: 多元列表显示文章预计阅读时间
           value: false
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_post_excerpt_in_post_list_summary
           if: "$post_list_layout === 'post-list-summary'"
           label: 多元列表显示文章摘要
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
         - $formkit: number
           name: post_excerpt_max_lines
           if: "$post_list_layout === 'post-list-summary'"
           label: 多元列表文章摘要行数上限
           value: 3
           help: "填写值范围为 1-5"
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_index_post_list_permalink_text
           if: "$post_list_layout === 'post-list-summary'"
           label: 多元列表跳转文章链接所用提示文字
           help: "如关闭此项，首页文章列表文章项将不显示跳转链接文字"
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_pin_icon_show
           label: 文章列表置顶图标
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
         - $formkit: select
           name: pin_icon_position
           if: "$is_pin_icon_show===true"
@@ -745,89 +588,44 @@ spec:
     - group: post_styles
       label: 文章页样式
       formSchema:
-        - $formkit: radio
+        - $formkit: checkbox
           name: post_title_uppper
           label: 文章标题大写
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_post_publish_time
           label: 文章发布时间
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_post_publish_time_left_text
           if: "$is_show_post_publish_time === true"
           label: 文章发布时间左侧文字
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_post_updated_time
           label: 文章更新时间
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_post_updated_time_left_text
           if: "$is_show_post_updated_time === true"
           label: 文章更新时间左侧文字
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_post_estimated_reading_time
           label: 文章预计阅读时间
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_post_nav_share_button
           label: 桌面端菜单中的分享按钮
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_dividing_line_at_the_end_of_post_show
           label: 文章与评论区间的分隔线
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_post_upvote_button_show
           label: 文章底部的点赞按钮
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
         - $formkit: text
           name: post_upvote_button_width
           if: "$is_post_upvote_button_show === true"
@@ -840,16 +638,11 @@ spec:
           label: 点赞按钮高度
           value: "1rem"
           help: "设置点赞按钮的高度。允许使用所有 CSS 长度单位，如：5px, 1rem。"
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_post_upvote_count
           if: "$is_post_upvote_button_show === true"
           label: 展示文章获赞数
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
         - $formkit: select
           name: post_upvote_button_position
           if: "$is_post_upvote_button_show === true"
@@ -862,46 +655,26 @@ spec:
               value: "center"
             - label: "靠右"
               value: "right"
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_post_comment_section_show
           label: 文章评论区
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_footer_nav
           label: 移动端底部导航栏
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_share_footer
           if: "$is_show_footer_nav === true"
           label: 移动端底部导航栏中的分享按钮
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
     - group: categories_page_styles
       label: 分类集合页样式
       formSchema:
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_the_number_of_articles_per_category
           label: 是否显示每个分类下的文章数量
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
         - $formkit: text
           name: characters_to_the_left_of_the_number_of_articles
           if: "$is_show_the_number_of_articles_per_category === true"
@@ -912,36 +685,21 @@ spec:
           if: "$is_show_the_number_of_articles_per_category === true"
           label: "在“文章数量”右侧的字符"
           value: ")"
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_multi_layer_categories
           label: 是否显示多层分类
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
     - group: custom_page_styles
       label: 自定义页面样式
       formSchema:
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_dividing_line_at_the_end_of_content_show
           label: 是否启用正文内容与评论区间的分隔线
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_custom_page_comment_section_show
           label: 是否启用评论区
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
     - group: photos_styles
       label: 相册页样式
       formSchema:
@@ -955,25 +713,15 @@ spec:
           label: 图片渐入动画时间
           value: 0.2
           help: "设置图片渐入动画时间，单位秒。"
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_show_photo_group_name
           if: "$is_enable_masonry_layout === false"
           label: 是否启用分组标题
           value: false
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_enable_masonry_layout
           label: 是否启用瀑布流布局
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
         - $formkit: number
           name: max_masonry_columns
           if: "$is_enable_masonry_layout === true"
@@ -998,16 +746,11 @@ spec:
           label: 瀑布流间隔宽度
           value: 9
           help: "设置瀑布流布局的间隔宽度。单位 px"
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_enable_advanced_options
           label: 进阶配置选项
           value: false
           help: 此处的配置项需要前端知识
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
         - $formkit: text
           name: img_onmouseover
           if: "$is_enable_advanced_options === true"
@@ -1023,24 +766,14 @@ spec:
     - group: moments_styles
       label: 瞬间页样式
       formSchema:
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_moment_upvote_button_show
           label: 是否启用点赞按钮
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_moment_comment_section_show
           label: 是否启用评论区
           value: true
-          options:
-            - value: true
-              label: 开启
-            - value: false
-              label: 关闭
     - group: sns
       label: 社交资料/RSS
       formSchema:
@@ -1358,15 +1091,10 @@ spec:
     - group: error_page_styles
       label: 错误页样式
       formSchema:
-        - $formkit: radio
+        - $formkit: checkbox
           name: is_auto_redirect
           label: 页面自动重定向
           value: true
-          options:
-            - label: 开启
-              value: true
-            - label: 关闭
-              value: false
         - $formkit: text
           name: target_url
           if: "$is_auto_redirect === true"
