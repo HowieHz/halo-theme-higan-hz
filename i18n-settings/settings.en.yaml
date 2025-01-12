@@ -8,7 +8,7 @@ spec:
       label: Global
       formSchema:
         - $formkit: text
-          name: defalut_page_language
+          name: default_page_language
           label: Default page language
           value: "zh"
           help: "The default language of the page, such as: zh, en. The setting set the html lang attribute."
@@ -25,9 +25,9 @@ spec:
           help: "If enabled, the theme will match the menu name with the current language prefix. For example, if the current language is zh, the theme will match the menu name with zh-xxx."
         - $formkit: text
           if: "$is_i18n_menu_show === true"
-          name: defalut_i18n_menu_name
+          name: default_i18n_menu_name
           label: Default multi-language menu name
-          value: "defalut"
+          value: "default"
           help: "The default menu name for multi-language menus."
         - $formkit: checkbox
           name: upgrade_insecure_requests
@@ -445,6 +445,39 @@ spec:
           language: html
           height: 150px
         - $formkit: checkbox
+          name: is_18n_footer_content_show
+          label: Multi-language footer content support
+          help: "Halo settings - Code injection - Footer content display position is above 'Theme Information', 'Copyright Information', and 'Footer Menu'.\nThe footer content filled in here is below the 'Footer Menu', at the very bottom of the page."
+          value: false
+        - $formkit: checkbox
+          if: "$is_18n_footer_content_show === true"
+          name: is_18n_footer_content_show_prefix_match_mode
+          label: Multi-language footer content prefix match mode
+          value: true
+          help: "If enabled, the prefix match mode will be enabled. For specific usage, please refer to the documentation."
+        - $formkit: text
+          if: "$is_18n_footer_content_show === true"
+          name: default_i18n_footer_content_name
+          label: Default multi-language footer content language code
+          value: "default"
+          help: "Default multi-language footer content language code, such as: default. This will be displayed if no footer content is successfully matched. If this is empty, it will take the value of default."
+        - $formkit: repeater
+          name: i18n_footer_content
+          if: "$is_18n_footer_content_show === true"
+          label: Custom multi-language footer content
+          value: []
+          children:
+            - $formkit: text
+              name: lang
+               label: Language code
+              value: "zh"
+              validation: "required"
+            - $formkit: code
+              name: footer_content
+              label: Footer content at the bottom (support html code block)
+              language: html
+              height: 150px
+        - $formkit: checkbox
           name: is_preserve_empty_lines_in_blockquote
           label: Preserve empty lines in blockquote
           value: true
@@ -493,10 +526,10 @@ spec:
           help: "If enabled, the prefix match mode will be enabled. For specific usage, please refer to the documentation."
         - $formkit: text
           if: "$is_18n_resume_show === true"
-          name: defalut_i18n_resume_name
-          label: Default multi-language announcement name
-          value: "defalut"
-          help: "Default multi-language announcement name, such as: defalut. This will be displayed if no announcement is successfully matched. If this is empty, it will take the value of defalut."
+          name: default_i18n_resume_name
+          label: Default multi-language announcement language code
+          value: "default"
+          help: "Default multi-language announcement language code, such as: default. This will be displayed if no announcement is successfully matched. If this is empty, it will take the value of default."
         - $formkit: repeater
           name: i18n_resume
           if: "$is_18n_resume_show === true"
@@ -505,7 +538,7 @@ spec:
           children:
             - $formkit: text
               name: lang
-              label: Language
+              label: Language code
               value: "en"
               validation: "required"
             - $formkit: code
