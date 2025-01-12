@@ -16,6 +16,48 @@
           th:utext="${#strings.defaultString(theme.config?.index_styles?.resume, defaultResume)}"
         ></p>
       </th:block>
+      <th:block
+        th:if="${theme.config?.index_styles?.is_18n_resume_show}"
+        th:with="resumeItems = ${theme.config?.index_styles?.i18n_resume}"
+      >
+        <th:block th:if="not ${theme.config?.index_styles?.is_18n_resume_show_prefix_match_mode}">
+          <!--/* i18n 公告栏 全等匹配模式 */-->
+          <th:block th:each="resumeItem : ${resumeItems}">
+            <th:block th:if="${#strings.equals(resumeItem.lang, #locale)}">
+              <p
+                class="blog-description matched-resume"
+                th:with="defaultResume=${#strings.defaultString(site?.seo?.description, '')}"
+                th:utext="${#strings.defaultString(resumeItem.resume, defaultResume)}"
+              ></p>
+            </th:block>
+          </th:block>
+        </th:block>
+
+        <th:block th:if="${theme.config?.index_styles?.is_18n_resume_show_prefix_match_mode}">
+          <!--/* i18n 公告栏 前缀匹配模式 */-->
+          <th:block th:each="resumeItem : ${resumeItems}">
+            <th:block th:if="${#strings.startsWith(#locale, resumeItem.lang)}">
+              <p
+                class="blog-description matched-resume"
+                th:with="defaultResume=${#strings.defaultString(site?.seo?.description, '')}"
+                th:utext="${#strings.defaultString(resumeItem.resume, defaultResume)}"
+              ></p>
+            </th:block>
+          </th:block>
+        </th:block>
+
+        <!--/* i18n 公告栏 全等匹配模式 匹配默认公告栏 */-->
+        <th:block th:each="resumeItem : ${resumeItems}">
+          <th:block th:if="${#strings.equals(resumeItem.lang, theme.config?.index_styles?.defalut_i18n_resume_name)}">
+            <p
+              class="blog-description default-resume"
+              style="display: none"
+              th:with="defaultResume=${#strings.defaultString(site?.seo?.description, '')}"
+              th:utext="${#strings.defaultString(resumeItem.resume, defaultResume)}"
+            ></p>
+          </th:block>
+        </th:block>
+      </th:block>
     </section>
 
     <p id="findMe" th:if="${not #arrays.isEmpty(theme?.config?.sns?.index_sns)}">

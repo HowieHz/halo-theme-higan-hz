@@ -510,7 +510,6 @@ spec:
               validation: "required"
             - $formkit: code
               name: resume
-              if: "$is_resume_show === true"
               label: 个人简介/公告栏内容（支持 html 代码块）
               language: html
               height: 150px

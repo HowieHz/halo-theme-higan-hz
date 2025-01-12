@@ -510,7 +510,6 @@ spec:
               validation: "required"
             - $formkit: code
               name: resume
-              if: "$is_resume_show === true"
               label: Personal profile/Announcement content (support html code block)
               language: html
               height: 150px
