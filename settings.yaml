@@ -180,6 +180,7 @@ spec:
             - $formkit: code
               name: custom_css
               label: 自定义 CSS 变量
+              help: 文档中有示例
               language: css
               height: 150px
               value: |

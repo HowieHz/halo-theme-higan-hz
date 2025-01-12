@@ -174,7 +174,7 @@
 
 ## 相较于原始主题 最新开发版 的修改
 
-原主题最新版本为：[v2.9.0](https://github.com/guqing/halo-theme-higan/releases/tag/v2.9.0)  
+原主题最新版本为：[v2.9.1](https://github.com/guqing/halo-theme-higan/releases/tag/v2.9.1)  
 而本主题修改基于最新开发版：[上游提交日志](https://github.com/guqing/halo-theme-higan/commits/main/)
 
 ### 样式修复
@@ -233,6 +233,178 @@
      2. “配色方案”、”自动模式配色方案“（需启用“浅色/深色模式切换按钮”）、“浅色模式配色方案”（需启用“浅色/深色模式切换按钮”），“深色模式配色方案”（需启用“浅色/深色模式切换按钮”），中选择“自定义配色选项”。
      3. 在选项下方新出现的输入框中填写你的"自定义配色方案识别码"
      4. 即可使用你自定义的配色方案
+
+<details><summary>点我展开自定义配色示例</summary>
+
+深色模式示例（启用 CSS 原始输出模式）  
+实际使用时请将填写的”识别码“替换 {id}
+
+```css
+html[theme="theme-{id}"] {
+  --color-accent-1: #2bbc8a;
+  --color-accent-2: #eee;
+  --color-accent-3: #ccc;
+  --color-avatar-border: #212326;
+  --color-background: #1d1f21;
+  --color-background-code: #d5d7d8;
+  --color-border: #908d8d;
+  --color-card-hover: #212326;
+  --color-divide: #616161;
+  --color-footer-mobile-1: #a4a3a3;
+  --color-footer-mobile-2: #27292b;
+  --color-footer-mobile-3: #1f2325;
+  --color-highlight-background: #212326;
+  --color-link: #d480aa;
+  --color-meta: #908d8d;
+  --color-meta-code: #908d8d;
+  --color-quote: #ccffb6;
+  --color-scrollbar: #999;
+  --color-text: #d5d7d8;
+  --color-time: #adaeaf;
+  --toc-level-2: #e3e3e3;
+  --toc-level-3: #b0b0b0;
+  --toc-level-4: #636363;
+}
+html[theme="theme-{id}"] comment-widget {
+  --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
+  --halo-comment-widget-component-form-input-border-color: #636363 !important;
+}
+```
+
+浅色模式示例（启用 CSS 原始输出模式）  
+实际使用时请将填写的”识别码“替换 {id}
+
+```css
+html[theme="theme-{id}"] {
+  --color-accent-1: #2bbc8a;
+  --color-accent-2: #383838;
+  --color-accent-3: #676767;
+  --color-avatar-border: #fafafa;
+  --color-background: #fff;
+  --color-background-code: #fafafa;
+  --color-border: #666;
+  --color-card-hover: #fafafa;
+  --color-divide: #e5e7eb;
+  --color-footer-mobile-1: #666;
+  --color-footer-mobile-2: #e6e6e6;
+  --color-footer-mobile-3: #fafafa;
+  --color-highlight-background: #212326;
+  --color-link: #d480aa;
+  --color-meta: #666;
+  --color-meta-code: #808080;
+  --color-quote: #2bbc8a;
+  --color-scrollbar: #aaa;
+  --color-text: #333;
+  --color-time: #595858;
+  --toc-level-2: #383838;
+  --toc-level-3: #666;
+  --toc-level-4: #888;
+}
+html[theme="theme-{id}"] comment-widget {
+  --halo-comment-widget-component-form-input-bg-color: #fff !important;
+}
+```
+
+自动模式示例（启用 CSS 原始输出模式）  
+实际使用时请将填写的”识别码“替换 {id}
+
+```css
+@media (prefers-color-scheme: no-preference) {
+  html[theme="theme-{id}"] {
+    --color-accent-1: #2bbc8a;
+    --color-accent-2: #383838;
+    --color-accent-3: #676767;
+    --color-avatar-border: #fafafa;
+    --color-background: #fff;
+    --color-background-code: #fafafa;
+    --color-border: #666;
+    --color-card-hover: #fafafa;
+    --color-divide: #e5e7eb;
+    --color-footer-mobile-1: #666;
+    --color-footer-mobile-2: #e6e6e6;
+    --color-footer-mobile-3: #fafafa;
+    --color-highlight-background: #212326;
+    --color-link: #d480aa;
+    --color-meta: #666;
+    --color-meta-code: #808080;
+    --color-quote: #2bbc8a;
+    --color-scrollbar: #aaa;
+    --color-text: #333;
+    --color-time: #595858;
+    --toc-level-2: #383838;
+    --toc-level-3: #666;
+    --toc-level-4: #888;
+  }
+  html[theme="theme-{id}"] comment-widget {
+    --halo-comment-widget-component-form-input-bg-color: #fff !important;
+  }
+}
+@media (prefers-color-scheme: light) {
+  html[theme="theme-{id}"] {
+    --color-accent-1: #2bbc8a;
+    --color-accent-2: #383838;
+    --color-accent-3: #676767;
+    --color-avatar-border: #fafafa;
+    --color-background: #fff;
+    --color-background-code: #fafafa;
+    --color-border: #666;
+    --color-card-hover: #fafafa;
+    --color-divide: #e5e7eb;
+    --color-footer-mobile-1: #666;
+    --color-footer-mobile-2: #e6e6e6;
+    --color-footer-mobile-3: #fafafa;
+    --color-highlight-background: #212326;
+    --color-link: #d480aa;
+    --color-meta: #666;
+    --color-meta-code: #808080;
+    --color-quote: #2bbc8a;
+    --color-scrollbar: #aaa;
+    --color-text: #333;
+    --color-time: #595858;
+    --toc-level-2: #383838;
+    --toc-level-3: #666;
+    --toc-level-4: #888;
+  }
+  html[theme="theme-{id}"] comment-widget {
+    --halo-comment-widget-component-form-input-bg-color: #fff !important;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  html[theme="theme-{id}"] {
+    --color-accent-1: #2bbc8a;
+    --color-accent-2: #eee;
+    --color-accent-3: #ccc;
+    --color-avatar-border: #212326;
+    --color-background: #1d1f21;
+    --color-background-code: #d5d7d8;
+    --color-border: #908d8d;
+    --color-card-hover: #212326;
+    --color-divide: #616161;
+    --color-footer-mobile-1: #a4a3a3;
+    --color-footer-mobile-2: #27292b;
+    --color-footer-mobile-3: #1f2325;
+    --color-highlight-background: #212326;
+    --color-link: #d480aa;
+    --color-meta: #908d8d;
+    --color-meta-code: #908d8d;
+    --color-quote: #ccffb6;
+    --color-scrollbar: #999;
+    --color-text: #d5d7d8;
+    --color-time: #adaeaf;
+    --toc-level-2: #e3e3e3;
+    --toc-level-3: #b0b0b0;
+    --toc-level-4: #636363;
+  }
+  html[theme="theme-{id}"] comment-widget {
+    --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
+    --halo-comment-widget-component-form-input-border-color: #636363 !important;
+  }
+}
+```
+
+</details>
+<br>
+
 3. <a id="theme-switch-button-anchor"></a>可在大标题旁添加浅色/深色模式切换按钮（切换顺序 浅色模式 -> 深色模式 -> 自动模式 -> 浅色模式）
    - 注：“自动模式配色方案”选择一种浅色方案即可禁用自动模式。
    - 自动模式配色方案：指定“浅色/深色模式切换按钮”切换到自动模式时的配色方案

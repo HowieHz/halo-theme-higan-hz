@@ -180,6 +180,7 @@ spec:
             - $formkit: code
               name: custom_css
               label: Custom CSS Variables
+              help: "There are examples in the documentation"
               language: css
               height: 150px
               value: |
