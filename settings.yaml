@@ -726,6 +726,20 @@ spec:
           name: is_show_multi_layer_categories
           label: 是否显示多层分类
           value: true
+    - group: category_page_styles
+      label: 分类详情页样式
+      formSchema:
+        - $formkit: checkbox
+          name: is_show_post_views_in_post_list
+          label: 文章列表显示文章阅读量
+          value: false
+    - group: tag_page_styles
+      label: 标签详情页样式
+      formSchema:
+        - $formkit: checkbox
+          name: is_show_post_views_in_post_list
+          label: 文章列表显示文章阅读量
+          value: false
     - group: custom_page_styles
       label: 自定义页面样式
       formSchema:

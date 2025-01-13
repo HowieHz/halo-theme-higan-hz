@@ -726,6 +726,20 @@ spec:
           name: is_show_multi_layer_categories
           label: Display multi-layer categories
           value: true
+    - group: category_page_styles
+      label: Category details page style
+      formSchema:
+        - $formkit: checkbox
+          name: is_show_post_views_in_post_list
+          label: Display post views in post list
+          value: false
+    - group: tag_page_styles
+      label: Tag details page style
+      formSchema:
+        - $formkit: checkbox
+          name: is_show_post_views_in_post_list
+          label: Display post views in post list
+          value: false
     - group: custom_page_styles
       label: Custom page style
       formSchema:
