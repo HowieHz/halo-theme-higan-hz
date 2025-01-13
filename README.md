@@ -502,7 +502,9 @@ html[theme="theme-{id}"] comment-widget {
 5. 允许隐藏文字列表标题
 6. 允许用户修改主页上的固定文本 _[guqing/halo-theme-higan#86](https://github.com/guqing/halo-theme-higan/issues/86)_
    - 现为支持国际化（i18n），如想编辑固定文字，请到 halo 主题目录（themes），找到 howiehz-higan 文件夹里的 i18n 文件夹，找到对应语言的 properties 文件，修改保存即可（如中文是 zh.properties）
-7. 允许自定义多元列表
+7. 允许自定义简介列表
+   - 允许显示文章阅读量
+8. 允许自定义多元列表
    - 允许显示文章分类
    - 允许显示文章标签
    - 允许显示文章阅读量
@@ -510,7 +512,7 @@ html[theme="theme-{id}"] comment-widget {
    - 允许隐藏文章摘要
    - 允许限制文章摘要行数上限
    - 允许隐藏跳转文章链接所用提示文字
-8. 允许自由选择是否开关文章列表置顶图标，以及选择图标位置
+9. 允许自由选择是否开关文章列表置顶图标，以及选择图标位置
 
 #### 增加于“文章页样式”
 

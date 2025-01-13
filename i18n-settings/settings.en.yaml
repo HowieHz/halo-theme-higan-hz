@@ -567,6 +567,11 @@ spec:
             - label: "Summary list"
               value: "post-list-summary"
         - $formkit: checkbox
+          name: is_show_post_views_in_simple_post_list
+          if: "$post_list_layout === 'simple-post-list'"
+          label: Display post views in simple post list
+          value: false
+        - $formkit: checkbox
           name: is_show_post_categories_in_post_list_summary
           if: "$post_list_layout === 'post-list-summary'"
           label: Display post categories in post list summary
