@@ -740,6 +740,13 @@ spec:
           name: is_show_post_views_in_post_list
           label: Display post views in post list
           value: false
+    - group: archives_page_styles
+      label: Archives page style
+      formSchema:
+        - $formkit: checkbox
+          name: is_collapse_post_list_by_publication_year_and_month
+          label: Collapse post list by publication year and month
+          value: false
     - group: custom_page_styles
       label: Custom page style
       formSchema:
