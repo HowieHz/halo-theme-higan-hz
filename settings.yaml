@@ -740,6 +740,13 @@ spec:
           name: is_show_post_views_in_post_list
           label: 文章列表显示文章阅读量
           value: false
+    - group: archives_page_styles
+      label: 归档页样式
+      formSchema:
+        - $formkit: checkbox
+          name: is_collapse_post_list_by_publication_year_and_month
+          label: 按照发布年份和月份折叠文章列表
+          value: false
     - group: custom_page_styles
       label: 自定义页面样式
       formSchema:
