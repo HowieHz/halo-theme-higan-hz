@@ -747,6 +747,12 @@ spec:
           name: is_collapse_post_list_by_publication_year_and_month
           label: Collapse post list by publication year and month
           value: false
+        - $formkit: number
+          name: duration_of_expand_collapse_animation
+          if: "$is_collapse_post_list_by_publication_year_and_month === true"
+          label: Duration of expand/collapse animation
+          help: "Unit: milliseconds"
+          value: 200
     - group: custom_page_styles
       label: Custom page style
       formSchema:
