@@ -747,6 +747,12 @@ spec:
           name: is_collapse_post_list_by_publication_year_and_month
           label: 按照发布年份和月份折叠文章列表
           value: false
+        - $formkit: number
+          name: duration_of_expand_collapse_animation
+          if: "$is_collapse_post_list_by_publication_year_and_month === true"
+          label: 展开折叠动画时长
+          help: 单位毫秒
+          value: 200
     - group: custom_page_styles
       label: 自定义页面样式
       formSchema:

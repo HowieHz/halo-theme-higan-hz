@@ -3,13 +3,13 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(title=#{page.archives.page-title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
 >
-  <th:block
-    th:fragment="content"
-    th:if="not ${theme.config?.archives_page_styles?.is_collapse_post_list_by_publication_year_and_month}"
-  >
+  <th:block th:fragment="content">
     <div id="archive" class="flex-auto content">
       <div class="flex-1">
-        <div th:each="archive : ${archives}">
+        <div
+          th:each="archive : ${archives}"
+          th:if="not ${theme.config?.archives_page_styles?.is_collapse_post_list_by_publication_year_and_month}"
+        >
           <h2 th:text="${archive.year}"></h2>
           <ul class="post-list flex-auto">
             <th:block th:each="month : ${archive.months}">
@@ -29,17 +29,11 @@
             </th:block>
           </ul>
         </div>
-      </div>
-      <th:block th:insert="~{fragments/posts :: pagination(posts=${archives})}"></th:block>
-    </div>
-  </th:block>
-  <th:block
-    th:fragment="content"
-    th:if="${theme.config?.archives_page_styles?.is_collapse_post_list_by_publication_year_and_month}"
-  >
-    <div id="archive" class="flex-auto content">
-      <div class="flex-1">
-        <div th:each="archive : ${archives}">
+
+        <div
+          th:each="archive : ${archives}"
+          th:if="${theme.config?.archives_page_styles?.is_collapse_post_list_by_publication_year_and_month}"
+        >
           <h2 onclick="toggleVisibility(this)" class="cursor-pointer">
             <span th:text="${archive.year}"></span>
             <i class="iconify iconify-large" data-icon="mdi:chevron-right" style="display: inline"></i>
@@ -71,20 +65,21 @@
               </div>
             </th:block>
           </ul>
-          <script>
+          <script th:inline="javascript">
             function toggleVisibility(element) {
               const caretRight = element.querySelector('[data-icon="mdi:chevron-right"]');
               const caretDown = element.querySelector('[data-icon="mdi:chevron-down"]');
-              const nextElement = element.nextElementSibling;
+              const nextElement = $(element).next();
+              const duration_of_expand_collapse_animation = /*[(${theme.config?.archives_page_styles?.duration_of_expand_collapse_animation})]*/ 200;
 
-              if (nextElement.style.display === "none") {
-                nextElement.style.display = "block";
-                caretRight.style.display = "none";
-                caretDown.style.display = "inline";
-              } else {
-                nextElement.style.display = "none";
+              if (nextElement.is(":visible")) {
+                nextElement.slideUp(duration_of_expand_collapse_animation);
                 caretRight.style.display = "inline";
                 caretDown.style.display = "none";
+              } else {
+                nextElement.slideDown(duration_of_expand_collapse_animation);
+                caretRight.style.display = "none";
+                caretDown.style.display = "inline";
               }
             }
           </script>
