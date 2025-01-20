@@ -174,6 +174,19 @@
             >
               跳转文章链接所用提示文字替换位
             </div>
+            <img
+              th:if="${theme.config?.index_styles?.is_show_post_cover_in_post_list_summary} and ${not #strings.isEmpty(post.spec.cover)}"
+              th:src="${post.spec.cover}"
+              th:alt="${post.spec.title}"
+              th:srcset="|
+              ${thumbnail.gen(post.spec.cover, 's')} 400w,
+              ${thumbnail.gen(post.spec.cover, 'm')} 800w,
+              ${thumbnail.gen(post.spec.cover, 'l')} 1200w,
+              ${thumbnail.gen(post.spec.cover, 'xl')} 1600w
+              |"
+              sizes="(max-width: 1600px) 100vw, 1600px"
+              class="z-10 w-full h-full object-cover rounded-lg mt-4"
+            />
           </div>
           <time
             class="mt-1 hidden md:block relative z-10 order-first mb-3 flex items-center text-sm color-accent-3"

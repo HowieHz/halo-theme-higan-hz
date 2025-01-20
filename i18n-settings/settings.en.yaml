@@ -609,6 +609,11 @@ spec:
           help: "If enabled, the theme will display the text of the post list permalink."
           value: true
         - $formkit: checkbox
+          name: is_show_post_cover_in_post_list_summary
+          if: "$post_list_layout === 'post-list-summary'"
+          label: Display post cover in the post list summary
+          value: true
+        - $formkit: checkbox
           name: is_pin_icon_show
           label: Top icon display on the post list
           value: true

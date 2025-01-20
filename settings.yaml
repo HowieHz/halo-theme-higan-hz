@@ -609,6 +609,11 @@ spec:
           help: "如关闭此项，首页文章列表文章项将不显示跳转链接文字"
           value: true
         - $formkit: checkbox
+          name: is_show_post_cover_in_post_list_summary
+          if: "$post_list_layout === 'post-list-summary'"
+          label: 多元列表显示文章封面
+          value: true
+        - $formkit: checkbox
           name: is_pin_icon_show
           label: 文章列表置顶图标
           value: true
