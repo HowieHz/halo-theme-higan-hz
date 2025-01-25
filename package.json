@@ -7,8 +7,9 @@
     "dev-build": "postcss ./src/styles/tailwind.css -o ./tmp/styles/tailwind.css && stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ && tsc && vite build",
     "build": "set NODE_ENV=777 && stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --compress && tsc && vite build",
     "lint": "eslint ./src",
-    "neo-format": "prettier --write \"./src/**/*.{js,ts,css,json,ml,yaml,html}\" \"./templates/**/*.html\" && stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
-    "format": "prettier --write \"*.{js,ts,json,yaml,md,cjs,mjs}\" \"./src/**/*.{js,ts,css,json,ml,yaml,html}\" \"./templates/**/*.html\"",
+    "format" : "pnpm run \"/^format:.*/\"",
+    "format:stylus": "stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
+    "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md,cjs,mjs}\" \"./src/**/*.{js,ts,css,json,ml,yaml,html}\" \"./templates/**/*.html\"",
     "prepare": "husky"
   },
   "keywords": [
