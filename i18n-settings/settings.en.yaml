@@ -421,6 +421,32 @@ spec:
           name: is_footer_theme_info_show
           label: Theme information in the footer
           value: true
+        - $formkit: radio
+          name: footer_theme_info_theme_name
+          if: "$is_footer_theme_info_show === true"
+          label: Theme name displayed in the footer theme information
+          value: higan-hz
+          # autocorrect-disable
+          options:
+            - label: higan-hz
+              value: higan-hz
+            - label: higan
+              value: higan
+            - label: 彼岸-皓改
+              value: 彼岸-皓改
+            - label: 彼岸
+              value: 彼岸
+          # autocorrect-enable
+        - $formkit: radio
+          name: footer_theme_info_halo_version_name
+          if: "$is_footer_theme_info_show === true"
+          label: Halo version displayed in the footer theme information
+          value: Halo
+          options:
+            - label: Halo
+              value: Halo
+            - label: Halo Pro
+              value: Halo Pro
         - $formkit: checkbox
           name: is_footer_copyright_show
           label: Footer theme copyright information in the footer

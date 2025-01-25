@@ -575,10 +575,21 @@ html[theme="theme-[(${colorSchema.id})]"] {
             >
               <span class="info" th:if="${theme.config?.styles?.is_footer_theme_info_show}">
                 Theme is
-                <a href="https://github.com/howiehz/halo-theme-higan-hz" rel="noopener noreferrer" target="_blank"
+                <a
+                  href="https://github.com/howiehz/halo-theme-higan-hz"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  th:text="${theme.config?.styles?.footer_theme_info_theme_name}"
                   >higan-hz</a
                 >
-                Powered by <a href="https://halo.run" rel="noopener noreferrer" target="_blank">Halo</a>
+                Powered by
+                <a
+                  href="https://halo.run"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  th:text="${theme.config?.styles?.footer_theme_info_halo_version_name}"
+                  >Halo</a
+                >
               </span>
               <span class="copyright" th:if="${theme.config?.styles?.is_footer_copyright_show}">
                 ©

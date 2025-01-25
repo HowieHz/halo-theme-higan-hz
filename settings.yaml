@@ -421,6 +421,32 @@ spec:
           name: is_footer_theme_info_show
           label: 页面底部主题信息
           value: true
+        - $formkit: radio
+          name: footer_theme_info_theme_name
+          if: "$is_footer_theme_info_show === true"
+          label: 页面底部主题信息所展示的主题名
+          value: higan-hz
+          # autocorrect-disable
+          options:
+            - label: higan-hz
+              value: higan-hz
+            - label: higan
+              value: higan
+            - label: 彼岸-皓改
+              value: 彼岸-皓改
+            - label: 彼岸
+              value: 彼岸
+          # autocorrect-enable
+        - $formkit: radio
+          name: footer_theme_info_halo_version_name
+          if: "$is_footer_theme_info_show === true"
+          label: 页面底部主题信息所展示的 Halo 版本
+          value: Halo
+          options:
+            - label: Halo
+              value: Halo
+            - label: Halo Pro
+              value: Halo Pro
         - $formkit: checkbox
           name: is_footer_copyright_show
           label: 页面底部版权信息
