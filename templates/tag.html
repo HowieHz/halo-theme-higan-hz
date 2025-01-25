@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(title=${#annotations.getOrDefault(tag, 'higan.howiehz.top/page-title', tag.spec.displayName)}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{}, language=${#annotations.get(tag, 'higan.howiehz.top/page-language')} )}"

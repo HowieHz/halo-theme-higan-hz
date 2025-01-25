@@ -2,11 +2,11 @@
  * Sets up Justified Gallery.
  */
 function isPrototypeJustifiedGallery() {
-  return !!$.prototype.justifiedGallery;
+  return Boolean($.prototype.justifiedGallery);
 }
 
 if (isPrototypeJustifiedGallery()) {
-  var options = {
+  const options = {
     rowHeight: 140,
     margins: 4,
     lastRow: "justify",
@@ -15,7 +15,7 @@ if (isPrototypeJustifiedGallery()) {
 }
 
 window.isMobile = () => {
-  let flag = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const flag = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   return flag;
 };
 
@@ -116,7 +116,7 @@ $(function () {
       const menuIconTablet = $("#menu-icon-tablet");
       const menuIcon = $("#menu-icon");
       $(window).on("scroll", function () {
-        var topDistance = $(window).scrollTop();
+        const topDistance = $(window).scrollTop();
 
         // hide only the navigation links on desktop
         // if (!nav.is(":visible") && topDistance < 50) {
@@ -147,13 +147,13 @@ $(function () {
     // 移动端 文章页 底部导航栏 页面滚动相关逻辑
     const footerNav = $("#footer-post");
     if (footerNav.length) {
-      var lastScrollTop = 0;
+      let lastScrollTop = 0;
       const navFooter = $("#nav-footer");
       const tocFooter = $("#toc-footer");
       const shareFooter = $("#share-footer");
       const footerTopIcon = $("#actions-footer > #top");
       $(window).on("scroll", function () {
-        var topDistance = $(window).scrollTop();
+        const topDistance = $(window).scrollTop();
 
         // 在滚动时，关闭全部底部导航栏子菜单
         navFooter.slideUp(200);

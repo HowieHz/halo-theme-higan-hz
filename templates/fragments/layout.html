@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html
   th:lang="${language ?: (theme.config?.global?.default_page_language ?: 'zh')}"
   th:with="theme_config=${theme.config?.styles?.color_schema},
@@ -28,7 +28,7 @@
     </script>
     <script th:if="${theme_config['theme'] == 'custom'}" th:inline="javascript">
       const customColorSchema = allCustomColorSchema.find(
-        (schema) => schema.id === /*[[${theme.config?.styles?.custom_color_schema_init_id}]]*/ "1"
+        (schema) => schema.id === /*[[${theme.config?.styles?.custom_color_schema_init_id}]]*/ "1",
       );
       document.documentElement.setAttribute("data-color-scheme", customColorSchema ? customColorSchema.type : null);
     </script>
@@ -102,13 +102,13 @@ html[theme="theme-[(${colorSchema.id})]"] {
       import mermaid from /*[[${theme.config?.global?.mermaid_script_url}]]*/ "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
       function genUUID() {
         return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
-          (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
+          (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16),
         );
       }
       const config = /*[(${theme.config?.global?.mermaid_config})]*/ { startOnLoad: false };
       mermaid.initialize(config);
       const mermaidElements = document.querySelectorAll(
-        /*[[${theme.config?.global?.mermaid_selector}]]*/ ".content .mermaid"
+        /*[[${theme.config?.global?.mermaid_selector}]]*/ ".content .mermaid",
       );
 
       function renderMermaid(item, id, theme) {
@@ -155,7 +155,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
               // marker 标签被使用在很多属性上，用 marker 的属性有 marker-start, marker-mid, marker-end
               // symbol 被 use 标签使用，xlink:href 已经被废弃，但是还有一些库在使用，现在用 href */-->
               const elementsUsingId = svgElement.querySelectorAll(
-                `[marker-start*="#${originalId}"], [marker-mid*="#${originalId}"], [marker-end*="#${originalId}"], [href*="#${originalId}"]`
+                `[marker-start*="#${originalId}"], [marker-mid*="#${originalId}"], [marker-end*="#${originalId}"], [href*="#${originalId}"]`,
               );
               const attributesToUpdate = ["marker-start", "marker-mid", "marker-end", "xlink:href", "href"];
               elementsUsingId.forEach((refElement) => {
@@ -229,7 +229,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
 
       if (THEME_DARK == "custom") {
         let customColorSchema = allCustomColorSchema.find(
-          (schema) => schema.id === /*[[${theme.config?.styles?.custom_theme_dark_id}]]*/ "1"
+          (schema) => schema.id === /*[[${theme.config?.styles?.custom_theme_dark_id}]]*/ "1",
         );
         if (customColorSchema) {
           THEME_DARK = "theme-" + customColorSchema.id;
@@ -238,7 +238,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
       }
       if (THEME_LIGHT == "custom") {
         let customColorSchema = allCustomColorSchema.find(
-          (schema) => schema.id === /*[[${theme.config?.styles?.custom_theme_light_id}]]*/ "1"
+          (schema) => schema.id === /*[[${theme.config?.styles?.custom_theme_light_id}]]*/ "1",
         );
         if (customColorSchema) {
           THEME_LIGHT = "theme-" + customColorSchema.id;
@@ -247,7 +247,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
       }
       if (THEME_AUTO == "custom") {
         let customColorSchema = allCustomColorSchema.find(
-          (schema) => schema.id === /*[[${theme.config?.styles?.custom_theme_auto_id}]]*/ "1"
+          (schema) => schema.id === /*[[${theme.config?.styles?.custom_theme_auto_id}]]*/ "1",
         );
         if (customColorSchema) {
           THEME_AUTO = "theme-" + customColorSchema.id;
