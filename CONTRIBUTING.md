@@ -82,6 +82,10 @@ pnpm build
 pnpm dev-build
 ```
 
+<!-- #### 目前所用的图标库
+
+[vite-plugin-purge-icons](https://github.com/antfu/purge-icons/blob/main/packages/vite-plugin-purge-icons/README.md) -->
+
 <!-- #### 打包主题
 
 ```bash

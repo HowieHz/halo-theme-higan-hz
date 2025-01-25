@@ -7,7 +7,7 @@
     "dev-build": "postcss ./src/styles/tailwind.css -o ./tmp/styles/tailwind.css && stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ && tsc && vite build",
     "build": "set NODE_ENV=777 && stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --compress && tsc && vite build",
     "lint": "eslint ./src",
-    "format" : "pnpm run \"/^format:.*/\"",
+    "format": "pnpm run \"/^format:.*/\"",
     "format:stylus": "stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
     "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md,cjs,mjs}\" \"./src/**/*.{js,ts,css,json,ml,yaml,html}\" \"./templates/**/*.html\"",
     "prepare": "husky"
@@ -67,7 +67,6 @@
   "dependencies": {
     "@iconify/iconify": "^3.1.1",
     "@jsdevtools/rehype-toc": "^3.0.2",
-    "@purge-icons/generated": "^0.10.0",
     "alpinejs": "^3.14.8",
     "rehype-parse": "^9.0.1",
     "rehype-slug": "^6.0.0",
