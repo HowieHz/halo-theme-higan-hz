@@ -10,9 +10,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const gitignorePath = path.resolve(__dirname, ".gitignore");
 
-export default [
+export default tseslint.config(
   includeIgnoreFile(gitignorePath),
-  ...tseslint.config(eslint.configs.recommended, tseslint.configs.recommended),
+  eslint.configs.recommended,
+  tseslint.configs.recommended,
   {
     files: ["**/*.js", "**/*.cjs", "**/*.mjs", "**/*.cts", "**/*.ts", "**/*.mts"],
 
@@ -25,4 +26,4 @@ export default [
     },
   },
   eslintPluginPrettierRecommended,
-];
+);
