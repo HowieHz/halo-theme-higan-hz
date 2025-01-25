@@ -2,7 +2,7 @@
  * Sets up Justified Gallery.
  */
 function isPrototypeJustifiedGallery() {
-  return !!$.prototype.justifiedGallery;
+  return Boolean($.prototype.justifiedGallery);
 }
 
 if (isPrototypeJustifiedGallery()) {

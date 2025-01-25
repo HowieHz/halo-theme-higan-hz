@@ -20,7 +20,7 @@ export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
         link: "toc-link",
         listItem: "toc-item",
       },
-      customizeTOC: function (t: HtmlElementNode) {
+      customizeTOC(t: HtmlElementNode) {
         // @ts-ignore
         const children = t.children?.flatMap((item) => item.children);
 
