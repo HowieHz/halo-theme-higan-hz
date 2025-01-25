@@ -67,5 +67,16 @@ export default defineConfig({
       fileName: "main",
       formats: ["iife"],
     },
+
+    rollupOptions: {
+      output: {
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.names && assetInfo.names.includes("main.css")) {
+            return "style.css";
+          }
+          return "[name].[hash][extname]";
+        },
+      },
+    },
   },
 });
