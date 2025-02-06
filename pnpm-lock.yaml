@@ -37,8 +37,8 @@ importers:
         specifier: ^9.19.0
         version: 9.19.0
       '@iconify/json':
-        specifier: ^2.2.302
-        version: 2.2.302
+        specifier: ^2.2.303
+        version: 2.2.303
       '@types/alpinejs':
         specifier: ^3.13.11
         version: 3.13.11
@@ -95,13 +95,13 @@ importers:
         version: 8.23.0(eslint@9.19.0(jiti@1.21.7))(typescript@5.7.3)
       unplugin-fonts:
         specifier: ^1.3.1
-        version: 1.3.1(vite@6.0.11(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0))
+        version: 1.3.1(vite@6.1.0(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0))
       vite:
-        specifier: ^6.0.11
-        version: 6.0.11(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0)
+        specifier: ^6.1.0
+        version: 6.1.0(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0)
       vite-plugin-purge-icons:
         specifier: ^0.10.0
-        version: 0.10.0(vite@6.0.11(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0))
+        version: 0.10.0(vite@6.1.0(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0))
 
 packages:
 
@@ -345,8 +345,8 @@ packages:
     resolution: {integrity: sha512-1nemfyD/OJzh9ALepH7YfuuP8BdEB24Skhd8DXWh0hzcOxImbb1ZizSZkpCzAwSZSGcJFmscIBaBQu+yLyWaxQ==}
     deprecated: no longer maintained, switch to modern iconify-icon web component
 
-  '@iconify/json@2.2.302':
-    resolution: {integrity: sha512-gklpnOBA3xLNW68cdQz6iI4UnRGIXb+se8UyQN1lzy4Si01XIHynGq2nTep01HQK/I1Ltgz2h6srnPGSDB8LhQ==}
+  '@iconify/json@2.2.303':
+    resolution: {integrity: sha512-/s42MDeyZhJbL6g4uNjqqAPUi+tRnF0IRd99ZPhEV5iLHOQRhmURkjARHmnzhg8hQQtKP4/ZaXKS77W0gK+7ZQ==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -2132,8 +2132,8 @@ packages:
     peerDependencies:
       vite: '>=2'
 
-  vite@6.0.11:
-    resolution: {integrity: sha512-4VL9mQPKoHy4+FE0NnRE/kbY51TOfaknxAjt3fJbGJxhIpBZiqVzlZDEesWWsuREXHwNdAoOFZ9MkPEVXczHwg==}
+  vite@6.1.0:
+    resolution: {integrity: sha512-RjjMipCKVoR4hVfPY6GQTgveinjNuyLw+qruksLDvA5ktI1150VmcMBKmQaEWJhg/j6Uaf6dNCNA0AfdzUb/hQ==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -2412,7 +2412,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify/json@2.2.302':
+  '@iconify/json@2.2.303':
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
@@ -4253,11 +4253,11 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unplugin-fonts@1.3.1(vite@6.0.11(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0)):
+  unplugin-fonts@1.3.1(vite@6.1.0(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0)):
     dependencies:
       fast-glob: 3.3.3
       unplugin: 2.0.0-beta.1
-      vite: 6.0.11(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0)
 
   unplugin@2.0.0-beta.1:
     dependencies:
@@ -4300,17 +4300,17 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite-plugin-purge-icons@0.10.0(vite@6.0.11(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0)):
+  vite-plugin-purge-icons@0.10.0(vite@6.1.0(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0)):
     dependencies:
       '@purge-icons/core': 0.10.0
       '@purge-icons/generated': 0.10.0
       rollup-plugin-purge-icons: 0.10.0
-      vite: 6.0.11(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0)
+      vite: 6.1.0(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0)
     transitivePeerDependencies:
       - encoding
       - supports-color
 
-  vite@6.0.11(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0):
+  vite@6.1.0(@types/node@22.13.1)(jiti@1.21.7)(stylus@0.64.0)(yaml@2.7.0):
     dependencies:
       esbuild: 0.24.2
       postcss: 8.5.1
