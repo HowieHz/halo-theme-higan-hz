@@ -530,6 +530,26 @@ spec:
           name: hitokoto
           label: 一言 (hitokoto)
           value: false
+        - $formkit: text
+          name: hitokoto_link
+          if: "$hitokoto === true"
+          label: 一言 (hitokoto) 链接
+          value: https://v1.hitokoto.cn/?encode=js
+          help: "默认值：https://v1.hitokoto.cn/?encode=js、文档：https://developer.hitokoto.cn/sentence/"
+        - $formkit: checkbox
+          name: is_random_sentence_show
+          label: 自定义随机显示一句话
+          value: false
+        - $formkit: repeater
+          name: random_sentence_list
+          if: "$is_random_sentence_show === true"
+          label: 自定义句子内容
+          value: []
+          children:
+            - $formkit: text
+              name: sentence
+              label: "一句话"
+              validation: "required"
         - $formkit: checkbox
           name: is_resume_show
           label: 个人简介/公告栏

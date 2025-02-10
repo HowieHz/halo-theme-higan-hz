@@ -342,7 +342,7 @@ spec:
           value: fit-content
           placeholder: "Default: fit-content"
           help: "This determines the style value of the width attribute corresponding to the content area style."
-         - $formkit: checkbox
+        - $formkit: checkbox
           name: is_show_header_icon
           label: Header icon
           value: true
@@ -495,7 +495,7 @@ spec:
           children:
             - $formkit: text
               name: lang
-               label: Language code
+              label: Language code
               value: "zh"
               validation: "required"
             - $formkit: code
@@ -530,6 +530,26 @@ spec:
           name: hitokoto
           label: Hitokoto
           value: false
+        - $formkit: text
+          name: hitokoto_link
+          if: "$hitokoto === true"
+          label: hitokoto link
+          value: https://v1.hitokoto.cn/?encode=js
+          help: "Default: https://v1.hitokoto.cn/?encode=js, Doc: https://developer.hitokoto.cn/sentence/"
+        - $formkit: checkbox
+          name: is_random_sentence_show
+          label: Custom random sentence display
+          value: false
+        - $formkit: repeater
+          name: random_sentence_list
+          if: "$is_random_sentence_show === true"
+          label: Custom sentence content
+          value: []
+          children:
+            - $formkit: text
+              name: sentence
+              label: "One Sentence"
+              validation: "required"
         - $formkit: checkbox
           name: is_resume_show
           label: Personal profile/Announcement content

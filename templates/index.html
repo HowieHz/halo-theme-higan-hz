@@ -6,8 +6,17 @@
   <th:block th:fragment="content">
     <section id="about">
       <th:block th:if="${theme.config?.index_styles?.hitokoto}">
-        <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script>
-        <p id="hitokoto"></p>
+        <script th:src="${theme.config?.index_styles?.hitokoto_link}" defer></script>
+        <p class="hitokoto"></p>
+      </th:block>
+      <th:block
+        th:if="${theme.config?.index_styles?.is_random_sentence_show} and ${not #lists.isEmpty(theme.config?.index_styles?.random_sentence_list)}"
+      >
+        <p
+          th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config?.index_styles?.random_sentence_list))}"
+          id="randomSentence"
+          th:text="${theme.config?.index_styles?.random_sentence_list[randomIndex]['sentence']}"
+        ></p>
       </th:block>
       <th:block th:if="${theme.config?.index_styles?.is_resume_show}">
         <p
@@ -61,8 +70,8 @@
     </section>
 
     <p id="findMe" th:if="${not #arrays.isEmpty(theme?.config?.sns?.index_sns)}">
-      <th:block th:text="#{page.index.findMeLeftText}" th:if="${theme.config?.index_styles?.is_show_find_me_left_text}"
-        >社交资料图标左侧文字替换位</th:block
+      <th:block th:text="#{page.index.findMeLeftText}" th:if="${theme.config?.index_styles?.is_show_find_me_left_text}">
+        社交资料图标左侧文字替换位</th:block
       >
       <th:block th:each="item : ${theme?.config?.sns?.index_sns}">
         <th:block
