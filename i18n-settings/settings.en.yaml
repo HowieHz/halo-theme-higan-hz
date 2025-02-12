@@ -518,6 +518,11 @@ spec:
           label: Show the quote after Blockquote 
           value: false
           help: "If enabled, the theme will display the quote after the blockquote. In Markdown, you can use the > symbol to create a blockquote."
+        - $formkit: checkbox
+          name: is_show_the_table_bottom_border
+          label: Table bottom border for each row
+          value: false
+          help: "If enabled, a bottom border will be added to each row of the table."
     - group: index_styles
       label: Home page style
       formSchema:

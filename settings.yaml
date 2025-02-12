@@ -518,6 +518,11 @@ spec:
           label: 引用块后添加引号
           value: false
           help: 如启用此项，将在引用块后添加引号。引用块在 Markdown 中使用 > 表示。
+        - $formkit: checkbox
+          name: is_show_the_table_bottom_border
+          label: 表格每行底部的表格线
+          value: false
+          help: 如启用此项，表格每行底部都将添加表格线
     - group: index_styles
       label: 首页样式
       formSchema:

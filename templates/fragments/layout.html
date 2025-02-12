@@ -520,6 +520,11 @@ html[theme="theme-[(${colorSchema.id})]"] {
         line-height: 0.1em;
       }
     </style>
+    <style th:inline="css" th:if="${theme.config?.styles?.is_show_the_table_bottom_border}">
+      body tr {
+        border-bottom: 0.5px dashed #666;
+      }
+    </style>
     <div class="max-width min-width mx-auto px-8 ltr content-width">
       <th:block th:replace="${navbar}" />
 
