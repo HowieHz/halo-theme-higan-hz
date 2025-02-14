@@ -141,7 +141,7 @@ body table {
 
 body th {
   padding: 0.5rem;
-  border-bottom: 1px dashed #666;
+  border-bottom: 0.11rem solid var(--color-accent-3);
   color: var(--color-accent-2);
   font-weight: bold;
   font-size: var(--text-th);
