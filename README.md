@@ -1083,6 +1083,7 @@ title: [[图表标题]]
 
 ## 感谢赞助
 
+- GreenTomato 赞助 66.66 CNY 于 2025 年 2 月 14 日
 - [默小班](hhttps://www.memxb.top/) 赞助 5 CNY 于 2025 年 2 月 12 日
 - [boyving](https://www.imdream.cn/) 赞助 18.80 CNY 于 2025 年 2 月 10 日
 - [bilibili@氵青一色但不是清一色](https://space.bilibili.com/37264956) 赞助 5 CNY 于 2025 年 1 月 20 日
