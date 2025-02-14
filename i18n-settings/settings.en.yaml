@@ -520,9 +520,16 @@ spec:
           help: "If enabled, the theme will display the quote after the blockquote. In Markdown, you can use the > symbol to create a blockquote."
         - $formkit: checkbox
           name: is_show_the_table_bottom_border
-          label: Table bottom border for each row
+          label: Table bottom border for each row (excluding the header)
           value: false
-          help: "If enabled, a bottom border will be added to each row of the table."
+          help: "If enabled, a border will be added to the bottom of each table row."
+        - $formkit: text
+          name: table_bottom_border_width
+          if: "$is_show_the_table_bottom_border===true"
+          label: Table bottom border width for each row (excluding the header)
+          value: 0.1rem
+          placeholder: "Default: 0.1rem"
+          help: "Allow all CSS length units, such as: 48rem, 780px, 70vw, 70%."
     - group: index_styles
       label: Home page style
       formSchema:
