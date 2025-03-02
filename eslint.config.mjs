@@ -1,9 +1,9 @@
-import globals from "globals";
 import { includeIgnoreFile } from "@eslint/compat";
+import js from "@eslint/js";
+import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import globals from "globals";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
-import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 
 const __filename = fileURLToPath(import.meta.url);

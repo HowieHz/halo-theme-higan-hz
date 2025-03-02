@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import { unified } from "unified";
+import toc, { HtmlElementNode } from "@jsdevtools/rehype-toc";
 import parse from "rehype-parse";
 import slug from "rehype-slug";
-import toc, { HtmlElementNode } from "@jsdevtools/rehype-toc";
 import stringify from "rehype-stringify";
+import { unified } from "unified";
 
 export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
   if (!inputHTML) {
@@ -21,7 +20,7 @@ export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
         listItem: "toc-item",
       },
       customizeTOC(t: HtmlElementNode) {
-        // @ts-ignore
+        // @ts-expect-error expect-error
         const children = t.children?.flatMap((item) => item.children);
 
         return {
@@ -66,7 +65,7 @@ export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
                   properties: {
                     class: "toc-text",
                   },
-                  // @ts-ignore
+                  // @ts-expect-error expect-error
                   children: [...tocItem.children[0].children],
                 },
               ],
@@ -83,7 +82,7 @@ export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
   const targetDom = document.querySelector(targetDomSelector);
   if (targetDom) {
     const doc = document.createRange().createContextualFragment(outputHTML.toString());
-    // @ts-ignore
+    // @ts-expect-error expect-error
     targetDom.appendChild(doc.getElementById("toc-container"));
     return;
   }

@@ -1,12 +1,14 @@
-import "unfonts.css";
-import "./assets/main.js";
-import "./styles/tailwind.css";
-import "../tmp/styles/theme.css";
-import "./styles/main.css";
 import "@purge-icons/generated";
-export * from "./create-toc";
 import Alpine from "alpinejs";
+import "unfonts.css";
+
+import "../tmp/styles/theme.css";
 import momentComment from "./alpine-data/moment-comment";
+import "./assets/main.js";
+import "./styles/main.css";
+import "./styles/tailwind.css";
+
+export * from "./create-toc";
 
 window.Alpine = Alpine;
 Alpine.data("momentComment", momentComment);
