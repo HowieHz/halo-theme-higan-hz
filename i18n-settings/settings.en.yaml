@@ -565,6 +565,22 @@ spec:
           value: 0.1rem
           placeholder: "Default: 0.1rem"
           help: "Allow all CSS length units, such as: 48rem, 780px, 70vw, 70%."
+        - $formkit: number
+          name: heading_margin_top_multiplier
+          label: Heading margin-top multiplier
+          value: 1
+          step: 0.1
+          min: 0
+          max: 5
+          help: "Set the margin-top multiplier for headings (h1, h2, etc.). Value of 1 means use default margins, less than 1 reduces margins, greater than 1 increases margins"
+        - $formkit: number
+          name: heading_margin_bottom_multiplier
+          label: Heading margin-bottom multiplier
+          value: 1
+          step: 0.1
+          min: 0
+          max: 5
+          help: "Set the margin-bottom multiplier for headings (h1, h2, etc.). Value of 1 means use default margins, less than 1 reduces margins, greater than 1 increases margins"
     - group: index_styles
       label: Home page style
       formSchema:
