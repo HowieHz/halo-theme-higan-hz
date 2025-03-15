@@ -557,6 +557,33 @@ html[theme="theme-[(${colorSchema.id})]"] {
         border-bottom-color: var(--color-accent-3);
       }
     </style>
+    <style
+      th:inline="css"
+      th:if="${(theme.config?.styles?.heading_margin_top_multiplier != 1 
+      and theme.config?.styles?.heading_margin_top_multiplier != '1')
+      or (theme.config?.styles?.heading_margin_bottom_multiplier != 1
+      and theme.config?.styles?.heading_margin_bottom_multiplier != '1')}"
+    >
+      body h1,
+      body .h1 {
+        margin-top: calc(3rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
+        margin-bottom: calc(1rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
+      }
+
+      body h2,
+      body .h2 {
+        margin-top: calc(2rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
+        margin-bottom: calc(0.5rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
+      }
+
+      body h3,
+      body h4,
+      body h5,
+      body h6 {
+        margin-top: calc(0.9rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
+        margin-bottom: calc(0.5rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
+      }
+    </style>
     <div class="max-width min-width mx-auto px-8 ltr content-width">
       <th:block th:replace="${navbar}" />
 

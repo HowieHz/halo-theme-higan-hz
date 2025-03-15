@@ -565,6 +565,22 @@ spec:
           value: 0.1rem
           placeholder: "默认值：0.1rem"
           help: "允许全部 CSS 长度单位，如：48rem, 780px, 70vw, 70%。"
+        - $formkit: number
+          name: heading_margin_top_multiplier
+          label: 标题上边距倍率
+          value: 1
+          step: 0.1
+          min: 0
+          max: 5
+          help: "设置标题(h1, h2等)的上边距(margin-top)倍率，值为1表示使用默认边距，小于1减小边距，大于1增加边距"
+        - $formkit: number
+          name: heading_margin_bottom_multiplier
+          label: 标题下边距倍率
+          value: 1
+          step: 0.1
+          min: 0
+          max: 5
+          help: "设置标题(h1, h2等)的下边距(margin-bottom)倍率，值为1表示使用默认边距，小于1减小边距，大于1增加边距"
     - group: index_styles
       label: 首页样式
       formSchema:
