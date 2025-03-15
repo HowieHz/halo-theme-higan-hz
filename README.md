@@ -274,8 +274,9 @@
    - 添加“默认多语言菜单名称”，可设定默认菜单。默认菜单将在没有菜单成功匹配的时候显示。
    - 此项使用教程请看 [多语言菜单使用指南](#多语言菜单使用指南)
 3. 添加“CSP:upgrade-insecure-requests”选项，避免 HTTPS 协议网页引用 HTTP 资源时报错。相关文档：[CSP: upgrade-insecure-requests - HTTP | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
-4. 增加“仅允许使用指定域名访问”。使用场景：防止站点被恶意镜像后的流量流失
-5. 增加“instant.page 支持”，自动加载 instant.page 脚本，以提升页面加载速度。
+4. 增加“仅允许使用指定域名访问”。使用场景：防止站点被恶意镜像后的流量流失。
+5. 增加“自定义资源位置地址”，允许指定资源位置地址（如主要 CSS 资源，主要 JavaScript 资源）。
+6. 增加“instant.page 支持”，自动加载 instant.page 脚本，以提升页面加载速度。
 
 #### 增加于“总体样式”
 

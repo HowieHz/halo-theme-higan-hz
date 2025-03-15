@@ -63,6 +63,41 @@ spec:
           help: "If enabled, the theme will keep the path and query parameters of the current page when jumping to the target link."
           value: true
         - $formkit: checkbox
+          name: is_custom_resource_locations
+          label: Custom resource location
+          value: false
+          help: If enabled, custom resource locations will be used instead of the default theme locations.
+        - $formkit: text
+          name: js_resource_location
+          if: "$is_custom_resource_locations === true"
+          label: JavaScript resource location
+          value: "/themes/howiehz-higan/assets/dist/main.iife.js"
+          help: Specify the location of JavaScript resources, e.g., https://cdn.example.com/main.iife.js
+        - $formkit: text
+          name: css_resource_location
+          if: "$is_custom_resource_locations === true"
+          label: CSS resource location
+          value: "/themes/howiehz-higan/assets/dist/style.css"
+          help: Specify the location of CSS resources, e.g., https://cdn.example.com/style.css
+        - $formkit: text
+          name: clipboard_resource_location
+          if: "$is_custom_resource_locations === true"
+          label: Clipboard.js resource location
+          value: "/themes/howiehz-higan/assets/lib/clipboard/clipboard.min.js"
+          help: Specify the location of the Clipboard.js library, e.g., https://cdn.example.com/clipboard.min.js
+        - $formkit: text
+          name: instantpage_resource_location
+          if: "$is_custom_resource_locations === true"
+          label: instant.page resource location
+          value: "/themes/howiehz-higan/assets/lib/instantpage/5.2.0.js"
+          help: Specify the location of the instant.page library, e.g., https://cdn.example.com/instantpage.min.js
+        - $formkit: text
+          name: jquery_resource_location
+          if: "$is_custom_resource_locations === true"
+          label: jQuery resource location
+          value: "/themes/howiehz-higan/assets/lib/jquery/jquery.min.js"
+          help: Specify the location of the jQuery library, e.g., https://cdn.example.com/jquery.min.js
+        - $formkit: checkbox
           name: is_instant_page_enable
           label: instant.page support
           value: true

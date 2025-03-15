@@ -114,7 +114,14 @@
       <div th:replace="~{fragments/footer-nav :: footerNav}"></div>
     </th:block>
     <!--/* clipboard */-->
-    <script th:src="@{/assets/lib/clipboard/clipboard.min.js}"></script>
+    <script
+      th:src="@{/assets/lib/clipboard/clipboard.min.js}"
+      th:if="not ${theme.config?.global?.is_custom_resource_locations}"
+    ></script>
+    <script
+      th:src="${theme.config?.global?.clipboard_resource_location}"
+      th:if="${theme.config?.global?.is_custom_resource_locations}"
+    ></script>
     <script type="text/javascript" th:inline="javascript">
       $(function () {
         // mount it!
