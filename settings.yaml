@@ -63,6 +63,41 @@ spec:
           help: "例：假设当前页面为 localhost/a/b?a=1，目标链接为 https://p.com。关闭此项会跳转到 https://p.com，而开启此项会跳转到 https://p.com/a/b?a=1"
           value: true
         - $formkit: checkbox
+          name: is_custom_resource_locations
+          label: 自定义资源位置地址
+          value: false
+          help: 如启用此项，将使用自定义的资源位置地址，而不是主题默认的地址。
+        - $formkit: text
+          name: js_resource_location
+          if: "$is_custom_resource_locations === true"
+          label: JavaScript 资源位置
+          value: "/themes/howiehz-higan/assets/dist/main.iife.js"
+          help: "指定 JavaScript 资源的基本位置，例如：https://cdn.example.com/main.iife.js"
+        - $formkit: text
+          name: css_resource_location
+          if: "$is_custom_resource_locations === true"
+          label: CSS 资源位置
+          value: "/themes/howiehz-higan/assets/dist/style.css"
+          help: "指定 CSS 资源的基本位置，例如：https://cdn.example.com/style.css"
+        - $formkit: text
+          name: clipboard_resource_location
+          if: "$is_custom_resource_locations === true"
+          label: Clipboard.js 资源位置
+          value: "/themes/howiehz-higan/assets/lib/clipboard/clipboard.min.js"
+          help: "指定 Clipboard.js 库的资源位置，例如：https://cdn.example.com/clipboard.min.js"
+        - $formkit: text
+          name: instantpage_resource_location
+          if: "$is_custom_resource_locations === true"
+          label: instant.page 资源位置
+          value: "/themes/howiehz-higan/assets/lib/instantpage/5.2.0.js"
+          help: "指定 instant.page 库的资源位置，例如：https://cdn.example.com/instantpage.min.js"
+        - $formkit: text
+          name: jquery_resource_location
+          if: "$is_custom_resource_locations === true"
+          label: jQuery 资源位置
+          value: "/themes/howiehz-higan/assets/lib/jquery/jquery.min.js"
+          help: "指定 jQuery 库的资源位置，例如：https://cdn.example.com/jquery.min.js"
+        - $formkit: checkbox
           name: is_instant_page_enable
           label: instant.page 支持
           value: true
