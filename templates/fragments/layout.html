@@ -584,6 +584,18 @@ html[theme="theme-[(${colorSchema.id})]"] {
         margin-bottom: calc(0.5rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
       }
     </style>
+    <style
+      th:inline="css"
+      th:if="${(theme.config?.styles?.paragraph_margin_top_multiplier != 1 
+      and theme.config?.styles?.paragraph_margin_top_multiplier != '1')
+      or (theme.config?.styles?.paragraph_margin_bottom_multiplier != 1
+      and theme.config?.styles?.paragraph_margin_bottom_multiplier != '1')}"
+    >
+      body p {
+        margin-block-start: calc(1em * /*[(${theme.config?.styles?.paragraph_margin_top_multiplier ?: 1})]*/ 1);
+        margin-block-end: calc(1em * /*[(${theme.config?.styles?.paragraph_margin_bottom_multiplier ?: 1})]*/ 1);
+      }
+    </style>
     <div class="max-width min-width mx-auto px-8 ltr content-width">
       <th:block th:replace="${navbar}" />
 

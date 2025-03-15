@@ -581,6 +581,22 @@ spec:
           min: 0
           max: 5
           help: "Set the margin-bottom multiplier for headings (h1, h2, etc.). Value of 1 means use default margins, less than 1 reduces margins, greater than 1 increases margins"
+        - $formkit: number
+          name: paragraph_margin_top_multiplier
+          label: Paragraph margin-top multiplier
+          value: 1
+          step: 0.1
+          min: 0
+          max: 5
+          help: "Set the margin-top multiplier for paragraphs (p). Value of 1 means use default margins, less than 1 reduces margins, greater than 1 increases margins"
+        - $formkit: number
+          name: paragraph_margin_bottom_multiplier
+          label: Paragraph margin-bottom multiplier
+          value: 1
+          step: 0.1
+          min: 0
+          max: 5
+          help: "Set the margin-bottom multiplier for paragraphs (p). Value of 1 means use default margins, less than 1 reduces margins, greater than 1 increases margins"
     - group: index_styles
       label: Home page style
       formSchema:
