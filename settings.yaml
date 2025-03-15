@@ -572,7 +572,7 @@ spec:
           step: 0.1
           min: 0
           max: 5
-          help: "设置标题(h1, h2等)的上边距(margin-top)倍率，值为1表示使用默认边距，小于1减小边距，大于1增加边距"
+          help: "设置标题 (h1, h2 等) 的上边距 (margin-top) 倍率，值为 1 表示使用默认边距，小于 1 减小边距，大于 1 增加边距"
         - $formkit: number
           name: heading_margin_bottom_multiplier
           label: 标题下边距倍率
@@ -580,7 +580,7 @@ spec:
           step: 0.1
           min: 0
           max: 5
-          help: "设置标题(h1, h2等)的下边距(margin-bottom)倍率，值为1表示使用默认边距，小于1减小边距，大于1增加边距"
+          help: "设置标题 (h1, h2 等) 的下边距 (margin-bottom) 倍率，值为 1 表示使用默认边距，小于 1 减小边距，大于 1 增加边距"
         - $formkit: number
           name: paragraph_margin_top_multiplier
           label: 段落上边距倍率
@@ -588,7 +588,7 @@ spec:
           step: 0.1
           min: 0
           max: 5
-          help: "设置段落(p)的上边距(margin-top)倍率，值为1表示使用默认边距，小于1减小边距，大于1增加边距"
+          help: "设置段落 (p 标签) 的上边距倍率，值为 1 表示使用默认边距，小于 1 减小边距，大于 1 增加边距"
         - $formkit: number
           name: paragraph_margin_bottom_multiplier
           label: 段落下边距倍率
@@ -596,7 +596,7 @@ spec:
           step: 0.1
           min: 0
           max: 5
-          help: "设置段落(p)的下边距(margin-bottom)倍率，值为1表示使用默认边距，小于1减小边距，大于1增加边距"
+          help: "设置段落 (p 标签) 的下边距倍率，值为 1 表示使用默认边距，小于 1 减小边距，大于 1 增加边距"
     - group: index_styles
       label: 首页样式
       formSchema:
