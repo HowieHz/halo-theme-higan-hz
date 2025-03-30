@@ -400,6 +400,11 @@ spec:
           label: 是否显示页眉菜单
           value: true
         - $formkit: checkbox
+          name: is_show_random_button_in_header_menu
+          if: "$is_show_header_menu === true"
+          label: 页眉菜单中随机文章按钮
+          value: false
+        - $formkit: checkbox
           name: is_show_page_number
           label: 是否显示页码
           value: true
