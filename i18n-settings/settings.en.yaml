@@ -400,6 +400,11 @@ spec:
           label: Header menu
           value: true
         - $formkit: checkbox
+          name: is_show_random_button_in_header_menu
+          if: "$is_show_header_menu === true"
+          label: Random post button in header menu
+          value: false
+        - $formkit: checkbox
           name: is_show_page_number
           label: Display page number
           value: true
