@@ -159,18 +159,22 @@
           >
             <div class="recommendations" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
               <h4 class="mb-2" th:text="#{fragment.post-nav.recommended}">推荐文章 标题填充位</h4>
-              <th:block th:each="post: ${targetPagePostList}">
-                <div>
+              <th:block th:each="iterPost: ${targetPagePostList}">
+                <div th:if="${post.metadata.name != iterPost.metadata.name}">
                   <span class="meta">
                     <time
                       class="color-time"
-                      th:datetime="${post.spec?.publishTime}"
+                      th:datetime="${iterPost.spec?.publishTime}"
                       itemprop="datePublished"
-                      th:text="${#temporals.format(post.spec?.publishTime, 'yyyy-MM-dd')}"
+                      th:text="${#temporals.format(iterPost.spec?.publishTime, 'yyyy-MM-dd')}"
                       >文章发布时间替换位</time
                     >
                   </span>
-                  <a class="post-title" th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}"></a>
+                  <a
+                    class="post-title"
+                    th:href="@{${iterPost.status?.permalink}}"
+                    th:text="${iterPost.spec?.title}"
+                  ></a>
                 </div>
               </th:block>
               <!--/* 如果是最后一页，而且不是第一页（如果是最后一页也是第一页，说明本来就不够）。
@@ -182,18 +186,24 @@
                 <!--/* 缺项则补 */-->
                 <th:block th:if="${itemsNeeded > 0}">
                   <th:block th:each="index : ${#numbers.sequence(0,itemsNeeded-1)}">
-                    <div th:with="post=${firstPagePostList[index]}">
-                      <span class="meta">
-                        <time
-                          class="color-time"
-                          th:datetime="${post.spec?.publishTime}"
-                          itemprop="datePublished"
-                          th:text="${#temporals.format(post.spec?.publishTime, 'yyyy-MM-dd')}"
-                          >文章发布时间替换位</time
-                        >
-                      </span>
-                      <a class="post-title" th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}"></a>
-                    </div>
+                    <th:block th:with="iterPost=${firstPagePostList[index]}">
+                      <div th:if="${post.metadata.name != iterPost.metadata.name}">
+                        <span class="meta">
+                          <time
+                            class="color-time"
+                            th:datetime="${iterPost.spec?.publishTime}"
+                            itemprop="datePublished"
+                            th:text="${#temporals.format(iterPost.spec?.publishTime, 'yyyy-MM-dd')}"
+                            >文章发布时间替换位</time
+                          >
+                        </span>
+                        <a
+                          class="post-title"
+                          th:href="@{${iterPost.status?.permalink}}"
+                          th:text="${iterPost.spec?.title}"
+                        ></a>
+                      </div>
+                    </th:block>
                   </th:block>
                 </th:block>
               </th:block>
@@ -270,18 +280,22 @@
           >
             <div class="recommendations" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
               <h4 class="mb-2" th:text="#{fragment.post-nav.recommended}">推荐文章 标题填充位</h4>
-              <th:block th:each="post: ${targetPagePostList}">
-                <div>
+              <th:block th:each="iterPost: ${targetPagePostList}">
+                <div th:if="${post.metadata.name != iterPost.metadata.name}">
                   <span class="meta">
                     <time
                       class="color-time"
-                      th:datetime="${post.spec?.publishTime}"
+                      th:datetime="${iterPost.spec?.publishTime}"
                       itemprop="datePublished"
-                      th:text="${#temporals.format(post.spec?.publishTime, 'yyyy-MM-dd')}"
+                      th:text="${#temporals.format(iterPost.spec?.publishTime, 'yyyy-MM-dd')}"
                       >文章发布时间替换位</time
                     >
                   </span>
-                  <a class="post-title" th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}"></a>
+                  <a
+                    class="post-title"
+                    th:href="@{${iterPost.status?.permalink}}"
+                    th:text="${iterPost.spec?.title}"
+                  ></a>
                 </div>
               </th:block>
               <!--/* 如果是最后一页，而且不是第一页（如果是最后一页也是第一页，说明本来就不够）。
@@ -293,18 +307,24 @@
                 <!--/* 缺项则补 */-->
                 <th:block th:if="${itemsNeeded > 0}">
                   <th:block th:each="index : ${#numbers.sequence(0,itemsNeeded-1)}">
-                    <div th:with="post=${firstPagePostList[index]}">
-                      <span class="meta">
-                        <time
-                          class="color-time"
-                          th:datetime="${post.spec?.publishTime}"
-                          itemprop="datePublished"
-                          th:text="${#temporals.format(post.spec?.publishTime, 'yyyy-MM-dd')}"
-                          >文章发布时间替换位</time
-                        >
-                      </span>
-                      <a class="post-title" th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}"></a>
-                    </div>
+                    <th:block th:with="iterPost=${firstPagePostList[index]}">
+                      <div th:if="${post.metadata.name != iterPost.metadata.name}">
+                        <span class="meta">
+                          <time
+                            class="color-time"
+                            th:datetime="${iterPost.spec?.publishTime}"
+                            itemprop="datePublished"
+                            th:text="${#temporals.format(iterPost.spec?.publishTime, 'yyyy-MM-dd')}"
+                            >文章发布时间替换位</time
+                          >
+                        </span>
+                        <a
+                          class="post-title"
+                          th:href="@{${iterPost.status?.permalink}}"
+                          th:text="${iterPost.spec?.title}"
+                        ></a>
+                      </div>
+                    </th:block>
                   </th:block>
                 </th:block>
               </th:block>
