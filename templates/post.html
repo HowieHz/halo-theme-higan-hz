@@ -116,7 +116,7 @@
                    and not #lists.isEmpty(post.categories) 
                    and (#lists.size(postFinder.list({
                     size: n,
-                    categoryName: firstCategoryName,
+                    categoryName: post.categories[0].metadata.name,
                     sort: {'spec.publishTime,desc', 'metadata.creationTimestamp,asc'}
                    }).items) > 1)},
                  postCursor=${postFinder.cursor(post.metadata?.name)},
