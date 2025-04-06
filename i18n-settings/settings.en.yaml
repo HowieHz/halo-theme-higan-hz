@@ -797,6 +797,24 @@ spec:
           name: is_post_upvote_button_show
           label: Upvote button at the bottom of the post
           value: false
+        - $formkit: checkbox
+          name: is_post_recommended_articles_show
+          label: Recommended articles at the bottom of the post
+          value: false
+          help: "When enabled, recommended articles will be displayed at the bottom of the post. Note: This works by reading the first category of the current article and randomly outputting several articles from it. Therefore, the current article may appear in the recommendation list. If the current article has no category or there's only one article in the category, this feature will be disabled."
+        - $formkit: number
+          name: post_recommended_articles_count
+          if: "$is_post_recommended_articles_show === true"
+          label: Number of recommended articles
+          value: 3
+          min: 1
+          max: 10
+          help: "Set the number of recommended articles displayed at the bottom of the post"
+        - $formkit: checkbox
+          name: is_post_prev_next_navigation_show
+          label: Adjacent article navigation at the bottom of the post
+          value: false
+          help: When enabled, navigation links to the previous and next articles will be displayed at the bottom of the post
         - $formkit: text
           name: post_upvote_button_width
           if: "$is_post_upvote_button_show === true"

@@ -75,7 +75,7 @@
 
       <div class="content flex-auto" itemprop="articleBody" th:utext="${post.content?.content}">文章内容填充处</div>
       <th:block th:if="${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show}">
-        <hr class="divide my-10" />
+        <hr class="divide mt-10" />
       </th:block>
       <th:block th:if="${theme.config?.post_styles?.is_post_upvote_button_show}">
         <a
@@ -106,6 +106,251 @@
           ></span>
         </a>
       </th:block>
+
+      <!--/* 启用了推荐文章和相邻导航 */-->
+      <th:block
+        th:if="${theme.config?.post_styles?.is_post_recommended_articles_show
+                and theme.config?.post_styles?.is_post_prev_next_navigation_show}"
+        th:with="n=${#conversions.convert(theme.config?.post_styles?.post_recommended_articles_count, 'java.lang.Integer')},
+                 is_show_recommended_articles=${theme.config?.post_styles?.is_post_recommended_articles_show 
+                   and not #lists.isEmpty(post.categories) 
+                   and (#lists.size(postFinder.list({
+                    size: n,
+                    categoryName: firstCategoryName,
+                    sort: {'spec.publishTime,desc', 'metadata.creationTimestamp,asc'}
+                   }).items) > 1)},
+                 postCursor=${postFinder.cursor(post.metadata?.name)},
+                 is_show_navigation=${theme.config?.post_styles?.is_post_prev_next_navigation_show
+                   and (postCursor.hasPrevious() 
+                   or postCursor.hasNext())},
+                 is_show_divide=${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show
+                   and (is_show_recommended_articles
+                   or is_show_navigation)}"
+      >
+        <!--/* 推荐文章 */-->
+        <!--/* 根据文章的第一个类别，找相同类别的文章 */-->
+        <!--/* 文章无分类则不进行推荐 */-->
+        <!--/* 改进点：进行检查让推荐列表不出现当前页面文章 */-->
+        <th:block
+          th:if="${is_show_recommended_articles}"
+          th:with="firstCategoryName=${post.categories[0].metadata.name},
+                 postFinderResult=${postFinder.list({
+                   size: n,
+                   categoryName: firstCategoryName,
+                   sort: {'spec.publishTime,desc', 'metadata.creationTimestamp,asc'}
+                 })},
+                 firstPagePostList=${postFinderResult.items},
+                 totalPages=${postFinderResult.totalPages}"
+        >
+          <!--/* 分类下无文章则不进行推荐 */-->
+          <!--/* 用 totalPages 生成 randomPageNumber，然后查询 randomPageNumber 页的结果 */-->
+          <!--/* 这个分类只有当前一篇就不启用推荐，因此 > 1 */-->
+          <th:block
+            th:if="${#lists.size(firstPagePostList) > 1}"
+            th:with="
+                randomPageNumber=${T(java.lang.Math).floor(T(java.lang.Math).random()*(totalPages)+1)},
+                targetPagePostFinderResult=${postFinder.list({
+                   page: randomPageNumber,
+                   size: n,
+                   categoryName: firstCategoryName,
+                   sort: {'spec.publishTime,desc', 'metadata.creationTimestamp,asc'}
+                 })},
+                 targetPagePostList=${targetPagePostFinderResult.items},"
+          >
+            <div class="recommendations" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
+              <h4 class="mb-2" th:text="#{fragment.post-nav.recommended}">推荐文章 标题填充位</h4>
+              <th:block th:each="post: ${targetPagePostList}">
+                <div>
+                  <span class="meta">
+                    <time
+                      class="color-time"
+                      th:datetime="${post.spec?.publishTime}"
+                      itemprop="datePublished"
+                      th:text="${#temporals.format(post.spec?.publishTime, 'yyyy-MM-dd')}"
+                      >文章发布时间替换位</time
+                    >
+                  </span>
+                  <a class="post-title" th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}"></a>
+                </div>
+              </th:block>
+              <!--/* 如果是最后一页，而且不是第一页（如果是最后一页也是第一页，说明本来就不够）。
+            看下有没有缺项，缺则从第一页补。 */-->
+              <th:block
+                th:if="${targetPagePostFinderResult.last and not targetPagePostFinderResult.first}"
+                th:with="itemsNeeded=${n-#lists.size(targetPagePostList)}"
+              >
+                <!--/* 缺项则补 */-->
+                <th:block th:if="${itemsNeeded > 0}">
+                  <th:block th:each="index : ${#numbers.sequence(0,itemsNeeded-1)}">
+                    <div th:with="post=${firstPagePostList[index]}">
+                      <span class="meta">
+                        <time
+                          class="color-time"
+                          th:datetime="${post.spec?.publishTime}"
+                          itemprop="datePublished"
+                          th:text="${#temporals.format(post.spec?.publishTime, 'yyyy-MM-dd')}"
+                          >文章发布时间替换位</time
+                        >
+                      </span>
+                      <a class="post-title" th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}"></a>
+                    </div>
+                  </th:block>
+                </th:block>
+              </th:block>
+            </div>
+          </th:block>
+        </th:block>
+
+        <span
+          class="post-navigation"
+          th:classappend="${is_show_recommended_articles} ? 'mt-10' : '' "
+          th:if="${is_show_navigation}"
+        >
+          <div th:if="${postCursor.hasPrevious()}">
+            <span th:text="#{fragment.post-nav.prev}">上一篇 填充位</span>
+            <a
+              class="post-title"
+              th:href="@{${postCursor.previous?.status?.permalink}}"
+              th:text="${postCursor.previous?.spec?.title}"
+            ></a>
+          </div>
+          <div th:if="${postCursor.hasNext()}">
+            <span th:text="#{fragment.post-nav.next}">下一篇 填充位</span>
+            <a
+              class="post-title"
+              th:href="@{${postCursor.next?.status?.permalink}}"
+              th:text="${postCursor.next?.spec?.title}"
+            ></a>
+          </div>
+        </span>
+
+        <th:block th:if="${is_show_divide}">
+          <hr class="divide my-10" />
+        </th:block>
+      </th:block>
+
+      <!--/* 仅启用推荐文章 */-->
+      <th:block
+        th:if="${theme.config?.post_styles?.is_post_recommended_articles_show
+                and not theme.config?.post_styles?.is_post_prev_next_navigation_show}"
+        th:with="is_show_recommended_articles=${theme.config?.post_styles?.is_post_recommended_articles_show 
+                   and not #lists.isEmpty(post.categories)},
+                 postCursor=${postFinder.cursor(post.metadata?.name)}"
+      >
+        <!--/* 推荐文章 */-->
+        <!--/* 根据文章的第一个类别，找相同类别的文章 */-->
+        <!--/* 文章无分类则不进行推荐 */-->
+        <!--/* 改进点：进行检查让推荐列表不出现当前页面文章 */-->
+        <th:block
+          th:if="${is_show_recommended_articles}"
+          th:with="firstCategoryName=${post.categories[0].metadata.name},
+                 n=${#conversions.convert(theme.config?.post_styles?.post_recommended_articles_count, 'java.lang.Integer')},
+                 postFinderResult=${postFinder.list({
+                   size: n,
+                   categoryName: firstCategoryName,
+                   sort: {'spec.publishTime,desc', 'metadata.creationTimestamp,asc'}
+                 })},
+                 firstPagePostList=${postFinderResult.items},
+                 totalPages=${postFinderResult.totalPages}"
+        >
+          <!--/* 分类下无文章则不进行推荐 */-->
+          <!--/* 用 totalPages 生成 randomPageNumber，然后查询 randomPageNumber 页的结果 */-->
+          <!--/* 这个分类只有当前一篇就不启用推荐，因此 > 1 */-->
+          <th:block
+            th:if="${#lists.size(firstPagePostList) > 1}"
+            th:with="
+                randomPageNumber=${T(java.lang.Math).floor(T(java.lang.Math).random()*(totalPages)+1)},
+                targetPagePostFinderResult=${postFinder.list({
+                   page: randomPageNumber,
+                   size: n,
+                   categoryName: firstCategoryName,
+                   sort: {'spec.publishTime,desc', 'metadata.creationTimestamp,asc'}
+                 })},
+                 targetPagePostList=${targetPagePostFinderResult.items},"
+          >
+            <div class="recommendations" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
+              <h4 class="mb-2" th:text="#{fragment.post-nav.recommended}">推荐文章 标题填充位</h4>
+              <th:block th:each="post: ${targetPagePostList}">
+                <div>
+                  <span class="meta">
+                    <time
+                      class="color-time"
+                      th:datetime="${post.spec?.publishTime}"
+                      itemprop="datePublished"
+                      th:text="${#temporals.format(post.spec?.publishTime, 'yyyy-MM-dd')}"
+                      >文章发布时间替换位</time
+                    >
+                  </span>
+                  <a class="post-title" th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}"></a>
+                </div>
+              </th:block>
+              <!--/* 如果是最后一页，而且不是第一页（如果是最后一页也是第一页，说明本来就不够）。
+            看下有没有缺项，缺则从第一页补。 */-->
+              <th:block
+                th:if="${targetPagePostFinderResult.last and not targetPagePostFinderResult.first}"
+                th:with="itemsNeeded=${n-#lists.size(targetPagePostList)}"
+              >
+                <!--/* 缺项则补 */-->
+                <th:block th:if="${itemsNeeded > 0}">
+                  <th:block th:each="index : ${#numbers.sequence(0,itemsNeeded-1)}">
+                    <div th:with="post=${firstPagePostList[index]}">
+                      <span class="meta">
+                        <time
+                          class="color-time"
+                          th:datetime="${post.spec?.publishTime}"
+                          itemprop="datePublished"
+                          th:text="${#temporals.format(post.spec?.publishTime, 'yyyy-MM-dd')}"
+                          >文章发布时间替换位</time
+                        >
+                      </span>
+                      <a class="post-title" th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}"></a>
+                    </div>
+                  </th:block>
+                </th:block>
+              </th:block>
+            </div>
+            <th:block th:if="${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show}">
+              <hr class="divide my-10" />
+            </th:block>
+          </th:block>
+        </th:block>
+      </th:block>
+
+      <!--仅启用相邻导航-->
+      <th:block
+        th:if="${not theme.config?.post_styles?.is_post_recommended_articles_show 
+                and theme.config?.post_styles?.is_post_prev_next_navigation_show}"
+        th:with="postCursor=${postFinder.cursor(post.metadata?.name)},
+                 is_show_navigation=${theme.config?.post_styles?.is_post_prev_next_navigation_show
+                   and (postCursor.hasPrevious() 
+                   or postCursor.hasNext())},
+                 is_show_divide=${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show
+                   and is_show_navigation}"
+      >
+        <span class="post-navigation" th:if="${is_show_navigation}">
+          <div th:if="${postCursor.hasPrevious()}">
+            <span th:text="#{fragment.post-nav.prev}">上一篇 填充位</span>
+            <a
+              class="post-title"
+              th:href="@{${postCursor.previous?.status?.permalink}}"
+              th:text="${postCursor.previous?.spec?.title}"
+            ></a>
+          </div>
+          <div th:if="${postCursor.hasNext()}">
+            <span th:text="#{fragment.post-nav.next}">下一篇 填充位</span>
+            <a
+              class="post-title"
+              th:href="@{${postCursor.next?.status?.permalink}}"
+              th:text="${postCursor.next?.spec?.title}"
+            ></a>
+          </div>
+        </span>
+
+        <th:block th:if="${is_show_divide}">
+          <hr class="divide my-10" />
+        </th:block>
+      </th:block>
+
       <th:block th:if="${theme.config?.post_styles?.is_post_comment_section_show} and ${haloCommentEnabled}">
         <halo:comment group="content.halo.run" kind="Post" th:name="${post.metadata?.name}" />
       </th:block>
