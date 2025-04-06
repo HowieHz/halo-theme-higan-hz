@@ -227,6 +227,12 @@ body {
   color: var(--color-link);
 }
 
+.recommendations a,
+.post-navigation a {
+  color: var(--color-text);
+  /* background-image: none; */
+}
+
 .content h1 a,
 .content .h1 a,
 .content h2 a,
