@@ -830,7 +830,7 @@ spec:
           name: is_post_recommended_articles_show
           label: 文章底部的推荐文章
           value: false
-          help: 开启后将在文章底部显示推荐文章列表。注：原理是读取当前文章第一个分类，并且随机输出其中若干个文章。因此推荐列表中可能输出当前文章。如果当前文章未设置分类，该功能会被禁用。如果分类仅有一篇文章，该功能会被禁用。
+          help: 开启后将在文章底部显示推荐文章列表。注：原理是读取当前文章第一个分类，并且随机输出其中若干个文章。如果当前文章在列表中将会被剔除，因此推荐文章可能小于当前推荐文章数。如果当前文章未设置分类，该功能会被禁用。如果分类仅有一篇文章，该功能会被禁用。
         - $formkit: number
           name: post_recommended_articles_count
           if: "$is_post_recommended_articles_show === true"

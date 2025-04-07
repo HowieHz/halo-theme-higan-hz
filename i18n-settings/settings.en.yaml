@@ -830,7 +830,7 @@ spec:
           name: is_post_recommended_articles_show
           label: Recommended articles at the bottom of the post
           value: false
-          help: "When enabled, recommended articles will be displayed at the bottom of the post. Note: This works by reading the first category of the current article and randomly outputting several articles from it. Therefore, the current article may appear in the recommendation list. If the current article has no category or there's only one article in the category, this feature will be disabled."
+          help: "When enabled, recommended articles will be displayed at the bottom of the post. Note: This works by reading the first category of the current article and randomly outputting several articles from it. If the current article appears in the list, it will be removed, so the number of recommended articles may be less than the current recommendation count. If the current article has no category assigned, this feature will be disabled. If a category has only one article, this feature will be disabled."
         - $formkit: number
           name: post_recommended_articles_count
           if: "$is_post_recommended_articles_show === true"
