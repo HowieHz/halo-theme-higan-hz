@@ -797,24 +797,6 @@ spec:
           name: is_post_upvote_button_show
           label: 文章底部的点赞按钮
           value: false
-        - $formkit: checkbox
-          name: is_post_recommended_articles_show
-          label: 文章底部的推荐文章
-          value: false
-          help: 开启后将在文章底部显示推荐文章列表。注：原理是读取当前文章第一个分类，并且随机输出其中若干个文章。因此推荐列表中可能输出当前文章。如果当前文章未设置分类，该功能会被禁用。如果分类仅有一篇文章，该功能会被禁用。
-        - $formkit: number
-          name: post_recommended_articles_count
-          if: "$is_post_recommended_articles_show === true"
-          label: 推荐文章数量
-          value: 3
-          min: 1
-          max: 10
-          help: "设置文章底部显示的推荐文章数量"
-        - $formkit: checkbox
-          name: is_post_prev_next_navigation_show
-          label: 文章底部的相邻文章导航
-          value: false
-          help: 开启后将在文章底部显示上一篇和下一篇文章的导航链接
         - $formkit: text
           name: post_upvote_button_width
           if: "$is_post_upvote_button_show === true"
@@ -844,6 +826,24 @@ spec:
               value: "center"
             - label: "靠右"
               value: "right"
+        - $formkit: checkbox
+          name: is_post_recommended_articles_show
+          label: 文章底部的推荐文章
+          value: false
+          help: 开启后将在文章底部显示推荐文章列表。注：原理是读取当前文章第一个分类，并且随机输出其中若干个文章。因此推荐列表中可能输出当前文章。如果当前文章未设置分类，该功能会被禁用。如果分类仅有一篇文章，该功能会被禁用。
+        - $formkit: number
+          name: post_recommended_articles_count
+          if: "$is_post_recommended_articles_show === true"
+          label: 推荐文章数量
+          value: 3
+          min: 1
+          max: 10
+          help: "设置文章底部显示的推荐文章数量"
+        - $formkit: checkbox
+          name: is_post_prev_next_navigation_show
+          label: 文章底部的相邻文章导航
+          value: false
+          help: 开启后将在文章底部显示上一篇和下一篇文章的导航链接
         - $formkit: checkbox
           name: is_post_comment_section_show
           label: 文章评论区

@@ -227,10 +227,22 @@ body {
   color: var(--color-link);
 }
 
+/* 推荐文章和相邻导航字体颜色设置 */
 .recommendations a,
 .post-navigation a {
   color: var(--color-text);
   /* background-image: none; */
+}
+
+/* 分割线上一个也是分割线或者是点赞按钮就隐藏 */
+hr.divide + hr.divide,
+a.upvote-button + hr.divide {
+  display: none;
+}
+
+/* 点赞按钮是 article 里最后一个，那就设置 mb-0（说明直接接上了页脚。没开评论区，推荐文章等） */
+article a.upvote-button:last-child {
+  margin-bottom: 0;
 }
 
 .content h1 a,
