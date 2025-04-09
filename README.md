@@ -48,7 +48,7 @@
 
 ![preview](./screenshots/preview-1.png)
 
-文档版本：`1.33.0`  
+文档版本：`1.34.0`  
 （如此处文档版本小于您正在使用的主题版本，说明您正在阅读一份过时的文档，请到[项目原地址](https://github.com/HowieHz/halo-theme-higan-hz/blob/main/README.md)阅读最新版本。）
 
 ### 目录
