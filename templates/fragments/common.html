@@ -97,10 +97,10 @@
 </th:block>
 
 <th:block
-  th:fragment="share"
+  th:fragment="share(originPermalink,title)"
   th:with="siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1)== '/'}? ${#strings.substring(site.url,0,#strings.length(site.url) - 1)}:${site.url}"
 >
-  <th:block th:with="permalink=${siteUrl}+${post.status.permalink}, title=${post?.spec?.title}">
+  <th:block th:with="permalink=${siteUrl}+${originPermalink}, title=${title}">
     <ul>
       <script th:inline="javascript">
         function nativeShare() {

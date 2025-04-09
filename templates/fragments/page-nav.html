@@ -19,7 +19,7 @@
       </span>
       <br />
 
-      <span id="actions" th:with="postCursor=${postFinder.cursor(post.metadata?.name)}">
+      <span id="actions">
         <ul>
           <li>
             <a
@@ -30,35 +30,6 @@
               onmouseout="$('#i-home').toggle();"
             >
               <i class="iconify iconify-large" data-icon="mdi:home-circle"></i>
-            </a>
-          </li>
-          <li th:if="${postCursor.hasPrevious()}">
-            <a
-              class="icon"
-              th:aria-label="#{fragment.post-nav.actions.prev-icon.aria-label}"
-              th:href="@{${postCursor.previous?.status?.permalink}}"
-            >
-              <i
-                class="iconify iconify-large"
-                data-icon="mdi:chevron-left"
-                onmouseover="$('#i-prev').toggle();"
-                onmouseout="$('#i-prev').toggle();"
-              ></i>
-            </a>
-          </li>
-
-          <li th:if="${postCursor.hasNext()}">
-            <a
-              class="icon"
-              th:aria-label="#{fragment.post-nav.actions.next-icon.aria-label}"
-              th:href="@{${postCursor.next?.status?.permalink}}"
-            >
-              <i
-                class="iconify iconify-large"
-                data-icon="ic:round-chevron-right"
-                onmouseover="$('#i-next').toggle();"
-                onmouseout="$('#i-next').toggle();"
-              ></i>
             </a>
           </li>
 
@@ -91,9 +62,6 @@
           </li>
         </ul>
 
-        <span id="i-prev" class="info" style="display: none">[(#{fragment.post-nav.prev})]</span>
-        <span id="i-next" class="info" style="display: none">[(#{fragment.post-nav.next})]</span>
-
         <span id="i-top" class="info" style="display: none">[(#{fragment.post-nav.toTop})]</span>
         <span
           id="i-share"
@@ -107,7 +75,7 @@
       <br />
       <div id="share-list" style="display: none" th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}">
         <th:block
-          th:insert="~{fragments/common :: share(originPermalink=${post.status.permalink},title=${post.spec.title})}"
+          th:insert="~{fragments/common :: share(originPermalink=${singlePage.status.permalink},title=${singlePage.spec.title})}"
         ></th:block>
       </div>
       <div id="toc"></div>

@@ -4,10 +4,11 @@
       <div id="nav-footer" style="display: none">
         <th:block th:insert="~{fragments/common :: menu(showIcon=false)}"></th:block>
       </div>
-
       <div id="toc-footer" style="display: none"></div>
       <div id="share-footer" style="display: none" th:if="${theme.config?.post_styles?.is_show_share_footer}">
-        <th:block th:insert="~{fragments/common :: share}"></th:block>
+        <th:block
+          th:insert="~{fragments/common :: share(originPermalink=${post.status.permalink},title=${post.spec.title})}"
+        ></th:block>
       </div>
       <div id="actions-footer">
         <a id="menu" class="icon" href="javascript:void(0);" onclick="return false;">

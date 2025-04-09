@@ -921,6 +921,11 @@ spec:
       label: Custom page style
       formSchema:
         - $formkit: checkbox
+          name: is_enable_post_like_layout
+          label: Enable post-like layout
+          value: false
+          help: When enabled, custom pages will use a layout and style similar to post pages, mainly reflected in desktop top menu (side table of contents, back to top button, share menu) and mobile bottom menu (similar to post pages). Menu and table of contents related settings are consistent with those under "Post page style".
+        - $formkit: checkbox
           name: is_dividing_line_at_the_end_of_content_show
           label: Enable dividing line at the end of the content
           value: true
