@@ -790,6 +790,18 @@ spec:
           label: 桌面端菜单中的分享按钮
           value: true
         - $formkit: checkbox
+          name: is_custom_toc_max_width
+          label: 自定义侧边目录最大宽度
+          value: false
+          help: 开启后可以设置文章页面右侧边栏目录的最大宽度。
+        - $formkit: text
+          name: toc_max_width
+          if: "$is_custom_toc_max_width === true"
+          label: 侧边目录最大宽度
+          value: 20rem
+          placeholder: "默认值：20rem"
+          help: "控制文章右侧边栏目录的最大宽度。允许全部 CSS 长度单位，如：20rem, 300px, 30vw。"
+        - $formkit: checkbox
           name: is_dividing_line_at_the_end_of_post_show
           label: 文章末尾的的分隔线
           value: true

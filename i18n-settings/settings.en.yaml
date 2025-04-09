@@ -790,6 +790,18 @@ spec:
           label: Share button in desktop menu
           value: true
         - $formkit: checkbox
+          name: is_custom_toc_max_width
+          label: Custom sidebar table of contents maximum width
+          value: false
+          help: When enabled, you can set the maximum width of the table of contents sidebar on article pages.
+        - $formkit: text
+          name: toc_max_width
+          if: "$is_custom_toc_max_width === true"
+          label: Sidebar table of contents maximum width
+          value: 20rem
+          placeholder: "Default: 20rem"
+          help: "Controls the maximum width of the table of contents sidebar on article pages. All CSS length units are allowed, such as: 20rem, 300px, 30vw."
+        - $formkit: checkbox
           name: is_dividing_line_at_the_end_of_post_show
           label: Enable dividing line at the end of the post
           value: true
