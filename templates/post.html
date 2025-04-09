@@ -1,7 +1,13 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(title=${#annotations.getOrDefault(post, 'higan.howiehz.top/page-title', post.spec.title)}, content = ~{::content}, header = ~{}, navbar = ~{fragments/post-nav::navbar}, language=${#annotations.get(post, 'higan.howiehz.top/page-language')} )}"
+  th:replace="~{fragments/layout :: html(
+    title=${#annotations.getOrDefault(post, 'higan.howiehz.top/page-title', post.spec.title)}, 
+    content = ~{::content}, 
+    header = ~{}, 
+    navbar = ~{fragments/post-nav::navbar}, 
+    language=${#annotations.get(post, 'higan.howiehz.top/page-language')}
+  )}"
 >
   <th:block th:fragment="content">
     <style th:inline="css" th:if="${theme.config?.post_styles?.is_custom_toc_max_width}">
@@ -237,7 +243,7 @@
       </div>
     </article>
     <th:block th:if="${theme.config?.post_styles?.is_show_footer_nav}">
-      <div th:replace="~{fragments/footer-nav :: footerNav}"></div>
+      <div th:replace="~{fragments/post-footer-nav :: footerNav}"></div>
     </th:block>
     <!--/* clipboard */-->
     <script
@@ -250,18 +256,18 @@
     ></script>
     <script type="text/javascript" th:inline="javascript">
       $(function () {
-        // mount it!
+        // <!--/* mount it! */-->
         $(".content pre").wrap('<figure class="highlight"></figure>');
-        // copy-btn HTML
+        // <!--/* copy-btn HTML */-->
 
         const copySvg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z"/></svg>`;
         $(".content figure pre").before(
           `<span class="btn-copy tooltipped tooltipped-sw" aria-label=[[#{common.shareModal.clipboard.aria-label.copy}]]>${copySvg}</span>`,
         );
-        // code highlight
+        // <!--/* code highlight
         // document.querySelectorAll('pre code').forEach(el => {
         //   hljs.highlightElement(el)
-        // })
+        // }) */-->
 
         var clip = new ClipboardJS(".btn-copy", {
           text: function (trigger) {
@@ -276,11 +282,11 @@
           e.clearSelection();
         });
 
-        // generate toc
+        // <!--/* generate toc */-->
         const contentDom = document.querySelector("article > .content");
         const tocSelector = isMobile() ? "#toc-footer" : "#toc";
-        // wontfix：如果电脑屏幕较窄，文章页用的是底部导航栏，目录按钮按了之后不会显示目录
-        // 但是目录按钮在手机端是正常的，为了保证性能，不做特殊处理
+        // <!--/* wontfix：如果电脑屏幕较窄，文章页用的是底部导航栏，目录按钮按了之后不会显示目录
+        // 但是目录按钮在手机端是正常的，为了保证性能，不做特殊处理 */-->
         main.generateTOC(contentDom.innerHTML, tocSelector);
 
         const postTitleUpperCase = /*[(${theme.config?.post_styles?.post_title_uppper})]*/ false;
@@ -288,7 +294,7 @@
           $(".post .posttitle").addClass("title-upper-case");
         }
 
-        // toc collapse control
+        // <!--/* toc collapse control */-->
         window.addEventListener("scroll", () => {
           headings = document.querySelectorAll("h2, h3, h4, h5, h6");
           let currentActiveHeading;
@@ -298,7 +304,7 @@
               currentActiveHeading = heading;
             }
           });
-          // remove all active class
+          // <!--/* remove all active class */-->
           const tocActiveClassName = "toc-active";
           document.querySelectorAll("." + tocActiveClassName).forEach((el) => {
             el.classList.remove(tocActiveClassName);

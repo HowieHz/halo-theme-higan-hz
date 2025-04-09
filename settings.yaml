@@ -921,6 +921,11 @@ spec:
       label: 自定义页面样式
       formSchema:
         - $formkit: checkbox
+          name: is_enable_post_like_layout
+          label: 启用类文章页样式
+          value: false
+          help: 启用后，自定义页面将使用类似文章页的布局和样式，主要体现在桌面端顶部菜单（侧边目录，回到顶端按钮，分享菜单），移动端底部菜单（类似文章页）。菜单、目录相关设置与“文章页样式”下的设置保持一致。
+        - $formkit: checkbox
           name: is_dividing_line_at_the_end_of_content_show
           label: 是否启用正文内容与评论区间的分隔线
           value: true

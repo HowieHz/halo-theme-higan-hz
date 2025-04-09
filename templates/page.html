@@ -2,19 +2,25 @@
 <th:block
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
-    title=${#annotations.getOrDefault(singlePage, 'higan.howiehz.top/page-title', singlePage.spec?.title)}, 
+    title = ${#annotations.getOrDefault(singlePage, 'higan.howiehz.top/page-title', singlePage.spec?.title)}, 
     content = ~{::content}, 
-    header = ~{fragments/header::content}, 
-    navbar = ~{}, 
-    language=${#annotations.get(singlePage, 'higan.howiehz.top/page-language')}
+    header = ${not theme.config?.custom_page_styles?.is_enable_post_like_layout} ? ~{fragments/header::content} : ~{}, 
+    navbar = ${theme.config?.custom_page_styles?.is_enable_post_like_layout} ? ~{fragments/page-nav::navbar} : ~{}, 
+    language = ${#annotations.get(singlePage, 'higan.howiehz.top/page-language')}
   )}"
 >
   <th:block th:fragment="content">
+    <style th:inline="css" th:if="${theme.config?.post_styles?.is_custom_toc_max_width}">
+      #header-post #toc {
+        max-width: /*[(${theme.config?.post_styles?.toc_max_width})]*/ 20em;
+      }
+    </style>
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <h1>
         <th:block th:text="${singlePage.spec?.title}">标题替换位</th:block
         ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
       </h1>
+
       <div class="content flex-auto" itemprop="articleBody" th:utext="${singlePage.content?.content}">
         singlePage formatted content
       </div>
@@ -38,7 +44,7 @@
       ></script>
       <script type="text/javascript">
         $(function () {
-          // copy-btn HTML
+          // <!--/* copy-btn HTML */-->
           const copySvg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z"/></svg>`;
           $(".content figure pre").before(
             `<span class="btn-copy tooltipped tooltipped-sw" aria-label=[[#{common.shareModal.clipboard.aria-label.copy}]]>${copySvg}</span>`,
@@ -59,5 +65,48 @@
         });
       </script>
     </article>
+    <th:block th:if="${theme.config?.custom_page_styles?.is_enable_post_like_layout}">
+      <div th:replace="~{fragments/page-footer-nav :: footerNav}"></div>
+
+      <script type="text/javascript" th:inline="javascript">
+        $(function () {
+          // <!--/* generate toc */-->
+          const contentDom = document.querySelector("article > .content");
+          const tocSelector = isMobile() ? "#toc-footer" : "#toc";
+          // <!--/* wontfix：如果电脑屏幕较窄，文章页用的是底部导航栏，目录按钮按了之后不会显示目录
+          // 但是目录按钮在手机端是正常的，为了保证性能，不做特殊处理 */-->
+          main.generateTOC(contentDom.innerHTML, tocSelector);
+
+          const postTitleUpperCase = /*[(${theme.config?.post_styles?.post_title_uppper})]*/ false;
+          if (postTitleUpperCase) {
+            $(".post .posttitle").addClass("title-upper-case");
+          }
+
+          // <!--/* toc collapse control */-->
+          window.addEventListener("scroll", () => {
+            headings = document.querySelectorAll("h2, h3, h4, h5, h6");
+            let currentActiveHeading;
+            headings.forEach((heading) => {
+              const headingTop = heading.offsetTop;
+              if (pageYOffset >= headingTop - 50) {
+                currentActiveHeading = heading;
+              }
+            });
+            // <!--/* remove all active class */-->
+            const tocActiveClassName = "toc-active";
+            document.querySelectorAll("." + tocActiveClassName).forEach((el) => {
+              el.classList.remove(tocActiveClassName);
+            });
+
+            if (currentActiveHeading) {
+              const tocLevel = document.querySelector(`.toc-link[href="#${currentActiveHeading.id}"]`);
+              if (tocLevel) {
+                tocLevel.classList.add(tocActiveClassName);
+              }
+            }
+          });
+        });
+      </script>
+    </th:block>
   </th:block>
 </th:block>
