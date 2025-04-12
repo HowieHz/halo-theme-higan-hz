@@ -10,147 +10,131 @@
   background-color: transparent;
   border: none;
   vertical-align: middle;
+
+  & .icon:hover {
+    color: var(--color-link);
+  }
 }
 
-#theme-toggle-button .icon:hover {
-  color: var(--color-link);
-}
+body {
+  & h1,
+  .h1 {
+    display: block;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    color: var(--color-accent-1);
+    letter-spacing: 0.01em;
+    font-weight: 700;
+    font-style: normal;
+    font-size: var(--text-h1);
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+  }
 
-body h1,
-body .h1 {
-  display: block;
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-  color: var(--color-accent-1);
-  letter-spacing: 0.01em;
-  font-weight: 700;
-  font-style: normal;
-  font-size: var(--text-h1);
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-}
-
-body h2,
-body .h2 {
-  position: relative;
-  display: block;
-  margin-top: 2rem;
-  margin-bottom: 0.5rem;
-  color: var(--color-accent-2);
-  text-transform: none;
-  letter-spacing: normal;
-  font-weight: bold;
-  font-size: var(--text-h2);
-}
-
-body h3 {
-  color: var(--color-accent-2);
-  text-decoration: underline;
-  font-weight: bold;
-  font-size: var(--text-h3);
-}
-
-body h4,
-body h5,
-body h6 {
-  display: inline;
-  text-decoration: none;
-  color: var(--color-accent-3);
-  font-weight: bold;
-  font-size: var(--text-h4);
-}
-
-body h3,
-body h4,
-body h5,
-body h6 {
-  margin-top: 0.9rem;
-  margin-bottom: 0.5rem;
-}
-
-body hr {
-  border: 0.5px dashed var(--color-accent-3);
-  opacity: 0.5;
-  margin: 1.25rem 0 1.25rem 0;
-}
-
-body strong {
-  font-weight: bold;
-}
-
-body em,
-body cite {
-  font-style: italic;
-}
-
-body sup,
-body sub {
-  position: relative;
-  vertical-align: baseline;
-  font-size: var(--text-xs);
-  line-height: 0;
-}
-
-body sup {
-  top: -0.5rem;
-}
-
-body sub {
-  bottom: -0.2rem;
-}
-
-body small {
-  font-size: var(--text-sm);
-}
-
-body acronym,
-body abbr {
-  border-bottom: 1px dotted;
-}
-
-body ul,
-body ol,
-body dl {
-  line-height: 1.725;
-}
-
-body ul ul,
-body ol ul,
-body ul ol,
-body ol ol {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-body ol {
-  list-style: decimal;
-}
-
-body dt {
-  font-weight: bold;
-}
-
-body table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-  font-size: var(--text-xs);
-  overflow: auto;
-  display: block;
-}
-
-body th {
-  padding: 0.5rem;
-  border-bottom: 0.1rem solid var(--color-accent-3);
-  color: var(--color-accent-2);
-  font-weight: bold;
-  font-size: var(--text-th);
-}
-
-body td {
-  padding: 0 0.5rem;
-  border-bottom: none;
-  font-size: var(--text-sm);
+  & h2,
+  .h2 {
+    position: relative;
+    display: block;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-accent-2);
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: bold;
+    font-size: var(--text-h2);
+  }
+  & h3 {
+    color: var(--color-accent-2);
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: var(--text-h3);
+  }
+  & h4,
+  h5,
+  h6 {
+    display: inline;
+    text-decoration: none;
+    color: var(--color-accent-3);
+    font-weight: bold;
+    font-size: var(--text-h4);
+  }
+  & h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  & hr {
+    border: 0.5px dashed var(--color-accent-3);
+    opacity: 0.5;
+    margin: 1.25rem 0 1.25rem 0;
+  }
+  & strong {
+    font-weight: bold;
+  }
+  & em,
+  cite {
+    font-style: italic;
+  }
+  & sup,
+  sub {
+    position: relative;
+    vertical-align: baseline;
+    font-size: var(--text-xs);
+    line-height: 0;
+  }
+  & sup {
+    top: -0.5rem;
+  }
+  & sub {
+    bottom: -0.2rem;
+  }
+  & small {
+    font-size: var(--text-sm);
+  }
+  & acronym,
+  abbr {
+    border-bottom: 1px dotted;
+  }
+  & ul,
+  ol,
+  dl {
+    line-height: 1.725;
+  }
+  & ul ul,
+  ol ul,
+  ul ol,
+  ol ol {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  & ol {
+    list-style: decimal;
+  }
+  & dt {
+    font-weight: bold;
+  }
+  & table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: var(--text-xs);
+    overflow: auto;
+    display: block;
+  }
+  & th {
+    padding: 0.5rem;
+    border-bottom: 0.1rem solid var(--color-accent-3);
+    color: var(--color-accent-2);
+    font-weight: bold;
+    font-size: var(--text-th);
+  }
+  & td {
+    padding: 0 0.5rem;
+    border-bottom: none;
+    font-size: var(--text-sm);
+  }
 }
 
 *,
@@ -190,41 +174,46 @@ body {
   min-height: 100%;
   flex-direction: column;
   overflow-wrap: break-word;
-}
 
-.content p {
-  -moz-hyphens: auto;
-  -ms-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}
+  & p {
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
 
-.content code {
-  -moz-hyphens: manual;
-  -ms-hyphens: manual;
-  -webkit-hyphens: manual;
-  hyphens: manual;
-}
+  & code {
+    -moz-hyphens: manual;
+    -ms-hyphens: manual;
+    -webkit-hyphens: manual;
+    hyphens: manual;
+  }
 
-.content a {
-  color: var(--color-text);
-  text-decoration: none;
-  background-image: linear-gradient(transparent, transparent 0.3125rem, var(--color-text) 0.3125rem, var(--color-text));
-  background-position: bottom;
-  background-size: 100% 0.375rem;
-  background-repeat: repeat-x;
-}
+  & a {
+    color: var(--color-text);
+    text-decoration: none;
+    background-image: linear-gradient(
+      transparent,
+      transparent 0.3125rem,
+      var(--color-text) 0.3125rem,
+      var(--color-text)
+    );
+    background-position: bottom;
+    background-size: 100% 0.375rem;
+    background-repeat: repeat-x;
+  }
 
-.content a:hover {
-  background-image: linear-gradient(transparent, transparent 0.25rem, var(--color-link) 0.25rem, var(--color-link));
-}
+  & a:hover {
+    background-image: linear-gradient(transparent, transparent 0.25rem, var(--color-link) 0.25rem, var(--color-link));
+  }
 
-.content a.icon {
-  background: none;
-}
+  & a.icon {
+    background: none;
+  }
 
-.content a.icon:hover {
-  color: var(--color-link);
+  & a.icon:hover {
+    color: var(--color-link);
+  }
 }
 
 /* 推荐文章和相邻导航字体颜色设置 */
