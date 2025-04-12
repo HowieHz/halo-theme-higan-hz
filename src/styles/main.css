@@ -1173,9 +1173,9 @@ html[data-color-scheme="dark"] article .content div.dark {
     background-position: bottom;
     background-size: 100% 0.375rem;
     background-repeat: repeat-x;
-  }
-  &:before {
-    content: "#";
+    &:before {
+      content: "#";
+    }
   }
 }
 
