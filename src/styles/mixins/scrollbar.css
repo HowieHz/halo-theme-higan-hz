@@ -1,8 +1,11 @@
 :root {
+
   /* 滚动条滑块的颜色 */
   --scrollbar-thumb-color: var(--color-scrollbar);
+
   /* 滚动条滑块的颜色 鼠标悬停时 */
   --scrollbar-thumb-hover-color: var(--color-scrollbar);
+
   /* 滚动条滑块背景色 */
   --scrollbar-thumb-background-color: transparent;
 
@@ -14,9 +17,10 @@
 }
 
 * {
-  scrollbar-width: thin;
+
   /* 将第一种颜色应用于滚动条滑块，第二种颜色应用于滚动条轨道 */
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-background-color) !important;
+  scrollbar-width: thin;
 }
 
 *:hover {
@@ -25,10 +29,12 @@
 
 /* 整个滚动条 */
 *::-webkit-scrollbar {
-  /* 垂直滚动条的宽度 */
-  width: 8px;
+
   /* 水平滚动条的高度 */
   height: 8px;
+
+  /* 垂直滚动条的宽度 */
+  width: 8px;
 }
 
 /* 滚动条上的按钮（上下箭头） */
