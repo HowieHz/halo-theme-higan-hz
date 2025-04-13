@@ -13,20 +13,6 @@ module.exports = {
     // 媒体查询
     "media-feature-range-notation": "prefix", // 使用传统前缀表示法 (min-width: 480px)
 
-    // 允许的伪类和伪元素
-    // "selector-pseudo-class-no-unknown": [
-    //   true,
-    //   {
-    //     ignorePseudoClasses: ["global", "local", "deep", "has"],
-    //   },
-    // ],
-    // "selector-pseudo-element-no-unknown": [
-    //   true,
-    //   {
-    //     ignorePseudoElements: ["v-deep", "deep"],
-    //   },
-    // ],
-
     // 允许 CSS at unknown 值语
     "at-rule-no-unknown": [
       true,
