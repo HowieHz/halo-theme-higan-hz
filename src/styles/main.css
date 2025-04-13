@@ -126,6 +126,10 @@ body {
     border-bottom: 1px dotted;
   }
 
+  & ol {
+    list-style: decimal;
+  }
+
   & ul,
   & ol,
   & dl {
@@ -135,10 +139,6 @@ body {
     & ol {
       margin: 0;
     }
-  }
-
-  & ol {
-    list-style: decimal;
   }
 
   & dt {
@@ -1018,7 +1018,6 @@ article {
   }
 
   & .content {
-
     /* 默认样式 language-mermaid style 适配 halo-plugin-vditor */
     & div {
       &.light,
@@ -1078,7 +1077,7 @@ article {
       & footer {
         color: var(--color-meta);
         font-size: var(--text-xs);
-        margin: line-height 0;
+        margin: var(--text) * 1.725 0;
 
         & a {
           background-image: linear-gradient(

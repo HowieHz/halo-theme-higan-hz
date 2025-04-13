@@ -14,35 +14,24 @@ module.exports = {
     "media-feature-range-notation": "prefix", // 使用传统前缀表示法 (min-width: 480px)
 
     // 允许的伪类和伪元素
-    "selector-pseudo-class-no-unknown": [
-      true,
-      {
-        ignorePseudoClasses: ["global", "local", "deep", "has"],
-      },
-    ],
-    "selector-pseudo-element-no-unknown": [
-      true,
-      {
-        ignorePseudoElements: ["v-deep", "deep"],
-      },
-    ],
+    // "selector-pseudo-class-no-unknown": [
+    //   true,
+    //   {
+    //     ignorePseudoClasses: ["global", "local", "deep", "has"],
+    //   },
+    // ],
+    // "selector-pseudo-element-no-unknown": [
+    //   true,
+    //   {
+    //     ignorePseudoElements: ["v-deep", "deep"],
+    //   },
+    // ],
 
-    // 允许 CSS 嵌套语法
+    // 允许 CSS at unknown 值语
     "at-rule-no-unknown": [
       true,
       {
-        ignoreAtRules: [
-          "tailwind",
-          "apply",
-          "variants",
-          "responsive",
-          "screen",
-          "layer",
-          "mixin",
-          "include",
-          "extend",
-          "content",
-        ],
+        ignoreAtRules: ["tailwind"],
       },
     ],
 
@@ -50,7 +39,9 @@ module.exports = {
     "order/properties-alphabetical-order": true,
 
     // 空行规则
+    // 控制属性声明前是否应该有空行
     "declaration-empty-line-before": "never",
+    // 控制选择器规则（整个样式块）前是否应该有空行
     "rule-empty-line-before": [
       "always",
       {
@@ -58,12 +49,19 @@ module.exports = {
         ignore: ["after-comment"],
       },
     ],
+    // 控制注释前是否应该有空行
+    "comment-empty-line-before": [
+      "always",
+      {
+        except: ["first-nested"],
+        ignore: ["stylelint-commands", "after-comment"],
+      },
+    ],
 
     // 其他规则
     "no-empty-source": null, // 允许空文件
     "max-nesting-depth": 99, // 限制嵌套深度
     "color-hex-length": "short", // 使用短十六进制颜色代码
-    "comment-empty-line-before": "always", // 注释前空行
     "declaration-block-single-line-max-declarations": 1, // 单行最多声明数
     "unit-allowed-list": ["px", "em", "rem", "%", "s", "vh", "vw", "deg", "fr", "vmax", "vmin", "ms"], // 允许的单位
   },
