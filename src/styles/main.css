@@ -1646,7 +1646,7 @@ html[data-color-scheme="dark"] article .content div.dark {
     }
   }
 
-  & .momemt-content {
+  & .moment-content {
     word-break: break-word;
     & a {
       color: var(--color-text);
@@ -1734,7 +1734,7 @@ html[data-color-scheme="dark"] article .content div.dark {
 }
 
 .moment-body {
-  & .momemt-content {
+  & .moment-content {
     & li {
       list-style: initial !important;
     }

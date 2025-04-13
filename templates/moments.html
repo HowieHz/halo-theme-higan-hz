@@ -91,7 +91,7 @@
               </div>
               <div class="moment-body">
                 <div class="moment-content-box">
-                  <div class="momemt-content" th:utext="${moment.spec.content?.html}"></div>
+                  <div class="moment-content" th:utext="${moment.spec.content?.html}"></div>
                   <div class="medium" th:with="medium=${moment.spec.content?.medium}">
                     <th:block th:each="media : ${medium}">
                       <img
