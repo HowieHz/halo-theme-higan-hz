@@ -267,10 +267,12 @@ body {
   .image-wrap {
     flex-direction: row;
     margin-bottom: 2rem;
+
     & .image-block {
       flex: 1 0 35%;
       margin-right: 2rem;
     }
+
     & p {
       flex: 1 0 65%;
     }
@@ -344,6 +346,7 @@ body {
     background-size: 3.125rem 3.125rem;
     background-repeat: no-repeat;
   }
+
   & #nav {
     color: var(--color-accent-1);
     letter-spacing: 0.01em;
@@ -824,6 +827,7 @@ body {
     width: 100%;
     text-align: center;
     white-space: nowrap;
+
     & a {
       display: inline-block;
       padding-left: 1rem;
@@ -1137,7 +1141,8 @@ article {
 .post-navigation {
   & a {
     color: var(--color-text);
-    /* background-image: none; */
+
+    /* 去除下划线用这个 background-image: none; */
   }
 }
 
@@ -1156,12 +1161,14 @@ a {
   & img {
     display: inherit !important;
   }
+
   &:has(img) {
     background-image: none !important;
   }
 }
 
 /* language-mermaid style start */
+
 /* 默认样式 适配 halo-plugin-vditor */
 article {
   & .content {
@@ -1335,6 +1342,7 @@ html[data-color-scheme="dark"] article .content div.dark {
     color: var(--color-footer-mobile-1);
     text-decoration: underline;
     background-image: none;
+
     &:hover {
       color: var(--color-meta-code);
     }
@@ -1536,6 +1544,7 @@ html[data-color-scheme="dark"] article .content div.dark {
   & .category-list-title {
     color: var(--color-meta);
   }
+
   & .category-list {
     & .category-list-item {
       & .category-list-count {
