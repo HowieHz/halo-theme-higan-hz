@@ -1449,6 +1449,7 @@ html[data-color-scheme="dark"] article .content div.dark {
   & .tag-cloud-tags {
     clear: both;
     text-align: center;
+
     & a {
       display: inline-block;
       margin: 0.625rem;
@@ -1560,7 +1561,7 @@ html[data-color-scheme="dark"] article .content div.dark {
   }
 }
 
-/*图库页面样式开始*/
+/* 图库页面样式开始 */
 .photos {
   & .photo-list {
     list-style: none;
@@ -1578,9 +1579,9 @@ html[data-color-scheme="dark"] article .content div.dark {
     margin-bottom: 0.9375rem;
   }
 }
-/*图库页面样式结束*/
+/* 图库页面样式结束 */
 
-/*友链页面样式开始*/
+/* 友链页面样式开始 */
 #links {
   & li {
     list-style: none;
@@ -1634,9 +1635,9 @@ html[data-color-scheme="dark"] article .content div.dark {
   }
 }
 
-/*友链页面样式结束*/
+/* 友链页面样式结束 */
 
-/*日志样式开始*/
+/* 日志样式开始 */
 .moment {
   & .moment-comment {
     margin-top: 1rem;
@@ -1649,6 +1650,7 @@ html[data-color-scheme="dark"] article .content div.dark {
   & .post-list {
     & li {
       list-style: none;
+
       /* display: flex;
       flex-direction: column;
       flex: 1; */
@@ -1701,7 +1703,7 @@ html[data-color-scheme="dark"] article .content div.dark {
 
   & .avatar {
     background-color: var(--color-background);
-    box-shadow: 0 0 0 1px rgba(27, 31, 36, 0.15);
+    box-shadow: 0 0 0 1px rgba(27 31 36 / 15%);
     display: inline-block;
     flex-shrink: 0;
     line-height: 1;
@@ -1721,6 +1723,7 @@ html[data-color-scheme="dark"] article .content div.dark {
     display: grid;
     grid-gap: 0.5rem;
     grid-template-columns: 1fr 1fr 1fr;
+
     & img {
       max-height: 9rem;
       width: 100%;
@@ -1733,9 +1736,9 @@ html[data-color-scheme="dark"] article .content div.dark {
     background-image: none !important;
     background-color: var(--color-background-code) !important;
     color: var(--color-accent-1) !important;
-    padding: 0px 6px;
+    padding: 0 6px;
     border-radius: 5px;
-    box-shadow: 0px 0px 6px var(--color-footer-mobile-2);
+    box-shadow: 0 0 6px var(--color-footer-mobile-2);
     text-decoration: none;
     font-size: var(--text-sm);
 
@@ -1762,6 +1765,7 @@ html[data-color-scheme="dark"] article .content div.dark {
     & li {
       list-style: initial !important;
     }
+
     & p {
       text-align: left;
       word-wrap: break-word;
