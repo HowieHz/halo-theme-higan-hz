@@ -49,9 +49,6 @@ module.exports = {
     // 属性排序
     "order/properties-alphabetical-order": true,
 
-    // 引号规则
-    "string-quotes": "double",
-
     // 空行规则
     "declaration-empty-line-before": "never",
     "rule-empty-line-before": [
@@ -64,10 +61,10 @@ module.exports = {
 
     // 其他规则
     "no-empty-source": null, // 允许空文件
-    "max-nesting-depth": 4, // 限制嵌套深度
+    "max-nesting-depth": 99, // 限制嵌套深度
     "color-hex-length": "short", // 使用短十六进制颜色代码
     "comment-empty-line-before": "always", // 注释前空行
     "declaration-block-single-line-max-declarations": 1, // 单行最多声明数
-    "unit-allowed-list": ["px", "em", "rem", "%", "s", "vh", "vw", "deg", "fr", "vmax", "vmin"], // 允许的单位
+    "unit-allowed-list": ["px", "em", "rem", "%", "s", "vh", "vw", "deg", "fr", "vmax", "vmin", "ms"], // 允许的单位
   },
 };

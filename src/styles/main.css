@@ -748,7 +748,7 @@ body {
     display: none;
   }
 
-  #footer-post {
+  & #footer-post {
     background: var(--color-footer-mobile-3);
     border-top: 1px solid #666;
     bottom: 0;
@@ -1018,6 +1018,15 @@ article {
   }
 
   & .content {
+
+    /* 默认样式 language-mermaid style 适配 halo-plugin-vditor */
+    & div {
+      &.light,
+      &.dark {
+        display: none;
+      }
+    }
+
     & h2::before {
       color: var(--color-accent-1);
       content: "#";
@@ -1158,23 +1167,13 @@ a {
 
 /* language-mermaid style start */
 
-/* 默认样式 适配 halo-plugin-vditor */
-article {
-  & .content {
-    & div {
-      &.light,
-      &.dark {
-        display: none;
-      }
-    }
-  }
-}
-
 /* 自动模式 */
 html[data-color-scheme="auto"] article .content {
   & div {
     &.light {
-      @media (prefers-color-scheme: no-preference), (prefers-color-scheme: light) {
+      display: block;
+
+      @media (prefers-color-scheme: light) {
         display: block;
       }
     }
@@ -1661,7 +1660,7 @@ html[data-color-scheme="dark"] article .content div.dark {
   }
 
   & .moment-content {
-    word-break: break-word;
+    overflow-wrap: break-word;
 
     & a {
       background-image: linear-gradient(
@@ -1828,12 +1827,9 @@ html[data-color-scheme="dark"] article .content div.dark {
   color: var(--color-accent-3);
 }
 
-.color-time {
+.color-time,
+a.color-time {
   color: var(--color-time);
-}
-
-.\!color-time {
-  color: var(--color-time) !important;
 }
 
 code {
@@ -1879,6 +1875,7 @@ code {
     & .title,
     & .name,
     & .section,
+    /* stylelint-disable-next-line selector-class-pattern */
     & .built_in {
       color: #b5bd68;
     }

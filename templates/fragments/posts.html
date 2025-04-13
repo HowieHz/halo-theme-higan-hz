@@ -107,7 +107,7 @@
                 <span class="iconify" data-icon="fa-solid:archive" data-inline="false"></span>
                 <th:block th:each="category : ${post.categories}">
                   <a
-                    class="category-link !color-time"
+                    class="category-link color-time"
                     th:href="@{${category.status?.permalink}}"
                     th:text="${category.spec?.displayName}"
                   >
@@ -124,7 +124,7 @@
                 <span class="iconify" data-icon="mdi:tag-outline" data-inline="false"></span>
                 <th:block th:each="tag : ${post.tags}">
                   <a
-                    class="tag-link !color-time"
+                    class="tag-link color-time"
                     th:href="@{${tag.status?.permalink}}"
                     th:text="${tag.spec?.displayName}"
                   >
