@@ -1619,9 +1619,11 @@ html[data-color-scheme="dark"] article .content div.dark {
     & figcaption {
       padding-left: 0.9375rem;
     }
+
     & .fig-author-figure-title {
       font-weight: 400;
     }
+
     & .fig-author-figure-description {
       margin-top: 0.125rem;
       color: var(--color-meta);
@@ -1640,6 +1642,7 @@ html[data-color-scheme="dark"] article .content div.dark {
 .moment {
   & .moment-comment {
     margin-top: 1rem;
+
     &:target {
       display: block;
     }
@@ -1652,13 +1655,16 @@ html[data-color-scheme="dark"] article .content div.dark {
       flex-direction: column;
       flex: 1; */
     }
+
     & .moment-item {
       padding-bottom: 1.5rem;
     }
+
     & a {
       text-decoration: none;
       background: none;
     }
+
     & .operation {
       color: var(--color-text);
       padding-top: 0.5rem;
@@ -1734,13 +1740,14 @@ html[data-color-scheme="dark"] article .content div.dark {
     box-shadow: 0px 0px 6px var(--color-footer-mobile-2);
     text-decoration: none;
     font-size: var(--text-sm);
+
     &::before {
       content: "#";
     }
   }
 
   & ul {
-    @media (width < 768px) {
+    @media (max-width: 767px) {
       margin-block-start: 0;
       padding-inline-start: 0;
     }
