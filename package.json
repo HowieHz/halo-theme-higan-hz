@@ -7,7 +7,7 @@
     "dev-build": "postcss ./src/styles/tailwind.css -o ./tmp/styles/tailwind.css && stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ && tsc && vite build",
     "build": "set NODE_ENV=777 && stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --compress && tsc && vite build",
     "lint": "pnpm run \"/^lint:.*/\"",
-    "lint:eslint": "eslint ./src",
+    "lint:eslint": "eslint --fix ./src",
     "lint:style": "stylelint --fix \"./src/**/*.css\"",
     "nofix:lint:md": "markdownlint \"**/*.md\"",
     "lint:md": "markdownlint \"**/*.md\" --fix",
