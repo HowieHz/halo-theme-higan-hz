@@ -9,7 +9,6 @@
     "lint": "pnpm run \"/^lint:.*/\"",
     "lint:eslint": "eslint --fix ./src",
     "lint:style": "stylelint --fix \"./src/**/*.css\"",
-    "nofix:lint:md": "markdownlint \"**/*.md\"",
     "lint:md": "markdownlint \"**/*.md\" --fix",
     "format": "pnpm run \"/^format:.*/\"",
     "format:stylus": "stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
