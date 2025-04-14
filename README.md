@@ -38,8 +38,10 @@
 如果你喜欢这个主题，请给项目点个 Star 吧！  
 你的 Star 和支持将成为我持续更新的动力！
 
-欢迎大家加入主题交流群（QQ）：[点击链接加入群聊 群号 694413711](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=QCcmLkzDHUT22qP_-MVYSYDwlL_Jf55Y&authKey=KWfge330T3nQAJy96gacr8eyp8u0egY3tNGBFAnNjqdBdMJKQLp9I9efUU9aMiGM&noverify=0&group_code=694413711)  
-如果你愿意支持我，也可以加入群聊，与我交流：让我知道除了我自己，还有其他人在使用这个主题😀
+欢迎大家加入主题交流群（QQ）：
+
+- [点击链接加入群聊 群号 694413711](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=QCcmLkzDHUT22qP_-MVYSYDwlL_Jf55Y&authKey=KWfge330T3nQAJy96gacr8eyp8u0egY3tNGBFAnNjqdBdMJKQLp9I9efUU9aMiGM&noverify=0&group_code=694413711)  
+  如果你愿意支持我，也可以加入群聊，与我交流：让我知道除了我自己，还有其他人在使用这个主题😀
 
 欢迎基于此项目进行 Fork，如果你能提个 Issue 那就更好了。无论需求多么奇特，我都会尽力添加 \^\_\^
 
@@ -101,14 +103,14 @@
   - [可选插件](#可选插件)
     - [Mermaid 明暗切换支持](#mermaid-明暗切换支持)
       - [使用默认编辑器](#使用默认编辑器)
-        - [示例](#示例)
-        - [使用说明](#使用说明)
+        - [适用于默认编辑器的示例](#适用于默认编辑器的示例)
+        - [适用于默认编辑器的使用说明](#适用于默认编辑器的使用说明)
       - [使用 Vditor 编辑器](#使用-vditor-编辑器)
-        - [示例](#示例-1)
-        - [使用说明](#使用说明-1)
+        - [适用于 Vditor 编辑器的示例](#适用于-vditor-编辑器的示例)
+        - [适用于 Vditor 编辑器的使用说明](#适用于-vditor-编辑器的使用说明)
   - [设置内容仅在浅色/深色模式下显示](#设置内容仅在浅色深色模式下显示)
-    - [使用默认编辑器](#使用默认编辑器-1)
-    - [使用 Vditor 编辑器](#使用-vditor-编辑器-1)
+    - [在默认编辑器中的使用方法](#在默认编辑器中的使用方法)
+    - [在使用 Vditor 编辑器 中的使用方法](#在使用-vditor-编辑器-中的使用方法)
   - [开发指南/贡献指南](#开发指南贡献指南)
   - [Lighthouse](#lighthouse)
   - [TODO](#todo)
@@ -273,7 +275,8 @@
    - 添加“多语言菜单前缀匹配模式”，启用此项将允许菜单名符合 navigator.language 值前缀即显示，而无需完全匹配。
    - 添加“默认多语言菜单名称”，可设定默认菜单。默认菜单将在没有菜单成功匹配的时候显示。
    - 此项使用教程请看 [多语言菜单使用指南](#多语言菜单使用指南)
-3. 添加“CSP:upgrade-insecure-requests”选项，避免 HTTPS 协议网页引用 HTTP 资源时报错。相关文档：[CSP: upgrade-insecure-requests - HTTP | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
+3. 添加“CSP:upgrade-insecure-requests”选项，避免 HTTPS 协议网页引用 HTTP 资源时报错。
+   - 相关文档：[CSP: upgrade-insecure-requests - HTTP | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
 4. 增加“仅允许使用指定域名访问”。使用场景：防止站点被恶意镜像后的流量流失。
 5. 增加“自定义资源位置地址”，允许指定资源位置地址（如主要 CSS 资源，主要 JavaScript 资源）。
 6. 增加“instant.page 支持”，自动加载 instant.page 脚本，以提升页面加载速度。
@@ -284,182 +287,183 @@
    - 添加“跟随系统”配色方案
    - 添加蓝色系列配色方案
 2. 支持自定义配色方案
+
    - 使用步骤
+
      1. 在此处创建自定义配色方案，填写好对应信息，记住"自定义配色方案识别码"
      2. “配色方案”、”自动模式配色方案“（需启用“浅色/深色模式切换按钮”）、“浅色模式配色方案”（需启用“浅色/深色模式切换按钮”），“深色模式配色方案”（需启用“浅色/深色模式切换按钮”），中选择“自定义配色选项”。
      3. 在选项下方新出现的输入框中填写你的"自定义配色方案识别码"
      4. 即可使用你自定义的配色方案
 
-<details><summary>点我展开自定义配色示例</summary>
+        <details><summary>点我展开自定义配色示例</summary>
 
-深色模式示例（启用 CSS 原始输出模式）  
-实际使用时请将填写的”识别码“替换 {id}
+        深色模式示例（启用 CSS 原始输出模式）  
+        实际使用时请将填写的”识别码“替换 {id}
 
-```css
-html[theme="theme-{id}"] {
-  --color-accent-1: #2bbc8a;
-  --color-accent-2: #eee;
-  --color-accent-3: #ccc;
-  --color-avatar-border: #212326;
-  --color-background: #1d1f21;
-  --color-background-code: #d5d7d8;
-  --color-border: #908d8d;
-  --color-card-hover: #212326;
-  --color-divide: #616161;
-  --color-footer-mobile-1: #a4a3a3;
-  --color-footer-mobile-2: #27292b;
-  --color-footer-mobile-3: #1f2325;
-  --color-highlight-background: #212326;
-  --color-link: #d480aa;
-  --color-meta: #908d8d;
-  --color-meta-code: #908d8d;
-  --color-quote: #ccffb6;
-  --color-scrollbar: #999;
-  --color-text: #d5d7d8;
-  --color-time: #adaeaf;
-  --toc-level-2: #e3e3e3;
-  --toc-level-3: #b0b0b0;
-  --toc-level-4: #636363;
-}
-html[theme="theme-{id}"] comment-widget {
-  --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
-  --halo-comment-widget-component-form-input-border-color: #636363 !important;
-}
-```
+        ```css
+        html[theme="theme-{id}"] {
+          --color-accent-1: #2bbc8a;
+          --color-accent-2: #eee;
+          --color-accent-3: #ccc;
+          --color-avatar-border: #212326;
+          --color-background: #1d1f21;
+          --color-background-code: #d5d7d8;
+          --color-border: #908d8d;
+          --color-card-hover: #212326;
+          --color-divide: #616161;
+          --color-footer-mobile-1: #a4a3a3;
+          --color-footer-mobile-2: #27292b;
+          --color-footer-mobile-3: #1f2325;
+          --color-highlight-background: #212326;
+          --color-link: #d480aa;
+          --color-meta: #908d8d;
+          --color-meta-code: #908d8d;
+          --color-quote: #ccffb6;
+          --color-scrollbar: #999;
+          --color-text: #d5d7d8;
+          --color-time: #adaeaf;
+          --toc-level-2: #e3e3e3;
+          --toc-level-3: #b0b0b0;
+          --toc-level-4: #636363;
+        }
+        html[theme="theme-{id}"] comment-widget {
+          --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
+          --halo-comment-widget-component-form-input-border-color: #636363 !important;
+        }
+        ```
 
-浅色模式示例（启用 CSS 原始输出模式）  
-实际使用时请将填写的”识别码“替换 {id}
+        浅色模式示例（启用 CSS 原始输出模式）  
+        实际使用时请将填写的”识别码“替换 {id}
 
-```css
-html[theme="theme-{id}"] {
-  --color-accent-1: #2bbc8a;
-  --color-accent-2: #383838;
-  --color-accent-3: #676767;
-  --color-avatar-border: #fafafa;
-  --color-background: #fff;
-  --color-background-code: #fafafa;
-  --color-border: #666;
-  --color-card-hover: #fafafa;
-  --color-divide: #e5e7eb;
-  --color-footer-mobile-1: #666;
-  --color-footer-mobile-2: #e6e6e6;
-  --color-footer-mobile-3: #fafafa;
-  --color-highlight-background: #212326;
-  --color-link: #d480aa;
-  --color-meta: #666;
-  --color-meta-code: #808080;
-  --color-quote: #2bbc8a;
-  --color-scrollbar: #aaa;
-  --color-text: #333;
-  --color-time: #595858;
-  --toc-level-2: #383838;
-  --toc-level-3: #666;
-  --toc-level-4: #888;
-}
-html[theme="theme-{id}"] comment-widget {
-  --halo-comment-widget-component-form-input-bg-color: #fff !important;
-}
-```
+        ```css
+        html[theme="theme-{id}"] {
+          --color-accent-1: #2bbc8a;
+          --color-accent-2: #383838;
+          --color-accent-3: #676767;
+          --color-avatar-border: #fafafa;
+          --color-background: #fff;
+          --color-background-code: #fafafa;
+          --color-border: #666;
+          --color-card-hover: #fafafa;
+          --color-divide: #e5e7eb;
+          --color-footer-mobile-1: #666;
+          --color-footer-mobile-2: #e6e6e6;
+          --color-footer-mobile-3: #fafafa;
+          --color-highlight-background: #212326;
+          --color-link: #d480aa;
+          --color-meta: #666;
+          --color-meta-code: #808080;
+          --color-quote: #2bbc8a;
+          --color-scrollbar: #aaa;
+          --color-text: #333;
+          --color-time: #595858;
+          --toc-level-2: #383838;
+          --toc-level-3: #666;
+          --toc-level-4: #888;
+        }
+        html[theme="theme-{id}"] comment-widget {
+          --halo-comment-widget-component-form-input-bg-color: #fff !important;
+        }
+        ```
 
-自动模式示例（启用 CSS 原始输出模式）  
-实际使用时请将填写的”识别码“替换 {id}
+        自动模式示例（启用 CSS 原始输出模式）  
+        实际使用时请将填写的”识别码“替换 {id}
 
-```css
-@media (prefers-color-scheme: no-preference) {
-  html[theme="theme-{id}"] {
-    --color-accent-1: #2bbc8a;
-    --color-accent-2: #383838;
-    --color-accent-3: #676767;
-    --color-avatar-border: #fafafa;
-    --color-background: #fff;
-    --color-background-code: #fafafa;
-    --color-border: #666;
-    --color-card-hover: #fafafa;
-    --color-divide: #e5e7eb;
-    --color-footer-mobile-1: #666;
-    --color-footer-mobile-2: #e6e6e6;
-    --color-footer-mobile-3: #fafafa;
-    --color-highlight-background: #212326;
-    --color-link: #d480aa;
-    --color-meta: #666;
-    --color-meta-code: #808080;
-    --color-quote: #2bbc8a;
-    --color-scrollbar: #aaa;
-    --color-text: #333;
-    --color-time: #595858;
-    --toc-level-2: #383838;
-    --toc-level-3: #666;
-    --toc-level-4: #888;
-  }
-  html[theme="theme-{id}"] comment-widget {
-    --halo-comment-widget-component-form-input-bg-color: #fff !important;
-  }
-}
-@media (prefers-color-scheme: light) {
-  html[theme="theme-{id}"] {
-    --color-accent-1: #2bbc8a;
-    --color-accent-2: #383838;
-    --color-accent-3: #676767;
-    --color-avatar-border: #fafafa;
-    --color-background: #fff;
-    --color-background-code: #fafafa;
-    --color-border: #666;
-    --color-card-hover: #fafafa;
-    --color-divide: #e5e7eb;
-    --color-footer-mobile-1: #666;
-    --color-footer-mobile-2: #e6e6e6;
-    --color-footer-mobile-3: #fafafa;
-    --color-highlight-background: #212326;
-    --color-link: #d480aa;
-    --color-meta: #666;
-    --color-meta-code: #808080;
-    --color-quote: #2bbc8a;
-    --color-scrollbar: #aaa;
-    --color-text: #333;
-    --color-time: #595858;
-    --toc-level-2: #383838;
-    --toc-level-3: #666;
-    --toc-level-4: #888;
-  }
-  html[theme="theme-{id}"] comment-widget {
-    --halo-comment-widget-component-form-input-bg-color: #fff !important;
-  }
-}
-@media (prefers-color-scheme: dark) {
-  html[theme="theme-{id}"] {
-    --color-accent-1: #2bbc8a;
-    --color-accent-2: #eee;
-    --color-accent-3: #ccc;
-    --color-avatar-border: #212326;
-    --color-background: #1d1f21;
-    --color-background-code: #d5d7d8;
-    --color-border: #908d8d;
-    --color-card-hover: #212326;
-    --color-divide: #616161;
-    --color-footer-mobile-1: #a4a3a3;
-    --color-footer-mobile-2: #27292b;
-    --color-footer-mobile-3: #1f2325;
-    --color-highlight-background: #212326;
-    --color-link: #d480aa;
-    --color-meta: #908d8d;
-    --color-meta-code: #908d8d;
-    --color-quote: #ccffb6;
-    --color-scrollbar: #999;
-    --color-text: #d5d7d8;
-    --color-time: #adaeaf;
-    --toc-level-2: #e3e3e3;
-    --toc-level-3: #b0b0b0;
-    --toc-level-4: #636363;
-  }
-  html[theme="theme-{id}"] comment-widget {
-    --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
-    --halo-comment-widget-component-form-input-border-color: #636363 !important;
-  }
-}
-```
+        ```css
+        @media (prefers-color-scheme: no-preference) {
+          html[theme="theme-{id}"] {
+            --color-accent-1: #2bbc8a;
+            --color-accent-2: #383838;
+            --color-accent-3: #676767;
+            --color-avatar-border: #fafafa;
+            --color-background: #fff;
+            --color-background-code: #fafafa;
+            --color-border: #666;
+            --color-card-hover: #fafafa;
+            --color-divide: #e5e7eb;
+            --color-footer-mobile-1: #666;
+            --color-footer-mobile-2: #e6e6e6;
+            --color-footer-mobile-3: #fafafa;
+            --color-highlight-background: #212326;
+            --color-link: #d480aa;
+            --color-meta: #666;
+            --color-meta-code: #808080;
+            --color-quote: #2bbc8a;
+            --color-scrollbar: #aaa;
+            --color-text: #333;
+            --color-time: #595858;
+            --toc-level-2: #383838;
+            --toc-level-3: #666;
+            --toc-level-4: #888;
+          }
+          html[theme="theme-{id}"] comment-widget {
+            --halo-comment-widget-component-form-input-bg-color: #fff !important;
+          }
+        }
+        @media (prefers-color-scheme: light) {
+          html[theme="theme-{id}"] {
+            --color-accent-1: #2bbc8a;
+            --color-accent-2: #383838;
+            --color-accent-3: #676767;
+            --color-avatar-border: #fafafa;
+            --color-background: #fff;
+            --color-background-code: #fafafa;
+            --color-border: #666;
+            --color-card-hover: #fafafa;
+            --color-divide: #e5e7eb;
+            --color-footer-mobile-1: #666;
+            --color-footer-mobile-2: #e6e6e6;
+            --color-footer-mobile-3: #fafafa;
+            --color-highlight-background: #212326;
+            --color-link: #d480aa;
+            --color-meta: #666;
+            --color-meta-code: #808080;
+            --color-quote: #2bbc8a;
+            --color-scrollbar: #aaa;
+            --color-text: #333;
+            --color-time: #595858;
+            --toc-level-2: #383838;
+            --toc-level-3: #666;
+            --toc-level-4: #888;
+          }
+          html[theme="theme-{id}"] comment-widget {
+            --halo-comment-widget-component-form-input-bg-color: #fff !important;
+          }
+        }
+        @media (prefers-color-scheme: dark) {
+          html[theme="theme-{id}"] {
+            --color-accent-1: #2bbc8a;
+            --color-accent-2: #eee;
+            --color-accent-3: #ccc;
+            --color-avatar-border: #212326;
+            --color-background: #1d1f21;
+            --color-background-code: #d5d7d8;
+            --color-border: #908d8d;
+            --color-card-hover: #212326;
+            --color-divide: #616161;
+            --color-footer-mobile-1: #a4a3a3;
+            --color-footer-mobile-2: #27292b;
+            --color-footer-mobile-3: #1f2325;
+            --color-highlight-background: #212326;
+            --color-link: #d480aa;
+            --color-meta: #908d8d;
+            --color-meta-code: #908d8d;
+            --color-quote: #ccffb6;
+            --color-scrollbar: #999;
+            --color-text: #d5d7d8;
+            --color-time: #adaeaf;
+            --toc-level-2: #e3e3e3;
+            --toc-level-3: #b0b0b0;
+            --toc-level-4: #636363;
+          }
+          html[theme="theme-{id}"] comment-widget {
+            --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
+            --halo-comment-widget-component-form-input-border-color: #636363 !important;
+          }
+        }
+        ```
 
-</details>
-<br>
+        </details>
 
 3. <a id="theme-switch-button-anchor"></a>可在大标题旁添加浅色/深色模式切换按钮（切换顺序 浅色模式 -> 深色模式 -> 自动模式 -> 浅色模式）
    - 注：“自动模式配色方案”选择一种浅色方案即可禁用自动模式。
@@ -487,10 +491,8 @@ html[theme="theme-{id}"] comment-widget {
    - 支持自由调整顺序、数量
    - 支持选择图标/文字
 10. 允许关闭页面底部主题信息
-
-- 支持调整其中的主题名
-- 支持调整其中的 Halo 版本名
-
+    - 支持调整其中的主题名
+    - 支持调整其中的 Halo 版本名
 11. 允许关闭页面底部版权信息
 12. 允许设定是否强制页脚在页面最底部
 13. 允许关闭页面底部菜单
@@ -520,16 +522,14 @@ html[theme="theme-{id}"] comment-widget {
 9. 允许自定义简介列表
    - 允许显示文章阅读量
 10. 允许自定义多元列表
-
-- 允许显示文章分类
-- 允许显示文章标签
-- 允许显示文章阅读量
-- 允许显示文章预计阅读时间
-- 允许隐藏文章摘要
-- 允许限制文章摘要行数上限
-- 允许隐藏跳转文章链接所用提示文字
-- 允许显示文章封面
-
+    - 允许显示文章分类
+    - 允许显示文章标签
+    - 允许显示文章阅读量
+    - 允许显示文章预计阅读时间
+    - 允许隐藏文章摘要
+    - 允许限制文章摘要行数上限
+    - 允许隐藏跳转文章链接所用提示文字
+    - 允许显示文章封面
 11. 允许自由选择是否开关文章列表置顶图标，以及选择图标位置
 
 #### 增加于“文章页样式”
@@ -738,7 +738,7 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 
 #### 使用默认编辑器
 
-##### 示例
+##### 适用于默认编辑器的示例
 
 <details><summary>点我展开示例 展示使用方法</summary>
 
@@ -747,7 +747,8 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 
 > 第一种方式（以下内容作为 HTML 代码块插入默认编辑器）
 
-```
+<!-- prettier-ignore-start -->
+```html
 <div class="mermaid auto">
 flowchart TD
 A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
@@ -767,10 +768,12 @@ RSS3 -->|发 Token| $RSS3{{$RSS3}}
 RSS3 -->|发 Token| $POWER{{$POWER}}
 </div>
 ```
+<!-- prettier-ignore-end -->
 
 > 第二种方式（以下内容作为 HTML 代码块插入默认编辑器）
 
-```
+<!-- prettier-ignore-start -->
+```html
 <div class="mermaid dark">
 %%{init: { "theme": "dark" } }%%
 flowchart TD
@@ -811,10 +814,11 @@ RSS3 -->|发 Token| $RSS3{{$RSS3}}
 RSS3 -->|发 Token| $POWER{{$POWER}}
 </div>
 ```
+<!-- prettier-ignore-end -->
 
 </details>
 
-##### 使用说明
+##### 适用于默认编辑器的使用说明
 
 1. 需插件 [plugin-hybrid-edit-block](https://github.com/halo-sigs/plugin-hybrid-edit-block)
 2. 进入主题配置，启用 `全局-Mermaid 支持`
@@ -825,15 +829,18 @@ RSS3 -->|发 Token| $POWER{{$POWER}}
 
 > 第一种方式：只写一遍，自动生成浅色/深色模式下两种图表
 
-```
+<!-- prettier-ignore-start -->
+```html
 <div class="mermaid auto">
 [[图表正文]]
 </div>
 ```
+<!-- prettier-ignore-end -->
 
 > 第二种方式：手动管理浅色/深色模式下的图表
 
-```
+<!-- prettier-ignore-start -->
+```html
 <div class="mermaid dark">
 %%{init: { "theme": "dark" } }%%
 [[图表正文]]
@@ -844,10 +851,11 @@ RSS3 -->|发 Token| $POWER{{$POWER}}
 [[图表正文]]
 </div>
 ```
+<!-- prettier-ignore-end -->
 
 #### 使用 [Vditor 编辑器](https://github.com/justice2001/halo-plugin-vditor)
 
-##### 示例
+##### 适用于 Vditor 编辑器的示例
 
 <details><summary>点我展开示例 展示使用方法</summary>
 
@@ -960,7 +968,7 @@ RSS3 -->|发 Token| $POWER{{$POWER}}
 
 </details>
 
-##### 使用说明
+##### 适用于 Vditor 编辑器的使用说明
 
 输入以下内容，将 `[[图表标题]]` 和 `[[图表正文]]` 换成你自己的内容，  
 即可适配明暗切换。  
@@ -970,11 +978,13 @@ RSS3 -->|发 Token| $POWER{{$POWER}}
 > 此方式需要进入主题配置，启用 `全局-Mermaid 支持`  
 > 缺点：不兼容 Vditor 编辑器的实时预览
 
-```
+<!-- prettier-ignore-start -->
+```html
 <div class="mermaid auto">
 [[图表正文]]
 </div>
 ```
+<!-- prettier-ignore-end -->
 
 > 第二种方式：只写一遍，自动生成浅色/深色模式下两种图表  
 > 此方式需要进入主题配置，启用 `全局-Mermaid 支持`  
@@ -982,7 +992,8 @@ RSS3 -->|发 Token| $POWER{{$POWER}}
 > 缺点：一张图会多被渲染一遍（被 Vditor 自带的 Mermaid 多渲染一遍）  
 > 优点：兼容 Vditor 编辑器的实时预览
 
-````
+<!-- prettier-ignore-start -->
+````html
 <div class="mermaid auto">
 
 ```mermaid
@@ -991,12 +1002,14 @@ RSS3 -->|发 Token| $POWER{{$POWER}}
 
 </div>
 ````
+<!-- prettier-ignore-end -->
 
 > 第三种方式：手动管理浅色/深色模式下的图表  
 > 缺点：同样内容要复制粘贴一遍。由于是完全使用 Vditor 自带的渲染，所以主题设置中有关 Mermaid 的设置会失效。会继承上游的 bug，如 [mermaid-js/mermaid@5741](https://github.com/mermaid-js/mermaid/issues/5741)。  
 > 优点：兼容 Vditor 编辑器的实时预览，兼容性最好。完全使用 Vditor 自带的渲染，和预览表现一致。
 
-````
+<!-- prettier-ignore-start -->
+````html
 <div class="light">
 
 ```mermaid
@@ -1021,10 +1034,11 @@ title: [[图表标题]]
 
 </div>
 ````
+<!-- prettier-ignore-end -->
 
 ## 设置内容仅在浅色/深色模式下显示
 
-### 使用默认编辑器
+### 在默认编辑器中的使用方法
 
 1. 需插件 [plugin-hybrid-edit-block](https://github.com/halo-sigs/plugin-hybrid-edit-block)
 2. 默认编辑器中输入 `/html` 选择插入 html 代码块
@@ -1032,7 +1046,8 @@ title: [[图表标题]]
 输入以下内容，将 `[[浅色模式内容]]` 和 `[[深色模式内容]]` 换成你自己的内容，
 即可适配明暗切换
 
-```
+<!-- prettier-ignore-start -->
+```html
 <div class="dark">
 
 [[深色模式内容]]
@@ -1045,13 +1060,15 @@ title: [[图表标题]]
 
 </div>
 ```
+<!-- prettier-ignore-end -->
 
-### 使用 [Vditor 编辑器](https://github.com/justice2001/halo-plugin-vditor)
+### 在使用 [Vditor 编辑器](https://github.com/justice2001/halo-plugin-vditor) 中的使用方法
 
 输入以下内容，将 `[[浅色模式内容]]` 和 `[[深色模式内容]]` 换成你自己的内容，
 即可适配明暗切换
 
-```
+<!-- prettier-ignore-start -->
+```html
 <div class="dark">
 
 [[深色模式内容]]
@@ -1064,6 +1081,7 @@ title: [[图表标题]]
 
 </div>
 ```
+<!-- prettier-ignore-end -->
 
 ## 开发指南/贡献指南
 

@@ -55,7 +55,7 @@
     // MD013/line-length : Line length : https://github.com/DavidAnson/markdownlint/blob/v0.37.4/doc/md013.md
     "MD013": {
         // Number of characters
-        "line_length": 80,
+        "line_length": 160,
         // Number of characters for headings
         "heading_line_length": 80,
         // Number of characters for code blocks
@@ -137,7 +137,7 @@
     // MD033/no-inline-html : Inline HTML : https://github.com/DavidAnson/markdownlint/blob/v0.37.4/doc/md033.md
     "MD033": {
         // Allowed elements
-        "allowed_elements": []
+        "allowed_elements": ["a", "details", "summary", "br"]
     },
     // MD034/no-bare-urls : Bare URL used : https://github.com/DavidAnson/markdownlint/blob/v0.37.4/doc/md034.md
     "MD034": true,
@@ -174,12 +174,12 @@
     // MD042/no-empty-links : No empty links : https://github.com/DavidAnson/markdownlint/blob/v0.37.4/doc/md042.md
     "MD042": true,
     // MD043/required-headings : Required heading structure : https://github.com/DavidAnson/markdownlint/blob/v0.37.4/doc/md043.md
-    "MD043": {
-        // List of headings
-        "headings": [],
-        // Match case of headings
-        "match_case": false
-    },
+    // "MD043": {
+    //     // List of headings
+    //     "headings": [],
+    //     // Match case of headings
+    //     "match_case": false
+    // },
     // MD044/proper-names : Proper names should have the correct capitalization : https://github.com/DavidAnson/markdownlint/blob/v0.37.4/doc/md044.md
     "MD044": {
         // List of proper names
