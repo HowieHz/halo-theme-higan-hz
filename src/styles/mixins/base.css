@@ -1,17 +1,15 @@
 /* 初始化样式 */
 .aspect-w-1 > * {
-  position: absolute;
   height: 100%;
+  inset: 0;
+  position: absolute;
   width: 100%;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
 }
 
 .aspect-w-1 {
-  position: relative;
   padding-bottom: calc(var(--tw-aspect-h) / var(--tw-aspect-w) * 100%);
+  position: relative;
+
   --tw-aspect-w: 1;
 }
 
@@ -20,6 +18,6 @@
 }
 
 video {
-  max-width: 100%;
   height: auto;
+  max-width: 100%;
 }

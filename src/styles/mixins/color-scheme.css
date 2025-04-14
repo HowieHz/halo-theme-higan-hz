@@ -7,10 +7,8 @@
   color-scheme: only dark;
 }
 
-@media (prefers-color-scheme: no-preference) {
-  [data-color-scheme="auto"] {
-    color-scheme: normal;
-  }
+[data-color-scheme="auto"] {
+  color-scheme: normal;
 }
 
 @media (prefers-color-scheme: light) {
