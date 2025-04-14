@@ -4,7 +4,6 @@
     "watch:vite": "vite build --watch",
     "watch:stylus": "stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --watch",
     "watch:post-css": "postcss ./src/styles/tailwind.css -o ./tmp/styles/tailwind.css --watch",
-    "dev-build": "postcss ./src/styles/tailwind.css -o ./tmp/styles/tailwind.css && stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ && tsc && vite build",
     "build": "set NODE_ENV=777 && stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --compress && tsc && vite build",
     "lint": "pnpm run \"/^lint:.*/\"",
     "lint:eslint": "eslint --fix ./src",
