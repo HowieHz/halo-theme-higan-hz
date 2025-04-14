@@ -1,6 +1,6 @@
 import path from "path";
-import Unfonts from "unplugin-fonts/vite";
 import { fileURLToPath } from "url";
+import Unfonts from "unplugin-fonts/vite";
 import { defineConfig } from "vite";
 // vite.config.js
 import PurgeIcons from "vite-plugin-purge-icons";
