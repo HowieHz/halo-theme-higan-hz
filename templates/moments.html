@@ -21,7 +21,7 @@
                       class="inline-block"
                     >
                       <img
-                        class="avatar avatar-user"
+                        class="avatar-user avatar"
                         th:with="defaultAvatar=${#theme.assets('/images/logo.png')}, avatarUri=${#strings.defaultString(moment.owner?.avatar, defaultAvatar)}"
                         th:src="${avatarUri}"
                         th:srcset="|${thumbnail.gen(avatarUri, 's')} 400w|"
@@ -34,13 +34,13 @@
                     </a>
                   </span>
                   <span
-                    class="no-underline color-fg-muted"
+                    class="color-fg-muted no-underline"
                     th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event'}"
                     th:utext="${moment.metadata?.annotations?.get('higan.howiehz.top/customize-title')}"
                   >
                   </span>
                   <span
-                    class="no-underline color-fg-muted"
+                    class="color-fg-muted no-underline"
                     th:if="${moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"
                     th:utext="${moment.metadata?.annotations?.get('guqing.github.io/customize-title')}"
                   >
@@ -59,7 +59,7 @@
                       class="inline-block"
                     >
                       <img
-                        class="avatar avatar-user"
+                        class="avatar-user avatar"
                         th:with="defaultAvatar=${#theme.assets('/images/logo.png')}, avatarUri=${#strings.defaultString(moment.owner?.avatar, defaultAvatar)}"
                         th:src="${avatarUri}"
                         th:srcset="|${thumbnail.gen(avatarUri, 's')} 400w|"
@@ -72,12 +72,12 @@
                     </a>
                   </span>
                   <a
-                    class="no-underline break-all inline-block"
+                    class="inline-block break-all no-underline"
                     th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
                     th:href="@{${authorPage}}"
                     th:text="${moment.owner?.displayName}"
                   ></a>
-                  <span class="no-underline color-fg-muted">
+                  <span class="color-fg-muted no-underline">
                     <relative-time
                       tense="past"
                       th:datetime="${moment.spec.releaseTime}"
@@ -133,7 +133,7 @@
                     </a>
                   </th:block>
                   <th:block th:if="${theme.config?.moments_styles?.is_moment_comment_section_show}">
-                    <a @click="setCurrent(name)" class="cursor-pointer ml-1">
+                    <a @click="setCurrent(name)" class="ml-1 cursor-pointer">
                       <span class="iconify">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24">
                           <path

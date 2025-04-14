@@ -86,12 +86,12 @@
 
       <div class="content flex-auto" itemprop="articleBody" th:utext="${post.content?.content}">文章内容填充处</div>
       <th:block th:if="${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show}">
-        <hr class="divide mt-10 mb-0" />
+        <hr class="divide mb-0 mt-10" />
       </th:block>
       <th:block th:if="${theme.config?.post_styles?.is_post_upvote_button_show}">
         <!--/* CSS 样式中设置了，如果下面的推荐文章，评论区等都没开，直接接上页脚，会设置为 mb-0 */-->
         <a
-          class="upvote-button mt-2 -mb-8"
+          class="upvote-button -mb-8 mt-2"
           th:href="|javascript:handleLike('${post.metadata.name}')|"
           th:data-post-name="${post.metadata.name}"
           th:style="'display: flex;
@@ -206,7 +206,7 @@
         th:if="${theme.config?.post_styles?.is_post_prev_next_navigation_show}"
       >
         <span
-          class="post-navigation mt-10 mb-0"
+          class="post-navigation mb-0 mt-10"
           th:if="${postCursor.hasPrevious()
                   or postCursor.hasNext()}"
         >
@@ -231,7 +231,7 @@
 
       <!--/* 上一个也是分隔线或者点赞按钮，就会隐藏，是 CSS 样式做的工作 */-->
       <th:block th:if="${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show}">
-        <hr class="divide mt-10 mb-0" />
+        <hr class="divide mb-0 mt-10" />
       </th:block>
 
       <div

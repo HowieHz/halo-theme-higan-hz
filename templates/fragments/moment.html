@@ -1,6 +1,6 @@
 <th:block th:fragment="momentVideoModal">
   <div th:if="${#strings.equals(media.type,'VIDEO')}" x-data="{openVideoModal:false}" class="aspect-h-1 aspect-w-1">
-    <video preload="metadata" th:src="${media.url}" class="object-cover m-0 h-full"></video>
+    <video preload="metadata" th:src="${media.url}" class="m-0 h-full object-cover"></video>
     <div
       th:if="${#strings.equals(media.type,'VIDEO')}"
       class="absolute flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-base-200 opacity-50 transition-all hover:opacity-70"

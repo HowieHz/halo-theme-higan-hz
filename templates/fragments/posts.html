@@ -17,7 +17,7 @@
 </th:block>
 
 <th:block th:fragment="simple-post-list(posts)">
-  <section id="writing" class="flex-auto flex flex-col">
+  <section id="writing" class="flex flex-auto flex-col">
     <h2 class="h1" th:if="${theme.config?.index_styles?.is_show_index_post_list_title}">
       <a th:href="@{/archives}" th:text="#{page.index.indexPostListTitle}">首页文章列表标题替换位</a>
     </h2>
@@ -42,7 +42,7 @@
             <a th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}">文章标题替换位</a>
             <th:block th:if="${theme.config?.index_styles?.is_show_post_views_in_simple_post_list}">
               <span
-                class="p-0 mb-0 relative z-10 mt-0.5 text-sm color-time"
+                class="color-time relative z-10 mb-0 mt-0.5 p-0 text-sm"
                 th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
               >
                 <span class="iconify" data-icon="mdi:eye-outline" data-inline="false"></span>
@@ -64,14 +64,14 @@
 </th:block>
 
 <th:block th:fragment="post-list-summary(posts)">
-  <section class="flex-auto flex flex-col">
-    <div class="flex flex-col space-y-10 flex-auto">
+  <section class="flex flex-auto flex-col">
+    <div class="flex flex-auto flex-col space-y-10">
       <th:block th:each="post : ${posts}">
         <div class="grid grid-cols-1 md:grid-cols-4 md:items-baseline">
-          <div class="md:col-span-3 group relative flex flex-col">
-            <h2 class="static m-0 text-base font-semibold tracking-tight color-text">
+          <div class="group relative flex flex-col md:col-span-3">
+            <h2 class="color-text static m-0 text-base font-semibold tracking-tight">
               <div
-                class="absolute opacity-0 -inset-x-4 -inset-y-2 z-0 sm:-inset-x-6 sm:rounded-2xl post-card-hover"
+                class="post-card-hover absolute -inset-x-4 -inset-y-2 z-0 opacity-0 sm:-inset-x-6 sm:rounded-2xl"
               ></div>
               <i
                 id="post-list-pin-icon"
@@ -91,7 +91,7 @@
               ></i>
             </h2>
             <time
-              class="md:hidden relative z-10 order-first mb-3 flex items-center text-sm color-accent-3 pl-3.5"
+              class="color-accent-3 relative z-10 order-first mb-3 flex items-center pl-3.5 text-sm md:hidden"
               th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
             >
               <span class="absolute inset-y-0 left-0 flex items-center" aria-hidden="true">
@@ -101,7 +101,7 @@
             </time>
             <th:block th:if="${theme.config?.index_styles?.is_show_post_categories_in_post_list_summary}">
               <div
-                class="article-category p-0 mb-0 relative z-20 mt-0.5 text-sm color-time"
+                class="article-category color-time relative z-20 mb-0 mt-0.5 p-0 text-sm"
                 th:if="${!#lists.isEmpty(post.categories)}"
               >
                 <span class="iconify" data-icon="fa-solid:archive" data-inline="false"></span>
@@ -118,7 +118,7 @@
             </th:block>
             <th:block th:if="${theme.config?.index_styles?.is_show_post_tags_in_post_list_summary}">
               <div
-                class="article-tag p-0 mb-0 relative z-20 mt-0.5 text-sm color-time"
+                class="article-tag color-time relative z-20 mb-0 mt-0.5 p-0 text-sm"
                 th:if="${!#lists.isEmpty(post.tags)}"
               >
                 <span class="iconify" data-icon="mdi:tag-outline" data-inline="false"></span>
@@ -135,7 +135,7 @@
             </th:block>
             <th:block th:if="${theme.config?.index_styles?.is_show_post_views_in_post_list_summary}">
               <div
-                class="p-0 mb-0 relative z-10 mt-0.5 text-sm color-time"
+                class="color-time relative z-10 mb-0 mt-0.5 p-0 text-sm"
                 th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
               >
                 <span class="iconify" data-icon="mdi:eye-outline" data-inline="false"></span>
@@ -144,7 +144,7 @@
             </th:block>
             <th:block th:if="${theme.config?.index_styles?.is_show_post_estimated_reading_time_in_post_list_summary}">
               <div
-                class="p-0 mb-0 relative z-10 mt-0.5 text-sm color-time"
+                class="color-time relative z-10 mb-0 mt-0.5 p-0 text-sm"
                 th:with="wordsCount = ${#strings.length(postFinder.content(post.metadata?.name).content)}"
                 th:title="#{page.post.estimated-reading-time.hover(#{common.characters(${wordsCount})})}"
               >
@@ -159,7 +159,7 @@
               th:with="max_lines=${theme.config?.index_styles?.post_excerpt_max_lines}"
             >
               <p
-                class="p-0 mb-0 relative z-10 mt-2 text-sm color-accent-3"
+                class="color-accent-3 relative z-10 mb-0 mt-2 p-0 text-sm"
                 th:text="${post.status?.excerpt}"
                 th:classappend="|${max_lines == '1' ? 'line-clamp-1' : ''} ${max_lines == '2' ? 'line-clamp-2' : ''} ${max_lines == '3' ? 'line-clamp-3' : ''} ${max_lines == '4' ? 'line-clamp-4' : ''} ${max_lines == '5' ? 'line-clamp-5' : ''}|"
               >
@@ -168,7 +168,7 @@
             </th:block>
             <div
               aria-hidden="true"
-              class="relative z-10 mt-4 flex items-center text-sm font-medium color-accent-1"
+              class="color-accent-1 relative z-10 mt-4 flex items-center text-sm font-medium"
               th:text="#{page.index.indexPostListPermalinkText}"
               th:if="${theme.config?.index_styles?.is_show_index_post_list_permalink_text}"
             >
@@ -185,11 +185,11 @@
               ${thumbnail.gen(post.spec.cover, 'xl')} 1600w
               |"
               sizes="(max-width: 1600px) 100vw, 1600px"
-              class="z-10 w-full h-full object-cover rounded-lg mt-4"
+              class="z-10 mt-4 h-full w-full rounded-lg object-cover"
             />
           </div>
           <time
-            class="mt-1 hidden md:flex relative z-10 order-first mb-3 items-center text-sm color-accent-3"
+            class="color-accent-3 relative z-10 order-first mb-3 mt-1 hidden items-center text-sm md:flex"
             th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
             th:text="${#temporals.format(post.spec.publishTime, 'MMMM dd yyyy')}"
           >

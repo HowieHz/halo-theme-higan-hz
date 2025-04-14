@@ -4,7 +4,7 @@
   th:replace="~{fragments/layout :: html(title=#{page.archives.page-title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
 >
   <th:block th:fragment="content">
-    <div id="archive" class="flex-auto content">
+    <div id="archive" class="content flex-auto">
       <div class="flex-1">
         <div
           th:each="archive : ${archives}"
@@ -41,8 +41,8 @@
           </h2>
           <ul class="post-list flex-auto" style="display: none">
             <th:block th:each="month : ${archive.months}">
-              <div class="month-container flex ml-7">
-                <h3 class="cursor-pointer flex-none -mt-2 no-underline" onclick="toggleVisibility(this)">
+              <div class="month-container ml-7 flex">
+                <h3 class="-mt-2 flex-none cursor-pointer no-underline" onclick="toggleVisibility(this)">
                   <span th:text="${month.month}" class="underline"></span>
                   <i class="iconify iconify-large" data-icon="mdi:chevron-right" style="display: inline"></i>
                   <i class="iconify iconify-large" data-icon="mdi:chevron-down" style="display: none"></i>

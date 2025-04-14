@@ -18,7 +18,7 @@
                 class="inline-block"
               >
                 <img
-                  class="avatar avatar-user"
+                  class="avatar-user avatar"
                   th:with="defaultAvatar=${#theme.assets('/images/logo.png')}, avatarUri=${#strings.defaultString(moment.owner?.avatar, defaultAvatar)}"
                   th:src="${avatarUri}"
                   size="400px"
@@ -30,13 +30,13 @@
               </a>
             </span>
             <span
-              class="no-underline color-fg-muted"
+              class="color-fg-muted no-underline"
               th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event'}"
               th:utext="${moment.metadata?.annotations?.get('higan.howiehz.top/customize-title')}"
             >
             </span>
             <span
-              class="no-underline color-fg-muted"
+              class="color-fg-muted no-underline"
               th:if="${moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"
               th:utext="${moment.metadata?.annotations?.get('guqing.github.io/customize-title')}"
             >
@@ -55,7 +55,7 @@
                 class="inline-block"
               >
                 <img
-                  class="avatar avatar-user"
+                  class="avatar-user avatar"
                   th:with="defaultAvatar=${#theme.assets('/images/logo.png')}, avatarUri=${#strings.defaultString(moment.owner?.avatar, defaultAvatar)}"
                   th:src="${avatarUri}"
                   size="400px"
@@ -67,12 +67,12 @@
               </a>
             </span>
             <a
-              class="no-underline break-all inline-block"
+              class="inline-block break-all no-underline"
               th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
               th:href="@{${authorPage}}"
               th:text="${moment.owner?.displayName}"
             ></a>
-            <span class="no-underline color-fg-muted">
+            <span class="color-fg-muted no-underline">
               <relative-time
                 tense="past"
                 th:datetime="${moment.spec.releaseTime}"
