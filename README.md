@@ -48,7 +48,7 @@
 最初，这个项目只是为了满足自己的一些独特需求而创建。然而，如今已有许多小伙伴在使用这个主题，并通过各种渠道反馈意见，帮助我不断优化和改进。由衷感谢大家的支持与鼓励！  
 此外，我没想到还有小伙伴通过打赏支持这个项目，特此列出名单表示感谢！[赞助名单](#感谢赞助)
 
-![preview](./screenshots/preview-1.png)
+![preview-1](./docs/img/preview-1.png)
 
 文档版本：`1.34.0`  
 （如此处文档版本小于您正在使用的主题版本，说明您正在阅读一份过时的文档，请到[项目原地址](https://github.com/HowieHz/halo-theme-higan-hz/blob/main/README.md)阅读最新版本。）
@@ -1089,7 +1089,7 @@ title: [[图表标题]]
 
 ## Lighthouse
 
-![Lighthouse-result-2024-04-15-post](./screenshots/Lighthouse-result-2024-04-15-post.png)
+![Lighthouse-result-2024-04-15-post](./docs/img/Lighthouse-result-2024-04-15-post.png)
 
 ## TODO
 
