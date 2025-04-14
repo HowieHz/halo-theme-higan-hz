@@ -1,0 +1,20 @@
+/* 图库页面样式开始 */
+.photos {
+  & .photo-list {
+    list-style: none;
+
+    & li:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  & .photo-image {
+    margin-bottom: 0.9375rem;
+  }
+
+  & .pagination {
+    margin-bottom: 0.9375rem;
+  }
+}
+
+/* 图库页面样式结束 */

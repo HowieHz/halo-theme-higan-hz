@@ -1,0 +1,55 @@
+/* 友链页面样式开始 */
+#links {
+  & li {
+    color: var(--color-text);
+    list-style: none;
+  }
+
+  & a {
+    background-image: none;
+    text-decoration: none;
+
+    &:hover {
+      background-image: none;
+      text-decoration: none;
+    }
+  }
+
+  & .fir-clickcircle {
+    border: 1px solid var(--color-footer-mobile-2);
+    border-radius: 6.25rem;
+    cursor: pointer;
+    height: 3.75rem;
+    width: 3.75rem;
+  }
+
+  & .fir-image-figure {
+    align-items: center;
+    display: flex;
+    margin: 0;
+    margin-bottom: 0.3125rem;
+    position: relative;
+    text-decoration: none;
+
+    & .caption,
+    & figcaption {
+      padding-left: 0.9375rem;
+    }
+
+    & .fig-author-figure-title {
+      font-weight: 400;
+    }
+
+    & .fig-author-figure-description {
+      color: var(--color-meta);
+      margin-top: 0.125rem;
+    }
+  }
+
+  & .fir-imageover {
+    display: flex;
+    position: relative;
+  }
+}
+
+/* 友链页面样式结束 */
