@@ -189,7 +189,7 @@
             />
           </div>
           <time
-            class="mt-1 hidden md:block relative z-10 order-first mb-3 flex items-center text-sm color-accent-3"
+            class="mt-1 hidden md:flex relative z-10 order-first mb-3 items-center text-sm color-accent-3"
             th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
             th:text="${#temporals.format(post.spec.publishTime, 'MMMM dd yyyy')}"
           >
