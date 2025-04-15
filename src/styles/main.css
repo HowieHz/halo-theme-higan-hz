@@ -1362,28 +1362,6 @@ html[data-color-scheme="dark"] article .content div.dark {
   }
 }
 
-#categories {
-  & .category-list-title {
-    color: var(--color-meta);
-  }
-
-  & .category-list {
-    & .category-list-item {
-      & .category-list-count {
-        color: var(--color-meta);
-
-        &::before {
-          content: " (";
-        }
-
-        &::after {
-          content: ")";
-        }
-      }
-    }
-  }
-}
-
 .color-accent-1 {
   color: var(--color-accent-1);
 }
