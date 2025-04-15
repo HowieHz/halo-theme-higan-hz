@@ -776,19 +776,6 @@
   }
 }
 
-.project-list {
-  list-style: none;
-  padding: 0;
-
-  & .project-item {
-    margin-bottom: 0.3125rem;
-
-    & p {
-      display: inline;
-    }
-  }
-}
-
 article {
   display: flex;
   flex: auto;
@@ -1252,7 +1239,6 @@ html[data-color-scheme="dark"] article .content div.dark {
   display: none;
   padding-bottom: 0.5em;
 }
-
 
 @keyframes tooltip-appear {
   from {
