@@ -17,7 +17,11 @@
     </style>
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
-        <h1 class="posttitle" itemprop="name headline">
+        <h1
+          class="posttitle"
+          th:classappend="${theme.config?.post_styles?.post_title_uppper} ? 'title-upper-case'"
+          itemprop="name headline"
+        >
           <th:block th:text="${post.spec?.title}">标题替换位</th:block
           ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
         </h1>
@@ -288,11 +292,6 @@
         // <!--/* wontfix：如果电脑屏幕较窄，文章页用的是底部导航栏，目录按钮按了之后不会显示目录
         // 但是目录按钮在手机端是正常的，为了保证性能，不做特殊处理 */-->
         main.generateTOC(contentDom.innerHTML, tocSelector);
-
-        const postTitleUpperCase = /*[(${theme.config?.post_styles?.post_title_uppper})]*/ false;
-        if (postTitleUpperCase) {
-          $(".post .posttitle").addClass("title-upper-case");
-        }
 
         // <!--/* toc collapse control */-->
         window.addEventListener("scroll", () => {

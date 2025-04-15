@@ -77,11 +77,6 @@
           // 但是目录按钮在手机端是正常的，为了保证性能，不做特殊处理 */-->
           main.generateTOC(contentDom.innerHTML, tocSelector);
 
-          const postTitleUpperCase = /*[(${theme.config?.post_styles?.post_title_uppper})]*/ false;
-          if (postTitleUpperCase) {
-            $(".post .posttitle").addClass("title-upper-case");
-          }
-
           // <!--/* toc collapse control */-->
           window.addEventListener("scroll", () => {
             headings = document.querySelectorAll("h2, h3, h4, h5, h6");
