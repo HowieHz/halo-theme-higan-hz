@@ -112,22 +112,6 @@
   }
 }
 
-@media (min-width: 540px) {
-  .image-wrap {
-    flex-direction: row;
-    margin-bottom: 2rem;
-
-    & .image-block {
-      flex: 1 0 35%;
-      margin-right: 2rem;
-    }
-
-    & p {
-      flex: 1 0 65%;
-    }
-  }
-}
-
 @media (max-width: 480px) {
   .px-8 {
     padding-left: 1rem;
