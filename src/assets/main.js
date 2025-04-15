@@ -1,19 +1,3 @@
-/**
- * Sets up Justified Gallery.
- */
-function isPrototypeJustifiedGallery() {
-  return Boolean($.prototype.justifiedGallery);
-}
-
-if (isPrototypeJustifiedGallery()) {
-  const options = {
-    rowHeight: 140,
-    margins: 4,
-    lastRow: "justify",
-  };
-  $(".article-gallery").justifiedGallery(options);
-}
-
 window.isMobile = () => {
   const flag = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   return flag;
