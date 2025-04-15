@@ -112,13 +112,6 @@
   }
 }
 
-@media (max-width: 480px) {
-  .px-8 {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-}
-
 @media (min-width: 480px) {
   p {
     text-align: start;
