@@ -1,0 +1,54 @@
+/* 作者页面样式开始 */
+.author {
+  & .head-cover {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  & .profile-wrap {
+    backdrop-filter: blur(1px);
+    color: var(--color-text);
+    margin: 0 auto;
+    padding: 1.25rem 0;
+  }
+
+  & .profile-content {
+    margin: 0 auto;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  & .profile-avatar {
+    border: 0.1rem solid #eae9e7;
+    border-radius: 50%;
+    height: 5rem;
+    margin: 0 auto;
+    width: 5rem;
+  }
+
+  & .profile-nickname-container {
+    font-size: 1rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  & .profile-nickname {
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  & .profile-bio {
+    color: var(--color-accent-2);
+    font-size: 0.875rem;
+    font-weight: normal;
+    line-height: 1.25rem;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+}
+
+/* 作者页面样式结束 */

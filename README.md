@@ -314,7 +314,6 @@
           --color-footer-mobile-1: #a4a3a3;
           --color-footer-mobile-2: #27292b;
           --color-footer-mobile-3: #1f2325;
-          --color-highlight-background: #212326;
           --color-link: #d480aa;
           --color-meta: #908d8d;
           --color-meta-code: #908d8d;
@@ -349,7 +348,6 @@
           --color-footer-mobile-1: #666;
           --color-footer-mobile-2: #e6e6e6;
           --color-footer-mobile-3: #fafafa;
-          --color-highlight-background: #212326;
           --color-link: #d480aa;
           --color-meta: #666;
           --color-meta-code: #808080;
@@ -384,7 +382,6 @@
             --color-footer-mobile-1: #666;
             --color-footer-mobile-2: #e6e6e6;
             --color-footer-mobile-3: #fafafa;
-            --color-highlight-background: #212326;
             --color-link: #d480aa;
             --color-meta: #666;
             --color-meta-code: #808080;
@@ -414,7 +411,6 @@
             --color-footer-mobile-1: #666;
             --color-footer-mobile-2: #e6e6e6;
             --color-footer-mobile-3: #fafafa;
-            --color-highlight-background: #212326;
             --color-link: #d480aa;
             --color-meta: #666;
             --color-meta-code: #808080;
@@ -444,7 +440,6 @@
             --color-footer-mobile-1: #a4a3a3;
             --color-footer-mobile-2: #27292b;
             --color-footer-mobile-3: #1f2325;
-            --color-highlight-background: #212326;
             --color-link: #d480aa;
             --color-meta: #908d8d;
             --color-meta-code: #908d8d;
