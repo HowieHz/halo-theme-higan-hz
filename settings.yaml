@@ -80,12 +80,6 @@ spec:
           value: "/themes/howiehz-higan/assets/dist/style.css"
           help: "指定 CSS 资源的位置，例如：https://cdn.example.com/style.css"
         - $formkit: text
-          name: clipboard_resource_location
-          if: "$is_custom_resource_locations === true"
-          label: Clipboard.js 资源位置
-          value: "/themes/howiehz-higan/assets/lib/clipboard/clipboard.min.js"
-          help: "指定 Clipboard.js 库的资源位置，例如：https://cdn.example.com/clipboard.min.js"
-        - $formkit: text
           name: instantpage_resource_location
           if: "$is_custom_resource_locations === true"
           label: instant.page 资源位置
@@ -206,7 +200,6 @@ spec:
                 --color-footer-mobile-1: #a4a3a3;
                 --color-footer-mobile-2: #27292b;
                 --color-footer-mobile-3: #1f2325;
-                --color-highlight-background: #212326;
                 --color-link: #d480aa;
                 --color-meta: #908d8d;
                 --color-meta-code: #908d8d;

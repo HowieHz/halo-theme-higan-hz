@@ -180,8 +180,4 @@ $(function () {
       });
     }
   }
-
-  // mount it!
-  $("article .content pre").wrap('<figure class="highlight"></figure>');
-  $("figure.highlight pre code").addClass("hljs");
 });
