@@ -1263,22 +1263,6 @@ html[data-color-scheme="dark"] article .content div.dark {
   padding-bottom: 0.5em;
 }
 
-#tag-cloud {
-  & .tag-cloud-title {
-    color: var(--color-meta);
-  }
-
-  & .tag-cloud-tags {
-    clear: both;
-    text-align: center;
-
-    & a {
-      display: inline-block;
-      margin: 0.625rem;
-    }
-  }
-}
-
 .tooltipped {
   position: relative;
 
