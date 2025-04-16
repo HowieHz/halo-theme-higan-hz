@@ -895,12 +895,6 @@ article {
   }
 }
 
-/* 分割线上一个也是分割线或者是点赞按钮就隐藏 */
-hr.divide + hr.divide,
-a.upvote-button + hr.divide {
-  display: none;
-}
-
 /* 点赞按钮是 article 里最后一个，那就设置 mb-0（说明直接接上了页脚。没开评论区，推荐文章等） */
 article a.upvote-button:last-child {
   margin-bottom: 0;
@@ -945,14 +939,15 @@ html[data-color-scheme="dark"] article .content div.dark {
 
 /* language-mermaid style end */
 
-.divide {
-  border-color: var(--color-divide);
-  border-style: solid;
-  border-width: 0;
-  border-top-width: 1px !important;
-  box-sizing: border-box;
-  color: inherit;
+hr.divide {
+  border: 0 solid var(--color-divide);
+  border-top-width: 1px;
   height: 0;
+
+  /* 分割线上一个也是分割线或者是点赞按钮就隐藏 */
+  :is(hr.divide, a.upvote-button) + & {
+    display: none;
+  }
 }
 
 .article-tag {
