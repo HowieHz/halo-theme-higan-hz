@@ -17,10 +17,10 @@
 }
 
 .max-width {
-  max-width: 48rem;
+  max-width: 100%;
 
-  @media (width <= 767px) {
-    max-width: 100%;
+  @media (width >= 768px) {
+    max-width: 48rem;
   }
 
   @media (width >= 1199px) {
