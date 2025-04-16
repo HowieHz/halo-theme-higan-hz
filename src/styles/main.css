@@ -16,10 +16,6 @@
   }
 }
 
-#post-list-pin-icon {
-  color: var(--color-link);
-}
-
 .max-width {
   max-width: 48rem;
 
@@ -1231,6 +1227,10 @@ html[data-color-scheme="dark"] article .content div.dark {
 
 .color-accent-3 {
   color: var(--color-accent-3);
+}
+
+.color-link {
+  color: var(--color-link);
 }
 
 .color-time,
