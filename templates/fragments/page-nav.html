@@ -1,13 +1,11 @@
 <th:block xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
-  <div id="header-post">
+  <div id="header-post" class="fixed right-0 top-8 z-50 float-right hidden sm:block">
     <a id="menu-icon" href="javascript:void(0);" th:aria-label="#{fragment.post-nav.menu-icon.aria-label}">
       <i class="iconify iconify-middle" data-icon="material-symbols:menu"></i>
     </a>
-    <a id="menu-icon-tablet" href="javascript:void(0);"
-      ><i class="iconify iconify-middle" data-icon="material-symbols:menu"></i
-    ></a>
     <a
       id="top-icon-tablet"
+      class="lg:hidden"
       href="javascript:void(0);"
       onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
       style="display: none"

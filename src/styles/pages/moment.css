@@ -134,7 +134,7 @@ video {
   }
 
   & ul {
-    @media (width <= 767px) {
+    @media (width < 640px) {
       margin-block-start: 0;
       padding-inline-start: 0;
     }
