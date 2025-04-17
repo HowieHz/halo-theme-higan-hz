@@ -3,7 +3,7 @@ module.exports = {
   plugins: ["stylelint-order"],
   rules: {
     // 嵌套选择器规则
-    "selector-nested-pattern": "^&",
+    "selector-nested-pattern": "^&|&$",
     "no-descending-specificity": null,
 
     // 颜色函数与透明度
