@@ -778,6 +778,50 @@ article {
   }
 }
 
+/* 仅明暗显示 Block 样式设定 */
+
+article .content div {
+  &.light {
+    display: block;
+  }
+
+  &.dark {
+    display: none;
+  }
+}
+
+/* 自动模式 */
+html[data-color-scheme="auto"] article .content {
+  & div {
+    &.light {
+      @media (prefers-color-scheme: dark) {
+        display: none;
+      }
+    }
+
+    &.dark {
+      @media (prefers-color-scheme: dark) {
+        display: block;
+      }
+    }
+  }
+}
+
+/* 暗黑模式 */
+html[data-color-scheme="dark"] article .content {
+  & div {
+    &.light {
+      display: none;
+    }
+
+    &.dark {
+      display: block;
+    }
+  }
+}
+
+/* 仅明暗显示 Block 样式设定 end */
+
 /* 推荐文章和相邻导航字体颜色设置 */
 .recommendations,
 .post-navigation {
@@ -797,51 +841,6 @@ a {
     background-image: none !important;
   }
 }
-
-/* 仅明暗显示 Block 样式设定 */
-
-article {
-  & .content {
-    & div {
-      &.light {
-        display: block;
-      }
-      &.dark {
-        display: none;
-      }
-    }
-  }
-}
-
-/* 自动模式 */
-html[data-color-scheme="auto"] article .content {
-  & div {
-    &.light {
-      @media (prefers-color-scheme: dark) {
-        display: none;
-      }
-    }
-    &.dark {
-      @media (prefers-color-scheme: dark) {
-        display: block;
-      }
-    }
-  }
-}
-
-/* 暗黑模式 */
-html[data-color-scheme="dark"] article .content {
-  & div {
-    &.light {
-      display: none;
-    }
-    &.dark {
-      display: block;
-    }
-  }
-}
-
-/* 仅明暗显示 Block 样式设定 end */
 
 hr.divide {
   border: 0 solid var(--color-divide);
