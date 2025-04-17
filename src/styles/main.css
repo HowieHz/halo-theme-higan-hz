@@ -255,12 +255,6 @@
 }
 
 #header-post {
-  float: right;
-  position: fixed;
-  right: 0;
-  top: 2rem;
-  z-index: 100;
-
   & a {
     background: none;
     color: inherit;
@@ -322,11 +316,6 @@
     color: var(--color-accent-1);
   }
 
-  & #menu {
-    display: none;
-    margin-right: 2rem;
-  }
-
   & #nav {
     color: var(--color-accent-1);
     font-size: var(--text-sm);
@@ -370,28 +359,14 @@
   }
 
   & #actions {
-    float: right;
-    margin-right: 2rem;
-    margin-top: 2rem;
-    text-align: right;
-    width: 100%;
-
-    & ul {
-      display: block;
-    }
-
     & .info {
-      display: block;
+      float: left;
       font-style: italic;
+      margin-right: 2rem;
     }
   }
 
   & #share-list {
-    clear: both;
-    padding-right: 2rem;
-    padding-top: 1rem;
-    text-align: right;
-
     & li {
       display: block;
       margin: 0;
@@ -463,33 +438,6 @@
 
   & .is-collapsible {
     transition: all 40ms ease-in-out;
-  }
-
-  @media screen {
-    @media (width < 1024px) {
-      & #actions,
-      & #toc {
-        display: none;
-      }
-    }
-
-    @media (width >= 1024px) {
-      & #actions {
-        width: auto;
-
-        & ul {
-          display: block;
-          float: right;
-        }
-
-        & .info {
-          display: inline;
-          float: left;
-          font-style: italic;
-          margin-right: 2rem;
-        }
-      }
-    }
   }
 }
 

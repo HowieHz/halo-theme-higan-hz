@@ -5,20 +5,19 @@
     </a>
     <a
       id="top-icon-tablet"
-      class="lg:hidden"
+      class="hidden lg:!hidden"
       href="javascript:void(0);"
       onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
-      style="display: none"
       ><i class="iconify iconify-middle" data-icon="material-symbols:keyboard-arrow-up"></i
     ></a>
-    <span id="menu">
+    <span id="menu" class="mr-8 hidden">
       <span id="nav">
         <th:block th:insert="~{fragments/common :: menu(showIcon=false)}"></th:block>
       </span>
       <br />
 
-      <span id="actions">
-        <ul>
+      <span id="actions" class="float-right mr-8 mt-8 text-right">
+        <ul class="float-right block">
           <li>
             <a
               th:href="@{/}"
@@ -60,18 +59,18 @@
           </li>
         </ul>
 
-        <span id="i-top" class="info" style="display: none">[(#{fragment.post-nav.toTop})]</span>
-        <span
-          id="i-share"
-          class="info"
-          style="display: none"
-          th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
+        <span id="i-top" class="info hidden">[(#{fragment.post-nav.toTop})]</span>
+        <span id="i-share" class="info hidden" th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
           >[(#{fragment.post-nav.sharePost})]</span
         >
-        <span id="i-home" class="info" style="display: none">[(#{fragment.post-nav.backToHome})]</span>
+        <span id="i-home" class="info hidden">[(#{fragment.post-nav.backToHome})]</span>
       </span>
       <br />
-      <div id="share-list" style="display: none" th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}">
+      <div
+        id="share-list"
+        class="clear-both hidden pr-8 pt-4 text-right"
+        th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
+      >
         <th:block
           th:insert="~{fragments/common :: share(originPermalink=${singlePage.status.permalink},title=${singlePage.spec.title})}"
         ></th:block>
