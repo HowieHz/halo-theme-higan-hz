@@ -680,52 +680,9 @@ article {
         font-size: var(--text-sm);
       }
     }
-
-    & .author {
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      text-transform: uppercase;
-    }
-
-    & .post-publish-time {
-      display: inline;
-
-      & + .post-update-time {
-        @media (width < 640px) {
-          display: block;
-        }
-
-        @media (width >= 640px) {
-          &::before {
-            content: "|";
-          }
-        }
-      }
-    }
-
-    @media (width < 640px) {
-      & .post-update-time {
-        display: inline;
-      }
-    }
-
-    @media (width >= 640px) {
-      & .article-tag::before,
-      & .article-category::before {
-        content: "|";
-      }
-    }
   }
 
   & .content {
-    /* 默认样式 language-mermaid style 适配 halo-plugin-vditor */
-    & div {
-      &.light,
-      &.dark {
-        display: none;
-      }
-    }
-
     & h2::before {
       color: var(--color-accent-1);
       content: "#";
@@ -858,19 +815,29 @@ a {
   }
 }
 
-/* language-mermaid style start */
+/* 仅明暗显示 Block 样式设定 */
+
+article {
+  & .content {
+    & div {
+      &.light {
+        display: block;
+      }
+      &.dark {
+        display: none;
+      }
+    }
+  }
+}
 
 /* 自动模式 */
 html[data-color-scheme="auto"] article .content {
   & div {
     &.light {
-      display: block;
-
       @media (prefers-color-scheme: dark) {
         display: none;
       }
     }
-
     &.dark {
       @media (prefers-color-scheme: dark) {
         display: block;
@@ -879,13 +846,19 @@ html[data-color-scheme="auto"] article .content {
   }
 }
 
-/* 明亮模式 和 暗黑模式 */
-html[data-color-scheme="light"] article .content div.light,
-html[data-color-scheme="dark"] article .content div.dark {
-  display: block;
+/* 暗黑模式 */
+html[data-color-scheme="dark"] article .content {
+  & div {
+    &.light {
+      display: none;
+    }
+    &.dark {
+      display: block;
+    }
+  }
 }
 
-/* language-mermaid style end */
+/* 仅明暗显示 Block 样式设定 end */
 
 hr.divide {
   border: 0 solid var(--color-divide);
@@ -898,16 +871,14 @@ hr.divide {
   }
 }
 
-.article-tag {
-  & .tag-link {
-    background-image: linear-gradient(transparent, transparent 0.625rem, var(--color-link) 0.625rem, var(--color-link));
-    background-position: bottom;
-    background-repeat: repeat-x;
-    background-size: 100% 0.375rem;
+.article-tag .tag-link {
+  background-image: linear-gradient(transparent, transparent 0.625rem, var(--color-link) 0.625rem, var(--color-link));
+  background-position: bottom;
+  background-repeat: repeat-x;
+  background-size: 100% 0.375rem;
 
-    &::before {
-      content: "#";
-    }
+  &::before {
+    content: "#";
   }
 }
 
@@ -916,18 +887,6 @@ hr.divide {
   background-position: bottom;
   background-repeat: repeat-x;
   background-size: 100% 0.375rem;
-}
-
-@media (width >= 640px) {
-  p {
-    text-align: start;
-  }
-
-  .post-update-time,
-  .article-tag,
-  .article-category {
-    display: inline;
-  }
 }
 
 #archive {

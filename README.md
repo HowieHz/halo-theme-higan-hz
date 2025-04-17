@@ -396,36 +396,6 @@
           --halo-comment-widget-component-form-input-bg-color: #fff !important;
         }
 
-        @media (prefers-color-scheme: light) {
-          html[theme="theme-{id}"] {
-            --color-accent-1: #2bbc8a;
-            --color-accent-2: #383838;
-            --color-accent-3: #676767;
-            --color-avatar-border: #fafafa;
-            --color-background: #fff;
-            --color-background-code: #fafafa;
-            --color-border: #666;
-            --color-card-hover: #fafafa;
-            --color-divide: #e5e7eb;
-            --color-footer-mobile-1: #666;
-            --color-footer-mobile-2: #e6e6e6;
-            --color-footer-mobile-3: #fafafa;
-            --color-link: #d480aa;
-            --color-meta: #666;
-            --color-meta-code: #808080;
-            --color-quote: #2bbc8a;
-            --color-scrollbar: #aaa;
-            --color-text: #333;
-            --color-time: #595858;
-            --toc-level-2: #383838;
-            --toc-level-3: #666;
-            --toc-level-4: #888;
-          }
-          html[theme="theme-{id}"] comment-widget {
-            --halo-comment-widget-component-form-input-bg-color: #fff !important;
-          }
-        }
-
         @media (prefers-color-scheme: dark) {
           html[theme="theme-{id}"] {
             --color-accent-1: #2bbc8a;
