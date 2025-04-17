@@ -16,7 +16,7 @@
       </span>
       <br />
 
-      <span id="actions" class="float-right mr-8 mt-8 text-right">
+      <span id="actions" class="float-right mr-8 mt-8 hidden text-right lg:block">
         <ul class="float-right block">
           <li>
             <a
@@ -75,7 +75,7 @@
           th:insert="~{fragments/common :: share(originPermalink=${singlePage.status.permalink},title=${singlePage.spec.title})}"
         ></th:block>
       </div>
-      <div id="toc"></div>
+      <div id="toc" class="hidden lg:block"></div>
     </span>
   </div>
 </th:block>

@@ -18,7 +18,7 @@
 
       <span
         id="actions"
-        class="float-right mr-8 mt-8 text-right"
+        class="float-right mr-8 mt-8 hidden text-right lg:block"
         th:with="postCursor=${postFinder.cursor(post.metadata?.name)}"
       >
         <ul class="float-right block">
@@ -112,7 +112,7 @@
           th:insert="~{fragments/common :: share(originPermalink=${post.status.permalink},title=${post.spec.title})}"
         ></th:block>
       </div>
-      <div id="toc"></div>
+      <div id="toc" class="hidden lg:block"></div>
     </span>
   </div>
 </th:block>
