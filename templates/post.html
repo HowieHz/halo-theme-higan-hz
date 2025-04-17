@@ -18,8 +18,8 @@
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
         <h1
-          class="posttitle"
-          th:classappend="${theme.config?.post_styles?.post_title_uppper} ? 'title-upper-case'"
+          class="my-0 text-[1.5em] leading-tight"
+          th:classappend="${theme.config?.post_styles?.post_title_uppper} ? 'uppercase'"
           itemprop="name headline"
         >
           <th:block th:text="${post.spec?.title}">标题替换位</th:block

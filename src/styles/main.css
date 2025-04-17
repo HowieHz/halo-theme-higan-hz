@@ -659,18 +659,6 @@ article {
   min-height: 100%;
 
   & header {
-    & .posttitle {
-      font-size: 1.5em;
-      line-height: 1.25;
-      margin-bottom: 0;
-      margin-top: 0;
-      text-transform: none;
-
-      &.title-upper-case {
-        text-transform: uppercase;
-      }
-    }
-
     & .meta {
       margin-bottom: 1rem;
       margin-top: 0;
