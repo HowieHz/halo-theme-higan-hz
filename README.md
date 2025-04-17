@@ -713,6 +713,7 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 > 第一种方式（以下内容作为 HTML 代码块插入默认编辑器）
 
 <!-- prettier-ignore-start -->
+<!-- autocorrect-disable -->
 ```html
 <div class="mermaid auto">
 flowchart TD
@@ -733,11 +734,13 @@ RSS3 -->|发 Token| $RSS3{{$RSS3}}
 RSS3 -->|发 Token| $POWER{{$POWER}}
 </div>
 ```
+<!-- autocorrect-enable -->
 <!-- prettier-ignore-end -->
 
 > 第二种方式（以下内容作为 HTML 代码块插入默认编辑器）
 
 <!-- prettier-ignore-start -->
+<!-- autocorrect-disable -->
 ```html
 <div class="mermaid dark">
 %%{init: { "theme": "dark" } }%%
@@ -779,6 +782,7 @@ RSS3 -->|发 Token| $RSS3{{$RSS3}}
 RSS3 -->|发 Token| $POWER{{$POWER}}
 </div>
 ```
+<!-- autocorrect-enable -->
 <!-- prettier-ignore-end -->
 
 </details>
