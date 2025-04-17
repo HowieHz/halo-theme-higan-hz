@@ -14,6 +14,9 @@
     "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md,cjs,mjs}\" \"./src/**/*.{js,ts,css,json,ml,yaml,html}\" \"./templates/**/*.html\"",
     "prepare": "husky"
   },
+  "browserslist": [
+    "defaults"
+  ],
   "keywords": [
     "halo",
     "howiehz",
@@ -47,7 +50,6 @@
     "@iconify/json": "^2.2.326",
     "@types/alpinejs": "^3.13.11",
     "@types/node": "^22.14.1",
-    "autoprefixer": "^10.4.21",
     "cssnano": "^7.0.6",
     "daisyui": "^4.12.23",
     "eslint": "^9.24.0",
@@ -60,6 +62,7 @@
     "postcss": "^8.5.3",
     "postcss-cli": "^11.0.1",
     "postcss-nesting": "^13.0.1",
+    "postcss-preset-env": "^10.1.5",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "stylelint": "^16.18.0",
