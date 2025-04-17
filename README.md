@@ -324,6 +324,8 @@
           --toc-level-2: #e3e3e3;
           --toc-level-3: #b0b0b0;
           --toc-level-4: #636363;
+        }
+        html[theme="theme-{id}"] comment-widget {
           --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
           --halo-comment-widget-component-form-input-border-color: #636363 !important;
         }
@@ -356,6 +358,8 @@
           --toc-level-2: #383838;
           --toc-level-3: #666;
           --toc-level-4: #888;
+        }
+        html[theme="theme-{id}"] comment-widget {
           --halo-comment-widget-component-form-input-bg-color: #fff !important;
         }
         ```
@@ -387,6 +391,8 @@
           --toc-level-2: #383838;
           --toc-level-3: #666;
           --toc-level-4: #888;
+        }
+        html[theme="theme-{id}"] comment-widget {
           --halo-comment-widget-component-form-input-bg-color: #fff !important;
         }
 
@@ -414,6 +420,8 @@
             --toc-level-2: #383838;
             --toc-level-3: #666;
             --toc-level-4: #888;
+          }
+          html[theme="theme-{id}"] comment-widget {
             --halo-comment-widget-component-form-input-bg-color: #fff !important;
           }
         }
@@ -442,6 +450,8 @@
             --toc-level-2: #e3e3e3;
             --toc-level-3: #b0b0b0;
             --toc-level-4: #636363;
+          }
+          html[theme="theme-{id}"] comment-widget {
             --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
             --halo-comment-widget-component-form-input-border-color: #636363 !important;
           }
