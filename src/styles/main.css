@@ -866,8 +866,8 @@ html[data-color-scheme="auto"] article .content {
     &.light {
       display: block;
 
-      @media (prefers-color-scheme: light) {
-        display: block;
+      @media (prefers-color-scheme: dark) {
+        display: none;
       }
     }
 
