@@ -788,11 +788,6 @@ article {
   }
 }
 
-/* 点赞按钮是 article 里最后一个，那就设置 mb-0（说明直接接上了页脚。没开评论区，推荐文章等） */
-article a.upvote-button:last-child {
-  margin-bottom: 0;
-}
-
 a {
   & img {
     display: inherit !important;
