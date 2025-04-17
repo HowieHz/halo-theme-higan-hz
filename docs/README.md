@@ -98,3 +98,7 @@
 - 模板路径：/templates/moment.html
 - 访问路径：/moments/{name}
 - 文档链接：[plugin-moments#详情页面](https://github.com/halo-sigs/plugin-moments?tab=readme-ov-file#%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2-momentsname)
+
+### 通用评论组件插件
+
+- 文档链接：[plugin-comment-widget#主题适配](https://github.com/halo-dev/plugin-comment-widget?tab=readme-ov-file#%E4%B8%BB%E9%A2%98%E9%80%82%E9%85%8D)

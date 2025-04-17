@@ -65,13 +65,13 @@ $(function () {
 
     const menu = $("#menu");
     // const nav = $("#menu > #nav");
-    const menuIcon = $("#menu-icon, #menu-icon-tablet");
+    const menuIcon = $("#menu-icon");
 
     /**
      * Display the menu on hi-res laptops and desktops.
      */
-    // 大于等于 1440px 的屏幕宽度 初始化时就显示菜单
-    if ($(document).width() >= 1440) {
+    // 大于等于 1024px 的屏幕宽度 初始化时就显示菜单
+    if (window.matchMedia("(min-width: 1024px)").matches) {
       menuIcon.addClass("active"); // for #header-post .active style
       menu.show();
     }
@@ -97,8 +97,6 @@ $(function () {
     // 平板端 文章页 导航栏、回到顶部按钮 页面滚动相关逻辑
     if (menu.length) {
       const topIcon = $("#top-icon-tablet");
-      const menuIconTablet = $("#menu-icon-tablet");
-      const menuIcon = $("#menu-icon");
       $(window).on("scroll", function () {
         const topDistance = $(window).scrollTop();
 
@@ -113,13 +111,15 @@ $(function () {
         // show a "scroll to top icon" instead
 
         // 顶部菜单按钮、顶部菜单、回到顶部按钮 根据页面滚动距离 显示/隐藏
-        if (!menuIcon.is(":visible") && topDistance < 50) {
-          menuIconTablet.fadeIn(200);
-          topIcon.fadeOut(200);
-        } else if (!menuIcon.is(":visible") && topDistance > 100) {
-          menuIconTablet.fadeOut(200);
-          menu.fadeOut(200);
-          topIcon.fadeIn(200);
+        if (window.matchMedia("(min-width: 640px) and (max-width: 1024px)").matches) {
+          if (topDistance < 50) {
+            menuIcon.fadeIn(200);
+            topIcon.fadeOut(200);
+          } else if (topDistance > 100) {
+            menuIcon.fadeOut(200);
+            menu.fadeOut(200);
+            topIcon.fadeIn(200);
+          }
         }
       });
     }

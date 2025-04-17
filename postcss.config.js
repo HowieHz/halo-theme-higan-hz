@@ -2,7 +2,7 @@ module.exports = {
   plugins: {
     "tailwindcss/nesting": "postcss-nesting",
     tailwindcss: {},
-    autoprefixer: {},
+    "postcss-preset-env": {},
     ...(process.env.NODE_ENV == 777 ? { cssnano: { preset: "default" } } : {}),
   },
 };

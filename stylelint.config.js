@@ -3,7 +3,7 @@ module.exports = {
   plugins: ["stylelint-order"],
   rules: {
     // 嵌套选择器规则
-    "selector-nested-pattern": "^&",
+    "selector-nested-pattern": "^&|&$",
     "no-descending-specificity": null,
 
     // 颜色函数与透明度
@@ -11,7 +11,7 @@ module.exports = {
     "alpha-value-notation": "percentage", // 使用百分比表示透明度 15% 而非 0.15
 
     // 媒体查询
-    "media-feature-range-notation": "prefix", // 使用传统前缀表示法 (min-width: 480px)
+    "media-feature-range-notation": "context", // 使用上下文表示法 (width >= 480px)
 
     // 允许 CSS at unknown 值语
     "at-rule-no-unknown": [

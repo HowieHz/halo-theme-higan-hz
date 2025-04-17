@@ -492,6 +492,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
       /*[(${theme.config?.styles?.max_width})]*/ 48rem;
       }
     </style>
+    <!--/* 缩小窗口时优先缩小 margin，触发下面样式表里面的取小函数肯定是 margin=0，此时 100vw 和 100% 应相等 */-->
     <style th:inline="css" th:if="${theme.config?.styles?.is_min_width_settings}">
       :root {
         --content-min-width:
@@ -500,7 +501,6 @@ html[theme="theme-[(${colorSchema.id})]"] {
 
       .min-width {
         min-width: min(100%, var(--content-min-width));
-        /* 缩小窗口时优先缩小 margin，触发这个取小函数肯定是 margin=0，此时 100vw 和 100% 应相等 */
       }
     </style>
     <style th:inline="css" th:if="${theme.config?.styles?.is_force_min_width_settings}">
