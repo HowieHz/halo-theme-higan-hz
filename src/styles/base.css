@@ -147,7 +147,7 @@ body {
     display: block;
     font-size: var(--text-xs);
     overflow: auto;
-    text-align: left;
+    text-align: start;
     width: 100%;
 
     & th {
@@ -163,5 +163,9 @@ body {
       font-size: var(--text-sm);
       padding: 0 0.5rem;
     }
+  }
+
+  & p {
+    text-align: start;
   }
 }

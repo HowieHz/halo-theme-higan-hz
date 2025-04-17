@@ -15,19 +15,11 @@ html[theme="dark-blue"]
 html[theme="light-blue"]
 	theme-light-blue()
 
-@media (prefers-color-scheme: no-preference)
-	html[theme="auto"]
-		theme-light()
+html[theme="auto"]
+	theme-light()
 
-	html[theme="auto-blue"]
-		theme-light-blue()
-
-@media (prefers-color-scheme: light)
-	html[theme="auto"]
-		theme-light()
-
-	html[theme="auto-blue"]
-		theme-light-blue()
+html[theme="auto-blue"]
+	theme-light-blue()
 
 @media (prefers-color-scheme: dark)
 	html[theme="auto"]

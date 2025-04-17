@@ -659,18 +659,6 @@ article {
   min-height: 100%;
 
   & header {
-    & .posttitle {
-      font-size: 1.5em;
-      line-height: 1.25;
-      margin-bottom: 0;
-      margin-top: 0;
-      text-transform: none;
-
-      &.title-upper-case {
-        text-transform: uppercase;
-      }
-    }
-
     & .meta {
       margin-bottom: 1rem;
       margin-top: 0;
@@ -680,52 +668,9 @@ article {
         font-size: var(--text-sm);
       }
     }
-
-    & .author {
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      text-transform: uppercase;
-    }
-
-    & .post-publish-time {
-      display: inline;
-
-      & + .post-update-time {
-        @media (width < 640px) {
-          display: block;
-        }
-
-        @media (width >= 640px) {
-          &::before {
-            content: "|";
-          }
-        }
-      }
-    }
-
-    @media (width < 640px) {
-      & .post-update-time {
-        display: inline;
-      }
-    }
-
-    @media (width >= 640px) {
-      & .article-tag::before,
-      & .article-category::before {
-        content: "|";
-      }
-    }
   }
 
   & .content {
-    /* 默认样式 language-mermaid style 适配 halo-plugin-vditor */
-    & div {
-      &.light,
-      &.dark {
-        display: none;
-      }
-    }
-
     & h2::before {
       color: var(--color-accent-1);
       content: "#";
@@ -833,6 +778,50 @@ article {
   }
 }
 
+/* 仅明暗显示 Block 样式设定 */
+
+article .content div {
+  &.light {
+    display: block;
+  }
+
+  &.dark {
+    display: none;
+  }
+}
+
+/* 自动模式 */
+html[data-color-scheme="auto"] article .content {
+  & div {
+    &.light {
+      @media (prefers-color-scheme: dark) {
+        display: none;
+      }
+    }
+
+    &.dark {
+      @media (prefers-color-scheme: dark) {
+        display: block;
+      }
+    }
+  }
+}
+
+/* 暗黑模式 */
+html[data-color-scheme="dark"] article .content {
+  & div {
+    &.light {
+      display: none;
+    }
+
+    &.dark {
+      display: block;
+    }
+  }
+}
+
+/* 仅明暗显示 Block 样式设定 end */
+
 /* 推荐文章和相邻导航字体颜色设置 */
 .recommendations,
 .post-navigation {
@@ -841,11 +830,6 @@ article {
 
     /* 去除下划线用这个 background-image: none; */
   }
-}
-
-/* 点赞按钮是 article 里最后一个，那就设置 mb-0（说明直接接上了页脚。没开评论区，推荐文章等） */
-article a.upvote-button:last-child {
-  margin-bottom: 0;
 }
 
 a {
@@ -858,35 +842,6 @@ a {
   }
 }
 
-/* language-mermaid style start */
-
-/* 自动模式 */
-html[data-color-scheme="auto"] article .content {
-  & div {
-    &.light {
-      display: block;
-
-      @media (prefers-color-scheme: light) {
-        display: block;
-      }
-    }
-
-    &.dark {
-      @media (prefers-color-scheme: dark) {
-        display: block;
-      }
-    }
-  }
-}
-
-/* 明亮模式 和 暗黑模式 */
-html[data-color-scheme="light"] article .content div.light,
-html[data-color-scheme="dark"] article .content div.dark {
-  display: block;
-}
-
-/* language-mermaid style end */
-
 hr.divide {
   border: 0 solid var(--color-divide);
   border-top-width: 1px;
@@ -898,16 +853,14 @@ hr.divide {
   }
 }
 
-.article-tag {
-  & .tag-link {
-    background-image: linear-gradient(transparent, transparent 0.625rem, var(--color-link) 0.625rem, var(--color-link));
-    background-position: bottom;
-    background-repeat: repeat-x;
-    background-size: 100% 0.375rem;
+.article-tag .tag-link {
+  background-image: linear-gradient(transparent, transparent 0.625rem, var(--color-link) 0.625rem, var(--color-link));
+  background-position: bottom;
+  background-repeat: repeat-x;
+  background-size: 100% 0.375rem;
 
-    &::before {
-      content: "#";
-    }
+  &::before {
+    content: "#";
   }
 }
 
@@ -916,18 +869,6 @@ hr.divide {
   background-position: bottom;
   background-repeat: repeat-x;
   background-size: 100% 0.375rem;
-}
-
-@media (width >= 640px) {
-  p {
-    text-align: start;
-  }
-
-  .post-update-time,
-  .article-tag,
-  .article-category {
-    display: inline;
-  }
 }
 
 #archive {
