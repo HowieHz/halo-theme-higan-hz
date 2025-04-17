@@ -1,0 +1,18 @@
+name: Autocorrect Lint Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: actions/checkout@v4
+      - name: AutoCorrect
+        uses: huacnlee/autocorrect-action@v2
