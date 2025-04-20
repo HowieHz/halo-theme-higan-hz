@@ -835,22 +835,18 @@ hr.divide {
   }
 }
 
-.article-tag .tag-link {
-  background-image: linear-gradient(transparent, transparent 0.625rem, var(--color-link) 0.625rem, var(--color-link));
-  background-position: bottom;
-  background-repeat: repeat-x;
-  background-size: 100% 0.375rem;
-
-  &::before {
-    content: "#";
-  }
-}
-
+.article-tag .tag-link,
 .article-category .category-link {
   background-image: linear-gradient(transparent, transparent 0.625rem, var(--color-link) 0.625rem, var(--color-link));
   background-position: bottom;
   background-repeat: repeat-x;
   background-size: 100% 0.375rem;
+}
+
+.article-tag .tag-link {
+  &::before {
+    content: "#";
+  }
 }
 
 #archive {

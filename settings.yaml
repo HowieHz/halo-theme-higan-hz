@@ -775,6 +775,10 @@ spec:
           label: 文章更新时间左侧文字
           value: false
         - $formkit: checkbox
+          name: is_show_post_views
+          label: 显示文章阅读量
+          value: true
+        - $formkit: checkbox
           name: is_show_post_estimated_reading_time
           label: 文章预计阅读时间
           value: false

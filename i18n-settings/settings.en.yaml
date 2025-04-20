@@ -775,6 +775,10 @@ spec:
           label: Post update time left text
           value: false
         - $formkit: checkbox
+          name: is_show_post_views
+          label: Show post views
+          value: true
+        - $formkit: checkbox
           name: is_show_post_estimated_reading_time
           label: Estimated reading time of the article
           value: false
