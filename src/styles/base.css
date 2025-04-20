@@ -152,9 +152,9 @@ body {
 
     /* abbr[title], 覆盖用户代理样式表的 
     text-decoration: underline dotted; */
-    &[title] {
+    /* &[title] {
       text-decoration: none;
-    }
+    } */
   }
 
   & ol {
