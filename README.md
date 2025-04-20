@@ -11,6 +11,8 @@
 
 > 更激进的修改，更高的配置自由度！
 
+higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archives/higan-hz-style-guide)
+
 ### 特色功能概要
 
 1. 可自定义更多内容
