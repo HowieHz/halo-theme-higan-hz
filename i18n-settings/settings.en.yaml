@@ -679,62 +679,70 @@ spec:
           help: "If enabled, the theme will display the title of the post list."
           value: true
         - $formkit: select
-          name: post_list_layout
-          id: index_post_list_layout
-          label: Post list layout
+          name: list_layout
+          label: Home page post list layout
           value: "simple-post-list"
           options:
-            - label: "Simple list"
-              value: "simple-post-list"
-            - label: "Summary list"
-              value: "post-list-summary"
+          - label: "Simple post list"
+            value: "simple-post-list"
+          - label: "Rich post list"
+            value: "post-list-summary"
+          - label: "Moment list"
+            value: "moment-list-summary"
+          help: "The 'Moment list' requires the 'Moments' plugin to be enabled for proper use."
         - $formkit: checkbox
           name: is_show_post_views_in_simple_post_list
-          if: "$post_list_layout === 'simple-post-list'"
+          if: "$list_layout === 'simple-post-list'"
           label: Display post views in simple post list
           value: false
         - $formkit: checkbox
           name: is_show_post_categories_in_post_list_summary
-          if: "$post_list_layout === 'post-list-summary'"
+          if: "$list_layout === 'post-list-summary'"
           label: Display post categories in post list summary
           value: true
         - $formkit: checkbox
           name: is_show_post_tags_in_post_list_summary
-          if: "$post_list_layout === 'post-list-summary'"
+          if: "$list_layout === 'post-list-summary'"
           label: Display post tags in post list summary
           value: true
         - $formkit: checkbox
           name: is_show_post_views_in_post_list_summary
-          if: "$post_list_layout === 'post-list-summary'"
+          if: "$list_layout === 'post-list-summary'"
           label: Display post views in post list summary
           value: true
         - $formkit: checkbox
           name: is_show_post_estimated_reading_time_in_post_list_summary
-          if: "$post_list_layout === 'post-list-summary'"
+          if: "$list_layout === 'post-list-summary'"
           label: Display post estimated reading time in post list summary
           value: false
         - $formkit: checkbox
           name: is_show_post_excerpt_in_post_list_summary
-          if: "$post_list_layout === 'post-list-summary'"
+          if: "$list_layout === 'post-list-summary'"
           label: Display post excerpt in post list summary
           value: true
         - $formkit: number
           name: post_excerpt_max_lines
-          if: "$post_list_layout === 'post-list-summary'"
+          if: "$list_layout === 'post-list-summary'"
           label: Maximum number of lines in the post list summary
           value: 3
           help: "The value range is 1-5"
         - $formkit: checkbox
           name: is_show_index_post_list_permalink_text
-          if: "$post_list_layout === 'post-list-summary'"
+          if: "$list_layout === 'post-list-summary'"
           label: Display the text of the post list permalink
           help: "If enabled, the theme will display the text of the post list permalink."
           value: true
         - $formkit: checkbox
           name: is_show_post_cover_in_post_list_summary
-          if: "$post_list_layout === 'post-list-summary'"
+          if: "$list_layout === 'post-list-summary'"
           label: Display post cover in the post list summary
           value: true
+        - $formkit: text
+          label: Number of moments per page
+          name: moment_list_page_size
+          if: "$list_layout === 'moment-list-summary'"
+          validation: required|Number
+          value: 10
         - $formkit: checkbox
           name: is_pin_icon_show
           label: Top icon display on the post list
