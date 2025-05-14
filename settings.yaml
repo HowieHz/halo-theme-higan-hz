@@ -744,6 +744,16 @@ spec:
           validation: required|Number
           value: 10
         - $formkit: checkbox
+          name: is_show_moment_avatar
+          if: "$list_layout === 'moment-list-summary'"
+          label: 瞬间列表显示条目作者头像
+          value: true
+        - $formkit: checkbox
+          name: is_show_moment_nickname
+          if: "$list_layout === 'moment-list-summary'"
+          label: 瞬间列表显示条目作者昵称
+          value: true
+        - $formkit: checkbox
           name: is_pin_icon_show
           label: 文章列表置顶图标
           value: true
