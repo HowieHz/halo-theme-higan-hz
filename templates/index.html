@@ -107,7 +107,7 @@
 
     <th:block th:if="${theme?.config.index_styles?.post_list_layout=='post-list-summary'}">
       <span class="h1" th:if="${theme.config?.index_styles?.is_show_index_post_list_title}">
-        <a th:href="@{/archives}" th:text="#{page.index.indexPostListTitle}">首页文章列表标题替换位</a>
+        <a th:href="@{/archives}" th:text="#{page.index.postListTitle}">首页文章列表标题替换位</a>
       </span>
       <th:block th:insert="~{fragments/posts :: post-list-summary(${posts})}"></th:block>
     </th:block>
