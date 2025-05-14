@@ -4,8 +4,6 @@
   th:replace="~{fragments/layout :: html(title = ${title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
 >
   <th:block th:fragment="content">
-    <th:block
-      th:insert="~{fragments/moments :: moment-list-summary(moments=${moments}, isStandalonePage=true)}"
-    ></th:block>
+    <th:block th:insert="~{fragments/moments :: moment-list-summary(moments=${moments}, isIndexPage=false)}"></th:block>
   </th:block>
 </th:block>

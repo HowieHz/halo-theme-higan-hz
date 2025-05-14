@@ -1,4 +1,4 @@
-<th:block th:fragment="moment-list-summary(moments, isStandalonePage)">
+<th:block th:fragment="moment-list-summary(moments, isIndexPage)">
   <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
     <div class="content flex-auto">
       <div class="post-list flex-auto">
@@ -47,7 +47,7 @@
               th:unless="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event' or moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"
             >
               <div class="color-fg-muted">
-                <span>
+                <span th:if="${not isIndexPage or theme?.config.index_styles?.is_show_moment_avatar}">
                   <a
                     th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
                     th:href="@{${authorPage}}"
@@ -67,6 +67,7 @@
                   </a>
                 </span>
                 <a
+                  th:if="${not isIndexPage or theme?.config.index_styles?.is_show_moment_nickname}"
                   class="inline-block break-all no-underline"
                   th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
                   th:href="@{${authorPage}}"
@@ -150,7 +151,7 @@
       </div>
       <div class="pagination mt-0">
         <a
-          th:href="${isStandalonePage} ? ${moments.prevUrl} : (${moments.page-1==1} ? '/' : '/page/' + ${moments.page-1})"
+          th:href="${not isIndexPage} ? ${moments.prevUrl} : (${moments.page-1==1} ? '/' : '/page/' + ${moments.page-1})"
           th:if="${moments.hasPrevious()}"
           th:aria-label="#{common.previousPage.aria-label}"
         >
@@ -164,7 +165,7 @@
           >Page 1 of 1 填充位</span
         >
         <a
-          th:href="@{${isStandalonePage} ? ${moments.nextUrl} : '/page/' + ${moments.page+1}}"
+          th:href="@{${not isIndexPage} ? ${moments.nextUrl} : '/page/' + ${moments.page+1}}"
           th:if="${moments.hasNext()}"
           th:aria-label="#{common.nextPage.aria-label}"
         >
