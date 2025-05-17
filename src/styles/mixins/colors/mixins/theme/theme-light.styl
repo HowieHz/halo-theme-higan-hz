@@ -2,18 +2,17 @@ theme-light()
 	--color-accent-1: #2bbc8a
 	--color-accent-2: #383838
 	--color-accent-3: #676767
-	--color-avatar-border: #fafafa
-	--color-background: #ffffff
-	--color-background-code: #fafafa
+	color-background-numbers = 255, 255, 255
+	color-background = rgb(color-background-numbers)
+	color-card-hover-numbers = 250, 250, 250
+	color-card-hover = rgb(color-card-hover-numbers)
+	color-link-hover-numbers = 212, 128, 170
+	color-link-hover = rgb(color-link-hover-numbers)
 	--color-border: #666
-	--color-card-hover: #fafafa
 	--color-divide: #e5e7eb
 	--color-footer-mobile-1: #666
 	--color-footer-mobile-2: #e6e6e6
-	--color-footer-mobile-3: #fafafa
-	--color-link: rgba(212, 128, 170, 1)
-	--color-meta: #666
-	--color-meta-code: #808080
+	--color-footer-mobile-3: color-card-hover
 	--color-quote: #2bbc8a
 	--color-scrollbar: #aaa
 	--color-text: #333333
@@ -21,6 +20,4 @@ theme-light()
 	--toc-level-2: #383838
 	--toc-level-3: #666
 	--toc-level-4: #888
-
-	comment-widget
-		--halo-comment-widget-component-form-input-bg-color: #ffffff !important
+	base-vars(color-background, color-background-numbers, color-card-hover, color-card-hover-numbers, color-link-hover)

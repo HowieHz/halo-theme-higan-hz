@@ -307,18 +307,11 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
           --color-accent-1: #2bbc8a;
           --color-accent-2: #eee;
           --color-accent-3: #ccc;
-          --color-avatar-border: #212326;
-          --color-background: #1d1f21;
-          --color-background-code: #d5d7d8;
           --color-border: #908d8d;
-          --color-card-hover: #212326;
           --color-divide: #616161;
           --color-footer-mobile-1: #a4a3a3;
           --color-footer-mobile-2: #27292b;
-          --color-footer-mobile-3: #1f2325;
-          --color-link: #d480aa;
-          --color-meta: #908d8d;
-          --color-meta-code: #908d8d;
+          --color-footer-mobile-3: #212326;
           --color-quote: #ccffb6;
           --color-scrollbar: #999;
           --color-text: #d5d7d8;
@@ -326,6 +319,14 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
           --toc-level-2: #e3e3e3;
           --toc-level-3: #b0b0b0;
           --toc-level-4: #636363;
+          --color-avatar-border: #212326;
+          --color-background: #1d1f21;
+          --color-background-code: #212326;
+          --color-background-numbers: 29, 31, 33;
+          --color-card-hover: #212326;
+          --color-card-hover-numbers: 33, 35, 38;
+          --color-link-hover: #d480aa;
+          --color-link-hover-70-alpha: rgba(212, 128, 170, 0.7);
         }
         html[theme="theme-{id}"] comment-widget {
           --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
@@ -341,18 +342,11 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
           --color-accent-1: #2bbc8a;
           --color-accent-2: #383838;
           --color-accent-3: #676767;
-          --color-avatar-border: #fafafa;
-          --color-background: #fff;
-          --color-background-code: #fafafa;
           --color-border: #666;
-          --color-card-hover: #fafafa;
           --color-divide: #e5e7eb;
           --color-footer-mobile-1: #666;
           --color-footer-mobile-2: #e6e6e6;
           --color-footer-mobile-3: #fafafa;
-          --color-link: #d480aa;
-          --color-meta: #666;
-          --color-meta-code: #808080;
           --color-quote: #2bbc8a;
           --color-scrollbar: #aaa;
           --color-text: #333;
@@ -360,6 +354,14 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
           --toc-level-2: #383838;
           --toc-level-3: #666;
           --toc-level-4: #888;
+          --color-avatar-border: #fafafa;
+          --color-background: #fff;
+          --color-background-code: #fafafa;
+          --color-background-numbers: 255, 255, 255;
+          --color-card-hover: #fafafa;
+          --color-card-hover-numbers: 250, 250, 250;
+          --color-link-hover: #d480aa;
+          --color-link-hover-70-alpha: rgba(212, 128, 170, 0.7);
         }
         html[theme="theme-{id}"] comment-widget {
           --halo-comment-widget-component-form-input-bg-color: #fff !important;
@@ -374,18 +376,11 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
           --color-accent-1: #2bbc8a;
           --color-accent-2: #383838;
           --color-accent-3: #676767;
-          --color-avatar-border: #fafafa;
-          --color-background: #fff;
-          --color-background-code: #fafafa;
           --color-border: #666;
-          --color-card-hover: #fafafa;
           --color-divide: #e5e7eb;
           --color-footer-mobile-1: #666;
           --color-footer-mobile-2: #e6e6e6;
           --color-footer-mobile-3: #fafafa;
-          --color-link: #d480aa;
-          --color-meta: #666;
-          --color-meta-code: #808080;
           --color-quote: #2bbc8a;
           --color-scrollbar: #aaa;
           --color-text: #333;
@@ -393,6 +388,14 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
           --toc-level-2: #383838;
           --toc-level-3: #666;
           --toc-level-4: #888;
+          --color-avatar-border: #fafafa;
+          --color-background: #fff;
+          --color-background-code: #fafafa;
+          --color-background-numbers: 255, 255, 255;
+          --color-card-hover: #fafafa;
+          --color-card-hover-numbers: 250, 250, 250;
+          --color-link-hover: #d480aa;
+          --color-link-hover-70-alpha: rgba(212, 128, 170, 0.7);
         }
         html[theme="theme-{id}"] comment-widget {
           --halo-comment-widget-component-form-input-bg-color: #fff !important;
@@ -403,18 +406,11 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
             --color-accent-1: #2bbc8a;
             --color-accent-2: #eee;
             --color-accent-3: #ccc;
-            --color-avatar-border: #212326;
-            --color-background: #1d1f21;
-            --color-background-code: #d5d7d8;
             --color-border: #908d8d;
-            --color-card-hover: #212326;
             --color-divide: #616161;
             --color-footer-mobile-1: #a4a3a3;
             --color-footer-mobile-2: #27292b;
-            --color-footer-mobile-3: #1f2325;
-            --color-link: #d480aa;
-            --color-meta: #908d8d;
-            --color-meta-code: #908d8d;
+            --color-footer-mobile-3: #212326;
             --color-quote: #ccffb6;
             --color-scrollbar: #999;
             --color-text: #d5d7d8;
@@ -422,6 +418,14 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
             --toc-level-2: #e3e3e3;
             --toc-level-3: #b0b0b0;
             --toc-level-4: #636363;
+            --color-avatar-border: #212326;
+            --color-background: #1d1f21;
+            --color-background-code: #212326;
+            --color-background-numbers: 29, 31, 33;
+            --color-card-hover: #212326;
+            --color-card-hover-numbers: 33, 35, 38;
+            --color-link-hover: #d480aa;
+            --color-link-hover-70-alpha: rgba(212, 128, 170, 0.7);
           }
           html[theme="theme-{id}"] comment-widget {
             --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;

@@ -2,13 +2,13 @@
 
 #categories {
   & .category-list-title {
-    color: var(--color-meta);
+    color: var(--color-footer-mobile-1);
   }
 
   & .category-list {
     & .category-list-item {
       & .category-list-count {
-        color: var(--color-meta);
+        color: var(--color-footer-mobile-1);
 
         &::before {
           content: " (";
@@ -24,7 +24,7 @@
 
 #tag-cloud {
   & .tag-cloud-title {
-    color: var(--color-meta);
+    color: var(--color-footer-mobile-1);
   }
 
   & .tag-cloud-tags {
@@ -229,7 +229,7 @@
   }
 
   & figcaption {
-    color: var(--color-meta);
+    color: var(--color-footer-mobile-1);
     font-size: 0.9em;
     margin: -0.3125rem 0 0.3125rem;
     zoom: 1;
@@ -238,13 +238,13 @@
       background-image: linear-gradient(
         transparent,
         transparent 0.625rem,
-        var(--color-link) 0.625rem,
-        var(--color-link)
+        var(--color-link-hover) 0.625rem,
+        var(--color-link-hover)
       );
       background-position: bottom;
       background-repeat: repeat-x;
       background-size: 100% 0.375rem;
-      color: var(--color-meta);
+      color: var(--color-footer-mobile-1);
       float: right;
       font-size: 0.8em;
       font-style: italic;
