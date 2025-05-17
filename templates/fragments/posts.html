@@ -34,7 +34,7 @@
           </div>
           <span>
             <i
-              class="iconify iconify-middle color-link"
+              class="iconify iconify-middle color-link-hover"
               data-icon="typcn:pin-outline"
               th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='left'"
             ></i>
@@ -49,7 +49,7 @@
               </span>
             </th:block>
             <i
-              class="iconify iconify-middle color-link"
+              class="iconify iconify-middle color-link-hover"
               data-icon="typcn:pin-outline"
               th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='right'"
             ></i>
@@ -72,7 +72,7 @@
                 class="post-card-hover absolute -inset-x-4 -inset-y-2 z-0 opacity-0 sm:-inset-x-6 sm:rounded-2xl"
               ></div>
               <i
-                class="iconify iconify-middle color-link relative z-10"
+                class="iconify iconify-middle color-link-hover relative z-10"
                 data-icon="typcn:pin-outline"
                 th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='left'"
               ></i>
@@ -81,7 +81,7 @@
                 <span class="relative z-10" th:text="${post.spec.title}">文章标题替换位</span>
               </a>
               <i
-                class="iconify iconify-middle color-link relative z-10"
+                class="iconify iconify-middle color-link-hover relative z-10"
                 data-icon="typcn:pin-outline"
                 th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='right'"
               ></i>
@@ -96,19 +96,37 @@
               <th:block th:text="${#temporals.format(post.spec.publishTime, 'MMMM dd yyyy')}"></th:block>
             </time>
             <th:block th:if="${theme.config?.index_styles?.is_show_post_categories_in_post_list_summary}">
+              <!--/* 使用 sm:inlne 而不是 sm:inline-block 是希望能在很多“分类面包屑”的情况下自动换行 */-->
               <div
                 class="article-category color-time relative z-20 mb-0 mt-0.5 block p-0 text-sm sm:inline"
                 th:if="${!#lists.isEmpty(post.categories)}"
               >
-                <span class="iconify" data-icon="fa-solid:archive" data-inline="false"></span>
-                <th:block th:each="category : ${post.categories}">
-                  <a
-                    class="category-link color-time"
-                    th:href="@{${category.status?.permalink}}"
-                    th:text="${category.spec?.displayName}"
-                  >
-                    文章分类名替换位
-                  </a>
+                <th:block th:each="categoryLeafNode, categoryLeafNodeIterStat : ${post.categories}">
+                  <!--/* inline-block 使一个“分类面包屑”不会被分到两行 */-->
+                  <span class="categoryBreadcrumbs inline-block">
+                    <!--/* 分类图标和第一个“分类面包屑”保持在一行。 */-->
+                    <span
+                      th:if="${categoryLeafNodeIterStat.first}"
+                      class="iconify"
+                      data-icon="fa-solid:archive"
+                      data-inline="false"
+                    ></span>
+                    <th:block
+                      th:each="category, iterStat : ${categoryFinder.getBreadcrumbs(categoryLeafNode.metadata?.name)}"
+                    >
+                      <a
+                        class="category-link"
+                        th:href="@{${category.status?.permalink}}"
+                        th:text="${category.spec?.displayName}"
+                      >
+                        文章分类名替换位 </a
+                      ><!--/*
+                      */--><span th:if="${!iterStat.last}"> ></span
+                      ><!--/* 除最后一个“分类面包屑”没有逗号，其他“分类面包屑”末尾都有逗号，并且和这个“分类面包屑”保持在一行。
+                      */--><span th:if="${iterStat.last and !categoryLeafNodeIterStat.last}">,</span>
+                      <!--/* 逗号需要写在此层 th:block，然后用注释连接起来，否则逗号前会出现空格 */-->
+                    </th:block>
+                  </span>
                 </th:block>
               </div>
             </th:block>

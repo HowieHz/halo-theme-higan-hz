@@ -12,7 +12,7 @@
   vertical-align: middle;
 
   & .icon:hover {
-    color: var(--color-link);
+    color: var(--color-link-hover);
   }
 }
 
@@ -67,14 +67,19 @@
     text-decoration: none;
 
     &:hover {
-      background-image: linear-gradient(transparent, transparent 0.25rem, var(--color-link) 0.25rem, var(--color-link));
+      background-image: linear-gradient(
+        transparent,
+        transparent 0.25rem,
+        var(--color-link-hover) 0.25rem,
+        var(--color-link-hover)
+      );
     }
 
     &.icon {
       background: none;
 
       &:hover {
-        color: var(--color-link);
+        color: var(--color-link-hover);
       }
     }
   }
@@ -112,7 +117,7 @@ article {
     }
 
     & .caption {
-      color: var(--color-meta);
+      color: var(--color-footer-mobile-1);
       display: block;
       font-size: 0.9em;
       margin-top: 0.5em;
@@ -160,7 +165,7 @@ article {
       }
 
       & footer {
-        color: var(--color-meta);
+        color: var(--color-footer-mobile-1);
         font-size: var(--text-xs);
         margin: var(--text) * 1.725 0;
 
@@ -168,19 +173,19 @@ article {
           background-image: linear-gradient(
             transparent,
             transparent 0.3125rem,
-            var(--color-meta) 0.3125rem,
-            var(--color-meta)
+            var(--color-footer-mobile-1) 0.3125rem,
+            var(--color-footer-mobile-1)
           );
-          color: var(--color-meta);
+          color: var(--color-footer-mobile-1);
 
           &:hover {
             background-image: linear-gradient(
               transparent,
               transparent 0.25rem,
-              var(--color-meta-code) 0.25rem,
-              var(--color-meta-code)
+              var(--color-link-hover) 0.25rem,
+              var(--color-link-hover)
             );
-            color: var(--color-meta-code);
+            color: var(--color-link-hover);
           }
         }
 
@@ -413,7 +418,7 @@ html[data-color-scheme="dark"] article .content {
       background: none;
 
       &:hover {
-        color: var(--color-link);
+        color: var(--color-link-hover);
       }
     }
   }
@@ -540,7 +545,7 @@ html[data-color-scheme="dark"] article .content {
     }
 
     & a:hover {
-      color: var(--color-link);
+      color: var(--color-link-hover);
     }
 
     & .toc-level-1 > .toc-link {
@@ -632,7 +637,7 @@ html[data-color-scheme="dark"] article .content {
         background: none;
 
         &:hover {
-          color: var(--color-link);
+          color: var(--color-link-hover);
         }
       }
     }
@@ -733,7 +738,7 @@ html[data-color-scheme="dark"] article .content {
       }
 
       & a:hover {
-        color: var(--color-link);
+        color: var(--color-link-hover);
       }
 
       & .toc-level-1 > .toc-link {
@@ -837,7 +842,12 @@ hr.divide {
 
 .article-tag .tag-link,
 .article-category .category-link {
-  background-image: linear-gradient(transparent, transparent 0.625rem, var(--color-link) 0.625rem, var(--color-link));
+  background-image: linear-gradient(
+    transparent,
+    transparent 0.625rem,
+    var(--color-link-hover) 0.625rem,
+    var(--color-link-hover)
+  );
   background-position: bottom;
   background-repeat: repeat-x;
   background-size: 100% 0.375rem;
@@ -867,7 +877,7 @@ hr.divide {
       }
 
       & .meta {
-        color: var(--color-meta);
+        color: var(--color-footer-mobile-1);
         display: block;
         font-size: var(--text);
         margin-right: 1rem;
@@ -937,7 +947,7 @@ hr.divide {
     text-decoration: underline;
 
     &:hover {
-      color: var(--color-meta-code);
+      color: var(--color-link-hover);
     }
   }
 
@@ -1022,8 +1032,8 @@ hr.divide {
   }
 
   & em.search-keyword {
-    border-bottom: 1px dashed var(--color-link);
-    color: var(--color-link);
+    border-bottom: 1px dashed var(--color-link-hover);
+    color: var(--color-link-hover);
     font-weight: bold;
   }
 }
@@ -1052,8 +1062,8 @@ hr.divide {
   color: var(--color-accent-3);
 }
 
-.color-link {
-  color: var(--color-link);
+.color-link-hover {
+  color: var(--color-link-hover);
 }
 
 .color-time,
@@ -1062,7 +1072,7 @@ a.color-time {
 }
 
 code {
-  border: 1px dotted var(--color-meta);
+  border: 1px dotted var(--color-footer-mobile-1);
   border-radius: 0.125rem;
   padding: 0 0.3125rem;
 }
