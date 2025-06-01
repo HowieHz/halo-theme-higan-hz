@@ -24,7 +24,22 @@
                 th:alt="#{page.author.avatar-img.alt}"
               />
               <div class="profile-nickname-container">
-                <p class="profile-nickname" th:text="${author.spec.displayName}"></p>
+                <p class="profile-nickname">
+                  <span th:text="${author.spec.displayName}">作者名填充位置</span>
+                  <th:block
+                    th:if="${pluginFinder.available('PluginFeed') and theme.config?.author_page_styles?.is_show_rss_button}"
+                  >
+                    <a
+                      class="icon"
+                      th:aria-label="#{common.subscribeThisPage}"
+                      th:href="@{'/feed/authors/' + ${author.metadata?.name} + '.xml'}"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <span class="iconify iconify-middle" data-icon="heroicons-outline:rss" data-inline="false"></span
+                    ></a>
+                  </th:block>
+                </p>
                 <p class="profile-bio" th:text="${author.spec.bio}"></p>
               </div>
             </div>

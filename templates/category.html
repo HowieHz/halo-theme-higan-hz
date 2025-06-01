@@ -5,7 +5,22 @@
 >
   <th:block th:fragment="content">
     <div id="archive" class="content">
-      <h1 th:text="#{page.category.title(${category.spec?.displayName})}">分类页标题替换位</h1>
+      <h1>
+        <span th:text="#{page.category.title(${category.spec?.displayName})}">分类页标题替换位</span>
+        <th:block
+          th:if="${pluginFinder.available('PluginFeed') and theme.config?.category_page_styles?.is_show_rss_button}"
+        >
+          <a
+            class="icon"
+            th:aria-label="#{common.subscribeThisPage}"
+            th:href="@{'/feed/categories/' + ${category.spec?.slug} + '.xml'}"
+            target="_blank"
+            rel="noopener"
+          >
+            <span class="iconify iconify-huge" data-icon="heroicons-outline:rss" data-inline="false"></span
+          ></a>
+        </th:block>
+      </h1>
       <ul class="post-list flex-auto">
         <li class="post-item" th:each="post : ${posts}">
           <div class="meta">

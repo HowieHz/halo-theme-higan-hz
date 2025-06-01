@@ -913,6 +913,11 @@ spec:
           name: is_show_post_views_in_post_list
           label: 文章列表显示文章阅读量
           value: false
+        - $formkit: checkbox
+          name: is_show_rss_button
+          label: 显示 RSS 订阅按钮
+          value: false
+          help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
     - group: tag_page_styles
       label: 标签详情页样式
       formSchema:
@@ -920,6 +925,19 @@ spec:
           name: is_show_post_views_in_post_list
           label: 文章列表显示文章阅读量
           value: false
+        - $formkit: checkbox
+          name: is_show_rss_button
+          label: 显示 RSS 订阅按钮
+          value: false
+          help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
+    - group: author_page_styles
+      label: 作者详情页样式
+      formSchema:
+        - $formkit: checkbox
+          name: is_show_rss_button
+          label: 显示 RSS 订阅按钮
+          value: false
+          help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
     - group: archives_page_styles
       label: 归档页样式
       formSchema:

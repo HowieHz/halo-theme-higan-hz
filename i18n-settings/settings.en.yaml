@@ -913,6 +913,11 @@ spec:
           name: is_show_post_views_in_post_list
           label: Display post views in post list
           value: false
+        - $formkit: checkbox
+          name: is_show_rss_button
+          label: Show RSS subscription button
+          value: false
+          help: "Requires enabling the RSS plugin (https://www.halo.run/store/apps/app-KhIVw)"
     - group: tag_page_styles
       label: Tag details page style
       formSchema:
@@ -920,6 +925,19 @@ spec:
           name: is_show_post_views_in_post_list
           label: Display post views in post list
           value: false
+        - $formkit: checkbox
+          name: is_show_rss_button
+          label: Show RSS subscription button
+          value: false
+          help: "Requires enabling the RSS plugin (https://www.halo.run/store/apps/app-KhIVw)"
+    - group: author_page_styles
+      label: Author details page style
+      formSchema:
+        - $formkit: checkbox
+          name: is_show_rss_button
+          label: Show RSS subscription button
+          value: false
+          help: "Requires enabling the RSS plugin (https://www.halo.run/store/apps/app-KhIVw)"
     - group: archives_page_styles
       label: Archives page style
       formSchema:

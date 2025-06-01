@@ -83,6 +83,7 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
       - [添加于“分类集合页样式”](#添加于分类集合页样式)
       - [添加于“分类详情页样式”](#添加于分类详情页样式)
       - [添加于“标签详情页样式”](#添加于标签详情页样式)
+      - [添加于“作者详情页样式”](#添加于作者详情页样式)
       - [添加于"归档页样式"](#添加于归档页样式)
       - [增加于“自定义页面样式”](#增加于自定义页面样式)
       - [增加于“相册页样式”](#增加于相册页样式)
@@ -541,10 +542,16 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
 #### 添加于“分类详情页样式”
 
 1. 允许文章列表显示文章阅读量
+2. 允许显示该页面 RSS 订阅按钮（需要启用 [RSS 订阅插件](https://github.com/halo-dev/plugin-feed)([应用市场页面](https://www.halo.run/store/apps/app-KhIVw))）
 
 #### 添加于“标签详情页样式”
 
 1. 允许文章列表显示文章阅读量
+2. 允许显示该页面 RSS 订阅按钮（需要启用 [RSS 订阅插件](https://github.com/halo-dev/plugin-feed)([应用市场页面](https://www.halo.run/store/apps/app-KhIVw))）
+
+#### 添加于“作者详情页样式”
+
+1. 允许显示该页面 RSS 订阅按钮（需要启用 [RSS 订阅插件](https://github.com/halo-dev/plugin-feed)([应用市场页面](https://www.halo.run/store/apps/app-KhIVw))）
 
 #### 添加于"归档页样式"
 
@@ -689,15 +696,15 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 
 ## 可选插件
 
-- 友链页面（/links），需插件 [plugin-links](https://github.com/halo-sigs/plugin-links)
-- <a id="plugin-photos"></a>图库页面（/photos），需插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)
-- <a id="plugin-moments"></a>瞬间页面（/moments），需插件 [plugin-moments](https://github.com/halo-sigs/plugin-moments)
+- 友链页面（/links），需插件 [plugin-links](https://github.com/halo-sigs/plugin-links)([应用市场页面](https://www.halo.run/store/apps/app-hfbQg))
+- <a id="plugin-photos"></a>图库页面（/photos），需插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)([应用市场页面](https://www.halo.run/store/apps/app-BmQJW))
+- <a id="plugin-moments"></a>瞬间页面（/moments），需插件 [plugin-moments](https://github.com/halo-sigs/plugin-moments)([应用市场页面](https://www.halo.run/store/apps/app-SnwWD))
   - 瞬间页面可用于展示 github 活动，此用法请看 [howiehz/ghu-events-moments](https://github.com/howiehz/ghu-events-moments) 或 [guqing/ghu-events-moments](https://github.com/guqing/ghu-events-moments)（兼容原主题数据类型）
-- 评论功能，需插件 [plugin-comment-widget](https://github.com/halo-sigs/plugin-comment-widget/releases)
-- 搜索功能，需插件 [plugin-search-widget](https://github.com/halo-sigs/plugin-search-widget/releases)
-- 代码渲染，需插件：[plugin-highlightjs](https://github.com/halo-sigs/plugin-highlightjs)
+- 评论功能，需插件 [plugin-comment-widget](https://github.com/halo-sigs/plugin-comment-widget/releases)([应用市场页面](https://www.halo.run/store/apps/app-YXyaD))
+- 搜索功能，需插件 [plugin-search-widget](https://github.com/halo-sigs/plugin-search-widget/releases)([应用市场页面](https://www.halo.run/store/apps/app-DlacW))
+- 代码渲染，需插件：[plugin-highlightjs](https://github.com/halo-sigs/plugin-highlightjs)([应用市场页面](https://www.halo.run/store/apps/app-sqpgf))
 - - 暗黑模式下，代码块高亮主题推荐选择“an-old-hope.min.css”
-- 图片灯箱，需插件：[plugin-lightgallery](https://github.com/halo-sigs/plugin-lightgallery)
+- 图片灯箱，需插件：[plugin-lightgallery](https://github.com/halo-sigs/plugin-lightgallery)([应用市场页面](https://www.halo.run/store/apps/app-OoggD))
 
 - - 页面匹配规则 推荐设置为
 
@@ -799,7 +806,7 @@ RSS3 -->|发 Token| $POWER{{$POWER}}
 
 ##### 适用于默认编辑器的使用说明
 
-1. 需插件 [plugin-hybrid-edit-block](https://github.com/halo-sigs/plugin-hybrid-edit-block)
+1. 需插件 [plugin-hybrid-edit-block](https://github.com/halo-sigs/plugin-hybrid-edit-block)([应用市场页面](https://www.halo.run/store/apps/app-NgHnY))
 2. 进入主题配置，启用 `全局-Mermaid 支持`
 3. 默认编辑器中输入 `/html` 选择插入 html 代码块
 
@@ -832,7 +839,9 @@ RSS3 -->|发 Token| $POWER{{$POWER}}
 ```
 <!-- prettier-ignore-end -->
 
-#### 使用 [Vditor 编辑器](https://github.com/justice2001/halo-plugin-vditor)
+#### 使用 Vditor 编辑器
+
+需启用 [Vditor 编辑器插件](https://github.com/justice2001/halo-plugin-vditor)([应用市场页面](https://www.halo.run/store/apps/app-uBcYw))，并进入文章编辑页，将文章编辑器设置为 Vditor 编辑器。
 
 ##### 适用于 Vditor 编辑器的示例
 
@@ -1041,7 +1050,9 @@ title: [[图表标题]]
 ```
 <!-- prettier-ignore-end -->
 
-### 在使用 [Vditor 编辑器](https://github.com/justice2001/halo-plugin-vditor) 中的使用方法
+### 在使用 Vditor 编辑器 中的使用方法
+
+需启用 [Vditor 编辑器插件](https://github.com/justice2001/halo-plugin-vditor)([应用市场页面](https://www.halo.run/store/apps/app-uBcYw))，并进入文章编辑页，将文章编辑器设置为 Vditor 编辑器。
 
 输入以下内容，将 `[[浅色模式内容]]` 和 `[[深色模式内容]]` 换成你自己的内容，
 即可适配明暗切换
@@ -1077,11 +1088,15 @@ title: [[图表标题]]
 
 ## 感谢赞助
 
+<details><summary>点我展开赞助列表</summary>
+
 - GreenTomato 赞助 66.66 CNY 于 2025 年 2 月 14 日
 - [默小班](hhttps://www.memxb.top/) 赞助 5 CNY 于 2025 年 2 月 12 日
 - [boyving](https://www.imdream.cn/) 赞助 18.80 CNY 于 2025 年 2 月 10 日
 - [bilibili@氵青一色但不是清一色](https://space.bilibili.com/37264956) 赞助 5 CNY 于 2025 年 1 月 20 日
 - [bilibili@氵青一色但不是清一色](https://space.bilibili.com/37264956) 赞助 5 CNY 于 2025 年 1 月 11 日
+
+</details>
 
 ## 项目状态
 
