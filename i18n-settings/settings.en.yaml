@@ -150,7 +150,7 @@ spec:
         - $formkit: number
           name: custom_color_schema_init_id
           if: "$get(color_schema_init).value.theme === 'custom'"
-          value: ''
+          value: ""
           help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
         - $formkit: repeater
@@ -179,7 +179,7 @@ spec:
             - $formkit: checkbox
               name: is_raw_css_output_mode
               label: Raw CSS Output Mode
-              help: "After disabling this option, you only need to fill in the custom CSS variables part, and it will be automatically output in the corresponding CSS selector (the selector is html[theme=\"theme-{id}\"] (replace {id} with the \"identifier\" filled in here))."
+              help: 'After disabling this option, you only need to fill in the custom CSS variables part, and it will be automatically output in the corresponding CSS selector (the selector is html[theme="theme-{id}"] (replace {id} with the "identifier" filled in here)).'
               value: false
             - $formkit: code
               name: custom_css
@@ -246,7 +246,7 @@ spec:
         - $formkit: number
           name: custom_theme_auto_id
           if: "$get(custom_theme_auto).value === 'custom'"
-          value: ''
+          value: ""
           help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
         - $formkit: select
@@ -275,7 +275,7 @@ spec:
         - $formkit: number
           name: custom_theme_light_id
           if: "$get(custom_theme_light).value === 'custom'"
-          value: ''
+          value: ""
           help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
         - $formkit: select
@@ -304,7 +304,7 @@ spec:
         - $formkit: number
           name: custom_theme_dark_id
           if: "$get(custom_theme_dark).value === 'custom'"
-          value: ''
+          value: ""
           help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
         - $formkit: checkbox
@@ -543,12 +543,12 @@ spec:
           help: "If enabled, empty lines in blockquotes will be preserved; otherwise, they will be automatically removed. Blockquotes are represented by the > symbol in Markdown."
         - $formkit: checkbox
           name: is_show_the_quote_before_blockquote
-          label: Show the quote before Blockquote 
+          label: Show the quote before Blockquote
           value: true
           help: "If enabled, the theme will display the quote before the blockquote. In Markdown, you can use the > symbol to create a blockquote."
         - $formkit: checkbox
           name: is_show_the_quote_after_blockquote
-          label: Show the quote after Blockquote 
+          label: Show the quote after Blockquote
           value: false
           help: "If enabled, the theme will display the quote after the blockquote. In Markdown, you can use the > symbol to create a blockquote."
         - $formkit: checkbox
@@ -684,12 +684,12 @@ spec:
           label: Home page post list layout
           value: "simple-post-list"
           options:
-          - label: "Simple post list"
-            value: "simple-post-list"
-          - label: "Rich post list"
-            value: "post-list-summary"
-          - label: "Moment list"
-            value: "moment-list-summary"
+            - label: "Simple post list"
+              value: "simple-post-list"
+            - label: "Rich post list"
+              value: "post-list-summary"
+            - label: "Moment list"
+              value: "moment-list-summary"
           help: "The 'Moment list' requires the 'Moments' plugin to be enabled for proper use."
         - $formkit: checkbox
           name: is_show_post_views_in_simple_post_list
