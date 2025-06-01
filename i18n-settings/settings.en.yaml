@@ -893,12 +893,12 @@ spec:
           label: Display the number of articles per category
           value: true
         - $formkit: text
-          name: characters_to_the_left_of_the_number_of_articles
+          name: characters_to_the_left_of_the_number_of_posts
           if: "$is_show_the_number_of_articles_per_category === true"
           label: "Characters to the left of the number of articles"
           value: "("
         - $formkit: text
-          name: characters_to_the_right_of_the_number_of_articles
+          name: characters_to_the_right_of_the_number_of_posts
           if: "$is_show_the_number_of_articles_per_category === true"
           label: "Characters to the right of the number of articles"
           value: ")"
@@ -918,6 +918,39 @@ spec:
           label: Show RSS subscription button
           value: false
           help: "Requires enabling the RSS plugin (https://www.halo.run/store/apps/app-KhIVw)"
+    - group: tags_page_styles
+      label: Tag Collection Page Style
+      formSchema:
+        - $formkit: checkbox
+          name: is_show_the_number_of_posts_per_tag
+          label: Display the number of posts per tag
+          value: true
+        - $formkit: text
+          name: characters_to_the_left_of_the_number_of_posts
+          if: "$is_show_the_number_of_posts_per_tag === true"
+          label: "Characters to the left of the number of posts"
+          value: "("
+        - $formkit: text
+          name: characters_to_the_right_of_the_number_of_posts
+          if: "$is_show_the_number_of_posts_per_tag === true"
+          label: "Characters to the right of the number of posts"
+          value: ")"
+        - $formkit: select
+          name: tags_sort_order
+          label: Tag sort order
+          value: "default"
+          options:
+        - label: "Default"
+          value: "default"
+        - label: "By post count descending"
+          value: "count_desc"
+        - label: "By post count ascending"
+          value: "count_asc"
+        - label: "By name ascending"
+          value: "name_asc"
+        - label: "By name descending"
+          value: "name_desc"
+          help: "Select the sorting method for tags on the tag collection page"
     - group: tag_page_styles
       label: Tag details page style
       formSchema:

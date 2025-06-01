@@ -893,12 +893,12 @@ spec:
           label: 是否显示每个分类下的文章数量
           value: true
         - $formkit: text
-          name: characters_to_the_left_of_the_number_of_articles
+          name: characters_to_the_left_of_the_number_of_posts
           if: "$is_show_the_number_of_articles_per_category === true"
           label: "在“文章数量”左侧的字符"
           value: "("
         - $formkit: text
-          name: characters_to_the_right_of_the_number_of_articles
+          name: characters_to_the_right_of_the_number_of_posts
           if: "$is_show_the_number_of_articles_per_category === true"
           label: "在“文章数量”右侧的字符"
           value: ")"
@@ -918,6 +918,39 @@ spec:
           label: 显示 RSS 订阅按钮
           value: false
           help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
+    - group: tags_page_styles
+      label: 标签集合页样式
+      formSchema:
+        - $formkit: checkbox
+          name: is_show_the_number_of_posts_per_tag
+          label: 是否显示每个标签下的文章数量
+          value: true
+        - $formkit: text
+          name: characters_to_the_left_of_the_number_of_posts
+          if: "$is_show_the_number_of_posts_per_tag === true"
+          label: "在“文章数量”左侧的字符"
+          value: "("
+        - $formkit: text
+          name: characters_to_the_right_of_the_number_of_posts
+          if: "$is_show_the_number_of_posts_per_tag === true"
+          label: "在“文章数量”右侧的字符"
+          value: ")"
+        - $formkit: select
+          name: tags_sort_order
+          label: 标签排序方式
+          value: "default"
+          options:
+            - label: "默认"
+              value: "default"
+            - label: "按文章数量从多到少"
+              value: "count_desc"
+            - label: "按文章数量从少到多"
+              value: "count_asc"
+            - label: "按名称升序"
+              value: "name_asc"
+            - label: "按名称降序"
+              value: "name_desc"
+          help: "选择标签在标签集合页的排序方式"
     - group: tag_page_styles
       label: 标签详情页样式
       formSchema:
