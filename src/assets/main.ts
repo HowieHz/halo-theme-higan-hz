@@ -28,20 +28,20 @@ window.scrollToTop = (): void => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
-document.addEventListener("DOMContentLoaded", function (): void {
+document.addEventListener("DOMContentLoaded", (): void => {
   /**
    * Shows the responsive navigation menu on mobile.
    */
   // 移动端 页眉菜单 按钮事件
   const mobileMenuIcon = document.querySelector("#header > #nav > ul > .icon");
   const mobileMenu = $("#header > #nav > ul > li:not(:first-child)");
-  mobileMenuIcon?.addEventListener("click", function (): void {
+  mobileMenuIcon?.addEventListener("click", (): void => {
     if (mobileMenu.is(":visible")) {
-      mobileMenu.slideUp(200, function (): void {
+      mobileMenu.slideUp(200, (): void => {
         mobileMenu.removeClass("responsive").css("display", "");
       });
     } else {
-      mobileMenu.slideDown(200, function (): void {
+      mobileMenu.slideDown(200, (): void => {
         mobileMenu.addClass("responsive").css("display", "");
       });
     }
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function (): void {
    * Controls the different versions of  the menu in blog post articles
    * for Desktop, tablet and mobile.
    */
-  if ($(".post").length) {
+  if (document.querySelector(".post")) {
     // 移动端 文章页 底部导航栏 按钮事件
     const menuElement = document.querySelector("#actions-footer > #menu") as HTMLElement;
     menuElement?.addEventListener("click", (): void => {
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function (): void {
      * Display the menu if the menu icon is clicked.
      */
     // 平板端、桌面端 文章页 菜单按钮事件
-    menuIcon.on("click", function (): boolean {
+    menuIcon.on("click", (): boolean => {
       if (menu.is(":visible")) {
         menuIcon.removeClass("active"); // for #header-post .active style
         menu.fadeOut(50);
@@ -126,8 +126,12 @@ document.addEventListener("DOMContentLoaded", function (): void {
     // 平板端 文章页 导航栏、回到顶部按钮 页面滚动相关逻辑
     if (menu.length) {
       const topIcon = $("#top-icon-tablet");
-      $(window).on("scroll", function (): void {
-        const topDistance = $(window).scrollTop() || 0;
+      window.addEventListener("scroll", (): void => {
+        // const topDistance = window.pageYOffset || // 现代浏览器首选 scrollY 的别名 支持大部分现代浏览器（IE9+）
+        // document.documentElement.scrollTop ||  // 标准模式兼容 包括老版本 IE
+        // document.body.scrollTop || // 怪异模式兼容
+        // 0;
+        const topDistance = window.scrollY || 0;
 
         // hide only the navigation links on desktop
         // if (!nav.is(":visible") && topDistance < 50) {
@@ -164,9 +168,9 @@ document.addEventListener("DOMContentLoaded", function (): void {
       const navFooter = $("#nav-footer");
       const tocFooter = $("#toc-footer");
       const shareFooter = $("#share-footer");
-      const footerTopIcon = $("#actions-footer > #top");
-      $(window).on("scroll", function (): void {
-        const topDistance = $(window).scrollTop() || 0;
+      const footerTopIcon: HTMLElement | null = document.querySelector("#actions-footer > #top");
+      window.addEventListener("scroll", (): void => {
+        const topDistance = window.scrollY || 0;
 
         // 在滚动时，关闭全部底部导航栏子菜单
         navFooter.slideUp(200);
@@ -186,9 +190,9 @@ document.addEventListener("DOMContentLoaded", function (): void {
         // otherwise show a "scroll to the top" icon
         // 回到顶部按钮 根据页面滚动距离 显示/隐藏
         if (topDistance < 50) {
-          footerTopIcon.css("transform", "scale(0)");
+          footerTopIcon?.style.setProperty("transform", "scale(0)");
         } else if (topDistance > 100) {
-          footerTopIcon.css("transform", "scale(1)");
+          footerTopIcon?.style.setProperty("transform", "scale(1)");
         }
       });
     }
