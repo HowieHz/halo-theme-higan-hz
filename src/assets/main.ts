@@ -1,4 +1,22 @@
-window.isMobile = () => {
+/// <reference types="jquery" />
+
+// 使此文件成为模块
+export {};
+
+// 扩展 window 对象的类型
+declare global {
+  interface Window {
+    isMobile: () => boolean;
+    scrollToTop: () => void;
+    show: (selector: string | HTMLElement | NodeList) => HTMLElement | NodeList;
+    hide: (selector: string | HTMLElement | NodeList) => HTMLElement | NodeList;
+    toggle: (selector: string | HTMLElement | NodeList, state?: boolean) => HTMLElement | NodeList;
+    toggleWithAnimation: (selector: string | HTMLElement, duration?: number, easing?: string) => Promise<HTMLElement>;
+  }
+}
+
+// 检测是否为移动设备
+window.isMobile = (): boolean => {
   const flag = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   return flag;
 };
@@ -6,24 +24,24 @@ window.isMobile = () => {
 /**
  * 滚动到页面顶部
  */
-window.scrollToTop = () => {
+window.scrollToTop = (): void => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function (): void {
   /**
    * Shows the responsive navigation menu on mobile.
    */
   // 移动端 页眉菜单 按钮事件
-  const mobileMenuIcon = $("#header > #nav > ul > .icon");
+  const mobileMenuIcon = document.querySelector("#header > #nav > ul > .icon");
   const mobileMenu = $("#header > #nav > ul > li:not(:first-child)");
-  mobileMenuIcon.on("click", function () {
+  mobileMenuIcon?.addEventListener("click", function (): void {
     if (mobileMenu.is(":visible")) {
-      mobileMenu.slideUp(200, function () {
+      mobileMenu.slideUp(200, function (): void {
         mobileMenu.removeClass("responsive").css("display", "");
       });
     } else {
-      mobileMenu.slideDown(200, function () {
+      mobileMenu.slideDown(200, function (): void {
         mobileMenu.addClass("responsive").css("display", "");
       });
     }
@@ -35,7 +53,8 @@ document.addEventListener("DOMContentLoaded", function () {
    */
   if ($(".post").length) {
     // 移动端 文章页 底部导航栏 按钮事件
-    $("#actions-footer > #menu").click(function () {
+    const menuElement = document.querySelector("#actions-footer > #menu") as HTMLElement;
+    menuElement?.addEventListener("click", (): void => {
       const navFooter = $("#nav-footer");
       if (navFooter.is(":visible")) {
         navFooter.slideUp(200);
@@ -43,7 +62,8 @@ document.addEventListener("DOMContentLoaded", function () {
         navFooter.slideDown(200);
       }
     });
-    $("#actions-footer > #toc").click(function () {
+    const tocElement = document.querySelector("#actions-footer > #toc") as HTMLElement;
+    tocElement?.addEventListener("click", (): void => {
       const tocFooter = $("#toc-footer");
       if (tocFooter.is(":visible")) {
         tocFooter.slideUp(200);
@@ -51,7 +71,8 @@ document.addEventListener("DOMContentLoaded", function () {
         tocFooter.slideDown(200);
       }
     });
-    $("#actions-footer > #share").click(function () {
+    const shareElement = document.querySelector("#actions-footer > #share") as HTMLElement;
+    shareElement?.addEventListener("click", (): void => {
       const shareFooter = $("#share-footer");
       if (shareFooter.is(":visible")) {
         shareFooter.slideUp(200);
@@ -61,7 +82,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // 桌面端 文章页 导航栏按钮事件
-    $("#actions #action-share").click(function () {
+    const actionShareElement = document.querySelector("#actions #action-share") as HTMLElement;
+    actionShareElement?.addEventListener("click", (): void => {
       const shareMenu = $("#share-list");
       if (shareMenu.is(":visible")) {
         shareMenu.slideUp(200);
@@ -87,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
      * Display the menu if the menu icon is clicked.
      */
     // 平板端、桌面端 文章页 菜单按钮事件
-    menuIcon.on("click", function () {
+    menuIcon.on("click", function (): boolean {
       if (menu.is(":visible")) {
         menuIcon.removeClass("active"); // for #header-post .active style
         menu.fadeOut(50);
@@ -104,8 +126,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // 平板端 文章页 导航栏、回到顶部按钮 页面滚动相关逻辑
     if (menu.length) {
       const topIcon = $("#top-icon-tablet");
-      $(window).on("scroll", function () {
-        const topDistance = $(window).scrollTop();
+      $(window).on("scroll", function (): void {
+        const topDistance = $(window).scrollTop() || 0;
 
         // hide only the navigation links on desktop
         // if (!nav.is(":visible") && topDistance < 50) {
@@ -143,8 +165,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const tocFooter = $("#toc-footer");
       const shareFooter = $("#share-footer");
       const footerTopIcon = $("#actions-footer > #top");
-      $(window).on("scroll", function () {
-        const topDistance = $(window).scrollTop();
+      $(window).on("scroll", function (): void {
+        const topDistance = $(window).scrollTop() || 0;
 
         // 在滚动时，关闭全部底部导航栏子菜单
         navFooter.slideUp(200);
@@ -176,17 +198,34 @@ document.addEventListener("DOMContentLoaded", function () {
 /**
  * 自定义 Toggle 函数实现
  * 用于显示/隐藏元素的工具函数集合
+ * 使用示例：
+ *
+ * 基本用法
+ * toggle('#myElement');                    // 切换显示/隐藏
+ * toggle('#myElement', true);              // 强制显示
+ * toggle('#myElement', false);             // 强制隐藏
+ *
+ * 显示/隐藏
+ * show('#myElement');                      // 显示元素
+ * hide('#myElement');                      // 隐藏元素
+ *
+ * 带动画的切换
+ * toggleWithAnimation('#myElement', 500, 'ease-in-out')
+ *   .then(() => console.log('动画完成'));
+ *
+ * 批量操作
+ * toggle(document.querySelectorAll('.toggle-items'));
  */
 
 // 存储元素默认显示值的映射表
-const defaultDisplayMap = {};
+const defaultDisplayMap: Record<string, string> = {};
 
 /**
  * 获取元素的默认 display 值
- * @param {HTMLElement} elem - 要检查的元素
- * @returns {string} 默认的 display 值
+ * @param elem - 要检查的元素
+ * @returns 默认的 display 值
  */
-function getDefaultDisplay(elem) {
+function getDefaultDisplay(elem: HTMLElement): string {
   const nodeName = elem.nodeName;
   let display = defaultDisplayMap[nodeName];
 
@@ -210,31 +249,37 @@ function getDefaultDisplay(elem) {
 
 /**
  * 检查元素是否在 DOM 树中隐藏
- * @param {HTMLElement} elem - 要检查的元素
- * @returns {boolean} 是否隐藏
+ * @param elem - 要检查的元素
+ * @returns 是否隐藏
  */
-function isHiddenWithinTree(elem) {
+function isHiddenWithinTree(elem: HTMLElement): boolean {
   return elem.offsetParent === null || window.getComputedStyle(elem).display === "none";
 }
 
 /**
  * 批量显示/隐藏元素
- * @param {HTMLElement|NodeList|Array} elements - 要操作的元素
- * @param {boolean} show - true 为显示，false 为隐藏
- * @returns {HTMLElement|NodeList|Array} 返回元素
+ * @param elements - 要操作的元素
+ * @param show - true 为显示，false 为隐藏
+ * @returns 返回元素
  */
-function showHide(elements, show) {
+function showHide(elements: HTMLElement | NodeList | HTMLElement[], show: boolean): HTMLElement | NodeList {
   // 确保 elements 是数组或类数组对象
-  if (!elements.length && elements.nodeType) {
-    elements = [elements];
+  let elementsArray: HTMLElement[];
+
+  if (elements instanceof HTMLElement) {
+    elementsArray = [elements];
+  } else if (elements instanceof NodeList) {
+    elementsArray = Array.from(elements) as HTMLElement[];
+  } else {
+    elementsArray = elements as HTMLElement[];
   }
 
-  const values = [];
-  const length = elements.length;
+  const values: (string | null)[] = [];
+  const length = elementsArray.length;
 
   // 第一次循环：计算新的 display 值
   for (let index = 0; index < length; index++) {
-    const elem = elements[index];
+    const elem = elementsArray[index];
     if (!elem || !elem.style) {
       continue;
     }
@@ -267,40 +312,44 @@ function showHide(elements, show) {
   // 第二次循环：应用新的 display 值（避免频繁重排）
   for (let index = 0; index < length; index++) {
     if (values[index] != null) {
-      elements[index].style.display = values[index];
+      elementsArray[index].style.display = values[index] as string;
     }
   }
 
-  return elements;
+  return elements instanceof HTMLElement
+    ? elements
+    : elements instanceof NodeList
+      ? elements
+      : (elements as HTMLElement[])[0] || (elements as HTMLElement[])[0];
 }
 
 /**
  * 显示元素
- * @param {HTMLElement|NodeList|string} selector - 元素或选择器
- * @returns {HTMLElement|NodeList} 返回元素
+ * @param selector - 元素或选择器
+ * @returns 返回元素
  */
-window.show = function (selector) {
+window.show = function (selector: string | HTMLElement | NodeList): HTMLElement | NodeList {
   const elements = typeof selector === "string" ? document.querySelectorAll(selector) : selector;
   return showHide(elements, true);
 };
 
 /**
  * 隐藏元素
- * @param {HTMLElement|NodeList|string} selector - 元素或选择器
- * @returns {HTMLElement|NodeList} 返回元素
+ * @param selector - 元素或选择器
+ * @returns 返回元素
  */
-window.hide = function (selector) {
+window.hide = function (selector: string | HTMLElement | NodeList): HTMLElement | NodeList {
   const elements = typeof selector === "string" ? document.querySelectorAll(selector) : selector;
   return showHide(elements, false);
 };
 
 /**
  * 切换元素显示/隐藏状态
- * @param {HTMLElement|NodeList|string} selector - 元素或选择器
- * @param {boolean} [state] - 可选的状态参数，true 为显示，false 为隐藏
- * @returns {HTMLElement|NodeList} 返回元素
+ * @param selector - 元素或选择器
+ * @param state - 可选的状态参数，true 为显示，false 为隐藏
+ * @returns 返回元素
  */
-window.toggle = function (selector, state) {
+window.toggle = function (selector: string | HTMLElement | NodeList, state?: boolean): HTMLElement | NodeList {
   const elements = typeof selector === "string" ? document.querySelectorAll(selector) : selector;
 
   // 如果指定了 state 参数
@@ -309,9 +358,17 @@ window.toggle = function (selector, state) {
   }
 
   // 否则根据当前状态切换
-  const elementsArray = elements.length ? Array.from(elements) : [elements];
+  let elementsArray: HTMLElement[];
 
-  elementsArray.forEach(function (elem) {
+  if (elements instanceof HTMLElement) {
+    elementsArray = [elements];
+  } else if (elements instanceof NodeList) {
+    elementsArray = Array.from(elements) as HTMLElement[];
+  } else {
+    elementsArray = elements as HTMLElement[];
+  }
+
+  elementsArray.forEach(function (elem: HTMLElement): void {
     if (isHiddenWithinTree(elem)) {
       window.show(elem);
     } else {
@@ -324,16 +381,20 @@ window.toggle = function (selector, state) {
 
 /**
  * 带动画的 toggle 函数（使用 CSS 过渡）
- * @param {HTMLElement|string} selector - 元素或选择器
- * @param {number} [duration=300] - 动画持续时间（毫秒）
- * @param {string} [easing='ease'] - 动画缓动函数
- * @returns {Promise} 返回 Promise
+ * @param selector - 元素或选择器
+ * @param duration - 动画持续时间（毫秒）
+ * @param easing - 动画缓动函数
+ * @returns 返回 Promise
  */
-window.toggleWithAnimation = function (selector, duration = 300, easing = "ease") {
-  const element = typeof selector === "string" ? document.querySelector(selector) : selector;
+window.toggleWithAnimation = function (
+  selector: string | HTMLElement,
+  duration: number = 300,
+  easing: string = "ease",
+): Promise<HTMLElement> {
+  const element = typeof selector === "string" ? (document.querySelector(selector) as HTMLElement) : selector;
 
   if (!element) {
-    return Promise.resolve();
+    return Promise.resolve(element);
   }
 
   return new Promise((resolve) => {
@@ -374,22 +435,3 @@ window.toggleWithAnimation = function (selector, duration = 300, easing = "ease"
     }, duration);
   });
 };
-
-// 使用示例：
-/*
-// 基本用法
-toggle('#myElement');                    // 切换显示/隐藏
-toggle('#myElement', true);              // 强制显示
-toggle('#myElement', false);             // 强制隐藏
-
-// 显示/隐藏
-show('#myElement');                      // 显示元素
-hide('#myElement');                      // 隐藏元素
-
-// 带动画的切换
-toggleWithAnimation('#myElement', 500, 'ease-in-out')
-  .then(() => console.log('动画完成'));
-
-// 批量操作
-toggle(document.querySelectorAll('.toggle-items'));
-*/
