@@ -172,3 +172,224 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
+
+/**
+ * 自定义 Toggle 函数实现
+ * 用于显示/隐藏元素的工具函数集合
+ */
+
+// 存储元素默认显示值的映射表
+const defaultDisplayMap = {};
+
+/**
+ * 获取元素的默认 display 值
+ * @param {HTMLElement} elem - 要检查的元素
+ * @returns {string} 默认的 display 值
+ */
+function getDefaultDisplay(elem) {
+  const nodeName = elem.nodeName;
+  let display = defaultDisplayMap[nodeName];
+
+  if (display) {
+    return display;
+  }
+
+  // 创建临时元素来获取默认样式
+  const temp = document.createElement(nodeName);
+  document.body.appendChild(temp);
+  display = window.getComputedStyle(temp).display;
+  document.body.removeChild(temp);
+
+  if (display === "none") {
+    display = "block";
+  }
+
+  defaultDisplayMap[nodeName] = display;
+  return display;
+}
+
+/**
+ * 检查元素是否在 DOM 树中隐藏
+ * @param {HTMLElement} elem - 要检查的元素
+ * @returns {boolean} 是否隐藏
+ */
+function isHiddenWithinTree(elem) {
+  return elem.offsetParent === null || window.getComputedStyle(elem).display === "none";
+}
+
+/**
+ * 批量显示/隐藏元素
+ * @param {HTMLElement|NodeList|Array} elements - 要操作的元素
+ * @param {boolean} show - true 为显示，false 为隐藏
+ * @returns {HTMLElement|NodeList|Array} 返回元素
+ */
+function showHide(elements, show) {
+  // 确保 elements 是数组或类数组对象
+  if (!elements.length && elements.nodeType) {
+    elements = [elements];
+  }
+
+  const values = [];
+  const length = elements.length;
+
+  // 第一次循环：计算新的 display 值
+  for (let index = 0; index < length; index++) {
+    const elem = elements[index];
+    if (!elem || !elem.style) {
+      continue;
+    }
+
+    const currentDisplay = elem.style.display;
+
+    if (show) {
+      // 显示元素
+      if (currentDisplay === "none") {
+        const storedDisplay = elem.dataset.originalDisplay || null;
+        values[index] = storedDisplay;
+        if (!storedDisplay) {
+          elem.style.display = "";
+        }
+      }
+
+      if (elem.style.display === "" && isHiddenWithinTree(elem)) {
+        values[index] = getDefaultDisplay(elem);
+      }
+    } else {
+      // 隐藏元素
+      if (currentDisplay !== "none") {
+        values[index] = "none";
+        // 记住原始的 display 值
+        elem.dataset.originalDisplay = currentDisplay || window.getComputedStyle(elem).display;
+      }
+    }
+  }
+
+  // 第二次循环：应用新的 display 值（避免频繁重排）
+  for (let index = 0; index < length; index++) {
+    if (values[index] != null) {
+      elements[index].style.display = values[index];
+    }
+  }
+
+  return elements;
+}
+
+/**
+ * 显示元素
+ * @param {HTMLElement|NodeList|string} selector - 元素或选择器
+ * @returns {HTMLElement|NodeList} 返回元素
+ */
+window.show = function (selector) {
+  const elements = typeof selector === "string" ? document.querySelectorAll(selector) : selector;
+  return showHide(elements, true);
+};
+
+/**
+ * 隐藏元素
+ * @param {HTMLElement|NodeList|string} selector - 元素或选择器
+ * @returns {HTMLElement|NodeList} 返回元素
+ */
+window.hide = function (selector) {
+  const elements = typeof selector === "string" ? document.querySelectorAll(selector) : selector;
+  return showHide(elements, false);
+};
+
+/**
+ * 切换元素显示/隐藏状态
+ * @param {HTMLElement|NodeList|string} selector - 元素或选择器
+ * @param {boolean} [state] - 可选的状态参数，true 为显示，false 为隐藏
+ * @returns {HTMLElement|NodeList} 返回元素
+ */
+window.toggle = function (selector, state) {
+  const elements = typeof selector === "string" ? document.querySelectorAll(selector) : selector;
+
+  // 如果指定了 state 参数
+  if (typeof state === "boolean") {
+    return state ? window.show(elements) : window.hide(elements);
+  }
+
+  // 否则根据当前状态切换
+  const elementsArray = elements.length ? Array.from(elements) : [elements];
+
+  elementsArray.forEach(function (elem) {
+    if (isHiddenWithinTree(elem)) {
+      window.show(elem);
+    } else {
+      window.hide(elem);
+    }
+  });
+
+  return elements;
+};
+
+/**
+ * 带动画的 toggle 函数（使用 CSS 过渡）
+ * @param {HTMLElement|string} selector - 元素或选择器
+ * @param {number} [duration=300] - 动画持续时间（毫秒）
+ * @param {string} [easing='ease'] - 动画缓动函数
+ * @returns {Promise} 返回 Promise
+ */
+window.toggleWithAnimation = function (selector, duration = 300, easing = "ease") {
+  const element = typeof selector === "string" ? document.querySelector(selector) : selector;
+
+  if (!element) {
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve) => {
+    const isHidden = isHiddenWithinTree(element);
+
+    // 设置过渡效果
+    element.style.transition = `opacity ${duration}ms ${easing}, transform ${duration}ms ${easing}`;
+
+    if (isHidden) {
+      // 显示元素
+      element.style.display = element.dataset.originalDisplay || "";
+      element.style.opacity = "0";
+      element.style.transform = "scale(0.9)";
+
+      // 强制重排
+      void element.offsetHeight;
+
+      element.style.opacity = "1";
+      element.style.transform = "scale(1)";
+    } else {
+      // 隐藏元素
+      element.style.opacity = "0";
+      element.style.transform = "scale(0.9)";
+    }
+
+    // 动画完成后的处理
+    setTimeout(() => {
+      if (isHidden) {
+        element.style.transition = "";
+        element.style.transform = "";
+      } else {
+        element.style.display = "none";
+        element.style.transition = "";
+        element.style.transform = "";
+        element.style.opacity = "";
+      }
+      resolve(element);
+    }, duration);
+  });
+};
+
+// 使用示例：
+/*
+// 基本用法
+toggle('#myElement');                    // 切换显示/隐藏
+toggle('#myElement', true);              // 强制显示
+toggle('#myElement', false);             // 强制隐藏
+
+// 显示/隐藏
+show('#myElement');                      // 显示元素
+hide('#myElement');                      // 隐藏元素
+
+// 带动画的切换
+toggleWithAnimation('#myElement', 500, 'ease-in-out')
+  .then(() => console.log('动画完成'));
+
+// 批量操作
+toggle(document.querySelectorAll('.toggle-items'));
+*/
