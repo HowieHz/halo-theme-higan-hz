@@ -511,6 +511,11 @@ html[theme="theme-[(${colorSchema.id})]"] {
       /*[(${theme.config?.styles?.content_width_style})]*/ fit-content;
       }
     </style>
+    <style th:if="${theme.config?.styles?.is_h3_underline}">
+      body h3 {
+        text-decoration: underline;
+      }
+    </style>
     <style th:if="${theme.config?.styles?.is_preserve_empty_lines_in_blockquote}">
       article .content blockquote p {
         margin: inherit;

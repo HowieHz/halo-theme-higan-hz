@@ -537,6 +537,11 @@ spec:
               language: html
               height: 150px
         - $formkit: checkbox
+          name: is_h3_underline
+          label: Add underline to H3 headings
+          value: true
+          help: "If enabled, an underline will be displayed below H3 headings to make them stand out more."
+        - $formkit: checkbox
           name: is_preserve_empty_lines_in_blockquote
           label: Preserve empty lines in blockquote
           value: true

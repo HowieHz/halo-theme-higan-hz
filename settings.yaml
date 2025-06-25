@@ -537,6 +537,11 @@ spec:
               language: html
               height: 150px
         - $formkit: checkbox
+          name: is_h3_underline
+          label: 为三级标题添加下划线
+          value: true
+          help: 开启后，三级标题（h3）下方将显示下划线装饰，让标题更加突出。
+        - $formkit: checkbox
           name: is_preserve_empty_lines_in_blockquote
           label: 引用块保留空行
           value: true
