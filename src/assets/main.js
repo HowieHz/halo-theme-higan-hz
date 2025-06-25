@@ -3,7 +3,7 @@ window.isMobile = () => {
   return flag;
 };
 
-$(function () {
+document.addEventListener("DOMContentLoaded", function () {
   /**
    * Shows the responsive navigation menu on mobile.
    */

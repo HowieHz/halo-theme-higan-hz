@@ -37,7 +37,7 @@
       <div th:replace="~{fragments/page-footer-nav :: footerNav}"></div>
 
       <script type="text/javascript" th:inline="javascript">
-        $(function () {
+        document.addEventListener("DOMContentLoaded", function () {
           // <!--/* generate toc */-->
           const contentDom = document.querySelector("article > .content");
           const tocSelector = isMobile() ? "#toc-footer" : "#toc";
