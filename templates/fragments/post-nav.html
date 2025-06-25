@@ -1,13 +1,14 @@
 <th:block xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
   <div id="header-post" class="fixed right-0 top-8 z-50 float-right hidden sm:block">
-    <a id="menu-icon" href="javascript:void(0);" th:aria-label="#{fragment.post-nav.menu-icon.aria-label}">
+    <a
+      id="menu-icon"
+      href="#"
+      onclick="event.preventDefault();"
+      th:aria-label="#{fragment.post-nav.menu-icon.aria-label}"
+    >
       <i class="iconify iconify-middle" data-icon="material-symbols:menu"></i>
     </a>
-    <a
-      id="top-icon-tablet"
-      class="hidden lg:!hidden"
-      href="javascript:void(0);"
-      onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
+    <a id="top-icon-tablet" class="hidden lg:!hidden" href="#" onclick="event.preventDefault(); scrollToTop();"
       ><i class="iconify iconify-middle" data-icon="material-symbols:keyboard-arrow-up"></i
     ></a>
     <span id="menu" class="mr-8 hidden">
@@ -66,8 +67,8 @@
           <li>
             <a
               class="icon"
-              href="javascript:void(0);"
-              onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
+              href="#"
+              onclick="event.preventDefault(); scrollToTop();"
               th:aria-label="#{fragment.post-nav.actions.to-top-icon.aria-label}"
             >
               <i
@@ -79,14 +80,18 @@
             </a>
           </li>
           <li th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}">
-            <a class="icon" href="#" th:aria-label="#{fragment.post-nav.actions.share-icon.aria-label}">
+            <a
+              class="icon"
+              href="#"
+              onclick="event.preventDefault();"
+              th:aria-label="#{fragment.post-nav.actions.share-icon.aria-label}"
+            >
               <i
                 id="action-share"
                 class="iconify iconify-middle"
                 data-icon="mdi:share-variant-outline"
                 onmouseover="$('#i-share').toggle();"
                 onmouseout="$('#i-share').toggle();"
-                onclick="return false;"
               ></i>
             </a>
           </li>

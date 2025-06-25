@@ -3,6 +3,13 @@ window.isMobile = () => {
   return flag;
 };
 
+/**
+ * 滚动到页面顶部
+ */
+window.scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
 document.addEventListener("DOMContentLoaded", function () {
   /**
    * Shows the responsive navigation menu on mobile.

@@ -11,19 +11,19 @@
         ></th:block>
       </div>
       <div id="actions-footer">
-        <a id="menu" class="icon" href="javascript:void(0);" onclick="return false;">
+        <a id="menu" class="icon" href="#" onclick="event.preventDefault();">
           <i class="iconify" data-icon="ic:baseline-menu" aria-hidden="true"></i>
           [(#{fragment.footer-nav.menu})]</a
         >
-        <a id="toc" class="icon" href="javascript:void(0);" onclick="return false;">
+        <a id="toc" class="icon" href="#" onclick="event.preventDefault();">
           <i class="iconify" data-icon="ic:baseline-toc" aria-hidden="true"></i>
           [(#{fragment.footer-nav.toc})]</a
         >
         <a
           id="share"
           class="icon"
-          href="javascript:void(0);"
-          onclick="return false;"
+          href="#"
+          onclick="event.preventDefault();"
           th:if="${theme.config?.post_styles?.is_show_share_footer}"
         >
           <i class="iconify" data-icon="ic:baseline-share" aria-hidden="true"></i>
@@ -33,8 +33,8 @@
           id="top"
           style="transform: scale(0); width: 0"
           class="icon transition-transform duration-200 ease-in-out"
-          href="javascript:void(0);"
-          onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"
+          href="#"
+          onclick="event.preventDefault(); scrollToTop();"
         >
           <i class="iconify" data-icon="ic:baseline-arrow-upward" aria-hidden="true"></i>
         </a>
