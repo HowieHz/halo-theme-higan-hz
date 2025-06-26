@@ -548,8 +548,8 @@ html[data-color-scheme="dark"] article .content {
       color: var(--color-link-hover);
     }
 
-    & .toc-level-1 > .toc-link {
-      display: none;
+    & .toc-link-h1 {
+      font-style: italic;
     }
 
     & .toc-level-2 > .toc-link-h2 {
@@ -741,8 +741,8 @@ html[data-color-scheme="dark"] article .content {
         color: var(--color-link-hover);
       }
 
-      & .toc-level-1 > .toc-link {
-        display: none;
+      & .toc-link-h1 {
+        font-style: italic;
       }
 
       & .toc-level-2 {

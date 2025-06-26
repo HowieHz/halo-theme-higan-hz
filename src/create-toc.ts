@@ -80,11 +80,18 @@ export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
   // Process the HTML, adding heading IDs and Table of Contents
   const outputHTML = processor.processSync(inputHTML);
   const targetDom = document.querySelector(targetDomSelector);
-  if (targetDom) {
-    const doc = document.createRange().createContextualFragment(outputHTML.toString());
-    // @ts-expect-error expect-error
-    targetDom.appendChild(doc.getElementById("toc-container"));
+  if (!targetDom) {
+    console.warn(`Failed to generate toc to targetDom ${targetDom}, processed html is: ${outputHTML}`);
     return;
   }
-  console.warn(`Failed to generate toc to targetDom ${targetDom}, processed html is: ${outputHTML}`);
+
+  const tocElement = document
+    .createRange()
+    .createContextualFragment(outputHTML.toString())
+    .getElementById("toc-container");
+
+  if (tocElement) {
+    targetDom.appendChild(tocElement);
+  }
+  return;
 };
