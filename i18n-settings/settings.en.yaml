@@ -782,6 +782,17 @@ spec:
           value: false
           help: When enabled, adds minimum height to article content paragraphs to improve blank line display
         - $formkit: checkbox
+          name: is_enable_paragraph_first_line_indent
+          label: Enable paragraph first-line indent
+          value: false
+          help: When enabled, article paragraphs will use first-line indent style, typically 2 character widths (2em)
+        - $formkit: text
+          name: paragraph_first_line_indent_value
+          if: "$is_enable_paragraph_first_line_indent === true"
+          label: First-line indent value
+          value: "2em"
+          help: "Set the size of the first-line indent. All CSS length units are allowed, such as: 2em, 32px, 2rem, etc. Recommended: 2em"
+        - $formkit: checkbox
           name: post_title_uppper
           label: Post title uppercase
           value: false
@@ -997,6 +1008,22 @@ spec:
     - group: custom_page_styles
       label: Custom page style
       formSchema:
+        - $formkit: checkbox
+          name: is_optimize_content_paragraph_spacing
+          label: Optimize article paragraph spacing display
+          value: false
+          help: When enabled, adds minimum height to article content paragraphs to improve blank line display
+        - $formkit: checkbox
+          name: is_enable_paragraph_first_line_indent
+          label: Enable paragraph first-line indent
+          value: false
+          help: When enabled, article paragraphs will use first-line indent style, typically 2 character widths (2em)
+        - $formkit: text
+          name: paragraph_first_line_indent_value
+          if: "$is_enable_paragraph_first_line_indent === true"
+          label: First-line indent value
+          value: "2em"
+          help: "Set the size of the first-line indent. All CSS length units are allowed, such as: 2em, 32px, 2rem, etc. Recommended: 2em"
         - $formkit: checkbox
           name: is_enable_post_like_layout
           label: Enable post-like layout

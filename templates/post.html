@@ -20,6 +20,11 @@
         min-height: 1.1em;
       }
     </style>
+    <style th:inline="css" th:if="${theme.config?.post_styles?.is_enable_paragraph_first_line_indent}">
+      .content p {
+        text-indent: /*[(${theme.config?.post_styles?.paragraph_first_line_indent_value})]*/ 2em;
+      }
+    </style>
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
         <h1
