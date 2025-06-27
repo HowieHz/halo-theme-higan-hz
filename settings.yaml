@@ -1009,6 +1009,22 @@ spec:
       label: 自定义页面样式
       formSchema:
         - $formkit: checkbox
+          name: is_optimize_content_paragraph_spacing
+          label: 优化文章段落空行显示
+          value: false
+          help: 启用后，为文章内容段落添加最小高度，改善空行显示效果
+        - $formkit: checkbox
+          name: is_enable_paragraph_first_line_indent
+          label: 启用段落首行缩进
+          value: false
+          help: 启用后，文章段落将使用首行缩进样式，通常为 2 个汉字宽度（2em）
+        - $formkit: text
+          name: paragraph_first_line_indent_value
+          if: "$is_enable_paragraph_first_line_indent === true"
+          label: 首行缩进值
+          value: "2em"
+          help: "设置首行缩进的大小。允许使用所有 CSS 长度单位，如：2em, 32px, 2rem 等。推荐使用 2em"
+        - $formkit: checkbox
           name: is_enable_post_like_layout
           label: 启用类文章页样式
           value: false
