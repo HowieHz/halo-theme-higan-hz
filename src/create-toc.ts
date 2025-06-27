@@ -6,6 +6,7 @@ import { unified } from "unified";
 
 export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
   if (!inputHTML) {
+    console.warn("inputHTML is empty or undefined");
     return;
   }
   // Create a Rehype processor with the TOC plugin
