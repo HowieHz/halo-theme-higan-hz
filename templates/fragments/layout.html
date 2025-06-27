@@ -678,7 +678,9 @@ html[theme="theme-[(${colorSchema.id})]"] {
                   th:with="now=${#temporals.createNow()}"
                   th:text="${#temporals.format(now, 'yyyy')}"
                 ></span>
-                <span th:text="${#strings.defaultString(theme.config?.styles?.footer_copyright_custom_name, site?.title)}"></span>
+                <span
+                  th:text="${#strings.defaultString(theme.config?.styles?.footer_copyright_custom_name, site?.title)}"
+                ></span>
               </span>
             </div>
           </div>
