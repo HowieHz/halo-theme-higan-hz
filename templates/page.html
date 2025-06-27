@@ -10,7 +10,11 @@
   )}"
 >
   <th:block th:fragment="content">
-    <style th:inline="css" th:if="${theme.config?.post_styles?.is_custom_toc_max_width}">
+    <style
+      th:inline="css"
+      th:if="${theme.config?.custom_page_styles?.is_enable_post_like_layout 
+    and theme.config?.post_styles?.is_custom_toc_max_width}"
+    >
       #header-post #toc {
         max-width: /*[(${theme.config?.post_styles?.toc_max_width})]*/ 20em;
       }
