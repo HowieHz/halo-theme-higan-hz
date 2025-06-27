@@ -777,6 +777,11 @@ spec:
       label: Post page style
       formSchema:
         - $formkit: checkbox
+          name: is_optimize_content_paragraph_spacing
+          label: Optimize article paragraph spacing display
+          value: false
+          help: When enabled, adds minimum height to article content paragraphs to improve blank line display
+        - $formkit: checkbox
           name: post_title_uppper
           label: Post title uppercase
           value: false

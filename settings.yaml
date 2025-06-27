@@ -777,6 +777,11 @@ spec:
       label: 文章页样式
       formSchema:
         - $formkit: checkbox
+          name: is_optimize_content_paragraph_spacing
+          label: 优化文章段落空行显示
+          value: false
+          help: 启用后，为文章内容段落添加最小高度，改善空行显示效果
+        - $formkit: checkbox
           name: post_title_uppper
           label: 文章标题大写
           value: false

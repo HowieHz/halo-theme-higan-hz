@@ -15,6 +15,11 @@
         max-width: /*[(${theme.config?.post_styles?.toc_max_width})]*/ 20em;
       }
     </style>
+    <style th:if="${theme.config?.post_styles?.is_optimize_content_paragraph_spacing}">
+      .content p {
+        min-height: 1.1em;
+      }
+    </style>
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
         <h1
