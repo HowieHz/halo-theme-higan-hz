@@ -484,6 +484,11 @@ spec:
           name: is_footer_copyright_show
           label: Footer theme copyright information in the footer
           value: true
+        - $formkit: text
+          if: "$is_footer_copyright_show === true"
+          name: footer_copyright_custom_name
+          label: Custom copyright signature
+          help: "If left blank, the site title will be used as the signature"
         - $formkit: checkbox
           name: is_footer_force_bottom
           label: Footer, Page number force to the bottom
