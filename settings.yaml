@@ -484,6 +484,11 @@ spec:
           name: is_footer_copyright_show
           label: 页面底部版权信息
           value: true
+        - $formkit: text
+          if: "$is_footer_copyright_show === true"
+          name: footer_copyright_custom_name
+          label: 版权信息自定义署名
+          help: "如果不填写，则使用站点标题作为署名"
         - $formkit: checkbox
           name: is_footer_force_bottom
           label: 强制页脚、页码在页面底部
