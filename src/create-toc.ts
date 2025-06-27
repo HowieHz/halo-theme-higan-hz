@@ -33,8 +33,7 @@ export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
        * @returns Modified TOC structure with custom container
        */
       customizeTOC(t: HtmlElementNode) {
-        // @ts-expect-error expect-error
-        const children = t.children?.flatMap((item) => item.children);
+        const children = t.children?.flatMap((item) => (item as HtmlElementNode).children || []) || [];
 
         return {
           type: "element",
@@ -87,8 +86,7 @@ export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
                   properties: {
                     class: "toc-text",
                   },
-                  // @ts-expect-error expect-error
-                  children: [...tocItem.children[0].children],
+                  children: [...((tocItem.children[0] as HtmlElementNode).children || [])],
                 },
               ],
             },
