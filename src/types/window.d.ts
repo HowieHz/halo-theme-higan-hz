@@ -23,47 +23,47 @@ declare global {
     /**
      * fadeIn 效果
      * @param element - 要显示的元素
-     * @param duration - 动画持续时间（毫秒），默认200ms
+     * @param duration - 动画持续时间（毫秒），默认 200ms
      */
     fadeIn: (element: HTMLElement, duration?: number) => void;
 
     /**
      * fadeOut 效果
      * @param element - 要隐藏的元素
-     * @param duration - 动画持续时间（毫秒），默认200ms
+     * @param duration - 动画持续时间（毫秒），默认 200ms
      */
     fadeOut: (element: HTMLElement, duration?: number) => void;
 
     /**
      * slideDown 效果
      * @param element - 要显示的元素
-     * @param duration - 动画持续时间（毫秒），默认300ms
+     * @param duration - 动画持续时间（毫秒），默认 300ms
      */
     slideDown: (element: HTMLElement, duration?: number) => void;
 
     /**
      * slideUp 效果
      * @param element - 要隐藏的元素
-     * @param duration - 动画持续时间（毫秒），默认300ms
+     * @param duration - 动画持续时间（毫秒），默认 300ms
      */
     slideUp: (element: HTMLElement, duration?: number) => void;
 
     /**
      * 显示元素
-     * @param selector - 元素、选择器或NodeList
+     * @param selector - 元素、选择器或 NodeList
      */
     show: (selector: string | HTMLElement | NodeList) => HTMLElement | NodeList;
 
     /**
      * 隐藏元素
-     * @param selector - 元素、选择器或NodeList
+     * @param selector - 元素、选择器或 NodeList
      */
     hide: (selector: string | HTMLElement | NodeList) => HTMLElement | NodeList;
 
     /**
      * 切换元素显示/隐藏状态
-     * @param selector - 元素、选择器或NodeList
-     * @param state - 可选的状态参数，true为显示，false为隐藏
+     * @param selector - 元素、选择器或 NodeList
+     * @param state - 可选的状态参数，true 为显示，false 为隐藏
      */
     toggle: (selector: string | HTMLElement | NodeList, state?: boolean) => HTMLElement | NodeList;
   }

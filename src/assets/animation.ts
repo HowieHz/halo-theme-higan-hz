@@ -33,7 +33,7 @@ function showElement(element: HTMLElement): void {
    * 原因：清空内联样式 (display = "") 后，元素会使用 CSS 规则中的 display 值
    * 如果 CSS 规则设置了 display: none，元素仍然不可见
    *
-   * 解决方案：强制设置该HTML标签的浏览器默认 display 值来覆盖 CSS 规则
+   * 解决方案：强制设置该 HTML 标签的浏览器默认 display 值来覆盖 CSS 规则
    * 例如：div → "block", span → "inline", table → "table"
    *
    * 示例场景：
@@ -144,7 +144,7 @@ window.slideDown = function (element: HTMLElement, duration: number = 300): void
     return;
   }
 
-  // 先显示元素但设置高度为0
+  // 先显示元素但设置高度为 0
   showElement(element);
 
   // 获取元素的自然高度
@@ -153,7 +153,7 @@ window.slideDown = function (element: HTMLElement, duration: number = 300): void
   // 设置 CSS 变量用于动画
   element.style.setProperty("--slide-target-height", `${originalHeight}px`);
 
-  // 开始时设置高度为0
+  // 开始时设置高度为 0
   element.style.height = "0px";
   element.style.overflow = "hidden";
 
