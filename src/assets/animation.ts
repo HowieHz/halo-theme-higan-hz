@@ -270,3 +270,91 @@ window.toggle = function (selector: string | HTMLElement | NodeList, state?: boo
 
   return elements;
 };
+
+/**
+ * 调试元素可见性 - 详细检查元素为什么不可见
+ * 仅在开发模式下可用
+ * @param element - 要检查的元素
+ * @param elementName - 元素名称（用于日志输出）
+ */
+if (import.meta.env.DEV) {
+  window.debugVisibility = function (element: HTMLElement | null | string, elementName: string = "元素"): void {
+    if (typeof element === "string") {
+      element = document.querySelector(element) as HTMLElement | null;
+    }
+    console.group(`🔍 调试 ${elementName} 可见性`);
+
+    if (!element) {
+      console.log("❌ 元素不存在 (element is null)");
+      console.groupEnd();
+      return;
+    }
+
+    const style = window.getComputedStyle(element);
+    const inlineStyle = element.style;
+
+    console.log("📋 元素信息:");
+    console.log("- ID:", element.id);
+    console.log("- 类名:", element.className);
+    console.log("- 标签:", element.tagName);
+
+    console.log("\n🎨 样式检查:");
+    console.log("- 内联 display:", inlineStyle.display || "(未设置)");
+    console.log("- 计算 display:", style.display);
+    console.log("- 计算 visibility:", style.visibility);
+    console.log("- offsetParent:", element.offsetParent ? "存在" : "null");
+
+    console.log("\n✅ 可见性条件检查:");
+    const displayOK = style.display !== "none";
+    const visibilityOK = style.visibility !== "hidden";
+    const offsetParentOK = element.offsetParent !== null;
+    const isFixed = style.position === "fixed";
+    const rect = element.getBoundingClientRect();
+    const hasSize = rect.width > 0 && rect.height > 0;
+
+    console.log("- display !== 'none':", displayOK ? "✅ 通过" : "❌ 失败");
+    console.log("- visibility !== 'hidden':", visibilityOK ? "✅ 通过" : "❌ 失败");
+    console.log("- offsetParent !== null:", offsetParentOK ? "✅ 通过" : "❌ 失败");
+
+    if (!offsetParentOK) {
+      console.log("- position === 'fixed':", isFixed ? "✅ 是 (fixed 元素)" : "❌ 不是");
+      console.log("- 元素尺寸:", `${rect.width}x${rect.height} (${hasSize ? "有尺寸" : "无尺寸"})`);
+    }
+
+    // 更新可见性判断逻辑
+    let isVisible: boolean;
+    if (!displayOK || !visibilityOK) {
+      isVisible = false;
+    } else if (offsetParentOK) {
+      isVisible = true;
+    } else if (isFixed) {
+      isVisible = true; // position: fixed 的元素即使 offsetParent 为 null 也可能可见
+    } else if (hasSize) {
+      isVisible = true; // 有尺寸的元素（可能有 transform）也可能可见
+    } else {
+      isVisible = false;
+    }
+
+    console.log(`\n🎯 最终结果: ${isVisible ? "✅ 可见" : "❌ 不可见"}`);
+
+    if (!isVisible) {
+      console.log("\n💡 可能的解决方案:");
+      if (!displayOK) {
+        console.log("- display 问题: 检查 CSS 类是否有 display: none，特别是 !important 规则");
+      }
+      if (!visibilityOK) {
+        console.log("- visibility 问题: 检查是否设置了 visibility: hidden");
+      }
+      if (!offsetParentOK) {
+        console.log("- offsetParent 问题: 元素或其父元素可能有 position: fixed 或其他定位问题");
+      }
+    }
+
+    console.groupEnd();
+  };
+} else {
+  // 生产模式下提供一个空的实现
+  window.debugVisibility = function (): void {
+    // 生产模式下不执行任何操作
+  };
+}

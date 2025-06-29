@@ -54,6 +54,14 @@ declare global {
      * @param state - 可选的状态参数，true为显示，false为隐藏
      */
     toggle: (selector: string | HTMLElement | NodeList, state?: boolean) => HTMLElement | NodeList;
+
+    /**
+     * 调试元素可见性 - 详细检查元素为什么不可见
+     * 仅在开发模式下有完整功能，生产模式下为空实现
+     * @param element - 要检查的元素
+     * @param elementName - 元素名称（用于日志输出）
+     */
+    debugVisibility: (element: HTMLElement | null | string, elementName?: string) => void;
   }
 }
 
