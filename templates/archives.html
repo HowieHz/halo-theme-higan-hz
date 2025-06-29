@@ -69,15 +69,19 @@
             function toggleVisibility(element) {
               const caretRight = element.querySelector('[data-icon="mdi:chevron-right"]');
               const caretDown = element.querySelector('[data-icon="mdi:chevron-down"]');
-              const nextElement = $(element).next();
+              const nextElement = element.nextElementSibling;
               const duration_of_expand_collapse_animation = /*[(${theme.config?.archives_page_styles?.duration_of_expand_collapse_animation})]*/ 200;
 
-              if (nextElement.is(":visible")) {
-                nextElement.slideUp(duration_of_expand_collapse_animation);
+              if (!nextElement) {
+                return;
+              }
+
+              if (window.isVisible(nextElement)) {
+                window.slideUp(nextElement, duration_of_expand_collapse_animation);
                 caretRight.style.display = "inline";
                 caretDown.style.display = "none";
               } else {
-                nextElement.slideDown(duration_of_expand_collapse_animation);
+                window.slideDown(nextElement, duration_of_expand_collapse_animation);
                 caretRight.style.display = "none";
                 caretDown.style.display = "inline";
               }

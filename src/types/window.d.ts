@@ -1,5 +1,3 @@
-/// <reference types="jquery" />
-
 /**
  * 扩展 window 对象的类型定义
  */

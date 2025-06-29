@@ -378,10 +378,6 @@ html[data-color-scheme="dark"] article .content {
               color: var(--color-accent-1);
             }
           }
-
-          &.responsive {
-            display: block;
-          }
         }
       }
 

@@ -1,4 +1,4 @@
-// 导入类型定义（仅类型导入，不会在运行时包含。包含了 jQuery 类型和自定义 window 扩展）
+// 导入类型定义（仅类型导入，不会在运行时包含。包含了自定义 window 扩展）
 import type {} from "../types/window";
 
 // 使此文件成为模块
@@ -56,17 +56,22 @@ function getTopDistance(): number {
 }
 
 document.addEventListener("DOMContentLoaded", (): void => {
-  const mobileMenuIcon = document.querySelector("#header > #nav > ul > .icon");
-  const mobileMenu = $("#header > #nav > ul > li:not(:first-child)");
+  const mobileMenuIcon: HTMLElement | null = document.querySelector("#header > #nav > ul > .icon");
+  const mobileMenuItems: NodeListOf<HTMLElement> | null = document.querySelectorAll(
+    "#header > #nav > ul > li:not(:first-child)",
+  );
   // 移动端 主页页眉菜单 按钮事件 绑定
   mobileMenuIcon?.addEventListener("click", (): void => {
-    if (mobileMenu.is(":visible")) {
-      mobileMenu.slideUp(200, (): void => {
-        mobileMenu.removeClass("responsive").css("display", "");
+    // 检查第一个菜单项是否可见来判断菜单状态
+    if (window.isVisible(mobileMenuItems[0])) {
+      // 隐藏所有菜单项
+      mobileMenuItems.forEach((item) => {
+        window.slideUp(item, 200);
       });
     } else {
-      mobileMenu.slideDown(200, (): void => {
-        mobileMenu.addClass("responsive").css("display", "");
+      // 显示所有菜单项
+      mobileMenuItems.forEach((item) => {
+        window.slideDown(item, 200);
       });
     }
   });
@@ -78,27 +83,36 @@ document.addEventListener("DOMContentLoaded", (): void => {
   if (document.querySelector(".post")) {
     // 移动端 文章页 底部导航栏 按钮事件 绑定
     document.querySelector("#actions-footer > #menu")?.addEventListener("click", (): void => {
-      const navFooter = $("#nav-footer");
-      if (navFooter.is(":visible")) {
-        navFooter.slideUp(200);
+      const navFooter: HTMLElement | null = document.querySelector("#nav-footer");
+      if (!navFooter) {
+        return;
+      }
+      if (window.isVisible(navFooter)) {
+        window.slideUp(navFooter, 200);
       } else {
-        navFooter.slideDown(200);
+        window.slideDown(navFooter, 200);
       }
     });
     document.querySelector("#actions-footer > #toc")?.addEventListener("click", (): void => {
-      const tocFooter = $("#toc-footer");
-      if (tocFooter.is(":visible")) {
-        tocFooter.slideUp(200);
+      const tocFooter: HTMLElement | null = document.querySelector("#toc-footer");
+      if (!tocFooter) {
+        return;
+      }
+      if (window.isVisible(tocFooter)) {
+        window.slideUp(tocFooter, 200);
       } else {
-        tocFooter.slideDown(200);
+        window.slideDown(tocFooter, 200);
       }
     });
     document.querySelector("#actions-footer > #share")?.addEventListener("click", (): void => {
-      const shareFooter = $("#share-footer");
-      if (shareFooter.is(":visible")) {
-        shareFooter.slideUp(200);
+      const shareFooter: HTMLElement | null = document.querySelector("#share-footer");
+      if (!shareFooter) {
+        return;
+      }
+      if (window.isVisible(shareFooter)) {
+        window.slideUp(shareFooter, 200);
       } else {
-        shareFooter.slideDown(200);
+        window.slideDown(shareFooter, 200);
       }
     });
 
@@ -159,39 +173,42 @@ document.addEventListener("DOMContentLoaded", (): void => {
       });
     }
 
+    const footerNav: HTMLElement | null = document.querySelector("#footer-post");
+    let lastScrollTop = 0;
+    const navFooter: HTMLElement | null = document.querySelector("#nav-footer");
+    const tocFooter: HTMLElement | null = document.querySelector("#toc-footer");
+    const shareFooter: HTMLElement | null = document.querySelector("#share-footer");
+    const footerTopIcon: HTMLElement | null = document.querySelector("#actions-footer > #top");
+
     /**
      * 移动端 文章页 底部导航栏 页面滚动相关逻辑
      * 向上滚动时显示移动端导航菜单，
      * 向下滚动时再次隐藏
      */
-    const footerNav = $("#footer-post");
-    if (footerNav.length) {
-      let lastScrollTop = 0;
-      const navFooter = $("#nav-footer");
-      const tocFooter = $("#toc-footer");
-      const shareFooter = $("#share-footer");
-      const footerTopIcon: HTMLElement | null = document.querySelector("#actions-footer > #top");
+    if (footerNav) {
       window.addEventListener("scroll", (): void => {
         const topDistance = getTopDistance();
 
         // 在滚动时，关闭全部底部导航栏子菜单
-        navFooter.slideUp(200);
-        tocFooter.slideUp(200);
-        shareFooter.slideUp(200);
+        if (navFooter) window.slideUp(navFooter, 200);
+        if (tocFooter) window.slideUp(tocFooter, 200);
+        if (shareFooter) window.slideUp(shareFooter, 200);
 
         if (topDistance > lastScrollTop) {
           // 向下滚动 -> 隐藏菜单
-          footerNav.slideUp(200);
+          window.slideUp(footerNav, 200);
         } else {
           // 向上滚动 -> 显示菜单
-          footerNav.slideDown(200);
+          window.slideDown(footerNav, 200);
         }
         lastScrollTop = topDistance;
 
         // 回到顶部按钮 根据页面滚动距离 显示/隐藏
         if (topDistance < 50) {
+          // 隐藏回到顶部按钮
           footerTopIcon?.style.setProperty("transform", "scale(0)");
         } else if (topDistance > 100) {
+          // 显示回到顶部按钮
           footerTopIcon?.style.setProperty("transform", "scale(1)");
         }
       });

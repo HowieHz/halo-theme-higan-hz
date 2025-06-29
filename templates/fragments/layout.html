@@ -94,15 +94,6 @@ html[theme="theme-[(${colorSchema.id})]"] {
       th:if="${theme.config?.global?.is_custom_resource_locations}"
       href="assets/dist/style.css"
     />
-    <!--/* jquery */-->
-    <script
-      th:src="@{/assets/lib/jquery/jquery.min.js(v=${theme.spec.version})}"
-      th:if="not ${theme.config?.global?.is_custom_resource_locations}"
-    ></script>
-    <script
-      th:src="${theme.config?.global?.jquery_resource_location}"
-      th:if="${theme.config?.global?.is_custom_resource_locations}"
-    ></script>
     <!--/* main */-->
     <script
       th:src="@{/assets/dist/main.iife.js(v=${theme.spec.version})}"
