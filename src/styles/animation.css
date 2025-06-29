@@ -11,11 +11,11 @@
 }
 
 .fade-in {
-  animation: fade-in ease-in-out forwards;
+  animation: fade-in ease-out forwards;
 }
 
 .fade-out {
-  animation: fade-out ease-in-out forwards;
+  animation: fade-out ease-out forwards;
 }
 
 /* 其他常用动画示例 */

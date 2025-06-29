@@ -66,12 +66,12 @@ document.addEventListener("DOMContentLoaded", (): void => {
     if (window.isVisible(mobileMenuItems[0])) {
       // 隐藏所有菜单项
       mobileMenuItems.forEach((item) => {
-        window.slideUp(item, 200);
+        window.fadeOut(item, 50);
       });
     } else {
       // 显示所有菜单项
       mobileMenuItems.forEach((item) => {
-        window.slideDown(item, 200);
+        window.fadeIn(item, 50);
       });
     }
   });
@@ -190,9 +190,9 @@ document.addEventListener("DOMContentLoaded", (): void => {
         const topDistance = getTopDistance();
 
         // 在滚动时，关闭全部底部导航栏子菜单
-        if (navFooter) window.slideUp(navFooter, 200);
-        if (tocFooter) window.slideUp(tocFooter, 200);
-        if (shareFooter) window.slideUp(shareFooter, 200);
+        for (const footer of [navFooter, tocFooter, shareFooter]) {
+          if (footer) window.slideUp(footer, 200);
+        }
 
         if (topDistance > lastScrollTop) {
           // 向下滚动 -> 隐藏菜单
