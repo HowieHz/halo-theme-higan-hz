@@ -1,0 +1,134 @@
+@keyframes fade-in {
+  from {
+    opacity: 0%;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0%;
+  }
+}
+
+.fade-in {
+  animation: fade-in ease-in-out forwards;
+}
+
+.fade-out {
+  animation: fade-out ease-in-out forwards;
+}
+
+/* 其他常用动画示例 */
+
+/* 滑入动画 */
+@keyframes slide-in {
+  from {
+    opacity: 0%;
+    transform: translateX(-100%);
+  }
+
+  to {
+    opacity: 100%;
+    transform: translateX(0);
+  }
+}
+
+.slide-in {
+  animation: slide-in 0.3s ease-out forwards;
+}
+
+/* 缩放动画 */
+@keyframes scale-in {
+  from {
+    opacity: 0%;
+    transform: scale(0);
+  }
+
+  to {
+    opacity: 100%;
+    transform: scale(1);
+  }
+}
+
+.scale-in {
+  animation: scale-in 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+/* 弹跳动画 */
+@keyframes bounce {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40%,
+  43% {
+    transform: translateY(-30px);
+  }
+
+  70% {
+    transform: translateY(-15px);
+  }
+
+  90% {
+    transform: translateY(-4px);
+  }
+}
+
+.bounce {
+  animation: bounce 1s ease-in-out;
+}
+
+/* 脉冲动画 */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+/* 旋转动画 */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate {
+  animation: rotate 2s linear infinite;
+}
+
+/* 闪烁动画 */
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 100%;
+  }
+
+  51%,
+  100% {
+    opacity: 0%;
+  }
+}
+
+.blink {
+  animation: blink 1s infinite;
+}
