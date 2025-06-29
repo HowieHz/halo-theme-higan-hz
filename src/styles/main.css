@@ -1,4 +1,5 @@
 @import url("./base.css");
+@import url("./animation.css");
 @import url("./pages/moment.css");
 @import url("./pages/photos.css");
 @import url("./pages/links.css");
@@ -376,10 +377,6 @@ html[data-color-scheme="dark"] article .content {
             &.iconify {
               color: var(--color-accent-1);
             }
-          }
-
-          &.responsive {
-            display: block;
           }
         }
       }
@@ -1042,16 +1039,6 @@ hr.divide {
   color: var(--color-text);
   display: none;
   padding-bottom: 0.5em;
-}
-
-@keyframes tooltip-appear {
-  from {
-    opacity: 0%;
-  }
-
-  to {
-    opacity: 100%;
-  }
 }
 
 .color-accent-1 {

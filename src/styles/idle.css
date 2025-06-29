@@ -96,7 +96,7 @@
   &:focus {
     &::before,
     &::after {
-      animation: tooltip-appear 0.1s ease-in forwards;
+      animation: fade-in 0.1s ease-in forwards;
       display: inline-block;
       text-decoration: none;
     }
@@ -126,16 +126,6 @@
 
 .tooltipped-s::after {
   transform: translateX(50%);
-}
-
-@keyframes tooltip-appear {
-  from {
-    opacity: 0%;
-  }
-
-  to {
-    opacity: 100%;
-  }
 }
 
 .highlight {

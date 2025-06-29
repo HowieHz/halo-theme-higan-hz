@@ -7,6 +7,7 @@ import "../tmp/styles/theme.css";
 
 import momentComment from "./alpine-data/moment-comment";
 
+import "./assets/animation.ts";
 import "./assets/main.ts";
 import "./styles/main.css";
 import "./styles/tailwind.css";

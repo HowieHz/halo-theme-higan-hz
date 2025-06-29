@@ -1,0 +1,61 @@
+@keyframes fade-in {
+  from {
+    opacity: 0%;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0%;
+  }
+}
+
+.fade-in {
+  animation: fade-in ease-out forwards;
+}
+
+.fade-out {
+  animation: fade-out ease-out forwards;
+}
+
+/* 其他常用动画示例 */
+
+/* jQuery 风格的滑下动画 - 通过高度变化显示元素
+ * 省略 to 的写法实际渲染会卡顿
+*/
+@keyframes slide-down {
+  from {
+    height: 0;
+    overflow: hidden;
+  }
+
+  to {
+    height: var(--slide-target-height, auto);
+    overflow: hidden;
+  }
+}
+
+.slide-down {
+  animation: slide-down ease-out forwards;
+  overflow: hidden;
+}
+
+/* jQuery 风格的滑上动画 - 通过高度变化隐藏元素 
+ * 省略 from 的写法实际渲染会卡顿
+*/
+@keyframes slide-up {
+  from {
+    height: var(--slide-target-height, auto);
+    overflow: hidden;
+  }
+
+  to {
+    height: 0;
+    overflow: hidden;
+  }
+}
+
+.slide-up {
+  animation: slide-up ease-out forwards;
+  overflow: hidden;
+}
