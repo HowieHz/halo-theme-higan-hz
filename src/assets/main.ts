@@ -104,11 +104,14 @@ document.addEventListener("DOMContentLoaded", (): void => {
 
     // 桌面端 文章页 导航栏 按钮事件 绑定
     document.querySelector("#actions #action-share")?.addEventListener("click", (): void => {
-      const shareMenu = $("#share-list");
-      if (shareMenu.is(":visible")) {
-        shareMenu.slideUp(200);
+      const shareMenu = document.getElementById("share-list");
+      if (!shareMenu) {
+        return;
+      }
+      if (window.isVisible(shareMenu)) {
+        window.slideUp(shareMenu, 200);
       } else {
-        shareMenu.slideDown(200);
+        window.slideDown(shareMenu, 200);
       }
     });
 

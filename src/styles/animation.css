@@ -20,21 +20,44 @@
 
 /* 其他常用动画示例 */
 
-/* 滑入动画 */
-@keyframes slide-in {
+/* jQuery 风格的滑下动画 - 通过高度变化显示元素
+ * 尝试省略 to 的写法，但实际渲染会卡顿
+*/
+@keyframes slide-down {
   from {
-    opacity: 0%;
-    transform: translateX(-100%);
+    height: 0;
+    overflow: hidden;
   }
 
   to {
-    opacity: 100%;
-    transform: translateX(0);
+    height: var(--slide-target-height, auto);
+    overflow: hidden;
   }
 }
 
-.slide-in {
-  animation: slide-in 0.3s ease-out forwards;
+.slide-down {
+  animation: slide-down 0.3s ease-out forwards;
+  overflow: hidden;
+}
+
+/* jQuery 风格的滑上动画 - 通过高度变化隐藏元素 
+ * 尝试省略 from 的写法，但实际渲染会卡顿
+*/
+@keyframes slide-up {
+  from {
+    height: var(--slide-target-height, auto);
+    overflow: hidden;
+  }
+
+  to {
+    height: 0;
+    overflow: hidden;
+  }
+}
+
+.slide-up {
+  animation: slide-up 0.3s ease-out forwards;
+  overflow: hidden;
 }
 
 /* 缩放动画 */

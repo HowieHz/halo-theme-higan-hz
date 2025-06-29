@@ -37,6 +37,20 @@ declare global {
     fadeOut: (element: HTMLElement, duration?: number) => void;
 
     /**
+     * slideDown 效果
+     * @param element - 要显示的元素
+     * @param duration - 动画持续时间（毫秒），默认300ms
+     */
+    slideDown: (element: HTMLElement, duration?: number) => void;
+
+    /**
+     * slideUp 效果
+     * @param element - 要隐藏的元素
+     * @param duration - 动画持续时间（毫秒），默认300ms
+     */
+    slideUp: (element: HTMLElement, duration?: number) => void;
+
+    /**
      * 显示元素
      * @param selector - 元素、选择器或NodeList
      */
