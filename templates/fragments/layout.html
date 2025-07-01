@@ -1,6 +1,6 @@
 <!doctype html>
 <html
-  th:lang="${language ?: (theme.config?.global?.default_page_language ?: 'zh')}"
+  th:lang="${language ?: ('' + param.lang != '' ? '' + param.lang : (theme.config?.global?.default_page_language ?: 'zh'))}"
   th:with="theme_config=${theme.config?.styles?.color_schema},
            custom_color_schema_config=${theme.config?.styles?.custom_color_schema}"
   th:attr="data-color-scheme=${theme_config['theme']} != 'custom' ? ${theme_config['color-scheme']} : null,
@@ -10,6 +10,7 @@
   th:fragment="html"
 >
   <!--/* th:fragment="html (title, content, header, navbar, language)" */-->
+
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -82,6 +83,67 @@ html[theme="theme-[(${colorSchema.id})]"] {
         }
       })();
     </script>
+    <script th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}" th:inline="javascript">
+      (function () {
+        // <!--/* 如果 ${language} 已经传入，则不跳转 */-->
+        const languageParam = /*[[${language}]]*/ null;
+        if (languageParam) {
+          return;
+        }
+
+        // <!--/* 如果浏览器已有 lang 查询参数，则不跳转
+        // param.lang 是一个列表，例 []、['zh']、['zh,en']
+        // lang=zh -> ''+param.lang 为 'zh'
+        // lang=zh,en -> ''+param.lang 为 'zh,en'
+        // 用 (new URL(window.location.href)).searchParams.get("lang") 也差不多
+        // 但我选择尽量预渲染 */-->
+        const langParam = /*[[${''+param.lang}]]*/ "";
+        if (langParam) {
+          return;
+        }
+
+        // <!--/* 获取配置项默认语言 */-->
+        let defaultLang = /*[[${theme?.config?.global?.default_page_language}]]*/ "zh";
+        if (!defaultLang) {
+          defaultLang = "zh";
+        }
+
+        // <!--/* 获取浏览器语言
+        // navigator.language 适用于现代浏览器
+        // navigator.userLanguage 为非标准属性适用于早期的 IE 浏览器（IE 11 及更早）
+        // */-->
+        const browserLang = navigator.language;
+
+        const originLangList = /*[(${theme?.config?.global?.auto_redirect_target_language_list})]*/ [];
+        const targetLangs = originLangList.map((item) => item.v);
+        const prefixMode = /*[[${theme?.config?.global?.is_i18n_prefix_match_mode}]]*/ true;
+
+        let matchedLang = undefined;
+        if (prefixMode) {
+          matchedLang = targetLangs.find((lang) => browserLang.startsWith(lang));
+        } else {
+          matchedLang = targetLangs.find((lang) => browserLang === lang);
+        }
+        // <!--/* 没有匹配的语言参数，不进行跳转 */-->
+        if (!matchedLang) {
+          return;
+        }
+
+        // <!--/* 跳转到带有浏览器语言参数的当前页面
+        // 检查当前 URL 的 lang 参数是否已经等于 matchedLang，避免循环跳转 */-->
+        const url = new URL(window.location.href);
+        if (url.searchParams.get("lang") === matchedLang) {
+          return;
+        }
+        // <!--/* 如果 defaultLang 和  matchedLang 匹配说明默认页面语言就是目标语言，无需跳转  */-->
+        if ((prefixMode && defaultLang.startsWith(matchedLang)) || (!prefixMode && defaultLang === matchedLang)) {
+          return;
+        }
+
+        url.searchParams.set("lang", matchedLang);
+        window.location.href = url.toString();
+      })();
+    </script>
     <link
       rel="stylesheet"
       th:href="@{/assets/dist/style.css(v=${theme.spec.version})}"
@@ -138,7 +200,6 @@ html[theme="theme-[(${colorSchema.id})]"] {
         // <!--/* 如果标签为 text-diagram  data-type 为 mermaid 读取 data-content 为 rawContent，适配文本绘图插件在默认编辑器的插入 */-->
         if (item.tagName === "TEXT-DIAGRAM" && item.getAttribute("data-type") === "mermaid") {
           rawContent = item.getAttribute("data-content");
-          console.log("text-diagram\n\n", rawContent);
         }
 
         let content = null;
@@ -404,7 +465,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
         }
       });
     </script>
-    <script th:if="${theme.config?.index_styles?.is_18n_resume_show}" th:inline="javascript">
+    <script th:if="${theme.config?.index_styles?.is_i18n_resume_show}" th:inline="javascript">
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/*
         // 检查目标标签是否具有 class="matched-resume"
@@ -546,7 +607,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </style>
     <style th:inline="css" th:if="${theme.config?.styles?.is_show_the_table_bottom_border}">
       body tr:not(:first-child) {
-        border-bottom-width: /*[(${theme.config?.styles?.table_bottom_border_width})]*/ 0.1rem;
+        border-bottom-width:
+      /*[(${theme.config?.styles?.table_bottom_border_width})]*/ 0.1rem;
         border-bottom-style: dashed;
         border-bottom-color: var(--color-accent-3);
       }
@@ -687,10 +749,10 @@ html[theme="theme-[(${colorSchema.id})]"] {
             th:if="${theme.config?.styles?.is_18n_footer_content_show}"
             th:with="footerContentItems = ${theme.config?.styles?.i18n_footer_content}"
           >
-            <th:block th:if="not ${theme.config?.styles?.is_18n_footer_content_show_prefix_match_mode}">
+            <th:block th:if="not ${theme.config?.global?.is_i18n_prefix_match_mode}">
               <!--/* i18n 页面底部内容 全等匹配模式 */-->
               <th:block th:each="footerContentItem : ${footerContentItems}">
-                <th:block th:if="${#strings.equals(footerContentItem.lang, #locale)}">
+                <th:block th:if="${#strings.equals(footerContentItem.lang, param.lang)}">
                   <div class="footer-bottom matched-footer-content">
                     <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
                   </div>
@@ -698,10 +760,10 @@ html[theme="theme-[(${colorSchema.id})]"] {
               </th:block>
             </th:block>
 
-            <th:block th:if="${theme.config?.styles?.is_18n_footer_content_show_prefix_match_mode}">
+            <th:block th:if="${theme.config?.global?.is_i18n_prefix_match_mode}">
               <!--/* i18n 页面底部内容 前缀匹配模式 */-->
               <th:block th:each="footerContentItem : ${footerContentItems}">
-                <th:block th:if="${#strings.startsWith(#locale, footerContentItem.lang)}">
+                <th:block th:if="${#strings.startsWith(param.lang, footerContentItem.lang)}">
                   <div class="footer-bottom matched-footer-content">
                     <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
                   </div>
@@ -711,9 +773,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
 
             <!--/* i18n 页面底部内容 全等匹配模式 匹配默认页面底部内容 */-->
             <th:block th:each="footerContentItem : ${footerContentItems}">
-              <th:block
-                th:if="${#strings.equals(footerContentItem.lang, theme.config?.styles?.default_i18n_footer_content_name)}"
-              >
+              <th:block th:if="${#strings.equals(footerContentItem.lang, theme.config?.global?.default_page_language)}">
                 <div class="footer-bottom default-footer-content" style="display: none">
                   <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
                 </div>
