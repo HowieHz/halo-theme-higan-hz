@@ -11,7 +11,7 @@ spec:
           name: default_page_language
           label: 默认页面语言
           value: "zh"
-          help: "默认页面语言，如：zh、en，此项置空则取 zh"
+          help: "默认页面语言，例如：zh、en。若此项为空，则默认为 zh。切换语言的方法是在 URL 后添加 ?lang=语言代码，例如：https://example.com/?lang=en"
         - $formkit: checkbox
           name: is_i18n_prefix_match_mode
           label: 多语言功能前缀匹配模式

@@ -11,7 +11,7 @@ spec:
           name: default_page_language
           label: Default page language
           value: "zh"
-          help: "The default language of the page, such as: zh, en. The setting set the html lang attribute."
+          help: "Default page language, e.g., zh or en. If this field is left empty, zh will be used by default. To switch languages, add ?lang=language_code to the end of the URL, for example: https://example.com/?lang=en"
         - $formkit: checkbox
           name: is_i18n_prefix_match_mode
           label: I18n prefix match mode
