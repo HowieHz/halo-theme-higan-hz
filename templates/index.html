@@ -26,13 +26,13 @@
         ></p>
       </th:block>
       <th:block
-        th:if="${theme.config?.index_styles?.is_18n_resume_show}"
+        th:if="${theme.config?.index_styles?.is_i18n_resume_show}"
         th:with="resumeItems = ${theme.config?.index_styles?.i18n_resume}"
       >
-        <th:block th:if="not ${theme.config?.index_styles?.is_18n_resume_show_prefix_match_mode}">
+        <th:block th:if="not ${theme.config?.global?.is_i18n_prefix_match_mode}">
           <!--/* i18n 公告栏 全等匹配模式 */-->
           <th:block th:each="resumeItem : ${resumeItems}">
-            <th:block th:if="${#strings.equals(resumeItem.lang, #locale)}">
+            <th:block th:if="${#strings.equals(resumeItem.lang, page_language}">
               <p
                 class="blog-description matched-resume"
                 th:with="defaultResume=${#strings.defaultString(site?.seo?.description, '')}"
@@ -42,10 +42,10 @@
           </th:block>
         </th:block>
 
-        <th:block th:if="${theme.config?.index_styles?.is_18n_resume_show_prefix_match_mode}">
+        <th:block th:if="${theme.config?.global?.is_i18n_prefix_match_mode}">
           <!--/* i18n 公告栏 前缀匹配模式 */-->
           <th:block th:each="resumeItem : ${resumeItems}">
-            <th:block th:if="${#strings.startsWith(#locale, resumeItem.lang)}">
+            <th:block th:if="${#strings.startsWith(page_language, resumeItem.lang)}">
               <p
                 class="blog-description matched-resume"
                 th:with="defaultResume=${#strings.defaultString(site?.seo?.description, '')}"
@@ -57,7 +57,7 @@
 
         <!--/* i18n 公告栏 全等匹配模式 匹配默认公告栏 */-->
         <th:block th:each="resumeItem : ${resumeItems}">
-          <th:block th:if="${#strings.equals(resumeItem.lang, theme.config?.index_styles?.default_i18n_resume_name)}">
+          <th:block th:if="${#strings.equals(resumeItem.lang, theme.config?.global?.default_page_language)}">
             <p
               class="blog-description default-resume"
               style="display: none"

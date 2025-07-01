@@ -11,24 +11,34 @@ spec:
           name: default_page_language
           label: Default page language
           value: "zh"
-          help: "The default language of the page, such as: zh, en. The setting set the html lang attribute."
+          help: "Default page language, e.g., zh or en. If this field is left empty, zh will be used by default. To switch languages, add ?lang=language_code to the end of the URL, for example: https://example.com/?lang=en"
+        - $formkit: checkbox
+          name: is_i18n_prefix_match_mode
+          label: I18n prefix match mode
+          value: true
+          help: "If enabled, the multi-language feature will use prefix match mode. See documentation for details."
+        - $formkit: checkbox
+          name: is_auto_redirect_to_browser_language
+          label: Auto redirect to browser language
+          value: false
+          help: "If enabled, when the browser language is different from the default page language and a corresponding language page exists, it will automatically redirect to the corresponding language page."
+        - $formkit: repeater
+          name: auto_redirect_target_language_list
+          if: "$is_auto_redirect_to_browser_language === true"
+          label: Allowed target region language code list for redirect
+          value: []
+          help: "The ones in front will be matched first"
+          children:
+            - $formkit: text
+              name: v
+              label: "Region language code"
+              validation: "required"
+              help: "e.g. zh, zh_CN, en, en_US"
         - $formkit: checkbox
           name: is_i18n_menu_show
           label: Enable multi-language menu support
           value: false
           help: "If enabled, the theme will automatically generate a multi-language menu based on the menu name. For details, please refer to the documentation."
-        - $formkit: checkbox
-          if: "$is_i18n_menu_show === true"
-          name: is_i18n_menu_prefix_match_mode
-          label: Enable prefix match mode
-          value: true
-          help: "If enabled, the theme will match the menu name with the current language prefix. For example, if the current language is zh, the theme will match the menu name with zh-xxx."
-        - $formkit: text
-          if: "$is_i18n_menu_show === true"
-          name: default_i18n_menu_name
-          label: Default multi-language menu name
-          value: "default"
-          help: "The default menu name for multi-language menus."
         - $formkit: checkbox
           name: upgrade_insecure_requests
           label: CSP:upgrade-insecure-requests
@@ -507,18 +517,6 @@ spec:
           label: Multi-language footer content support
           help: "Halo settings - Code injection - Footer content display position is above 'Theme Information', 'Copyright Information', and 'Footer Menu'.\nThe footer content filled in here is below the 'Footer Menu', at the very bottom of the page."
           value: false
-        - $formkit: checkbox
-          if: "$is_18n_footer_content_show === true"
-          name: is_18n_footer_content_show_prefix_match_mode
-          label: Multi-language footer content prefix match mode
-          value: true
-          help: "If enabled, the prefix match mode will be enabled. For specific usage, please refer to the documentation."
-        - $formkit: text
-          if: "$is_18n_footer_content_show === true"
-          name: default_i18n_footer_content_name
-          label: Default multi-language footer content language code
-          value: "default"
-          help: "Default multi-language footer content language code, such as: default. This will be displayed if no footer content is successfully matched. If this is empty, it will take the value of default."
         - $formkit: repeater
           name: i18n_footer_content
           if: "$is_18n_footer_content_show === true"
@@ -642,24 +640,12 @@ spec:
           language: html
           height: 150px
         - $formkit: checkbox
-          name: is_18n_resume_show
+          name: is_i18n_resume_show
           label: Multi-language personal profile/announcement support
           value: false
-        - $formkit: checkbox
-          if: "$is_18n_resume_show === true"
-          name: is_18n_resume_show_prefix_match_mode
-          label: Multi-language announcement prefix match mode
-          value: true
-          help: "If enabled, the prefix match mode will be enabled. For specific usage, please refer to the documentation."
-        - $formkit: text
-          if: "$is_18n_resume_show === true"
-          name: default_i18n_resume_name
-          label: Default multi-language announcement language code
-          value: "default"
-          help: "Default multi-language announcement language code, such as: default. This will be displayed if no announcement is successfully matched. If this is empty, it will take the value of default."
         - $formkit: repeater
           name: i18n_resume
-          if: "$is_18n_resume_show === true"
+          if: "$is_i18n_resume_show === true"
           label: Custom multi-language announcement content
           value: []
           children:

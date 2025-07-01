@@ -11,24 +11,34 @@ spec:
           name: default_page_language
           label: 默认页面语言
           value: "zh"
-          help: "默认页面语言，如：zh、en，此项置空则取 zh。此项设定的是 html 标签的 lang 属性值"
+          help: "默认页面语言，例如：zh、en。若此项为空，则默认为 zh。切换语言的方法是在 URL 后添加 ?lang=语言代码，例如：https://example.com/?lang=en"
+        - $formkit: checkbox
+          name: is_i18n_prefix_match_mode
+          label: 多语言功能前缀匹配模式
+          value: true
+          help: 如启用此项，则多语言功能将启用前缀匹配模式，具体使用方法请看文档。
+        - $formkit: checkbox
+          name: is_auto_redirect_to_browser_language
+          label: 浏览器语言自动跳转
+          value: false
+          help: "如启用此项，若当前浏览器语言与默认页面语言不同，且存在对应语言的页面，将自动跳转到对应语言页面。"
+        - $formkit: repeater
+          name: auto_redirect_target_language_list
+          if: "$is_auto_redirect_to_browser_language === true"
+          label: 允许跳转的目标区域语言代码列表
+          value: []
+          help: "放在前面的会被优先匹配"
+          children:
+            - $formkit: text
+              name: v
+              label: "区域语言代码"
+              validation: "required"
+              help: "如 zh、zh_CN、en、en_US"
         - $formkit: checkbox
           name: is_i18n_menu_show
           label: 多语言菜单支持
           value: false
           help: 如启用此项，将启用多语言菜单支持，具体使用方法请看文档。
-        - $formkit: checkbox
-          if: "$is_i18n_menu_show === true"
-          name: is_i18n_menu_prefix_match_mode
-          label: 多语言菜单前缀匹配模式
-          value: true
-          help: 如启用此项，则启用前缀匹配模式，具体使用方法请看文档。
-        - $formkit: text
-          if: "$is_i18n_menu_show === true"
-          name: default_i18n_menu_name
-          label: 默认多语言菜单名称
-          value: "default"
-          help: "默认多语言菜单名称，如：default。此项将在没有一个菜单未被成功匹配后显示。此项置空则取 default"
         - $formkit: checkbox
           name: upgrade_insecure_requests
           label: CSP:upgrade-insecure-requests
@@ -507,18 +517,6 @@ spec:
           label: 多语言页面最底部内容支持
           help: "Halo 设置 - 代码注入 - 页脚 的内容显示位置在“主题信息”、“版权信息”、“底部菜单”之上。\n而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。"
           value: false
-        - $formkit: checkbox
-          if: "$is_18n_footer_content_show === true"
-          name: is_18n_footer_content_show_prefix_match_mode
-          label: 多语言页面最底部内容前缀匹配模式
-          value: true
-          help: 如启用此项，则启用前缀匹配模式，具体使用方法请看文档。
-        - $formkit: text
-          if: "$is_18n_footer_content_show === true"
-          name: default_i18n_footer_content_name
-          label: 默认多语言页面最底部内容的语言代码
-          value: "default"
-          help: "默认多语言页面最底部内容的语言代码，如：default。此项将在没有一个页面最底部内容未被成功匹配后显示。此项置空则取 default"
         - $formkit: repeater
           name: i18n_footer_content
           if: "$is_18n_footer_content_show === true"
@@ -642,24 +640,12 @@ spec:
           language: html
           height: 150px
         - $formkit: checkbox
-          name: is_18n_resume_show
+          name: is_i18n_resume_show
           label: 多语言个人简介/公告栏支持
           value: false
-        - $formkit: checkbox
-          if: "$is_18n_resume_show === true"
-          name: is_18n_resume_show_prefix_match_mode
-          label: 多语言公告栏前缀匹配模式
-          value: true
-          help: 如启用此项，则启用前缀匹配模式，具体使用方法请看文档。
-        - $formkit: text
-          if: "$is_18n_resume_show === true"
-          name: default_i18n_resume_name
-          label: 默认多语言公告栏语言代码
-          value: "default"
-          help: "默认多语言公告栏语言代码，如：default。此项将在没有一个公告栏未被成功匹配后显示。此项置空则取 default"
         - $formkit: repeater
           name: i18n_resume
-          if: "$is_18n_resume_show === true"
+          if: "$is_i18n_resume_show === true"
           label: 自定义多语言公告栏内容
           value: []
           children:
