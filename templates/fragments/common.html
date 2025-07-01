@@ -48,9 +48,7 @@
     >
       <!--/* i18n menu 全等匹配模式 */-->
       <th:block th:each="menuItem : ${menuItems}">
-        <th:block
-          th:if="${#strings.equals(menuItem.spec.displayName, language ?: ('' + param.lang != '' ? '' + param.lang : (theme.config?.global?.default_page_language ?: 'zh')) )}"
-        >
+        <th:block th:if="${#strings.equals(menuItem.spec.displayName, page_language)}">
           <li th:each="menuItemChildren : ${menuItem?.children}" class="matched-menu">
             <a
               th:href="@{${menuItemChildren?.status?.href}}"
@@ -67,9 +65,7 @@
     <th:block th:if="${theme.config?.global?.is_i18n_menu_show} and ${theme.config?.global?.is_i18n_prefix_match_mode}">
       <!--/* i18n menu 前缀匹配模式 */-->
       <th:block th:each="menuItem : ${menuItems}">
-        <th:block
-          th:if="${#strings.startsWith(language ?: ('' + param.lang != '' ? '' + param.lang : (theme.config?.global?.default_page_language ?: 'zh')), menuItem.spec.displayName)}"
-        >
+        <th:block th:if="${#strings.startsWith(page_language, menuItem.spec.displayName)}">
           <li th:each="menuItemChildren : ${menuItem?.children}" class="matched-menu">
             <a
               th:href="@{${menuItemChildren?.status?.href}}"

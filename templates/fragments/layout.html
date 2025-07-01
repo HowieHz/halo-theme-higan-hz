@@ -1,8 +1,9 @@
 <!doctype html>
 <html
-  th:lang="${language ?: ('' + param.lang != '' ? '' + param.lang : (theme.config?.global?.default_page_language ?: 'zh'))}"
   th:with="theme_config=${theme.config?.styles?.color_schema},
-           custom_color_schema_config=${theme.config?.styles?.custom_color_schema}"
+           custom_color_schema_config=${theme.config?.styles?.custom_color_schema},
+           page_language=${language ?: ('' + param.lang != '' ? '' + param.lang : (theme.config?.global?.default_page_language ?: 'zh'))}"
+  th:lang="${page_language}"
   th:attr="data-color-scheme=${theme_config['theme']} != 'custom' ? ${theme_config['color-scheme']} : null,
            theme=${theme_config['theme']} != 'custom' ? ${theme_config['theme']} : 'theme-'+${theme.config?.styles?.custom_color_schema_init_id}"
   xmlns:th="http://www.thymeleaf.org"
@@ -85,7 +86,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </script>
     <script th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}" th:inline="javascript">
       (function () {
-        // <!--/* 如果 ${language} 已经传入，则不跳转 */-->
+        // <!--/* 如果 ${language} 已经传入，也就是已经指定了页面语言，则不跳转 */-->
         const languageParam = /*[[${language}]]*/ null;
         if (languageParam) {
           return;

@@ -262,14 +262,16 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
 
 #### 增加于“全局”
 
-1. 添加“默认页面语言”，允许指定站点默认的页面语言（HTML lang 属性）（如配置值为空，则设置为 "zh"）
-2. 添加“多语言菜单支持”，允许用户定义多套菜单适用于不同语言。
+1. 添加“默认页面语言”，允许指定站点默认的页面语言。（如配置值为空，则设置为 "zh"）
+2. 添加“多语言功能前缀匹配模式”，如启用此项，则多语言功能将启用前缀匹配模式。
+3. 添加“浏览器语言自动跳转”
+4. 添加“多语言菜单支持”，允许用户定义多套菜单适用于不同语言。
    - 此项使用教程请看 [多语言菜单使用指南](#多语言菜单使用指南)
-3. 添加“CSP:upgrade-insecure-requests”选项，避免 HTTPS 协议网页引用 HTTP 资源时报错。
+5. 添加“CSP:upgrade-insecure-requests”选项，避免 HTTPS 协议网页引用 HTTP 资源时报错。
    - 相关文档：[CSP: upgrade-insecure-requests - HTTP | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
-4. 增加“仅允许使用指定域名访问”。使用场景：防止站点被恶意镜像后的流量流失。
-5. 增加“自定义资源位置地址”，允许指定资源位置地址（如主要 CSS 资源，主要 JavaScript 资源）。
-6. 增加“instant.page 支持”，自动加载 instant.page 脚本，以提升页面加载速度。
+6. 增加“仅允许使用指定域名访问”。使用场景：防止站点被恶意镜像后的流量流失。
+7. 增加“自定义资源位置地址”，允许指定资源位置地址（如主要 CSS 资源，主要 JavaScript 资源）。
+8. 增加“instant.page 支持”，自动加载 instant.page 脚本，以提升页面加载速度。
 
 #### 增加于“总体样式”
 

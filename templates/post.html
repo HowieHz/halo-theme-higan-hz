@@ -6,7 +6,7 @@
     content = ~{::content}, 
     header = ~{}, 
     navbar = ~{fragments/post-nav::navbar}, 
-    language=${#annotations.get(post, 'higan.howiehz.top/page-language') ?: theme.config?.global?.default_page_language ?: 'zh'}
+    language=${#annotations.get(post, 'higan.howiehz.top/page-language')}
   )}"
 >
   <th:block th:fragment="content">
