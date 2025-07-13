@@ -12,7 +12,5 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - uses: actions/checkout@v4
       - name: AutoCorrect
         uses: huacnlee/autocorrect-action@v2

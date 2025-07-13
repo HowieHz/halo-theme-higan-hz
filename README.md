@@ -183,17 +183,17 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
 启用“首页样式 - 多语言个人简介/公告栏支持”选项后，“首页样式 - 自定义多语言公告栏内容”应设置形如以下形式（注：“zh_CN”项可选择自定义链接，链接为 /，名称为 zh_CN。其中名称为关键设置，其他不影响）
 
 - - “语言代码”设置值：zh_CN
-  - “个人简介/公告栏内容（支持 html 代码块）”设置值：你好！
+  - “个人简介/公告栏内容（支持 HTML 代码块）”设置值：你好！
 - - “语言代码”设置值：en_US
-  - “个人简介/公告栏内容（支持 html 代码块）”设置值：Hello!
+  - “个人简介/公告栏内容（支持 HTML 代码块）”设置值：Hello!
 
 启用“全局 - 多语言功能前缀匹配模式”，启用此项将允许“语言代码”设置值符合 navigator.language 值前缀即显示，而无需完全匹配。（注：开启了这项之后，下面的“zh”可匹配 zh_CN，zh_TW 等 navigator.language 值。）
 以上菜单可改为：
 
 - - “语言代码”设置值：zh
-  - “个人简介/公告栏内容（支持 html 代码块）”设置值：你好！
+  - “个人简介/公告栏内容（支持 HTML 代码块）”设置值：你好！
 - - “语言代码”设置值：en
-  - “个人简介/公告栏内容（支持 html 代码块）”设置值：Hello!
+  - “个人简介/公告栏内容（支持 HTML 代码块）”设置值：Hello!
 
 与“全局 - 默认页面语言”设置值同名的将被作为默认多语言公告栏，默认多语言公告栏将在没有公告栏成功匹配的时候显示。
 “全局 - 默认页面语言”默认值为 zh，你也可以设定为如 zh_CN，但是要注意这里是**完全匹配“语言代码”设置值**，即使开启了“全局 - 多语言功能前缀匹配模式”。
@@ -205,17 +205,17 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
 启用“总体样式 - 多语言页面最底部内容支持”选项后，“总体样式 - 自定义多语言页面最底部内容”应设置形如以下形式（注：“zh_CN”项可选择自定义链接，链接为 /，名称为 zh_CN。其中名称为关键设置，其他不影响）
 
 - - “语言代码”设置值：zh_CN
-  - “页面最底部内容（支持 html 代码块）”设置值：你好！
+  - “页面最底部内容（支持 HTML 代码块）”设置值：你好！
 - - “语言代码”设置值：en_US
-  - “页面最底部内容（支持 html 代码块）”设置值：Hello!
+  - “页面最底部内容（支持 HTML 代码块）”设置值：Hello!
 
 启用“全局 - 多语言功能前缀匹配模式”，启用此项将允许“语言代码”设置值符合 navigator.language 值前缀即显示，而无需完全匹配。（注：开启了这项之后，下面的“zh”可匹配 zh_CN，zh_TW 等 navigator.language 值。）
 以上菜单可改为：
 
 - - “语言代码”设置值：zh
-  - “页面最底部内容（支持 html 代码块）”设置值：你好！
+  - “页面最底部内容（支持 HTML 代码块）”设置值：你好！
 - - “语言代码”设置值：en
-  - “页面最底部内容（支持 html 代码块）”设置值：Hello!
+  - “页面最底部内容（支持 HTML 代码块）”设置值：Hello!
 
 与“全局 - 默认页面语言”设置值同名的将被作为默认多语言页面最底部内容，默认多语言页面最底部内容将在没有页面最底部内容成功匹配的时候显示。
 “全局 - 默认页面语言”默认值为 zh，你也可以设定为如 zh_CN，但是要注意这里是**完全匹配“语言代码”设置值**，即使开启了“全局 - 多语言功能前缀匹配模式”。
@@ -665,7 +665,7 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
 
 ### 杂项（对主题使用者无感的修改）
 
-1. 重构样式切换方式 (原来是 body 标签的 class 决定样式，现在是 html 标签的 theme 属性的值决定样式)
+1. 重构样式切换方式 (原来是 body 标签的 class 决定样式，现在是 HTML 标签的 theme 属性的值决定样式)
 2. 修改项目内各种链接指向分叉后的项目链接，并修改元数据避免与原主题冲突
 3. 清除无用样式，减小最终文件体积
 4. 修改颜色主题内部代号值
@@ -702,7 +702,7 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 - 友链页面（/links），需插件 [plugin-links](https://github.com/halo-sigs/plugin-links)([应用市场页面](https://www.halo.run/store/apps/app-hfbQg))
 - <a id="plugin-photos"></a>图库页面（/photos），需插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)([应用市场页面](https://www.halo.run/store/apps/app-BmQJW))
 - <a id="plugin-moments"></a>瞬间页面（/moments），需插件 [plugin-moments](https://github.com/halo-sigs/plugin-moments)([应用市场页面](https://www.halo.run/store/apps/app-SnwWD))
-  - 瞬间页面可用于展示 github 活动，此用法请看 [howiehz/ghu-events-moments](https://github.com/howiehz/ghu-events-moments) 或 [guqing/ghu-events-moments](https://github.com/guqing/ghu-events-moments)（兼容原主题数据类型）
+  - 瞬间页面可用于展示 GitHub 活动，此用法请看 [howiehz/ghu-events-moments](https://github.com/howiehz/ghu-events-moments) 或 [guqing/ghu-events-moments](https://github.com/guqing/ghu-events-moments)（兼容原主题数据类型）
 - 评论功能，需插件 [plugin-comment-widget](https://github.com/halo-sigs/plugin-comment-widget/releases)([应用市场页面](https://www.halo.run/store/apps/app-YXyaD))
 - 搜索功能，需插件 [plugin-search-widget](https://github.com/halo-sigs/plugin-search-widget/releases)([应用市场页面](https://www.halo.run/store/apps/app-DlacW))
 - 代码渲染，需插件：[plugin-highlightjs](https://github.com/halo-sigs/plugin-highlightjs)([应用市场页面](https://www.halo.run/store/apps/app-sqpgf))
@@ -811,7 +811,7 @@ RSS3 -->|发 Token| $POWER{{$POWER}}
 
 1. 需插件 [plugin-hybrid-edit-block](https://github.com/halo-sigs/plugin-hybrid-edit-block)([应用市场页面](https://www.halo.run/store/apps/app-NgHnY))
 2. 进入主题配置，启用 `全局-Mermaid 支持`
-3. 默认编辑器中输入 `/html` 选择插入 html 代码块
+3. 默认编辑器中输入 `/html` 选择插入 HTML 代码块
 
 输入以下内容，将 `[[图表标题]]` 和 `[[图表正文]]` 换成你自己的内容，  
 即可适配明暗切换
@@ -1032,7 +1032,7 @@ title: [[图表标题]]
 ### 在默认编辑器中的使用方法
 
 1. 需插件 [plugin-hybrid-edit-block](https://github.com/halo-sigs/plugin-hybrid-edit-block)
-2. 默认编辑器中输入 `/html` 选择插入 html 代码块
+2. 默认编辑器中输入 `/html` 选择插入 HTML 代码块
 
 输入以下内容，将 `[[浅色模式内容]]` 和 `[[深色模式内容]]` 换成你自己的内容，
 即可适配明暗切换

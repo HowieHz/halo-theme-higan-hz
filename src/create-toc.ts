@@ -104,7 +104,7 @@ export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
   // Find the target DOM element where TOC will be inserted
   const targetDom = document.querySelector(targetDomSelector);
   if (!targetDom) {
-    console.warn(`Failed to generate toc to targetDom ${targetDom}, processed html is: ${outputHTML}`);
+    console.warn(`Failed to generate toc to targetDom ${targetDom}, processed HTML is: ${outputHTML}`);
     return;
   }
 

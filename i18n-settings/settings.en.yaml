@@ -509,7 +509,7 @@ spec:
         - $formkit: code
           name: footer_content
           if: "$is_footer_content_show === true"
-          label: Footer content at the bottom (support html code block)
+          label: Footer content at the bottom (support HTML code block)
           language: html
           height: 150px
         - $formkit: checkbox
@@ -530,7 +530,7 @@ spec:
               validation: "required"
             - $formkit: code
               name: footer_content
-              label: Footer content at the bottom (support html code block)
+              label: Footer content at the bottom (support HTML code block)
               language: html
               height: 150px
         - $formkit: checkbox
@@ -636,7 +636,7 @@ spec:
         - $formkit: code
           name: resume
           if: "$is_resume_show === true"
-          label: Personal profile/Announcement content (support html code block)
+          label: Personal profile/Announcement content (support HTML code block)
           language: html
           height: 150px
         - $formkit: checkbox
@@ -656,7 +656,7 @@ spec:
               validation: "required"
             - $formkit: code
               name: resume
-              label: Personal profile/Announcement content (support html code block)
+              label: Personal profile/Announcement content (support HTML code block)
               language: html
               height: 150px
         - $formkit: checkbox
@@ -1202,12 +1202,12 @@ spec:
                       aria-label: "Find me on facebook",
                       data-icon: ic:baseline-facebook,
                     }
-                - label: Github
+                - label: GitHub
                   value:
                     {
                       type: "github",
                       url: "https://github.com/",
-                      aria-label: "Find me on Github",
+                      aria-label: "Find me on GitHub",
                       data-icon: mdi:github,
                     }
                 - label: Instagram

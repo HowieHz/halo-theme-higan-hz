@@ -524,16 +524,16 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </script>
     <!--/*
   本主题的样式切换说明：
-  用哪套样式看 html 标签内的 theme 属性值：auto，dark，light，gray
+  用哪套样式看 HTML 标签内的 theme 属性值：auto，dark，light，gray
 
   本主题标识明暗模式说明：
 
-  1. 用于给 css 样式读取，放在 html 标签内的 data-color-scheme 属性值：auto，dark，light
+  1. 用于给 css 样式读取，放在 HTML 标签内的 data-color-scheme 属性值：auto，dark，light
   当前用于：决定官方评论组件样式
   文档：https://www.halo.run/store/apps/app-YXyaD
   
   2. main.css 样式中还写了一个 color-scheme，由标签内的 data-color-scheme 决定，默认是 normal，亮色是 only light，暗色是 only dark
-  应用于 :root 加上 only 效果是关闭由 Chrome 的自动深色主题引起的颜色覆盖。上游应用于 body 标签，本主题应用于 html 标签（实际是应用在有 data-color-scheme 属性的地方，本主题仅有 html 标签有这个属性）
+  应用于 :root 加上 only 效果是关闭由 Chrome 的自动深色主题引起的颜色覆盖。上游应用于 body 标签，本主题应用于 HTML 标签（实际是应用在有 data-color-scheme 属性的地方，本主题仅有 HTML 标签有这个属性）
   https://developer.mozilla.org/zh-CN/docs/Web/CSS/color-scheme
 */-->
     <style th:inline="css" th:if="${theme.config?.styles?.is_max_width_settings}">
