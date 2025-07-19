@@ -4,18 +4,6 @@
 declare global {
   interface Window {
     /**
-     * 检测是否为移动设备
-     */
-    isMobile: () => boolean;
-
-    /**
-     * 检查元素是否可见
-     * @param element - 要检查的元素
-     * @returns 元素是否可见
-     */
-    isVisible: (element: HTMLElement | null) => boolean;
-
-    /**
      * 滚动到页面顶部
      */
     scrollToTop: () => void;

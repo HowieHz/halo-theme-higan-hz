@@ -87,8 +87,8 @@ spec:
           name: css_resource_location
           if: "$is_custom_resource_locations === true"
           label: CSS resource location
-          value: "/themes/howiehz-higan/assets/dist/style.css"
-          help: Specify the location of CSS resources, e.g., https://cdn.example.com/style.css
+          value: "/themes/howiehz-higan/assets/dist/common.css"
+          help: Specify the location of CSS resources, e.g., https://cdn.example.com/common.css
         - $formkit: text
           name: instantpage_resource_location
           if: "$is_custom_resource_locations === true"

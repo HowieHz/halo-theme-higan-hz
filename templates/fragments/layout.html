@@ -10,7 +10,7 @@
   style="border: 0px solid"
   th:fragment="html"
 >
-  <!--/* th:fragment="html (title, content, header, navbar, language)" */-->
+  <!--/* th:fragment="html (title, head, content, header, navbar, language)" */-->
 
   <head>
     <meta charset="UTF-8" />
@@ -153,30 +153,21 @@ html[theme="theme-[(${colorSchema.id})]"] {
       type="font/woff2"
       crossorigin
     />
-    <!--/* style.css */-->
+    <!--/* common.css */-->
     <link
       rel="stylesheet"
-      th:href="@{/assets/dist/style.css(v=${theme.spec.version})}"
+      th:href="@{/assets/dist/common.css(v=${theme.spec.version})}"
       th:if="not ${theme.config?.global?.is_custom_resource_locations}"
-      href="assets/dist/style.css"
+      href="assets/dist/common.css"
     />
     <link
       rel="stylesheet"
       th:href="${theme.config?.global?.css_resource_location}"
       th:if="${theme.config?.global?.is_custom_resource_locations}"
-      href="assets/dist/style.css"
+      href="assets/dist/common.css"
     />
     <!--/* main.js */-->
-    <script
-      th:src="@{/assets/dist/main.js(v=${theme.spec.version})}"
-      th:if="not ${theme.config?.global?.is_custom_resource_locations}"
-      defer
-    ></script>
-    <script
-      th:src="${theme.config?.global?.js_resource_location}"
-      th:if="${theme.config?.global?.is_custom_resource_locations}"
-      defer
-    ></script>
+    <th:block th:replace="${head}" />
     <!--/* instant.page */-->
     <script
       th:src="@{/assets/lib/instantpage/5.2.0.js(v=${theme.spec.version})}"

@@ -1,8 +1,22 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(title = ${title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
+  th:replace="~{fragments/layout :: html(
+    title = ${title}, 
+    head = ~{::head},
+    content = ~{::content}, 
+    header = ~{fragments/header::content}, 
+    navbar = ~{}
+  )}"
 >
+  <th:block th:fragment="head">
+    <link
+      rel="stylesheet"
+      th:href="@{/assets/dist/moment.css(v=${theme.spec.version})}"
+      href="assets/dist/moment.css"
+    />
+    <script th:src="@{/assets/dist/moment.js(v=${theme.spec.version})}" type="module" defer></script>
+  </th:block>
   <th:block th:fragment="content">
     <th:block th:insert="~{fragments/moments :: moment-list-summary(moments=${moments}, isIndexPage=false)}"></th:block>
   </th:block>

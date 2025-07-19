@@ -4,9 +4,9 @@
   font-style: normal;
   font-weight: 400;
   src:
-    url("/themes/howiehz-higan/assets/dist/MesloLGS-Regular.woff2") format("woff2"),
-    url("/themes/howiehz-higan/assets/dist/MesloLGS-Regular.woff") format("woff"),
-    url("/themes/howiehz-higan/assets/dist/MesloLGS-Regular.ttf") format("truetype"),
+    url("../../assets/fonts/meslo-LG/MesloLGS-Regular.woff2") format("woff2"),
+    url("../../assets/fonts/meslo-LG/MesloLGS-Regular.woff") format("woff"),
+    url("../../assets/fonts/meslo-LG/MesloLGS-Regular.ttf") format("truetype"),
     local(meslo lg s);
 }
 
