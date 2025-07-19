@@ -2,13 +2,28 @@
 <th:block
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
-    title=${#annotations.getOrDefault(category, 'higan.howiehz.top/page-title', category.spec.displayName)}, 
+    title = ${#annotations.getOrDefault(category, 'higan.howiehz.top/page-title', category.spec.displayName)}, 
+    head = ~{::head},
     content = ~{::content}, 
     header = ~{fragments/header::content}, 
     navbar = ~{}, 
     language=${#annotations.get(category, 'higan.howiehz.top/page-language')} 
   )}"
 >
+  <th:block th:fragment="head">
+    <script
+      th:src="@{/assets/dist/main.js(v=${theme.spec.version})}"
+      th:if="not ${theme.config?.global?.is_custom_resource_locations}"
+      type="module"
+      defer
+    ></script>
+    <script
+      th:src="${theme.config?.global?.js_resource_location}"
+      th:if="${theme.config?.global?.is_custom_resource_locations}"
+      type="module"
+      defer
+    ></script>
+  </th:block>
   <th:block th:fragment="content">
     <div id="archive" class="content">
       <h1>

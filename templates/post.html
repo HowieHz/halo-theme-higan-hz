@@ -2,13 +2,22 @@
 <th:block
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
-    title=${#annotations.getOrDefault(post, 'higan.howiehz.top/page-title', post.spec.title)}, 
+    title = ${#annotations.getOrDefault(post, 'higan.howiehz.top/page-title', post.spec.title)}, 
+    head = ~{::head},
     content = ~{::content}, 
     header = ~{}, 
     navbar = ~{fragments/post-nav::navbar}, 
     language=${#annotations.get(post, 'higan.howiehz.top/page-language')}
   )}"
 >
+  <th:block th:fragment="head">
+    <link
+      rel="stylesheet"
+      th:href="@{/assets/dist/animation.css(v=${theme.spec.version})}"
+      href="assets/dist/animation.css"
+    />
+    <script th:src="@{/assets/dist/post.js(v=${theme.spec.version})}" type="module" defer></script>
+  </th:block>
   <th:block th:fragment="content">
     <style th:inline="css" th:if="${theme.config?.post_styles?.is_custom_toc_max_width}">
       #header-post #toc {
@@ -321,7 +330,7 @@
         const tocSelector = isMobile() ? "#toc-footer" : "#toc";
         // <!--/* wontfix：如果电脑屏幕较窄，文章页用的是底部导航栏，目录按钮按了之后不会显示目录
         // 但是目录按钮在手机端是正常的，为了保证性能，不做特殊处理 */-->
-        main.generateTOC(contentDom.innerHTML, tocSelector);
+        window.generateTOC(contentDom.innerHTML, tocSelector);
 
         // <!--/* toc collapse control */-->
         window.addEventListener("scroll", () => {

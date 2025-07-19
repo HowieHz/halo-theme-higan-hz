@@ -1,8 +1,28 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(title=#{page.tags.page-title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
+  th:replace="~{fragments/layout :: html(
+    title = #{page.tags.page-title}, 
+    head = ~{::head},
+    content = ~{::content}, 
+    header = ~{fragments/header::content}, 
+    navbar = ~{}
+  )}"
 >
+  <th:block th:fragment="head">
+    <script
+      th:src="@{/assets/dist/main.js(v=${theme.spec.version})}"
+      th:if="not ${theme.config?.global?.is_custom_resource_locations}"
+      type="module"
+      defer
+    ></script>
+    <script
+      th:src="${theme.config?.global?.js_resource_location}"
+      th:if="${theme.config?.global?.is_custom_resource_locations}"
+      type="module"
+      defer
+    ></script>
+  </th:block>
   <th:block th:fragment="content">
     <h1>
       <th:block th:text="#{page.tags.title}">标题替换位</th:block>

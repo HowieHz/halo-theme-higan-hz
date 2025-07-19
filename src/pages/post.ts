@@ -1,47 +1,11 @@
-// 导入类型定义（仅类型导入，不会在运行时包含。包含了自定义 window 扩展）
-import type {} from "../types/window";
-
-// 使此文件成为模块
-export {};
+import "../utils/common";
+import "../utils/animation";
+import "../utils/create-toc";
 
 // 检测是否为移动设备
 window.isMobile = (): boolean => {
   const flag = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   return flag;
-};
-
-// 检查元素是否可见
-window.isVisible = (element: HTMLElement | null): boolean => {
-  if (!element) {
-    return false;
-  }
-  const style = window.getComputedStyle(element);
-
-  // 基本可见性检查
-  if (style.display === "none" || style.visibility === "hidden") {
-    return false;
-  }
-
-  // 对于 position: fixed 的元素，offsetParent 会是 null，但这不意味着不可见
-  // 我们需要额外检查元素的位置属性
-  if (element.offsetParent === null) {
-    // 如果元素是 position: fixed，我们认为它是可见的（只要 display 和 visibility 没问题）
-    if (style.position === "fixed") {
-      return true;
-    }
-
-    // 如果元素或其父元素有 transform 属性，offsetParent 也可能为 null
-    // 在这种情况下，我们检查元素的尺寸和位置
-    const rect = element.getBoundingClientRect();
-    if (rect.width > 0 && rect.height > 0) {
-      return true;
-    }
-
-    // 其他情况下，offsetParent 为 null 通常意味着不可见
-    return false;
-  }
-
-  return true;
 };
 
 /**
@@ -56,26 +20,6 @@ function getTopDistance(): number {
 }
 
 document.addEventListener("DOMContentLoaded", (): void => {
-  const mobileMenuIcon: HTMLElement | null = document.querySelector("#header > #nav > ul > .icon");
-  const mobileMenuItems: NodeListOf<HTMLElement> | null = document.querySelectorAll(
-    "#header > #nav > ul > li:not(:first-child)",
-  );
-  // 移动端 主页页眉菜单 按钮事件 绑定
-  mobileMenuIcon?.addEventListener("click", (): void => {
-    // 检查第一个菜单项是否可见来判断菜单状态
-    if (window.isVisible(mobileMenuItems[0])) {
-      // 隐藏所有菜单项
-      mobileMenuItems.forEach((item) => {
-        window.fadeOut(item, 50);
-      });
-    } else {
-      // 显示所有菜单项
-      mobileMenuItems.forEach((item) => {
-        window.fadeIn(item, 50);
-      });
-    }
-  });
-
   /**
    * 控制博客文章页面中菜单的不同版本
    * 适用于桌面端、平板端和移动端

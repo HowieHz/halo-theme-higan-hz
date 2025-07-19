@@ -1,80 +1,37 @@
 import path from "path";
 import { fileURLToPath } from "url";
-import Unfonts from "unplugin-fonts/vite";
 import { defineConfig } from "vite";
 // vite.config.js
 import PurgeIcons from "vite-plugin-purge-icons";
 
 export default defineConfig({
+  base: "/themes/howiehz-higan/assets/dist/",
   plugins: [
     PurgeIcons({
       content: ["./templates/*.html"],
     }),
-    Unfonts({
-      custom: {
-        /**
-         * Fonts families lists
-         */
-        families: [
-          {
-            /**
-             * Name of the font family.
-             */
-            name: "Meslo LG",
-            /**
-             * Local name of the font. Used to add `src: local()` to `@font-rule`.
-             */
-            local: "Meslo LG S",
-            /**
-             * Regex(es) of font files to import. The names of the files will
-             * predicate the `font-style` and `font-weight` values of the `@font-rule`'s.
-             */
-            src: "./src/assets/fonts/meslo-LG/MesloLGS-Regular.ttf",
-          },
-        ],
-
-        /**
-         * Defines the default `font-display` value used for the generated
-         * `@font-rule` classes.
-         */
-        display: "auto",
-
-        /**
-         * Using `<link rel="preload">` will trigger a request for the WebFont
-         * early in the critical rendering path, without having to wait for the
-         * CSSOM to be created.
-         */
-        preload: true,
-
-        /**
-         * Using `<link rel="prefetch">` is intended for prefetching resources
-         * that will be used in the next navigation/page load
-         * (e.g. when you go to the next page)
-         *
-         * Note: this can not be used with `preload`
-         */
-        prefetch: false,
-      },
-    }),
   ],
   build: {
     outDir: fileURLToPath(new URL("./templates/assets/dist", import.meta.url)),
+    assetsDir: "",
     emptyOutDir: true,
 
-    lib: {
-      entry: path.resolve(__dirname, "src/main.ts"),
-      name: "main",
-      fileName: "main",
-      formats: ["iife"],
-    },
-
     rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, "src/main.ts"),
+        index: path.resolve(__dirname, "src/pages/index.ts"),
+        post: path.resolve(__dirname, "src/pages/post.ts"),
+        page: path.resolve(__dirname, "src/pages/page.ts"),
+        moment: path.resolve(__dirname, "src/pages/moment.ts"),
+        archives: path.resolve(__dirname, "src/pages/archives.ts"),
+        photos: path.resolve(__dirname, "src/pages/photos.ts"),
+        links: path.resolve(__dirname, "src/pages/links.ts"),
+        author: path.resolve(__dirname, "src/pages/author.ts"),
+      },
       output: {
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.names && assetInfo.names.includes("main.css")) {
-            return "style.css";
-          }
-          return "[name].[hash][extname]";
+        entryFileNames: "[name].js",
+        assetFileNames: () => {
+          return "[name][extname]";
         },
       },
     },

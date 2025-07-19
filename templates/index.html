@@ -1,8 +1,22 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(title=${#strings.isEmpty(theme.config?.index_styles?.page_html_title) ? site.title : theme.config?.index_styles?.page_html_title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
+  th:replace="~{fragments/layout :: html(
+    title = ${#strings.isEmpty(theme.config?.index_styles?.page_html_title) ? site.title : theme.config?.index_styles?.page_html_title}, 
+    head = ~{::head},
+    content = ~{::content}, 
+    header = ~{fragments/header::content}, 
+    navbar = ~{}
+  )}"
 >
+  <th:block th:fragment="head">
+    <link
+      rel="stylesheet"
+      th:href="@{/assets/dist/animation.css(v=${theme.spec.version})}"
+      href="assets/dist/animation.css"
+    />
+    <script th:src="@{/assets/dist/index.js(v=${theme.spec.version})}" type="module" defer></script>
+  </th:block>
   <th:block th:fragment="content">
     <section id="about">
       <th:block th:if="${theme.config?.index_styles?.hitokoto}">
