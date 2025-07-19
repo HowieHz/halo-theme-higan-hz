@@ -1,8 +1,18 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(title=#{page.links.page-title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
+  th:replace="~{fragments/layout :: html(
+    title = #{page.links.page-title}, 
+    head = ~{::head},
+    content = ~{::content}, 
+    header = ~{fragments/header::content}, 
+    navbar = ~{}
+  )}"
 >
+  <th:block th:fragment="head">
+    <link rel="stylesheet" th:href="@{/assets/dist/links.css(v=${theme.spec.version})}" href="assets/dist/links.css" />
+    <script th:src="@{/assets/dist/links.js(v=${theme.spec.version})}" type="module" defer></script>
+  </th:block>
   <th:block th:fragment="content">
     <article id="links" class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <div class="content">

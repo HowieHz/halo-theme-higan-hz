@@ -1,3 +1,5 @@
+import type {} from "../types/window-create-toc";
+
 import toc, { HtmlElementNode } from "@jsdevtools/rehype-toc";
 import parse from "rehype-parse";
 import slug from "rehype-slug";
@@ -9,7 +11,7 @@ import { unified } from "unified";
  * @param inputHTML - The HTML content to generate TOC from
  * @param targetDomSelector - CSS selector for the DOM element where TOC will be inserted
  */
-export const generateTOC = (inputHTML: string, targetDomSelector: string) => {
+window.generateTOC = (inputHTML: string, targetDomSelector: string) => {
   // Early return if input HTML is empty or undefined
   if (!inputHTML) {
     console.warn("inputHTML is empty or undefined");

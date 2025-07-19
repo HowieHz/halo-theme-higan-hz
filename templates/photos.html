@@ -1,8 +1,22 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(title = ${title}, content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
+  th:replace="~{fragments/layout :: html(
+    title = ${title},
+    head = ~{::head},
+    content = ~{::content}, 
+    header = ~{fragments/header::content}, 
+    navbar = ~{}
+  )}"
 >
+  <th:block th:fragment="head">
+    <link
+      rel="stylesheet"
+      th:href="@{/assets/dist/photos.css(v=${theme.spec.version})}"
+      href="assets/dist/photos.css"
+    />
+    <script th:src="@{/assets/dist/photos.js(v=${theme.spec.version})}" type="module" defer></script>
+  </th:block>
   <th:block th:fragment="content">
     <article class="photos post" itemscope itemtype="http://schema.org/BlogPosting">
       <script type="module" th:inline="javascript" th:if="${theme.config?.photos_styles?.is_enable_masonry_layout}">

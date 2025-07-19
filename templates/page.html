@@ -3,12 +3,32 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${#annotations.getOrDefault(singlePage, 'higan.howiehz.top/page-title', singlePage.spec?.title)}, 
+    head = ~{::head},
     content = ~{::content}, 
     header = ${not theme.config?.custom_page_styles?.is_enable_post_like_layout} ? ~{fragments/header::content} : ~{}, 
     navbar = ${theme.config?.custom_page_styles?.is_enable_post_like_layout} ? ~{fragments/page-nav::navbar} : ~{}, 
     language = ${#annotations.get(singlePage, 'higan.howiehz.top/page-language')}
   )}"
 >
+  <th:block th:fragment="head">
+    <link
+      rel="stylesheet"
+      th:href="@{/assets/dist/animation.css(v=${theme.spec.version})}"
+      href="assets/dist/animation.css"
+    />
+    <script
+      th:unless="${theme.config?.custom_page_styles?.is_enable_post_like_layout}"
+      th:src="@{/assets/dist/page.js(v=${theme.spec.version})}"
+      type="module"
+      defer
+    ></script>
+    <script
+      th:if="${theme.config?.custom_page_styles?.is_enable_post_like_layout}"
+      th:src="@{/assets/dist/post.js(v=${theme.spec.version})}"
+      type="module"
+      defer
+    ></script>
+  </th:block>
   <th:block th:fragment="content">
     <style
       th:inline="css"
@@ -58,7 +78,7 @@
           const tocSelector = isMobile() ? "#toc-footer" : "#toc";
           // <!--/* wontfix：如果电脑屏幕较窄，文章页用的是底部导航栏，目录按钮按了之后不会显示目录
           // 但是目录按钮在手机端是正常的，为了保证性能，不做特殊处理 */-->
-          main.generateTOC(contentDom.innerHTML, tocSelector);
+          window.generateTOC(contentDom.innerHTML, tocSelector);
 
           // <!--/* toc collapse control */-->
           window.addEventListener("scroll", () => {
