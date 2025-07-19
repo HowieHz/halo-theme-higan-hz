@@ -145,6 +145,15 @@ html[theme="theme-[(${colorSchema.id})]"] {
         window.location.href = url.toString();
       })();
     </script>
+    <!--/* font */-->
+    <link
+      rel="preload"
+      href="/themes/howiehz-higan/assets/dist/MesloLGS-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <!--/* style.css */-->
     <link
       rel="stylesheet"
       th:href="@{/assets/dist/style.css(v=${theme.spec.version})}"
@@ -157,9 +166,9 @@ html[theme="theme-[(${colorSchema.id})]"] {
       th:if="${theme.config?.global?.is_custom_resource_locations}"
       href="assets/dist/style.css"
     />
-    <!--/* main */-->
+    <!--/* main.js */-->
     <script
-      th:src="@{/assets/dist/main.iife.js(v=${theme.spec.version})}"
+      th:src="@{/assets/dist/main.js(v=${theme.spec.version})}"
       th:if="not ${theme.config?.global?.is_custom_resource_locations}"
       defer
     ></script>
