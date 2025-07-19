@@ -1,13 +1,13 @@
 @font-face {
   font-display: swap;
-  font-family: Meslo LG;
+  font-family: "meslo lg";
   font-style: normal;
   font-weight: 400;
   src:
     url("/themes/howiehz-higan/assets/dist/MesloLGS-Regular.woff2") format("woff2"),
     url("/themes/howiehz-higan/assets/dist/MesloLGS-Regular.woff") format("woff"),
     url("/themes/howiehz-higan/assets/dist/MesloLGS-Regular.ttf") format("truetype"),
-    local(Meslo LG S);
+    local(meslo lg s);
 }
 
 body {
