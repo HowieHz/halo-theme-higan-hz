@@ -2,11 +2,13 @@ import "@purge-icons/generated";
 
 import Alpine from "alpinejs";
 
-import "unfonts.css";
 import "../tmp/styles/theme.css";
 
 import momentComment from "./alpine-data/moment-comment";
 
+import "./assets/fonts/meslo-LG/MesloLGS-Regular.woff2";
+import "./assets/fonts/meslo-LG/MesloLGS-Regular.woff";
+import "./assets/fonts/meslo-LG/MesloLGS-Regular.ttf";
 import "./assets/animation.ts";
 import "./assets/main.ts";
 import "./styles/main.css";

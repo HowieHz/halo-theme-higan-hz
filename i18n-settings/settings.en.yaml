@@ -81,8 +81,8 @@ spec:
           name: js_resource_location
           if: "$is_custom_resource_locations === true"
           label: JavaScript resource location
-          value: "/themes/howiehz-higan/assets/dist/main.iife.js"
-          help: Specify the location of JavaScript resources, e.g., https://cdn.example.com/main.iife.js
+          value: "/themes/howiehz-higan/assets/dist/main.js"
+          help: Specify the location of JavaScript resources, e.g., https://cdn.example.com/main.js
         - $formkit: text
           name: css_resource_location
           if: "$is_custom_resource_locations === true"
