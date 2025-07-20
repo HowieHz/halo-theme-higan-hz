@@ -18,6 +18,15 @@ jobs:
           mkdir -p ~/builds/tmp ~/builds/target
       - name: Checkout
         uses: actions/checkout@v2
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10
+          run_install: false
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build project
+        run: pnpm build
       - name: Copy Theme Files from Original to Temp
         run: |
           pwd
