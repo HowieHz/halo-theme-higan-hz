@@ -16,24 +16,39 @@ jobs:
         run: |
           pwd
           mkdir -p ~/builds/tmp ~/builds/target
+
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          run_install: true
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
       - name: Build project
         run: pnpm build
+
       - name: Copy Theme Files from Original to Temp
         run: |
           pwd
           cp -r . ~/builds/tmp
+
       - name: Remove excluded files
         run: |
           pwd
           cd ~/builds/tmp
           pwd
           cat ~/work/halo-theme-higan-hz/halo-theme-higan-hz/.github/exclude-list.txt | xargs rm -rvf
+
       - name: Zip Theme in Chinese
         run: |
           pwd
@@ -49,6 +64,7 @@ jobs:
           zip -9 -r howiehz-higan-cn.zip settings.yaml annotation-settings.yaml theme.yaml
 
           mv howiehz-higan-cn.zip ~/builds/target
+
       - name: Zip Theme in English
         run: |
           pwd
@@ -64,6 +80,7 @@ jobs:
           zip -9 -r howiehz-higan-en.zip settings.yaml annotation-settings.yaml theme.yaml
 
           mv howiehz-higan-en.zip ~/builds/target
+
       - name: Upload Theme Build Target
         uses: actions/upload-artifact@v4
         with:
