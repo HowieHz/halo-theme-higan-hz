@@ -3,27 +3,18 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${#annotations.getOrDefault(category, 'higan.howiehz.top/page-title', category.spec.displayName)}, 
-    head = ~{::head},
+    head = ~{::headContent},
     content = ~{::content}, 
     header = ~{fragments/header::content}, 
     navbar = ~{}, 
     language=${#annotations.get(category, 'higan.howiehz.top/page-language')} 
   )}"
 >
-  <th:block th:fragment="head">
-    <script
-      th:src="@{/assets/dist/main.js(v=${theme.spec.version})}"
-      th:if="not ${theme.config?.global?.is_custom_resource_locations}"
-      type="module"
-      defer
-    ></script>
-    <script
-      th:src="${theme.config?.global?.js_resource_location}"
-      th:if="${theme.config?.global?.is_custom_resource_locations}"
-      type="module"
-      defer
-    ></script>
-  </th:block>
+  <head th:fragment="headContent">
+    <script type="module" crossorigin src="/themes/howiehz-higan/assets/dist/common-CB2peu2R.js"></script>
+    <script type="module" crossorigin src="/themes/howiehz-higan/assets/dist/common-CkwwutVn.js"></script>
+    <link rel="stylesheet" crossorigin href="/themes/howiehz-higan/assets/dist/common-CHy-SMB4.css">
+  </head>
   <th:block th:fragment="content">
     <div id="archive" class="content">
       <h1>
