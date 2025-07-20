@@ -5,9 +5,9 @@ module.exports = {
   },
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./templates/*.html",
-    "./templates/fragments/*.html",
-    "./templates/error/*.html",
+    "./src/templates/*.html",
+    "./src/templates/fragments/*.html",
+    "./src/templates/error/*.html",
   ],
   theme: {
     fontSize: {
