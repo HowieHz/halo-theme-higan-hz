@@ -12,7 +12,7 @@
     "lint:autocorrect": "autocorrect --fix",
     "format": "pnpm run \"/^format:.*/\"",
     "format:stylus": "stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
-    "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md,cjs,mjs}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,ml,yaml,html}\" \"./templates/**/*.html\"",
+    "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md,cjs,mjs}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,ml,yaml,html}\"",
     "prepare": "husky"
   },
   "browserslist": [
@@ -59,6 +59,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import-x": "^4.16.1",
     "eslint-plugin-prettier": "^5.5.3",
+    "fast-glob": "^3.3.3",
     "globals": "^16.3.0",
     "husky": "^9.1.7",
     "markdownlint-cli": "^0.45.0",

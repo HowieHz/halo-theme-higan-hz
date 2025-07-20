@@ -3,188 +3,21 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${title},
-    head = ~{::head},
+    head = ~{::headContent},
     content = ~{::content}, 
     header = ~{fragments/header::content}, 
     navbar = ~{}
   )}"
 >
-  <th:block th:fragment="head">
-    <link
-      rel="stylesheet"
-      th:href="@{/assets/dist/photos.css(v=${theme.spec.version})}"
-      href="assets/dist/photos.css"
-    />
-    <script th:src="@{/assets/dist/photos.js(v=${theme.spec.version})}" type="module" defer></script>
-  </th:block>
+  <head th:fragment="headContent">
+    <script type="module" crossorigin src="/themes/howiehz-higan/assets/dist/photos-V2EZNrTd.js"></script>
+    <link rel="modulepreload" crossorigin href="/themes/howiehz-higan/assets/dist/common-CB2peu2R.js">
+    <link rel="stylesheet" crossorigin href="/themes/howiehz-higan/assets/dist/common-CHy-SMB4.css">
+    <link rel="stylesheet" crossorigin href="/themes/howiehz-higan/assets/dist/photos-D_E1AMfo.css">
+  </head>
   <th:block th:fragment="content">
     <article class="photos post" itemscope itemtype="http://schema.org/BlogPosting">
-      <script type="module" th:inline="javascript" th:if="${theme.config?.photos_styles?.is_enable_masonry_layout}">
-        class Waterfall {
-          constructor(options) {
-            this.$el = options.$el || null; // <!--/* 父容器 */-->
-            this.columns = options.columns || 4; // <!--/* 列数 */-->
-            this.gap = options.gap || 10; // <!--/* 间距 */-->
-            this.width = 0; // <!--/* 的宽度 */-->
-            this.items = []; // <!--/* 子元素集合 */-->
-            this.nextImageIndex = 0; // <!--/* 存储下一个需要加载的图片的 index */-->
-            this.totalImages = 0; // <!--/* 存储一共有多少张图片 */-->
-            this.H = []; // <!--/* 存储每列的高度方便计算 */-->
-            this.flag = null; // <!--/* 虚拟节点集合 */-->
-            this.init();
-          }
-          init() {
-            if (this.$el) {
-              this.addChildren(Array.from(this.$el.children));
-            } else {
-              throw new Error("Parent container element not found");
-            }
-          }
-          addChildren(children) {
-            if (!Array.isArray(children)) {
-              throw new Error("Children should be an array");
-            }
-            children.forEach((child) => {
-              if (!this.items.includes(child)) {
-                this.$el.appendChild(child); // <!--/* appendChild 方法会将 child 元素从其当前父元素中移除（如果有的话），然后将其附加到新的父元素 this.$el 中 */-->
-                this.items.push(child);
-                this.totalImages++;
-              }
-            });
-            this.reset();
-            this.render();
-          }
-          reset() {
-            this.flag = document.createDocumentFragment();
-            this.width = this.$el.clientWidth / this.columns;
-            this.H = new Array(this.columns).fill(0);
-            this.$el.innerHTML = "";
-          }
-          render() {
-            const { width, items, flag, H, gap } = this;
-            items.forEach((item) => {
-              item.style.width = `${width}px`;
-              item.style.position = "absolute";
-              const img = item.querySelector("img");
 
-              if (img) {
-                const placeAndAnimate = () => {
-                  item.style.opacity = 0; // <!--/* 为动画做准备 */-->
-                  this.placeItem(item, img, H, width, gap, flag);
-                  this.updateContainerHeight(); // <!--/* 拓展上级控件高度 使得底部内容不会跑到图片底下 */-->
-                  this.checkAndLoadMoreImages(); // <!--/* 检查是否可能要接着加载图片 */-->
-                  requestAnimationFrame(() => {
-                    // <!--/* 加载动画 fade in */-->
-                    item.style.transition =
-                      "opacity [(${theme.config?.photos_styles?.img_transition_duration_after_load})]s";
-                    item.style.opacity = 1;
-                  });
-                };
-                img.complete ? placeAndAnimate() : img.addEventListener("load", placeAndAnimate);
-              }
-            });
-          }
-          placeItem(item, img, H, width, gap, flag) {
-            const tag = H.indexOf(Math.min(...H));
-            item.style.left = `${tag * (width + gap)}px`;
-            item.style.top = `${H[tag]}px`;
-            H[tag] += (img.height * width) / img.width + gap;
-            flag.appendChild(item);
-            this.$el.append(flag);
-          }
-          getMaxHeight() {
-            return Math.max(...this.H);
-          }
-          updateContainerHeight() {
-            const maxHeight = this.getMaxHeight();
-            this.$el.style.height = `${maxHeight}px`;
-          }
-          checkAndLoadMoreImages() {
-            var { nextImageIndex, totalImages } = this;
-            if (window.scrollY + window.innerHeight + 200 >= this.getMaxHeight()) {
-              // <!--/* 读取到的高度其实还可以 +300 提前多加载点。如果这里不设置提前量，出现长一点的图片很容易旁边都是空的 */-->
-              if (this.nextImageIndex < this.totalImages) {
-                const img = this.items[this.nextImageIndex].querySelector("img");
-                img.style.display = "block";
-                // <!--/* 因为上面设置了图片加载好自动重新排版(reset and render)，所以这里只需要让图片加载出来即可 */-->
-                img.loading = "eager";
-                this.nextImageIndex++;
-              }
-            }
-          }
-        }
-
-        window.onload = () => {
-          const MAX_MASONRY_COLUMNS = /*[(${theme.config?.photos_styles?.max_masonry_columns})]*/ 4;
-          const MIN_MASONRY_COLUMNS = /*[(${theme.config?.photos_styles?.min_masonry_columns})]*/ 1;
-          const MIN_IMG_WIDTH = /*[(${theme.config?.photos_styles?.min_img_width})]*/ 300;
-
-          function calculateColumns() {
-            const width = window.innerWidth;
-            const columns = Math.floor(width / MIN_IMG_WIDTH);
-            return Math.max(MIN_MASONRY_COLUMNS, Math.min(columns, MAX_MASONRY_COLUMNS));
-          }
-
-          const waterfallInstance = new Waterfall({
-            $el: document.querySelector(".photo-list"),
-            columns: calculateColumns(),
-            gap: /*[(${theme.config?.photos_styles?.masonry_gap})]*/ 10,
-          });
-
-          window.addEventListener("resize", () => {
-            const newColumns = calculateColumns();
-            if (newColumns !== waterfallInstance.columns) {
-              waterfallInstance.columns = newColumns;
-              waterfallInstance.reset();
-              waterfallInstance.render();
-            }
-          });
-          window.addEventListener("scroll", () => waterfallInstance.checkAndLoadMoreImages());
-          window.addEventListener("resize", () => waterfallInstance.checkAndLoadMoreImages());
-
-          // <!--/* 加载第一张图片，以及递归加载其他的图片 */-->
-          waterfallInstance.checkAndLoadMoreImages();
-        };
-      </script>
-
-      <script type="module" th:inline="javascript" th:if="not ${theme.config?.photos_styles?.is_enable_masonry_layout}">
-        const photos = document.querySelectorAll(".photo-groups img");
-        var nextImageIndex = 0; // <!--/* 存储下一个需要加载的图片的 index */-->
-        var totalImages = photos.length; // <!--/* 存储一共有多少张图片 */-->
-        var totalheight = 0; // <!--/* 最后一张图片下边缘的位置 */-->
-
-        photos.forEach((img) => {
-          const placeAndAnimate = () => {
-            // <!--/* 加载好一张图之后检查是否能继续加载 */-->
-            checkAndLoadMoreImages();
-            // <!--/* 加载动画 fade in */-->
-            requestAnimationFrame(() => {
-              img.style.transition = "opacity [(${theme.config?.photos_styles?.img_transition_duration_after_load})]s";
-              img.style.opacity = 1;
-            });
-          };
-          img.complete ? placeAndAnimate() : img.addEventListener("load", placeAndAnimate);
-        });
-
-        function checkAndLoadMoreImages() {
-          if (window.scrollY + window.innerHeight + 200 >= totalheight) {
-            // <!--/* 读取到的高度其实还可以 +300 提前多加载点。如果这里不设置提前量，出现长一点的图片很容易旁边都是空的 */-->
-            if (nextImageIndex < totalImages) {
-              const img = photos[nextImageIndex];
-              img.style.display = "block";
-              // <!--/* 因为上面设置了图片加载好自动重新排版(reset and render)，所以这里只需要让图片加载出来即可 */-->
-              img.loading = "eager";
-              totalheight = img.getBoundingClientRect().bottom;
-              nextImageIndex++;
-            }
-          }
-        }
-
-        window.addEventListener("scroll", () => checkAndLoadMoreImages());
-        window.addEventListener("resize", () => checkAndLoadMoreImages());
-
-        checkAndLoadMoreImages();
-      </script>
 
       <script>
         document.addEventListener("DOMContentLoaded", () => {

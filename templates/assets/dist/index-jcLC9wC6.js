@@ -1,0 +1,1 @@
+import"./common-CB2peu2R.js";import"./animation-LD1kPb7m.js";document.addEventListener(`DOMContentLoaded`,()=>{let e=document.querySelector(`#header > #nav > ul > .icon`),t=document.querySelectorAll(`#header > #nav > ul > li:not(:first-child)`);e?.addEventListener(`click`,()=>{window.isVisible(t[0])?t.forEach(e=>{window.fadeOut(e,50)}):t.forEach(e=>{window.fadeIn(e,50)})})});
