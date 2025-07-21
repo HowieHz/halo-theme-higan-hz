@@ -116,6 +116,23 @@ spec:
     - group: styles
       label: 总体样式
       formSchema:
+        - $formkit: checkbox
+          name: is_custom_font_files_enable
+          label: 启用自定义字体文件
+          value: false
+          help: 如启用此项，将使用上传的自定义字体文件替换默认字体
+        - $formkit: attachment
+          if: "$is_custom_font_files_enable === true"
+          name: custom_font_files
+          label: 自定义字体文件
+          help: 上传 .woff/.woff2/.ttf 等字体文件，主题会优先使用这些文件替换默认字体
+          value: ""
+        - $formkit: text
+          if: "$is_custom_font_files_enable === true"
+          name: custom_font_name
+          label: 字体名称（全名/PostScript 名）
+          help: "请填写上传字体文件内部声明的“字体全名 (nameID=4)”或“PostScript 名 (nameID=6)”，如：My Custom Font Regular 或 MyCustomFont-Regular；如果不知道也可以置空。若置空，则即使用户本地已安装该字体，也不会使用本地版本，而是继续从网络下载。"
+          value: ""
         - $formkit: select
           name: color_schema
           id: color_schema_init

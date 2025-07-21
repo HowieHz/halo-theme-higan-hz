@@ -116,6 +116,23 @@ spec:
     - group: styles
       label: Style
       formSchema:
+        - $formkit: checkbox
+          name: is_custom_font_files_enable
+          label: Enable Custom Font Files
+          value: false
+          help: Enable this option to use uploaded custom font files instead of the default fonts
+        - $formkit: attachment
+          if: "$is_custom_font_files_enable === true"
+          name: custom_font_files
+          label: Custom Font Files
+          help: Upload .woff/.woff2/.ttf or other font files. The theme will prioritize these files over the default fonts.
+          value: ""
+        - $formkit: text
+          if: "$is_custom_font_files_enable === true"
+          name: custom_font_name
+          label: Font Name (Full Name/PostScript Name)
+          help: 'Enter the font''s internal "Full Name (nameID=4)" or "PostScript Name (nameID=6)", e.g., My Custom Font Regular or MyCustomFont-Regular. You may leave this blank if unknown. If left blank, even if the font is installed locally, it will not be used and the web font will still be downloaded.'
+          value: ""
         - $formkit: select
           name: color_schema
           id: color_schema_init
