@@ -16,14 +16,14 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
 
 ### 特色功能概要
 
-1. 可自定义更多内容
+1. 可自定义更多内容：
    - 页面样式
    - 固定文字
    - 关闭一切你想关闭的部分！
 2. 修复错误并清除冗余代码与样式，**去除 jQuery 依赖**，拆分脚本和样式以节省流量并加速加载，预加载关键资源以缩短等待时间。
-3. 添加轻量的过渡动画
-4. [预设更多配色方案/支持自定义配色方案](#more-color-scheme)
-5. 支持更多特色功能
+3. 添加轻量的过渡动画。
+4. [预设更多配色方案/支持自定义配色方案](#more-color-scheme)。
+5. 支持更多特色功能：
    - [浅色/深色模式切换按钮](#theme-switch-button-anchor)
    - 防止站点被恶意镜像
    - 文章页标题自定义（页面标题和文字标题可不同）
@@ -31,7 +31,7 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
    - [Mermaid 明暗切换支持](#mermaid-明暗切换支持)
    - [设置内容仅在浅色/深色模式下显示](#设置内容仅在浅色深色模式下显示)
    - [适配相册插件](#增加于相册页样式)，支持瀑布流布局
-6. 具有良好的兼容性支持（[在线查看兼容浏览器列表](https://browsersl.ist/#q=defaults)）
+6. 具有良好的兼容性支持：[在线查看兼容浏览器列表](https://browsersl.ist/#q=defaults)
 7. 更多功能等您来探索...
 
 ### 作者的碎碎语
@@ -696,9 +696,9 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 
 ### 最新开发版获取方法
 
-1. 点击项目主页 [HowieHz/halo-theme-higan-hz](https://github.com/HowieHz/halo-theme-higan-hz/tree/main) 绿色的“<> Code”按钮
-2. 选择“Download ZIP”下载最新代码
-3. 在 Console 端的主题菜单直接上传安装即可使用
+1. 前往 https://github.com/HowieHz/halo-theme-higan-hz/actions/workflows/build.yml，找到最新的构建任务并下载 `theme-artifact`。
+2. 解压下载的压缩包，根据语言选择对应的文件（如 `howiehz-higan-cn.zip` 或 `howiehz-higan-en.zip`）。
+3. 在 Halo CMS 后台（/Console）的“主题”菜单上传所选压缩包并完成安装。
 
 ## 可选插件
 
