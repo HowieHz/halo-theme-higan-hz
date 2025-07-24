@@ -696,7 +696,7 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 
 ### 最新开发版获取方法
 
-1. 前往 https://github.com/HowieHz/halo-theme-higan-hz/actions/workflows/build.yml，找到最新的构建任务并下载 `theme-artifact`。
+1. 前往 [Build CI](https://github.com/HowieHz/halo-theme-higan-hz/actions/workflows/build.yml)，找到最新的构建任务并下载 `theme-artifact`。
 2. 解压下载的压缩包，根据语言选择对应的文件（如 `howiehz-higan-cn.zip` 或 `howiehz-higan-en.zip`）。
 3. 在 Halo CMS 后台（/Console）的“主题”菜单上传所选压缩包并完成安装。
 

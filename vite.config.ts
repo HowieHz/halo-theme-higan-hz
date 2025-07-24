@@ -1,7 +1,7 @@
 import path from "path";
 import { fileURLToPath } from "url";
+import legacy from "@vitejs/plugin-legacy";
 import { defineConfig } from "vite";
-// vite.config.js
 import PurgeIcons from "vite-plugin-purge-icons";
 
 import copyFilePlugin from "./plugins/vite-copy-file";
@@ -13,6 +13,7 @@ export default defineConfig({
     PurgeIcons({
       content: ["./templates/*.html"],
     }),
+    legacy(),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
     copyFilePlugin({
       targets: [
