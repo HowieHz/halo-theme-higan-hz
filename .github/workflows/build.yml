@@ -42,12 +42,15 @@ jobs:
           pwd
           cp -r . ~/builds/tmp
 
-      - name: Remove excluded files
+      - name: Keep only included files
         run: |
           pwd
           cd ~/builds/tmp
           pwd
-          cat ~/work/halo-theme-higan-hz/halo-theme-higan-hz/.github/exclude-list.txt | xargs rm -rvf
+          mkdir ~/builds/tmp-included
+          cat ~/work/halo-theme-higan-hz/halo-theme-higan-hz/.github/include-list.txt | xargs -I {} cp --parents {} ~/builds/tmp-included
+          rm -rf ~/builds/tmp
+          mv ~/builds/tmp-included ~/builds/tmp
 
       - name: Zip Theme in Chinese
         run: |
