@@ -31,7 +31,7 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
    - [Mermaid 明暗切换支持](#mermaid-明暗切换支持)
    - [设置内容仅在浅色/深色模式下显示](#设置内容仅在浅色深色模式下显示)
    - [适配相册插件](#增加于相册页样式)，支持瀑布流布局
-6. 具有良好的兼容性支持：[在线查看兼容浏览器列表](https://browsersl.ist/#q=defaults)
+6. 具有良好的兼容性支持：[在线查看兼容浏览器列表](https://browsersl.ist/#q=defaults%0ASafari+%3E%3D+16.4%0AChrome+%3E%3D+111%0AFirefox+%3E%3D+128)
 7. 更多功能等您来探索...
 
 ### 作者的碎碎语

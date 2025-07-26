@@ -16,7 +16,10 @@
     "prepare": "husky"
   },
   "browserslist": [
-    "defaults"
+    "defaults",
+    "Safari >= 16.4",
+    "Chrome >= 111",
+    "Firefox >= 128"
   ],
   "keywords": [
     "halo",
