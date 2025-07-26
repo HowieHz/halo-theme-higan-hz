@@ -12,9 +12,10 @@
     "lint:autocorrect": "autocorrect --fix",
     "format": "pnpm run \"/^format:.*/\"",
     "format:stylus": "stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
-    "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md,cjs,mjs}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,ml,yaml,html}\"",
+    "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md,cjs,mjs,cts,mts}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,ml,yaml,html}\"",
     "prepare": "husky"
   },
+  "type": "module",
   "browserslist": [
     "defaults",
     "Safari >= 16.4",

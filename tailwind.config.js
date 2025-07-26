@@ -1,5 +1,7 @@
+import daisyui from "daisyui";
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   corePlugins: {
     preflight: false,
   },
@@ -15,7 +17,7 @@ module.exports = {
       base: ["1rem", "1.75rem"],
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [daisyui],
   daisyui: {
     themes: [],
   },

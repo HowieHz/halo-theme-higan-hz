@@ -1,4 +1,6 @@
-export default {
+import { type Config } from "prettier";
+
+const config: Config = {
   printWidth: 120,
   tabWidth: 2,
   useTabs: false,
@@ -7,3 +9,5 @@ export default {
   importOrderTypeScriptVersion: "5.0.0",
   plugins: ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
 };
+
+export default config;
