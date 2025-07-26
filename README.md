@@ -228,7 +228,7 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
 ### 样式修复
 
 1. 移除导航栏文字前出现的空白 _[guqing/halo-theme-higan#113](https://github.com/guqing/halo-theme-higan/issues/113)_
-2. 使用 PostCSS + Tailwind CSS + daisyUI 重构，修复上游标注在标签的 class 内但没有正常引入的样式，以及没有正常工作的样式。
+2. 使用 PostCSS + Tailwind CSS 重构，修复上游标注在标签的 class 内但没有正常引入的样式，以及没有正常工作的样式。
 3. 修复在文章页平板端模式下，回到顶部按钮未正常显示的问题
 4. 修复在文章页平板端模式下，菜单不能随菜单按钮一起隐藏的问题
 5. 修复在文章页桌面端模式下，隐藏的顶部导航栏依然会遮挡页面按钮的问题 _[#89](https://github.com/HowieHz/halo-theme-higan-hz/issues/89)_

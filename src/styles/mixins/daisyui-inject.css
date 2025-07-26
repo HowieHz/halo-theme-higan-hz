@@ -1,0 +1,96 @@
+:root,
+[data-theme] {
+  background-color: var(--fallback-b1, oklch(var(--b1) / 1));
+  color: var(--fallback-bc, oklch(var(--bc) / 1));
+}
+
+@supports not (color: oklch(0% 0 0)) {
+  :root {
+    --csstools-color-scheme--light: initial;
+    --lightningcss-light: initial;
+    --lightningcss-dark: ;
+    color-scheme: light;
+    --fallback-p: #491eff;
+    --fallback-pc: #d4dbff;
+    --fallback-s: #ff41c7;
+    --fallback-sc: #fff9fc;
+    --fallback-a: #00cfbd;
+    --fallback-ac: #00100d;
+    --fallback-n: #2b3440;
+    --fallback-nc: #d7dde4;
+    --fallback-b1: #fff;
+    --fallback-b2: #e5e6e6;
+    --fallback-b3: #e5e6e6;
+    --fallback-bc: #1f2937;
+    --fallback-in: #00b3f0;
+    --fallback-inc: #000;
+    --fallback-su: #00ca92;
+    --fallback-suc: #000;
+    --fallback-wa: #ffc22d;
+    --fallback-wac: #000;
+    --fallback-er: #ff6f70;
+    --fallback-erc: #000;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --csstools-color-scheme--light: ;
+      --lightningcss-light: ;
+      --lightningcss-dark: initial;
+      color-scheme: dark;
+      --fallback-p: #7582ff;
+      --fallback-pc: #050617;
+      --fallback-s: #ff71cf;
+      --fallback-sc: #190211;
+      --fallback-a: #00c7b5;
+      --fallback-ac: #000e0c;
+      --fallback-n: #2a323c;
+      --fallback-nc: #a6adbb;
+      --fallback-b1: #1d232a;
+      --fallback-b2: #191e24;
+      --fallback-b3: #15191e;
+      --fallback-bc: #a6adbb;
+      --fallback-in: #00b3f0;
+      --fallback-inc: #000;
+      --fallback-su: #00ca92;
+      --fallback-suc: #000;
+      --fallback-wa: #ffc22d;
+      --fallback-wac: #000;
+      --fallback-er: #ff6f70;
+      --fallback-erc: #000;
+    }
+  }
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+* {
+  scrollbar-color: color-mix(in oklch, currentColor 35%, transparent) transparent;
+}
+
+:hover {
+  scrollbar-color: color-mix(in oklch, currentColor 60%, transparent) transparent;
+}
+
+.bg-base-100 {
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b1, oklch(var(--b1) / 1));
+  background-color: var(--fallback-b1, oklch(var(--b1) / var(--tw-bg-opacity, 1)));
+}
+
+.bg-base-200 {
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b2, oklch(var(--b2) / 1));
+  background-color: var(--fallback-b2, oklch(var(--b2) / var(--tw-bg-opacity, 1)));
+}
+
+.text-base-content\/60 {
+  color: var(--fallback-bc, oklch(var(--bc) / 0.6));
+}
+
+.group:hover .group-hover\:text-base-content {
+  --tw-text-opacity: 1;
+  color: var(--fallback-bc, oklch(var(--bc) / var(--tw-text-opacity, 1)));
+}

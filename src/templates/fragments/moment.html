@@ -3,7 +3,7 @@
     <video preload="metadata" th:src="${media.url}" class="m-0 h-full object-cover"></video>
     <div
       th:if="${#strings.equals(media.type,'VIDEO')}"
-      class="absolute flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-base-200 opacity-50 transition-all hover:opacity-70"
+      class="bg-base-200 absolute flex h-full w-full cursor-pointer items-center justify-center rounded-lg opacity-50 transition-all hover:opacity-70"
       @click="openVideoModal = true"
     >
       <i class="iconify iconify-huge" data-icon="material-symbols:play-circle-outline"></i>
@@ -37,17 +37,17 @@
             <div class="flex min-h-full flex-col items-center justify-center p-4 text-center sm:p-0">
               <div
                 @click.outside="openVideoModal = false"
-                class="relative my-4 transform overflow-hidden rounded-sm bg-base-100 text-left shadow-xl transition-all sm:w-full sm:max-w-xl"
+                class="bg-base-100 relative my-4 transform overflow-hidden rounded-sm text-left shadow-xl transition-all sm:w-full sm:max-w-xl"
               >
                 <video preload="metadata" th:src="${media.url}" class="w-full" controls></video>
               </div>
               <div>
                 <div
                   @click="openVideoModal = false;"
-                  class="group inline-flex items-center justify-center rounded-full bg-base-100 p-1.5"
+                  class="bg-base-100 group inline-flex items-center justify-center rounded-full p-1.5"
                 >
                   <i
-                    class="iconify iconify-huge block text-base-content/60 group-hover:text-base-content"
+                    class="iconify iconify-huge text-base-content/60 group-hover:text-base-content block"
                     data-icon="material-symbols:cancel-rounded"
                   ></i>
                 </div>
