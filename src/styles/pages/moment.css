@@ -1,3 +1,37 @@
+@supports not (color: oklch(0% 0 0)) {
+  :root {
+    --fallback-b1: #fff;
+    --fallback-b2: #e5e6e6;
+    --fallback-b3: #e5e6e6;
+    --fallback-bc: #1f2937;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fallback-b1: #1d232a;
+      --fallback-b2: #191e24;
+      --fallback-b3: #15191e;
+      --fallback-bc: #a6adbb;
+    }
+  }
+}
+
+.bg-base-100 {
+  background-color: var(--fallback-b1);
+}
+
+.bg-base-200 {
+  background-color: var(--fallback-b2);
+}
+
+.text-base-content-60 {
+  color: var(--fallback-bc);
+}
+
+.group:hover .group-hover-text-base-content {
+  color: var(--fallback-bc);
+}
+
 /* 初始化日志内容样式 */
 .aspect-w-1 > * {
   height: 100%;

@@ -3,7 +3,6 @@
 @import url("./mixins/iconify.css");
 @import url("./mixins/font.css");
 @import url("./mixins/color-scheme.css");
-@import url("./mixins/daisyui-inject.css");
 
 *,
 *::before,
@@ -16,6 +15,7 @@ html {
   height: 100%;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
   text-size-adjust: 100%;
 }
 
