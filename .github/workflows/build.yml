@@ -48,7 +48,7 @@ jobs:
           cd ~/builds/tmp
           pwd
           mkdir ~/builds/tmp-included
-          cat ~/work/halo-theme-higan-hz/halo-theme-higan-hz/.github/include-list.txt | xargs -I {} cp --parents {} ~/builds/tmp-included
+          cat ~/work/halo-theme-higan-hz/halo-theme-higan-hz/.github/include-list.txt | xargs -I {} cp -r --parents {} ~/builds/tmp-included
           rm -rf ~/builds/tmp
           mv ~/builds/tmp-included ~/builds/tmp
 
