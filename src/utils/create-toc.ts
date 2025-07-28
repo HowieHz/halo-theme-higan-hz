@@ -55,7 +55,6 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
   // Then, automatically generate ids for headings without id
   originalHeadings.forEach((h) => {
     if (h.id) return;
-    console.log(h, h.textContent);
     const baseId = slugify(h.textContent || "heading") || "heading";
     let id = baseId;
     const usedCount = usedIds.get(baseId) ?? 0; // Check how many times this id has been used
