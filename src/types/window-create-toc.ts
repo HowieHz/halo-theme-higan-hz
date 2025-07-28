@@ -3,7 +3,7 @@
  */
 declare global {
   interface Window {
-    generateTOC: (inputHTML: string, targetDomSelector: string) => void;
+    initTOC: (contentSelector: string, tocSelector: string, headingSelector?: string) => void;
   }
 }
 

@@ -91,6 +91,7 @@ video {
   & .operation {
     color: var(--color-text);
     padding-top: 0.5rem;
+
     & a {
       background: none;
     }

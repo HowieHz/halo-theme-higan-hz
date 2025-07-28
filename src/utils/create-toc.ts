@@ -7,16 +7,21 @@ import stringify from "rehype-stringify";
 import { unified } from "unified";
 
 /**
- * Generates a Table of Contents (TOC) from HTML content and injects it into the specified DOM element
- * @param inputHTML - The HTML content to generate TOC from
- * @param targetDomSelector - CSS selector for the DOM element where TOC will be inserted
+ * Generates a Table of Contents (TOC) from the headings within a specified HTML content element
+ * and injects the generated TOC into a target DOM element.
+ *
+ * @param contentSelector - CSS selector for the element containing the content from which headings will be retrieved to construct the TOC.
+ * @param tocSelector - CSS selector for the DOM element where the generated TOC should be displayed.
+ * @param headingSelector - A string of heading selectors (e.g., "h1, h2, h3") to select within the contentSelector element for inclusion in the TOC.
  */
-window.generateTOC = (inputHTML: string, targetDomSelector: string) => {
+window.initTOC = (contentSelector: string, tocSelector: string, headingSelector: string = "h1, h2, h3, h4") => {
   // Early return if input HTML is empty or undefined
-  if (!inputHTML) {
-    console.warn("inputHTML is empty or undefined");
+  const contentRootDom = document.querySelector<HTMLElement>(contentSelector);
+  if (!contentRootDom) {
+    console.warn(`Element not found for selector: ${contentSelector}`);
     return;
   }
+
   // Create a Rehype processor with the TOC plugin
   const processor = unified()
     .use(parse) // Parse HTML into a syntax tree
@@ -100,25 +105,47 @@ window.generateTOC = (inputHTML: string, targetDomSelector: string) => {
     })
     .use(stringify); // Convert syntax tree back to HTML string
 
-  // Process the HTML, adding heading IDs and Table of Contents
-  const outputHTML = processor.processSync(inputHTML);
-
   // Find the target DOM element where TOC will be inserted
-  const targetDom = document.querySelector(targetDomSelector);
-  if (!targetDom) {
-    console.warn(`Failed to generate toc to targetDom ${targetDom}, processed HTML is: ${outputHTML}`);
+  const tocRootDom = document.querySelector<HTMLElement>(tocSelector);
+  if (!tocRootDom) {
+    console.warn(`Element not found for TOC selector: ${tocSelector}`);
     return;
   }
 
-  // Create a document fragment from the processed HTML and extract the TOC container
-  const tocElement = document
+  // Append the TOC element to the target DOM
+  const tocFragment = document
     .createRange()
-    .createContextualFragment(outputHTML.toString())
-    .getElementById("toc-container");
-
-  // Append the TOC element to the target DOM if it exists
-  if (tocElement) {
-    targetDom.appendChild(tocElement);
+    .createContextualFragment(processor.processSync(contentRootDom.innerHTML).toString());
+  const tocContainer = tocFragment.getElementById("toc-container");
+  if (tocContainer) {
+    tocRootDom.appendChild(tocContainer);
   }
+
+  // Cache original headings
+  const reversedOriginalHeadings = Array.from(contentRootDom.querySelectorAll<HTMLElement>(headingSelector)).reverse();
+
+  // Cache corresponding TOC links
+  const tocLinks = reversedOriginalHeadings.map((h) =>
+    tocRootDom.querySelector<HTMLElement>(`.toc-link[href="#${h.id}"]`),
+  ) as HTMLElement[];
+
+  const tocActiveClassName = "toc-active";
+
+  // toc collapse control
+  window.addEventListener(
+    "scroll",
+    () => {
+      // remove all active class
+      tocLinks.forEach((tocLink) => {
+        tocLink?.classList.remove(tocActiveClassName);
+      });
+      for (const [index, heading] of reversedOriginalHeadings.entries()) {
+        if (pageYOffset >= heading.offsetTop - 50) {
+          tocLinks[index].classList.add(tocActiveClassName);
+        }
+      }
+    },
+    { passive: true },
+  );
   return;
 };
