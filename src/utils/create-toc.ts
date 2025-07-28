@@ -1,11 +1,5 @@
 import type {} from "../types/window-create-toc";
 
-import toc, { HtmlElementNode } from "@jsdevtools/rehype-toc";
-import parse from "rehype-parse";
-import slug from "rehype-slug";
-import stringify from "rehype-stringify";
-import { unified } from "unified";
-
 /**
  * Generates a Table of Contents (TOC) from the headings within a specified HTML content element
  * and injects the generated TOC into a target DOM element.
@@ -15,111 +9,165 @@ import { unified } from "unified";
  * @param headingSelector - A string of heading selectors (e.g., "h1, h2, h3") to select within the contentSelector element for inclusion in the TOC.
  */
 window.initTOC = (contentSelector: string, tocSelector: string, headingSelector: string = "h1, h2, h3, h4") => {
-  // Early return if input HTML is empty or undefined
   const contentRootDom = document.querySelector<HTMLElement>(contentSelector);
+  const tocRootDom = document.querySelector<HTMLElement>(tocSelector);
+
   if (!contentRootDom) {
     console.warn(`Element not found for selector: ${contentSelector}`);
     return;
   }
-
-  // Create a Rehype processor with the TOC plugin
-  const processor = unified()
-    .use(parse) // Parse HTML into a syntax tree
-    .use(slug) // Add id attributes to headings
-    .use(toc, {
-      // Define CSS classes for TOC elements
-      cssClasses: {
-        list: "toc-child",
-        toc: "toc",
-        link: "toc-link",
-        listItem: "toc-item",
-      },
-      /**
-       * Customize the overall TOC structure
-       * @param t - The TOC element node
-       * @returns Modified TOC structure with custom container
-       */
-      customizeTOC(t: HtmlElementNode) {
-        const children = t.children?.flatMap((item) => (item as HtmlElementNode).children || []) || [];
-
-        return {
-          type: "element",
-          tagName: "ol",
-          properties: {
-            id: "toc-container",
-            className: "toc",
-          },
-          children: children,
-        };
-      },
-      /**
-       * Customize individual TOC items with numbering and structure
-       * @param tocItem - The original TOC item element
-       * @param heading - The heading element this TOC item refers to
-       * @returns Modified TOC item with custom numbering and structure
-       */
-      customizeTOCItem(tocItem, heading) {
-        // Extract heading level from tag name (h1, h2, h3, etc.)
-        const headingNumber = parseInt(heading.tagName.slice(-1), 10);
-        let depth = headingNumber;
-        return {
-          type: "element",
-          tagName: "li",
-          properties: {
-            className: `toc-item toc-level-${headingNumber}`,
-          },
-          children: [
-            {
-              ...tocItem.children[0],
-              children: [
-                // Add numbering span
-                {
-                  type: "element",
-                  tagName: "span",
-                  properties: {
-                    class: "toc-number",
-                  },
-                  children: [
-                    {
-                      type: "text",
-                      value: `${depth++}.`,
-                    },
-                  ],
-                },
-                // Add text content span
-                {
-                  type: "element",
-                  tagName: "span",
-                  properties: {
-                    class: "toc-text",
-                  },
-                  children: [...((tocItem.children[0] as HtmlElementNode).children || [])],
-                },
-              ],
-            },
-            // Preserve any nested TOC items
-            ...tocItem.children.slice(1),
-          ],
-        };
-      },
-    })
-    .use(stringify); // Convert syntax tree back to HTML string
-
-  // Find the target DOM element where TOC will be inserted
-  const tocRootDom = document.querySelector<HTMLElement>(tocSelector);
   if (!tocRootDom) {
     console.warn(`Element not found for TOC selector: ${tocSelector}`);
     return;
   }
 
-  // Append the TOC element to the target DOM
-  const tocFragment = document
-    .createRange()
-    .createContextualFragment(processor.processSync(contentRootDom.innerHTML).toString());
-  const tocContainer = tocFragment.getElementById("toc-container");
-  if (tocContainer) {
-    tocRootDom.appendChild(tocContainer);
+  const originalHeadings = Array.from(contentRootDom.querySelectorAll<HTMLElement>(headingSelector));
+
+  if (originalHeadings.length === 0) {
+    return;
   }
+
+  // Generate slug, compatible with most Markdown parser rules
+  const slugify = (str: string) =>
+    str
+      .trim()
+      .toLowerCase()
+      .replace(/[\s]+/g, "-") // Convert whitespace to -
+      .replace(/[^a-z0-9-]/g, "") // Remove non-alphanumeric and -
+      .replace(/-+/g, "-") // Merge consecutive -
+      .replace(/^-+|-+$/g, ""); // Remove leading and trailing -
+
+  const usedIds = new Map<string, number>();
+  // First, collect existing ids
+  originalHeadings.forEach((h) => {
+    if (h.id) {
+      const baseId = h.id;
+      let id = baseId;
+      const usedCount = usedIds.get(baseId) ?? 0; // Check how many times this id has been used
+      if (usedCount) {
+        id = `${baseId}-${usedCount}`;
+        h.id = id;
+      }
+      usedIds.set(id, usedCount + 1);
+    }
+  });
+
+  // Then, automatically generate ids for headings without id
+  originalHeadings.forEach((h) => {
+    if (h.id) return;
+    console.log(h, h.textContent);
+    const baseId = slugify(h.textContent || "heading") || "heading";
+    let id = baseId;
+    const usedCount = usedIds.get(baseId) ?? 0; // Check how many times this id has been used
+    if (usedCount) {
+      id = `${baseId}-${usedCount}`;
+    }
+    h.id = id;
+    usedIds.set(id, usedCount + 1);
+  });
+
+  // Find the minimum heading level (e.g., if only h2~h4 in content, then minLevel=2)
+  const headingLevels = originalHeadings.map((h) => parseInt(h.tagName.slice(1), 10));
+  const minLevel = Math.min(...headingLevels);
+  const maxLevel = Math.max(...headingLevels);
+
+  // Create the outermost ol#toc-container.toc
+  const tocContainer = document.createElement("ol");
+  tocContainer.id = "toc-container";
+  tocContainer.className = "toc";
+
+  // Build TOC tree structure
+  type TOCRoot = {
+    level: number;
+    children: TOCNode[];
+    parent?: TOCNode | TOCRoot;
+  };
+
+  type TOCNode = TOCRoot & {
+    heading: HTMLElement;
+  };
+
+  const tocTreeRoot: TOCRoot = {
+    level: minLevel - 1,
+    children: [],
+  };
+
+  let lastNode: TOCRoot = tocTreeRoot;
+
+  originalHeadings.forEach((heading) => {
+    const level = parseInt(heading.tagName.slice(1), 10);
+    let parent = lastNode;
+    // Roll back to the appropriate parent node
+    while (parent.level >= level) {
+      parent = parent.parent!;
+    }
+    const node: TOCNode = {
+      level,
+      heading,
+      children: [],
+      parent,
+    };
+    parent.children.push(node);
+    lastNode = node;
+  });
+
+  // Render TOC tree as DOM
+  const counters: Record<number, number> = {};
+
+  function renderTOCNodes(nodes: TOCNode[], parentOl: HTMLOListElement) {
+    nodes.forEach((node) => {
+      const level = node.level;
+      // Update numbering, reset lower levels
+      counters[level] = (counters[level] || 0) + 1;
+      for (let lv = level + 1; lv <= maxLevel; lv++) {
+        counters[lv] = 0;
+      }
+      // Build numbering string: from minLevel to current level
+      const num = [];
+      for (let lv = minLevel; lv <= level; lv++) {
+        num.push(counters[lv] ?? 0);
+      }
+      const numStr = num.join(".");
+
+      // Create li and a
+      const li = document.createElement("li");
+      li.className = `toc-item toc-level-${level}`;
+
+      const a = document.createElement("a");
+      a.href = `#${node.heading.id}`;
+      a.classList.add("toc-link", `toc-link-h${level}`);
+
+      // Numbering span
+      const spanNum = document.createElement("span");
+      spanNum.className = "toc-number";
+      spanNum.textContent = numStr + ".";
+
+      // Text span
+      const spanText = document.createElement("span");
+      spanText.className = "toc-text";
+      spanText.textContent = (node.heading.textContent ?? "").trim();
+
+      a.append(spanNum, spanText);
+      li.appendChild(a);
+
+      // Recursively render child nodes
+      if (node.children.length > 0) {
+        const childOl = document.createElement("ol");
+        childOl.classList.add("toc-child", `toc-child-${level}`);
+        renderTOCNodes(node.children, childOl);
+        li.appendChild(childOl);
+      }
+
+      parentOl.appendChild(li);
+    });
+  }
+
+  console.time("toc-render");
+  renderTOCNodes(tocTreeRoot.children, tocContainer);
+  console.timeEnd("toc-render");
+
+  // replace
+  tocRootDom.replaceChildren(tocContainer);
 
   // Cache original headings
   const reversedOriginalHeadings = Array.from(contentRootDom.querySelectorAll<HTMLElement>(headingSelector)).reverse();
@@ -132,20 +180,28 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
   const tocActiveClassName = "toc-active";
 
   // toc collapse control
-  window.addEventListener(
-    "scroll",
-    () => {
-      // remove all active class
-      tocLinks.forEach((tocLink) => {
-        tocLink?.classList.remove(tocActiveClassName);
-      });
-      for (const [index, heading] of reversedOriginalHeadings.entries()) {
-        if (pageYOffset >= heading.offsetTop - 50) {
-          tocLinks[index].classList.add(tocActiveClassName);
-        }
+  function handleTOCScrollHighlight() {
+    // remove all active class
+    tocLinks.forEach((tocLink) => {
+      tocLink?.classList.remove(tocActiveClassName);
+    });
+    let highlighted: boolean = false;
+    for (const [index, heading] of reversedOriginalHeadings.entries()) {
+      if (pageYOffset >= heading.offsetTop - 50) {
+        tocLinks[index].classList.add(tocActiveClassName);
+        highlighted = true;
+        break;
       }
-    },
-    { passive: true },
-  );
+    }
+    // If no heading is highlighted (i.e., the page is at the very top),
+    // highlight the last TOC item (since the traversal order is reversed)
+    if (!highlighted) {
+      tocLinks[tocLinks.length - 1].classList.add(tocActiveClassName);
+    }
+    return;
+  }
+
+  handleTOCScrollHighlight();
+  window.addEventListener("scroll", handleTOCScrollHighlight, { passive: true });
   return;
 };
