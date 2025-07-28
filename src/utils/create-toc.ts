@@ -142,7 +142,7 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
 
     const a = document.createElement("a");
     a.href = `#${node.heading.id}`;
-    a.classList.add("toc-link", `toc-link-h${level}`);
+    a.className = `toc-link toc-link-h${level}`;
 
     // Numbering span
     const spanNum = document.createElement("span");
@@ -160,7 +160,7 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
     // If there are children, create an OL and push them onto the stack
     if (node.children.length > 0) {
       const childOl = document.createElement("ol");
-      childOl.classList.add("toc-child", `toc-child-${level}`);
+      childOl.className = `toc-child toc-child-${level}`;
       li.appendChild(childOl);
       for (let i = node.children.length - 1; i >= 0; i--) {
         stack.push({ node: node.children[i], parentOl: childOl });
