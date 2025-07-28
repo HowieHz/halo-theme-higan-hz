@@ -114,57 +114,61 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
   // Render TOC tree as DOM
   const counters: Record<number, number> = {};
 
-  function renderTOCNodes(nodes: TOCNode[], parentOl: HTMLOListElement) {
-    nodes.forEach((node) => {
-      const level = node.level;
-      // Update numbering, reset lower levels
-      counters[level] = (counters[level] || 0) + 1;
-      for (let lv = level + 1; lv <= maxLevel; lv++) {
-        counters[lv] = 0;
-      }
-      // Build numbering string: from minLevel to current level
-      const num = [];
-      for (let lv = minLevel; lv <= level; lv++) {
-        num.push(counters[lv] ?? 0);
-      }
-      const numStr = num.join(".");
-
-      // Create li and a
-      const li = document.createElement("li");
-      li.className = `toc-item toc-level-${level}`;
-
-      const a = document.createElement("a");
-      a.href = `#${node.heading.id}`;
-      a.classList.add("toc-link", `toc-link-h${level}`);
-
-      // Numbering span
-      const spanNum = document.createElement("span");
-      spanNum.className = "toc-number";
-      spanNum.textContent = numStr + ".";
-
-      // Text span
-      const spanText = document.createElement("span");
-      spanText.className = "toc-text";
-      spanText.textContent = (node.heading.textContent ?? "").trim();
-
-      a.append(spanNum, spanText);
-      li.appendChild(a);
-
-      // Recursively render child nodes
-      if (node.children.length > 0) {
-        const childOl = document.createElement("ol");
-        childOl.classList.add("toc-child", `toc-child-${level}`);
-        renderTOCNodes(node.children, childOl);
-        li.appendChild(childOl);
-      }
-
-      parentOl.appendChild(li);
-    });
+  type StackItem = { node: TOCNode; parentOl: HTMLOListElement };
+  const stack: StackItem[] = [];
+  // Initialize stack with root nodes in reverse order to preserve sequence
+  for (let i = tocTreeRoot.children.length - 1; i >= 0; i--) {
+    stack.push({ node: tocTreeRoot.children[i], parentOl: tocContainer });
   }
 
-  console.time("toc-render");
-  renderTOCNodes(tocTreeRoot.children, tocContainer);
-  console.timeEnd("toc-render");
+  while (stack.length) {
+    const { node, parentOl } = stack.pop()!;
+    const level = node.level;
+    // Update numbering and reset deeper levels
+    counters[level] = (counters[level] || 0) + 1;
+    for (let lv = level + 1; lv <= maxLevel; lv++) {
+      counters[lv] = 0;
+    }
+    // Build numbering string
+    const numArr: number[] = [];
+    for (let lv = minLevel; lv <= level; lv++) {
+      numArr.push(counters[lv] || 0);
+    }
+    const numStr = numArr.join(".");
+
+    // Create li and a
+    const li = document.createElement("li");
+    li.className = `toc-item toc-level-${level}`;
+
+    const a = document.createElement("a");
+    a.href = `#${node.heading.id}`;
+    a.classList.add("toc-link", `toc-link-h${level}`);
+
+    // Numbering span
+    const spanNum = document.createElement("span");
+    spanNum.className = "toc-number";
+    spanNum.textContent = numStr + ".";
+
+    // Text span
+    const spanText = document.createElement("span");
+    spanText.className = "toc-text";
+    spanText.textContent = (node.heading.textContent ?? "").trim();
+
+    a.append(spanNum, spanText);
+    li.appendChild(a);
+
+    // If there are children, create an OL and push them onto the stack
+    if (node.children.length > 0) {
+      const childOl = document.createElement("ol");
+      childOl.classList.add("toc-child", `toc-child-${level}`);
+      li.appendChild(childOl);
+      for (let i = node.children.length - 1; i >= 0; i--) {
+        stack.push({ node: node.children[i], parentOl: childOl });
+      }
+    }
+
+    parentOl.appendChild(li);
+  }
 
   // replace
   tocRootDom.replaceChildren(tocContainer);
