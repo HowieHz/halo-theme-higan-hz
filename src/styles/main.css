@@ -772,6 +772,7 @@ html[data-color-scheme="dark"] article .content {
       font-size: var(--text-toc-level-4);
     }
 
+    /* 隐藏 5 6 级标题和序号 */
     & .toc-level-5,
     & .toc-level-6,
     & .toc-number {
@@ -951,12 +952,18 @@ html[data-color-scheme="dark"] article .content {
       }
 
       & .toc-level-3 {
-        color: #666;
+        color: #999;
         font-size: 0.7rem;
         line-height: 0.9375rem;
       }
 
-      & .toc-level-4,
+      & .toc-level-4 {
+        color: #777;
+        font-size: 0.65rem;
+        line-height: 0.9375rem;
+      }
+
+      /* 隐藏 5 6 级标题和序号 */
       & .toc-level-5,
       & .toc-level-6,
       & .toc-number {

@@ -57,36 +57,10 @@
 
       <script type="text/javascript" th:inline="javascript">
         document.addEventListener("DOMContentLoaded", function () {
-          // <!--/* generate toc */-->
-          const contentDom = document.querySelector("article > .content");
-          const tocSelector = isMobile() ? "#toc-footer" : "#toc";
-          // <!--/* wontfix：如果电脑屏幕较窄，文章页用的是底部导航栏，目录按钮按了之后不会显示目录
+          // <!--/* generate toc
+          // wontfix：如果电脑屏幕较窄，文章页用的是底部导航栏，目录按钮按了之后不会显示目录
           // 但是目录按钮在手机端是正常的，为了保证性能，不做特殊处理 */-->
-          window.generateTOC(contentDom.innerHTML, tocSelector);
-
-          // <!--/* toc collapse control */-->
-          window.addEventListener("scroll", () => {
-            headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
-            let currentActiveHeading;
-            headings.forEach((heading) => {
-              const headingTop = heading.offsetTop;
-              if (pageYOffset >= headingTop - 50) {
-                currentActiveHeading = heading;
-              }
-            });
-            // <!--/* remove all active class */-->
-            const tocActiveClassName = "toc-active";
-            document.querySelectorAll("." + tocActiveClassName).forEach((el) => {
-              el.classList.remove(tocActiveClassName);
-            });
-
-            if (currentActiveHeading) {
-              const tocLevel = document.querySelector(`.toc-link[href="#${currentActiveHeading.id}"]`);
-              if (tocLevel) {
-                tocLevel.classList.add(tocActiveClassName);
-              }
-            }
-          });
+          window.initTOC("article > .content", isMobile() ? "#toc-footer" : "#toc");
         });
       </script>
     </th:block>
