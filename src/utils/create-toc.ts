@@ -48,7 +48,7 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
         id = `${baseId}-${usedCount}`;
         h.id = id;
       }
-      usedIds.set(id, usedCount + 1);
+      usedIds.set(baseId, usedCount + 1);
     }
   });
 
@@ -63,7 +63,7 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
       id = `${baseId}-${usedCount}`;
     }
     h.id = id;
-    usedIds.set(id, usedCount + 1);
+    usedIds.set(baseId, usedCount + 1);
   });
 
   // Find the minimum heading level (e.g., if only h2~h4 in content, then minLevel=2)
