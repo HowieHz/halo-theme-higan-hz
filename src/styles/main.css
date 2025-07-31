@@ -736,7 +736,7 @@ html[data-color-scheme="dark"] article .content {
     text-align: right;
 
     & .toc-text {
-      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     & a:hover {

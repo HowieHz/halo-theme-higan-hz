@@ -99,7 +99,7 @@ video {
 
   & .medium {
     display: grid;
-    grid-gap: 0.5rem;
+    gap: 0.5rem;
     grid-template-columns: 1fr 1fr 1fr;
 
     & img {
@@ -145,8 +145,8 @@ video {
     }
 
     & p {
+      overflow-wrap: break-word;
       text-align: left;
-      word-wrap: break-word;
     }
   }
 }
