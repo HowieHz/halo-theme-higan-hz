@@ -2,12 +2,6 @@ import "../utils/common";
 import "../utils/animation";
 import "../utils/create-toc";
 
-// 检测是否为移动设备
-window.isMobile = (): boolean => {
-  const flag = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  return flag;
-};
-
 /**
  * 获取页面滚动距离（垂直方向）
  */

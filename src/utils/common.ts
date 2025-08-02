@@ -41,3 +41,62 @@ window.isVisible = (element: HTMLElement | null): boolean => {
 
   return true;
 };
+
+// 检测是否为移动设备
+window.isMobile = (): boolean => {
+  const flag = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  return flag;
+};
+
+/**
+ * 移动端 abbr 标签点击显示 title 属性功能
+ * 在移动设备上为 abbr 标签添加点击事件来显示其 title 属性内容
+ */
+function initMobileAbbrSupport(): void {
+  // 仅在移动设备上启用此功能
+  if (!window.isMobile()) {
+    return;
+  }
+
+  const abbrElements: NodeListOf<HTMLElement> = document.querySelectorAll("abbr[title]");
+
+  abbrElements.forEach((abbr: HTMLElement) => {
+    // 保存原始 title 到 data 属性，避免移动端浏览器的默认 tooltip
+    const title = abbr.getAttribute("title");
+    if (title) {
+      abbr.setAttribute("data-title", title);
+      abbr.removeAttribute("title"); // 移除 title 避免默认 tooltip
+    }
+
+    // 添加点击事件监听器
+    abbr.addEventListener("click", (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // 先关闭其他已激活的 abbr tooltip
+      document.querySelectorAll("abbr.abbr-active").forEach((activeAbbr) => {
+        if (activeAbbr !== abbr) {
+          activeAbbr.classList.remove("abbr-active");
+        }
+      });
+
+      // 切换当前 abbr 的激活状态
+      abbr.classList.toggle("abbr-active");
+    });
+  });
+
+  // 点击其他地方时关闭所有 abbr tooltip
+  document.addEventListener("click", (e: Event) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest("abbr")) {
+      document.querySelectorAll("abbr.abbr-active").forEach((activeAbbr) => {
+        activeAbbr.classList.remove("abbr-active");
+      });
+    }
+  });
+}
+
+// 在 DOM 内容加载完成后初始化移动端 abbr 支持
+document.addEventListener("DOMContentLoaded", (): void => {
+  initMobileAbbrSupport();
+});

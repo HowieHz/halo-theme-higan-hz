@@ -9,6 +9,12 @@ declare global {
      * @returns 元素是否可见
      */
     isVisible: (element: HTMLElement | null) => boolean;
+
+    /**
+     * 检测是否为移动设备
+     * @returns 是否为移动设备
+     */
+    isMobile: () => boolean;
   }
 }
 
