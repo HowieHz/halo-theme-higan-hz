@@ -61,6 +61,11 @@ function initMobileAbbrSupport(): void {
   const abbrElements: NodeListOf<HTMLElement> = document.querySelectorAll("abbr[title]");
 
   abbrElements.forEach((abbr: HTMLElement) => {
+    // 如果 abbr 元素在链接内，跳过处理以保留链接功能
+    if (abbr.closest("a")) {
+      return;
+    }
+
     // 保存原始 title 到 data 属性，避免移动端浏览器的默认 tooltip
     const title = abbr.getAttribute("title");
     if (title) {
