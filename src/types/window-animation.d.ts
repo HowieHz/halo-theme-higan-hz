@@ -25,14 +25,14 @@ declare global {
     /**
      * slideDown 效果
      * @param element - 要显示的元素
-     * @param duration - 动画持续时间（毫秒），默认 300ms
+     * @param duration - 动画持续时间（毫秒），默认 200ms
      */
     slideDown: (element: HTMLElement, duration?: number) => void;
 
     /**
      * slideUp 效果
      * @param element - 要隐藏的元素
-     * @param duration - 动画持续时间（毫秒），默认 300ms
+     * @param duration - 动画持续时间（毫秒），默认 200ms
      */
     slideUp: (element: HTMLElement, duration?: number) => void;
 

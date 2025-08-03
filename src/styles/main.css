@@ -201,6 +201,20 @@ body {
   & p {
     text-align: start;
   }
+
+  /* 自定义 hide 标签默认模糊 */
+  & hide {
+    cursor: pointer;
+    filter: blur(6px);
+    transition: filter 0.2s;
+
+    /* 鼠标悬停时，元素被聚焦时，文本被选中时去除模糊 */
+    &:hover,
+    &:focus,
+    &::selection {
+      filter: none;
+    }
+  }
 }
 
 /* 样式开始 */
@@ -789,7 +803,7 @@ html[data-color-scheme="dark"] article .content {
   }
 
   & .is-collapsible {
-    transition: all 40ms ease-in-out;
+    transition: all 0.2s ease-in-out;
   }
 }
 
@@ -974,12 +988,19 @@ html[data-color-scheme="dark"] article .content {
 }
 
 .group:hover .post-card-hover {
-  background-color: var(--color-card-hover);
+  background: var(--color-card-hover);
   opacity: 100%;
-  transform: translate(0, 0) rotate(0) skewX(0) skewY(0) scaleX(0.95) scaleY(0.95);
-  transition-duration: 0.15s;
-  transition-property:
-    color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform;
+  transform: scale(0.95);
+  transition:
+    color 0.2s,
+    background-color 0.2s,
+    border-color 0.2s,
+    text-decoration-color 0.2s,
+    fill 0.2s,
+    stroke 0.2s,
+    opacity 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
 }
 
 .post-list {

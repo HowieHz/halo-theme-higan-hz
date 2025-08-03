@@ -95,7 +95,7 @@ function setupAnimation(element: HTMLElement, className: string, duration: numbe
  * @param element - 要执行动画的元素
  * @param duration - 动画持续时间（毫秒）
  */
-window.fadeIn = function (element: HTMLElement, duration: number = 300): void {
+window.fadeIn = function (element: HTMLElement, duration: number = 200): void {
   if (!element) return;
 
   // 检查元素是否已经显示，如果已经显示则不触发动画
@@ -116,7 +116,7 @@ window.fadeIn = function (element: HTMLElement, duration: number = 300): void {
  * @param element - 要执行动画的元素
  * @param duration - 动画持续时间（毫秒）
  */
-window.fadeOut = function (element: HTMLElement, duration: number = 300): void {
+window.fadeOut = function (element: HTMLElement, duration: number = 200): void {
   if (!element) return;
 
   // 检查元素是否已经隐藏，如果已经隐藏则不触发动画
@@ -137,7 +137,7 @@ window.fadeOut = function (element: HTMLElement, duration: number = 300): void {
  * @param element - 要执行动画的元素
  * @param duration - 动画持续时间（毫秒）
  */
-window.slideDown = function (element: HTMLElement, duration: number = 300): void {
+window.slideDown = function (element: HTMLElement, duration: number = 200): void {
   if (!element) return;
 
   // 检查元素是否已经显示，如果已经显示则不触发动画
@@ -179,7 +179,7 @@ window.slideDown = function (element: HTMLElement, duration: number = 300): void
  * @param element - 要执行动画的元素
  * @param duration - 动画持续时间（毫秒）
  */
-window.slideUp = function (element: HTMLElement, duration: number = 300): void {
+window.slideUp = function (element: HTMLElement, duration: number = 200): void {
   if (!element) return;
 
   // 检查元素是否已经隐藏，如果已经隐藏则不触发动画
