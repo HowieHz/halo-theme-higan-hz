@@ -49,7 +49,7 @@ export default {
       true,
       {
         // 允许自定义标签名
-        ignoreTypes: ["hide"],
+        ignoreTypes: ["hide", "spoiler"],
       },
     ],
 

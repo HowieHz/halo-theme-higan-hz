@@ -202,10 +202,11 @@ body {
     text-align: start;
   }
 
-  /* 自定义 hide 标签默认模糊 */
-  & hide {
+  /* 自定义 hide, spolier 标签默认模糊 */
+  & hide,
+  & spoiler {
     cursor: pointer;
-    filter: blur(6px);
+    filter: blur(0.3125rem);
     transition: filter 0.2s;
 
     /* 鼠标悬停时，元素被聚焦时，文本被选中时去除模糊 */
