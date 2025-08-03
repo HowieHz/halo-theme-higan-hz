@@ -44,6 +44,14 @@ export default {
         ignore: ["stylelint-commands", "after-comment"],
       },
     ],
+    // 未知类型选择器错误
+    "selector-type-no-unknown": [
+      true,
+      {
+        // 允许自定义标签名
+        ignoreTypes: ["hide"],
+      },
+    ],
 
     // 其他规则
     "no-empty-source": null, // 允许空文件
