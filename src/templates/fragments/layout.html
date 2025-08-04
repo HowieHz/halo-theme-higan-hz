@@ -11,7 +11,8 @@
   th:fragment="html"
 >
   <!--/* th:fragment="html (title, head, content, header, navbar, language)" */-->
-  <th:block th:fragment="commonHeadF">
+
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta
@@ -181,8 +182,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
         }
       </style>
     </th:block>
-  </th:block>
-  <th:block th:fragment="commonHeadS">
+    <!--/* js/css */-->
+    <th:block th:include="${head}" />
     <!--/* instant.page */-->
     <script
       th:src="@{/assets/lib/instantpage/5.2.0.js(v=${theme.spec.version})}"
@@ -450,13 +451,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
         document.getElementById("theme-toggle-button").addEventListener("click", toggleTheme);
       });
     </script>
-  </th:block>
-  <head>
-    <!-- 分别替换各部分 -->
-    <th:block th:replace="~{::commonHeadF}"></th:block>
-    <th:block th:replace="${head}"></th:block>
-    <th:block th:replace="~{::commonHeadS}"></th:block>
   </head>
+
   <body class="transition-colors duration-300" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
     <script th:if="${theme.config?.global?.is_i18n_menu_show}" th:inline="javascript">
       document.addEventListener("DOMContentLoaded", function () {
