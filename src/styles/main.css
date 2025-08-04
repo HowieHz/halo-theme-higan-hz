@@ -145,15 +145,23 @@ body {
     font-size: var(--text-sm);
   }
 
-  /* & acronym, 此标签在 HTML5 中弃用 */
   & abbr {
-    border-bottom: 1px dotted;
+    /* 用户代理样式表在 abbr[title] 有 text-decoration: underline dotted; 
+    可用 text-decoration: none; 覆盖 */
 
-    /* abbr[title], 覆盖用户代理样式表的 
-    text-decoration: underline dotted; */
-    /* &[title] {
-      text-decoration: none;
-    } */
+    &[title] {
+      border-bottom: 1px dotted;
+      cursor: help;
+
+      @media (hover: none), print {
+        /* 样式将应用于以下任一情况：
+     - 设备不支持悬停
+     - 打印模式 */
+        &::after {
+          content: "(" attr(title) ")";
+        }
+      }
+    }
   }
 
   & ol {
@@ -218,9 +226,9 @@ body {
 
     /* 黑色遮罩类型 */
     &.black {
-      filter: none;
       background-color: #000;
       color: transparent;
+      filter: none;
       transition: all 0.2s;
 
       &:hover,
