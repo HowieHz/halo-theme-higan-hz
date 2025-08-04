@@ -152,52 +152,15 @@ body {
       text-decoration: none;
     } */
 
-    &[data-title],
     &[title] {
       border-bottom: 1px dotted;
       cursor: help;
-      position: relative;
 
-      /* 默认隐藏 tooltip */
-      &::after {
-        backdrop-filter: blur(0.3125rem);
-        background: rgb(var(--color-background-numbers), 0.7);
-        border-radius: 0.625rem;
-        bottom: calc(100% + 0.265em);
-        box-shadow:
-          0 0 0.53em var(--color-link-hover),
-          0 0 0.53em var(--color-link-hover);
-        box-sizing: border-box;
-        color: var(--color-text);
-        font-size: var(--text);
-        left: 50%;
-        max-width: min(90vw, 300px);
-        opacity: 0%;
-        overflow-wrap: break-word;
-        padding: 0.15em 0.5em;
-        pointer-events: none;
-        position: absolute;
-        text-align: start;
-        text-indent: 0;
-        transform: translateX(-50%);
-        transition: opacity 0.2s;
-        white-space: normal;
-      }
-
-      /* 悬停、聚焦、选中时显示自定义 tooltip */
-      &:hover::after,
-      &:focus::after {
-        opacity: 100%;
-      }
-
-      /* 优先使用 data-title */
-      &[data-title]::after {
-        content: attr(data-title);
-      }
-
-      /* 没有 data-title 时使用 title */
-      &:not([data-title])[title]::after {
-        content: attr(title);
+      /* 检测无法悬停的设备 */
+      @media (hover: none) {
+        &::after {
+          content: "(" attr(title) ")";
+        }
       }
     }
   }
