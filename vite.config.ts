@@ -6,6 +6,7 @@ import PurgeIcons from "vite-plugin-purge-icons";
 
 import copyFilePlugin from "./plugins/vite-copy-file";
 import moveHtmlPlugin from "./plugins/vite-move-html";
+import headInject from "./plugins/vite-plugin-head-inject";
 
 export default defineConfig({
   base: "/themes/howiehz-higan/",
@@ -14,6 +15,16 @@ export default defineConfig({
       content: ["./templates/*.html"],
     }),
     legacy(),
+    headInject({
+      // 在 <head> 标签前插入
+      beforeHeadOpen: `<th:block th:fragment="headContent">\n  <!--/*-->\n  `,
+      // 在 <head> 标签后插入
+      afterHeadOpen: `\n  <!--*/-->`,
+      // 在 </head> 标签前插入
+      beforeHeadClose: `<!--/*-->\n  `,
+      // 在 </head> 标签后插入
+      afterHeadClose: `\n  <!--*/-->\n  </th:block>`,
+    }),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
     copyFilePlugin({
       targets: [
