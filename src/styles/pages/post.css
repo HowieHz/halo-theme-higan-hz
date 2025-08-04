@@ -1,0 +1,387 @@
+/* 文章页桌面端/平板端文章右上角菜单 */
+#header-post {
+  & a {
+    background: none;
+    color: inherit;
+    text-decoration: none;
+
+    &.icon {
+      background: none;
+
+      &:hover {
+        color: var(--color-link-hover);
+      }
+    }
+  }
+
+  & ol {
+    list-style-type: none;
+  }
+
+  & ul {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    & li {
+      display: inline-block;
+      margin-right: 0.9375rem;
+      vertical-align: middle;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  & #menu-icon {
+    margin-left: 0.9375rem;
+    margin-right: 2rem;
+
+    &:hover {
+      color: var(--color-accent-1);
+    }
+  }
+
+  & #top-icon-tablet {
+    bottom: 2rem;
+    margin-left: 0.9375rem;
+    margin-right: 2rem;
+    position: fixed;
+    right: 2rem;
+
+    &:hover {
+      color: var(--color-accent-1);
+    }
+  }
+
+  & .active {
+    color: var(--color-accent-1);
+  }
+
+  & #nav {
+    color: var(--color-accent-1);
+    font-size: var(--text-sm);
+    font-style: normal;
+    letter-spacing: 0.01em;
+
+    & ul {
+      display: inline-table;
+      line-height: 0.9375rem;
+
+      & a {
+        color: var(--color-accent-1);
+        margin-right: 0.9375rem;
+
+        &:hover {
+          background-image: linear-gradient(
+            transparent,
+            transparent 0.3125rem,
+            var(--color-accent-1) 0.3125rem,
+            var(--color-accent-1)
+          );
+          background-position: bottom;
+          background-repeat: repeat-x;
+          background-size: 100% 0.375rem;
+        }
+      }
+
+      & li {
+        border-right: 1px dotted var(--color-accent-1);
+
+        &:last-child {
+          border-right: 0;
+          margin-right: 0;
+
+          & a {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+
+  & #actions {
+    direction: ltr;
+
+    & .info {
+      float: left;
+      font-style: italic;
+      margin-right: 2rem;
+    }
+  }
+
+  & #share-list {
+    & li {
+      display: block;
+      margin: 0;
+    }
+  }
+
+  & #toc {
+    clear: both;
+    float: right;
+    font-size: var(--text);
+    margin-top: 1rem;
+    max-height: calc(95vh - 7rem);
+    max-width: 20em;
+    overflow: auto;
+    padding-right: 2rem;
+    text-align: right;
+
+    & .toc-text {
+      overflow-wrap: break-word;
+    }
+
+    & a:hover {
+      color: var(--color-link-hover);
+    }
+
+    & .toc-link-h1 {
+      font-style: italic;
+    }
+
+    & .toc-level-2 > .toc-link-h2 {
+      font-weight: 500;
+    }
+
+    & .toc-level-2 {
+      color: var(--toc-level-2);
+      font-size: var(--text-toc-level-2);
+
+      &::before {
+        color: var(--color-accent-1);
+        content: "#";
+        padding-right: 0.3125rem;
+      }
+    }
+
+    & .toc-level-3 {
+      color: var(--toc-level-3);
+      font-size: var(--text-toc-level-3);
+    }
+
+    & .toc-level-4 {
+      color: var(--toc-level-4);
+      font-size: var(--text-toc-level-4);
+    }
+
+    /* 隐藏 5 6 级标题和序号 */
+    & .toc-level-5,
+    & .toc-level-6,
+    & .toc-number {
+      display: none;
+    }
+
+    & .toc-active {
+      color: var(--color-accent-1);
+    }
+  }
+
+  & .is-active-link::before {
+    background-color: var(--color-accent-1);
+  }
+
+  & .is-collapsible {
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+/* 文章页桌面端/平板端文章右上角菜单 end */
+
+/* toc collapsible 目录展开相关样式 */
+.toc-child {
+  display: none;
+
+  &:has(.toc-active) {
+    display: block;
+  }
+}
+
+.toc-active + .toc-child {
+  display: block;
+}
+
+/* toc collapsible 目录展开相关样式 end */
+
+/* 文章页移动端底部菜单 */
+
+#footer-post-container {
+  @media screen and (width >= 640px) {
+    display: none;
+  }
+
+  & #footer-post {
+    background: var(--color-footer-mobile-3);
+    border-top: 1px solid #666;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    transition: opacity 0.2s;
+    width: 100%;
+    z-index: 5000000;
+
+    & a {
+      background: none;
+      color: inherit;
+      text-decoration: none;
+
+      &.icon {
+        background: none;
+
+        &:hover {
+          color: var(--color-link-hover);
+        }
+      }
+    }
+
+    & #nav-footer {
+      background: var(--color-footer-mobile-2);
+      padding-left: 1rem;
+      padding-right: 1rem;
+      text-align: center;
+
+      & a {
+        color: var(--color-accent-1);
+        font-size: 1em;
+
+        &:hover {
+          background-image: linear-gradient(
+            transparent,
+            transparent 0.3125rem,
+            var(--color-accent-1) 0.3125rem,
+            var(--color-accent-1)
+          );
+          background-position: bottom;
+          background-repeat: repeat-x;
+          background-size: 100% 0.375rem;
+        }
+      }
+
+      & ul {
+        display: table;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+
+        & li {
+          display: inline-table;
+          padding: 0.625rem;
+          vertical-align: middle;
+          width: 20%;
+        }
+      }
+    }
+
+    & #actions-footer {
+      margin-bottom: 1rem;
+      margin-top: 1rem;
+      overflow: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      text-align: center;
+      white-space: nowrap;
+      width: 100%;
+
+      & a {
+        color: var(--color-accent-1);
+        display: inline-block;
+        padding-left: 1rem;
+      }
+    }
+
+    & #share-footer {
+      background: var(--color-footer-mobile-2);
+      padding-left: 1rem;
+      padding-right: 1rem;
+      text-align: center;
+
+      & ul {
+        display: table;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+
+        & li {
+          display: inline-table;
+          padding: 0.625rem;
+          vertical-align: middle;
+          width: 20%;
+        }
+      }
+    }
+
+    & #toc-footer {
+      background: var(--color-footer-mobile-2);
+      clear: both;
+      padding-bottom: 1rem;
+      padding-top: 1rem;
+      text-align: left;
+
+      & ol {
+        list-style-type: none;
+        margin: 0;
+        padding-left: 1.25rem;
+
+        & li {
+          line-height: 1.875rem;
+        }
+      }
+
+      & a:hover {
+        color: var(--color-link-hover);
+      }
+
+      & .toc-link-h1 {
+        font-style: italic;
+      }
+
+      & .toc-level-2 {
+        color: var(--color-text);
+        font-size: var(--text-sm);
+
+        &::before {
+          color: var(--color-accent-1);
+          content: "#";
+        }
+      }
+
+      & .toc-level-3 {
+        color: #999;
+        font-size: 0.7rem;
+        line-height: 0.9375rem;
+      }
+
+      & .toc-level-4 {
+        color: #777;
+        font-size: 0.65rem;
+        line-height: 0.9375rem;
+      }
+
+      /* 隐藏 5 6 级标题和序号 */
+      & .toc-level-5,
+      & .toc-level-6,
+      & .toc-number {
+        display: none;
+      }
+    }
+  }
+}
+
+/* 文章页移动端底部菜单 end */
+
+/* 文章页正文末尾 推荐文章和相邻导航字体颜色设置 */
+.recommendations,
+.post-navigation {
+  & a {
+    color: var(--color-text);
+
+    /* 去除下划线用这个 background-image: none; */
+  }
+}
+
+/* 文章页正文末尾 推荐文章和相邻导航字体颜色设置 end */

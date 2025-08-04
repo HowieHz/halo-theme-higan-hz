@@ -1,22 +1,23 @@
 <th:block xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
   <div id="header-post" class="fixed right-0 top-8 z-50 float-right hidden sm:block">
-    <a
-      id="menu-icon"
-      href="#"
-      onclick="event.preventDefault();"
-      th:aria-label="#{fragment.post-nav.menu-icon.aria-label}"
-    >
-      <i class="iconify iconify-middle" data-icon="material-symbols:menu"></i>
-    </a>
     <a id="top-icon-tablet" class="hidden lg:!hidden" href="#" onclick="event.preventDefault(); scrollToTop();"
       ><i class="iconify iconify-middle" data-icon="material-symbols:keyboard-arrow-up"></i
     ></a>
-    <span id="menu" class="mr-8 hidden">
-      <span id="nav">
-        <th:block th:insert="~{fragments/common :: menu(showIcon=false)}"></th:block>
-      </span>
-      <br />
-
+    <span id="menu" class="mr-8">
+      <div class="flex items-center justify-end">
+        <span id="nav" class="hidden lg:block">
+          <th:block th:insert="~{fragments/common :: menu(showIcon=false)}"></th:block>
+        </span>
+        <a
+          id="menu-icon"
+          href="#"
+          onclick="event.preventDefault();"
+          th:aria-label="#{fragment.post-nav.menu-icon.aria-label}"
+          class="active"
+        >
+          <i class="iconify iconify-middle -translate-y-px" data-icon="material-symbols:menu"></i>
+        </a>
+      </div>
       <span id="actions" class="float-right mr-8 mt-8 hidden text-right lg:block">
         <ul class="float-right block">
           <li>

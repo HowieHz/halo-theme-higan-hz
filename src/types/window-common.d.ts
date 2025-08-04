@@ -8,7 +8,7 @@ declare global {
      * @param element - 要检查的元素
      * @returns 元素是否可见
      */
-    isVisible: (element: HTMLElement | null) => boolean;
+    isVisible: (element: HTMLElement | NodeListOf<HTMLElement> | null) => boolean;
   }
 }
 

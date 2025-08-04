@@ -92,43 +92,46 @@ function setupAnimation(element: HTMLElement, className: string, duration: numbe
 
 /**
  * 淡入动画函数 - 使用 CSS 动画，与 window.show 逻辑保持一致
- * @param element - 要执行动画的元素
+ * @param element - 要执行动画的元素，支持单个 HTMLElement 或 NodeListOf<HTMLElement>
  * @param duration - 动画持续时间（毫秒）
  */
-window.fadeIn = function (element: HTMLElement, duration: number = 200): void {
+window.fadeIn = function (element: HTMLElement | NodeListOf<HTMLElement>, duration: number = 200): void {
   if (!element) return;
 
-  // 检查元素是否已经显示，如果已经显示则不触发动画
-  if (window.isVisible(element)) {
-    return;
-  }
+  const elements = element instanceof HTMLElement ? [element] : Array.from(element);
 
-  // 使用统一的显示逻辑
-  showElement(element);
+  elements.forEach((el) => {
+    // 已经可见则跳过
+    if (window.isVisible(el)) return;
 
-  // 移除冲突的类并设置动画
-  element.classList.remove("fade-out");
-  setupAnimation(element, "fade-in", duration);
+    // 使用统一的显示逻辑
+    showElement(el);
+
+    // 移除冲突的类并设置动画
+    el.classList.remove("fade-out");
+    setupAnimation(el, "fade-in", duration);
+  });
 };
 
 /**
  * 淡出动画函数 - 使用 CSS 动画，与 window.hide 逻辑保持一致
- * @param element - 要执行动画的元素
+ * @param element - 要执行动画的元素，支持单个 HTMLElement 或 NodeListOf<HTMLElement>
  * @param duration - 动画持续时间（毫秒）
  */
-window.fadeOut = function (element: HTMLElement, duration: number = 200): void {
+window.fadeOut = function (element: HTMLElement | NodeListOf<HTMLElement>, duration: number = 200): void {
   if (!element) return;
 
-  // 检查元素是否已经隐藏，如果已经隐藏则不触发动画
-  if (!window.isVisible(element)) {
-    return;
-  }
+  const elements = element instanceof HTMLElement ? [element] : Array.from(element);
 
-  // 移除冲突的类并设置动画
-  element.classList.remove("fade-in");
-  setupAnimation(element, "fade-out", duration, () => {
-    // 动画完成后使用统一的隐藏逻辑
-    hideElement(element);
+  elements.forEach((el) => {
+    if (!window.isVisible(el)) return;
+
+    // 移除冲突的类并设置动画
+    el.classList.remove("fade-in");
+    setupAnimation(el, "fade-out", duration, () => {
+      // 动画完成后使用统一的隐藏逻辑
+      hideElement(el);
+    });
   });
 };
 

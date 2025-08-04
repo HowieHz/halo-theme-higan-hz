@@ -1,6 +1,7 @@
 import "../utils/common";
 import "../utils/animation";
 import "../utils/create-toc";
+import "../styles/pages/post.css";
 
 // 检测是否为移动设备
 window.isMobile = (): boolean => {
@@ -73,28 +74,34 @@ document.addEventListener("DOMContentLoaded", (): void => {
       }
     });
 
-    const menu: HTMLElement | null = document.querySelector("#menu");
-    // const nav = document.querySelector("#menu > #nav") as HTMLElement;
-    const menuIcon: HTMLElement | null = document.querySelector("#menu-icon");
-    const topIcon: HTMLElement | null = document.querySelector("#top-icon-tablet");
+    const menuComponents: NodeListOf<HTMLElement> = document.querySelectorAll<HTMLElement>(
+      "#menu #nav, #menu #actions, #menu #toc",
+    );
 
-    if (menu && menuIcon && topIcon) {
+    const shareListComponents: HTMLElement | null = document.querySelector<HTMLElement>("#menu #share-list");
+    const menuIcon: HTMLElement | null = document.querySelector<HTMLElement>("#menu-icon");
+    const topIcon: HTMLElement | null = document.querySelector<HTMLElement>("#top-icon-tablet");
+
+    if (menuComponents && shareListComponents && menuIcon && topIcon) {
       // 在高分辨率笔记本电脑和桌面端显示菜单
       // 大于等于 1024px 的屏幕宽度 页面完成初始化时自动显示菜单
       if (window.matchMedia("(min-width: 1024px)").matches) {
-        menuIcon.classList.add("active"); // 为 #header-post .active 样式设置
-        window.show(menu);
+        // menuIcon.classList.add("active"); // 为 #header-post .active 样式设置，模板默认有 active，无需添加
+        window.show(menuComponents);
+      } else {
+        menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
       }
 
       // 平板端、桌面端 文章页 菜单 按钮事件
       menuIcon.addEventListener("click", (e: Event): void => {
         e.preventDefault();
-        if (window.isVisible(menu)) {
+        if (window.isVisible(menuComponents)) {
           menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
-          window.fadeOut(menu, 50);
+          window.fadeOut(menuComponents, 50);
+          window.fadeOut(shareListComponents, 50);
         } else {
           menuIcon.classList.add("active"); // 为 #header-post .active 样式设置
-          window.fadeIn(menu, 50);
+          window.fadeIn(menuComponents, 50);
         }
       });
 
@@ -109,8 +116,10 @@ document.addEventListener("DOMContentLoaded", (): void => {
             window.fadeIn(menuIcon, 200);
             window.fadeOut(topIcon, 200);
           } else if (topDistance > 100) {
+            menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
             window.fadeOut(menuIcon, 200);
-            window.fadeOut(menu, 200);
+            window.fadeOut(menuComponents, 200);
+            window.fadeOut(shareListComponents, 200);
             window.fadeIn(topIcon, 200);
           }
         }
