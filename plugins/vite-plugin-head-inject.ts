@@ -62,9 +62,9 @@ export default function headInjectPlugin(options: HeadInjectOptions = {}): Plugi
   
   return {
     name: 'vite-plugin-head-inject',
-    enforce: 'pre',
+    enforce: 'post',
     transformIndexHtml: {
-      // 'post'确保在其他插件处理后执行，这样我们可以捕获所有头部内容
+      // 'post' 确保在其他插件处理后执行，这样我们可以捕获所有头部内容
       order: 'post',
       handler: transformHook
     }
