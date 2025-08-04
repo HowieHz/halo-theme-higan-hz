@@ -183,7 +183,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
       </style>
     </th:block>
     <!--/* js/css */-->
-    <th:block th:include="${head}" />
+    <th:block th:replace="${head}" />
     <!--/* instant.page */-->
     <script
       th:src="@{/assets/lib/instantpage/5.2.0.js(v=${theme.spec.version})}"
