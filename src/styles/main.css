@@ -215,6 +215,21 @@ body {
     &::selection {
       filter: none;
     }
+
+    /* 黑色遮罩类型 */
+    &.black {
+      filter: none;
+      background-color: #000;
+      color: transparent;
+      transition: all 0.2s;
+
+      &:hover,
+      &:focus,
+      &::selection {
+        background-color: transparent;
+        color: inherit;
+      }
+    }
   }
 }
 
