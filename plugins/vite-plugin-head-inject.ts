@@ -15,7 +15,7 @@ interface HeadInjectOptions {
 }
 
 /**
- * 在head标签周围注入内容的插件
+ * 在 head 标签周围注入内容的插件
  * @param options 插件配置选项
  * @returns Vite 插件
  */
