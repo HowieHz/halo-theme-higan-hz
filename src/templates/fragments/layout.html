@@ -650,9 +650,13 @@ html[theme="theme-[(${colorSchema.id})]"] {
       }
 
       body h3,
+      body .h3,
       body h4,
+      body .h4,
       body h5,
-      body h6 {
+      body .h5,
+      body h6,
+      body .h6 {
         margin-top: calc(0.9rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
         margin-bottom: calc(0.5rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
       }

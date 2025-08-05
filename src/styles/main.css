@@ -59,15 +59,19 @@ body {
     text-transform: none;
   }
 
-  & h3 {
+  & h3,
+  & .h3 {
     color: var(--color-accent-2);
     font-size: var(--text-h3);
     font-weight: bold;
   }
 
   & h4,
+  & .h4,
   & h5,
-  & h6 {
+  & .h5,
+  & h6,
+  & .h6 {
     color: var(--color-accent-3);
     display: inline;
     font-size: var(--text-h4);
@@ -76,9 +80,13 @@ body {
   }
 
   & h3,
+  & .h3,
   & h4,
+  & .h4,
   & h5,
-  & h6 {
+  & .h5,
+  & h6,
+  & .h6 {
     margin-bottom: 0.5rem;
     margin-top: 0.9rem;
   }
@@ -88,9 +96,13 @@ body {
   & h2,
   & .h2,
   & h3,
+  & .h3,
   & h4,
+  & .h4,
   & h5,
-  & h6 {
+  & .h5,
+  & h6,
+  & .h6 {
     & a {
       background: none;
       color: inherit;
@@ -343,14 +355,17 @@ article {
   }
 
   & .content {
-    & h2::before {
-      color: var(--color-accent-1);
-      content: "#";
-      font-size: 1.2rem;
-      font-weight: bold;
-      left: -1rem;
-      position: absolute;
-      top: -0.25rem;
+    & h2,
+    & .h2 {
+      &::before {
+        color: var(--color-accent-1);
+        content: "#";
+        font-size: 1.2rem;
+        font-weight: bold;
+        left: -1rem;
+        position: absolute;
+        top: -0.25rem;
+      }
     }
 
     & .caption {
@@ -633,7 +648,8 @@ html[data-color-scheme="dark"] article .content {
       margin-right: 5rem;
       min-height: 3.125rem;
 
-      & h1 {
+      & h1,
+      & .h1 {
         display: table-cell;
         vertical-align: middle;
       }
