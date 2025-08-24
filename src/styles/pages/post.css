@@ -370,6 +370,10 @@
       & .toc-number {
         display: none;
       }
+
+      & .toc-active {
+        color: var(--color-accent-1);
+      }
     }
   }
 }
