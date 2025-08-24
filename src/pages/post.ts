@@ -46,18 +46,19 @@ document.addEventListener("DOMContentLoaded", (): void => {
       if (window.isVisible(tocFooter)) {
         window.slideUp(tocFooter, 200);
       } else {
-        // First, instantly scroll to active item position
-        const activeLink = tocFooter.querySelector(".toc-active");
+        // First, play the slide-down animation
+        window.slideDown(tocFooter, 200);
+        
+        // Then instantly scroll to active item position 
+        const activeLink = tocFooter.querySelector<HTMLElement>(".toc-active");
+
         if (activeLink) {
           activeLink.scrollIntoView({
             behavior: "auto", // Instant scroll, no animation
             block: "center",
-            inline: "nearest",
+            inline: "center",
           });
         }
-        
-        // Then play the slide-down animation
-        window.slideDown(tocFooter, 200);
       }
     });
     document.querySelector("#actions-footer > #share")?.addEventListener("click", (): void => {
@@ -137,12 +138,12 @@ document.addEventListener("DOMContentLoaded", (): void => {
       });
     }
 
-    const footerNav: HTMLElement | null = document.querySelector("#footer-post");
+    const footerNav: HTMLElement | null = document.querySelector<HTMLElement>("#footer-post");
     let lastScrollTop = 0;
-    const navFooter: HTMLElement | null = document.querySelector("#nav-footer");
-    const tocFooter: HTMLElement | null = document.querySelector("#toc-footer");
-    const shareFooter: HTMLElement | null = document.querySelector("#share-footer");
-    const footerTopIcon: HTMLElement | null = document.querySelector("#actions-footer > #top");
+    const navFooter: HTMLElement | null = document.querySelector<HTMLElement>("#nav-footer");
+    const tocFooter: HTMLElement | null = document.querySelector<HTMLElement>("#toc-footer");
+    const shareFooter: HTMLElement | null = document.querySelector<HTMLElement>("#share-footer");
+    const footerTopIcon: HTMLElement | null = document.querySelector<HTMLElement>("#actions-footer > #top");
 
     /**
      * 移动端 文章页 底部导航栏 页面滚动相关逻辑
@@ -154,7 +155,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
         const topDistance = getTopDistance();
 
         // 在滚动时，关闭全部底部导航栏子菜单
-        for (const footer of [navFooter, tocFooter, shareFooter]) {
+        for (const footer of [tocFooter, navFooter, shareFooter]) {
           if (footer) window.slideUp(footer, 200);
         }
 
