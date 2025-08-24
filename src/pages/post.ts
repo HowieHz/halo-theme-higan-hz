@@ -47,15 +47,15 @@ document.addEventListener("DOMContentLoaded", (): void => {
         window.slideUp(tocFooter, 200);
       } else {
         window.slideDown(tocFooter, 200);
-
+        
         // After slide-down animation completes, scroll to active item
-        const activeLink = tocFooter.querySelector(".toc-active");
+        const activeLink = tocFooter.querySelector('.toc-active');
         if (activeLink) {
           setTimeout(() => {
             activeLink.scrollIntoView({
-              behavior: "smooth",
-              block: "center",
-              inline: "nearest",
+              behavior: 'smooth',
+              block: 'center',
+              inline: 'nearest'
             });
           }, 250); // Wait for animation to complete (200ms + small buffer)
         }
