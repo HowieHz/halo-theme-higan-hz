@@ -206,12 +206,18 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
     }
 
     // Auto-scroll to active item for mobile TOC
+    // Only scroll if the TOC is visible and not animating to avoid conflicts
     if (activeLink && tocRootDom && tocRootDom.id === 'toc-footer') {
-      activeLink.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-        inline: 'nearest'
-      });
+      const isVisible = window.isVisible(tocRootDom);
+      const isAnimating = tocRootDom.classList.contains('slide-up') || tocRootDom.classList.contains('slide-down');
+      
+      if (isVisible && !isAnimating) {
+        activeLink.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'nearest'
+        });
+      }
     }
     
     return;
