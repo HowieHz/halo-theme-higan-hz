@@ -46,19 +46,18 @@ document.addEventListener("DOMContentLoaded", (): void => {
       if (window.isVisible(tocFooter)) {
         window.slideUp(tocFooter, 200);
       } else {
-        window.slideDown(tocFooter, 200);
-
-        // After slide-down animation completes, scroll to active item
+        // First, instantly scroll to active item position
         const activeLink = tocFooter.querySelector(".toc-active");
         if (activeLink) {
-          setTimeout(() => {
-            activeLink.scrollIntoView({
-              behavior: "smooth",
-              block: "center",
-              inline: "nearest",
-            });
-          }, 250); // Wait for animation to complete (200ms + small buffer)
+          activeLink.scrollIntoView({
+            behavior: "auto", // Instant scroll, no animation
+            block: "center",
+            inline: "nearest",
+          });
         }
+        
+        // Then play the slide-down animation
+        window.slideDown(tocFooter, 200);
       }
     });
     document.querySelector("#actions-footer > #share")?.addEventListener("click", (): void => {
