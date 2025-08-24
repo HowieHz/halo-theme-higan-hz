@@ -207,33 +207,25 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
 
     // Auto-scroll TOC container to keep active item visible (desktop only)
     if (activeLink && tocRootDom && tocRootDom.id === "toc") {
+      // Get the TOC container's scroll properties
       const tocRect = tocRootDom.getBoundingClientRect();
       const activeLinkRect = activeLink.getBoundingClientRect();
 
-      // Add buffer to prevent constant re-scrolling
-      const buffer = 20;
-      const isOutsideTop = activeLinkRect.top < tocRect.top + buffer;
-      const isOutsideBottom = activeLinkRect.bottom > tocRect.bottom - buffer;
-
-      // Check if the active link is outside the visible area with buffer
-      if (isOutsideTop || isOutsideBottom) {
-        // Calculate relative position within the TOC container
-        const currentScrollTop = tocRootDom.scrollTop;
-        const activeRelativeTop = activeLink.offsetTop - tocRootDom.offsetTop;
+      // Check if the active link is outside the visible area
+      if (activeLinkRect.top < tocRect.top || activeLinkRect.bottom > tocRect.bottom) {
+        // Calculate the scroll position to center the active item
+        const activeOffsetTop = activeLink.offsetTop;
         const tocHeight = tocRootDom.clientHeight;
         const activeLinkHeight = activeLink.offsetHeight;
 
-        // Calculate the target scroll position to center the active item
-        const targetScrollTop = activeRelativeTop - tocHeight / 2 + activeLinkHeight / 2;
+        // Calculate the target scroll position (center the active item)
+        const targetScrollTop = activeOffsetTop - tocHeight / 2 + activeLinkHeight / 2;
 
-        // Only scroll if the target position is significantly different from current
-        const scrollDifference = Math.abs(targetScrollTop - currentScrollTop);
-        if (scrollDifference > buffer) {
-          tocRootDom.scrollTo({
-            top: Math.max(0, targetScrollTop),
-            behavior: "smooth",
-          });
-        }
+        // Smooth scroll to the target position
+        tocRootDom.scrollTo({
+          top: Math.max(0, targetScrollTop),
+          behavior: "smooth",
+        });
       }
     }
     return;
