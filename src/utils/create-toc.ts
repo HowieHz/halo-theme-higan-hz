@@ -189,11 +189,9 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
       tocLink?.classList.remove(tocActiveClassName);
     });
     let highlighted: boolean = false;
-    let activeLink: HTMLElement | null = null;
     for (const [index, heading] of reversedOriginalHeadings.entries()) {
       if (pageYOffset >= heading.offsetTop - 50) {
         tocLinks[index].classList.add(tocActiveClassName);
-        activeLink = tocLinks[index];
         highlighted = true;
         break;
       }
@@ -202,24 +200,8 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
     // highlight the last TOC item (since the traversal order is reversed)
     if (!highlighted) {
       tocLinks[tocLinks.length - 1].classList.add(tocActiveClassName);
-      activeLink = tocLinks[tocLinks.length - 1];
     }
 
-    // Auto-scroll to active item for mobile TOC
-    // Only scroll if the TOC is visible and not animating to avoid conflicts
-    if (activeLink && tocRootDom && tocRootDom.id === 'toc-footer') {
-      const isVisible = window.isVisible(tocRootDom);
-      const isAnimating = tocRootDom.classList.contains('slide-up') || tocRootDom.classList.contains('slide-down');
-      
-      if (isVisible && !isAnimating) {
-        activeLink.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-          inline: 'nearest'
-        });
-      }
-    }
-    
     return;
   }
 
