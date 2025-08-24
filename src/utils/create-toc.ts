@@ -189,9 +189,11 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
       tocLink?.classList.remove(tocActiveClassName);
     });
     let highlighted: boolean = false;
+    let activeLink: HTMLElement | null = null;
     for (const [index, heading] of reversedOriginalHeadings.entries()) {
       if (pageYOffset >= heading.offsetTop - 50) {
         tocLinks[index].classList.add(tocActiveClassName);
+        activeLink = tocLinks[index];
         highlighted = true;
         break;
       }
@@ -200,6 +202,31 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
     // highlight the last TOC item (since the traversal order is reversed)
     if (!highlighted) {
       tocLinks[tocLinks.length - 1].classList.add(tocActiveClassName);
+      activeLink = tocLinks[tocLinks.length - 1];
+    }
+
+    // Auto-scroll TOC container to keep active item visible (desktop only)
+    if (activeLink && tocRootDom && tocRootDom.id === "toc") {
+      // Get the TOC container's scroll properties
+      const tocRect = tocRootDom.getBoundingClientRect();
+      const activeLinkRect = activeLink.getBoundingClientRect();
+
+      // Check if the active link is outside the visible area
+      if (activeLinkRect.top < tocRect.top || activeLinkRect.bottom > tocRect.bottom) {
+        // Calculate the scroll position to center the active item
+        const activeOffsetTop = activeLink.offsetTop;
+        const tocHeight = tocRootDom.clientHeight;
+        const activeLinkHeight = activeLink.offsetHeight;
+
+        // Calculate the target scroll position (center the active item)
+        const targetScrollTop = activeOffsetTop - tocHeight / 2 + activeLinkHeight / 2;
+
+        // Smooth scroll to the target position
+        tocRootDom.scrollTo({
+          top: Math.max(0, targetScrollTop),
+          behavior: "smooth",
+        });
+      }
     }
     return;
   }
