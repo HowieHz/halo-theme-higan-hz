@@ -318,6 +318,8 @@
     & #toc-footer {
       background: var(--color-footer-mobile-2);
       clear: both;
+      max-height: calc(50vh - 4rem);
+      overflow: auto;
       padding-bottom: 1rem;
       padding-top: 1rem;
       text-align: left;
@@ -367,6 +369,10 @@
       & .toc-level-6,
       & .toc-number {
         display: none;
+      }
+
+      & .toc-active {
+        color: var(--color-accent-1);
       }
     }
   }

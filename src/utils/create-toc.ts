@@ -201,6 +201,7 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
     if (!highlighted) {
       tocLinks[tocLinks.length - 1].classList.add(tocActiveClassName);
     }
+
     return;
   }
 
