@@ -182,39 +182,52 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
 
   const tocActiveClassName = "toc-active";
 
+  let lastActiveLink: HTMLElement | null = null; // Cache the previously active TOC item
+
   // toc collapse control
   function handleTOCScrollHighlight() {
-    // remove all active class
-    tocLinks.forEach((tocLink) => {
-      tocLink?.classList.remove(tocActiveClassName);
-    });
-    let highlighted: boolean = false;
+    let highlighted = false;
     let activeLink: HTMLElement | null = null;
+
     for (const [index, heading] of reversedOriginalHeadings.entries()) {
       if (pageYOffset >= heading.offsetTop - 50) {
-        tocLinks[index].classList.add(tocActiveClassName);
         activeLink = tocLinks[index];
         highlighted = true;
         break;
       }
     }
+
     // If no heading is highlighted (i.e., the page is at the very top),
     // highlight the last TOC item (since the traversal order is reversed)
     if (!highlighted) {
-      tocLinks[tocLinks.length - 1].classList.add(tocActiveClassName);
       activeLink = tocLinks[tocLinks.length - 1];
     }
+
+    // If the active item has not changed, do nothing
+    if (activeLink === lastActiveLink) {
+      return;
+    }
+
+    // Remove the old one first, then add the new one to avoid the menu collapsing and expanding again.
+    // If you remove the class before adding it, collapsing the TOC will result in a short menu with only the top-level headings.
+    // When you expand it again, the TOC will jump back to the top.
+    if (activeLink) {
+      activeLink.classList.add(tocActiveClassName);
+    }
+    if (lastActiveLink) {
+      lastActiveLink.classList.remove(tocActiveClassName);
+    }
+
+    lastActiveLink = activeLink;
 
     // Auto-scroll TOC container to keep active item visible (desktop only)
     if (activeLink && tocRootDom && tocRootDom.id === "toc") {
       activeLink.scrollIntoView({
         behavior: "smooth",
         block: "center",
-        inline: "nearest",
+        inline: "center",
       });
     }
-
-    return;
   }
 
   handleTOCScrollHighlight();
