@@ -48,8 +48,8 @@ document.addEventListener("DOMContentLoaded", (): void => {
       } else {
         // First, play the slide-down animation
         window.slideDown(tocFooter, 200);
-        
-        // Then instantly scroll to active item position 
+
+        // Then instantly scroll to active item position
         const activeLink = tocFooter.querySelector<HTMLElement>(".toc-active");
 
         if (activeLink) {
