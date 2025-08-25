@@ -213,6 +213,7 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
         inline: "nearest",
       });
     }
+
     return;
   }
 
