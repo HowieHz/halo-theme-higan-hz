@@ -207,26 +207,11 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
 
     // Auto-scroll TOC container to keep active item visible (desktop only)
     if (activeLink && tocRootDom && tocRootDom.id === "toc") {
-      // Check if the active link is outside the visible area of the TOC container
-      const linkTop = activeLink.offsetTop;
-      const linkHeight = activeLink.offsetHeight;
-      const containerScrollTop = tocRootDom.scrollTop;
-      const containerHeight = tocRootDom.clientHeight;
-
-      // Calculate if the link is outside the visible area
-      const linkRelativeTop = linkTop - containerScrollTop;
-      const linkRelativeBottom = linkRelativeTop + linkHeight;
-
-      if (linkRelativeTop < 0 || linkRelativeBottom > containerHeight) {
-        // Calculate the target scroll position to center the active item
-        const targetScrollTop = linkTop - containerHeight / 2 + linkHeight / 2;
-
-        // Smooth scroll to the target position within the TOC container
-        tocRootDom.scrollTo({
-          top: Math.max(0, targetScrollTop),
-          behavior: "smooth",
-        });
-      }
+      activeLink.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "nearest",
+      });
     }
 
     return;
