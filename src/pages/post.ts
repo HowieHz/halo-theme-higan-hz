@@ -53,11 +53,13 @@ document.addEventListener("DOMContentLoaded", (): void => {
         const activeLink = tocFooter.querySelector<HTMLElement>(".toc-active");
 
         if (activeLink) {
-          activeLink.scrollIntoView({
-            behavior: "auto", // Instant scroll, no animation
-            block: "center",
-            inline: "center",
-          });
+          setTimeout(() => {
+            activeLink.scrollIntoView({
+              behavior: "auto", // Instant scroll, no animation
+              block: "center",
+              inline: "center",
+            });
+          }, 200);
         }
       }
     });
