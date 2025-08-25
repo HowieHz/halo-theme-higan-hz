@@ -214,7 +214,7 @@
 
   & #footer-post {
     background: var(--color-footer-mobile-2);
-    border-radius: 30px 30px 0 0;
+    border-radius: 2rem 2rem 0 0;
     border-top: 1px solid #666;
     bottom: 0;
     left: 0;
@@ -277,7 +277,7 @@
 
     & #actions-footer {
       background: var(--color-footer-mobile-3);
-      border-radius: 30px 30px 0 0;
+      border-radius: 2rem 2rem 0 0;
       overflow: auto;
       padding: 1rem;
       text-align: center;
@@ -292,7 +292,7 @@
     }
 
     & #share-footer {
-      padding: 0.375rem 1rem;
+      padding: calc(1rem - 0.625rem) 1rem;
       text-align: center;
 
       & ul {
@@ -313,7 +313,7 @@
 
     & #toc-footer {
       clear: both;
-      margin: 1rem 0;
+      margin: 2rem 0 1rem;
       max-height: calc(50vh - 4rem);
       overflow: auto;
       text-align: left;
