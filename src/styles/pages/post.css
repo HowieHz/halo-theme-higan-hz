@@ -213,7 +213,8 @@
   }
 
   & #footer-post {
-    background: var(--color-footer-mobile-3);
+    background: var(--color-footer-mobile-2);
+    border-radius: 30px 30px 0 0;
     border-top: 1px solid #666;
     bottom: 0;
     left: 0;
@@ -238,9 +239,7 @@
     }
 
     & #nav-footer {
-      background: var(--color-footer-mobile-2);
-      padding-left: 1rem;
-      padding-right: 1rem;
+      padding: 1rem;
       text-align: center;
 
       & a {
@@ -269,7 +268,7 @@
 
         & li {
           display: inline-table;
-          padding: 0.625rem;
+          padding: 0 0.625rem;
           vertical-align: middle;
           width: 20%;
         }
@@ -277,11 +276,10 @@
     }
 
     & #actions-footer {
-      margin-bottom: 1rem;
-      margin-top: 1rem;
+      background: var(--color-footer-mobile-3);
+      border-radius: 30px 30px 0 0;
       overflow: auto;
-      padding-left: 1rem;
-      padding-right: 1rem;
+      padding: 1rem;
       text-align: center;
       white-space: nowrap;
       width: 100%;
@@ -294,9 +292,7 @@
     }
 
     & #share-footer {
-      background: var(--color-footer-mobile-2);
-      padding-left: 1rem;
-      padding-right: 1rem;
+      padding: 0.375rem 1rem;
       text-align: center;
 
       & ul {
@@ -316,12 +312,10 @@
     }
 
     & #toc-footer {
-      background: var(--color-footer-mobile-2);
       clear: both;
-      max-height: calc(70vh - 4rem);
+      margin: 1rem 0;
+      max-height: calc(50vh - 4rem);
       overflow: auto;
-      padding-bottom: 1rem;
-      padding-top: 1rem;
       text-align: left;
 
       & ol {

@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
         if (activeLink) {
           setTimeout(() => {
             activeLink.scrollIntoView({
-              behavior: "auto", // Instant scroll, no animation
+              behavior: "smooth",
               block: "center",
               inline: "center",
             });
