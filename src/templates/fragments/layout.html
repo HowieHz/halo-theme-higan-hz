@@ -169,7 +169,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
                 (ext == 'ttf' ? 'font/ttf' : 
                 (ext == 'otf' ? 'font/otf' : 
                 (ext == 'sfnt' ? 'font/sfnt' : 
-                ((ext == 'ttc' or ext == 'otc') ? 'font/collection' : 'application/octet-stream')))))}"
+                (ext == 'eot' ? 'application/vnd.ms-fontobject' : 
+                ((ext == 'ttc' or ext == 'otc') ? 'font/collection' : 'application/octet-stream'))))))}"
     >
       <link rel="preload" th:href="${font}" as="font" th:type="${mime}" crossorigin />
       <style th:inline="css">

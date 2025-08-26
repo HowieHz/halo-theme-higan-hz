@@ -125,7 +125,7 @@ spec:
           if: "$is_custom_font_files_enable === true"
           name: custom_font_files
           label: 自定义字体文件
-          help: 上传 .woff/.woff2/.ttf 等字体文件，主题会优先使用这些文件替换默认字体
+          help: 上传 .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt 字体文件，主题会优先使用这些文件替换默认字体
           value: ""
         - $formkit: text
           if: "$is_custom_font_files_enable === true"
