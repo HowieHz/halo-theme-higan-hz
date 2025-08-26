@@ -49,6 +49,7 @@
             th:each="contributor : ${post?.contributors}"
           >
             <a
+              th:if="${contributor.permalink} != '/authors/ghost'"
               th:href="${contributor.permalink}"
               itemprop="name"
               th:text="${contributor?.displayName}"
