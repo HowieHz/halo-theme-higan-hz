@@ -156,15 +156,23 @@ html[theme="theme-[(${colorSchema.id})]"] {
     />
     <th:block
       th:if="${theme.config?.styles?.is_custom_font_files_enable}"
-      th:with="font=${#objects.nullSafe(theme.config?.styles?.custom_font_files, #theme.assets('/dist/MesloLGS-Regular.woff2'))}"
+      th:with="font=${#objects.nullSafe(theme.config?.styles?.custom_font_files, #theme.assets('/dist/MesloLGS-Regular.woff2'))},
+              ext=${font.substring(font.lastIndexOf('.') + 1)},
+              format=${ext == 'woff2' ? 'woff2' : 
+                (ext == 'woff' ? 'woff' : 
+                (ext == 'ttf' ? 'truetype' : 
+                (ext == 'otf' ? 'opentype' : 
+                (ext == 'eot' ? 'embedded-opentype' : 
+                ((ext == 'ttc' or ext == 'otc') ? 'collection' : ext)))))},
+              mime=${ext == 'woff2' ? 'font/woff2' : 
+                (ext == 'woff' ? 'font/woff' : 
+                (ext == 'ttf' ? 'font/ttf' : 
+                (ext == 'otf' ? 'font/otf' : 
+                (ext == 'sfnt' ? 'font/sfnt' : 
+                (ext == 'eot' ? 'application/vnd.ms-fontobject' : 
+                ((ext == 'ttc' or ext == 'otc') ? 'font/collection' : 'application/octet-stream'))))))}"
     >
-      <link
-        rel="preload"
-        th:href="${font}"
-        as="font"
-        th:type="'font/' + ${font.substring(font.lastIndexOf('.') + 1)}"
-        crossorigin
-      />
+      <link rel="preload" th:href="${font}" as="font" th:type="${mime}" crossorigin />
       <style th:inline="css">
         @font-face {
           font-display: swap;
@@ -173,7 +181,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
           font-weight: 400;
           src:
             local("[(${theme.config?.styles?.custom_font_name})]"),
-            url("[(${font})]") format("[(${font.substring(font.lastIndexOf('.') + 1)})]");
+            url("[(${font})]") format("[(${format})]");
         }
         :root {
           --higan-font-family:

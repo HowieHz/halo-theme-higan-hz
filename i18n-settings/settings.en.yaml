@@ -125,7 +125,7 @@ spec:
           if: "$is_custom_font_files_enable === true"
           name: custom_font_files
           label: Custom Font Files
-          help: Upload .woff/.woff2/.ttf or other font files. The theme will prioritize these files over the default fonts.
+          help: Upload .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt font files. The theme will prioritize these files over the default fonts.
           value: ""
         - $formkit: text
           if: "$is_custom_font_files_enable === true"

@@ -283,7 +283,7 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
 #### 增加于“总体样式”
 
 1. 允许启用自定义字体文件
-   - 启用后，可上传 .woff/.woff2/.ttf 等字体文件，主题会优先使用这些文件替换默认字体
+   - 启用后，可上传 .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt 字体文件，主题会优先使用这些文件替换默认字体
    - 可填写字体名称（全名/PostScript 名），如 `'My Custom Font Regular'` 或 `'MyCustomFont-Regular'`。如不填写，则即使用户本地已安装该字体，也会继续从网络下载
 2. <a id="more-color-scheme"></a>“配色方案”（样式 - 配色方案）
    - 添加“跟随系统”配色方案
