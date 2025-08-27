@@ -1,6 +1,7 @@
 // 导入类型定义（仅类型导入，不会在运行时包含）
 import type {} from "../types/window-animation";
 import "../styles/mixins/animation.css";
+import "./common"; // window.isVisible
 
 // 使此文件成为模块
 export {};

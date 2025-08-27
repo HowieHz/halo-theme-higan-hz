@@ -1,8 +1,17 @@
 <!doctype html>
 <html
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{/fragments/layout :: html(title='404', content = ~{::content}, header = ~{fragments/header::content}, navbar = ~{})}"
+  th:replace="~{/fragments/layout :: html(
+    title='404',
+    head = ~{::headContent},
+    content = ~{::content},
+    header = ~{fragments/header::content},
+    navbar = ~{}
+  )}"
 >
+  <head>
+    <script src="/src/pages/generic-header.ts" type="module"></script>
+  </head>
   <th:block th:fragment="content">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <div class="content" itemprop="articleBody">

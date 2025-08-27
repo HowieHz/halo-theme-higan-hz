@@ -1,5 +1,4 @@
-import "../utils/common";
-import "../utils/animation";
+import "./generic";
 import "../utils/create-toc";
 import "../styles/pages/post.css";
 

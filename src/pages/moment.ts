@@ -1,4 +1,4 @@
-import "../utils/common";
+import "./generic-header";
 
 import Alpine from "alpinejs";
 

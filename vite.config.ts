@@ -27,10 +27,7 @@ export default defineConfig({
     }),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
     copyFilePlugin({
-      targets: [
-        { src: "src/templates/error", dest: "templates/error" },
-        { src: "src/templates/fragments", dest: "templates/fragments" },
-      ],
+      targets: [{ src: "src/templates/fragments", dest: "templates/fragments" }],
     }),
   ],
   build: {
@@ -52,6 +49,8 @@ export default defineConfig({
         post: path.resolve(__dirname, "src/templates/post.html"),
         tag: path.resolve(__dirname, "src/templates/tag.html"),
         tags: path.resolve(__dirname, "src/templates/tags.html"),
+        "5xx": path.resolve(__dirname, "src/templates/error/5xx.html"),
+        "404": path.resolve(__dirname, "src/templates/error/404.html"),
       },
       output: {
         assetFileNames: (assetInfo) => {

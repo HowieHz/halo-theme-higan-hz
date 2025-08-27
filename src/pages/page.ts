@@ -1,2 +1,2 @@
-import "./index";
+import "./generic-header";
 import "./post";
