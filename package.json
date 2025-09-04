@@ -6,7 +6,7 @@
     "watch:vite": "vite build --watch",
     "watch:stylus": "stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --watch",
     "watch:post-css": "postcss ./src/styles/tailwind.css -o ./tmp/styles/tailwind.css --watch",
-    "build": "set NODE_ENV=777 && stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --compress && tsc && vite build",
+    "build": "set NODE_ENV=777 && stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --compress && tsc && tw-patch extract && vite build",
     "lint": "pnpm run \"/^lint:.*/\"",
     "lint:eslint": "eslint --fix ./src",
     "lint:style": "stylelint --fix \"./src/**/*.css\"",
@@ -15,7 +15,7 @@
     "format": "pnpm run \"/^format:.*/\"",
     "format:stylus": "stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
     "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,yaml,html}\"",
-    "prepare": "husky"
+    "prepare": "husky && tw-patch install"
   },
   "browserslist": [
     "defaults",
@@ -79,8 +79,10 @@
     "stylus": "^0.64.0",
     "stylus-supremacy": "^4.0.0",
     "tailwindcss": "^3.4.17",
+    "tailwindcss-patch": "^7.1.4",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.42.0",
+    "unplugin-tailwindcss-mangle": "^4.1.2",
     "vite": "npm:rolldown-vite@^7.1.5",
     "vite-plugin-purge-icons": "^0.10.0"
   },

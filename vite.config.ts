@@ -1,6 +1,7 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import legacy from "@vitejs/plugin-legacy";
+import utwm from "unplugin-tailwindcss-mangle/vite";
 import { defineConfig } from "vite";
 import PurgeIcons from "vite-plugin-purge-icons";
 
@@ -14,6 +15,7 @@ export default defineConfig({
     PurgeIcons({
       content: ["./templates/*.html"],
     }),
+    utwm(), // obfuscate tailwindcss class.
     legacy(),
     headInject({
       // 在 <head> 标签前插入
