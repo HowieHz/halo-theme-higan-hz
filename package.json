@@ -1,4 +1,6 @@
 {
+  "private": true,
+  "type": "module",
   "scripts": {
     "dev": "pnpm run \"/^watch:.*/\"",
     "watch:vite": "vite build --watch",
@@ -12,10 +14,9 @@
     "lint:autocorrect": "autocorrect --fix",
     "format": "pnpm run \"/^format:.*/\"",
     "format:stylus": "stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
-    "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,ml,yaml,html}\"",
+    "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,yaml,html}\"",
     "prepare": "husky"
   },
-  "type": "module",
   "browserslist": [
     "defaults",
     "Safari >= 16.4",
