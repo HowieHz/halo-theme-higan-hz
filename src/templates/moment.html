@@ -155,7 +155,7 @@
           </div>
         </div>
       </div>
-      <script th:inline="javascript">
+      <script vite-ignore th:inline="javascript">
         const likes_localstorage_key = "higan.likes.moment.ids";
         let likedMomentNames = JSON.parse(localStorage.getItem(likes_localstorage_key) || "[]");
         likedMomentNames.forEach((momentName) => {

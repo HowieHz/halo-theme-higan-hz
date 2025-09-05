@@ -24,12 +24,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="${#strings.defaultString(title, site.title)}"></title>
     <script
+      vite-ignore
       th:if="${theme_config['theme'] == 'custom'} or ${theme.config?.styles?.theme_dark == 'custom'} or ${theme.config?.styles?.theme_light == 'custom'} or ${theme.config?.styles?.theme_auto == 'custom'}"
       th:inline="javascript"
     >
       const allCustomColorSchema = /*[(${custom_color_schema_config})]*/ "";
     </script>
-    <script th:if="${theme_config['theme'] == 'custom'}" th:inline="javascript">
+    <script vite-ignore th:if="${theme_config['theme'] == 'custom'}" th:inline="javascript">
       const customColorSchema = allCustomColorSchema.find(
         (schema) => schema.id === /*[[${theme.config?.styles?.custom_color_schema_init_id}]]*/ "1",
       );
@@ -58,7 +59,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
         </th:block>
       </th:block>
     </th:block>
-    <script th:if="${theme.config?.global?.anti_mirror_site}" th:inline="javascript">
+    <script vite-ignore th:if="${theme.config?.global?.anti_mirror_site}" th:inline="javascript">
       (function () {
         // <!--/* 获取被编码后的目标链接 */-->
         var encodedRedirectUrl = /*[[${theme?.config?.global?.target_url}]]*/ "bG9jYWxob3N0";
@@ -84,7 +85,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
         }
       })();
     </script>
-    <script th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}" th:inline="javascript">
+    <script vite-ignore th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}" th:inline="javascript">
       (function () {
         // <!--/* 如果 ${language} 已经传入，也就是已经指定了页面语言，则不跳转 */-->
         const languageParam = /*[[${language}]]*/ null;
@@ -173,6 +174,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
                 ((ext == 'ttc' or ext == 'otc') ? 'font/collection' : 'application/octet-stream'))))))}"
     >
       <link rel="preload" th:href="${font}" as="font" th:type="${mime}" crossorigin />
+      <!--/*/
       <style th:inline="css">
         @font-face {
           font-display: swap;
@@ -189,6 +191,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
             arial, noto sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", segoe ui symbol, "Noto Color Emoji" !important;
         }
       </style>
+      /*/-->
     </th:block>
     <!--/* js/css */-->
     <th:block th:replace="${head}" />
@@ -206,7 +209,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
       defer
     ></script>
     <!--/* Mermaid */-->
-    <script type="module" th:inline="javascript" th:if="${theme.config?.global?.is_mermaid_enable}">
+    <script vite-ignore type="module" th:inline="javascript" th:if="${theme.config?.global?.is_mermaid_enable}">
       import mermaid from /*[[${theme.config?.global?.mermaid_script_url}]]*/ "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
 
       function genUUID() {
@@ -318,7 +321,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
       });
     </script>
 
-    <script th:inline="javascript" th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+    <script vite-ignore th:inline="javascript" th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       var THEME_DARK = /*[[${theme.config?.styles?.theme_dark}]]*/ "dark";
       var THEME_LIGHT = /*[[${theme.config?.styles?.theme_light}]]*/ "light";
       var THEME_AUTO = /*[[${theme.config?.styles?.theme_auto}]]*/ "auto";
@@ -462,7 +465,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
   </head>
 
   <body class="transition-colors duration-300" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
-    <script th:if="${theme.config?.global?.is_i18n_menu_show}" th:inline="javascript">
+    <script th:if="${theme.config?.global?.is_i18n_menu_show}">
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/*
         // 检查目标 li 标签是否具有 class="matched-menu"
@@ -490,7 +493,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
         }
       });
     </script>
-    <script th:if="${theme.config?.index_styles?.is_i18n_resume_show}" th:inline="javascript">
+    <script th:if="${theme.config?.index_styles?.is_i18n_resume_show}">
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/*
         // 检查目标标签是否具有 class="matched-resume"
@@ -518,7 +521,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
         }
       });
     </script>
-    <script th:if="${theme.config?.styles?.is_18n_footer_content_show}" th:inline="javascript">
+    <script th:if="${theme.config?.styles?.is_18n_footer_content_show}">
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/*
         // 检查目标标签是否具有 class="matched-footer-content"
@@ -560,13 +563,16 @@ html[theme="theme-[(${colorSchema.id})]"] {
   应用于 :root 加上 only 效果是关闭由 Chrome 的自动深色主题引起的颜色覆盖。上游应用于 body 标签，本主题应用于 HTML 标签（实际是应用在有 data-color-scheme 属性的地方，本主题仅有 HTML 标签有这个属性）
   https://developer.mozilla.org/zh-CN/docs/Web/CSS/color-scheme
 */-->
+    <!--/*/
     <style th:inline="css" th:if="${theme.config?.styles?.is_max_width_settings}">
       .max-width {
         max-width:
       /*[(${theme.config?.styles?.max_width})]*/ 48rem;
       }
     </style>
+    /*/-->
     <!--/* 缩小窗口时优先缩小 margin，触发下面样式表里面的取小函数肯定是 margin=0，此时 100vw 和 100% 应相等 */-->
+    <!--/*/
     <style th:inline="css" th:if="${theme.config?.styles?.is_min_width_settings}">
       :root {
         --content-min-width:
@@ -577,17 +583,20 @@ html[theme="theme-[(${colorSchema.id})]"] {
         min-width: min(100%, var(--content-min-width));
       }
     </style>
-    <style th:inline="css" th:if="${theme.config?.styles?.is_force_min_width_settings}">
+    /*/-->
+    <style th:if="${theme.config?.styles?.is_force_min_width_settings}">
       .min-width {
         min-width: var(--content-min-width) !important;
       }
     </style>
+    <!--/*/
     <style th:inline="css" th:if="${theme.config?.styles?.is_content_width_style_settings}">
       .content-width {
         width:
       /*[(${theme.config?.styles?.content_width_style})]*/ fit-content;
       }
     </style>
+    /*/-->
     <style th:if="${theme.config?.styles?.is_h3_underline}">
       body h3 {
         text-decoration: underline;
@@ -608,7 +617,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
         margin-bottom: 0;
       }
     </style>
-    <style th:inline="css" th:if="${theme.config?.styles?.is_show_the_quote_before_blockquote}">
+    <style th:if="${theme.config?.styles?.is_show_the_quote_before_blockquote}">
       article .content blockquote:before {
         margin-right: 0.25em;
         color: var(--color-quote);
@@ -618,7 +627,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
         line-height: 0.1em;
       }
     </style>
-    <style th:inline="css" th:if="${theme.config?.styles?.is_show_the_quote_after_blockquote}">
+    <style th:if="${theme.config?.styles?.is_show_the_quote_after_blockquote}">
       article .content blockquote:after {
         float: right;
         margin-top: 0.4em;
@@ -630,6 +639,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
         line-height: 0.1em;
       }
     </style>
+    <!--/*/
     <style th:inline="css" th:if="${theme.config?.styles?.is_show_the_table_bottom_border}">
       body tr:not(:first-child) {
         border-bottom-width:
@@ -638,6 +648,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
         border-bottom-color: var(--color-accent-3);
       }
     </style>
+    /*/-->
+    <!--/*/
     <style
       th:inline="css"
       th:if="${(theme.config?.styles?.heading_margin_top_multiplier != 1 
@@ -669,6 +681,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
         margin-bottom: calc(0.5rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
       }
     </style>
+    /*/-->
+    <!--/*/
     <style
       th:inline="css"
       th:if="${(theme.config?.styles?.paragraph_margin_top_multiplier != 1 
@@ -681,6 +695,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
         margin-block-end: calc(1em * /*[(${theme.config?.styles?.paragraph_margin_bottom_multiplier ?: 1})]*/ 1);
       }
     </style>
+    /*/-->
     <div class="max-width min-width content-width mx-auto px-4 sm:px-8">
       <th:block th:replace="${navbar}" />
 

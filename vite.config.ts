@@ -5,7 +5,6 @@ import utwm from "unplugin-tailwindcss-mangle/vite";
 import { defineConfig } from "vite";
 import PurgeIcons from "vite-plugin-purge-icons";
 
-import copyFilePlugin from "./plugins/vite-copy-file";
 import moveHtmlPlugin from "./plugins/vite-move-html";
 import bodyInject from "./plugins/vite-plugin-body-inject";
 import headInject from "./plugins/vite-plugin-head-inject";
@@ -17,7 +16,7 @@ export default defineConfig({
     PurgeIcons({
       content: ["./templates/*.html"],
     }),
-    utwm(), // obfuscate tailwindcss class.
+    utwm(), // obfuscate tailwindcss class
     legacy(),
     headInject({
       // 在 <head> 标签前插入
@@ -43,27 +42,24 @@ export default defineConfig({
       rules: [
         // 清理模板，匹配四种注释包裹的 head/body 标签
         {
-          from: "  <!--/*-->\n  <head>\n  <!--*/-->\n",
+          from: /^\s*<!--\/\*-->\s*<head>\s*<!--\*\/-->\s*$/gm,
           to: "",
         },
         {
-          from: "  <!--/*-->\n  </head>\n  <!--*/-->\n",
+          from: /^\s*<!--\/\*-->\s*<\/head>\s*<!--\*\/-->\s*$/gm,
           to: "",
         },
         {
-          from: "  <!--/*-->\n  <body>\n  <!--*/-->\n",
+          from: /^\s*<!--\/\*-->\s*<body>\s*<!--\*\/-->\s*$/gm,
           to: "",
         },
         {
-          from: "  <!--/*-->\n  </body>\n  <!--*/-->\n",
+          from: /^\s*<!--\/\*-->\s*<\/body>\s*<!--\*\/-->\s*$/gm,
           to: "",
         },
       ],
     }),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
-    copyFilePlugin({
-      targets: [{ src: "src/templates/fragments", dest: "templates/fragments" }],
-    }),
   ],
   build: {
     outDir: fileURLToPath(new URL("./templates/", import.meta.url)),

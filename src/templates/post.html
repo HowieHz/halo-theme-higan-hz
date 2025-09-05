@@ -14,22 +14,26 @@
     <script src="/src/pages/post.ts" type="module"></script>
   </head>
   <body>
+    <!--/*/
     <style th:inline="css" th:if="${theme.config?.post_styles?.is_custom_toc_max_width}">
       #header-post #toc {
         max-width: /*[(${theme.config?.post_styles?.toc_max_width})]*/ 20em;
       }
     </style>
+    /*/-->
     <style th:if="${theme.config?.post_styles?.is_optimize_content_paragraph_spacing}">
       .content > p {
         min-height: 1.1em;
       }
     </style>
     <!--/* 默认编辑器插入图片会有一个 display: inline-block，以及其他样式，因此需要排除避免产生以外缩进 */-->
+    <!--/*/
     <style th:inline="css" th:if="${theme.config?.post_styles?.is_enable_paragraph_first_line_indent}">
       .content > p:not(:has(img:only-child)) {
         text-indent: /*[(${theme.config?.post_styles?.paragraph_first_line_indent_value})]*/ 2em;
       }
     </style>
+    /*/-->
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
         <h1
@@ -319,7 +323,7 @@
     <th:block th:if="${theme.config?.post_styles?.is_show_footer_nav}">
       <div th:replace="~{fragments/post-footer-nav :: footerNav}"></div>
     </th:block>
-    <script type="text/javascript" th:inline="javascript">
+    <script>
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/* generate toc
         // wontfix：如果电脑屏幕较窄，文章页用的是底部导航栏，目录按钮按了之后不会显示目录
@@ -327,7 +331,7 @@
         window.initTOC("article > .content", isMobile() ? "#toc-footer" : "#toc");
       });
     </script>
-    <script th:inline="javascript" th:if="${theme.config?.post_styles?.is_post_upvote_button_show}">
+    <script vite-ignore th:inline="javascript" th:if="${theme.config?.post_styles?.is_post_upvote_button_show}">
       const likes_localstorage_key = "higan.likes.post.ids";
       let likedPostNames = JSON.parse(localStorage.getItem(likes_localstorage_key) || "[]");
       likedPostNames.forEach((postName) => {

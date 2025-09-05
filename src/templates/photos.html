@@ -14,7 +14,12 @@
   </head>
   <body>
     <article class="photos post" itemscope itemtype="http://schema.org/BlogPosting">
-      <script type="module" th:inline="javascript" th:if="${theme.config?.photos_styles?.is_enable_masonry_layout}">
+      <script
+        vite-ignore
+        type="module"
+        th:inline="javascript"
+        th:if="${theme.config?.photos_styles?.is_enable_masonry_layout}"
+      >
         class Waterfall {
           constructor(options) {
             this.$el = options.$el || null; // <!--/* 父容器 */-->
@@ -142,7 +147,12 @@
         };
       </script>
 
-      <script type="module" th:inline="javascript" th:if="not ${theme.config?.photos_styles?.is_enable_masonry_layout}">
+      <script
+        vite-ignore
+        type="module"
+        th:inline="javascript"
+        th:if="not ${theme.config?.photos_styles?.is_enable_masonry_layout}"
+      >
         const photos = document.querySelectorAll(".photo-groups img");
         var nextImageIndex = 0; // <!--/* 存储下一个需要加载的图片的 index */-->
         var totalImages = photos.length; // <!--/* 存储一共有多少张图片 */-->
