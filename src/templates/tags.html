@@ -12,7 +12,7 @@
   <head>
     <script src="/src/pages/generic-header.ts" type="module"></script>
   </head>
-  <th:block th:fragment="content">
+  <body>
     <h1>
       <th:block th:text="#{page.tags.title}">标题替换位</th:block>
       <th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
@@ -79,5 +79,5 @@
           console.error("Error fetching tags:", error);
         });
     </script>
-  </th:block>
+  </body>
 </th:block>

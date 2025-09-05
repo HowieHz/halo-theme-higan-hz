@@ -12,7 +12,7 @@
   <head>
     <script src="/src/pages/photos.ts" type="module"></script>
   </head>
-  <th:block th:fragment="content">
+  <body>
     <article class="photos post" itemscope itemtype="http://schema.org/BlogPosting">
       <script type="module" th:inline="javascript" th:if="${theme.config?.photos_styles?.is_enable_masonry_layout}">
         class Waterfall {
@@ -273,5 +273,5 @@
         </div>
       </div>
     </article>
-  </th:block>
+  </body>
 </th:block>

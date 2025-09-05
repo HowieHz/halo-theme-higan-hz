@@ -7,7 +7,9 @@ import PurgeIcons from "vite-plugin-purge-icons";
 
 import copyFilePlugin from "./plugins/vite-copy-file";
 import moveHtmlPlugin from "./plugins/vite-move-html";
+import bodyInject from "./plugins/vite-plugin-body-inject";
 import headInject from "./plugins/vite-plugin-head-inject";
+import replaceHtmlPlugin from "./plugins/vite-plugin-replace-html";
 
 export default defineConfig({
   base: "/themes/howiehz-higan/",
@@ -26,6 +28,37 @@ export default defineConfig({
       beforeHeadClose: `<!--/*-->\n  `,
       // 在 </head> 标签后插入
       afterHeadClose: `\n  <!--*/-->\n  </th:block>`,
+    }),
+    bodyInject({
+      // 在 <body> 标签前插入
+      beforeBodyOpen: `<th:block th:fragment="content">\n  <!--/*-->\n  `,
+      // 在 <body> 标签后插入
+      afterBodyOpen: `\n  <!--*/-->`,
+      // 在 </body> 标签前插入
+      beforeBodyClose: `<!--/*-->\n  `,
+      // 在 </body> 标签后插入
+      afterBodyClose: `\n  <!--*/-->\n  </th:block>`,
+    }),
+    replaceHtmlPlugin({
+      rules: [
+        // 清理模板，匹配四种注释包裹的 head/body 标签
+        {
+          from: "  <!--/*-->\n  <head>\n  <!--*/-->\n",
+          to: "",
+        },
+        {
+          from: "  <!--/*-->\n  </head>\n  <!--*/-->\n",
+          to: "",
+        },
+        {
+          from: "  <!--/*-->\n  <body>\n  <!--*/-->\n",
+          to: "",
+        },
+        {
+          from: "  <!--/*-->\n  </body>\n  <!--*/-->\n",
+          to: "",
+        },
+      ],
     }),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
     copyFilePlugin({
