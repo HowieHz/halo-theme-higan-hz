@@ -1,4 +1,4 @@
-import type { Plugin, IndexHtmlTransformHook } from 'vite';
+import type { IndexHtmlTransformHook, Plugin } from "vite";
 
 /**
  * 插件选项接口
@@ -20,53 +20,48 @@ interface BodyInjectOptions {
  * @returns Vite 插件
  */
 export default function bodyInjectPlugin(options: BodyInjectOptions = {}): Plugin {
-  const {
-    beforeBodyOpen = '',
-    afterBodyOpen = '',
-    beforeBodyClose = '',
-    afterBodyClose = ''
-  } = options;
-  
+  const { beforeBodyOpen = "", afterBodyOpen = "", beforeBodyClose = "", afterBodyClose = "" } = options;
+
   const transformHook: IndexHtmlTransformHook = (html) => {
     // 检查是否有<body>标签
-    if (!html.includes('<body') || !html.includes('</body>')) {
-      console.warn('[vite-plugin-body-inject] No <body> tag found in HTML');
+    if (!html.includes("<body") || !html.includes("</body>")) {
+      console.warn("[vite-plugin-body-inject] No <body> tag found in HTML");
       return html;
     }
-    
+
     // 四个位置的注入，按顺序执行以避免干扰
     let result = html;
-    
+
     // 1. 在<body>标签前插入
     if (beforeBodyOpen) {
       result = result.replace(/(<body[^>]*>)/i, `${beforeBodyOpen}$1`);
     }
-    
+
     // 2. 在<body>标签后插入
     if (afterBodyOpen) {
       result = result.replace(/(<body[^>]*>)/i, `$1${afterBodyOpen}`);
     }
-    
+
     // 3. 在</body>标签前插入
     if (beforeBodyClose) {
       result = result.replace(/<\/body>/i, `${beforeBodyClose}</body>`);
     }
-    
+
     // 4. 在</body>标签后插入
     if (afterBodyClose) {
       result = result.replace(/<\/body>/i, `</body>${afterBodyClose}`);
     }
-    
+
     return result;
   };
-  
+
   return {
-    name: 'vite-plugin-body-inject',
-    enforce: 'post',
+    name: "vite-plugin-body-inject",
+    enforce: "post",
     transformIndexHtml: {
       // 'post' 确保在其他插件处理后执行，这样我们可以捕获所有 body 内容
-      order: 'post',
-      handler: transformHook
-    }
+      order: "post",
+      handler: transformHook,
+    },
   };
 }

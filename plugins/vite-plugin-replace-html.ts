@@ -1,4 +1,4 @@
-import type { Plugin, IndexHtmlTransformHook } from 'vite';
+import type { IndexHtmlTransformHook, Plugin } from "vite";
 
 /**
  * 替换规则接口
@@ -32,11 +32,11 @@ export default function replaceHtmlPlugin(options: ReplaceHtmlOptions): Plugin {
   };
 
   return {
-    name: 'vite-plugin-replace-html',
-    enforce: 'post',
+    name: "vite-plugin-replace-html",
+    enforce: "post",
     transformIndexHtml: {
-      order: 'post',
-      handler: transformHook
-    }
+      order: "post",
+      handler: transformHook,
+    },
   };
 }
