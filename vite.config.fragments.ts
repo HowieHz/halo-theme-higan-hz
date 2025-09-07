@@ -15,6 +15,9 @@ export default defineConfig({
     outDir: fileURLToPath(new URL("./templates/", import.meta.url)),
     assetsDir: "assets/dist/",
     emptyOutDir: false,
+    modulePreload: {
+      polyfill: false, // 仅 fragments/layout.html 会注入此 polyfill，其他 fragment 无 js，但其他页面 js 包括此 polyfill，因此无需重复注入
+    },
     rollupOptions: {
       input: {
         "category-tree": path.resolve(__dirname, "src/templates/fragments/category-tree.html"),
