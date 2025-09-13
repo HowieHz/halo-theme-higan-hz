@@ -11,13 +11,20 @@
   )}"
 >
   <head>
+    <link
+      th:if="${pluginFinder.available('PluginFeed') and theme.config?.tag_page_styles?.is_show_rss_button}"
+      rel="alternate"
+      type="application/rss+xml"
+      th:title="'Posts - Tag: ' + ${tag.spec?.displayName}"
+      th:href="@{'/feed/tags/' + ${tag.spec?.slug} + '.xml'}"
+    />
     <script src="/src/pages/generic-header.ts" type="module"></script>
   </head>
   <body>
     <div id="archive" class="content">
       <h1>
         <span th:text="#{page.tag.title(${tag.spec?.displayName})}">标签页标题替换位</span>
-        <th:block th:if="${theme.config?.tag_page_styles?.is_show_rss_button}">
+        <th:block th:if="${pluginFinder.available('PluginFeed') and theme.config?.tag_page_styles?.is_show_rss_button}">
           <a
             class="icon"
             th:aria-label="#{common.subscribeThisPage}"
@@ -42,9 +49,7 @@
             <a class="post-title" th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}"
               >文章标题替换位</a
             >
-            <th:block
-              th:if="${pluginFinder.available('PluginFeed') and theme.config?.tag_page_styles?.is_show_post_views_in_post_list}"
-            >
+            <th:block th:if="${theme.config?.tag_page_styles?.is_show_post_views_in_post_list}">
               <span
                 class="color-time relative z-10 mb-0 mt-0.5 p-0 text-sm"
                 th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"

@@ -10,6 +10,13 @@
   )}"
 >
   <head>
+    <link
+      th:if="${pluginFinder.available('PluginFeed')}"
+      rel="alternate"
+      type="application/rss+xml"
+      title="Moments - All"
+      th:href="@{'/moments/rss.xml'}"
+    />
     <script src="/src/pages/moment.ts" type="module"></script>
   </head>
   <body>

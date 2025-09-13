@@ -10,6 +10,13 @@
   )}"
 >
   <head>
+    <link
+      th:if="${pluginFinder.available('PluginFeed') and theme.config?.author_page_styles?.is_show_rss_button}"
+      rel="alternate"
+      type="application/rss+xml"
+      th:title="'Posts - Author: ' + ${author.spec.displayName}"
+      th:href="@{'/feed/authors/' + ${author.metadata?.name} + '.xml'}"
+    />
     <script src="/src/pages/author.ts" type="module"></script>
   </head>
   <body>
