@@ -194,14 +194,18 @@ html[theme="theme-[(${colorSchema.id})]"] {
       /*/-->
     </th:block>
     <!--/* RSS link declaration */-->
-    <th:block th:each="item : ${theme?.config?.sns?.index_sns}" th:if="${pluginFinder.available('PluginFeed')}">
-      <th:block th:if="${#strings.equals(item?.type['type'], 'rss')}">
-        <link
-          rel="alternate"
-          type="application/rss+xml"
-          title="Posts - All"
-          th:href="@{${item?.type['url']}+${item?.input_value}}"
-        />
+    <th:block th:if="${pluginFinder.available('PluginFeed')}">
+      <link rel="alternate" type="application/rss+xml" title="Posts - All" th:href="@{'/rss.xml'}" />
+      <th:block th:each="item : ${theme?.config?.sns?.index_sns}">
+        <th:block th:if="${#strings.equals(item?.type['type'], 'rss')}" th:with="href=${item?.input_value}">
+          <link
+            th:if="${href != '/rss.xml'}"
+            rel="alternate"
+            type="application/rss+xml"
+            title="RSS feed"
+            th:href="@{${href}}"
+          />
+        </th:block>
       </th:block>
     </th:block>
     <!--/* js/css */-->
