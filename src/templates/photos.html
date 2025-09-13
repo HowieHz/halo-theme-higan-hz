@@ -10,6 +10,16 @@
   )}"
 >
   <head>
+    <th:block th:each="item : ${theme?.config?.sns?.index_sns}" th:if="${pluginFinder.available('PluginFeed')}">
+      <th:block th:if="${#strings.equals(item?.type['type'], 'rss')}">
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Posts - All"
+          th:href="@{${item?.type['url']}+${item?.input_value}}"
+        />
+      </th:block>
+    </th:block>
     <script src="/src/pages/photos.ts" type="module"></script>
   </head>
   <body>
