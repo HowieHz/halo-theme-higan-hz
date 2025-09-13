@@ -11,7 +11,7 @@
 >
   <head>
     <link
-      th:if="${pluginFinder.available('PluginFeed') and theme.config?.author_page_styles?.is_show_rss_button}"
+      th:if="${pluginFinder.available('PluginFeed')}"
       rel="alternate"
       type="application/rss+xml"
       th:title="'Posts - Author: ' + ${author.spec.displayName}"
