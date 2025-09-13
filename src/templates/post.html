@@ -11,6 +11,43 @@
   )}"
 >
   <head>
+    <th:block th:if="${pluginFinder.available('PluginFeed')}">
+      <th:block th:each="contributor : ${post?.contributors}">
+        <link
+          th:if="${contributor.permalink} != '/authors/ghost'"
+          rel="alternate"
+          type="application/rss+xml"
+          th:title="'Posts - Author: ' + ${contributor?.displayName}"
+          th:href="@{'/feed/authors/' + ${contributor.metadata?.name} + '.xml'}"
+        />
+      </th:block>
+
+      <th:block th:if="${!#lists.isEmpty(post.categories)}">
+        <th:block th:each="categoryLeafNode, categoryLeafNodeIterStat : ${post.categories}">
+          <th:block>
+            <th:block th:each="category, iterStat : ${categoryFinder.getBreadcrumbs(categoryLeafNode.metadata?.name)}">
+              <link
+                rel="alternate"
+                type="application/rss+xml"
+                th:title="'Posts - Category: ' + ${category.spec?.displayName}"
+                th:href="@{'/feed/categories/' + ${category.spec?.slug} + '.xml'}"
+              />
+            </th:block>
+          </th:block>
+        </th:block>
+      </th:block>
+
+      <th:block th:if="${!#lists.isEmpty(post.tags)}">
+        <th:block th:each="tag, iterStat : ${post.tags}">
+          <link
+            rel="alternate"
+            type="application/rss+xml"
+            th:title="'Posts - Tag: ' + ${tag.spec?.displayName}"
+            th:href="@{'/feed/tags/' + ${tag.spec?.slug} + '.xml'}"
+          />
+        </th:block>
+      </th:block>
+    </th:block>
     <script src="/src/pages/post.ts" type="module"></script>
   </head>
   <body>
