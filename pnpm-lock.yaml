@@ -31,11 +31,11 @@ importers:
         specifier: ^3.13.11
         version: 3.13.11
       '@types/node':
-        specifier: ^24.3.3
-        version: 24.3.3
+        specifier: ^24.4.0
+        version: 24.4.0
       '@vitejs/plugin-legacy':
         specifier: ^7.2.1
-        version: 7.2.1(rolldown-vite@7.1.9(@types/node@24.3.3)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0))(terser@5.43.1)
+        version: 7.2.1(rolldown-vite@7.1.9(@types/node@24.4.0)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0))(terser@5.43.1)
       autocorrect-node:
         specifier: ^2.14.0
         version: 2.14.0
@@ -122,10 +122,10 @@ importers:
         version: 4.1.2
       vite:
         specifier: npm:rolldown-vite@^7.1.9
-        version: rolldown-vite@7.1.9(@types/node@24.3.3)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0)
+        version: rolldown-vite@7.1.9(@types/node@24.4.0)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0)
       vite-plugin-purge-icons:
         specifier: ^0.10.0
-        version: 0.10.0(rolldown-vite@7.1.9(@types/node@24.3.3)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0))
+        version: 0.10.0(rolldown-vite@7.1.9(@types/node@24.4.0)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0))
 
 packages:
 
@@ -1556,8 +1556,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@24.3.3':
-    resolution: {integrity: sha512-GKBNHjoNw3Kra1Qg5UXttsY5kiWMEfoHq2TmXb+b1rcm6N7B3wTrFYIf/oSZ1xNQ+hVVijgLkiDZh7jRRsh+Gw==}
+  '@types/node@24.4.0':
+    resolution: {integrity: sha512-gUuVEAK4/u6F9wRLznPUU4WGUacSEBDPoC2TrBkw3GAnOLHBL45QdfHOXp1kJ4ypBGLxTOB+t7NJLpKoC3gznQ==}
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
@@ -4240,8 +4240,8 @@ packages:
   ufo@1.6.1:
     resolution: {integrity: sha512-9a4/uxlTWJ4+a5i0ooc1rU7C7YOw3wT+UGqdeNNHWnOF9qcMBgLRS+4IYUqbczewFx4mLEig6gawh7X6mFlEkA==}
 
-  undici-types@7.10.0:
-    resolution: {integrity: sha512-t5Fy/nfn+14LuOc2KNYg75vZqClpAiqscVvMygNnlsHBFpSXdJaYtXMcdNLpl/Qvc3P2cB3s6lOV51nqsFq4ag==}
+  undici-types@7.11.0:
+    resolution: {integrity: sha512-kt1ZriHTi7MU+Z/r9DOdAI3ONdaR3M3csEaRc6ewa4f4dTvX4cQCbJ4NkEn0ohE4hHtq85+PhPSTY+pO/1PwgA==}
 
   unicode-canonical-property-names-ecmascript@2.0.1:
     resolution: {integrity: sha512-dA8WbNeb2a6oQzAQ55YlT5vQAWGV9WXOsi3SskE3bcCdM0P4SDd+24zS/OCacdRq5BkdsRj9q3Pg6YyQoxIGqg==}
@@ -5900,9 +5900,9 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@24.3.3':
+  '@types/node@24.4.0':
     dependencies:
-      undici-types: 7.10.0
+      undici-types: 7.11.0
 
   '@types/unist@2.0.11': {}
 
@@ -6060,7 +6060,7 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.9.2':
     optional: true
 
-  '@vitejs/plugin-legacy@7.2.1(rolldown-vite@7.1.9(@types/node@24.3.3)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0))(terser@5.43.1)':
+  '@vitejs/plugin-legacy@7.2.1(rolldown-vite@7.1.9(@types/node@24.4.0)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0))(terser@5.43.1)':
     dependencies:
       '@babel/core': 7.28.0
       '@babel/plugin-transform-dynamic-import': 7.27.1(@babel/core@7.28.0)
@@ -6075,7 +6075,7 @@ snapshots:
       regenerator-runtime: 0.14.1
       systemjs: 6.15.1
       terser: 5.43.1
-      vite: rolldown-vite@7.1.9(@types/node@24.3.3)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0)
+      vite: rolldown-vite@7.1.9(@types/node@24.4.0)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -8272,7 +8272,7 @@ snapshots:
 
   reusify@1.0.4: {}
 
-  rolldown-vite@7.1.9(@types/node@24.3.3)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0):
+  rolldown-vite@7.1.9(@types/node@24.4.0)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0):
     dependencies:
       fdir: 6.5.0(picomatch@4.0.3)
       lightningcss: 1.30.1
@@ -8281,7 +8281,7 @@ snapshots:
       rolldown: 1.0.0-beta.37
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@types/node': 24.3.3
+      '@types/node': 24.4.0
       esbuild: 0.25.6
       fsevents: 2.3.3
       jiti: 2.5.1
@@ -8720,7 +8720,7 @@ snapshots:
 
   ufo@1.6.1: {}
 
-  undici-types@7.10.0: {}
+  undici-types@7.11.0: {}
 
   unicode-canonical-property-names-ecmascript@2.0.1: {}
 
@@ -8807,12 +8807,12 @@ snapshots:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
 
-  vite-plugin-purge-icons@0.10.0(rolldown-vite@7.1.9(@types/node@24.3.3)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0)):
+  vite-plugin-purge-icons@0.10.0(rolldown-vite@7.1.9(@types/node@24.4.0)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0)):
     dependencies:
       '@purge-icons/core': 0.10.0
       '@purge-icons/generated': 0.10.0
       rollup-plugin-purge-icons: 0.10.0
-      vite: rolldown-vite@7.1.9(@types/node@24.3.3)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0)
+      vite: rolldown-vite@7.1.9(@types/node@24.4.0)(esbuild@0.25.6)(jiti@2.5.1)(stylus@0.64.0)(terser@5.43.1)(yaml@2.7.0)
     transitivePeerDependencies:
       - encoding
       - supports-color
