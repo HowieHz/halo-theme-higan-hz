@@ -453,7 +453,7 @@ spec:
                   value: "comment"
                 - label: "Total number of categories"
                   value: "category"
-                - label: "Total number of words"
+                - label: "Total number of words(requires 'Extra API' plugin support)"
                   value: "wordcount"
               validation: "required"
             - $formkit: checkbox

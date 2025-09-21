@@ -708,6 +708,10 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 
 ## 可选插件
 
+- API 扩展，需插件 [plugin-extra-api](https://github.com/HowieHz/halo-plugin-extra-api)
+  - 启用插件后：
+    - 单文章字数统计将自动应用插件中更准确的计算方法。
+    - “总体样式-页面底部站点统计信息”将支持“总字数”统计显示。
 - 友链页面（/links），需插件 [plugin-links](https://github.com/halo-sigs/plugin-links)([应用市场页面](https://www.halo.run/store/apps/app-hfbQg))
 - <a id="plugin-photos"></a>图库页面（/photos），需插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)([应用市场页面](https://www.halo.run/store/apps/app-BmQJW))
 - <a id="plugin-moments"></a>瞬间页面（/moments），需插件 [plugin-moments](https://github.com/halo-sigs/plugin-moments)([应用市场页面](https://www.halo.run/store/apps/app-SnwWD))
@@ -715,18 +719,16 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 - 评论功能，需插件 [plugin-comment-widget](https://github.com/halo-sigs/plugin-comment-widget/releases)([应用市场页面](https://www.halo.run/store/apps/app-YXyaD))
 - 搜索功能，需插件 [plugin-search-widget](https://github.com/halo-sigs/plugin-search-widget/releases)([应用市场页面](https://www.halo.run/store/apps/app-DlacW))
 - 代码渲染，需插件：[plugin-highlightjs](https://github.com/halo-sigs/plugin-highlightjs)([应用市场页面](https://www.halo.run/store/apps/app-sqpgf))
-- - 暗黑模式下，代码块高亮主题推荐选择“an-old-hope.min.css”
+  - 暗黑模式下，代码块高亮主题推荐选择“an-old-hope.min.css”
 - 图片灯箱，需插件：[plugin-lightgallery](https://github.com/halo-sigs/plugin-lightgallery)([应用市场页面](https://www.halo.run/store/apps/app-OoggD))
-
-- - 页面匹配规则 推荐设置为
-
-| 路径匹配       | 匹配区域                   |
-| -------------- | -------------------------- |
-| `/archives/**` | `article .content`         |
-| `/moments`     | `article .content .medium` |
-| `/moments/**`  | `article .content .medium` |
-| `/photos`      | `article .content`         |
-| `/photos/**`   | `article .content`         |
+  - 页面匹配规则 推荐设置为
+    | 路径匹配 | 匹配区域 |
+    | -------------- | -------------------------- |
+    | `/archives/**` | `article .content` |
+    | `/moments` | `article .content .medium` |
+    | `/moments/**` | `article .content .medium` |
+    | `/photos` | `article .content` |
+    | `/photos/**` | `article .content` |
 
 ### Mermaid 明暗切换支持
 

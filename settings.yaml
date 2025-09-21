@@ -453,7 +453,7 @@ spec:
                   value: "comment"
                 - label: "总分类数"
                   value: "category"
-                - label: "总字数"
+                - label: "总字数（需“API 扩展包”插件支持）"
                   value: "wordcount"
               validation: "required"
             - $formkit: checkbox
