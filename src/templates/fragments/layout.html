@@ -739,6 +739,10 @@ html[theme="theme-[(${colorSchema.id})]"] {
                   <span th:text="${stats.comment}" th:if="${item?.type=='comment'} and not ${item?.i18n_text}"></span>
                   <span th:text="${stats.category}" th:if="${item?.type=='category'} and not ${item?.i18n_text}"></span>
                   <span
+                    th:text="${stats.wordcount}"
+                    th:if="${item?.type=='wordcount'} and not ${item?.i18n_text}"
+                  ></span>
+                  <span
                     th:text="#{common.siteTotalVisit(${stats.visit})}"
                     th:if="${item?.type=='visit'} and ${item?.i18n_text}"
                   ></span>
@@ -757,6 +761,10 @@ html[theme="theme-[(${colorSchema.id})]"] {
                   <span
                     th:text="#{common.siteTotalCategory(${stats.category})}"
                     th:if="${item?.type=='category'} and ${item?.i18n_text}"
+                  ></span>
+                  <span
+                    th:text="#{common.siteTotalWordcount(${extraApiStatsFinder.postWordCount()})}"
+                    th:if="${item?.type=='wordcount'} and ${item?.i18n_text} and ${pluginFinder.available('extra-api')}"
                   ></span>
                 </li>
               </ul>

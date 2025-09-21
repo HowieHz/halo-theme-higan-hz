@@ -434,6 +434,9 @@ spec:
             - type: "category"
               icon: ""
               i18n_text: true
+            - type: "wordcount"
+              icon: ""
+              i18n_text: true
           children:
             - $formkit: select
               name: type
@@ -450,6 +453,8 @@ spec:
                   value: "comment"
                 - label: "总分类数"
                   value: "category"
+                - label: "总字数"
+                  value: "wordcount"
               validation: "required"
             - $formkit: checkbox
               name: i18n_text
