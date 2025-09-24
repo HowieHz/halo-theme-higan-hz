@@ -38,6 +38,7 @@
         "swup",
         "initTOC",
         "isMobile",
+        "swupScriptsPlugin",
       ];
 
       window.moduleResolve = {};
@@ -48,6 +49,18 @@
           window.moduleResolve[key] = resolve;
         });
       });
+
+      document.addEventListener(
+        "swup:visit:start",
+        ({ detail: { visit } }) => {
+          moduleKeys.forEach((key) => {
+            window.moduleReady[key] = new Promise((resolve) => {
+              window.moduleResolve[key] = resolve;
+            });
+          });
+        },
+        { once: true },
+      );
 
       const originalAddEventListener = EventTarget.prototype.addEventListener;
 
@@ -72,11 +85,35 @@
           // 在 page:view 后触发
           // 就运行一次 */-->
           if (!window.isDirectLoad) {
-            window.moduleReady.swup.then(() => {
-              if (window.isPageViewTriggered) {
-                listener();
-              } else {
-                window.swup.hooks.once("page:view", () => listener());
+            window.moduleReady.swupScriptsPlugin.then(() => {
+              function retryFunction() {
+                if (window.isPageViewTriggered) {
+                  listener();
+                } else {
+                  document.addEventListener(
+                    "swup:visit:end",
+                    ({ detail: { visit } }) => {
+                      listener();
+                    },
+                    { once: true },
+                  );
+                }
+              }
+              try {
+                retryFunction();
+              } catch (error) {
+                console.log("Error caught in hook:", error);
+                if (error instanceof ReferenceError) {
+                  // 专门处理 ReferenceError（如 "xxx is not defined"）
+                  console.log("ReferenceError caught:", error.message);
+                  // 处理逻辑，如等待依赖加载
+                  window.moduleReady.swupScriptsPlugin.then(() => {
+                    retryFunction();
+                  });
+                } else {
+                  // 其他错误
+                  throw error; // 重新抛出
+                }
               }
             });
           }
@@ -88,8 +125,10 @@
 
       EventTarget.prototype.addEventListener = function (type, listener, options) {
         if (type === "DOMContentLoaded") {
+          console.log("Hooking DOMContentLoaded event listener");
           window.onDOMContentLoadedHook(listener, options);
         } else if (type === "load") {
+          console.log("Hooking load event listener");
           window.onloadHook(listener, options);
         } else {
           originalAddEventListener.call(this, type, listener, options);

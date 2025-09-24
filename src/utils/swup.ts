@@ -3,11 +3,12 @@ import type {} from "../types/window-common";
 
 import SwupA11yPlugin from "@swup/a11y-plugin";
 import SwupDebugPlugin from "@swup/debug-plugin";
-import SwupHeadPlugin from "@swup/head-plugin";
 import SwupPreloadPlugin from "@swup/preload-plugin";
-import SwupScriptsPlugin from "@swup/scripts-plugin";
 import SwupScrollPlugin from "@swup/scroll-plugin";
 import Swup from "swup";
+
+import SwupHeadPlugin from "../../plugins/swup-plugin-head";
+import SwupScriptsPlugin from "../../plugins/swup-plugin-scripts";
 
 // 使此文件成为模块
 export {};
@@ -16,7 +17,9 @@ window.swup = new Swup({
   plugins: [
     new SwupPreloadPlugin(),
     new SwupScrollPlugin(),
-    new SwupHeadPlugin({ persistAssets: true }),
+    new SwupHeadPlugin({
+      awaitScripts: true,
+    }),
     new SwupScriptsPlugin(),
     new SwupDebugPlugin(),
     new SwupA11yPlugin({
@@ -71,7 +74,7 @@ window.swup = new Swup({
         },
         "ja-JP": {
           visit: "{title} に移動しました",
-          url: "新しいページのURL: {url}",
+          url: "新しいページの URL: {url}",
         },
         "de-DE": {
           visit: "Navigiert zu: {title}",
@@ -88,13 +91,12 @@ window.swup = new Swup({
       },
     }),
   ],
-  native: true,
   hooks: {
-    "visit:start": () => {
+    "visit:start.before": () => {
       window.isDirectLoad = false;
       window.isPageViewTriggered = false;
     },
-    "page:view": () => {
+    "visit:end.before": () => {
       window.isPageViewTriggered = true;
     },
   },

@@ -12,7 +12,8 @@ type ModuleKeys =
   | "isVisible"
   | "swup"
   | "initTOC"
-  | "isMobile";
+  | "isMobile"
+  | "swupScriptsPlugin";
 
 /**
  * 扩展 window 对象的类型定义
