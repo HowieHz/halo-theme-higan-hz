@@ -16,7 +16,7 @@ window.swup = new Swup({
   plugins: [
     new SwupPreloadPlugin(),
     new SwupScrollPlugin(),
-    new SwupHeadPlugin(),
+    new SwupHeadPlugin({ persistAssets: true }),
     new SwupScriptsPlugin(),
     new SwupDebugPlugin(),
     new SwupA11yPlugin({

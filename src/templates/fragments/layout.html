@@ -52,17 +52,17 @@
       const originalAddEventListener = EventTarget.prototype.addEventListener;
 
       const createHook = (event, target = window) => {
-        return (funcHook, options = {}) => {
+        return (listener, options = {}, addEventListener = true) => {
           // <!--/* 直接进入页面触发
           // 加 if 避免反复添加 Listener 浪费资源
           // 这的 addEventListener 只会在直接进入这个页面时才执行一次，加不加 once 没区别 */-->
-          if (window.isDirectLoad) {
+          if (addEventListener && window.isDirectLoad) {
             // 用 originalAddEventListener 避免被覆盖
             originalAddEventListener.call(
               target,
               event,
               () => {
-                funcHook();
+                listener();
               },
               options,
             );
@@ -71,21 +71,32 @@
           // 通过 swup 进入这个页面触发
           // 在 page:view 后触发
           // 就运行一次 */-->
-          window.moduleReady.swup.then(() => {
-            if (!window.isDirectLoad) {
+          if (!window.isDirectLoad) {
+            window.moduleReady.swup.then(() => {
               if (window.isPageViewTriggered) {
-                funcHook();
+                listener();
               } else {
-                window.swup.hooks.once("page:view", () => funcHook());
+                window.swup.hooks.once("page:view", () => listener());
               }
-            }
-          });
+            });
+          }
         };
       };
 
       window.onDOMContentLoadedHook = createHook("DOMContentLoaded", document);
       window.onloadHook = createHook("load");
+
+      EventTarget.prototype.addEventListener = function (type, listener, options) {
+        if (type === "DOMContentLoaded") {
+          window.onDOMContentLoadedHook(listener, options);
+        } else if (type === "load") {
+          window.onloadHook(listener, options);
+        } else {
+          originalAddEventListener.call(this, type, listener, options);
+        }
+      };
     </script>
+    <th:block th:if="${pluginFinder.available('PluginHighlightJS')}"> </th:block>
     <script
       vite-ignore
       th:if="${theme_config['theme'] == 'custom'} or ${theme.config?.styles?.theme_dark == 'custom'} or ${theme.config?.styles?.theme_light == 'custom'} or ${theme.config?.styles?.theme_auto == 'custom'}"
