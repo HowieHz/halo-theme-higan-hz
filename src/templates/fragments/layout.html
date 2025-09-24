@@ -49,13 +49,23 @@
         });
       });
 
+      const originalAddEventListener = EventTarget.prototype.addEventListener;
+
       const createHook = (event, target = window) => {
-        return (funcHook) => {
+        return (funcHook, options = {}) => {
           // <!--/* 直接进入页面触发
           // 加 if 避免反复添加 Listener 浪费资源
           // 这的 addEventListener 只会在直接进入这个页面时才执行一次，加不加 once 没区别 */-->
           if (window.isDirectLoad) {
-            target.addEventListener(event, () => funcHook());
+            // 用 originalAddEventListener 避免被覆盖
+            originalAddEventListener.call(
+              target,
+              event,
+              () => {
+                funcHook();
+              },
+              options,
+            );
           }
           // <!--/* 得在 swup 初始化好之后触发
           // 通过 swup 进入这个页面触发
