@@ -23,6 +23,59 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="${#strings.defaultString(title, site.title)}"></title>
+    <script data-swup-ignore-script>
+      window.isDirectLoad = true;
+      const moduleKeys = [
+        "scrollToTop",
+        "fadeIn",
+        "fadeOut",
+        "slideDown",
+        "slideUp",
+        "show",
+        "hide",
+        "toggle",
+        "isVisible",
+        "swup",
+        "initTOC",
+        "isMobile",
+      ];
+
+      window.moduleResolve = {};
+      window.moduleReady = {};
+
+      moduleKeys.forEach((key) => {
+        window.moduleReady[key] = new Promise((resolve) => {
+          window.moduleResolve[key] = resolve;
+        });
+      });
+
+      const createHook = (event, target = window) => {
+        return (funcHook) => {
+          // <!--/* 直接进入页面触发
+          // 加 if 避免反复添加 Listener 浪费资源
+          // 这的 addEventListener 只会在直接进入这个页面时才执行一次，加不加 once 没区别 */-->
+          if (window.isDirectLoad) {
+            target.addEventListener(event, () => funcHook());
+          }
+          // <!--/* 得在 swup 初始化好之后触发
+          // 通过 swup 进入这个页面触发
+          // 在 page:view 后触发
+          // 就运行一次 */-->
+          window.moduleReady.swup.then(() => {
+            if (!window.isDirectLoad) {
+              if (window.isPageViewTriggered) {
+                funcHook();
+              } else {
+                window.swup.hooks.once("page:view", () => funcHook());
+              }
+            }
+          });
+        };
+      };
+
+      window.onDOMContentLoadedHook = createHook("DOMContentLoaded", document);
+      window.onloadHook = createHook("load");
+    </script>
     <script
       vite-ignore
       th:if="${theme_config['theme'] == 'custom'} or ${theme.config?.styles?.theme_dark == 'custom'} or ${theme.config?.styles?.theme_light == 'custom'} or ${theme.config?.styles?.theme_auto == 'custom'}"
@@ -210,19 +263,10 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </th:block>
     <!--/* js/css */-->
     <th:block th:replace="${head}" />
-    <!--/* instant.page */-->
-    <script
-      th:src="@{/assets/lib/instantpage/5.2.0.js(v=${theme.spec.version})}"
-      th:if="${theme.config?.global?.is_instant_page_enable} and not ${theme.config?.global?.is_custom_resource_locations}"
-      type="module"
-      defer
-    ></script>
-    <script
-      th:src="${theme.config?.global?.instantpage_resource_location}"
-      th:if="${theme.config?.global?.is_instant_page_enable} and ${theme.config?.global?.is_custom_resource_locations}"
-      type="module"
-      defer
-    ></script>
+    <script data-swup-ignore-script src="/src/utils/swup.ts" type="module"></script>
+  </head>
+
+  <body class="transition-colors duration-300" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
     <!--/* Mermaid */-->
     <script vite-ignore type="module" th:inline="javascript" th:if="${theme.config?.global?.is_mermaid_enable}">
       import mermaid from /*[[${theme.config?.global?.mermaid_script_url}]]*/ "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
@@ -335,12 +379,11 @@ html[theme="theme-[(${colorSchema.id})]"] {
         item.setAttribute("data-processed", "true");
       });
     </script>
-
     <script vite-ignore th:inline="javascript" th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       var THEME_DARK = /*[[${theme.config?.styles?.theme_dark}]]*/ "dark";
       var THEME_LIGHT = /*[[${theme.config?.styles?.theme_light}]]*/ "light";
       var THEME_AUTO = /*[[${theme.config?.styles?.theme_auto}]]*/ "auto";
-      const is_save_color_scheme_settings_to_browser =
+      window.is_save_color_scheme_settings_to_browser =
         /*[[${theme.config?.styles?.is_save_color_scheme_settings_to_browser}]]*/ "true";
 
       var themeColorSchemeMap = {
@@ -403,7 +446,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
       }
 
       function applyTheme(theme) {
-        if (is_save_color_scheme_settings_to_browser === true && typeof Storage !== "undefined") {
+        if (window.is_save_color_scheme_settings_to_browser === true && typeof Storage !== "undefined") {
           localStorage.setItem("pref-theme", themeColorSchemeMap[theme]);
         } else if (typeof Storage === "undefined") {
           console.log("Sorry, your browser does not support web storage...");
@@ -423,7 +466,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
       }
 
       (function () {
-        if (is_save_color_scheme_settings_to_browser !== true && typeof Storage !== "undefined") {
+        if (window.is_save_color_scheme_settings_to_browser !== true && typeof Storage !== "undefined") {
           localStorage.removeItem("pref-theme");
         }
         const is_auto_switch_color_scheme_based_on_browser_settings =
@@ -444,20 +487,6 @@ html[theme="theme-[(${colorSchema.id})]"] {
         }
       })();
 
-      document.addEventListener("DOMContentLoaded", function () {
-        switch (getPreferredTheme()) {
-          case "dark":
-            updateThemeIcon(THEME_DARK);
-            break;
-          case "light":
-            updateThemeIcon(THEME_LIGHT);
-            break;
-          case "auto":
-            updateThemeIcon(THEME_AUTO);
-            break;
-        }
-      });
-
       function toggleTheme(event) {
         event.preventDefault(); // 阻止默认行为，防止页面刷新
         const currentTheme = document.documentElement.attributes["theme"].value;
@@ -473,15 +502,26 @@ html[theme="theme-[(${colorSchema.id})]"] {
         applyTheme(newTheme);
       }
 
-      document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("theme-toggle-button").addEventListener("click", toggleTheme);
-      });
-    </script>
-  </head>
+      function initThemeToggle() {
+        switch (getPreferredTheme()) {
+          case "dark":
+            updateThemeIcon(THEME_DARK);
+            break;
+          case "light":
+            updateThemeIcon(THEME_LIGHT);
+            break;
+          case "auto":
+            updateThemeIcon(THEME_AUTO);
+            break;
+        }
 
-  <body class="transition-colors duration-300" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
+        document.getElementById("theme-toggle-button").addEventListener("click", toggleTheme);
+      }
+
+      window.onDOMContentLoadedHook(initThemeToggle);
+    </script>
     <script th:if="${theme.config?.global?.is_i18n_menu_show}">
-      document.addEventListener("DOMContentLoaded", function () {
+      function setMenuDisplayNone() {
         // <!--/*
         // 检查目标 li 标签是否具有 class="matched-menu"
         // 如果开了 i18n 菜单，如果没有菜单成功匹配，这里就会显示默认菜单
@@ -506,10 +546,12 @@ html[theme="theme-[(${colorSchema.id})]"] {
             menu.remove();
           });
         }
-      });
+      }
+
+      window.onDOMContentLoadedHook(setMenuDisplayNone);
     </script>
     <script th:if="${theme.config?.index_styles?.is_i18n_resume_show}">
-      document.addEventListener("DOMContentLoaded", function () {
+      function setResumeDisplayNone() {
         // <!--/*
         // 检查目标标签是否具有 class="matched-resume"
         // 如果开了 i18n 公告栏，如果没有公告栏成功匹配，这里就会显示默认公告栏
@@ -534,10 +576,12 @@ html[theme="theme-[(${colorSchema.id})]"] {
             resume.remove();
           });
         }
-      });
+      }
+
+      window.onDOMContentLoadedHook(setResumeDisplayNone);
     </script>
     <script th:if="${theme.config?.styles?.is_18n_footer_content_show}">
-      document.addEventListener("DOMContentLoaded", function () {
+      function setFooterContentDisplayNone() {
         // <!--/*
         // 检查目标标签是否具有 class="matched-footer-content"
         // 如果开了 i18n 页面最底部内容，如果没有页面最底部内容成功匹配，这里就会显示默认页面最底部内容
@@ -562,7 +606,9 @@ html[theme="theme-[(${colorSchema.id})]"] {
             footer_content.remove();
           });
         }
-      });
+      }
+
+      window.onDOMContentLoadedHook(setFooterContentDisplayNone);
     </script>
     <!--/*
   本主题的样式切换说明：
@@ -711,7 +757,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
       }
     </style>
     /*/-->
-    <div class="max-width min-width content-width mx-auto px-4 sm:px-8">
+    <div id="swup" class="max-width min-width content-width transition-fade mx-auto px-4 sm:px-8">
       <th:block th:replace="${navbar}" />
 
       <div

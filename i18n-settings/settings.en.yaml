@@ -77,12 +77,6 @@ spec:
           label: Custom resource location
           value: false
           help: If enabled, custom resource locations will be used instead of the default theme locations.
-        - $formkit: text
-          name: instantpage_resource_location
-          if: "$is_custom_resource_locations === true"
-          label: instant.page resource location
-          value: "/themes/howiehz-higan/assets/lib/instantpage/5.2.0.js"
-          help: Specify the location of the instant.page library, e.g., https://cdn.example.com/instantpage.min.js
         - $formkit: checkbox
           name: is_instant_page_enable
           label: instant.page support

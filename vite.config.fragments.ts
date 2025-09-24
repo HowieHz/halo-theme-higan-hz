@@ -4,11 +4,23 @@ import utwm from "unplugin-tailwindcss-mangle/vite";
 import { defineConfig } from "vite";
 
 import moveHtmlPlugin from "./plugins/vite-move-html";
+import replaceHtmlPlugin from "./plugins/vite-plugin-replace-html";
 
 export default defineConfig({
   base: "/themes/howiehz-higan/",
   plugins: [
     utwm(), // obfuscate tailwindcss class
+    replaceHtmlPlugin({
+      rules: [
+        {
+          from: /<script type="module" crossorigin src="\/themes\/howiehz-higan\/assets\/dist\/fragments-layout-[^"]*\.js"><\/script>/,
+          to: (match) => {
+            // 保留原有的 script 标签，但添加 data-swup-ignore-script 属性，防止 swup 重复加载
+            return match.replace("<script ", "<script data-swup-ignore-script ");
+          },
+        },
+      ],
+    }),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
   build: {

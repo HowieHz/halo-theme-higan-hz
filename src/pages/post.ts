@@ -7,6 +7,7 @@ window.isMobile = (): boolean => {
   const flag = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   return flag;
 };
+window.moduleResolve.isMobile(); // 调用 resolve 函数
 
 /**
  * 获取页面滚动距离（垂直方向）
@@ -19,7 +20,10 @@ function getTopDistance(): number {
   return window.scrollY || 0;
 }
 
-document.addEventListener("DOMContentLoaded", (): void => {
+/**
+ * 初始化博客文章页面的交互功能
+ */
+function initPostPage(): void {
   /**
    * 控制博客文章页面中菜单的不同版本
    * 适用于桌面端、平板端和移动端
@@ -180,4 +184,6 @@ document.addEventListener("DOMContentLoaded", (): void => {
       });
     }
   }
-});
+}
+
+window.onDOMContentLoadedHook(initPostPage);

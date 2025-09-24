@@ -1,7 +1,12 @@
 import "./common"; // window.isVisible
 import "./animation"; // window.fadeIn, window.fadeOut
 
-document.addEventListener("DOMContentLoaded", (): void => {
+/**
+ * 初始化 移动端 主页页眉菜单
+ * 绑定菜单按钮点击事件
+ * 点击按钮时，切换菜单项的显示/隐藏状态
+ */
+function initMobileMenu(): void {
   const mobileMenuIcon: HTMLElement | null = document.querySelector("#header > #nav > ul > .icon");
   const mobileMenuItems: NodeListOf<HTMLElement> | null = document.querySelectorAll(
     "#header > #nav > ul > li:not(:first-child)",
@@ -21,4 +26,6 @@ document.addEventListener("DOMContentLoaded", (): void => {
       });
     }
   });
-});
+}
+
+window.onDOMContentLoadedHook(initMobileMenu);

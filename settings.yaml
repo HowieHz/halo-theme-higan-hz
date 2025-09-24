@@ -77,12 +77,6 @@ spec:
           label: 自定义资源位置地址
           value: false
           help: 如启用此项，将使用自定义的资源位置地址，而不是主题默认的地址。
-        - $formkit: text
-          name: instantpage_resource_location
-          if: "$is_custom_resource_locations === true"
-          label: instant.page 资源位置
-          value: "/themes/howiehz-higan/assets/lib/instantpage/5.2.0.js"
-          help: "指定 instant.page 库的资源位置，例如：https://cdn.example.com/instantpage.min.js"
         - $formkit: checkbox
           name: is_instant_page_enable
           label: instant.page 支持

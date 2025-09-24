@@ -5,7 +5,7 @@ import type { IndexHtmlTransformHook, Plugin } from "vite";
  */
 interface ReplaceRule {
   from: string | RegExp;
-  to: string;
+  to: string | ((substring: string, ...args: any[]) => string);
 }
 
 /**
@@ -26,7 +26,11 @@ export default function replaceHtmlPlugin(options: ReplaceHtmlOptions): Plugin {
   const transformHook: IndexHtmlTransformHook = (html) => {
     let result = html;
     for (const rule of rules) {
-      result = result.replace(rule.from, rule.to);
+      if (typeof rule.to === "string") {
+        result = result.replace(rule.from, rule.to);
+      } else if (typeof rule.to === "function") {
+        result = result.replace(rule.from, rule.to);
+      }
     }
     return result;
   };

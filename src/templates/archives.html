@@ -84,16 +84,21 @@
               if (!nextElement) {
                 return;
               }
-
-              if (window.isVisible(nextElement)) {
-                window.slideUp(nextElement, duration_of_expand_collapse_animation);
-                caretRight.style.display = "inline";
-                caretDown.style.display = "none";
-              } else {
-                window.slideDown(nextElement, duration_of_expand_collapse_animation);
-                caretRight.style.display = "none";
-                caretDown.style.display = "inline";
-              }
+              window.moduleReady.isVisible.then(() => {
+                if (window.isVisible(nextElement)) {
+                  window.moduleReady.slideUp.then(() => {
+                    window.slideUp(nextElement, duration_of_expand_collapse_animation);
+                    caretRight.style.display = "inline";
+                    caretDown.style.display = "none";
+                  });
+                } else {
+                  window.moduleReady.slideDown.then(() => {
+                    window.slideDown(nextElement, duration_of_expand_collapse_animation);
+                    caretRight.style.display = "none";
+                    caretDown.style.display = "inline";
+                  });
+                }
+              });
             }
           </script>
         </div>

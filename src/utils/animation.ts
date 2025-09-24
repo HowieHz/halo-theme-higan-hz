@@ -12,6 +12,7 @@ export {};
 window.scrollToTop = (): void => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
+window.moduleResolve.scrollToTop(); // 调用 resolve 函数
 
 /**
  * 显示元素的通用逻辑
@@ -113,6 +114,7 @@ window.fadeIn = function (element: HTMLElement | NodeListOf<HTMLElement>, durati
     setupAnimation(el, "fade-in", duration);
   });
 };
+window.moduleResolve.fadeIn(); // 调用 resolve 函数
 
 /**
  * 淡出动画函数 - 使用 CSS 动画，与 window.hide 逻辑保持一致
@@ -135,6 +137,7 @@ window.fadeOut = function (element: HTMLElement | NodeListOf<HTMLElement>, durat
     });
   });
 };
+window.moduleResolve.fadeOut(); // 调用 resolve 函数
 
 /**
  * jQuery 风格的滑下动画函数 - 通过高度变化显示元素
@@ -177,6 +180,7 @@ window.slideDown = function (element: HTMLElement, duration: number = 200): void
 
   element.addEventListener("animationend", handleAnimationEnd, { once: true });
 };
+window.moduleResolve.slideDown(); // 调用 resolve 函数
 
 /**
  * jQuery 风格的滑上动画函数 - 通过高度变化隐藏元素
@@ -218,6 +222,7 @@ window.slideUp = function (element: HTMLElement, duration: number = 200): void {
 
   element.addEventListener("animationend", handleAnimationEnd, { once: true });
 };
+window.moduleResolve.slideUp(); // 调用 resolve 函数
 
 /**
  * 自定义 Toggle 函数实现
@@ -312,6 +317,7 @@ window.show = function (selector: string | HTMLElement | NodeList): HTMLElement 
   const elements = typeof selector === "string" ? document.querySelectorAll(selector) : selector;
   return showHide(elements, true);
 };
+window.moduleResolve.show(); // 调用 resolve 函数
 
 /**
  * 隐藏元素
@@ -322,6 +328,7 @@ window.hide = function (selector: string | HTMLElement | NodeList): HTMLElement 
   const elements = typeof selector === "string" ? document.querySelectorAll(selector) : selector;
   return showHide(elements, false);
 };
+window.moduleResolve.hide(); // 调用 resolve 函数
 
 /**
  * 切换元素显示/隐藏状态
@@ -358,3 +365,4 @@ window.toggle = function (selector: string | HTMLElement | NodeList, state?: boo
 
   return elements;
 };
+window.moduleResolve.toggle(); // 调用 resolve 函数

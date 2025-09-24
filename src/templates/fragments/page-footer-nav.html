@@ -34,7 +34,7 @@
           style="transform: scale(0); width: 0"
           class="icon transition-transform duration-200 ease-in-out"
           href="#"
-          onclick="event.preventDefault(); scrollToTop();"
+          onclick="event.preventDefault(); window.moduleReady.scrollToTop.then(window.scrollToTop);"
         >
           <i class="iconify" data-icon="ic:baseline-arrow-upward" aria-hidden="true"></i>
         </a>

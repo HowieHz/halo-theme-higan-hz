@@ -161,7 +161,7 @@
     }
     let currentTimeLeft = /*[(${theme.config?.error_page_styles?.redirect_wait_time})]*/ 5;
     const originText = /*[[#{page.error.auto-refresh}]]*/ "";
-    document.addEventListener("DOMContentLoaded", () => {
+    function startCountdown() {
       countdownElement.innerHTML = `${originText
         .replace("{0}", currentTimeLeft)
         .replace("{1}", `<a href="${targetUrl}">${targetUrl}</a>`)}`;
@@ -177,6 +177,8 @@
           .replace("{1}", `<a href="${targetUrl}">${targetUrl}</a>`)}`;
         currentTimeLeft -= 1;
       }, 1000);
-    });
+    }
+
+    window.onDOMContentLoadedHook(startCountdown);
   </script>
 </th:block>

@@ -234,3 +234,4 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
   window.addEventListener("scroll", handleTOCScrollHighlight, { passive: true });
   return;
 };
+window.moduleResolve.initTOC(); // 调用 resolve 函数

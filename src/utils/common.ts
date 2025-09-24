@@ -43,3 +43,4 @@ window.isVisible = (input: HTMLElement | NodeListOf<HTMLElement> | null): boolea
   }
   return checkSingle(input);
 };
+window.moduleResolve.isVisible(); // 调用 resolve 函数

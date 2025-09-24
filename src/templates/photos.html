@@ -114,7 +114,7 @@
           }
         }
 
-        window.onload = () => {
+        function initWaterfall() {
           const MAX_MASONRY_COLUMNS = /*[(${theme.config?.photos_styles?.max_masonry_columns})]*/ 4;
           const MIN_MASONRY_COLUMNS = /*[(${theme.config?.photos_styles?.min_masonry_columns})]*/ 1;
           const MIN_IMG_WIDTH = /*[(${theme.config?.photos_styles?.min_img_width})]*/ 300;
@@ -144,7 +144,9 @@
 
           // <!--/* 加载第一张图片，以及递归加载其他的图片 */-->
           waterfallInstance.checkAndLoadMoreImages();
-        };
+        }
+
+        window.onloadHook(initWaterfall);
       </script>
 
       <script
@@ -192,7 +194,7 @@
       </script>
 
       <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        function initPhotoPage() {
           const content = document.querySelector(".content");
 
           const handleEvent = (event, attr) => {
@@ -215,7 +217,9 @@
               }
             }
           };
-        });
+        }
+
+        window.onDOMContentLoadedHook(initPhotoPage);
       </script>
       <div class="content">
         <ul class="photo-list">
