@@ -201,7 +201,7 @@
             <span
               th:if="${pluginFinder.available('extra-api')}"
               class="readtime"
-              th:with="wordsCount=${extraApiStatsFinder.postWordCount({name: post.metadata.name})}"
+              th:with="wordsCount=${extraApiStatsFinder.getPostWordCount({name: post.metadata.name})}"
               th:text="#{common.min(${#numbers.formatDecimal(wordsCount * 1.0 / 450, 1, 1) + '~' + #numbers.formatDecimal(wordsCount * 1.0 / 350, 1, 1)})}"
             >
               文章预计阅读时间替换位
