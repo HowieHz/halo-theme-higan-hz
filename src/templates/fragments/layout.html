@@ -727,45 +727,45 @@ html[theme="theme-[(${colorSchema.id})]"] {
             <halo:footer />
             <div th:if="${theme.config?.styles?.is_footer_site_stats_show}">
               <ul class="site-stats" th:with="stats = ${siteStatsFinder.getStats()}">
-                <li th:each="item : ${theme.config?.styles?.footer_site_stats}">
+                <li
+                  th:each="item : ${theme.config?.styles?.footer_site_stats}"
+                  th:if="${item?.type == 'visit'} or 
+                  ${item?.type == 'post'} or 
+                  ${item?.type == 'upvote'} or 
+                  ${item?.type == 'comment'} or 
+                  ${item?.type == 'category'} or 
+                  (${item?.type == 'wordcount'} and ${pluginFinder.available('extra-api')})"
+                >
                   <i
                     class="iconify"
                     th:attr="data-icon=${item?.icon}"
                     th:if="${item?.icon != null} and ${item?.icon != ''}"
                   ></i>
-                  <span th:text="${stats.visit}" th:if="${item?.type=='visit'} and not ${item?.i18n_text}"></span>
-                  <span th:text="${stats.post}" th:if="${item?.type=='post'} and not ${item?.i18n_text}"></span>
-                  <span th:text="${stats.upvote}" th:if="${item?.type=='upvote'} and not ${item?.i18n_text}"></span>
-                  <span th:text="${stats.comment}" th:if="${item?.type=='comment'} and not ${item?.i18n_text}"></span>
-                  <span th:text="${stats.category}" th:if="${item?.type=='category'} and not ${item?.i18n_text}"></span>
-                  <span
-                    th:text="${extraApiStatsFinder.getPostWordCount()}"
-                    th:if="${item?.type=='wordcount'} and not ${item?.i18n_text} and ${pluginFinder.available('extra-api')}"
-                  ></span>
-                  <span
-                    th:text="#{common.siteTotalVisit(${stats.visit})}"
-                    th:if="${item?.type=='visit'} and ${item?.i18n_text}"
-                  ></span>
-                  <span
-                    th:text="#{common.siteTotalPost(${stats.post})}"
-                    th:if="${item?.type=='post'} and ${item?.i18n_text}"
-                  ></span>
-                  <span
-                    th:text="#{common.siteTotalUpvote(${stats.upvote})}"
-                    th:if="${item?.type=='upvote'} and ${item?.i18n_text}"
-                  ></span>
-                  <span
-                    th:text="#{common.siteTotalComment(${stats.comment})}"
-                    th:if="${item?.type=='comment'} and ${item?.i18n_text}"
-                  ></span>
-                  <span
-                    th:text="#{common.siteTotalCategory(${stats.category})}"
-                    th:if="${item?.type=='category'} and ${item?.i18n_text}"
-                  ></span>
-                  <span
-                    th:text="#{common.siteTotalWordcount(${extraApiStatsFinder.getPostWordCount()})}"
-                    th:if="${item?.type=='wordcount'} and ${item?.i18n_text} and ${pluginFinder.available('extra-api')}"
-                  ></span>
+                  <th:block th:if="not ${item?.i18n_text}">
+                    <span th:text="${stats.visit}" th:if="${item?.type=='visit'}"></span>
+                    <span th:text="${stats.post}" th:if="${item?.type=='post'}"></span>
+                    <span th:text="${stats.upvote}" th:if="${item?.type=='upvote'}"></span>
+                    <span th:text="${stats.comment}" th:if="${item?.type=='comment'}"></span>
+                    <span th:text="${stats.category}" th:if="${item?.type=='category'}"></span>
+                    <span th:text="${extraApiStatsFinder.getPostWordCount()}" th:if="${item?.type=='wordcount'}"></span>
+                  </th:block>
+                  <th:block th:if="${item?.i18n_text}">
+                    <span th:text="#{common.siteTotalVisit(${stats.visit})}" th:if="${item?.type=='visit'}"></span>
+                    <span th:text="#{common.siteTotalPost(${stats.post})}" th:if="${item?.type=='post'}"></span>
+                    <span th:text="#{common.siteTotalUpvote(${stats.upvote})}" th:if="${item?.type=='upvote'}"></span>
+                    <span
+                      th:text="#{common.siteTotalComment(${stats.comment})}"
+                      th:if="${item?.type=='comment'}"
+                    ></span>
+                    <span
+                      th:text="#{common.siteTotalCategory(${stats.category})}"
+                      th:if="${item?.type=='category'}"
+                    ></span>
+                    <span
+                      th:text="#{common.siteTotalWordcount(${extraApiStatsFinder.getPostWordCount()})}"
+                      th:if="${item?.type=='wordcount'}"
+                    ></span>
+                  </th:block>
                 </li>
               </ul>
             </div>
