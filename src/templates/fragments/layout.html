@@ -739,8 +739,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
                   <span th:text="${stats.comment}" th:if="${item?.type=='comment'} and not ${item?.i18n_text}"></span>
                   <span th:text="${stats.category}" th:if="${item?.type=='category'} and not ${item?.i18n_text}"></span>
                   <span
-                    th:text="${stats.wordcount}"
-                    th:if="${item?.type=='wordcount'} and not ${item?.i18n_text}"
+                    th:text="${extraApiStatsFinder.getPostWordCount()}"
+                    th:if="${item?.type=='wordcount'} and not ${item?.i18n_text} and ${pluginFinder.available('extra-api')}"
                   ></span>
                   <span
                     th:text="#{common.siteTotalVisit(${stats.visit})}"
