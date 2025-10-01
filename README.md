@@ -708,7 +708,7 @@ Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商�
 
 ## 可选插件
 
-- API 扩展，需插件 [plugin-extra-api](https://github.com/HowieHz/halo-plugin-extra-api)
+- API 扩展（轻量版），需插件 [plugin-extra-api](https://github.com/HowieHz/halo-plugin-extra-api)([应用市场页面](https://www.halo.run/store/apps/app-di1jh8gd))
   - 启用插件后：
     - 单文章字数统计将自动应用插件中更准确的计算方法。
     - “总体样式-页面底部站点统计信息”将支持“总字数”统计显示。
