@@ -182,8 +182,8 @@
             <span class="iconify" data-icon="mdi:eye-outline" data-inline="false"></span>
             <span th:text="${post.stats?.visit}">文章阅读量替换位</span>
           </span>
-
-          <!--/* inline-block 保证图标和数字在一行 */-->
+          <!--/* 预计阅读时长 
+          inline-block 保证图标和数字在一行 */-->
           <span
             class="inline-block"
             th:if="${theme.config?.post_styles?.is_show_post_estimated_reading_time}"
@@ -200,7 +200,8 @@
             </span>
           </span>
 
-          <!--/* 文章字数显示 */-->
+          <!--/* 字数统计 
+          inline-block 保证图标和数字在一行 */-->
           <span
             class="inline-block"
             th:if="${theme.config?.post_styles?.is_show_post_word_count}"

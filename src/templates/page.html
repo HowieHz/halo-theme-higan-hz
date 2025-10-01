@@ -48,7 +48,8 @@
           ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
         </h1>
         <div class="meta">
-          <!--/* inline-block 保证图标和数字在一行 */-->
+          <!--/* 预计阅读时长 
+          inline-block 保证图标和数字在一行 */-->
           <span
             class="inline-block"
             th:if="${theme.config?.custom_page_styles?.is_show_post_estimated_reading_time}"
@@ -65,7 +66,8 @@
             </span>
           </span>
 
-          <!--/* 文章字数显示 */-->
+          <!--/* 字数统计 
+          inline-block 保证图标和数字在一行 */-->
           <span
             class="inline-block"
             th:if="${theme.config?.custom_page_styles?.is_show_post_word_count}"

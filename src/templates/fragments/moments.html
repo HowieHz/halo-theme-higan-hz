@@ -23,7 +23,6 @@
                       sizes="400px"
                       width="32"
                       height="32"
-                      alt="Moment 作者头像 alt 填充位"
                       th:alt="|@${moment.owner?.name}|"
                     />
                   </a>
@@ -61,7 +60,6 @@
                       sizes="400px"
                       width="32"
                       height="32"
-                      alt="Moment 作者头像 alt 填充位"
                       th:alt="|@${moment.owner?.name}|"
                     />
                   </a>
@@ -82,6 +80,40 @@
                     th:text="${#temporals.format(moment.spec.releaseTime, 'MMMM dd yyyy')}"
                   >
                   </relative-time>
+                </span>
+                <!--/* 预计阅读时长 
+                inline-block 保证图标和数字在一行 */-->
+                <span
+                  class="color-fg-muted inline-block no-underline"
+                  th:if="${theme.config?.moments_styles?.is_show_post_estimated_reading_time}"
+                  th:with="wordCount = ${pluginFinder.available('extra-api', '2.*') ? 
+                    extraApiStatsFinder.getContentWordCount(moment.spec.content?.html) : #strings.length(moment.spec.content?.html)/2 }"
+                  th:title="#{page.post.estimated-reading-time(#{common.words(${wordCount})})}"
+                >
+                  <span class="iconify" data-icon="mdi:clock-outline" data-inline="false"></span>
+                  <span
+                    class="readtime"
+                    th:text="#{common.min(${#numbers.formatDecimal(wordCount * 1.0 / 450, 1, 1) + '~' + #numbers.formatDecimal(wordCount * 1.0 / 350, 1, 1)})}"
+                  >
+                    帖文预计阅读时间替换位
+                  </span>
+                </span>
+
+                <!--/* 字数统计 
+                inline-block 保证图标和数字在一行 */-->
+                <span
+                  class="color-fg-muted inline-block no-underline"
+                  th:if="${theme.config?.moments_styles?.is_show_post_word_count}"
+                  th:with="wordCount = ${pluginFinder.available('extra-api', '2.*') ? 
+                    extraApiStatsFinder.getContentWordCount(moment.spec.content?.html) : #strings.length(moment.spec.content?.html)/2 }"
+                  th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
+                >
+                  <span
+                    class="iconify"
+                    data-icon="fluent:text-edit-style-character-a-32-regular"
+                    data-inline="false"
+                  ></span>
+                  <span class="word-count" th:text="${wordCount}">帖文字数替换位</span>
                 </span>
               </div>
             </div>

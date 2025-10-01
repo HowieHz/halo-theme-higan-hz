@@ -1116,6 +1116,14 @@ spec:
       label: 瞬间页样式
       formSchema:
         - $formkit: checkbox
+          name: is_show_post_estimated_reading_time
+          label: 帖文预计阅读时间
+          value: false
+        - $formkit: checkbox
+          name: is_show_post_word_count
+          label: 帖文字数统计
+          value: false
+        - $formkit: checkbox
           name: is_moment_upvote_button_show
           label: 是否启用点赞按钮
           value: true
