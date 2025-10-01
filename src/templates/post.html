@@ -192,14 +192,14 @@
           >
             <span class="iconify" data-icon="mdi:clock-outline" data-inline="false"></span>
             <span
-              th:unless="${pluginFinder.available('extra-api')}"
+              th:unless="${pluginFinder.available('extra-api', '2.*')}"
               class="readtime"
               th:text="#{common.min(${#numbers.formatDecimal(wordsCount * 1.0 / 900, 1, 1) + '~' + #numbers.formatDecimal(wordsCount * 1.0 / 700 , 1, 1)})}"
             >
               文章预计阅读时间替换位
             </span>
             <span
-              th:if="${pluginFinder.available('extra-api')}"
+              th:if="${pluginFinder.available('extra-api', '2.*')}"
               class="readtime"
               th:with="wordsCount=${extraApiStatsFinder.getPostWordCount({name: post.metadata.name})}"
               th:text="#{common.min(${#numbers.formatDecimal(wordsCount * 1.0 / 450, 1, 1) + '~' + #numbers.formatDecimal(wordsCount * 1.0 / 350, 1, 1)})}"
