@@ -1029,6 +1029,14 @@ spec:
           value: "2em"
           help: "设置首行缩进的大小。允许使用所有 CSS 长度单位，如：2em, 32px, 2rem 等。推荐使用 2em"
         - $formkit: checkbox
+          name: is_show_post_estimated_reading_time
+          label: 文章预计阅读时间
+          value: false
+        - $formkit: checkbox
+          name: is_show_post_word_count
+          label: 文章字数统计
+          value: false
+        - $formkit: checkbox
           name: is_enable_post_like_layout
           label: 启用类文章页样式
           value: false

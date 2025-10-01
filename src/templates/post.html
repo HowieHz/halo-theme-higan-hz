@@ -208,7 +208,7 @@
               extraApiStatsFinder.getPostWordCount({name: post.metadata.name}) : #strings.length(post.content?.content)/2 }"
             th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
           >
-            <span class="iconify" data-icon="mdi:pencil-outline" data-inline="false"></span>
+            <span class="iconify" data-icon="fluent:text-edit-style-character-a-32-regular" data-inline="false"></span>
             <span class="word-count" th:text="${wordCount}">文章字数替换位</span>
           </span>
         </div>

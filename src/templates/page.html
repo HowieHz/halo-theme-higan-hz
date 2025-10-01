@@ -42,10 +42,42 @@
     </style>
     /*/-->
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-      <h1>
-        <th:block th:text="${singlePage.spec?.title}">标题替换位</th:block
-        ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
-      </h1>
+      <header>
+        <h1>
+          <th:block th:text="${singlePage.spec?.title}">标题替换位</th:block
+          ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
+        </h1>
+        <div class="meta">
+          <!--/* inline-block 保证图标和数字在一行 */-->
+          <span
+            class="inline-block"
+            th:if="${theme.config?.custom_page_styles?.is_show_post_estimated_reading_time}"
+            th:with="wordCount = ${pluginFinder.available('extra-api', '2.*') ? 
+              extraApiStatsFinder.getContentWordCount(singlePage.content?.content) : #strings.length(singlePage.content?.content)/2 }"
+            th:title="#{page.post.estimated-reading-time(#{common.words(${wordCount})})}"
+          >
+            <span class="iconify" data-icon="mdi:clock-outline" data-inline="false"></span>
+            <span
+              class="readtime"
+              th:text="#{common.min(${#numbers.formatDecimal(wordCount * 1.0 / 450, 1, 1) + '~' + #numbers.formatDecimal(wordCount * 1.0 / 350, 1, 1)})}"
+            >
+              文章预计阅读时间替换位
+            </span>
+          </span>
+
+          <!--/* 文章字数显示 */-->
+          <span
+            class="inline-block"
+            th:if="${theme.config?.custom_page_styles?.is_show_post_word_count}"
+            th:with="wordCount = ${pluginFinder.available('extra-api', '2.*') ? 
+              extraApiStatsFinder.getContentWordCount(singlePage.content?.content) : #strings.length(singlePage.content?.content)/2 }"
+            th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
+          >
+            <span class="iconify" data-icon="fluent:text-edit-style-character-a-32-regular" data-inline="false"></span>
+            <span class="word-count" th:text="${wordCount}">文章字数替换位</span>
+          </span>
+        </div>
+      </header>
 
       <div class="content flex-auto" itemprop="articleBody" th:utext="${singlePage.content?.content}">
         singlePage formatted content
