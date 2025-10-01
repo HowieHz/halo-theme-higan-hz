@@ -1029,6 +1029,14 @@ spec:
           value: "2em"
           help: "Set the size of the first-line indent. All CSS length units are allowed, such as: 2em, 32px, 2rem, etc. Recommended: 2em"
         - $formkit: checkbox
+          name: is_show_post_estimated_reading_time
+          label: Show estimated reading time of the article
+          value: false
+        - $formkit: checkbox
+          name: is_show_post_word_count
+          label: Show word count of the article
+          value: false
+        - $formkit: checkbox
           name: is_enable_post_like_layout
           label: Enable post-like layout
           value: false
@@ -1107,6 +1115,14 @@ spec:
     - group: moments_styles
       label: Moments page style
       formSchema:
+        - $formkit: checkbox
+          name: is_show_post_estimated_reading_time
+          label: Show estimated reading time of the post
+          value: false
+        - $formkit: checkbox
+          name: is_show_post_word_count
+          label: Show word count of the post
+          value: false
         - $formkit: checkbox
           name: is_moment_upvote_button_show
           label: Enable upvote button
