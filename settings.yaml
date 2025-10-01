@@ -717,6 +717,11 @@ spec:
           label: 多元列表显示文章预计阅读时间
           value: false
         - $formkit: checkbox
+          name: is_show_post_word_count_in_post_list_summary
+          if: "$list_layout === 'post-list-summary'"
+          label: 多元列表显示文章字数统计
+          value: false
+        - $formkit: checkbox
           name: is_show_post_excerpt_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
           label: 多元列表显示文章摘要
@@ -816,6 +821,10 @@ spec:
         - $formkit: checkbox
           name: is_show_post_estimated_reading_time
           label: 文章预计阅读时间
+          value: false
+        - $formkit: checkbox
+          name: is_show_post_word_count
+          label: 文章字数统计
           value: false
         - $formkit: checkbox
           name: is_show_post_nav_share_button

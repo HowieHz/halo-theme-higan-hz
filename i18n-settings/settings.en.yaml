@@ -717,6 +717,11 @@ spec:
           label: Display post estimated reading time in post list summary
           value: false
         - $formkit: checkbox
+          name: is_show_post_word_count_in_post_list_summary
+          if: "$list_layout === 'post-list-summary'"
+          label: Display post word count in post list summary
+          value: false
+        - $formkit: checkbox
           name: is_show_post_excerpt_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
           label: Display post excerpt in post list summary
@@ -815,7 +820,11 @@ spec:
           value: true
         - $formkit: checkbox
           name: is_show_post_estimated_reading_time
-          label: Estimated reading time of the article
+          label: Show estimated reading time of the article
+          value: false
+        - $formkit: checkbox
+          name: is_show_post_word_count
+          label: Show post word count
           value: false
         - $formkit: checkbox
           name: is_show_post_nav_share_button
