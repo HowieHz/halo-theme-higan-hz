@@ -59,7 +59,7 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
 
 ![preview-1](./docs/img/preview-1.png)
 
-文档版本：`1.44.0`  
+文档版本：`1.45.0`  
 （如果此处文档版本低于你正在使用的主题版本，说明你正在阅读的是旧版文档，请前往[项目主页](https://github.com/HowieHz/halo-theme-higan-hz/blob/main/README.md)获取最新版。）
 
 ### 目录
