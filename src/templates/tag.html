@@ -36,32 +36,8 @@
           ></a>
         </th:block>
       </h1>
-      <ul class="post-list flex-auto">
-        <li class="post-item" th:each="post : ${posts}">
-          <div class="meta">
-            <time
-              th:datetime="${post.spec?.publishTime}"
-              th:text="${#temporals.format(post.spec?.publishTime, 'MMMM dd yyyy')}"
-              itemprop="datePublished"
-            ></time>
-          </div>
-          <span>
-            <a class="post-title" th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}"
-              >文章标题替换位</a
-            >
-            <th:block th:if="${theme.config?.tag_page_styles?.is_show_post_views_in_post_list}">
-              <span
-                class="color-time relative z-10 mb-0 mt-0.5 p-0 text-sm"
-                th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
-              >
-                <span class="iconify" data-icon="mdi:eye-outline" data-inline="false"></span>
-                <span th:text="${post.stats?.visit}">文章阅读量替换位</span>
-              </span>
-            </th:block>
-          </span>
-        </li>
-      </ul>
-      <th:block th:insert="~{fragments/posts :: pagination}"></th:block>
+
+      <th:block th:insert="~{fragments/posts :: simple-post-list(posts = ${posts}, showPagination = true)}"></th:block>
     </div>
   </body>
 </th:block>

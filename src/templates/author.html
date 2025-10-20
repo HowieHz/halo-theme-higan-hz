@@ -64,7 +64,9 @@
       </section>
 
       <div class="mt-16 flex flex-auto flex-col sm:mt-20">
-        <th:block th:insert="~{fragments/posts :: post-list-summary(${posts})}"></th:block>
+        <th:block
+          th:insert="~{fragments/posts :: simple-post-list(posts = ${posts}, showPagination = true)}"
+        ></th:block>
       </div>
     </article>
   </body>

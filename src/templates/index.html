@@ -121,7 +121,10 @@
       <th:block th:insert="~{fragments/posts :: post-list-summary(${posts})}"></th:block>
     </th:block>
     <th:block th:if="${theme?.config.index_styles?.list_layout=='simple-post-list'}">
-      <th:block th:insert="~{fragments/posts :: simple-post-list(${posts})}"></th:block>
+      <span class="h1" th:if="${theme.config?.index_styles?.is_show_index_post_list_title}">
+        <a th:href="@{/archives}" th:text="#{page.index.postListTitle}">首页文章列表标题替换位</a>
+      </span>
+      <th:block th:insert="~{fragments/posts :: simple-post-list(posts= ${posts}, showPagination = true)}"></th:block>
     </th:block>
     <th:block th:if="${theme?.config.index_styles?.list_layout=='moment-list-summary'}">
       <th:block th:if="${pluginFinder.available('PluginMoments')}">

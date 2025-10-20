@@ -27,6 +27,12 @@ spec:
     - $formkit: "text"
       name: "higan.howiehz.top/page-language"
       label: Page Language
+    - $formkit: "text"
+      label: "Show in Post List"
+      name: "higan.howiehz.top/show-in-post-list"
+      value: "true"
+      on-value: "true"
+      off-value: "false"
 
 ---
 apiVersion: v1alpha1
