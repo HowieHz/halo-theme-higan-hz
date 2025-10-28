@@ -36,6 +36,7 @@
     "**/*.sw?"
   ],
   "rules": {
+    "constructor-super": "error",
     "for-direction": "error",
     "getter-return": "error",
     "no-async-promise-executor": "error",
@@ -123,6 +124,7 @@
     {
       "files": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
       "rules": {
+        "constructor-super": "off",
         "getter-return": "off",
         "no-class-assign": "off",
         "no-const-assign": "off",
