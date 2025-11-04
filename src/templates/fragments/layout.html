@@ -87,7 +87,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </script>
     <script vite-ignore th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}" th:inline="javascript">
       (function () {
-        // <!--/* 如果 ${language} 已经传入，也就是已经指定了页面语言，则不跳转 */-->
+        // <!--/* 如果 ${language} 已经传入，也就是已经指定了页面语言，则不跳转
+        // 这个 ${language} 是文章元数据/分类详情页元数据/标签详情页元数据的 language */-->
         const languageParam = /*[[${language}]]*/ null;
         if (languageParam) {
           return;
