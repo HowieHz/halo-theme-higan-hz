@@ -87,7 +87,15 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </script>
     <script vite-ignore th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}" th:inline="javascript">
       (function () {
-        // <!--/* 如果 ${language} 已经传入，也就是已经指定了页面语言，则不跳转
+        // <!--/* 设计思路：
+        // 1. 如果 ${language} 已经传入，也就是已经在元数据强行指定了页面语言，则不跳转
+        // 2. 如果浏览器已有 lang 查询参数，也就是在用户层面强行指定了页面语言，则不跳转
+        // 3. 获取主题配置项默认语言
+        // 4. 获取浏览器语言
+        // 5. 获取主题配置项中的目标语言列表，以及前缀匹配模式开关
+        // 6. 如果浏览器语言匹配配置项中的目标语言列表，则跳转到带有浏览器语言参数的当前页面
+
+        // 如果 ${language} 已经传入，也就是已经指定了页面语言，则不跳转
         // 这个 ${language} 是文章元数据/分类详情页元数据/标签详情页元数据的 language */-->
         const languageParam = /*[[${language}]]*/ null;
         if (languageParam) {
@@ -121,30 +129,24 @@ html[theme="theme-[(${colorSchema.id})]"] {
         const targetLangs = originLangList.map((item) => item.v);
         const prefixMode = /*[[${theme?.config?.global?.is_i18n_prefix_match_mode}]]*/ true;
 
-        let matchedLang = undefined;
-        if (prefixMode) {
-          matchedLang = targetLangs.find((lang) => browserLang.startsWith(lang));
-        } else {
-          matchedLang = targetLangs.find((lang) => browserLang === lang);
-        }
+        let matchedLang = prefixMode
+          ? targetLangs.find((lang) => browserLang.startsWith(lang))
+          : targetLangs.find((lang) => browserLang === lang);
         // <!--/* 没有匹配的语言参数，不进行跳转 */-->
         if (!matchedLang) {
           return;
         }
 
-        // <!--/* 跳转到带有浏览器语言参数的当前页面
-        // 检查当前 URL 的 lang 参数是否已经等于 matchedLang，避免循环跳转 */-->
-        const url = new URL(window.location.href);
-        if (url.searchParams.get("lang") === matchedLang) {
-          return;
-        }
-        // <!--/* 如果 defaultLang 和  matchedLang 匹配说明默认页面语言就是目标语言，无需跳转  */-->
+        // <!--/* 准备跳转到带有浏览器语言参数的当前页面
+        // 如果 defaultLang 和  matchedLang 匹配说明默认页面语言就是目标语言，无需跳转 */-->
         if ((prefixMode && defaultLang.startsWith(matchedLang)) || (!prefixMode && defaultLang === matchedLang)) {
           return;
         }
 
+        // <!--/* 进行跳转 */-->
+        const url = new URL(window.location);
         url.searchParams.set("lang", matchedLang);
-        window.location.href = url.toString();
+        window.location.href = url;
       })();
     </script>
     <!--/* preload woff2 font */-->
