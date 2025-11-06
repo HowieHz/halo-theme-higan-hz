@@ -1,0 +1,10 @@
+#tags-list > li {
+  &::marker {
+    color: var(--tag-hash-color, currentColor);
+    content: "#";
+  }
+
+  & a {
+    background-image: none;
+  }
+}

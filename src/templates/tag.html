@@ -18,12 +18,18 @@
       th:title="'Posts - Tag: ' + ${tag.spec?.displayName}"
       th:href="@{'/feed/tags/' + ${tag.spec?.slug} + '.xml'}"
     />
-    <script src="/src/pages/generic-header.ts" type="module"></script>
+    <script src="/src/pages/tag.ts" type="module"></script>
   </head>
   <body>
     <div id="archive" class="content">
-      <h1>
-        <span th:text="#{page.tag.title(${tag.spec?.displayName})}">标签页标题替换位</span>
+      <h1
+        th:with="tagColor=${tag.spec?.color}"
+        th:style="${tagColor != null
+                  and !#strings.equalsIgnoreCase(tagColor, '#ffffff')}
+                ? |--tag-hash-color:${tagColor};|
+                : null"
+      >
+        <span th:text="${tag.spec?.displayName}">标签页标题替换位</span>
         <th:block th:if="${pluginFinder.available('PluginFeed') and theme.config?.tag_page_styles?.is_show_rss_button}">
           <a
             class="icon"

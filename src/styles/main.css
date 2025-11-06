@@ -738,6 +738,7 @@ hr.divide {
 
 .article-tag .tag-link {
   &::before {
+    color: var(--tag-hash-color, currentColor);
     content: "#";
   }
 }

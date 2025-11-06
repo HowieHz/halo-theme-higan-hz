@@ -1,0 +1,4 @@
+#archive h1::before {
+  color: var(--tag-hash-color, currentColor);
+  content: "#";
+}

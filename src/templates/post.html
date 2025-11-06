@@ -165,7 +165,16 @@
               <span class="inline-block">
                 <!--/* 标签图标和第一个标签项保持在一行。 */-->
                 <span th:if="${iterStat.first}" class="iconify" data-icon="fa-solid:tag" data-inline="false"></span>
-                <a class="tag-link" th:href="@{${tag.status?.permalink}}" th:text="${tag.spec?.displayName}">
+                <a
+                  class="tag-link"
+                  th:with="tagColor=${tag.spec?.color}"
+                  th:href="@{${tag.status?.permalink}}"
+                  th:text="${tag.spec?.displayName}"
+                  th:style="${tagColor != null
+                            and !#strings.equalsIgnoreCase(tagColor, '#ffffff')}
+                          ? |--tag-hash-color:${tagColor};|
+                          : null"
+                >
                   文章标签名替换位 </a
                 ><!--/*
                 */--><span th:if="${!iterStat.last}">,</span>
