@@ -69,6 +69,10 @@
             }) || []
           ).forEach((tag) => {
             const li = document.createElement("li");
+            const color = (tag.spec?.color || "").trim();
+            if (color && color.toLowerCase() !== "#ffffff") {
+              li.style.setProperty("--tag-hash-color", color);
+            }
             const a = document.createElement("a");
             a.href = tag.status?.permalink || "#";
             // <!--/* 正常情况 tag.spec?.displayName 必定存在 */-->
