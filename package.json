@@ -15,7 +15,10 @@
     "format": "pnpm run \"/^format:.*/\"",
     "format:stylus": "stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
     "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,yaml,html}\" \"./plugins/**/*.ts\"",
-    "prepare": "husky && tw-patch install"
+    "prepare": "husky && tw-patch install",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "browserslist": [
     "defaults",
@@ -87,7 +90,8 @@
     "typescript-eslint": "^8.46.3",
     "unplugin-tailwindcss-mangle": "^5.0.0",
     "vite": "npm:rolldown-vite@^7.2.1",
-    "vite-plugin-purge-icons": "^0.10.0"
+    "vite-plugin-purge-icons": "^0.10.0",
+    "vitepress": "2.0.0-alpha.12"
   },
   "dependencies": {
     "@iconify/iconify": "^3.1.1",
