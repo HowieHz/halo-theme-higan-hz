@@ -1,85 +1,74 @@
-# Markdown Extension Examples
+# 文档 Markdown 使用约定
 
-This page demonstrates some of the built-in markdown extensions provided by VitePress.
+本文记录我们在撰写 higan-hz 文档时推荐使用的 Markdown 扩展和惯例，方便贡献者快速对齐格式。VitePress 原生支持的语法非常丰富，但文档中只会选用其中一部分以保证阅读体验。
 
-## Syntax Highlighting
+## 常用提示块
 
-VitePress provides Syntax Highlighting powered by [Shiki](https://github.com/shikijs/shiki), with additional features like line-highlighting:
-
-**Input**
-
-````md
-```js{4}
-export default {
-  data () {
-    return {
-      msg: 'Highlighted!'
-    }
-  }
-}
-```
-````
-
-**Output**
-
-```js{4}
-export default {
-  data () {
-    return {
-      msg: 'Highlighted!'
-    }
-  }
-}
-```
-
-## Custom Containers
-
-**Input**
+使用自定义容器语法强调重点信息：
 
 ```md
 ::: info
-This is an info box.
+用于补充背景或上下文提示。
 :::
 
 ::: tip
-This is a tip.
+写操作建议或最佳实践。
 :::
 
 ::: warning
-This is a warning.
+提醒潜在风险或注意事项。
 :::
 
-::: danger
-This is a dangerous warning.
-:::
-
-::: details
-This is a details block.
+::: details 标题
+折叠展示步骤截图、冗长示例等次要信息。
 :::
 ```
 
-**Output**
+为保持页面节奏，单页内的提示块数量不宜超过三处；折叠块请始终补充标题文本。
 
-::: info
-This is an info box.
-:::
+## 代码与终端示例
 
-::: tip
-This is a tip.
-:::
+- 默认使用围栏代码块并注明语言：
 
-::: warning
-This is a warning.
-:::
+  ```md
+  ```bash
+  pnpm install
+  ```
+  ```
 
-::: danger
-This is a dangerous warning.
-:::
+- 如需突出关键行，可在语言后追加 `{n}` 指定高亮行号：
 
-::: details
-This is a details block.
-:::
+  ````md
+  ```json{2}
+  {
+    "haloVersion": "2.19+"
+  }
+  ```
+  ````
 
-## More
+终端输出较长时，可搭配 `<details>` 折叠展示，正文保留关键结论即可。
 
-Check out the documentation for the [full list of markdown extensions](https://vitepress.dev/guide/markdown).
+## 内联 HTML
+
+当 Markdown 语法无法满足布局需求时，可以有限度地使用 HTML 元素：
+
+- `<details>` / `<summary>`：嵌入 FAQ、展开式步骤。
+- `<kbd>`：标记快捷键，如 `<kbd>Ctrl</kbd> + <kbd>S</kbd>`。
+- `<span class="label">`：用于与主题样式保持一致的徽标或状态标签。
+
+请避免引入复杂结构或行内样式，确保内容在暗色模式下依旧清晰可读。
+
+## 排版约束
+
+- 一级标题（`#`）仅在文档开头使用一次，其余层级按章节递进。
+- 中英文之间保留空格，例如 `Halo 2.19`，保持阅读流畅。
+- 表格需控制列数，必要时拆分为多段文字说明。
+- 图片添加简短的 alt 与标题，示意图可配合 `<div class="caption">` 说明来源。
+
+## 拓展阅读
+
+- 《guide/content-components.md》：列出了主题提供的 Markdown 增强写法，可直接复用到页面模板与文章中。
+- 《guide/advanced.md#mermaid》：记录 Mermaid 渲染注意事项，适用于流程图与架构图。
+- VitePress 官方文档的 [Markdown 扩展清单](https://vitepress.dev/guide/markdown) 可作为补充参考。
+
+如需新增语法或格式指引，请先在讨论区提出，以便统一文档风格。
