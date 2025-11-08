@@ -58,8 +58,8 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/HowieHz/halo-theme-higan-hz' }
     ],
     footer: {
-      message: 'MIT Licensed',
-      copyright: 'Copyright © 2024-2025 HowieHz'
+      message: '基于 MIT 许可发布',
+      copyright: '版权所有 © 2024-至今 HowieHz'
     },
     editLink: {
       pattern: 'https://github.com/HowieHz/halo-theme-higan-hz/edit/new-docs/docs/:path',

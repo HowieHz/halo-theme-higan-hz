@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: "higan-hz"
-  text: "简洁而强大的主题"
-  tagline: "多语言、深浅色、模块化布局与性能优化一应俱全"
+  text: "一款响应式、简洁清爽的个人网站 Halo 主题"
+  tagline: "多语言、深浅色、模块化布局与可配置性强的一体化体验"
   actions:
     - theme: brand
       text: 快速开始
