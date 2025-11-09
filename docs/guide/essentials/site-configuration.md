@@ -1,9 +1,9 @@
 ---
-title: 配置总览
+title: 站点配置基础
 outline: deep
 ---
 
-# 配置总览
+# 站点配置基础
 
 所有主题设置均位于 Halo 后台的「外观 → 主题 → 设置」。本章节按配置分组逐项说明默认值、作用及注意事项，并给出与其他功能的联动提示。
 
@@ -39,7 +39,7 @@ outline: deep
 ### 多语言菜单支持
 - **路径**：`全局 → 多语言菜单支持`
 - **默认**：关闭
-- **说明**：开启后可为不同语言维护不同的导航菜单。详细操作见《[多语言菜单指南](./content-components.md#菜单与多语言)》。
+- **说明**：开启后可为不同语言维护不同的导航菜单。详细操作见《[多语言菜单指南](./multi-language.md#多语言菜单)》。
 
 ### CSP: upgrade-insecure-requests
 - **路径**：`全局 → CSP:upgrade-insecure-requests`
@@ -64,7 +64,7 @@ outline: deep
 ### Mermaid 支持
 - **路径**：`全局 → Mermaid 支持`
 - **默认**：关闭
-- **说明**：开启后将自动在文章页注入 Mermaid 渲染脚本。可自定义选择器、脚本地址与 Mermaid 配置，详见《[进阶功能](./advanced.md#mermaid)》。
+- **说明**：开启后将自动在文章页注入 Mermaid 渲染脚本。可自定义选择器、脚本地址与 Mermaid 配置，详见《[进阶功能](../advanced/#mermaid)》。
 
 ## 总体样式
 
@@ -121,7 +121,7 @@ outline: deep
 - `表格每行底部的表格线` + 宽度设置
 - `标题/段落 上下边距倍率`
 
-这些选项主要影响 Markdown 渲染效果。若你在 `content-components.md` 中启用了主题专属组件，建议保持引用块及表格相关选项为默认。
+这些选项主要影响 Markdown 渲染效果。若你在《[内容写作与增强](./content-authoring.md)》中启用了主题专属组件，建议保持引用块及表格相关选项为默认。
 
 ## 首页样式
 
@@ -233,4 +233,4 @@ outline: deep
 
 ---
 
-完成基础配置后，建议继续阅读《[内容增强](./content-components.md)》与《[进阶功能](./advanced.md)》了解主题独有的 Markdown 组件与高级特性。
+完成基础配置后，建议继续阅读《[内容写作与增强](./content-authoring.md)》与《[进阶功能](../advanced/)》了解主题独有的 Markdown 组件与高级特性。

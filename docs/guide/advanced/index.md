@@ -130,4 +130,4 @@ https://x.com/share?url=@URL&utm_source=blog&title=@TITLE
 
 ---
 
-至此，你已掌握 higan-hz 的高级选项与插件整合方式。若还未阅读模板映射与常见问题，请前往《[参考资料](../reference/template-map.md)》与《[常见问题](../reference/faq.md)》。
+至此，你已掌握 higan-hz 的高级选项与插件整合方式。若还未阅读模板映射与常见问题，请前往《[模板映射与页面路径](../../reference/template-map.md)》与《[常见问题](../../reference/faq.md)》。

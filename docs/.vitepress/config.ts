@@ -3,6 +3,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   lang: 'zh-CN',
   title: 'Halo higan-hz 主题文档',
+  titleTemplate: ':title - higan-hz 主题文档',
   description: 'Halo higan-hz 主题文档与指南，涵盖特色功能、配置说明、插件支持及示例演示。',
   lastUpdated: true,
   cleanUrls: true,
@@ -11,12 +12,17 @@ export default defineConfig({
       {
         text: '指南',
         items: [
-          { text: '主题概览', link: '/guide/overview' },
-          { text: '快速开始', link: '/guide/getting-started' },
-          { text: '配置总览', link: '/guide/configuration-overview' },
-          { text: 'i18n 支持指南', link: '/guide/i18n' },
-          { text: '内容增强', link: '/guide/content-components' },
-          { text: '进阶功能', link: '/guide/advanced' }
+          { text: '简介', link: '/guide/introduction/' },
+          { text: '快速开始', link: '/guide/getting-started/' },
+          {
+            text: '核心要素',
+            items: [
+              { text: '站点配置', link: '/guide/essentials/site-configuration' },
+              { text: '内容写作', link: '/guide/essentials/content-authoring' },
+              { text: '多语言实践', link: '/guide/essentials/multi-language' }
+            ]
+          },
+          { text: '进阶功能', link: '/guide/advanced/' }
         ]
       },
       {
@@ -32,15 +38,24 @@ export default defineConfig({
     sidebar: {
       '/guide/': [
         {
-          text: '指南',
+          text: '简介',
+          items: [{ text: '主题概览', link: '/guide/introduction/' }]
+        },
+        {
+          text: '快速开始',
+          items: [{ text: '安装与升级', link: '/guide/getting-started/' }]
+        },
+        {
+          text: '核心要素',
           items: [
-            { text: '主题概览', link: '/guide/overview' },
-            { text: '快速开始', link: '/guide/getting-started' },
-            { text: '配置总览', link: '/guide/configuration-overview' },
-            { text: 'i18n 支持指南', link: '/guide/i18n' },
-            { text: '内容增强与多语言', link: '/guide/content-components' },
-            { text: '进阶功能', link: '/guide/advanced' }
+            { text: '站点配置基础', link: '/guide/essentials/site-configuration' },
+            { text: '内容写作与增强', link: '/guide/essentials/content-authoring' },
+            { text: '多语言实践', link: '/guide/essentials/multi-language' }
           ]
+        },
+        {
+          text: '进阶',
+          items: [{ text: '性能、安全与插件', link: '/guide/advanced/' }]
         }
       ],
       '/reference/': [

@@ -1,9 +1,9 @@
 ---
-title: 内容增强与多语言
+title: 内容写作与增强
 outline: deep
 ---
 
-# 内容增强与多语言
+# 内容写作与增强
 
 higan-hz 在原主题的 Markdown 能力之上提供了大量排版增强、模式切换与多语言工具。本章节汇总常见写法及配套配置，帮助你快速创建高质量内容。
 
@@ -121,7 +121,7 @@ sequenceDiagram
 </div>
 ~~~
 
-更多配置可在“Mermaid Config 属性”中直接写入 JavaScript 对象，详见《[进阶功能](./advanced.md#mermaid)》。
+更多配置可在“Mermaid Config 属性”中直接写入 JavaScript 对象，详见《[进阶功能](../advanced/#mermaid)》。
 
 ### 默认编辑器写法（Hybrid Edit Block）
 
@@ -210,7 +210,7 @@ Vditor 支持多种写法，可根据预览需求选择：
 
 语言代码遵循 BCP 47 标准（如 `zh`, `zh-CN`, `en-US`）。若开启前缀匹配，`zh` 可同时匹配 `zh_CN` 与 `zh_TW`。
 
-更多多语言整体流程，请参阅《[i18n 支持指南](./i18n.md)》获取完整示例。
+更多多语言整体流程，请参阅《[多语言实践](./multi-language.md)》获取完整示例。
 
 ## 语义化内容块示例
 
@@ -257,4 +257,4 @@ Vditor 支持多种写法，可根据预览需求选择：
 
 ---
 
-更多针对高级配置、资源路径和安全策略的说明，请继续阅读《[进阶功能](./advanced.md)》。
+更多针对高级配置、资源路径和安全策略的说明，请继续阅读《[进阶功能](../advanced/)》。

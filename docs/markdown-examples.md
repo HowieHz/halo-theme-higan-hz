@@ -67,8 +67,8 @@
 
 ## 拓展阅读
 
-- 《guide/content-components.md》：列出了主题提供的 Markdown 增强写法，可直接复用到页面模板与文章中。
-- 《guide/advanced.md#mermaid》：记录 Mermaid 渲染注意事项，适用于流程图与架构图。
+- 《guide/essentials/content-authoring.md》：列出了主题提供的 Markdown 增强写法，可直接复用到页面模板与文章中。
+- 《guide/advanced/#mermaid》：记录 Mermaid 渲染注意事项，适用于流程图与架构图。
 - VitePress 官方文档的 [Markdown 扩展清单](https://vitepress.dev/guide/markdown) 可作为补充参考。
 
 如需新增语法或格式指引，请先在讨论区提出，以便统一文档风格。

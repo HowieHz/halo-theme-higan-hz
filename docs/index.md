@@ -8,10 +8,10 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /guide/getting-started
+      link: /guide/getting-started/
     - theme: alt
       text: 配置总览
-      link: /guide/configuration-overview
+      link: /guide/essentials/site-configuration
 
 features:
   - title: 全面多语言体系
