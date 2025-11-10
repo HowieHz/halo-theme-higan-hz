@@ -36,7 +36,7 @@ features:
   - icon: 🌐
     title: 多语言支持
     details: 首创多语言切换，在各方面都提供完善的多语言配置项。
-    link: /guide/i18n
+    link: /tutorial/i18n
     linkText: 了解更多
   - icon: ⚡
     title: 高性能表现
@@ -46,7 +46,7 @@ features:
   - icon: 🔒
     title: 安全防护
     details: 内置站点防克隆、强制将 HTTP 资源升级为 HTTPS 等功能，保障站点安全。
-    link: /guide/security
+    link: /tutorial/security
     linkText: 了解更多
   - icon: 🧩
     title: 插件兼容性

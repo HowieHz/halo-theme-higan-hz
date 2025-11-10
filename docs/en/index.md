@@ -36,7 +36,7 @@ features:
   - icon: 🌐
     title: "Multilingual Support"
     details: "Introduces multilingual switching with comprehensive options available across the board."
-    link: /guide/i18n
+    link: /tutorial/i18n
     linkText: "Learn More"
   - icon: ⚡
     title: "High Performance"
@@ -46,7 +46,7 @@ features:
   - icon: 🔒
     title: "Security Safeguards"
     details: "Built-in anti-cloning, automatic HTTPS upgrades for HTTP resources, and more to keep the site secure."
-    link: /guide/security
+    link: /tutorial/security
     linkText: "Learn More"
   - icon: 🧩
     title: "Plugin Compatibility"
