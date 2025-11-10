@@ -18,10 +18,10 @@ export default defineConfig({
       "meta",
       {
         property: "og:image",
-        content: "https://docs.howiehz.top/ico.ico",
+        content: "https://higan-haozi.docs.howiehz.top/ico.ico",
       },
     ],
-    ["meta", { property: "og:url", content: "https://docs.howiehz.top" }],
+    ["meta", { property: "og:url", content: "https://higan-haozi.docs.howiehz.top" }],
     // <script defer src="https://umami.howiehz.top/script.js" data-website-id="d717a747-91d2-4be4-a5e7-5cc32ff14f4a" data-domains="howiehz.top"></script>
     [
       "script",
@@ -29,7 +29,7 @@ export default defineConfig({
         defer: "",
         src: "https://umami.howiehz.top/script.js",
         "data-website-id": "d717a747-91d2-4be4-a5e7-5cc32ff14f4a",
-        "data-domains": "docs.howiehz.top",
+        "data-domains": "higan-haozi.docs.howiehz.top",
       },
     ],
   ],
@@ -47,7 +47,7 @@ export default defineConfig({
   },
 
   sitemap: {
-    hostname: "https://docs.howiehz.top",
+    hostname: "https://higan-haozi.docs.howiehz.top",
   },
 
   themeConfig: {
