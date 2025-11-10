@@ -472,15 +472,13 @@ spec:
           name: footer_theme_info_theme_name
           if: "$is_footer_theme_info_show === true"
           label: 页面底部主题信息所展示的主题名
-          value: higan-hz
+          value: Higan Haozi
           # autocorrect-disable
           options:
-            - label: higan-hz
-              value: higan-hz
-            - label: higan
-              value: higan
-            - label: 彼岸-皓改
-              value: 彼岸-皓改
+            - label: Higan Haozi
+              value: Higan Haozi
+            - label: Higan
+              value: Higan
             - label: 彼岸
               value: 彼岸
           # autocorrect-enable

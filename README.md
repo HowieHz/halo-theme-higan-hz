@@ -1,4 +1,4 @@
-# halo-theme-higan-hz
+# Higan Haozi
 
 ![GitHub](https://img.shields.io/github/license/HowieHz/halo-theme-higan-hz)
 ![GitHub all releases](https://img.shields.io/github/downloads/HowieHz/halo-theme-higan-hz/total)
@@ -10,9 +10,11 @@
 
 本主题是在 guqing 的 [halo-theme-higan](https://github.com/guqing/halo-theme-higan) 基础上进行深度定制和优化的版本。
 
+一款响应式、简洁清爽的个人网站 Halo CMS 主题。
+
 > 更激进的修改，更高的配置自由度！
 
-higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archives/higan-hz-style-guide)
+Higan Haozi 主题样式展示与使用指导：[文档](https://howiehz.top/archives/higan-hz-style-guide)
 
 ### 特色功能概要
 
@@ -64,7 +66,7 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
 
 ### 目录
 
-- [halo-theme-higan-hz](#halo-theme-higan-hz)
+- [Higan Haozi](#higan-haozi)
   - [说明](#说明)
     - [特色功能概要](#特色功能概要)
     - [作者的碎碎语](#作者的碎碎语)
@@ -707,7 +709,7 @@ higan-hz 主题样式展示与使用指导：[文档](https://howiehz.top/archiv
 
 Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商店页面下载即可
 
-- 市场链接：[应用：彼岸 - 皓改](https://www.halo.run/store/apps/app-homxf?tab=releases)
+- 市场链接：[应用](https://www.halo.run/store/apps/app-homxf?tab=releases)
 
 ### 最新开发版获取方法
 

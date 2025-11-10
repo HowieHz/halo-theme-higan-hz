@@ -14,7 +14,7 @@
     "lint:autocorrect": "autocorrect --fix",
     "format": "pnpm run \"/^format:.*/\"",
     "format:stylus": "stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
-    "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,yaml,html}\" \"./plugins/**/*.ts\"",
+    "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,yaml,html}\" \"./plugins/**/*.ts\" \"./docs/**/*.{ts,md}\"",
     "prepare": "husky && tw-patch install",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
@@ -31,7 +31,8 @@
     "howiehz",
     "halo-theme",
     "halo-theme-higan",
-    "halo-theme-higan-hz"
+    "halo-theme-higan-hz",
+    "halo-theme-higan-haozi"
   ],
   "homepage": "https://github.com/howiehz/halo-theme-higan-hz#readme",
   "bugs": {
