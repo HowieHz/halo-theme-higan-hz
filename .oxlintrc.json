@@ -11,6 +11,7 @@
     "public/assets/lib/**/*",
     "docs/.vitepress/dist",
     "docs/.vitepress/cache",
+    "**/.oxlintrc.json.bak",
     "**/logs",
     "**/*.log",
     "**/npm-debug.log*",
