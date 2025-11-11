@@ -12,7 +12,7 @@ outline: deep
 
 ### 稳定版获取方法
 
-v1.2.1 版本开始，本主题已上架 Halo 应用市场，直接到市场即可获取：
+从 `v1.2.1` 版本开始，本主题已上架 Halo 应用市场，到应用市场即可获取：
 
 - 市场链接：[Higan Haozi](https://www.halo.run/store/apps/app-homxf)
 
