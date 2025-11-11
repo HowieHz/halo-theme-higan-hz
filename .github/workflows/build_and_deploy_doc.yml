@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Install Pagefind
+        run: pnpm add pagefind
+
       - name: Build Documentation
         run: pnpm docs:build
 
