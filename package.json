@@ -18,7 +18,7 @@
     "prepare": "husky && tw-patch install",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs || (vitepress build docs && vitepress preview docs)"
   },
   "browserslist": [
     "defaults",
