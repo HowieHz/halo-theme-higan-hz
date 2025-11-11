@@ -1,6 +1,7 @@
 {
   "private": true,
   "type": "module",
+  "version": "1.45.4",
   "scripts": {
     "dev": "pnpm run \"/^watch:.*/\"",
     "watch:vite": "vite build --watch",

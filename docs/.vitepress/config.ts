@@ -1,6 +1,8 @@
 import { defineConfig } from "vitepress";
 import { chineseSearchOptimize, pagefindPlugin } from "vitepress-plugin-pagefind";
 
+import pkg from "../../package.json";
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   vite: {
@@ -109,7 +111,6 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     logo: { src: "/ico.ico", width: 24, height: 24 },
     nav: [
-      { text: "快速开始", link: "/guide/getting-started/" },
       {
         text: "指南",
         items: [
@@ -151,6 +152,16 @@ export default defineConfig({
         ],
       },
       { text: "示例站点", link: "https://howiehz.top" },
+      {
+        text: pkg.version,
+        items: [
+          { text: `更新日志`, link: "https://github.com/HowieHz/halo-theme-higan-hz/blob/main/CHANGELOG.md" },
+          {
+            text: `发布说明 v${pkg.version}`,
+            link: "https://github.com/HowieHz/halo-theme-higan-hz/releases/tag/v" + pkg.version,
+          },
+        ],
+      },
     ],
 
     sidebar: [
