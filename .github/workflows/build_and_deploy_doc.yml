@@ -31,4 +31,4 @@ jobs:
 
       - name: Deploy Doc to Halo
         run: |
-          pnpm dlx halo-static-pages-deploy-cli deploy -e ${{ secrets.DOCS_ENDPOINT }} -i ${{ secrets.DOCS_ID }} -t ${{ secrets.DOCS_PAT }} -f docs/.vitepress/dist
+          pnpm --package=halo-static-pages-deploy-cli dlx halo-static-pages-deploy deploy -e ${{ secrets.DOCS_ENDPOINT }} -i ${{ secrets.DOCS_ID }} -t ${{ secrets.DOCS_PAT }} -f docs/.vitepress/dist
