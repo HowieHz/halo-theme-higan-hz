@@ -8,13 +8,40 @@
 
 ## 说明
 
-本主题是在 guqing 的 [halo-theme-higan](https://github.com/guqing/halo-theme-higan) 基础上进行深度定制和优化的版本。
-
 一款响应式、简洁清爽的个人网站 Halo CMS 主题。
 
-> 更激进的修改，更高的配置自由度！
+想了解更多吗？欢迎访问[文档](https://howiehz.top/halo-theme-higan-hz/)进一步了解此主题。
+也可以访问[示例站点](https://howiehz.top/)进行体验。
 
-Higan Haozi 主题样式展示与使用指导：[文档](https://howiehz.top/archives/higan-hz-style-guide)
+## 特点
+
+在简洁清爽的基础上，本主题秉持以下核心理念：
+
+1. 响应式设计
+2. [强可配置性](https://howiehz.top/halo-theme-higan-hz/guide/theme-configuration)
+3. [多语言支持](https://howiehz.top/halo-theme-higan-hz/tutorial/i18n)
+4. [插件兼容性](https://howiehz.top/halo-theme-higan-hz/guide/plugin-compatibility)
+5. [高性能表现](https://howiehz.top/halo-theme-higan-hz/guide/what-is-higan-haozi#lighthouse)
+
+## 预览
+
+下图展示了主题部分配色风格：
+
+![preview-1](./docs/public/preview-1.png)
+
+## 一些话
+
+如果你喜欢这个主题，欢迎 [Star⭐](https://github.com/HowieHz/halo-theme-higan-hz)、[Issue🐛](https://github.com/HowieHz/halo-theme-higan-hz/issues) 或 [Pull Request🔀](https://github.com/HowieHz/halo-theme-higan-hz/pulls) 支持项目迭代。
+你的支持是我持续更新的最大动力！
+
+如果你愿意支持我，也欢迎进群交流，让我知道除了我自己，还有许多人在使用这个主题😀
+
+- [主题交流群（QQ）](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=QCcmLkzDHUT22qP_-MVYSYDwlL_Jf55Y&authKey=KWfge330T3nQAJy96gacr8eyp8u0egY3tNGBFAnNjqdBdMJKQLp9I9efUU9aMiGM&noverify=0&group_code=694413711)
+
+欢迎基于本项目二次开发，不论需求多么独特，只要是本主题没实现的，就欢迎你来提 [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new)。
+
+最初，这个项目只是为了解决自己的一些需求。没想到现如今已有不少小伙伴在使用，并通过各种方式反馈建议，帮助我不断优化和完善。衷心感谢大家的支持与鼓励！
+另外，感谢所有通过打赏支持本项目的小伙伴，特此列出名单：[赞助名单](#感谢赞助)
 
 ### 特色功能概要
 
@@ -41,96 +68,6 @@ Higan Haozi 主题样式展示与使用指导：[文档](https://howiehz.top/arc
 6. 优秀的兼容性：  
    [在线查看兼容浏览器列表](https://browsersl.ist/#q=defaults%0ASafari+%3E%3D+16.4%0AChrome+%3E%3D+111%0AFirefox+%3E%3D+128)
 7. 更多功能，等你发现……
-
-### 作者的碎碎语
-
-主题使用前请务必阅读：[可选插件](#可选插件)
-
-如果你喜欢这个主题，欢迎为项目点个 Star！
-你的 Star 和支持，是我持续更新的最大动力！
-
-欢迎加入主题交流群（QQ）：
-
-- [点击链接加入群聊 群号 694413711](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=QCcmLkzDHUT22qP_-MVYSYDwlL_Jf55Y&authKey=KWfge330T3nQAJy96gacr8eyp8u0egY3tNGBFAnNjqdBdMJKQLp9I9efUU9aMiGM&noverify=0&group_code=694413711)  
-  如果你愿意支持我，也欢迎进群交流，让我知道除了我自己，还有更多人在使用这个主题😀
-
-欢迎基于本项目 Fork，如果能提 Issue 就更好了。无论你的需求多么独特，我都会尽力满足 ^\_^
-
-最初，这个项目只是为了解决自己的一些特殊需求。没想到现在已经有许多小伙伴在使用，并通过各种方式反馈建议，帮助我不断优化和完善。衷心感谢大家的支持与鼓励！
-另外，感谢所有通过打赏支持本项目的小伙伴，特此列出名单：[赞助名单](#感谢赞助)
-
-![preview-1](./docs/img/preview-1.png)
-
-文档版本：`1.45.4`  
-（如果此处文档版本低于你正在使用的主题版本，说明你正在阅读的是旧版文档，请前往[项目主页](https://github.com/HowieHz/halo-theme-higan-hz/blob/main/README.md)获取最新版。）
-
-### 目录
-
-- [Higan Haozi](#higan-haozi)
-  - [说明](#说明)
-    - [特色功能概要](#特色功能概要)
-    - [作者的碎碎语](#作者的碎碎语)
-    - [目录](#目录)
-  - [i18n 支持指南](#i18n-支持指南)
-    - [站点默认语言标识](#站点默认语言标识)
-    - [修改文章页面语言标识](#修改文章页面语言标识)
-    - [修改分类页面语言标识](#修改分类页面语言标识)
-    - [修改标签页面语言标识](#修改标签页面语言标识)
-    - [修改独立页面语言标识](#修改独立页面语言标识)
-    - [修改页面固定文字（修改语言文件）](#修改页面固定文字修改语言文件)
-    - [多语言菜单使用指南](#多语言菜单使用指南)
-    - [多语言个人简介/公告栏使用指南](#多语言个人简介公告栏使用指南)
-    - [多语言页面最底部内容使用指南](#多语言页面最底部内容使用指南)
-  - [相较于原始主题 最新开发版 的修改](#相较于原始主题-最新开发版-的修改)
-    - [样式修复](#样式修复)
-    - [不可配置的样式修改](#不可配置的样式修改)
-    - [配置项修改](#配置项修改)
-      - [增加于“全局”](#增加于全局)
-      - [增加于“总体样式”](#增加于总体样式)
-      - [增加于“首页样式”](#增加于首页样式)
-      - [增加于“文章页样式”](#增加于文章页样式)
-      - [添加于“分类集合页样式”](#添加于分类集合页样式)
-      - [添加于“分类详情页样式”](#添加于分类详情页样式)
-      - [添加于“标签集合页样式”](#添加于标签集合页样式)
-      - [添加于“标签详情页样式”](#添加于标签详情页样式)
-      - [添加于“作者详情页样式”](#添加于作者详情页样式)
-      - [添加于"归档页样式"](#添加于归档页样式)
-      - [增加于“自定义页面样式”](#增加于自定义页面样式)
-      - [增加于“相册页样式”](#增加于相册页样式)
-      - [增加于“瞬间页样式”](#增加于瞬间页样式)
-      - [增加于“社交资料/RSS”](#增加于社交资料rss)
-      - [添加于“页面分享按钮设置”](#添加于页面分享按钮设置)
-      - [添加于“错误页样式”](#添加于错误页样式)
-      - [增加于文章元数据](#增加于文章元数据)
-      - [增加于分类元数据](#增加于分类元数据)
-      - [增加于标签元数据](#增加于标签元数据)
-      - [增加于页面元数据](#增加于页面元数据)
-      - [调整于“总体样式”](#调整于总体样式)
-      - [调整于“首页样式”](#调整于首页样式)
-    - [杂项（对主题使用者无感的修改）](#杂项对主题使用者无感的修改)
-  - [原项目说明](#原项目说明)
-  - [主题应用实例](#主题应用实例)
-  - [如何获取主题包](#如何获取主题包)
-    - [稳定版获取方法](#稳定版获取方法)
-    - [最新开发版获取方法](#最新开发版获取方法)
-  - [可选插件](#可选插件)
-    - [Mermaid 明暗切换支持](#mermaid-明暗切换支持)
-      - [使用默认编辑器](#使用默认编辑器)
-        - [适用于默认编辑器的示例](#适用于默认编辑器的示例)
-        - [适用于默认编辑器的使用说明](#适用于默认编辑器的使用说明)
-      - [使用 Vditor 编辑器](#使用-vditor-编辑器)
-        - [适用于 Vditor 编辑器的示例](#适用于-vditor-编辑器的示例)
-        - [适用于 Vditor 编辑器的使用说明](#适用于-vditor-编辑器的使用说明)
-  - [设置内容仅在浅色/深色模式下显示](#设置内容仅在浅色深色模式下显示)
-    - [在默认编辑器中的使用方法](#在默认编辑器中的使用方法)
-    - [在使用 Vditor 编辑器 中的使用方法](#在使用-vditor-编辑器-中的使用方法)
-  - [开发指南/贡献指南](#开发指南贡献指南)
-  - [Lighthouse](#lighthouse)
-  - [TODO](#todo)
-  - [感谢赞助](#感谢赞助)
-  - [项目状态](#项目状态)
-    - [Repobeats analytics](#repobeats-analytics)
-    - [Star History](#star-history)
 
 ## i18n 支持指南
 
@@ -690,33 +627,6 @@ Higan Haozi 主题样式展示与使用指导：[文档](https://howiehz.top/arc
 5. 文字分类支持面包屑显示（嵌套分类将显示为：`大分类 > 中分类 > 小分类`。原主题仅支持显示：`小分类`）
 6. 以下页面中的标签都会按配置呈现标签色：标签集合页（/tags）、标签详情页（/tags/:slug）、首页多元文章列表以及文章页顶部标签区。
 
-## 原项目说明
-
-该主题的原作者为 Pieter Robberechts，非常感谢做出这么优秀的主题。
-
-原主题地址：[hexo-theme-cactus](https://github.com/probberechts/hexo-theme-cactus.git)
-
-## 主题应用实例
-
-[howiehz.top](https://howiehz.top)
-
-## 如何获取主题包
-
-### 稳定版获取方法
-
-1. 到 [Release](https://github.com/HowieHz/halo-theme-higan-hz/releases) 下载最新版的“Source code (zip)”
-2. 在 Console 端的主题菜单直接上传安装即可使用
-
-Release v1.2.1 包括之后的版本已上架 halo 应用市场，直接到商店页面下载即可
-
-- 市场链接：[应用](https://www.halo.run/store/apps/app-homxf?tab=releases)
-
-### 最新开发版获取方法
-
-1. 前往 [Build CI](https://github.com/HowieHz/halo-theme-higan-hz/actions/workflows/build.yml)，找到最新的构建任务并下载 `theme-artifact`。
-2. 解压下载的压缩包，根据语言选择对应的文件（如 `howiehz-higan-cn.zip` 或 `howiehz-higan-en.zip`）。
-3. 在 Halo CMS 后台（/Console）的“主题”菜单上传所选压缩包并完成安装。
-
 ## 可选插件
 
 - API 扩展（轻量版），需插件 [plugin-extra-api](https://github.com/HowieHz/halo-plugin-extra-api)([应用市场页面](https://www.halo.run/store/apps/app-di1jh8gd))
@@ -1099,7 +1009,7 @@ title: [[图表标题]]
 ```
 <!-- prettier-ignore-end -->
 
-## 开发指南/贡献指南
+## 贡献指南
 
 见 [CONTRIBUTING](./CONTRIBUTING)
 
