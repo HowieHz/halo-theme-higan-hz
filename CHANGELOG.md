@@ -1,3 +1,5 @@
+# 更新日志
+
 ## [1.45.4](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.45.3...v1.45.4) (2025-11-07)
 
 ### 错误修复

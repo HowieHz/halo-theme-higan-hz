@@ -155,11 +155,12 @@ export default defineConfig({
       {
         text: pkg.version,
         items: [
-          { text: `更新日志`, link: "https://github.com/HowieHz/halo-theme-higan-hz/blob/main/CHANGELOG.md" },
           {
             text: `发布说明 v${pkg.version}`,
-            link: "https://github.com/HowieHz/halo-theme-higan-hz/releases/tag/v" + pkg.version,
+            link: `https://github.com/HowieHz/halo-theme-higan-hz/releases/tag/v${pkg.version}`,
           },
+          { text: `更新日志`, link: "https://github.com/HowieHz/halo-theme-higan-hz/blob/main/CHANGELOG.md" },
+          { text: "贡献指南", link: "https://github.com/HowieHz/halo-theme-higan-hz/blob/main/CONTRIBUTING.md" },
         ],
       },
     ],

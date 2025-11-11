@@ -6,7 +6,7 @@ const templateDir = resolve('templates')
 const THEME_PREFIX = 'themes/howiehz-higan/'
 const SKIP_PROTOCOLS = ['http://', 'https://', '//', 'data:', 'mailto:', 'tel:', 'javascript:']
 
-// 片段定义缓存: templatePath -> Set<fragmentName>
+// 片段定义缓存：templatePath -> Set<fragmentName>
 const fragmentDefinitions = new Map()
 // 模板内容缓存
 const templateContentCache = new Map()
@@ -75,7 +75,7 @@ function normalizeAssetPath(rawUrl) {
   return resolve(templateDir, clean)
 }
 
-// 解析 Thymeleaf 引用: ~{/fragments/layout :: html} 或 ~{fragments/header::content}
+// 解析 Thymeleaf 引用：~{/fragments/layout :: html} 或 ~{fragments/header::content}
 function parseThymeleafReference(ref) {
   if (!ref) return null
   
