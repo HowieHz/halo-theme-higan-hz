@@ -15,7 +15,7 @@ Higan Haozi 是一款适用于 [Halo CMS](https://github.com/halo-dev/halo) 的�
 
 1. 响应式设计
 2. [强可配置性](./theme-configuration)
-3. [多语言支持](./i18n)
+3. [多语言支持](../tutorial/i18n)
 4. [插件兼容性](./plugin-compatibility)
 5. [高性能表现](#lighthouse)
 
@@ -39,4 +39,4 @@ Lighthouse 测试结果：
 
 ![Lighthouse](/Lighthouse-result-2024-04-15-post.png)
 
-期望进一步进行性能优化配置，请阅读[性能优化](./performance)。
+期望进一步进行性能优化配置，请阅读[性能优化](../tutorial/performance)。

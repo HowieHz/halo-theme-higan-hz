@@ -92,7 +92,8 @@
     "unplugin-tailwindcss-mangle": "^5.0.0",
     "vite": "npm:rolldown-vite@^7.2.1",
     "vite-plugin-purge-icons": "^0.10.0",
-    "vitepress": "2.0.0-alpha.12"
+    "vitepress": "2.0.0-alpha.12",
+    "vitepress-plugin-pagefind": "^0.4.15"
   },
   "dependencies": {
     "@iconify/iconify": "^3.1.1",
