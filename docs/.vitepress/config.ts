@@ -29,9 +29,11 @@ export default defineConfig({
     ],
   },
 
-  title: "Halo Higan Haozi 主题文档",
-  titleTemplate: ":title - Higan Haozi 主题文档",
-  description: "Halo Higan Haozi 主题文档与指南，涵盖特色功能、配置说明、插件支持及示例演示。",
+  title: "Higan Haozi",
+  // 首页只显示 title，其他页面才用模板
+  titleTemplate: ":title | Higan Haozi",
+  description:
+    "Higan Haozi 是一款响应式、简洁清爽的个人网站 Halo CMS 主题。此处是 Higan Haozi 文档站，包括特色功能、配置说明、插件支持及示例演示。",
 
   lastUpdated: true,
   cleanUrls: true,
@@ -50,7 +52,7 @@ export default defineConfig({
         content: "https://howiehz.top/halo-theme-higan-hz/ico.ico",
       },
     ],
-    ["meta", { property: "og:url", content: "https://howiehz.top/halo-theme-higan-hz" }],
+    ["meta", { property: "og:url", content: "https://howiehz.top/halo-theme-higan-hz/" }],
     // <script defer src="https://umami.howiehz.top/script.js" data-website-id="7b461ac5-155d-45a8-a118-178d0a2936e4" data-domains="howiehz.top"></script>
     [
       "script",
@@ -105,6 +107,7 @@ export default defineConfig({
 
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    logo: { src: "/ico.ico", width: 24, height: 24 },
     nav: [
       { text: "快速开始", link: "/guide/getting-started/" },
       {
