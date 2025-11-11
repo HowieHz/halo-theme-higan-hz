@@ -50,6 +50,19 @@ export default defineConfig({
     hostname: "https://higan-haozi.docs.howiehz.top",
   },
 
+  markdown: {
+    container: {
+      tipLabel: '提示',
+      warningLabel: '警告',
+      dangerLabel: '危险',
+      infoLabel: '信息',
+      detailsLabel: '详细信息'
+    },
+    image: {
+      lazyLoading: true
+    }
+  },
+
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
