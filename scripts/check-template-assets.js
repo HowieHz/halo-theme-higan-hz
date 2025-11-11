@@ -1,3 +1,4 @@
+/* eslint-env node */
 import { promises as fs } from 'fs'
 import { join, resolve, relative } from 'path'
 
@@ -141,7 +142,7 @@ async function buildFragmentIndex(templates) {
       if (fragments.size > 0) {
         fragmentDefinitions.set(template, fragments)
       }
-    } catch (err) {
+    } catch {
       console.warn(`Failed to read template: ${template}`)
     }
   }

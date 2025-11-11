@@ -1,7 +1,8 @@
 ---
-title: Higan Haozi 是什么？
 outline: deep
 ---
+
+<!-- markdownlint-disable MD013 -->
 
 # Higan Haozi 是什么？
 

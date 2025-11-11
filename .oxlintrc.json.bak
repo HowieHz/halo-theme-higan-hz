@@ -38,9 +38,7 @@
     "**/*.sw?"
   ],
   "rules": {
-    "constructor-super": "error",
     "for-direction": "error",
-    "getter-return": "error",
     "no-async-promise-executor": "error",
     "no-case-declarations": "error",
     "no-class-assign": "error",
@@ -69,7 +67,6 @@
     "no-invalid-regexp": "error",
     "no-irregular-whitespace": "error",
     "no-loss-of-precision": "error",
-    "no-misleading-character-class": "error",
     "no-new-native-nonconstructor": "error",
     "no-nonoctal-decimal-escape": "error",
     "no-obj-calls": "error",
@@ -81,8 +78,6 @@
     "no-shadow-restricted-names": "error",
     "no-sparse-arrays": "error",
     "no-this-before-super": "error",
-    "no-undef": "error",
-    "no-unreachable": "error",
     "no-unsafe-finally": "error",
     "no-unsafe-negation": "error",
     "no-unsafe-optional-chaining": "error",
@@ -120,8 +115,6 @@
     {
       "files": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
       "rules": {
-        "constructor-super": "off",
-        "getter-return": "off",
         "no-class-assign": "off",
         "no-const-assign": "off",
         "no-dupe-class-members": "off",
@@ -133,8 +126,6 @@
         "no-redeclare": "off",
         "no-setter-return": "off",
         "no-this-before-super": "off",
-        "no-undef": "off",
-        "no-unreachable": "off",
         "no-unsafe-negation": "off",
         "no-var": "error",
         "no-with": "off",

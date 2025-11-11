@@ -27,7 +27,7 @@ export default defineConfig(
     },
   },
   {
-    files: ["postcss.config.js"],
+    files: ["postcss.config.js", "scripts/**/*.js"],
 
     languageOptions: {
       globals: {

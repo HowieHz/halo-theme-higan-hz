@@ -1,5 +1,4 @@
 ---
-title: 安装与升级
 outline: deep
 ---
 
