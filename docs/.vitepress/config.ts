@@ -130,6 +130,7 @@ export default defineConfig({
             items: [
               { text: "安装与升级", link: "/guide/getting-started/" },
               { text: "主题配置项", link: "/guide/theme-configuration" },
+              { text: "元数据配置项", link: "/guide/metadata-configuration" },
               { text: "插件兼容性", link: "/guide/plugin-compatibility" },
             ],
           },
@@ -182,6 +183,7 @@ export default defineConfig({
         items: [
           { text: "安装与升级", link: "/guide/installation-and-upgrade" },
           { text: "主题配置项", link: "/guide/theme-configuration" },
+          { text: "元数据配置项", link: "/guide/metadata-configuration" },
           { text: "插件兼容性", link: "/guide/plugin-compatibility" },
         ],
       },
