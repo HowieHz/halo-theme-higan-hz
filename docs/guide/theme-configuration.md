@@ -101,7 +101,7 @@ const QuickJumpConfig = (props) => {
 
 ::: tip
 
-重置全部配置为默认值：<QuickJumpConfig to="/console/theme" /> 点击主题名这行最右边三个点，然后点击“重置”按钮即可。
+重置全部配置为默认值的方法：前往 <QuickJumpConfig to="/console/theme" /> 页，之后点击主题名这行最右边三个点，最后点击“重置”按钮即可。
 
 :::
 
