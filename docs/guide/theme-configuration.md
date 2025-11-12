@@ -87,10 +87,6 @@ const QuickJumpConfig = (props) => {
   基础站点链接：<input v-model="inputBaseUrl" placeholder="例：https://example.com" style="width:50%" />
 </p>
 
-## 目录
-
-[[toc]]
-
 ## 示例
 
 - 用途：说明配置项用途。
