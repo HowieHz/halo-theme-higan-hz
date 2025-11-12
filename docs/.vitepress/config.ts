@@ -104,6 +104,9 @@ export default defineConfig({
         'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"',
       ],
     },
+    transformItems(items) {
+      return items.filter((item) => !item.url.includes("frames/default"));
+    },
   },
 
   markdown: {
