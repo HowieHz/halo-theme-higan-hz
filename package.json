@@ -63,6 +63,8 @@
     "@types/alpinejs": "^3.13.11",
     "@types/node": "^24.10.0",
     "@vitejs/plugin-legacy": "^7.2.1",
+    "@whyframe/core": "^0.1.14",
+    "@whyframe/vue": "^0.1.9",
     "autocorrect-node": "^2.14.0",
     "cssnano": "^7.1.2",
     "eslint": "^9.39.1",
@@ -95,7 +97,8 @@
     "vite": "npm:rolldown-vite@^7.2.4",
     "vite-plugin-purge-icons": "^0.10.0",
     "vitepress": "2.0.0-alpha.12",
-    "vitepress-plugin-pagefind": "^0.4.15"
+    "vitepress-plugin-pagefind": "^0.4.15",
+    "vue": "^3.5.23"
   },
   "dependencies": {
     "@iconify/iconify": "^3.1.1",

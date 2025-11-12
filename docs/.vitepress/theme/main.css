@@ -1,0 +1,12 @@
+iframe[data-why] {
+  display: inline-block;
+  border: 3px solid #b2b2b2;
+  background-color: #a2a2a2;
+  border-radius: 0.5rem;
+  width: 400px;
+  height: 200px;
+}
+
+.dark iframe[data-why] {
+  border-color: #303030;
+}

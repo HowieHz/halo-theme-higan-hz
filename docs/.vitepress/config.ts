@@ -1,3 +1,5 @@
+import { whyframe } from "@whyframe/core";
+import { whyframeVue } from "@whyframe/vue";
 import { defineConfig } from "vitepress";
 import { chineseSearchOptimize, pagefindPlugin } from "vitepress-plugin-pagefind";
 
@@ -7,6 +9,16 @@ import pkg from "../../package.json";
 export default defineConfig({
   vite: {
     plugins: [
+      // Initialize whyframe core plugin
+      whyframe({
+        defaultSrc: "/halo-theme-higan-hz/frames/default", // provide our own html
+      }),
+
+      // Initialize whyframe Vue integration plugin
+      whyframeVue({
+        include: /\.(?:vue|md)$/, // also scan in markdown files
+      }),
+
       pagefindPlugin({
         customSearchQuery: chineseSearchOptimize,
         locales: {

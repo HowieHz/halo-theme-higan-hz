@@ -36,6 +36,12 @@ importers:
       '@vitejs/plugin-legacy':
         specifier: ^7.2.1
         version: 7.2.1(rolldown-vite@7.2.4(@types/node@24.10.0)(esbuild@0.25.6)(jiti@1.21.7)(stylus@0.64.0)(terser@5.43.1)(yaml@2.8.1))(terser@5.43.1)
+      '@whyframe/core':
+        specifier: ^0.1.14
+        version: 0.1.14(rolldown-vite@7.2.4(@types/node@24.10.0)(esbuild@0.25.6)(jiti@1.21.7)(stylus@0.64.0)(terser@5.43.1)(yaml@2.8.1))
+      '@whyframe/vue':
+        specifier: ^0.1.9
+        version: 0.1.9(@whyframe/core@0.1.14(rolldown-vite@7.2.4(@types/node@24.10.0)(esbuild@0.25.6)(jiti@1.21.7)(stylus@0.64.0)(terser@5.43.1)(yaml@2.8.1)))(rolldown-vite@7.2.4(@types/node@24.10.0)(esbuild@0.25.6)(jiti@1.21.7)(stylus@0.64.0)(terser@5.43.1)(yaml@2.8.1))
       autocorrect-node:
         specifier: ^2.14.0
         version: 2.14.0
@@ -135,6 +141,9 @@ importers:
       vitepress-plugin-pagefind:
         specifier: ^0.4.15
         version: 0.4.15(pagefind@1.4.0)(typescript@5.9.3)
+      vue:
+        specifier: ^3.5.23
+        version: 3.5.23(typescript@5.9.3)
 
 packages:
 
@@ -1977,6 +1986,23 @@ packages:
 
   '@weapp-tailwindcss/shared@1.1.0':
     resolution: {integrity: sha512-rKPNwAch2tVYpQ7j796B/wkI7Yjn6YWleUcv/gcjvRD7jtSCzKzTsLBeEGnzFX7Kkz3Z7zKfJDFvBmJ8tKhGTA==}
+
+  '@whyframe/core@0.1.14':
+    resolution: {integrity: sha512-cQPtXZ0zYSpa85lVZU+deMAOUfMZMKuKJGr/od8YngPfUOw4l3xIbbnR6I4xeCTfr3wqk93/pvekMjCE02w9zQ==}
+    peerDependencies:
+      vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
+      webpack: ^5.0.0
+    peerDependenciesMeta:
+      vite:
+        optional: true
+      webpack:
+        optional: true
+
+  '@whyframe/vue@0.1.9':
+    resolution: {integrity: sha512-uVuD0TbEcj/RDv8yomKD3y25+zbk3xp6+AWqzzh1zsKr3+W52cpa05CGm1sEK+YzzMfY1gdyCjthBBcFXt0J4w==}
+    peerDependencies:
+      '@whyframe/core': ^0.1.14
+      vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -6680,6 +6706,17 @@ snapshots:
   '@weapp-tailwindcss/shared@1.1.0':
     dependencies:
       pathe: 2.0.3
+
+  '@whyframe/core@0.1.14(rolldown-vite@7.2.4(@types/node@24.10.0)(esbuild@0.25.6)(jiti@1.21.7)(stylus@0.64.0)(terser@5.43.1)(yaml@2.8.1))':
+    optionalDependencies:
+      vite: rolldown-vite@7.2.4(@types/node@24.10.0)(esbuild@0.25.6)(jiti@1.21.7)(stylus@0.64.0)(terser@5.43.1)(yaml@2.8.1)
+
+  '@whyframe/vue@0.1.9(@whyframe/core@0.1.14(rolldown-vite@7.2.4(@types/node@24.10.0)(esbuild@0.25.6)(jiti@1.21.7)(stylus@0.64.0)(terser@5.43.1)(yaml@2.8.1)))(rolldown-vite@7.2.4(@types/node@24.10.0)(esbuild@0.25.6)(jiti@1.21.7)(stylus@0.64.0)(terser@5.43.1)(yaml@2.8.1))':
+    dependencies:
+      '@vue/compiler-dom': 3.5.23
+      '@whyframe/core': 0.1.14(rolldown-vite@7.2.4(@types/node@24.10.0)(esbuild@0.25.6)(jiti@1.21.7)(stylus@0.64.0)(terser@5.43.1)(yaml@2.8.1))
+      magic-string: 0.30.21
+      vite: rolldown-vite@7.2.4(@types/node@24.10.0)(esbuild@0.25.6)(jiti@1.21.7)(stylus@0.64.0)(terser@5.43.1)(yaml@2.8.1)
 
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:
