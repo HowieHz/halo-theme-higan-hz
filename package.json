@@ -59,9 +59,9 @@
     "@eslint/compat": "^1.4.1",
     "@eslint/js": "^9.39.1",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
-    "@iconify/json": "^2.2.405",
+    "@iconify/json": "^2.2.406",
     "@types/alpinejs": "^3.13.11",
-    "@types/node": "^24.10.0",
+    "@types/node": "^24.10.1",
     "@vitejs/plugin-legacy": "^7.2.1",
     "@whyframe/core": "^0.1.14",
     "@whyframe/vue": "^0.1.9",
@@ -94,17 +94,14 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.4",
     "unplugin-tailwindcss-mangle": "^5.0.0",
-    "vite": "npm:rolldown-vite@^7.2.4",
+    "vite": "npm:rolldown-vite@^7.2.5",
     "vite-plugin-purge-icons": "^0.10.0",
     "vitepress": "2.0.0-alpha.12",
     "vitepress-plugin-pagefind": "^0.4.15",
-    "vue": "^3.5.23"
+    "vue": "^3.5.24"
   },
   "dependencies": {
     "@iconify/iconify": "^3.1.1",
     "alpinejs": "^3.15.1"
-  },
-  "overrides": {
-    "vite": "npm:rolldown-vite@^7.2.4"
   }
 }
