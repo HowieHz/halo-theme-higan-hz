@@ -77,20 +77,20 @@ const QuickJumpConfig = (props) => {
 
 ::: tip {#quick-jump-warning}
 
-当你的站点已经安装了最新版本的主题后，可在下方填写你的站点链接。
+当你的站点已经安装了最新版本的主题后，可在下方填写你的站点链接。  
 即可在本文档启用快速跳转链接，一键跳转到后台对应配置项。
 
 :::
-::: info
+::: info 站点链接
 
-站点链接：<input v-model="inputBaseUrl" placeholder="请在此处填写你的 Halo 站点链接。例：https://example.com" style="width:100%" />
+<input v-model="inputBaseUrl" placeholder="请在此处填写你的 Halo 站点链接。例：https://example.com" style="width:100%" />
 
 :::
 <template v-if="canJump">
 
-::: info
+::: info 请确保此链接可访问
 
-请确保此链接可访问：<QuickJumpConfig to="/console" showRealUrl=true />  
+<QuickJumpConfig to="/console" showRealUrl=true />  
 只有在上方链接可访问时，快速跳转链接才可以正常使用。
 
 :::
