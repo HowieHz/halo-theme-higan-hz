@@ -8,10 +8,6 @@ outline: deep
 
 :::
 
-# 主题配置项
-
-你可在后台“主题设置”界面中直接修改这些配置项。
-
 <script setup>
 import { ref, computed, h } from 'vue'
 
@@ -42,13 +38,15 @@ function prefixHref(href) {
  * Props
  * - to: string （必需） — 目标路径
  * - label?: string — 链接显示文本，默认回退到 to
- * - ariaLabel?: string — 无障碍文本，默认回退到 label
+ * - ariaLabel?: string — 无障碍文本，默认回退到 to
+ * - showRealUrl?: boolean — 是否展示实际跳转链接，为 true 将强制覆盖 label
  */
 const QuickJumpConfig = (props) => {
   const to = props.to
   const label = props.label ?? to
-  const ariaLabel = props.ariaLabel ?? label
+  const ariaLabel = props.ariaLabel ?? to
   const href = prefixHref(to)
+  const showRealUrl = props.showRealUrl ?? false
 
   const attrs = {
     href,
@@ -69,31 +67,57 @@ const QuickJumpConfig = (props) => {
     attrs.tabindex = '-1'
   }
 
-  return h('a', attrs, label)
+  return h('a', attrs, showRealUrl ? href : label)
 }
 </script>
 
-<template v-if="!canJump">
+# 主题配置项
+
+你可以在后台“主题设置”界面中直接修改这些配置项。
 
 ::: tip {#quick-jump-warning}
 
 当你的站点已经安装了最新版本的主题后，可在下方填写你的站点链接。
-即可在文章启用快速跳转链接，一键跳转到后台对应配置项。
+即可在本文档启用快速跳转链接，一键跳转到后台对应配置项。
+
+:::
+::: info
+
+站点链接：<input v-model="inputBaseUrl" placeholder="请在此处填写你的 Halo 站点链接。例：https://example.com" style="width:100%" />
+
+:::
+<template v-if="canJump">
+
+::: info
+
+请确保此链接可访问：<QuickJumpConfig to="/console" showRealUrl=true />  
+只有在上方链接可访问时，快速跳转链接才可以正常使用。
 
 :::
 
 </template>
 
-<p>
-  基础站点链接：<input v-model="inputBaseUrl" placeholder="例：https://example.com" style="width:50%" />
-</p>
-
 ## 示例
 
-🎯 用途：说明配置项用途。  
-📂 配置项位置：说明在主题配置项的位置。  
-⚡ 快速跳转：点击即可快速跳转到对应主题配置项。  
-🏷️ 值类型：此配置项的值类型。
+::: info 🎯 用途
+
+说明配置项用途。
+
+:::
+::: info 📂 配置项位置
+
+说明在主题配置项的位置。
+
+:::
+::: info ⚡ 快速跳转
+
+点击即可快速跳转到对应主题配置项。
+
+:::
+
+::: info 🏷️ 值类型
+
+此配置项的值类型。
 
 ::: tip 以下举例几个常见类型
 
@@ -110,19 +134,41 @@ const QuickJumpConfig = (props) => {
 
 :::
 
-⭐ 默认值：此配置项的默认值。
+::: info ⭐ 默认值
+
+此配置项的默认值。
 
 ::: tip 如何重置全部配置为默认值？
 
-前往 <QuickJumpConfig to="/console/theme" /> 页，之后点击主题名这行最右边三个点，最后点击“重置”按钮即可。
+前往 <QuickJumpConfig to="/console/theme" />，之后点击主题名这行最右边三个点，最后点击“重置”按钮即可。
 
 :::
 
-💡 示例值：再举几个例子便于理解。  
-🔒 内部约束：如果填写的配置值不满足这个要求，将无法保存配置。  
-⚠️ 外部约束：如果填写的配置值不满足这个要求，主题可能无法正常工作。  
-🧩 模板变量：提供给模板开发者使用的变量，用于读取此配置值。可通过 `${模板变量}` 使用。  
-ℹ️ 补充信息：补充说明一些信息。
+::: info 💡 示例值
+
+再举几个例子便于理解。
+
+:::
+::: info 🔒 内部约束
+
+如果填写的配置值不满足这个要求，将无法保存配置。
+
+:::
+::: info ⚠️ 外部约束
+
+如果填写的配置值不满足这个要求，主题可能无法正常工作。
+
+:::  
+::: info 🧩 模板变量
+
+提供给模板开发者使用的变量，用于读取此配置值。可通过 `${模板变量}` 使用。
+
+:::
+::: info ℹ️ 补充信息
+
+补充说明一些信息。
+
+:::
 
 ## 全局
 
@@ -130,7 +176,7 @@ const QuickJumpConfig = (props) => {
 
 ::: info 🎯 用途
 
-指定站点根标签 `<html>` 的 `lang` 属性默认值，用于辅助无障碍、SEO 以及浏览器/插件的语言感知（如：浏览器是否弹出页面翻译提醒）。
+指定站点根标签 `<html>` 的 `lang` 属性默认值，用于辅助无障碍、SEO 以及浏览器/插件的语言感知（例：浏览器是否弹出页面翻译提醒）。
 
 :::
 ::: info 📂 配置项位置
