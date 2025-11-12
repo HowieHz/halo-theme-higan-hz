@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+<!-- markdownlint-disable MD013 MD024 MD025 MD033 -->
+
 # 组件样式扩展
 
 ::: danger
@@ -28,8 +30,8 @@ outline: deep
 
 ### 标题样式 - Markdown 写法
 
-此处展示内容均在文章内， 因此受文章样式影响。
-未受文章样式影响的 h2 标签请看归档页(`/archives`)的年份，为白色。
+此处展示内容均在文章内，因此受文章样式影响。
+未受文章样式影响的 h2 标签请看归档页 (`/archives`) 的年份，为白色。
 
 ```markdown
 # 一级标题 (h1)
@@ -160,15 +162,15 @@ outline: deep
 ### 标题中的链接样式 - HTML 类写法
 
 ```html
-<div class="h1"><a href="https://example.com">h1类中的链接</a></div>
-<div class="h2"><a href="https://example.com">h2类中的链接</a></div>
+<div class="h1"><a href="https://example.com">h1 类中的链接</a></div>
+<div class="h2"><a href="https://example.com">h2 类中的链接</a></div>
 ```
 
 ### 渲染效果
 
 <iframe data-why>
-<div class="h1"><a href="https://example.com">h1类中的链接</a></div>
-<div class="h2"><a href="https://example.com">h2类中的链接</a></div>
+<div class="h1"><a href="https://example.com">h1 类中的链接</a></div>
+<div class="h2"><a href="https://example.com">h2 类中的链接</a></div>
 </iframe>
 
 ### 水平分割线 - Markdown 写法
@@ -218,9 +220,9 @@ outline: deep
 ### 渲染效果
 
 <iframe data-why>
-
+<!-- markdownlint-disable MD036 -->
 **这是粗体文本**
-
+<!-- markdownlint-enable MD036 -->
 </iframe>
 
 ### 文本格式 - 粗体 - HTML 写法
@@ -244,9 +246,9 @@ _这是调文本_
 ### 渲染效果
 
 <iframe data-why>
-
+<!-- markdownlint-disable MD036 -->
 _这是强调文本_
-
+<!-- markdownlint-enable MD036 -->
 </iframe>
 
 ### 斜体/强调 - HTML 写法
@@ -321,7 +323,7 @@ This is normal text <small>This is small text</small> This is normal text
 ```html
 这段文字包含一个缩写，在支持悬停的设备上鼠标放上去可以看到提示：<abbr title="Hypertext Markup Language">HTML</abbr>
 
-当<strong>设备不支持悬停</strong>或处于<strong>打印模式</strong>时，全称将会以`(全称)`的形式显示在缩写后面。
+当<strong>设备不支持悬停</strong>或处于<strong>打印模式</strong>时，全称将会以 `(全称)` 的形式显示在缩写后面。
 例如在触摸设备上，上面的 "HTML" 会自动显示为 "HTML(Hypertext Markup Language)"。
 
 <abbr title="Hypertext Markup Language"
@@ -609,7 +611,7 @@ This is normal text <small>This is small text</small> This is normal text
 ### 渲染效果
 
 <iframe data-why>
-这是一个普通段落，测试文本对齐和行高。这个段落包含一些常用格式如**粗体**、*斜体*和`代码`。根据你的 CSS，这段文字应该有适当的行高和对齐方式。
+这是一个普通段落，测试文本对齐和行高。这个段落包含一些常用格式如**粗体**、*斜体*和 `代码`。根据你的 CSS，这段文字应该有适当的行高和对齐方式。
 </iframe>
 
 ### 段落 - HTML 写法
@@ -632,10 +634,10 @@ This is normal text <small>This is small text</small> This is normal text
 ```html
 我不是隐藏内容。<hide>我是隐藏内容。鼠标悬停、聚焦或文字选中时自动显示。</hide>我也不是隐藏内容。
 我不是隐藏内容。<spoiler>我是隐藏内容。鼠标悬停、聚焦或文字选中时自动显示。</spoiler>我也不是隐藏内容。
-我不是隐藏内容。<hide class="blur">我是隐藏内容。应该是模糊样式。</hide>我也不是隐藏内容。 我不是隐藏内容。<spoiler
+我不是隐藏内容。<hide class="blur">我是隐藏内容。应该是模糊样式。</hide>我也不是隐藏内容。我不是隐藏内容。<spoiler
   class="blur"
   >我是隐藏内容。应该是模糊样式。</spoiler
->我也不是隐藏内容。 我不是隐藏内容。<hide class="black">我是隐藏内容。应该是黑块样式。</hide>我也不是隐藏内容。
+>我也不是隐藏内容。我不是隐藏内容。<hide class="black">我是隐藏内容。应该是黑块样式。</hide>我也不是隐藏内容。
 我不是隐藏内容。<spoiler class="black">我是隐藏内容。应该是黑块样式。</spoiler>我也不是隐藏内容。
 ```
 
@@ -660,16 +662,16 @@ This is normal text <small>This is small text</small> This is normal text
 ### 长单词测试 - Markdown 写法
 
 ```markdown
-这段文本使用了 hyphens: auto，显示自动断词效果。 Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。 Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
+这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
 An extremely long English word
 
-`这段文本使用了 hyphens: manual，无自动断词。 Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。 Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
+`这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
 An extremely long English word`
 ```
 
 ### 渲染结果
 
-这段文本使用了 hyphens: auto，显示自动断词效果。 Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。 Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
+这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
 An extremely long English word
 
 `这段文本使用了 hyphens: manual，无自动断词。 Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。 Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。 An extremely long English word`
@@ -678,24 +680,24 @@ An extremely long English word
 
 ```html
 <p>
-  这段文本使用了 hyphens: auto，显示自动断词效果。 Supercalifragilisticexpialidocious
-  是一个非常长的英文单词，在窄容器中会自动添加连字符。 Pneumonoultramicroscopicsilicovolcanoconiosis
-  是另一个超长单词示例。 An extremely long English word
+  这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious
+  是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis
+  是另一个超长单词示例。An extremely long English word
 </p>
 
 <code
-  >这段文本使用了 hyphens: manual，无自动断词。 Supercalifragilisticexpialidocious
-  是一个非常长的英文单词，不会自动添加连字符。 Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。 An
+  >这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious
+  是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An
   extreme&shy;ly long English word</code
 >
 ```
 
 ### 渲染结果
 
-<p>这段文本使用了 hyphens: auto，显示自动断词效果。 Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。 Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
+<p>这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
 An extreme&shy;ly long English word</p>
 
-<code>这段文本使用了 hyphens: manual，无自动断词。 Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。 Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
+<code>这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
 An extreme&shy;ly long English word</code>
 
 ### 链接样式测试 - Markdown 写法
@@ -746,7 +748,7 @@ An extreme&shy;ly long English word</code>
 
 ### h2 标签样式测试
 
-```
+```markdown
 ## 在此处 h2 标题前应有一个 `#` 字符
 ```
 
@@ -888,6 +890,8 @@ An extreme&shy;ly long English word</code>
 
 <iframe data-why>
 
+<!-- markdownlint-disable MD028 -->
+
 > 引用内容
 
 > 这是引用内容
@@ -912,6 +916,8 @@ An extreme&shy;ly long English word</code>
 >
 > <footer><a href="https://example.com">作者链接</a><cite>作者名</cite></footer>
 
+<!-- markdownlint-enable MD028 -->
+
 </iframe>
 
 ### higan-hz 式 - 拉引用样式测试
@@ -932,7 +938,13 @@ An extreme&shy;ly long English word</code>
     这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。
   </blockquote>
 
-  这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了45%的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了45%的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了45%的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了45%的宽度，文本会自动填充剩余空间。
+  这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了 45%
+  的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了
+  45%
+  的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了
+  45%
+  的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了
+  45% 的宽度，文本会自动填充剩余空间。
 
   <blockquote class="pullquote right">
     这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。
@@ -963,7 +975,7 @@ An extreme&shy;ly long English word</code>
 
 </blockquote>
 
-这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了45%的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了45%的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了45%的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了45%的宽度，文本会自动填充剩余空间。
+这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了 45% 的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了 45% 的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了 45% 的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了 45% 的宽度，文本会自动填充剩余空间。
 
 <blockquote class="pullquote right">
 
@@ -979,9 +991,9 @@ An extreme&shy;ly long English word</code>
 ### higan-hz 式 - 明暗模式块测试
 
 ```html
-<div class="light">这段内容只在亮色模式/自动模式(亮色)下显示。</div>
+<div class="light">这段内容只在亮色模式/自动模式 (亮色) 下显示。</div>
 
-<div class="dark">这段内容只在暗色模式/自动模式(暗色)下显示。</div>
+<div class="dark">这段内容只在暗色模式/自动模式 (暗色) 下显示。</div>
 ```
 
 ### 渲染效果
@@ -989,13 +1001,13 @@ An extreme&shy;ly long English word</code>
 <iframe data-why>
 <div class="light">
 
-这段内容只在亮色模式/自动模式(亮色)下显示。
+这段内容只在亮色模式/自动模式 (亮色) 下显示。
 
 </div>
 
 <div class="dark">
 
-这段内容只在暗色模式/自动模式(暗色)下显示。
+这段内容只在暗色模式/自动模式 (暗色) 下显示。
 
 </div>
 </iframe>

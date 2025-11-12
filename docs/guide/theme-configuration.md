@@ -2,11 +2,9 @@
 outline: deep
 ---
 
-::: danger
+<!-- markdownlint-disable MD033 -->
 
-此页面文档还未完成。
-
-:::
+# 主题配置项
 
 <script setup>
 import { ref, computed, h } from 'vue'
@@ -36,7 +34,7 @@ function prefixHref(href) {
  *   并且链接会添加 aria-describedby="quick-jump-warning"、aria-disabled="true"、tabindex="-1"
  *
  * Props
- * - to: string （必需） — 目标路径
+ * - to: string（必需） — 目标路径
  * - label?: string — 链接显示文本，默认回退到 to
  * - ariaLabel?: string — 无障碍文本，默认回退到 to
  * - showRealUrl?: boolean — 是否展示实际跳转链接，为 true 将强制覆盖 label
@@ -71,7 +69,11 @@ const QuickJumpConfig = (props) => {
 }
 </script>
 
-# 主题配置项
+::: danger
+
+此页面文档还未完成。
+
+:::
 
 你可以在后台“主题设置”界面中直接修改这些配置项。
 
@@ -224,9 +226,9 @@ const QuickJumpConfig = (props) => {
 - 安全性：设定的语言值的会自动转义，无需担心 XSS 注入攻击。
 - 内部相关行为：
   - 站点根标签 `<html>` 的 `lang` 属性设定顺序：
-    1.  页面/文章元数据中明确指定的 `language` 元数据（最高优先级）
-    2.  URL 查询参数 ?lang=（若存在且通过验证）
-    3.  主题设置中的默认页面语言（此配置项）
-    4.  若上述都为空，则回退到 "zh"
+    1. 页面/文章元数据中明确指定的 `language` 元数据（最高优先级）
+    2. URL 查询参数 ?lang=（若存在且通过验证）
+    3. 主题设置中的默认页面语言（此配置项）
+    4. 若上述都为空，则回退到 "zh"
 
 :::
