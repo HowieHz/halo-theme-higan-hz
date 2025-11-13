@@ -20,8 +20,10 @@
     "docs:dev": "pnpm run \"/^docs:watch:.*/\"",
     "docs:watch:vitepress": "vitepress dev docs",
     "docs:watch:docs-styles": "vite build --config vite.docs.fragments.ts --watch",
-    "docs:build": "vite build --config vite.docs.fragments.ts && vitepress build docs",
-    "docs:preview": "vitepress preview docs || (vitepress build docs && vitepress preview docs)"
+    "docs:watch:stylus": "stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --watch",
+    "docs:watch:post-css": "postcss ./src/styles/tailwind.css -o ./tmp/styles/tailwind.css --watch",
+    "docs:build": "set NODE_ENV=777 && stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --compress && tsc && tw-patch extract && vite build --config vite.docs.fragments.ts && vitepress build docs",
+    "docs:preview": "vitepress preview docs || (pnpm run docs:build && vitepress preview docs)"
   },
   "browserslist": [
     "defaults",
