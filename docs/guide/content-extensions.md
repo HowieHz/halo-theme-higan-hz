@@ -79,7 +79,7 @@ outline: deep
 ### 渲染效果
 
 <iframe data-why>
-<h1>一级标题 (h1)</h1>
+<h1 style="color: var(--color-accent-1)">一级标题 (h1)</h1>
 <h2>一级标题 (h2)</h2>
 <h3>一级标题 (h3)</h3>
 <h4>一级标题 (h4)</h4>

@@ -7,7 +7,6 @@
   th:attr="data-color-scheme=${theme_config['theme']} != 'custom' ? ${theme_config['color-scheme']} : null,
            theme=${theme_config['theme']} != 'custom' ? ${theme_config['theme']} : 'theme-'+${theme.config?.styles?.custom_color_schema_init_id}"
   xmlns:th="http://www.thymeleaf.org"
-  style="border: 0px solid"
   th:fragment="html"
 >
   <!--/* th:fragment="html (title, head, content, header, navbar, language)" */-->
