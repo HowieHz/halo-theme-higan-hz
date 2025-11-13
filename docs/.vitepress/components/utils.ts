@@ -12,8 +12,10 @@ export function trackColorScheme() {
 
     if (theme === "light") {
       document.documentElement.classList.remove("dark");
+      document.documentElement.setAttribute("theme", "light");
     } else if (theme === "dark") {
       document.documentElement.classList.add("dark");
+      document.documentElement.setAttribute("theme", "dark");
     }
   });
 }
