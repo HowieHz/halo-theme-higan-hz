@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import legacy from "@vitejs/plugin-legacy";
 import utwm from "unplugin-tailwindcss-mangle/vite";
 import { defineConfig } from "vite";
+// @ts-expect-error: ignore missing types
 import PurgeIcons from "vite-plugin-purge-icons";
 
 import moveHtmlPlugin from "./plugins/vite-move-html";
@@ -14,7 +15,7 @@ export default defineConfig({
   base: "/themes/howiehz-higan/",
   plugins: [
     PurgeIcons({
-      content: ["./templates/*.html"],
+      content: ["./templates/**/*.html"],
     }),
     utwm(), // obfuscate tailwindcss class
     legacy(),
