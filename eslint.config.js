@@ -20,7 +20,8 @@ export default defineConfig(
   includeIgnoreFile(gitignorePath),
   js.configs.recommended,
   ...pluginVue.configs["flat/recommended"],
-  tseslint.configs.recommended,
+  tseslint.configs.strict,
+  tseslint.configs.stylistic,
   {
     files: ["**/*.js", "**/*.ts"],
 
