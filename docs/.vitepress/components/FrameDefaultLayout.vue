@@ -24,5 +24,4 @@ onMounted(async () => {
 <!-- 导入 post 页样式 -->
 <style src="../../../tmp/styles/theme.css" scoped></style>
 <style src="../../../src/styles/main.css" scoped></style>
-<style src="../../../src/styles/tailwind.css" scoped></style>
 <style src="../../../src/styles/pages/post.css" scoped></style>
