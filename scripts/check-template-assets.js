@@ -76,7 +76,7 @@ function normalizeAssetPath(rawUrl) {
   return resolve(templateDir, clean);
 }
 
-// 解析 Thymeleaf 引用：~{/fragments/layout :: html} 或 ~{fragments/header::content}
+// 解析 Thymeleaf 引用：~{/fragments/layout :: html} 或 ~{fragments/header :: content}
 function parseThymeleafReference(ref) {
   if (!ref) return null;
 

@@ -18,8 +18,8 @@
 
 <th:block th:fragment="simple-post-list">
   <!--/* simple-post-list(posts, showPagination) */-->
-  <section class="flex flex-auto flex-col">
-    <ul class="post-list flex-auto">
+  <section class="simple-post-list flex flex-auto flex-col">
+    <ul class="common-post-list flex-auto">
       <th:block th:each="post : ${posts}">
         <th:block th:if="${#annotations.getOrDefault(post, 'higan.howiehz.top/show-in-post-list', 'true')=='true'}">
           <li class="post-item">
@@ -62,7 +62,7 @@
 </th:block>
 
 <th:block th:fragment="post-list-summary(posts)">
-  <section class="flex flex-auto flex-col">
+  <section class="post-list-summary flex flex-auto flex-col">
     <div class="flex flex-auto flex-col space-y-10">
       <th:block th:each="post : ${posts}">
         <th:block th:if="${#annotations.getOrDefault(post, 'higan.howiehz.top/show-in-post-list', 'true')=='true'}">

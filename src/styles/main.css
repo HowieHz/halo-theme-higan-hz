@@ -653,35 +653,6 @@ html[data-color-scheme="dark"] article .content {
   }
 }
 
-/* 文章列表样式 */
-.post-list {
-  margin: 0;
-  padding: 0;
-
-  & .post-item {
-    list-style-type: none;
-    margin-bottom: 1rem;
-    margin-left: 0;
-
-    @media (width >= 640px) {
-      display: flex;
-      margin-bottom: 0.3125rem;
-    }
-
-    & .meta {
-      color: var(--color-time);
-      display: block;
-      font-size: var(--text);
-      margin-right: 1rem;
-      white-space: nowrap;
-
-      @media (width >= 640px) {
-        text-align: right;
-      }
-    }
-  }
-}
-
 /* 疑似可去除 需进一步测试 */
 a {
   & img {

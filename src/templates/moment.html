@@ -5,7 +5,7 @@
     title = ${title}, 
     head = ~{::headContent},
     content = ~{::content}, 
-    header = ~{fragments/header::content}, 
+    header = ~{fragments/header :: content}, 
     navbar = ~{}
   )}"
 >
@@ -21,7 +21,7 @@
   </head>
   <body>
     <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
-      <div class="content post-list">
+      <div class="content common-post-list">
         <div
           class="moment-header mt-5"
           th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event' or moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"

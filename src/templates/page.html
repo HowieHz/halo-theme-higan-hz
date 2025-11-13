@@ -5,7 +5,7 @@
     title = ${#annotations.getOrDefault(singlePage, 'higan.howiehz.top/page-title', singlePage.spec?.title)}, 
     head = ~{::headContent},
     content = ~{::content}, 
-    header = ${not theme.config?.custom_page_styles?.is_enable_post_like_layout} ? ~{fragments/header::content} : ~{}, 
+    header = ${not theme.config?.custom_page_styles?.is_enable_post_like_layout} ? ~{fragments/header :: content} : ~{}, 
     navbar = ${theme.config?.custom_page_styles?.is_enable_post_like_layout} ? ~{fragments/page-nav::navbar} : ~{}, 
     language = ${#annotations.get(singlePage, 'higan.howiehz.top/page-language')}
   )}"
