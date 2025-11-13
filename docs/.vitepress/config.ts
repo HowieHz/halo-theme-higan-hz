@@ -44,6 +44,37 @@ export default defineConfig({
     ],
   },
 
+  async transformPageData(pageData) {
+    // 如果不是 frames/ 路径下的页面，则添加 head
+    if (!pageData.relativePath.includes("frames/")) {
+      pageData.frontmatter.head ??= [];
+      pageData.frontmatter.head.push(
+        ["link", { rel: "icon", type: "image/x-icon", href: "/halo-theme-higan-hz/ico.ico" }],
+        ["meta", { name: "theme-color", content: "#5f67ee" }],
+        ["meta", { property: "og:type", content: "website" }],
+        ["meta", { property: "og:site_name", content: "Higan Haozi" }],
+        [
+          "meta",
+          {
+            property: "og:image",
+            content: "https://howiehz.top/halo-theme-higan-hz/ico.ico",
+          },
+        ],
+        ["meta", { property: "og:url", content: "https://howiehz.top/halo-theme-higan-hz/" }],
+        // <script defer src="https://umami.howiehz.top/script.js" data-website-id="7b461ac5-155d-45a8-a118-178d0a2936e4" data-domains="howiehz.top"></script>
+        [
+          "script",
+          {
+            defer: "",
+            src: "https://umami.howiehz.top/script.js",
+            "data-website-id": "7b461ac5-155d-45a8-a118-178d0a2936e4",
+            "data-domains": "howiehz.top",
+          },
+        ],
+      );
+    }
+  },
+
   title: "Higan Haozi",
   // 首页只显示 title，其他页面才用模板
   titleTemplate: ":title | Higan Haozi",
@@ -54,31 +85,6 @@ export default defineConfig({
   cleanUrls: true,
 
   base: "/halo-theme-higan-hz/",
-
-  head: [
-    ["link", { rel: "icon", type: "image/x-icon", href: "/halo-theme-higan-hz/ico.ico" }],
-    ["meta", { name: "theme-color", content: "#5f67ee" }],
-    ["meta", { property: "og:type", content: "website" }],
-    ["meta", { property: "og:site_name", content: "Higan Haozi" }],
-    [
-      "meta",
-      {
-        property: "og:image",
-        content: "https://howiehz.top/halo-theme-higan-hz/ico.ico",
-      },
-    ],
-    ["meta", { property: "og:url", content: "https://howiehz.top/halo-theme-higan-hz/" }],
-    // <script defer src="https://umami.howiehz.top/script.js" data-website-id="7b461ac5-155d-45a8-a118-178d0a2936e4" data-domains="howiehz.top"></script>
-    [
-      "script",
-      {
-        defer: "",
-        src: "https://umami.howiehz.top/script.js",
-        "data-website-id": "7b461ac5-155d-45a8-a118-178d0a2936e4",
-        "data-domains": "howiehz.top",
-      },
-    ],
-  ],
   locales: {
     root: {
       label: "简体中文",
