@@ -28,66 +28,31 @@ outline: deep
 
 适用模板文件范围：每一页
 
-### 标题样式 - Markdown 写法
+### 标题样式
 
-此处展示内容均在文章内，因此受文章样式影响。
-未受文章样式影响的 h2 标签请看归档页 (`/archives`) 的年份，为白色。
+**Markdown 写法**
 
 ```markdown
-# 一级标题 (h1)
-
-## 二级标题 (h2)
-
-### 三级标题 (h3)
-
-#### 四级标题 (h4)
-
-##### 五级标题 (h5)
-
-###### 六级标题 (h6)
+# 一级标题
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题
 ```
 
-### 渲染效果
-
-<iframe data-why>
-
-# 一级标题 (h1)
-
-## 二级标题 (h2)
-
-### 三级标题 (h3)
-
-#### 四级标题 (h4)
-
-##### 五级标题 (h5)
-
-###### 六级标题 (h6)
-
-</iframe>
-
-### 标题样式 - HTML 标签写法
+**HTML 标签写法**
 
 ```html
-<h1>一级标题 (h1)</h1>
-<h2>一级标题 (h2)</h2>
-<h3>一级标题 (h3)</h3>
-<h4>一级标题 (h4)</h4>
-<h5>一级标题 (h5)</h5>
-<h6>一级标题 (h6)</h6>
+<h1>一级标题</h1>
+<h2>二级标题</h2>
+<h3>三级标题</h3>
+<h4>四级标题</h4>
+<h5>五级标题</h5>
+<h6>六级标题</h6>
 ```
 
-### 渲染效果
-
-<iframe data-why>
-<h1 style="color: var(--color-accent-1)">一级标题 (h1)</h1>
-<h2>一级标题 (h2)</h2>
-<h3>一级标题 (h3)</h3>
-<h4>一级标题 (h4)</h4>
-<h5>一级标题 (h5)</h5>
-<h6>一级标题 (h6)</h6>
-</iframe>
-
-### 标题样式 - HTML 类写法
+**HTML 类写法**
 
 ```html
 <div class="h1">使用 h1 类的文本</div>
@@ -96,71 +61,45 @@ outline: deep
 
 ### 渲染效果
 
-<iframe data-why>
+<iframe data-why style="height: 300px;">
+
+# 一级标题 (h1)
+## 二级标题 (h2)
+### 三级标题 (h3)
+#### 四级标题 (h4)
+##### 五级标题 (h5)
+###### 六级标题 (h6)
+
 <div class="h1">使用 h1 类的文本</div>
 <div class="h2">使用 h2 类的文本</div>
+
 </iframe>
 
-### 标题中的链接样式 - Markdown 写法
+### 标题中的链接样式
+
+**Markdown 写法**
 
 ```markdown
-# [一级标题中的链接](https://example.com)
-
-## [二级标题中的链接](https://example.com)
-
-### [三级标题中的链接](https://example.com)
-
-#### [四级标题中的链接](https://example.com)
-
-##### [五级标题中的链接](https://example.com)
-
-###### [六级标题中的链接](https://example.com)
+# [一级标题中的链接](https://howiehz.top)
+## [二级标题中的链接](https://howiehz.top)
+### [三级标题中的链接](https://howiehz.top)
+#### [四级标题中的链接](https://howiehz.top)
+##### [五级标题中的链接](https://howiehz.top)
+###### [六级标题中的链接](https://howiehz.top)
 ```
 
-### 渲染效果
-
-<iframe data-why>
-
-# [一级标题中的链接](https://example.com)
-
-## [二级标题中的链接](https://example.com)
-
-### [三级标题中的链接](https://example.com)
-
-#### [四级标题中的链接](https://example.com)
-
-##### [五级标题中的链接](https://example.com)
-
-###### [六级标题中的链接](https://example.com)
-
-</iframe>
-
-### 标题中的链接样式 - HTML 标签写法
+**HTML 标签写法**
 
 ```html
-<h1><a href="https://example.com">一级标题中的链接</a></h1>
-<h2><a href="https://example.com">二级标题中的链接</a></h2>
-<h3><a href="https://example.com">三级标题中的链接</a></h3>
-<h4><a href="https://example.com">四级标题中的链接</a></h4>
-<h5><a href="https://example.com">五级标题中的链接</a></h5>
-<h6><a href="https://example.com">六级标题中的链接</a></h6>
+<h1><a href="https://howiehz.top">一级标题中的链接</a></h1>
+<h2><a href="https://howiehz.top">二级标题中的链接</a></h2>
+<h3><a href="https://howiehz.top">三级标题中的链接</a></h3>
+<h4><a href="https://howiehz.top">四级标题中的链接</a></h4>
+<h5><a href="https://howiehz.top">五级标题中的链接</a></h5>
+<h6><a href="https://howiehz.top">六级标题中的链接</a></h6>
 ```
 
-### 渲染效果
-
-<iframe data-why>
-
-<h1><a href="https://example.com">一级标题中的链接</a></h1>
-<h2><a href="https://example.com">二级标题中的链接</a></h2>
-<h3><a href="https://example.com">三级标题中的链接</a></h3>
-<h4><a href="https://example.com">四级标题中的链接</a></h4>
-<h5><a href="https://example.com">五级标题中的链接</a></h5>
-<h6><a href="https://example.com">六级标题中的链接</a></h6>
-
-</iframe>
-
-### 标题中的链接样式 - HTML 类写法
-
+**HTML 类写法**
 ```html
 <div class="h1"><a href="https://example.com">h1 类中的链接</a></div>
 <div class="h2"><a href="https://example.com">h2 类中的链接</a></div>
@@ -168,15 +107,31 @@ outline: deep
 
 ### 渲染效果
 
-<iframe data-why>
+<iframe data-why style="height: 300px;">
+
+# [一级标题中的链接](https://howiehz.top)
+## [二级标题中的链接](https://howiehz.top)
+### [三级标题中的链接](https://howiehz.top)
+#### [四级标题中的链接](https://howiehz.top)
+##### [五级标题中的链接](https://howiehz.top)
+###### [六级标题中的链接](https://howiehz.top)
+
 <div class="h1"><a href="https://example.com">h1 类中的链接</a></div>
 <div class="h2"><a href="https://example.com">h2 类中的链接</a></div>
 </iframe>
 
-### 水平分割线 - Markdown 写法
+### 水平分割线
+
+**Markdown 写法**
 
 ```markdown
 ---
+```
+
+**HTML 标签写法**
+
+```html
+<hr />
 ```
 
 ### 渲染效果
@@ -187,19 +142,9 @@ outline: deep
 
 </iframe>
 
-### 水平分割线 - HTML 标签写法
+### higan-hz 式 - divide 类水平分割线
 
-```html
-<hr />
-```
-
-### 渲染效果
-
-<iframe data-why>
-<hr />
-</iframe>
-
-### higan-hz 式 - divide 类水平分割线 - HTML 类写法
+**HTML 类写法**
 
 ```html
 <hr class="divide" />
@@ -211,23 +156,15 @@ outline: deep
 <hr class='divide' />
 </iframe>
 
-### 文本格式 - 粗体 - Markdown 写法
+### 文本格式 - 粗体
+
+**Markdown 写法**
 
 ```markdown
 **这是粗体文本**
 ```
 
-### 渲染效果
-
-<iframe data-why>
-<!-- markdownlint-disable MD036 -->
-
-**这是粗体文本**
-
-<!-- markdownlint-enable MD036 -->
-</iframe>
-
-### 文本格式 - 粗体 - HTML 写法
+**HTML 写法**
 
 ```html
 <strong>这是粗体文本</strong>
@@ -239,23 +176,17 @@ outline: deep
 <strong>这是粗体文本</strong>
 </iframe>
 
-### 斜体/强调 - Markdown 写法
+### 斜体/强调
+
+**Markdown 写法**
 
 ```markdown
 _这是强调文本_
 ```
 
-### 渲染效果
+### 斜体/强调
 
-<iframe data-why>
-<!-- markdownlint-disable MD036 -->
-
-_这是强调文本_
-
-<!-- markdownlint-enable MD036 -->
-</iframe>
-
-### 斜体/强调 - HTML 写法
+**HTML 写法**
 
 ```html
 <em>这是强调文本</em>
@@ -267,7 +198,9 @@ _这是强调文本_
 <em>这是强调文本</em>
 </iframe>
 
-### 引用 - HTML 写法
+### 引用
+
+**HTML 写法**
 
 ```html
 <cite>这是引用文本</cite>
@@ -282,27 +215,20 @@ _这是强调文本_
 ### 上标和下标 - HTML 写法
 
 ```html
-正常文本<sup>上标</sup>与<sub>下标</sub>
+正常文本<sup>上标<sup>上上标<sup>上上上标<sup>上上上上标</sup></sup></sup></sup>
+正常文本<sub>下标<sub>下下标<sub>下下下标<sub>下下下下标</sub></sub></sub></sub>
 
-正常文本<sup
-  >上标<sup
-    >上上标<sup>上上上标<sup>上上上上标</sup></sup></sup
-  ></sup
->
-正常文本<sub
-  >下标<sub
-    >下下标<sub>下下下标<sub>下下下下标</sub></sub></sub
-  ></sub
->
+正常文本<sup>上标</sup>与<sub>下标</sub>
 ```
 
 ### 渲染效果
 
-<iframe data-why>
-正常文本<sup>上标</sup>与<sub>下标</sub>
+<iframe data-why style="height: 100px;">
 
 正常文本<sup>上标<sup>上上标<sup>上上上标<sup>上上上上标</sup></sup></sup></sup>
 正常文本<sub>下标<sub>下下标<sub>下下下标<sub>下下下下标</sub></sub></sub></sub>
+
+正常文本<sup>上标</sup>与<sub>下标</sub>
 
 </iframe>
 
@@ -361,7 +287,6 @@ This is normal text <small>This is small text</small> This is normal text
 <abbr>实际上 <abbr>title</abbr> 是可选项</abbr>
 
 <abbr>一层 <abbr>二层 <abbr>三层 <abbr>四层 abbr 标签嵌套测试 </abbr></abbr></abbr></abbr>
-
 </iframe>
 
 ### 列表 - 无序列表 - Markdown 写法
@@ -638,26 +563,29 @@ This is normal text <small>This is small text</small> This is normal text
 ### higan-hz 式 - hide/spoiler 标签隐藏/剧透内容 - HTML 类写法
 
 ```html
+我不是隐藏内容。<hide class="blur">我是隐藏内容。应该是模糊样式。</hide>我也不是隐藏内容。
+我不是隐藏内容。<spoiler class="blur">我是隐藏内容。应该是模糊样式。</spoiler>我也不是隐藏内容。
+
+我不是隐藏内容。<hide class="black">我是隐藏内容。应该是黑块样式。</hide>我也不是隐藏内容。
+我不是隐藏内容。<spoiler class="black">我是隐藏内容。应该是黑块样式。</spoiler>我也不是隐藏内容。
+
 我不是隐藏内容。<hide>我是隐藏内容。鼠标悬停、聚焦或文字选中时自动显示。</hide>我也不是隐藏内容。
 我不是隐藏内容。<spoiler>我是隐藏内容。鼠标悬停、聚焦或文字选中时自动显示。</spoiler>我也不是隐藏内容。
-我不是隐藏内容。<hide class="blur">我是隐藏内容。应该是模糊样式。</hide>我也不是隐藏内容。我不是隐藏内容。<spoiler
-  class="blur"
-  >我是隐藏内容。应该是模糊样式。</spoiler
->我也不是隐藏内容。我不是隐藏内容。<hide class="black">我是隐藏内容。应该是黑块样式。</hide>我也不是隐藏内容。
-我不是隐藏内容。<spoiler class="black">我是隐藏内容。应该是黑块样式。</spoiler>我也不是隐藏内容。
 ```
 
 ### 渲染效果
 
 <iframe data-why>
-我不是隐藏内容。<hide>我是隐藏内容。鼠标悬停、聚焦或文字选中时自动显示。</hide>我也不是隐藏内容。
-我不是隐藏内容。<spoiler>我是隐藏内容。鼠标悬停、聚焦或文字选中时自动显示。</spoiler>我也不是隐藏内容。
+
 
 我不是隐藏内容。<hide class="blur">我是隐藏内容。应该是模糊样式。</hide>我也不是隐藏内容。
 我不是隐藏内容。<spoiler class="blur">我是隐藏内容。应该是模糊样式。</spoiler>我也不是隐藏内容。
 
 我不是隐藏内容。<hide class="black">我是隐藏内容。应该是黑块样式。</hide>我也不是隐藏内容。
 我不是隐藏内容。<spoiler class="black">我是隐藏内容。应该是黑块样式。</spoiler>我也不是隐藏内容。
+
+我不是隐藏内容。<hide>我是隐藏内容。鼠标悬停、聚焦或文字选中时自动显示。</hide>我也不是隐藏内容。
+我不是隐藏内容。<spoiler>我是隐藏内容。鼠标悬停、聚焦或文字选中时自动显示。</spoiler>我也不是隐藏内容。
 
 </iframe>
 
@@ -677,10 +605,14 @@ An extremely long English word`
 
 ### 渲染结果
 
+<iframe data-why>
+
 这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
 An extremely long English word
 
 `这段文本使用了 hyphens: manual，无自动断词。 Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。 Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。 An extremely long English word`
+
+</iframe>
 
 ### 长单词测试 - HTML 写法
 
