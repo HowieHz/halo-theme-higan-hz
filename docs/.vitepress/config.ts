@@ -4,7 +4,6 @@ import { defineConfig } from "vitepress";
 import { chineseSearchOptimize, pagefindPlugin } from "vitepress-plugin-pagefind";
 
 import pkg from "../../package.json";
-import addArticlePlugin from "./postcss-add-article";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -43,11 +42,6 @@ export default defineConfig({
         },
       }),
     ],
-    css: {
-      postcss: {
-        plugins: [addArticlePlugin()],
-      },
-    },
   },
 
   async transformPageData(pageData) {
