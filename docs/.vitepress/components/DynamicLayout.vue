@@ -1,10 +1,11 @@
 <script setup>
-import { useRoute } from 'vitepress'
-import Theme from 'vitepress/theme'
-// the default layout we'll create next
-import FrameDefaultLayout from './FrameDefaultLayout.vue'
+import { useRoute } from "vitepress";
+import Theme from "vitepress/theme";
 
-const route = useRoute()
+// the default layout we'll create next
+import FrameDefaultLayout from "./FrameDefaultLayout.vue";
+
+const route = useRoute();
 </script>
 
 <template>

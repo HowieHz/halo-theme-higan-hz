@@ -221,7 +221,9 @@ outline: deep
 
 <iframe data-why>
 <!-- markdownlint-disable MD036 -->
+
 **这是粗体文本**
+
 <!-- markdownlint-enable MD036 -->
 </iframe>
 
@@ -240,14 +242,16 @@ outline: deep
 ### 斜体/强调 - Markdown 写法
 
 ```markdown
-_这是调文本_
+_这是强调文本_
 ```
 
 ### 渲染效果
 
 <iframe data-why>
 <!-- markdownlint-disable MD036 -->
+
 _这是强调文本_
+
 <!-- markdownlint-enable MD036 -->
 </iframe>
 
@@ -611,7 +615,9 @@ This is normal text <small>This is small text</small> This is normal text
 ### 渲染效果
 
 <iframe data-why>
+
 这是一个普通段落，测试文本对齐和行高。这个段落包含一些常用格式如**粗体**、*斜体*和 `代码`。根据你的 CSS，这段文字应该有适当的行高和对齐方式。
+
 </iframe>
 
 ### 段落 - HTML 写法

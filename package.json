@@ -17,8 +17,10 @@
     "format:stylus": "stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
     "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,yaml,html}\" \"./plugins/**/*.ts\" \"./docs/**/*.{ts,md}\"",
     "prepare": "husky && tw-patch install",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
+    "docs:dev": "pnpm run \"/^docs:watch:.*/\"",
+    "docs:watch:vitepress": "vitepress dev docs",
+    "docs:watch:docs-styles": "vite build --config vite.docs.fragments.ts --watch",
+    "docs:build": "vite build --config vite.docs.fragments.ts && vitepress build docs",
     "docs:preview": "vitepress preview docs || (vitepress build docs && vitepress preview docs)"
   },
   "browserslist": [
@@ -62,6 +64,7 @@
     "@iconify/json": "^2.2.406",
     "@types/alpinejs": "^3.13.11",
     "@types/node": "^24.10.1",
+    "@typescript-eslint/parser": "^8.46.4",
     "@vitejs/plugin-legacy": "^7.2.1",
     "@whyframe/core": "^0.1.14",
     "@whyframe/vue": "^0.1.9",
@@ -72,6 +75,7 @@
     "eslint-plugin-import-x": "^4.16.1",
     "eslint-plugin-oxlint": "^1.28.0",
     "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-vue": "^10.5.1",
     "fast-glob": "^3.3.3",
     "globals": "^16.5.0",
     "husky": "^9.1.7",
@@ -98,7 +102,8 @@
     "vite-plugin-purge-icons": "^0.10.0",
     "vitepress": "2.0.0-alpha.12",
     "vitepress-plugin-pagefind": "^0.4.15",
-    "vue": "^3.5.24"
+    "vue": "^3.5.24",
+    "vue-eslint-parser": "^10.2.0"
   },
   "dependencies": {
     "@iconify/iconify": "^3.1.1",

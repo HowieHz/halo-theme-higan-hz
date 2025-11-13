@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "unicorn"],
+  "plugins": ["vue", "typescript", "unicorn"],
   "categories": {
     "correctness": "off"
   },
@@ -97,6 +97,12 @@
     "require-yield": "error",
     "use-isnan": "error",
     "valid-typeof": "error",
+    "vue/no-export-in-script-setup": "error",
+    "vue/prefer-import-from-vue": "error",
+    "vue/valid-define-emits": "error",
+    "vue/valid-define-props": "error",
+    "vue/no-multiple-slot-args": "warn",
+    "vue/no-required-prop-with-default": "warn",
     "@typescript-eslint/ban-ts-comment": "error",
     "no-array-constructor": "error",
     "@typescript-eslint/no-duplicate-enum-values": "error",
@@ -146,6 +152,15 @@
     {
       "files": ["**/*.js", "**/*.ts"],
       "env": {
+        "es2026": true,
+        "browser": true,
+        "shared-node-browser": true
+      }
+    },
+    {
+      "files": ["**/*.vue"],
+      "env": {
+        "es2026": true,
         "browser": true,
         "shared-node-browser": true
       }

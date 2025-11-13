@@ -1,9 +1,12 @@
+import fs from "fs";
+import path from "path";
 import { whyframe } from "@whyframe/core";
 import { whyframeVue } from "@whyframe/vue";
 import { defineConfig } from "vitepress";
 import { chineseSearchOptimize, pagefindPlugin } from "vitepress-plugin-pagefind";
 
 import pkg from "../../package.json";
+import { docsCssPlugin } from "../../plugins/vite-plugin-docs-css";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -18,6 +21,36 @@ export default defineConfig({
       whyframeVue({
         include: /\.(?:vue|md)$/, // also scan in markdown files
       }),
+
+      docsCssPlugin(),
+
+      // 开发模式 CSS 服务
+      {
+        name: "dev-post-css",
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            if (req.url === "/__vite_post_css__") {
+              const cssPath = path.resolve(__dirname, "../../tmp/docs/styles");
+              fs.readdir(cssPath, (err, files) => {
+                if (err) {
+                  next();
+                  return;
+                }
+                const cssFile = files.find((f) => f.startsWith("post-") && f.endsWith(".css"));
+                if (cssFile) {
+                  const content = fs.readFileSync(path.join(cssPath, cssFile), "utf-8");
+                  res.setHeader("Content-Type", "text/css");
+                  res.end(content);
+                } else {
+                  next();
+                }
+              });
+            } else {
+              next();
+            }
+          });
+        },
+      },
 
       pagefindPlugin({
         customSearchQuery: chineseSearchOptimize,
