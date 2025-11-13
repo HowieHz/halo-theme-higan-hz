@@ -22,6 +22,6 @@ onMounted(async () => {
 
 <style src="./default.css" scoped></style>
 <!-- 导入 post 页样式 -->
-<style src="../../../tmp/styles/theme.css" scoped></style>
+<style src="../../../src/styles/mixins/colors/theme.styl" scoped></style>
 <style src="../../../src/styles/main.css" scoped></style>
 <style src="../../../src/styles/pages/post.css" scoped></style>

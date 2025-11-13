@@ -19,10 +19,8 @@
     "format:stylus": "stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
     "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,yaml,html}\" \"./plugins/**/*.ts\" \"./docs/**/*.{ts,md,vue}\"",
     "prepare": "husky && tw-patch install",
-    "docs:dev": "pnpm run \"/^docs:watch:.*/\"",
-    "docs:watch:vitepress": "vitepress dev docs",
-    "docs:watch:stylus": "pnpm run watch:stylus",
-    "docs:build": "pnpm run build:stylus && vitepress build docs",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
     "docs:preview": "pnpm run docs:build && vitepress preview docs"
   },
   "browserslist": [
