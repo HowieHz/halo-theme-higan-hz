@@ -31,14 +31,36 @@ export function trackColorScheme() {
   });
 }
 
-export function extendStylesScope() {
-  // 读取 #article-tag 元素的 data-v- 开头属性，为 body 标签和 html 标签添加相同属性，解决部分浏览器插件无法识别 body 上的 data-v- 开头属性的问题
-  const articleTag = document.getElementById("article-tag");
+export function extendStylesScope(appElement: HTMLElement) {
+  // 读取 #article-tag 元素的 data-v- 开头属性，为 body 标签和 html 标签添加相同属性，之后给子元素添加相同属性
+  const articleTag = appElement;
+  let dataAttr: {
+    name: string;
+    value: string;
+  } | null = null;
   if (articleTag) {
     for (const attr of articleTag.attributes) {
       if (attr.name.startsWith("data-v-") && attr.name !== "data-v-app") {
-        document.body.setAttribute(attr.name, attr.value);
-        document.documentElement.setAttribute(attr.name, attr.value);
+        dataAttr = { name: attr.name, value: attr.value };
+        break;
+      }
+    }
+  }
+  if (dataAttr) {
+    document.body.setAttribute(dataAttr.name, dataAttr.value);
+    document.documentElement.setAttribute(dataAttr.name, dataAttr.value);
+
+    const queue = [appElement];
+
+    while (queue.length > 0) {
+      const current = queue.shift() as HTMLElement; // 取出队首元素
+
+      // 给当前元素添加属性
+      current.setAttribute(dataAttr.name, dataAttr.value);
+
+      // 将所有子元素加入队列
+      for (const child of current.children) {
+        queue.push(child as HTMLElement);
       }
     }
   }

@@ -10,8 +10,9 @@ const el = ref();
 onMounted(async () => {
   trackColorScheme();
   // Mount the app to the ref
-  createApp(el.value);
-  extendStylesScope();
+  createApp(el.value).then(() => {
+    extendStylesScope(el.value);
+  });
 });
 </script>
 
