@@ -15,14 +15,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="vp-app" ref="el"></div>
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <div id="vp-app" ref="el" class="content flex-auto" itemprop="articleBody"></div>
+  </article>
 </template>
 
-<!-- <style src="../../../src/styles/main.css" scoped>
-</style>
-<style src="../../../src/styles/tailwind.css" scoped>
-</style>
-<style src="../../../tmp/styles/theme.css" scoped>
-</style> -->
 <style src="./default.css" scoped>
 </style>
