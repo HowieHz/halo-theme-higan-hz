@@ -23,7 +23,7 @@
     "docs:watch:vitepress": "vitepress dev docs",
     "docs:watch:stylus": "pnpm run watch:stylus",
     "docs:build": "pnpm run build:stylus && vitepress build docs",
-    "docs:preview": "vitepress preview docs || (pnpm run docs:build && vitepress preview docs)"
+    "docs:preview": "pnpm run docs:build && vitepress preview docs"
   },
   "browserslist": [
     "defaults",

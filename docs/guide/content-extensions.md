@@ -844,12 +844,15 @@ An extreme&shy;ly long English word</code>
 ```html
 <div class="video-container">
   <iframe
-    src="https://player.bilibili.com/player.html?bvid=BV1A7QWY3EkW&page=1&as_wide=1&high_quality=0&danmaku=0"
-    allowfullscreen="allowfullscreen"
+    src="https://player.bilibili.com/player.html?bvid=BV1A7QWY3EkW"
     width="100%"
     height="500"
     scrolling="no"
     frameborder="0"
+    danmaku="false"
+    allowfullscreen="true"
+    muted="true"
+    autoplay="false"
     sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
   ></iframe>
 </div>
@@ -859,8 +862,18 @@ An extreme&shy;ly long English word</code>
 
 <iframe data-why>
 <div class="video-container">
-    <iframe src="https://player.bilibili.com/player.html?bvid=BV1A7QWY3EkW&page=1&as_wide=1&high_quality=0&danmaku=0"
-        allowfullscreen="allowfullscreen" width="100%" height="500" scrolling="no" frameborder="0" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"></iframe>
+  <iframe
+    src="https://player.bilibili.com/player.html?bvid=BV1A7QWY3EkW"
+    width="100%"
+    height="500"
+    scrolling="no"
+    frameborder="0"
+    danmaku="false"
+    allowfullscreen="true"
+    muted="true"
+    autoplay="false"
+    sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
+  ></iframe>
 </div>
 </iframe>
 
