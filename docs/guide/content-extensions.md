@@ -12,25 +12,23 @@ outline: deep
 
 :::
 
-## 前言
+展示基本样式以及拓展样式。
 
-此篇文章展示了如何进行组件样式拓展。
+::: info 样式适用范围说明
 
-本文分为三部分：
+相关链接：[模板文件与访问路径映射](/reference/template-map)
 
-- 第一部分 - 基础样式测试
-- 第二部分 - content 类样式测试
-- 第三部分 - `article .content` 样式测试
+- 通用样式，适用模板文件范围：每一页。
+- 内容样式 `.content` ，适用模板文件范围：`archives.html`, `category.html`, `links.html`, `moments.html`, `moment.html`, `page.html`, `photos.html`, `post.html(文章页)`, `tag.html`. `5xx.html`, `404.html`。
+- 文章样式 `article .content`，适用模板文件范围：`author.html`, `links.html`, `moment.html`, `moments.html`, `page.html`, `photos.html`, `post.html`, `qrcode.html`, `5xx.html`, `404.html`。
+
+:::
 
 如果你想快速寻找可能仅在本主题，而不能在其他 Halo CMS 主题生效的样式（作使用指导）。请使用 `CTRL+F` 快捷键搜索关键字：`higan-hz 式`
 
-## 第一部分 - 基础样式测试
+## 标题 <Badge type="tip" text="通用样式" />
 
-适用模板文件范围：每一页
-
-### 标题样式
-
-#### Markdown 写法
+### Markdown 写法
 
 <!-- prettier-ignore-start -->
 ```markdown
@@ -43,7 +41,7 @@ outline: deep
 ```
 <!-- prettier-ignore-end -->
 
-#### HTML 标签写法
+### HTML 标签写法
 
 ```html
 <h1>一级标题</h1>
@@ -54,7 +52,7 @@ outline: deep
 <h6>六级标题</h6>
 ```
 
-#### HTML 类写法
+### HTML 类写法
 
 ```html
 <div class="h1">使用 h1 类的文本</div>
@@ -82,9 +80,9 @@ outline: deep
 
 </iframe>
 
-### 标题中的链接样式
+## 标题中的链接 <Badge type="tip" text="通用样式" />
 
-#### Markdown 写法
+### Markdown 写法
 
 <!-- prettier-ignore-start -->
 ```markdown
@@ -97,7 +95,7 @@ outline: deep
 ```
 <!-- prettier-ignore-end -->
 
-#### HTML 标签写法
+### HTML 标签写法
 
 ```html
 <h1><a href="https://howiehz.top">一级标题中的链接</a></h1>
@@ -108,7 +106,7 @@ outline: deep
 <h6><a href="https://howiehz.top">六级标题中的链接</a></h6>
 ```
 
-#### HTML 类写法
+### HTML 类写法
 
 ```html
 <div class="h1"><a href="https://example.com">h1 类中的链接</a></div>
@@ -135,15 +133,15 @@ outline: deep
 <div class="h2"><a href="https://example.com">h2 类中的链接</a></div>
 </iframe>
 
-### 水平分割线
+## 水平分割线 <Badge type="tip" text="通用样式" />
 
-#### Markdown 写法
+### Markdown 写法
 
 ```markdown
 ---
 ```
 
-#### HTML 标签写法
+### HTML 标签写法
 
 ```html
 <hr />
@@ -157,9 +155,9 @@ outline: deep
 
 </iframe>
 
-### higan-hz 式 - divide 类水平分割线
+## higan-hz 式 - divide 类水平分割线 <Badge type="tip" text="通用样式" />
 
-#### HTML 类写法
+### HTML 类写法
 
 ```html
 <hr class="divide" />
@@ -171,15 +169,15 @@ outline: deep
 <hr class='divide' />
 </iframe>
 
-### 文本格式 - 粗体
+## 粗体 <Badge type="tip" text="通用样式" />
 
-#### Markdown 写法
+### Markdown 写法
 
 ```markdown
 **这是粗体文本**
 ```
 
-#### HTML 标签写法
+### HTML 标签写法
 
 ```html
 <strong>这是粗体文本</strong>
@@ -191,17 +189,15 @@ outline: deep
 <strong>这是粗体文本</strong>
 </iframe>
 
-### 斜体/强调
+## 斜体/强调 <Badge type="tip" text="通用样式" />
 
-#### Markdown 写法
+### Markdown 写法
 
 ```markdown
 _这是强调文本_
 ```
 
-### 斜体/强调
-
-#### HTML 标签写法
+### HTML 标签写法
 
 ```html
 <em>这是强调文本</em>
@@ -213,9 +209,9 @@ _这是强调文本_
 <em>这是强调文本</em>
 </iframe>
 
-### 引用
+## 引用 <Badge type="tip" text="通用样式" />
 
-#### HTML 标签写法
+### HTML 标签写法
 
 ```html
 <cite>这是引用文本</cite>
@@ -227,9 +223,9 @@ _这是强调文本_
 <cite>这是引用文本</cite>
 </iframe>
 
-### 上标和下标
+## 上标和下标 <Badge type="tip" text="通用样式" />
 
-#### HTML 标签写法
+### HTML 标签写法
 
 <!-- prettier-ignore-start -->
 ```html
@@ -251,9 +247,9 @@ _这是强调文本_
 
 </iframe>
 
-### 小号文本
+## 小号文本 <Badge type="tip" text="通用样式" />
 
-#### HTML 标签写法
+### HTML 标签写法
 
 <!-- prettier-ignore-start -->
 ```html
@@ -273,9 +269,9 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### higan-hz 式 - 缩写
+## higan-hz 式 - 缩写 <Badge type="tip" text="通用样式" />
 
-#### HTML 标签写法
+### HTML 标签写法
 
 <!-- prettier-ignore-start -->
 ```html
@@ -313,9 +309,9 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### 无序列表
+## 无序列表 <Badge type="tip" text="通用样式" />
 
-#### Markdown 写法
+### Markdown 写法
 
 ```markdown
 - 列表项一
@@ -325,7 +321,7 @@ This is normal text <small>This is small text</small> This is normal text
 - 列表项三
 ```
 
-#### HTML 标签写法
+### HTML 标签写法
 
 ```html
 <ul>
@@ -353,9 +349,9 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### 有序列表
+## 有序列表 <Badge type="tip" text="通用样式" />
 
-#### Markdown 写法
+### Markdown 写法
 
 ```markdown
 1. 第一项
@@ -365,7 +361,7 @@ This is normal text <small>This is small text</small> This is normal text
 3. 第三项
 ```
 
-#### HTML 标签写法
+### HTML 标签写法
 
 ```html
 <ol>
@@ -393,9 +389,9 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### 定义列表
+## 定义列表 <Badge type="tip" text="通用样式" />
 
-#### HTML 写法
+### HTML 标签写法
 
 ```html
 <dl>
@@ -417,9 +413,9 @@ This is normal text <small>This is small text</small> This is normal text
 </dl>
 </iframe>
 
-### 表格
+## 表格 <Badge type="tip" text="通用样式" />
 
-#### Markdown 写法
+### Markdown 写法
 
 ```markdown
 | 名称     | 平均时间复杂度 | 空间复杂度 |
@@ -429,7 +425,7 @@ This is normal text <small>This is small text</small> This is normal text
 | 快速排序 | O(n log n)     | O(log n)   |
 ```
 
-#### HTML 标签写法
+### HTML 标签写法
 
 ```html
 <table>
@@ -472,15 +468,15 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### 段落
+## 段落 <Badge type="tip" text="通用样式" />
 
-#### Markdown 写法
+### Markdown 写法
 
 ```markdown
 这是一个普通段落，测试文本对齐和行高。这个段落包含一些常用格式如**粗体**、*斜体*和`代码`。根据你的 CSS，这段文字应该有适当的行高和对齐方式。
 ```
 
-#### HTML 写法
+### HTML 标签写法
 
 <!-- prettier-ignore-start -->
 ```html
@@ -496,9 +492,9 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### higan-hz 式 - hide/spoiler 标签隐藏/剧透内容
+## higan-hz 式 - hide/spoiler 标签隐藏/剧透内容 <Badge type="tip" text="通用样式" />
 
-#### HTML 标签/HTML 类写法
+### HTML 标签写法
 
 <!-- prettier-ignore-start -->
 ```html
@@ -528,19 +524,25 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-## 第二部分 - content 类样式测试
+### 长单词测试 <Badge type="tip" text="内容样式" />
 
-适用模板文件范围：archives.html, category.html, links.html, moments.html, moment.html, page.html, photos.html, post.html, tag.html. 5xx.html, 404.html
-
-### 长单词测试
-
-#### Markdown 写法
+### Markdown 写法
 
 ```markdown
 这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word
 
 `这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word`
 ```
+
+#### HTML 标签写法
+
+<!-- prettier-ignore-start -->
+```html
+<p>这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</p>
+
+<code>这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</code>
+```
+<!-- prettier-ignore-end -->
 
 #### 渲染结果
 
@@ -550,39 +552,21 @@ This is normal text <small>This is small text</small> This is normal text
 
 `这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word`
 
+<p>这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</p>
+
+<code>这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</code>
+
 </iframe>
 
-### 长单词测试 - HTML 写法
+### 链接样式 <Badge type="tip" text="内容样式" />
 
-<!-- prettier-ignore-start -->
-```html
-<p>这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</p>
-
-<code>这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</code>
-```
-<!-- prettier-ignore-end -->
-
-### 渲染结果
-
-<p>这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</p>
-
-<code>这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</code>
-
-### 链接样式测试 - Markdown 写法
+#### Markdown 写法
 
 ```markdown
 [这是普通链接](https://example.com)，有下划线效果。鼠标悬停时下划线颜色会变化。
 ```
 
-#### 渲染效果
-
-<iframe data-why>
-
-[这是普通链接](https://example.com)，有下划线效果。鼠标悬停时下划线颜色会变化。
-
-</iframe>
-
-### 链接样式测试 - HTML 写法
+#### HTML 标签写法
 
 ```html
 <a href="https://example.com">这是普通链接</a>，有下划线效果。鼠标悬停时下划线颜色会变化。
@@ -591,10 +575,12 @@ This is normal text <small>This is small text</small> This is normal text
 #### 渲染效果
 
 <iframe data-why>
-<a href="https://example.com">这是普通链接</a>，有下划线效果。鼠标悬停时下划线颜色会变化。
+
+[这是普通链接](https://example.com)，有下划线效果。鼠标悬停时下划线颜色会变化。
+
 </iframe>
 
-### 图标链接样式测试
+### 图标链接样式 <Badge type="tip" text="内容样式" />
 
 <!-- prettier-ignore-start -->
 ```html
@@ -608,13 +594,7 @@ This is normal text <small>This is small text</small> This is normal text
 <a class="icon" href="javascript:void(0);">这里有一个带有 `class="icon"` 的超链接标签：用于图标链接，没有下划线，鼠标悬停时颜色会变化</a>
 </iframe>
 
-## 第三部分 - `article .content` 样式测试
-
-适用模板文件范围：author.html, links.html, moment.html, moments.html, page.html, photos.html, post.html, qrcode.html, 5xx.html, 404.html
-
-`article` 是语义化标签，专门用于表示文章内容，通常内部嵌套一个 `.content` 类
-
-### h2 标签样式测试
+### h2 标签样式测试 <Badge type="tip" text="文章样式" />
 
 ```markdown
 ## 在此处 h2 标题前应有一个 `#` 字符
@@ -628,7 +608,9 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### 图片测试 - Markdown 写法
+### 图片测试 <Badge type="tip" text="文章样式" />
+
+#### Markdown 写法
 
 ```markdown
 ![Alt text - 图片未加载则显示](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2311325.jpg)
@@ -638,19 +620,7 @@ This is normal text <small>This is small text</small> This is normal text
 ![cat](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg)
 ```
 
-#### 渲染效果
-
-<iframe data-why>
-
-![Alt text - 图片未加载则显示](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2311325.jpg)
-
-![Alt text - 图片未加载则显示](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg "Optional title - 可选的 title 值")
-
-![cat](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg)
-
-</iframe>
-
-### 图片测试 - HTML 写法
+#### HTML 标签写法
 
 ```html
 <img
@@ -670,21 +640,16 @@ This is normal text <small>This is small text</small> This is normal text
 #### 渲染效果
 
 <iframe data-why>
-<img
-  src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2311325.jpg"
-  alt="Alt text - 图片未加载则显示"
-/>
 
-<img
-  src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg"
-  alt="Alt text - 图片未加载则显示"
-  title="Optional title - 可选的 title 值"
-/>
+![Alt text - 图片未加载则显示](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2311325.jpg)
 
-<img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg" alt="cat" />
+![Alt text - 图片未加载则显示](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg "Optional title - 可选的 title 值")
+
+![cat](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg)
+
 </iframe>
 
-### 说明文字测试
+### 说明文字 <Badge type="tip" text="文章样式" />
 
 <!-- prettier-ignore-start -->
 ```html
@@ -705,7 +670,9 @@ This is normal text <small>This is small text</small> This is normal text
 <div class="caption">我也是图片说明文字 <a href="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg">我是超链接</a></div>
 </iframe>
 
-### higan-hz 式 - 视频嵌入 - HTML 写法
+### higan-hz 式 - 视频嵌入 <Badge type="tip" text="文章样式" />
+
+#### HTML 标签写法
 
 注：包裹在 `<div class="video-container">` 使得嵌入的视频宽度能随着页面宽度减小，方法来自 [CSS: Elastic Videos - Web Designer Wall](https://webdesignerwall.com/tutorials/css-elastic-videos)
 
@@ -745,7 +712,9 @@ This is normal text <small>This is small text</small> This is normal text
 </div>
 </iframe> -->
 
-### higan-hz 式 - 引用块测试 - Markdown 写法
+### higan-hz 式 - 引用块测试 <Badge type="tip" text="文章样式" />
+
+#### Markdown 写法
 
 ```markdown
 > 引用内容
@@ -807,9 +776,11 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### higan-hz 式 - 拉引用样式测试
+### higan-hz 式 - 拉引用样式 <Badge type="tip" text="文章样式" />
 
 注：[hexo-theme-cactus](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/2016/11/14/hello-world/) 和 halo-theme-higan 均未能出现文字围绕效果，本分支已添加。
+
+#### HTML 标签写法
 
 <!-- prettier-ignore-start -->
 ```html
@@ -879,7 +850,7 @@ This is normal text <small>This is small text</small> This is normal text
 </div>
 </iframe>
 
-### higan-hz 式 - 明暗模式块测试
+### higan-hz 式 - 明暗模式块测试 <Badge type="tip" text="文章样式" />
 
 ```html
 <div class="light">这段内容只在亮色模式/自动模式 (亮色) 下显示。</div>
