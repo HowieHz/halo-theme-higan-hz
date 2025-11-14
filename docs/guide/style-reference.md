@@ -6,6 +6,10 @@ outline: deep
 
 # 样式参考
 
+<script setup>
+import DefaultRender from '../.vitepress/components/DefaultRender.vue';
+</script>
+
 ::: danger
 
 此页面需重写
@@ -55,9 +59,9 @@ _这是强调文本_
 
 ### 渲染效果
 
-<iframe data-why>
+<DefaultRender>
 <em>这是强调文本</em>
-</iframe>
+</DefaultRender>
 
 ## 粗体 <Badge type="tip" text="通用样式" />
 
@@ -78,9 +82,9 @@ __这是粗体文本__
 
 ### 渲染效果
 
-<iframe data-why>
+<DefaultRender>
 <strong>这是粗体文本</strong>
-</iframe>
+</DefaultRender>
 
 ## 行内代码 <Badge type="tip" text="通用样式" />
 
@@ -98,11 +102,11 @@ __这是粗体文本__
 
 ### 渲染效果
 
-<iframe data-why>
+<DefaultRender>
 
 `print("世界，你好！")`
 
-</iframe>
+</DefaultRender>
 
 ## 多行代码块 <Badge type="tip" text="通用样式" />
 
@@ -161,7 +165,7 @@ print("嵌套代码块")
 
 ### 渲染效果
 
-<iframe data-why style="height: 325px;">
+<DefaultRender height="325px">
 
 这是一个普通段落，测试文本对齐和行高。这个段落包含一些常用格式如**粗体**、*斜体*和 `代码`。根据你的 CSS，这段文字应该有适当的行高和对齐方式。
 
@@ -176,7 +180,7 @@ print("嵌套代码块")
 
 默认不显示空行，如果你开启 `文章页样式 - 文章页样式 - 优化文章段落空行显示`，则会显示空行。
 
-</iframe>
+</DefaultRender>
 
 ## 引用源 <Badge type="tip" text="通用样式" />
 
@@ -190,13 +194,13 @@ From <cite>Documentation Writing Guide</cite>
 
 ### 渲染效果
 
-<iframe data-why>
+<DefaultRender>
 
 来自<cite>《文档编写指南》</cite>
 
 From <cite>Documentation Writing Guide</cite>
 
-</iframe>
+</DefaultRender>
 
 ## 上标和下标 <Badge type="tip" text="通用样式" />
 
@@ -213,14 +217,14 @@ From <cite>Documentation Writing Guide</cite>
 
 ### 渲染效果
 
-<iframe data-why style="height: 100px;">
+<DefaultRender height="100px">
 
 正常文本<sup>上标<sup>上上标<sup>上上上标<sup>上上上上标</sup></sup></sup></sup>
 正常文本<sub>下标<sub>下下标<sub>下下下标<sub>下下下下标</sub></sub></sub></sub>
 
 正常文本<sup>上标</sup>与<sub>下标</sub>
 
-</iframe>
+</DefaultRender>
 
 ## 小号文本 <Badge type="tip" text="通用样式" />
 
@@ -236,13 +240,13 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why>
+<DefaultRender>
 
 这是正常文本 <small>这是小号文本</small> 这是正常文本
 
 This is normal text <small>This is small text</small> This is normal text
 
-</iframe>
+</DefaultRender>
 
 ## 缩写 <Badge type="tip" text="通用样式" /> <Badge type="warning" text="扩展样式" /> {#abbreviation}
 
@@ -267,7 +271,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 300px;">
+<DefaultRender height="300px">
 
 这段文字包含一个缩写，在支持悬停的设备上鼠标放上去可以看到提示：<abbr title="Hypertext Markup Language">HTML</abbr>
 
@@ -282,7 +286,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 <abbr>一层 <abbr>二层 <abbr>三层 <abbr>四层 abbr 标签嵌套测试 </abbr></abbr></abbr></abbr>
 
-</iframe>
+</DefaultRender>
 
 ## 标题 <Badge type="tip" text="通用样式" />
 
@@ -319,7 +323,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 300px;">
+<DefaultRender height="300px">
 
 # 一级标题
 
@@ -336,7 +340,7 @@ This is normal text <small>This is small text</small> This is normal text
 <div class="h1">使用 h1 类的文本</div>
 <div class="h2">使用 h2 类的文本</div>
 
-</iframe>
+</DefaultRender>
 
 ## 文章二级标题样式 <Badge type="tip" text="文章样式" />
 
@@ -354,11 +358,11 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why src="/halo-theme-higan-hz/frames/post">
+<DefaultRender src="/halo-theme-higan-hz/frames/post">
 
 ## 在此处 h2 标题前应有一个 `#` 字符
 
-</iframe>
+</DefaultRender>
 
 ## 标题中的链接 <Badge type="tip" text="通用样式" />
 
@@ -395,7 +399,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 300px;">
+<DefaultRender height="300px">
 
 # [一级标题中的链接](https://howiehz.top)
 
@@ -411,7 +415,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 <div class="h1"><a href="https://example.com">h1 类中的链接</a></div>
 <div class="h2"><a href="https://example.com">h2 类中的链接</a></div>
-</iframe>
+</DefaultRender>
 
 ## 链接 <Badge type="tip" text="内容样式" />
 
@@ -429,11 +433,11 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why>
+<DefaultRender>
 
 [这是普通链接](https://example.com)，有下划线效果。鼠标悬停时下划线颜色会变化。
 
-</iframe>
+</DefaultRender>
 
 ## 图标链接 <Badge type="tip" text="内容样式" />
 
@@ -445,9 +449,9 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why>
+<DefaultRender>
 <a class="icon" href="javascript:void(0);">这里有一个带有 `class="icon"` 的超链接标签：用于图标链接，没有下划线，鼠标悬停时颜色会变化</a>
-</iframe>
+</DefaultRender>
 
 ## 图片嵌入 <Badge type="tip" text="文章样式" />
 
@@ -480,7 +484,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 300px;" src="/halo-theme-higan-hz/frames/post">
+<DefaultRender height="300px" src="/halo-theme-higan-hz/frames/post">
 
 ![Alt text - 图片未加载则显示](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2311325.jpg)
 
@@ -488,7 +492,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ![cat](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg)
 
-</iframe>
+</DefaultRender>
 
 ## 说明文字 <Badge type="tip" text="文章样式" />
 
@@ -506,12 +510,12 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 300px;" src="/halo-theme-higan-hz/frames/post">
+<DefaultRender height="300px" src="/halo-theme-higan-hz/frames/post">
 <img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg" alt="cat" />
 
 <div class="caption">我是图片说明文字 上面是城市夜景</div>
 <div class="caption">我也是图片说明文字 <a href="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg">我是超链接</a></div>
-</iframe>
+</DefaultRender>
 
 ## 响应式视频嵌入 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="扩展样式" /> {#responsive-video-embed}
 
@@ -542,7 +546,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<!-- <iframe data-why>
+<!-- <DefaultRender>
 <div class="video-container">
   <iframe
     src="https://player.bilibili.com/player.html?bvid=BV1A7QWY3EkW"
@@ -557,7 +561,7 @@ This is normal text <small>This is small text</small> This is normal text
     sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
   ></iframe>
 </div>
-</iframe> -->
+</DefaultRender> -->
 
 ## 引用块 <Badge type="tip" text="文章样式" />
 
@@ -575,7 +579,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 400px;" src="/halo-theme-higan-hz/frames/post">
+<DefaultRender height="400px" src="/halo-theme-higan-hz/frames/post">
 
 <!-- markdownlint-disable MD028 -->
 
@@ -589,7 +593,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 <!-- markdownlint-enable MD028 -->
 
-</iframe>
+</DefaultRender>
 
 ## 引用块脚注 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="扩展样式" /> {#blockquote-footnote}
 
@@ -615,7 +619,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 600px;" src="/halo-theme-higan-hz/frames/post">
+<DefaultRender height="600px" src="/halo-theme-higan-hz/frames/post">
 
 <!-- markdownlint-disable MD028 -->
 
@@ -637,7 +641,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 <!-- markdownlint-enable MD028 -->
 
-</iframe>
+</DefaultRender>
 
 ## 拉引用块 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="扩展样式" /> {#pullquote}
 
@@ -679,7 +683,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 500px;" src="/halo-theme-higan-hz/frames/post">
+<DefaultRender height="500px" src="/halo-theme-higan-hz/frames/post">
 <div style="clear: both">
 
 这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。
@@ -709,7 +713,7 @@ This is normal text <small>This is small text</small> This is normal text
 这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧引用。这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧引用。这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧引用。这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧引用。
 
 </div>
-</iframe>
+</DefaultRender>
 
 ## 无序列表 <Badge type="tip" text="通用样式" />
 
@@ -741,7 +745,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 250px;">
+<DefaultRender height="250px">
 
 - 列表项一
 - 列表项二
@@ -749,7 +753,7 @@ This is normal text <small>This is small text</small> This is normal text
   - 另一嵌套列表项
 - 列表项三
 
-</iframe>
+</DefaultRender>
 
 ## 有序列表 <Badge type="tip" text="通用样式" />
 
@@ -781,7 +785,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 250px;">
+<DefaultRender height="250px">
 
 1. 第一项
 2. 第二项
@@ -789,7 +793,7 @@ This is normal text <small>This is small text</small> This is normal text
    2. 嵌套有序项
 3. 第三项
 
-</iframe>
+</DefaultRender>
 
 ## 定义列表 <Badge type="tip" text="通用样式" />
 
@@ -806,14 +810,14 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 250px;">
+<DefaultRender height="250px">
 <dl>
     <dt>术语一</dt>
     <dd>术语一的定义说明</dd>
     <dt>术语二</dt>
     <dd>术语二的定义说明</dd>
 </dl>
-</iframe>
+</DefaultRender>
 
 ## 表格 <Badge type="tip" text="通用样式" />
 
@@ -860,7 +864,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 200px;">
+<DefaultRender height="200px">
 
 | 名称     | 平均时间复杂度 | 空间复杂度 |
 | -------- | -------------- | ---------- |
@@ -868,7 +872,7 @@ This is normal text <small>This is small text</small> This is normal text
 | 归并排序 | O(n log n)     | O(n)       |
 | 快速排序 | O(n log n)     | O(log n)   |
 
-</iframe>
+</DefaultRender>
 
 ## 水平分割线 <Badge type="tip" text="通用样式" /> {#horizontal-divider-special-style}
 
@@ -886,11 +890,11 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why>
+<DefaultRender>
 
 ---
 
-</iframe>
+</DefaultRender>
 
 ## 水平分割线（特殊样式） <Badge type="tip" text="通用样式" /> <Badge type="warning" text="扩展样式" />
 
@@ -902,9 +906,9 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why>
+<DefaultRender>
 <hr class='divide' />
-</iframe>
+</DefaultRender>
 
 ## 隐藏/剧透 <Badge type="tip" text="通用样式" /> <Badge type="warning" text="扩展样式" /> {#hidden-spoiler-content}
 
@@ -925,7 +929,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 250px;">
+<DefaultRender height="250px">
 
 我不是隐藏内容。<hide class="blur">我是隐藏内容。应该是模糊样式。</hide>我也不是隐藏内容。
 我不是隐藏内容。<spoiler class="blur">我是隐藏内容。应该是模糊样式。</spoiler>我也不是隐藏内容。
@@ -936,7 +940,7 @@ This is normal text <small>This is small text</small> This is normal text
 我不是隐藏内容。<hide>我是隐藏内容。鼠标悬停、聚焦或文字选中时自动显示。</hide>我也不是隐藏内容。
 我不是隐藏内容。<spoiler>我是隐藏内容。鼠标悬停、聚焦或文字选中时自动显示。</spoiler>我也不是隐藏内容。
 
-</iframe>
+</DefaultRender>
 
 ## 长单词测试 <Badge type="tip" text="内容样式" />
 
@@ -952,13 +956,13 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染结果
 
-<iframe data-why style="height: 300px;">
+<DefaultRender height="300px">
 
 <p>这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</p>
 
 <code>这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</code>
 
-</iframe>
+</DefaultRender>
 
 ## 明暗模式显隐块 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="扩展样式" /> {#light-dark-mode-visibility-block}
 
@@ -969,7 +973,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why src="/halo-theme-higan-hz/frames/post">
+<DefaultRender src="/halo-theme-higan-hz/frames/post">
 <div class="light">这段内容只在亮色模式/自动模式 (亮色) 下显示。试试切换页面主题。</div>
 <div class="dark">这段内容只在暗色模式/自动模式 (暗色) 下显示。试试切换页面主题。</div>
-</iframe>
+</DefaultRender>

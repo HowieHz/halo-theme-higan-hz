@@ -11,6 +11,7 @@ export default defineConfig({
     plugins: [
       // Initialize whyframe core plugin
       whyframe({
+        components: [{ name: "DefaultRender" }],
         defaultSrc: "/halo-theme-higan-hz/frames/default", // provide our own html
       }),
 
