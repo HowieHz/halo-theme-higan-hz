@@ -12,7 +12,7 @@ outline: deep
 
 :::
 
-此文档展示主题基本样式、拓展样式及其写法。
+此文档展示主题基本样式、扩展样式及其写法。
 
 ::: info 样式适用范围说明
 
@@ -24,9 +24,9 @@ outline: deep
 
 :::
 
-## 拓展样式快速检索 <Badge type="warning" text="拓展样式" />
+## 扩展样式快速检索 <Badge type="warning" text="扩展样式" />
 
-此处列出了本主题独有的的拓展样式。
+此处列出了本主题独有的的扩展样式。
 
 - [缩写](#abbreviation)
 - [响应式视频嵌入](#responsive-video-embed)
@@ -244,7 +244,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-## 缩写 <Badge type="tip" text="通用样式" /> <Badge type="warning" text="拓展样式" /> {#abbreviation}
+## 缩写 <Badge type="tip" text="通用样式" /> <Badge type="warning" text="扩展样式" /> {#abbreviation}
 
 ### HTML 标签写法
 
@@ -513,7 +513,7 @@ This is normal text <small>This is small text</small> This is normal text
 <div class="caption">我也是图片说明文字 <a href="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg">我是超链接</a></div>
 </iframe>
 
-## 响应式视频嵌入 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="拓展样式" /> {#responsive-video-embed}
+## 响应式视频嵌入 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="扩展样式" /> {#responsive-video-embed}
 
 ### HTML 标签写法
 
@@ -591,7 +591,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-## 引用块脚注 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="拓展样式" /> {#blockquote-footnote}
+## 引用块脚注 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="扩展样式" /> {#blockquote-footnote}
 
 ### Markdown 写法
 
@@ -639,7 +639,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-## 拉引用块 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="拓展样式" /> {#pullquote}
+## 拉引用块 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="扩展样式" /> {#pullquote}
 
 注：[hexo-theme-cactus](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/2016/11/14/hello-world/) 和 halo-theme-higan 均未能出现文字围绕效果，本分支已添加。
 
@@ -894,7 +894,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-## 水平分割线（特殊样式） <Badge type="tip" text="通用样式" /> <Badge type="warning" text="拓展样式" />
+## 水平分割线（特殊样式） <Badge type="tip" text="通用样式" /> <Badge type="warning" text="扩展样式" />
 
 ### HTML 类写法
 
@@ -908,7 +908,7 @@ This is normal text <small>This is small text</small> This is normal text
 <hr class='divide' />
 </iframe>
 
-## 隐藏/剧透 <Badge type="tip" text="通用样式" /> <Badge type="warning" text="拓展样式" /> {#hidden-spoiler-content}
+## 隐藏/剧透 <Badge type="tip" text="通用样式" /> <Badge type="warning" text="扩展样式" /> {#hidden-spoiler-content}
 
 ### HTML 标签写法
 
@@ -962,7 +962,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-## 明暗模式显隐块 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="拓展样式" /> {#light-dark-mode-visibility-block}
+## 明暗模式显隐块 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="扩展样式" /> {#light-dark-mode-visibility-block}
 
 ```html
 <div class="light">这段内容只在亮色模式/自动模式 (亮色) 下显示。试试切换页面主题。</div>

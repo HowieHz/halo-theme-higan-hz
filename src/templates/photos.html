@@ -71,7 +71,7 @@
                 const placeAndAnimate = () => {
                   item.style.opacity = 0; // <!--/* 为动画做准备 */-->
                   this.placeItem(item, img, H, width, gap, flag);
-                  this.updateContainerHeight(); // <!--/* 拓展上级控件高度 使得底部内容不会跑到图片底下 */-->
+                  this.updateContainerHeight(); // <!--/* 扩展上级控件高度 使得底部内容不会跑到图片底下 */-->
                   this.checkAndLoadMoreImages(); // <!--/* 检查是否可能要接着加载图片 */-->
                   requestAnimationFrame(() => {
                     // <!--/* 加载动画 fade in */-->
