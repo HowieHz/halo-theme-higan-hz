@@ -10,17 +10,11 @@ outline: deep
 import DefaultRender from '../.vitepress/components/DefaultRender.vue';
 </script>
 
-::: danger
-
-此页面需重写
-
-:::
-
 此文档展示主题基本样式、扩展样式及其写法。
 
 ::: info 样式适用范围说明
 
-相关链接：[模板文件与访问路径映射](/reference/template-map)
+相关文档：[模板文件与访问路径映射](/reference/template-map)
 
 - <Badge type="tip" text="通用样式" /> 适用模板文件范围：每一页。
 - <Badge type="tip" text="内容样式" /> 适用模板文件范围：`archives.html`, `category.html`, `links.html`, `moments.html`, `moment.html`, `page.html`, `photos.html`, `post.html(文章页)`, `tag.html`. `5xx.html`, `404.html`。CSS 选择器为 `.content`。
