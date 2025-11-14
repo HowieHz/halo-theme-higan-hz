@@ -61,7 +61,7 @@ outline: deep
 <div class="h2">使用 h2 类的文本</div>
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why style="height: 300px;">
 
@@ -115,7 +115,7 @@ outline: deep
 <div class="h2"><a href="https://example.com">h2 类中的链接</a></div>
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why style="height: 300px;">
 
@@ -149,7 +149,7 @@ outline: deep
 <hr />
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 
@@ -165,7 +165,7 @@ outline: deep
 <hr class="divide" />
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 <hr class='divide' />
@@ -185,7 +185,7 @@ outline: deep
 <strong>这是粗体文本</strong>
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 <strong>这是粗体文本</strong>
@@ -207,7 +207,7 @@ _这是强调文本_
 <em>这是强调文本</em>
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 <em>这是强调文本</em>
@@ -221,13 +221,15 @@ _这是强调文本_
 <cite>这是引用文本</cite>
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 <cite>这是引用文本</cite>
 </iframe>
 
-### 上标和下标 - HTML 写法
+### 上标和下标
+
+#### HTML 标签写法
 
 <!-- prettier-ignore-start -->
 ```html
@@ -238,7 +240,7 @@ _这是强调文本_
 ```
 <!-- prettier-ignore-end -->
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why style="height: 100px;">
 
@@ -249,23 +251,31 @@ _这是强调文本_
 
 </iframe>
 
-### 小号文本 - HTML 写法
+### 小号文本
 
+#### HTML 标签写法
+
+<!-- prettier-ignore-start -->
 ```html
-这是正常文本 <small>这是小号文本</small> 这是正常文本 This is normal text <small>This is small text</small> This is
-normal text
-```
+这是正常文本 <small>这是小号文本</small> 这是正常文本
 
-### 渲染效果
+This is normal text <small>This is small text</small> This is normal text
+```
+<!-- prettier-ignore-end -->
+
+#### 渲染效果
 
 <iframe data-why>
+
 这是正常文本 <small>这是小号文本</small> 这是正常文本
 
 This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### higan-hz 式 - 缩写 - HTML 标签写法
+### higan-hz 式 - 缩写
+
+#### HTML 标签写法
 
 <!-- prettier-ignore-start -->
 ```html
@@ -284,9 +294,9 @@ This is normal text <small>This is small text</small> This is normal text
 ```
 <!-- prettier-ignore-end -->
 
-### 渲染效果
+#### 渲染效果
 
-<iframe data-why>
+<iframe data-why style="height: 300px;">
 
 这段文字包含一个缩写，在支持悬停的设备上鼠标放上去可以看到提示：<abbr title="Hypertext Markup Language">HTML</abbr>
 
@@ -303,7 +313,9 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### 列表 - 无序列表 - Markdown 写法
+### 无序列表
+
+#### Markdown 写法
 
 ```markdown
 - 列表项一
@@ -313,19 +325,7 @@ This is normal text <small>This is small text</small> This is normal text
 - 列表项三
 ```
 
-### 渲染效果
-
-<iframe data-why>
-
-- 列表项一
-- 列表项二
-  - 嵌套列表项
-  - 另一嵌套列表项
-- 列表项三
-
-</iframe>
-
-### 列表 - 无序列表 - HTML 写法
+#### HTML 标签写法
 
 ```html
 <ul>
@@ -341,22 +341,21 @@ This is normal text <small>This is small text</small> This is normal text
 </ul>
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
-<ul>
-    <li>列表项一</li>
-    <li>列表项二
-      <ul>
-        <li>嵌套列表项</li>
-        <li>另一嵌套列表项</li>
-      </ul>
-    </li>
-    <li>列表项三</li>
-</ul>
+
+- 列表项一
+- 列表项二
+  - 嵌套列表项
+  - 另一嵌套列表项
+- 列表项三
+
 </iframe>
 
-### 列表 - 有序列表 - Markdown 写法
+### 有序列表
+
+#### Markdown 写法
 
 ```markdown
 1. 第一项
@@ -366,19 +365,7 @@ This is normal text <small>This is small text</small> This is normal text
 3. 第三项
 ```
 
-### 渲染效果
-
-<iframe data-why>
-
-1. 第一项
-2. 第二项
-   1. 嵌套有序项
-   2. 嵌套有序项
-3. 第三项
-
-</iframe>
-
-### 列表 - 有序列表 - HTML 写法
+#### HTML 标签写法
 
 ```html
 <ol>
@@ -394,22 +381,21 @@ This is normal text <small>This is small text</small> This is normal text
 </ol>
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
-<ol>
-    <li>第一项</li>
-    <li>第二项
-        <ol>
-            <li>嵌套有序项</li>
-            <li>嵌套有序项</li>
-        </ol>
-    </li>
-    <li>第三项</li>
-</ol>
+
+1. 第一项
+2. 第二项
+   1. 嵌套有序项
+   2. 嵌套有序项
+3. 第三项
+
 </iframe>
 
-### 列表 - 定义列表 - HTML 写法
+### 定义列表
+
+#### HTML 写法
 
 ```html
 <dl>
@@ -420,7 +406,7 @@ This is normal text <small>This is small text</small> This is normal text
 </dl>
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 <dl>
@@ -431,27 +417,19 @@ This is normal text <small>This is small text</small> This is normal text
 </dl>
 </iframe>
 
-### 表格 - Markdown 写法
+### 表格
+
+#### Markdown 写法
 
 ```markdown
-| 表头一 | 表头二 | 表头三 |
-| ------ | ------ | ------ |
-| 内容一 | 内容二 | 内容三 |
-| 内容四 | 内容五 | 内容六 |
+| 名称     | 平均时间复杂度 | 空间复杂度 |
+| -------- | -------------- | ---------- |
+| 冒泡排序 | O(n^2)         | O(1)       |
+| 归并排序 | O(n log n)     | O(n)       |
+| 快速排序 | O(n log n)     | O(log n)   |
 ```
 
-### 渲染效果
-
-<iframe data-why>
-
-| 表头一 | 表头二 | 表头三 |
-| ------ | ------ | ------ |
-| 内容一 | 内容二 | 内容三 |
-| 内容四 | 内容五 | 内容六 |
-
-</iframe>
-
-### 表格 - HTML 写法
+#### HTML 标签写法
 
 ```html
 <table>
@@ -460,106 +438,49 @@ This is normal text <small>This is small text</small> This is normal text
       <th><p>名称</p></th>
       <th><p>平均时间复杂度</p></th>
       <th><p>空间复杂度</p></th>
-      <th><p>稳定性</p></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><p>选择排序</p></td>
-      <td><p>O(n^2)</p></td>
-      <td><p>O(1)</p></td>
-      <td><p>×</p></td>
-    </tr>
-    <tr>
       <td><p>冒泡排序</p></td>
       <td><p>O(n^2)</p></td>
       <td><p>O(1)</p></td>
-      <td><p>√</p></td>
-    </tr>
-    <tr>
-      <td><p>插入排序</p></td>
-      <td><p>O(n^2)</p></td>
-      <td><p>O(1)</p></td>
-      <td><p>√</p></td>
     </tr>
     <tr>
       <td><p>归并排序</p></td>
       <td><p>O(n\log n)</p></td>
       <td><p>O(n)</p></td>
-      <td><p>√</p></td>
     </tr>
     <tr>
       <td><p>快速排序</p></td>
       <td><p>O(n\log n)</p></td>
       <td><p>O(\log n)</p></td>
-      <td><p>×</p></td>
     </tr>
   </tbody>
 </table>
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
-<table>
-    <thead>
-        <tr>
-            <th><p>名称</p></th>
-            <th><p>平均时间复杂度</p></th>
-            <th><p>空间复杂度</p></th>
-            <th><p>稳定性</p></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><p>选择排序</p> </td>
-            <td><p>O(n^2)</p> </td>
-            <td><p>O(1)</p></td>
-            <td><p>×</p></td>
-        </tr>
-        <tr>
-            <td><p>冒泡排序</p></td>
-            <td><p>O(n^2)</p></td>
-            <td><p>O(1)</p></td>
-            <td><p>√</p></td>
-        </tr>
-        <tr>
-            <td><p>插入排序</p></td>
-            <td><p>O(n^2)</p></td>
-            <td><p>O(1)</p></td>
-            <td><p>√</p></td>
-        </tr>
-        <tr>
-            <td><p>归并排序</p></td>
-            <td><p>O(n\log n)</p></td>
-            <td><p>O(n)</p></td>
-            <td><p>√</p></td>
-        </tr>
-        <tr>
-            <td><p>快速排序</p></td>
-            <td><p>O(n\log n)</p></td>
-            <td><p>O(\log n)</p></td>
-            <td><p>×</p></td>
-        </tr>
-    </tbody>
-</table>
+
+| 名称     | 平均时间复杂度 | 空间复杂度 |
+| -------- | -------------- | ---------- |
+| 冒泡排序 | O(n^2)         | O(1)       |
+| 归并排序 | O(n log n)     | O(n)       |
+| 快速排序 | O(n log n)     | O(log n)   |
+
 </iframe>
 
-### 段落 - Markdown 写法
+### 段落
+
+#### Markdown 写法
 
 ```markdown
 这是一个普通段落，测试文本对齐和行高。这个段落包含一些常用格式如**粗体**、*斜体*和`代码`。根据你的 CSS，这段文字应该有适当的行高和对齐方式。
 ```
 
-### 渲染效果
-
-<iframe data-why>
-
-这是一个普通段落，测试文本对齐和行高。这个段落包含一些常用格式如**粗体**、*斜体*和 `代码`。根据你的 CSS，这段文字应该有适当的行高和对齐方式。
-
-</iframe>
-
-### 段落 - HTML 写法
+#### HTML 写法
 
 <!-- prettier-ignore-start -->
 ```html
@@ -567,13 +488,17 @@ This is normal text <small>This is small text</small> This is normal text
 ```
 <!-- prettier-ignore-end -->
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
-<p>这是一个普通段落，测试文本对齐和行高。这个段落包含一些常用格式如<strong>粗体</strong>、<em>斜体</em>和<code>代码</code>。根据你的 CSS，这段文字应该有适当的行高和对齐方式。</p>
+
+这是一个普通段落，测试文本对齐和行高。这个段落包含一些常用格式如**粗体**、*斜体*和 `代码`。根据你的 CSS，这段文字应该有适当的行高和对齐方式。
+
 </iframe>
 
-### higan-hz 式 - hide/spoiler 标签隐藏/剧透内容 - HTML 类写法
+### higan-hz 式 - hide/spoiler 标签隐藏/剧透内容
+
+#### HTML 标签/HTML 类写法
 
 <!-- prettier-ignore-start -->
 ```html
@@ -588,7 +513,7 @@ This is normal text <small>This is small text</small> This is normal text
 ```
 <!-- prettier-ignore-end -->
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 
@@ -607,7 +532,9 @@ This is normal text <small>This is small text</small> This is normal text
 
 适用模板文件范围：archives.html, category.html, links.html, moments.html, moment.html, page.html, photos.html, post.html, tag.html. 5xx.html, 404.html
 
-### 长单词测试 - Markdown 写法
+### 长单词测试
+
+#### Markdown 写法
 
 ```markdown
 这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word
@@ -615,7 +542,7 @@ This is normal text <small>This is small text</small> This is normal text
 `这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word`
 ```
 
-### 渲染结果
+#### 渲染结果
 
 <iframe data-why>
 
@@ -647,7 +574,7 @@ This is normal text <small>This is small text</small> This is normal text
 [这是普通链接](https://example.com)，有下划线效果。鼠标悬停时下划线颜色会变化。
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 
@@ -661,7 +588,7 @@ This is normal text <small>This is small text</small> This is normal text
 <a href="https://example.com">这是普通链接</a>，有下划线效果。鼠标悬停时下划线颜色会变化。
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 <a href="https://example.com">这是普通链接</a>，有下划线效果。鼠标悬停时下划线颜色会变化。
@@ -675,7 +602,7 @@ This is normal text <small>This is small text</small> This is normal text
 ```
 <!-- prettier-ignore-end -->
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 <a class="icon" href="javascript:void(0);">这里有一个带有 `class="icon"` 的超链接标签：用于图标链接，没有下划线，鼠标悬停时颜色会变化</a>
@@ -693,7 +620,7 @@ This is normal text <small>This is small text</small> This is normal text
 ## 在此处 h2 标题前应有一个 `#` 字符
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 
@@ -711,7 +638,7 @@ This is normal text <small>This is small text</small> This is normal text
 ![cat](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg)
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 
@@ -740,7 +667,7 @@ This is normal text <small>This is small text</small> This is normal text
 <img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg" alt="cat" />
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 <img
@@ -769,7 +696,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 <!-- prettier-ignore-end -->
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 <img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg" alt="cat" />
@@ -799,7 +726,7 @@ This is normal text <small>This is small text</small> This is normal text
 </div>
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <!-- <iframe data-why>
 <div class="video-container">
@@ -846,7 +773,7 @@ This is normal text <small>This is small text</small> This is normal text
 > <footer><a href="https://example.com">作者链接</a><cite>作者名</cite></footer>
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 
@@ -918,7 +845,7 @@ This is normal text <small>This is small text</small> This is normal text
 ```
 <!-- prettier-ignore-end -->
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 <div style="clear: both">
@@ -960,7 +887,7 @@ This is normal text <small>This is small text</small> This is normal text
 <div class="dark">这段内容只在暗色模式/自动模式 (暗色) 下显示。</div>
 ```
 
-### 渲染效果
+#### 渲染效果
 
 <iframe data-why>
 <div class="light">这段内容只在亮色模式/自动模式 (亮色) 下显示。</div>
