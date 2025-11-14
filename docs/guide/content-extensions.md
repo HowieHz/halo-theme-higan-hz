@@ -32,6 +32,7 @@ outline: deep
 
 **Markdown 写法**
 
+<!-- prettier-ignore-start -->
 ```markdown
 # 一级标题
 ## 二级标题
@@ -40,6 +41,7 @@ outline: deep
 ##### 五级标题
 ###### 六级标题
 ```
+<!-- prettier-ignore-end -->
 
 **HTML 标签写法**
 
@@ -63,12 +65,14 @@ outline: deep
 
 <iframe data-why style="height: 300px;">
 
-# 一级标题 (h1)
-## 二级标题 (h2)
-### 三级标题 (h3)
-#### 四级标题 (h4)
-##### 五级标题 (h5)
-###### 六级标题 (h6)
+<!-- prettier-ignore-start -->
+# 一级标题
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题
+<!-- prettier-ignore-end -->
 
 <div class="h1">使用 h1 类的文本</div>
 <div class="h2">使用 h2 类的文本</div>
@@ -79,6 +83,7 @@ outline: deep
 
 **Markdown 写法**
 
+<!-- prettier-ignore-start -->
 ```markdown
 # [一级标题中的链接](https://howiehz.top)
 ## [二级标题中的链接](https://howiehz.top)
@@ -87,6 +92,7 @@ outline: deep
 ##### [五级标题中的链接](https://howiehz.top)
 ###### [六级标题中的链接](https://howiehz.top)
 ```
+<!-- prettier-ignore-end -->
 
 **HTML 标签写法**
 
@@ -100,6 +106,7 @@ outline: deep
 ```
 
 **HTML 类写法**
+
 ```html
 <div class="h1"><a href="https://example.com">h1 类中的链接</a></div>
 <div class="h2"><a href="https://example.com">h2 类中的链接</a></div>
@@ -109,12 +116,14 @@ outline: deep
 
 <iframe data-why style="height: 300px;">
 
+<!-- prettier-ignore-start -->
 # [一级标题中的链接](https://howiehz.top)
 ## [二级标题中的链接](https://howiehz.top)
 ### [三级标题中的链接](https://howiehz.top)
 #### [四级标题中的链接](https://howiehz.top)
 ##### [五级标题中的链接](https://howiehz.top)
 ###### [六级标题中的链接](https://howiehz.top)
+<!-- prettier-ignore-end -->
 
 <div class="h1"><a href="https://example.com">h1 类中的链接</a></div>
 <div class="h2"><a href="https://example.com">h2 类中的链接</a></div>
@@ -214,12 +223,14 @@ _这是强调文本_
 
 ### 上标和下标 - HTML 写法
 
+<!-- prettier-ignore-start -->
 ```html
 正常文本<sup>上标<sup>上上标<sup>上上上标<sup>上上上上标</sup></sup></sup></sup>
 正常文本<sub>下标<sub>下下标<sub>下下下标<sub>下下下下标</sub></sub></sub></sub>
 
 正常文本<sup>上标</sup>与<sub>下标</sub>
 ```
+<!-- prettier-ignore-end -->
 
 ### 渲染效果
 
@@ -250,31 +261,8 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### higan-hz 式 - 缩写 - HTML 标签写法
 
+<!-- prettier-ignore-start -->
 ```html
-这段文字包含一个缩写，在支持悬停的设备上鼠标放上去可以看到提示：<abbr title="Hypertext Markup Language">HTML</abbr>
-
-当<strong>设备不支持悬停</strong>或处于<strong>打印模式</strong>时，全称将会以 `(全称)` 的形式显示在缩写后面。
-例如在触摸设备上，上面的 "HTML" 会自动显示为 "HTML(Hypertext Markup Language)"。
-
-<abbr title="Hypertext Markup Language"
-  ><a href="https://example.com">HTML - 此行在文章内会同时应用 a 标签的样式，因此有两层下划线</a></abbr
->
-
-<abbr title="我是提示">这个标签写了 title 属性，所以鼠标放上去会有提示。</abbr>
-
-<abbr>实际上 <abbr>title</abbr> 是可选项</abbr>
-
-<abbr
-  >一层
-  <abbr
-    >二层 <abbr>三层 <abbr>四层 abbr 标签嵌套测试 </abbr></abbr></abbr
-  ></abbr
->
-```
-
-### 渲染效果
-
-<iframe data-why>
 这段文字包含一个缩写，在支持悬停的设备上鼠标放上去可以看到提示：<abbr title="Hypertext Markup Language">HTML</abbr>
 
 当<strong>设备不支持悬停</strong>或处于<strong>打印模式</strong>时，全称将会以`(全称)`的形式显示在缩写后面。
@@ -287,6 +275,26 @@ This is normal text <small>This is small text</small> This is normal text
 <abbr>实际上 <abbr>title</abbr> 是可选项</abbr>
 
 <abbr>一层 <abbr>二层 <abbr>三层 <abbr>四层 abbr 标签嵌套测试 </abbr></abbr></abbr></abbr>
+```
+<!-- prettier-ignore-end -->
+
+### 渲染效果
+
+<iframe data-why>
+
+这段文字包含一个缩写，在支持悬停的设备上鼠标放上去可以看到提示：<abbr title="Hypertext Markup Language">HTML</abbr>
+
+当<strong>设备不支持悬停</strong>或处于<strong>打印模式</strong>时，全称将会以`(全称)`的形式显示在缩写后面。
+例如在触摸设备上，上面的 "HTML" 会自动显示为 "HTML(Hypertext Markup Language)"。
+
+<abbr title="Hypertext Markup Language"><a href="https://example.com">HTML - 此行在文章内会同时应用 a 标签的样式，因此有两层下划线</a></abbr>
+
+<abbr title="我是提示">这个标签写了 title 属性，所以鼠标放上去会有提示。</abbr>
+
+<abbr>实际上 <abbr>title</abbr> 是可选项</abbr>
+
+<abbr>一层 <abbr>二层 <abbr>三层 <abbr>四层 abbr 标签嵌套测试 </abbr></abbr></abbr></abbr>
+
 </iframe>
 
 ### 列表 - 无序列表 - Markdown 写法
@@ -547,12 +555,11 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 段落 - HTML 写法
 
+<!-- prettier-ignore-start -->
 ```html
-<p>
-  这是一个普通段落，测试文本对齐和行高。这个段落包含一些常用格式如<strong>粗体</strong>、<em>斜体</em>和<code>代码</code>。根据你的
-  CSS，这段文字应该有适当的行高和对齐方式。
-</p>
+<p>这是一个普通段落，测试文本对齐和行高。这个段落包含一些常用格式如<strong>粗体</strong>、<em>斜体</em>和<code>代码</code>。根据你的 CSS，这段文字应该有适当的行高和对齐方式。</p>
 ```
+<!-- prettier-ignore-end -->
 
 ### 渲染效果
 
@@ -562,6 +569,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### higan-hz 式 - hide/spoiler 标签隐藏/剧透内容 - HTML 类写法
 
+<!-- prettier-ignore-start -->
 ```html
 我不是隐藏内容。<hide class="blur">我是隐藏内容。应该是模糊样式。</hide>我也不是隐藏内容。
 我不是隐藏内容。<spoiler class="blur">我是隐藏内容。应该是模糊样式。</spoiler>我也不是隐藏内容。
@@ -572,11 +580,11 @@ This is normal text <small>This is small text</small> This is normal text
 我不是隐藏内容。<hide>我是隐藏内容。鼠标悬停、聚焦或文字选中时自动显示。</hide>我也不是隐藏内容。
 我不是隐藏内容。<spoiler>我是隐藏内容。鼠标悬停、聚焦或文字选中时自动显示。</spoiler>我也不是隐藏内容。
 ```
+<!-- prettier-ignore-end -->
 
 ### 渲染效果
 
 <iframe data-why>
-
 
 我不是隐藏内容。<hide class="blur">我是隐藏内容。应该是模糊样式。</hide>我也不是隐藏内容。
 我不是隐藏内容。<spoiler class="blur">我是隐藏内容。应该是模糊样式。</spoiler>我也不是隐藏内容。
@@ -596,47 +604,36 @@ This is normal text <small>This is small text</small> This is normal text
 ### 长单词测试 - Markdown 写法
 
 ```markdown
-这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
-An extremely long English word
+这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word
 
-`这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
-An extremely long English word`
+`这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word`
 ```
 
 ### 渲染结果
 
 <iframe data-why>
 
-这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
-An extremely long English word
+这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word
 
-`这段文本使用了 hyphens: manual，无自动断词。 Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。 Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。 An extremely long English word`
+`这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word`
 
 </iframe>
 
 ### 长单词测试 - HTML 写法
 
+<!-- prettier-ignore-start -->
 ```html
-<p>
-  这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious
-  是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis
-  是另一个超长单词示例。An extremely long English word
-</p>
+<p>这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</p>
 
-<code
-  >这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious
-  是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An
-  extreme&shy;ly long English word</code
->
+<code>这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</code>
 ```
+<!-- prettier-ignore-end -->
 
 ### 渲染结果
 
-<p>这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
-An extreme&shy;ly long English word</p>
+<p>这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</p>
 
-<code>这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。
-An extreme&shy;ly long English word</code>
+<code>这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</code>
 
 ### 链接样式测试 - Markdown 写法
 
@@ -666,11 +663,11 @@ An extreme&shy;ly long English word</code>
 
 ### 图标链接样式测试
 
+<!-- prettier-ignore-start -->
 ```html
-<a class="icon" href="javascript:void(0);"
-  >这里有一个带有 `class="icon"` 的超链接标签：用于图标链接，没有下划线，鼠标悬停时颜色会变化</a
->
+<a class="icon" href="javascript:void(0);">这里有一个带有 `class="icon"` 的超链接标签：用于图标链接，没有下划线，鼠标悬停时颜色会变化</a>
 ```
+<!-- prettier-ignore-end -->
 
 ### 渲染效果
 
@@ -740,25 +737,31 @@ An extreme&shy;ly long English word</code>
 ### 渲染效果
 
 <iframe data-why>
-<img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2311325.jpg" alt="Alt text - 图片未加载则显示" />
+<img
+  src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2311325.jpg"
+  alt="Alt text - 图片未加载则显示"
+/>
 
-<img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg" alt="Alt text - 图片未加载则显示" title="Optional title - 可选的 title 值" />
+<img
+  src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg"
+  alt="Alt text - 图片未加载则显示"
+  title="Optional title - 可选的 title 值"
+/>
 
 <img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg" alt="cat" />
 </iframe>
 
 ### 说明文字测试
 
+<!-- prettier-ignore-start -->
 ```html
 <img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg" alt="cat" />
+
 <div class="caption">我是图片说明文字 上面有一只猫</div>
-<div class="caption">
-  我也是图片说明文字
-  <a href="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg"
-    >我是超链接</a
-  >
-</div>
+<div class="caption">我也是图片说明文字 <a href="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg">我是超链接</a></div>
 ```
+
+<!-- prettier-ignore-end -->
 
 ### 渲染效果
 
@@ -875,35 +878,39 @@ An extreme&shy;ly long English word</code>
 
 注：[hexo-theme-cactus](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/2016/11/14/hello-world/) 和 halo-theme-higan 均未能出现文字围绕效果，本分支已添加。
 
+<!-- prettier-ignore-start -->
 ```html
 <div style="clear: both">
-  这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。
 
-  <blockquote class="pullquote">
-    这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。
-  </blockquote>
+这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。
 
-  这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。
+<blockquote class="pullquote">
 
-  <blockquote class="pullquote left">
-    这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。
-  </blockquote>
+这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。
 
-  这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了 45%
-  的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了
-  45%
-  的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了
-  45%
-  的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了
-  45% 的宽度，文本会自动填充剩余空间。
+</blockquote>
 
-  <blockquote class="pullquote right">
-    这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。
-  </blockquote>
+这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。
 
-  这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧引用。这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧引用。这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧引用。这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧引用。
+<blockquote class="pullquote left">
+
+这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。这是左侧的拉引用样式。
+
+</blockquote>
+
+这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了 45% 的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了 45% 的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了 45% 的宽度，文本会自动填充剩余空间。这是主文本内容，可以围绕左侧的拉引用。这段文本足够长，可以测试文本如何环绕左侧拉引用。可以看到引用只占据了 45% 的宽度，文本会自动填充剩余空间。
+
+<blockquote class="pullquote right">
+
+这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。这是右侧的拉引用样式。
+
+</blockquote>
+
+这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧引用。这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧引用。这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧引用。这是另一段文本，围绕右侧拉引用。同样地，这段文字需要足够长，才能看出环绕效果。右侧拉引用也有特定的边距设置。这是另一段文本，围绕右侧引用。
+
 </div>
 ```
+<!-- prettier-ignore-end -->
 
 ### 渲染效果
 
@@ -950,15 +957,7 @@ An extreme&shy;ly long English word</code>
 ### 渲染效果
 
 <iframe data-why>
-<div class="light">
+<div class="light">这段内容只在亮色模式/自动模式 (亮色) 下显示。</div>
 
-这段内容只在亮色模式/自动模式 (亮色) 下显示。
-
-</div>
-
-<div class="dark">
-
-这段内容只在暗色模式/自动模式 (暗色) 下显示。
-
-</div>
+<div class="dark">这段内容只在暗色模式/自动模式 (暗色) 下显示。</div>
 </iframe>
