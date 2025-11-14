@@ -1,0 +1,9 @@
+/* 部分样式为模板动态添加，为展现默认值效果，在此手动添加 */
+article .content blockquote:before {
+  margin-right: 0.25em;
+  color: var(--color-quote);
+  content: "\201C";
+  vertical-align: -0.4em;
+  font-size: 2em;
+  line-height: 0.1em;
+}

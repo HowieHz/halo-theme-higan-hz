@@ -52,6 +52,8 @@ export function extendStylesScope(appElement: HTMLElement) {
   }
   if (dataAttr) {
     document.body.setAttribute(dataAttr.name, dataAttr.value);
+    // body 加上 text-size-normal class 以确保默认文本大小正确
+    document.body.classList.add("text-size-normal");
     document.documentElement.setAttribute(dataAttr.name, dataAttr.value);
 
     const queue = [appElement];

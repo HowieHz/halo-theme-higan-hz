@@ -161,7 +161,7 @@ print("嵌套代码块")
 
 ### 渲染效果
 
-<iframe data-why style="height: 300px;">
+<iframe data-why style="height: 325px;">
 
 这是一个普通段落，测试文本对齐和行高。这个段落包含一些常用格式如**粗体**、*斜体*和 `代码`。根据你的 CSS，这段文字应该有适当的行高和对齐方式。
 
@@ -575,7 +575,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 300px;" src="/halo-theme-higan-hz/frames/post">
+<iframe data-why style="height: 400px;" src="/halo-theme-higan-hz/frames/post">
 
 <!-- markdownlint-disable MD028 -->
 
@@ -615,7 +615,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<iframe data-why style="height: 500px;" src="/halo-theme-higan-hz/frames/post">
+<iframe data-why style="height: 600px;" src="/halo-theme-higan-hz/frames/post">
 
 <!-- markdownlint-disable MD028 -->
 
@@ -640,8 +640,6 @@ This is normal text <small>This is small text</small> This is normal text
 </iframe>
 
 ## 拉引用块 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="扩展样式" /> {#pullquote}
-
-注：[hexo-theme-cactus](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/2016/11/14/hello-world/) 和 halo-theme-higan 均未能出现文字围绕效果，本分支已添加。
 
 ### HTML 标签写法
 
