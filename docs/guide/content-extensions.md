@@ -30,7 +30,7 @@ outline: deep
 
 ### 标题样式
 
-**Markdown 写法**
+#### Markdown 写法
 
 <!-- prettier-ignore-start -->
 ```markdown
@@ -43,7 +43,7 @@ outline: deep
 ```
 <!-- prettier-ignore-end -->
 
-**HTML 标签写法**
+#### HTML 标签写法
 
 ```html
 <h1>一级标题</h1>
@@ -54,7 +54,7 @@ outline: deep
 <h6>六级标题</h6>
 ```
 
-**HTML 类写法**
+#### HTML 类写法
 
 ```html
 <div class="h1">使用 h1 类的文本</div>
@@ -65,14 +65,17 @@ outline: deep
 
 <iframe data-why style="height: 300px;">
 
-<!-- prettier-ignore-start -->
 # 一级标题
+
 ## 二级标题
+
 ### 三级标题
+
 #### 四级标题
+
 ##### 五级标题
+
 ###### 六级标题
-<!-- prettier-ignore-end -->
 
 <div class="h1">使用 h1 类的文本</div>
 <div class="h2">使用 h2 类的文本</div>
@@ -81,7 +84,7 @@ outline: deep
 
 ### 标题中的链接样式
 
-**Markdown 写法**
+#### Markdown 写法
 
 <!-- prettier-ignore-start -->
 ```markdown
@@ -94,7 +97,7 @@ outline: deep
 ```
 <!-- prettier-ignore-end -->
 
-**HTML 标签写法**
+#### HTML 标签写法
 
 ```html
 <h1><a href="https://howiehz.top">一级标题中的链接</a></h1>
@@ -105,7 +108,7 @@ outline: deep
 <h6><a href="https://howiehz.top">六级标题中的链接</a></h6>
 ```
 
-**HTML 类写法**
+#### HTML 类写法
 
 ```html
 <div class="h1"><a href="https://example.com">h1 类中的链接</a></div>
@@ -116,14 +119,17 @@ outline: deep
 
 <iframe data-why style="height: 300px;">
 
-<!-- prettier-ignore-start -->
 # [一级标题中的链接](https://howiehz.top)
+
 ## [二级标题中的链接](https://howiehz.top)
+
 ### [三级标题中的链接](https://howiehz.top)
+
 #### [四级标题中的链接](https://howiehz.top)
+
 ##### [五级标题中的链接](https://howiehz.top)
+
 ###### [六级标题中的链接](https://howiehz.top)
-<!-- prettier-ignore-end -->
 
 <div class="h1"><a href="https://example.com">h1 类中的链接</a></div>
 <div class="h2"><a href="https://example.com">h2 类中的链接</a></div>
@@ -131,13 +137,13 @@ outline: deep
 
 ### 水平分割线
 
-**Markdown 写法**
+#### Markdown 写法
 
 ```markdown
 ---
 ```
 
-**HTML 标签写法**
+#### HTML 标签写法
 
 ```html
 <hr />
@@ -153,7 +159,7 @@ outline: deep
 
 ### higan-hz 式 - divide 类水平分割线
 
-**HTML 类写法**
+#### HTML 类写法
 
 ```html
 <hr class="divide" />
@@ -167,13 +173,13 @@ outline: deep
 
 ### 文本格式 - 粗体
 
-**Markdown 写法**
+#### Markdown 写法
 
 ```markdown
 **这是粗体文本**
 ```
 
-**HTML 写法**
+#### HTML 标签写法
 
 ```html
 <strong>这是粗体文本</strong>
@@ -187,7 +193,7 @@ outline: deep
 
 ### 斜体/强调
 
-**Markdown 写法**
+#### Markdown 写法
 
 ```markdown
 _这是强调文本_
@@ -195,7 +201,7 @@ _这是强调文本_
 
 ### 斜体/强调
 
-**HTML 写法**
+#### HTML 标签写法
 
 ```html
 <em>这是强调文本</em>
@@ -209,7 +215,7 @@ _这是强调文本_
 
 ### 引用
 
-**HTML 写法**
+#### HTML 标签写法
 
 ```html
 <cite>这是引用文本</cite>
@@ -265,7 +271,7 @@ This is normal text <small>This is small text</small> This is normal text
 ```html
 这段文字包含一个缩写，在支持悬停的设备上鼠标放上去可以看到提示：<abbr title="Hypertext Markup Language">HTML</abbr>
 
-当<strong>设备不支持悬停</strong>或处于<strong>打印模式</strong>时，全称将会以`(全称)`的形式显示在缩写后面。
+当<strong>设备不支持悬停</strong>或处于<strong>打印模式</strong>时，全称将会以 `(全称)` 的形式显示在缩写后面。
 例如在触摸设备上，上面的 "HTML" 会自动显示为 "HTML(Hypertext Markup Language)"。
 
 <abbr title="Hypertext Markup Language"><a href="https://example.com">HTML - 此行在文章内会同时应用 a 标签的样式，因此有两层下划线</a></abbr>
