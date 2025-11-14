@@ -6,8 +6,10 @@ export function trackColorScheme() {
   if (!appearance || appearance === "auto" ? prefersDark : appearance === "dark") {
     // document.documentElement.classList.add("dark"); vitepress 默认 dark 模式会添加 .dark 类名
     document.documentElement.setAttribute("theme", "dark");
+    document.documentElement.setAttribute("data-color-scheme", "dark");
   } else {
     document.documentElement.setAttribute("theme", "light");
+    document.documentElement.setAttribute("data-color-scheme", "light");
   }
 
   let prevTheme: string | null = null;
@@ -24,9 +26,11 @@ export function trackColorScheme() {
     if (theme === "light") {
       document.documentElement.classList.remove("dark");
       document.documentElement.setAttribute("theme", "light");
+      document.documentElement.setAttribute("data-color-scheme", "light");
     } else if (theme === "dark") {
       document.documentElement.classList.add("dark");
       document.documentElement.setAttribute("theme", "dark");
+      document.documentElement.setAttribute("data-color-scheme", "dark");
     }
   });
 }

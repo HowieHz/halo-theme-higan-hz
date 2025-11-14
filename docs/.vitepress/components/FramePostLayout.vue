@@ -17,10 +17,14 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="vp-app" ref="el" class="content"></div>
+  <article id="article-tag" class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <div id="vp-app" ref="el" class="content" itemprop="articleBody"></div>
+  </article>
 </template>
 
 <style src="./default.css" scoped></style>
 <!-- 导入主题样式 -->
 <style src="../../../src/styles/mixins/colors/theme.styl" scoped></style>
 <style src="../../../src/styles/main.css" scoped></style>
+<!-- 导入 post 页样式 -->
+<style src="../../../src/styles/pages/post.css" scoped></style>

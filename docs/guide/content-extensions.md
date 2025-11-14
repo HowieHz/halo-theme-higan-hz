@@ -12,19 +12,89 @@ outline: deep
 
 :::
 
-展示基本样式以及拓展样式。
+此文档展示基本样式、主题独有拓展样式及其写法。
 
 ::: info 样式适用范围说明
 
 相关链接：[模板文件与访问路径映射](/reference/template-map)
 
-- 通用样式，适用模板文件范围：每一页。
-- 内容样式 `.content` ，适用模板文件范围：`archives.html`, `category.html`, `links.html`, `moments.html`, `moment.html`, `page.html`, `photos.html`, `post.html(文章页)`, `tag.html`. `5xx.html`, `404.html`。
-- 文章样式 `article .content`，适用模板文件范围：`author.html`, `links.html`, `moment.html`, `moments.html`, `page.html`, `photos.html`, `post.html`, `qrcode.html`, `5xx.html`, `404.html`。
+- <Badge type="tip" text="通用样式" /> 适用模板文件范围：每一页。
+- <Badge type="tip" text="内容样式" /> 适用模板文件范围：`archives.html`, `category.html`, `links.html`, `moments.html`, `moment.html`, `page.html`, `photos.html`, `post.html(文章页)`, `tag.html`. `5xx.html`, `404.html`。CSS 选择器为 `.content`。
+- <Badge type="tip" text="文章样式" /> 适用模板文件范围：`author.html`, `links.html`, `moment.html`, `moments.html`, `page.html`, `photos.html`, `post.html`, `qrcode.html`, `5xx.html`, `404.html`。CSS 选择器为 `article .content`。
 
 :::
 
-如果你想快速寻找可能仅在本主题，而不能在其他 Halo CMS 主题生效的样式（作使用指导）。请使用 `CTRL+F` 快捷键搜索关键字：`higan-hz 式`
+## 拓展样式快速检索 <Badge type="warning" text="拓展样式" />
+
+此处列出了本主题独有的的拓展样式。
+
+- [水平分割线（特殊样式）](#horizontal-divider-special-style)
+- [缩写](#abbreviation)
+- [隐藏/剧透](#hidden-spoiler-content)
+- [响应式视频嵌入](#responsive-video-embed)
+- [引用块脚注](#blockquote-footnote)
+- [拉引用块](#pullquote)
+- [明暗模式显隐块](#light-dark-mode-visibility-block)
+
+## 斜体/强调 <Badge type="tip" text="通用样式" />
+
+### Markdown 写法
+
+```markdown
+_这是强调文本_
+```
+
+### HTML 标签写法
+
+```html
+<em>这是强调文本</em>
+```
+
+#### 渲染效果
+
+<iframe data-why>
+<em>这是强调文本</em>
+</iframe>
+
+## 粗体 <Badge type="tip" text="通用样式" />
+
+### Markdown 写法
+
+```markdown
+**这是粗体文本**
+```
+
+### HTML 标签写法
+
+```html
+<strong>这是粗体文本</strong>
+```
+
+#### 渲染效果
+
+<iframe data-why>
+<strong>这是粗体文本</strong>
+</iframe>
+
+## 引用源 <Badge type="tip" text="通用样式" />
+
+### HTML 标签写法
+
+```html
+来自<cite>《文档编写指南》</cite>
+
+From <cite>Documentation Writing Guide</cite>
+```
+
+#### 渲染效果
+
+<iframe data-why>
+
+来自<cite>《文档编写指南》</cite>
+
+From <cite>Documentation Writing Guide</cite>
+
+</iframe>
 
 ## 标题 <Badge type="tip" text="通用样式" />
 
@@ -133,7 +203,7 @@ outline: deep
 <div class="h2"><a href="https://example.com">h2 类中的链接</a></div>
 </iframe>
 
-## 水平分割线 <Badge type="tip" text="通用样式" />
+## 水平分割线 <Badge type="tip" text="通用样式" /> {#horizontal-divider-special-style}
 
 ### Markdown 写法
 
@@ -155,7 +225,7 @@ outline: deep
 
 </iframe>
 
-## higan-hz 式 - divide 类水平分割线 <Badge type="tip" text="通用样式" />
+## 水平分割线（特殊样式） <Badge type="tip" text="通用样式" /> <Badge type="warning" text="拓展样式" />
 
 ### HTML 类写法
 
@@ -167,60 +237,6 @@ outline: deep
 
 <iframe data-why>
 <hr class='divide' />
-</iframe>
-
-## 粗体 <Badge type="tip" text="通用样式" />
-
-### Markdown 写法
-
-```markdown
-**这是粗体文本**
-```
-
-### HTML 标签写法
-
-```html
-<strong>这是粗体文本</strong>
-```
-
-#### 渲染效果
-
-<iframe data-why>
-<strong>这是粗体文本</strong>
-</iframe>
-
-## 斜体/强调 <Badge type="tip" text="通用样式" />
-
-### Markdown 写法
-
-```markdown
-_这是强调文本_
-```
-
-### HTML 标签写法
-
-```html
-<em>这是强调文本</em>
-```
-
-#### 渲染效果
-
-<iframe data-why>
-<em>这是强调文本</em>
-</iframe>
-
-## 引用 <Badge type="tip" text="通用样式" />
-
-### HTML 标签写法
-
-```html
-<cite>这是引用文本</cite>
-```
-
-#### 渲染效果
-
-<iframe data-why>
-<cite>这是引用文本</cite>
 </iframe>
 
 ## 上标和下标 <Badge type="tip" text="通用样式" />
@@ -269,7 +285,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-## higan-hz 式 - 缩写 <Badge type="tip" text="通用样式" />
+## 缩写 <Badge type="tip" text="通用样式" /> <Badge type="warning" text="拓展样式" /> {#abbreviation}
 
 ### HTML 标签写法
 
@@ -339,7 +355,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 #### 渲染效果
 
-<iframe data-why>
+<iframe data-why style="height: 300px;">
 
 - 列表项一
 - 列表项二
@@ -379,7 +395,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 #### 渲染效果
 
-<iframe data-why>
+<iframe data-why style="height: 300px;">
 
 1. 第一项
 2. 第二项
@@ -404,7 +420,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 #### 渲染效果
 
-<iframe data-why>
+<iframe data-why style="height: 300px;">
 <dl>
     <dt>术语一</dt>
     <dd>术语一的定义说明</dd>
@@ -458,7 +474,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 #### 渲染效果
 
-<iframe data-why>
+<iframe data-why style="height: 200px;">
 
 | 名称     | 平均时间复杂度 | 空间复杂度 |
 | -------- | -------------- | ---------- |
@@ -486,13 +502,13 @@ This is normal text <small>This is small text</small> This is normal text
 
 #### 渲染效果
 
-<iframe data-why>
+<iframe data-why style="height: 150px;">
 
 这是一个普通段落，测试文本对齐和行高。这个段落包含一些常用格式如**粗体**、*斜体*和 `代码`。根据你的 CSS，这段文字应该有适当的行高和对齐方式。
 
 </iframe>
 
-## higan-hz 式 - hide/spoiler 标签隐藏/剧透内容 <Badge type="tip" text="通用样式" />
+## 隐藏/剧透 <Badge type="tip" text="通用样式" /> <Badge type="warning" text="拓展样式" /> {#hidden-spoiler-content}
 
 ### HTML 标签写法
 
@@ -511,7 +527,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 #### 渲染效果
 
-<iframe data-why>
+<iframe data-why style="height: 300px;">
 
 我不是隐藏内容。<hide class="blur">我是隐藏内容。应该是模糊样式。</hide>我也不是隐藏内容。
 我不是隐藏内容。<spoiler class="blur">我是隐藏内容。应该是模糊样式。</spoiler>我也不是隐藏内容。
@@ -524,33 +540,21 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### 长单词测试 <Badge type="tip" text="内容样式" />
+## 长单词测试 <Badge type="tip" text="内容样式" />
 
-### Markdown 写法
-
-```markdown
-这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word
-
-`这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word`
-```
-
-#### HTML 标签写法
+### HTML 标签写法
 
 <!-- prettier-ignore-start -->
 ```html
-<p>这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</p>
+<p>这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extremely long English word</p>
 
-<code>这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</code>
+<code>这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extremely long English word</code>
 ```
 <!-- prettier-ignore-end -->
 
-#### 渲染结果
+### 渲染结果
 
-<iframe data-why>
-
-这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word
-
-`这段文本使用了 hyphens: manual，无自动断词。Supercalifragilisticexpialidocious 是一个非常长的英文单词，不会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word`
+<iframe data-why style="height: 300px;">
 
 <p>这段文本使用了 hyphens: auto，显示自动断词效果。Supercalifragilisticexpialidocious 是一个非常长的英文单词，在窄容器中会自动添加连字符。Pneumonoultramicroscopicsilicovolcanoconiosis 是另一个超长单词示例。An extreme&shy;ly long English word</p>
 
@@ -558,21 +562,21 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### 链接样式 <Badge type="tip" text="内容样式" />
+## 链接 <Badge type="tip" text="内容样式" />
 
-#### Markdown 写法
+### Markdown 写法
 
 ```markdown
 [这是普通链接](https://example.com)，有下划线效果。鼠标悬停时下划线颜色会变化。
 ```
 
-#### HTML 标签写法
+### HTML 标签写法
 
 ```html
 <a href="https://example.com">这是普通链接</a>，有下划线效果。鼠标悬停时下划线颜色会变化。
 ```
 
-#### 渲染效果
+### 渲染效果
 
 <iframe data-why>
 
@@ -580,7 +584,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### 图标链接样式 <Badge type="tip" text="内容样式" />
+## 图标链接样式 <Badge type="tip" text="内容样式" />
 
 <!-- prettier-ignore-start -->
 ```html
@@ -588,29 +592,37 @@ This is normal text <small>This is small text</small> This is normal text
 ```
 <!-- prettier-ignore-end -->
 
-#### 渲染效果
+### 渲染效果
 
 <iframe data-why>
 <a class="icon" href="javascript:void(0);">这里有一个带有 `class="icon"` 的超链接标签：用于图标链接，没有下划线，鼠标悬停时颜色会变化</a>
 </iframe>
 
-### h2 标签样式测试 <Badge type="tip" text="文章样式" />
+## 二级标题样式 <Badge type="tip" text="文章样式" />
+
+### Markdown 写法
 
 ```markdown
 ## 在此处 h2 标题前应有一个 `#` 字符
 ```
 
-#### 渲染效果
+### HTML 标签写法
 
-<iframe data-why>
+```html
+<h2>在此处 h2 标题前应有一个 <code>#</code> 字符</h2>
+```
+
+### 渲染效果
+
+<iframe data-why src="/halo-theme-higan-hz/frames/post">
 
 ## 在此处 h2 标题前应有一个 `#` 字符
 
 </iframe>
 
-### 图片测试 <Badge type="tip" text="文章样式" />
+## 图片嵌入 <Badge type="tip" text="文章样式" />
 
-#### Markdown 写法
+### Markdown 写法
 
 ```markdown
 ![Alt text - 图片未加载则显示](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2311325.jpg)
@@ -620,7 +632,7 @@ This is normal text <small>This is small text</small> This is normal text
 ![cat](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg)
 ```
 
-#### HTML 标签写法
+### HTML 标签写法
 
 ```html
 <img
@@ -637,9 +649,9 @@ This is normal text <small>This is small text</small> This is normal text
 <img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg" alt="cat" />
 ```
 
-#### 渲染效果
+### 渲染效果
 
-<iframe data-why>
+<iframe data-why style="height: 300px;" src="/halo-theme-higan-hz/frames/post">
 
 ![Alt text - 图片未加载则显示](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2311325.jpg)
 
@@ -649,35 +661,41 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### 说明文字 <Badge type="tip" text="文章样式" />
+## 说明文字 <Badge type="tip" text="文章样式" />
+
+### HTML 标签写法
 
 <!-- prettier-ignore-start -->
 ```html
-<img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg" alt="cat" />
+<img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg" alt="cat" />
 
-<div class="caption">我是图片说明文字 上面有一只猫</div>
+<div class="caption">我是图片说明文字 上面是城市夜景</div>
 <div class="caption">我也是图片说明文字 <a href="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg">我是超链接</a></div>
 ```
 
 <!-- prettier-ignore-end -->
 
-#### 渲染效果
+### 渲染效果
 
-<iframe data-why>
-<img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg" alt="cat" />
+<iframe data-why style="height: 300px;" src="/halo-theme-higan-hz/frames/post">
+<img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg" alt="cat" />
 
-<div class="caption">我是图片说明文字 上面有一只猫</div>
+<div class="caption">我是图片说明文字 上面是城市夜景</div>
 <div class="caption">我也是图片说明文字 <a href="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg">我是超链接</a></div>
 </iframe>
 
-### higan-hz 式 - 视频嵌入 <Badge type="tip" text="文章样式" />
+## 响应式视频嵌入 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="拓展样式" /> {#responsive-video-embed}
 
-#### HTML 标签写法
+### HTML 标签写法
 
-注：包裹在 `<div class="video-container">` 使得嵌入的视频宽度能随着页面宽度减小，方法来自 [CSS: Elastic Videos - Web Designer Wall](https://webdesignerwall.com/tutorials/css-elastic-videos)
+::: tip
+
+包裹在 `<div class="video-container"></div>` 内使得嵌入的视频宽度能随着页面宽度减小，方法来自 [CSS: Elastic Videos - Web Designer Wall](https://webdesignerwall.com/tutorials/css-elastic-videos)。
+
+:::
 
 ```html
-<div class="video-container">
+<div class="video-container" src="/halo-theme-higan-hz/frames/post">
   <iframe
     src="https://player.bilibili.com/player.html?bvid=BV1A7QWY3EkW"
     width="100%"
@@ -693,7 +711,7 @@ This is normal text <small>This is small text</small> This is normal text
 </div>
 ```
 
-#### 渲染效果
+### 渲染效果
 
 <!-- <iframe data-why>
 <div class="video-container">
@@ -712,9 +730,9 @@ This is normal text <small>This is small text</small> This is normal text
 </div>
 </iframe> -->
 
-### higan-hz 式 - 引用块测试 <Badge type="tip" text="文章样式" />
+## 引用块 <Badge type="tip" text="文章样式" />
 
-#### Markdown 写法
+### Markdown 写法
 
 ```markdown
 > 引用内容
@@ -724,7 +742,31 @@ This is normal text <small>This is small text</small> This is normal text
 > > 这是嵌套引用内容
 >
 > 这层引用内容回到了第一层
+```
 
+### 渲染效果
+
+<iframe data-why style="height: 300px;" src="/halo-theme-higan-hz/frames/post">
+
+<!-- markdownlint-disable MD028 -->
+
+> 引用内容
+
+> 这是引用内容
+>
+> > 这是嵌套引用内容
+>
+> 这层引用内容回到了第一层
+
+<!-- markdownlint-enable MD028 -->
+
+</iframe>
+
+## 引用块脚注 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="拓展样式" /> {#blockquote-footnote}
+
+### Markdown 写法
+
+```markdown
 > 引用内容
 >
 > <footer>脚注信息</footer>
@@ -742,19 +784,11 @@ This is normal text <small>This is small text</small> This is normal text
 > <footer><a href="https://example.com">作者链接</a><cite>作者名</cite></footer>
 ```
 
-#### 渲染效果
+### 渲染效果
 
-<iframe data-why>
+<iframe data-why style="height: 500px;" src="/halo-theme-higan-hz/frames/post">
 
 <!-- markdownlint-disable MD028 -->
-
-> 引用内容
-
-> 这是引用内容
->
-> > 这是嵌套引用内容
->
-> 这层引用内容回到了第一层
 
 > 引用内容
 >
@@ -776,25 +810,25 @@ This is normal text <small>This is small text</small> This is normal text
 
 </iframe>
 
-### higan-hz 式 - 拉引用样式 <Badge type="tip" text="文章样式" />
+## 拉引用块 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="拓展样式" /> {#pullquote}
 
 注：[hexo-theme-cactus](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/2016/11/14/hello-world/) 和 halo-theme-higan 均未能出现文字围绕效果，本分支已添加。
 
-#### HTML 标签写法
+### HTML 标签写法
 
 <!-- prettier-ignore-start -->
 ```html
 <div style="clear: both">
 
-这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。
+这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。
 
 <blockquote class="pullquote">
 
-这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。
+这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。
 
 </blockquote>
 
-这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。
+这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。
 
 <blockquote class="pullquote left">
 
@@ -816,20 +850,20 @@ This is normal text <small>This is small text</small> This is normal text
 ```
 <!-- prettier-ignore-end -->
 
-#### 渲染效果
+### 渲染效果
 
-<iframe data-why>
+<iframe data-why style="height: 500px;" src="/halo-theme-higan-hz/frames/post">
 <div style="clear: both">
 
-这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。
+这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。
 
 <blockquote class="pullquote">
 
-这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。
+这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。这是拉引用样式。
 
 </blockquote>
 
-这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。
+这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。这还是一段测试文本，正如你所想的，只是一段测试文本。
 
 <blockquote class="pullquote left">
 
@@ -850,18 +884,16 @@ This is normal text <small>This is small text</small> This is normal text
 </div>
 </iframe>
 
-### higan-hz 式 - 明暗模式块测试 <Badge type="tip" text="文章样式" />
+## 明暗模式显隐块 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="拓展样式" /> {#light-dark-mode-visibility-block}
 
 ```html
-<div class="light">这段内容只在亮色模式/自动模式 (亮色) 下显示。</div>
-
-<div class="dark">这段内容只在暗色模式/自动模式 (暗色) 下显示。</div>
+<div class="light">这段内容只在亮色模式/自动模式 (亮色) 下显示。试试切换页面主题。</div>
+<div class="dark">这段内容只在暗色模式/自动模式 (暗色) 下显示。试试切换页面主题。</div>
 ```
 
-#### 渲染效果
+### 渲染效果
 
-<iframe data-why>
-<div class="light">这段内容只在亮色模式/自动模式 (亮色) 下显示。</div>
-
-<div class="dark">这段内容只在暗色模式/自动模式 (暗色) 下显示。</div>
+<iframe data-why src="/halo-theme-higan-hz/frames/post">
+<div class="light">这段内容只在亮色模式/自动模式 (亮色) 下显示。试试切换页面主题。</div>
+<div class="dark">这段内容只在暗色模式/自动模式 (暗色) 下显示。试试切换页面主题。</div>
 </iframe>

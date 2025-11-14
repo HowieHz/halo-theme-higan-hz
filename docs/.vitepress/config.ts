@@ -112,7 +112,7 @@ export default defineConfig({
       ],
     },
     transformItems(items) {
-      return items.filter((item) => !item.url.includes("frames/default"));
+      return items.filter((item) => !item.url.includes("frames/")); // 排除 frames/ 路径下的页面
     },
   },
 
