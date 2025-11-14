@@ -70,4 +70,7 @@ export function extendStylesScope(appElement: HTMLElement) {
       }
     }
   }
+
+  // 移除 #vp-app 元素的 loading 类
+  appElement.classList.remove("loading");
 }

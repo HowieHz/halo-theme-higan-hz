@@ -18,7 +18,7 @@ onMounted(async () => {
 
 <template>
   <article id="article-tag" class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    <div id="vp-app" ref="el" class="content" itemprop="articleBody"></div>
+    <div id="vp-app" ref="el" class="content loading" itemprop="articleBody"></div>
   </article>
 </template>
 
