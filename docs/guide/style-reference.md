@@ -24,7 +24,7 @@ import DefaultRender from '../.vitepress/components/DefaultRender.vue';
 
 ## 扩展样式快速检索 <Badge type="warning" text="扩展样式" />
 
-此处列出了本主题独有的的扩展样式。
+此处列出了本主题实现的扩展样式。
 
 - [缩写](#abbreviation)
 - [响应式视频嵌入](#responsive-video-embed)
