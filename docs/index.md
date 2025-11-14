@@ -30,9 +30,9 @@ features:
     link: /guide/theme-configuration
     linkText: 了解更多
   - icon: 🎨
-    title: 组件样式扩展
+    title: 组件样式拓展
     details: 提供丰富的组件样式拓展，使用自定义 HTML 标签以创建更加生动的内容展示效果。
-    link: /guide/content-extensions
+    link: /guide/style-reference
     linkText: 了解更多
   - icon: 🌐
     title: 多语言支持

@@ -4,7 +4,7 @@ outline: deep
 
 <!-- markdownlint-disable MD013 MD024 MD025 MD033 -->
 
-# 组件样式扩展
+# 样式参考
 
 ::: danger
 
@@ -12,7 +12,7 @@ outline: deep
 
 :::
 
-此文档展示基本样式、主题独有拓展样式及其写法。
+此文档展示主题基本样式、拓展样式及其写法。
 
 ::: info 样式适用范围说明
 

@@ -100,7 +100,7 @@ higan-hz 基于 guqing 的 halo-theme-higan 最新开发版持续演进。本页
 - 提供二维码分享页面 `public/assets/qrcode.html`。
 - 新增分享按钮位置与模板片段以配合插件输出。
 
-更多插件使用说明详见《[进阶功能](../guide/plugin-compatibility)》与《[内容写作与增强](../guide/content-extensions)#mermaid-与代码块》。
+更多插件使用说明详见《[进阶功能](../guide/plugin-compatibility)》与《[内容写作与增强](../guide/style-reference)#mermaid-与代码块》。
 
 ## 工程与内部优化
 

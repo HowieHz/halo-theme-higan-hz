@@ -145,7 +145,7 @@ export default defineConfig({
           },
           {
             text: "写作",
-            items: [{ text: "组件样式扩展", link: "/guide/content-extensions" }],
+            items: [{ text: "样式参考", link: "/guide/style-reference" }],
           },
           {
             text: "配置与扩展",
@@ -198,7 +198,7 @@ export default defineConfig({
       },
       {
         text: "写作",
-        items: [{ text: "组件样式扩展", link: "/guide/content-extensions" }],
+        items: [{ text: "样式参考", link: "/guide/style-reference" }],
       },
       {
         text: "配置与扩展",

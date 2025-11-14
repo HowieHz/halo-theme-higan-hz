@@ -32,7 +32,7 @@ features:
   - icon: 🎨
     title: "Component Style Extensions"
     details: "Provides a wide range of component style extensions and custom HTML tags to create more vivid content displays."
-    link: /guide/content-extensions
+    link: /guide/style-reference
     linkText: "Learn More"
   - icon: 🌐
     title: "Multilingual Support"
