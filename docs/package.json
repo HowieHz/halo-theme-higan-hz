@@ -1,6 +1,12 @@
 {
   "name": "docs",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "pnpm run docs:build && vitepress preview"
+  },
   "devDependencies": {
     "@whyframe/core": "^0.1.14",
     "@whyframe/vue": "^0.1.9",
