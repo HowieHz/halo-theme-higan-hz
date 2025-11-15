@@ -522,17 +522,15 @@ This is normal text <small>This is small text</small> This is normal text
 :::
 
 ```html
-<div class="video-container" src="/halo-theme-higan-hz/frames/post">
+<div class="video-container">
   <iframe
-    src="https://player.bilibili.com/player.html?bvid=BV1A7QWY3EkW"
+    src="https://player.bilibili.com/player.html?bvid=BV1A7QWY3EkW&autoplay=0&poster=1&muted=1&danmaku=0"
     width="100%"
     height="500"
     scrolling="no"
     frameborder="0"
-    danmaku="false"
+    framespacing="0"
     allowfullscreen="true"
-    muted="true"
-    autoplay="false"
     sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
   ></iframe>
 </div>
@@ -540,22 +538,20 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<!-- <DefaultRender>
+<DefaultRender height="400px" src="/halo-theme-higan-hz/frames/post">
 <div class="video-container">
   <iframe
-    src="https://player.bilibili.com/player.html?bvid=BV1A7QWY3EkW"
+    src="https://player.bilibili.com/player.html?bvid=BV1A7QWY3EkW&autoplay=0&poster=1&muted=1&danmaku=0"
     width="100%"
     height="500"
     scrolling="no"
     frameborder="0"
-    danmaku="false"
+    framespacing="0"
     allowfullscreen="true"
-    muted="true"
-    autoplay="false"
     sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
   ></iframe>
 </div>
-</DefaultRender> -->
+</DefaultRender>
 
 ## 引用块 <Badge type="tip" text="文章样式" />
 
