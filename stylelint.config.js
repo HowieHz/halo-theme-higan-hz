@@ -1,6 +1,6 @@
 /** @type {import('stylelint').Config} */
 export default {
-  extends: ["stylelint-config-standard"],
+  extends: ["stylelint-config-standard", "stylelint-config-html", "stylelint-config-recommended-vue"],
   plugins: ["stylelint-order"],
   rules: {
     // 嵌套选择器规则

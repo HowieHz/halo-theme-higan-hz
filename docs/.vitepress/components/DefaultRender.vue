@@ -43,22 +43,22 @@ const loading = ref(true);
 
   /* 隐藏 iframe */
   & > iframe {
-    opacity: 0;
+    opacity: 0%;
   }
 }
 
 /* 使用 ::before 伪元素创建 spinner */
 .frame.loading::before {
-  content: "";
-  position: absolute;
-  width: 40px;
+  animation: spin 0.8s linear infinite;
   aspect-ratio: 1;
+  border: 3px solid rgb(0 0 0 / 10%);
+  border-radius: 50%;
+  border-top-color: var(--vp-c-brand-1);
+  content: "";
   inset: 0;
   margin: auto;
-  border: 3px solid rgba(0, 0, 0, 0.1);
-  border-top-color: var(--vp-c-brand-1);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  position: absolute;
+  width: 40px;
 }
 
 @keyframes spin {
