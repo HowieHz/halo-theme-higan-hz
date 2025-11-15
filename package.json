@@ -21,7 +21,7 @@
     "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,yaml,html}\" \"./plugins/**/*.ts\" \"./docs/**/*.{ts,md,vue}\"",
     "prepare": "husky && tw-patch install",
     "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs && pnpm dlx pagefind --site \"docs/.vitepress/dist\" --exclude-selectors \"div.aside, a.header-anchor\"",
+    "docs:build": "vitepress build docs",
     "docs:preview": "pnpm run docs:build && vitepress preview docs"
   },
   "browserslist": [

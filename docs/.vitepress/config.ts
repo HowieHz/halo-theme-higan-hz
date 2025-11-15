@@ -24,7 +24,6 @@ export default defineConfig({
       // Pagefind search plugin
       pagefindPlugin({
         customSearchQuery: chineseSearchOptimize,
-        manual: true, // 手动控制索引生成指令和资源加载脚本
         locales: {
           root: {
             btnPlaceholder: "搜索",
@@ -66,6 +65,14 @@ export default defineConfig({
       // 移除 script id="check-dark-mode" 和 script id="check-mac-os"
       $("head script#check-dark-mode, head script#check-mac-os").remove();
 
+      // 移除 <script>import("/halo-theme-higan-hz/pagefind/pagefind.js").then(i=>{window.__pagefind__=i,i.init()}).catch(()=>{});</script>
+      $("head script").each((_, elem) => {
+        const scriptContent = $(elem).html();
+        if (scriptContent && scriptContent.includes('import("/halo-theme-higan-hz/pagefind/pagefind.js")')) {
+          $(elem).remove();
+        }
+      });
+
       // 移除多余的空行并返回修改后的 HTML
       return $.html().replace(/^\s*[\r\n]/gm, "");
     }
@@ -97,18 +104,6 @@ export default defineConfig({
             "data-website-id": "7b461ac5-155d-45a8-a118-178d0a2936e4",
             "data-domains": "howiehz.top",
           },
-        ],
-        [
-          "script",
-          {},
-          `import('/halo-theme-higan-hz/pagefind/pagefind.js')
-        .then((module) => {
-          window.__pagefind__ = module
-          module.init()
-        })
-        .catch(() => {
-          // console.log('not load /pagefind/pagefind.js')
-        })`,
         ],
       );
     }
