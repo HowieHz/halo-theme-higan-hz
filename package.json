@@ -12,7 +12,7 @@
     "build:stylus": "stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --compress",
     "lint": "pnpm run \"/^lint:.*/\"",
     "lint:eslint": "oxlint --type-aware --fix && eslint --fix",
-    "lint:style": "stylelint --fix \"./src/**/*.css\" \"./docs/.vitepress/**/*.{css,vue}\"",
+    "lint:style": "stylelint --fix \"./src/**/*.{css,html}\" \"./docs/.vitepress/**/*.{css,vue}\"",
     "lint:md": "markdownlint \"**/*.md\" --fix",
     "lint:autocorrect": "autocorrect --fix",
     "lint:type-check": "tsc --noEmit",

@@ -153,7 +153,7 @@
   th:fragment="auto-redirect"
   th:with="siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1)== '/'}? ${#strings.substring(site.url,0,#strings.length(site.url) - 1)}:${site.url}"
 >
-  <p id="countdown" style="opacity: 0; transition: opacity 1s"></p>
+  <p id="countdown" style="opacity: 0%; transition: opacity 1s"></p>
   <script vite-ignore th:inline="javascript">
     const countdownElement = document.getElementById("countdown");
     const siteUrl = /*[[${siteUrl}]]*/ "";

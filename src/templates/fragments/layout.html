@@ -635,25 +635,25 @@ html[theme="theme-[(${colorSchema.id})]"] {
       }
     </style>
     <style th:if="${theme.config?.styles?.is_show_the_quote_before_blockquote}">
-      article .content blockquote:before {
-        margin-right: 0.25em;
+      article .content blockquote::before {
         color: var(--color-quote);
         content: "\201C";
-        vertical-align: -0.4em;
         font-size: 2em;
         line-height: 0.1em;
+        margin-right: 0.25em;
+        vertical-align: -0.4em;
       }
     </style>
     <style th:if="${theme.config?.styles?.is_show_the_quote_after_blockquote}">
-      article .content blockquote:after {
-        float: right;
-        margin-top: 0.4em;
-        margin-left: 0.25em;
+      article .content blockquote::after {
         color: var(--color-quote);
         content: "\201D";
-        vertical-align: 0.4em;
+        float: right;
         font-size: 2em;
         line-height: 0.1em;
+        margin-left: 0.25em;
+        margin-top: 0.4em;
+        vertical-align: 0.4em;
       }
     </style>
     <!--/*/
