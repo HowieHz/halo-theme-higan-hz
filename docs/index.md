@@ -6,7 +6,7 @@ layout: home
 hero:
   name: "Higan Haozi"
   text: "一款响应式、简洁清爽的个人网站 Halo CMS 主题"
-  tagline: 多语言、可配置性强、兼容性好的一体化体验
+  tagline: 多语言、可配置性强、兼容性佳的一体化体验
   actions:
     - theme: brand
       text: 什么是 Higan Haozi？

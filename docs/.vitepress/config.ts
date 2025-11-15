@@ -252,7 +252,6 @@ function nav(): DefaultTheme.NavItem[] {
       items: [
         { text: "常见问题", link: "/reference/faq" },
         { text: "模板文件与访问路径映射", link: "/reference/template-map" },
-        { text: "与上游主题的差异", link: "/reference/upstream-diff" },
       ],
     },
     { text: "示例站点", link: "https://howiehz.top" },
@@ -305,7 +304,6 @@ function sidebar(): DefaultTheme.SidebarItem[] {
       items: [
         { text: "常见问题", link: "/reference/faq" },
         { text: "模板文件与访问路径映射", link: "/reference/template-map" },
-        { text: "与上游主题的差异", link: "/reference/upstream-diff" },
       ],
     },
   ];
