@@ -1,6 +1,7 @@
 import { whyframe } from "@whyframe/core";
 import { whyframeVue } from "@whyframe/vue";
-import { defineConfig } from "vitepress";
+import * as cheerio from "cheerio";
+import { defineConfig, type DefaultTheme } from "vitepress";
 import { chineseSearchOptimize, pagefindPlugin } from "vitepress-plugin-pagefind";
 
 import pkg from "../../package.json";
@@ -23,6 +24,7 @@ export default defineConfig({
       // Pagefind search plugin
       pagefindPlugin({
         customSearchQuery: chineseSearchOptimize,
+        manual: true, // 手动控制索引生成指令和资源加载脚本
         locales: {
           root: {
             btnPlaceholder: "搜索",
@@ -43,6 +45,30 @@ export default defineConfig({
         },
       }),
     ],
+  },
+
+  async transformHtml(code, id) {
+    if (id.includes("frames/") || id.includes("frames\\")) {
+      // code 是准备写入硬盘的 HTML 内容，可以在这里进行修改后返回
+      // 用 cheerio 解析后删除相应标签
+      const $ = cheerio.load(code);
+      // script type="module" 不能移除，所以 <link rel="modulepreload"> 标签也不能移除，移除了反而减慢加载速度
+
+      // 移除无用的 meta 标签和 ttile, 控制 HTML 大小
+      $('head meta[name="viewport"], head meta[name="generator"], head meta[name="description"], head title').remove();
+
+      // 移除 <link rel="preload"> 标签，避免重复加载默认字体资源
+      $('head link[rel="preload"]').remove();
+      // 不能移除全部 <link rel="preload stylesheet"> 标签，会导致 iframe 内样式丢失
+      // 可以移除，因为 vp-icons.css 用不到
+      $('head link[rel="preload stylesheet"][href="/halo-theme-higan-hz/vp-icons.css"][as="style"]').remove();
+
+      // 移除 script id="check-dark-mode" 和 script id="check-mac-os"
+      $("head script#check-dark-mode, head script#check-mac-os").remove();
+
+      // 移除多余的空行并返回修改后的 HTML
+      return $.html().replace(/^\s*[\r\n]/gm, "");
+    }
   },
 
   async transformPageData(pageData) {
@@ -72,6 +98,18 @@ export default defineConfig({
             "data-domains": "howiehz.top",
           },
         ],
+        [
+          "script",
+          {},
+          `import('/halo-theme-higan-hz/pagefind/pagefind.js')
+        .then((module) => {
+          window.__pagefind__ = module
+          module.init()
+        })
+        .catch(() => {
+          // console.log('not load /pagefind/pagefind.js')
+        })`,
+        ],
       );
     }
   },
@@ -84,6 +122,7 @@ export default defineConfig({
 
   lastUpdated: true,
   cleanUrls: true,
+  metaChunk: true,
 
   base: "/halo-theme-higan-hz/",
   locales: {
@@ -133,100 +172,8 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: { src: "/ico.ico", width: 24, height: 24 },
-    nav: [
-      {
-        text: "指南",
-        items: [
-          {
-            text: "简介",
-            items: [
-              { text: "Higan Haozi 是什么？", link: "/guide/what-is-higan-haozi" },
-              { text: "快速开始", link: "/guide/getting-started" },
-            ],
-          },
-          {
-            text: "写作",
-            items: [{ text: "样式参考", link: "/guide/style-reference" }],
-          },
-          {
-            text: "配置与扩展",
-            items: [
-              { text: "安装与升级", link: "/guide/getting-started/" },
-              { text: "主题配置项", link: "/guide/theme-configuration" },
-              { text: "元数据配置项", link: "/guide/metadata-configuration" },
-              { text: "插件兼容性", link: "/guide/plugin-compatibility" },
-            ],
-          },
-        ],
-      },
-      {
-        text: "教程",
-        items: [
-          { text: "多语言支持", link: "/tutorial/i18n" },
-          { text: "性能优化", link: "/tutorial/performance" },
-          { text: "安全实践", link: "/tutorial/security" },
-        ],
-      },
-      {
-        text: "参考",
-        items: [
-          { text: "常见问题", link: "/reference/faq" },
-          { text: "模板文件与访问路径映射", link: "/reference/template-map" },
-          { text: "与上游主题的差异", link: "/reference/upstream-diff" },
-        ],
-      },
-      { text: "示例站点", link: "https://howiehz.top" },
-      {
-        text: pkg.version,
-        items: [
-          {
-            text: `发布说明 v${pkg.version}`,
-            link: `https://github.com/HowieHz/halo-theme-higan-hz/releases/tag/v${pkg.version}`,
-          },
-          { text: `更新日志`, link: "https://github.com/HowieHz/halo-theme-higan-hz/blob/main/CHANGELOG.md" },
-          { text: "贡献指南", link: "https://github.com/HowieHz/halo-theme-higan-hz/blob/main/CONTRIBUTING.md" },
-        ],
-      },
-    ],
-
-    sidebar: [
-      {
-        text: "简介",
-        items: [
-          { text: "Higan Haozi 是什么？", link: "/guide/what-is-higan-haozi" },
-          { text: "快速开始", link: "/guide/getting-started" },
-        ],
-      },
-      {
-        text: "写作",
-        items: [{ text: "样式参考", link: "/guide/style-reference" }],
-      },
-      {
-        text: "配置与扩展",
-        items: [
-          { text: "安装与升级", link: "/guide/installation-and-upgrade" },
-          { text: "主题配置项", link: "/guide/theme-configuration" },
-          { text: "元数据配置项", link: "/guide/metadata-configuration" },
-          { text: "插件兼容性", link: "/guide/plugin-compatibility" },
-        ],
-      },
-      {
-        text: "教程",
-        items: [
-          { text: "多语言支持", link: "/tutorial/i18n" },
-          { text: "性能优化", link: "/tutorial/performance" },
-          { text: "安全防护", link: "/tutorial/security" },
-        ],
-      },
-      {
-        text: "参考",
-        items: [
-          { text: "常见问题", link: "/reference/faq" },
-          { text: "模板文件与访问路径映射", link: "/reference/template-map" },
-          { text: "与上游主题的差异", link: "/reference/upstream-diff" },
-        ],
-      },
-    ],
+    nav: nav(),
+    sidebar: sidebar(),
 
     socialLinks: [{ icon: "github", link: "https://github.com/HowieHz/halo-theme-higan-hz" }],
 
@@ -269,3 +216,102 @@ export default defineConfig({
     skipToContentLabel: "跳转到内容",
   },
 });
+
+function nav(): DefaultTheme.NavItem[] {
+  return [
+    {
+      text: "指南",
+      items: [
+        {
+          text: "简介",
+          items: [
+            { text: "Higan Haozi 是什么？", link: "/guide/what-is-higan-haozi" },
+            { text: "快速开始", link: "/guide/getting-started" },
+          ],
+        },
+        {
+          text: "写作",
+          items: [{ text: "样式参考", link: "/guide/style-reference" }],
+        },
+        {
+          text: "配置与扩展",
+          items: [
+            { text: "安装与升级", link: "/guide/getting-started/" },
+            { text: "主题配置项", link: "/guide/theme-configuration" },
+            { text: "元数据配置项", link: "/guide/metadata-configuration" },
+            { text: "插件兼容性", link: "/guide/plugin-compatibility" },
+          ],
+        },
+      ],
+    },
+    {
+      text: "教程",
+      items: [
+        { text: "多语言支持", link: "/tutorial/i18n" },
+        { text: "性能优化", link: "/tutorial/performance" },
+        { text: "安全实践", link: "/tutorial/security" },
+      ],
+    },
+    {
+      text: "参考",
+      items: [
+        { text: "常见问题", link: "/reference/faq" },
+        { text: "模板文件与访问路径映射", link: "/reference/template-map" },
+        { text: "与上游主题的差异", link: "/reference/upstream-diff" },
+      ],
+    },
+    { text: "示例站点", link: "https://howiehz.top" },
+    {
+      text: pkg.version,
+      items: [
+        {
+          text: `发布说明 v${pkg.version}`,
+          link: `https://github.com/HowieHz/halo-theme-higan-hz/releases/tag/v${pkg.version}`,
+        },
+        { text: `更新日志`, link: "https://github.com/HowieHz/halo-theme-higan-hz/blob/main/CHANGELOG.md" },
+        { text: "贡献指南", link: "https://github.com/HowieHz/halo-theme-higan-hz/blob/main/CONTRIBUTING.md" },
+      ],
+    },
+  ];
+}
+
+function sidebar(): DefaultTheme.SidebarItem[] {
+  return [
+    {
+      text: "简介",
+      items: [
+        { text: "Higan Haozi 是什么？", link: "/guide/what-is-higan-haozi" },
+        { text: "快速开始", link: "/guide/getting-started" },
+      ],
+    },
+    {
+      text: "写作",
+      items: [{ text: "样式参考", link: "/guide/style-reference" }],
+    },
+    {
+      text: "配置与扩展",
+      items: [
+        { text: "安装与升级", link: "/guide/installation-and-upgrade" },
+        { text: "主题配置项", link: "/guide/theme-configuration" },
+        { text: "元数据配置项", link: "/guide/metadata-configuration" },
+        { text: "插件兼容性", link: "/guide/plugin-compatibility" },
+      ],
+    },
+    {
+      text: "教程",
+      items: [
+        { text: "多语言支持", link: "/tutorial/i18n" },
+        { text: "性能优化", link: "/tutorial/performance" },
+        { text: "安全防护", link: "/tutorial/security" },
+      ],
+    },
+    {
+      text: "参考",
+      items: [
+        { text: "常见问题", link: "/reference/faq" },
+        { text: "模板文件与访问路径映射", link: "/reference/template-map" },
+        { text: "与上游主题的差异", link: "/reference/upstream-diff" },
+      ],
+    },
+  ];
+}

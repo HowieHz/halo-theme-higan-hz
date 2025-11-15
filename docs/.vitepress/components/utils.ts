@@ -4,7 +4,7 @@ export function trackColorScheme() {
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
   if (!appearance || appearance === "auto" ? prefersDark : appearance === "dark") {
-    // document.documentElement.classList.add("dark"); vitepress 默认 dark 模式会添加 .dark 类名
+    document.documentElement.classList.add("dark"); // 模仿 vitepress 默认 dark 模式会添加 .dark 类名
     document.documentElement.setAttribute("theme", "dark");
     document.documentElement.setAttribute("data-color-scheme", "dark");
   } else {
@@ -71,6 +71,6 @@ export function extendStylesScope(appElement: HTMLElement) {
     }
   }
 
-  // 移除 #vp-app 元素的 loading 类
+  // 移除 .vp-app 元素的 loading 类
   appElement.classList.remove("loading");
 }

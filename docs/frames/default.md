@@ -10,4 +10,8 @@ outline: false
 lastUpdated: false
 editLink: false
 footer: false
+search: false
+pagefind-indexed: false
+prev: false
+next: false
 ---
