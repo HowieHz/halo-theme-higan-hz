@@ -17,11 +17,12 @@
 
 在简洁清爽的基础上，本主题秉持以下核心理念：
 
-1. 响应式设计
-2. [强可配置性](https://howiehz.top/halo-theme-higan-hz/guide/theme-configuration)
-3. [多语言支持](https://howiehz.top/halo-theme-higan-hz/tutorial/i18n)
-4. [插件兼容性](https://howiehz.top/halo-theme-higan-hz/guide/plugin-compatibility)
-5. [高性能表现](https://howiehz.top/halo-theme-higan-hz/guide/what-is-higan-haozi#lighthouse)
+1. 响应式设计（适配不同屏幕尺寸）
+2. [多语言支持](https://howiehz.top/halo-theme-higan-hz/tutorial/i18n)
+3. [强可配置性](https://howiehz.top/halo-theme-higan-hz/guide/theme-configuration)
+4. [兼容性良好](https://howiehz.top/halo-theme-higan-hz/guide/what-is-higan-haozi#浏览器兼容性)
+5. [插件兼容性](https://howiehz.top/halo-theme-higan-hz/guide/plugin-compatibility)
+6. [高性能表现](https://howiehz.top/halo-theme-higan-hz/guide/what-is-higan-haozi#lighthouse)
 
 ## 预览
 
@@ -70,32 +71,6 @@
 [![Star History Chart](https://api.star-history.com/svg?repos=HowieHz/halo-theme-higan-hz&type=Date)](https://star-history.com/#HowieHz/halo-theme-higan-hz&Date)
 
 ---
-
-### 特色功能概要
-
-1. 支持更多自定义内容：
-   - 页面样式灵活可配
-   - 固定文字自定义
-   - 可自由关闭任意模块
-2. 优化与精简：
-   - 修复已知问题，清理冗余代码与样式
-   - 完全去除 jQuery 依赖
-   - 脚本和样式按页面拆分，减少流量消耗
-   - 预加载关键资源，加快响应速度
-   - 减少外部依赖，用原生 JavaScript 实现
-3. 新增轻量级过渡动画
-4. [预设多种配色方案/支持自定义配色](#more-color-scheme)
-5. 丰富的特色功能：
-   - 浅色/深色模式切换按钮
-   - 防止站点被恶意镜像
-   - 文章页标题可自定义（页面标题与正文标题可独立设置）
-   - 完善的多语言支持（包括多语言文本与菜单，详见文档 [i18n 支持指南](#i18n-支持指南)）
-   - [Mermaid 明暗模式切换支持](#mermaid-明暗切换支持)
-   - [支持内容仅在浅色/深色模式下显示](#设置内容仅在浅色深色模式下显示)
-   - [适配相册插件](#增加于相册页样式)，支持瀑布流布局
-6. 优秀的兼容性：  
-   [在线查看兼容浏览器列表](https://browsersl.ist/#q=defaults%0ASafari+%3E%3D+16.4%0AChrome+%3E%3D+111%0AFirefox+%3E%3D+128)
-7. 更多功能，等你发现……
 
 ## i18n 支持指南
 

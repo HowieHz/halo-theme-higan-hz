@@ -10,15 +10,18 @@ Higan Haozi 是一款适用于 [Halo CMS](https://github.com/halo-dev/halo) 的�
 
 欢迎 [Star⭐](https://github.com/HowieHz/halo-theme-higan-hz)、[Issue🐛](https://github.com/HowieHz/halo-theme-higan-hz/issues) 或 [Pull Request🔀](https://github.com/HowieHz/halo-theme-higan-hz/pulls) 支持项目迭代。
 
+> 👉 [快速开始](./getting-started)
+
 ## 特点
 
 在简洁清爽的基础上，本主题秉持以下核心理念：
 
-1. 响应式设计
-2. [强可配置性](./theme-configuration)
-3. [多语言支持](../tutorial/i18n)
-4. [插件兼容性](./plugin-compatibility)
-5. [高性能表现](#lighthouse)
+1. 响应式设计（适配不同屏幕尺寸）
+2. [多语言支持](/tutorial/i18n)
+3. [强可配置性](./theme-configuration)
+4. [兼容性良好](#浏览器兼容性)
+5. [插件兼容性](./plugin-compatibility)
+6. [高性能表现](#lighthouse)
 
 ## 主题历史
 
@@ -41,3 +44,7 @@ Lighthouse 测试结果：
 ![Lighthouse](/Lighthouse-result-2024-04-15-post.png)
 
 期望进一步进行性能优化配置，请阅读[性能优化](../tutorial/performance)。
+
+## 浏览器兼容性
+
+在线查看：[兼容浏览器矩阵](https://browsersl.ist/#q=defaults%0ASafari+%3E%3D+16.4%0AChrome+%3E%3D+111%0AFirefox+%3E%3D+128)
