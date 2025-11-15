@@ -48,6 +48,26 @@
 最初，这个项目只是为了解决自己的一些需求。没想到现如今已有不少小伙伴在使用，并通过各种方式反馈建议，帮助我不断优化和完善。衷心感谢大家的支持与鼓励！
 另外，感谢所有通过打赏支持本项目的小伙伴，特此列出名单：[赞助名单](#感谢赞助)
 
+## Lighthouse
+
+Lighthouse 测试结果：
+
+![Lighthouse-result-2024-04-15-post](./docs/img/Lighthouse-result-2024-04-15-post.png)
+
+## 贡献指南
+
+见 [CONTRIBUTING](./CONTRIBUTING)
+
+## 项目状态
+
+### Repobeats analytics
+
+![Alt](https://repobeats.axiom.co/api/embed/b02231ee758d8477f8fdb3b166fcf0488cbe7377.svg "Repobeats analytics image")
+
+### Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=HowieHz/halo-theme-higan-hz&type=Date)](https://star-history.com/#HowieHz/halo-theme-higan-hz&Date)
+
 ## 感谢赞助
 
 <details><summary>点我展开赞助列表</summary>
@@ -60,142 +80,9 @@
 
 </details>
 
-## 项目状态
-
-### Repobeats analytics
-
-![Alt](https://repobeats.axiom.co/api/embed/b02231ee758d8477f8fdb3b166fcf0488cbe7377.svg "Repobeats analytics image")
-
-### Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=HowieHz/halo-theme-higan-hz&type=Date)](https://star-history.com/#HowieHz/halo-theme-higan-hz&Date)
-
 ---
 
-## i18n 支持指南
-
-### 站点默认语言标识
-
-修改“全局 - 默认页面语言”，详情请见[增加于“全局”](#增加于全局)
-
-### 修改文章页面语言标识
-
-详情请见 [增加于文章元数据](#增加于文章元数据)
-
-### 修改分类页面语言标识
-
-详情请见 [增加于分类元数据](#增加于分类元数据)
-
-### 修改标签页面语言标识
-
-详情请见 [增加于标签元数据](#增加于标签元数据)
-
-### 修改独立页面语言标识
-
-详情请见 [增加于页面元数据](#增加于页面元数据)
-
-### 修改页面固定文字（修改语言文件）
-
-请到 halo 主题目录（themes），找到 howiehz-higan 文件夹里的 i18n 文件夹，找到对应语言的 properties 文件，修改保存即可（如中文是 zh.properties）
-
-### 多语言菜单使用指南
-
-（注：按 f12 打开开发者控制台，上面选择控制台，输入 `navigator.language` 后回车即可查看你浏览器的 `navigator.language` 值）
-
-启用“全局 - 多语言菜单支持”选项后，主菜单应设置形如以下形式（注：“zh_CN”项可选择自定义链接，链接为 /，名称为 zh_CN。其中名称为关键设置，其他不影响）
-
-- zh_CN
-  - 首页
-  - 关于
-- en_US
-  - Home
-  - About
-
-启用“全局 - 多语言功能前缀匹配模式”，启用此项将允许菜单名符合 navigator.language 值前缀即显示，而无需完全匹配。（注：开启了这项之后，下面的“zh”可匹配 zh_CN，zh_TW 等 navigator.language 值。）
-以上菜单可改为：
-
-- zh
-  - 首页
-  - 关于
-- en
-  - Home
-  - About
-
-与“全局 - 默认页面语言”设置值同名的将被作为默认菜单，默认菜单将在没有菜单成功匹配的时候显示。
-“全局 - 默认页面语言”默认值为 zh，你也可以设定为如 zh_CN，但是要注意这里是**完全匹配菜单名**，即使开启了“全局 - 多语言功能前缀匹配模式”。
-
-### 多语言个人简介/公告栏使用指南
-
-（注：按 f12 打开开发者控制台，上面选择控制台，输入 navigator.language 后回车即可查看你浏览器的 navigator.language 值）
-
-启用“首页样式 - 多语言个人简介/公告栏支持”选项后，“首页样式 - 自定义多语言公告栏内容”应设置形如以下形式（注：“zh_CN”项可选择自定义链接，链接为 /，名称为 zh_CN。其中名称为关键设置，其他不影响）
-
-- - “语言代码”设置值：zh_CN
-  - “个人简介/公告栏内容（支持 HTML 代码块）”设置值：你好！
-- - “语言代码”设置值：en_US
-  - “个人简介/公告栏内容（支持 HTML 代码块）”设置值：Hello!
-
-启用“全局 - 多语言功能前缀匹配模式”，启用此项将允许“语言代码”设置值符合 navigator.language 值前缀即显示，而无需完全匹配。（注：开启了这项之后，下面的“zh”可匹配 zh_CN，zh_TW 等 navigator.language 值。）
-以上菜单可改为：
-
-- - “语言代码”设置值：zh
-  - “个人简介/公告栏内容（支持 HTML 代码块）”设置值：你好！
-- - “语言代码”设置值：en
-  - “个人简介/公告栏内容（支持 HTML 代码块）”设置值：Hello!
-
-与“全局 - 默认页面语言”设置值同名的将被作为默认多语言公告栏，默认多语言公告栏将在没有公告栏成功匹配的时候显示。
-“全局 - 默认页面语言”默认值为 zh，你也可以设定为如 zh_CN，但是要注意这里是**完全匹配“语言代码”设置值**，即使开启了“全局 - 多语言功能前缀匹配模式”。
-
-### 多语言页面最底部内容使用指南
-
-（注：按 f12 打开开发者控制台，上面选择控制台，输入 navigator.language 后回车即可查看你浏览器的 navigator.language 值）
-
-启用“总体样式 - 多语言页面最底部内容支持”选项后，“总体样式 - 自定义多语言页面最底部内容”应设置形如以下形式（注：“zh_CN”项可选择自定义链接，链接为 /，名称为 zh_CN。其中名称为关键设置，其他不影响）
-
-- - “语言代码”设置值：zh_CN
-  - “页面最底部内容（支持 HTML 代码块）”设置值：你好！
-- - “语言代码”设置值：en_US
-  - “页面最底部内容（支持 HTML 代码块）”设置值：Hello!
-
-启用“全局 - 多语言功能前缀匹配模式”，启用此项将允许“语言代码”设置值符合 navigator.language 值前缀即显示，而无需完全匹配。（注：开启了这项之后，下面的“zh”可匹配 zh_CN，zh_TW 等 navigator.language 值。）
-以上菜单可改为：
-
-- - “语言代码”设置值：zh
-  - “页面最底部内容（支持 HTML 代码块）”设置值：你好！
-- - “语言代码”设置值：en
-  - “页面最底部内容（支持 HTML 代码块）”设置值：Hello!
-
-与“全局 - 默认页面语言”设置值同名的将被作为默认多语言页面最底部内容，默认多语言页面最底部内容将在没有页面最底部内容成功匹配的时候显示。
-“全局 - 默认页面语言”默认值为 zh，你也可以设定为如 zh_CN，但是要注意这里是**完全匹配“语言代码”设置值**，即使开启了“全局 - 多语言功能前缀匹配模式”。
-
-## 相较于原始主题 最新开发版 的修改
-
-原主题最新版本为：[v2.10.0](https://github.com/guqing/halo-theme-higan/releases/tag/v2.10.0)  
-而本主题修改基于最新开发版：[上游提交日志](https://github.com/guqing/halo-theme-higan/commits/main/)
-
-### 样式修复
-
-1. 移除导航栏文字前出现的空白 _[guqing/halo-theme-higan#113](https://github.com/guqing/halo-theme-higan/issues/113)_
-2. 使用 PostCSS + Tailwind CSS 重构，修复上游标注在标签的 class 内但没有正常引入的样式，以及没有正常工作的样式。
-3. 修复在文章页平板端模式下，回到顶部按钮未正常显示的问题
-4. 修复在文章页平板端模式下，菜单不能随菜单按钮一起隐藏的问题
-5. 修复在文章页桌面端模式下，隐藏的顶部导航栏依然会遮挡页面按钮的问题 _[#89](https://github.com/HowieHz/halo-theme-higan-hz/issues/89)_
-6. 修复分享按钮无法获取准确链接的问题
-7. 修复一级标题无法在文章目录正常显示的问题
-
-### 不可配置的样式修改
-
-> 如果添加的样式修改是可被配置的（如可修改，可关闭），则不会被列举在此处
-
-1. 新增文章顶部分享栏分享方式：QQ 空间
-2. 修改文章顶部分享栏 Twitter 的链接为 X
-3. 友链页面允许用户在链接描述使用 HTML 代码块
-4. 为非文章页移动端模式下，顶部导航栏的出现和消失添加了动画
-5. 为文章页移动端模式下，底部导航栏（包括子菜单，其中的回到顶部按钮）的出现和消失添加了动画
-6. 为文章页桌面端模式下，顶部导航栏（包括子菜单）的出现和消失添加了动画
-7. 为文章页平板端模式下，顶部导航栏（包括子菜单）和右下角的回到顶部按钮出现和消失添加了动画
-
-### 配置项修改
+### 配置项说明
 
 为方便查找，本主题将选项分类到多栏目下，而不是像原主题集中在一个“样式”栏下。  
 现分类为“全局”，“总体样式”，“首页样式”，“文章页样式”，“分类集合页样式”，“自定义页面样式”，“瞬间页样式”，“RSS”，“社交资料”。
@@ -215,7 +102,7 @@
 2. 添加“多语言功能前缀匹配模式”，如启用此项，则多语言功能将启用前缀匹配模式。
 3. 添加“浏览器语言自动跳转”
 4. 添加“多语言菜单支持”，允许用户定义多套菜单适用于不同语言。
-   - 此项使用教程请看 [多语言菜单使用指南](#多语言菜单使用指南)
+   - 此项使用教程请看 [多语言菜单使用指南](https://howiehz.top/halo-theme-higan-hz/tutorial/i18n#多语言菜单使用指南)
 5. 添加“CSP:upgrade-insecure-requests”选项，避免 HTTPS 协议网页引用 HTTP 资源时报错。
    - 相关文档：[CSP: upgrade-insecure-requests - HTTP | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
 6. 增加“仅允许使用指定域名访问”。使用场景：防止站点被恶意镜像后的流量流失。
@@ -524,7 +411,7 @@
 
 #### 增加于“相册页样式”
 
-[适配对应 plugin-photos 插件](#plugin-photos)
+[适配对应 plugin-photos 插件](https://howiehz.top/halo-theme-higan-hz/guide/plugin-compatibility#plugin-photos)
 
 1. 允许设置图片圆角宽度
 2. 允许设置图片渐入动画时间
@@ -539,7 +426,7 @@
 
 #### 增加于“瞬间页样式”
 
-[适配对应 plugin-moments 插件](#plugin-moments)
+[适配对应 plugin-moments 插件](https://howiehz.top/halo-theme-higan-hz/guide/plugin-compatibility#plugin-moments)
 
 1. 允许显示帖文预计阅读时间
 2. 允许显示帖文字数统计
@@ -609,418 +496,3 @@
 
 1. 增加“页面标题”配置项，可设定此文章在浏览页的 HTML 标题（如配置值为空，则 HTML 标题取此文章的标题）
 2. 添加“页面语言”配置项，可指定此文章的页面语言（HTML lang 属性）（如配置值为空，则取“全局 - 默认页面语言”的值）
-
-#### 调整于“总体样式”
-
-1. 配色方案（样式 - 配色方案）对应的配置名修改：
-   - 暗黑 -> 暗色 - 绿
-   - 白色 -> 浅色 - 绿
-   - 亮色 -> 浅色 - 灰粉
-
-#### 调整于“首页样式”
-
-1. 个人简介（样式 - 个人简介）输入框高度修改：100px -> 150px
-
-### 杂项（对主题使用者无感的修改）
-
-1. 重构样式切换方式 (原来是 body 标签的 class 决定样式，现在是 HTML 标签的 theme 属性的值决定样式)
-2. 修改项目内各种链接指向分叉后的项目链接，并修改元数据避免与原主题冲突
-3. 清除无用样式，减小最终文件体积
-4. 修改颜色主题内部代号值
-5. 文字分类支持面包屑显示（嵌套分类将显示为：`大分类 > 中分类 > 小分类`。原主题仅支持显示：`小分类`）
-6. 以下页面中的标签都会按配置呈现标签色：标签集合页（/tags）、标签详情页（/tags/:slug）、首页多元文章列表以及文章页顶部标签区。
-
-## 可选插件
-
-- API 扩展（轻量版），需插件 [plugin-extra-api](https://github.com/HowieHz/halo-plugin-extra-api)([应用市场页面](https://www.halo.run/store/apps/app-di1jh8gd))
-  - 启用插件后：
-    - 单文章字数统计将自动应用插件中更准确的计算方法。
-    - “总体样式 - 页面底部站点统计信息”将支持“总字数”统计显示。
-- 友链页面（/links），需插件 [plugin-links](https://github.com/halo-sigs/plugin-links)([应用市场页面](https://www.halo.run/store/apps/app-hfbQg))
-- <a id="plugin-photos"></a>图库页面（/photos），需插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)([应用市场页面](https://www.halo.run/store/apps/app-BmQJW))
-- <a id="plugin-moments"></a>瞬间页面（/moments），需插件 [plugin-moments](https://github.com/halo-sigs/plugin-moments)([应用市场页面](https://www.halo.run/store/apps/app-SnwWD))
-  - 瞬间页面可用于展示 GitHub 活动，此用法请看 [howiehz/ghu-events-moments](https://github.com/howiehz/ghu-events-moments) 或 [guqing/ghu-events-moments](https://github.com/guqing/ghu-events-moments)（兼容原主题数据类型）
-- 评论功能，需插件 [plugin-comment-widget](https://github.com/halo-sigs/plugin-comment-widget/releases)([应用市场页面](https://www.halo.run/store/apps/app-YXyaD))
-- 搜索功能，需插件 [plugin-search-widget](https://github.com/halo-sigs/plugin-search-widget/releases)([应用市场页面](https://www.halo.run/store/apps/app-DlacW))
-- 代码渲染，需插件：[plugin-highlightjs](https://github.com/halo-sigs/plugin-highlightjs)([应用市场页面](https://www.halo.run/store/apps/app-sqpgf))
-  - 暗黑模式下，代码块高亮主题推荐选择“an-old-hope.min.css”
-- 图片灯箱，需插件：[plugin-lightgallery](https://github.com/halo-sigs/plugin-lightgallery)([应用市场页面](https://www.halo.run/store/apps/app-OoggD))
-  - 页面匹配规则 推荐设置为
-
-    | 路径匹配       | 匹配区域                   |
-    | -------------- | -------------------------- |
-    | `/archives/**` | `article .content`         |
-    | `/moments`     | `article .content .medium` |
-    | `/moments/**`  | `article .content .medium` |
-    | `/photos`      | `article .content`         |
-    | `/photos/**`   | `article .content`         |
-
-### Mermaid 明暗切换支持
-
-#### 使用默认编辑器
-
-##### 适用于默认编辑器的示例
-
-<details><summary>点我展开示例 展示使用方法</summary>
-
-本图原始作者为 [欧雷流](https://ourai.ws/)
-授权 [HowieHz](https://howiehz.top/) 重绘
-
-> 第一种方式（以下内容作为 HTML 代码块插入默认编辑器）
-
-<!-- prettier-ignore-start -->
-<!-- autocorrect-disable -->
-```html
-<div class="mermaid auto">
-flowchart TD
-A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
-A -->|组成部分| RSS3{RSS3}
-A -->|组成部分| Crossbell{Crossbell}
-Crossbell -->|构建应用| xLog([xLog])
-Crossbell -->|构建应用| xSync([xSync])
-Crossbell -->|构建应用| xLhar([xLhar])
-Crossbell -->|构建应用| xFeed([xFeed])
-RSSHub -->|构建应用| Follow([Follow])
-xLog -->|经济系统| $CSB
-xLog -->|经济系统| $MIRA
-Follow -->|经济系统| $POWER
-Crossbell -->|发 Token| $CSB{{$CSB}}
-Crossbell -->|发 Token| $MIRA{{$MIRA}}
-RSS3 -->|发 Token| $RSS3{{$RSS3}}
-RSS3 -->|发 Token| $POWER{{$POWER}}
-</div>
-```
-<!-- autocorrect-enable -->
-<!-- prettier-ignore-end -->
-
-> 第二种方式（以下内容作为 HTML 代码块插入默认编辑器）
-
-<!-- prettier-ignore-start -->
-<!-- autocorrect-disable -->
-```html
-<div class="mermaid dark">
-%%{init: { "theme": "dark" } }%%
-flowchart TD
-A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
-A -->|组成部分| RSS3{RSS3}
-A -->|组成部分| Crossbell{Crossbell}
-Crossbell -->|构建应用| xLog([xLog])
-Crossbell -->|构建应用| xSync([xSync])
-Crossbell -->|构建应用| xLhar([xLhar])
-Crossbell -->|构建应用| xFeed([xFeed])
-RSSHub -->|构建应用| Follow([Follow])
-xLog -->|经济系统| $CSB
-xLog -->|经济系统| $MIRA
-Follow -->|经济系统| $POWER
-Crossbell -->|发 Token| $CSB{{$CSB}}
-Crossbell -->|发 Token| $MIRA{{$MIRA}}
-RSS3 -->|发 Token| $RSS3{{$RSS3}}
-RSS3 -->|发 Token| $POWER{{$POWER}}
-</div>
-
-<div class="mermaid light">
-%%{init: { "theme": "light" } }%%
-flowchart TD
-A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
-A -->|组成部分| RSS3{RSS3}
-A -->|组成部分| Crossbell{Crossbell}
-Crossbell -->|构建应用| xLog([xLog])
-Crossbell -->|构建应用| xSync([xSync])
-Crossbell -->|构建应用| xLhar([xLhar])
-Crossbell -->|构建应用| xFeed([xFeed])
-RSSHub -->|构建应用| Follow([Follow])
-xLog -->|经济系统| $CSB
-xLog -->|经济系统| $MIRA
-Follow -->|经济系统| $POWER
-Crossbell -->|发 Token| $CSB{{$CSB}}
-Crossbell -->|发 Token| $MIRA{{$MIRA}}
-RSS3 -->|发 Token| $RSS3{{$RSS3}}
-RSS3 -->|发 Token| $POWER{{$POWER}}
-</div>
-```
-<!-- autocorrect-enable -->
-<!-- prettier-ignore-end -->
-
-</details>
-
-##### 适用于默认编辑器的使用说明
-
-1. 需插件 [plugin-hybrid-edit-block](https://github.com/halo-sigs/plugin-hybrid-edit-block)([应用市场页面](https://www.halo.run/store/apps/app-NgHnY))
-2. 进入主题配置，启用 `全局-Mermaid 支持`
-3. 默认编辑器中输入 `/html` 选择插入 HTML 代码块
-
-输入以下内容，将 `[[图表标题]]` 和 `[[图表正文]]` 换成你自己的内容，  
-即可适配明暗切换
-
-> 第一种方式：只写一遍，自动生成浅色/深色模式下两种图表
-
-<!-- prettier-ignore-start -->
-```html
-<div class="mermaid auto">
-[[图表正文]]
-</div>
-```
-<!-- prettier-ignore-end -->
-
-> 第二种方式：手动管理浅色/深色模式下的图表
-
-<!-- prettier-ignore-start -->
-```html
-<div class="mermaid dark">
-%%{init: { "theme": "dark" } }%%
-[[图表正文]]
-</div>
-
-<div class="mermaid light">
-%%{init: { "theme": "light" } }%%
-[[图表正文]]
-</div>
-```
-<!-- prettier-ignore-end -->
-
-#### 使用 Vditor 编辑器
-
-需启用 [Vditor 编辑器插件](https://github.com/justice2001/halo-plugin-vditor)([应用市场页面](https://www.halo.run/store/apps/app-uBcYw))，并进入文章编辑页，将文章编辑器设置为 Vditor 编辑器。
-
-##### 适用于 Vditor 编辑器的示例
-
-<details><summary>点我展开示例 展示使用方法</summary>
-
-````markdown
-本图原始作者为 [欧雷流](https://ourai.ws/)
-授权 [HowieHz](https://howiehz.top/) 重绘
-
-## 第一种方式
-
-<div class="mermaid auto">
-flowchart TD
-A(("`**Open (Network)**`")) -->|组成部分| RSSHub{RSSHub}
-A -->|组成部分| RSS3{RSS3}
-A -->|组成部分| Crossbell{Crossbell}
-Crossbell -->|构建应用| xLog([xLog])
-Crossbell -->|构建应用| xSync([xSync])
-Crossbell -->|构建应用| xLhar([xLhar])
-Crossbell -->|构建应用| xFeed([xFeed])
-RSSHub -->|构建应用| Follow([Follow])
-xLog -->|经济系统| $CSB
-xLog -->|经济系统| $MIRA
-Follow -->|经济系统| $POWER
-Crossbell -->|发 Token| $CSB{{$CSB}}
-Crossbell -->|发 Token| $MIRA{{$MIRA}}
-RSS3 -->|发 Token| $RSS3{{$RSS3}}
-RSS3 -->|发 Token| $POWER{{$POWER}}
-</div>
-
-## 第二种方式
-
-<div class="mermaid auto">
-
-```mermaid
-flowchart TD
-A(("`**Open (Network)**`")) -->|组成部分 | RSSHub{RSSHub}
-A -->|组成部分 | RSS3{RSS3}
-A -->|组成部分 | Crossbell{Crossbell}
-Crossbell -->|构建应用 | xLog([xLog])
-Crossbell -->|构建应用 | xSync([xSync])
-Crossbell -->|构建应用 | xLhar([xLhar])
-Crossbell -->|构建应用 | xFeed([xFeed])
-RSSHub -->|构建应用 | Follow([Follow])
-xLog -->|经济系统 | $CSB
-xLog -->|经济系统 | $MIRA
-Follow -->|经济系统 | $POWER
-Crossbell -->|发 Token| $CSB{{$CSB}}
-Crossbell -->|发 Token| $MIRA{{$MIRA}}
-RSS3 -->|发 Token| $RSS3{{$RSS3}}
-RSS3 -->|发 Token| $POWER{{$POWER}}
-```
-
-</div>
-
-## 第三种方式
-
-<div class="light">
-
-```mermaid
----
-title: The Open(RSS3) Universe
----
-%%{init: { "theme": "light" } }%%
-flowchart TD
-A(("`**Open (Network)**`")) -->|组成部分 | RSSHub{RSSHub}
-A -->|组成部分 | RSS3{RSS3}
-A -->|组成部分 | Crossbell{Crossbell}
-Crossbell -->|构建应用 | xLog([xLog])
-Crossbell -->|构建应用 | xSync([xSync])
-Crossbell -->|构建应用 | xLhar([xLhar])
-Crossbell -->|构建应用 | xFeed([xFeed])
-RSSHub -->|构建应用 | Follow([Follow])
-xLog -->|经济系统 | $CSB
-xLog -->|经济系统 | $MIRA
-Follow -->|经济系统 | $POWER
-Crossbell -->|发 Token| $CSB{{$CSB}}
-Crossbell -->|发 Token| $MIRA{{$MIRA}}
-RSS3 -->|发 Token| $RSS3{{$RSS3}}
-RSS3 -->|发 Token| $POWER{{$POWER}}
-```
-
-</div>
-
-<div class="dark">
-
-```mermaid
----
-title: The Open(RSS3) Universe
----
-%%{init: { "theme": "dark" } }%%
-flowchart TD
-A(("`**Open (Network)**`")) -->|组成部分 | RSSHub{RSSHub}
-A -->|组成部分 | RSS3{RSS3}
-A -->|组成部分 | Crossbell{Crossbell}
-Crossbell -->|构建应用 | xLog([xLog])
-Crossbell -->|构建应用 | xSync([xSync])
-Crossbell -->|构建应用 | xLhar([xLhar])
-Crossbell -->|构建应用 | xFeed([xFeed])
-RSSHub -->|构建应用 | Follow([Follow])
-xLog -->|经济系统 | $CSB
-xLog -->|经济系统 | $MIRA
-Follow -->|经济系统 | $POWER
-Crossbell -->|发 Token| $CSB{{$CSB}}
-Crossbell -->|发 Token| $MIRA{{$MIRA}}
-RSS3 -->|发 Token| $RSS3{{$RSS3}}
-RSS3 -->|发 Token| $POWER{{$POWER}}
-```
-
-</div>
-````
-
-</details>
-
-##### 适用于 Vditor 编辑器的使用说明
-
-输入以下内容，将 `[[图表标题]]` 和 `[[图表正文]]` 换成你自己的内容，  
-即可适配明暗切换。  
-注意：下列模板中出现的空行不可省略，没出现空行的也不能多添加空行。建议使用分屏预览模式编辑。
-
-> 第一种方式：只写一遍，自动生成浅色/深色模式下两种图表  
-> 此方式需要进入主题配置，启用 `全局-Mermaid 支持`  
-> 缺点：不兼容 Vditor 编辑器的实时预览
-
-<!-- prettier-ignore-start -->
-```html
-<div class="mermaid auto">
-[[图表正文]]
-</div>
-```
-<!-- prettier-ignore-end -->
-
-> 第二种方式：只写一遍，自动生成浅色/深色模式下两种图表  
-> 此方式需要进入主题配置，启用 `全局-Mermaid 支持`  
-> 此方式原理：由于主题的 Mermaid 初始化先加载，可在 Vditor 自带的 Mermaid 渲染前抢先渲染生成  
-> 缺点：一张图会多被渲染一遍（被 Vditor 自带的 Mermaid 多渲染一遍）  
-> 优点：兼容 Vditor 编辑器的实时预览
-
-<!-- prettier-ignore-start -->
-````html
-<div class="mermaid auto">
-
-```mermaid
-[[图表正文]]
-```
-
-</div>
-````
-<!-- prettier-ignore-end -->
-
-> 第三种方式：手动管理浅色/深色模式下的图表  
-> 缺点：同样内容要复制粘贴一遍。由于是完全使用 Vditor 自带的渲染，所以主题设置中有关 Mermaid 的设置会失效。会继承上游的 bug，如 [mermaid-js/mermaid@5741](https://github.com/mermaid-js/mermaid/issues/5741)。  
-> 优点：兼容 Vditor 编辑器的实时预览，兼容性最好。完全使用 Vditor 自带的渲染，和预览表现一致。
-
-<!-- prettier-ignore-start -->
-````html
-<div class="light">
-
-```mermaid
----
-title: [[图表标题]]
----
-%%{init: { "theme": "light" } }%%
-[[图表正文]]
-```
-
-</div>
-
-<div class="dark">
-
-```mermaid
----
-title: [[图表标题]]
----
-%%{init: { "theme": "dark" } }%%
-[[图表正文]]
-```
-
-</div>
-````
-<!-- prettier-ignore-end -->
-
-## 设置内容仅在浅色/深色模式下显示
-
-### 在默认编辑器中的使用方法
-
-1. 需插件 [plugin-hybrid-edit-block](https://github.com/halo-sigs/plugin-hybrid-edit-block)
-2. 默认编辑器中输入 `/html` 选择插入 HTML 代码块
-
-输入以下内容，将 `[[浅色模式内容]]` 和 `[[深色模式内容]]` 换成你自己的内容，
-即可适配明暗切换
-
-<!-- prettier-ignore-start -->
-```html
-<div class="dark">
-
-[[深色模式内容]]
-
-</div>
-
-<div class="light">
-
-[[浅色模式内容]]
-
-</div>
-```
-<!-- prettier-ignore-end -->
-
-### 在使用 Vditor 编辑器 中的使用方法
-
-需启用 [Vditor 编辑器插件](https://github.com/justice2001/halo-plugin-vditor)([应用市场页面](https://www.halo.run/store/apps/app-uBcYw))，并进入文章编辑页，将文章编辑器设置为 Vditor 编辑器。
-
-输入以下内容，将 `[[浅色模式内容]]` 和 `[[深色模式内容]]` 换成你自己的内容，
-即可适配明暗切换
-
-<!-- prettier-ignore-start -->
-```html
-<div class="dark">
-
-[[深色模式内容]]
-
-</div>
-
-<div class="light">
-
-[[浅色模式内容]]
-
-</div>
-```
-<!-- prettier-ignore-end -->
-
-## 贡献指南
-
-见 [CONTRIBUTING](./CONTRIBUTING)
-
-## Lighthouse
-
-![Lighthouse-result-2024-04-15-post](./docs/img/Lighthouse-result-2024-04-15-post.png)
-
-## TODO
-
-见 [项目 Issue 页面](https://github.com/HowieHz/halo-theme-higan-hz/issues)  
-注：社区意愿较大的 Issue 会列为优先项。如果你对某功能有需求，请一定要在对应 Issue 下回复，或进入我的博客通过其他联系方式联系我，谢谢！

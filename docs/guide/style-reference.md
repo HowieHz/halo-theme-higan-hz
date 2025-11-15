@@ -22,6 +22,17 @@ import DefaultRender from '../.vitepress/components/DefaultRender.vue';
 
 :::
 
+::: info 如何在编辑器中使用 HTML 写法
+
+- 在默认编辑器的使用方法：
+  1. 需启用 [Markdown / HTML 内容块插件](https://github.com/halo-sigs/plugin-hybrid-edit-block)([应用市场页面](https://www.halo.run/store/apps/app-NgHnY))。
+  2. 默认编辑器中输入 `/html` 选择插入 HTML 代码块。
+- 在 Vditor 编辑器的使用方法：
+  1. 需启用 [Vditor 编辑器插件](https://github.com/justice2001/halo-plugin-vditor)([应用市场页面](https://www.halo.run/store/apps/app-uBcYw))，并进入文章编辑页，将文章编辑器设置为 Vditor 编辑器。
+  2. Vditor 编辑器原生支持 HTML 标签，直接编写即可。
+
+:::
+
 ## 扩展样式快速检索 <Badge type="warning" text="扩展样式" />
 
 此处列出了本主题实现的扩展样式。
