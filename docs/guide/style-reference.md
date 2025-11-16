@@ -1017,6 +1017,7 @@ This is normal text <small>This is small text</small> This is normal text
 </div>
 ```
 <!-- prettier-ignore-end -->
+
 :::
 ::: details 方法三 <Badge type="tip" text="Vditor 编辑器可用" />  
 需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
@@ -1036,6 +1037,7 @@ This is normal text <small>This is small text</small> This is normal text
 </div>
 ````
 <!-- prettier-ignore-end -->
+
 :::
 ::: details 方法四 <Badge type="tip" text="Vditor 编辑器可用" />  
 需关闭 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  

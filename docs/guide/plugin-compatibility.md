@@ -11,6 +11,7 @@ outline: deep
 插件 [plugin-extra-api](https://github.com/HowieHz/halo-plugin-extra-api)（[应用市场页面](https://www.halo.run/store/apps/app-di1jh8gd)）
 
 启用插件（轻量版）后：
+
 - [文章预计阅读时间](/guide/theme-configuration#文章预计阅读时间)、[文章字数统计](/guide/theme-configuration#文章字数统计)、[页面预计阅读时间](/guide/theme-configuration#页面预计阅读时间)、[页面字数统计](/guide/theme-configuration#页面字数统计)、[帖文预计阅读时间](/guide/theme-configuration#帖文预计阅读时间)、[帖文字数统计](/guide/theme-configuration#帖文字数统计)将自动应用插件中更准确的计量方法。
 - [页面底部站点统计信息](/guide/theme-configuration#页面底部站点统计信息)将支持“总字数”统计显示。
 
@@ -31,6 +32,7 @@ outline: deep
 插件 [plugin-moments](https://github.com/halo-sigs/plugin-moments)（[应用市场页面](https://www.halo.run/store/apps/app-SnwWD)）
 
 主题提供了瞬间页（`/moments`）支持，详情请阅读[瞬间页样式](/guide/theme-configuration#瞬间页样式)相关文档。
+
 - 瞬间页面可用于展示 GitHub 活动，此用法请看 [howiehz/ghu-events-moments](https://github.com/howiehz/ghu-events-moments) 或 [guqing/ghu-events-moments](https://github.com/guqing/ghu-events-moments)（兼容原主题数据类型）
 
 ## 评论区
@@ -46,6 +48,7 @@ outline: deep
 插件 [plugin-search-widget](https://github.com/halo-sigs/plugin-search-widget)（[应用市场页面](https://www.halo.run/store/apps/app-DlacW)）
 
 启用插件后：
+
 - 菜单将显示“搜索”项，点击即可唤起搜索弹框。
 
 ## 代码渲染
@@ -81,6 +84,7 @@ outline: deep
 插件 [plugin-feed](https://github.com/halo-dev/plugin-feed)（[应用市场页面](https://www.halo.run/store/apps/app-KhIVw)）
 
 启用插件后：
+
 - 可使用[分类 RSS 订阅按钮](/guide/theme-configuration#显示分类-rss-订阅按钮)。
 - 可使用[标签 RSS 订阅按钮](/guide/theme-configuration#显示标签-rss-订阅按钮)。
 - 可使用[作者 RSS 订阅按钮](/guide/theme-configuration#显示作者-rss-订阅按钮)。
