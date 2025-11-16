@@ -1708,7 +1708,7 @@ const QuickJumpConfig = (props) => {
 
 ## 首页样式
 
-应用范围：[`/(page/{page})`](/reference/template-map#:~:text=/(page/%7Bpage%7D))。
+应用范围：[`/(page/{page})`](</reference/template-map#:~:text=/(page/%7Bpage%7D)>)。
 
 ### 主页 HTML 标题
 
@@ -3038,7 +3038,7 @@ const QuickJumpConfig = (props) => {
 
 ## 归档页样式
 
-应用范围：[`/archives(/{year}(/{month}))`](/reference/template-map#:~:text=/archives(/%7Byear%7D(/%7Bmonth%7D)))。
+应用范围：[`/archives(/{year}(/{month}))`](</reference/template-map#:~:text=/archives(/%7Byear%7D(/%7Bmonth%7D))>)。
 
 ### 按照发布年份和月份折叠文章列表
 
