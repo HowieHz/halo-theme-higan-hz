@@ -12,8 +12,8 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1
       alpinejs:
-        specifier: ^3.15.1
-        version: 3.15.1
+        specifier: ^3.15.2
+        version: 3.15.2
     devDependencies:
       '@eslint/compat':
         specifier: ^2.0.0
@@ -158,7 +158,7 @@ importers:
         version: 2.0.0-alpha.12(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.43.1)(typescript@5.9.3)(yaml@2.8.1)
       vitepress-plugin-pagefind:
         specifier: ^0.4.15
-        version: 0.4.15(pagefind@1.4.0)(typescript@5.9.3)
+        version: 0.4.16(pagefind@1.4.0)(typescript@5.9.3)
       vue:
         specifier: ^3.5.24
         version: 3.5.24(typescript@5.9.3)
@@ -2035,8 +2035,8 @@ packages:
   ajv@8.17.1:
     resolution: {integrity: sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g==}
 
-  alpinejs@3.15.1:
-    resolution: {integrity: sha512-HLO1TtiE92VajFHtLLPK8BWaK1YepV/uj31UrfoGnQ00lyFOJZ+oVY3F0DghPAwvg8sLU79pmjGQSytERa2gEg==}
+  alpinejs@3.15.2:
+    resolution: {integrity: sha512-2kYF2aG+DTFkE6p0rHG5XmN4VEb6sO9b02aOdU4+i8QN6rL0DbRZQiypDE1gBcGO65yDcqMz5KKYUYgMUxgNkw==}
 
   ansi-regex@2.1.1:
     resolution: {integrity: sha512-TIGnTpdo+E3+pCyAluZvtED5p5wCqLdezCyhPZzKPcxvFplEt4i+W7OONCKgeZFT3+y5NZZfOOS/Bdcanm1MYA==}
@@ -4759,8 +4759,8 @@ packages:
       yaml:
         optional: true
 
-  vitepress-plugin-pagefind@0.4.15:
-    resolution: {integrity: sha512-z1b7O/LTUKl+nteqTFEvER0/toHiVheqRtuzXWWznT7L438VKyQwEwKq7z8BMebQqYeMPmg6L6B7NF9cu+iFvw==}
+  vitepress-plugin-pagefind@0.4.16:
+    resolution: {integrity: sha512-P2rI06L9FepHnc/ANfZ2xir9I7mESgTdxsBLqR+Ni4FrWI/Ns6ybRmeqG/B5SDHLhelf7tQon01Ye7lYpwOV5g==}
     peerDependencies:
       pagefind: ^1.1.0
 
@@ -6827,7 +6827,7 @@ snapshots:
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
-  alpinejs@3.15.1:
+  alpinejs@3.15.2:
     dependencies:
       '@vue/reactivity': 3.1.5
 
@@ -9788,7 +9788,7 @@ snapshots:
       terser: 5.43.1
       yaml: 2.8.1
 
-  vitepress-plugin-pagefind@0.4.15(pagefind@1.4.0)(typescript@5.9.3):
+  vitepress-plugin-pagefind@0.4.16(pagefind@1.4.0)(typescript@5.9.3):
     dependencies:
       '@sugarat/theme-shared': 0.0.6
       '@vueuse/core': 9.13.0(vue@3.5.24(typescript@5.9.3))
