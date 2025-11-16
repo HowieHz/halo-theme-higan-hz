@@ -334,7 +334,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-具体使用方法请查看[多语言菜单使用指南](/tutorial/i18n#多语言菜单使用指南)。
+启用后请参照[多语言菜单使用指南](/tutorial/i18n#多语言菜单使用指南)进行配置。
 
 :::
 
@@ -1348,7 +1348,145 @@ const QuickJumpConfig = (props) => {
 启用后可配置：
 
 - 页面最底部内容
-- 自定义多语言页面最底部内容
+- 多语言页面最底部内容支持
+  - 自定义多语言页面最底部内容
+
+:::
+
+
+#### 多语言页面最底部内容支持
+
+::: info 🎯 用途
+
+控制是否启用多语言页面最底部内容支持。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 页面最底部内容](/guide/theme-configuration#页面最底部内容)启用时显示）  
+
+首页样式 -> 多语言页面最底部内容支持
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多语言页面最底部内容支持" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_18n_footer_content_show`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后请参照[多语言页面最底部内容使用指南](/tutorial/i18n#多语言页面最底部内容使用指南)进行配置
+
+:::
+
+#### 自定义多语言页面最底部内容
+
+::: info 🎯 用途
+
+设定多语言页面最底部内容内容。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 页面最底部内容](/guide/theme-configuration#页面最底部内容)启用时显示）  
+
+首页样式 -> 自定义多语言页面最底部内容
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=自定义多语言页面最底部内容" />
+
+:::
+::: info 🏷️ 类型
+
+重复器
+
+:::
+
+> [!NOTE] ⭐ 默认值
+>
+> ::: tip 📂 配置项名
+>
+> 语言代码
+>
+> :::
+> ::: info 🏷️ 类型
+>
+> 字符串
+>
+> :::
+> ::: info ⭐ 默认值
+>
+> `zh`
+>
+> :::
+> ::: info 💡 示例值
+>
+> `zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+>
+> :::
+> ::: info 🔒 内部约束
+> 
+> 必填项
+> 
+> :::
+> ::: info ⚠️ 外部约束
+>
+> 设定值需满足 [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82)，否则无效。
+>
+> :::
+> ::: tip 📂 配置项名
+>
+> 页面最底部内容
+>
+> :::
+> ::: info 🏷️ 类型
+>
+> 代码输入框（HTML）
+>
+> :::
+> ::: info ⭐ 默认值
+>
+> 空
+>
+> :::
+> ::: info 💡 示例值
+>
+> ```html
+> 已经结束了！
+> ```
+>
+> HTML 代码也是可以的：
+> ```html
+> <code>下面已经没有东西了</code>
+> ```
+>
+> :::
+> ::: info ⚠️ 外部约束
+>
+> 合法的 HTML 代码。
+>
+> :::
+
+::: info 🧩 模板变量
+
+`theme.config?.styles?.i18n_footer_content`
 
 :::
 
@@ -1871,9 +2009,145 @@ const QuickJumpConfig = (props) => {
 
 启用后可以配置
 
-- 个人简介/公告栏内容（支持 HTML 代码块）
+- 个人简介/公告栏内容
 - 多语言个人简介/公告栏支持
   - 自定义多语言公告栏内容
+
+:::
+
+#### 多语言个人简介/公告栏支持
+
+::: info 🎯 用途
+
+控制是否启用多语言个人简介/公告栏支持。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 个人简介/公告栏](/guide/theme-configuration#个人简介-公告栏)启用时显示）  
+
+首页样式 -> 多语言个人简介/公告栏支持
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多语言个人简介/公告栏支持" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_i18n_resume_show`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后请参照[多语言个人简介/公告栏使用指南](/tutorial/i18n#多语言个人简介-公告栏使用指南)进行配置
+
+:::
+
+#### 自定义多语言公告栏内容
+
+::: info 🎯 用途
+
+设定多语言公告栏内容。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 个人简介/公告栏](/guide/theme-configuration#个人简介-公告栏)启用时显示）  
+
+首页样式 -> 自定义多语言公告栏内容
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=自定义多语言公告栏内容" />
+
+:::
+::: info 🏷️ 类型
+
+重复器
+
+:::
+
+> [!NOTE] ⭐ 默认值
+>
+> ::: tip 📂 配置项名
+>
+> 语言代码
+>
+> :::
+> ::: info 🏷️ 类型
+>
+> 字符串
+>
+> :::
+> ::: info ⭐ 默认值
+>
+> `zh`
+>
+> :::
+> ::: info 💡 示例值
+>
+> `zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+>
+> :::
+> ::: info 🔒 内部约束
+> 
+> 必填项
+> 
+> :::
+> ::: info ⚠️ 外部约束
+>
+> 设定值需满足 [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82)，否则无效。
+>
+> :::
+> ::: tip 📂 配置项名
+>
+> 个人简介/公告栏内容
+>
+> :::
+> ::: info 🏷️ 类型
+>
+> 代码输入框（HTML）
+>
+> :::
+> ::: info ⭐ 默认值
+>
+> 空
+>
+> :::
+> ::: info 💡 示例值
+>
+> ```html
+> 欢迎大家访问此站点！
+> ```
+>
+> HTML 代码也是可以的：
+> ```html
+> <code>支持填写 HTML 代码</code>
+> ```
+>
+> :::
+> ::: info ⚠️ 外部约束
+>
+> 合法的 HTML 代码。
+>
+> :::
+
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.i18n_resume`
 
 :::
 

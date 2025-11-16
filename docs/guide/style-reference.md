@@ -20,13 +20,19 @@ import DefaultRender from '../.vitepress/components/DefaultRender.vue';
 
 ## 样式适用范围说明
 
+::: details
+
 相关文档：[模板文件与访问路径映射](/reference/template-map)
 
 - <Badge type="tip" text="通用样式" /> 适用模板文件范围：每一页。
-- <Badge type="tip" text="内容样式" /> 适用模板文件范围：`archives.html`, `category.html`, `links.html`, `moments.html`, `moment.html`, `page.html`, `photos.html`, `post.html(文章页)`, `tag.html`. `5xx.html`, `404.html`。CSS 选择器为 `.content`。
+- <Badge type="tip" text="内容样式" /> 适用模板文件范围：`archives.html`, `category.html`, `links.html`, `moments.html`, `moment.html`, `page.html`, `photos.html`, `post.html`, `tag.html`. `5xx.html`, `404.html`。CSS 选择器为 `.content`。
 - <Badge type="tip" text="文章样式" /> 适用模板文件范围：`author.html`, `links.html`, `moment.html`, `moments.html`, `page.html`, `photos.html`, `post.html`, `qrcode.html`, `5xx.html`, `404.html`。CSS 选择器为 `article .content`。
 
+:::
+
 ## 如何在编辑器中使用 HTML 写法
+
+::: details
 
 - 在默认编辑器的使用方法：
   1. 需启用 [Markdown / HTML 内容块插件](https://github.com/halo-sigs/plugin-hybrid-edit-block)([应用市场页面](https://www.halo.run/store/apps/app-NgHnY))。
@@ -34,6 +40,8 @@ import DefaultRender from '../.vitepress/components/DefaultRender.vue';
 - 在 Vditor 编辑器的使用方法：
   1. 需启用 [Vditor 编辑器插件](https://github.com/justice2001/halo-plugin-vditor)([应用市场页面](https://www.halo.run/store/apps/app-uBcYw))，并进入文章编辑页，将文章编辑器设置为 Vditor 编辑器。
   2. Vditor 编辑器原生支持 HTML 标签，直接编写即可。
+
+:::
 
 ## 扩展样式快速检索 <Badge type="warning" text="扩展样式" />
 

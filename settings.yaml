@@ -540,9 +540,10 @@ spec:
               validation: "required"
             - $formkit: code
               name: footer_content
-              label: 页面最底部内容（支持 HTML 代码块）
+              label: 页面最底部内容
               language: html
               height: 150px
+              help: 支持 HTML 代码块
         - $formkit: checkbox
           name: is_h3_underline
           label: 为三级标题添加下划线
@@ -646,9 +647,10 @@ spec:
         - $formkit: code
           name: resume
           if: "$is_resume_show === true"
-          label: 个人简介/公告栏内容（支持 HTML 代码块）
+          label: 个人简介/公告栏内容
           language: html
           height: 150px
+          help: 支持 HTML 代码块
         - $formkit: checkbox
           name: is_i18n_resume_show
           label: 多语言个人简介/公告栏支持
@@ -666,9 +668,10 @@ spec:
               validation: "required"
             - $formkit: code
               name: resume
-              label: 个人简介/公告栏内容（支持 HTML 代码块）
+              label: 个人简介/公告栏内容
               language: html
               height: 150px
+              help: 支持 HTML 代码块
         - $formkit: checkbox
           name: is_show_find_me_left_text
           label: 社交资料图标左侧文字
