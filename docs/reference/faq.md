@@ -44,7 +44,11 @@ outline: deep
 
 站点根标签 `<html>` 的 `lang` 属性设定优先级：
 
+<!-- markdownlint-disable MD013 -->
+
 1. [文章](/guide/metadata-configuration#文章页面标题)、[分类](/guide/metadata-configuration#分类页面标题)、[标签](/guide/metadata-configuration#标签元数据)、[页面](/guide/metadata-configuration#页面元数据)元数据中明确指定的 `language` 元数据。
 2. URL 查询参数 `?lang=`。
 3. 主题设置中的[默认页面语言](/guide/theme-configuration#默认页面语言)。
 4. 若上述都为空，则回退到 `zh`。
+
+<!-- markdownlint-enable MD013 -->

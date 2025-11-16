@@ -107,6 +107,7 @@ pnpm release
 ### 其他指令
 
 检查项目依赖是否过时
+
 ```bash
 pnpm -r outdated
 ```

@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+<!-- markdownlint-disable MD033 -->
+
 # 安全防护
 
 <script setup>
