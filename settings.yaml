@@ -137,7 +137,7 @@ spec:
           name: color_schema
           id: color_schema_init
           label: 配色方案
-          help: 此项无法显示所选项是正常现象，实际会正常生效。（对于启用”浅色/深色模式切换按钮”的情况来说，这项决定了网站刚加载完成时的配色方案。）
+          help: 此项无法显示所选项是正常现象，实际会正常生效。（对于启用“深浅色模式切换按钮”的情况来说，这项决定了网站刚加载完成时的配色方案。）
           value: { theme: "auto", color-scheme: "auto" }
           options:
             - label: "跟随系统 - 绿"
@@ -226,7 +226,7 @@ spec:
                 }
         - $formkit: checkbox
           name: is_show_color_scheme_toggle_button
-          label: 浅色/深色模式切换按钮
+          label: 深浅色模式切换按钮
           value: false
           help: （切换此项后，请点击下方保存按钮，再之后刷新此页面）若启用此项，将在大标题旁显示明暗模式切换按钮。并且在 浅色模式 -> 深色模式 -> 自动模式 -> 浅色模式 中自动切换。注：“自动模式配色方案”选择一种浅色方案即可禁用自动模式。（具体运行逻辑请查看文档）
         - $formkit: select

@@ -616,7 +616,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-- 对于启用[浅色/深色模式切换按钮](#浅色-深色模式切换按钮)的情况，这项决定了网站刚加载完成时的默认配色方案。
+- 对于启用[深浅色模式切换按钮](#深浅色模式切换按钮)的情况，这项决定了网站刚加载完成时的默认配色方案。
 - 选择"自定义配色"时，需要配合[自定义配色方案](#自定义配色方案)使用。
 
 :::
@@ -764,7 +764,7 @@ const QuickJumpConfig = (props) => {
 >
 > :::
 
-### 浅色/深色模式切换按钮
+### 深浅色模式切换按钮
 
 ::: info 🎯 用途
 
@@ -774,12 +774,12 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-总体样式 -> 浅色/深色模式切换按钮
+总体样式 -> 深浅色模式切换按钮
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=浅色/深色模式切换按钮" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=深浅色模式切换按钮" />
 
 :::
 ::: info 🏷️ 类型
@@ -2090,7 +2090,7 @@ const QuickJumpConfig = (props) => {
 
 :::
 
-### 段落首行缩进
+### 文档段落首行缩进
 
 ::: info 🎯 用途
 
@@ -2751,7 +2751,7 @@ const QuickJumpConfig = (props) => {
 
 ## 分类详情页样式
 
-### 文章列表显示文章阅读量
+### 分类详情页文章列表显示文章阅读量
 
 ::: info 🎯 用途
 
@@ -2911,7 +2911,7 @@ const QuickJumpConfig = (props) => {
 
 ## 标签详情页样式
 
-### 文章列表显示文章阅读量
+### 标签详情页文章列表显示文章阅读量
 
 ::: info 🎯 用途
 
@@ -3107,7 +3107,7 @@ const QuickJumpConfig = (props) => {
 
 :::
 
-### 段落首行缩进
+### 自定义页面段落首行缩进
 
 ::: info 🎯 用途
 
