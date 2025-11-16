@@ -7,15 +7,15 @@ outline: deep
 <script setup>
 import { ref, computed } from 'vue'
 
-const urlToEncode = ref('') // 用户输入的URL，用于base64编码
+const urlToEncode = ref('') // 用户输入的 URL，用于 base64 编码
 
 const encodedUrl = computed(() => {
   const url = urlToEncode.value.trim()
   if (!url) return ''
   try {
-    return btoa(url) // 将URL编码为base64
+    return btoa(url) // 将 URL 编码为 base64
   } catch (e) {
-    return '无效URL'
+    return '无效 URL'
   }
 })
 </script>
@@ -35,7 +35,7 @@ const encodedUrl = computed(() => {
 ::: info URL 转 Base64
 
 <input v-model="urlToEncode" placeholder="请输入 URL 进行 Base64编码。例：https://howiehz.top" style="width:100%" />
-<p v-if="encodedUrl">Base64 编码结果: {{ encodedUrl }}</p>
+<p v-if="encodedUrl">Base64 编码结果：{{ encodedUrl }}</p>
 
 :::
 
