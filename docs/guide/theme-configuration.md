@@ -1353,7 +1353,6 @@ const QuickJumpConfig = (props) => {
 
 :::
 
-
 #### 多语言页面最底部内容支持
 
 ::: info 🎯 用途
@@ -1363,7 +1362,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-（[首页样式 -> 页面最底部内容](/guide/theme-configuration#页面最底部内容)启用时显示）  
+（[首页样式 -> 页面最底部内容](/guide/theme-configuration#页面最底部内容)启用时显示）
 
 首页样式 -> 多语言页面最底部内容支持
 
@@ -1403,7 +1402,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-（[首页样式 -> 页面最底部内容](/guide/theme-configuration#页面最底部内容)启用时显示）  
+（[首页样式 -> 页面最底部内容](/guide/theme-configuration#页面最底部内容)启用时显示）
 
 首页样式 -> 自定义多语言页面最底部内容
 
@@ -1442,9 +1441,9 @@ const QuickJumpConfig = (props) => {
 >
 > :::
 > ::: info 🔒 内部约束
-> 
+>
 > 必填项
-> 
+>
 > :::
 > ::: info ⚠️ 外部约束
 >
@@ -1473,6 +1472,7 @@ const QuickJumpConfig = (props) => {
 > ```
 >
 > HTML 代码也是可以的：
+>
 > ```html
 > <code>下面已经没有东西了</code>
 > ```
@@ -2024,7 +2024,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-（[首页样式 -> 个人简介/公告栏](/guide/theme-configuration#个人简介-公告栏)启用时显示）  
+（[首页样式 -> 个人简介/公告栏](/guide/theme-configuration#个人简介-公告栏)启用时显示）
 
 首页样式 -> 多语言个人简介/公告栏支持
 
@@ -2064,7 +2064,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-（[首页样式 -> 个人简介/公告栏](/guide/theme-configuration#个人简介-公告栏)启用时显示）  
+（[首页样式 -> 个人简介/公告栏](/guide/theme-configuration#个人简介-公告栏)启用时显示）
 
 首页样式 -> 自定义多语言公告栏内容
 
@@ -2103,9 +2103,9 @@ const QuickJumpConfig = (props) => {
 >
 > :::
 > ::: info 🔒 内部约束
-> 
+>
 > 必填项
-> 
+>
 > :::
 > ::: info ⚠️ 外部约束
 >
@@ -2134,6 +2134,7 @@ const QuickJumpConfig = (props) => {
 > ```
 >
 > HTML 代码也是可以的：
+>
 > ```html
 > <code>支持填写 HTML 代码</code>
 > ```

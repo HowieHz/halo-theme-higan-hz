@@ -41,4 +41,3 @@ const encodedUrl = computed(() => {
 
 将你的站点完整链接输入上方输入框，即可生成 Base64 编码结果。  
 开启[仅允许使用指定域名访问](/guide/theme-configuration#仅允许使用指定域名访问)后，在“域名白名单列表”和“Base64 编码后的目标链接”输入 Base64 编码后的结果，即可防御恶意克隆。
-
