@@ -41,6 +41,34 @@
 } 
 */
 
+/* 部分样式为模板动态添加，为展现默认值效果，在此手动添加 */
+body h3 {
+  text-decoration: underline;
+}
+
+article .content blockquote p {
+  margin: inherit;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+article .content blockquote p:first-child {
+  margin-top: 0;
+}
+
+article .content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+article .content blockquote::before {
+  color: var(--color-quote);
+  content: "\201C";
+  font-size: 2em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
 /* 用户代理样式表 */
 ::marker {
   font-variant-numeric: tabular-nums;

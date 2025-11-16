@@ -24,6 +24,38 @@ export default defineConfig({
       // Pagefind search plugin
       pagefindPlugin({
         customSearchQuery: chineseSearchOptimize,
+        showDate: (date: number, lang: string) => {
+          const now = Date.now();
+          const diff = date - now;  // 正值表示未来，负值表示过去
+          const sign = Math.sign(diff);
+          const absDiff = Math.abs(diff);
+
+          const rtf = new Intl.RelativeTimeFormat(lang, { numeric: "auto" });
+
+          // 时间单位及其对应的毫秒数
+          if (absDiff < 60000) {  // 小于 1 分钟
+            const timeDiff = sign * Math.floor(absDiff / 1000);
+            return rtf.format(timeDiff, "second");
+          } else if (absDiff < 3600000) {  // 小于 1 小时
+            const timeDiff = sign * Math.floor(absDiff / 60000);
+            return rtf.format(timeDiff, "minute");
+          } else if (absDiff < 86400000) {  // 小于 1 天
+            const timeDiff = sign * Math.floor(absDiff / 3600000);
+            return rtf.format(timeDiff, "hour");
+          } else if (absDiff < 604800000) {  // 小于 1 周
+            const timeDiff = sign * Math.floor(absDiff / 86400000);
+            return rtf.format(timeDiff, "day");
+          } else if (absDiff < 2592000000) {  // 小于 30 天
+            const timeDiff = sign * Math.floor(absDiff / 604800000);
+            return rtf.format(timeDiff, "week");
+          } else if (absDiff < 31536000000) {  // 小于 365 天
+            const timeDiff = sign * Math.floor(absDiff / 2592000000);
+            return rtf.format(timeDiff, "month");
+          } else {  // 默认按年为单位
+            const timeDiff = sign * Math.floor(absDiff / 31536000000);
+            return rtf.format(timeDiff, "year");
+          }
+        },
         locales: {
           root: {
             btnPlaceholder: "搜索",
@@ -40,6 +72,7 @@ export default defineConfig({
             placeholder: "Search Docs...",
             emptyText: "No results",
             heading: "Total {{searchResult}} results",
+            showDate: true,
           },
         },
       }),

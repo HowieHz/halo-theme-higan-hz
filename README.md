@@ -411,7 +411,7 @@ Lighthouse 测试结果：
 
 #### 增加于“相册页样式”
 
-[适配对应 plugin-photos 插件](https://howiehz.top/halo-theme-higan-hz/guide/plugin-compatibility#plugin-photos)
+[适配对应 plugin-photos 插件](https://howiehz.top/halo-theme-higan-hz/guide/plugin-compatibility#图库页)
 
 1. 允许设置图片圆角宽度
 2. 允许设置图片渐入动画时间
@@ -426,7 +426,7 @@ Lighthouse 测试结果：
 
 #### 增加于“瞬间页样式”
 
-[适配对应 plugin-moments 插件](https://howiehz.top/halo-theme-higan-hz/guide/plugin-compatibility#plugin-moments)
+[适配对应 plugin-moments 插件](https://howiehz.top/halo-theme-higan-hz/guide/plugin-compatibility#瞬间页)
 
 1. 允许显示帖文预计阅读时间
 2. 允许显示帖文字数统计

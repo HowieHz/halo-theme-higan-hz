@@ -12,7 +12,13 @@ import DefaultRender from '../.vitepress/components/DefaultRender.vue';
 
 此文档展示主题基本样式、扩展样式及其写法。
 
-::: info 样式适用范围说明
+::: tip
+
+展示样式为主题默认值，部分样式可根据实际需要调整。
+
+:::
+
+## 样式适用范围说明
 
 相关文档：[模板文件与访问路径映射](/reference/template-map)
 
@@ -20,9 +26,7 @@ import DefaultRender from '../.vitepress/components/DefaultRender.vue';
 - <Badge type="tip" text="内容样式" /> 适用模板文件范围：`archives.html`, `category.html`, `links.html`, `moments.html`, `moment.html`, `page.html`, `photos.html`, `post.html(文章页)`, `tag.html`. `5xx.html`, `404.html`。CSS 选择器为 `.content`。
 - <Badge type="tip" text="文章样式" /> 适用模板文件范围：`author.html`, `links.html`, `moment.html`, `moments.html`, `page.html`, `photos.html`, `post.html`, `qrcode.html`, `5xx.html`, `404.html`。CSS 选择器为 `article .content`。
 
-:::
-
-::: info 如何在编辑器中使用 HTML 写法
+## 如何在编辑器中使用 HTML 写法
 
 - 在默认编辑器的使用方法：
   1. 需启用 [Markdown / HTML 内容块插件](https://github.com/halo-sigs/plugin-hybrid-edit-block)([应用市场页面](https://www.halo.run/store/apps/app-NgHnY))。
@@ -30,8 +34,6 @@ import DefaultRender from '../.vitepress/components/DefaultRender.vue';
 - 在 Vditor 编辑器的使用方法：
   1. 需启用 [Vditor 编辑器插件](https://github.com/justice2001/halo-plugin-vditor)([应用市场页面](https://www.halo.run/store/apps/app-uBcYw))，并进入文章编辑页，将文章编辑器设置为 Vditor 编辑器。
   2. Vditor 编辑器原生支持 HTML 标签，直接编写即可。
-
-:::
 
 ## 扩展样式快速检索 <Badge type="warning" text="扩展样式" />
 
@@ -978,3 +980,94 @@ This is normal text <small>This is small text</small> This is normal text
 <div class="light">这段内容只在亮色模式/自动模式 (亮色) 下显示。试试切换页面主题。</div>
 <div class="dark">这段内容只在暗色模式/自动模式 (暗色) 下显示。试试切换页面主题。</div>
 </DefaultRender>
+
+### Mermaid 适配明暗主题切换
+
+以下方法均为 HTML 标签写法。  
+相关链接：[如何在编辑器中使用 HTML 写法](#如何在编辑器中使用-html-写法)
+
+::: details 方法一 <Badge type="tip" text="默认编辑器可用" /> <Badge type="tip" text="Vditor 编辑器可用" />  
+需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+图表只写一遍，自动生成浅色/深色模式下两种图表。  
+缺点：不兼容 Vditor 编辑器的实时预览。
+
+<!-- prettier-ignore-start -->
+```html
+<div class="mermaid auto">
+[[图表正文]]
+</div>
+```
+<!-- prettier-ignore-end -->
+
+:::
+::: details 方法二 <Badge type="tip" text="默认编辑器可用" />  
+需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+手动管理浅色/深色模式下的图表。
+
+<!-- prettier-ignore-start -->
+```html
+<div class="mermaid dark">
+%%{init: { "theme": "dark" } }%%
+[[图表正文]]
+</div>
+
+<div class="mermaid light">
+%%{init: { "theme": "light" } }%%
+[[图表正文]]
+</div>
+```
+<!-- prettier-ignore-end -->
+:::
+::: details 方法三 <Badge type="tip" text="Vditor 编辑器可用" />  
+需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+原理：由于主题的 Mermaid 初始化先加载，可在 Vditor 自带的 Mermaid 渲染前抢先渲染生成。  
+缺点：一张图会多被渲染一遍（被 Vditor 自带的 Mermaid 多渲染一遍）。  
+优点：兼容 Vditor 编辑器的实时预览。
+注意：出现的空行不可省略，没出现空行的也不能多添加空行。建议使用分屏预览模式编辑。
+
+<!-- prettier-ignore-start -->
+````html
+<div class="mermaid auto">
+
+```mermaid
+[[图表正文]]
+```
+
+</div>
+````
+<!-- prettier-ignore-end -->
+:::
+::: details 方法四 <Badge type="tip" text="Vditor 编辑器可用" />  
+需关闭 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+缺点：同样内容要复制粘贴一遍。由于是完全使用 Vditor 自带的渲染，所以主题设置中有关 Mermaid 的设置会失效。会继承上游的 bug，如 [mermaid-js/mermaid@5741](https://github.com/mermaid-js/mermaid/issues/5741)。  
+优点：兼容 Vditor 编辑器的实时预览，兼容性最好。完全使用 Vditor 自带的渲染，和预览表现一致。
+
+<!-- prettier-ignore-start -->
+````html
+<div class="light">
+
+```mermaid
+---
+title: [[图表标题]]
+---
+%%{init: { "theme": "light" } }%%
+[[图表正文]]
+```
+
+</div>
+
+<div class="dark">
+
+```mermaid
+---
+title: [[图表标题]]
+---
+%%{init: { "theme": "dark" } }%%
+[[图表正文]]
+```
+
+</div>
+````
+<!-- prettier-ignore-end -->
+
+:::

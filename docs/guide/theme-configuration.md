@@ -6,16 +6,10 @@ outline: deep
 
 # 主题配置项
 
-::: danger
-
-此页面尚未完成
-
-:::
-
 <script setup>
 import { ref, computed, h } from 'vue'
 
-const inputBaseUrl = ref('') // 用户输入的基础链接
+const inputBaseUrl = ref('http://127.0.0.1:8090/') // 用户输入的基础链接
 
 const canJump = computed(() => inputBaseUrl.value.trim().length > 0)
 
@@ -48,7 +42,7 @@ function prefixHref(href) {
 const QuickJumpConfig = (props) => {
   const to = props.to
   const label = props.label ?? to
-  const ariaLabel = props.ariaLabel ?? to
+  const ariaLabel = props.ariaLabel ?? label
   const href = prefixHref(to)
   const showRealUrl = props.showRealUrl ?? false
 
@@ -117,7 +111,7 @@ const QuickJumpConfig = (props) => {
 
 :::
 
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 此配置项的值类型。
 
@@ -126,7 +120,10 @@ const QuickJumpConfig = (props) => {
 - 字符串：一串字符，如 `abc123`、`zh-CN`。
 - 整数：整数，如 `-1`、`0`、`100`。
 - 浮点数：带小数点的数，如 `1.2`、`0.3`、`4.5`。
-- 布尔值：`true` 或 `false`
+- 布尔值：`true` 或 `false`。体现为一个单选框🔘，打勾☑️就是 `true`，不勾🔘就是 `false`。
+- 选项：提供了固定选项，直接选择即可。
+- 重复器：可重复一组输入。可增加组，移除组，交换任意组顺序。
+- 代码输入框（编程语言）：提供一个多行的代码输入框，会按照指定编程语言进行高亮。
 
 <!-- - 数组：多个值的列表，如 `[1, 2, 3]`
 - 对象：键值对集合，如 `{name: "张三", age: 20}`
@@ -191,7 +188,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=默认页面语言" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 字符串
 
@@ -204,11 +201,6 @@ const QuickJumpConfig = (props) => {
 ::: info 💡 示例值
 
 `zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
-
-:::
-::: info 🔒 内部约束
-
-无
 
 :::
 ::: info ⚠️ 外部约束
@@ -250,7 +242,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=多语言功能前缀匹配模式" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -267,7 +259,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-具体使用方法请参考多语言文档。
+具体使用方法请参考[前缀匹配模式说明](/tutorial/i18n.md#前缀匹配模式说明)。
 
 :::
 
@@ -288,7 +280,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=浏览器语言自动跳转" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -305,7 +297,49 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-启用此项后，若浏览器语言与默认页面语言不同，且存在对应语言的页面，将自动跳转。
+启用此项后，若浏览器语言与默认页面语言不同，且浏览器语言存在于“允许跳转的目标区域语言代码列表”，将自动跳转到对应页面。
+
+启用后可配置：
+
+- 允许跳转的目标区域语言代码列表
+
+:::
+
+### 多语言菜单支持
+
+::: info 🎯 用途
+
+启用多语言菜单支持，允许在菜单中显示不同语言的内容。
+
+:::
+::: info 📂 配置项位置
+
+全局 -> 多语言菜单支持
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=多语言菜单支持" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.global?.is_i18n_menu_show`
+
+:::
+::: info ℹ️ 补充信息
+
+具体使用方法请查看[多语言菜单使用指南](/tutorial/i18n#多语言菜单使用指南)。
 
 :::
 
@@ -323,10 +357,10 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=CSP:upgrade-insecure-requests" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=CSP%3Aupgrade%2Dinsecure%2Drequests" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -339,6 +373,81 @@ const QuickJumpConfig = (props) => {
 ::: info 🧩 模板变量
 
 `theme.config?.global?.upgrade_insecure_requests`
+
+:::
+
+### 仅允许使用指定域名访问
+
+::: info 🎯 用途
+
+防止站点被恶意镜像后的流量流失，仅允许白名单中的域名访问。
+
+:::
+::: info 📂 配置项位置
+
+全局 -> 仅允许使用指定域名访问
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=仅允许使用指定域名访问" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.global?.anti_mirror_site`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后可配置：
+
+- 域名白名单列表（需要 Base64 编码）
+- 目标链接（Base64 编码）
+- 是否保留路径和查询参数
+
+:::
+
+### 自定义资源位置地址
+
+::: info 🎯 用途
+
+指定资源将使用自定义的资源位置地址，而不是主题默认的地址。
+
+:::
+::: info 📂 配置项位置
+
+全局 -> 自定义资源位置地址
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=自定义资源位置地址" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.global?.is_custom_resource_locations`
 
 :::
 
@@ -356,10 +465,10 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=instant.page 支持" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=instant.page%20支持" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -389,10 +498,10 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Mermaid 支持" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Mermaid%20支持" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -409,6 +518,8 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
+明暗切换
+
 启用后需要配置以下子项：
 
 - Mermaid CSS 选择器（默认：`.content .mermaid`）
@@ -417,136 +528,7 @@ const QuickJumpConfig = (props) => {
 
 :::
 
-### 多语言菜单支持
-
-::: info 🎯 用途
-
-启用多语言菜单支持，允许在菜单中显示不同语言的内容。
-
-:::
-::: info 📂 配置项位置
-
-全局 -> 多语言菜单支持
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=多语言菜单支持" />
-
-:::
-::: info 🏷️ 值类型
-
-布尔值
-
-:::
-::: info ⭐ 默认值
-
-`false`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.global?.is_i18n_menu_show`
-
-:::
-::: info ℹ️ 补充信息
-
-具体使用方法请查看文档。
-
-:::
-
-### 仅允许使用指定域名访问
-
-::: info 🎯 用途
-
-防止站点被恶意镜像后的流量流失，仅允许白名单中的域名访问。
-
-:::
-::: info 📂 配置项位置
-
-全局 -> 仅允许使用指定域名访问
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=仅允许使用指定域名访问" />
-
-:::
-::: info 🏷️ 值类型
-
-布尔值
-
-:::
-::: info ⭐ 默认值
-
-`false`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.global?.anti_mirror_site`
-
-:::
-::: info ℹ️ 补充信息
-
-启用后需要配置：
-
-- 域名白名单列表（需要 Base64 编码）
-- 目标链接（Base64 编码）
-- 是否保留路径和查询参数
-
-:::
-
 ## 总体样式
-
-### 配色方案
-
-::: info 🎯 用途
-
-设置网站的整体配色方案，支持多种内置主题和自定义配色。
-
-:::
-::: info 📂 配置项位置
-
-总体样式 -> 配色方案
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=配色方案" />
-
-:::
-::: info 🏷️ 值类型
-
-对象
-
-:::
-::: info ⭐ 默认值
-
-`{ theme: "auto", color-scheme: "auto" }`（跟随系统 - 绿）
-
-:::
-::: info 💡 示例值
-
-- `{ theme: "light", color-scheme: "light" }`（浅色 - 绿）
-- `{ theme: "dark", color-scheme: "dark" }`（暗色 - 绿）
-- `{ theme: "light-blue", color-scheme: "light" }`（浅色 - 蓝）
-- `{ theme: "dark-blue", color-scheme: "dark" }`（暗色 - 蓝）
-- `{ theme: "gray", color-scheme: "light" }`（浅色 - 灰粉）
-- `{ theme: "custom", color-scheme: "auto" }`（自定义配色）
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.styles?.color_schema`
-
-:::
-::: info ℹ️ 补充信息
-
-- 对于启用"浅色/深色模式切换按钮"的情况，这项决定了网站刚加载完成时的配色方案。
-- 选择"自定义配色"时，需要配合"自定义配色方案识别码"使用。
-
-:::
 
 ### 启用自定义字体文件
 
@@ -565,7 +547,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=启用自定义字体文件" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -582,10 +564,250 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-启用后需要配置：
+启用后可配置：
 
-- 自定义字体文件：上传 .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt 字体文件
+- 自定义字体文件：选择上传到附件的 `.woff2`/`.woff`/`.ttf`/`.otf`/`.eot`/`.ttc`/`.otc`/`.sfnt` 字体文件
 - 字体名称：填写字体全名或 PostScript 名（如：My Custom Font Regular 或 MyCustomFont-Regular）
+
+:::
+
+### 配色方案
+
+::: info 🎯 用途
+
+设置网站的整体配色方案，支持多种内置主题和自定义配色。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 配色方案
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=配色方案" />
+
+:::
+::: info 🏷️ 类型
+
+选项
+
+:::
+::: info ⭐ 默认值
+
+`跟随系统 - 绿`（内部值 `{ theme: "auto", color-scheme: "auto" }`）
+
+:::
+::: info 💡 其余选项
+
+- `浅色 - 绿`（内部值 `{ theme: "light", color-scheme: "light" }`）
+- `暗色 - 绿`（内部值 `{ theme: "dark", color-scheme: "dark" }`）
+- `跟随系统 - 蓝`（内部值 `{ theme: "auto", color-scheme: "auto" }`）
+- `浅色 - 蓝`（内部值 `{ theme: "auto-blue", color-scheme: "light" }`）
+- `暗色 - 蓝`（内部值 `{ theme: "dark-blue", color-scheme: "dark" }`）
+- `浅色 - 灰粉`（内部值 `{ theme: "gray", color-scheme: "light" }`）
+- `自定义配色`（内部值 `{ theme: "custom", color-scheme: "auto" }`）
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.color_schema`
+
+:::
+::: info ℹ️ 补充信息
+
+- 对于启用[浅色/深色模式切换按钮](#浅色-深色模式切换按钮)的情况，这项决定了网站刚加载完成时的默认配色方案。
+- 选择"自定义配色"时，需要配合[自定义配色方案](#自定义配色方案)使用。
+
+:::
+
+### 自定义配色方案
+
+::: info 🎯 用途
+
+设置自定义配色方案。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 自定义配色方案
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=自定义配色方案" />
+
+:::
+::: info 🏷️ 类型
+
+重复器
+
+:::
+> [!NOTE] ⭐ 默认值
+>
+> ::: tip 📂 配置项名
+> 
+> 自定义配色方案识别码
+> 
+> :::
+> ::: info 🏷️ 类型
+> 
+> 数字
+> 
+> :::
+> ::: info ⭐ 默认值
+> 
+> `1`
+> 
+> :::
+> ::: info ℹ️ 补充信息
+>
+> 唯一识别码，请勿重复。
+>
+> :::
+> ::: tip 📂 配置项名
+> 
+> 主题色彩模式
+> 
+> :::
+> ::: info 🏷️ 类型
+> 
+> 选项
+> 
+> :::
+> ::: info ⭐ 默认值
+> 
+> `深色模式`（内部值 `dark`）
+> 
+> :::
+> ::: info 💡 其余选项
+> 
+> - `浅色模式`（内部值 `light`）
+> - `自动模式`（内部值 `auto`）
+> 
+> :::
+> ::: tip 📂 配置项名
+> 
+> CSS 原始输出模式
+> 
+> :::
+> ::: info 🏷️ 类型
+> 
+> 布尔值
+> 
+> :::
+> ::: info ⭐ 默认值
+> 
+> `false`
+> 
+> :::
+> ::: info ℹ️ 补充信息
+>
+> 关闭此项后，仅需填写自定义 CSS 变量的部分。  
+> 输出时会自动输出在对应 CSS 选择器中（选择器为 `html[theme="theme-{识别码}"]`）。
+>
+> :::
+> ::: tip 📂 配置项名
+> 
+> 自定义 CSS 变量
+> 
+> :::
+> ::: info 🏷️ 类型
+> 
+> 代码输入框（CSS）
+> 
+> :::
+> ::: info ⭐ 默认值
+> 
+> ```plaintext
+> --color-accent-1: #2bbc8a;
+> --color-accent-2: #eee;
+> --color-accent-3: #ccc;
+> --color-border: #908d8d;
+> --color-divide: #616161;
+> --color-footer-mobile-1: #a4a3a3;
+> --color-footer-mobile-2: #27292b;
+> --color-footer-mobile-3: #212326;
+> --color-quote: #ccffb6;
+> --color-scrollbar: #999;
+> --color-text: #d5d7d8;
+> --color-time: #adaeaf;
+> --toc-level-2: #e3e3e3;
+> --toc-level-3: #b0b0b0;
+> --toc-level-4: #636363;
+> --color-avatar-border: #212326;
+> --color-background: #1d1f21;
+> --color-background-code: #212326;
+> --color-background-numbers: 29, 31, 33;
+> --color-card-hover: #212326;
+> --color-card-hover-numbers: 33, 35, 38;
+> --color-link-hover: #d480aa;
+> --color-link-hover-70-alpha: rgba(212,128,170,0.7);
+> comment-widget {
+>   --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
+>   --halo-comment-widget-component-form-input-border-color: #636363 !important;
+> }
+> ```
+> 
+> :::
+> ::: info ⚠️ 外部约束
+>
+> 开启 `CSS 原始输出模式` 时，你填写的内容需要是合法的 CSS 代码。  
+> 关闭 `CSS 原始输出模式` 时，以下内容需要是合法的 CSS 代码：
+> ```css
+> html[theme="theme-{识别码}"] {
+>   /* 你填写的内容 */
+> }
+> ```
+> :::
+
+### 浅色/深色模式切换按钮
+
+::: info 🎯 用途
+
+若启用此项，将在大标题旁显示明暗模式切换按钮。  
+切换逻辑为：浅色模式 -> 深色模式 -> 自动模式 -> 浅色模式。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 浅色/深色模式切换按钮
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=浅色/深色模式切换按钮" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_show_color_scheme_toggle_button`
+
+:::
+::: info ℹ️ 补充信息
+
+“自动模式配色方案”选择与“浅色模式配色方案”相同即可禁用自动模式。  
+切换逻辑将变为：浅色模式 -> 深色模式 -> 浅色模式。
+
+启用后可配置：
+
+- 自动模式配色方案
+- 浅色模式配色方案
+- 深色模式配色方案
+
+相关说明：
+
+[Mermaid 适配明暗主题切换](/guide/style-reference#mermaid-适配明暗主题切换)
 
 :::
 
@@ -606,30 +828,157 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=字体大小" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
-字符串
+选项
 
 :::
 ::: info ⭐ 默认值
 
-`small`（小字体）
+`小字体`（内部值 `small`）
 
 :::
-::: info 💡 示例值
+::: info 💡 其余选项
 
-- `small`（小字体）
-- `normal`（常规）
-- `large`（大字体）
+- `常规`（内部值 `normal`）
+- `大字体`（内部值 `large`）
 
 :::
 ::: info 🧩 模板变量
 
 `theme.config?.styles?.text_size`
 
-- 允许全部 CSS 长度单位。
-- 如不开启"自定义内容区域最大宽度"，内容区域最大宽度会随着页面宽度变化而变化，但可能出现内容整体偏左的现象。
-- 建议关闭"自定义内容区域最大宽度"的同时开启"内容区域最小宽度"和"自定义内容区域宽度属性"并保持默认值。
+:::
+
+### 自定义内容区域最大宽度
+
+::: info 🎯 用途
+
+是否定义内容区域最大宽度。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 自定义内容区域最大宽度
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=自定义内容区域最大宽度" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_max_width_settings`
+
+:::
+::: info ℹ️ 补充信息
+
+若关闭此项，内容区域最大宽度会随着页面宽度变化而变化，但可能出现内容整体偏左的现象。  
+若想关闭此项，建议开启"内容区域最小宽度"和"自定义内容区域宽度属性"。
+
+启用后可配置：
+
+- 内容区域最大宽度
+
+:::
+
+### 自定义内容区域最小宽度
+
+::: info 🎯 用途
+
+是否定义内容区域最小宽度。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 自定义内容区域最小宽度
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=自定义内容区域最小宽度" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_min_width_settings`
+
+:::
+::: info ℹ️ 补充信息
+
+当窗口宽度小于此此设置宽度时，实际会使用窗口宽度。以避免出现横向滚动条。
+
+启用后可配置：
+
+- 内容区域最小宽度
+- 强制应用内容区域最小宽度：
+  - 禁用时：当窗口宽度小于设定的最小宽度时，实际会使用窗口宽度。以避免出现横向滚动条。
+  - 启用时：强制使内容显示区域不小于设定的最小宽度，即使出现横向滚动条。
+
+:::
+
+### 自定义内容区域宽度属性
+
+::: info 🎯 用途
+
+是否定义内容区域宽度属性。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 自定义内容区域宽度属性
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=自定义内容区域宽度属性" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_content_width_style_settings`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后可配置：
+
+- 内容区域宽度样式
+  - 用途：使内容区域宽度为最宽的内容的宽度
+  - 类型：字符串
+  - 默认值：`fit-content`
+  - 外部约束：[文档](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/Properties/width#%E5%80%BC)
 
 :::
 
@@ -650,7 +999,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=是否显示页眉头像" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -665,12 +1014,351 @@ const QuickJumpConfig = (props) => {
 `theme.config?.styles?.is_show_header_icon`
 
 :::
+::: info ℹ️ 补充信息
+
+启用后可配置：
+
+- 自定义页眉头像：用于选择上传的图片作为页眉头像，未设置将使用默认头像 `/images/logo.png`。
+- 圆形头像
+- 灰度头像
+
+:::
+
+### 菜单中随机文章项
+
+::: info 🎯 用途
+
+控制是否在菜单显示随机文章项。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 菜单中随机文章项
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=菜单中随机文章项" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_show_random_button_in_menu`
+
+:::
+
+### 显示页眉菜单
+
+::: info 🎯 用途
+
+控制是否显示页眉菜单。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 显示页眉菜单
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=显示页眉菜单" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_show_header_menu`
+
+:::
+
+### 显示页码
+
+::: info 🎯 用途
+
+控制是否显示页码。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 显示页码
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=显示页码" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_show_page_number`
+
+:::
+
+### 页面底部站点统计信息
+
+::: info 🎯 用途
+
+控制是否显示页面底部站点统计信息。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 页面底部站点统计信息
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=页面底部站点统计信息" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_footer_site_stats_show`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后可配置：
+
+- 统计项设置
+
+:::
+
+### 页面底部主题信息
+
+::: info 🎯 用途
+
+控制是否显示页面底部主题信息。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 页面底部主题信息
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=页面底部主题信息" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_footer_theme_info_show`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后可配置：
+
+- 页面底部主题信息所展示的主题名
+- 页面底部主题信息所展示的 Halo 版本
+
+:::
+
+### 页面底部版权信息
+
+::: info 🎯 用途
+
+控制是否显示页面底部版权信息。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 页面底部版权信息
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=页面底部版权信息" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_footer_copyright_show`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后可配置：
+
+- 版权信息自定义署名
+
+:::
+
+### 强制页脚、页码在页面底部
+
+::: info 🎯 用途
+
+控制是否强制页脚、页码在页面底部。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 强制页脚、页码在页面底部
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=强制页脚、页码在页面底部" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_footer_force_bottom`
+
+:::
+
+### 页面底部菜单
+
+::: info 🎯 用途
+
+控制是否显示页面底部菜单。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 页面底部菜单
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=页面底部菜单" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_footer_menu_show`
+
+:::
+
+### 添加内容到页面最底部
+
+::: info 🎯 用途
+
+控制添加内容到页面最底部。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 添加内容到页面最底部
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=添加内容到页面最底部" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_footer_content_show`
+
+:::
+::: info ℹ️ 补充信息
+
+在 Halo CMS 的后台（<QuickJumpConfig to="/console/settings?tab=codeInjection:~:text=页脚" label="快速跳转" />）设定的页脚内容，显示位置在“主题信息”、“版权信息”、“底部菜单”之上。  
+而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。
+
+启用后可配置：
+
+- 页面最底部内容
+- 自定义多语言页面最底部内容
+
+:::
 
 ### 为三级标题添加下划线
 
 ::: info 🎯 用途
 
-在三级标题（h3）下方显示下划线装饰，让标题更加突出。
+启用时，在三级标题（h3）下方显示下划线装饰，让标题更加突出。
 
 :::
 ::: info 📂 配置项位置
@@ -683,7 +1371,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=为三级标题添加下划线" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -716,7 +1404,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=引用块保留空行" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -733,7 +1421,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-引用块在 Markdown 中使用 `>` 表示。
+引用块写法请参考[写作样式](/guide/style-reference#引用块)。
 
 :::
 
@@ -754,7 +1442,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=引用块前添加引号" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -787,7 +1475,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=引用块后添加引号" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -803,16 +1491,16 @@ const QuickJumpConfig = (props) => {
 
 :::
 
-### 表格每行底部的表格线
+### 表格每行底部的表格线（除表头）
 
 ::: info 🎯 用途
 
-为表格每行底部添加表格线（除去表头）。
+是否为表格每行底部添加表格线（除表头）。
 
 :::
 ::: info 📂 配置项位置
 
-总体样式 -> 表格每行底部的表格线（除去表头）
+总体样式 -> 表格每行底部的表格线（除表头）
 
 :::
 ::: info ⚡ 快速跳转
@@ -820,7 +1508,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=表格每行底部的表格线" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -835,12 +1523,19 @@ const QuickJumpConfig = (props) => {
 `theme.config?.styles?.is_show_the_table_bottom_border`
 
 :::
+::: info ℹ️ 补充信息
+
+启用后可配置：
+
+- 表格每行底部的表格线宽度（除表头）
+
+:::
 
 ### 标题上边距倍率
 
 ::: info 🎯 用途
 
-设置标题（h1, h2 等）的上边距倍率。
+设置[标题](/guide/style-reference#标题)的上边距 (`margin-top`) 倍率。
 
 :::
 ::: info 📂 配置项位置
@@ -853,9 +1548,9 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=标题上边距倍率" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
-浮点数
+浮点数/整数
 
 :::
 ::: info ⭐ 默认值
@@ -888,7 +1583,7 @@ const QuickJumpConfig = (props) => {
 
 ::: info 🎯 用途
 
-设置标题（h1, h2 等）的下边距倍率。
+设置[标题](/guide/style-reference#标题)的下边距 (`margin-bottom`) 倍率。
 
 :::
 ::: info 📂 配置项位置
@@ -901,9 +1596,9 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=标题下边距倍率" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
-浮点数
+浮点数/整数
 
 :::
 ::: info ⭐ 默认值
@@ -931,7 +1626,7 @@ const QuickJumpConfig = (props) => {
 
 ::: info 🎯 用途
 
-设置段落（p 标签）的上边距倍率。
+设置[段落](/guide/style-reference#段落)的上边距倍率。
 
 :::
 ::: info 📂 配置项位置
@@ -944,9 +1639,9 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=段落上边距倍率" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
-浮点数
+浮点数/整数
 
 :::
 ::: info ⭐ 默认值
@@ -974,7 +1669,7 @@ const QuickJumpConfig = (props) => {
 
 ::: info 🎯 用途
 
-设置段落（p 标签）的下边距倍率。
+设置[段落](/guide/style-reference#段落)的下边距倍率。
 
 :::
 ::: info 📂 配置项位置
@@ -987,9 +1682,9 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=段落下边距倍率" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
-浮点数
+浮点数/整数
 
 :::
 ::: info ⭐ 默认值
@@ -1019,7 +1714,7 @@ const QuickJumpConfig = (props) => {
 
 ::: info 🎯 用途
 
-自定义主页的 HTML 标题（显示在浏览器标签页上）。
+自定义主页的 HTML 标题（会显示在浏览器标签页上）。
 
 :::
 ::: info 📂 配置项位置
@@ -1029,17 +1724,17 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=主页 HTML 标题" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=主页%20HTML%20标题" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 字符串
 
 :::
 ::: info ⭐ 默认值
 
-空（使用站点标题）
+空
 
 :::
 ::: info 🧩 模板变量
@@ -1049,28 +1744,28 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-如置空则取值自"Halo 设置 - 基本设置 - 站点标题"。
+如置空则取值 Halo CMS 的后台（<QuickJumpConfig to="/console/settings:~:text=站点标题" label="快速跳转" />）设定的站点标题。
 
 :::
 
-### 一言 (hitokoto)
+### 一言（hitokoto）
 
 ::: info 🎯 用途
 
-在首页显示一言（随机句子）服务的内容。
+是否在首页显示一言（hitokoto）随机句子服务的内容。
 
 :::
 ::: info 📂 配置项位置
 
-首页样式 -> 一言 (hitokoto)
+首页样式 -> 一言（hitokoto）
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=一言 (hitokoto)" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=一言（hitokoto）" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1087,7 +1782,51 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-启用后可以配置一言链接，默认为 `https://v1.hitokoto.cn/?encode=js`。
+启用后可以配置
+
+- 一言（hitokoto）服务链接：
+  - 默认值：`https://v1.hitokoto.cn/?encode=js`
+  - 补充说明：相关信息可阅读其[文档](https://developer.hitokoto.cn/sentence/)获取
+
+:::
+
+### 自定义随机显示一句话
+
+::: info 🎯 用途
+
+是否在首页随机显示一句话。
+
+:::
+::: info 📂 配置项位置
+
+首页样式 -> 自定义随机显示一句话
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=自定义随机显示一句话" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_random_sentence_show`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后可以配置
+
+- 自定义句子内容
 
 :::
 
@@ -1108,7 +1847,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=个人简介/公告栏" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1125,7 +1864,11 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-启用后可以填写公告栏内容（支持 HTML 代码块），并支持多语言配置。
+启用后可以配置
+
+- 个人简介/公告栏内容（支持 HTML 代码块）
+- 多语言个人简介/公告栏支持
+  - 自定义多语言公告栏内容
 
 :::
 
@@ -1133,7 +1876,7 @@ const QuickJumpConfig = (props) => {
 
 ::: info 🎯 用途
 
-控制是否显示社交资料图标左侧的"Find me on"等文字。
+控制是否显示首页社交资料图标左侧的文字。
 
 :::
 ::: info 📂 配置项位置
@@ -1146,7 +1889,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=社交资料图标左侧文字" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1179,7 +1922,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=首页文章列表标题" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1212,21 +1955,20 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=主页列表布局" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
-字符串
+选项
 
 :::
 ::: info ⭐ 默认值
 
-`simple-post-list`（简洁文章列表）
+`简洁文章列表`（内部值 `simple-post-list`）
 
 :::
-::: info 💡 示例值
+::: info 💡 其余选项
 
-- `simple-post-list`（简洁文章列表）
-- `post-list-summary`（多元文章列表）
-- `moment-list-summary`（瞬间列表）
+- 多元文章列表（内部值 `post-list-summary`）
+- 瞬间列表（内部值 `moment-list-summary`）
 
 :::
 ::: info 🧩 模板变量
@@ -1236,7 +1978,31 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-"瞬间列表"需要"瞬间"插件启用方可正常使用。根据选择的布局类型，会显示不同的配置选项（如简洁列表的阅读量显示、多元列表的分类标签等）。
+"瞬间列表"需[瞬间页](/guide/plugin-compatibility#瞬间页)插件启用后方可使用。
+
+根据选择的布局类型，会显示不同的配置选项。
+
+简洁列表启用后可以配置
+
+- 显示文章阅读量
+
+多元列表启用后可以配置
+
+- 显示文章分类
+- 显示文章标签
+- 显示文章阅读量
+- 显示文章预计阅读时间
+- 显示文章字数统计
+- 显示文章摘要
+- 文章摘要行数上限
+- 跳转文章链接所用提示文字
+- 显示文章封面
+
+瞬间列表启用后可以配置
+
+- 显示条数
+- 显示条目作者头像
+- 显示条目作者昵称
 
 :::
 
@@ -1257,7 +2023,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=文章列表置顶图标" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1274,17 +2040,103 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-启用后可以配置置顶图标的位置（标题左侧或右侧），默认为右侧。
+启用后可以配置
+
+- 置顶图标的位置（标题左侧或右侧），默认为右侧。
 
 :::
 
 ## 文章页样式
 
+### 优化文章段落空行显示
+
+::: info 🎯 用途
+
+为文章内容段落添加最小高度，以显示空行。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 优化文章段落空行显示
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=优化文章段落空行显示" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_optimize_content_paragraph_spacing`
+
+:::
+::: details ℹ️ 补充信息
+
+不同 Markdown 编辑器所用解析器不同，故此配置项反映到最终渲染结果上，可能会有所不同。  
+相关链接：[babelmark3](https://babelmark.github.io/) 是一个对比不同 Markdown 解析器解析结果的网站。
+
+:::
+
+### 段落首行缩进
+
+::: info 🎯 用途
+
+为文章内容段落首行添加缩进样式。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 段落首行缩进
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=段落首行缩进" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_enable_paragraph_first_line_indent`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后可以配置
+
+- 首行缩进值
+  - 类型：字符串
+  - 默认值：`2em`（2 字符宽度）
+  - 外部约束：CSS 长度单位。如：20rem, 300px, 30vw。
+
+:::
+
 ### 文章标题大写
 
 ::: info 🎯 用途
 
-将文章标题转换为大写字母显示。
+将文章标题中字符转换为对应大写表示。
+
+如：`a` 转换为 `A`。
 
 :::
 ::: info 📂 配置项位置
@@ -1297,7 +2149,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=文章标题大写" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1317,7 +2169,7 @@ const QuickJumpConfig = (props) => {
 
 ::: info 🎯 用途
 
-在文章页面显示文章的发布时间。
+在文章页面顶部显示文章的发布时间。
 
 :::
 ::: info 📂 配置项位置
@@ -1330,7 +2182,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=文章发布时间" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1345,8 +2197,55 @@ const QuickJumpConfig = (props) => {
 `theme.config?.post_styles?.is_show_post_publish_time`
 
 :::
+::: info ℹ️ 补充信息
 
-### 显示文章阅读量
+启用后可以配置
+
+- 文章发布时间左侧文字
+
+:::
+
+### 文章更新时间
+
+::: info 🎯 用途
+
+在文章页面顶部显示文章的最后更新时间。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 文章更新时间
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=文章更新时间" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_show_post_updated_time`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后可以配置
+
+- 文章更新时间左侧文字
+
+:::
+
+### 文章阅读量
 
 ::: info 🎯 用途
 
@@ -1355,15 +2254,15 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-文章页样式 -> 显示文章阅读量
+文章页样式 -> 文章阅读量
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=显示文章阅读量" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=文章阅读量" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1376,6 +2275,321 @@ const QuickJumpConfig = (props) => {
 ::: info 🧩 模板变量
 
 `theme.config?.post_styles?.is_show_post_views`
+
+:::
+
+### 文章预计阅读时间
+
+::: info 🎯 用途
+
+在文章页面显示根据文章字数估算的阅读时间。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 文章预计阅读时间
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=文章预计阅读时间" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_show_post_estimated_reading_time`
+
+:::
+::: info ℹ️ 补充信息
+
+启用 [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动启用更准确的计量方法。
+
+:::
+
+### 文章字数统计
+
+::: info 🎯 用途
+
+在文章页面显示文章的总字数。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 文章字数统计
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=文章字数统计" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_show_post_word_count`
+
+:::
+::: info ℹ️ 补充信息
+
+启用 [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动启用更准确的计量方法。
+
+:::
+
+### 桌面端菜单中的分享按钮
+
+::: info 🎯 用途
+
+控制是否在桌面端文章页面的菜单中显示分享按钮。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 桌面端菜单中的分享按钮
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=桌面端菜单中的分享按钮" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_show_post_nav_share_button`
+
+:::
+
+### 自定义侧边目录最大宽度
+
+::: info 🎯 用途
+
+开启后可以配置
+
+- 文章页面右侧边栏目录的最大宽度。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 自定义侧边目录最大宽度
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=自定义侧边目录最大宽度" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_custom_toc_max_width`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后可以配置
+
+- 侧边目录最大宽度
+  - 类型：字符串
+  - 默认值：`20rem` 
+  - 外部约束：CSS 长度单位。如：20rem, 300px, 30vw。
+
+:::
+
+### 文章末尾的的分隔线
+
+::: info 🎯 用途
+
+控制是否显示文章末尾的的分隔线。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 文章末尾的的分隔线
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=文章末尾的的分隔线" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show`
+
+:::
+
+### 文章底部的点赞按钮
+
+::: info 🎯 用途
+
+控制是否显示文章底部的点赞按钮。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 文章底部的点赞按钮
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=文章底部的点赞按钮" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_post_upvote_button_show`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后可以配置
+
+- 点赞按钮宽度
+  - 类型：字符串
+  - 默认值：`1rem` 
+  - 外部约束：CSS 长度单位。如：20rem, 300px, 30vw。
+- 点赞按钮高度
+  - 类型：字符串
+  - 默认值：`1rem` 
+  - 外部约束：CSS 长度单位。如：20rem, 300px, 30vw。
+- 展示文章获赞数
+- 点赞按钮位置
+
+:::
+
+### 文章底部的推荐文章
+
+::: info 🎯 用途
+
+控制是否在文章底部显示推荐文章列表。
+
+原理：读取当前文章**第一个分类**，并且随机输出其中若干个文章。  
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 文章底部的推荐文章
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=文章底部的推荐文章" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_post_recommended_articles_show`
+
+:::
+::: info ℹ️ 补充信息
+
+如果当前文章在随机列表中将会被剔除，因此实际推荐文章数可能小于设定的“推荐文章数量”。  
+如果当前文章**未设置分类**，该功能会被**禁用**。  
+如果**分类仅有一篇文章**，该功能会被**禁用**。  
+
+启用后可以配置
+
+- 推荐文章数量
+
+:::
+
+### 文章底部的相邻文章导航
+
+::: info 🎯 用途
+
+开启后将在文章底部显示上一篇和下一篇文章的导航链接。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 文章底部的相邻文章导航
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=文章底部的相邻文章导航" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_post_prev_next_navigation_show`
 
 :::
 
@@ -1396,7 +2610,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=文章评论区" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1412,143 +2626,11 @@ const QuickJumpConfig = (props) => {
 
 :::
 
-### 优化文章段落空行显示
-
-::: info 🎯 用途
-
-为文章内容段落添加最小高度，改善空行显示效果。
-
-:::
-::: info 📂 配置项位置
-
-文章页样式 -> 优化文章段落空行显示
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=优化文章段落空行显示" />
-
-:::
-::: info 🏷️ 值类型
-
-布尔值
-
-:::
-::: info ⭐ 默认值
-
-`false`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.post_styles?.is_optimize_content_paragraph_spacing`
-
-:::
-
-### 文章更新时间
-
-::: info 🎯 用途
-
-在文章页面显示文章的最后更新时间。
-
-:::
-::: info 📂 配置项位置
-
-文章页样式 -> 文章更新时间
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=文章更新时间" />
-
-:::
-::: info 🏷️ 值类型
-
-布尔值
-
-:::
-::: info ⭐ 默认值
-
-`false`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.post_styles?.is_show_post_updated_time`
-
-:::
-
-### 文章预计阅读时间
-
-::: info 🎯 用途
-
-显示根据文章字数估算的阅读时间。
-
-:::
-::: info 📂 配置项位置
-
-文章页样式 -> 文章预计阅读时间
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=文章预计阅读时间" />
-
-:::
-::: info 🏷️ 值类型
-
-布尔值
-
-:::
-::: info ⭐ 默认值
-
-`false`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.post_styles?.is_show_post_estimated_reading_time`
-
-:::
-
-### 文章字数统计
-
-::: info 🎯 用途
-
-显示文章的总字数。
-
-:::
-::: info 📂 配置项位置
-
-文章页样式 -> 文章字数统计
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=文章字数统计" />
-
-:::
-::: info 🏷️ 值类型
-
-布尔值
-
-:::
-::: info ⭐ 默认值
-
-`false`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.post_styles?.is_show_post_word_count`
-
-:::
-
 ### 移动端底部导航栏
 
 ::: info 🎯 用途
 
-在移动端显示底部导航栏，方便快速访问常用功能。
+控制是否在移动端文章页面底部显示导航栏。
 
 :::
 ::: info 📂 配置项位置
@@ -1561,7 +2643,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=移动端底部导航栏" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1576,6 +2658,13 @@ const QuickJumpConfig = (props) => {
 `theme.config?.post_styles?.is_show_footer_nav`
 
 :::
+::: info ℹ️ 补充信息
+
+启用后可以配置
+
+- 移动端底部导航栏中的分享按钮
+
+:::
 
 ## 分类集合页样式
 
@@ -1583,20 +2672,20 @@ const QuickJumpConfig = (props) => {
 
 ::: info 🎯 用途
 
-在分类列表中显示每个分类包含的文章数量。
+控制是否在分类列表中显示每个分类包含的文章数量。
 
 :::
 ::: info 📂 配置项位置
 
-分类集合页样式 -> 是否显示每个分类下的文章数量
+分类集合页样式 -> 显示每个分类下的文章数量
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=是否显示每个分类下的文章数量" />
+<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=显示每个分类下的文章数量" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1611,12 +2700,23 @@ const QuickJumpConfig = (props) => {
 `theme.config?.categories_page_styles?.is_show_the_number_of_articles_per_category`
 
 :::
+::: info ℹ️ 补充信息
+
+启用后可以配置
+
+- 在文章数量左侧的字符
+  - 类型：字符串
+  - 默认值：`(` 
+- 在文章数量右侧的字符
+  - 类型：字符串
+  - 默认值：`)` 
+:::
 
 ### 显示多层分类
 
 ::: info 🎯 用途
 
-在分类页面展示多层级的分类结构。
+控制是否在分类页面展示子分类。
 
 :::
 ::: info 📂 配置项位置
@@ -1629,7 +2729,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=是否显示多层分类" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1647,6 +2747,39 @@ const QuickJumpConfig = (props) => {
 
 ## 分类详情页样式
 
+### 文章列表显示文章阅读量
+
+::: info 🎯 用途
+
+在分类详情页显示文章阅读量。
+
+:::
+::: info 📂 配置项位置
+
+分类详情页样式 -> 文章列表显示文章阅读量
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=文章列表显示文章阅读量" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.category_page_styles?.is_show_post_views_in_post_list`
+
+:::
+
 ### 显示分类 RSS 订阅按钮
 
 ::: info 🎯 用途
@@ -1656,15 +2789,15 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-分类详情页样式 -> 显示 RSS 订阅按钮
+分类详情页样式 -> 分类 RSS 订阅按钮
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=显示 RSS 订阅按钮" />
+<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=分类%20RSS%20订阅按钮" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1681,11 +2814,55 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⚠️ 外部约束
 
-需启用 [RSS 插件](https://www.halo.run/store/apps/app-KhIVw)。
+需 [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)启用后方可使用。
 
 :::
 
 ## 标签集合页样式
+
+### 显示每个标签下的文章数量
+
+::: info 🎯 用途
+
+控制是否在分类列表中显示每个标签包含的文章数量。
+
+:::
+::: info 📂 配置项位置
+
+标签集合页样式 -> 显示每个标签下的文章数量
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=显示每个标签下的文章数量" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.tags_page_styles?.is_show_the_number_of_posts_per_tag`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后可以配置
+
+- 在文章数量左侧的字符
+  - 类型：字符串
+  - 默认值：`(` 
+- 在文章数量右侧的字符
+  - 类型：字符串
+  - 默认值：`)` 
+:::
 
 ### 标签排序方式
 
@@ -1704,23 +2881,22 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=标签排序方式" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
-字符串
+选项
 
 :::
 ::: info ⭐ 默认值
 
-`default`
+默认（内部值 `default`）
 
 :::
-::: info 💡 示例值
+::: info 💡 其余选项
 
-- `default`（默认）
-- `count_desc`（按文章数量从多到少）
-- `count_asc`（按文章数量从少到多）
-- `name_asc`（按名称升序）
-- `name_desc`（按名称降序）
+- 按文章数量从多到少（内部值 `count_desc`）
+- 按文章数量从少到多（内部值 `count_asc`）
+- 按名称升序（内部值 `name_asc`）
+- 按名称降序（内部值 `name_desc`）
 
 :::
 ::: info 🧩 模板变量
@@ -1731,6 +2907,39 @@ const QuickJumpConfig = (props) => {
 
 ## 标签详情页样式
 
+### 文章列表显示文章阅读量
+
+::: info 🎯 用途
+
+在标签详情页显示文章阅读量。
+
+:::
+::: info 📂 配置项位置
+
+标签详情页样式 -> 文章列表显示文章阅读量
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=文章列表显示文章阅读量" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.tag_page_styles?.is_show_post_views_in_post_list`
+
+:::
+
 ### 显示标签 RSS 订阅按钮
 
 ::: info 🎯 用途
@@ -1740,15 +2949,15 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-标签详情页样式 -> 显示 RSS 订阅按钮
+标签详情页样式 -> 显示标签 RSS 订阅按钮
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=显示 RSS 订阅按钮" />
+<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=显示标签%20RSS%20订阅按钮" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1765,7 +2974,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⚠️ 外部约束
 
-需启用 [RSS 插件](https://www.halo.run/store/apps/app-KhIVw)。
+需 [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)启用后方可使用。
 
 :::
 
@@ -1780,15 +2989,15 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-作者详情页样式 -> 显示 RSS 订阅按钮
+作者详情页样式 -> 显示作者 RSS 订阅按钮
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=显示 RSS 订阅按钮" />
+<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=显示作者%20RSS%20订阅按钮" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1805,7 +3014,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⚠️ 外部约束
 
-需启用 [RSS 插件](https://www.halo.run/store/apps/app-KhIVw)。
+需 [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)启用后方可使用。
 
 :::
 
@@ -1828,7 +3037,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=按照发布年份和月份折叠文章列表" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1845,11 +3054,173 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-启用后可以配置展开折叠动画时长（单位：毫秒），默认为 200ms。
+启用后可以配置
+
+- 展开折叠动画时长（单位：毫秒）
+  - 类型：浮点数/整数
+  - 默认值：`200`
 
 :::
 
 ## 自定义页面样式
+
+### 优化段落空行显示
+
+::: info 🎯 用途
+
+为自定义页面内容段落添加最小高度，以显示空行。
+
+:::
+::: info 📂 配置项位置
+
+自定义页面样式 -> 优化段落空行显示
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=优化段落空行显示" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.custom_page_styles?.is_optimize_content_paragraph_spacing`
+
+:::
+::: details ℹ️ 补充信息
+
+不同 Markdown 编辑器所用解析器不同，故此配置项反映到最终渲染结果上，可能会有所不同。  
+相关链接：[babelmark3](https://babelmark.github.io/) 是一个对比不同 Markdown 解析器解析结果的网站。
+
+:::
+
+### 段落首行缩进
+
+::: info 🎯 用途
+
+为内容段落首行添加缩进样式。
+
+:::
+::: info 📂 配置项位置
+
+自定义页面样式 -> 段落首行缩进
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=段落首行缩进" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.custom_page_styles?.is_enable_paragraph_first_line_indent`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后可以配置
+
+- 首行缩进值
+  - 类型：字符串
+  - 默认值：`2em`（2 字符宽度）
+  - 外部约束：CSS 长度单位。如：20rem, 300px, 30vw。
+
+:::
+
+### 页面预计阅读时间
+
+::: info 🎯 用途
+
+在页面显示根据文章字数估算的阅读时间。
+
+:::
+::: info 📂 配置项位置
+
+自定义页面样式 -> 页面预计阅读时间
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=页面预计阅读时间" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.custom_page_styles?.is_show_post_estimated_reading_time`
+
+:::
+::: info ℹ️ 补充信息
+
+启用 [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动启用更准确的计量方法。
+
+:::
+
+### 页面字数统计
+
+::: info 🎯 用途
+
+在页面显示文章的总字数。
+
+:::
+::: info 📂 配置项位置
+
+自定义页面样式 -> 页面字数统计
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=页面字数统计" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.custom_page_styles?.is_show_post_word_count`
+
+:::
+::: info ℹ️ 补充信息
+
+启用 [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动启用更准确的计量方法。
+
+:::
 
 ### 启用类文章页样式
 
@@ -1868,7 +3239,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=启用类文章页样式" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1883,8 +3254,85 @@ const QuickJumpConfig = (props) => {
 `theme.config?.custom_page_styles?.is_enable_post_like_layout`
 
 :::
+::: ℹ️ 补充信息
 
-## 相册页样式
+启用后，自定义页面将使用类似文章页的布局和样式。
+主要体现在：
+1. 桌面端顶部菜单（侧边目录，回到顶端按钮，分享菜单）
+2. 移动端底部菜单（折叠目录，回到顶端按钮，分享菜单）
+3. 以及，菜单、目录相关设置与[文章页样式](#文章页样式)下对应设置保持一致。
+
+:::
+
+### 页面正文内容末尾分隔线
+
+::: info 🎯 用途
+
+控制是否显示页面正文内容末尾的的分隔线。
+
+:::
+::: info 📂 配置项位置
+
+自定义页面样式 -> 页面正文内容末尾分隔线
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=页面正文内容末尾分隔线" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.custom_page_styles?.is_dividing_line_at_the_end_of_content_show`
+
+:::
+
+### 页面评论区
+
+::: info 🎯 用途
+
+控制是否在页面显示评论区。
+
+:::
+::: info 📂 配置项位置
+
+自定义页面样式 -> 页面评论区
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=页面评论区" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.custom_page_styles?.is_custom_page_comment_section_show`
+
+:::
+
+## 图库页样式
+
+需[图库管理插件](/guide/plugin-compatibility#图库页)启用后方可使用。
 
 ### 图片圆角宽度
 
@@ -1903,9 +3351,9 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=图片圆角宽度" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
-字符串（CSS 长度值）
+字符串
 
 :::
 ::: info ⭐ 默认值
@@ -1918,9 +3366,52 @@ const QuickJumpConfig = (props) => {
 `0px`、`5px`、`10%`、`1rem`
 
 :::
+::: info ⚠️ 外部约束
+
+合法的 CSS 长度单位。如：20rem, 300px, 30vw。
+
+:::
 ::: info 🧩 模板变量
 
 `theme.config?.photos_styles?.img_border_radius`
+
+:::
+
+### 图片渐入动画时间
+
+::: info 🎯 用途
+
+设置相册页面中图片渐入动画时间。
+
+:::
+::: info 📂 配置项位置
+
+相册页样式 -> 图片渐入动画时间
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=图片渐入动画时间" />
+
+:::
+::: info 🏷️ 类型
+
+整数/浮点数（单位：秒）
+
+:::
+::: info ⭐ 默认值
+
+`0.2`
+
+:::
+::: info 💡 示例值
+
+`1`、`0`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.photos_styles?.img_transition_duration_after_load`
 
 :::
 
@@ -1933,15 +3424,15 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-相册页样式 -> 是否启用瀑布流布局
+相册页样式 -> 启用瀑布流布局
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=是否启用瀑布流布局" />
+<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=启用瀑布流布局" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -1956,8 +3447,103 @@ const QuickJumpConfig = (props) => {
 `theme.config?.photos_styles?.is_enable_masonry_layout`
 
 :::
+::: ℹ️ 补充信息
+
+启用后可以配置
+
+- 瀑布流最大列数
+- 瀑布流最小列数
+- 瀑布流最小图片宽度
+- 瀑布流间隔宽度
+- 进阶配置选项
+  - 自定义图片 onmouseover 属性
+  - 自定义图片 onmouseout 属性
+
+禁用后可以配置
+
+- 显示分组标题
+
+:::
 
 ## 瞬间页样式
+
+需[瞬间管理插件](/guide/plugin-compatibility#瞬间页)启用后方可使用。
+
+### 帖文预计阅读时间
+
+::: info 🎯 用途
+
+在帖子开头显示根据字数估算的阅读时间。
+
+:::
+::: info 📂 配置项位置
+
+瞬间页样式 -> 帖文预计阅读时间
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=帖文预计阅读时间" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.moments_styles?.is_show_post_estimated_reading_time`
+
+:::
+::: info ℹ️ 补充信息
+
+启用 [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动启用更准确的计量方法。
+
+:::
+
+### 帖文字数统计
+
+::: info 🎯 用途
+
+在帖子开头显示文章的总字数。
+
+:::
+::: info 📂 配置项位置
+
+瞬间页样式 -> 帖文字数统计
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=帖文字数统计" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.moments_styles?.is_show_post_word_count`
+
+:::
+::: info ℹ️ 补充信息
+
+启用 [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动启用更准确的计量方法。
+
+:::
 
 ### 瞬间页点赞按钮
 
@@ -1968,15 +3554,15 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-瞬间页样式 -> 是否启用点赞按钮
+瞬间页样式 -> 启用点赞按钮
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=是否启用点赞按钮" />
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=启用点赞按钮" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -2001,15 +3587,15 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-瞬间页样式 -> 是否启用评论区
+瞬间页样式 -> 启用评论区
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=是否启用评论区" />
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=启用评论区" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -2031,7 +3617,7 @@ const QuickJumpConfig = (props) => {
 
 ::: info 🎯 用途
 
-在错误页面（如 404）自动跳转到指定页面。
+在错误页面（如 `404`）自动跳转到指定页面。
 
 :::
 ::: info 📂 配置项位置
@@ -2044,7 +3630,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/error_page_styles#:~:text=页面自动重定向" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 布尔值
 
@@ -2061,7 +3647,15 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-启用后可以配置跳转目标链接（默认为 `/`）和跳转等待时间（默认为 5 秒）。
+启用后可以配置
+
+- 跳转目标链接
+  - 类型：字符串
+  - 默认值：`/`
+  - 外部约束：合法的相对/绝对链接
+- 跳转等待时间（单位：秒）
+  - 类型：整数
+  - 默认值：`5`
 
 :::
 
@@ -2084,7 +3678,7 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/sns#:~:text=首页社交资料展示" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
 数组（可重复添加多个社交资料）
 
@@ -2125,14 +3719,14 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/sns#:~:text=设定自定义资料" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
-数组（可重复添加多个自定义资料）
+重复器
 
 :::
 ::: info ⭐ 默认值
 
-空数组 `[]`
+空
 
 :::
 ::: info 🧩 模板变量
@@ -2141,6 +3735,10 @@ const QuickJumpConfig = (props) => {
 
 :::
 ::: info ℹ️ 补充信息
+
+提供了主流平台的预设值，只需要填写对应平台的识别码就可以添加。
+
+除此之外，你也可以添加自定义资料。
 
 每个自定义资料需要配置：
 
@@ -2170,9 +3768,9 @@ const QuickJumpConfig = (props) => {
 <QuickJumpConfig to="/console/theme/settings/share#:~:text=分享按钮设置" />
 
 :::
-::: info 🏷️ 值类型
+::: info 🏷️ 类型
 
-数组（可重复添加多个分享按钮）
+重复器
 
 :::
 ::: info ⭐ 默认值
@@ -2188,7 +3786,7 @@ const QuickJumpConfig = (props) => {
 ::: info ℹ️ 补充信息
 
 - `@URL` 和 `@TITLE` 是占位符，使用时会被替换为页面实际地址和标题
-- 每个分享按钮需要配置：名称、链接、图标、aria-label
+- 每个分享按钮有四个可配置项：名称、链接、图标、`aria-label`（无障碍标签）
 - 可以自由调整顺序、删除或新增分享按钮
 
 :::
