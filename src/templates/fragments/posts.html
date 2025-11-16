@@ -79,7 +79,7 @@
                 ></i>
                 <a th:href="@{${post.status?.permalink}}">
                   <span class="absolute -inset-x-4 -inset-y-2 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                  <span class="relative z-10" th:text="${post.spec.title}">文章标题替换位</span>
+                  <span class="relative z-10" th:text="${post.spec?.title}">文章标题替换位</span>
                 </a>
                 <i
                   class="iconify iconify-middle color-link-hover relative z-10"
@@ -216,7 +216,7 @@
               <img
                 th:if="${theme.config?.index_styles?.is_show_post_cover_in_post_list_summary} and ${not #strings.isEmpty(post.spec.cover)}"
                 th:src="${post.spec.cover}"
-                th:alt="${post.spec.title}"
+                th:alt="${post.spec?.title}"
                 th:srcset="|
               ${thumbnail.gen(post.spec.cover, 's')} 400w,
               ${thumbnail.gen(post.spec.cover, 'm')} 800w,

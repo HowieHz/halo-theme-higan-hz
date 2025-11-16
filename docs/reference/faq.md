@@ -142,4 +142,11 @@ outline: deep
 - 如果只需调试文档站点，可以运行 `pnpm docs:dev`。
 - 若修改了模板（`src/templates`），请刷新浏览器或执行一次 `pnpm build` 以清理旧产物。
 
----
+### 页面语言设定优先级
+
+站点根标签 `<html>` 的 `lang` 属性设定优先级：
+
+1. [文章](/guide/metadata-configuration#文章页面标题)、[分类](/guide/metadata-configuration#分类页面标题)、[标签](/guide/metadata-configuration#标签元数据)、[页面](/guide/metadata-configuration#页面元数据)元数据中明确指定的 `language` 元数据。
+2. URL 查询参数 `?lang=`。
+3. 主题设置中的[默认页面语言](/guide/theme-configuration#默认页面语言)。
+4. 若上述都为空，则回退到 `zh`。

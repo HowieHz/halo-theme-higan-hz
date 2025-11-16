@@ -9,7 +9,7 @@ outline: deep
 <script setup>
 import { ref, computed, h } from 'vue'
 
-const inputBaseUrl = ref('http://127.0.0.1:8090/') // 用户输入的基础链接
+const inputBaseUrl = ref('') // 用户输入的基础链接
 
 const canJump = computed(() => inputBaseUrl.value.trim().length > 0)
 
@@ -216,12 +216,7 @@ const QuickJumpConfig = (props) => {
 ::: info ℹ️ 补充信息
 
 - 安全性：设定的语言值的会自动转义，无需担心 XSS 注入攻击。
-- 内部相关行为：
-  - 站点根标签 `<html>` 的 `lang` 属性设定顺序：
-    1. 页面/文章元数据中明确指定的 `language` 元数据（最高优先级）
-    2. URL 查询参数 ?lang=（若存在且通过验证）
-    3. 主题设置中的默认页面语言（此配置项）
-    4. 若上述都为空，则回退到 "zh"
+- 设定优先级：请查阅[页面语言设定优先级](/reference/faq#页面语言设定优先级)。
 
 :::
 
@@ -1713,6 +1708,8 @@ const QuickJumpConfig = (props) => {
 
 ## 首页样式
 
+应用范围：[`/(page/{page})`](/reference/template-map#:~:text=/(page/%7Bpage%7D))。
+
 ### 主页 HTML 标题
 
 ::: info 🎯 用途
@@ -1738,6 +1735,11 @@ const QuickJumpConfig = (props) => {
 ::: info ⭐ 默认值
 
 空
+
+:::
+::: info ⚠️ 外部约束
+
+如果配置值过长，可能影响 SEO 和页面显示效果。
 
 :::
 ::: info 🧩 模板变量
@@ -2050,6 +2052,8 @@ const QuickJumpConfig = (props) => {
 :::
 
 ## 文章页样式
+
+应用范围：[`/archives/{slug}`](/reference/template-map#:~:text=/archives/%7Bslug%7D)。
 
 ### 优化文章段落空行显示
 
@@ -2671,6 +2675,8 @@ const QuickJumpConfig = (props) => {
 
 ## 分类集合页样式
 
+应用范围：[`/categories`](/reference/template-map#:~:text=/categories)。
+
 ### 显示每个分类下的文章数量
 
 ::: info 🎯 用途
@@ -2751,6 +2757,8 @@ const QuickJumpConfig = (props) => {
 
 ## 分类详情页样式
 
+应用范围：[`/categories/{slug}`](/reference/template-map#:~:text=/categories/%7Bslug%7D)。
+
 ### 分类详情页文章列表显示文章阅读量
 
 ::: info 🎯 用途
@@ -2823,6 +2831,8 @@ const QuickJumpConfig = (props) => {
 :::
 
 ## 标签集合页样式
+
+应用范围：[`/tags`](/reference/template-map#:~:text=/tags)。
 
 ### 显示每个标签下的文章数量
 
@@ -2911,6 +2921,8 @@ const QuickJumpConfig = (props) => {
 
 ## 标签详情页样式
 
+应用范围：[`/tags/{slug}`](/reference/template-map#:~:text=/tags/%7Bslug%7D)。
+
 ### 标签详情页文章列表显示文章阅读量
 
 ::: info 🎯 用途
@@ -2984,6 +2996,8 @@ const QuickJumpConfig = (props) => {
 
 ## 作者详情页样式
 
+应用范围：[`/authors/{name}`](/reference/template-map#:~:text=/authors/%7Bname%7D)。
+
 ### 显示作者 RSS 订阅按钮
 
 ::: info 🎯 用途
@@ -3023,6 +3037,8 @@ const QuickJumpConfig = (props) => {
 :::
 
 ## 归档页样式
+
+应用范围：[`/archives(/{year}(/{month}))`](/reference/template-map#:~:text=/archives(/%7Byear%7D(/%7Bmonth%7D)))。
 
 ### 按照发布年份和月份折叠文章列表
 
@@ -3067,6 +3083,8 @@ const QuickJumpConfig = (props) => {
 :::
 
 ## 自定义页面样式
+
+应用范围：[`/{slug}`](/reference/template-map#:~:text=/%7Bslug%7D)。
 
 ### 优化段落空行显示
 
@@ -3795,3 +3813,9 @@ const QuickJumpConfig = (props) => {
 - 可以自由调整顺序、删除或新增分享按钮
 
 :::
+
+## 下一步
+
+你可以进一步了解：
+
+- [元数据配置项](/guide/metadata-configuration)
