@@ -8,7 +8,7 @@ import type {} from "../types/window-create-toc";
  * @param tocSelector - CSS selector for the DOM element where the generated TOC should be displayed.
  * @param headingSelector - A string of heading selectors (e.g., "h1, h2, h3") to select within the contentSelector element for inclusion in the TOC.
  */
-window.initTOC = (contentSelector: string, tocSelector: string, headingSelector: string = "h1, h2, h3, h4") => {
+window.initTOC = (contentSelector: string, tocSelector: string, headingSelector = "h1, h2, h3, h4") => {
   const contentRootDom = document.querySelector<HTMLElement>(contentSelector);
   const tocRootDom = document.querySelector<HTMLElement>(tocSelector);
 
@@ -76,11 +76,11 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
   tocContainer.className = "toc";
 
   // Build TOC tree structure
-  type TOCRoot = {
+  interface TOCRoot {
     level: number;
     children: TOCNode[];
     parent?: TOCNode | TOCRoot;
-  };
+  }
 
   type TOCNode = TOCRoot & {
     heading: HTMLElement;
@@ -97,8 +97,9 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
     const level = parseInt(heading.tagName.slice(1), 10);
     let parent = lastNode;
     // Roll back to the appropriate parent node
-    while (parent.level >= level) {
-      parent = parent.parent!;
+    while (parent.level >= level && parent.parent) {
+      // parent.parent 一定存在，但为了避免使用条件断言，因此判断
+      parent = parent.parent;
     }
     const node: TOCNode = {
       level,
@@ -113,7 +114,10 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
   // Render TOC tree as DOM
   const counters: Record<number, number> = {};
 
-  type StackItem = { node: TOCNode; parentOl: HTMLOListElement };
+  interface StackItem {
+    node: TOCNode;
+    parentOl: HTMLOListElement;
+  }
   const stack: StackItem[] = [];
   // Initialize stack with root nodes in reverse order to preserve sequence
   for (let i = tocTreeRoot.children.length - 1; i >= 0; i--) {
@@ -121,7 +125,8 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector:
   }
 
   while (stack.length) {
-    const { node, parentOl } = stack.pop()!;
+    const item = stack.pop() as StackItem;
+    const { node, parentOl } = item;
     const level = node.level;
     // Update numbering and reset deeper levels
     counters[level] = (counters[level] || 0) + 1;

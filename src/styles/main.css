@@ -11,7 +11,6 @@
 }
 
 html {
-  border-top: 2px solid var(--color-text);
   height: 100%;
   margin: 0;
   padding: 0;
@@ -253,8 +252,7 @@ body {
   }
 }
 
-/* 样式开始 */
-
+/* 主题切换按钮 */
 #theme-toggle-button {
   background-color: transparent;
   border: none;
@@ -265,6 +263,7 @@ body {
   }
 }
 
+/* 最大宽度控制 最大宽度容器类 */
 .max-width {
   max-width: 100%;
 
@@ -285,8 +284,7 @@ body {
   }
 }
 
-/* .content 通用样式类 可单独使用 */
-
+/* .content 通用样式类 */
 .content {
   display: flex;
   flex-direction: column;
@@ -335,7 +333,6 @@ body {
 }
 
 /* 语义化 HTML5 标签 内部一般嵌套一个 .content */
-
 article {
   display: flex;
   flex: auto;
@@ -468,8 +465,8 @@ article {
   }
 }
 
-/* 仅明暗显示 Block 样式设定 */
-
+/* 明暗控制显示 样式块 开始 */
+/* 明暗控制显示 样式块 明亮模式（默认值） */
 article .content div {
   &.light {
     display: block;
@@ -480,7 +477,7 @@ article .content div {
   }
 }
 
-/* 自动模式 */
+/* 明暗控制显示 样式块 自动模式 */
 html[data-color-scheme="auto"] article .content {
   & div {
     &.light {
@@ -497,7 +494,7 @@ html[data-color-scheme="auto"] article .content {
   }
 }
 
-/* 暗黑模式 */
+/* 明暗控制显示 样式块 暗黑模式 */
 html[data-color-scheme="dark"] article .content {
   & div {
     &.light {
@@ -510,7 +507,7 @@ html[data-color-scheme="dark"] article .content {
   }
 }
 
-/* 仅明暗显示 Block 样式设定 end */
+/* 明暗控制显示 样式块 结束 */
 
 #header {
   margin: 0 auto 2rem;
@@ -657,50 +654,6 @@ html[data-color-scheme="dark"] article .content {
   }
 }
 
-.group:hover .post-card-hover {
-  background: var(--color-card-hover);
-  opacity: 100%;
-  transform: scale(0.95);
-  transition:
-    color 0.2s,
-    background-color 0.2s,
-    border-color 0.2s,
-    text-decoration-color 0.2s,
-    fill 0.2s,
-    stroke 0.2s,
-    opacity 0.2s,
-    box-shadow 0.2s,
-    transform 0.2s;
-}
-
-.post-list {
-  margin: 0;
-  padding: 0;
-
-  & .post-item {
-    list-style-type: none;
-    margin-bottom: 1rem;
-    margin-left: 0;
-
-    @media (width >= 640px) {
-      display: flex;
-      margin-bottom: 0.3125rem;
-    }
-
-    & .meta {
-      color: var(--color-time);
-      display: block;
-      font-size: var(--text);
-      margin-right: 1rem;
-      white-space: nowrap;
-
-      @media (width >= 640px) {
-        text-align: right;
-      }
-    }
-  }
-}
-
 /* 疑似可去除 需进一步测试 */
 a {
   & img {
@@ -723,6 +676,8 @@ hr.divide {
   }
 }
 
+/* 文章标签 分类 样式开始 */
+/* 用于多元文章列表和文章页开头信息展示 */
 .article-tag .tag-link,
 .article-category .category-link {
   background-image: linear-gradient(
@@ -742,6 +697,8 @@ hr.divide {
     content: "#";
   }
 }
+
+/* 文章标签 分类 样式结束 */
 
 #archive {
   flex: auto;
@@ -872,60 +829,6 @@ hr.divide {
       }
     }
   }
-}
-
-.search-input {
-  background-color: var(--color-background);
-  border: solid 1px var(--color-accent-3);
-  border-radius: 0.3125rem;
-  color: var(--color-text);
-  font-size: 1.2rem;
-  outline: none;
-  padding: 0.25rem 0.4375rem;
-  width: 100%;
-
-  &:focus {
-    border: solid 1px var(--color-accent-1);
-  }
-}
-
-#search-result {
-  & ul.search-result-list {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  & li {
-    margin: 2em auto;
-  }
-
-  & a.search-result-title {
-    background-image: none;
-    color: var(--color-text);
-    font-weight: bold;
-    line-height: 1.2;
-    text-transform: capitalize;
-  }
-
-  & p.search-result {
-    font-size: 0.8em;
-    margin: 0.4em auto;
-    max-height: 13em;
-    overflow: hidden;
-    text-align: justify;
-  }
-
-  & em.search-keyword {
-    border-bottom: 1px dashed var(--color-link-hover);
-    color: var(--color-link-hover);
-    font-weight: bold;
-  }
-}
-
-.search-no-result {
-  color: var(--color-text);
-  display: none;
-  padding-bottom: 0.5em;
 }
 
 .color-accent-1 {

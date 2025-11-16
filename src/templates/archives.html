@@ -5,12 +5,12 @@
     title = #{page.archives.page-title},
     head = ~{::headContent},
     content = ~{::content},
-    header = ~{fragments/header::content},
+    header = ~{fragments/header :: content},
     navbar = ~{}
   )}"
 >
   <head>
-    <script src="/src/pages/generic-header.ts" type="module"></script>
+    <script src="/src/pages/archives.ts" type="module"></script>
   </head>
   <body>
     <div id="archive" class="content flex-auto">
@@ -34,7 +34,7 @@
             <i class="iconify iconify-large" data-icon="mdi:chevron-right" style="display: inline"></i>
             <i class="iconify iconify-large" data-icon="mdi:chevron-down" style="display: none"></i>
           </h2>
-          <ul class="post-list flex-auto" style="display: none">
+          <ul class="m-0 flex-auto p-0" style="display: none">
             <th:block th:each="month : ${archive.months}">
               <div class="month-container ml-7 flex">
                 <h3 class="-mt-2 flex-none cursor-pointer no-underline" onclick="toggleVisibility(this)">
@@ -42,7 +42,7 @@
                   <i class="iconify iconify-large" data-icon="mdi:chevron-right" style="display: inline"></i>
                   <i class="iconify iconify-large" data-icon="mdi:chevron-down" style="display: none"></i>
                 </h3>
-                <ul class="post-list flex-auto" style="display: none">
+                <ul class="common-post-list flex-auto" style="display: none">
                   <li class="post-item" th:each="post : ${month.posts}">
                     <div class="meta">
                       <time

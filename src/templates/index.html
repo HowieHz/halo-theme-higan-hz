@@ -5,12 +5,12 @@
     title = ${#strings.isEmpty(theme.config?.index_styles?.page_html_title) ? site.title : theme.config?.index_styles?.page_html_title}, 
     head = ~{::headContent},
     content = ~{::content}, 
-    header = ~{fragments/header::content}, 
+    header = ~{fragments/header :: content}, 
     navbar = ~{}
   )}"
 >
   <head>
-    <script src="/src/pages/generic-header.ts" type="module"></script>
+    <script src="/src/pages/index.ts" type="module"></script>
   </head>
   <body>
     <section id="about">
