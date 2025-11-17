@@ -11,10 +11,10 @@ const route = useRoute();
 
 <template>
   <!--
-    replace with the layout entirely for `/halo-theme-higan-hz/frames/default`
+    replace with the layout entirely for `/halo-theme-higan-haozi/frames/default`
     so we don't inherit from `Theme.Layout`
   -->
-  <FrameDefaultLayout v-if="route.path.startsWith('/halo-theme-higan-hz/frames/default')" />
-  <FramePostLayout v-else-if="route.path.startsWith('/halo-theme-higan-hz/frames/post')" />
+  <FrameDefaultLayout v-if="route.path.startsWith('/halo-theme-higan-haozi/frames/default')" />
+  <FramePostLayout v-else-if="route.path.startsWith('/halo-theme-higan-haozi/frames/post')" />
   <Theme.Layout v-else />
 </template>
