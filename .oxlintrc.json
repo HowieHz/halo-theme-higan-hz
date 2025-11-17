@@ -206,9 +206,6 @@
     },
     {
       "files": ["**/*.vue"],
-      "globals": {
-        "vue/setup-compiler-macros": "writeable"
-      },
       "env": {
         "es2026": true,
         "browser": true,
