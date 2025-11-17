@@ -479,8 +479,6 @@ spec:
               value: Higan Haozi
             - label: Higan
               value: Higan
-            - label: 彼岸-皓子
-              value: 彼岸-皓子
             - label: 彼岸
               value: 彼岸
           # autocorrect-enable
@@ -568,13 +566,13 @@ spec:
           help: 如启用此项，将在引用块后添加引号。引用块在 Markdown 中使用 > 表示。
         - $formkit: checkbox
           name: is_show_the_table_bottom_border
-          label: 表格每行底部的表格线（除表头）
+          label: 表格行间线（除表头）
           value: false
           help: 如启用此项，表格每行底部都将添加表格线（除去表头）
         - $formkit: text
           name: table_bottom_border_width
           if: "$is_show_the_table_bottom_border===true"
-          label: 表格每行底部的表格线宽度（除表头）
+          label: 表格行间线宽度（除表头）
           value: 0.1rem
           placeholder: "默认值：0.1rem"
           help: "允许全部 CSS 长度单位，如：48rem, 780px, 70vw, 70%。"
