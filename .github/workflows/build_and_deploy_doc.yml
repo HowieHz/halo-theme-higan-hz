@@ -2,7 +2,7 @@ name: Build and Deploy Documentation
 
 on:
   push:
-    branches: [main, real-new-docs]
+    branches: [main]
 
 jobs:
   deploy:
