@@ -10,7 +10,7 @@
 
 一款响应式、简洁清爽的个人网站 Halo CMS 主题。
 
-想了解更多吗？欢迎访问[文档](https://howiehz.top/halo-theme-higan-haozi/)进一步了解此主题。
+想了解更多吗？欢迎访问[文档](https://howiehz.top/halo-theme-higan-haozi/)进一步了解此主题。  
 也可以访问[示例站点](https://howiehz.top/)进行体验。
 
 ## 特点
@@ -52,7 +52,7 @@
 
 Lighthouse 测试结果：
 
-![Lighthouse-result-2024-04-15-post](./docs/img/Lighthouse-result-2024-04-15-post.png)
+![Lighthouse-result-2024-04-15-post](./docs/public/Lighthouse-result-2024-04-15-post.png)
 
 ## 贡献指南
 
