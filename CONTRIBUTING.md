@@ -2,7 +2,7 @@
 
 ## 项目结构
 
-- [模板文件与访问路径映射](https://howiehz.top/halo-theme-higan-hz/reference/template-map)
+- [模板文件与访问路径映射](https://howiehz.top/halo-theme-higan-haozi/reference/template-map)
 
 ## 版本适用说明
 

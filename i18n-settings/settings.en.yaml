@@ -492,6 +492,8 @@ spec:
               value: Halo
             - label: Halo Pro
               value: Halo Pro
+            - label: Halo Professional Edition
+              value: Halo Professional Edition
         - $formkit: checkbox
           name: is_footer_copyright_show
           label: Footer theme copyright information in the footer

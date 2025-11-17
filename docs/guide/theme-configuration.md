@@ -124,6 +124,7 @@ const QuickJumpConfig = (props) => {
 - 选项：提供了固定选项，直接选择即可。
 - 重复器：可重复一组输入。可增加组，移除组，交换任意组顺序。
 - 代码输入框（编程语言）：提供一个多行的代码输入框，会按照指定编程语言进行高亮。
+- 附件：选择上传的附件。
 
 <!-- - 数组：多个值的列表，如 `[1, 2, 3]`
 - 对象：键值对集合，如 `{name: "张三", age: 20}`
@@ -258,7 +259,7 @@ const QuickJumpConfig = (props) => {
 
 :::
 
-### 浏览器语言自动跳转
+### 浏览器按语言自动跳转
 
 ::: info 🎯 用途
 
@@ -267,12 +268,12 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-全局 -> 浏览器语言自动跳转
+全局 -> 浏览器按语言自动跳转
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=浏览器语言自动跳转" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=浏览器按语言自动跳转" />
 
 :::
 ::: info 🏷️ 类型
@@ -292,11 +293,91 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-启用此项后，若浏览器语言与默认页面语言不同，且浏览器语言存在于“允许跳转的目标区域语言代码列表”，将自动跳转到对应页面。
+启用此项后，若浏览器语言与默认页面语言不同，且浏览器语言存在于[允许跳转的目标区域语言代码列表](#允许跳转的目标区域语言代码列表)，将自动跳转到对应页面。
+
+启用后请参照[浏览器按语言自动跳转使用指南](/tutorial/i18n#浏览器按语言自动跳转使用指南)进行配置。
 
 启用后可配置：
 
-- 允许跳转的目标区域语言代码列表
+- [允许跳转的目标区域语言代码列表](#允许跳转的目标区域语言代码列表)
+
+:::
+
+### 允许跳转的目标区域语言代码列表
+
+::: info 🎯 用途
+
+设定允许的自动跳转目标语言。
+
+:::
+::: info 📂 配置项位置
+
+（[全局 -> 浏览器按语言自动跳转](#浏览器按语言自动跳转)启用时显示）
+
+全局 -> 允许跳转的目标区域语言代码列表
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=允许跳转的目标区域语言代码列表" />
+
+:::
+::: info 🏷️ 类型
+
+重复器
+
+:::
+::: info ⭐ 默认值
+
+空
+
+:::
+
+> [!NOTE] 💡 示例值
+>
+> ::: tip 📂 配置项名
+>
+> 语言代码
+>
+> :::
+> ::: info 🏷️ 类型
+>
+> 字符串
+>
+> :::
+> ::: info ⭐ 默认值
+>
+> `zh`
+>
+> :::
+> ::: info 💡 示例值
+>
+> `zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+>
+> :::
+> ::: info 🔒 内部约束
+>
+> 必填项
+>
+> :::
+> ::: info ⚠️ 外部约束
+>
+> 设定值需满足 [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82)，否则无效。
+>
+> :::
+
+::: info 🧩 模板变量
+
+`theme.config?.global?.auto_redirect_target_language_list`
+
+:::
+::: info ℹ️ 补充信息
+
+启用[浏览器按语言自动跳转](#浏览器按语言自动跳转)后，若浏览器语言与默认页面语言不同，且浏览器语言存在于此项，将自动跳转到对应页面。
+
+请参照[浏览器按语言自动跳转使用指南](/tutorial/i18n#浏览器按语言自动跳转使用指南)进行配置。
+
+匹配顺序从上到下。
 
 :::
 
@@ -405,11 +486,167 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
+启用后请参照[开启仅允许使用指定域名访问](/tutorial/security#开启仅允许使用指定域名访问)进行配置。
+
 启用后可配置：
 
-- 域名白名单列表（需要 Base64 编码）
-- 目标链接（Base64 编码）
-- 是否保留路径和查询参数
+- [域名白名单列表](#域名白名单列表)
+- [目标链接](#目标链接)
+- [跳转后是否保留路径和查询参数](#跳转后是否保留路径和查询参数)
+
+:::
+
+### 域名白名单列表
+
+::: info 🎯 用途
+
+设定域名白名单列表。
+
+:::
+::: info 📂 配置项位置
+
+（[全局 -> 仅允许使用指定域名访问](#仅允许使用指定域名访问)启用时显示）
+
+全局 -> 域名白名单列表
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=域名白名单列表" />
+
+:::
+::: info 🏷️ 类型
+
+重复器
+
+:::
+::: info ⭐ 默认值
+
+空
+
+:::
+
+> [!NOTE] 💡 示例值
+>
+> ::: tip 📂 配置项名
+>
+> Base64 编码后的域名
+>
+> :::
+> ::: info 🏷️ 类型
+>
+> 字符串
+>
+> :::
+> ::: info 💡 示例值
+>
+> `bG9jYWxob3N0`
+>
+> :::
+> ::: info 🔒 内部约束
+>
+> 必填项
+>
+> :::
+
+::: info 🧩 模板变量
+
+`theme.config?.global?.allow_site_whitelist`
+
+:::
+::: info ℹ️ 补充信息
+
+请参照[开启仅允许使用指定域名访问](/tutorial/security#开启仅允许使用指定域名访问)进行配置。
+
+:::
+
+### 目标链接
+
+::: info 🎯 用途
+
+设定域名白名单列表。
+
+:::
+::: info 📂 配置项位置
+
+（[全局 -> 仅允许使用指定域名访问](#仅允许使用指定域名访问)启用时显示）
+
+全局 -> 目标链接
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=目标链接" />
+
+:::
+::: info 🏷️ 类型
+
+字符串
+
+:::
+::: info ⭐ 默认值
+
+`bG9jYWxob3N0`
+
+:::
+::: info 💡 示例值
+
+`bG9jYWxob3N0`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.global?.target_url`
+
+:::
+::: info ℹ️ 补充信息
+
+请参照[开启仅允许使用指定域名访问](/tutorial/security#开启仅允许使用指定域名访问)进行配置。
+
+:::
+
+### 跳转后是否保留路径和查询参数
+
+::: info 🎯 用途
+
+设定跳转后是否保留路径和查询参数。
+
+:::
+::: info 📂 配置项位置
+
+（[全局 -> 仅允许使用指定域名访问](#仅允许使用指定域名访问)启用时显示）
+
+全局 -> 跳转后是否保留路径和查询参数
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=跳转后是否保留路径和查询参数" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.global?.is_keep_path_and_query`
+
+:::
+::: info ℹ️ 补充信息
+
+请参照[开启仅允许使用指定域名访问](/tutorial/security#开启仅允许使用指定域名访问)进行配置。
+
+假设用户访问的链接为 `http://localhost/a/b?a=1`，[目标链接](#目标链接)设定为（Base 64 编码前）`https://p.com`：
+
+- 关闭此项会跳转到：`https://p.com`
+- 开启此项会跳转到：`https://p.com/a/b?a=1`
 
 :::
 
@@ -561,8 +798,84 @@ const QuickJumpConfig = (props) => {
 
 启用后可配置：
 
-- 自定义字体文件：选择上传到附件的 `.woff2`/`.woff`/`.ttf`/`.otf`/`.eot`/`.ttc`/`.otc`/`.sfnt` 字体文件
-- 字体名称：填写字体全名或 PostScript 名（如：My Custom Font Regular 或 MyCustomFont-Regular）
+- [自定义字体文件](#自定义字体文件)
+- [自定义字体名称](#自定义字体名称)
+
+:::
+
+### 自定义字体文件
+
+::: info 🎯 用途
+
+用于选择上传的字体文件替换默认字体文件。支持 `.woff2`/`.woff`/`.ttf`/`.otf`/`.eot`/`.ttc`/`.otc`/`.sfnt` 格式的字体文件。
+
+:::
+::: info 📂 配置项位置
+
+（[总体样式 -> 启用自定义字体文件](#启用自定义字体文件)启用时显示）
+
+总体样式 -> 选择自定义字体文件
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=选择自定义字体文件" />
+
+:::
+::: info 🏷️ 类型
+
+附件
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.custom_font_files`
+
+:::
+
+### 自定义字体名称
+
+::: info 🎯 用途
+
+正确填写此项后，如果用户本地安装已经此字体，则应用本地版本。  
+若此项置空，则即使用户本地已安装该字体，也不会使用本地版本，而是从网络下载字体文件。
+
+:::
+::: info 📂 配置项位置
+
+（[总体样式 -> 启用自定义字体文件](#启用自定义字体文件)启用时显示）
+
+总体样式 -> 自定义字体名称
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=自定义字体名称" />
+
+:::
+::: info 🏷️ 类型
+
+字符串
+
+:::
+::: info ⭐ 默认值
+
+空
+
+:::
+::: info 💡 示例值
+
+`My Custom Font Regular`、`MyCustomFont-Regular`
+
+:::
+::: info 外部约束
+
+对应字体文件内部声明的“字体全名 (`nameID=4`)”或“PostScript 名 (`nameID=6`)”。
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.custom_font_name`
 
 :::
 
@@ -799,13 +1112,166 @@ const QuickJumpConfig = (props) => {
 
 启用后可配置：
 
-- 自动模式配色方案
-- 浅色模式配色方案
-- 深色模式配色方案
+- [自动模式配色方案](#自动模式配色方案)
+- [浅色模式配色方案](#浅色模式配色方案)
+- [深色模式配色方案](#深色模式配色方案)
 
 相关说明：
 
 [Mermaid 适配明暗主题切换](/guide/style-reference#mermaid-适配明暗主题切换)
+
+:::
+
+### 自动模式配色方案
+
+::: info 🎯 用途
+
+设置深浅色模式切换按钮中自动模式的配色方案。
+
+:::
+::: info 📂 配置项位置
+
+（[总体样式 -> 深浅色模式切换按钮](#深浅色模式切换按钮)启用时显示）
+
+总体样式 -> 自动模式配色方案
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=自动模式配色方案" />
+
+:::
+::: info 🏷️ 类型
+
+选项
+
+:::
+::: info ⭐ 默认值
+
+`跟随系统 - 绿`（内部值 `auto`）
+
+:::
+::: info 💡 其余选项
+
+- `浅色 - 绿`（内部值 `light`）
+- `暗色 - 绿`（内部值 `dark`）
+- `跟随系统 - 蓝`（内部值 `auto-blue`）
+- `浅色 - 蓝`（内部值 `light-blue`）
+- `暗色 - 蓝`（内部值 `dark-blue`）
+- `浅色 - 灰粉`（内部值 `gray`）
+- `自定义配色`（内部值 `custom`）
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.theme_auto`
+
+:::
+::: info ℹ️ 补充信息
+
+选择“自定义配色”时，需要配合[自定义配色方案](#自定义配色方案)使用，并填写自定义配色方案识别码。
+
+:::
+
+### 浅色模式配色方案
+
+::: info 🎯 用途
+
+设置深浅色模式切换按钮中浅色模式的配色方案。
+
+:::
+::: info 📂 配置项位置
+
+（[总体样式 -> 深浅色模式切换按钮](#深浅色模式切换按钮)启用时显示）
+
+总体样式 -> 浅色模式配色方案
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=浅色模式配色方案" />
+
+:::
+::: info 🏷️ 类型
+
+选项
+
+:::
+::: info ⭐ 默认值
+
+`浅色 - 绿`（内部值 `light`）
+
+:::
+::: info 💡 其余选项
+
+- `跟随系统 - 绿`（内部值 `auto`）
+- `暗色 - 绿`（内部值 `dark`）
+- `跟随系统 - 蓝`（内部值 `auto-blue`）
+- `浅色 - 蓝`（内部值 `light-blue`）
+- `暗色 - 蓝`（内部值 `dark-blue`）
+- `浅色 - 灰粉`（内部值 `gray`）
+- `自定义配色`（内部值 `custom`）
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.theme_light`
+
+:::
+::: info ℹ️ 补充信息
+
+选择"自定义配色"时，需要配合[自定义配色方案](#自定义配色方案)使用，并填写自定义配色方案识别码。
+
+:::
+
+### 深色模式配色方案
+
+::: info 🎯 用途
+
+设置深浅色模式切换按钮中深色模式的配色方案。
+
+:::
+::: info 📂 配置项位置
+
+（[总体样式 -> 深浅色模式切换按钮](#深浅色模式切换按钮)启用时显示）
+
+总体样式 -> 深色模式配色方案
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=深色模式配色方案" />
+
+:::
+::: info 🏷️ 类型
+
+选项
+
+:::
+::: info ⭐ 默认值
+
+`暗色 - 绿`（内部值 `dark`）
+
+:::
+::: info 💡 其余选项
+
+- `跟随系统 - 绿`（内部值 `auto`）
+- `浅色 - 绿`（内部值 `light`）
+- `跟随系统 - 蓝`（内部值 `auto-blue`）
+- `浅色 - 蓝`（内部值 `light-blue`）
+- `暗色 - 蓝`（内部值 `dark-blue`）
+- `浅色 - 灰粉`（内部值 `gray`）
+- `自定义配色`（内部值 `custom`）
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.theme_dark`
+
+:::
+::: info ℹ️ 补充信息
+
+选择"自定义配色"时，需要配合[自定义配色方案](#自定义配色方案)使用，并填写自定义配色方案识别码。
 
 :::
 
@@ -887,7 +1353,52 @@ const QuickJumpConfig = (props) => {
 
 启用后可配置：
 
-- 内容区域最大宽度
+- [内容区域最大宽度](#内容区域最大宽度)
+
+:::
+
+### 内容区域最大宽度
+
+::: info 🎯 用途
+
+设置内容区域的最大宽度。
+
+:::
+::: info 📂 配置项位置
+
+（[总体样式 -> 自定义内容区域最大宽度](#自定义内容区域最大宽度)启用时显示）
+
+总体样式 -> 内容区域最大宽度
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=内容区域最大宽度" />
+
+:::
+::: info 🏷️ 类型
+
+字符串
+
+:::
+::: info ⭐ 默认值
+
+`48rem`
+
+:::
+::: info 💡 示例值
+
+`20rem`、`300px`、`30vw`
+
+:::
+::: info ⚠️ 外部约束
+
+合法的 CSS 长度单位。
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.max_width`
 
 :::
 
@@ -929,10 +1440,94 @@ const QuickJumpConfig = (props) => {
 
 启用后可配置：
 
-- 内容区域最小宽度
-- 强制应用内容区域最小宽度：
-  - 禁用时：当窗口宽度小于设定的最小宽度时，实际会使用窗口宽度。以避免出现横向滚动条。
-  - 启用时：强制使内容显示区域不小于设定的最小宽度，即使出现横向滚动条。
+- [内容区域最小宽度](#内容区域最小宽度)
+- [强制应用内容区域最小宽度](#强制应用内容区域最小宽度)
+
+:::
+
+### 内容区域最小宽度
+
+::: info 🎯 用途
+
+设置内容区域的最小宽度。
+
+:::
+::: info 📂 配置项位置
+
+（[总体样式 -> 自定义内容区域最小宽度](#自定义内容区域最小宽度)启用时显示）
+
+总体样式 -> 内容区域最小宽度
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=内容区域最小宽度" />
+
+:::
+::: info 🏷️ 类型
+
+字符串
+
+:::
+::: info ⭐ 默认值
+
+`48rem`
+
+:::
+::: info 💡 示例值
+
+`20rem`、`300px`、`30vw`
+
+:::
+::: info ⚠️ 外部约束
+
+合法的 CSS 长度单位。
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.min_width`
+
+:::
+
+### 强制应用内容区域最小宽度
+
+::: info 🎯 用途
+
+控制是否强制应用内容区域最小宽度。
+
+:::
+::: info 📂 配置项位置
+
+（[总体样式 -> 自定义内容区域最小宽度](#自定义内容区域最小宽度)启用时显示）
+
+总体样式 -> 强制应用内容区域最小宽度
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=强制应用内容区域最小宽度" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_force_min_width_settings`
+
+:::
+::: info ℹ️ 补充信息
+
+- 禁用时：当窗口宽度小于设定的最小宽度时，实际会使用窗口宽度。以避免出现横向滚动条。
+- 启用时：强制使内容显示区域不小于设定的最小宽度，即使出现横向滚动条。
 
 :::
 
@@ -972,11 +1567,57 @@ const QuickJumpConfig = (props) => {
 
 启用后可配置：
 
-- 内容区域宽度样式
-  - 用途：使内容区域宽度为最宽的内容的宽度
-  - 类型：字符串
-  - 默认值：`fit-content`
-  - 外部约束：[文档](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/Properties/width#%E5%80%BC)
+- [内容区域宽度样式](#内容区域宽度样式)
+
+:::
+
+### 内容区域宽度样式
+
+::: info 🎯 用途
+
+决定内容区域宽度样式。
+
+:::
+::: info 📂 配置项位置
+
+（[总体样式 -> 自定义内容区域宽度属性](/guide/theme-configuration#自定义内容区域宽度属性)启用时显示）
+
+总体样式 -> 内容区域宽度样式
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=内容区域宽度样式" />
+
+:::
+::: info 🏷️ 类型
+
+字符串
+
+:::
+::: info ⭐ 默认值
+
+`fit-content`
+
+:::
+::: info 💡 示例值
+
+`max-content`、`min-content`
+
+:::
+::: info ⚠️ 外部约束
+
+符合[文档](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/Properties/width#%E5%80%BC)对值的要求。
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.content_width_style`
+
+:::
+::: info ℹ️ 补充信息
+
+默认值效果为：使内容区域宽度等于最宽的内容的宽度。（此项实际是在设置内容区域的 `width` 属性对应的样式值）
 
 :::
 
@@ -1016,9 +1657,109 @@ const QuickJumpConfig = (props) => {
 
 启用后可配置：
 
-- 自定义页眉头像：用于选择上传的图片作为页眉头像，未设置将使用默认头像 `/images/logo.png`。
-- 圆形头像
-- 灰度头像
+- [自定义页眉头像](#自定义页眉头像)
+- [圆形头像](#圆形头像)
+- [灰度头像](#灰度头像)
+
+:::
+
+### 自定义页眉头像
+
+::: info 🎯 用途
+
+用于选择上传的图片作为页眉头像。未设置将使用默认头像 `/images/logo.png`。
+
+:::
+::: info 📂 配置项位置
+
+（[全局 -> 页眉头像显示](#页眉头像显示)启用时显示）
+
+总体样式 -> 自定义页眉头像
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=自定义页眉头像" />
+
+:::
+::: info 🏷️ 类型
+
+附件
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.icon`
+
+:::
+
+### 圆形头像
+
+::: info 🎯 用途
+
+控制是否强制将头像裁切为圆形。
+
+:::
+::: info 📂 配置项位置
+
+（[全局 -> 页眉头像显示](#页眉头像显示)启用时显示）
+
+总体样式 -> 圆形头像
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=圆形头像" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.avatar_circle`
+
+:::
+
+### 灰度头像
+
+::: info 🎯 用途
+
+控制是否强制将头像以灰度处理。
+
+:::
+::: info 📂 配置项位置
+
+（[全局 -> 页眉头像显示](#页眉头像显示)启用时显示）
+
+总体样式 -> 灰度头像
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=灰度头像" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.avatar_grayout`
 
 :::
 
@@ -1157,9 +1898,111 @@ const QuickJumpConfig = (props) => {
 
 启用后可配置：
 
-- 统计项设置
+- [统计项设置](#统计项设置)
 
 :::
+
+### 统计项设置
+
+::: info 🎯 用途
+
+设定统计项。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 页面底部站点统计信息](#页面底部站点统计信息)启用时显示）
+
+总体样式 -> 统计项设置
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=统计项设置" />
+
+:::
+::: info 🏷️ 类型
+
+重复器
+
+:::
+::: info ⭐ 默认值
+
+包含多个预设分享按钮：总阅读量、总文章数、总点赞数、总评论数、总分类数、总字数（需[API 扩展包插件](/guide/plugin-compatibility#api-扩展包)）。
+
+:::
+
+> [!NOTE] 💡 示例值
+>
+> ::: tip 📂 配置项名
+>
+> 统计项
+>
+> :::
+> ::: info 🏷️ 类型
+>
+> 选项
+>
+> :::
+> ::: info ⭐ 默认值
+>
+> 总阅读量（内部值 `visit`）
+>
+> :::
+> ::: info 💡 其余选项
+>
+> - 总文章数（内部值 `post`）
+> - 总点赞数（内部值 `upvote`）
+> - 总评论数（内部值 `comment`）
+> - 总分类数（内部值 `category`）
+> - 总字数（内部值 `wordcount`）
+>
+> :::
+> ::: info 🔒 内部约束
+>
+> 必填项
+>
+> :::
+> ::: tip 📂 配置项名
+>
+> 多语言文本包裹数字
+>
+> :::
+> ::: info 🏷️ 类型
+>
+> 布尔值
+>
+> :::
+> ::: info ⭐ 默认值
+>
+> `true`
+>
+> :::
+> ::: tip 📂 配置项名
+>
+> 文字左侧的图标
+>
+> :::
+> ::: info 🏷️ 类型
+>
+> 字符串
+>
+> :::
+> ::: info ⭐ 默认值
+>
+> 空
+>
+> :::
+> ::: info 💡 示例值
+>
+> `mdi:eye-outline`
+>
+> :::
+> ::: info ⚠️ 外部约束
+>
+> 合法的 [Iconify](https://icon-sets.iconify.design/) 图标。
+>
+> :::
 
 ### 页面底部主题信息
 
@@ -1197,8 +2040,90 @@ const QuickJumpConfig = (props) => {
 
 启用后可配置：
 
-- 页面底部主题信息所展示的主题名
-- 页面底部主题信息所展示的 Halo 版本
+- [页面底部主题信息所展示的主题名](#页面底部主题信息所展示的主题名)
+- [页面底部主题信息所展示的 Halo 版本](#页面底部主题信息所展示的-halo-版本)
+
+:::
+
+#### 页面底部主题信息所展示的主题名
+
+::: info 🎯 用途
+
+设定页面底部主题信息所展示的主题名。
+
+:::
+::: info 📂 配置项位置
+
+（[总体样式 -> 页面底部主题信息](#页面底部主题信息)启用时显示）
+
+总体样式 -> 版权信息自定义署名
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=页面底部主题信息所展示的主题名" />
+
+:::
+::: info 🏷️ 类型
+
+选项
+
+:::
+::: info ⭐ 默认值
+
+Higan Haozi（内部值 `Higan Haozi`）
+
+:::
+::: info 💡 其余选项
+
+- Higan（内部值 `Higan`）
+- 彼岸（内部值 `彼岸`）
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.footer_theme_info_theme_name`
+
+:::
+
+#### 页面底部主题信息所展示的 Halo 版本
+
+::: info 🎯 用途
+
+设定页面底部主题信息所展示的 Halo 版本。
+
+:::
+::: info 📂 配置项位置
+
+（[总体样式 -> 页面底部主题信息](#页面底部主题信息)启用时显示）
+
+总体样式 -> 页面底部主题信息所展示的 Halo 版本
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=页面底部主题信息所展示的%20Halo%20版本" />
+
+:::
+::: info 🏷️ 类型
+
+选项
+
+:::
+::: info ⭐ 默认值
+
+Halo（内部值 `Halo`）
+
+:::
+::: info 💡 其余选项
+
+- Halo Pro（内部值 `Halo Pro`）
+- Halo 专业版（内部值 `Halo 专业版`）
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.footer_theme_info_halo_version_name`
 
 :::
 
@@ -1238,7 +2163,47 @@ const QuickJumpConfig = (props) => {
 
 启用后可配置：
 
-- 版权信息自定义署名
+- [版权信息自定义署名](#版权信息自定义署名)
+
+:::
+
+#### 版权信息自定义署名
+
+::: info 🎯 用途
+
+设定页面底部版权信息的署名。
+
+:::
+::: info 📂 配置项位置
+
+（[总体样式 -> 页面底部版权信息](#页面底部版权信息)启用时显示）
+
+总体样式 -> 版权信息自定义署名
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=版权信息自定义署名" />
+
+:::
+::: info 🏷️ 类型
+
+字符串
+
+:::
+::: info ⭐ 默认值
+
+空
+
+:::
+::: info 💡 示例值
+
+`HowieHz`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.footer_copyright_custom_name`
 
 :::
 
@@ -1347,9 +2312,62 @@ const QuickJumpConfig = (props) => {
 
 启用后可配置：
 
-- 页面最底部内容
-- 多语言页面最底部内容支持
-  - 自定义多语言页面最底部内容
+- [页面最底部内容](#页面最底部内容)
+- [多语言页面最底部内容支持](#多语言页面最底部内容支持)
+  - [自定义多语言页面最底部内容](#自定义多语言页面最底部内容)
+
+:::
+
+#### 页面最底部内容
+
+::: info 🎯 用途
+
+设定页面最底部内容内容。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 页面最底部内容](#页面最底部内容)启用时显示）
+
+首页样式 -> 页面最底部内容
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=页面最底部内容" />
+
+:::
+::: info 🏷️ 类型
+
+代码输入框（HTML）
+
+:::
+::: info ⭐ 默认值
+
+空
+
+:::
+::: info 💡 示例值
+
+```html
+已经结束了！
+```
+
+HTML 代码也是可以的：
+
+```html
+<code>下面已经没有东西了</code>
+```
+
+:::
+::: info ⚠️ 外部约束
+
+合法的 HTML 代码。
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.footer_content`
 
 :::
 
@@ -1362,7 +2380,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-（[首页样式 -> 页面最底部内容](/guide/theme-configuration#页面最底部内容)启用时显示）
+（[首页样式 -> 页面最底部内容](#页面最底部内容)启用时显示）
 
 首页样式 -> 多语言页面最底部内容支持
 
@@ -1402,7 +2420,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-（[首页样式 -> 页面最底部内容](/guide/theme-configuration#页面最底部内容)启用时显示）
+（[首页样式 -> 页面最底部内容](#页面最底部内容)启用时显示）
 
 首页样式 -> 自定义多语言页面最底部内容
 
@@ -1627,7 +2645,7 @@ const QuickJumpConfig = (props) => {
 
 :::
 
-### 表格每行底部的表格线（除表头）
+### 表格行间线（除表头）
 
 ::: info 🎯 用途
 
@@ -1636,12 +2654,12 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-总体样式 -> 表格每行底部的表格线（除表头）
+总体样式 -> 表格行间线（除表头）
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=表格每行底部的表格线" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=表格行间线" />
 
 :::
 ::: info 🏷️ 类型
@@ -1663,7 +2681,59 @@ const QuickJumpConfig = (props) => {
 
 启用后可配置：
 
-- 表格每行底部的表格线宽度（除表头）
+<!-- markdownlint-disable MD051 -->
+
+- [表格行间线宽度（除表头）](#表格行间线宽度-除表头)
+<!-- markdownlint-enable MD051 -->
+
+:::
+
+### 表格行间线宽度（除表头）
+
+::: info 🎯 用途
+
+设置表格每行底部添表格线的宽度（除表头）。
+
+:::
+::: info 📂 配置项位置
+
+<!-- markdownlint-disable MD051 -->
+
+（[总体样式 -> 表格行间线（除表头）](#表格行间线-除表头)启用时显示）
+
+<!-- markdownlint-enable MD051 -->
+
+总体样式 -> 表格行间线宽度（除表头）
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=表格行间线宽度" />
+
+:::
+::: info 🏷️ 类型
+
+字符串
+
+:::
+::: info ⭐ 默认值
+
+`8px`
+
+:::
+::: info 💡 示例值
+
+`0px`、`5px`、`10%`、`1rem`
+
+:::
+::: info ⚠️ 外部约束
+
+合法的 CSS 长度单位。
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.table_bottom_border_width`
 
 :::
 
@@ -2024,7 +3094,11 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-（[首页样式 -> 个人简介/公告栏](/guide/theme-configuration#个人简介-公告栏)启用时显示）
+<!-- markdownlint-disable MD051 -->
+
+（[首页样式 -> 个人简介/公告栏](#个人简介-公告栏)启用时显示）
+
+<!-- markdownlint-enable MD051 -->
 
 首页样式 -> 多语言个人简介/公告栏支持
 
@@ -2064,7 +3138,11 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-（[首页样式 -> 个人简介/公告栏](/guide/theme-configuration#个人简介-公告栏)启用时显示）
+<!-- markdownlint-disable MD051 -->
+
+（[首页样式 -> 个人简介/公告栏](#个人简介-公告栏)启用时显示）
+
+<!-- markdownlint-enable MD051 -->
 
 首页样式 -> 自定义多语言公告栏内容
 
@@ -2264,25 +3342,500 @@ const QuickJumpConfig = (props) => {
 
 简洁列表启用后可以配置
 
-- 显示文章阅读量
+- [显示文章阅读量](#简洁列表显示文章阅读量)
 
 多元列表启用后可以配置
 
-- 显示文章分类
-- 显示文章标签
-- 显示文章阅读量
-- 显示文章预计阅读时间
-- 显示文章字数统计
-- 显示文章摘要
-- 文章摘要行数上限
-- 跳转文章链接所用提示文字
-- 显示文章封面
+- [显示文章分类](#多元列表显示文章分类)
+- [显示文章标签](#多元列表显示文章标签)
+- [显示文章阅读量](#多元列表显示文章阅读量)
+- [显示文章预计阅读时间](#多元列表显示文章预计阅读时间)
+- [显示文章字数统计](#多元列表显示文章字数统计)
+- [显示文章摘要](#多元列表显示文章摘要)
+- [文章摘要行数上限](#多元列表文章摘要行数上限)
+- [跳转文章链接所用提示文字](#多元列表跳转文章链接所用提示文字)
+- [显示文章封面](#多元列表显示文章封面)
 
 瞬间列表启用后可以配置
 
-- 显示条数
-- 显示条目作者头像
-- 显示条目作者昵称
+- [显示条数](#瞬间列表显示条数)
+- [显示条目作者头像](#瞬间列表显示条目作者头像)
+- [显示条目作者昵称](#瞬间列表显示条目作者昵称)
+
+:::
+
+### 简洁列表显示文章阅读量
+
+::: info 🎯 用途
+
+控制是否在简洁列表中显示文章阅读量。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为“简洁文章列表”时显示）
+
+首页样式 -> 简洁列表显示文章阅读量
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=简洁列表显示文章阅读量" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_post_views_in_simple_post_list`
+
+:::
+
+### 多元列表显示文章分类
+
+::: info 🎯 用途
+
+控制是否在多元列表中显示文章分类。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为“多元文章列表”时显示）
+
+首页样式 -> 多元列表显示文章分类
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表显示文章分类" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_post_categories_in_post_list_summary`
+
+:::
+
+### 多元列表显示文章标签
+
+::: info 🎯 用途
+
+控制是否在多元列表中显示文章标签。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为“多元文章列表”时显示）
+
+首页样式 -> 多元列表显示文章标签
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表显示文章标签" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_post_tags_in_post_list_summary`
+
+:::
+
+### 多元列表显示文章阅读量
+
+::: info 🎯 用途
+
+控制是否在多元列表中显示文章阅读量。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为“多元文章列表”时显示）
+
+首页样式 -> 多元列表显示文章阅读量
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表显示文章阅读量" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_post_views_in_post_list_summary`
+
+:::
+
+### 多元列表显示文章预计阅读时间
+
+::: info 🎯 用途
+
+控制是否在多元列表中显示文章预计阅读时间。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为“多元文章列表”时显示）
+
+首页样式 -> 多元列表显示文章预计阅读时间
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表显示文章预计阅读时间" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_post_estimated_reading_time_in_post_list_summary`
+
+:::
+::: info ℹ️ 补充信息
+
+启用 [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动启用更准确的计量方法。
+
+:::
+
+### 多元列表显示文章字数统计
+
+::: info 🎯 用途
+
+控制是否在多元列表中显示文章字数统计。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为“多元文章列表”时显示）
+
+首页样式 -> 多元列表显示文章字数统计
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表显示文章字数统计" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_post_word_count_in_post_list_summary`
+
+:::
+::: info ℹ️ 补充信息
+
+启用 [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动启用更准确的计量方法。
+
+:::
+
+### 多元列表显示文章摘要
+
+::: info 🎯 用途
+
+控制是否在多元列表中显示文章摘要。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为“多元文章列表”时显示）
+
+首页样式 -> 多元列表显示文章摘要
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表显示文章摘要" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_post_excerpt_in_post_list_summary`
+
+:::
+
+### 多元列表文章摘要行数上限
+
+::: info 🎯 用途
+
+设置多元列表中文章摘要的最大行数。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为“多元文章列表”时显示）
+
+首页样式 -> 多元列表文章摘要行数上限
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表文章摘要行数上限" />
+
+:::
+::: info 🏷️ 类型
+
+整数
+
+:::
+::: info ⭐ 默认值
+
+`3`
+
+:::
+::: info 🔒 内部约束
+
+范围 1-5
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.post_excerpt_max_lines`
+
+:::
+
+### 多元列表跳转文章链接所用提示文字
+
+::: info 🎯 用途
+
+控制是否在多元列表中显示跳转文章链接的提示文字。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为“多元文章列表”时显示）
+
+首页样式 -> 多元列表跳转文章链接所用提示文字
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表跳转文章链接所用提示文字" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_index_post_list_permalink_text`
+
+:::
+::: info ℹ️ 补充信息
+
+如关闭此项，首页文章列表文章项将不显示跳转链接文字
+
+:::
+
+### 多元列表显示文章封面
+
+::: info 🎯 用途
+
+控制是否在多元列表中显示文章封面。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为“多元文章列表”时显示）
+
+首页样式 -> 多元列表显示文章封面
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表显示文章封面" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_post_cover_in_post_list_summary`
+
+:::
+
+### 瞬间列表显示条数
+
+::: info 🎯 用途
+
+设置瞬间列表中显示的条目数量。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为“瞬间列表”时显示）
+
+首页样式 -> 瞬间列表显示条数
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=瞬间列表显示条数" />
+
+:::
+::: info 🏷️ 类型
+
+整数
+
+:::
+::: info ⭐ 默认值
+
+`10`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.moment_list_page_size`
+
+:::
+
+### 瞬间列表显示条目作者头像
+
+::: info 🎯 用途
+
+控制是否在瞬间列表中显示条目作者头像。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为“瞬间列表”时显示）
+
+首页样式 -> 瞬间列表显示条目作者头像
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=瞬间列表显示条目作者头像" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_moment_avatar`
+
+:::
+
+### 瞬间列表显示条目作者昵称
+
+::: info 🎯 用途
+
+控制是否在瞬间列表中显示条目作者昵称。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为“瞬间列表”时显示）
+
+首页样式 -> 瞬间列表显示条目作者昵称
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=瞬间列表显示条目作者昵称" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_moment_nickname`
 
 :::
 
@@ -3666,7 +5219,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⚠️ 外部约束
 
-合法的 CSS 长度单位。如：20rem, 300px, 30vw。
+合法的 CSS 长度单位。
 
 :::
 ::: info 🧩 模板变量

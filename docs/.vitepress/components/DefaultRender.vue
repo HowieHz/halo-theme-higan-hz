@@ -4,13 +4,13 @@ import { ref } from "vue";
 /* oxlint-disable eslint(no-undef) */
 /**
  * 组件属性定义：
- * @prop {String} src - 要渲染的 iframe 源地址，默认为 "/halo-theme-higan-hz/frames/default.html"
+ * @prop {String} src - 要渲染的 iframe 源地址，默认为 "/halo-theme-higan-haozi/frames/default.html"
  * @prop {String} height - iframe 的高度，默认为 "100px"
  */
 defineProps({
   src: {
     type: String,
-    default: "/halo-theme-higan-hz/frames/default.html",
+    default: "/halo-theme-higan-haozi/frames/default.html",
   },
   height: {
     type: String,

@@ -6,13 +6,13 @@ outline: deep
 
 以下均为可选插件。
 
-## API 扩展
+## API 扩展包
 
 插件 [plugin-extra-api](https://github.com/HowieHz/halo-plugin-extra-api)（[应用市场页面](https://www.halo.run/store/apps/app-di1jh8gd)）
 
 启用插件（轻量版）后：
 
-- [文章预计阅读时间](/guide/theme-configuration#文章预计阅读时间)、[文章字数统计](/guide/theme-configuration#文章字数统计)、[页面预计阅读时间](/guide/theme-configuration#页面预计阅读时间)、[页面字数统计](/guide/theme-configuration#页面字数统计)、[帖文预计阅读时间](/guide/theme-configuration#帖文预计阅读时间)、[帖文字数统计](/guide/theme-configuration#帖文字数统计)将自动应用插件中更准确的计量方法。
+- [文章预计阅读时间](/guide/theme-configuration#文章预计阅读时间)、[文章字数统计](/guide/theme-configuration#文章字数统计)、[页面预计阅读时间](/guide/theme-configuration#页面预计阅读时间)、[页面字数统计](/guide/theme-configuration#页面字数统计)、[帖文预计阅读时间](/guide/theme-configuration#帖文预计阅读时间)、[帖文字数统计](/guide/theme-configuration#帖文字数统计)、[多元列表文章预计阅读时间](/guide/theme-configuration#多元列表显示文章预计阅读时间)、[多元列表文章字数统计](/guide/theme-configuration#多元列表显示文章字数统计)将自动应用插件中更准确的计量方法。
 - [页面底部站点统计信息](/guide/theme-configuration#页面底部站点统计信息)将支持“总字数”统计显示。
 
 ## 友链页

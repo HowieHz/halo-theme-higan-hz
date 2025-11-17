@@ -373,7 +373,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<DefaultRender src="/halo-theme-higan-hz/frames/post">
+<DefaultRender src="/halo-theme-higan-haozi/frames/post">
 
 ## 在此处 h2 标题前应有一个 `#` 字符
 
@@ -499,7 +499,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<DefaultRender height="300px" src="/halo-theme-higan-hz/frames/post">
+<DefaultRender height="300px" src="/halo-theme-higan-haozi/frames/post">
 
 ![Alt text - 图片未加载则显示](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2311325.jpg)
 
@@ -525,7 +525,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<DefaultRender height="300px" src="/halo-theme-higan-hz/frames/post">
+<DefaultRender height="300px" src="/halo-theme-higan-haozi/frames/post">
 <img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg" alt="cat" />
 
 <div class="caption">我是图片说明文字 上面是城市夜景</div>
@@ -559,7 +559,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<DefaultRender height="400px" src="/halo-theme-higan-hz/frames/post">
+<DefaultRender height="400px" src="/halo-theme-higan-haozi/frames/post">
 <div class="video-container">
   <iframe
     src="https://player.bilibili.com/player.html?bvid=BV1A7QWY3EkW&autoplay=0&poster=1&muted=1&danmaku=0"
@@ -590,7 +590,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<DefaultRender height="400px" src="/halo-theme-higan-hz/frames/post">
+<DefaultRender height="400px" src="/halo-theme-higan-haozi/frames/post">
 
 <!-- markdownlint-disable MD028 -->
 
@@ -630,7 +630,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<DefaultRender height="600px" src="/halo-theme-higan-hz/frames/post">
+<DefaultRender height="600px" src="/halo-theme-higan-haozi/frames/post">
 
 <!-- markdownlint-disable MD028 -->
 
@@ -694,7 +694,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<DefaultRender height="500px" src="/halo-theme-higan-hz/frames/post">
+<DefaultRender height="500px" src="/halo-theme-higan-haozi/frames/post">
 <div style="clear: both">
 
 这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。这是一段测试文本，正如你所想的，只是一段测试文本。
@@ -984,7 +984,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### 渲染效果
 
-<DefaultRender src="/halo-theme-higan-hz/frames/post">
+<DefaultRender src="/halo-theme-higan-haozi/frames/post">
 <div class="light">这段内容只在亮色模式/自动模式 (亮色) 下显示。试试切换页面主题。</div>
 <div class="dark">这段内容只在暗色模式/自动模式 (暗色) 下显示。试试切换页面主题。</div>
 </DefaultRender>

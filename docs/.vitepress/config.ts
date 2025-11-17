@@ -13,7 +13,7 @@ export default defineConfig({
       // Initialize whyframe core plugin
       whyframe({
         components: [{ name: "DefaultRender" }],
-        defaultSrc: "/halo-theme-higan-hz/frames/default", // provide our own html
+        defaultSrc: "/halo-theme-higan-haozi/frames/default", // provide our own html
       }),
 
       // Initialize whyframe Vue integration plugin
@@ -100,15 +100,15 @@ export default defineConfig({
       $('head link[rel="preload"]').remove();
       // 不能移除全部 <link rel="preload stylesheet"> 标签，会导致 iframe 内样式丢失
       // 可以移除，因为 vp-icons.css 用不到
-      $('head link[rel="preload stylesheet"][href="/halo-theme-higan-hz/vp-icons.css"][as="style"]').remove();
+      $('head link[rel="preload stylesheet"][href="/halo-theme-higan-haozi/vp-icons.css"][as="style"]').remove();
 
       // 移除 script id="check-dark-mode" 和 script id="check-mac-os"
       $("head script#check-dark-mode, head script#check-mac-os").remove();
 
-      // 移除 <script>import("/halo-theme-higan-hz/pagefind/pagefind.js").then(i=>{window.__pagefind__=i,i.init()}).catch(()=>{});</script>
+      // 移除 <script>import("/halo-theme-higan-haozi/pagefind/pagefind.js").then(i=>{window.__pagefind__=i,i.init()}).catch(()=>{});</script>
       $("head script").each((_, elem) => {
         const scriptContent = $(elem).html();
-        if (scriptContent && scriptContent.includes('import("/halo-theme-higan-hz/pagefind/pagefind.js")')) {
+        if (scriptContent && scriptContent.includes('import("/halo-theme-higan-haozi/pagefind/pagefind.js")')) {
           $(elem).remove();
         }
       });
@@ -123,7 +123,7 @@ export default defineConfig({
     if (!pageData.relativePath.includes("frames/")) {
       pageData.frontmatter.head ??= [];
       pageData.frontmatter.head.push(
-        ["link", { rel: "icon", type: "image/x-icon", href: "/halo-theme-higan-hz/ico.ico" }],
+        ["link", { rel: "icon", type: "image/x-icon", href: "/halo-theme-higan-haozi/ico.ico" }],
         ["meta", { name: "theme-color", content: "#5f67ee" }],
         ["meta", { property: "og:type", content: "website" }],
         ["meta", { property: "og:site_name", content: "Higan Haozi" }],
@@ -131,10 +131,10 @@ export default defineConfig({
           "meta",
           {
             property: "og:image",
-            content: "https://howiehz.top/halo-theme-higan-hz/ico.ico",
+            content: "https://howiehz.top/halo-theme-higan-haozi/ico.ico",
           },
         ],
-        ["meta", { property: "og:url", content: "https://howiehz.top/halo-theme-higan-hz/" }],
+        ["meta", { property: "og:url", content: "https://howiehz.top/halo-theme-higan-haozi/" }],
         // <script defer src="https://umami.howiehz.top/script.js" data-website-id="7b461ac5-155d-45a8-a118-178d0a2936e4" data-domains="howiehz.top"></script>
         [
           "script",
@@ -159,7 +159,7 @@ export default defineConfig({
   cleanUrls: true,
   metaChunk: true,
 
-  base: "/halo-theme-higan-hz/",
+  base: "/halo-theme-higan-haozi/",
   locales: {
     root: {
       label: "简体中文",
@@ -174,7 +174,7 @@ export default defineConfig({
   },
 
   sitemap: {
-    hostname: "https://howiehz.top/halo-theme-higan-hz/",
+    hostname: "https://howiehz.top/halo-theme-higan-haozi/",
     xmlns: {
       // trim the xml namespace
       news: true, // flip to false to omit the xml namespace for news

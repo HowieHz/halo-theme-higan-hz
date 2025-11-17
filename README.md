@@ -10,7 +10,7 @@
 
 一款响应式、简洁清爽的个人网站 Halo CMS 主题。
 
-想了解更多吗？欢迎访问[文档](https://howiehz.top/halo-theme-higan-hz/)进一步了解此主题。
+想了解更多吗？欢迎访问[文档](https://howiehz.top/halo-theme-higan-haozi/)进一步了解此主题。
 也可以访问[示例站点](https://howiehz.top/)进行体验。
 
 ## 特点
@@ -18,11 +18,11 @@
 在简洁清爽的基础上，本主题秉持以下核心理念：
 
 1. 响应式设计（适配不同屏幕尺寸）
-2. [多语言支持](https://howiehz.top/halo-theme-higan-hz/tutorial/i18n)
-3. [强可配置性](https://howiehz.top/halo-theme-higan-hz/guide/theme-configuration)
-4. [兼容性良好](https://howiehz.top/halo-theme-higan-hz/guide/what-is-higan-haozi#浏览器兼容性)
-5. [插件兼容性](https://howiehz.top/halo-theme-higan-hz/guide/plugin-compatibility)
-6. [高性能表现](https://howiehz.top/halo-theme-higan-hz/guide/what-is-higan-haozi#lighthouse)
+2. [多语言支持](https://howiehz.top/halo-theme-higan-haozi/tutorial/i18n)
+3. [强可配置性](https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration)
+4. [兼容性良好](https://howiehz.top/halo-theme-higan-haozi/guide/what-is-higan-haozi#浏览器兼容性)
+5. [插件兼容性](https://howiehz.top/halo-theme-higan-haozi/guide/plugin-compatibility)
+6. [高性能表现](https://howiehz.top/halo-theme-higan-haozi/guide/what-is-higan-haozi#lighthouse)
 
 ## 预览
 

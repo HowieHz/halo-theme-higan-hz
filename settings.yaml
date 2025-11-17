@@ -19,7 +19,7 @@ spec:
           help: 如启用此项，则多语言功能将启用前缀匹配模式，具体使用方法请看文档。
         - $formkit: checkbox
           name: is_auto_redirect_to_browser_language
-          label: 浏览器语言自动跳转
+          label: 浏览器按语言自动跳转
           value: false
           help: "如启用此项，若当前浏览器语言与默认页面语言不同，且存在对应语言的页面，将自动跳转到对应语言页面。"
         - $formkit: repeater
@@ -31,7 +31,7 @@ spec:
           children:
             - $formkit: text
               name: v
-              label: "区域语言代码"
+              label: "语言代码"
               validation: "required"
               help: "如 zh、zh_CN、en、en_US"
         - $formkit: checkbox
@@ -63,8 +63,8 @@ spec:
         - $formkit: text
           name: target_url
           if: "$anti_mirror_site === true"
-          label: "Base64 编码后的目标链接"
-          help: "检测到当前页面域名不在白名单中，就会跳转到目标链接（编码前的内容包括完整域名。请在输入框仅输入编码后的内容！）\n示例：编码前 https://howiehz.top\n编码后 aHR0cHM6Ly9ob3dpZWh6LnRvcA=="
+          label: "目标链接"
+          help: "Base64 编码后的目标链接。检测到当前页面域名不在白名单中，就会跳转到目标链接（编码前的内容包括完整域名。请在输入框仅输入编码后的内容！）\n示例：编码前 https://howiehz.top\n编码后 aHR0cHM6Ly9ob3dpZWh6LnRvcA=="
           value: "bG9jYWxob3N0"
         - $formkit: checkbox
           name: is_keep_path_and_query
@@ -124,13 +124,13 @@ spec:
         - $formkit: attachment
           if: "$is_custom_font_files_enable === true"
           name: custom_font_files
-          label: 自定义字体文件
+          label: 选择自定义字体文件
           help: 上传 .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt 字体文件，主题会优先使用这些文件替换默认字体
           value: ""
         - $formkit: text
           if: "$is_custom_font_files_enable === true"
           name: custom_font_name
-          label: 字体名称（全名/PostScript 名）
+          label: 自定义字体名称
           help: "请填写上传字体文件内部声明的“字体全名 (nameID=4)”或“PostScript 名 (nameID=6)”，如：My Custom Font Regular 或 MyCustomFont-Regular；如果不知道也可以置空。若置空，则即使用户本地已安装该字体，也不会使用本地版本，而是继续从网络下载。"
           value: ""
         - $formkit: select
@@ -441,7 +441,7 @@ spec:
             - $formkit: select
               name: type
               label: 统计项
-              value: ""
+              value: "visit"
               options:
                 - label: "总阅读量"
                   value: "visit"
@@ -479,8 +479,6 @@ spec:
               value: Higan Haozi
             - label: Higan
               value: Higan
-            - label: 彼岸-皓子
-              value: 彼岸-皓子
             - label: 彼岸
               value: 彼岸
           # autocorrect-enable
@@ -494,6 +492,8 @@ spec:
               value: Halo
             - label: Halo Pro
               value: Halo Pro
+            - label: Halo 专业版
+              value: Halo 专业版
         - $formkit: checkbox
           name: is_footer_copyright_show
           label: 页面底部版权信息
@@ -566,13 +566,13 @@ spec:
           help: 如启用此项，将在引用块后添加引号。引用块在 Markdown 中使用 > 表示。
         - $formkit: checkbox
           name: is_show_the_table_bottom_border
-          label: 表格每行底部的表格线（除表头）
+          label: 表格行间线（除表头）
           value: false
           help: 如启用此项，表格每行底部都将添加表格线（除去表头）
         - $formkit: text
           name: table_bottom_border_width
           if: "$is_show_the_table_bottom_border===true"
-          label: 表格每行底部的表格线宽度（除表头）
+          label: 表格行间线宽度（除表头）
           value: 0.1rem
           placeholder: "默认值：0.1rem"
           help: "允许全部 CSS 长度单位，如：48rem, 780px, 70vw, 70%。"
@@ -734,6 +734,9 @@ spec:
           if: "$list_layout === 'post-list-summary'"
           label: 多元列表文章摘要行数上限
           value: 3
+          min: 1
+          max: 5
+          step: 1
           help: "填写值范围为 1-5"
         - $formkit: checkbox
           name: is_show_index_post_list_permalink_text
@@ -886,7 +889,7 @@ spec:
           name: is_post_recommended_articles_show
           label: 文章底部的推荐文章
           value: false
-          help: 开启后将在文章底部显示推荐文章列表。注：原理是读取当前文章第一个分类，并且随机输出其中若干个文章。如果当前文章在列表中将会被剔除，因此推荐文章可能小于当前推荐文章数。如果当前文章未设置分类，该功能会被禁用。如果分类仅有一篇文章，该功能会被禁用。
+          help: 开启后将在文章底部显示推荐文章列表。
         - $formkit: number
           name: post_recommended_articles_count
           if: "$is_post_recommended_articles_show === true"
