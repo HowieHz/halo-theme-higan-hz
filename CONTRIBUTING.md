@@ -2,13 +2,11 @@
 
 ## 项目结构
 
-- [模板文件信息](./docs/README.md)
+- [模板文件与访问路径映射](https://howiehz.top/halo-theme-higan-haozi/reference/template-map)
 
 ## 版本适用说明
 
-当前 main 分支适用于 Halo 2.0 版本
-
-适用于 Halo 1.x 版本的主题位于分支 [halo-theme-higan 1.x](https://github.com/HowieHz/halo-theme-higan-hz/tree/1.x)
+当前 main 分支适用于 Halo 2.x 版本
 
 ## 开发指南
 
@@ -42,44 +40,58 @@ pnpm install
 
 ### 开发主题
 
-开发时在项目根目录运行运行以下指令可实时渲染修改
+开发时在项目根目录运行以下指令可实时渲染修改。
 
 ```bash
 pnpm dev
 ```
 
-### 开发之后
+此时会在 `tmp/` 目录输出未压缩的样式文件，便于追踪问题。
 
-#### 求疵
+#### 开发之后
 
-开发完成后请运行以下的指令进行检查（请确保无 error）
+##### 求疵
+
+开发完成后请运行以下的指令进行检查（请确保无 error）。
 
 ```bash
 pnpm lint
 ```
 
-#### 格式化代码
+##### 格式化代码
 
-提交前请运行以下的指令的指令格式化代码
+提交前请运行以下的指令的指令格式化代码。
 
 ```bash
 pnpm format
 ```
 
-#### 构建主题
+##### 构建主题
 
-最后在提交前请不要忘记运行以下的指令构建主题
+最后在提交前请不要忘记运行以下的指令构建主题。
 
 ```bash
 pnpm build
 ```
 
-#### 其他 NPM 脚本的作用
+### 编写文档
 
-在 .\tmp\ 目录输出未压缩的样式文件，便于追踪问题
+开发时在项目根目录运行以下指令可启动服务器，用以实时渲染修改。
 
 ```bash
-pnpm dev-build
+pnpm docs:dev
+```
+
+以下指令将在 `docs/.vitepress/dist` 目录构建成品。
+
+```bash
+pnpm docs:build
+```
+
+使用以下指令可启用服务器，用于预览成品。
+
+```bash
+pnpm docs:preview
 ```
 
 <!-- #### 目前所用的图标库
@@ -91,3 +103,11 @@ pnpm dev-build
 ```bash
 pnpm release
 ``` -->
+
+### 其他指令
+
+检查项目依赖是否过时
+
+```bash
+pnpm -r outdated
+```

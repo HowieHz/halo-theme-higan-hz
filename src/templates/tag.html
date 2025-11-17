@@ -2,10 +2,10 @@
 <th:block
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
-    title = ${#annotations.getOrDefault(tag, 'higan.howiehz.top/page-title', tag.spec.displayName)}, 
+    title = ${#annotations.getOrDefault(tag, 'higan.howiehz.top/page-title', tag.spec?.displayName)}, 
     head = ~{::headContent},
     content = ~{::content}, 
-    header = ~{fragments/header::content}, 
+    header = ~{fragments/header :: content}, 
     navbar = ~{}, 
     language=${#annotations.get(tag, 'higan.howiehz.top/page-language')} 
   )}"

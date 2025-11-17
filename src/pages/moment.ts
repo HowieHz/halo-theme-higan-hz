@@ -1,8 +1,8 @@
 import "./generic-header";
+import "../styles/mixins/common-post-list.css";
+import "../styles/pages/moment.css";
 
 import Alpine from "alpinejs";
-
-import "../styles/pages/moment.css";
 
 import momentComment from "../alpine-data/moment-comment";
 

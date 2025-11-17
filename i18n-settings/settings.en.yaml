@@ -475,12 +475,10 @@ spec:
           value: higan-hz
           # autocorrect-disable
           options:
-            - label: higan-hz
-              value: higan-hz
-            - label: higan
-              value: higan
-            - label: 彼岸-皓改
-              value: 彼岸-皓改
+            - label: Higan Haozi
+              value: Higan Haozi
+            - label: Higan
+              value: Higan
             - label: 彼岸
               value: 彼岸
           # autocorrect-enable
@@ -494,6 +492,8 @@ spec:
               value: Halo
             - label: Halo Pro
               value: Halo Pro
+            - label: Halo Professional Edition
+              value: Halo Professional Edition
         - $formkit: checkbox
           name: is_footer_copyright_show
           label: Footer theme copyright information in the footer
@@ -1131,6 +1131,24 @@ spec:
           name: is_moment_comment_section_show
           label: Enable comment section
           value: true
+    - group: error_page_styles
+      label: Error Page Style
+      formSchema:
+        - $formkit: checkbox
+          name: is_auto_redirect
+          label: Page auto-redirect
+          value: true
+        - $formkit: text
+          name: target_url
+          if: "$is_auto_redirect === true"
+          label: Redirect target URL
+          value: "/"
+        - $formkit: number
+          name: redirect_wait_time
+          if: "$is_auto_redirect === true"
+          label: Redirect wait time
+          value: 5
+          help: "Set the wait time for redirect, in seconds."
     - group: sns
       label: Social media settings/RSS
       formSchema:
@@ -1445,21 +1463,3 @@ spec:
               value: ""
               help: The name in the aria-label
               validation: "required"
-    - group: error_page_styles
-      label: Error Page Style
-      formSchema:
-        - $formkit: checkbox
-          name: is_auto_redirect
-          label: Page auto-redirect
-          value: true
-        - $formkit: text
-          name: target_url
-          if: "$is_auto_redirect === true"
-          label: Redirect target URL
-          value: "/"
-        - $formkit: number
-          name: redirect_wait_time
-          if: "$is_auto_redirect === true"
-          label: Redirect wait time
-          value: 5
-          help: "Set the wait time for redirect, in seconds."

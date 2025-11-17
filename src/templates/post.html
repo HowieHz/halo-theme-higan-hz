@@ -2,7 +2,7 @@
 <th:block
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
-    title = ${#annotations.getOrDefault(post, 'higan.howiehz.top/page-title', post.spec.title)}, 
+    title = ${#annotations.getOrDefault(post, 'higan.howiehz.top/page-title', post.spec?.title)}, 
     head = ~{::headContent},
     content = ~{::content}, 
     header = ~{}, 
@@ -291,7 +291,7 @@
                  })},
                  targetPagePostList=${targetPagePostFinderResult.items},"
         >
-          <div class="recommendations mt-10" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
+          <div class="recommendations mt-10">
             <h4 class="mb-2" th:text="#{fragment.post-nav.recommended}">推荐文章 标题填充位</h4>
             <th:block th:each="iterPost: ${targetPagePostList}">
               <div th:if="${post.metadata.name != iterPost.metadata.name}">

@@ -19,7 +19,7 @@ spec:
           help: 如启用此项，则多语言功能将启用前缀匹配模式，具体使用方法请看文档。
         - $formkit: checkbox
           name: is_auto_redirect_to_browser_language
-          label: 浏览器语言自动跳转
+          label: 浏览器按语言自动跳转
           value: false
           help: "如启用此项，若当前浏览器语言与默认页面语言不同，且存在对应语言的页面，将自动跳转到对应语言页面。"
         - $formkit: repeater
@@ -31,7 +31,7 @@ spec:
           children:
             - $formkit: text
               name: v
-              label: "区域语言代码"
+              label: "语言代码"
               validation: "required"
               help: "如 zh、zh_CN、en、en_US"
         - $formkit: checkbox
@@ -63,8 +63,8 @@ spec:
         - $formkit: text
           name: target_url
           if: "$anti_mirror_site === true"
-          label: "Base64 编码后的目标链接"
-          help: "检测到当前页面域名不在白名单中，就会跳转到目标链接（编码前的内容包括完整域名。请在输入框仅输入编码后的内容！）\n示例：编码前 https://howiehz.top\n编码后 aHR0cHM6Ly9ob3dpZWh6LnRvcA=="
+          label: "目标链接"
+          help: "Base64 编码后的目标链接。检测到当前页面域名不在白名单中，就会跳转到目标链接（编码前的内容包括完整域名。请在输入框仅输入编码后的内容！）\n示例：编码前 https://howiehz.top\n编码后 aHR0cHM6Ly9ob3dpZWh6LnRvcA=="
           value: "bG9jYWxob3N0"
         - $formkit: checkbox
           name: is_keep_path_and_query
@@ -124,20 +124,20 @@ spec:
         - $formkit: attachment
           if: "$is_custom_font_files_enable === true"
           name: custom_font_files
-          label: 自定义字体文件
+          label: 选择自定义字体文件
           help: 上传 .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt 字体文件，主题会优先使用这些文件替换默认字体
           value: ""
         - $formkit: text
           if: "$is_custom_font_files_enable === true"
           name: custom_font_name
-          label: 字体名称（全名/PostScript 名）
+          label: 自定义字体名称
           help: "请填写上传字体文件内部声明的“字体全名 (nameID=4)”或“PostScript 名 (nameID=6)”，如：My Custom Font Regular 或 MyCustomFont-Regular；如果不知道也可以置空。若置空，则即使用户本地已安装该字体，也不会使用本地版本，而是继续从网络下载。"
           value: ""
         - $formkit: select
           name: color_schema
           id: color_schema_init
           label: 配色方案
-          help: 此项无法显示所选项是正常现象，实际会正常生效。（对于启用”浅色/深色模式切换按钮”的情况来说，这项决定了网站刚加载完成时的配色方案。）
+          help: 此项无法显示所选项是正常现象，实际会正常生效。（对于启用“深浅色模式切换按钮”的情况来说，这项决定了网站刚加载完成时的配色方案。）
           value: { theme: "auto", color-scheme: "auto" }
           options:
             - label: "跟随系统 - 绿"
@@ -170,7 +170,7 @@ spec:
             - $formkit: number
               name: id
               label: 自定义配色方案识别码
-              value: "1"
+              value: 1
               help: "唯一识别码，请勿重复"
               validation: "required"
             - $formkit: select
@@ -226,9 +226,9 @@ spec:
                 }
         - $formkit: checkbox
           name: is_show_color_scheme_toggle_button
-          label: 浅色/深色模式切换按钮
+          label: 深浅色模式切换按钮
           value: false
-          help: （切换此项后，请点击下方保存按钮，再之后刷新此页面）如启用此项，将在大标题旁显示明暗模式切换按钮。并且在 浅色模式 -> 深色模式 -> 自动模式 -> 浅色模式 中自动切换。注：“自动模式配色方案”选择一种浅色方案即可禁用自动模式。（具体运行逻辑请查看文档）
+          help: （切换此项后，请点击下方保存按钮，再之后刷新此页面）若启用此项，将在大标题旁显示明暗模式切换按钮。并且在 浅色模式 -> 深色模式 -> 自动模式 -> 浅色模式 中自动切换。注：“自动模式配色方案”选择一种浅色方案即可禁用自动模式。（具体运行逻辑请查看文档）
         - $formkit: select
           name: theme_auto
           id: custom_theme_auto
@@ -361,13 +361,13 @@ spec:
           label: 内容区域最小宽度
           value: 48rem
           placeholder: "默认值：48rem"
-          help: "允许全部 CSS 长度单位，如：48rem, 780px, 70vw, 70%。当此设置宽度小于窗口宽度时，主题会使用窗口宽度。以避免出现横向滚动条。"
+          help: "允许全部 CSS 长度单位，如：48rem, 780px, 70vw, 70%。当此设置宽度大于窗口宽度时，主题会使用窗口宽度。以避免出现横向滚动条。"
         - $formkit: checkbox
           name: is_force_min_width_settings
           if: "$is_min_width_settings===true"
           label: 强制应用内容区域最小宽度
           value: false
-          help: "强制使内容显示区域不小于设定的最小宽度，即使出现横向滚动条。"
+          help: "启用时，强制使内容显示区域不小于设定的最小宽度，即使出现横向滚动条。"
         - $formkit: checkbox
           name: is_content_width_style_settings
           label: 自定义内容区域宽度属性
@@ -404,11 +404,11 @@ spec:
           value: false
         - $formkit: checkbox
           name: is_show_header_menu
-          label: 是否显示页眉菜单
+          label: 显示页眉菜单
           value: true
         - $formkit: checkbox
           name: is_show_page_number
-          label: 是否显示页码
+          label: 显示页码
           value: true
         - $formkit: checkbox
           name: is_footer_site_stats_show
@@ -441,7 +441,7 @@ spec:
             - $formkit: select
               name: type
               label: 统计项
-              value: ""
+              value: "visit"
               options:
                 - label: "总阅读量"
                   value: "visit"
@@ -472,15 +472,13 @@ spec:
           name: footer_theme_info_theme_name
           if: "$is_footer_theme_info_show === true"
           label: 页面底部主题信息所展示的主题名
-          value: higan-hz
+          value: Higan Haozi
           # autocorrect-disable
           options:
-            - label: higan-hz
-              value: higan-hz
-            - label: higan
-              value: higan
-            - label: 彼岸-皓改
-              value: 彼岸-皓改
+            - label: Higan Haozi
+              value: Higan Haozi
+            - label: Higan
+              value: Higan
             - label: 彼岸
               value: 彼岸
           # autocorrect-enable
@@ -494,6 +492,8 @@ spec:
               value: Halo
             - label: Halo Pro
               value: Halo Pro
+            - label: Halo 专业版
+              value: Halo 专业版
         - $formkit: checkbox
           name: is_footer_copyright_show
           label: 页面底部版权信息
@@ -519,7 +519,7 @@ spec:
         - $formkit: code
           name: footer_content
           if: "$is_footer_content_show === true"
-          label: 页面最底部内容（支持 HTML 代码块）
+          label: 页面最底部内容
           language: html
           height: 150px
         - $formkit: checkbox
@@ -540,9 +540,10 @@ spec:
               validation: "required"
             - $formkit: code
               name: footer_content
-              label: 页面最底部内容（支持 HTML 代码块）
+              label: 页面最底部内容
               language: html
               height: 150px
+              help: 支持 HTML 代码块
         - $formkit: checkbox
           name: is_h3_underline
           label: 为三级标题添加下划线
@@ -565,13 +566,13 @@ spec:
           help: 如启用此项，将在引用块后添加引号。引用块在 Markdown 中使用 > 表示。
         - $formkit: checkbox
           name: is_show_the_table_bottom_border
-          label: 表格每行底部的表格线（除去表头）
+          label: 表格行间线（除表头）
           value: false
-          help: 如启用此项，表格每行底部都将添加表格线
+          help: 如启用此项，表格每行底部都将添加表格线（除去表头）
         - $formkit: text
           name: table_bottom_border_width
           if: "$is_show_the_table_bottom_border===true"
-          label: 表格每行底部的表格线宽度（除去表头）
+          label: 表格行间线宽度（除表头）
           value: 0.1rem
           placeholder: "默认值：0.1rem"
           help: "允许全部 CSS 长度单位，如：48rem, 780px, 70vw, 70%。"
@@ -617,12 +618,12 @@ spec:
           value: ""
         - $formkit: checkbox
           name: hitokoto
-          label: 一言 (hitokoto)
+          label: 一言（hitokoto）
           value: false
         - $formkit: text
           name: hitokoto_link
           if: "$hitokoto === true"
-          label: 一言 (hitokoto) 链接
+          label: 一言（hitokoto）服务链接
           value: https://v1.hitokoto.cn/?encode=js
           help: "默认值：https://v1.hitokoto.cn/?encode=js、文档：https://developer.hitokoto.cn/sentence/"
         - $formkit: checkbox
@@ -646,9 +647,10 @@ spec:
         - $formkit: code
           name: resume
           if: "$is_resume_show === true"
-          label: 个人简介/公告栏内容（支持 HTML 代码块）
+          label: 个人简介/公告栏内容
           language: html
           height: 150px
+          help: 支持 HTML 代码块
         - $formkit: checkbox
           name: is_i18n_resume_show
           label: 多语言个人简介/公告栏支持
@@ -666,9 +668,10 @@ spec:
               validation: "required"
             - $formkit: code
               name: resume
-              label: 个人简介/公告栏内容（支持 HTML 代码块）
+              label: 个人简介/公告栏内容
               language: html
               height: 150px
+              help: 支持 HTML 代码块
         - $formkit: checkbox
           name: is_show_find_me_left_text
           label: 社交资料图标左侧文字
@@ -731,6 +734,9 @@ spec:
           if: "$list_layout === 'post-list-summary'"
           label: 多元列表文章摘要行数上限
           value: 3
+          min: 1
+          max: 5
+          step: 1
           help: "填写值范围为 1-5"
         - $formkit: checkbox
           name: is_show_index_post_list_permalink_text
@@ -783,7 +789,7 @@ spec:
           help: 启用后，为文章内容段落添加最小高度，改善空行显示效果
         - $formkit: checkbox
           name: is_enable_paragraph_first_line_indent
-          label: 启用段落首行缩进
+          label: 段落首行缩进
           value: false
           help: 启用后，文章段落将使用首行缩进样式，通常为 2 个汉字宽度（2em）
         - $formkit: text
@@ -816,7 +822,7 @@ spec:
           value: false
         - $formkit: checkbox
           name: is_show_post_views
-          label: 显示文章阅读量
+          label: 文章阅读量
           value: true
         - $formkit: checkbox
           name: is_show_post_estimated_reading_time
@@ -883,7 +889,7 @@ spec:
           name: is_post_recommended_articles_show
           label: 文章底部的推荐文章
           value: false
-          help: 开启后将在文章底部显示推荐文章列表。注：原理是读取当前文章第一个分类，并且随机输出其中若干个文章。如果当前文章在列表中将会被剔除，因此推荐文章可能小于当前推荐文章数。如果当前文章未设置分类，该功能会被禁用。如果分类仅有一篇文章，该功能会被禁用。
+          help: 开启后将在文章底部显示推荐文章列表。
         - $formkit: number
           name: post_recommended_articles_count
           if: "$is_post_recommended_articles_show === true"
@@ -915,21 +921,21 @@ spec:
       formSchema:
         - $formkit: checkbox
           name: is_show_the_number_of_articles_per_category
-          label: 是否显示每个分类下的文章数量
+          label: 显示每个分类下的文章数量
           value: true
         - $formkit: text
           name: characters_to_the_left_of_the_number_of_posts
           if: "$is_show_the_number_of_articles_per_category === true"
-          label: "在“文章数量”左侧的字符"
+          label: "在文章数量左侧的字符"
           value: "("
         - $formkit: text
           name: characters_to_the_right_of_the_number_of_posts
           if: "$is_show_the_number_of_articles_per_category === true"
-          label: "在“文章数量”右侧的字符"
+          label: "在文章数量右侧的字符"
           value: ")"
         - $formkit: checkbox
           name: is_show_multi_layer_categories
-          label: 是否显示多层分类
+          label: 显示多层分类
           value: true
     - group: category_page_styles
       label: 分类详情页样式
@@ -940,7 +946,7 @@ spec:
           value: false
         - $formkit: checkbox
           name: is_show_rss_button
-          label: 显示 RSS 订阅按钮
+          label: 分类 RSS 订阅按钮
           value: false
           help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
     - group: tags_page_styles
@@ -948,17 +954,17 @@ spec:
       formSchema:
         - $formkit: checkbox
           name: is_show_the_number_of_posts_per_tag
-          label: 是否显示每个标签下的文章数量
+          label: 显示每个标签下的文章数量
           value: true
         - $formkit: text
           name: characters_to_the_left_of_the_number_of_posts
           if: "$is_show_the_number_of_posts_per_tag === true"
-          label: "在“文章数量”左侧的字符"
+          label: "在文章数量左侧的字符"
           value: "("
         - $formkit: text
           name: characters_to_the_right_of_the_number_of_posts
           if: "$is_show_the_number_of_posts_per_tag === true"
-          label: "在“文章数量”右侧的字符"
+          label: "在文章数量右侧的字符"
           value: ")"
         - $formkit: select
           name: tags_sort_order
@@ -985,7 +991,7 @@ spec:
           value: false
         - $formkit: checkbox
           name: is_show_rss_button
-          label: 显示 RSS 订阅按钮
+          label: 显示标签 RSS 订阅按钮
           value: false
           help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
     - group: author_page_styles
@@ -993,7 +999,7 @@ spec:
       formSchema:
         - $formkit: checkbox
           name: is_show_rss_button
-          label: 显示 RSS 订阅按钮
+          label: 显示作者 RSS 订阅按钮
           value: false
           help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
     - group: archives_page_styles
@@ -1014,12 +1020,12 @@ spec:
       formSchema:
         - $formkit: checkbox
           name: is_optimize_content_paragraph_spacing
-          label: 优化文章段落空行显示
+          label: 优化段落空行显示
           value: false
-          help: 启用后，为文章内容段落添加最小高度，改善空行显示效果
+          help: 启用后，为内容段落添加最小高度，改善空行显示效果
         - $formkit: checkbox
           name: is_enable_paragraph_first_line_indent
-          label: 启用段落首行缩进
+          label: 段落首行缩进
           value: false
           help: 启用后，文章段落将使用首行缩进样式，通常为 2 个汉字宽度（2em）
         - $formkit: text
@@ -1030,11 +1036,11 @@ spec:
           help: "设置首行缩进的大小。允许使用所有 CSS 长度单位，如：2em, 32px, 2rem 等。推荐使用 2em"
         - $formkit: checkbox
           name: is_show_post_estimated_reading_time
-          label: 文章预计阅读时间
+          label: 页面预计阅读时间
           value: false
         - $formkit: checkbox
           name: is_show_post_word_count
-          label: 文章字数统计
+          label: 页面字数统计
           value: false
         - $formkit: checkbox
           name: is_enable_post_like_layout
@@ -1043,14 +1049,14 @@ spec:
           help: 启用后，自定义页面将使用类似文章页的布局和样式，主要体现在桌面端顶部菜单（侧边目录，回到顶端按钮，分享菜单），移动端底部菜单（类似文章页）。菜单、目录相关设置与“文章页样式”下的设置保持一致。
         - $formkit: checkbox
           name: is_dividing_line_at_the_end_of_content_show
-          label: 是否启用正文内容与评论区间的分隔线
+          label: 页面正文内容末尾分隔线
           value: true
         - $formkit: checkbox
           name: is_custom_page_comment_section_show
-          label: 是否启用评论区
+          label: 页面评论区
           value: true
     - group: photos_styles
-      label: 相册页样式
+      label: 图库页样式
       formSchema:
         - $formkit: text
           name: img_border_radius
@@ -1065,11 +1071,11 @@ spec:
         - $formkit: checkbox
           name: is_show_photo_group_name
           if: "$is_enable_masonry_layout === false"
-          label: 是否启用分组标题
+          label: 显示分组标题
           value: false
         - $formkit: checkbox
           name: is_enable_masonry_layout
-          label: 是否启用瀑布流布局
+          label: 启用瀑布流布局
           value: true
         - $formkit: number
           name: max_masonry_columns
@@ -1125,12 +1131,30 @@ spec:
           value: false
         - $formkit: checkbox
           name: is_moment_upvote_button_show
-          label: 是否启用点赞按钮
+          label: 启用点赞按钮
           value: true
         - $formkit: checkbox
           name: is_moment_comment_section_show
-          label: 是否启用评论区
+          label: 启用评论区
           value: true
+    - group: error_page_styles
+      label: 错误页样式
+      formSchema:
+        - $formkit: checkbox
+          name: is_auto_redirect
+          label: 页面自动重定向
+          value: true
+        - $formkit: text
+          name: target_url
+          if: "$is_auto_redirect === true"
+          label: 跳转目标链接
+          value: "/"
+        - $formkit: number
+          name: redirect_wait_time
+          if: "$is_auto_redirect === true"
+          label: 跳转等待时间
+          value: 5
+          help: "设置跳转等待时间，单位秒。"
     - group: sns
       label: 社交资料/RSS
       formSchema:
@@ -1445,21 +1469,3 @@ spec:
               value: ""
               help: 无障碍标签中的名称
               validation: "required"
-    - group: error_page_styles
-      label: 错误页样式
-      formSchema:
-        - $formkit: checkbox
-          name: is_auto_redirect
-          label: 页面自动重定向
-          value: true
-        - $formkit: text
-          name: target_url
-          if: "$is_auto_redirect === true"
-          label: 跳转目标链接
-          value: "/"
-        - $formkit: number
-          name: redirect_wait_time
-          if: "$is_auto_redirect === true"
-          label: 跳转等待时间
-          value: 5
-          help: "设置跳转等待时间，单位秒。"

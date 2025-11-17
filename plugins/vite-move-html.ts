@@ -43,7 +43,15 @@ export default function moveHtmlPlugin(opts: MoveHtmlOptions): Plugin {
     apply: "build",
     async writeBundle(bundleOptions, bundle) {
       // 规范化输出目录，已做路径校验，安全使用 resolve
-      const outDir = bundleOptions.dir ? resolve(bundleOptions.dir) : dirname(resolve(bundleOptions.file!));
+      const outDir = bundleOptions.dir
+        ? resolve(bundleOptions.dir)
+        : bundleOptions.file
+          ? dirname(resolve(bundleOptions.file))
+          : (() => {
+              throw new Error("Neither dir nor file specified in bundleOptions");
+            })();
+
+      // 项目根目录绝对路径
       const projectRoot = resolve(process.cwd());
 
       // 目标目录绝对路径

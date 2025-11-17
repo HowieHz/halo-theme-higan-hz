@@ -1,0 +1,19 @@
+{
+  "name": "docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "pnpm run docs:build && vitepress preview"
+  },
+  "devDependencies": {
+    "@whyframe/core": "^0.1.14",
+    "@whyframe/vue": "^0.1.9",
+    "cheerio": "^1.1.2",
+    "pagefind": "^1.4.0",
+    "vitepress": "2.0.0-alpha.12",
+    "vitepress-plugin-pagefind": "^0.4.16",
+    "vue": "^3.5.24"
+  }
+}

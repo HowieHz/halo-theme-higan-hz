@@ -1,21 +1,28 @@
 {
   "private": true,
   "type": "module",
+  "version": "1.45.4",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev": "pnpm run \"/^watch:.*/\"",
     "watch:vite": "vite build --watch",
     "watch:stylus": "stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --watch",
     "watch:post-css": "postcss ./src/styles/tailwind.css -o ./tmp/styles/tailwind.css --watch",
-    "build": "set NODE_ENV=777 && stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --compress && tsc && tw-patch extract && vite build && vite build --config vite.config.fragments.ts",
+    "build": "set NODE_ENV=777 && pnpm run build:stylus && pnpm run lint:type-check && tw-patch extract && vite build && vite build --config vite.config.fragments.ts",
+    "build:stylus": "stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --compress",
     "lint": "pnpm run \"/^lint:.*/\"",
     "lint:eslint": "oxlint --type-aware --fix && eslint --fix",
-    "lint:style": "stylelint --fix \"./src/**/*.css\"",
+    "lint:style": "stylelint --fix \"./src/**/*.{css,html}\" \"./docs/.vitepress/**/*.{css,vue}\"",
     "lint:md": "markdownlint \"**/*.md\" --fix",
     "lint:autocorrect": "autocorrect --fix",
+    "lint:type-check": "tsc --noEmit",
     "format": "pnpm run \"/^format:.*/\"",
     "format:stylus": "stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
-    "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,yaml,html}\" \"./plugins/**/*.ts\"",
-    "prepare": "husky && tw-patch install"
+    "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,yaml,html}\" \"./plugins/**/*.ts\" \"./docs/**/*.{ts,md,vue,json}\"",
+    "prepare": "husky && tw-patch install",
+    "docs:dev": "pnpm --filter \"docs\" docs:dev ",
+    "docs:build": "pnpm --filter \"docs\" docs:build",
+    "docs:preview": "pnpm -filter \"docs\" docs:preview"
   },
   "browserslist": [
     "defaults",
@@ -28,9 +35,10 @@
     "howiehz",
     "halo-theme",
     "halo-theme-higan",
-    "halo-theme-higan-hz"
+    "halo-theme-higan-hz",
+    "halo-theme-higan-haozi"
   ],
-  "homepage": "https://github.com/howiehz/halo-theme-higan-hz#readme",
+  "homepage": "https://howiehz.top/halo-theme-higan-haozi",
   "bugs": {
     "url": "https://github.com/howiehz/halo-theme-higan-hz/issues"
   },
@@ -51,49 +59,50 @@
   },
   "packageManager": "pnpm@10.11.0",
   "devDependencies": {
-    "@eslint/compat": "^1.4.1",
+    "@eslint/compat": "^2.0.0",
     "@eslint/js": "^9.39.1",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
-    "@iconify/json": "^2.2.404",
+    "@iconify/json": "^2.2.407",
     "@types/alpinejs": "^3.13.11",
-    "@types/node": "^24.10.0",
+    "@types/node": "^24.10.1",
+    "@typescript-eslint/parser": "^8.46.4",
     "@vitejs/plugin-legacy": "^7.2.1",
     "autocorrect-node": "^2.14.0",
     "cssnano": "^7.1.2",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import-x": "^4.16.1",
-    "eslint-plugin-oxlint": "^1.26.0",
+    "eslint-plugin-oxlint": "^1.28.0",
     "eslint-plugin-prettier": "^5.5.4",
-    "fast-glob": "^3.3.3",
+    "eslint-plugin-vue": "^10.5.1",
     "globals": "^16.5.0",
     "husky": "^9.1.7",
     "markdownlint-cli": "^0.45.0",
-    "oxlint": "^1.26.0",
-    "oxlint-tsgolint": "^0.5.0",
+    "oxlint": "^1.28.0",
+    "oxlint-tsgolint": "^0.6.0",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
     "postcss-preset-env": "^10.4.0",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.7.1",
     "stylelint": "^16.25.0",
+    "stylelint-config-html": "^1.1.0",
+    "stylelint-config-recommended-vue": "^1.6.1",
     "stylelint-config-standard": "^39.0.1",
     "stylelint-order": "^7.0.0",
     "stylus": "^0.64.0",
     "stylus-supremacy": "^4.0.0",
     "tailwindcss": "^3.4.18",
-    "tailwindcss-patch": "^8.2.1",
+    "tailwindcss-patch": "^8.2.3",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.3",
+    "typescript-eslint": "^8.46.4",
     "unplugin-tailwindcss-mangle": "^5.0.0",
-    "vite": "npm:rolldown-vite@^7.2.1",
-    "vite-plugin-purge-icons": "^0.10.0"
+    "vite": "npm:rolldown-vite@^7.2.5",
+    "vite-plugin-purge-icons": "^0.10.0",
+    "vue-eslint-parser": "^10.2.0"
   },
   "dependencies": {
     "@iconify/iconify": "^3.1.1",
-    "alpinejs": "^3.15.1"
-  },
-  "overrides": {
-    "vite": "npm:rolldown-vite@^7.2.1"
+    "alpinejs": "^3.15.2"
   }
 }

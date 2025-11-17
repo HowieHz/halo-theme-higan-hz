@@ -1,0 +1,118 @@
+#vp-app {
+  /* 用主题的 font-family，避免多次加载 inter 字体 */
+  font-family: menlo, meslolgs-regular, ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont, "segoe ui", roboto,
+    "helvetica neue", arial, "noto sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "segoe ui symbol",
+    "Noto Color Emoji";
+  height: 100vh;
+  padding: 2rem;
+  width: 100%;
+}
+
+/* 加载状态：显示 spinner，隐藏内容 */
+#vp-app.loading {
+  position: relative;
+  
+  /* 隐藏子元素 */
+  & > * {
+    opacity: 0%;
+  }
+}
+
+/* 使用 ::before 伪元素创建 spinner */
+#vp-app.loading::before {
+  animation: spin 0.8s linear infinite;
+  aspect-ratio: 1;
+  border: 3px solid rgb(0 0 0 / 10%);
+  border-radius: 50%;
+  border-top-color: var(--vp-c-brand-2);  /* 和 var(--vp-c-brand-1) 区分，说明已经加载好 iframe，在内部渲染 */
+  content: '';
+  inset: 0;
+  margin: auto;
+  position: absolute;
+  width: 40px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 
+.dark #vp-app {
+} 
+*/
+
+/* 部分样式为模板动态添加，为展现默认值效果，在此手动添加 */
+body h3 {
+  text-decoration: underline;
+}
+
+article .content blockquote p {
+  margin: inherit;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+article .content blockquote p:first-child {
+  margin-top: 0;
+}
+
+article .content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+article .content blockquote::before {
+  color: var(--color-quote);
+  content: "\201C";
+  font-size: 2em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
+/* 用户代理样式表 */
+::marker {
+  font-variant-numeric: tabular-nums;
+  text-align: start !important;
+  text-align-last: auto !important;
+  text-indent: 0 !important;
+  text-transform: none;
+  unicode-bidi: isolate;
+}
+
+ol {
+  display: block;
+  list-style-type: decimal;
+  margin-block: 1em;
+  padding-inline-start: 40px;
+  unicode-bidi: isolate;
+}
+
+li {
+  display: list-item;
+  unicode-bidi: isolate;
+}
+
+ul {
+  display: block;
+  list-style-type: disc;
+  margin-block: 1em;
+  padding-inline-start: 40px;
+  unicode-bidi: isolate;
+}
+
+dl {
+  display: block;
+  margin-block: 1em;
+  unicode-bidi: isolate;
+}
+
+dt {
+  display: block;
+  unicode-bidi: isolate;
+}
+
+dd {
+  display: block;
+  margin-inline-start: 40px;
+  unicode-bidi: isolate;
+}
