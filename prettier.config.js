@@ -10,6 +10,14 @@ const config = {
   importOrder: ["^@core/(.*)$", "", "^@server/(.*)$", "", "^@ui/(.*)$", "", "^[./]"],
   importOrderTypeScriptVersion: "5.0.0",
   plugins: ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
+  overrides: [
+    {
+      files: ["**/*.jsonc"],
+      options: {
+        trailingComma: "none",
+      },
+    },
+  ],
 };
 
 export default config;
