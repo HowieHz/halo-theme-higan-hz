@@ -26,10 +26,10 @@ Higan Haozi 是一款适用于 [Halo CMS](https://github.com/halo-dev/halo) 的�
 ## 主题历史
 
 - 本主题：[`HowieHz/halo-theme-higan-hz`](https://github.com/HowieHz/halo-theme-higan-hz)（2024.4.5）
-- 上游主题：[`guqing/halo-theme-higan`](https://github.com/guqing/halo-theme-higan)（2019.4.16）
-- 上游设计：[`probberechts/hexo-theme-cactus`](https://github.com/probberechts/hexo-theme-cactus)（2016.11.1）
+- 样式移植：[`guqing/halo-theme-higan`](https://github.com/guqing/halo-theme-higan)（2019.4.16）
+- 样式设计：[`probberechts/hexo-theme-cactus`](https://github.com/probberechts/hexo-theme-cactus)（2016.11.1）
 
-❤非常感谢上游作者 [guqing](https://github.com/guqing) 和 [Pieter Robberechts](https://github.com/probberechts) 以及社区伙伴的贡献与反馈！
+❤非常感谢 [Pieter Robberechts](https://github.com/probberechts) 和 [guqing](https://github.com/guqing) 以及社区伙伴的贡献与反馈！
 
 ## 预览
 
