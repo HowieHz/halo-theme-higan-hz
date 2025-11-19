@@ -18,7 +18,7 @@
     "lint:type-check": "tsgo --noEmit",
     "format": "pnpm run \"/^format:.*/\"",
     "format:stylus": "stylus-supremacy format src/**/*.styl --options .vscode/settings.json -r",
-    "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,yaml,html}\" \"./plugins/**/*.ts\" \"./docs/**/*.{ts,md,vue,json}\"",
+    "format:prettier": "prettier --write \"*.{js,ts,json,yaml,md,jsonc}\" \"./i18n-settings/*.yaml\" \"./src/**/*.{js,ts,css,json,yaml,html}\" \"./plugins/**/*.ts\" \"./docs/**/*.{ts,md,vue,json}\"",
     "prepare": "husky && tw-patch install",
     "docs:dev": "pnpm --filter \"docs\" docs:dev ",
     "docs:build": "pnpm --filter \"docs\" docs:build",
