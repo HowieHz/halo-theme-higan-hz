@@ -302,6 +302,7 @@ jobs:
         with:
           name: lighthouse-raw-data
           path: ./.lighthouseci/
+          include-hidden-files: true
           if-no-files-found: warn
 
       - name: Generate reports
