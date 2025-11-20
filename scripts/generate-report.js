@@ -105,74 +105,21 @@ async function parseLighthouseResults() {
 function generateMarkdownReport(results, version) {
   let markdown = `# 页面体积评估报告 - v${version}\n\n`;
   markdown += `生成时间：${new Date().toISOString()}\n\n`;
-  markdown += `## 性能预算参考值\n\n`;
-  markdown += `> 📊 以下数值仅作为参考，不会阻塞发布流程\n\n`;
-  markdown += `- JS 体积参考：< 1000 KB\n`;
-  markdown += `- CSS 体积参考：< 500 KB\n`;
-  markdown += `- 字体体积参考：< 500 KB\n`;
-  markdown += `- HTML 大小参考：< 200 KB\n`;
-  markdown += `- 图片体积参考：< 1000 KB\n`;
-  markdown += `- 总体积参考：< 3000 KB\n\n`;
 
   for (const result of results) {
     const urlPath = new URL(result.url).pathname || "/";
-    markdown += `## 页面：${urlPath}\n\n`;
+    markdown += `## ${urlPath}\n\n`;
     
-    markdown += `### 📦 资源体积详情\n\n`;
-    markdown += `| 资源类型 | 实际大小 | 参考值 | 状态 |\n`;
-    markdown += `|---------|---------|--------|------|\n`;
-
-    // JS
-    const scriptKB = (result.script / 1024).toFixed(2);
-    const scriptRef = 1000;
-    const scriptPercent = ((result.script / 1024 / scriptRef) * 100).toFixed(1);
-    const scriptStatus = result.script <= scriptRef * 1024 ? "✅ 正常" : `⚠️ ${scriptPercent}%`;
-    markdown += `| JavaScript | ${scriptKB} KB | ${scriptRef} KB | ${scriptStatus} |\n`;
-
-    // CSS
-    const stylesheetKB = (result.stylesheet / 1024).toFixed(2);
-    const stylesheetRef = 500;
-    const stylesheetPercent = ((result.stylesheet / 1024 / stylesheetRef) * 100).toFixed(1);
-    const stylesheetStatus = result.stylesheet <= stylesheetRef * 1024 ? "✅ 正常" : `⚠️ ${stylesheetPercent}%`;
-    markdown += `| CSS | ${stylesheetKB} KB | ${stylesheetRef} KB | ${stylesheetStatus} |\n`;
-
-    // Font
-    const fontKB = (result.font / 1024).toFixed(2);
-    const fontRef = 500;
-    const fontPercent = ((result.font / 1024 / fontRef) * 100).toFixed(1);
-    const fontStatus = result.font <= fontRef * 1024 ? "✅ 正常" : `⚠️ ${fontPercent}%`;
-    markdown += `| 字体 | ${fontKB} KB | ${fontRef} KB | ${fontStatus} |\n`;
-
-    // Document
-    const documentKB = (result.document / 1024).toFixed(2);
-    const documentRef = 200;
-    const documentPercent = ((result.document / 1024 / documentRef) * 100).toFixed(1);
-    const documentStatus = result.document <= documentRef * 1024 ? "✅ 正常" : `ℹ️ ${documentPercent}%`;
-    markdown += `| HTML | ${documentKB} KB | ${documentRef} KB | ${documentStatus} |\n`;
-
-    // Image
-    const imageKB = (result.image / 1024).toFixed(2);
-    const imageRef = 1000;
-    if (result.image > 0) {
-      const imagePercent = ((result.image / 1024 / imageRef) * 100).toFixed(1);
-      const imageStatus = result.image <= imageRef * 1024 ? "✅ 正常" : `ℹ️ ${imagePercent}%`;
-      markdown += `| 图片 | ${imageKB} KB | ${imageRef} KB | ${imageStatus} |\n`;
-    } else {
-      markdown += `| 图片 | ${imageKB} KB | ${imageRef} KB | ✅ 无 |\n`;
-    }
-
-    // Other
-    if (result.other > 0) {
-      const otherKB = (result.other / 1024).toFixed(2);
-      markdown += `| 其他 | ${otherKB} KB | - | ℹ️ 信息 |\n`;
-    }
-
-    // Total
-    const totalKB = (result.total / 1024).toFixed(2);
-    const totalRef = 3000;
-    const totalPercent = ((result.total / 1024 / totalRef) * 100).toFixed(1);
-    const totalStatus = result.total <= totalRef * 1024 ? "✅ 正常" : `⚠️ ${totalPercent}%`;
-    markdown += `| **总计** | **${totalKB} KB** | **${totalRef} KB** | **${totalStatus}** |\n\n`;
+    // 计算外部资源（除了 HTML 的其他所有资源）
+    const externalResources = result.total - result.document;
+    
+    markdown += `| 资源类型 | 大小 |\n`;
+    markdown += `|---------|------|\n`;
+    markdown += `| 全部 JS | ${(result.script / 1024).toFixed(2)} KB |\n`;
+    markdown += `| 全部 CSS | ${(result.stylesheet / 1024).toFixed(2)} KB |\n`;
+    markdown += `| 全部外部资源 | ${(externalResources / 1024).toFixed(2)} KB |\n`;
+    markdown += `| HTML 页面 | ${(result.document / 1024).toFixed(2)} KB |\n`;
+    markdown += `| **整体大小** | **${(result.total / 1024).toFixed(2)} KB** |\n\n`;
   }
 
   // 平均值
@@ -180,13 +127,17 @@ function generateMarkdownReport(results, version) {
     const avgTotal = results.reduce((sum, r) => sum + r.total, 0) / results.length;
     const avgScript = results.reduce((sum, r) => sum + r.script, 0) / results.length;
     const avgStylesheet = results.reduce((sum, r) => sum + r.stylesheet, 0) / results.length;
-    const avgFont = results.reduce((sum, r) => sum + r.font, 0) / results.length;
+    const avgDocument = results.reduce((sum, r) => sum + r.document, 0) / results.length;
+    const avgExternal = results.reduce((sum, r) => sum + (r.total - r.document), 0) / results.length;
 
     markdown += `## 平均值\n\n`;
-    markdown += `- JS: ${(avgScript / 1024).toFixed(2)} KB\n`;
-    markdown += `- CSS: ${(avgStylesheet / 1024).toFixed(2)} KB\n`;
-    markdown += `- 字体：${(avgFont / 1024).toFixed(2)} KB\n`;
-    markdown += `- 总体积：${(avgTotal / 1024).toFixed(2)} KB\n\n`;
+    markdown += `| 资源类型 | 平均大小 |\n`;
+    markdown += `|---------|----------|\n`;
+    markdown += `| 全部 JS | ${(avgScript / 1024).toFixed(2)} KB |\n`;
+    markdown += `| 全部 CSS | ${(avgStylesheet / 1024).toFixed(2)} KB |\n`;
+    markdown += `| 全部外部资源 | ${(avgExternal / 1024).toFixed(2)} KB |\n`;
+    markdown += `| HTML 页面 | ${(avgDocument / 1024).toFixed(2)} KB |\n`;
+    markdown += `| **整体大小** | **${(avgTotal / 1024).toFixed(2)} KB** |\n\n`;
   }
 
   markdown += `---\n\n`;
