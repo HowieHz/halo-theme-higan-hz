@@ -284,11 +284,25 @@ jobs:
           echo "检查生成的文件："
           ls -la ./.lighthouseci/
 
+      - name: Debug - Check Lighthouse files
+        if: always()
+        run: |
+          echo "检查 .lighthouseci/ 目录："
+          ls -la ./.lighthouseci/ || echo "目录不存在"
+          echo "---"
+          echo "当前工作目录："
+          pwd
+          echo "---"
+          echo "当前目录内容："
+          ls -la
+
       - name: Upload Lighthouse raw data
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-raw-data
           path: ./.lighthouseci/
+          if-no-files-found: warn
 
       - name: Generate reports
         if: success()
@@ -347,13 +361,6 @@ jobs:
           if [ -f ~/halo.pid ]; then
             kill $(cat ~/halo.pid) || true
           fi
-
-      - name: Upload Lighthouse results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouse-results
-          path: ./.lighthouseci/
 
       - name: Upload Halo logs
         if: failure()
