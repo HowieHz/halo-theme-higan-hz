@@ -16,54 +16,40 @@ async function parseLighthouseResults() {
   const fs = (await import("fs")).promises;
   const path = (await import("path")).default;
 
-  // 尝试先读取 manifest.json
-  let entries = null;
-  const manifestPath = resolve(LIGHTHOUSE_RESULTS_DIR, "manifest.json");
+  // 直接扫描目录中的所有 Lighthouse 结果文件
+  console.log("直接扫描 Lighthouse 结果文件...");
+  
+  const files = (await fs.readdir(LIGHTHOUSE_RESULTS_DIR)).filter(
+    (f) => f.endsWith(".json") && f.startsWith("lhr-"),
+  );
 
-  try {
-    const manifest = JSON.parse(await readFile(manifestPath, "utf-8"));
-    entries = manifest;
-  } catch {
-    console.log("manifest.json 不存在，尝试从 links.json 读取...");
+  if (files.length === 0) {
+    throw new Error(`在 ${LIGHTHOUSE_RESULTS_DIR} 目录中没有找到 Lighthouse 结果文件`);
+  }
 
-    // 如果 manifest.json 不存在，尝试从 links.json 读取
-    const linksPath = resolve(LIGHTHOUSE_RESULTS_DIR, "links.json");
-    try {
-      // 读取 links.json（虽然我们不使用它的内容，但检查它是否存在）
-      await readFile(linksPath, "utf-8");
+  console.log(`找到 ${files.length} 个 Lighthouse 结果文件`);
 
-      // 从 links.json 提取信息并查找对应的 JSON 文件
-      entries = [];
+  // 按 URL 分组结果
+  const urlGroups = {};
 
-      // 列出目录中的所有 JSON 文件
-      const files = (await fs.readdir(LIGHTHOUSE_RESULTS_DIR)).filter(
-        (f) => f.endsWith(".json") && f.startsWith("lhr-"),
-      );
+  for (const file of files) {
+    const filePath = resolve(LIGHTHOUSE_RESULTS_DIR, file);
+    const report = JSON.parse(await readFile(filePath, "utf-8"));
+    const url = report.requestedUrl || report.finalUrl || report.mainDocumentUrl;
 
-      // 按 URL 分组结果
-      const urlGroups = {};
-
-      for (const file of files) {
-        const filePath = resolve(LIGHTHOUSE_RESULTS_DIR, file);
-        const report = JSON.parse(await readFile(filePath, "utf-8"));
-        const url = report.mainDocumentUrl || report.finalUrl;
-
-        if (!urlGroups[url]) {
-          urlGroups[url] = [];
-        }
-        urlGroups[url].push(filePath);
-      }
-
-      // 为每个 URL 创建一个条目（使用最后一个运行结果）
-      for (const [url, files] of Object.entries(urlGroups)) {
-        entries.push({
-          url,
-          jsonPath: path.basename(files[files.length - 1]),
-        });
-      }
-    } catch {
-      throw new Error("无法读取 manifest.json 或 links.json");
+    if (!urlGroups[url]) {
+      urlGroups[url] = [];
     }
+    urlGroups[url].push(filePath);
+  }
+
+  // 为每个 URL 创建一个条目（使用最后一个运行结果）
+  const entries = [];
+  for (const [url, files] of Object.entries(urlGroups)) {
+    entries.push({
+      url,
+      jsonPath: path.basename(files[files.length - 1]),
+    });
   }
 
   const results = [];
@@ -72,36 +58,60 @@ async function parseLighthouseResults() {
     const reportPath = resolve(LIGHTHOUSE_RESULTS_DIR, entry.jsonPath);
     const report = JSON.parse(await readFile(reportPath, "utf-8"));
 
-    const resourceSummary = report.audits["resource-summary"];
-    const items = resourceSummary?.details?.items || [];
+    // 使用 audits.network-requests.details.items
+    const networkRequests = report.audits["network-requests"];
+    const items = networkRequests?.details?.items || [];
 
-    const metrics = {
-      url: entry.url,
-      script: { transfer: 0, resource: 0 },
-      stylesheet: { transfer: 0, resource: 0 },
-      font: { transfer: 0, resource: 0 },
-      document: { transfer: 0, resource: 0 },
-      image: { transfer: 0, resource: 0 },
-      other: { transfer: 0, resource: 0 },
-      total: { transfer: 0, resource: 0 },
-    };
-
-    for (const item of items) {
-      const type = item.resourceType;
-      const transferSize = item.transferSize || 0;
-      // resourceSize 可能是未压缩大小，但如果为 0 则尝试使用 transferSize 作为原始大小的估计
-      // 或者检查是否有其他字段如 size
-      const resourceSize = item.resourceSize || item.size || transferSize;
-
-      if (type in metrics && metrics[type].transfer !== undefined) {
-        metrics[type].transfer += transferSize;
-        metrics[type].resource += resourceSize;
-      }
-      metrics.total.transfer += transferSize;
-      metrics.total.resource += resourceSize;
+    // 按资源类型统计
+    const resources = {};
+    const resourceTypes = ["document", "font", "script", "stylesheet", "image", "fetch", "other"];
+    
+    // 初始化所有资源类型
+    for (const type of resourceTypes) {
+      resources[type] = {
+        transferSize: 0,
+        resourceSize: 0,
+      };
     }
 
-    results.push(metrics);
+    // 统计资源
+    for (const item of items) {
+      const url = item.url || "";
+      
+      // 忽略 data: 和 blob: URL
+      if (url.startsWith("data:") || url.startsWith("blob:")) {
+        continue;
+      }
+
+      const resourceType = (item.resourceType || "other").toLowerCase();
+      const transferSize = item.transferSize || 0;
+      const resourceSize = item.resourceSize || 0;
+
+      if (resources[resourceType]) {
+        resources[resourceType].transferSize += transferSize;
+        resources[resourceType].resourceSize += resourceSize;
+      } else {
+        // 如果是未知类型，归类到 other
+        resources.other.transferSize += transferSize;
+        resources.other.resourceSize += resourceSize;
+      }
+    }
+
+    // 计算总计
+    resources.total = {
+      transferSize: 0,
+      resourceSize: 0,
+    };
+    
+    for (const type of resourceTypes) {
+      resources.total.transferSize += resources[type].transferSize;
+      resources.total.resourceSize += resources[type].resourceSize;
+    }
+
+    results.push({
+      url: entry.url,
+      resources,
+    });
   }
 
   return results;
@@ -142,60 +152,66 @@ function generateMarkdownReport(results, metadata = {}) {
 
   markdown += `Unit: KB, Format: gzipped(original)\n\n`;
 
-  // 显示传输大小和原始大小
-  markdown += `| Page | JS | CSS | Other Resources | All External Resources | HTML | Total |\n`;
-  markdown += `|------|----|----|-----------------|------------------------|------|-------|\n`;
+  // 定义资源类型的显示顺序和标签
+  const typeOrder = ["document", "script", "stylesheet", "font", "image", "fetch", "other"];
+  const typeLabels = {
+    document: "Document",
+    script: "Script",
+    stylesheet: "Stylesheet",
+    font: "Font",
+    image: "Image",
+    fetch: "Fetch",
+    other: "Other",
+    total: "All",
+  };
 
+  // 生成表头
+  markdown += `| Page |`;
+  for (const type of typeOrder) {
+    markdown += ` ${typeLabels[type]} |`;
+  }
+  markdown += ` Total |\n`;
+
+  // 生成分隔线
+  markdown += `|------|`;
+  for (let i = 0; i < typeOrder.length; i++) {
+    markdown += `------|`;
+  }
+  markdown += `-------|\n`;
+
+  // 生成数据行
   for (const result of results) {
     const urlPath = new URL(result.url).pathname || "/";
-    // 其他资源 = 总计 - JS - CSS - HTML
-    const otherTransfer =
-      result.total.transfer - result.script.transfer - result.stylesheet.transfer - result.document.transfer;
-    const otherResource =
-      result.total.resource - result.script.resource - result.stylesheet.resource - result.document.resource;
-    // 全部外部资源 = 总计 - HTML
-    const externalTransfer = result.total.transfer - result.document.transfer;
-    const externalResource = result.total.resource - result.document.resource;
+    markdown += `| ${urlPath} |`;
 
-    markdown += `| ${urlPath} `;
-    markdown += `| ${(result.script.transfer / 1024).toFixed(1)}(${(result.script.resource / 1024).toFixed(1)}) `;
-    markdown += `| ${(result.stylesheet.transfer / 1024).toFixed(1)}(${(result.stylesheet.resource / 1024).toFixed(1)}) `;
-    markdown += `| ${(otherTransfer / 1024).toFixed(1)}(${(otherResource / 1024).toFixed(1)}) `;
-    markdown += `| ${(externalTransfer / 1024).toFixed(1)}(${(externalResource / 1024).toFixed(1)}) `;
-    markdown += `| ${(result.document.transfer / 1024).toFixed(1)}(${(result.document.resource / 1024).toFixed(1)}) `;
-    markdown += `| **${(result.total.transfer / 1024).toFixed(1)}(${(result.total.resource / 1024).toFixed(1)})** |\n`;
+    for (const type of typeOrder) {
+      const transfer = result.resources[type]?.transferSize || 0;
+      const resource = result.resources[type]?.resourceSize || 0;
+      markdown += ` ${(transfer / 1024).toFixed(1)}(${(resource / 1024).toFixed(1)}) |`;
+    }
+
+    const totalTransfer = result.resources.total?.transferSize || 0;
+    const totalResource = result.resources.total?.resourceSize || 0;
+    markdown += ` **${(totalTransfer / 1024).toFixed(1)}(${(totalResource / 1024).toFixed(1)})** |\n`;
   }
 
-  // 平均值
+  // 计算并添加平均值
   if (results.length > 0) {
-    const avgScriptT = results.reduce((sum, r) => sum + r.script.transfer, 0) / results.length;
-    const avgScriptR = results.reduce((sum, r) => sum + r.script.resource, 0) / results.length;
-    const avgStyleT = results.reduce((sum, r) => sum + r.stylesheet.transfer, 0) / results.length;
-    const avgStyleR = results.reduce((sum, r) => sum + r.stylesheet.resource, 0) / results.length;
-    const avgDocT = results.reduce((sum, r) => sum + r.document.transfer, 0) / results.length;
-    const avgDocR = results.reduce((sum, r) => sum + r.document.resource, 0) / results.length;
-    const avgTotalT = results.reduce((sum, r) => sum + r.total.transfer, 0) / results.length;
-    const avgTotalR = results.reduce((sum, r) => sum + r.total.resource, 0) / results.length;
-    const avgOtherT =
-      results.reduce(
-        (sum, r) => sum + (r.total.transfer - r.script.transfer - r.stylesheet.transfer - r.document.transfer),
-        0,
-      ) / results.length;
-    const avgOtherR =
-      results.reduce(
-        (sum, r) => sum + (r.total.resource - r.script.resource - r.stylesheet.resource - r.document.resource),
-        0,
-      ) / results.length;
-    const avgExtT = results.reduce((sum, r) => sum + (r.total.transfer - r.document.transfer), 0) / results.length;
-    const avgExtR = results.reduce((sum, r) => sum + (r.total.resource - r.document.resource), 0) / results.length;
+    markdown += `| **Average** |`;
 
-    markdown += `| **Average** `;
-    markdown += `| **${(avgScriptT / 1024).toFixed(1)}(${(avgScriptR / 1024).toFixed(1)})** `;
-    markdown += `| **${(avgStyleT / 1024).toFixed(1)}(${(avgStyleR / 1024).toFixed(1)})** `;
-    markdown += `| **${(avgOtherT / 1024).toFixed(1)}(${(avgOtherR / 1024).toFixed(1)})** `;
-    markdown += `| **${(avgExtT / 1024).toFixed(1)}(${(avgExtR / 1024).toFixed(1)})** `;
-    markdown += `| **${(avgDocT / 1024).toFixed(1)}(${(avgDocR / 1024).toFixed(1)})** `;
-    markdown += `| **${(avgTotalT / 1024).toFixed(1)}(${(avgTotalR / 1024).toFixed(1)})** |\n\n`;
+    for (const type of typeOrder) {
+      const avgTransfer =
+        results.reduce((sum, r) => sum + (r.resources[type]?.transferSize || 0), 0) / results.length;
+      const avgResource =
+        results.reduce((sum, r) => sum + (r.resources[type]?.resourceSize || 0), 0) / results.length;
+      markdown += ` **${(avgTransfer / 1024).toFixed(1)}(${(avgResource / 1024).toFixed(1)})** |`;
+    }
+
+    const avgTotalTransfer =
+      results.reduce((sum, r) => sum + (r.resources.total?.transferSize || 0), 0) / results.length;
+    const avgTotalResource =
+      results.reduce((sum, r) => sum + (r.resources.total?.resourceSize || 0), 0) / results.length;
+    markdown += ` **${(avgTotalTransfer / 1024).toFixed(1)}(${(avgTotalResource / 1024).toFixed(1)})** |\n\n`;
   }
 
   markdown += `*This report is automatically generated by Lighthouse CI*\n`;
