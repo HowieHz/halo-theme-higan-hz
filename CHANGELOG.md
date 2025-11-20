@@ -1,5 +1,7 @@
 # 更新日志
 
+<!-- markdownlint-disable MD024 -->
+
 ## [1.47.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.46.0...v1.47.0) (2025-11-20)
 
 ### 🚀 新功能
