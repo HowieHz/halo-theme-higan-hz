@@ -122,15 +122,24 @@ jobs:
           fi
 
       - name: Install and activate theme
-        env:
-          HALO_URL: http://localhost:8090
-          THEME_ZIP_PATH: ~/builds/target/howiehz-higan-cn.zip
         run: |
           # 简化版本：直接使用 curl 而不是 Node.js 脚本
           echo "安装主题..."
           
           # 等待初始化完成
           sleep 10
+          
+          # 设置变量
+          THEME_ZIP_PATH="${HOME}/builds/target/howiehz-higan-cn.zip"
+          
+          # 确认文件存在
+          if [ ! -f "$THEME_ZIP_PATH" ]; then
+            echo "❌ 主题文件不存在: $THEME_ZIP_PATH"
+            ls -la "${HOME}/builds/target/"
+            exit 1
+          fi
+          
+          echo "找到主题文件: $THEME_ZIP_PATH"
           
           # 上传主题
           response=$(curl -X POST \

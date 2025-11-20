@@ -3,28 +3,28 @@
  * 解析 Lighthouse 结果并生成可读的报告
  */
 
-import { readFile, writeFile } from 'fs/promises';
-import { resolve } from 'path';
+import { readFile, writeFile } from "fs/promises";
+import { resolve } from "path";
 
-const LIGHTHOUSE_RESULTS_DIR = process.env.LIGHTHOUSE_RESULTS_DIR || '.lighthouseci';
-const OUTPUT_DIR = process.env.OUTPUT_DIR || './reports';
+const LIGHTHOUSE_RESULTS_DIR = process.env.LIGHTHOUSE_RESULTS_DIR || ".lighthouseci";
+const OUTPUT_DIR = process.env.OUTPUT_DIR || "./reports";
 
 /**
  * 解析 Lighthouse 结果
  */
 async function parseLighthouseResults() {
-  const manifestPath = resolve(LIGHTHOUSE_RESULTS_DIR, 'manifest.json');
-  const manifest = JSON.parse(await readFile(manifestPath, 'utf-8'));
-  
+  const manifestPath = resolve(LIGHTHOUSE_RESULTS_DIR, "manifest.json");
+  const manifest = JSON.parse(await readFile(manifestPath, "utf-8"));
+
   const results = [];
-  
+
   for (const entry of manifest) {
     const reportPath = resolve(LIGHTHOUSE_RESULTS_DIR, entry.jsonPath);
-    const report = JSON.parse(await readFile(reportPath, 'utf-8'));
-    
-    const resourceSummary = report.audits['resource-summary'];
+    const report = JSON.parse(await readFile(reportPath, "utf-8"));
+
+    const resourceSummary = report.audits["resource-summary"];
     const items = resourceSummary?.details?.items || [];
-    
+
     const metrics = {
       url: entry.url,
       script: 0,
@@ -35,20 +35,20 @@ async function parseLighthouseResults() {
       other: 0,
       total: 0,
     };
-    
+
     for (const item of items) {
       const type = item.resourceType;
       const size = item.transferSize || 0;
-      
+
       if (type in metrics) {
         metrics[type] = size;
       }
       metrics.total += size;
     }
-    
+
     results.push(metrics);
   }
-  
+
   return results;
 }
 
@@ -64,80 +64,80 @@ function generateMarkdownReport(results, version) {
   markdown += `- 字体体积：< 100 KB\n`;
   markdown += `- HTML 大小：< 50 KB\n`;
   markdown += `- 总体积：< 500 KB\n\n`;
-  
+
   for (const result of results) {
-    const urlPath = new URL(result.url).pathname || '/';
+    const urlPath = new URL(result.url).pathname || "/";
     markdown += `## 页面：${urlPath}\n\n`;
-    
+
     // JS
     const scriptKB = (result.script / 1024).toFixed(2);
-    const scriptStatus = result.script <= 204800 ? '✅' : '❌';
+    const scriptStatus = result.script <= 204800 ? "✅" : "❌";
     markdown += `- ${scriptStatus} **JS 体积**: ${scriptKB} KB / 200 KB`;
     if (result.script > 204800) {
       const over = ((result.script - 204800) / 1024).toFixed(2);
       markdown += ` (超出 ${over} KB)`;
     }
-    markdown += '\n';
-    
+    markdown += "\n";
+
     // CSS
     const stylesheetKB = (result.stylesheet / 1024).toFixed(2);
-    const stylesheetStatus = result.stylesheet <= 102400 ? '✅' : '❌';
+    const stylesheetStatus = result.stylesheet <= 102400 ? "✅" : "❌";
     markdown += `- ${stylesheetStatus} **CSS 体积**: ${stylesheetKB} KB / 100 KB`;
     if (result.stylesheet > 102400) {
       const over = ((result.stylesheet - 102400) / 1024).toFixed(2);
       markdown += ` (超出 ${over} KB)`;
     }
-    markdown += '\n';
-    
+    markdown += "\n";
+
     // Font
     const fontKB = (result.font / 1024).toFixed(2);
-    const fontStatus = result.font <= 102400 ? '✅' : '❌';
+    const fontStatus = result.font <= 102400 ? "✅" : "❌";
     markdown += `- ${fontStatus} **字体体积**: ${fontKB} KB / 100 KB`;
     if (result.font > 102400) {
       const over = ((result.font - 102400) / 1024).toFixed(2);
       markdown += ` (超出 ${over} KB)`;
     }
-    markdown += '\n';
-    
+    markdown += "\n";
+
     // Document
     const documentKB = (result.document / 1024).toFixed(2);
-    const documentStatus = result.document <= 51200 ? '✅' : '⚠️';
+    const documentStatus = result.document <= 51200 ? "✅" : "⚠️";
     markdown += `- ${documentStatus} **HTML 大小**: ${documentKB} KB / 50 KB\n`;
-    
+
     // Image
     if (result.image > 0) {
       const imageKB = (result.image / 1024).toFixed(2);
       markdown += `- ℹ️ **图片体积**: ${imageKB} KB\n`;
     }
-    
+
     // Total
     const totalKB = (result.total / 1024).toFixed(2);
-    const totalStatus = result.total <= 512000 ? '✅' : '❌';
+    const totalStatus = result.total <= 512000 ? "✅" : "❌";
     markdown += `- ${totalStatus} **总体积**: ${totalKB} KB / 500 KB`;
     if (result.total > 512000) {
       const over = ((result.total - 512000) / 1024).toFixed(2);
       markdown += ` (超出 ${over} KB)`;
     }
-    markdown += '\n\n';
+    markdown += "\n\n";
   }
-  
+
   // 平均值
   if (results.length > 0) {
     const avgTotal = results.reduce((sum, r) => sum + r.total, 0) / results.length;
     const avgScript = results.reduce((sum, r) => sum + r.script, 0) / results.length;
     const avgStylesheet = results.reduce((sum, r) => sum + r.stylesheet, 0) / results.length;
     const avgFont = results.reduce((sum, r) => sum + r.font, 0) / results.length;
-    
+
     markdown += `## 平均值\n\n`;
     markdown += `- JS: ${(avgScript / 1024).toFixed(2)} KB\n`;
     markdown += `- CSS: ${(avgStylesheet / 1024).toFixed(2)} KB\n`;
     markdown += `- 字体：${(avgFont / 1024).toFixed(2)} KB\n`;
     markdown += `- 总体积：${(avgTotal / 1024).toFixed(2)} KB\n\n`;
   }
-  
+
   markdown += `---\n\n`;
   markdown += `*此报告由 Lighthouse CI 自动生成*\n`;
-  
+
   return markdown;
 }
 
@@ -159,7 +159,7 @@ function generateJsonReport(results, version) {
       },
     },
     null,
-    2
+    2,
   );
 }
 
@@ -168,28 +168,27 @@ function generateJsonReport(results, version) {
  */
 async function main() {
   try {
-    console.log('解析 Lighthouse 结果...');
+    console.log("解析 Lighthouse 结果...");
     const results = await parseLighthouseResults();
-    
-    const version = process.env.RELEASE_VERSION || '未知版本';
-    
-    console.log('生成 Markdown 报告...');
+
+    const version = process.env.RELEASE_VERSION || "未知版本";
+
+    console.log("生成 Markdown 报告...");
     const markdownReport = generateMarkdownReport(results, version);
-    await writeFile(resolve(OUTPUT_DIR, 'page-size-report.md'), markdownReport);
-    
-    console.log('生成 JSON 报告...');
+    await writeFile(resolve(OUTPUT_DIR, "page-size-report.md"), markdownReport);
+
+    console.log("生成 JSON 报告...");
     const jsonReport = generateJsonReport(results, version);
-    await writeFile(resolve(OUTPUT_DIR, 'page-size-report.json'), jsonReport);
-    
-    console.log('\n✓ 报告生成完成！');
-    console.log(`  - Markdown: ${resolve(OUTPUT_DIR, 'page-size-report.md')}`);
-    console.log(`  - JSON: ${resolve(OUTPUT_DIR, 'page-size-report.json')}`);
-    
+    await writeFile(resolve(OUTPUT_DIR, "page-size-report.json"), jsonReport);
+
+    console.log("\n✓ 报告生成完成！");
+    console.log(`  - Markdown: ${resolve(OUTPUT_DIR, "page-size-report.md")}`);
+    console.log(`  - JSON: ${resolve(OUTPUT_DIR, "page-size-report.json")}`);
+
     // 输出到控制台
-    console.log('\n' + markdownReport);
-    
+    console.log("\n" + markdownReport);
   } catch (error) {
-    console.error('❌ 生成报告失败：', error.message);
+    console.error("❌ 生成报告失败：", error.message);
     process.exit(1);
   }
 }
