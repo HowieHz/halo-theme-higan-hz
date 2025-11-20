@@ -23,13 +23,14 @@ async function parseLighthouseResults() {
   try {
     const manifest = JSON.parse(await readFile(manifestPath, "utf-8"));
     entries = manifest;
-  } catch (e) {
+  } catch {
     console.log("manifest.json 不存在，尝试从 links.json 读取...");
     
     // 如果 manifest.json 不存在，尝试从 links.json 读取
     const linksPath = resolve(LIGHTHOUSE_RESULTS_DIR, "links.json");
     try {
-      const links = JSON.parse(await readFile(linksPath, "utf-8"));
+      // 读取 links.json（虽然我们不使用它的内容，但检查它是否存在）
+      await readFile(linksPath, "utf-8");
       
       // 从 links.json 提取信息并查找对应的 JSON 文件
       entries = [];
@@ -58,7 +59,7 @@ async function parseLighthouseResults() {
           jsonPath: path.basename(files[files.length - 1])
         });
       }
-    } catch (linkError) {
+    } catch {
       throw new Error("无法读取 manifest.json 或 links.json");
     }
   }
@@ -74,23 +75,26 @@ async function parseLighthouseResults() {
 
     const metrics = {
       url: entry.url,
-      script: 0,
-      stylesheet: 0,
-      font: 0,
-      document: 0,
-      image: 0,
-      other: 0,
-      total: 0,
+      script: { transfer: 0, resource: 0 },
+      stylesheet: { transfer: 0, resource: 0 },
+      font: { transfer: 0, resource: 0 },
+      document: { transfer: 0, resource: 0 },
+      image: { transfer: 0, resource: 0 },
+      other: { transfer: 0, resource: 0 },
+      total: { transfer: 0, resource: 0 },
     };
 
     for (const item of items) {
       const type = item.resourceType;
-      const size = item.transferSize || 0;
+      const transferSize = item.transferSize || 0;
+      const resourceSize = item.resourceSize || 0;
 
-      if (type in metrics) {
-        metrics[type] = size;
+      if (type in metrics && metrics[type].transfer !== undefined) {
+        metrics[type].transfer += transferSize;
+        metrics[type].resource += resourceSize;
       }
-      metrics.total += size;
+      metrics.total.transfer += transferSize;
+      metrics.total.resource += resourceSize;
     }
 
     results.push(metrics);
@@ -106,40 +110,45 @@ function generateMarkdownReport(results, version) {
   let markdown = `# 页面体积评估报告 - v${version}\n\n`;
   markdown += `生成时间：${new Date().toISOString()}\n\n`;
 
+  // 紧凑的单表格显示所有页面
+  markdown += `| 页面 | JS (gzip/原始) | CSS (gzip/原始) | 外部资源 (gzip/原始) | HTML (gzip/原始) | 整体 (gzip/原始) |\n`;
+  markdown += `|------|----------------|-----------------|---------------------|------------------|------------------|\n`;
+
   for (const result of results) {
     const urlPath = new URL(result.url).pathname || "/";
-    markdown += `## ${urlPath}\n\n`;
+    const externalTransfer = result.total.transfer - result.document.transfer;
+    const externalResource = result.total.resource - result.document.resource;
     
-    // 计算外部资源（除了 HTML 的其他所有资源）
-    const externalResources = result.total - result.document;
-    
-    markdown += `| 资源类型 | 大小 |\n`;
-    markdown += `|---------|------|\n`;
-    markdown += `| 全部 JS | ${(result.script / 1024).toFixed(2)} KB |\n`;
-    markdown += `| 全部 CSS | ${(result.stylesheet / 1024).toFixed(2)} KB |\n`;
-    markdown += `| 全部外部资源 | ${(externalResources / 1024).toFixed(2)} KB |\n`;
-    markdown += `| HTML 页面 | ${(result.document / 1024).toFixed(2)} KB |\n`;
-    markdown += `| **整体大小** | **${(result.total / 1024).toFixed(2)} KB** |\n\n`;
+    markdown += `| ${urlPath} `;
+    markdown += `| ${(result.script.transfer / 1024).toFixed(1)}/${(result.script.resource / 1024).toFixed(1)} `;
+    markdown += `| ${(result.stylesheet.transfer / 1024).toFixed(1)}/${(result.stylesheet.resource / 1024).toFixed(1)} `;
+    markdown += `| ${(externalTransfer / 1024).toFixed(1)}/${(externalResource / 1024).toFixed(1)} `;
+    markdown += `| ${(result.document.transfer / 1024).toFixed(1)}/${(result.document.resource / 1024).toFixed(1)} `;
+    markdown += `| **${(result.total.transfer / 1024).toFixed(1)}/${(result.total.resource / 1024).toFixed(1)}** |\n`;
   }
 
   // 平均值
   if (results.length > 0) {
-    const avgTotal = results.reduce((sum, r) => sum + r.total, 0) / results.length;
-    const avgScript = results.reduce((sum, r) => sum + r.script, 0) / results.length;
-    const avgStylesheet = results.reduce((sum, r) => sum + r.stylesheet, 0) / results.length;
-    const avgDocument = results.reduce((sum, r) => sum + r.document, 0) / results.length;
-    const avgExternal = results.reduce((sum, r) => sum + (r.total - r.document), 0) / results.length;
+    const avgScriptT = results.reduce((sum, r) => sum + r.script.transfer, 0) / results.length;
+    const avgScriptR = results.reduce((sum, r) => sum + r.script.resource, 0) / results.length;
+    const avgStyleT = results.reduce((sum, r) => sum + r.stylesheet.transfer, 0) / results.length;
+    const avgStyleR = results.reduce((sum, r) => sum + r.stylesheet.resource, 0) / results.length;
+    const avgDocT = results.reduce((sum, r) => sum + r.document.transfer, 0) / results.length;
+    const avgDocR = results.reduce((sum, r) => sum + r.document.resource, 0) / results.length;
+    const avgTotalT = results.reduce((sum, r) => sum + r.total.transfer, 0) / results.length;
+    const avgTotalR = results.reduce((sum, r) => sum + r.total.resource, 0) / results.length;
+    const avgExtT = results.reduce((sum, r) => sum + (r.total.transfer - r.document.transfer), 0) / results.length;
+    const avgExtR = results.reduce((sum, r) => sum + (r.total.resource - r.document.resource), 0) / results.length;
 
-    markdown += `## 平均值\n\n`;
-    markdown += `| 资源类型 | 平均大小 |\n`;
-    markdown += `|---------|----------|\n`;
-    markdown += `| 全部 JS | ${(avgScript / 1024).toFixed(2)} KB |\n`;
-    markdown += `| 全部 CSS | ${(avgStylesheet / 1024).toFixed(2)} KB |\n`;
-    markdown += `| 全部外部资源 | ${(avgExternal / 1024).toFixed(2)} KB |\n`;
-    markdown += `| HTML 页面 | ${(avgDocument / 1024).toFixed(2)} KB |\n`;
-    markdown += `| **整体大小** | **${(avgTotal / 1024).toFixed(2)} KB** |\n\n`;
+    markdown += `| **平均** `;
+    markdown += `| **${(avgScriptT / 1024).toFixed(1)}/${(avgScriptR / 1024).toFixed(1)}** `;
+    markdown += `| **${(avgStyleT / 1024).toFixed(1)}/${(avgStyleR / 1024).toFixed(1)}** `;
+    markdown += `| **${(avgExtT / 1024).toFixed(1)}/${(avgExtR / 1024).toFixed(1)}** `;
+    markdown += `| **${(avgDocT / 1024).toFixed(1)}/${(avgDocR / 1024).toFixed(1)}** `;
+    markdown += `| **${(avgTotalT / 1024).toFixed(1)}/${(avgTotalR / 1024).toFixed(1)}** |\n\n`;
   }
 
+  markdown += `*单位：KB (gzip压缩后/原始大小)*\n\n`;
   markdown += `---\n\n`;
   markdown += `*此报告由 Lighthouse CI 自动生成*\n`;
 

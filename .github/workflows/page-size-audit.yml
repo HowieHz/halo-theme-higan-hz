@@ -12,6 +12,10 @@ on:
         description: 'Halo version to test with'
         required: false
         default: '2.21.10'
+      theme_version:
+        description: 'Theme version to test (e.g., v1.47.0, leave empty to use current code)'
+        required: false
+        default: ''
 
 jobs:
   audit:
@@ -43,15 +47,35 @@ jobs:
         run: |
           mkdir -p ~/builds/tmp ~/builds/target
 
-      - name: Package theme
+      - name: Download or build theme
         run: |
-          cp -r . ~/builds/tmp
-          mkdir -p ~/builds/tmp-included
-          cd ~/builds/tmp
-          cat ${{ github.workspace }}/.github/include-list.txt | xargs -I {} cp -r --parents {} ~/builds/tmp-included/
-          cd ~/builds/tmp-included
-          zip -9 -r howiehz-higan-cn.zip .
-          mv howiehz-higan-cn.zip ~/builds/target/
+          THEME_VERSION="${{ github.event.inputs.theme_version }}"
+          
+          if [ -n "$THEME_VERSION" ]; then
+            # 下载指定版本的主题
+            echo "下载主题版本: $THEME_VERSION"
+            wget https://github.com/HowieHz/halo-theme-higan-hz/releases/download/${THEME_VERSION}/howiehz-higan-cn.zip \
+              -O ~/builds/target/howiehz-higan-cn.zip
+            
+            if [ ! -f ~/builds/target/howiehz-higan-cn.zip ]; then
+              echo "❌ 下载主题失败"
+              exit 1
+            fi
+            
+            echo "✓ 主题下载完成: $THEME_VERSION"
+          else
+            # 构建当前代码
+            echo "使用当前代码构建主题..."
+            cp -r . ~/builds/tmp
+            mkdir -p ~/builds/tmp-included
+            cd ~/builds/tmp
+            cat ${{ github.workspace }}/.github/include-list.txt | xargs -I {} cp -r --parents {} ~/builds/tmp-included/
+            cd ~/builds/tmp-included
+            zip -9 -r howiehz-higan-cn.zip .
+            mv howiehz-higan-cn.zip ~/builds/target/
+            
+            echo "✓ 主题构建完成"
+          fi
 
       - name: Setup Java
         uses: actions/setup-java@v4
