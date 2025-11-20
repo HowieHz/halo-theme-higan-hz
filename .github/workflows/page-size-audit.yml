@@ -154,10 +154,6 @@ jobs:
           # 简化版本：直接使用 curl 而不是 Node.js 脚本
           echo "安装主题..."
           
-          # 等待 Halo 完全初始化（包括管理员账户）
-          echo "等待 Halo 完全初始化..."
-          sleep 30
-          
           # 检查 Halo 日志确认初始化完成
           echo "Halo 日志（最后30行）:"
           tail -30 ~/halo.log
@@ -242,20 +238,47 @@ jobs:
           mkdir -p ./reports
           
           # 运行 Lighthouse 测试
+          echo "开始运行 Lighthouse CI 测试..."
           lhci autorun \
             --collect.url=http://localhost:8090/ \
             --collect.url=http://localhost:8090/archives \
+            --collect.url=http://localhost:8090/archives/hello-halo \
             --collect.url=http://localhost:8090/tags \
+            --collect.url=http://localhost:8090/tags/halo \
+            --collect.url=http://localhost:8090/categories \
+            --collect.url=http://localhost:8090/categories/default \
+            --collect.url=http://localhost:8090/authors/admin \
+            --collect.url=http://localhost:8090/about \
+            --collect.url=http://localhost:8090/404 \
             --collect.numberOfRuns=3 \
             --collect.settings.preset=desktop \
-            --upload.target=temporary-public-storage || true
+            --upload.target=temporary-public-storage || {
+              echo "❌ Lighthouse CI 执行失败"
+              echo "检查 Lighthouse CI 输出目录："
+              ls -la ./.lighthouseci/ || echo ".lighthouseci 目录不存在"
+              exit 1
+            }
+          
+          echo "✓ Lighthouse CI 执行完成"
+          echo "检查生成的文件："
+          ls -la ./.lighthouseci/
 
       - name: Generate reports
+        if: success()
         env:
           RELEASE_VERSION: ${{ github.event.release.tag_name || github.sha }}
           OUTPUT_DIR: ./reports
           LIGHTHOUSE_RESULTS_DIR: ./.lighthouseci
-        run: node scripts/generate-report.js
+        run: |
+          # 检查 manifest.json 是否存在
+          if [ ! -f "./.lighthouseci/manifest.json" ]; then
+            echo "⚠️  警告：manifest.json 不存在，无法生成报告"
+            echo "Lighthouse CI 可能没有成功运行"
+            ls -la ./.lighthouseci/ || echo ".lighthouseci 目录不存在"
+            exit 1
+          fi
+          
+          node scripts/generate-report.js
 
       - name: Upload reports
         uses: actions/upload-artifact@v4
