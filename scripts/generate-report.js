@@ -19,44 +19,46 @@ async function parseLighthouseResults() {
   // 尝试先读取 manifest.json
   let entries = null;
   const manifestPath = resolve(LIGHTHOUSE_RESULTS_DIR, "manifest.json");
-  
+
   try {
     const manifest = JSON.parse(await readFile(manifestPath, "utf-8"));
     entries = manifest;
   } catch {
     console.log("manifest.json 不存在，尝试从 links.json 读取...");
-    
+
     // 如果 manifest.json 不存在，尝试从 links.json 读取
     const linksPath = resolve(LIGHTHOUSE_RESULTS_DIR, "links.json");
     try {
       // 读取 links.json（虽然我们不使用它的内容，但检查它是否存在）
       await readFile(linksPath, "utf-8");
-      
+
       // 从 links.json 提取信息并查找对应的 JSON 文件
       entries = [];
-      
+
       // 列出目录中的所有 JSON 文件
-      const files = (await fs.readdir(LIGHTHOUSE_RESULTS_DIR)).filter(f => f.endsWith('.json') && f.startsWith('lhr-'));
-      
+      const files = (await fs.readdir(LIGHTHOUSE_RESULTS_DIR)).filter(
+        (f) => f.endsWith(".json") && f.startsWith("lhr-"),
+      );
+
       // 按 URL 分组结果
       const urlGroups = {};
-      
+
       for (const file of files) {
         const filePath = resolve(LIGHTHOUSE_RESULTS_DIR, file);
         const report = JSON.parse(await readFile(filePath, "utf-8"));
         const url = report.mainDocumentUrl || report.finalUrl;
-        
+
         if (!urlGroups[url]) {
           urlGroups[url] = [];
         }
         urlGroups[url].push(filePath);
       }
-      
+
       // 为每个 URL 创建一个条目（使用最后一个运行结果）
       for (const [url, files] of Object.entries(urlGroups)) {
         entries.push({
           url,
-          jsonPath: path.basename(files[files.length - 1])
+          jsonPath: path.basename(files[files.length - 1]),
         });
       }
     } catch {
@@ -106,22 +108,39 @@ async function parseLighthouseResults() {
 /**
  * 生成 Markdown 报告
  */
-function generateMarkdownReport(results, version) {
-  let markdown = `# 页面体积评估报告 - v${version}\n\n`;
-  markdown += `生成时间：${new Date().toISOString()}\n\n`;
+function generateMarkdownReport(results, metadata = {}) {
+  let markdown = `# 页面体积评估报告\n\n`;
 
-  // 紧凑的单表格显示所有页面
-  markdown += `| 页面 | JS (gzip/原始) | CSS (gzip/原始) | 外部资源 (gzip/原始) | HTML (gzip/原始) | 整体 (gzip/原始) |\n`;
-  markdown += `|------|----------------|-----------------|---------------------|------------------|------------------|\n`;
+  // 添加元数据
+  if (metadata.haloVersion || metadata.javaVersion || metadata.themeVersion) {
+    markdown += `**测试环境：**\n`;
+    if (metadata.haloVersion) markdown += `- Halo 版本：${metadata.haloVersion}\n`;
+    if (metadata.javaVersion) markdown += `- Java 版本：${metadata.javaVersion}\n`;
+    if (metadata.themeVersion) markdown += `- 主题版本：${metadata.themeVersion}\n`;
+    markdown += `\n`;
+  }
+
+  markdown += `单位：KB(gzip/origin)\n\n`;
+
+  // 简化的表格
+  markdown += `| 页面 | JS | CSS | 其他资源 | 全部外部资源 | HTML | 页面总计 |\n`;
+  markdown += `|------|----|----|---------|-------------|------|----------|\n`;
 
   for (const result of results) {
     const urlPath = new URL(result.url).pathname || "/";
+    // 其他资源 = 总计 - JS - CSS - HTML
+    const otherTransfer =
+      result.total.transfer - result.script.transfer - result.stylesheet.transfer - result.document.transfer;
+    const otherResource =
+      result.total.resource - result.script.resource - result.stylesheet.resource - result.document.resource;
+    // 全部外部资源 = 总计 - HTML
     const externalTransfer = result.total.transfer - result.document.transfer;
     const externalResource = result.total.resource - result.document.resource;
-    
+
     markdown += `| ${urlPath} `;
     markdown += `| ${(result.script.transfer / 1024).toFixed(1)}/${(result.script.resource / 1024).toFixed(1)} `;
     markdown += `| ${(result.stylesheet.transfer / 1024).toFixed(1)}/${(result.stylesheet.resource / 1024).toFixed(1)} `;
+    markdown += `| ${(otherTransfer / 1024).toFixed(1)}/${(otherResource / 1024).toFixed(1)} `;
     markdown += `| ${(externalTransfer / 1024).toFixed(1)}/${(externalResource / 1024).toFixed(1)} `;
     markdown += `| ${(result.document.transfer / 1024).toFixed(1)}/${(result.document.resource / 1024).toFixed(1)} `;
     markdown += `| **${(result.total.transfer / 1024).toFixed(1)}/${(result.total.resource / 1024).toFixed(1)}** |\n`;
@@ -137,19 +156,28 @@ function generateMarkdownReport(results, version) {
     const avgDocR = results.reduce((sum, r) => sum + r.document.resource, 0) / results.length;
     const avgTotalT = results.reduce((sum, r) => sum + r.total.transfer, 0) / results.length;
     const avgTotalR = results.reduce((sum, r) => sum + r.total.resource, 0) / results.length;
+    const avgOtherT =
+      results.reduce(
+        (sum, r) => sum + (r.total.transfer - r.script.transfer - r.stylesheet.transfer - r.document.transfer),
+        0,
+      ) / results.length;
+    const avgOtherR =
+      results.reduce(
+        (sum, r) => sum + (r.total.resource - r.script.resource - r.stylesheet.resource - r.document.resource),
+        0,
+      ) / results.length;
     const avgExtT = results.reduce((sum, r) => sum + (r.total.transfer - r.document.transfer), 0) / results.length;
     const avgExtR = results.reduce((sum, r) => sum + (r.total.resource - r.document.resource), 0) / results.length;
 
     markdown += `| **平均** `;
     markdown += `| **${(avgScriptT / 1024).toFixed(1)}/${(avgScriptR / 1024).toFixed(1)}** `;
     markdown += `| **${(avgStyleT / 1024).toFixed(1)}/${(avgStyleR / 1024).toFixed(1)}** `;
+    markdown += `| **${(avgOtherT / 1024).toFixed(1)}/${(avgOtherR / 1024).toFixed(1)}** `;
     markdown += `| **${(avgExtT / 1024).toFixed(1)}/${(avgExtR / 1024).toFixed(1)}** `;
     markdown += `| **${(avgDocT / 1024).toFixed(1)}/${(avgDocR / 1024).toFixed(1)}** `;
     markdown += `| **${(avgTotalT / 1024).toFixed(1)}/${(avgTotalR / 1024).toFixed(1)}** |\n\n`;
   }
 
-  markdown += `*单位：KB (gzip压缩后/原始大小)*\n\n`;
-  markdown += `---\n\n`;
   markdown += `*此报告由 Lighthouse CI 自动生成*\n`;
 
   return markdown;
@@ -158,19 +186,12 @@ function generateMarkdownReport(results, version) {
 /**
  * 生成 JSON 报告
  */
-function generateJsonReport(results, version) {
+function generateJsonReport(results, metadata) {
   return JSON.stringify(
     {
-      version,
+      metadata,
       timestamp: new Date().toISOString(),
       results,
-      budgets: {
-        script: 204800,
-        stylesheet: 102400,
-        font: 102400,
-        document: 51200,
-        total: 512000,
-      },
     },
     null,
     2,
@@ -185,14 +206,19 @@ async function main() {
     console.log("解析 Lighthouse 结果...");
     const results = await parseLighthouseResults();
 
-    const version = process.env.RELEASE_VERSION || "未知版本";
+    // 收集元数据
+    const metadata = {
+      haloVersion: process.env.HALO_VERSION || null,
+      javaVersion: process.env.JAVA_VERSION || null,
+      themeVersion: process.env.THEME_VERSION || process.env.GITHUB_SHA || null,
+    };
 
     console.log("生成 Markdown 报告...");
-    const markdownReport = generateMarkdownReport(results, version);
+    const markdownReport = generateMarkdownReport(results, metadata);
     await writeFile(resolve(OUTPUT_DIR, "page-size-report.md"), markdownReport);
 
     console.log("生成 JSON 报告...");
-    const jsonReport = generateJsonReport(results, version);
+    const jsonReport = generateJsonReport(results, metadata);
     await writeFile(resolve(OUTPUT_DIR, "page-size-report.json"), jsonReport);
 
     console.log("\n✓ 报告生成完成！");

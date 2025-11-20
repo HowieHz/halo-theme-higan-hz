@@ -290,9 +290,12 @@ jobs:
       - name: Generate reports
         if: success()
         env:
-          RELEASE_VERSION: ${{ github.event.release.tag_name || github.sha }}
           OUTPUT_DIR: ./reports
           LIGHTHOUSE_RESULTS_DIR: ./.lighthouseci
+          HALO_VERSION: ${{ github.event.inputs.halo_version || '2.21.10' }}
+          JAVA_VERSION: '21'
+          THEME_VERSION: ${{ github.event.inputs.theme_version || github.sha }}
+          GITHUB_SHA: ${{ github.sha }}
         run: |
           # 检查 Lighthouse 结果目录是否存在
           if [ ! -d "./.lighthouseci" ]; then
@@ -317,20 +320,31 @@ jobs:
           name: page-size-reports
           path: ./reports/
 
-      - name: Comment on Release (if release event)
-        if: github.event_name == 'release'
+      - name: Comment on PR or Release
+        if: github.event_name == 'pull_request' || github.event_name == 'release'
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
             const report = fs.readFileSync('./reports/page-size-report.md', 'utf8');
             
-            await github.rest.repos.createReleaseComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              release_id: context.payload.release.id,
-              body: report
-            });
+            if (context.eventName === 'pull_request') {
+              // 在 PR 上评论
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: report
+              });
+            } else if (context.eventName === 'release') {
+              // 在 Release 上评论
+              await github.rest.repos.createReleaseComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: context.payload.release.id,
+                body: report
+              });
+            }
 
       - name: Stop Halo
         if: always()
