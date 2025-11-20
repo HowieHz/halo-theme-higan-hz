@@ -1,5 +1,20 @@
 # 更新日志
 
+## [1.47.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.46.0...v1.47.0) (2025-11-20)
+
+### 🚀 新功能
+
+- 添加“总体样式 -> [额外菜单项](http://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration#%E9%A2%9D%E5%A4%96%E8%8F%9C%E5%8D%95%E9%A1%B9)”
+  - 替代原有的“总体样式 -> 菜单中随机文章项”、“总体样式 -> 菜单中用户账号项”。
+  - 类型为“重复器”，支持自定义排序，允许自由添加或删除条目。
+  - 其中新增`用户账号`类型：
+    - 未登录时，菜单显示 `登录`，点击后跳转 `/login` 页面。
+    - 已登录时，菜单显示用户名，点击后跳转 `/uc` 页面。
+
+### 🛠️ 开发体验
+
+- 更新开发依赖
+
 ## [1.46.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.45.4...v1.46.0) (2025-11-17)
 
 第 100 个正式版本，感谢有你🎉
