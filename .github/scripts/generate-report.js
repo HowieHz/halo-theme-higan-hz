@@ -114,7 +114,13 @@ function generateMarkdownReport(results, metadata = {}) {
   let markdown = `# Page Size Audit Report\n\n`;
 
   // 添加元数据
-  if (metadata.haloVersion || metadata.javaVersion || metadata.themeVersion || metadata.lhciVersion || metadata.generatedAt) {
+  if (
+    metadata.haloVersion ||
+    metadata.javaVersion ||
+    metadata.themeVersion ||
+    metadata.lhciVersion ||
+    metadata.generatedAt
+  ) {
     markdown += `**Test Environment:**\n`;
     if (metadata.haloVersion) markdown += `- Halo CMS Version: ${metadata.haloVersion}\n`;
     if (metadata.javaVersion) markdown += `- Java Version: ${metadata.javaVersion}\n`;

@@ -1,0 +1,83 @@
+name: Generate Size Chart
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_version:
+        description: '起始版本 (例如: v1.45.0)'
+        required: true
+      end_version:
+        description: '结束版本 (例如: v1.47.0，留空表示最新版本)'
+        required: false
+        default: ''
+      chart_type:
+        description: '图表类型'
+        required: true
+        default: 'total'
+        type: choice
+        options:
+          - total
+          - js-css
+          - all-resources
+      output_format:
+        description: '输出格式'
+        required: true
+        default: 'markdown'
+        type: choice
+        options:
+          - markdown
+          - mermaid
+
+jobs:
+  generate-chart:
+    name: Generate XY Chart
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm install @octokit/rest@^22.0.1
+
+      - name: Generate chart
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          START_VERSION: ${{ github.event.inputs.start_version }}
+          END_VERSION: ${{ github.event.inputs.end_version }}
+          CHART_TYPE: ${{ github.event.inputs.chart_type }}
+          OUTPUT_FORMAT: ${{ github.event.inputs.output_format }}
+        run: |
+          node .github/scripts/generate-chart.js
+
+      - name: Upload chart
+        uses: actions/upload-artifact@v4
+        with:
+          name: size-chart
+          path: ./charts/
+
+      - name: Comment on commit
+        if: github.event.inputs.output_format == 'markdown'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const chartPath = './charts/size-chart.md';
+            
+            if (fs.existsSync(chartPath)) {
+              const chart = fs.readFileSync(chartPath, 'utf8');
+              
+              // 创建一个 issue 来展示图表
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `页面体积趋势图 (${context.payload.inputs.start_version} → ${context.payload.inputs.end_version || 'latest'})`,
+                body: chart,
+                labels: ['documentation']
+              });
+            }
