@@ -7,6 +7,7 @@
     </li>
 
     <th:block th:insert="~{fragments/common :: base-menu}"></th:block>
+    <!--/* random post button */-->
     <li th:if="${theme.config?.styles?.is_show_random_button_in_menu}">
       <a
         href="/"
@@ -18,6 +19,24 @@
         th:text="#{fragment.menu.random}"
       ></a>
     </li>
+    <!--/* login status button */-->
+    <li th:if="${theme.config?.styles?.is_show_user_account_menu}">
+      <a
+        sec:authorize="isAnonymous()"
+        href="/login"
+        onclick="this.href = '/login?redirect_uri=' + encodeURIComponent(window.location.href)"
+        th:text="#{fragment.menu.login}"
+      >
+      </a>
+      <a
+        sec:authorize="isAuthenticated()"
+        th:with="loggedInUser = ${contributorFinder.getContributor(#authentication.name)}"
+        th:text="${loggedInUser.displayName}"
+        href="/uc"
+      >
+      </a>
+    </li>
+    <!--/* search widget button */-->
     <li th:if="${pluginFinder.available('PluginSearchWidget')}">
       <a
         href="javascript:SearchWidget.open();"

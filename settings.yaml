@@ -403,6 +403,10 @@ spec:
           label: 菜单中随机文章项
           value: false
         - $formkit: checkbox
+          name: is_show_user_account_menu
+          label: 菜单中用户账号项
+          value: false
+        - $formkit: checkbox
           name: is_show_header_menu
           label: 显示页眉菜单
           value: true
