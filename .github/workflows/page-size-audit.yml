@@ -83,6 +83,8 @@ jobs:
               cache: false
           halo:
             security:
+              basic-auth:
+                disabled: false
               initializer:
                 superadminusername: admin
                 superadminpassword: admin
@@ -141,37 +143,46 @@ jobs:
           
           echo "找到主题文件: $THEME_ZIP_PATH"
           
-          # 上传主题
+          # 使用 Basic Auth (Halo 2.20+ 需要启用)
+          echo "上传主题文件..."
           response=$(curl -X POST \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/install \
-            -F "file=@${THEME_ZIP_PATH}" \
             -u admin:admin \
-            -w "\n%{http_code}" -s)
+            -F "file=@${THEME_ZIP_PATH}" \
+            -w "\n%{http_code}\n%{redirect_url}" -s)
           
-          http_code=$(echo "$response" | tail -n1)
-          body=$(echo "$response" | sed '$d')
+          http_code=$(echo "$response" | tail -n2 | head -n1)
+          redirect_url=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | sed '$d' | sed '$d')
           
           if [ "$http_code" != "200" ] && [ "$http_code" != "201" ]; then
             echo "❌ 主题安装失败 (HTTP $http_code)"
-            echo "$body"
+            echo "响应内容: $body"
+            if [ "$http_code" = "302" ] && [ -n "$redirect_url" ]; then
+              echo "重定向目标: $redirect_url"
+            fi
             exit 1
           fi
           
           echo "✓ 主题已安装"
           
           # 激活主题
+          echo "激活主题..."
           sleep 3
           curl -X PUT \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/activation \
-            -u admin:admin
+            -u admin:admin \
+            -s > /dev/null
           
           echo "✓ 主题已激活"
           
           # 清除缓存
+          echo "清除缓存..."
           sleep 2
           curl -X PUT \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/invalidate-cache \
-            -u admin:admin
+            -u admin:admin \
+            -s > /dev/null
           
           echo "✓ 缓存已清除"
 
