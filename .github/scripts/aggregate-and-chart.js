@@ -4,7 +4,7 @@
  */
 
 import { readFile, readdir, writeFile } from "fs/promises";
-import { resolve, basename } from "path";
+import { resolve } from "path";
 
 const REPORTS_DIR = process.env.REPORTS_DIR || "./all-reports";
 const OUTPUT_DIR = process.env.OUTPUT_DIR || "./charts";
