@@ -287,6 +287,17 @@ jobs:
           echo "检查生成的文件："
           ls -la ./.lighthouseci/
 
+      - name: Debug Lighthouse Data
+        run: |
+          echo "查看第一个 Lighthouse 结果的结构："
+          ls -la ./.lighthouseci/
+          # 显示第一个 JSON 文件的内容（格式化）
+          first_json=$(ls ./.lighthouseci/lhr-*.json | head -1)
+          if [ -f "$first_json" ]; then
+            echo "文件: $first_json"
+            cat "$first_json" | python -m json.tool | head -100
+          fi
+
       - name: Generate reports
         if: success()
         env:
