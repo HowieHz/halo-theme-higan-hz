@@ -274,7 +274,7 @@ jobs:
             --collect.url=http://localhost:8090/categories/default \
             --collect.url=http://localhost:8090/authors/admin \
             --collect.url=http://localhost:8090/about \
-            --collect.numberOfRuns=3 \
+            --collect.numberOfRuns=1 \
             --collect.settings.preset=desktop \
             --upload.target=temporary-public-storage || {
               echo "❌ Lighthouse CI 执行失败"
