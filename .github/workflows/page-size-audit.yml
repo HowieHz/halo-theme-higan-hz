@@ -85,9 +85,6 @@ jobs:
             security:
               basic-auth:
                 disabled: false
-              initializer:
-                superadminusername: admin
-                superadminpassword: admin
             caches:
               page:
                 disabled: true
@@ -123,13 +120,48 @@ jobs:
             exit 1
           fi
 
+      - name: Initialize Halo system
+        run: |
+          echo "正在初始化 Halo 系统..."
+          
+          # 获取 CSRF token
+          response=$(curl -c /tmp/cookies.txt -s http://localhost:8090/system/setup)
+          csrf_token=$(echo "$response" | grep '_csrf' | sed -n 's/.*value="\([^"]*\)".*/\1/p')
+          
+          echo "CSRF Token: $csrf_token"
+          
+          # 提交初始化表单
+          curl -b /tmp/cookies.txt -X POST \
+            http://localhost:8090/system/setup \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -d "_csrf=${csrf_token}" \
+            -d "language=zh-CN" \
+            -d "externalUrl=http://localhost:8090" \
+            -d "siteTitle=Test Site" \
+            -d "username=admin" \
+            -d "email=admin@example.com" \
+            -d "password=admin" \
+            -d "confirmPassword=admin" \
+            -L -v
+          
+          echo "✓ Halo 系统初始化完成"
+          
+          # 等待初始化完成
+          sleep 10
+
       - name: Install and activate theme
         run: |
           # 简化版本：直接使用 curl 而不是 Node.js 脚本
           echo "安装主题..."
           
-          # 等待初始化完成
-          sleep 10
+          # 等待 Halo 完全初始化（包括管理员账户）
+          echo "等待 Halo 完全初始化..."
+          sleep 30
+          
+          # 检查 Halo 日志确认初始化完成
+          echo "Halo 日志（最后30行）:"
+          tail -30 ~/halo.log
+          echo "---"
           
           # 设置变量
           THEME_ZIP_PATH="${HOME}/builds/target/howiehz-higan-cn.zip"
