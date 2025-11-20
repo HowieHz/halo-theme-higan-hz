@@ -114,7 +114,7 @@ function generateMarkdownReport(results, metadata = {}) {
   let markdown = `# Page Size Audit Report\n\n`;
 
   // 添加元数据
-  if (metadata.haloVersion || metadata.javaVersion || metadata.themeVersion) {
+  if (metadata.haloVersion || metadata.javaVersion || metadata.themeVersion || metadata.lhciVersion || metadata.generatedAt) {
     markdown += `**Test Environment:**\n`;
     if (metadata.haloVersion) markdown += `- Halo CMS Version: ${metadata.haloVersion}\n`;
     if (metadata.javaVersion) markdown += `- Java Version: ${metadata.javaVersion}\n`;
@@ -126,12 +126,17 @@ function generateMarkdownReport(results, metadata = {}) {
         markdown += `- Theme Version: ${metadata.themeVersion}\n`;
       }
     }
+    if (metadata.lhciVersion) markdown += `- Lighthouse CI Version: ${metadata.lhciVersion}\n`;
+    if (metadata.generatedAt) {
+      const date = new Date(metadata.generatedAt);
+      markdown += `- Generated At: ${date.toISOString()}\n`;
+    }
     markdown += `\n`;
   }
 
-  markdown += `Unit: KB (transferred over network)\n\n`;
+  markdown += `Unit: KB, Format: gzipped(original)\n\n`;
 
-  // 简化的表格 - 只显示传输大小（最重要的指标）
+  // 显示传输大小和原始大小
   markdown += `| Page | JS | CSS | Other Resources | All External Resources | HTML | Total |\n`;
   markdown += `|------|----|----|-----------------|------------------------|------|-------|\n`;
 
@@ -140,38 +145,51 @@ function generateMarkdownReport(results, metadata = {}) {
     // 其他资源 = 总计 - JS - CSS - HTML
     const otherTransfer =
       result.total.transfer - result.script.transfer - result.stylesheet.transfer - result.document.transfer;
+    const otherResource =
+      result.total.resource - result.script.resource - result.stylesheet.resource - result.document.resource;
     // 全部外部资源 = 总计 - HTML
     const externalTransfer = result.total.transfer - result.document.transfer;
+    const externalResource = result.total.resource - result.document.resource;
 
     markdown += `| ${urlPath} `;
-    markdown += `| ${(result.script.transfer / 1024).toFixed(1)} `;
-    markdown += `| ${(result.stylesheet.transfer / 1024).toFixed(1)} `;
-    markdown += `| ${(otherTransfer / 1024).toFixed(1)} `;
-    markdown += `| ${(externalTransfer / 1024).toFixed(1)} `;
-    markdown += `| ${(result.document.transfer / 1024).toFixed(1)} `;
-    markdown += `| **${(result.total.transfer / 1024).toFixed(1)}** |\n`;
+    markdown += `| ${(result.script.transfer / 1024).toFixed(1)}(${(result.script.resource / 1024).toFixed(1)}) `;
+    markdown += `| ${(result.stylesheet.transfer / 1024).toFixed(1)}(${(result.stylesheet.resource / 1024).toFixed(1)}) `;
+    markdown += `| ${(otherTransfer / 1024).toFixed(1)}(${(otherResource / 1024).toFixed(1)}) `;
+    markdown += `| ${(externalTransfer / 1024).toFixed(1)}(${(externalResource / 1024).toFixed(1)}) `;
+    markdown += `| ${(result.document.transfer / 1024).toFixed(1)}(${(result.document.resource / 1024).toFixed(1)}) `;
+    markdown += `| **${(result.total.transfer / 1024).toFixed(1)}(${(result.total.resource / 1024).toFixed(1)})** |\n`;
   }
 
   // 平均值
   if (results.length > 0) {
     const avgScriptT = results.reduce((sum, r) => sum + r.script.transfer, 0) / results.length;
+    const avgScriptR = results.reduce((sum, r) => sum + r.script.resource, 0) / results.length;
     const avgStyleT = results.reduce((sum, r) => sum + r.stylesheet.transfer, 0) / results.length;
+    const avgStyleR = results.reduce((sum, r) => sum + r.stylesheet.resource, 0) / results.length;
     const avgDocT = results.reduce((sum, r) => sum + r.document.transfer, 0) / results.length;
+    const avgDocR = results.reduce((sum, r) => sum + r.document.resource, 0) / results.length;
     const avgTotalT = results.reduce((sum, r) => sum + r.total.transfer, 0) / results.length;
+    const avgTotalR = results.reduce((sum, r) => sum + r.total.resource, 0) / results.length;
     const avgOtherT =
       results.reduce(
         (sum, r) => sum + (r.total.transfer - r.script.transfer - r.stylesheet.transfer - r.document.transfer),
         0,
       ) / results.length;
+    const avgOtherR =
+      results.reduce(
+        (sum, r) => sum + (r.total.resource - r.script.resource - r.stylesheet.resource - r.document.resource),
+        0,
+      ) / results.length;
     const avgExtT = results.reduce((sum, r) => sum + (r.total.transfer - r.document.transfer), 0) / results.length;
+    const avgExtR = results.reduce((sum, r) => sum + (r.total.resource - r.document.resource), 0) / results.length;
 
     markdown += `| **Average** `;
-    markdown += `| **${(avgScriptT / 1024).toFixed(1)}** `;
-    markdown += `| **${(avgStyleT / 1024).toFixed(1)}** `;
-    markdown += `| **${(avgOtherT / 1024).toFixed(1)}** `;
-    markdown += `| **${(avgExtT / 1024).toFixed(1)}** `;
-    markdown += `| **${(avgDocT / 1024).toFixed(1)}** `;
-    markdown += `| **${(avgTotalT / 1024).toFixed(1)}** |\n\n`;
+    markdown += `| **${(avgScriptT / 1024).toFixed(1)}(${(avgScriptR / 1024).toFixed(1)})** `;
+    markdown += `| **${(avgStyleT / 1024).toFixed(1)}(${(avgStyleR / 1024).toFixed(1)})** `;
+    markdown += `| **${(avgOtherT / 1024).toFixed(1)}(${(avgOtherR / 1024).toFixed(1)})** `;
+    markdown += `| **${(avgExtT / 1024).toFixed(1)}(${(avgExtR / 1024).toFixed(1)})** `;
+    markdown += `| **${(avgDocT / 1024).toFixed(1)}(${(avgDocR / 1024).toFixed(1)})** `;
+    markdown += `| **${(avgTotalT / 1024).toFixed(1)}(${(avgTotalR / 1024).toFixed(1)})** |\n\n`;
   }
 
   markdown += `*This report is automatically generated by Lighthouse CI*\n`;
@@ -207,6 +225,8 @@ async function main() {
       haloVersion: process.env.HALO_VERSION || null,
       javaVersion: process.env.JAVA_VERSION || null,
       themeVersion: process.env.THEME_VERSION || process.env.GITHUB_SHA || null,
+      lhciVersion: process.env.LHCI_VERSION || null,
+      generatedAt: new Date().toISOString(),
     };
 
     console.log("生成 Markdown 报告...");

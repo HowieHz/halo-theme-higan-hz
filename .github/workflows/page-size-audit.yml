@@ -252,7 +252,9 @@ jobs:
           echo "✓ 缓存已清除"
 
       - name: Install Lighthouse CI
-        run: pnpm add -g @lhci/cli@0.15.x
+        run: |
+          pnpm add -g @lhci/cli@0.15.x
+          echo "LHCI_VERSION=$(lhci --version)" >> $GITHUB_ENV
 
       - name: Run Lighthouse CI
         run: |
@@ -314,6 +316,7 @@ jobs:
           JAVA_VERSION: '21'
           THEME_VERSION: ${{ github.event.inputs.theme_version || github.sha }}
           GITHUB_SHA: ${{ github.sha }}
+          LHCI_VERSION: ${{ env.LHCI_VERSION }}
         run: |
           # 检查 Lighthouse 结果目录是否存在
           if [ ! -d "./.lighthouseci" ]; then

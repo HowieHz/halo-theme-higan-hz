@@ -707,7 +707,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⭐ 默认值
 
-`true`
+`false`
 
 :::
 ::: info 🧩 模板变量
