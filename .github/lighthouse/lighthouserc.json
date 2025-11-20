@@ -1,0 +1,28 @@
+{
+  "ci": {
+    "collect": {
+      "numberOfRuns": 3,
+      "settings": {
+        "preset": "desktop",
+        "throttling": {
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1
+        }
+      }
+    },
+    "assert": {
+      "preset": "lighthouse:no-pwa",
+      "assertions": {
+        "categories:performance": ["warn", {"minScore": 0.8}],
+        "resource-summary:script:size": ["error", {"maxNumericValue": 204800}],
+        "resource-summary:stylesheet:size": ["error", {"maxNumericValue": 102400}],
+        "resource-summary:font:size": ["error", {"maxNumericValue": 102400}],
+        "resource-summary:total:size": ["error", {"maxNumericValue": 512000}]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}

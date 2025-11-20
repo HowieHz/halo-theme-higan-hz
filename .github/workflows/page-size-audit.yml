@@ -1,0 +1,229 @@
+name: Page Size Audit
+
+on:
+  release:
+    types: [published]
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      halo_version:
+        description: 'Halo version to test with'
+        required: false
+        default: '2.21.10'
+
+jobs:
+  audit:
+    name: Lighthouse Performance Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build theme
+        run: pnpm build
+
+      - name: Create build directories
+        run: |
+          mkdir -p ~/builds/tmp ~/builds/target
+
+      - name: Package theme
+        run: |
+          cp -r . ~/builds/tmp
+          cd ~/builds/tmp
+          cat ${{ github.workspace }}/.github/include-list.txt | xargs -I {} cp -r --parents {} ~/builds/tmp-included
+          rm -rf ~/builds/tmp
+          mv ~/builds/tmp-included ~/builds/tmp
+          cd ~/builds/tmp
+          zip -9 -r howiehz-higan-cn.zip .
+          mv howiehz-higan-cn.zip ~/builds/target/
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Download Halo
+        run: |
+          HALO_VERSION="${{ github.event.inputs.halo_version || '2.21.10' }}"
+          wget https://github.com/halo-dev/halo/releases/download/v${HALO_VERSION}/halo-${HALO_VERSION}.jar -O ~/halo.jar
+
+      - name: Create Halo configuration
+        run: |
+          mkdir -p ~/.halo2
+          cat > ~/.halo2/application.yaml << 'EOF'
+          server:
+            port: 8090
+          spring:
+            r2dbc:
+              url: r2dbc:h2:file:///${user.home}/.halo2/db/halo?MODE=MySQL&DB_CLOSE_ON_EXIT=FALSE
+              username: admin
+              password: admin
+            sql:
+              init:
+                mode: always
+                platform: h2
+            thymeleaf:
+              cache: false
+          halo:
+            security:
+              initializer:
+                superadminusername: admin
+                superadminpassword: admin
+            caches:
+              page:
+                disabled: true
+            work-dir: ${user.home}/.halo2
+            external-url: http://localhost:8090
+          EOF
+
+      - name: Start Halo in background
+        run: |
+          nohup java -jar ~/halo.jar \
+            --spring.config.additional-location=optional:file:${HOME}/.halo2/ \
+            -Dfile.encoding=UTF-8 > ~/halo.log 2>&1 &
+          echo $! > ~/halo.pid
+          echo "Halo PID: $(cat ~/halo.pid)"
+
+      - name: Wait for Halo to be ready
+        run: |
+          echo "Waiting for Halo to start..."
+          max_attempts=60
+          attempt=0
+          while [ $attempt -lt $max_attempts ]; do
+            if curl -f http://localhost:8090/actuator/health/readiness > /dev/null 2>&1; then
+              echo "✓ Halo is ready!"
+              break
+            fi
+            attempt=$((attempt + 1))
+            echo "Waiting... ($attempt/$max_attempts)"
+            sleep 5
+          done
+          if [ $attempt -eq $max_attempts ]; then
+            echo "❌ Halo failed to start"
+            cat ~/halo.log
+            exit 1
+          fi
+
+      - name: Install and activate theme
+        env:
+          HALO_URL: http://localhost:8090
+          THEME_ZIP_PATH: ~/builds/target/howiehz-higan-cn.zip
+        run: |
+          # 简化版本：直接使用 curl 而不是 Node.js 脚本
+          echo "安装主题..."
+          
+          # 等待初始化完成
+          sleep 10
+          
+          # 上传主题
+          response=$(curl -X POST \
+            http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/install \
+            -F "file=@${THEME_ZIP_PATH}" \
+            -u admin:admin \
+            -w "\n%{http_code}" -s)
+          
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | sed '$d')
+          
+          if [ "$http_code" != "200" ] && [ "$http_code" != "201" ]; then
+            echo "❌ 主题安装失败 (HTTP $http_code)"
+            echo "$body"
+            exit 1
+          fi
+          
+          echo "✓ 主题已安装"
+          
+          # 激活主题
+          sleep 3
+          curl -X PUT \
+            http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/activation \
+            -u admin:admin
+          
+          echo "✓ 主题已激活"
+          
+          # 清除缓存
+          sleep 2
+          curl -X PUT \
+            http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/invalidate-cache \
+            -u admin:admin
+          
+          echo "✓ 缓存已清除"
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.13.x
+
+      - name: Run Lighthouse CI
+        run: |
+          mkdir -p ./reports
+          
+          # 运行 Lighthouse 测试
+          lhci autorun \
+            --collect.url=http://localhost:8090/ \
+            --collect.url=http://localhost:8090/archives \
+            --collect.url=http://localhost:8090/tags \
+            --collect.numberOfRuns=3 \
+            --collect.settings.preset=desktop \
+            --upload.target=temporary-public-storage || true
+
+      - name: Generate reports
+        env:
+          RELEASE_VERSION: ${{ github.event.release.tag_name || github.sha }}
+          OUTPUT_DIR: ./reports
+          LIGHTHOUSE_RESULTS_DIR: ./.lighthouseci
+        run: node scripts/generate-report.js
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: page-size-reports
+          path: |
+            ./reports/*.md
+            ./reports/*.json
+            ./.lighthouseci/*
+
+      - name: Comment on Release (if release event)
+        if: github.event_name == 'release'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('./reports/page-size-report.md', 'utf8');
+            
+            await github.rest.repos.createReleaseComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: context.payload.release.id,
+              body: report
+            });
+
+      - name: Stop Halo
+        if: always()
+        run: |
+          if [ -f ~/halo.pid ]; then
+            kill $(cat ~/halo.pid) || true
+          fi
+
+      - name: Upload Halo logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: halo-logs
+          path: ~/halo.log
