@@ -104,14 +104,11 @@ jobs:
                 mode: always
                 platform: h2
             thymeleaf:
-              cache: false
+              cache: true
           halo:
             security:
               basic-auth:
                 disabled: false
-            caches:
-              page:
-                disabled: true
             work-dir: ${user.home}/.halo2
             external-url: http://localhost:8090
           EOF
@@ -175,7 +172,7 @@ jobs:
 
       - name: Install and activate theme
         run: |
-          # 简化版本：直接使用 curl 而不是 Node.js 脚本
+          # 直接使用 curl 上传主题
           echo "安装主题..."
           
           # 检查 Halo 日志确认初始化完成
@@ -255,7 +252,7 @@ jobs:
           echo "✓ 缓存已清除"
 
       - name: Install Lighthouse CI
-        run: npm install -g @lhci/cli@0.13.x
+        run: pnpm add -g @lhci/cli@0.13.x
 
       - name: Run Lighthouse CI
         run: |
@@ -345,14 +342,6 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                body: report
-              });
-            } else if (context.eventName === 'release') {
-              // 在 Release 上评论
-              await github.rest.repos.createReleaseComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                release_id: context.payload.release.id,
                 body: report
               });
             }
