@@ -145,17 +145,33 @@ jobs:
           
           # 使用 Basic Auth (Halo 2.20+ 需要启用)
           echo "上传主题文件..."
-          response=$(curl -X POST \
+          
+          # 添加详细调试信息
+          echo "调试：测试 API 连接..."
+          curl -v http://localhost:8090/actuator/health 2>&1 | head -20
+          
+          echo "调试：尝试上传主题..."
+          response=$(curl -v -X POST \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/install \
             -u admin:admin \
             -F "file=@${THEME_ZIP_PATH}" \
-            -w "\n%{http_code}\n%{redirect_url}" -s)
+            -w "\nHTTP_CODE:%{http_code}\nREDIRECT:%{redirect_url}" \
+            2>&1)
           
-          http_code=$(echo "$response" | tail -n2 | head -n1)
-          redirect_url=$(echo "$response" | tail -n1)
-          body=$(echo "$response" | sed '$d' | sed '$d')
+          echo "完整响应:"
+          echo "$response"
+          echo "---"
           
-          if [ "$http_code" != "200" ] && [ "$http_code" != "201" ]; then
+          http_code=$(echo "$response" | grep "HTTP_CODE:" | cut -d: -f2)
+          redirect_url=$(echo "$response" | grep "REDIRECT:" | cut -d: -f2)
+          body=$(echo "$response" | grep -v "^HTTP_CODE:" | grep -v "^REDIRECT:" | grep -v "^\*" | grep -v "^>" | grep -v "^<")
+          
+          echo "解析结果:"
+          echo "HTTP 状态码: $http_code"
+          echo "重定向 URL: $redirect_url"
+          echo "响应体: $body"
+          
+          if [ -z "$http_code" ] || ([ "$http_code" != "200" ] && [ "$http_code" != "201" ]); then
             echo "❌ 主题安装失败 (HTTP $http_code)"
             echo "响应内容: $body"
             if [ "$http_code" = "302" ] && [ -n "$redirect_url" ]; then
