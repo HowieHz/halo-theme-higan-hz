@@ -13,12 +13,59 @@ const OUTPUT_DIR = process.env.OUTPUT_DIR || "./reports";
  * 解析 Lighthouse 结果
  */
 async function parseLighthouseResults() {
+  const fs = (await import("fs")).promises;
+  const path = (await import("path")).default;
+
+  // 尝试先读取 manifest.json
+  let entries = null;
   const manifestPath = resolve(LIGHTHOUSE_RESULTS_DIR, "manifest.json");
-  const manifest = JSON.parse(await readFile(manifestPath, "utf-8"));
+  
+  try {
+    const manifest = JSON.parse(await readFile(manifestPath, "utf-8"));
+    entries = manifest;
+  } catch (e) {
+    console.log("manifest.json 不存在，尝试从 links.json 读取...");
+    
+    // 如果 manifest.json 不存在，尝试从 links.json 读取
+    const linksPath = resolve(LIGHTHOUSE_RESULTS_DIR, "links.json");
+    try {
+      const links = JSON.parse(await readFile(linksPath, "utf-8"));
+      
+      // 从 links.json 提取信息并查找对应的 JSON 文件
+      entries = [];
+      
+      // 列出目录中的所有 JSON 文件
+      const files = (await fs.readdir(LIGHTHOUSE_RESULTS_DIR)).filter(f => f.endsWith('.json') && f.startsWith('lhr-'));
+      
+      // 按 URL 分组结果
+      const urlGroups = {};
+      
+      for (const file of files) {
+        const filePath = resolve(LIGHTHOUSE_RESULTS_DIR, file);
+        const report = JSON.parse(await readFile(filePath, "utf-8"));
+        const url = report.mainDocumentUrl || report.finalUrl;
+        
+        if (!urlGroups[url]) {
+          urlGroups[url] = [];
+        }
+        urlGroups[url].push(filePath);
+      }
+      
+      // 为每个 URL 创建一个条目（使用最后一个运行结果）
+      for (const [url, files] of Object.entries(urlGroups)) {
+        entries.push({
+          url,
+          jsonPath: path.basename(files[files.length - 1])
+        });
+      }
+    } catch (linkError) {
+      throw new Error("无法读取 manifest.json 或 links.json");
+    }
+  }
 
   const results = [];
 
-  for (const entry of manifest) {
+  for (const entry of entries) {
     const reportPath = resolve(LIGHTHOUSE_RESULTS_DIR, entry.jsonPath);
     const report = JSON.parse(await readFile(reportPath, "utf-8"));
 

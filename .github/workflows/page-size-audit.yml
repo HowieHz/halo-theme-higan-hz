@@ -270,14 +270,21 @@ jobs:
           OUTPUT_DIR: ./reports
           LIGHTHOUSE_RESULTS_DIR: ./.lighthouseci
         run: |
-          # 检查 manifest.json 是否存在
-          if [ ! -f "./.lighthouseci/manifest.json" ]; then
-            echo "⚠️  警告：manifest.json 不存在，无法生成报告"
-            echo "Lighthouse CI 可能没有成功运行"
-            ls -la ./.lighthouseci/ || echo ".lighthouseci 目录不存在"
+          # 检查 Lighthouse 结果目录是否存在
+          if [ ! -d "./.lighthouseci" ]; then
+            echo "⚠️  警告：.lighthouseci 目录不存在"
             exit 1
           fi
           
+          # 检查是否有 JSON 文件
+          json_count=$(find ./.lighthouseci -name "lhr-*.json" | wc -l)
+          if [ "$json_count" -eq 0 ]; then
+            echo "⚠️  警告：没有找到 Lighthouse 结果文件"
+            ls -la ./.lighthouseci/
+            exit 1
+          fi
+          
+          echo "找到 $json_count 个 Lighthouse 结果文件"
           node scripts/generate-report.js
 
       - name: Upload reports
