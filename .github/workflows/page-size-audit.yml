@@ -252,7 +252,7 @@ jobs:
           echo "✓ 缓存已清除"
 
       - name: Install Lighthouse CI
-        run: pnpm add -g @lhci/cli@0.13.x
+        run: pnpm add -g @lhci/cli@0.15.x
 
       - name: Run Lighthouse CI
         run: |
