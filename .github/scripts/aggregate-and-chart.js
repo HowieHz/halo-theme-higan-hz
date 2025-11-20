@@ -3,7 +3,7 @@
  * 从 all-reports 目录读取各个版本的 JSON 报告，生成 Mermaid 图表
  */
 
-import { readFile, readdir, writeFile } from "fs/promises";
+import { readdir, readFile, writeFile } from "fs/promises";
 import { resolve } from "path";
 
 const REPORTS_DIR = process.env.REPORTS_DIR || "./all-reports";

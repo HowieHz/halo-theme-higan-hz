@@ -8,6 +8,8 @@ import { resolve } from "path";
 
 const LIGHTHOUSE_RESULTS_DIR = process.env.LIGHTHOUSE_RESULTS_DIR || ".lighthouseci";
 const OUTPUT_DIR = process.env.OUTPUT_DIR || "./reports";
+const OUTPUT_FILENAME = process.env.OUTPUT_FILENAME || "page-size-report";
+const JSON_ONLY = process.env.JSON_ONLY === "true";
 
 /**
  * 解析 Lighthouse 结果
@@ -245,20 +247,25 @@ async function main() {
       generatedAt: new Date().toISOString(),
     };
 
-    console.log("生成 Markdown 报告...");
-    const markdownReport = generateMarkdownReport(results, metadata);
-    await writeFile(resolve(OUTPUT_DIR, "page-size-report.md"), markdownReport);
-
+    // 生成 JSON 报告
     console.log("生成 JSON 报告...");
     const jsonReport = generateJsonReport(results, metadata);
-    await writeFile(resolve(OUTPUT_DIR, "page-size-report.json"), jsonReport);
+    await writeFile(resolve(OUTPUT_DIR, `${OUTPUT_FILENAME}.json`), jsonReport);
 
     console.log("\n✓ 报告生成完成！");
-    console.log(`  - Markdown: ${resolve(OUTPUT_DIR, "page-size-report.md")}`);
-    console.log(`  - JSON: ${resolve(OUTPUT_DIR, "page-size-report.json")}`);
+    console.log(`  - JSON: ${resolve(OUTPUT_DIR, `${OUTPUT_FILENAME}.json`)}`);
 
-    // 输出到控制台
-    console.log("\n" + markdownReport);
+    // 如果不是仅输出 JSON，也生成 Markdown 报告
+    if (!JSON_ONLY) {
+      console.log("生成 Markdown 报告...");
+      const markdownReport = generateMarkdownReport(results, metadata);
+      await writeFile(resolve(OUTPUT_DIR, `${OUTPUT_FILENAME}.md`), markdownReport);
+
+      console.log(`  - Markdown: ${resolve(OUTPUT_DIR, `${OUTPUT_FILENAME}.md`)}`);
+
+      // 输出到控制台
+      console.log("\n" + markdownReport);
+    }
   } catch (error) {
     console.error("❌ 生成报告失败：", error.message);
     process.exit(1);
