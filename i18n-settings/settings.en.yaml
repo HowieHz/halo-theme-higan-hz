@@ -403,6 +403,10 @@ spec:
           label: Random articles item in menu
           value: false
         - $formkit: checkbox
+          name: is_show_user_account_menu
+          label: User account menu item
+          value: false
+        - $formkit: checkbox
           name: is_show_header_menu
           label: Header menu
           value: true

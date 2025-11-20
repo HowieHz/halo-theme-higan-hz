@@ -1796,6 +1796,45 @@ const QuickJumpConfig = (props) => {
 
 :::
 
+### 菜单中用户账号项
+
+::: info 🎯 用途
+
+控制是否在菜单显示用户账号项。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 菜单中用户账号项
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=菜单中用户账户项" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.is_show_user_account_menu`
+
+:::
+::: info ℹ️ 补充信息
+
+- 未登录时，菜单显示 `登录`，点击后跳转 `/login` 页面。
+- 已登录时，菜单显示用户名，点击后跳转 `/uc` 页面。
+
+:::
+
 ### 显示页眉菜单
 
 ::: info 🎯 用途
