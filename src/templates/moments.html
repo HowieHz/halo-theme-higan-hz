@@ -17,7 +17,7 @@
       title="Moments - All"
       th:href="@{'/moments/rss.xml'}"
     />
-    <script src="/src/pages/moment.ts" type="module"></script>
+    <script src="/src/scripts/pages/moment.ts" type="module"></script>
   </head>
   <body>
     <th:block th:insert="~{fragments/moments :: moment-list-summary(moments=${moments}, isIndexPage=false)}"></th:block>

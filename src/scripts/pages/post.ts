@@ -1,6 +1,6 @@
-import "./generic";
+import "../generic";
 import "../utils/create-toc";
-import "../styles/pages/post.css";
+import "../../styles/pages/post.css";
 
 // 检测是否为移动设备
 window.isMobile = (): boolean => {
