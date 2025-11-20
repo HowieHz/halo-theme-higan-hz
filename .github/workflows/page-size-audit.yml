@@ -238,6 +238,7 @@ jobs:
           mkdir -p ./reports
           
           # 运行 Lighthouse 测试
+          # 注意：不测试 404 页面，因为它返回 404 状态码会导致 Lighthouse 失败
           echo "开始运行 Lighthouse CI 测试..."
           lhci autorun \
             --collect.url=http://localhost:8090/ \
@@ -249,7 +250,6 @@ jobs:
             --collect.url=http://localhost:8090/categories/default \
             --collect.url=http://localhost:8090/authors/admin \
             --collect.url=http://localhost:8090/about \
-            --collect.url=http://localhost:8090/404 \
             --collect.numberOfRuns=3 \
             --collect.settings.preset=desktop \
             --upload.target=temporary-public-storage || {
