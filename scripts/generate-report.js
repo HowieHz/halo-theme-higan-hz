@@ -10,17 +10,6 @@ const LIGHTHOUSE_RESULTS_DIR = process.env.LIGHTHOUSE_RESULTS_DIR || '.lighthous
 const OUTPUT_DIR = process.env.OUTPUT_DIR || './reports';
 
 /**
- * 格式化字节大小
- */
-function formatBytes(bytes) {
-  if (bytes === 0) return '0 B';
-  const k = 1024;
-  const sizes = ['B', 'KB', 'MB', 'GB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return (bytes / Math.pow(k, i)).toFixed(2) + ' ' + sizes[i];
-}
-
-/**
  * 解析 Lighthouse 结果
  */
 async function parseLighthouseResults() {
@@ -68,17 +57,17 @@ async function parseLighthouseResults() {
  */
 function generateMarkdownReport(results, version) {
   let markdown = `# 页面体积评估报告 - v${version}\n\n`;
-  markdown += `生成时间: ${new Date().toISOString()}\n\n`;
+  markdown += `生成时间：${new Date().toISOString()}\n\n`;
   markdown += `## 性能预算\n\n`;
-  markdown += `- JS 体积: < 200 KB\n`;
-  markdown += `- CSS 体积: < 100 KB\n`;
-  markdown += `- 字体体积: < 100 KB\n`;
-  markdown += `- HTML 大小: < 50 KB\n`;
-  markdown += `- 总体积: < 500 KB\n\n`;
+  markdown += `- JS 体积：< 200 KB\n`;
+  markdown += `- CSS 体积：< 100 KB\n`;
+  markdown += `- 字体体积：< 100 KB\n`;
+  markdown += `- HTML 大小：< 50 KB\n`;
+  markdown += `- 总体积：< 500 KB\n\n`;
   
   for (const result of results) {
     const urlPath = new URL(result.url).pathname || '/';
-    markdown += `## 页面: ${urlPath}\n\n`;
+    markdown += `## 页面：${urlPath}\n\n`;
     
     // JS
     const scriptKB = (result.script / 1024).toFixed(2);
@@ -142,8 +131,8 @@ function generateMarkdownReport(results, version) {
     markdown += `## 平均值\n\n`;
     markdown += `- JS: ${(avgScript / 1024).toFixed(2)} KB\n`;
     markdown += `- CSS: ${(avgStylesheet / 1024).toFixed(2)} KB\n`;
-    markdown += `- 字体: ${(avgFont / 1024).toFixed(2)} KB\n`;
-    markdown += `- 总体积: ${(avgTotal / 1024).toFixed(2)} KB\n\n`;
+    markdown += `- 字体：${(avgFont / 1024).toFixed(2)} KB\n`;
+    markdown += `- 总体积：${(avgTotal / 1024).toFixed(2)} KB\n\n`;
   }
   
   markdown += `---\n\n`;
@@ -200,7 +189,7 @@ async function main() {
     console.log('\n' + markdownReport);
     
   } catch (error) {
-    console.error('❌ 生成报告失败:', error.message);
+    console.error('❌ 生成报告失败：', error.message);
     process.exit(1);
   }
 }

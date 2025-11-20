@@ -46,11 +46,10 @@ jobs:
       - name: Package theme
         run: |
           cp -r . ~/builds/tmp
+          mkdir -p ~/builds/tmp-included
           cd ~/builds/tmp
-          cat ${{ github.workspace }}/.github/include-list.txt | xargs -I {} cp -r --parents {} ~/builds/tmp-included
-          rm -rf ~/builds/tmp
-          mv ~/builds/tmp-included ~/builds/tmp
-          cd ~/builds/tmp
+          cat ${{ github.workspace }}/.github/include-list.txt | xargs -I {} cp -r --parents {} ~/builds/tmp-included/
+          cd ~/builds/tmp-included
           zip -9 -r howiehz-higan-cn.zip .
           mv howiehz-higan-cn.zip ~/builds/target/
 
@@ -194,10 +193,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: page-size-reports
-          path: |
-            ./reports/*.md
-            ./reports/*.json
-            ./.lighthouseci/*
+          path: ./reports/
 
       - name: Comment on Release (if release event)
         if: github.event_name == 'release'
@@ -220,6 +216,13 @@ jobs:
           if [ -f ~/halo.pid ]; then
             kill $(cat ~/halo.pid) || true
           fi
+
+      - name: Upload Lighthouse results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-results
+          path: ./.lighthouseci/
 
       - name: Upload Halo logs
         if: failure()

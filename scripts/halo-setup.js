@@ -8,7 +8,6 @@ import { resolve } from 'path';
 
 const HALO_URL = process.env.HALO_URL || 'http://localhost:8090';
 const THEME_ZIP_PATH = process.env.THEME_ZIP_PATH || '~/builds/target/howiehz-higan-cn.zip';
-const THEME_NAME = 'howiehz-higan';
 const MAX_RETRIES = 30;
 const RETRY_DELAY = 2000;
 
@@ -25,7 +24,7 @@ async function waitForHalo() {
         console.log('✓ Halo 服务已就绪');
         return true;
       }
-    } catch (error) {
+    } catch {
       // 服务还未就绪，继续等待
     }
     
@@ -80,11 +79,11 @@ async function installTheme(authToken) {
   });
   
   if (!response.ok) {
-    throw new Error(`主题安装失败: ${response.status}`);
+    throw new Error(`主题安装失败：${response.status}`);
   }
   
   const result = await response.json();
-  console.log('✓ 主题已安装:', result.metadata.name);
+  console.log('✓ 主题已安装：', result.metadata.name);
   return result.metadata.name;
 }
 
@@ -105,7 +104,7 @@ async function reloadTheme(authToken, themeName) {
   );
   
   if (!response.ok) {
-    throw new Error(`主题重载失败: ${response.status}`);
+    throw new Error(`主题重载失败：${response.status}`);
   }
   
   console.log('✓ 主题已重载');
@@ -128,7 +127,7 @@ async function activateTheme(authToken, themeName) {
   );
   
   if (!response.ok) {
-    throw new Error(`主题激活失败: ${response.status}`);
+    throw new Error(`主题激活失败：${response.status}`);
   }
   
   console.log('✓ 主题已激活');
@@ -151,7 +150,7 @@ async function invalidateCache(authToken, themeName) {
   );
   
   if (!response.ok) {
-    throw new Error(`清除缓存失败: ${response.status}`);
+    throw new Error(`清除缓存失败：${response.status}`);
   }
   
   console.log('✓ 缓存已清除');
@@ -181,11 +180,11 @@ async function main() {
     await invalidateCache(authToken, themeName);
     
     console.log('\n✓ 主题安装和激活完成！');
-    console.log(`主题已激活: ${themeName}`);
-    console.log(`访问地址: ${HALO_URL}`);
+    console.log(`主题已激活：${themeName}`);
+    console.log(`访问地址：${HALO_URL}`);
     
   } catch (error) {
-    console.error('❌ 错误:', error.message);
+    console.error('❌ 错误：', error.message);
     process.exit(1);
   }
 }
