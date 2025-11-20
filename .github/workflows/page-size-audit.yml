@@ -312,7 +312,7 @@ jobs:
           fi
           
           echo "找到 $json_count 个 Lighthouse 结果文件"
-          node scripts/generate-report.js
+          node .github/scripts/generate-report.js
 
       - name: Upload reports
         uses: actions/upload-artifact@v4
