@@ -403,9 +403,7 @@ spec:
           label: 额外菜单项
           help: "在菜单中添加额外的菜单项"
           value:
-            - type: "post"
-            - type: "upvote"
-            - type: "comment"
+            - type: "search"
           children:
             - $formkit: select
               name: type
