@@ -86,7 +86,7 @@ spec:
         - $formkit: checkbox
           name: is_instant_page_enable
           label: instant.page 支持
-          value: true
+          value: false
           help: 如启用此项，主题将自动加载 instant.page 脚本，以提升页面加载速度。
         - $formkit: checkbox
           name: is_mermaid_enable

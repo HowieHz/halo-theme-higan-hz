@@ -1,0 +1,264 @@
+name: Generate Size Chart
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_version:
+        description: '起始版本 (例如: v1.45.0)'
+        required: true
+      end_version:
+        description: '结束版本 (例如: v1.47.0，留空表示最新版本)'
+        required: false
+        default: ''
+      chart_type:
+        description: '图表类型'
+        required: true
+        default: 'total'
+        type: choice
+        options:
+          - total
+          - script-stylesheet
+          - all-resources
+      create_pr:
+        description: '是否创建 PR 提交数据文件'
+        required: true
+        default: false
+        type: boolean
+
+jobs:
+  # 第一步：获取要测试的版本列表
+  get-versions:
+    name: Get Version List
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.get-versions.outputs.versions }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get version list
+        id: get-versions
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const startVersion = '${{ github.event.inputs.start_version }}';
+            const endVersion = '${{ github.event.inputs.end_version }}' || '';
+            
+            // 获取所有 releases
+            const { data: releases } = await github.rest.repos.listReleases({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100
+            });
+            
+            // 找到版本范围
+            const startIndex = releases.findIndex(r => r.tag_name === startVersion);
+            const endIndex = endVersion ? releases.findIndex(r => r.tag_name === endVersion) : 0;
+            
+            if (startIndex === -1) {
+              core.setFailed(`找不到起始版本: ${startVersion}`);
+              return;
+            }
+            if (endVersion && endIndex === -1) {
+              core.setFailed(`找不到结束版本: ${endVersion}`);
+              return;
+            }
+            
+            // 提取版本列表（从旧到新）
+            const versionList = releases
+              .slice(endIndex, startIndex + 1)
+              .reverse()
+              .map(r => r.tag_name);
+            
+            console.log(`找到 ${versionList.length} 个版本:`, versionList);
+            core.setOutput('versions', JSON.stringify(versionList));
+
+  # 第二步：并行运行每个版本的测试
+  test-versions:
+    name: Test ${{ matrix.version }}
+    needs: get-versions
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ${{ fromJson(needs.get-versions.outputs.versions) }}
+      fail-fast: false  # 即使某个版本失败，继续测试其他版本
+    
+    steps:
+      - name: Checkout theme at ${{ matrix.version }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.version }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build theme
+        run: pnpm build
+
+      - name: Setup Halo
+        run: |
+          docker run -d \
+            --name halo-${{ matrix.version }} \
+            -p 8090:8090 \
+            -v ${{ github.workspace }}/dist:/root/.halo2/themes/theme-higan-test \
+            halohub/halo:2.20
+
+      - name: Wait for Halo to start
+        run: |
+          echo "等待 Halo 启动..."
+          for i in {1..30}; do
+            if curl -f http://localhost:8090/actuator/health > /dev/null 2>&1; then
+              echo "Halo 已启动"
+              exit 0
+            fi
+            echo "等待中... ($i/30)"
+            sleep 10
+          done
+          echo "Halo 启动超时"
+          exit 1
+
+      - name: Setup Lighthouse CI
+        run: |
+          npm install -g @lhci/cli@0.15.x
+
+      - name: Run Lighthouse CI
+        run: |
+          mkdir -p .lighthouseci
+          lhci autorun \
+            --config=.github/lighthouse/lighthouserc.json \
+            --upload.target=filesystem \
+            --upload.outputDir=.lighthouseci
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+      - name: Generate report (JSON only)
+        run: |
+          mkdir -p .github/page_size_audit_results
+          node .github/scripts/generate-report.js
+        env:
+          LIGHTHOUSE_RESULTS_DIR: .lighthouseci
+          OUTPUT_DIR: .github/page_size_audit_results
+          OUTPUT_FILENAME: ${{ matrix.version }}
+          JSON_ONLY: "true"
+          THEME_VERSION: ${{ matrix.version }}
+
+      - name: Upload report for ${{ matrix.version }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ matrix.version }}
+          path: .github/page_size_audit_results/${{ matrix.version }}.json
+          retention-days: 1
+
+      - name: Cleanup
+        if: always()
+        run: |
+          docker stop halo-${{ matrix.version }} || true
+          docker rm halo-${{ matrix.version }} || true
+
+  # 第三步：汇总所有版本的数据并生成图表
+  generate-chart:
+    name: Generate Chart
+    needs: test-versions
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Download all reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: report-*
+          path: ./all-reports
+
+      - name: Copy reports to page_size_audit_results
+        if: github.event.inputs.create_pr == 'true'
+        run: |
+          mkdir -p .github/page_size_audit_results
+          # 将所有下载的报告复制到目标目录
+          for dir in ./all-reports/report-*; do
+            if [ -d "$dir" ]; then
+              version=$(basename "$dir" | sed 's/report-//')
+              cp "$dir/${version}.json" ".github/page_size_audit_results/${version}.json"
+              echo "✓ 复制 ${version}.json"
+            fi
+          done
+
+      - name: Generate chart from reports
+        run: |
+          mkdir -p charts
+          node .github/scripts/aggregate-and-chart.js
+        env:
+          REPORTS_DIR: all-reports
+          OUTPUT_DIR: charts
+          CHART_TYPE: ${{ github.event.inputs.chart_type }}
+          START_VERSION: ${{ github.event.inputs.start_version }}
+          END_VERSION: ${{ github.event.inputs.end_version }}
+
+      - name: Upload chart
+        uses: actions/upload-artifact@v4
+        with:
+          name: size-chart
+          path: ./charts/
+
+      - name: Create PR with data files
+        if: github.event.inputs.create_pr == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update page size audit results for ${{ github.event.inputs.start_version }} to ${{ github.event.inputs.end_version || 'latest' }}"
+          title: 'chore: Update Page Size Audit Results'
+          body: |
+            ## Page Size Audit Results Update
+            
+            This PR adds/updates page size audit results for versions:
+            - **Start Version:** ${{ github.event.inputs.start_version }}
+            - **End Version:** ${{ github.event.inputs.end_version || 'latest' }}
+            
+            The following JSON data files have been updated in `.github/page_size_audit_results/`:
+            - Multiple version result files
+            
+            These files will be used for generating performance trend charts.
+            
+            ---
+            *Auto-generated by Page Size Chart workflow*
+          branch: perf/page-size-audit-${{ github.run_number }}
+          delete-branch: true
+          labels: |
+            performance
+            automated
+
+      - name: Create issue with chart
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const chartPath = './charts/size-chart.md';
+            
+            if (fs.existsSync(chartPath)) {
+              const chart = fs.readFileSync(chartPath, 'utf8');
+              const endVersion = '${{ github.event.inputs.end_version }}' || '最新版本';
+              
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `页面体积趋势图 (${{ github.event.inputs.start_version }} → ${endVersion})`,
+                body: chart,
+                labels: ['documentation', 'performance']
+              });
+            }

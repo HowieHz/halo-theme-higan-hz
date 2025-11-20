@@ -86,7 +86,7 @@ spec:
         - $formkit: checkbox
           name: is_instant_page_enable
           label: instant.page support
-          value: true
+          value: false
           help: "If enabled, the theme will automatically load the instant.page script to improve the page loading speed."
         - $formkit: checkbox
           name: is_mermaid_enable
