@@ -86,7 +86,14 @@ jobs:
       - name: Download Halo
         run: |
           HALO_VERSION="${{ github.event.inputs.halo_version || '2.21.10' }}"
-          wget https://github.com/halo-dev/halo/releases/download/v${HALO_VERSION}/halo-${HALO_VERSION}.jar -O ~/halo.jar
+          # 尝试从 GitHub 下载
+          if wget https://github.com/halo-dev/halo/releases/download/v${HALO_VERSION}/halo-${HALO_VERSION}.jar -O ~/halo.jar 2>/dev/null; then
+            echo "✓ 从 GitHub 下载 Halo 成功"
+          else
+            echo "⚠️  GitHub 下载失败，尝试从备用地址下载..."
+            wget https://dl.halo.run/release/halo-${HALO_VERSION}.jar -O ~/halo.jar
+            echo "✓ 从备用地址下载 Halo 成功"
+          fi
 
       - name: Create Halo configuration
         run: |
