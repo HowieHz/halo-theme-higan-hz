@@ -398,10 +398,25 @@ spec:
           if: "$is_show_header_icon===true"
           label: 灰度头像
           value: false
-        - $formkit: checkbox
-          name: is_show_random_button_in_menu
-          label: 菜单中随机文章项
-          value: false
+        - $formkit: repeater
+          name: extra_menu_items
+          label: 额外菜单项
+          help: "在菜单中添加额外的菜单项"
+          value:
+            - type: "search"
+          children:
+            - $formkit: select
+              name: type
+              label: 菜单项类型
+              value: "search"
+              options:
+                - label: "随机文章"
+                  value: "random"
+                - label: "用户账号"
+                  value: "user"
+                - label: "搜索（需“搜索组件插件”支持）"
+                  value: "search"
+              validation: "required"
         - $formkit: checkbox
           name: is_show_header_menu
           label: 显示页眉菜单

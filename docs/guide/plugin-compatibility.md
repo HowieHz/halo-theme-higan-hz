@@ -43,7 +43,7 @@ outline: deep
 - Waline 评论系统支持：[plugin-waline](https://github.com/wenjing-xin/plugin-waline)（[应用市场页面](https://www.halo.run/store/apps/app-lggDh)）
 - Artalk 评论系统支持：[plugin-artalk](https://github.com/wenjing-xin/plugin-artalk)（[应用市场页面](https://www.halo.run/store/apps/app-mBoYu)）
 
-## 搜索框组件
+## 搜索组件
 
 插件 [plugin-search-widget](https://github.com/halo-sigs/plugin-search-widget)（[应用市场页面](https://www.halo.run/store/apps/app-DlacW)）
 

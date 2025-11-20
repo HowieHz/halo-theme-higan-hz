@@ -7,23 +7,49 @@
     </li>
 
     <th:block th:insert="~{fragments/common :: base-menu}"></th:block>
-    <li th:if="${theme.config?.styles?.is_show_random_button_in_menu}">
-      <a
-        href="/"
-        th:with="allPostList=${postFinder.listAll()},
-                  randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random()*#lists.size(allPostList))},
-                  postPermalink=${allPostList[randomIndex].status.permalink}"
-        th:href="${postPermalink}"
-        th:aria-label="#{fragment.menu.random-button.aria-label}"
-        th:text="#{fragment.menu.random}"
-      ></a>
-    </li>
-    <li th:if="${pluginFinder.available('PluginSearchWidget')}">
-      <a
-        href="javascript:SearchWidget.open();"
-        th:aria-label="#{fragment.menu.search-button.aria-label}"
-        th:text="#{fragment.menu.search}"
-      ></a>
+    <li
+      th:each="item : ${theme.config?.styles?.extra_menu_items}"
+      th:if="${item?.type == 'random'} or 
+      ${item?.type == 'user'} or 
+      (${item?.type == 'search'} and ${pluginFinder.available('PluginSearchWidget')})"
+    >
+      <!--/* random post button */-->
+      <th:block th:if="${item?.type == 'random'}">
+        <a
+          href="/"
+          th:with="allPostList=${postFinder.listAll()},
+                    randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random()*#lists.size(allPostList))},
+                    postPermalink=${allPostList[randomIndex].status.permalink}"
+          th:href="${postPermalink}"
+          th:aria-label="#{fragment.menu.random-button.aria-label}"
+          th:text="#{fragment.menu.random}"
+        ></a>
+      </th:block>
+      <!--/* login status button */-->
+      <th:block th:if="${item?.type == 'user'}">
+        <a
+          sec:authorize="isAnonymous()"
+          href="/login"
+          onclick="this.href = '/login?redirect_uri=' + encodeURIComponent(window.location.href)"
+          th:text="#{fragment.menu.login}"
+        >
+        </a>
+        <a
+          sec:authorize="isAuthenticated()"
+          th:with="loggedInUser = ${contributorFinder.getContributor(#authentication.name)}"
+          th:text="${loggedInUser.displayName}"
+          href="/uc"
+        >
+        </a>
+      </th:block>
+      <!--/* search widget button */-->
+      <th:block th:if="${item?.type == 'search'}">
+        <a
+          href="javascript:SearchWidget.open();"
+          th:aria-label="#{fragment.menu.search-button.aria-label}"
+          th:text="#{fragment.menu.search}"
+        ></a>
+      </th:block>
     </li>
   </ul>
 </th:block>
