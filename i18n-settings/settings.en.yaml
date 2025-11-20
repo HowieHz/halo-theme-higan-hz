@@ -398,14 +398,25 @@ spec:
           if: "$is_show_header_icon===true"
           label: Avatar grayscale
           value: false
-        - $formkit: checkbox
-          name: is_show_random_button_in_menu
-          label: Random articles item in menu
-          value: false
-        - $formkit: checkbox
-          name: is_show_user_account_menu
-          label: User account menu item
-          value: false
+        - $formkit: repeater
+          name: extra_menu_items
+          label: Extra menu items
+          help: "Add extra items to the menu"
+          value:
+            - type: "search"
+          children:
+            - $formkit: select
+              name: type
+              label: Menu item type
+              value: "search"
+              options:
+                - label: "Random post"
+                  value: "random"
+                - label: "User account"
+                  value: "user"
+                - label: "Search (requires 'search-widget' plugin)"
+                  value: "search"
+              validation: "required"
         - $formkit: checkbox
           name: is_show_header_menu
           label: Header menu

@@ -1787,7 +1787,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⭐ 默认值
 
-包含一个预设：搜索（需[API 扩展包插件](/guide/plugin-compatibility#api-扩展包)）。
+包含一个预设：搜索（需[搜索组件插件](/guide/plugin-compatibility#搜索组件)）。
 
 :::
 
@@ -1795,7 +1795,7 @@ const QuickJumpConfig = (props) => {
 >
 > ::: tip 📂 配置项名
 >
-> 统计项
+> 菜单项类型
 >
 > :::
 > ::: info 🏷️ 类型
@@ -1805,16 +1805,13 @@ const QuickJumpConfig = (props) => {
 > :::
 > ::: info ⭐ 默认值
 >
-> 总阅读量（内部值 `visit`）
+> 搜索（需[搜索组件插件](/guide/plugin-compatibility#搜索组件)）（内部值 `search`）
 >
 > :::
 > ::: info 💡 其余选项
 >
-> - 总文章数（内部值 `post`）
-> - 总点赞数（内部值 `upvote`）
-> - 总评论数（内部值 `comment`）
-> - 总分类数（内部值 `category`）
-> - 总字数（内部值 `wordcount`）
+> - 随机文章（内部值 `random`）
+> - 用户账号（内部值 `user`）
 >
 > :::
 > ::: info 🔒 内部约束
@@ -1822,81 +1819,18 @@ const QuickJumpConfig = (props) => {
 > 必填项
 >
 > :::
+> ::: info ℹ️ 补充信息
+>
+> 对于`用户账号`类型：
+>
+> - 未登录时，菜单显示 `登录`，点击后跳转 `/login` 页面。
+> - 已登录时，菜单显示用户名，点击后跳转 `/uc` 页面。
+>
+> :::
+
 ::: info 🧩 模板变量
 
 `theme.config?.styles?.extra_menu_items`
-
-:::
-
-### 菜单中随机文章项
-
-::: info 🎯 用途
-
-控制是否在菜单显示随机文章项。
-
-:::
-::: info 📂 配置项位置
-
-总体样式 -> 菜单中随机文章项
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=菜单中随机文章项" />
-
-:::
-::: info 🏷️ 类型
-
-布尔值
-
-:::
-::: info ⭐ 默认值
-
-`false`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.styles?.is_show_random_button_in_menu`
-
-:::
-
-### 菜单中用户账号项
-
-::: info 🎯 用途
-
-控制是否在菜单显示用户账号项。
-
-:::
-::: info 📂 配置项位置
-
-总体样式 -> 菜单中用户账号项
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=菜单中用户账户项" />
-
-:::
-::: info 🏷️ 类型
-
-布尔值
-
-:::
-::: info ⭐ 默认值
-
-`false`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.styles?.is_show_user_account_menu`
-
-:::
-::: info ℹ️ 补充信息
-
-- 未登录时，菜单显示 `登录`，点击后跳转 `/login` 页面。
-- 已登录时，菜单显示用户名，点击后跳转 `/uc` 页面。
 
 :::
 
