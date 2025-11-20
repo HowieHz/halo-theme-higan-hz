@@ -18,10 +18,8 @@ async function parseLighthouseResults() {
 
   // 直接扫描目录中的所有 Lighthouse 结果文件
   console.log("直接扫描 Lighthouse 结果文件...");
-  
-  const files = (await fs.readdir(LIGHTHOUSE_RESULTS_DIR)).filter(
-    (f) => f.endsWith(".json") && f.startsWith("lhr-"),
-  );
+
+  const files = (await fs.readdir(LIGHTHOUSE_RESULTS_DIR)).filter((f) => f.endsWith(".json") && f.startsWith("lhr-"));
 
   if (files.length === 0) {
     throw new Error(`在 ${LIGHTHOUSE_RESULTS_DIR} 目录中没有找到 Lighthouse 结果文件`);
@@ -65,7 +63,7 @@ async function parseLighthouseResults() {
     // 按资源类型统计
     const resources = {};
     const resourceTypes = ["document", "font", "script", "stylesheet", "image", "fetch", "other"];
-    
+
     // 初始化所有资源类型
     for (const type of resourceTypes) {
       resources[type] = {
@@ -77,7 +75,7 @@ async function parseLighthouseResults() {
     // 统计资源
     for (const item of items) {
       const url = item.url || "";
-      
+
       // 忽略 data: 和 blob: URL
       if (url.startsWith("data:") || url.startsWith("blob:")) {
         continue;
@@ -102,7 +100,7 @@ async function parseLighthouseResults() {
       transferSize: 0,
       resourceSize: 0,
     };
-    
+
     for (const type of resourceTypes) {
       resources.total.transferSize += resources[type].transferSize;
       resources.total.resourceSize += resources[type].resourceSize;
@@ -174,9 +172,7 @@ function generateMarkdownReport(results, metadata = {}) {
 
   // 生成分隔线
   markdown += `|------|`;
-  for (let i = 0; i < typeOrder.length; i++) {
-    markdown += `------|`;
-  }
+  markdown += `------|`.repeat(typeOrder.length);
   markdown += `-------|\n`;
 
   // 生成数据行
@@ -200,10 +196,8 @@ function generateMarkdownReport(results, metadata = {}) {
     markdown += `| **Average** |`;
 
     for (const type of typeOrder) {
-      const avgTransfer =
-        results.reduce((sum, r) => sum + (r.resources[type]?.transferSize || 0), 0) / results.length;
-      const avgResource =
-        results.reduce((sum, r) => sum + (r.resources[type]?.resourceSize || 0), 0) / results.length;
+      const avgTransfer = results.reduce((sum, r) => sum + (r.resources[type]?.transferSize || 0), 0) / results.length;
+      const avgResource = results.reduce((sum, r) => sum + (r.resources[type]?.resourceSize || 0), 0) / results.length;
       markdown += ` **${(avgTransfer / 1024).toFixed(1)}(${(avgResource / 1024).toFixed(1)})** |`;
     }
 
