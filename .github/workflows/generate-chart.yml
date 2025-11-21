@@ -72,20 +72,27 @@ jobs:
             
             console.log(`总共获取 ${releases.length} 个 releases`);
             
-            // 过滤预发布版本（prerelease）
+            // 过滤预发布版本（使用 GitHub API 的 prerelease 字段）
             const stableReleases = releases.filter(r => {
-              const isPrerelease = r.prerelease || r.tag_name.includes('-alpha') || r.tag_name.includes('-beta') || r.tag_name.includes('-Beta') || r.tag_name.includes('-rc');
-              if (isPrerelease) {
+              if (r.prerelease) {
                 console.log(`⊘ 跳过预发布版本: ${r.tag_name}`);
+                return false;
               }
-              return !isPrerelease;
+              return true;
             });
             
             console.log(`过滤后得到 ${stableReleases.length} 个稳定版本`);
             
+            // 按 published_at 排序（从旧到新）
+            stableReleases.sort((a, b) => {
+              const dateA = new Date(a.published_at || a.created_at);
+              const dateB = new Date(b.published_at || b.created_at);
+              return dateA - dateB;
+            });
+            
             // 找到版本范围
             const startIndex = stableReleases.findIndex(r => r.tag_name === startVersion);
-            const endIndex = endVersion ? stableReleases.findIndex(r => r.tag_name === endVersion) : 0;
+            const endIndex = endVersion ? stableReleases.findIndex(r => r.tag_name === endVersion) : stableReleases.length - 1;
             
             if (startIndex === -1) {
               core.setFailed(`找不到起始版本: ${startVersion}，可用的稳定版本: ${stableReleases.slice(0, 10).map(r => r.tag_name).join(', ')}...`);
@@ -96,10 +103,9 @@ jobs:
               return;
             }
             
-            // 提取版本列表（从旧到新）
+            // 提取版本列表（从起始到结束）
             const versionList = stableReleases
-              .slice(endIndex, startIndex + 1)
-              .reverse()
+              .slice(startIndex, endIndex + 1)
               .map(r => r.tag_name);
             
             console.log(`找到 ${versionList.length} 个版本:`, versionList);
@@ -310,7 +316,7 @@ jobs:
 
       - name: Setup Lighthouse CI
         run: |
-          npm install -g @lhci/cli@0.15.x
+          pnpm add -g @lhci/cli@0.15.x
 
       - name: Run Lighthouse CI
         run: |

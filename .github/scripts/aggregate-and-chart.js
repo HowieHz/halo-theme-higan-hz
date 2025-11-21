@@ -195,10 +195,23 @@ function groupDataByPage(allReports) {
         pageGroups[url] = [];
       }
 
+      // 标准化数据结构：将 transferSize/resourceSize 转换为 transfer/resource
+      const normalizedResources = {};
+      const resourceTypes = ["document", "script", "stylesheet", "font", "image", "fetch", "other", "total"];
+      
+      for (const type of resourceTypes) {
+        if (result.resources?.[type]) {
+          normalizedResources[type] = {
+            transfer: result.resources[type].transferSize || 0,
+            resource: result.resources[type].resourceSize || 0,
+          };
+        }
+      }
+
       pageGroups[url].push({
         version,
         date: report.date,
-        resources: result.resources,
+        resources: normalizedResources,
       });
     }
   }
@@ -240,8 +253,10 @@ async function loadAllReportsWithPages() {
     }
   }
 
-  reports.sort((a, b) => a.version.localeCompare(b.version));
+  // 按日期排序（从旧到新）
+  reports.sort((a, b) => new Date(a.date) - new Date(b.date));
   console.log(`\n共加载 ${reports.length} 个版本的数据\n`);
+  console.log(`版本顺序（按时间）: ${reports.map(r => r.version).join(', ')}\n`);
   return reports;
 }
 
