@@ -83,6 +83,35 @@ function generateComparisonReport(currentReport, baseReport) {
   if (currentReport.metadata?.haloVersion) {
     markdown += `- Halo CMS Version: ${currentReport.metadata.haloVersion}\n`;
   }
+  if (currentReport.metadata?.javaVersion) {
+    markdown += `- Java Version: ${currentReport.metadata.javaVersion}\n`;
+  }
+  
+  // Current 分支的 theme version
+  if (currentReport.metadata?.themeVersion) {
+    const themeVersion = currentReport.metadata.themeVersion;
+    // 如果是 commit hash，添加链接
+    if (themeVersion.match(/^[0-9a-f]{40}$/i)) {
+      markdown += `- Current Theme Version: [\`${themeVersion.substring(0, 7)}\`](https://github.com/HowieHz/halo-theme-higan-hz/commit/${themeVersion})\n`;
+    } else {
+      markdown += `- Current Theme Version: ${themeVersion}\n`;
+    }
+  }
+  
+  // Base 分支的 theme version
+  if (baseReport.metadata?.themeVersion) {
+    const baseThemeVersion = baseReport.metadata.themeVersion;
+    // 如果是 commit hash，添加链接
+    if (baseThemeVersion.match(/^[0-9a-f]{40}$/i)) {
+      markdown += `- Base Theme Version: [\`${baseThemeVersion.substring(0, 7)}\`](https://github.com/HowieHz/halo-theme-higan-hz/commit/${baseThemeVersion})\n`;
+    } else {
+      markdown += `- Base Theme Version: ${baseThemeVersion}\n`;
+    }
+  }
+  
+  if (currentReport.metadata?.lhciVersion) {
+    markdown += `- Lighthouse CI Version: ${currentReport.metadata.lhciVersion}\n`;
+  }
   if (currentReport.metadata?.generatedAt) {
     markdown += `- Generated At: ${new Date(currentReport.metadata.generatedAt).toISOString()}\n`;
   }
@@ -176,16 +205,30 @@ function generateComparisonReport(currentReport, baseReport) {
 
   // 如果有变化，生成变化表格
   if (hasChanges) {
+    // 检查哪些列有变化（不是全部都是 "-"）
+    const columnsWithChanges = [];
+    for (const type of typeOrder) {
+      const hasAnyChange = changes.some(change => {
+        const { transferChange, resourceChange } = change.types[type];
+        return transferChange !== 0 || resourceChange !== 0;
+      });
+      if (hasAnyChange) {
+        columnsWithChanges.push(type);
+      }
+    }
+
     markdown += `## Changes\n\n`;
     markdown += `Unit: KB, Format: transfer size change(percent)/resource size change(percent)\n\n`;
     markdown += `🔴 <span style="color: red;">Red = Increase</span> | 🟢 <span style="color: green;">Green = Decrease</span>\n\n`;
+    
+    // 只显示有变化的列
     markdown += `| Page |`;
-    for (const type of typeOrder) {
+    for (const type of columnsWithChanges) {
       markdown += ` ${typeLabels[type]} |`;
     }
     markdown += ` Total |\n`;
     markdown += `|------|`;
-    markdown += `------|`.repeat(typeOrder.length);
+    markdown += `------|`.repeat(columnsWithChanges.length);
     markdown += `-------|\n`;
 
     // 生成变化数据行
@@ -193,7 +236,8 @@ function generateComparisonReport(currentReport, baseReport) {
       const urlPath = new URL(change.url).pathname || "/";
       markdown += `| ${urlPath} |`;
 
-      for (const type of typeOrder) {
+      // 只显示有变化的列
+      for (const type of columnsWithChanges) {
         const { transferChange, resourceChange, baseTransfer, baseResource } = change.types[type];
         markdown += ` ${formatColoredChange(transferChange, resourceChange, baseTransfer, baseResource)} |`;
       }
