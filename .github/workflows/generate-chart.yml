@@ -269,22 +269,38 @@ jobs:
             performance
             automated
 
-      - name: Create issue with chart
+      - name: Create issue with charts
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            const chartPath = './charts/size-chart.md';
+            const path = require('path');
             
-            if (fs.existsSync(chartPath)) {
-              const chart = fs.readFileSync(chartPath, 'utf8');
+            const chartsDir = './charts';
+            let body = '';
+            
+            // Find all aggregate chart files
+            const files = fs.readdirSync(chartsDir);
+            const aggregateFiles = files.filter(f => f.startsWith('size-chart-aggregate-')).sort();
+            
+            if (aggregateFiles.length > 0) {
+              for (const file of aggregateFiles) {
+                const content = fs.readFileSync(path.join(chartsDir, file), 'utf8');
+                body += content + '\n\n---\n\n';
+              }
+              
               const endVersion = '${{ github.event.inputs.end_version }}' || '最新版本';
+              const chartType = '${{ github.event.inputs.chart_type }}';
               
               await github.rest.issues.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                title: `页面体积趋势图 (${{ github.event.inputs.start_version }} → ${endVersion})`,
-                body: chart,
+                title: `页面体积趋势图 - ${chartType} (${{ github.event.inputs.start_version }} → ${endVersion})`,
+                body: body,
                 labels: ['documentation', 'performance']
               });
+              
+              console.log(`✓ 创建 issue 成功，包含 ${aggregateFiles.length} 个汇总图表`);
+            } else {
+              console.log('⚠️  未找到汇总图表文件');
             }
