@@ -115,9 +115,10 @@ async function parseLighthouseResults() {
       relativePath = urlObj.pathname || "/";
     } catch {
       // 如果 URL 解析失败，假设它已经是相对路径
-      relativePath = entry.url.startsWith('/') ? entry.url : '/' + entry.url;
+      relativePath = entry.url.startsWith("/") ? entry.url : "/" + entry.url;
     }
 
+    console.log(relativePath);
     results.push({
       url: relativePath,
       resources,

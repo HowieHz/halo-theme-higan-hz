@@ -48,7 +48,7 @@ function formatColoredChange(transferChange, resourceChange, baseTransfer, baseR
   if (transferChange === 0 && resourceChange === 0) {
     return "-";
   }
-  
+
   const transferStr = formatChange(transferChange, baseTransfer);
   const resourceStr = formatChange(resourceChange, baseResource);
 
@@ -59,7 +59,7 @@ function formatColoredChange(transferChange, resourceChange, baseTransfer, baseR
   } else if (transferChange < 0) {
     coloredTransfer = `🟢 <span style="color: green;">${transferStr}</span>`;
   }
-  
+
   // 为 resource size 添加颜色和 emoji
   let coloredResource = resourceStr;
   if (resourceChange > 0) {
@@ -86,7 +86,7 @@ function generateComparisonReport(currentReport, baseReport) {
   if (currentReport.metadata?.javaVersion) {
     markdown += `- Java Version: ${currentReport.metadata.javaVersion}\n`;
   }
-  
+
   // Current 分支的 theme version
   if (currentReport.metadata?.themeVersion) {
     const themeVersion = currentReport.metadata.themeVersion;
@@ -97,7 +97,7 @@ function generateComparisonReport(currentReport, baseReport) {
       markdown += `- Current Theme Version: ${themeVersion}\n`;
     }
   }
-  
+
   // Base 分支的 theme version
   if (baseReport.metadata?.themeVersion) {
     const baseThemeVersion = baseReport.metadata.themeVersion;
@@ -108,7 +108,7 @@ function generateComparisonReport(currentReport, baseReport) {
       markdown += `- Base Theme Version: ${baseThemeVersion}\n`;
     }
   }
-  
+
   if (currentReport.metadata?.lhciVersion) {
     markdown += `- Lighthouse CI Version: ${currentReport.metadata.lhciVersion}\n`;
   }
@@ -209,7 +209,7 @@ function generateComparisonReport(currentReport, baseReport) {
     // 检查哪些列有变化（不是全部都是 "-"）
     const columnsWithChanges = [];
     for (const type of typeOrder) {
-      const hasAnyChange = changes.some(change => {
+      const hasAnyChange = changes.some((change) => {
         const { transferChange, resourceChange } = change.types[type];
         return transferChange !== 0 || resourceChange !== 0;
       });
@@ -221,7 +221,7 @@ function generateComparisonReport(currentReport, baseReport) {
     markdown += `## Changes\n\n`;
     markdown += `Unit: KB, Format: transfer size change(percent)/resource size change(percent)\n\n`;
     markdown += `🔴 <span style="color: red;">Red = Increase</span> | 🟢 <span style="color: green;">Green = Decrease</span>\n\n`;
-    
+
     // 只显示有变化的列
     markdown += `| Page |`;
     for (const type of columnsWithChanges) {
