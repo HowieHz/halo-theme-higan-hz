@@ -98,8 +98,7 @@ jobs:
           
           # 从主分支获取最新的 .github 配置和脚本
           git fetch origin main
-          git checkout origin/main -- .github/lighthouse || echo "⚠️  .github/lighthouse not found in main"
-          git checkout origin/main -- .github/scripts || echo "⚠️  .github/scripts not found in main"
+          git checkout origin/main -- .github || echo "⚠️  .github not found in main"
           
           echo "✓ 已从主分支复制最新的 .github 文件"
 
