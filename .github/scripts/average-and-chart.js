@@ -1,7 +1,7 @@
 /**
  * 计算多个页面的报告数据的平均值，并生成趋势图
  * 从 all-reports 目录读取各个版本的 JSON 报告，生成 Mermaid 图表
- * 
+ *
  * 新的文件结构：
  * - 每个页面一个 MD 文件（包含该页面的所有图表）
  * - 一个平均值 MD 文件（包含所有页面平均后的所有图表）
@@ -12,7 +12,6 @@ import { resolve } from "path";
 
 const REPORTS_DIR = process.env.REPORTS_DIR || "./all-reports";
 const OUTPUT_DIR = process.env.OUTPUT_DIR || "./charts";
-const CHART_TYPE = process.env.CHART_TYPE || "all";
 const START_VERSION = process.env.START_VERSION;
 const END_VERSION = process.env.END_VERSION || "最新版本";
 
@@ -94,7 +93,7 @@ function generateMermaidChart(data, title, lines) {
  */
 function generatePageMarkdown(data, pageName, isAverage = false) {
   const pageTitle = isAverage ? "Average of All Pages" : pageName;
-  
+
   let markdown = `# Page Size Trend Analysis - ${pageTitle}\n\n`;
   markdown += `**Version Range:** ${START_VERSION} → ${END_VERSION}  \n`;
   markdown += `**Page:** ${pageTitle}  \n`;
@@ -103,44 +102,32 @@ function generatePageMarkdown(data, pageName, isAverage = false) {
 
   // 1. Total 全部资源总和的图表（gzipped）
   markdown += `## 1. Total Resources (gzipped)\n\n`;
-  markdown += generateMermaidChart(
-    data,
-    "Total Resources Size Trend (KB, gzipped)",
-    [{ label: "Total", type: "total", sizeType: "transfer" }]
-  );
+  markdown += generateMermaidChart(data, "Total Resources Size Trend (KB, gzipped)", [
+    { label: "Total", type: "total", sizeType: "transfer" },
+  ]);
   markdown += `\n`;
 
   // 1.1 Total 对应 raw 版
   markdown += `### 1.1 Total Resources (raw)\n\n`;
-  markdown += generateMermaidChart(
-    data,
-    "Total Resources Size Trend (KB, raw)",
-    [{ label: "Total", type: "total", sizeType: "resource" }]
-  );
+  markdown += generateMermaidChart(data, "Total Resources Size Trend (KB, raw)", [
+    { label: "Total", type: "total", sizeType: "resource" },
+  ]);
   markdown += `\n`;
 
   // 2. CSS + JS 的图表（gzipped）
   markdown += `## 2. Script & Stylesheet (gzipped)\n\n`;
-  markdown += generateMermaidChart(
-    data,
-    "Script & Stylesheet Size Trend (KB, gzipped)",
-    [
-      { label: "Script", type: "script", sizeType: "transfer" },
-      { label: "Stylesheet", type: "stylesheet", sizeType: "transfer" }
-    ]
-  );
+  markdown += generateMermaidChart(data, "Script & Stylesheet Size Trend (KB, gzipped)", [
+    { label: "Script", type: "script", sizeType: "transfer" },
+    { label: "Stylesheet", type: "stylesheet", sizeType: "transfer" },
+  ]);
   markdown += `\n`;
 
   // 2.1 CSS + JS 对应 raw 版
   markdown += `### 2.1 Script & Stylesheet (raw)\n\n`;
-  markdown += generateMermaidChart(
-    data,
-    "Script & Stylesheet Size Trend (KB, raw)",
-    [
-      { label: "Script", type: "script", sizeType: "resource" },
-      { label: "Stylesheet", type: "stylesheet", sizeType: "resource" }
-    ]
-  );
+  markdown += generateMermaidChart(data, "Script & Stylesheet Size Trend (KB, raw)", [
+    { label: "Script", type: "script", sizeType: "resource" },
+    { label: "Stylesheet", type: "stylesheet", sizeType: "resource" },
+  ]);
   markdown += `\n`;
 
   // 3. 全部种类资源的图表（gzipped）
@@ -149,7 +136,7 @@ function generatePageMarkdown(data, pageName, isAverage = false) {
   markdown += generateMermaidChart(
     data,
     "All Resource Types Size Trend (KB, gzipped)",
-    allTypes.map(type => ({ label: type, type, sizeType: "transfer" }))
+    allTypes.map((type) => ({ label: type, type, sizeType: "transfer" })),
   );
   markdown += `\n`;
 
@@ -158,32 +145,28 @@ function generatePageMarkdown(data, pageName, isAverage = false) {
   markdown += generateMermaidChart(
     data,
     "All Resource Types Size Trend (KB, raw)",
-    allTypes.map(type => ({ label: type, type, sizeType: "resource" }))
+    allTypes.map((type) => ({ label: type, type, sizeType: "resource" })),
   );
   markdown += `\n`;
 
   // 4. 每个种类资源自己的图表（gzipped 和 raw）
   markdown += `## 4. Individual Resource Types\n\n`;
-  
+
   for (const resourceType of allTypes) {
     const resourceLabel = resourceType.charAt(0).toUpperCase() + resourceType.slice(1);
-    
+
     // 4.x gzipped 版本
     markdown += `### 4.${allTypes.indexOf(resourceType) + 1} ${resourceLabel} (gzipped)\n\n`;
-    markdown += generateMermaidChart(
-      data,
-      `${resourceLabel} Size Trend (KB, gzipped)`,
-      [{ label: resourceLabel, type: resourceType, sizeType: "transfer" }]
-    );
+    markdown += generateMermaidChart(data, `${resourceLabel} Size Trend (KB, gzipped)`, [
+      { label: resourceLabel, type: resourceType, sizeType: "transfer" },
+    ]);
     markdown += `\n`;
 
     // 4.x.1 raw 版本
     markdown += `#### 4.${allTypes.indexOf(resourceType) + 1}.1 ${resourceLabel} (raw)\n\n`;
-    markdown += generateMermaidChart(
-      data,
-      `${resourceLabel} Size Trend (KB, raw)`,
-      [{ label: resourceLabel, type: resourceType, sizeType: "resource" }]
-    );
+    markdown += generateMermaidChart(data, `${resourceLabel} Size Trend (KB, raw)`, [
+      { label: resourceLabel, type: resourceType, sizeType: "resource" },
+    ]);
     markdown += `\n`;
   }
 
@@ -211,10 +194,16 @@ function generatePageMarkdown(data, pageName, isAverage = false) {
     const totalAvgResource = data.reduce((sum, d) => sum + d.resources.total.resource, 0) / data.length;
     const minTransfer = Math.min(...data.map((d) => d.resources.total.transfer));
     const maxTransfer = Math.max(...data.map((d) => d.resources.total.transfer));
+    const minResource = Math.min(...data.map((d) => d.resources.total.resource));
+    const maxResource = Math.max(...data.map((d) => d.resources.total.resource));
     const firstTransfer = data[0].resources.total.transfer;
     const lastTransfer = data[data.length - 1].resources.total.transfer;
+    const firstResource = data[0].resources.total.resource;
+    const lastResource = data[data.length - 1].resources.total.resource;
     const change = lastTransfer - firstTransfer;
     const changePercent = ((change / firstTransfer) * 100).toFixed(1);
+    const changeResource = lastResource - firstResource;
+    const changePercentResource = ((changeResource / firstResource) * 100).toFixed(1);
 
     markdown += `\n## Summary Statistics\n\n`;
     markdown += `### Gzipped Size:\n`;
@@ -223,19 +212,11 @@ function generatePageMarkdown(data, pageName, isAverage = false) {
     markdown += `- **Maximum Total Size:** ${(maxTransfer / 1024).toFixed(1)} KB\n`;
     markdown += `- **Size Change:** ${change > 0 ? "+" : ""}${(change / 1024).toFixed(1)} KB (${changePercent}%)\n\n`;
 
-    const totalAvgRaw = data.reduce((sum, d) => sum + d.resources.total.resource, 0) / data.length;
-    const minRaw = Math.min(...data.map((d) => d.resources.total.resource));
-    const maxRaw = Math.max(...data.map((d) => d.resources.total.resource));
-    const firstRaw = data[0].resources.total.resource;
-    const lastRaw = data[data.length - 1].resources.total.resource;
-    const changeRaw = lastRaw - firstRaw;
-    const changePercentRaw = ((changeRaw / firstRaw) * 100).toFixed(1);
-
     markdown += `### Raw Size:\n`;
-    markdown += `- **Average Total Size:** ${(totalAvgRaw / 1024).toFixed(1)} KB\n`;
-    markdown += `- **Minimum Total Size:** ${(minRaw / 1024).toFixed(1)} KB\n`;
-    markdown += `- **Maximum Total Size:** ${(maxRaw / 1024).toFixed(1)} KB\n`;
-    markdown += `- **Size Change:** ${changeRaw > 0 ? "+" : ""}${(changeRaw / 1024).toFixed(1)} KB (${changePercentRaw}%)\n`;
+    markdown += `- **Average Total Size:** ${(totalAvgResource / 1024).toFixed(1)} KB\n`;
+    markdown += `- **Minimum Total Size:** ${(minResource / 1024).toFixed(1)} KB\n`;
+    markdown += `- **Maximum Total Size:** ${(maxResource / 1024).toFixed(1)} KB\n`;
+    markdown += `- **Size Change:** ${changeResource > 0 ? "+" : ""}${(changeResource / 1024).toFixed(1)} KB (${changePercentResource}%)\n`;
   }
 
   markdown += `\n---\n\n`;
@@ -387,14 +368,14 @@ async function main() {
 
       const markdown = generatePageMarkdown(pageData, url, false);
       await writeFile(resolve(OUTPUT_DIR, fileName), markdown);
-      
+
       console.log(`✓ 生成页面报告: ${fileName}`);
       generatedFiles++;
     }
 
     // 2. 生成平均值报告文件
     console.log(`\n正在计算所有页面的平均值...`);
-    
+
     const avgData = allReports.map((report) => ({
       version: report.version,
       date: report.date,
@@ -404,7 +385,7 @@ async function main() {
     const avgFileName = `size-chart-average-all-pages.md`;
     const avgMarkdown = generatePageMarkdown(avgData, "Average", true);
     await writeFile(resolve(OUTPUT_DIR, avgFileName), avgMarkdown);
-    
+
     console.log(`✓ 生成平均值报告: ${avgFileName}`);
     generatedFiles++;
 
