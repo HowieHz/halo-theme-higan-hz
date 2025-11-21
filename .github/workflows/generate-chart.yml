@@ -46,19 +46,38 @@ jobs:
             const startVersion = '${{ github.event.inputs.start_version }}';
             const endVersion = '${{ github.event.inputs.end_version }}' || '';
             
-            // 获取所有 releases
-            const { data: releases } = await github.rest.repos.listReleases({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              per_page: 100
-            });
+            // 获取所有 releases（支持分页）
+            console.log('正在获取所有 releases...');
+            const releases = [];
+            let page = 1;
+            let hasMore = true;
+            
+            while (hasMore) {
+              const { data } = await github.rest.repos.listReleases({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                per_page: 100,
+                page: page
+              });
+              
+              releases.push(...data);
+              console.log(`已获取第 ${page} 页，共 ${data.length} 个 releases`);
+              
+              if (data.length < 100) {
+                hasMore = false;
+              } else {
+                page++;
+              }
+            }
+            
+            console.log(`总共获取 ${releases.length} 个 releases`);
             
             // 找到版本范围
             const startIndex = releases.findIndex(r => r.tag_name === startVersion);
             const endIndex = endVersion ? releases.findIndex(r => r.tag_name === endVersion) : 0;
             
             if (startIndex === -1) {
-              core.setFailed(`找不到起始版本: ${startVersion}`);
+              core.setFailed(`找不到起始版本: ${startVersion}，可用的版本: ${releases.slice(0, 10).map(r => r.tag_name).join(', ')}...`);
               return;
             }
             if (endVersion && endIndex === -1) {
