@@ -93,6 +93,12 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      - name: Get Java version
+        run: |
+          JAVA_VERSION=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}')
+          echo "JAVA_VERSION=${JAVA_VERSION}" >> $GITHUB_ENV
+          echo "✓ Java 版本: ${JAVA_VERSION}"
+
       - name: Download Halo
         run: |
           HALO_VERSION="${{ github.event.inputs.halo_version || '2.21.10' }}"
@@ -104,6 +110,9 @@ jobs:
             wget https://dl.halo.run/release/halo-${HALO_VERSION}.jar -O ~/halo.jar
             echo "✓ 从备用地址下载 Halo 成功"
           fi
+          # 将实际下载的版本保存到环境变量
+          echo "HALO_VERSION=${HALO_VERSION}" >> $GITHUB_ENV
+          echo "✓ Halo 版本: ${HALO_VERSION}"
 
       - name: Create Halo configuration
         run: |
@@ -329,8 +338,8 @@ jobs:
         env:
           OUTPUT_DIR: ./reports
           LIGHTHOUSE_RESULTS_DIR: ./.lighthouseci
-          HALO_VERSION: ${{ github.event.inputs.halo_version || '2.21.10' }}
-          JAVA_VERSION: '21'
+          HALO_VERSION: ${{ env.HALO_VERSION }}
+          JAVA_VERSION: ${{ env.JAVA_VERSION }}
           THEME_VERSION: ${{ github.event.inputs.theme_version || github.sha }}
           GITHUB_SHA: ${{ github.sha }}
           LHCI_VERSION: ${{ env.LHCI_VERSION }}

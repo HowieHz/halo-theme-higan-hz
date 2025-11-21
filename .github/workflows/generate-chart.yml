@@ -83,11 +83,30 @@ jobs:
             
             console.log(`过滤后得到 ${stableReleases.length} 个稳定版本`);
             
-            // 按 published_at 排序（从旧到新）
+            // 按语义化版本排序（从旧到新）
+            const parseVersion = (version) => {
+              const match = version.match(/^v?(\d+)\.(\d+)\.(\d+)(?:-(.+))?$/);
+              if (!match) return null;
+              const [, major, minor, patch] = match;
+              return {
+                major: parseInt(major, 10),
+                minor: parseInt(minor, 10),
+                patch: parseInt(patch, 10)
+              };
+            };
+            
             stableReleases.sort((a, b) => {
-              const dateA = new Date(a.published_at || a.created_at);
-              const dateB = new Date(b.published_at || b.created_at);
-              return dateA - dateB;
+              const versionA = parseVersion(a.tag_name);
+              const versionB = parseVersion(b.tag_name);
+              
+              if (!versionA || !versionB) {
+                console.warn(`⚠️  无法解析版本号: ${a.tag_name} 或 ${b.tag_name}`);
+                return 0;
+              }
+              
+              if (versionA.major !== versionB.major) return versionA.major - versionB.major;
+              if (versionA.minor !== versionB.minor) return versionA.minor - versionB.minor;
+              return versionA.patch - versionB.patch;
             });
             
             // 找到版本范围
@@ -201,6 +220,12 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      - name: Get Java version
+        run: |
+          JAVA_VERSION=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}')
+          echo "JAVA_VERSION=${JAVA_VERSION}" >> $GITHUB_ENV
+          echo "✓ Java 版本: ${JAVA_VERSION}"
+
       - name: Download Halo
         run: |
           HALO_VERSION="2.21.10"
@@ -211,6 +236,9 @@ jobs:
             wget https://dl.halo.run/release/halo-${HALO_VERSION}.jar -O ~/halo.jar
             echo "✓ 从备用地址下载 Halo 成功"
           fi
+          # 将实际下载的版本保存到环境变量
+          echo "HALO_VERSION=${HALO_VERSION}" >> $GITHUB_ENV
+          echo "✓ Halo 版本: ${HALO_VERSION}"
 
       - name: Create Halo configuration
         run: |
@@ -317,6 +345,7 @@ jobs:
       - name: Setup Lighthouse CI
         run: |
           pnpm add -g @lhci/cli@0.15.x
+          echo "LHCI_VERSION=$(lhci --version)" >> $GITHUB_ENV
 
       - name: Run Lighthouse CI
         run: |
@@ -350,7 +379,10 @@ jobs:
           OUTPUT_DIR: .github/page_size_audit_results
           OUTPUT_FILENAME: ${{ matrix.version }}
           JSON_ONLY: "true"
+          HALO_VERSION: ${{ env.HALO_VERSION }}
+          JAVA_VERSION: ${{ env.JAVA_VERSION }}
           THEME_VERSION: ${{ matrix.version }}
+          LHCI_VERSION: ${{ env.LHCI_VERSION }}
 
       - name: Upload report for ${{ matrix.version }}
         uses: actions/upload-artifact@v4
@@ -403,7 +435,7 @@ jobs:
       - name: Generate chart from reports
         run: |
           mkdir -p charts
-          node .github/scripts/aggregate-and-chart.js
+          node .github/scripts/average-and-chart.js
         env:
           REPORTS_DIR: all-reports
           OUTPUT_DIR: charts

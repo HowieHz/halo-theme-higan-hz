@@ -1,5 +1,5 @@
 /**
- * 汇总多个版本的报告数据并生成趋势图
+ * 计算多个版本报告数据的平均值并生成趋势图
  * 从 all-reports 目录读取各个版本的 JSON 报告，生成 Mermaid 图表
  */
 
@@ -127,10 +127,10 @@ function generateMarkdownReport(data, chartType, sizeType = 'transfer') {
   const sizeLabel = isGzipped ? 'gzipped' : 'raw';
   
   let markdown = `# Page Size Trend Analysis (${sizeLabel})\n\n`;
-  markdown += `**Version Range:** ${START_VERSION} → ${END_VERSION}\n`;
-  markdown += `**Chart Type:** ${chartType}\n`;
-  markdown += `**Size Type:** ${sizeLabel}\n`;
-  markdown += `**Generated At:** ${new Date().toISOString()}\n`;
+  markdown += `**Version Range:** ${START_VERSION} → ${END_VERSION}  \n`;
+  markdown += `**Chart Type:** ${chartType}  \n`;
+  markdown += `**Size Type:** ${sizeLabel}  \n`;
+  markdown += `**Generated At:** ${new Date().toISOString()}  \n`;
   markdown += `**Tested Versions:** ${data.length}\n\n`;
 
   // 添加图表
@@ -271,17 +271,17 @@ async function generateChartsForType(allReports, pageGroups, chartType, sizeType
   const sizeLabel = sizeType === 'transfer' ? 'gzipped' : 'raw';
   console.log(`\n=== 生成 ${chartType} 类型图表 (${sizeLabel}) ===`);
 
-  // 生成汇总图表
+  // 生成平均值图表
   const avgData = allReports.map((report) => ({
     version: report.version,
     date: report.date,
     resources: calculateAverage(report.rawResults),
   }));
 
-  const aggregateFileName = `size-chart-aggregate-${chartType}-${sizeLabel}.md`;
-  const aggregateMarkdown = generateMarkdownReport(avgData, chartType, sizeType);
-  await writeFile(resolve(OUTPUT_DIR, aggregateFileName), aggregateMarkdown);
-  console.log(`  ✓ 汇总图表: ${aggregateFileName}`);
+  const averageFileName = `size-chart-average-${chartType}-${sizeLabel}.md`;
+  const averageMarkdown = generateMarkdownReport(avgData, chartType, sizeType);
+  await writeFile(resolve(OUTPUT_DIR, averageFileName), averageMarkdown);
+  console.log(`  ✓ 平均值图表: ${averageFileName}`);
 
   // 生成各页面单独图表
   let chartCount = 0;
@@ -303,7 +303,7 @@ async function generateChartsForType(allReports, pageGroups, chartType, sizeType
  */
 async function main() {
   try {
-    console.log("=== 汇总数据并生成趋势图 ===\n");
+    console.log("=== 计算平均值并生成趋势图 ===\n");
 
     // 加载所有报告（包含每个页面的数据）
     const allReports = await loadAllReportsWithPages();
