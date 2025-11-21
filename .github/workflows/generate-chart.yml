@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       start_version:
-        description: '起始版本 (例如: v1.45.0)'
-        required: true
+        description: '起始版本 (例如: v1.45.0，留空表示 v1.0.0)'
+        required: false
+        default: 'v1.0.0'
       end_version:
         description: '结束版本 (例如: v1.47.0，留空表示最新版本)'
         required: false
@@ -43,7 +44,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const startVersion = '${{ github.event.inputs.start_version }}';
+            const startVersion = '${{ github.event.inputs.start_version }}' || 'v1.0.0';
             const endVersion = '${{ github.event.inputs.end_version }}' || '';
             
             // 获取所有 releases（支持分页）
