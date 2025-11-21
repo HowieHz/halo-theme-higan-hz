@@ -60,22 +60,22 @@ function generateMermaidChart(data, chartType) {
   chart += '  x-axis "版本" [';
   chart += data.map((d) => `"${d.version}"`).join(", ");
   chart += "]\n";
-  
+
   // 动态计算 y 轴最大值
   let maxValue = 0;
   if (chartType === "total") {
     maxValue = Math.max(...data.map((d) => d.resources.total.transfer / 1024));
   } else if (chartType === "script-stylesheet") {
     maxValue = Math.max(
-      ...data.map((d) => Math.max(d.resources.script.transfer / 1024, d.resources.stylesheet.transfer / 1024))
+      ...data.map((d) => Math.max(d.resources.script.transfer / 1024, d.resources.stylesheet.transfer / 1024)),
     );
   } else if (chartType === "all-resources") {
     const types = ["document", "script", "stylesheet", "font", "image", "fetch", "other"];
     maxValue = Math.max(...data.map((d) => Math.max(...types.map((t) => d.resources[t].transfer / 1024))));
   }
-  
+
   // 向上取整到合适的刻度
-  const yAxisMax = Math.ceil(maxValue * 1.1 / 10) * 10;
+  const yAxisMax = Math.ceil((maxValue * 1.1) / 10) * 10;
   chart += `  y-axis "体积 (KB)" 0 --> ${yAxisMax}\n`;
 
   // 根据图表类型添加数据线
@@ -164,25 +164,25 @@ function generateMarkdownReport(data, chartType) {
  */
 function groupDataByPage(allReports) {
   const pageGroups = {};
-  
+
   for (const report of allReports) {
     const version = report.version;
-    
+
     // 读取原始报告获取每个页面的数据
     for (const result of report.rawResults || []) {
       const url = result.url;
       if (!pageGroups[url]) {
         pageGroups[url] = [];
       }
-      
+
       pageGroups[url].push({
         version,
         date: report.date,
-        resources: result.resources
+        resources: result.resources,
       });
     }
   }
-  
+
   return pageGroups;
 }
 
@@ -210,7 +210,7 @@ async function loadAllReportsWithPages() {
         reports.push({
           version,
           date: reportData.metadata?.generatedAt || new Date().toISOString(),
-          rawResults: reportData.results
+          rawResults: reportData.results,
         });
 
         console.log(`✓ 加载 ${version}`);
@@ -230,14 +230,14 @@ async function loadAllReportsWithPages() {
  */
 async function generateChartsForType(allReports, pageGroups, chartType) {
   console.log(`\n=== 生成 ${chartType} 类型图表 ===`);
-  
+
   // 生成汇总图表
-  const avgData = allReports.map(report => ({
+  const avgData = allReports.map((report) => ({
     version: report.version,
     date: report.date,
-    resources: calculateAverage(report.rawResults)
+    resources: calculateAverage(report.rawResults),
   }));
-  
+
   const aggregateFileName = `size-chart-aggregate-${chartType}.md`;
   const aggregateMarkdown = generateMarkdownReport(avgData, chartType);
   await writeFile(resolve(OUTPUT_DIR, aggregateFileName), aggregateMarkdown);
@@ -246,14 +246,14 @@ async function generateChartsForType(allReports, pageGroups, chartType) {
   // 生成各页面单独图表
   let chartCount = 0;
   for (const [url, pageData] of Object.entries(pageGroups)) {
-    const pageName = url.replace('http://localhost:8090', '').replace(/\//g, '-') || 'home';
+    const pageName = url.replace("http://localhost:8090", "").replace(/\//g, "-") || "home";
     const fileName = `size-chart-${pageName}-${chartType}.md`;
-    
+
     const pageMarkdown = generateMarkdownReport(pageData, chartType);
     await writeFile(resolve(OUTPUT_DIR, fileName), pageMarkdown);
     chartCount++;
   }
-  
+
   console.log(`  ✓ 单页图表: ${chartCount} 个`);
   return chartCount + 1;
 }
@@ -274,13 +274,13 @@ async function main() {
 
     // 按页面分组
     const pageGroups = groupDataByPage(allReports);
-    
+
     let totalCharts = 0;
-    
+
     // 判断是生成所有类型还是单一类型
-    if (CHART_TYPE === 'all') {
+    if (CHART_TYPE === "all") {
       // 生成所有三种类型的图表
-      const types = ['total', 'script-stylesheet', 'all-resources'];
+      const types = ["total", "script-stylesheet", "all-resources"];
       for (const type of types) {
         const count = await generateChartsForType(allReports, pageGroups, type);
         totalCharts += count;

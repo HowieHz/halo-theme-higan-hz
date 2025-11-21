@@ -29,7 +29,7 @@ async function readReport(path) {
  */
 function formatChange(change, baseValue) {
   if (change === 0) return "0.00(0.00%)";
-  
+
   const sign = change > 0 ? "+" : "";
   const percent = baseValue > 0 ? (change / baseValue) * 100 : 0;
   return `${sign}${change.toFixed(2)}(${sign}${percent.toFixed(2)}%)`;
@@ -46,7 +46,7 @@ function formatChange(change, baseValue) {
 function formatColoredChange(transferChange, resourceChange, baseTransfer, baseResource) {
   const transferStr = formatChange(transferChange, baseTransfer);
   const resourceStr = formatChange(resourceChange, baseResource);
-  
+
   // 为 transfer size 添加颜色
   let coloredTransfer = transferStr;
   if (transferChange > 0) {
@@ -54,7 +54,7 @@ function formatColoredChange(transferChange, resourceChange, baseTransfer, baseR
   } else if (transferChange < 0) {
     coloredTransfer = `<span style="color: green;">${transferStr}</span>`;
   }
-  
+
   // 为 resource size 添加颜色
   let coloredResource = resourceStr;
   if (resourceChange > 0) {
@@ -62,7 +62,7 @@ function formatColoredChange(transferChange, resourceChange, baseTransfer, baseR
   } else if (resourceChange < 0) {
     coloredResource = `<span style="color: green;">${resourceStr}</span>`;
   }
-  
+
   return `${coloredTransfer}/${coloredResource}`;
 }
 
@@ -72,7 +72,7 @@ function formatColoredChange(transferChange, resourceChange, baseTransfer, baseR
 function generateComparisonReport(currentReport, baseReport) {
   let markdown = `# Page Size Comparison Report\n\n`;
   markdown += `Comparing **current** branch with **base** branch\n\n`;
-  
+
   // 添加测试环境信息
   markdown += `**Test Environment:**\n`;
   if (currentReport.metadata?.haloVersion) {
@@ -131,7 +131,7 @@ function generateComparisonReport(currentReport, baseReport) {
 
   // 计算变化
   for (const currentResult of currentReport.results) {
-    const baseResult = baseReport.results.find(r => r.url === currentResult.url);
+    const baseResult = baseReport.results.find((r) => r.url === currentResult.url);
     if (!baseResult) continue;
 
     let pageHasChanges = false;
