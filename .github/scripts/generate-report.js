@@ -118,7 +118,6 @@ async function parseLighthouseResults() {
       relativePath = entry.url.startsWith("/") ? entry.url : "/" + entry.url;
     }
 
-    console.log(relativePath);
     results.push({
       url: relativePath,
       resources,

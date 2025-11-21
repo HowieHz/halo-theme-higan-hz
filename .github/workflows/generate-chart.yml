@@ -146,16 +146,16 @@ jobs:
         with:
           ref: ${{ matrix.version }}
 
-      - name: Copy latest .github files from main branch
+      - name: Copy latest .github files from current branch
         run: |
           # 保存当前分支名
           CURRENT_REF="${{ matrix.version }}"
           
-          # 从主分支获取最新的 .github 配置和脚本
-          git fetch origin main
-          git checkout origin/main -- .github || echo "⚠️  .github not found in main"
+          # 从当前分支获取最新的 .github 配置和脚本
+          git fetch origin "${CURRENT_REF}"
+          git checkout origin/"${CURRENT_REF}" -- .github || echo "⚠️  .github not found in ${CURRENT_REF}"
           
-          echo "✓ 已从主分支复制最新的 .github 文件"
+          echo "✓ 已从当前分支复制最新的 .github 文件"
 
       - name: Check and set pnpm version
         id: check-pnpm
