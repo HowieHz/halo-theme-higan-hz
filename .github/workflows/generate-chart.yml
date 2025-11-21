@@ -118,27 +118,140 @@ jobs:
       - name: Build theme
         run: pnpm build
 
-      - name: Setup Halo
+      - name: Create build directories
         run: |
-          docker run -d \
-            --name halo-${{ matrix.version }} \
-            -p 8090:8090 \
-            -v ${{ github.workspace }}/dist:/root/.halo2/themes/theme-higan-test \
-            halohub/halo:2.20
+          mkdir -p ~/builds/tmp ~/builds/target
 
-      - name: Wait for Halo to start
+      - name: Build theme package
         run: |
-          echo "等待 Halo 启动..."
-          for i in {1..30}; do
-            if curl -f http://localhost:8090/actuator/health > /dev/null 2>&1; then
-              echo "Halo 已启动"
-              exit 0
+          echo "使用当前代码构建主题..."
+          cp -r . ~/builds/tmp
+          mkdir -p ~/builds/tmp-included
+          cd ~/builds/tmp
+          cat ${{ github.workspace }}/.github/include-list.txt | xargs -I {} cp -r --parents {} ~/builds/tmp-included/
+          cd ~/builds/tmp-included
+          zip -9 -r howiehz-higan-cn.zip .
+          mv howiehz-higan-cn.zip ~/builds/target/
+          echo "✓ 主题构建完成"
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Download Halo
+        run: |
+          HALO_VERSION="2.21.10"
+          if wget https://github.com/halo-dev/halo/releases/download/v${HALO_VERSION}/halo-${HALO_VERSION}.jar -O ~/halo.jar 2>/dev/null; then
+            echo "✓ 从 GitHub 下载 Halo 成功"
+          else
+            echo "⚠️  GitHub 下载失败，尝试从备用地址下载..."
+            wget https://dl.halo.run/release/halo-${HALO_VERSION}.jar -O ~/halo.jar
+            echo "✓ 从备用地址下载 Halo 成功"
+          fi
+
+      - name: Create Halo configuration
+        run: |
+          mkdir -p ~/.halo2
+          cat > ~/.halo2/application.yaml << 'EOF'
+          server:
+            port: 8090
+          spring:
+            r2dbc:
+              url: r2dbc:h2:file:///${user.home}/.halo2/db/halo?MODE=MySQL&DB_CLOSE_ON_EXIT=FALSE
+              username: admin
+              password: admin
+            sql:
+              init:
+                mode: always
+                platform: h2
+            thymeleaf:
+              cache: true
+          halo:
+            security:
+              basic-auth:
+                disabled: false
+            work-dir: ${user.home}/.halo2
+            external-url: http://localhost:8090
+          EOF
+
+      - name: Start Halo in background
+        run: |
+          nohup java -jar ~/halo.jar \
+            --spring.config.additional-location=optional:file:${HOME}/.halo2/ \
+            -Dfile.encoding=UTF-8 > ~/halo.log 2>&1 &
+          echo $! > ~/halo.pid
+          echo "Halo PID: $(cat ~/halo.pid)"
+
+      - name: Wait for Halo to be ready
+        run: |
+          echo "Waiting for Halo to start..."
+          max_attempts=60
+          attempt=0
+          while [ $attempt -lt $max_attempts ]; do
+            if curl -f http://localhost:8090/actuator/health/readiness > /dev/null 2>&1; then
+              echo "✓ Halo is ready!"
+              break
             fi
-            echo "等待中... ($i/30)"
-            sleep 10
+            attempt=$((attempt + 1))
+            echo "Waiting... ($attempt/$max_attempts)"
+            sleep 5
           done
-          echo "Halo 启动超时"
-          exit 1
+          if [ $attempt -eq $max_attempts ]; then
+            echo "❌ Halo failed to start"
+            cat ~/halo.log
+            exit 1
+          fi
+
+      - name: Initialize Halo system
+        run: |
+          echo "正在初始化 Halo 系统..."
+          response=$(curl -c /tmp/cookies.txt -s http://localhost:8090/system/setup)
+          csrf_token=$(echo "$response" | grep '_csrf' | sed -n 's/.*value="\([^"]*\)".*/\1/p')
+          echo "CSRF Token: $csrf_token"
+          curl -b /tmp/cookies.txt -X POST \
+            http://localhost:8090/system/setup \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -d "_csrf=${csrf_token}" \
+            -d "language=zh-CN" \
+            -d "externalUrl=http://localhost:8090" \
+            -d "siteTitle=Test Site" \
+            -d "username=admin" \
+            -d "email=admin@example.com" \
+            -d "password=admin" \
+            -d "confirmPassword=admin" \
+            -L -v
+          echo "✓ Halo 系统初始化完成"
+          sleep 10
+
+      - name: Install and activate theme
+        run: |
+          echo "安装主题..."
+          THEME_ZIP_PATH="${HOME}/builds/target/howiehz-higan-cn.zip"
+          if [ ! -f "$THEME_ZIP_PATH" ]; then
+            echo "❌ 主题文件不存在"
+            exit 1
+          fi
+          echo "上传主题文件..."
+          curl -X POST \
+            http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/install \
+            -u admin:admin \
+            -F "file=@${THEME_ZIP_PATH}" \
+            -s > /dev/null
+          echo "✓ 主题已安装"
+          sleep 3
+          curl -X PUT \
+            http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/activation \
+            -u admin:admin \
+            -s > /dev/null
+          echo "✓ 主题已激活"
+          sleep 2
+          curl -X PUT \
+            http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/invalidate-cache \
+            -u admin:admin \
+            -s > /dev/null
+          echo "✓ 缓存已清除"
 
       - name: Setup Lighthouse CI
         run: |
@@ -185,11 +298,12 @@ jobs:
           path: .github/page_size_audit_results/${{ matrix.version }}.json
           retention-days: 1
 
-      - name: Cleanup
+      - name: Stop Halo
         if: always()
         run: |
-          docker stop halo-${{ matrix.version }} || true
-          docker rm halo-${{ matrix.version }} || true
+          if [ -f ~/halo.pid ]; then
+            kill $(cat ~/halo.pid) || true
+          fi
 
   # 第三步：汇总所有版本的数据并生成图表
   generate-chart:
@@ -279,12 +393,12 @@ jobs:
             const chartsDir = './charts';
             let body = '';
             
-            // Find all aggregate chart files
+            // Find all chart files
             const files = fs.readdirSync(chartsDir);
-            const aggregateFiles = files.filter(f => f.startsWith('size-chart-aggregate-')).sort();
+            const chartFiles = files.filter(f => f.startsWith('size-chart-') && f.endsWith('.md')).sort();
             
-            if (aggregateFiles.length > 0) {
-              for (const file of aggregateFiles) {
+            if (chartFiles.length > 0) {
+              for (const file of chartFiles) {
                 const content = fs.readFileSync(path.join(chartsDir, file), 'utf8');
                 body += content + '\n\n---\n\n';
               }
@@ -300,7 +414,7 @@ jobs:
                 labels: ['documentation', 'performance']
               });
               
-              console.log(`✓ 创建 issue 成功，包含 ${aggregateFiles.length} 个汇总图表`);
+              console.log(`✓ 创建 issue 成功，包含 ${chartFiles.length} 个图表`);
             } else {
               console.log('⚠️  未找到汇总图表文件');
             }
