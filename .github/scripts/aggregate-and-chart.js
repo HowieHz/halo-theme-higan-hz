@@ -41,8 +41,14 @@ function calculateAverage(results) {
 
 /**
  * 生成 Mermaid XY Chart
+ * @param {Array} data - 数据数组
+ * @param {string} chartType - 图表类型
+ * @param {string} sizeType - 大小类型: 'transfer' (gzipped) 或 'resource' (原始)
  */
-function generateMermaidChart(data, chartType) {
+function generateMermaidChart(data, chartType, sizeType = 'transfer') {
+  const isGzipped = sizeType === 'transfer';
+  const sizeLabel = isGzipped ? 'gzipped' : '原始';
+  
   let chart = "```mermaid\n";
   chart += "---\n";
   chart += "config:\n";
@@ -57,11 +63,11 @@ function generateMermaidChart(data, chartType) {
 
   // 根据图表类型设置标题
   if (chartType === "total") {
-    chart += '  title "页面总体积变化趋势 (KB, gzipped)"\n';
+    chart += `  title "页面总体积变化趋势 (KB, ${sizeLabel})"\n`;
   } else if (chartType === "script-stylesheet") {
-    chart += '  title "Script & Stylesheet 体积变化趋势 (KB, gzipped)"\n';
+    chart += `  title "Script & Stylesheet 体积变化趋势 (KB, ${sizeLabel})"\n`;
   } else if (chartType === "all-resources") {
-    chart += '  title "各类资源体积变化趋势 (KB, gzipped)"\n';
+    chart += `  title "各类资源体积变化趋势 (KB, ${sizeLabel})"\n`;
   }
 
   chart += '  x-axis "版本" [';
@@ -71,14 +77,14 @@ function generateMermaidChart(data, chartType) {
   // 动态计算 y 轴最大值
   let maxValue = 0;
   if (chartType === "total") {
-    maxValue = Math.max(...data.map((d) => d.resources.total.transfer / 1024));
+    maxValue = Math.max(...data.map((d) => d.resources.total[sizeType] / 1024));
   } else if (chartType === "script-stylesheet") {
     maxValue = Math.max(
-      ...data.map((d) => Math.max(d.resources.script.transfer / 1024, d.resources.stylesheet.transfer / 1024)),
+      ...data.map((d) => Math.max(d.resources.script[sizeType] / 1024, d.resources.stylesheet[sizeType] / 1024)),
     );
   } else if (chartType === "all-resources") {
     const types = ["document", "script", "stylesheet", "font", "image", "fetch", "other"];
-    maxValue = Math.max(...data.map((d) => Math.max(...types.map((t) => d.resources[t].transfer / 1024))));
+    maxValue = Math.max(...data.map((d) => Math.max(...types.map((t) => d.resources[t][sizeType] / 1024))));
   }
 
   // 向上取整到合适的刻度
@@ -88,20 +94,20 @@ function generateMermaidChart(data, chartType) {
   // 根据图表类型添加数据线
   if (chartType === "total") {
     chart += "  line [";
-    chart += data.map((d) => (d.resources.total.transfer / 1024).toFixed(1)).join(", ");
+    chart += data.map((d) => (d.resources.total[sizeType] / 1024).toFixed(1)).join(", ");
     chart += "]\n";
   } else if (chartType === "script-stylesheet") {
     chart += "  line [";
-    chart += data.map((d) => (d.resources.script.transfer / 1024).toFixed(1)).join(", ");
+    chart += data.map((d) => (d.resources.script[sizeType] / 1024).toFixed(1)).join(", ");
     chart += "]\n";
     chart += "  line [";
-    chart += data.map((d) => (d.resources.stylesheet.transfer / 1024).toFixed(1)).join(", ");
+    chart += data.map((d) => (d.resources.stylesheet[sizeType] / 1024).toFixed(1)).join(", ");
     chart += "]\n";
   } else if (chartType === "all-resources") {
     const types = ["document", "script", "stylesheet", "font", "image", "fetch", "other"];
     for (const type of types) {
       chart += "  line [";
-      chart += data.map((d) => (d.resources[type].transfer / 1024).toFixed(1)).join(", ");
+      chart += data.map((d) => (d.resources[type][sizeType] / 1024).toFixed(1)).join(", ");
       chart += "]\n";
     }
   }
@@ -112,17 +118,24 @@ function generateMermaidChart(data, chartType) {
 
 /**
  * 生成 Markdown 报告
+ * @param {Array} data - 数据数组
+ * @param {string} chartType - 图表类型
+ * @param {string} sizeType - 大小类型: 'transfer' (gzipped) 或 'resource' (原始)
  */
-function generateMarkdownReport(data, chartType) {
-  let markdown = `# 页面体积趋势分析\n\n`;
+function generateMarkdownReport(data, chartType, sizeType = 'transfer') {
+  const isGzipped = sizeType === 'transfer';
+  const sizeLabel = isGzipped ? 'gzipped' : '原始';
+  
+  let markdown = `# 页面体积趋势分析 (${sizeLabel})\n\n`;
   markdown += `**版本范围:** ${START_VERSION} → ${END_VERSION}\n`;
   markdown += `**图表类型:** ${chartType}\n`;
+  markdown += `**大小类型:** ${sizeLabel}\n`;
   markdown += `**生成时间:** ${new Date().toISOString()}\n`;
   markdown += `**测试版本数:** ${data.length}\n\n`;
 
   // 添加图表
   markdown += `## 趋势图\n\n`;
-  markdown += generateMermaidChart(data, chartType);
+  markdown += generateMermaidChart(data, chartType, sizeType);
   markdown += `\n`;
 
   // 添加数据表格
@@ -145,15 +158,15 @@ function generateMarkdownReport(data, chartType) {
 
   // 添加统计信息
   if (data.length > 0) {
-    const avgTotal = data.reduce((sum, d) => sum + d.resources.total.transfer, 0) / data.length;
-    const minTotal = Math.min(...data.map((d) => d.resources.total.transfer));
-    const maxTotal = Math.max(...data.map((d) => d.resources.total.transfer));
-    const firstTotal = data[0].resources.total.transfer;
-    const lastTotal = data[data.length - 1].resources.total.transfer;
+    const avgTotal = data.reduce((sum, d) => sum + d.resources.total[sizeType], 0) / data.length;
+    const minTotal = Math.min(...data.map((d) => d.resources.total[sizeType]));
+    const maxTotal = Math.max(...data.map((d) => d.resources.total[sizeType]));
+    const firstTotal = data[0].resources.total[sizeType];
+    const lastTotal = data[data.length - 1].resources.total[sizeType];
     const change = lastTotal - firstTotal;
     const changePercent = ((change / firstTotal) * 100).toFixed(1);
 
-    markdown += `\n## 统计摘要 (gzipped)\n\n`;
+    markdown += `\n## 统计摘要 (${sizeLabel})\n\n`;
     markdown += `- **平均总体积:** ${(avgTotal / 1024).toFixed(1)} KB\n`;
     markdown += `- **最小总体积:** ${(minTotal / 1024).toFixed(1)} KB\n`;
     markdown += `- **最大总体积:** ${(maxTotal / 1024).toFixed(1)} KB\n`;
@@ -233,10 +246,15 @@ async function loadAllReportsWithPages() {
 }
 
 /**
- * 生成指定类型的所有图表
+ * 生成指定类型和大小类型的所有图表
+ * @param {Array} allReports - 所有报告数据
+ * @param {Object} pageGroups - 按页面分组的数据
+ * @param {string} chartType - 图表类型
+ * @param {string} sizeType - 大小类型: 'transfer' (gzipped) 或 'resource' (原始)
  */
-async function generateChartsForType(allReports, pageGroups, chartType) {
-  console.log(`\n=== 生成 ${chartType} 类型图表 ===`);
+async function generateChartsForType(allReports, pageGroups, chartType, sizeType = 'transfer') {
+  const sizeLabel = sizeType === 'transfer' ? 'gzipped' : 'raw';
+  console.log(`\n=== 生成 ${chartType} 类型图表 (${sizeLabel}) ===`);
 
   // 生成汇总图表
   const avgData = allReports.map((report) => ({
@@ -245,8 +263,8 @@ async function generateChartsForType(allReports, pageGroups, chartType) {
     resources: calculateAverage(report.rawResults),
   }));
 
-  const aggregateFileName = `size-chart-aggregate-${chartType}.md`;
-  const aggregateMarkdown = generateMarkdownReport(avgData, chartType);
+  const aggregateFileName = `size-chart-aggregate-${chartType}-${sizeLabel}.md`;
+  const aggregateMarkdown = generateMarkdownReport(avgData, chartType, sizeType);
   await writeFile(resolve(OUTPUT_DIR, aggregateFileName), aggregateMarkdown);
   console.log(`  ✓ 汇总图表: ${aggregateFileName}`);
 
@@ -254,9 +272,9 @@ async function generateChartsForType(allReports, pageGroups, chartType) {
   let chartCount = 0;
   for (const [url, pageData] of Object.entries(pageGroups)) {
     const pageName = url.replace("http://localhost:8090", "").replace(/\//g, "-") || "home";
-    const fileName = `size-chart-${pageName}-${chartType}.md`;
+    const fileName = `size-chart-${pageName}-${chartType}-${sizeLabel}.md`;
 
-    const pageMarkdown = generateMarkdownReport(pageData, chartType);
+    const pageMarkdown = generateMarkdownReport(pageData, chartType, sizeType);
     await writeFile(resolve(OUTPUT_DIR, fileName), pageMarkdown);
     chartCount++;
   }
@@ -286,15 +304,23 @@ async function main() {
 
     // 判断是生成所有类型还是单一类型
     if (CHART_TYPE === "all") {
-      // 生成所有三种类型的图表
+      // 生成所有三种类型的图表，每种类型生成 gzipped 和 raw 两个版本
       const types = ["total", "script-stylesheet", "all-resources"];
+      const sizeTypes = ["transfer", "resource"];
+      
       for (const type of types) {
-        const count = await generateChartsForType(allReports, pageGroups, type);
-        totalCharts += count;
+        for (const sizeType of sizeTypes) {
+          const count = await generateChartsForType(allReports, pageGroups, type, sizeType);
+          totalCharts += count;
+        }
       }
     } else {
-      // 生成指定类型的图表
-      totalCharts = await generateChartsForType(allReports, pageGroups, CHART_TYPE);
+      // 生成指定类型的图表，包括 gzipped 和 raw 两个版本
+      const sizeTypes = ["transfer", "resource"];
+      for (const sizeType of sizeTypes) {
+        const count = await generateChartsForType(allReports, pageGroups, CHART_TYPE, sizeType);
+        totalCharts += count;
+      }
     }
 
     console.log("\n✓ 报告生成完成！");
