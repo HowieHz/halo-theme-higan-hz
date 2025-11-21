@@ -392,9 +392,9 @@ jobs:
             const chartsDir = './charts';
             let body = '';
             
-            // Find all chart files
+            // Find aggregate chart files only (don't include per-page charts in issue)
             const files = fs.readdirSync(chartsDir);
-            const chartFiles = files.filter(f => f.startsWith('size-chart-') && f.endsWith('.md')).sort();
+            const chartFiles = files.filter(f => f.startsWith('size-chart-aggregate-') && f.endsWith('.md')).sort();
             
             if (chartFiles.length > 0) {
               for (const file of chartFiles) {

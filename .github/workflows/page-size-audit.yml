@@ -19,12 +19,22 @@ on:
 
 jobs:
   audit:
-    name: Lighthouse Performance Audit
+    name: Lighthouse Performance Audit (${{ matrix.ref_name }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - ref_name: current
+            ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          - ref_name: base
+            ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
+      fail-fast: false
     
     steps:
-      - name: Checkout
+      - name: Checkout ${{ matrix.ref_name }}
         uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.ref }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -305,16 +315,16 @@ jobs:
           echo "当前目录内容："
           ls -la
 
-      - name: Upload Lighthouse raw data
+      - name: Upload Lighthouse raw data (${{ matrix.ref_name }})
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: lighthouse-raw-data
+          name: lighthouse-raw-data-${{ matrix.ref_name }}
           path: ./.lighthouseci/
           include-hidden-files: true
           if-no-files-found: warn
 
-      - name: Generate reports
+      - name: Generate reports (${{ matrix.ref_name }})
         if: success()
         env:
           OUTPUT_DIR: ./reports
@@ -324,14 +334,13 @@ jobs:
           THEME_VERSION: ${{ github.event.inputs.theme_version || github.sha }}
           GITHUB_SHA: ${{ github.sha }}
           LHCI_VERSION: ${{ env.LHCI_VERSION }}
+          REF_NAME: ${{ matrix.ref_name }}
         run: |
-          # 检查 Lighthouse 结果目录是否存在
           if [ ! -d "./.lighthouseci" ]; then
             echo "⚠️  警告：.lighthouseci 目录不存在"
             exit 1
           fi
           
-          # 检查是否有 JSON 文件
           json_count=$(find ./.lighthouseci -name "lhr-*.json" | wc -l)
           if [ "$json_count" -eq 0 ]; then
             echo "⚠️  警告：没有找到 Lighthouse 结果文件"
@@ -342,29 +351,11 @@ jobs:
           echo "找到 $json_count 个 Lighthouse 结果文件"
           node .github/scripts/generate-report.js
 
-      - name: Upload reports
+      - name: Upload reports (${{ matrix.ref_name }})
         uses: actions/upload-artifact@v4
         with:
-          name: page-size-reports
+          name: page-size-reports-${{ matrix.ref_name }}
           path: ./reports/
-
-      - name: Comment on PR or Release
-        if: github.event_name == 'pull_request' || github.event_name == 'release'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const report = fs.readFileSync('./reports/page-size-report.md', 'utf8');
-            
-            if (context.eventName === 'pull_request') {
-              // 在 PR 上评论
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                body: report
-              });
-            }
 
       - name: Stop Halo
         if: always()
@@ -377,5 +368,54 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: halo-logs
+          name: halo-logs-${{ matrix.ref_name }}
           path: ~/halo.log
+
+  compare-and-comment:
+    name: Compare and Comment
+    needs: audit
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      
+      - name: Download current reports
+        uses: actions/download-artifact@v4
+        with:
+          name: page-size-reports-current
+          path: ./reports-current
+      
+      - name: Download base reports
+        uses: actions/download-artifact@v4
+        with:
+          name: page-size-reports-base
+          path: ./reports-base
+      
+      - name: Generate comparison report
+        run: |
+          node .github/scripts/compare-reports.js
+        env:
+          CURRENT_REPORT: ./reports-current/page-size-report.json
+          BASE_REPORT: ./reports-base/page-size-report.json
+          OUTPUT_FILE: ./comparison-report.md
+      
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('./comparison-report.md', 'utf8');
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: report
+            });

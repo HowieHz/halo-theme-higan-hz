@@ -13,52 +13,6 @@ const START_VERSION = process.env.START_VERSION;
 const END_VERSION = process.env.END_VERSION || "最新版本";
 
 /**
- * 从报告目录读取所有版本的数据
- */
-async function loadAllReports() {
-  console.log(`正在从 ${REPORTS_DIR} 读取报告...`);
-
-  const reportDirs = await readdir(REPORTS_DIR);
-  const reports = [];
-
-  for (const dir of reportDirs) {
-    // 目录名格式：report-v1.45.0
-    const match = dir.match(/^report-(.+)$/);
-    if (!match) continue;
-
-    const version = match[1];
-    const reportPath = resolve(REPORTS_DIR, dir, `${version}.json`);
-
-    try {
-      const content = await readFile(reportPath, "utf-8");
-      const reportData = JSON.parse(content);
-
-      // 提取第一个结果的平均数据（假设报告中包含多个页面的数据）
-      if (reportData.results && reportData.results.length > 0) {
-        // 计算所有页面的平均值
-        const avgData = calculateAverage(reportData.results);
-
-        reports.push({
-          version,
-          date: reportData.metadata?.generatedAt || new Date().toISOString(),
-          resources: avgData,
-        });
-
-        console.log(`✓ 加载 ${version}`);
-      }
-    } catch (error) {
-      console.error(`✗ 加载 ${version} 失败:`, error.message);
-    }
-  }
-
-  // 按版本排序
-  reports.sort((a, b) => a.version.localeCompare(b.version));
-
-  console.log(`\n共加载 ${reports.length} 个版本的数据\n`);
-  return reports;
-}
-
-/**
  * 计算多个页面结果的平均值
  */
 function calculateAverage(results) {
