@@ -50,7 +50,7 @@ function calculateAverage(results) {
 function generateMermaidChart(data, title, lines) {
   // 动态计算宽度：(版本数 - 1) * 100
   const chartWidth = Math.max(600, (data.length - 1) * 100);
-  
+
   let chart = "```mermaid\n";
   chart += "---\n";
   chart += "config:\n";
