@@ -106,7 +106,23 @@ function generateMermaidChart(data, chartType) {
   chart += '  x-axis "版本" [';
   chart += data.map((d) => `"${d.version}"`).join(", ");
   chart += "]\n";
-  chart += '  y-axis "体积 (KB)" 0 --> 200\n';
+  
+  // 动态计算 y 轴最大值
+  let maxValue = 0;
+  if (chartType === "total") {
+    maxValue = Math.max(...data.map((d) => d.resources.total.transfer / 1024));
+  } else if (chartType === "script-stylesheet") {
+    maxValue = Math.max(
+      ...data.map((d) => Math.max(d.resources.script.transfer / 1024, d.resources.stylesheet.transfer / 1024))
+    );
+  } else if (chartType === "all-resources") {
+    const types = ["document", "script", "stylesheet", "font", "image", "fetch", "other"];
+    maxValue = Math.max(...data.map((d) => Math.max(...types.map((t) => d.resources[t].transfer / 1024))));
+  }
+  
+  // 向上取整到合适的刻度
+  const yAxisMax = Math.ceil(maxValue * 1.1 / 10) * 10;
+  chart += `  y-axis "体积 (KB)" 0 --> ${yAxisMax}\n`;
 
   // 根据图表类型添加数据线
   if (chartType === "total") {

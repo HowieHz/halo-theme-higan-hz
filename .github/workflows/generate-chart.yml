@@ -148,6 +148,14 @@ jobs:
           mkdir -p .lighthouseci
           lhci autorun \
             --collect.url=http://localhost:8090/ \
+            --collect.url=http://localhost:8090/archives \
+            --collect.url=http://localhost:8090/archives/hello-halo \
+            --collect.url=http://localhost:8090/tags \
+            --collect.url=http://localhost:8090/tags/halo \
+            --collect.url=http://localhost:8090/categories \
+            --collect.url=http://localhost:8090/categories/default \
+            --collect.url=http://localhost:8090/authors/admin \
+            --collect.url=http://localhost:8090/about \
             --collect.numberOfRuns=1 \
             --collect.settings.preset=desktop \
             --collect.settings.throttling.rttMs=40 \
