@@ -139,14 +139,26 @@ jobs:
 
       - name: Copy latest .github files from workflow branch
         run: |
-          # 保存工作流发起分支名（即用户在 UI 中选择的 "Use workflow from" 分支）
-          WORKFLOW_REF="${{ github.ref }}"
+          echo "当前工作目录中的 .github 文件:"
+          ls -la .github/ || echo ".github 目录不存在"
+          
+          # 保存当前 checkout 的版本信息
+          CURRENT_VERSION=$(git describe --tags --exact-match 2>/dev/null || echo "unknown")
+          echo "当前版本: ${CURRENT_VERSION}"
+          
+          # 删除旧的 .github 目录（如果存在）
+          rm -rf .github
           
           # 从工作流发起分支获取最新的 .github 配置和脚本
-          git fetch origin "${WORKFLOW_REF}"
-          git checkout "${WORKFLOW_REF}" -- .github || echo "⚠️  .github not found in ${WORKFLOW_REF}"
+          WORKFLOW_BRANCH="${{ github.ref_name }}"
+          echo "工作流发起分支: ${WORKFLOW_BRANCH}"
           
-          echo "✓ 已从工作流发起分支 ${WORKFLOW_REF} 复制最新的 .github 文件"
+          git fetch origin "${WORKFLOW_BRANCH}":"refs/remotes/origin/${WORKFLOW_BRANCH}"
+          git checkout "origin/${WORKFLOW_BRANCH}" -- .github
+          
+          echo "✓ 已从工作流发起分支 ${WORKFLOW_BRANCH} 复制最新的 .github 文件"
+          echo "复制后的 .github 文件:"
+          ls -la .github/scripts/ || echo ".github/scripts 目录不存在"
 
       - name: Check and set pnpm version
         id: check-pnpm
