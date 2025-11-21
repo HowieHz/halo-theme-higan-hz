@@ -147,7 +147,12 @@ jobs:
         run: |
           mkdir -p .lighthouseci
           lhci autorun \
-            --config=.github/lighthouse/lighthouserc.json \
+            --collect.url=http://localhost:8090/ \
+            --collect.numberOfRuns=1 \
+            --collect.settings.preset=desktop \
+            --collect.settings.throttling.rttMs=40 \
+            --collect.settings.throttling.throughputKbps=10240 \
+            --collect.settings.throttling.cpuSlowdownMultiplier=1 \
             --upload.target=filesystem \
             --upload.outputDir=.lighthouseci
         env:
