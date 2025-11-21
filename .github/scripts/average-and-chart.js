@@ -228,6 +228,51 @@ function groupDataByPage(allReports) {
 }
 
 /**
+ * 解析语义化版本号
+ * @param {string} version - 版本号字符串，如 "v1.2.3"
+ * @returns {object|null} 解析后的版本对象，如果解析失败则返回 null
+ */
+function parseSemanticVersion(version) {
+  const match = version.match(/^v?(\d+)\.(\d+)\.(\d+)$/);
+  if (!match) return null;
+  
+  return {
+    major: parseInt(match[1], 10),
+    minor: parseInt(match[2], 10),
+    patch: parseInt(match[3], 10),
+  };
+}
+
+/**
+ * 比较两个语义化版本号
+ * @param {string} versionA - 版本 A
+ * @param {string} versionB - 版本 B
+ * @returns {number} 如果 A < B 返回负数，A > B 返回正数，A === B 返回 0
+ */
+function compareSemanticVersions(versionA, versionB) {
+  const parsedA = parseSemanticVersion(versionA);
+  const parsedB = parseSemanticVersion(versionB);
+  
+  // 如果有版本无法解析，回退到字符串比较
+  if (!parsedA || !parsedB) {
+    return versionA.localeCompare(versionB);
+  }
+  
+  // 比较 major 版本
+  if (parsedA.major !== parsedB.major) {
+    return parsedA.major - parsedB.major;
+  }
+  
+  // 比较 minor 版本
+  if (parsedA.minor !== parsedB.minor) {
+    return parsedA.minor - parsedB.minor;
+  }
+  
+  // 比较 patch 版本
+  return parsedA.patch - parsedB.patch;
+}
+
+/**
  * 从报告目录读取所有版本的完整数据（包含每个页面）
  */
 async function loadAllReportsWithPages() {
@@ -261,10 +306,10 @@ async function loadAllReportsWithPages() {
     }
   }
 
-  // 按日期排序（从旧到新）
-  reports.sort((a, b) => new Date(a.date) - new Date(b.date));
+  // 按语义化版本排序（从旧到新）
+  reports.sort((a, b) => compareSemanticVersions(a.version, b.version));
   console.log(`\n共加载 ${reports.length} 个版本的数据\n`);
-  console.log(`版本顺序（按时间）: ${reports.map(r => r.version).join(', ')}\n`);
+  console.log(`版本顺序（按语义化版本）: ${reports.map(r => r.version).join(', ')}\n`);
   return reports;
 }
 
