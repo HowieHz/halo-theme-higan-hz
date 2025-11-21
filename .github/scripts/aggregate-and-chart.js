@@ -206,30 +206,141 @@ function generateMarkdownReport(data, chartType) {
 }
 
 /**
+ * 按页面分组数据
+ */
+function groupDataByPage(allReports) {
+  const pageGroups = {};
+  
+  for (const report of allReports) {
+    const version = report.version;
+    
+    // 读取原始报告获取每个页面的数据
+    for (const result of report.rawResults || []) {
+      const url = result.url;
+      if (!pageGroups[url]) {
+        pageGroups[url] = [];
+      }
+      
+      pageGroups[url].push({
+        version,
+        date: report.date,
+        resources: result.resources
+      });
+    }
+  }
+  
+  return pageGroups;
+}
+
+/**
+ * 从报告目录读取所有版本的完整数据（包含每个页面）
+ */
+async function loadAllReportsWithPages() {
+  console.log(`正在从 ${REPORTS_DIR} 读取报告...`);
+
+  const reportDirs = await readdir(REPORTS_DIR);
+  const reports = [];
+
+  for (const dir of reportDirs) {
+    const match = dir.match(/^report-(.+)$/);
+    if (!match) continue;
+
+    const version = match[1];
+    const reportPath = resolve(REPORTS_DIR, dir, `${version}.json`);
+
+    try {
+      const content = await readFile(reportPath, "utf-8");
+      const reportData = JSON.parse(content);
+
+      if (reportData.results && reportData.results.length > 0) {
+        reports.push({
+          version,
+          date: reportData.metadata?.generatedAt || new Date().toISOString(),
+          rawResults: reportData.results
+        });
+
+        console.log(`✓ 加载 ${version}`);
+      }
+    } catch (error) {
+      console.error(`✗ 加载 ${version} 失败:`, error.message);
+    }
+  }
+
+  reports.sort((a, b) => a.version.localeCompare(b.version));
+  console.log(`\n共加载 ${reports.length} 个版本的数据\n`);
+  return reports;
+}
+
+/**
+ * 生成指定类型的所有图表
+ */
+async function generateChartsForType(allReports, pageGroups, chartType) {
+  console.log(`\n=== 生成 ${chartType} 类型图表 ===`);
+  
+  // 生成汇总图表
+  const avgData = allReports.map(report => ({
+    version: report.version,
+    date: report.date,
+    resources: calculateAverage(report.rawResults)
+  }));
+  
+  const aggregateFileName = `size-chart-aggregate-${chartType}.md`;
+  const aggregateMarkdown = generateMarkdownReport(avgData, chartType);
+  await writeFile(resolve(OUTPUT_DIR, aggregateFileName), aggregateMarkdown);
+  console.log(`  ✓ 汇总图表: ${aggregateFileName}`);
+
+  // 生成各页面单独图表
+  let chartCount = 0;
+  for (const [url, pageData] of Object.entries(pageGroups)) {
+    const pageName = url.replace('http://localhost:8090', '').replace(/\//g, '-') || 'home';
+    const fileName = `size-chart-${pageName}-${chartType}.md`;
+    
+    const pageMarkdown = generateMarkdownReport(pageData, chartType);
+    await writeFile(resolve(OUTPUT_DIR, fileName), pageMarkdown);
+    chartCount++;
+  }
+  
+  console.log(`  ✓ 单页图表: ${chartCount} 个`);
+  return chartCount + 1;
+}
+
+/**
  * 主函数
  */
 async function main() {
   try {
     console.log("=== 汇总数据并生成趋势图 ===\n");
 
-    // 加载所有报告
-    const data = await loadAllReports();
+    // 加载所有报告（包含每个页面的数据）
+    const allReports = await loadAllReportsWithPages();
 
-    if (data.length === 0) {
+    if (allReports.length === 0) {
       throw new Error("没有找到任何报告数据");
     }
 
-    // 生成图表
-    console.log("生成 Markdown 报告...");
-    const markdown = generateMarkdownReport(data, CHART_TYPE);
-    await writeFile(resolve(OUTPUT_DIR, "size-chart.md"), markdown);
+    // 按页面分组
+    const pageGroups = groupDataByPage(allReports);
+    
+    let totalCharts = 0;
+    
+    // 判断是生成所有类型还是单一类型
+    if (CHART_TYPE === 'all') {
+      // 生成所有三种类型的图表
+      const types = ['total', 'script-stylesheet', 'all-resources'];
+      for (const type of types) {
+        const count = await generateChartsForType(allReports, pageGroups, type);
+        totalCharts += count;
+      }
+    } else {
+      // 生成指定类型的图表
+      totalCharts = await generateChartsForType(allReports, pageGroups, CHART_TYPE);
+    }
 
     console.log("\n✓ 报告生成完成！");
-    console.log(`  - 输出文件: ${resolve(OUTPUT_DIR, "size-chart.md")}`);
-    console.log(`  - 包含版本: ${data.length} 个`);
-
-    // 输出到控制台
-    console.log("\n" + markdown);
+    console.log(`  - 输出目录: ${OUTPUT_DIR}`);
+    console.log(`  - 总计图表: ${totalCharts} 个`);
+    console.log(`  - 测试版本: ${allReports.length} 个`);
+    console.log(`  - 测试页面: ${Object.keys(pageGroups).length} 个`);
   } catch (error) {
     console.error("\n❌ 生成图表失败:", error.message);
     console.error(error.stack);
