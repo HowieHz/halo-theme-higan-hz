@@ -1,6 +1,9 @@
 {
   "ci": {
     "collect": {
+      "url": [
+        "http://localhost:8090/"
+      ],
       "numberOfRuns": 3,
       "settings": {
         "preset": "desktop",
