@@ -48,11 +48,14 @@ function calculateAverage(results) {
  * @param {Array} lines - 要显示的数据线配置 [{label, type, sizeType}]
  */
 function generateMermaidChart(data, title, lines) {
+  // 动态计算宽度：(版本数 - 1) * 100
+  const chartWidth = Math.max(600, (data.length - 1) * 100);
+  
   let chart = "```mermaid\n";
   chart += "---\n";
   chart += "config:\n";
   chart += "  xyChart:\n";
-  chart += "    width: 900\n";
+  chart += `    width: ${chartWidth}\n`;
   chart += "    height: 600\n";
   chart += "  themeVariables:\n";
   chart += "    xyChart:\n";
