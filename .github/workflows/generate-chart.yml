@@ -146,16 +146,16 @@ jobs:
         with:
           ref: ${{ matrix.version }}
 
-      - name: Copy latest .github files from current branch
+      - name: Copy latest .github files from workflow branch
         run: |
-          # 保存当前分支名
-          CURRENT_REF="${{ matrix.version }}"
+          # 保存工作流发起分支名（即用户在 UI 中选择的 "Use workflow from" 分支）
+          WORKFLOW_REF="${{ github.ref }}"
           
-          # 从当前分支获取最新的 .github 配置和脚本
-          git fetch origin "${CURRENT_REF}"
-          git checkout origin/"${CURRENT_REF}" -- .github || echo "⚠️  .github not found in ${CURRENT_REF}"
+          # 从工作流发起分支获取最新的 .github 配置和脚本
+          git fetch origin "${WORKFLOW_REF}"
+          git checkout "${WORKFLOW_REF}" -- .github || echo "⚠️  .github not found in ${WORKFLOW_REF}"
           
-          echo "✓ 已从当前分支复制最新的 .github 文件"
+          echo "✓ 已从工作流发起分支 ${WORKFLOW_REF} 复制最新的 .github 文件"
 
       - name: Check and set pnpm version
         id: check-pnpm
