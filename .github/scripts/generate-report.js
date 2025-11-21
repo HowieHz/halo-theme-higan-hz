@@ -108,8 +108,17 @@ async function parseLighthouseResults() {
       resources.total.resourceSize += resources[type].resourceSize;
     }
 
+    // 将完整 URL 转换为相对路径
+    let relativePath;
+    try {
+      relativePath = new URL(entry.url).pathname || "/";
+    } catch {
+      // 如果 URL 解析失败，使用原始值
+      relativePath = entry.url;
+    }
+
     results.push({
-      url: entry.url,
+      url: relativePath,
       resources,
     });
   }
@@ -179,8 +188,8 @@ function generateMarkdownReport(results, metadata = {}) {
 
   // 生成数据行
   for (const result of results) {
-    const urlPath = new URL(result.url).pathname || "/";
-    markdown += `| ${urlPath} |`;
+    // result.url 现在已经是相对路径，直接使用
+    markdown += `| ${result.url} |`;
 
     for (const type of typeOrder) {
       const transfer = result.resources[type]?.transferSize || 0;
