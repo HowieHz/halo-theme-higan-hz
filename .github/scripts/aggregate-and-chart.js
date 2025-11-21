@@ -27,7 +27,7 @@ async function loadAllReports() {
     if (!match) continue;
 
     const version = match[1];
-    const reportPath = resolve(REPORTS_DIR, dir, "page-size-report.json");
+    const reportPath = resolve(REPORTS_DIR, dir, `${version}.json`);
 
     try {
       const content = await readFile(reportPath, "utf-8");
