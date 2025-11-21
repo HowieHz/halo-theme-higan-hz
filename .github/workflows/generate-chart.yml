@@ -187,66 +187,62 @@ jobs:
           node-version: 24
           cache: pnpm
 
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build theme
-        run: pnpm build
-
-      - name: Create build directories
-        run: |
-          mkdir -p ~/builds/tmp ~/builds/target
-
-      - name: Build theme package
-        run: |
-          echo "使用当前代码构建主题..."
-          cp -r . ~/builds/tmp
-          mkdir -p ~/builds/tmp-included
-          cd ~/builds/tmp
-          # 逐行读取 include-list.txt 并复制存在的文件/文件夹
-          while IFS= read -r item; do
-            if [ -e "$item" ]; then
-              cp -r --parents "$item" ~/builds/tmp-included/
-              echo "✓ 复制: $item"
-            else
-              echo "⚠️  跳过不存在的: $item"
-            fi
-          done < ${{ github.workspace }}/.github/include-list.txt
-          cd ~/builds/tmp-included
-          zip -9 -r howiehz-higan-cn.zip .
-          mv howiehz-higan-cn.zip ~/builds/target/
-          echo "✓ 主题构建完成"
-
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '21'
+          distribution: temurin
+          java-version: 21
 
-      - name: Get Java version
+      # ========== 并行执行(主要耗时部分) ==========
+      - name: Parallel Build Theme and Setup Halo
+        shell: bash
         run: |
+          set -e
+          
           JAVA_VERSION=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}')
           echo "JAVA_VERSION=${JAVA_VERSION}" >> $GITHUB_ENV
-          echo "✓ Java 版本: ${JAVA_VERSION}"
-
-      - name: Download Halo
-        run: |
           HALO_VERSION="2.21.10"
-          if wget https://github.com/halo-dev/halo/releases/download/v${HALO_VERSION}/halo-${HALO_VERSION}.jar -O ~/halo.jar 2>/dev/null; then
-            echo "✓ 从 GitHub 下载 Halo 成功"
-          else
-            echo "⚠️  GitHub 下载失败，尝试从备用地址下载..."
-            wget https://dl.halo.run/release/halo-${HALO_VERSION}.jar -O ~/halo.jar
-            echo "✓ 从备用地址下载 Halo 成功"
-          fi
-          # 将实际下载的版本保存到环境变量
           echo "HALO_VERSION=${HALO_VERSION}" >> $GITHUB_ENV
-          echo "✓ Halo 版本: ${HALO_VERSION}"
-
-      - name: Create Halo configuration
-        run: |
-          mkdir -p ~/.halo2
-          cat > ~/.halo2/application.yaml << 'EOF'
+          
+          mkdir -p ~/logs
+          
+          # ============ 任务 1: 主题构建 ============
+          (
+            set -e
+            echo "📦 [Theme] 开始构建"
+            
+            pnpm install
+            pnpm build
+            
+            mkdir -p ~/builds/tmp ~/builds/target
+            
+            cp -r . ~/builds/tmp
+            mkdir -p ~/builds/tmp-included
+            cd ~/builds/tmp
+            while IFS= read -r item; do
+              if [ -e "$item" ]; then
+                cp -r --parents "$item" ~/builds/tmp-included/
+              fi
+            done < ${{ github.workspace }}/.github/include-list.txt
+            cd ~/builds/tmp-included
+            zip -9 -r howiehz-higan-cn.zip .
+            mv howiehz-higan-cn.zip ~/builds/target/
+            
+            echo "✅ [Theme] 完成"
+          ) > ~/logs/theme.log 2>&1 &
+          THEME_PID=$!
+          
+          # ============ 任务 2: Halo 设置 ============
+          (
+            set -e
+            echo "🔧 [Halo] 开始设置"
+            
+            if ! wget -q "https://github.com/halo-dev/halo/releases/download/v${HALO_VERSION}/halo-${HALO_VERSION}.jar" -O ~/halo.jar; then
+              wget -q "https://dl.halo.run/release/halo-${HALO_VERSION}.jar" -O ~/halo.jar
+            fi
+            
+            mkdir -p ~/.halo2
+            cat > ~/.halo2/application.yaml << 'EOF'
           server:
             port: 8090
           spring:
@@ -267,82 +263,94 @@ jobs:
             work-dir: ${user.home}/.halo2
             external-url: http://localhost:8090
           EOF
+            
+            nohup java -jar ~/halo.jar \
+              --spring.config.additional-location=optional:file:${HOME}/.halo2/ \
+              -Dfile.encoding=UTF-8 > ~/logs/halo-startup.log 2>&1 &
+            echo $! > ~/halo.pid
+            
+            for i in {1..60}; do
+              if curl -sf http://localhost:8090/actuator/health/readiness >/dev/null 2>&1; then
+                echo "✅ [Halo] 就绪 (${i}次尝试)"
+                break
+              fi
+              [ $i -eq 60 ] && { echo "❌ [Halo] 超时"; cat ~/logs/halo-startup.log; exit 1; }
+              sleep 1
+            done
+            
+            echo "正在初始化 Halo 系统..."
+            response=$(curl -c /tmp/cookies.txt -s http://localhost:8090/system/setup)
+            csrf_token=$(echo "$response" | grep '_csrf' | sed -n 's/.*value="\([^"]*\)".*/\1/p')
+            
+            curl -b /tmp/cookies.txt -X POST \
+              http://localhost:8090/system/setup \
+              -H "Content-Type: application/x-www-form-urlencoded" \
+              -d "_csrf=${csrf_token}" \
+              -d "language=zh-CN" \
+              -d "externalUrl=http://localhost:8090" \
+              -d "siteTitle=Test Site" \
+              -d "username=admin" \
+              -d "email=admin@example.com" \
+              -d "password=admin" \
+              -d "confirmPassword=admin" \
+              -L -s > /dev/null
 
-      - name: Start Halo in background
-        run: |
-          nohup java -jar ~/halo.jar \
-            --spring.config.additional-location=optional:file:${HOME}/.halo2/ \
-            -Dfile.encoding=UTF-8 > ~/halo.log 2>&1 &
-          echo $! > ~/halo.pid
-          echo "Halo PID: $(cat ~/halo.pid)"
-
-      - name: Wait for Halo to be ready
-        run: |
-          echo "Waiting for Halo to start..."
-          max_attempts=60
-          attempt=0
-          while [ $attempt -lt $max_attempts ]; do
-            if curl -f http://localhost:8090/actuator/health/readiness > /dev/null 2>&1; then
-              echo "✓ Halo is ready!"
-              break
-            fi
-            attempt=$((attempt + 1))
-            echo "Waiting... ($attempt/$max_attempts)"
-            sleep 5
-          done
-          if [ $attempt -eq $max_attempts ]; then
-            echo "❌ Halo failed to start"
-            cat ~/halo.log
+            echo "✅ [Halo] 完成"
+          ) > ~/logs/halo.log 2>&1 &
+          HALO_PID=$!
+          
+          # ============ 等待并检查结果 ============
+          echo "⏳ 等待并行任务..."
+          
+          wait $THEME_PID
+          THEME_CODE=$?
+          wait $HALO_PID
+          HALO_CODE=$?
+          
+          if [ $THEME_CODE -ne 0 ]; then
+            echo "❌ 主题构建失败"
+            cat ~/logs/theme.log
             exit 1
           fi
-
-      - name: Initialize Halo system
-        run: |
-          echo "正在初始化 Halo 系统..."
-          response=$(curl -c /tmp/cookies.txt -s http://localhost:8090/system/setup)
-          csrf_token=$(echo "$response" | grep '_csrf' | sed -n 's/.*value="\([^"]*\)".*/\1/p')
-          echo "CSRF Token: $csrf_token"
-          curl -b /tmp/cookies.txt -X POST \
-            http://localhost:8090/system/setup \
-            -H "Content-Type: application/x-www-form-urlencoded" \
-            -d "_csrf=${csrf_token}" \
-            -d "language=zh-CN" \
-            -d "externalUrl=http://localhost:8090" \
-            -d "siteTitle=Test Site" \
-            -d "username=admin" \
-            -d "email=admin@example.com" \
-            -d "password=admin" \
-            -d "confirmPassword=admin" \
-            -L -v
-          echo "✓ Halo 系统初始化完成"
-          sleep 10
+          
+          if [ $HALO_CODE -ne 0 ]; then
+            echo "❌ Halo 设置失败"
+            cat ~/logs/halo.log
+            exit 1
+          fi
+          
+          echo "🎉 并行任务全部成功!"
 
       - name: Install and activate theme
         run: |
-          echo "安装主题..."
           THEME_ZIP_PATH="${HOME}/builds/target/howiehz-higan-cn.zip"
+          
           if [ ! -f "$THEME_ZIP_PATH" ]; then
             echo "❌ 主题文件不存在"
             exit 1
           fi
-          echo "上传主题文件..."
+          
+          echo "安装主题..."
           curl -X POST \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/install \
             -u admin:admin \
             -F "file=@${THEME_ZIP_PATH}" \
             -s > /dev/null
+          
           echo "✓ 主题已安装"
-          sleep 3
+
           curl -X PUT \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/activation \
             -u admin:admin \
             -s > /dev/null
+          
           echo "✓ 主题已激活"
-          sleep 2
+
           curl -X PUT \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/invalidate-cache \
             -u admin:admin \
             -s > /dev/null
+          
           echo "✓ 缓存已清除"
 
       - name: Setup Lighthouse CI
@@ -401,6 +409,13 @@ jobs:
             kill $(cat ~/halo.pid) || true
           fi
 
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-${{ matrix.version }}
+          path: ~/logs/
+
   # 第三步：汇总所有版本的数据并生成图表
   generate-chart:
     name: Generate Chart
@@ -426,7 +441,6 @@ jobs:
         if: github.event.inputs.create_pr == 'true'
         run: |
           mkdir -p .github/page_size_audit_results
-          # 将所有下载的报告复制到目标目录
           for dir in ./all-reports/report-*; do
             if [ -d "$dir" ]; then
               version=$(basename "$dir" | sed 's/report-//')
