@@ -44,23 +44,28 @@ function formatChange(change, baseValue) {
  * @returns {string} 带颜色标记的字符串
  */
 function formatColoredChange(transferChange, resourceChange, baseTransfer, baseResource) {
+  // 如果两个值都没有变化，用 - 表示省略
+  if (transferChange === 0 && resourceChange === 0) {
+    return "-";
+  }
+  
   const transferStr = formatChange(transferChange, baseTransfer);
   const resourceStr = formatChange(resourceChange, baseResource);
 
-  // 为 transfer size 添加颜色
+  // 为 transfer size 添加颜色和 emoji
   let coloredTransfer = transferStr;
   if (transferChange > 0) {
-    coloredTransfer = `<span style="color: red;">${transferStr}</span>`;
+    coloredTransfer = `🔴 <span style="color: red;">${transferStr}</span>`;
   } else if (transferChange < 0) {
-    coloredTransfer = `<span style="color: green;">${transferStr}</span>`;
+    coloredTransfer = `🟢 <span style="color: green;">${transferStr}</span>`;
   }
-
-  // 为 resource size 添加颜色
+  
+  // 为 resource size 添加颜色和 emoji
   let coloredResource = resourceStr;
   if (resourceChange > 0) {
-    coloredResource = `<span style="color: red;">${resourceStr}</span>`;
+    coloredResource = `🔴 <span style="color: red;">${resourceStr}</span>`;
   } else if (resourceChange < 0) {
-    coloredResource = `<span style="color: green;">${resourceStr}</span>`;
+    coloredResource = `🟢 <span style="color: green;">${resourceStr}</span>`;
   }
 
   return `${coloredTransfer}/${coloredResource}`;
@@ -173,7 +178,7 @@ function generateComparisonReport(currentReport, baseReport) {
   if (hasChanges) {
     markdown += `## Changes\n\n`;
     markdown += `Unit: KB, Format: transfer size change(percent)/resource size change(percent)\n\n`;
-    markdown += `<span style="color: red;">Red = Increase</span> | <span style="color: green;">Green = Decrease</span>\n\n`;
+    markdown += `🔴 <span style="color: red;">Red = Increase</span> | 🟢 <span style="color: green;">Green = Decrease</span>\n\n`;
     markdown += `| Page |`;
     for (const type of typeOrder) {
       markdown += ` ${typeLabels[type]} |`;

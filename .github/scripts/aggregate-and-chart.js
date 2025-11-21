@@ -20,8 +20,15 @@ function calculateAverage(results) {
   const avg = {};
 
   for (const type of resourceTypes) {
-    const transferSum = results.reduce((sum, r) => sum + (r.resources[type]?.transferSize || 0), 0);
-    const resourceSum = results.reduce((sum, r) => sum + (r.resources[type]?.resourceSize || 0), 0);
+    // 注意：JSON 数据结构中是 resources[type].transferSize 和 resources[type].resourceSize
+    const transferSum = results.reduce((sum, r) => {
+      const value = r.resources?.[type]?.transferSize || 0;
+      return sum + value;
+    }, 0);
+    const resourceSum = results.reduce((sum, r) => {
+      const value = r.resources?.[type]?.resourceSize || 0;
+      return sum + value;
+    }, 0);
 
     avg[type] = {
       transfer: transferSum / results.length,
