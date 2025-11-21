@@ -18,7 +18,6 @@ on:
         type: choice
         options:
           - all
-          - total
           - script-stylesheet
           - all-resources
       create_pr:
