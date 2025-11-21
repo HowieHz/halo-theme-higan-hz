@@ -340,7 +340,7 @@ jobs:
           LIGHTHOUSE_RESULTS_DIR: ./.lighthouseci
           HALO_VERSION: ${{ env.HALO_VERSION }}
           JAVA_VERSION: ${{ env.JAVA_VERSION }}
-          THEME_VERSION: ${{ github.event.inputs.theme_version || github.sha }}
+          THEME_VERSION: ${{ github.event.inputs.theme_version || matrix.ref }}
           GITHUB_SHA: ${{ github.sha }}
           LHCI_VERSION: ${{ env.LHCI_VERSION }}
           REF_NAME: ${{ matrix.ref_name }}
