@@ -288,17 +288,18 @@ async function generateChartsForType(allReports, pageGroups, chartType, sizeType
     resources: calculateAverage(report.rawResults),
   }));
 
-  if (chartType === 'all-resources') {
-    // all-resources 模式：生成所有资源在一起的图表 + 每种资源单独的图表 + total 图表
-    
-    // 1. 所有资源在一起的图表
-    const allResourcesFileName = `size-chart--about-${chartType}-${sizeLabel}.md`;
-    const allResourcesMarkdown = generateMarkdownReport(avgData, chartType, sizeType);
-    await writeFile(resolve(OUTPUT_DIR, allResourcesFileName), allResourcesMarkdown);
-    console.log(`  ✓ 所有资源图表: ${allResourcesFileName}`);
-    totalCharts++;
+  // 1. 首先生成平均值图表（所有模式都有）
+  const averageFileName = `size-chart-average-${chartType}-${sizeLabel}.md`;
+  const averageMarkdown = generateMarkdownReport(avgData, chartType, sizeType);
+  await writeFile(resolve(OUTPUT_DIR, averageFileName), averageMarkdown);
+  console.log(`  ✓ 平均值图表: ${averageFileName}`);
+  totalCharts++;
 
-    // 2. 每种资源单独的图表
+  // 2. 根据模式生成额外的单独资源图表
+  if (chartType === 'all-resources') {
+    // all-resources 模式：额外生成每种资源单独的图表 + total 图表
+    
+    // 2.1 每种资源单独的图表
     const resourceTypes = ["document", "script", "stylesheet", "font", "image", "fetch", "other"];
     for (const resourceType of resourceTypes) {
       const fileName = `size-chart--about-${chartType}-${resourceType}-${sizeLabel}.md`;
@@ -308,7 +309,7 @@ async function generateChartsForType(allReports, pageGroups, chartType, sizeType
       totalCharts++;
     }
 
-    // 3. total 图表
+    // 2.2 total 图表
     const totalFileName = `size-chart--about-${chartType}-total-${sizeLabel}.md`;
     const totalMarkdown = generateMarkdownReport(avgData, chartType, sizeType, 'total');
     await writeFile(resolve(OUTPUT_DIR, totalFileName), totalMarkdown);
@@ -316,23 +317,16 @@ async function generateChartsForType(allReports, pageGroups, chartType, sizeType
     totalCharts++;
 
   } else if (chartType === 'script-stylesheet') {
-    // script-stylesheet 模式：两个在一起的图表 + script 单独 + stylesheet 单独
+    // script-stylesheet 模式：额外生成 script 单独 + stylesheet 单独
     
-    // 1. 两个在一起的图表
-    const combinedFileName = `size-chart--about-${chartType}-${sizeLabel}.md`;
-    const combinedMarkdown = generateMarkdownReport(avgData, chartType, sizeType);
-    await writeFile(resolve(OUTPUT_DIR, combinedFileName), combinedMarkdown);
-    console.log(`  ✓ script & stylesheet 组合图表: ${combinedFileName}`);
-    totalCharts++;
-
-    // 2. script 单独图表
+    // 2.1 script 单独图表
     const scriptFileName = `size-chart--about-${chartType}-script-${sizeLabel}.md`;
     const scriptMarkdown = generateMarkdownReport(avgData, chartType, sizeType, 'script');
     await writeFile(resolve(OUTPUT_DIR, scriptFileName), scriptMarkdown);
     console.log(`  ✓ script 单独图表: ${scriptFileName}`);
     totalCharts++;
 
-    // 3. stylesheet 单独图表
+    // 2.2 stylesheet 单独图表
     const stylesheetFileName = `size-chart--about-${chartType}-stylesheet-${sizeLabel}.md`;
     const stylesheetMarkdown = generateMarkdownReport(avgData, chartType, sizeType, 'stylesheet');
     await writeFile(resolve(OUTPUT_DIR, stylesheetFileName), stylesheetMarkdown);

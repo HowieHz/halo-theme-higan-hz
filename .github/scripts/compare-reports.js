@@ -144,7 +144,8 @@ function generateComparisonReport(currentReport, baseReport) {
 
   // 生成当前值的数据行
   for (const currentResult of currentReport.results) {
-    const urlPath = new URL(currentResult.url).pathname || "/";
+    // url 已经是相对路径，直接使用
+    const urlPath = currentResult.url || "/";
     markdown += `| ${urlPath} |`;
 
     for (const type of typeOrder) {
@@ -233,7 +234,8 @@ function generateComparisonReport(currentReport, baseReport) {
 
     // 生成变化数据行
     for (const change of changes) {
-      const urlPath = new URL(change.url).pathname || "/";
+      // url 已经是相对路径，直接使用
+      const urlPath = change.url || "/";
       markdown += `| ${urlPath} |`;
 
       // 只显示有变化的列

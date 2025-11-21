@@ -111,10 +111,11 @@ async function parseLighthouseResults() {
     // 将完整 URL 转换为相对路径
     let relativePath;
     try {
-      relativePath = new URL(entry.url).pathname || "/";
+      const urlObj = new URL(entry.url);
+      relativePath = urlObj.pathname || "/";
     } catch {
-      // 如果 URL 解析失败，使用原始值
-      relativePath = entry.url;
+      // 如果 URL 解析失败，假设它已经是相对路径
+      relativePath = entry.url.startsWith('/') ? entry.url : '/' + entry.url;
     }
 
     results.push({
