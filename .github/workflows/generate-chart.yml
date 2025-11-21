@@ -121,7 +121,25 @@ jobs:
           
           echo "✓ 已从主分支复制最新的 .github 文件"
 
-      - name: Setup pnpm
+      - name: Check and set pnpm version
+        id: check-pnpm
+        run: |
+          if grep -q "packageManager" package.json; then
+            echo "pnpm_version_needed=false" >> $GITHUB_OUTPUT
+            echo "✓ package.json 已包含 packageManager 字段"
+          else
+            echo "pnpm_version_needed=true" >> $GITHUB_OUTPUT
+            echo "⚠️  package.json 不包含 packageManager 字段，将使用默认版本"
+          fi
+
+      - name: Setup pnpm (with version)
+        if: steps.check-pnpm.outputs.pnpm_version_needed == 'true'
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup pnpm (auto-detect)
+        if: steps.check-pnpm.outputs.pnpm_version_needed == 'false'
         uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
