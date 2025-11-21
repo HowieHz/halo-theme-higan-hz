@@ -72,12 +72,23 @@ jobs:
             
             console.log(`总共获取 ${releases.length} 个 releases`);
             
+            // 过滤预发布版本（prerelease）
+            const stableReleases = releases.filter(r => {
+              const isPrerelease = r.prerelease || r.tag_name.includes('-alpha') || r.tag_name.includes('-beta') || r.tag_name.includes('-Beta') || r.tag_name.includes('-rc');
+              if (isPrerelease) {
+                console.log(`⊘ 跳过预发布版本: ${r.tag_name}`);
+              }
+              return !isPrerelease;
+            });
+            
+            console.log(`过滤后得到 ${stableReleases.length} 个稳定版本`);
+            
             // 找到版本范围
-            const startIndex = releases.findIndex(r => r.tag_name === startVersion);
-            const endIndex = endVersion ? releases.findIndex(r => r.tag_name === endVersion) : 0;
+            const startIndex = stableReleases.findIndex(r => r.tag_name === startVersion);
+            const endIndex = endVersion ? stableReleases.findIndex(r => r.tag_name === endVersion) : 0;
             
             if (startIndex === -1) {
-              core.setFailed(`找不到起始版本: ${startVersion}，可用的版本: ${releases.slice(0, 10).map(r => r.tag_name).join(', ')}...`);
+              core.setFailed(`找不到起始版本: ${startVersion}，可用的稳定版本: ${stableReleases.slice(0, 10).map(r => r.tag_name).join(', ')}...`);
               return;
             }
             if (endVersion && endIndex === -1) {
@@ -86,7 +97,7 @@ jobs:
             }
             
             // 提取版本列表（从旧到新）
-            const versionList = releases
+            const versionList = stableReleases
               .slice(endIndex, startIndex + 1)
               .reverse()
               .map(r => r.tag_name);
