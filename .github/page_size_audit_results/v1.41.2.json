@@ -1,0 +1,345 @@
+{
+  "metadata": {
+    "haloVersion": "2.21.10",
+    "javaVersion": "21.0.9",
+    "themeVersion": "v1.41.2",
+    "lhciVersion": "0.15.1",
+    "generatedAt": "2025-11-21T08:29:42.091Z"
+  },
+  "timestamp": "2025-11-21T08:29:42.091Z",
+  "results": [
+    {
+      "url": "http://localhost:8090/",
+      "resources": {
+        "document": {
+          "transferSize": 2378,
+          "resourceSize": 6404
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 294103,
+          "resourceSize": 931993
+        },
+        "stylesheet": {
+          "transferSize": 319565,
+          "resourceSize": 730492
+        },
+        "image": {
+          "transferSize": 224175,
+          "resourceSize": 224006
+        },
+        "fetch": {
+          "transferSize": 768,
+          "resourceSize": 195
+        },
+        "other": {
+          "transferSize": 618,
+          "resourceSize": 216
+        },
+        "total": {
+          "transferSize": 841607,
+          "resourceSize": 1893306
+        }
+      }
+    },
+    {
+      "url": "http://localhost:8090/archives",
+      "resources": {
+        "document": {
+          "transferSize": 2348,
+          "resourceSize": 6416
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 294103,
+          "resourceSize": 931993
+        },
+        "stylesheet": {
+          "transferSize": 319565,
+          "resourceSize": 730492
+        },
+        "image": {
+          "transferSize": 224175,
+          "resourceSize": 224006
+        },
+        "fetch": {
+          "transferSize": 764,
+          "resourceSize": 195
+        },
+        "other": {
+          "transferSize": 618,
+          "resourceSize": 216
+        },
+        "total": {
+          "transferSize": 841573,
+          "resourceSize": 1893318
+        }
+      }
+    },
+    {
+      "url": "http://localhost:8090/archives/hello-halo",
+      "resources": {
+        "document": {
+          "transferSize": 5568,
+          "resourceSize": 25016
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 692030,
+          "resourceSize": 2079860
+        },
+        "stylesheet": {
+          "transferSize": 319565,
+          "resourceSize": 730492
+        },
+        "image": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "fetch": {
+          "transferSize": 11927,
+          "resourceSize": 13177
+        },
+        "other": {
+          "transferSize": 618,
+          "resourceSize": 216
+        },
+        "total": {
+          "transferSize": 1029708,
+          "resourceSize": 2848761
+        }
+      }
+    },
+    {
+      "url": "http://localhost:8090/tags",
+      "resources": {
+        "document": {
+          "transferSize": 2227,
+          "resourceSize": 5910
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 294103,
+          "resourceSize": 931993
+        },
+        "stylesheet": {
+          "transferSize": 319565,
+          "resourceSize": 730492
+        },
+        "image": {
+          "transferSize": 224175,
+          "resourceSize": 224006
+        },
+        "fetch": {
+          "transferSize": 774,
+          "resourceSize": 195
+        },
+        "other": {
+          "transferSize": 618,
+          "resourceSize": 216
+        },
+        "total": {
+          "transferSize": 841462,
+          "resourceSize": 1892812
+        }
+      }
+    },
+    {
+      "url": "http://localhost:8090/tags/halo",
+      "resources": {
+        "document": {
+          "transferSize": 2358,
+          "resourceSize": 6286
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 294103,
+          "resourceSize": 931993
+        },
+        "stylesheet": {
+          "transferSize": 319565,
+          "resourceSize": 730492
+        },
+        "image": {
+          "transferSize": 224175,
+          "resourceSize": 224006
+        },
+        "fetch": {
+          "transferSize": 769,
+          "resourceSize": 195
+        },
+        "other": {
+          "transferSize": 618,
+          "resourceSize": 216
+        },
+        "total": {
+          "transferSize": 841588,
+          "resourceSize": 1893188
+        }
+      }
+    },
+    {
+      "url": "http://localhost:8090/categories",
+      "resources": {
+        "document": {
+          "transferSize": 2227,
+          "resourceSize": 5837
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 294103,
+          "resourceSize": 931993
+        },
+        "stylesheet": {
+          "transferSize": 319565,
+          "resourceSize": 730492
+        },
+        "image": {
+          "transferSize": 224175,
+          "resourceSize": 224006
+        },
+        "fetch": {
+          "transferSize": 773,
+          "resourceSize": 195
+        },
+        "other": {
+          "transferSize": 618,
+          "resourceSize": 216
+        },
+        "total": {
+          "transferSize": 841461,
+          "resourceSize": 1892739
+        }
+      }
+    },
+    {
+      "url": "http://localhost:8090/categories/default",
+      "resources": {
+        "document": {
+          "transferSize": 2429,
+          "resourceSize": 6396
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 294103,
+          "resourceSize": 931993
+        },
+        "stylesheet": {
+          "transferSize": 319565,
+          "resourceSize": 730492
+        },
+        "image": {
+          "transferSize": 224175,
+          "resourceSize": 224006
+        },
+        "fetch": {
+          "transferSize": 769,
+          "resourceSize": 195
+        },
+        "other": {
+          "transferSize": 619,
+          "resourceSize": 217
+        },
+        "total": {
+          "transferSize": 841660,
+          "resourceSize": 1893299
+        }
+      }
+    },
+    {
+      "url": "http://localhost:8090/authors/admin",
+      "resources": {
+        "document": {
+          "transferSize": 3386,
+          "resourceSize": 10352
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 294103,
+          "resourceSize": 931993
+        },
+        "stylesheet": {
+          "transferSize": 319565,
+          "resourceSize": 730492
+        },
+        "image": {
+          "transferSize": 224175,
+          "resourceSize": 224006
+        },
+        "fetch": {
+          "transferSize": 1283,
+          "resourceSize": 557
+        },
+        "other": {
+          "transferSize": 619,
+          "resourceSize": 217
+        },
+        "total": {
+          "transferSize": 843131,
+          "resourceSize": 1897617
+        }
+      }
+    },
+    {
+      "url": "http://localhost:8090/about",
+      "resources": {
+        "document": {
+          "transferSize": 2703,
+          "resourceSize": 7142
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 692030,
+          "resourceSize": 2079860
+        },
+        "stylesheet": {
+          "transferSize": 319565,
+          "resourceSize": 730492
+        },
+        "image": {
+          "transferSize": 224175,
+          "resourceSize": 224006
+        },
+        "fetch": {
+          "transferSize": 3947,
+          "resourceSize": 1443
+        },
+        "other": {
+          "transferSize": 619,
+          "resourceSize": 217
+        },
+        "total": {
+          "transferSize": 1243039,
+          "resourceSize": 3043160
+        }
+      }
+    }
+  ]
+}
