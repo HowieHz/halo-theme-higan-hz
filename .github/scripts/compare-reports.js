@@ -76,10 +76,10 @@ function formatColoredChange(transferChange, resourceChange, baseTransfer, baseR
  */
 function generateTable(title, data, typeOrder, typeLabels, isCollapsed = false) {
   let content = ``;
-  
+
   // 表格标题和说明
   content += `Unit: KiB, Format: transfer size(gzipped)/resource size\n\n`;
-  
+
   // 生成表头
   content += `| Page |`;
   for (const type of typeOrder) {
@@ -89,13 +89,13 @@ function generateTable(title, data, typeOrder, typeLabels, isCollapsed = false) 
   content += `|------|`;
   content += `------|`.repeat(typeOrder.length);
   content += `-------|\n`;
-  
+
   // 生成数据行
   for (const row of data) {
-    content += row + '\n';
+    content += row + "\n";
   }
   content += `\n`;
-  
+
   // 如果需要折叠，使用 details 标签
   if (isCollapsed) {
     return `<details>\n<summary><b>${title}</b></summary>\n\n${content}</details>\n\n`;
@@ -107,12 +107,20 @@ function generateTable(title, data, typeOrder, typeLabels, isCollapsed = false) 
 /**
  * 生成变化表格的通用函数
  */
-function generateChangesTable(title, changes, typeOrder, typeLabels, columnsWithChanges, formatColoredChange, isCollapsed = false) {
+function generateChangesTable(
+  title,
+  changes,
+  typeOrder,
+  typeLabels,
+  columnsWithChanges,
+  formatColoredChange,
+  isCollapsed = false,
+) {
   let content = ``;
-  
+
   content += `Unit: KiB, Format: transfer size change(percent)/resource size change(percent)\n\n`;
   content += `🔴 <span style="color: red;">Red = Increase</span> | 🟢 <span style="color: green;">Green = Decrease</span>\n\n`;
-  
+
   content += `| Page |`;
   for (const type of columnsWithChanges) {
     content += ` ${typeLabels[type]} |`;
@@ -121,21 +129,21 @@ function generateChangesTable(title, changes, typeOrder, typeLabels, columnsWith
   content += `|------|`;
   content += `------|`.repeat(columnsWithChanges.length);
   content += `-------|\n`;
-  
+
   for (const change of changes) {
     const urlPath = change.url || "/";
     content += `| ${urlPath} |`;
-    
+
     for (const type of columnsWithChanges) {
       const { transferChange, resourceChange, baseTransfer, baseResource } = change.types[type];
       content += ` ${formatColoredChange(transferChange, resourceChange, baseTransfer, baseResource)} |`;
     }
-    
+
     const { transferChange, resourceChange, baseTransfer, baseResource } = change.types.total;
     content += ` **${formatColoredChange(transferChange, resourceChange, baseTransfer, baseResource)}** |\n`;
   }
   content += `\n`;
-  
+
   if (isCollapsed) {
     return `<details>\n<summary><b>${title}</b></summary>\n\n${content}</details>\n\n`;
   } else {
@@ -217,7 +225,7 @@ function generateComparisonReport(currentReport, baseReport) {
     const totalTransfer = (currentResult.resources.total?.transferSize || 0) / 1024;
     const totalResource = (currentResult.resources.total?.resourceSize || 0) / 1024;
     row += ` **${totalTransfer.toFixed(3)}/${totalResource.toFixed(3)}**`;
-    
+
     allResourcesCurrentData.push(row);
   }
 
@@ -239,7 +247,7 @@ function generateComparisonReport(currentReport, baseReport) {
     const totalTransfer = (themeResources.total?.transferSize || 0) / 1024;
     const totalResource = (themeResources.total?.resourceSize || 0) / 1024;
     row += ` **${totalTransfer.toFixed(3)}/${totalResource.toFixed(3)}**`;
-    
+
     themeResourcesCurrentData.push(row);
   }
 
@@ -358,7 +366,7 @@ function generateComparisonReport(currentReport, baseReport) {
       typeLabels,
       themeColumnsWithChanges,
       formatColoredChange,
-      false  // 不折叠
+      false, // 不折叠
     );
   }
 
@@ -371,7 +379,7 @@ function generateComparisonReport(currentReport, baseReport) {
       typeLabels,
       allColumnsWithChanges,
       formatColoredChange,
-      true  // 折叠
+      true, // 折叠
     );
   }
 
@@ -381,7 +389,7 @@ function generateComparisonReport(currentReport, baseReport) {
     themeResourcesCurrentData,
     typeOrder,
     typeLabels,
-    true  // 折叠
+    true, // 折叠
   );
 
   // 4. All Resources - Current Size（折叠）
@@ -390,7 +398,7 @@ function generateComparisonReport(currentReport, baseReport) {
     allResourcesCurrentData,
     typeOrder,
     typeLabels,
-    true  // 折叠
+    true, // 折叠
   );
 
   markdown += `---\n\n`;

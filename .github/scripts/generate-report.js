@@ -103,7 +103,7 @@ async function parseLighthouseResults() {
       }
 
       // 新增：统计主题资源
-      if (url.includes('/themes/howiehz-higan/')) {
+      if (url.includes("/themes/howiehz-higan/")) {
         if (themeResources[resourceType]) {
           themeResources[resourceType].transferSize += transferSize;
           themeResources[resourceType].resourceSize += resourceSize;
@@ -231,7 +231,6 @@ function generateMarkdownReport(results, metadata = {}) {
     const totalResource = result.resources.total?.resourceSize || 0;
     markdown += ` **${(totalTransfer / 1024).toFixed(3)}/${(totalResource / 1024).toFixed(3)}** |\n`;
   }
-
 
   // 新增：主题资源表格
   markdown += `## Theme Resources\n\n`;
