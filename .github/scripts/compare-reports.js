@@ -28,11 +28,11 @@ async function readReport(path) {
  * @returns {string} 格式化的字符串，如 "+12.34(+5.67%)" 或 "-12.34(-5.67%)"
  */
 function formatChange(change, baseValue) {
-  if (change === 0) return "0.00(0.00%)";
+  if (change === 0) return "0.000(0.00%)";
 
   const sign = change > 0 ? "+" : "";
   const percent = baseValue > 0 ? (change / baseValue) * 100 : 0;
-  return `${sign}${change.toFixed(2)}(${sign}${percent.toFixed(2)}%)`;
+  return `${sign}${change.toFixed(3)}(${sign}${percent.toFixed(2)}%)`;
 }
 
 /**
@@ -132,7 +132,7 @@ function generateComparisonReport(currentReport, baseReport) {
 
   // 第一个表格：当前值
   markdown += `## Current Size\n\n`;
-  markdown += `Unit: KB, Format: transfer size(gzipped)/resource size\n\n`;
+  markdown += `Unit: KiB, Format: transfer size(gzipped)/resource size\n\n`;
   markdown += `| Page |`;
   for (const type of typeOrder) {
     markdown += ` ${typeLabels[type]} |`;
@@ -151,12 +151,12 @@ function generateComparisonReport(currentReport, baseReport) {
     for (const type of typeOrder) {
       const transfer = (currentResult.resources[type]?.transferSize || 0) / 1024;
       const resource = (currentResult.resources[type]?.resourceSize || 0) / 1024;
-      markdown += ` ${transfer.toFixed(2)}/${resource.toFixed(2)} |`;
+      markdown += ` ${transfer.toFixed(3)}/${resource.toFixed(3)} |`;
     }
 
     const totalTransfer = (currentResult.resources.total?.transferSize || 0) / 1024;
     const totalResource = (currentResult.resources.total?.resourceSize || 0) / 1024;
-    markdown += ` **${totalTransfer.toFixed(2)}/${totalResource.toFixed(2)}** |\n`;
+    markdown += ` **${totalTransfer.toFixed(3)}/${totalResource.toFixed(3)}** |\n`;
   }
   markdown += `\n`;
 
@@ -219,7 +219,7 @@ function generateComparisonReport(currentReport, baseReport) {
     }
 
     markdown += `## Changes\n\n`;
-    markdown += `Unit: KB, Format: transfer size change(percent)/resource size change(percent)\n\n`;
+    markdown += `Unit: KiB, Format: transfer size change(percent)/resource size change(percent)\n\n`;
     markdown += `🔴 <span style="color: red;">Red = Increase</span> | 🟢 <span style="color: green;">Green = Decrease</span>\n\n`;
 
     // 只显示有变化的列
