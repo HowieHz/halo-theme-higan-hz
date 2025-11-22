@@ -1,4 +1,4 @@
-name: "Page Size Audit: Generate JSON and Create PR"
+name: "Page Size Audit: Generate JSON"
 
 on:
   workflow_dispatch:
@@ -459,22 +459,6 @@ jobs:
               echo "✓ 复制 ${version}.json"
             fi
           done
-
-      - name: Generate chart from reports
-        run: |
-          mkdir -p charts
-          node .github/scripts/average-and-chart.js
-        env:
-          REPORTS_DIR: all-reports
-          OUTPUT_DIR: charts
-          START_VERSION: ${{ github.event.inputs.start_version || github.event.release.tag_name }}
-          END_VERSION: ${{ github.event.inputs.end_version || github.event.release.tag_name }}
-
-      - name: Upload chart
-        uses: actions/upload-artifact@v4
-        with:
-          name: size-chart
-          path: ./charts/
 
       - name: Create PR with data files
         if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
