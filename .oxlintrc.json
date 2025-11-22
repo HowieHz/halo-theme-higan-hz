@@ -35,7 +35,8 @@
     "**/*.suo",
     "**/*.ntvs*",
     "**/*.njsproj",
-    "**/*.sln"
+    "**/*.sln",
+    "**/*.sw?"
   ],
   "rules": {
     "constructor-super": "error",
