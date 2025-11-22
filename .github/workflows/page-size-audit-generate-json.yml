@@ -8,7 +8,7 @@ on:
         required: false
         default: 'v1.0.0'
       end_version:
-        description: '结束版本 (例如: v1.47.0，留空表示最新版本)'
+        description: '结束版本 (例如: v1.48.0，留空表示最新版本)'
         required: false
         default: ''
       create_pr:
@@ -427,9 +427,9 @@ jobs:
           name: logs-${{ matrix.version }}
           path: ~/logs/
 
-  # 第三步：汇总所有版本的数据并生成图表
-  generate-chart:
-    name: Generate Chart
+  # 第三步：汇总所有版本的数据并创建 PR
+  collect-and-pr:
+    name: Collect Reports and Create PR
     needs: test-versions
     runs-on: ubuntu-latest
     

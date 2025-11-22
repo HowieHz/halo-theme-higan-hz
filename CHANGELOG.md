@@ -2,6 +2,21 @@
 
 <!-- markdownlint-disable MD024 -->
 
+## [1.48.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.47.0...v1.48.0) (2025-11-22)
+
+### 🚀 新功能
+
+- 添加“页面元数据 -> 自定义模板 -> [文章页样式](http://howiehz.top/halo-theme-higan-haozi/guide/metadata-configuration#%E6%96%87%E7%AB%A0%E9%A1%B5%E6%A0%B7%E5%BC%8F)”
+  - 替代原有的“自定义页面样式 -> 启用类文章页样式”
+
+### 🔧 优化改进
+
+- 优化自定义页面样式体积。脚本和样式表均 [-15%](https://github.com/HowieHz/halo-theme-higan-hz/pull/327#issuecomment-3566640583) 的体积。
+
+### 🛠️ 开发体验
+
+- 更新开发依赖
+
 ## [1.47.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.46.0...v1.47.0) (2025-11-20)
 
 ### 🚀 新功能
@@ -18,8 +33,6 @@
 - 更新开发依赖
 
 ## [1.46.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.45.4...v1.46.0) (2025-11-17)
-
-第 100 个正式版本，感谢有你🎉
 
 ### 🚀 新功能
 
