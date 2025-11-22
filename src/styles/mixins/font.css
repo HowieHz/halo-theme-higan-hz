@@ -1,17 +1,5 @@
 @import url("../../assets/fonts/meslo-LG/result.css");
 
-@font-face {
-  font-display: swap;
-  font-family: "Meslo LG S";
-  font-style: normal;
-  font-weight: 400;
-  src:
-    local("Meslo LG S"),
-    url("../../assets/fonts/meslo-LG/MesloLGS-Regular.woff2") format("woff2"),
-    url("../../assets/fonts/meslo-LG/MesloLGS-Regular.woff") format("woff"),
-    url("../../assets/fonts/meslo-LG/MesloLGS-Regular.ttf") format("truetype");
-}
-
 :root {
   --higan-font-family:
     "Meslo LG S", ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont, segoe ui, roboto, helvetica neue, arial,
