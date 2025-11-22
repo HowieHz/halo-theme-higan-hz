@@ -22,7 +22,8 @@
     "prepare": "husky && tw-patch install",
     "docs:dev": "pnpm --filter \"docs\" docs:dev ",
     "docs:build": "pnpm --filter \"docs\" docs:build",
-    "docs:preview": "pnpm -filter \"docs\" docs:preview"
+    "docs:preview": "pnpm --filter \"docs\" docs:preview",
+    "migrate:oxlint": "pnpm dlx @oxlint/migrate --type-aware --with-nursery && pnpm run format"
   },
   "browserslist": [
     "defaults",
