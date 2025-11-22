@@ -373,7 +373,7 @@ jobs:
               console.log('✓ 成功发布评论');
             } catch (error) {
               if (error.status === 403) {
-                console.log('⚠️  无法发布评论（权限不足）。这通常发生在 Dependabot PR 中。');
+                console.log('⚠️  无法发布评论（权限不足）。这通常发生在 Dependabot 或其他 bot 创建的 PR 中。');
                 console.log('📊 报告已生成并上传为 artifact，可以手动查看。');
               } else {
                 throw error;
