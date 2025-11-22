@@ -45,7 +45,7 @@
                             ((ext == 'ico' or ext == 'cur') ? 'image/x-icon' : 
                             ((ext == 'tif' or ext == 'tiff') ? 'image/tiff' : 
                             'image/png')))))))))}"
-                  th:srcset="|${thumbnail.gen(logoUri, 's')} 400w|"
+                  th:srcset="|${thumbnail.gen(avatarUri, 's')} 400w|"
                   sizes="400px"
                   th:type="${imageType}"
                 />
