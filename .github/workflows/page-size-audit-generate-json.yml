@@ -465,6 +465,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PR_WORKFLOW_TOKEN }}
+          base: main  # main 而不是 github.event_name == 'release' && 'main' || github.ref_name ，是因为目前只提交到 main 更新就够了
           # 使用 PAT 而非 GITHUB_TOKEN，以便创建的 PR 能触发其他工作流
           # 所需权限（Fine-grained PAT）：
           # - Contents: Read and Write（创建分支和提交）
