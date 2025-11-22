@@ -15,18 +15,19 @@ outline: deep
 模板文件在 `src/templates` 文件夹下。  
 表格默认访问路径中 `{xxx}` 表示变量，请填入实际值；`(xxx)` 表示可选值，请根据需要填写。
 
-| 模板文件          | 渲染页面 | 默认访问路径                                 | 文档                                                                                  |
-| ----------------- | -------- | -------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `index.html`      | 首页     | `/(page/{page})`                             | [首页](https://docs.halo.run/developer-guide/theme/template-variables/index_)         |
-| `post.html`       | 文章详情 | `/archives/{slug}`（可在 Halo CMS 后台修改） | [文章](https://docs.halo.run/developer-guide/theme/template-variables/post)           |
-| `page.html`       | 独立页面 | `/{slug}`                                    | [单页面](https://docs.halo.run/developer-guide/theme/template-variables/page)         |
-| `archives.html`   | 文章归档 | `/archives(/{year}(/{month}))`               | [文章归档](https://docs.halo.run/developer-guide/theme/template-variables/archives)   |
-| `tags.html`       | 标签集合 | `/tags`                                      | [标签集合](https://docs.halo.run/developer-guide/theme/template-variables/tags)       |
-| `tag.html`        | 标签详情 | `/tags/{slug}`                               | [标签](https://docs.halo.run/developer-guide/theme/template-variables/tag)            |
-| `categories.html` | 分类集合 | `/categories`                                | [分类集合](https://docs.halo.run/developer-guide/theme/template-variables/categories) |
-| `category.html`   | 分类详情 | `/categories/{slug}`                         | [分类](https://docs.halo.run/developer-guide/theme/template-variables/category)       |
-| `author.html`     | 作者详情 | `/authors/{name}`                            | [作者](https://docs.halo.run/developer-guide/theme/template-variables/author)         |
-| `error/*.html`    | 错误页   | 无固定访问路径，由异常决定                   | [错误页面](https://docs.halo.run/developer-guide/theme/template-variables/error)      |
+| 模板文件                    | 渲染页面 | 默认访问路径                                                                    | 文档                                                                                  |
+| --------------------------- | -------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `index.html`                | 首页     | `/(page/{page})`                                                                | [首页](https://docs.halo.run/developer-guide/theme/template-variables/index_)         |
+| `post.html`                 | 文章详情 | `/archives/{slug}`（可在 Halo CMS 后台修改）                                    | [文章](https://docs.halo.run/developer-guide/theme/template-variables/post)           |
+| `page.html`                 | 独立页面 | `/{slug}`                                                                       | [单页面](https://docs.halo.run/developer-guide/theme/template-variables/page)         |
+| `page_like_post_style.html` | 独立页面 | `/{slug}`（自定义模板：[文章页样式](/guide/metadata-configuration#文章页样式)） | [单页面](https://docs.halo.run/developer-guide/theme/template-variables/page)         |
+| `archives.html`             | 文章归档 | `/archives(/{year}(/{month}))`                                                  | [文章归档](https://docs.halo.run/developer-guide/theme/template-variables/archives)   |
+| `tags.html`                 | 标签集合 | `/tags`                                                                         | [标签集合](https://docs.halo.run/developer-guide/theme/template-variables/tags)       |
+| `tag.html`                  | 标签详情 | `/tags/{slug}`                                                                  | [标签](https://docs.halo.run/developer-guide/theme/template-variables/tag)            |
+| `categories.html`           | 分类集合 | `/categories`                                                                   | [分类集合](https://docs.halo.run/developer-guide/theme/template-variables/categories) |
+| `category.html`             | 分类详情 | `/categories/{slug}`                                                            | [分类](https://docs.halo.run/developer-guide/theme/template-variables/category)       |
+| `author.html`               | 作者详情 | `/authors/{name}`                                                               | [作者](https://docs.halo.run/developer-guide/theme/template-variables/author)         |
+| `error/*.html`              | 错误页   | 无固定访问路径，由异常决定                                                      | [错误页面](https://docs.halo.run/developer-guide/theme/template-variables/error)      |
 
 ## 插件页面
 
