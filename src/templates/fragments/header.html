@@ -27,8 +27,8 @@
         ></div>
         <style th:inline="css">
           #logo {
-            background-image: url(/*[[${fallbackLogoPng}]]*/);
-            background-image: image-set(url(/*[[${logoUri}]]*/) type(/*[[${imageType}]]*/));
+            background-image: url("[(${fallbackLogoPng})]");
+            background-image: image-set(url("[(${logoUri})]") type("[(${imageType})]"));
           }
         </style>
       </th:block>
