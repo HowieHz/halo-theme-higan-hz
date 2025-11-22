@@ -36,6 +36,14 @@ jobs:
         with:
           ref: ${{ matrix.ref }}
 
+      - name: Copy latest .github scripts
+        run: |
+          # 获取最新的 .github 脚本（从触发 workflow 的分支）
+          git fetch origin ${{ github.ref_name }}
+          git checkout origin/${{ github.ref_name }} -- .github/scripts/
+          
+          echo "✓ 已从 ${{ github.ref_name }} 分支复制最新的 .github/scripts/"
+
       # ========== 阶段 1: 环境准备(串行,很快) ==========
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
