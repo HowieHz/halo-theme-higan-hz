@@ -29,16 +29,43 @@
           ></div>
           <div class="profile-wrap z-20">
             <div class="profile-content">
-              <img
-                th:with="defaultLogo=${#theme.assets('/images/logo.png')}, logoUri=${#strings.defaultString(author.spec.avatar, defaultLogo)}"
-                th:src="${logoUri}"
-                th:srcset="|${thumbnail.gen(logoUri, 's')} 400w|"
-                sizes="400px"
-                class="profile-avatar"
-                width="100%"
-                height="100%"
-                th:alt="#{page.author.avatar-img.alt}"
-              />
+              <picture>
+                <source
+                  th:with="defaultAvifAvatar=${#theme.assets('/images/logo.avif')},
+                          avatarUri=${#strings.defaultString(author.spec.avatar, defaultAvifAvatar)},
+                          ext=${avatarUri.substring(avatarUri.lastIndexOf('.') + 1).toLowerCase()},
+                          imageType=${ext == 'avif' ? 'image/avif' : 
+                            (ext == 'webp' ? 'image/webp' : 
+                            (ext == 'png' ? 'image/png' : 
+                            (ext == 'apng' ? 'image/apng' : 
+                            ((ext == 'jpg' or ext == 'jpeg' or ext == 'jfif' or ext == 'pjpeg' or ext == 'pjp') ? 'image/jpeg' : 
+                            (ext == 'gif' ? 'image/gif' : 
+                            (ext == 'svg' ? 'image/svg+xml' : 
+                            (ext == 'bmp' ? 'image/bmp' : 
+                            ((ext == 'ico' or ext == 'cur') ? 'image/x-icon' : 
+                            ((ext == 'tif' or ext == 'tiff') ? 'image/tiff' : 
+                            'image/png')))))))))}"
+                  th:srcset="|${thumbnail.gen(avatarUri, 's')} 400w|"
+                  sizes="400px"
+                  th:type="${imageType}"
+                />
+                <source
+                  th:with="defaultWebpAvatar=${#theme.assets('/images/logo.webp')}"
+                  th:srcset="|${thumbnail.gen(defaultWebpAvatar, 's')} 400w|"
+                  sizes="400px"
+                  type="image/webp"
+                />
+                <img
+                  th:with="defaultPngAvatar=${#theme.assets('/images/logo.png')}"
+                  th:src="${defaultPngAvatar}"
+                  th:srcset="|${thumbnail.gen(defaultPngAvatar, 's')} 400w|"
+                  sizes="400px"
+                  class="profile-avatar"
+                  width="100%"
+                  height="100%"
+                  th:alt="#{page.author.avatar-img.alt}"
+                />
+              </picture>
               <div class="profile-nickname-container">
                 <p class="profile-nickname">
                   <span th:text="${author.spec.displayName}">作者名填充位置</span>

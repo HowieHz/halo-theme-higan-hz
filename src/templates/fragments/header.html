@@ -1,14 +1,41 @@
 <th:block xmlns:th="https://www.thymeleaf.org" th:fragment="content">
   <header id="header">
     <a th:href="@{/}">
-      <div
-        id="logo"
-        th:with="styles=${theme.config?.styles},logo=${#objects.nullSafe(styles?.icon, site?.logo)},fallbackLogo=${#theme.assets('/images/logo.png')}"
-        th:class="${styles?.avatar_circle == true ? 'circle-avatar' : ''}"
-        th:classappend="${styles?.avatar_grayout == true ? 'avatar-grayscale' : ''}"
-        th:style="|background-image: url('${#strings.defaultString(logo, fallbackLogo)}')|"
-        th:if="${theme.config?.styles?.is_show_header_icon}"
-      ></div>
+      <th:block
+        th:with="styles=${theme.config?.styles},
+                fallbackLogoAvif=${#theme.assets('/images/logo.avif')},
+                fallbackLogoWebp=${#theme.assets('/images/logo.webp')},
+                fallbackLogoPng=${#theme.assets('/images/logo.png')},
+                logoUri=${#strings.defaultString(#objects.nullSafe(styles?.icon, site?.logo), fallbackLogoAvif)},
+                ext=${logoUri.substring(logoUri.lastIndexOf('.') + 1).toLowerCase()},
+                imageType=${ext == 'avif' ? 'image/avif' : 
+                  (ext == 'webp' ? 'image/webp' : 
+                  (ext == 'png' ? 'image/png' : 
+                  (ext == 'apng' ? 'image/apng' : 
+                  ((ext == 'jpg' or ext == 'jpeg' or ext == 'jfif' or ext == 'pjpeg' or ext == 'pjp') ? 'image/jpeg' : 
+                  (ext == 'gif' ? 'image/gif' : 
+                  (ext == 'svg' ? 'image/svg+xml' : 
+                  (ext == 'bmp' ? 'image/bmp' : 
+                  ((ext == 'ico' or ext == 'cur') ? 'image/x-icon' : 
+                  ((ext == 'tif' or ext == 'tiff') ? 'image/tiff' : 
+                  'image/png')))))))))}"
+      >
+        <div
+          id="logo"
+          th:class="${styles?.avatar_circle == true ? 'circle-avatar' : ''}"
+          th:classappend="${styles?.avatar_grayout == true ? 'avatar-grayscale' : ''}"
+          th:if="${theme.config?.styles?.is_show_header_icon}"
+        ></div>
+        <style th:inline="css">
+          #logo {
+            background-image: url("[(${fallbackLogoPng})]");
+            background-image: image-set(
+              url("[(${logoUri})]") type("[(${imageType})]"),
+              url("[(${fallbackLogoWebp})]") type("image/webp")
+            );
+          }
+        </style>
+      </th:block>
 
       <div id="title">
         <h1>

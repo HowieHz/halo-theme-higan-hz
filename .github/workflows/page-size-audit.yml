@@ -63,7 +63,7 @@ jobs:
           # 记录环境信息
           JAVA_VERSION=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}')
           echo "JAVA_VERSION=${JAVA_VERSION}" >> $GITHUB_ENV
-          HALO_VERSION="${{ github.event.inputs.halo_version || '2.21.10' }}"
+          HALO_VERSION="2.21.10"
           echo "HALO_VERSION=${HALO_VERSION}" >> $GITHUB_ENV
           
           mkdir -p ~/logs
@@ -78,19 +78,13 @@ jobs:
             
             mkdir -p ~/builds/tmp ~/builds/target
             
-            THEME_VERSION="${{ github.event.inputs.theme_version }}"
-            if [ -n "$THEME_VERSION" ]; then
-              wget -q "https://github.com/HowieHz/halo-theme-higan-hz/releases/download/${THEME_VERSION}/howiehz-higan-cn.zip" \
-                -O ~/builds/target/howiehz-higan-cn.zip
-            else
-              cp -r . ~/builds/tmp
-              mkdir -p ~/builds/tmp-included
-              cd ~/builds/tmp
-              cat "${{ github.workspace }}/.github/include-list.txt" | xargs -I {} cp -r --parents {} ~/builds/tmp-included/
-              cd ~/builds/tmp-included
-              zip -9 -r howiehz-higan-cn.zip .
-              mv howiehz-higan-cn.zip ~/builds/target/
-            fi
+            cp -r . ~/builds/tmp
+            mkdir -p ~/builds/tmp-included
+            cd ~/builds/tmp
+            cat "${{ github.workspace }}/.github/include-list.txt" | xargs -I {} cp -r --parents {} ~/builds/tmp-included/
+            cd ~/builds/tmp-included
+            zip -9 -r howiehz-higan-cn.zip .
+            mv howiehz-higan-cn.zip ~/builds/target/
             
             echo "✅ [Theme] 完成"
           ) > ~/logs/theme.log 2>&1 &
@@ -280,7 +274,7 @@ jobs:
           LIGHTHOUSE_RESULTS_DIR: ./.lighthouseci
           HALO_VERSION: ${{ env.HALO_VERSION }}
           JAVA_VERSION: ${{ env.JAVA_VERSION }}
-          THEME_VERSION: ${{ github.event.inputs.theme_version || matrix.ref }}
+          THEME_VERSION: ${{ matrix.ref }}
           GITHUB_SHA: ${{ github.sha }}
           LHCI_VERSION: ${{ env.LHCI_VERSION }}
           REF_NAME: ${{ matrix.ref_name }}
