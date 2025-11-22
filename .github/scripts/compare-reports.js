@@ -130,8 +130,8 @@ function generateComparisonReport(currentReport, baseReport) {
     total: "All",
   };
 
-  // 第一个表格：当前值
-  markdown += `## Current Size\n\n`;
+  // 第一个表格：所有资源当前值
+  markdown += `## All Resources - Current Size\n\n`;
   markdown += `Unit: KiB, Format: transfer size(gzipped)/resource size\n\n`;
   markdown += `| Page |`;
   for (const type of typeOrder) {
@@ -144,7 +144,6 @@ function generateComparisonReport(currentReport, baseReport) {
 
   // 生成当前值的数据行
   for (const currentResult of currentReport.results) {
-    // url 已经是相对路径，直接使用
     const urlPath = currentResult.url || "/";
     markdown += `| ${urlPath} |`;
 
@@ -160,11 +159,40 @@ function generateComparisonReport(currentReport, baseReport) {
   }
   markdown += `\n`;
 
-  // 第二个表格：变化（仅当有变化时显示）
+  // 第二个表格：主题资源当前值
+  markdown += `## Theme Resources - Current Size\n\n`;
+  markdown += `Unit: KiB, Format: transfer size(gzipped)/resource size\n\n`;
+  markdown += `| Page |`;
+  for (const type of typeOrder) {
+    markdown += ` ${typeLabels[type]} |`;
+  }
+  markdown += ` Total |\n`;
+  markdown += `|------|`;
+  markdown += `------|`.repeat(typeOrder.length);
+  markdown += `-------|\n`;
+
+  // 生成主题资源当前值的数据行
+  for (const currentResult of currentReport.results) {
+    const urlPath = currentResult.url || "/";
+    markdown += `| ${urlPath} |`;
+
+    for (const type of typeOrder) {
+      const transfer = (currentResult.themeResources[type]?.transferSize || 0) / 1024;
+      const resource = (currentResult.themeResources[type]?.resourceSize || 0) / 1024;
+      markdown += ` ${transfer.toFixed(3)}/${resource.toFixed(3)} |`;
+    }
+
+    const totalTransfer = (currentResult.themeResources.total?.transferSize || 0) / 1024;
+    const totalResource = (currentResult.themeResources.total?.resourceSize || 0) / 1024;
+    markdown += ` **${totalTransfer.toFixed(3)}/${totalResource.toFixed(3)}** |\n`;
+  }
+  markdown += `\n`;
+
+  // 第三个表格：所有资源变化（仅当有变化时显示）
   let hasChanges = false;
   const changes = [];
 
-  // 计算变化
+  // 计算所有资源变化
   for (const currentResult of currentReport.results) {
     const baseResult = baseReport.results.find((r) => r.url === currentResult.url);
     if (!baseResult) continue;
@@ -204,9 +232,8 @@ function generateComparisonReport(currentReport, baseReport) {
     }
   }
 
-  // 如果有变化，生成变化表格
+  // 如果有变化，生成所有资源变化表格
   if (hasChanges) {
-    // 检查哪些列有变化（不是全部都是 "-"）
     const columnsWithChanges = [];
     for (const type of typeOrder) {
       const hasAnyChange = changes.some((change) => {
@@ -218,11 +245,10 @@ function generateComparisonReport(currentReport, baseReport) {
       }
     }
 
-    markdown += `## Changes\n\n`;
+    markdown += `## All Resources - Changes\n\n`;
     markdown += `Unit: KiB, Format: transfer size change(percent)/resource size change(percent)\n\n`;
     markdown += `🔴 <span style="color: red;">Red = Increase</span> | 🟢 <span style="color: green;">Green = Decrease</span>\n\n`;
 
-    // 只显示有变化的列
     markdown += `| Page |`;
     for (const type of columnsWithChanges) {
       markdown += ` ${typeLabels[type]} |`;
@@ -232,14 +258,96 @@ function generateComparisonReport(currentReport, baseReport) {
     markdown += `------|`.repeat(columnsWithChanges.length);
     markdown += `-------|\n`;
 
-    // 生成变化数据行
     for (const change of changes) {
-      // url 已经是相对路径，直接使用
       const urlPath = change.url || "/";
       markdown += `| ${urlPath} |`;
 
-      // 只显示有变化的列
       for (const type of columnsWithChanges) {
+        const { transferChange, resourceChange, baseTransfer, baseResource } = change.types[type];
+        markdown += ` ${formatColoredChange(transferChange, resourceChange, baseTransfer, baseResource)} |`;
+      }
+
+      const { transferChange, resourceChange, baseTransfer, baseResource } = change.types.total;
+      markdown += ` **${formatColoredChange(transferChange, resourceChange, baseTransfer, baseResource)}** |\n`;
+    }
+    markdown += `\n`;
+  }
+
+  // 第四个表格：主题资源变化
+  let hasThemeChanges = false;
+  const themeChanges = [];
+
+  // 计算主题资源变化
+  for (const currentResult of currentReport.results) {
+    const baseResult = baseReport.results.find((r) => r.url === currentResult.url);
+    if (!baseResult) continue;
+
+    let pageHasThemeChanges = false;
+    const pageThemeChanges = {
+      url: currentResult.url,
+      types: {},
+      total: {},
+    };
+
+    // 检查主题资源各类型的变化
+    for (const type of [...typeOrder, "total"]) {
+      const currentTransfer = (currentResult.themeResources[type]?.transferSize || 0) / 1024;
+      const currentResource = (currentResult.themeResources[type]?.resourceSize || 0) / 1024;
+      const baseTransfer = (baseResult.themeResources[type]?.transferSize || 0) / 1024;
+      const baseResource = (baseResult.themeResources[type]?.resourceSize || 0) / 1024;
+
+      const transferChange = currentTransfer - baseTransfer;
+      const resourceChange = currentResource - baseResource;
+
+      if (transferChange !== 0 || resourceChange !== 0) {
+        hasThemeChanges = true;
+        pageHasThemeChanges = true;
+      }
+
+      pageThemeChanges.types[type] = {
+        transferChange,
+        resourceChange,
+        baseTransfer,
+        baseResource,
+      };
+    }
+
+    if (pageHasThemeChanges) {
+      themeChanges.push(pageThemeChanges);
+    }
+  }
+
+  // 如果主题资源有变化，生成主题资源变化表格
+  if (hasThemeChanges) {
+    const themeColumnsWithChanges = [];
+    for (const type of typeOrder) {
+      const hasAnyChange = themeChanges.some((change) => {
+        const { transferChange, resourceChange } = change.types[type];
+        return transferChange !== 0 || resourceChange !== 0;
+      });
+      if (hasAnyChange) {
+        themeColumnsWithChanges.push(type);
+      }
+    }
+
+    markdown += `## Theme Resources - Changes\n\n`;
+    markdown += `Unit: KiB, Format: transfer size change(percent)/resource size change(percent)\n\n`;
+    markdown += `🔴 <span style="color: red;">Red = Increase</span> | 🟢 <span style="color: green;">Green = Decrease</span>\n\n`;
+
+    markdown += `| Page |`;
+    for (const type of themeColumnsWithChanges) {
+      markdown += ` ${typeLabels[type]} |`;
+    }
+    markdown += ` Total |\n`;
+    markdown += `|------|`;
+    markdown += `------|`.repeat(themeColumnsWithChanges.length);
+    markdown += `-------|\n`;
+
+    for (const change of themeChanges) {
+      const urlPath = change.url || "/";
+      markdown += `| ${urlPath} |`;
+
+      for (const type of themeColumnsWithChanges) {
         const { transferChange, resourceChange, baseTransfer, baseResource } = change.types[type];
         markdown += ` ${formatColoredChange(transferChange, resourceChange, baseTransfer, baseResource)} |`;
       }

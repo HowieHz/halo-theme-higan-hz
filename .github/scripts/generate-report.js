@@ -64,11 +64,16 @@ async function parseLighthouseResults() {
 
     // 按资源类型统计
     const resources = {};
+    const themeResources = {}; // 新增：主题资源统计
     const resourceTypes = ["document", "font", "script", "stylesheet", "image", "fetch", "other"];
 
     // 初始化所有资源类型
     for (const type of resourceTypes) {
       resources[type] = {
+        transferSize: 0,
+        resourceSize: 0,
+      };
+      themeResources[type] = {
         transferSize: 0,
         resourceSize: 0,
       };
@@ -87,6 +92,7 @@ async function parseLighthouseResults() {
       const transferSize = item.transferSize || 0;
       const resourceSize = item.resourceSize || 0;
 
+      // 统计全部资源
       if (resources[resourceType]) {
         resources[resourceType].transferSize += transferSize;
         resources[resourceType].resourceSize += resourceSize;
@@ -95,9 +101,20 @@ async function parseLighthouseResults() {
         resources.other.transferSize += transferSize;
         resources.other.resourceSize += resourceSize;
       }
+
+      // 新增：统计主题资源
+      if (url.includes('/themes/howiehz-higan/')) {
+        if (themeResources[resourceType]) {
+          themeResources[resourceType].transferSize += transferSize;
+          themeResources[resourceType].resourceSize += resourceSize;
+        } else {
+          themeResources.other.transferSize += transferSize;
+          themeResources.other.resourceSize += resourceSize;
+        }
+      }
     }
 
-    // 计算总计
+    // 计算全部资源总计
     resources.total = {
       transferSize: 0,
       resourceSize: 0,
@@ -106,6 +123,17 @@ async function parseLighthouseResults() {
     for (const type of resourceTypes) {
       resources.total.transferSize += resources[type].transferSize;
       resources.total.resourceSize += resources[type].resourceSize;
+    }
+
+    // 新增：计算主题资源总计
+    themeResources.total = {
+      transferSize: 0,
+      resourceSize: 0,
+    };
+
+    for (const type of resourceTypes) {
+      themeResources.total.transferSize += themeResources[type].transferSize;
+      themeResources.total.resourceSize += themeResources[type].resourceSize;
     }
 
     // 将完整 URL 转换为相对路径
@@ -121,6 +149,7 @@ async function parseLighthouseResults() {
     results.push({
       url: relativePath,
       resources,
+      themeResources, // 新增：包含主题资源数据
     });
   }
 
@@ -217,6 +246,54 @@ function generateMarkdownReport(results, metadata = {}) {
       results.reduce((sum, r) => sum + (r.resources.total?.transferSize || 0), 0) / results.length;
     const avgTotalResource =
       results.reduce((sum, r) => sum + (r.resources.total?.resourceSize || 0), 0) / results.length;
+    markdown += ` **${(avgTotalTransfer / 1024).toFixed(3)}/${(avgTotalResource / 1024).toFixed(3)}** |\n\n`;
+  }
+
+  // 新增：主题资源表格
+  markdown += `## Theme Resources\n\n`;
+  markdown += `Unit: KiB, Format: transfer size(gzipped)/resource size\n\n`;
+
+  // 生成主题资源表头
+  markdown += `| Page |`;
+  for (const type of typeOrder) {
+    markdown += ` ${typeLabels[type]} |`;
+  }
+  markdown += ` Total |\n`;
+
+  // 生成主题资源分隔线
+  markdown += `|------|`;
+  markdown += `------|`.repeat(typeOrder.length);
+  markdown += `-------|\n`;
+
+  // 生成主题资源数据行
+  for (const result of results) {
+    markdown += `| ${result.url} |`;
+
+    for (const type of typeOrder) {
+      const transfer = result.themeResources[type]?.transferSize || 0;
+      const resource = result.themeResources[type]?.resourceSize || 0;
+      markdown += ` ${(transfer / 1024).toFixed(3)}/${(resource / 1024).toFixed(3)} |`;
+    }
+
+    const totalTransfer = result.themeResources.total?.transferSize || 0;
+    const totalResource = result.themeResources.total?.resourceSize || 0;
+    markdown += ` **${(totalTransfer / 1024).toFixed(3)}/${(totalResource / 1024).toFixed(3)}** |\n`;
+  }
+
+  // 计算并添加主题资源平均值
+  if (results.length > 0) {
+    markdown += `| **Average** |`;
+
+    for (const type of typeOrder) {
+      const avgTransfer = results.reduce((sum, r) => sum + (r.themeResources[type]?.transferSize || 0), 0) / results.length;
+      const avgResource = results.reduce((sum, r) => sum + (r.themeResources[type]?.resourceSize || 0), 0) / results.length;
+      markdown += ` **${(avgTransfer / 1024).toFixed(3)}/${(avgResource / 1024).toFixed(3)}** |`;
+    }
+
+    const avgTotalTransfer =
+      results.reduce((sum, r) => sum + (r.themeResources.total?.transferSize || 0), 0) / results.length;
+    const avgTotalResource =
+      results.reduce((sum, r) => sum + (r.themeResources.total?.resourceSize || 0), 0) / results.length;
     markdown += ` **${(avgTotalTransfer / 1024).toFixed(3)}/${(avgTotalResource / 1024).toFixed(3)}** |\n\n`;
   }
 
