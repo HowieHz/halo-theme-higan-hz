@@ -36,13 +36,19 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
+          token: ${{ secrets.PR_WORKFLOW_TOKEN }}
+          # 使用 PAT 而非 GITHUB_TOKEN，以便创建的 PR 能触发其他工作流
+          # 所需权限（Fine-grained PAT）：
+          # - Contents: Read and Write（创建分支和提交）
+          # - Pull requests: Read and Write（创建 PR）
+          # - Workflows: Read and Write（允许 PR 触发工作流）
           commit-message: 'chore: update oxlint configuration'
           title: 'chore: update oxlint configuration'
           body: |
             This PR updates the oxlint configuration by running the migration tool.
             
             Generated automatically by the oxlint-migrate workflow.
-          branch: chore/oxlint-migrate
+          branch: chore/oxlint-migrate-${{ github.run_number }}
           delete-branch: true
           labels: dependencies
           add-paths: |
