@@ -39,10 +39,14 @@ jobs:
       - name: Copy latest .github scripts
         run: |
           # 获取最新的 .github 脚本（从触发 workflow 的分支）
-          git fetch origin ${{ github.ref_name }}
-          git checkout origin/${{ github.ref_name }} -- .github/scripts/
+          # 对于 PR: 使用 head_ref (源分支)，对于其他事件: 使用 ref_name
+          BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
+          echo "工作流分支: $BRANCH_NAME"
           
-          echo "✓ 已从 ${{ github.ref_name }} 分支复制最新的 .github/scripts/"
+          git fetch origin "$BRANCH_NAME"
+          git checkout "origin/$BRANCH_NAME" -- .github/scripts/
+          
+          echo "✓ 已从 $BRANCH_NAME 分支复制最新的 .github/scripts/"
 
       # ========== 阶段 1: 环境准备(串行,很快) ==========
       - name: Setup pnpm
