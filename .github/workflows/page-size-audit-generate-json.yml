@@ -427,9 +427,9 @@ jobs:
           name: logs-${{ matrix.version }}
           path: ~/logs/
 
-  # 第三步：汇总所有版本的数据并生成图表
-  generate-chart:
-    name: Generate Chart
+  # 第三步：汇总所有版本的数据并创建 PR
+  collect-and-pr:
+    name: Collect Reports and Create PR
     needs: test-versions
     runs-on: ubuntu-latest
     
