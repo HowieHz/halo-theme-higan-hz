@@ -1,4 +1,4 @@
-name: Generate Size Chart
+name: "Page Size Audit: Generate JSON and Create PR"
 
 on:
   workflow_dispatch:
@@ -16,6 +16,8 @@ on:
         required: true
         default: false
         type: boolean
+  release:
+    types: [published]
 
 jobs:
   # 第一步：获取要测试的版本列表
@@ -34,8 +36,17 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const startVersion = '${{ github.event.inputs.start_version }}' || 'v1.0.0';
-            const endVersion = '${{ github.event.inputs.end_version }}' || '';
+            let startVersion, endVersion;
+            
+            if ('${{ github.event_name }}' === 'release') {
+              const releaseVersion = '${{ github.event.release.tag_name }}';
+              startVersion = releaseVersion;
+              endVersion = releaseVersion;
+              console.log(`Release 触发: 测试版本 ${releaseVersion}`);
+            } else {
+              startVersion = '${{ github.event.inputs.start_version }}' || 'v1.0.0';
+              endVersion = '${{ github.event.inputs.end_version }}' || '';
+            }
             
             // 获取所有 releases（支持分页）
             console.log('正在获取所有 releases...');
@@ -438,7 +449,7 @@ jobs:
           path: ./all-reports
 
       - name: Copy reports to page_size_audit_results
-        if: github.event.inputs.create_pr == 'true'
+        if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
         run: |
           mkdir -p .github/page_size_audit_results
           for dir in ./all-reports/report-*; do
@@ -456,8 +467,8 @@ jobs:
         env:
           REPORTS_DIR: all-reports
           OUTPUT_DIR: charts
-          START_VERSION: ${{ github.event.inputs.start_version }}
-          END_VERSION: ${{ github.event.inputs.end_version }}
+          START_VERSION: ${{ github.event.inputs.start_version || github.event.release.tag_name }}
+          END_VERSION: ${{ github.event.inputs.end_version || github.event.release.tag_name }}
 
       - name: Upload chart
         uses: actions/upload-artifact@v4
@@ -466,18 +477,18 @@ jobs:
           path: ./charts/
 
       - name: Create PR with data files
-        if: github.event.inputs.create_pr == 'true'
+        if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: update page size audit results for ${{ github.event.inputs.start_version }} to ${{ github.event.inputs.end_version || 'latest' }}"
+          commit-message: "chore: update page size audit results for ${{ github.event.inputs.start_version || github.event.release.tag_name }} to ${{ github.event.inputs.end_version || github.event.release.tag_name || 'latest' }}"
           title: 'chore: Update Page Size Audit Results'
           body: |
             ## Page Size Audit Results Update
             
             This PR adds/updates page size audit results for versions:
-            - **Start Version:** ${{ github.event.inputs.start_version }}
-            - **End Version:** ${{ github.event.inputs.end_version || 'latest' }}
+            - **Start Version:** ${{ github.event.inputs.start_version || github.event.release.tag_name }}
+            - **End Version:** ${{ github.event.inputs.end_version || github.event.release.tag_name || 'latest' }}
             
             The following JSON data files have been updated in `.github/page_size_audit_results/`:
             - Multiple version result files
