@@ -149,15 +149,6 @@ html[theme="theme-[(${colorSchema.id})]"] {
         window.location.href = url;
       })();
     </script>
-    <!--/* preload woff2 font */-->
-    <link
-      th:unless="${theme.config?.styles?.is_custom_font_files_enable}"
-      rel="preload"
-      th:href="@{/assets/dist/MesloLGS-Regular.woff2}"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
     <th:block
       th:if="${theme.config?.styles?.is_custom_font_files_enable}"
       th:with="font=${#objects.nullSafe(theme.config?.styles?.custom_font_files, #theme.assets('/dist/MesloLGS-Regular.woff2'))},
