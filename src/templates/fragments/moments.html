@@ -35,11 +35,17 @@
                         sizes="400px"
                         th:type="${imageType}"
                       />
+                      <source
+                        th:with="defaultWebpAvatar=${#theme.assets('/images/logo.webp')}"
+                        th:srcset="|${thumbnail.gen(defaultWebpAvatar, 's')} 400w|"
+                        sizes="400px"
+                        type="image/webp"
+                      />
                       <img
                         class="avatar-user avatar"
-                        th:with="defaultAvatar=${#theme.assets('/images/logo.png')}"
-                        th:src="${defaultAvatar}"
-                        th:srcset="|${thumbnail.gen(defaultAvatar, 's')} 400w|"
+                        th:with="defaultPngAvatar=${#theme.assets('/images/logo.png')}"
+                        th:src="${defaultPngAvatar}"
+                        th:srcset="|${thumbnail.gen(defaultPngAvatar, 's')} 400w|"
                         sizes="400px"
                         width="32"
                         height="32"
@@ -93,11 +99,17 @@
                         sizes="400px"
                         th:type="${imageType}"
                       />
+                      <source
+                        th:with="defaultWebpAvatar=${#theme.assets('/images/logo.webp')}"
+                        th:srcset="|${thumbnail.gen(defaultWebpAvatar, 's')} 400w|"
+                        sizes="400px"
+                        type="image/webp"
+                      />
                       <img
                         class="avatar-user avatar"
-                        th:with="defaultAvatar=${#theme.assets('/images/logo.png')}"
-                        th:src="${defaultAvatar}"
-                        th:srcset="|${thumbnail.gen(defaultAvatar, 's')} 400w|"
+                        th:with="defaultPngAvatar=${#theme.assets('/images/logo.png')}"
+                        th:src="${defaultPngAvatar}"
+                        th:srcset="|${thumbnail.gen(defaultPngAvatar, 's')} 400w|"
                         sizes="400px"
                         width="32"
                         height="32"

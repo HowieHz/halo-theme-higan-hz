@@ -1667,7 +1667,7 @@ const QuickJumpConfig = (props) => {
 
 ::: info 🎯 用途
 
-用于选择上传的图片作为页眉头像。未设置将使用默认头像 `/images/logo.png`。
+用于选择上传的图片作为页眉头像。未设置将使用默认头像 `/images/logo.{avif,webp,png}`。
 
 :::
 ::: info 📂 配置项位置

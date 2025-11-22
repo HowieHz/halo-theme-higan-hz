@@ -4,6 +4,7 @@
       <th:block
         th:with="styles=${theme.config?.styles},
                 fallbackLogoAvif=${#theme.assets('/images/logo.avif')},
+                fallbackLogoWebp=${#theme.assets('/images/logo.webp')},
                 fallbackLogoPng=${#theme.assets('/images/logo.png')},
                 logoUri=${#strings.defaultString(#objects.nullSafe(styles?.icon, site?.logo), fallbackLogoAvif)},
                 ext=${logoUri.substring(logoUri.lastIndexOf('.') + 1).toLowerCase()},
@@ -28,7 +29,10 @@
         <style th:inline="css">
           #logo {
             background-image: url("[(${fallbackLogoPng})]");
-            background-image: image-set(url("[(${logoUri})]") type("[(${imageType})]"));
+            background-image: image-set(
+              url("[(${logoUri})]") type("[(${imageType})]"),
+              url("[(${fallbackLogoWebp})]") type("image/webp")
+            );
           }
         </style>
       </th:block>

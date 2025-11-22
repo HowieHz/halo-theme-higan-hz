@@ -31,9 +31,9 @@
             <div class="profile-content">
               <picture>
                 <source
-                  th:with="defaultAvifLogo=${#theme.assets('/images/logo.avif')},
-                          logoUri=${#strings.defaultString(author.spec.avatar, defaultAvifLogo)},
-                          ext=${logoUri.substring(logoUri.lastIndexOf('.') + 1).toLowerCase()},
+                  th:with="defaultAvifAvatar=${#theme.assets('/images/logo.avif')},
+                          avatarUri=${#strings.defaultString(author.spec.avatar, defaultAvifAvatar)},
+                          ext=${avatarUri.substring(avatarUri.lastIndexOf('.') + 1).toLowerCase()},
                           imageType=${ext == 'avif' ? 'image/avif' : 
                             (ext == 'webp' ? 'image/webp' : 
                             (ext == 'png' ? 'image/png' : 
@@ -49,10 +49,16 @@
                   sizes="400px"
                   th:type="${imageType}"
                 />
+                <source
+                  th:with="defaultWebpAvatar=${#theme.assets('/images/logo.webp')}"
+                  th:srcset="|${thumbnail.gen(defaultWebpAvatar, 's')} 400w|"
+                  sizes="400px"
+                  type="image/webp"
+                />
                 <img
-                  th:with="defaultLogo=${#theme.assets('/images/logo.png')}"
-                  th:src="${defaultLogo}"
-                  th:srcset="|${thumbnail.gen(defaultLogo, 's')} 400w|"
+                  th:with="defaultPngAvatar=${#theme.assets('/images/logo.png')}"
+                  th:src="${defaultPngAvatar}"
+                  th:srcset="|${thumbnail.gen(defaultPngAvatar, 's')} 400w|"
                   sizes="400px"
                   class="profile-avatar"
                   width="100%"
