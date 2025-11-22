@@ -5,15 +5,25 @@
     title = ${#annotations.getOrDefault(singlePage, 'higan.howiehz.top/page-title', singlePage.spec?.title)}, 
     head = ~{::headContent},
     content = ~{::content}, 
-    header = ~{fragments/header :: content}, 
-    navbar = ~{}, 
+    header = ~{}, 
+    navbar = ~{fragments/page-nav::navbar}, 
     language = ${#annotations.get(singlePage, 'higan.howiehz.top/page-language')}
   )}"
 >
   <head>
-    <script src="/src/scripts/pages/page.ts" type="module"></script>
+    <script src="/src/scripts/pages/page_like_post_style.ts" type="module"></script>
   </head>
   <body>
+    <!--/*/
+    <style
+      th:inline="css"
+      th:if="${theme.config?.post_styles?.is_custom_toc_max_width}"
+    >
+      #header-post #toc {
+        max-width: /*[(${theme.config?.post_styles?.toc_max_width})]*/ 20em;
+      }
+    </style>
+    /*/-->
     <style th:if="${theme.config?.custom_page_styles?.is_optimize_content_paragraph_spacing}">
       .content > p {
         min-height: 1.1em;
@@ -82,5 +92,14 @@
         </div>
       </th:block>
     </article>
+    <div th:replace="~{fragments/page-footer-nav :: footerNav}"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // <!--/* generate toc
+        // wontfix：如果电脑屏幕较窄，文章页用的是底部导航栏，目录按钮按了之后不会显示目录
+        // 但是目录按钮在手机端是正常的，为了保证性能，不做特殊处理 */-->
+        window.initTOC("article > .content", isMobile() ? "#toc-footer" : "#toc");
+      });
+    </script>
   </body>
 </th:block>

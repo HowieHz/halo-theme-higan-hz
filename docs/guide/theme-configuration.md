@@ -5110,49 +5110,6 @@ HTML 代码也是可以的：
 
 :::
 
-### 启用类文章页样式
-
-::: info 🎯 用途
-
-让自定义页面使用类似文章页的布局和样式。
-
-:::
-::: info 📂 配置项位置
-
-自定义页面样式 -> 启用类文章页样式
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=启用类文章页样式" />
-
-:::
-::: info 🏷️ 类型
-
-布尔值
-
-:::
-::: info ⭐ 默认值
-
-`false`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.custom_page_styles?.is_enable_post_like_layout`
-
-:::
-::: ℹ️ 补充信息
-
-启用后，自定义页面将使用类似文章页的布局和样式。
-主要体现在：
-
-1. 桌面端顶部菜单（侧边目录，回到顶端按钮，分享菜单）
-2. 移动端底部菜单（折叠目录，回到顶端按钮，分享菜单）
-3. 以及，菜单、目录相关设置与[文章页样式](#文章页样式)下对应设置保持一致。
-
-:::
-
 ### 页面正文内容末尾分隔线
 
 ::: info 🎯 用途
@@ -5336,7 +5293,7 @@ HTML 代码也是可以的：
 `theme.config?.photos_styles?.is_enable_masonry_layout`
 
 :::
-::: ℹ️ 补充信息
+::: info ℹ️ 补充信息
 
 启用后可以配置
 
