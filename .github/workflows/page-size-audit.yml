@@ -1,21 +1,9 @@
 name: Page Size Audit
 
 on:
-  release:
-    types: [published]
   pull_request:
     types: [ opened, synchronize, reopened ]
     branches: [main]
-  workflow_dispatch:
-    inputs:
-      halo_version:
-        description: 'Halo version to test with'
-        required: false
-        default: '2.21.10'
-      theme_version:
-        description: 'Theme version to test (e.g., v1.48.0, leave empty to use current code)'
-        required: false
-        default: ''
 
 jobs:
   audit:
