@@ -64,14 +64,14 @@ const resourceColors = computed(() => isDark.value ? {
 })
 
 const resourceLabels = {
-  document: 'Document',
-  font: 'Font',
-  script: 'Script',
-  stylesheet: 'Stylesheet',
-  image: 'Image',
-  fetch: 'Fetch',
-  other: 'Other',
-  total: 'Total'
+  document: '文档',
+  font: '字体',
+  script: '脚本',
+  stylesheet: '样式表',
+  image: '图片',
+  fetch: '数据请求',
+  other: '其他',
+  total: '总计'
 }
 
 // 存储所有图表数据
