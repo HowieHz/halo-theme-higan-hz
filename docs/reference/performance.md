@@ -83,8 +83,8 @@ const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
   animation: false,
-  parsing: false,
-  normalized: true,
+  // parsing: false, 化为内部格式才能用
+  normalized: true, // 提供的数据索引唯一、已排序且在数据集之间一致，跳过验证和排序
   elements: {
     point: {
       radius: 0,
@@ -148,7 +148,10 @@ const chartOptions = computed(() => ({
 
 // 加载并处理数据
 onMounted(async () => {
+  console.time('📊 图表初始化总耗时')
+  
   try {
+    console.time('  1️⃣ 数据加载')
     // 动态导入所有 JSON 文件
     const jsonFiles = import.meta.glob('../../.github/page_size_audit_results/*.json')
     
@@ -166,6 +169,9 @@ onMounted(async () => {
       }
     }
     
+    console.timeEnd('  1️⃣ 数据加载')
+    
+    console.time('  2️⃣ 数据排序与处理')
     // 按版本排序
     allData.sort((a, b) => {
       const parseVersion = (v) => v.replace('v', '').split('.').map(Number)
@@ -257,9 +263,12 @@ onMounted(async () => {
       }
     }
     
+    console.timeEnd('  2️⃣ 数据排序与处理')
+    
     // 保存原始数据
     rawDatasets.value = { datasets, versions }
     
+    console.time('  3️⃣ 图表数据创建')
     // 创建图表数据格式的函数
     function createChartDatasets() {
       const colors = resourceColors.value
@@ -315,6 +324,9 @@ onMounted(async () => {
     
     // 初始创建图表数据
     createChartDatasets()
+    console.timeEnd('  3️⃣ 图表数据创建')
+    
+    console.timeEnd('📊 图表初始化总耗时')
     
     // 监听主题变化，重新创建图表数据
     watch(isDark, () => {
