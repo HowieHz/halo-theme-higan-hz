@@ -291,6 +291,7 @@ function nav(): DefaultTheme.NavItem[] {
       text: "参考",
       items: [
         { text: "常见问题", link: "/reference/faq" },
+        { text: "性能参考", link: "/reference/performance" },
         { text: "模板文件与访问路径映射", link: "/reference/template-map" },
       ],
     },
@@ -343,6 +344,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
       text: "参考",
       items: [
         { text: "常见问题", link: "/reference/faq" },
+        { text: "性能参考", link: "/reference/performance" },
         { text: "模板文件与访问路径映射", link: "/reference/template-map" },
       ],
     },
