@@ -89,8 +89,8 @@ export default defineConfig({
         assetFileNames: (assetInfo) => {
           const fontExtensions = [".woff2", ".woff", ".ttf"];
           const name = assetInfo.names[0] ?? "";
-          if (fontExtensions.some((ext) => name.endsWith(ext)) && name.startsWith("MesloLGS-Regular")) {
-            return "assets/dist/[name][extname]";
+          if (fontExtensions.some((ext) => name.endsWith(ext))) {
+            return "assets/dist/[hash][extname]";
           }
           return "assets/dist/[name]-[hash][extname]";
         },
