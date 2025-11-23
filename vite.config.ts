@@ -6,9 +6,10 @@ import { defineConfig } from "vite";
 // @ts-expect-error old version without types
 import PurgeIcons from "vite-plugin-purge-icons";
 
-import moveHtmlPlugin from "./plugins/vite-move-html";
 import bodyInject from "./plugins/vite-plugin-body-inject";
 import headInject from "./plugins/vite-plugin-head-inject";
+import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
+import removeEmptyLines from "./plugins/vite-plugin-remove-empty-lines";
 import replaceHtmlPlugin from "./plugins/vite-plugin-replace-html";
 
 export default defineConfig({
@@ -60,6 +61,7 @@ export default defineConfig({
         },
       ],
     }),
+    removeEmptyLines(),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
   build: {
