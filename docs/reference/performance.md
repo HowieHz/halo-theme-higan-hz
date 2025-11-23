@@ -84,11 +84,6 @@ const rawDatasets = ref({}) // 存储原始数据用于主题切换
 const loadingProgress = ref(0)
 const isLoading = ref(false)
 const loadingStage = ref('')
-const stageProgress = ref({
-  dataLoading: 0,
-  dataProcessing: 0,
-  chartCreation: 0
-})
 
 // 每个图表的加载状态
 const chartLoadingStatus = ref({})
@@ -102,9 +97,8 @@ const ProgressBar = defineComponent({
   },
   setup(props) {
     const stageNames = {
-      dataLoading: '数据加载',
-      dataProcessing: '数据排序与处理',
-      chartCreation: '图表数据创建'
+      dataProcessing: '数据处理',
+      chartCreation: '图表创建'
     }
     
     return () => {
@@ -232,13 +226,12 @@ const chartOptions = computed(() => ({
 }))
 
 // 加载并处理数据
-onMounted(async () => {
+onMounted(() => {
   // 清除可能存在的计时器（处理热重载情况）
   try {
     console.timeEnd('📊 图表初始化总耗时')
-    console.timeEnd('  1️⃣ 数据加载')
-    console.timeEnd('  2️⃣ 数据排序与处理')
-    console.timeEnd('  3️⃣ 图表数据创建')
+    console.timeEnd('  1️⃣ 数据处理')
+    console.timeEnd('  2️⃣ 图表创建')
   } catch (e) {
     // 忽略不存在的计时器错误
   }
@@ -259,57 +252,30 @@ onMounted(async () => {
   }
   
   try {
-    console.time('  1️⃣ 数据加载')
-    loadingStage.value = 'dataLoading'
-    
-    // 动态导入所有 JSON 文件
-    const jsonFiles = import.meta.glob('../../.github/page_size_audit_results/*.json')
-
-    const allData = []
-    const paths = Object.keys(jsonFiles)
-    const totalFiles = paths.length
-    let completedCount = 0
-
-    // 并发加载所有 JSON 文件
-    const loadPromises = paths.map(async (path) => {
-      const module = await jsonFiles[path]()
-      const version = path.match(/v\d+\.\d+\.\d+/)?.[0]
-
-      // 更新进度（使用原子操作确保准确）
-      completedCount++
-      const progress = Math.round((completedCount / totalFiles) * 100)
-      stageProgress.value.dataLoading = progress
-      loadingProgress.value = progress
-
-      if (version && module.default) {
-        return {
-          version,
-          data: module.default
-        }
-      }
-      return null
-    })
-
-    const results = await Promise.all(loadPromises)
-    allData.push(...results.filter(item => item !== null))
-    stageProgress.value.dataLoading = 100
-
-    console.timeEnd('  1️⃣ 数据加载')
-
-    console.time('  2️⃣ 数据排序与处理')
+    console.time('  1️⃣ 数据处理')
     loadingStage.value = 'dataProcessing'
-    loadingProgress.value = 0
-    // 按版本排序
-    allData.sort((a, b) => {
-      const parseVersion = (v) => v.replace('v', '').split('.').map(Number)
-      const [aMajor, aMinor, aPatch] = parseVersion(a.version)
-      const [bMajor, bMinor, bPatch] = parseVersion(b.version)
-
-      if (aMajor !== bMajor) return aMajor - bMajor
-      if (aMinor !== bMinor) return aMinor - bMinor
-      return aPatch - bPatch
+    
+    // 使用 eager 模式导入所有 JSON 文件（构建时打包，零运行时延迟）
+    const jsonFiles = import.meta.glob('../../.github/page_size_audit_results/*.json', { 
+      eager: true 
     })
 
+    // 直接处理已加载的模块并按版本排序
+    const allData = Object.entries(jsonFiles)
+      .map(([path, module]) => {
+        const version = path.match(/v\d+\.\d+\.\d+/)?.[0]
+        return version && module.default ? { version, data: module.default } : null
+      })
+      .filter(item => item !== null)
+      .sort((a, b) => {
+        const parseVersion = (v) => v.replace('v', '').split('.').map(Number)
+        const [aMajor, aMinor, aPatch] = parseVersion(a.version)
+        const [bMajor, bMinor, bPatch] = parseVersion(b.version)
+        
+        if (aMajor !== bMajor) return aMajor - bMajor
+        if (aMinor !== bMinor) return aMinor - bMinor
+        return aPatch - bPatch
+      })
     const versions = allData.map(d => d.version)
 
     // 为每个页面类型创建数据集
@@ -390,16 +356,14 @@ onMounted(async () => {
       }
     }
 
-    stageProgress.value.dataProcessing = 100
-    loadingProgress.value = 100
-    console.timeEnd('  2️⃣ 数据排序与处理')
+    loadingProgress.value = 50
+    console.timeEnd('  1️⃣ 数据处理')
 
     // 保存原始数据
     rawDatasets.value = { datasets, versions }
 
-    console.time('  3️⃣ 图表数据创建')
+    console.time('  2️⃣ 图表创建')
     loadingStage.value = 'chartCreation'
-    loadingProgress.value = 0
     
     // 创建图表数据格式的函数
     function createChartDatasets() {
@@ -474,9 +438,8 @@ onMounted(async () => {
 
     // 初始创建图表数据
     createChartDatasets()
-    stageProgress.value.chartCreation = 100
     loadingProgress.value = 100
-    console.timeEnd('  3️⃣ 图表数据创建')
+    console.timeEnd('  2️⃣ 图表创建')
 
     console.timeEnd('📊 图表初始化总耗时')
 
