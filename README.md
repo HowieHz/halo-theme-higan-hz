@@ -48,6 +48,14 @@
 最初，这个项目只是为了解决自己的一些需求。没想到现如今已有不少小伙伴在使用，并通过各种方式反馈建议，帮助我不断优化和完善。衷心感谢大家的支持与鼓励！
 另外，感谢所有通过打赏支持本项目的小伙伴，特此列出名单：[赞助名单](#感谢赞助)
 
+## 主题历史
+
+- 本主题：[`HowieHz/halo-theme-higan-hz`](https://github.com/HowieHz/halo-theme-higan-hz)（2024.4.5）
+- 样式移植：[`guqing/halo-theme-higan`](https://github.com/guqing/halo-theme-higan)（2019.4.16）
+- 样式设计：[`probberechts/hexo-theme-cactus`](https://github.com/probberechts/hexo-theme-cactus)（2016.11.1）
+
+❤非常感谢 [Pieter Robberechts](https://github.com/probberechts) 和 [guqing](https://github.com/guqing) 以及社区伙伴的贡献与反馈！
+
 ## Lighthouse
 
 Lighthouse 测试结果：
