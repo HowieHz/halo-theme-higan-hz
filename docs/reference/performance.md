@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+<!-- markdownlint-disable MD033 -->
+
 # 性能参考
 
 <script setup lang="ts">
@@ -10,7 +12,7 @@ import { defineClientComponent, useData } from 'vitepress'
 
 const { isDark } = useData()
 
-// 页面URL映射
+// 页面 URL 映射
 const pageUrls = {
   home: '/',
   archives: '/archives',
@@ -154,9 +156,9 @@ onMounted(async () => {
     console.time('  1️⃣ 数据加载')
     // 动态导入所有 JSON 文件
     const jsonFiles = import.meta.glob('../../.github/page_size_audit_results/*.json')
-    
+
     const allData = []
-    
+
     // 读取所有/JSON/文件读取所有 JSON 文件
     for (const path in jsonFiles) {
       const module = await jsonFiles[path]()
@@ -168,26 +170,26 @@ onMounted(async () => {
         })
       }
     }
-    
+
     console.timeEnd('  1️⃣ 数据加载')
-    
+
     console.time('  2️⃣ 数据排序与处理')
     // 按版本排序
     allData.sort((a, b) => {
       const parseVersion = (v) => v.replace('v', '').split('.').map(Number)
       const [aMajor, aMinor, aPatch] = parseVersion(a.version)
       const [bMajor, bMinor, bPatch] = parseVersion(b.version)
-      
+
       if (aMajor !== bMajor) return aMajor - bMajor
       if (aMinor !== bMinor) return aMinor - bMinor
       return aPatch - bPatch
     })
-    
+
     const versions = allData.map(d => d.version)
-    
+
     // 为每个页面类型创建数据集
     const datasets = {}
-    
+
     // 处理每个具体页面
     for (const [key, url] of Object.entries(pageUrls)) {
       datasets[key] = {
@@ -196,7 +198,7 @@ onMounted(async () => {
         resourcesGzipped: {},
         resourcesRaw: {}
       }
-      
+
       // 为每种资源类型初始化数组
       for (const type of resourceTypes) {
         datasets[key].themeGzipped[type] = []
@@ -204,7 +206,7 @@ onMounted(async () => {
         datasets[key].resourcesGzipped[type] = []
         datasets[key].resourcesRaw[type] = []
       }
-      
+
       allData.forEach(({ data }) => {
         const pageData = data.results?.find(r => r.url === url)
         if (pageData) {
@@ -224,7 +226,7 @@ onMounted(async () => {
         }
       })
     }
-    
+
     // 计算平均值
     datasets.average = {
       themeGzipped: {},
@@ -232,7 +234,7 @@ onMounted(async () => {
       resourcesGzipped: {},
       resourcesRaw: {}
     }
-    
+
     // 为每种资源类型初始化数组
     for (const type of resourceTypes) {
       datasets.average.themeGzipped[type] = []
@@ -240,12 +242,12 @@ onMounted(async () => {
       datasets.average.resourcesGzipped[type] = []
       datasets.average.resourcesRaw[type] = []
     }
-    
+
     for (let i = 0; i < versions.length; i++) {
       for (const type of resourceTypes) {
         let themeGzippedSum = 0, themeRawSum = 0, resourcesGzippedSum = 0, resourcesRawSum = 0
         let count = 0
-        
+
         for (const key of Object.keys(pageUrls)) {
           if (datasets[key].themeGzipped[type][i] !== null) {
             themeGzippedSum += datasets[key].themeGzipped[type][i]
@@ -255,19 +257,19 @@ onMounted(async () => {
             count++
           }
         }
-        
+
         datasets.average.themeGzipped[type].push(count > 0 ? themeGzippedSum / count : null)
         datasets.average.themeRaw[type].push(count > 0 ? themeRawSum / count : null)
         datasets.average.resourcesGzipped[type].push(count > 0 ? resourcesGzippedSum / count : null)
         datasets.average.resourcesRaw[type].push(count > 0 ? resourcesRawSum / count : null)
       }
     }
-    
+
     console.timeEnd('  2️⃣ 数据排序与处理')
-    
+
     // 保存原始数据
     rawDatasets.value = { datasets, versions }
-    
+
     console.time('  3️⃣ 图表数据创建')
     // 创建图表数据格式的函数
     function createChartDatasets() {
@@ -321,13 +323,13 @@ onMounted(async () => {
         }
       }
     }
-    
+
     // 初始创建图表数据
     createChartDatasets()
     console.timeEnd('  3️⃣ 图表数据创建')
-    
+
     console.timeEnd('📊 图表初始化总耗时')
-    
+
     // 监听主题变化，重新创建图表数据
     watch(isDark, () => {
       createChartDatasets()
