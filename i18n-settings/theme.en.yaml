@@ -19,3 +19,9 @@ spec:
   license:
     - name: "MIT"
       url: "https://github.com/howiehz/halo-theme-higan-hz/blob/main/LICENSE"
+  customTemplates:
+    page:
+      - name: Article page style
+        description: Customized pages will use a layout and style similar to article/post pages. This is mainly reflected in the desktop top menu (side table of contents, back-to-top button, share menu) and the mobile bottom menu (similar to article pages). Menu and table-of-contents related settings remain consistent with those under "Article page style".
+        screenshot:
+        file: page_like_post_style.html
