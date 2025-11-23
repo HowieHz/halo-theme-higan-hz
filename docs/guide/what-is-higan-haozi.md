@@ -37,8 +37,6 @@ Higan Haozi 是一款适用于 [Halo CMS](https://github.com/halo-dev/halo) 的�
 
 ![preview-1.png](/preview-1.png)
 
-期望进一步进行性能优化配置，请阅读[性能优化](../tutorial/performance)。
-
 ## 浏览器兼容性
 
 在线查看：[兼容浏览器矩阵](https://browsersl.ist/#q=defaults%0ASafari+%3E%3D+16.4%0AChrome+%3E%3D+111%0AFirefox+%3E%3D+128)
