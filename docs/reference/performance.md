@@ -83,6 +83,8 @@ const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
   animation: false,
+  parsing: false,
+  normalized: true,
   elements: {
     point: {
       radius: 0,
