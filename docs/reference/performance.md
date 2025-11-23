@@ -110,25 +110,33 @@ const ProgressBar = defineComponent({
     return () => {
       if (!props.isLoading) return null
       
+      // 根据主题适配颜色
+      const textColor = isDark.value ? '#cbd5e0' : '#4a5568'
+      const bgColor = isDark.value ? '#374151' : '#e5e7eb'
+      const progressGradient = isDark.value 
+        ? 'linear-gradient(90deg, #60a5fa 0%, #a78bfa 100%)'
+        : 'linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%)'
+      
       return h('div', {
         style: {
           textAlign: 'center',
           padding: '1.5rem',
-          color: '#6b7280'
+          color: textColor
         }
       }, [
         h('div', {
           style: {
             fontSize: '1rem',
             fontWeight: '600',
-            marginBottom: '0.5rem'
+            marginBottom: '0.5rem',
+            color: textColor
           }
         }, `正在${stageNames[props.stage]}...`),
         h('div', {
           style: {
             width: '100%',
             height: '4px',
-            background: '#e5e7eb',
+            background: bgColor,
             borderRadius: '2px',
             overflow: 'hidden',
             marginTop: '0.75rem'
@@ -138,7 +146,7 @@ const ProgressBar = defineComponent({
             style: {
               width: `${props.progress}%`,
               height: '100%',
-              background: 'linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%)',
+              background: progressGradient,
               transition: 'width 0.3s ease'
             }
           })
@@ -146,7 +154,8 @@ const ProgressBar = defineComponent({
         h('div', {
           style: {
             fontSize: '0.875rem',
-            marginTop: '0.5rem'
+            marginTop: '0.5rem',
+            color: textColor
           }
         }, `进度: ${props.progress}%`)
       ])
