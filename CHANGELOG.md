@@ -2,6 +2,19 @@
 
 <!-- markdownlint-disable MD024 -->
 
+## [1.48.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.0...v1.48.1) (2025-11-23)
+
+### 🔧 优化改进
+
+- 为默认 LOGO 添加 Avif/WebP 格式，原本的 PNG 格式作为回退。
+- 使用 [KonghaYao/cn-font-split](https://github.com/KonghaYao/cn-font-split) 对默认字体进行分割。
+- 修订构建流程，移除模板中的 `// <!--/* 到 */-->` 注释、`<!--/* 到 */-->` 注释、空行。优化分发体积和输出体积。
+- 经过上述优化，主题资源体积得到了极大的优化。
+
+### 🛠️ 开发体验
+
+- 更新开发依赖
+
 ## [1.48.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.47.0...v1.48.0) (2025-11-22)
 
 ### 🚀 新功能
