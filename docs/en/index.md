@@ -42,7 +42,7 @@ features:
   - icon: ⚡
     title: "High Performance"
     details: "Deeply optimized with streamlined code, fewer external dependencies, and page-level splitting for ultra-fast responses and smooth interactions."
-    link: /guide/what-is-higan-haozi#lighthouse
+    link: /reference/performance
     linkText: "Learn More"
   - icon: 🔒
     title: "Security Safeguards"
