@@ -4,12 +4,27 @@
 
 ## [1.48.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.0...v1.48.1) (2025-11-23)
 
+### 🚀 新功能
+
+- 新文档：[性能参考](https://howiehz.top/halo-theme-higan-haozi/reference/performance)
+  - 展示了主题从 v1.0.0 到最新版的资源体积变化。
+
 ### 🔧 优化改进
 
 - 为默认 LOGO 添加 Avif/WebP 格式，原本的 PNG 格式作为回退。
 - 使用 [KonghaYao/cn-font-split](https://github.com/KonghaYao/cn-font-split) 对默认字体进行分割。
 - 修订构建流程，移除模板中的 `// <!--/* 到 */-->` 注释、`<!--/* 到 */-->` 注释、空行。优化分发体积和输出体积。
-- 经过上述优化，主题资源体积得到了极大的优化。
+- 经过上述优化：
+  - 主题资源：
+    - 1.48.0 平均体积: 368.038 KiB (gzipped) / 428.557 KiB (原始)
+    - 1.48.1 平均体积: 66.808 KiB (gzipped) / 135.609 KiB (原始)
+    - 📉 Gzipped 下降: 301.230 KiB (81.85%)
+    - 📉 原始大小下降: 292.948 KiB (68.36%)
+  - 页面全部资源：
+    - 1.48.0 平均体积: 642.663 KiB (gzipped) / 1292.573 KiB (原始)
+    - 1.48.1 平均体积: 341.412 KiB (gzipped) / 999.784 KiB (原始)
+    - 📉 Gzipped 下降: 301.251 KiB (46.88%)
+    - 📉 原始大小下降: 292.789 KiB (22.65%)
 
 ### 🛠️ 开发体验
 
