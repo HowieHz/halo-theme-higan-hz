@@ -193,7 +193,7 @@
       countdownElement.innerHTML = `${originText
         .replace("{0}", currentTimeLeft)
         .replace("{1}", `<a href="${targetUrl}">${targetUrl}</a>`)}`;
-      countdownElement.style.opacity = 1; // <--/* 此处动画耗时一秒 */
+      countdownElement.style.opacity = 1; // <!--/* 此处动画耗时一秒 */-->
       currentTimeLeft -= 1;
       const countdownInterval = setInterval(() => {
         if (currentTimeLeft <= 0) {

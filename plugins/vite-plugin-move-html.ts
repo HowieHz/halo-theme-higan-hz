@@ -39,7 +39,7 @@ export default function moveHtmlPlugin(opts: MoveHtmlOptions): Plugin {
   const removeEmptyDirs = opts.removeEmptyDirs ?? true;
 
   return {
-    name: "vite-move-html",
+    name: "vite-plugin-move-html",
     apply: "build",
     async writeBundle(bundleOptions, bundle) {
       // 规范化输出目录，已做路径校验，安全使用 resolve

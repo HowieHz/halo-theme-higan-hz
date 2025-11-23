@@ -3,12 +3,14 @@ import { fileURLToPath } from "url";
 import utwm from "unplugin-tailwindcss-mangle/vite";
 import { defineConfig } from "vite";
 
-import moveHtmlPlugin from "./plugins/vite-move-html";
+import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
+import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
 export default defineConfig({
   base: "/themes/howiehz-higan/",
   plugins: [
     utwm(), // obfuscate tailwindcss class
+    thymeleafMinify(),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
   build: {

@@ -453,10 +453,10 @@ html[theme="theme-[(${colorSchema.id})]"] {
       });
 
       function toggleTheme(event) {
-        event.preventDefault(); // 阻止默认行为，防止页面刷新
+        event.preventDefault(); // <!--/* 阻止默认行为，防止页面刷新 */-->
         const currentTheme = document.documentElement.attributes["theme"].value;
         let newTheme;
-        // light -> dark -> auto -> light
+        // <!--/* light -> dark -> auto -> light */-->
         if (currentTheme === THEME_LIGHT) {
           newTheme = THEME_DARK;
         } else if (currentTheme === THEME_DARK) {
