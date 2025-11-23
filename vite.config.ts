@@ -9,8 +9,8 @@ import PurgeIcons from "vite-plugin-purge-icons";
 import bodyInject from "./plugins/vite-plugin-body-inject";
 import headInject from "./plugins/vite-plugin-head-inject";
 import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
-import removeEmptyLines from "./plugins/vite-plugin-remove-empty-lines";
 import replaceHtmlPlugin from "./plugins/vite-plugin-replace-html";
+import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
 export default defineConfig({
   base: "/themes/howiehz-higan/",
@@ -61,7 +61,7 @@ export default defineConfig({
         },
       ],
     }),
-    removeEmptyLines(),
+    thymeleafMinify(),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
   build: {
