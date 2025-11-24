@@ -1,6 +1,7 @@
 <head>
   <script src="/src/scripts/utils/list/moment/summary.ts" type="module"></script>
   <th:block th:replace="~{components/pagination/template :: headContent}"></th:block>
+  <th:block th:replace="~{components/moment-video-modal/template :: headContent}"></th:block>
 </head>
 <th:block th:fragment="moment-list(moments, isIndexPage)">
   <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
@@ -193,7 +194,7 @@
                       alt="moment image"
                       loading="lazy"
                     />
-                    <th:block th:replace="~{fragments/moment-video-modal :: momentVideoModal}"></th:block>
+                    <th:block th:insert="~{components/moment-video-modal/template :: content(${media})}"></th:block>
                   </th:block>
                 </div>
               </div>

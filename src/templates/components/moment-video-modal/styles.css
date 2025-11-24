@@ -1,0 +1,36 @@
+/* moment-video-modal start */
+.bg-base-100 {
+  background-color: var(--color-footer-mobile-3);
+}
+
+.bg-base-200 {
+  background-color: var(--color-footer-mobile-2);
+}
+
+.text-base-content-60 {
+  color: var(--toc-level-3);
+}
+
+.group:hover .group-hover-text-base-content {
+  color: var(--toc-level-3);
+}
+
+.aspect-w-1 > * {
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.aspect-w-1 {
+  padding-bottom: calc(var(--tw-aspect-h) / var(--tw-aspect-w) * 100%);
+  position: relative;
+
+  --tw-aspect-w: 1;
+}
+
+.aspect-h-1 {
+  --tw-aspect-h: 1;
+}
+
+/* moment-video-modal end */

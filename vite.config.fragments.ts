@@ -42,7 +42,10 @@ export default defineConfig({
         common: path.resolve(__dirname, "src/templates/fragments/common.html"),
         header: path.resolve(__dirname, "src/templates/fragments/header.html"),
         "fragments-layout": path.resolve(__dirname, "src/templates/fragments/layout.html"),
-        "fragments-moment-video-modal": path.resolve(__dirname, "src/templates/fragments/moment-video-modal.html"),
+        "components-moment-video-modal": path.resolve(
+          __dirname,
+          "src/templates/components/moment-video-modal/template.html",
+        ),
         "fragments-page-footer-nav": path.resolve(__dirname, "src/templates/fragments/page-footer-nav.html"),
         "fragments-page-nav": path.resolve(__dirname, "src/templates/fragments/page-nav.html"),
         "fragments-post-footer-nav": path.resolve(__dirname, "src/templates/fragments/post-footer-nav.html"),
