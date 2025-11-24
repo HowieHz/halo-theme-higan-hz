@@ -480,12 +480,12 @@ jobs:
           PR_SHA="${{ needs.check-trigger.outputs.pr_head_sha }}"
           
           cat > ./final-report.md << EOF
-          # 📊 性能对比报告
+          # 📊 Performance Comparison Report
           
-          **对比说明：** 当前 PR 版本 vs 最新 Release 版本 (\`${RELEASE_TAG}\`)
+          **Comparison:** Current PR version vs Latest Release version (\`${RELEASE_TAG}\`)
           
-          - **当前 PR**: [\`${PR_SHA:0:7}\`](https://github.com/${{ github.repository }}/commit/${PR_SHA})
-          - **最新 Release**: [\`${RELEASE_TAG}\`](https://github.com/${{ github.repository }}/releases/tag/${RELEASE_TAG})
+          - **Current PR**: [\`${PR_SHA:0:7}\`](https://github.com/${{ github.repository }}/commit/${PR_SHA})
+          - **Latest Release**: [\`${RELEASE_TAG}\`](https://github.com/${{ github.repository }}/releases/tag/${RELEASE_TAG})
           
           ---
           
