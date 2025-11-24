@@ -1,2 +1,2 @@
 import "../generic-header";
-import "../../styles/mixins/common-post-list.css";
+import "../utils/list/post/simple";

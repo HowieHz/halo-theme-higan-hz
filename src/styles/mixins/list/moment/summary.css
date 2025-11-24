@@ -1,44 +1,8 @@
-.bg-base-100 {
-  background-color: var(--color-footer-mobile-3);
-}
-
-.bg-base-200 {
-  background-color: var(--color-footer-mobile-2);
-}
-
-.text-base-content-60 {
-  color: var(--toc-level-3);
-}
-
-.group:hover .group-hover-text-base-content {
-  color: var(--toc-level-3);
-}
-
-/* 初始化日志内容样式 */
-.aspect-w-1 > * {
-  height: 100%;
-  inset: 0;
-  position: absolute;
-  width: 100%;
-}
-
-.aspect-w-1 {
-  padding-bottom: calc(var(--tw-aspect-h) / var(--tw-aspect-w) * 100%);
-  position: relative;
-
-  --tw-aspect-w: 1;
-}
-
-.aspect-h-1 {
-  --tw-aspect-h: 1;
-}
-
 video {
   height: auto;
   max-width: 100%;
 }
 
-/* 日志样式开始 */
 .moment {
   & .moment-comment {
     margin-top: 1rem;
@@ -131,24 +95,59 @@ video {
       padding-inline-start: 0;
     }
   }
-}
 
-.moment-content-box {
-  box-shadow: 1px 3px 15px rgb(140 149 159 / 15%);
-  padding: 1rem;
-}
+  & .moment-body {
+    & .moment-content-box {
+      box-shadow: 1px 3px 15px rgb(140 149 159 / 15%);
+      padding: 1rem;
 
-.moment-body {
-  & .moment-content {
-    & li {
-      list-style: initial !important;
-    }
+      & .moment-content {
+        & li {
+          list-style: initial !important;
+        }
 
-    & p {
-      overflow-wrap: break-word;
-      text-align: left;
+        & p {
+          overflow-wrap: break-word;
+          text-align: left;
+        }
+      }
     }
   }
 }
 
-/* 日志样式结束 */
+/* moment-video-modal start */
+.bg-base-100 {
+  background-color: var(--color-footer-mobile-3);
+}
+
+.bg-base-200 {
+  background-color: var(--color-footer-mobile-2);
+}
+
+.text-base-content-60 {
+  color: var(--toc-level-3);
+}
+
+.group:hover .group-hover-text-base-content {
+  color: var(--toc-level-3);
+}
+
+.aspect-w-1 > * {
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.aspect-w-1 {
+  padding-bottom: calc(var(--tw-aspect-h) / var(--tw-aspect-w) * 100%);
+  position: relative;
+
+  --tw-aspect-w: 1;
+}
+
+.aspect-h-1 {
+  --tw-aspect-h: 1;
+}
+
+/* moment-video-modal end */

@@ -1,5 +1,5 @@
 <head>
-  <script src="/src/scripts/utils/list/moment-list-summary.ts" type="module"></script>
+  <script src="/src/scripts/utils/list/moment/summary.ts" type="module"></script>
 </head>
 <th:block th:fragment="moment-list(moments, isIndexPage)">
   <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
@@ -192,7 +192,7 @@
                       alt="moment image"
                       loading="lazy"
                     />
-                    <th:block th:replace="~{fragments/moment::momentVideoModal}"></th:block>
+                    <th:block th:replace="~{fragments/moment-video-modal :: momentVideoModal}"></th:block>
                   </th:block>
                 </div>
               </div>
@@ -238,29 +238,7 @@
           </li>
         </ul>
       </div>
-      <div class="pagination mt-0">
-        <a
-          th:href="${not isIndexPage} ? ${moments.prevUrl} : (${moments.page-1==1} ? '/' : '/page/' + ${moments.page-1})"
-          th:if="${moments.hasPrevious()}"
-          th:aria-label="#{common.previousPage.aria-label}"
-        >
-          <i class="iconify iconify-middle" data-icon="material-symbols:chevron-left"></i>
-        </a>
-        <span
-          class="page-number"
-          th:with="totalPage=${moments.totalPages}"
-          th:text="#{common.page-number.text(${moments.page}, ${totalPage})}"
-          th:if="${moments.totalPages > 1 and theme.config?.styles?.is_show_page_number}"
-          >Page 1 of 1 填充位</span
-        >
-        <a
-          th:href="@{${not isIndexPage} ? ${moments.nextUrl} : '/page/' + ${moments.page+1}}"
-          th:if="${moments.hasNext()}"
-          th:aria-label="#{common.nextPage.aria-label}"
-        >
-          <i class="iconify iconify-middle" data-icon="material-symbols:chevron-right"></i>
-        </a>
-      </div>
+      <th:block th:insert="~{fragments/pagination :: pagination(posts=${moments})}"></th:block>
     </div>
     <script vite-ignore th:inline="javascript" th:if="${theme.config?.moments_styles?.is_moment_upvote_button_show}">
       const likes_localstorage_key = "higan.likes.moment.ids";

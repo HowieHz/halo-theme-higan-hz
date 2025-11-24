@@ -1,0 +1,57 @@
+/* 文章列表样式 */
+.common-post-list {
+  margin: 0;
+  padding: 0;
+
+  & .post-item {
+    list-style-type: none;
+    margin-bottom: 1rem;
+    margin-left: 0;
+
+    @media (width >= 640px) {
+      display: flex;
+      margin-bottom: 0.3125rem;
+    }
+
+    & .meta {
+      color: var(--color-time);
+      display: block;
+      font-size: var(--text);
+      margin-right: 1rem;
+      white-space: nowrap;
+
+      @media (width >= 640px) {
+        text-align: right;
+      }
+    }
+  }
+}
+
+#archive {
+  & .common-post-list {
+    padding: 0;
+
+    & .post-item {
+      list-style-type: none;
+      margin-bottom: 1rem;
+      margin-left: 0;
+
+      @media (width >= 640px) {
+        display: flex;
+        margin-bottom: 0.3125rem;
+        margin-left: 1rem;
+      }
+
+      & .meta {
+        color: var(--color-footer-mobile-1);
+        display: block;
+        font-size: var(--text);
+        margin-right: 1rem;
+
+        @media (width >= 640px) {
+          text-align: right;
+        }
+      }
+    }
+  }
+}
