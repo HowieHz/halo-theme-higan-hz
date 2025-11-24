@@ -1,0 +1,174 @@
+/* 语义化 HTML5 标签 内部一般嵌套一个 .content */
+article {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  min-height: 100%;
+
+  & header {
+    & .meta {
+      margin-bottom: 1rem;
+      margin-top: 0;
+
+      & * {
+        color: var(--color-accent-3);
+        font-size: var(--text-sm);
+      }
+    }
+  }
+
+  & .content {
+    & h2,
+    & .h2 {
+      &::before {
+        color: var(--color-accent-1);
+        content: "#";
+        font-size: 1.2rem;
+        font-weight: bold;
+        left: -1rem;
+        position: absolute;
+        top: -0.25rem;
+      }
+    }
+
+    & .caption {
+      color: var(--color-footer-mobile-1);
+      display: block;
+      font-size: 0.9em;
+      margin-top: 0.5em;
+      position: relative;
+      text-align: center;
+    }
+
+    & img,
+    & video {
+      display: block;
+      height: auto;
+      margin: auto;
+      max-width: 100%;
+    }
+
+    /* http://webdesignerwall.com/tutorials/css-elastic-videos */
+    & .video-container {
+      height: 0;
+      overflow: hidden;
+      padding-top: calc(9 / 16 * 100%); /*  16:9 ratio */
+      position: relative;
+
+      & iframe,
+      & object,
+      & embed {
+        height: 100%;
+        left: 0;
+        margin-top: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+    }
+
+    & blockquote {
+      background: inherit;
+      color: var(--color-quote);
+      font-weight: bold;
+      margin: 1rem 0.625rem;
+      padding: 0.5em 0.625rem;
+      quotes: "\201C" "\201D" "\2018" "\2019";
+
+      & p {
+        margin: 0;
+      }
+
+      & footer {
+        color: var(--color-footer-mobile-1);
+        font-size: var(--text-xs);
+        margin: var(--text) * 1.725 0;
+
+        & a {
+          background-image: linear-gradient(
+            transparent,
+            transparent 0.3125rem,
+            var(--color-footer-mobile-1) 0.3125rem,
+            var(--color-footer-mobile-1)
+          );
+          color: var(--color-footer-mobile-1);
+
+          &:hover {
+            background-image: linear-gradient(
+              transparent,
+              transparent 0.25rem,
+              var(--color-link-hover) 0.25rem,
+              var(--color-link-hover)
+            );
+            color: var(--color-link-hover);
+          }
+        }
+
+        & cite::before {
+          content: "—";
+          padding: 0 0.5em;
+        }
+      }
+    }
+
+    & .pullquote {
+      margin: 0;
+      text-align: left;
+      width: 45%;
+
+      &.left {
+        float: left;
+        margin-left: 0.5em;
+        margin-right: 1em;
+      }
+
+      &.right {
+        float: right;
+        margin-left: 1em;
+        margin-right: 0.5em;
+      }
+    }
+  }
+}
+
+/* 明暗控制显示 样式块 开始 */
+/* 明暗控制显示 样式块 明亮模式（默认值） */
+article .content div {
+  &.light {
+    display: block;
+  }
+
+  &.dark {
+    display: none;
+  }
+}
+
+/* 明暗控制显示 样式块 自动模式 */
+html[data-color-scheme="auto"] article .content {
+  & div {
+    &.light {
+      @media (prefers-color-scheme: dark) {
+        display: none;
+      }
+    }
+
+    &.dark {
+      @media (prefers-color-scheme: dark) {
+        display: block;
+      }
+    }
+  }
+}
+
+/* 明暗控制显示 样式块 暗黑模式 */
+html[data-color-scheme="dark"] article .content {
+  & div {
+    &.light {
+      display: none;
+    }
+
+    &.dark {
+      display: block;
+    }
+  }
+}
