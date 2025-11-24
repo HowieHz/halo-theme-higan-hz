@@ -64,6 +64,9 @@ export default defineConfig({
     thymeleafMinify(),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
+  esbuild: {
+    legalComments: "none", // 移除所有法律注释 https://esbuild.github.io/api/#legal-comments
+  },
   build: {
     outDir: fileURLToPath(new URL("./templates/", import.meta.url)),
     assetsDir: "assets/dist/",

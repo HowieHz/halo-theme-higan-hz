@@ -18,7 +18,11 @@ export default defineConfig({
     assetsDir: "assets/dist/",
     emptyOutDir: false,
     modulePreload: {
-      polyfill: false, // 仅 fragments/layout.html 会注入此 polyfill，其他 fragment 无 js，但其他页面 js 包括此 polyfill，因此无需重复注入
+      // https://cn.vite.dev/config/build-options#build-modulepreload
+      // 开启这个后仅 fragments/layout.html 会注入此 polyfill，其他 fragment 无 js。
+      // polyfill 是为不支持 link[rel="modulepreload"] 的旧浏览器加的。
+      // 实际页面模板带 polyfill，因此无需在通用模板重复注入。
+      polyfill: false,
     },
     rollupOptions: {
       input: {
