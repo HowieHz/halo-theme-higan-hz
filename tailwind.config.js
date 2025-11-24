@@ -3,12 +3,7 @@ export default {
   corePlugins: {
     preflight: false,
   },
-  content: [
-    "./src/**/*.{js,ts}",
-    "./src/templates/*.html",
-    "./src/templates/fragments/*.html",
-    "./src/templates/error/*.html",
-  ],
+  content: ["./src/**/*.{js,ts}", "./src/templates/**/*.html"],
   theme: {
     fontSize: {
       sm: ["0.875rem", "1.5rem"],
