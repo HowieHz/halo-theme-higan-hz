@@ -20,6 +20,7 @@ export default defineConfig({
       beforeHeadClose: `<!--/*-->\n  `,
       // 在 </head> 标签后插入
       afterHeadClose: `\n  <!--*/-->\n</th:block>`,
+      exclude: ["/src/templates/fragments/layout.html"],
     }),
     thymeleafMinify(),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),

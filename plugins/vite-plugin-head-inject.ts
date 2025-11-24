@@ -1,4 +1,14 @@
+import picomatch from "picomatch";
 import type { IndexHtmlTransformHook, Plugin } from "vite";
+
+/**
+ * 排除规则类型
+ * - 字符串: glob 模式匹配(如 'admin/**​/*.html')
+ * - 正则表达式: 正则匹配
+ * - 函数: 自定义匹配逻辑
+ * - 数组: 多个规则的组合
+ */
+type ExcludeRule = string | RegExp | ((path: string) => boolean);
 
 /**
  * 插件选项接口
@@ -12,6 +22,46 @@ interface HeadInjectOptions {
   beforeHeadClose?: string;
   /** 插入到</head>标签之后的内容 */
   afterHeadClose?: string;
+  /** 排除规则 - 匹配的路径将不会被注入内容 */
+  exclude?: ExcludeRule | ExcludeRule[];
+}
+
+/**
+ * 检查路径是否应该被排除
+ * @param path 待检查的路径
+ * @param exclude 排除规则
+ * @returns 如果应该排除返回 true,否则返回 false
+ */
+function shouldExclude(path: string, exclude?: ExcludeRule | ExcludeRule[]): boolean {
+  if (!exclude) {
+    return false;
+  }
+
+  const rules = Array.isArray(exclude) ? exclude : [exclude];
+
+  for (const rule of rules) {
+    // 字符串类型 - 使用 picomatch 进行 glob 匹配
+    if (typeof rule === "string") {
+      const isMatch = picomatch(rule);
+      if (isMatch(path)) {
+        return true;
+      }
+    }
+    // 正则表达式类型
+    else if (rule instanceof RegExp) {
+      if (rule.test(path)) {
+        return true;
+      }
+    }
+    // 函数类型
+    else if (typeof rule === "function") {
+      if (rule(path)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
 }
 
 /**
@@ -20,12 +70,18 @@ interface HeadInjectOptions {
  * @returns Vite 插件
  */
 export default function headInjectPlugin(options: HeadInjectOptions = {}): Plugin {
-  const { beforeHeadOpen = "", afterHeadOpen = "", beforeHeadClose = "", afterHeadClose = "" } = options;
+  const { beforeHeadOpen = "", afterHeadOpen = "", beforeHeadClose = "", afterHeadClose = "", exclude } = options;
 
-  const transformHook: IndexHtmlTransformHook = (html) => {
+  const transformHook: IndexHtmlTransformHook = (html, ctx) => {
+    // 检查路径是否应该被排除
+    if (shouldExclude(ctx.path, exclude)) {
+      console.log(`[vite-plugin-head-inject] Skipping ${ctx.path} (matched exclude rule)`);
+      return html;
+    }
+
     // 检查是否有<head>标签
     if (!html.includes("<head") || !html.includes("</head>")) {
-      console.warn("[vite-plugin-head-inject] No <head> tag found in HTML");
+      console.warn(`[vite-plugin-head-inject] No <head> tag found in ${ctx.path}`);
       return html;
     }
 
