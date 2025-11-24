@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import utwm from "unplugin-tailwindcss-mangle/vite";
 import { defineConfig } from "vite";
 
+import headInject from "./plugins/vite-plugin-head-inject";
 import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
@@ -10,6 +11,16 @@ export default defineConfig({
   base: "/themes/howiehz-higan/",
   plugins: [
     utwm(), // obfuscate tailwindcss class
+    headInject({
+      // 在 <head> 标签前插入
+      beforeHeadOpen: `<th:block th:fragment="headContent">\n  <!--/*-->\n  `,
+      // 在 <head> 标签后插入
+      afterHeadOpen: `\n  <!--*/-->`,
+      // 在 </head> 标签前插入
+      beforeHeadClose: `<!--/*-->\n  `,
+      // 在 </head> 标签后插入
+      afterHeadClose: `\n  <!--*/-->\n</th:block>`,
+    }),
     thymeleafMinify(),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
