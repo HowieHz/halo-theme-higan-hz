@@ -19,6 +19,7 @@
       th:href="@{'/feed/categories/' + ${category.spec?.slug} + '.xml'}"
     />
     <script src="/src/scripts/generic-header.ts" type="module"></script>
+    <th:block th:replace="~{fragments/list/post/simple :: headContent}"></th:block>
   </head>
   <body>
     <div id="archive" class="content flex-auto">

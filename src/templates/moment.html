@@ -18,6 +18,7 @@
       th:href="@{'/moments/rss.xml'}"
     />
     <script src="/src/scripts/pages/moment.ts" type="module"></script>
+    <th:block th:replace="~{fragments/list/moment/summary :: headContent}"></th:block>
   </head>
   <body>
     <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
