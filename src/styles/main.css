@@ -439,34 +439,6 @@ hr.divide {
   }
 }
 
-.pagination {
-  display: inline-block;
-  margin-top: 1rem;
-  text-align: center;
-  width: 100%;
-
-  & .page-number {
-    color: var(--color-text);
-    font-size: var(--text-sm);
-  }
-
-  & a {
-    background-image: none;
-    border-radius: 0.3125rem;
-    color: var(--color-text);
-    padding: 0.25rem 0.375rem;
-    text-decoration: none;
-
-    &:hover {
-      background-image: none;
-
-      &:not(.active) {
-        color: var(--color-accent-2);
-      }
-    }
-  }
-}
-
 .color-accent-1 {
   color: var(--color-accent-1);
 }
