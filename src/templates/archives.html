@@ -21,7 +21,7 @@
         >
           <h2 th:text="${archive.year}"></h2>
           <th:block th:each="month : ${archive.months}">
-            <th:block th:insert="~{fragments/post-list/simple :: post-list(posts = ${month.posts})}"> </th:block>
+            <th:block th:insert="~{fragments/list/post/simple :: post-list(posts = ${month.posts})}"> </th:block>
           </th:block>
         </div>
 

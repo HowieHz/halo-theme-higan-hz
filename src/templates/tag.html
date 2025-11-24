@@ -43,7 +43,9 @@
         </th:block>
       </h1>
 
-      <th:block th:insert="~{fragments/post-list/simple :: post-list(posts = ${posts}, showPagination = true)}"></th:block>
+      <th:block
+        th:insert="~{fragments/list/post/simple :: post-list(posts = ${posts}, showPagination = true)}"
+      ></th:block>
     </div>
   </body>
 </th:block>
