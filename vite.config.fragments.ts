@@ -17,7 +17,6 @@ export default defineConfig({
     outDir: fileURLToPath(new URL("./templates/", import.meta.url)),
     assetsDir: "assets/dist/",
     emptyOutDir: false,
-    minify: "terser",
     modulePreload: {
       // https://cn.vite.dev/config/build-options#build-modulepreload
       // 开启这个后仅 fragments/layout.html 会注入此 polyfill，其他 fragment 无 js。
