@@ -252,17 +252,6 @@ body {
   }
 }
 
-/* 主题切换按钮 */
-#theme-toggle-button {
-  background-color: transparent;
-  border: none;
-  vertical-align: middle;
-
-  & .icon:hover {
-    color: var(--color-link-hover);
-  }
-}
-
 /* 最大宽度控制 最大宽度容器类 */
 .max-width {
   max-width: 100%;

@@ -106,17 +106,17 @@ const ProgressBar = defineComponent({
       dataProcessing: '数据排序与处理',
       chartCreation: '图表数据创建'
     }
-    
+
     return () => {
       if (!props.isLoading) return null
-      
+
       // 根据主题适配颜色
       const textColor = isDark.value ? '#cbd5e0' : '#4a5568'
       const bgColor = isDark.value ? '#374151' : '#e5e7eb'
-      const progressGradient = isDark.value 
+      const progressGradient = isDark.value
         ? 'linear-gradient(90deg, #60a5fa 0%, #a78bfa 100%)'
         : 'linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%)'
-      
+
       return h('div', {
         style: {
           textAlign: 'center',
@@ -261,7 +261,7 @@ onMounted(async () => {
   try {
     console.time('  1️⃣ 数据加载')
     loadingStage.value = 'dataLoading'
-    
+
     // 动态导入所有 JSON 文件
     const jsonFiles = import.meta.glob('../../.github/page_size_audit_results/*.json')
 
@@ -400,13 +400,13 @@ onMounted(async () => {
     console.time('  3️⃣ 图表数据创建')
     loadingStage.value = 'chartCreation'
     loadingProgress.value = 0
-    
+
     // 创建图表数据格式的函数
     function createChartDatasets() {
       const colors = resourceColors.value
       let processedCount = 0
       const totalCharts = Object.keys(rawDatasets.value.datasets).length * 4 // 每个页面4个图表
-      
+
       for (const [pageKey, pageData] of Object.entries(rawDatasets.value.datasets)) {
         chartDatasets.value[pageKey] = {
           themeGzipped: {
@@ -424,7 +424,7 @@ onMounted(async () => {
         chartLoadingStatus.value[pageKey].themeGzipped = false
         processedCount++
         loadingProgress.value = Math.round((processedCount / totalCharts) * 100)
-        
+
         chartDatasets.value[pageKey].themeRaw = {
           labels: rawDatasets.value.versions,
           datasets: resourceTypes.map(type => ({
@@ -439,7 +439,7 @@ onMounted(async () => {
         chartLoadingStatus.value[pageKey].themeRaw = false
         processedCount++
         loadingProgress.value = Math.round((processedCount / totalCharts) * 100)
-        
+
         chartDatasets.value[pageKey].resourcesGzipped = {
           labels: rawDatasets.value.versions,
           datasets: resourceTypes.map(type => ({
@@ -454,7 +454,7 @@ onMounted(async () => {
         chartLoadingStatus.value[pageKey].resourcesGzipped = false
         processedCount++
         loadingProgress.value = Math.round((processedCount / totalCharts) * 100)
-        
+
         chartDatasets.value[pageKey].resourcesRaw = {
           labels: rawDatasets.value.versions,
           datasets: resourceTypes.map(type => ({
