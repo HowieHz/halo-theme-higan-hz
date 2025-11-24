@@ -58,6 +58,10 @@ video {
 
     & a {
       background: none;
+
+      &:hover {
+        background: none;
+      }
     }
   }
 

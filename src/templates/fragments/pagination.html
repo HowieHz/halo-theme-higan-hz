@@ -1,4 +1,4 @@
-<th:block th:fragment="pagination" th:with="posts=${posts}">
+<th:block th:fragment="pagination(posts)">
   <div class="pagination">
     <a th:href="@{${posts.prevUrl}}" th:if="${posts.hasPrevious()}" th:aria-label="#{common.previousPage.aria-label}">
       <i class="iconify iconify-middle" data-icon="material-symbols:chevron-left"></i>

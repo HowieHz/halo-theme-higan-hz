@@ -42,6 +42,6 @@
         </th:block>
       </th:block>
     </ul>
-    <th:block th:if="${showPagination ?: false}" th:insert="~{fragments/pagination :: pagination}"></th:block>
+    <th:block th:if="${showPagination ?: false}" th:insert="~{fragments/pagination :: pagination(${posts})}"></th:block>
   </section>
 </th:block>
