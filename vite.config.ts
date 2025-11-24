@@ -9,6 +9,7 @@ import PurgeIcons from "vite-plugin-purge-icons";
 import bodyInject from "./plugins/vite-plugin-body-inject";
 import headInject from "./plugins/vite-plugin-head-inject";
 import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
+import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments";
 import replaceHtmlPlugin from "./plugins/vite-plugin-replace-html";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
@@ -61,9 +62,13 @@ export default defineConfig({
         },
       ],
     }),
+    removeEmptyCssComments(),
     thymeleafMinify(),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
+  esbuild: {
+    legalComments: "none", // 移除所有法律注释 https://esbuild.github.io/api/#legal-comments
+  },
   build: {
     outDir: fileURLToPath(new URL("./templates/", import.meta.url)),
     assetsDir: "assets/dist/",
@@ -79,7 +84,7 @@ export default defineConfig({
         moment: path.resolve(__dirname, "src/templates/moment.html"),
         moments: path.resolve(__dirname, "src/templates/moments.html"),
         page: path.resolve(__dirname, "src/templates/page.html"),
-        page_like_post_style: path.resolve(__dirname, "src/templates/page_like_post_style.html"),
+        "page-like-post-style": path.resolve(__dirname, "src/templates/page-like-post-style.html"),
         photos: path.resolve(__dirname, "src/templates/photos.html"),
         post: path.resolve(__dirname, "src/templates/post.html"),
         tag: path.resolve(__dirname, "src/templates/tag.html"),

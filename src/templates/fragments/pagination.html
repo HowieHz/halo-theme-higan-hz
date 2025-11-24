@@ -1,0 +1,20 @@
+<head>
+  <script src="/src/scripts/utils/pagination.ts" type="module"></script>
+</head>
+<th:block th:fragment="pagination(posts)">
+  <div class="pagination">
+    <a th:href="@{${posts.prevUrl}}" th:if="${posts.hasPrevious()}" th:aria-label="#{common.previousPage.aria-label}">
+      <i class="iconify iconify-middle" data-icon="material-symbols:chevron-left"></i>
+    </a>
+    <span
+      class="page-number"
+      th:with="totalPage=${posts.totalPages}"
+      th:text="#{common.page-number.text(${posts.page}, ${totalPage})}"
+      th:if="${posts.totalPages > 1 and theme.config?.styles?.is_show_page_number}"
+      >Page 1 of 1 填充位</span
+    >
+    <a th:href="@{${posts.nextUrl}}" th:if="${posts.hasNext()}" th:aria-label="#{common.nextPage.aria-label}">
+      <i class="iconify iconify-middle" data-icon="material-symbols:chevron-right"></i>
+    </a>
+  </div>
+</th:block>

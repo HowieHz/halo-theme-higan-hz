@@ -29,3 +29,4 @@ onMounted(async () => {
 <style src="../../../src/styles/main.css" scoped></style>
 <!-- 导入 post 页样式 -->
 <style src="../../../src/styles/pages/post.css" scoped></style>
+<style src="../../../src/styles/mixins/article.css" scoped></style>

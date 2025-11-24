@@ -19,9 +19,10 @@
       th:href="@{'/feed/tags/' + ${tag.spec?.slug} + '.xml'}"
     />
     <script src="/src/scripts/pages/tag.ts" type="module"></script>
+    <th:block th:replace="~{fragments/list/post/simple :: headContent}"></th:block>
   </head>
   <body>
-    <div id="archive" class="content">
+    <div id="archive" class="content flex-auto">
       <h1
         th:with="tagColor=${tag.spec?.color}"
         th:style="${tagColor != null
@@ -43,7 +44,9 @@
         </th:block>
       </h1>
 
-      <th:block th:insert="~{fragments/posts :: simple-post-list(posts = ${posts}, showPagination = true)}"></th:block>
+      <th:block
+        th:insert="~{fragments/list/post/simple :: post-list(posts = ${posts}, showPagination = true)}"
+      ></th:block>
     </div>
   </body>
 </th:block>

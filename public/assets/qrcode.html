@@ -18,22 +18,20 @@
     </style>
   </head>
   <body>
-    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-      <script src="/themes/howiehz-higan/assets/lib/qrious/qrious.min.js"></script>
-      <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          const params = new URLSearchParams(window.location.search);
-          const url = params.get("url");
-          const size = params.get("size");
-          new QRious({
-            element: document.getElementById("qrcode-canvas"),
-            size: size,
-            value: url,
-            background: "#eceae7",
-          });
+    <script src="/themes/howiehz-higan/assets/lib/qrious/qrious.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const params = new URLSearchParams(window.location.search);
+        const url = params.get("url");
+        const size = params.get("size");
+        new QRious({
+          element: document.getElementById("qrcode-canvas"),
+          size: size,
+          value: url,
+          background: "#eceae7",
         });
-      </script>
-      <canvas id="qrcode-canvas"></canvas>
-    </article>
+      });
+    </script>
+    <canvas id="qrcode-canvas"></canvas>
   </body>
 </html>

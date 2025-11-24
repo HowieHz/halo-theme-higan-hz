@@ -11,6 +11,8 @@
 >
   <head>
     <script src="/src/scripts/pages/archives.ts" type="module"></script>
+    <th:block th:replace="~{fragments/list/post/simple :: headContent}"></th:block>
+    <th:block th:replace="~{fragments/pagination :: headContent}"></th:block>
   </head>
   <body>
     <div id="archive" class="content flex-auto">
@@ -21,7 +23,7 @@
         >
           <h2 th:text="${archive.year}"></h2>
           <th:block th:each="month : ${archive.months}">
-            <th:block th:insert="~{fragments/posts :: simple-post-list(posts = ${month.posts})}"> </th:block>
+            <th:block th:insert="~{fragments/list/post/simple :: post-list(posts = ${month.posts})}"> </th:block>
           </th:block>
         </div>
 
@@ -84,7 +86,7 @@
           </script>
         </div>
       </div>
-      <th:block th:insert="~{fragments/posts :: pagination(posts=${archives})}"></th:block>
+      <th:block th:insert="~{fragments/pagination :: pagination(${archives})}"></th:block>
     </div>
   </body>
 </th:block>

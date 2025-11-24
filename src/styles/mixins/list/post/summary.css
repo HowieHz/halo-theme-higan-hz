@@ -14,3 +14,11 @@
     box-shadow 0.2s,
     transform 0.2s;
 }
+
+.color-accent-1 {
+  color: var(--color-accent-1);
+}
+
+.color-accent-3 {
+  color: var(--color-accent-3);
+}

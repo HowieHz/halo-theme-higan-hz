@@ -18,10 +18,11 @@
       th:title="'Posts - Category: ' + ${category.spec?.displayName}"
       th:href="@{'/feed/categories/' + ${category.spec?.slug} + '.xml'}"
     />
-    <script src="/src/scripts/generic-header.ts" type="module"></script>
+    <script src="/src/scripts/pages/category.ts" type="module"></script>
+    <th:block th:replace="~{fragments/list/post/simple :: headContent}"></th:block>
   </head>
   <body>
-    <div id="archive" class="content">
+    <div id="archive" class="content flex-auto">
       <h1>
         <span th:text="#{page.category.title(${category.spec?.displayName})}">分类页标题替换位</span>
         <th:block
@@ -39,7 +40,9 @@
         </th:block>
       </h1>
 
-      <th:block th:insert="~{fragments/posts :: simple-post-list(posts = ${posts}, showPagination = true)}"></th:block>
+      <th:block
+        th:insert="~{fragments/list/post/simple :: post-list(posts = ${posts}, showPagination = true)}"
+      ></th:block>
     </div>
   </body>
 </th:block>
