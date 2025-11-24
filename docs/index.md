@@ -41,7 +41,7 @@ features:
     linkText: 了解更多
   - icon: ⚡
     title: 高性能表现
-    details: 经过深度优化，精简代码结构，减少外部依赖，按页进行分包，带来极速的页面响应和流程的交互体验。
+    details: 经过深度优化，精简代码结构，减少外部依赖，按页进行分包，带来极速的页面响应和流程的交互体验。（页面主题资源 <70KiB(gzipped)）
     link: /reference/performance
     linkText: 了解更多
   - icon: 🔒
