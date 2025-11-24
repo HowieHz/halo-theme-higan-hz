@@ -17,6 +17,7 @@ jobs:
       pr_number: ${{ steps.pr.outputs.number }}
       pr_head_sha: ${{ steps.pr.outputs.head_sha }}
       pr_head_ref: ${{ steps.pr.outputs.head_ref }}
+      comment_id: ${{ github.event.comment.id }}
     
     steps:
       - name: Add reaction to comment
@@ -503,7 +504,7 @@ jobs:
             await github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: context.payload.comment.id,
+              comment_id: ${{ needs.check-trigger.outputs.comment_id }},
               content: '+1'
             });
             
@@ -544,7 +545,7 @@ jobs:
             await github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: context.payload.comment.id,
+              comment_id: ${{ needs.check-trigger.outputs.comment_id }},
               content: '-1'
             });
             
