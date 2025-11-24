@@ -73,6 +73,7 @@ export default defineConfig({
     outDir: fileURLToPath(new URL("./templates/", import.meta.url)),
     assetsDir: "assets/dist/",
     emptyOutDir: true,
+    minify: "terser",
     rollupOptions: {
       input: {
         archives: path.resolve(__dirname, "src/templates/archives.html"),
