@@ -1,0 +1,44 @@
+<th:block th:fragment="post-list">
+  <!--/* post-list(posts, showPagination) */-->
+  <section class="simple-post-list flex flex-auto flex-col">
+    <ul class="common-post-list flex-auto">
+      <th:block th:each="post : ${posts}">
+        <th:block th:if="${#annotations.getOrDefault(post, 'higan.howiehz.top/show-in-post-list', 'true')=='true'}">
+          <li class="post-item">
+            <div class="meta">
+              <time
+                th:datetime="${post.spec.publishTime}"
+                itemprop="datePublished"
+                th:text="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
+              >
+              </time>
+            </div>
+            <span>
+              <i
+                class="iconify iconify-middle color-link-hover"
+                data-icon="typcn:pin-outline"
+                th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='left'"
+              ></i>
+              <a th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}">文章标题替换位</a>
+              <th:block th:if="${theme.config?.index_styles?.is_show_post_views_in_simple_post_list}">
+                <span
+                  class="color-time relative z-10 mb-0 mt-0.5 p-0 text-sm"
+                  th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
+                >
+                  <span class="iconify" data-icon="mdi:eye-outline" data-inline="false"></span>
+                  <span th:text="${post.stats?.visit}">文章阅读量替换位</span>
+                </span>
+              </th:block>
+              <i
+                class="iconify iconify-middle color-link-hover"
+                data-icon="typcn:pin-outline"
+                th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='right'"
+              ></i>
+            </span>
+          </li>
+        </th:block>
+      </th:block>
+    </ul>
+    <th:block th:if="${showPagination ?: false}" th:insert="~{fragments/pagination :: pagination}"></th:block>
+  </section>
+</th:block>

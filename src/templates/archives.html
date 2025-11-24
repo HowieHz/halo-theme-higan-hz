@@ -21,7 +21,7 @@
         >
           <h2 th:text="${archive.year}"></h2>
           <th:block th:each="month : ${archive.months}">
-            <th:block th:insert="~{fragments/posts :: simple-post-list(posts = ${month.posts})}"> </th:block>
+            <th:block th:insert="~{fragments/post-list/simple :: post-list(posts = ${month.posts})}"> </th:block>
           </th:block>
         </div>
 
@@ -84,7 +84,7 @@
           </script>
         </div>
       </div>
-      <th:block th:insert="~{fragments/posts :: pagination(posts=${archives})}"></th:block>
+      <th:block th:insert="~{fragments/pagination :: pagination(posts=${archives})}"></th:block>
     </div>
   </body>
 </th:block>

@@ -20,7 +20,7 @@ outline: deep
 | `index.html`                | 首页     | `/(page/{page})`                                                                | [首页](https://docs.halo.run/developer-guide/theme/template-variables/index_)         |
 | `post.html`                 | 文章详情 | `/archives/{slug}`（可在 Halo CMS 后台修改）                                    | [文章](https://docs.halo.run/developer-guide/theme/template-variables/post)           |
 | `page.html`                 | 独立页面 | `/{slug}`                                                                       | [单页面](https://docs.halo.run/developer-guide/theme/template-variables/page)         |
-| `page_like_post_style.html` | 独立页面 | `/{slug}`（自定义模板：[文章页样式](/guide/metadata-configuration#文章页样式)） | [单页面](https://docs.halo.run/developer-guide/theme/template-variables/page)         |
+| `page-like-post-style.html` | 独立页面 | `/{slug}`（自定义模板：[文章页样式](/guide/metadata-configuration#文章页样式)） | [单页面](https://docs.halo.run/developer-guide/theme/template-variables/page)         |
 | `archives.html`             | 文章归档 | `/archives(/{year}(/{month}))`                                                  | [文章归档](https://docs.halo.run/developer-guide/theme/template-variables/archives)   |
 | `tags.html`                 | 标签集合 | `/tags`                                                                         | [标签集合](https://docs.halo.run/developer-guide/theme/template-variables/tags)       |
 | `tag.html`                  | 标签详情 | `/tags/{slug}`                                                                  | [标签](https://docs.halo.run/developer-guide/theme/template-variables/tag)            |
