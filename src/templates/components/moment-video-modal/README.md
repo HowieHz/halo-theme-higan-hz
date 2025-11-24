@@ -16,8 +16,9 @@ Head Content(for including necessary scripts/styles)
 Content Insertion(for displaying the video modal)
 
 ```html
-<th:block th:insert="~{components/moment-video-modal/template :: content(${media})}"></th:block>
+<th:block th:insert="~{components/moment-video-modal/template :: content(media)}"></th:block>
 ```
 
 API
-- `${media}`: A media object containing video data (`type`, `url`).
+
+- `media`: A media object containing video data (`type`, `url`).

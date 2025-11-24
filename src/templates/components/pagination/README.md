@@ -16,9 +16,9 @@ Head Content(for including necessary scripts/styles)
 Content Insertion(for displaying pagination controls)
 
 ```html
-<th:block th:insert="~{components/pagination/template :: content(${posts})}"></th:block>
+<th:block th:insert="~{components/pagination/template :: content(posts)}"></th:block>
 ```
 
 API
 
-- `${posts}`: A pagination object containing pagination data (`hasPrevious()`, `hasNext()`, `prevUrl`, `nextUrl`, `totalPages`, `page`).
+- `posts`: A pagination object containing pagination data (`hasPrevious()`, `hasNext()`, `prevUrl`, `nextUrl`, `totalPages`, `page`).

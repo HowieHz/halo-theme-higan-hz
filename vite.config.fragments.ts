@@ -53,7 +53,10 @@ export default defineConfig({
         "components-pagination": path.resolve(__dirname, "src/templates/components/pagination/template.html"),
         "fragments-list-post-simple": path.resolve(__dirname, "src/templates/fragments/list/post/simple.html"),
         "fragments-list-post-summary": path.resolve(__dirname, "src/templates/fragments/list/post/summary.html"),
-        "fragments-list-moment-summary": path.resolve(__dirname, "src/templates/fragments/list/moment/summary.html"),
+        "components-list-moment-summary": path.resolve(
+          __dirname,
+          "src/templates/components/list-moment-summary/template.html",
+        ),
       },
     },
   },
