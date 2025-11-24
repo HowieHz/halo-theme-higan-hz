@@ -131,7 +131,7 @@
     <th:block th:if="${theme?.config.index_styles?.list_layout=='moment-list-summary'}">
       <th:block th:if="${pluginFinder.available('PluginMoments')}">
         <th:block
-          th:insert="~{fragments/moments :: moment-list-summary(
+          th:insert="~{fragments/list/moment/summary :: moment-list(
             moments=${momentFinder.list(
               posts.page,
               theme.config?.index_styles?.moment_list_page_size)},

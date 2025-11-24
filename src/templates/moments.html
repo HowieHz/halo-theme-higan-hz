@@ -20,6 +20,6 @@
     <script src="/src/scripts/pages/moment.ts" type="module"></script>
   </head>
   <body>
-    <th:block th:insert="~{fragments/moments :: moment-list-summary(moments=${moments}, isIndexPage=false)}"></th:block>
+    <th:block th:insert="~{fragments/list/moment/summary :: moment-list(moments=${moments}, isIndexPage=false)}"></th:block>
   </body>
 </th:block>
