@@ -47,7 +47,7 @@ export default defineConfig({
         "fragments-page-nav": path.resolve(__dirname, "src/templates/fragments/page-nav.html"),
         "fragments-post-footer-nav": path.resolve(__dirname, "src/templates/fragments/post-footer-nav.html"),
         "fragments-post-nav": path.resolve(__dirname, "src/templates/fragments/post-nav.html"),
-        "fragments-pagination": path.resolve(__dirname, "src/templates/fragments/pagination.html"),
+        "components-pagination": path.resolve(__dirname, "src/templates/components/pagination/template.html"),
         "fragments-list-post-simple": path.resolve(__dirname, "src/templates/fragments/list/post/simple.html"),
         "fragments-list-post-summary": path.resolve(__dirname, "src/templates/fragments/list/post/summary.html"),
         "fragments-list-moment-summary": path.resolve(__dirname, "src/templates/fragments/list/moment/summary.html"),

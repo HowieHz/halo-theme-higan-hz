@@ -1,6 +1,6 @@
 <head>
   <script src="/src/scripts/utils/list/moment/summary.ts" type="module"></script>
-  <th:block th:replace="~{fragments/pagination :: headContent}"></th:block>
+  <th:block th:replace="~{components/pagination/template :: headContent}"></th:block>
 </head>
 <th:block th:fragment="moment-list(moments, isIndexPage)">
   <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
@@ -239,7 +239,7 @@
           </li>
         </ul>
       </div>
-      <th:block th:insert="~{fragments/pagination :: pagination(${moments})}"></th:block>
+      <th:block th:insert="~{components/pagination/template :: content(${moments})}"></th:block>
     </div>
     <script vite-ignore th:inline="javascript" th:if="${theme.config?.moments_styles?.is_moment_upvote_button_show}">
       const likes_localstorage_key = "higan.likes.moment.ids";

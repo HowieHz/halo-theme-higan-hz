@@ -1,6 +1,6 @@
 <head>
   <script src="/src/scripts/utils/list/post/simple.ts" type="module"></script>
-  <th:block th:if="${showPagination ?: false}" th:replace="~{fragments/pagination :: headContent}"></th:block>
+  <th:block th:if="${showPagination ?: false}" th:replace="~{components/pagination/template :: headContent}"></th:block>
 </head>
 <th:block th:fragment="post-list">
   <!--/* post-list(posts, showPagination) */-->
@@ -43,6 +43,9 @@
         </th:block>
       </th:block>
     </ul>
-    <th:block th:if="${showPagination ?: false}" th:insert="~{fragments/pagination :: pagination(${posts})}"></th:block>
+    <th:block
+      th:if="${showPagination ?: false}"
+      th:insert="~{components/pagination/template :: content(${posts})}"
+    ></th:block>
   </section>
 </th:block>
