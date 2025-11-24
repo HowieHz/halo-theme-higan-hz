@@ -3,10 +3,10 @@ import type { IndexHtmlTransformHook, Plugin } from "vite";
 
 /**
  * 排除规则类型
- * - 字符串: glob 模式匹配(如 'admin/**​/*.html')
- * - 正则表达式: 正则匹配
- * - 函数: 自定义匹配逻辑
- * - 数组: 多个规则的组合
+ * - 字符串：glob 模式匹配 (如 'admin/**​/*.html')
+ * - 正则表达式：正则匹配
+ * - 函数：自定义匹配逻辑
+ * - 数组：多个规则的组合
  */
 type ExcludeRule = string | RegExp | ((path: string) => boolean);
 
@@ -30,7 +30,7 @@ interface HeadInjectOptions {
  * 检查路径是否应该被排除
  * @param path 待检查的路径
  * @param exclude 排除规则
- * @returns 如果应该排除返回 true,否则返回 false
+ * @returns 如果应该排除返回 true，否则返回 false
  */
 function shouldExclude(path: string, exclude?: ExcludeRule | ExcludeRule[]): boolean {
   if (!exclude) {
