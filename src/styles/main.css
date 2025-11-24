@@ -370,7 +370,7 @@ hr.divide {
 #archive {
   flex: auto;
 
-  & .post-list {
+  & .common-post-list {
     padding: 0;
 
     & .post-item {
