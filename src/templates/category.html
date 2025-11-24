@@ -18,7 +18,7 @@
       th:title="'Posts - Category: ' + ${category.spec?.displayName}"
       th:href="@{'/feed/categories/' + ${category.spec?.slug} + '.xml'}"
     />
-    <script src="/src/scripts/generic-header.ts" type="module"></script>
+    <script src="/src/scripts/pages/category.ts" type="module"></script>
     <th:block th:replace="~{fragments/list/post/simple :: headContent}"></th:block>
   </head>
   <body>

@@ -26,13 +26,3 @@
     }
   }
 }
-
-#archive {
-  & .common-post-list {
-    & .post-item {
-      @media (width >= 640px) {
-        margin-left: 1rem;
-      }
-    }
-  }
-}
