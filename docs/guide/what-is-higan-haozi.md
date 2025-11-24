@@ -21,7 +21,7 @@ Higan Haozi 是一款适用于 [Halo CMS](https://github.com/halo-dev/halo) 的�
 3. [强可配置性](./theme-configuration)
 4. [兼容性良好](#浏览器兼容性)
 5. [插件兼容性](./plugin-compatibility)
-6. [高性能表现](/reference/performance)
+6. [高性能表现](/reference/performance)（页面主题资源 <70KiB(gzipped)）
 
 ## 主题历史
 

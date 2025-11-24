@@ -22,7 +22,7 @@
 3. [强可配置性](https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration)
 4. [兼容性良好](https://howiehz.top/halo-theme-higan-haozi/guide/what-is-higan-haozi#浏览器兼容性)
 5. [插件兼容性](https://howiehz.top/halo-theme-higan-haozi/guide/plugin-compatibility)
-6. [高性能表现](https://howiehz.top/halo-theme-higan-haozi/reference/performance)
+6. [高性能表现](https://howiehz.top/halo-theme-higan-haozi/reference/performance)（页面主题资源 <70KiB(gzipped)）
 
 ## 预览
 
