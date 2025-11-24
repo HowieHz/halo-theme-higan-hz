@@ -1040,7 +1040,6 @@ const QuickJumpConfig = (props) => {
 > --color-quote: #ccffb6;
 > --color-scrollbar: #999;
 > --color-text: #d5d7d8;
-> --color-time: #adaeaf;
 > --toc-level-2: #e3e3e3;
 > --toc-level-3: #b0b0b0;
 > --toc-level-4: #636363;

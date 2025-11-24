@@ -14,7 +14,7 @@
     }
 
     & .meta {
-      color: var(--color-time);
+      color: var(--color-footer-mobile-1);
       display: block;
       font-size: var(--text);
       margin-right: 1rem;
@@ -29,28 +29,9 @@
 
 #archive {
   & .common-post-list {
-    padding: 0;
-
     & .post-item {
-      list-style-type: none;
-      margin-bottom: 1rem;
-      margin-left: 0;
-
       @media (width >= 640px) {
-        display: flex;
-        margin-bottom: 0.3125rem;
         margin-left: 1rem;
-      }
-
-      & .meta {
-        color: var(--color-footer-mobile-1);
-        display: block;
-        font-size: var(--text);
-        margin-right: 1rem;
-
-        @media (width >= 640px) {
-          text-align: right;
-        }
       }
     }
   }
