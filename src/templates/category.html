@@ -19,7 +19,7 @@
       th:href="@{'/feed/categories/' + ${category.spec?.slug} + '.xml'}"
     />
     <script src="/src/scripts/pages/category.ts" type="module"></script>
-    <th:block th:insert="~{fragments/list/post/simple :: headContent(showPagination = true)}"></th:block>
+    <th:block th:insert="~{components/list-post-simple/template :: headContent(showPagination = true)}"></th:block>
   </head>
   <body>
     <div id="archive" class="content flex-auto">
@@ -41,7 +41,7 @@
       </h1>
 
       <th:block
-        th:insert="~{fragments/list/post/simple :: post-list(posts = ${posts}, showPagination = true)}"
+        th:insert="~{components/list-post-simple/template :: content(posts = ${posts}, showPagination = true)}"
       ></th:block>
     </div>
   </body>

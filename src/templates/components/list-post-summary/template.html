@@ -1,8 +1,8 @@
 <head>
-  <script src="/src/scripts/utils/list/post/summary.ts" type="module"></script>
+  <script src="index.ts" type="module"></script>
   <th:block th:insert="~{components/pagination/template :: headContent}"></th:block>
 </head>
-<th:block th:fragment="post-list(posts)">
+<th:block th:fragment="content(posts)">
   <section class="post-list-summary flex flex-auto flex-col">
     <div class="flex flex-auto flex-col space-y-10">
       <th:block th:each="post : ${posts}">

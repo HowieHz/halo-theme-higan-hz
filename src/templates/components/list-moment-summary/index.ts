@@ -1,5 +1,5 @@
 import "./styles.css";
-import "/src/styles/mixins/list/post/common.css";
+import "../list-post-simple/styles.css";
 import "/src/styles/mixins/article.css";
 
 import Alpine from "alpinejs";
