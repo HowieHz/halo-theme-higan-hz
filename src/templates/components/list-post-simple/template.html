@@ -2,6 +2,9 @@
   <script src="index.ts" type="module"></script>
   <th:block th:if="${showPagination ?: false}" th:insert="~{components/pagination/template :: headContent}"></th:block>
 </head>
+<!--/*-->
+<body></body>
+<!--/*-->
 <th:block th:fragment="content">
   <!--/* content(posts, showPagination) */-->
   <section class="simple-post-list flex flex-auto flex-col">

@@ -1,3 +1,7 @@
+<!--/*-->
+<head> </head>
+<body></body>
+<!--*/-->
 <ul th:fragment="next (categories)" class="flex-auto">
   <li th:fragment="single (categories)" th:each="category : ${categories}">
     <a th:href="@{${category.status?.permalink}}">

@@ -1,6 +1,9 @@
 <head>
   <script src="index.ts" type="module"></script>
 </head>
+<!--/*-->
+<body></body>
+<!--/*-->
 <th:block th:fragment="content(posts)">
   <div class="pager">
     <a th:href="@{${posts.prevUrl}}" th:if="${posts.hasPrevious()}" th:aria-label="#{common.previousPage.aria-label}">

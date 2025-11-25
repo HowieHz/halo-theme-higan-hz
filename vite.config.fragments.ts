@@ -1,5 +1,6 @@
 import path from "path";
 import { fileURLToPath } from "url";
+import legacy from "@vitejs/plugin-legacy";
 import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
 import utwm from "unplugin-tailwindcss-mangle/vite";
@@ -7,6 +8,7 @@ import { defineConfig } from "vite";
 
 import pkg from "./package.json";
 import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
+import bodyInject from "./plugins/vite-plugin-body-inject";
 import headInject from "./plugins/vite-plugin-head-inject";
 import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
@@ -15,6 +17,7 @@ export default defineConfig({
   base: "/themes/howiehz-higan/",
   plugins: [
     utwm(), // obfuscate tailwindcss class
+    legacy(),
     headInject({
       // 在 <head> 标签前插入
       beforeHeadOpen: `<th:block th:fragment="headContent">\n  <!--/*-->\n  `,
@@ -24,6 +27,16 @@ export default defineConfig({
       beforeHeadClose: `<!--/*-->\n  `,
       // 在 </head> 标签后插入
       afterHeadClose: `\n  <!--*/-->\n</th:block>`,
+    }),
+    bodyInject({
+      // 在 <body> 标签前插入
+      beforeBodyOpen: `<th:block th:fragment="content">\n  <!--/*-->\n  `,
+      // 在 <body> 标签后插入
+      afterBodyOpen: `\n  <!--*/-->`,
+      // 在 </body> 标签前插入
+      beforeBodyClose: `<!--/*-->\n  `,
+      // 在 </body> 标签后插入
+      afterBodyClose: `\n  <!--*/-->\n  </th:block>`,
     }),
     thymeleafMinify(),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
