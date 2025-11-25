@@ -11,6 +11,7 @@ import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
 import bodyInject from "./plugins/vite-plugin-body-inject";
 import headInject from "./plugins/vite-plugin-head-inject";
 import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
+import replaceHtmlPlugin from "./plugins/vite-plugin-replace-html";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
 export default defineConfig({
@@ -37,6 +38,21 @@ export default defineConfig({
       beforeBodyClose: `<!--/*-->\n  `,
       // 在 </body> 标签后插入
       afterBodyClose: `\n  <!--*/-->\n  </th:block>`,
+    }),
+    replaceHtmlPlugin({
+      rules: [
+        // 清理不需要的 legacy 代码片段
+        {
+          from: `<script type="module">import.meta.url;import("_").catch(()=>1);(async function*(){})().next();window.__vite_is_modern_browser=true</script>`,
+          to: "",
+          include: ["/src/templates/fragments/**/*.html", "/src/templates/components/**/*.html"],
+        },
+        {
+          from: `<script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>`,
+          to: "",
+          include: ["/src/templates/fragments/**/*.html", "/src/templates/components/**/*.html"],
+        },
+      ],
     }),
     thymeleafMinify(),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),

@@ -47,22 +47,16 @@ export default defineConfig({
     }),
     replaceHtmlPlugin({
       rules: [
-        // 清理模板，匹配四种注释包裹的 head/body 标签
+        // 清理不需要的 legacy 代码片段
         {
-          from: /^\s*<!--\/\*-->\s*<head>\s*<!--\*\/-->\s*$/gm,
+          from: `<script type="module">import.meta.url;import("_").catch(()=>1);(async function*(){})().next();window.__vite_is_modern_browser=true</script>`,
           to: "",
+          include: ["/src/templates/fragments/**/*.html", "/src/templates/components/**/*.html"],
         },
         {
-          from: /^\s*<!--\/\*-->\s*<\/head>\s*<!--\*\/-->\s*$/gm,
+          from: `<script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>`,
           to: "",
-        },
-        {
-          from: /^\s*<!--\/\*-->\s*<body>\s*<!--\*\/-->\s*$/gm,
-          to: "",
-        },
-        {
-          from: /^\s*<!--\/\*-->\s*<\/body>\s*<!--\*\/-->\s*$/gm,
-          to: "",
+          include: ["/src/templates/fragments/**/*.html", "/src/templates/components/**/*.html"],
         },
       ],
     }),
