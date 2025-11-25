@@ -101,13 +101,12 @@ export default defineConfig({
       },
       output: {
         assetFileNames: (assetInfo) => {
-          const fontExtensions = [".woff2", ".woff", ".ttf"];
-          const name = assetInfo.names[0] ?? "";
-          if (fontExtensions.some((ext) => name.endsWith(ext))) {
-            return "assets/dist/[hash][extname]";
-          }
-          return "assets/dist/[name]-[hash][extname]";
+          return "assets/dist/[hash][extname]";
         },
+        // JS entry files https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+        entryFileNames: "assets/dist/[hash].js",
+        // 动态分块（chunk）https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+        chunkFileNames: "assets/dist/[hash].js",
       },
     },
   },

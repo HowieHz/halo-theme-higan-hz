@@ -56,6 +56,15 @@ export default defineConfig({
           "src/templates/components/list-moment-summary/template.html",
         ),
       },
+      output: {
+        assetFileNames: (assetInfo) => {
+          return "assets/dist/[hash][extname]";
+        },
+        // JS entry files https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+        entryFileNames: "assets/dist/[hash].js",
+        // 动态分块（chunk）https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+        chunkFileNames: "assets/dist/[hash].js",
+      },
     },
   },
 });

@@ -19,7 +19,7 @@ export default defineConfig({
     emptyOutDir: false,
     modulePreload: {
       // https://cn.vite.dev/config/build-options#build-modulepreload
-      // 开启这个后会注入此 polyfill。
+      // 开启这个后会注入此 polyfill https://github.com/vitejs/vite/blob/main/packages/vite/src/node/plugins/modulePreloadPolyfill.ts
       // polyfill 是为不支持 link[rel="modulepreload"] 的旧浏览器加的。
       // 只需要在通用模板 fragments/layout.html 注入一次即可。
       polyfill: true,
@@ -27,6 +27,15 @@ export default defineConfig({
     rollupOptions: {
       input: {
         "fragments-layout": path.resolve(__dirname, "src/templates/fragments/layout.html"),
+      },
+      output: {
+        assetFileNames: (assetInfo) => {
+          return "assets/dist/[hash][extname]";
+        },
+        // JS entry files https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+        entryFileNames: "assets/dist/[hash].js",
+        // 动态分块（chunk）https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+        chunkFileNames: "assets/dist/[hash].js",
       },
     },
   },
