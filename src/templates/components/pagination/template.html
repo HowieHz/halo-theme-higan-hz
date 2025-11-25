@@ -2,7 +2,7 @@
   <script src="index.ts" type="module"></script>
 </head>
 <th:block th:fragment="content(posts)">
-  <div class="pagination">
+  <div class="pager">
     <a th:href="@{${posts.prevUrl}}" th:if="${posts.hasPrevious()}" th:aria-label="#{common.previousPage.aria-label}">
       <i class="iconify iconify-middle" data-icon="material-symbols:chevron-left"></i>
     </a>
