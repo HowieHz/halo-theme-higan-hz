@@ -1,11 +1,14 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import legacy from "@vitejs/plugin-legacy";
+import browserslist from "browserslist";
+import { browserslistToTargets } from "lightningcss";
 import utwm from "unplugin-tailwindcss-mangle/vite";
 import { defineConfig } from "vite";
 // @ts-expect-error old version without types
 import PurgeIcons from "vite-plugin-purge-icons";
 
+import pkg from "./package.json";
 import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
 import bodyInject from "./plugins/vite-plugin-body-inject";
 import headInject from "./plugins/vite-plugin-head-inject";
@@ -70,6 +73,14 @@ export default defineConfig({
   esbuild: {
     legalComments: "none", // 移除所有法律注释 https://esbuild.github.io/api/#legal-comments
   },
+  css: {
+    lightningcss: {
+      // https://cn.vite.dev/config/css-options#css-lightningcss
+      // 启用所有可能的优化
+      targets: browserslistToTargets(browserslist(pkg.browserslist)),
+      minify: true,
+    },
+  },
   build: {
     outDir: fileURLToPath(new URL("./templates/", import.meta.url)),
     assetsDir: "assets/dist/",
@@ -81,6 +92,7 @@ export default defineConfig({
       // 只需要在通用模板 fragments/layout.html 注入一次即可。
       polyfill: false,
     },
+    cssMinify: "lightningcss",
     rollupOptions: {
       input: {
         archives: path.resolve(__dirname, "src/templates/archives.html"),
