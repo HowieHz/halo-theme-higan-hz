@@ -6,6 +6,7 @@ import { defineConfig } from "vite";
 // @ts-expect-error old version without types
 import PurgeIcons from "vite-plugin-purge-icons";
 
+import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
 import bodyInject from "./plugins/vite-plugin-body-inject";
 import headInject from "./plugins/vite-plugin-head-inject";
 import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
@@ -99,15 +100,7 @@ export default defineConfig({
         "5xx": path.resolve(__dirname, "src/templates/error/5xx.html"),
         "404": path.resolve(__dirname, "src/templates/error/404.html"),
       },
-      output: {
-        assetFileNames: (assetInfo) => {
-          return "assets/dist/[hash][extname]";
-        },
-        // JS entry files https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
-        entryFileNames: "assets/dist/[hash].js",
-        // 动态分块（chunk）https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
-        chunkFileNames: "assets/dist/[hash].js",
-      },
+      output: rollupOutput,
     },
   },
 });

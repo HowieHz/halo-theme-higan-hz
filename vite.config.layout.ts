@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import utwm from "unplugin-tailwindcss-mangle/vite";
 import { defineConfig } from "vite";
 
+import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
 import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
@@ -28,15 +29,7 @@ export default defineConfig({
       input: {
         "fragments-layout": path.resolve(__dirname, "src/templates/fragments/layout.html"),
       },
-      output: {
-        assetFileNames: (assetInfo) => {
-          return "assets/dist/[hash][extname]";
-        },
-        // JS entry files https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
-        entryFileNames: "assets/dist/[hash].js",
-        // 动态分块（chunk）https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
-        chunkFileNames: "assets/dist/[hash].js",
-      },
+      output: rollupOutput,
     },
   },
 });
