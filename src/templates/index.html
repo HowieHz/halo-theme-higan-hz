@@ -12,13 +12,13 @@
   <head>
     <script src="/src/scripts/pages/index.ts" type="module"></script>
     <th:block th:if="${theme?.config.index_styles?.list_layout=='post-list-summary'}">
-      <th:block th:replace="~{fragments/list/post/summary :: headContent}"></th:block>
+      <th:block th:insert="~{fragments/list/post/summary :: headContent}"></th:block>
     </th:block>
     <th:block th:if="${theme?.config.index_styles?.list_layout=='simple-post-list'}">
-      <th:block th:replace="~{fragments/list/post/simple :: headContent}"></th:block>
+      <th:block th:insert="~{fragments/list/post/simple :: headContent(showPagination = true)}"></th:block>
     </th:block>
     <th:block th:if="${theme?.config.index_styles?.list_layout=='moment-list-summary'}">
-      <th:block th:replace="~{components/list-moment-summary/template :: headContent}"></th:block>
+      <th:block th:insert="~{components/list-moment-summary/template :: headContent}"></th:block>
     </th:block>
   </head>
   <body>

@@ -10,7 +10,7 @@ It allows users to click on a video thumbnail to open a modal window and play th
 Head Content(for including necessary scripts/styles)
 
 ```html
-<th:block th:replace="~{components/moment-video-modal/template :: headContent}"></th:block>
+<th:block th:insert="~{components/moment-video-modal/template :: headContent}"></th:block>
 ```
 
 Content Insertion(for displaying the video modal)

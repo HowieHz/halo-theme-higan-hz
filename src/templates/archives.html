@@ -11,8 +11,8 @@
 >
   <head>
     <script src="/src/scripts/pages/archives.ts" type="module"></script>
-    <th:block th:replace="~{fragments/list/post/simple :: headContent}"></th:block>
-    <th:block th:replace="~{components/pagination/template :: headContent}"></th:block>
+    <th:block th:insert="~{fragments/list/post/simple :: headContent}"></th:block>
+    <th:block th:insert="~{components/pagination/template :: headContent}"></th:block>
   </head>
   <body>
     <div id="archive" class="content flex-auto">

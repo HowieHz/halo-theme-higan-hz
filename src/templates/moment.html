@@ -18,8 +18,8 @@
       th:href="@{'/moments/rss.xml'}"
     />
     <script src="/src/scripts/pages/moment.ts" type="module"></script>
-    <th:block th:replace="~{components/list-moment-summary/template :: headContent}"></th:block>
-    <th:block th:replace="~{components/moment-video-modal/template :: headContent}"></th:block>
+    <th:block th:insert="~{components/list-moment-summary/template :: headContent}"></th:block>
+    <th:block th:insert="~{components/moment-video-modal/template :: headContent}"></th:block>
   </head>
   <body>
     <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">

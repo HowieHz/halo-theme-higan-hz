@@ -9,7 +9,7 @@ This component displays a summarized list of moments (posts) with essential deta
 Head Content(for including necessary scripts/styles)
 
 ```html
-<th:block th:replace="~{components/list-moment-summary/template :: headContent}"></th:block>
+<th:block th:insert="~{components/list-moment-summary/template :: headContent}"></th:block>
 ```
 
 Content Insertion

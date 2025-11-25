@@ -10,7 +10,7 @@ It includes previous and next buttons, and is designed to be easily integrated i
 Head Content(for including necessary scripts/styles)
 
 ```html
-<th:block th:replace="~{components/pagination/template :: headContent}"></th:block>
+<th:block th:insert="~{components/pagination/template :: headContent}"></th:block>
 ```
 
 Content Insertion(for displaying pagination controls)
