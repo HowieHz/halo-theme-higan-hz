@@ -88,6 +88,7 @@ export default defineConfig({
     cssMinify: "lightningcss",
     rollupOptions: {
       input: {
+        // pages
         archives: path.resolve(__dirname, "src/templates/archives.html"),
         author: path.resolve(__dirname, "src/templates/author.html"),
         categories: path.resolve(__dirname, "src/templates/categories.html"),
@@ -104,6 +105,32 @@ export default defineConfig({
         tags: path.resolve(__dirname, "src/templates/tags.html"),
         "5xx": path.resolve(__dirname, "src/templates/error/5xx.html"),
         "404": path.resolve(__dirname, "src/templates/error/404.html"),
+        // components
+        "components-moment-video-modal": path.resolve(
+          __dirname,
+          "src/templates/components/moment-video-modal/template.html",
+        ),
+        "components-pagination": path.resolve(__dirname, "src/templates/components/pagination/template.html"),
+        "components-list-post-simple": path.resolve(
+          __dirname,
+          "src/templates/components/list-post-simple/template.html",
+        ),
+        "components-list-post-summary": path.resolve(
+          __dirname,
+          "src/templates/components/list-post-summary/template.html",
+        ),
+        "components-list-moment-summary": path.resolve(
+          __dirname,
+          "src/templates/components/list-moment-summary/template.html",
+        ),
+        // fragments
+        "fragments-category-tree": path.resolve(__dirname, "src/templates/fragments/category-tree.html"),
+        "fragments-common": path.resolve(__dirname, "src/templates/fragments/common.html"),
+        "fragments-header": path.resolve(__dirname, "src/templates/fragments/header.html"),
+        "fragments-page-footer-nav": path.resolve(__dirname, "src/templates/fragments/page-footer-nav.html"),
+        "fragments-page-nav": path.resolve(__dirname, "src/templates/fragments/page-nav.html"),
+        "fragments-post-footer-nav": path.resolve(__dirname, "src/templates/fragments/post-footer-nav.html"),
+        "fragments-post-nav": path.resolve(__dirname, "src/templates/fragments/post-nav.html"),
       },
       output: rollupOutput,
     },
