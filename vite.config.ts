@@ -65,8 +65,6 @@ export default defineConfig({
     removeLegacyGuard({
       include: ["/src/templates/fragments/**/*.html", "/src/templates/components/**/*.html"],
       base: "/themes/howiehz-higan/",
-      outDir: fileURLToPath(new URL("./templates/", import.meta.url)),
-      assetsDir: "assets/dist/",
     }),
     thymeleafMinify(),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),

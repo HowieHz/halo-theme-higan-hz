@@ -4,17 +4,17 @@ import picomatch from "picomatch";
 import type { Plugin } from "vite";
 
 /**
- * 插件选项接口
+ * Plugin options interface
  */
 interface RemoveLegacyGuardOptions {
-  /** 需要检查的文件路径模式（glob 格式） */
+  /** File path patterns to check (glob format) */
   include?: string | string[];
-  /** Vite base 路径 */
+  /** Vite base path */
   base?: string;
 }
 
 /**
- * 检查内容是否为空 legacy guard 函数
+ * Check if content contains only empty legacy guard function
  */
 function isLegacyGuardOnly(content: string): boolean {
   const normalizedContent = content.replace(/\s+/g, "");
@@ -24,47 +24,47 @@ function isLegacyGuardOnly(content: string): boolean {
 }
 
 /**
- * 移除只包含 legacy guard 函数的空 JS 文件及其 script 标签的插件
- * @param options 插件配置选项
- * @returns Vite 插件
+ * Plugin to remove empty JS files containing only legacy guard function and their script tags
+ * @param options Plugin configuration options
+ * @returns Vite plugin
  */
 export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOptions = {}): Plugin {
   const {
-    // 默认检查 fragments 和 components 目录下的 HTML 文件
+    // Default: check HTML files in fragments and components directories
     include = ["/src/templates/fragments/**/*.html", "/src/templates/components/**/*.html"],
-    // 默认为根路径，与 Vite 的 base 配置对应
+    // Default: root path, corresponding to Vite's base configuration
     base = "/",
   } = options;
 
-  // 将 include 规则转换为数组
+  // Convert include rules to array
   const includePatterns = Array.isArray(include) ? include : [include];
   const isIncludeMatch = picomatch(includePatterns);
 
-  // 用于存储需要处理的信息：script src 到对应的 HTML 文件路径
+  // Store information to process: map script src to corresponding HTML file paths
   const scriptsToCheck = new Map<string, Set<string>>();
 
   return {
     name: "vite-plugin-remove-legacy-guard",
     apply: "build",
 
-    // 第一阶段：在 HTML 转换时收集信息
+    // Phase 1: Collect information during HTML transformation
     transformIndexHtml: {
       order: "post",
       async handler(html, ctx) {
-        // 检查文件是否在 include 列表中
+        // Check if file is in include list
         if (!isIncludeMatch(ctx.path)) {
           return html;
         }
 
-        console.log(`[vite-plugin-remove-legacy-guard] 检查文件：${ctx.path}`);
+        console.log(`Checking file: ${ctx.path}`);
 
-        // 匹配所有 script 标签，收集 src
+        // Match all script tags and collect src
         const scriptRegex = /<script\s+type="module"\s+crossorigin\s+src="([^"]+)"[^>]*><\/script>/g;
         let match;
 
         while ((match = scriptRegex.exec(html)) !== null) {
           const scriptSrc = match[1];
-          console.log(`[vite-plugin-remove-legacy-guard]   发现 script 标签：src="${scriptSrc}"`);
+          console.log(`Found script tag: src="${scriptSrc}"`);
 
           if (!scriptsToCheck.has(scriptSrc)) {
             scriptsToCheck.set(scriptSrc, new Set());
@@ -74,52 +74,52 @@ export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOption
       },
     },
 
-    // 第二阶段：在 writeBundle 时处理文件
+    // Phase 2: Process files during writeBundle
     async writeBundle(bundleOptions) {
-      // 获取输出目录，优先使用 bundleOptions.dir，其次使用 bundleOptions.file 的目录，最后回退到当前工作目录
+      // Get output directory: prioritize bundleOptions.dir, then bundleOptions.file directory, finally fallback to current working directory
       const outDir_ = bundleOptions.dir
         ? resolve(bundleOptions.dir)
         : bundleOptions.file
           ? dirname(resolve(bundleOptions.file))
           : process.cwd();
 
-      console.log(`\n[vite-plugin-remove-legacy-guard] 处理 legacy guard 文件`);
+      console.log(`\nProcessing legacy guard files`);
 
       for (const [scriptSrc, htmlPaths] of scriptsToCheck.entries()) {
-        console.log(`\n[vite-plugin-remove-legacy-guard] 检查：${scriptSrc}`);
+        console.log(`\nChecking: ${scriptSrc}`);
 
-        // 移除 base 路径前缀
+        // Remove base path prefix
         let relativePath = scriptSrc;
         if (scriptSrc.startsWith(base)) {
           relativePath = scriptSrc.slice(base.length);
         }
 
-        // 构建完整路径
+        // Build full path
         const filePath = resolve(outDir_, relativePath);
-        console.log(`[vite-plugin-remove-legacy-guard]   文件路径：${filePath}`);
+        console.log(`File path: ${filePath}`);
 
         try {
-          // 读取文件内容
+          // Read file content
           const fileContent = await fs.readFile(filePath, "utf-8");
 
-          // 检查是否为空 legacy guard 文件
+          // Check if it's an empty legacy guard file
           if (isLegacyGuardOnly(fileContent)) {
-            console.log(`[vite-plugin-remove-legacy-guard]   ✓ 检测到空 legacy guard 文件`);
+            console.log(`✓ Detected empty legacy guard file`);
 
-            // 删除 JS 文件
+            // Delete JS file
             await fs.unlink(filePath);
-            console.log(`[vite-plugin-remove-legacy-guard]   ✓ 已删除：${filePath}`);
+            console.log(`✓ Deleted: ${filePath}`);
 
-            // 从相关 HTML 文件中移除 script 标签
+            // Remove script tags from related HTML files
             for (const htmlPath of htmlPaths) {
-              console.log(`[vite-plugin-remove-legacy-guard]   → 从 HTML 移除 script: ${htmlPath}`);
-              // 标记供后续处理
+              console.log(`→ Remove script from HTML: ${htmlPath}`);
+              // Mark for subsequent processing
             }
           } else {
-            console.log(`[vite-plugin-remove-legacy-guard]   ✗ 文件包含其他内容，保留`);
+            console.log(`✗ File contains other content, keep it`);
           }
         } catch (err) {
-          console.log(`[vite-plugin-remove-legacy-guard]   ⚠️ 处理失败：${err}`);
+          console.log(`⚠️ Processing failed: ${err}`);
         }
       }
     },
