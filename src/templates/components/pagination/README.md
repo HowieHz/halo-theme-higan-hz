@@ -2,7 +2,8 @@
 
 ## Description
 
-This component provides pagination controls for navigating through paginated content such as posts, moments, or archives. It displays previous and next navigation buttons with optional page number information, and is designed to be easily integrated into various templates.
+This component provides pagination controls for navigating paginated content such as posts, moments, or archives.  
+It shows previous and next navigation buttons, optionally including page number information, and is designed for easy integration into various templates.
 
 ## Usage
 

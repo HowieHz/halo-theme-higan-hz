@@ -2,7 +2,8 @@
 
 ## Description
 
-This is a template component that serves as a reference for creating new components in the Halo theme. It demonstrates the standard structure and documentation format for theme components.
+This is a template component that serves as a reference for creating new components in the Halo theme.
+It demonstrates the standard structure and documentation format for theme components.
 
 ## Usage
 

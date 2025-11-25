@@ -33,8 +33,7 @@ export default defineConfig({
   },
   css: {
     lightningcss: {
-      // https://cn.vite.dev/config/css-options#css-lightningcss
-      // 启用所有可能的优化
+      // https://cn.vitejs.dev/guide/features#lightning-css
       targets: browserslistToTargets(browserslist(pkg.browserslist)),
       minify: true,
     },

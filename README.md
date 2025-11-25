@@ -32,12 +32,8 @@
 
 ## 一些话
 
-<!-- markdownlint-disable MD013 -->
-
 如果你喜欢这个主题，欢迎 [Star⭐](#star-history)、[Issue🐛](https://github.com/HowieHz/halo-theme-higan-hz/issues) 或 [Pull Request🔀](https://github.com/HowieHz/halo-theme-higan-hz/pulls) 支持项目迭代。
 你的支持是我持续更新的最大动力！
-
-<!-- markdownlint-enable MD013 -->
 
 如果你愿意支持我，也欢迎进群交流，让我知道除了我自己，还有许多人在使用这个主题😀
 

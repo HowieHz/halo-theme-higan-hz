@@ -2,8 +2,6 @@
 outline: deep
 ---
 
-<!-- markdownlint-disable MD013 -->
-
 # Higan Haozi 是什么？
 
 Higan Haozi 是一款适用于 [Halo CMS](https://github.com/halo-dev/halo) 的个人网站主题。

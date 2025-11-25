@@ -2,7 +2,8 @@
 
 ## Description
 
-This component displays a summarized list of moments (short posts) with comprehensive details such as author information, publish date, content, media (photos/videos), estimated reading time, word count, upvote functionality, and optional comment section.
+This component displays a summarized list of moments (short posts) with comprehensive details, including author information, publish date, content, and media (photos/videos).
+It also shows estimated reading time, word count, supports upvote functionality, and an optional comment section.
 
 ## Usage
 

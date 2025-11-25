@@ -2,7 +2,7 @@
 outline: deep
 ---
 
-<!-- markdownlint-disable MD013 MD033 -->
+<!-- markdownlint-disable MD033 -->
 
 # 性能参考
 

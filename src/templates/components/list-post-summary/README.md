@@ -2,7 +2,8 @@
 
 ## Description
 
-This component displays a summarized list of posts with comprehensive details such as title, publish date, categories, tags, views, word count, estimated reading time, excerpt, and cover image.
+This component displays a summarized list of posts with comprehensive details, including title, publish date, categories, tags, and views.  
+It also shows word count, estimated reading time, excerpt, and cover image.
 
 ## Usage
 

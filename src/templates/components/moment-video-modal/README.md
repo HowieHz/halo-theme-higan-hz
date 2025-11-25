@@ -2,7 +2,8 @@
 
 ## Description
 
-This component provides a modal video player for moments that contain video media. It displays a video thumbnail with a play button overlay, and when clicked, opens a modal window to play the video in full screen mode.
+This component provides a modal video player for moments that contain video media.
+It displays a video thumbnail with a play button overlay, and when clicked, opens a modal window to play the video in full screen mode.
 
 ## Usage
 

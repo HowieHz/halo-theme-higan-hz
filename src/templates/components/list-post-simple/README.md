@@ -2,7 +2,8 @@
 
 ## Description
 
-This component displays a simple list of posts with minimal details such as title, publish date, and optional view count. It provides a compact view suitable for archives, sidebars, or pages where space is limited.
+This component displays a simple list of posts with minimal details such as title, publish date, and optional view count.
+It provides a compact view suitable for archives, sidebars, or pages where space is limited.
 
 ## Usage
 
