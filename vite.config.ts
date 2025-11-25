@@ -14,6 +14,7 @@ import bodyInject from "./plugins/vite-plugin-body-inject";
 import headInject from "./plugins/vite-plugin-head-inject";
 import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
 import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments";
+import removeLegacyGuard from "./plugins/vite-plugin-remove-legacy-guard";
 import replaceHtmlPlugin from "./plugins/vite-plugin-replace-html";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
@@ -61,6 +62,12 @@ export default defineConfig({
       ],
     }),
     removeEmptyCssComments(),
+    removeLegacyGuard({
+      include: ["/src/templates/fragments/**/*.html", "/src/templates/components/**/*.html"],
+      base: "/themes/howiehz-higan/",
+      outDir: fileURLToPath(new URL("./templates/", import.meta.url)),
+      assetsDir: "assets/dist/",
+    }),
     thymeleafMinify(),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
