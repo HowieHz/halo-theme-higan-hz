@@ -42,6 +42,8 @@ export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOption
 
   // Store information to process: map script src to corresponding HTML file paths
   const scriptsToCheck = new Map<string, Set<string>>();
+  // Store scripts to remove after detection
+  const scriptsToRemove = new Set<string>();
 
   return {
     name: "vite-plugin-remove-legacy-guard",
@@ -70,6 +72,20 @@ export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOption
             scriptsToCheck.set(scriptSrc, new Set());
           }
           scriptsToCheck.get(scriptSrc)?.add(ctx.path);
+        }
+
+        // If any scripts marked for removal, remove them from HTML
+        if (scriptsToRemove.size > 0) {
+          let modifiedHtml = html;
+          for (const scriptSrc of scriptsToRemove) {
+            // Create regex to match the script tag with this src
+            const scriptTagPattern = new RegExp(
+              `<script\\s+type="module"\\s+crossorigin\\s+src="${scriptSrc.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[^>]*><\\/script>\\s*`,
+              "g",
+            );
+            modifiedHtml = modifiedHtml.replace(scriptTagPattern, "");
+          }
+          return modifiedHtml;
         }
       },
     },
@@ -111,9 +127,28 @@ export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOption
             console.log(`✓ Deleted: ${filePath}`);
 
             // Remove script tags from related HTML files
+            scriptsToRemove.add(scriptSrc);
             for (const htmlPath of htmlPaths) {
-              console.log(`→ Remove script from HTML: ${htmlPath}`);
-              // Mark for subsequent processing
+              const htmlFilePath = resolve(outDir_, htmlPath.replace(/^\//, ""));
+              console.log(`→ Removing script from HTML: ${htmlFilePath}`);
+
+              try {
+                // Read HTML file
+                let htmlContent = await fs.readFile(htmlFilePath, "utf-8");
+
+                // Remove the script tag
+                const scriptTagPattern = new RegExp(
+                  `<script\\s+type="module"\\s+crossorigin\\s+src="${scriptSrc.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[^>]*><\\/script>\\s*`,
+                  "g",
+                );
+                htmlContent = htmlContent.replace(scriptTagPattern, "");
+
+                // Write back the modified HTML
+                await fs.writeFile(htmlFilePath, htmlContent, "utf-8");
+                console.log(`✓ Updated HTML file: ${htmlFilePath}`);
+              } catch (htmlErr) {
+                console.log(`⚠️ Failed to update HTML: ${htmlErr}`);
+              }
             }
           } else {
             console.log(`✗ File contains other content, keep it`);
