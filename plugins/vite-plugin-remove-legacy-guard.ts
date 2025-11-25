@@ -11,10 +11,6 @@ interface RemoveLegacyGuardOptions {
   include?: string | string[];
   /** Vite base 路径 */
   base?: string;
-  /** Vite outDir 路径 */
-  outDir?: string;
-  /** Vite assetsDir 路径 */
-  assetsDir?: string;
 }
 
 /**
@@ -34,10 +30,10 @@ function isLegacyGuardOnly(content: string): boolean {
  */
 export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOptions = {}): Plugin {
   const {
+    // 默认检查 fragments 和 components 目录下的 HTML 文件
     include = ["/src/templates/fragments/**/*.html", "/src/templates/components/**/*.html"],
+    // 默认为根路径，与 Vite 的 base 配置对应
     base = "/",
-    outDir = "dist",
-    assetsDir = "assets",
   } = options;
 
   // 将 include 规则转换为数组
@@ -73,20 +69,19 @@ export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOption
           if (!scriptsToCheck.has(scriptSrc)) {
             scriptsToCheck.set(scriptSrc, new Set());
           }
-          scriptsToCheck.get(scriptSrc)!.add(ctx.path);
+          scriptsToCheck.get(scriptSrc)?.add(ctx.path);
         }
       },
     },
 
     // 第二阶段：在 writeBundle 时处理文件
-    async writeBundle(bundleOptions, bundle) {
+    async writeBundle(bundleOptions) {
+      // 获取输出目录，优先使用 bundleOptions.dir，其次使用 bundleOptions.file 的目录，最后回退到当前工作目录
       const outDir_ = bundleOptions.dir
         ? resolve(bundleOptions.dir)
         : bundleOptions.file
           ? dirname(resolve(bundleOptions.file))
           : process.cwd();
-
-      const projectRoot = resolve(process.cwd());
 
       console.log(`\n[vite-plugin-remove-legacy-guard] 处理 legacy guard 文件`);
 
