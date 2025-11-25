@@ -1,5 +1,5 @@
 import "@purge-icons/generated";
-import "../../../tmp/styles/theme.css";
+import "../../styles/mixins/colors/theme.styl";
 import "../../styles/main.css";
 import "../../styles/tailwind.css";
 // 导入类型定义（仅类型导入，不会在运行时包含。包含了自定义 window 扩展）
