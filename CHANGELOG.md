@@ -2,6 +2,22 @@
 
 <!-- markdownlint-disable MD024 -->
 
+## [1.48.3](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.2...v1.48.3) (2025-11-26)
+
+### 🐛 错误修复
+
+- 修复在瞬间页中，作者名的悬停样式未按预期渲染的问题。
+
+### 🔧 优化改进
+
+- 进一步分包优化，移除冗余样式。
+
+### 🛠️ 开发体验
+
+- 重构构建流程。
+- 组件化部分模板。
+- 更新开发依赖
+
 ## [1.48.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.1...v1.48.2) (2025-11-25)
 
 ### 🐛 错误修复
