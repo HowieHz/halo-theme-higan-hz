@@ -112,8 +112,7 @@ export default defineConfig({
         post: path.resolve(__dirname, "src/templates/post.html"),
         tag: path.resolve(__dirname, "src/templates/tag.html"),
         tags: path.resolve(__dirname, "src/templates/tags.html"),
-        "5xx": path.resolve(__dirname, "src/templates/error/5xx.html"),
-        "404": path.resolve(__dirname, "src/templates/error/404.html"),
+        error: path.resolve(__dirname, "src/templates/error/error.html"),
         // components
         "components-moment-video-modal": path.resolve(
           __dirname,
