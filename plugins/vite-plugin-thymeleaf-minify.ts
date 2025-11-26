@@ -3,6 +3,14 @@ import { dirname, resolve } from "path";
 import type { Plugin } from "vite";
 
 /**
+ * Plugin options interface
+ */
+interface ThymeleafMinifyOptions {
+  /** Vite base path */
+  base?: string;
+}
+
+/**
  * Vite plugin that removes Thymeleaf prototype-only comments from HTML files and cleans up orphaned script files.
  *
  * Behavior:
@@ -23,9 +31,15 @@ import type { Plugin } from "vite";
  * - <script nomodule crossorigin src="..."> (legacy scripts)
  * - <script nomodule crossorigin data-src="..."> (Vite legacy plugin format)
  *
+ * @param options Plugin configuration options
  * @returns Vite plugin
  */
-export default function thymeleafMinify(): Plugin {
+export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): Plugin {
+  const {
+    // Default: root path, corresponding to Vite's base configuration
+    base = "/",
+  } = options;
+
   // Track script tags that were removed from HTML during transformation
   const removedScripts = new Map<string, Set<string>>(); // scriptSrc -> Set of HTML file paths
 
@@ -33,7 +47,7 @@ export default function thymeleafMinify(): Plugin {
     name: "vite-plugin-thymeleaf-minify",
     enforce: "post",
     transformIndexHtml: {
-      order: "post", // 在所有转换之后执行
+      order: "post", // Execute after all transformations
       handler(html, ctx) {
         // First, find all script tags in the original HTML (checking both src and data-src)
         const originalScripts = new Set<string>();
@@ -57,11 +71,11 @@ export default function thymeleafMinify(): Plugin {
           }
         }
 
-        // 删除 Thymeleaf 原型注释（支持多种前缀格式）
-        // 但保留解析器级注释 <!--/*/ ... /*/-->
+        // Remove Thymeleaf prototype comments (supports multiple prefix formats)
+        // But preserve parser-level comments <!--/*/ ... /*/-->
         html = removeNestedThymeleafComments(html);
 
-        // 清除连续的空行
+        // Remove consecutive empty lines
         html = html.replace(/\n\s*\n/g, "\n");
 
         // Now, find which script tags remain after transformation
@@ -114,13 +128,24 @@ export default function thymeleafMinify(): Plugin {
       console.log(`\n[thymeleaf-minify] Checking ${removedScripts.size} script(s) removed by Thymeleaf minification`);
 
       for (const [scriptSrc, htmlPaths] of removedScripts.entries()) {
-        // Remove leading slash if present
-        const relativePath = scriptSrc.replace(/^\//, "");
+        console.log(`\n[thymeleaf-minify] Checking: ${scriptSrc}`);
+
+        // Remove base path prefix
+        let relativePath = scriptSrc;
+        if (scriptSrc.startsWith(base)) {
+          relativePath = scriptSrc.slice(base.length);
+        } else {
+          relativePath = scriptSrc.replace(/^\//, "");
+        }
+
+        // Build full path
         const filePath = resolve(outDir, relativePath);
+        console.log(`[thymeleaf-minify]   File path: ${filePath}`);
 
         try {
           // Check if the file exists
           await fs.access(filePath);
+          console.log(`[thymeleaf-minify]   ✓ File exists`);
 
           // Check if this script is referenced by any other HTML files
           // by checking if it exists in the final bundle output
@@ -149,8 +174,10 @@ export default function thymeleafMinify(): Plugin {
             console.log(`[thymeleaf-minify]   ℹ Keeping script (still referenced): ${relativePath}`);
           }
         } catch (err) {
-          // File doesn't exist or can't be accessed, skip silently
-          if ((err as NodeJS.ErrnoException).code !== "ENOENT") {
+          // File doesn't exist or can't be accessed
+          if ((err as NodeJS.ErrnoException).code === "ENOENT") {
+            console.log(`[thymeleaf-minify]   ℹ File not found (already removed or doesn't exist): ${relativePath}`);
+          } else {
             console.log(`[thymeleaf-minify]   ⚠️ Error processing ${relativePath}: ${err}`);
           }
         }
@@ -186,12 +213,12 @@ async function findHtmlFiles(dir: string): Promise<string[]> {
 }
 
 /**
- * 使用栈算法删除嵌套的 Thymeleaf 原型注释
- * 支持的格式：
- * - <!--/* ... *\/--> （无前缀）
- * - //<!--/* ... *\/--> （JS 注释前缀，无空格）
- * - // <!--/* ... *\/--> （JS 注释前缀，带空格）
- * 保留解析器级注释：<!--/*\/ ... /*\/-->
+ * Remove nested Thymeleaf prototype comments using a stack-based algorithm
+ * Supported formats:
+ * - <!--/* ... *\/--> (no prefix)
+ * - //<!--/* ... *\/--> (JS comment prefix, no space)
+ * - // <!--/* ... *\/--> (JS comment prefix, with space)
+ * Preserves parser-level comments: <!--/*\/ ... /*\/-->
  */
 function removeNestedThymeleafComments(html: string): string {
   const result: string[] = [];
@@ -200,14 +227,14 @@ function removeNestedThymeleafComments(html: string): string {
 
   const START_MARKER = "<!--/*";
   const END_MARKER = "*/-->";
-  const EXCLUDE_START = "<!--/*/"; // 解析器级注释开始
-  const EXCLUDE_END = "/*/-->"; // 解析器级注释结束
-  const PREFIXES = ["// ", "//"]; // 可能的前缀（按长度降序）
+  const EXCLUDE_START = "<!--/*/"; // Parser-level comment start
+  const EXCLUDE_END = "/*/-->"; // Parser-level comment end
+  const PREFIXES = ["// ", "//"]; // Possible prefixes (in descending order of length)
 
   while (i < html.length) {
     let matched = false;
 
-    // 1. 检查解析器级注释的开始（支持所有前缀）
+    // 1. Check for parser-level comment start (supports all prefixes)
     for (const prefix of PREFIXES) {
       const fullExcludeStart = prefix + EXCLUDE_START;
       if (html.slice(i, i + fullExcludeStart.length) === fullExcludeStart) {
@@ -221,7 +248,7 @@ function removeNestedThymeleafComments(html: string): string {
     }
     if (matched) continue;
 
-    // 无前缀的解析器级注释开始
+    // Parser-level comment start without prefix
     if (html.slice(i, i + EXCLUDE_START.length) === EXCLUDE_START) {
       if (depth === 0) {
         result.push(EXCLUDE_START);
@@ -230,7 +257,7 @@ function removeNestedThymeleafComments(html: string): string {
       continue;
     }
 
-    // 2. 检查解析器级注释的结束
+    // 2. Check for parser-level comment end
     if (html.slice(i, i + EXCLUDE_END.length) === EXCLUDE_END) {
       if (depth === 0) {
         result.push(EXCLUDE_END);
@@ -239,7 +266,7 @@ function removeNestedThymeleafComments(html: string): string {
       continue;
     }
 
-    // 3. 检查原型注释的开始（支持所有前缀）
+    // 3. Check for prototype comment start (supports all prefixes)
     for (const prefix of PREFIXES) {
       const fullStartMarker = prefix + START_MARKER;
       if (html.slice(i, i + fullStartMarker.length) === fullStartMarker) {
@@ -251,14 +278,14 @@ function removeNestedThymeleafComments(html: string): string {
     }
     if (matched) continue;
 
-    // 无前缀的原型注释开始
+    // Prototype comment start without prefix
     if (html.slice(i, i + START_MARKER.length) === START_MARKER) {
       depth++;
       i += START_MARKER.length;
       continue;
     }
 
-    // 4. 检查原型注释的结束
+    // 4. Check for prototype comment end
     if (html.slice(i, i + END_MARKER.length) === END_MARKER) {
       if (depth > 0) {
         depth--;
@@ -267,7 +294,7 @@ function removeNestedThymeleafComments(html: string): string {
       continue;
     }
 
-    // 5. 如果不在注释内部，保留该字符
+    // 5. If not inside a comment, preserve the character
     if (depth === 0) {
       result.push(html[i]);
     }

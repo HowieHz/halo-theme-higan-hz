@@ -66,7 +66,9 @@ export default defineConfig({
       include: ["/src/templates/fragments/**/*.html", "/src/templates/components/**/*.html"],
       base: "/themes/howiehz-higan/",
     }),
-    thymeleafMinify(),
+    thymeleafMinify({
+      base: "/themes/howiehz-higan/",
+    }),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
   esbuild: {

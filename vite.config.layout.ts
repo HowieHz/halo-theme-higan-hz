@@ -14,7 +14,9 @@ export default defineConfig({
   base: "/themes/howiehz-higan/",
   plugins: [
     utwm(), // obfuscate tailwindcss class
-    thymeleafMinify(),
+    thymeleafMinify({
+      base: "/themes/howiehz-higan/",
+    }),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
   esbuild: {
