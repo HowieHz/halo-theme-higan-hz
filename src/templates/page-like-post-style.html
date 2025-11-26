@@ -93,12 +93,15 @@
       </th:block>
     </article>
     <div th:replace="~{fragments/page-footer-nav :: footerNav}"></div>
-    <script>
+    <script type="module">
+      import { isMobile } from "/src/scripts/utils/device.ts";
+      import { initTOC } from "/src/scripts/utils/toc.ts";
+
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/* generate toc
         // wontfix：如果电脑屏幕较窄，文章页用的是底部导航栏，目录按钮按了之后不会显示目录
         // 但是目录按钮在手机端是正常的，为了保证性能，不做特殊处理 */-->
-        window.initTOC("article > .content", isMobile() ? "#toc-footer" : "#toc");
+        initTOC("article > .content", isMobile() ? "#toc-footer" : "#toc");
       });
     </script>
   </body>

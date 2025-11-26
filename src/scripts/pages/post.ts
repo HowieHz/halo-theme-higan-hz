@@ -1,14 +1,7 @@
 import "../generic";
-import "../utils/create-toc";
 import "../../styles/pages/post.css";
 import "../../styles/mixins/article.css";
 import "../../styles/mixins/article-metadata.css";
-
-// 检测是否为移动设备
-window.isMobile = (): boolean => {
-  const flag = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  return flag;
-};
 
 /**
  * 获取页面滚动距离（垂直方向）
