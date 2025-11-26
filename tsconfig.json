@@ -12,6 +12,7 @@
     "noImplicitReturns": true,
     "resolveJsonModule": true,
     "verbatimModuleSyntax": true,
+    "isolatedModules": true, // 启用了 verbatimModuleSyntax 后这个冗余，但保持明确声明符合文档 https://cn.vitejs.dev/guide/features#isolatedmodules
     "lib": ["esnext", "dom", "dom.iterable"]
   },
   "include": ["src"]

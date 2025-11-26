@@ -1,9 +1,12 @@
 <head>
-  <script src="/src/scripts/utils/list/post/simple.ts" type="module"></script>
-  <th:block th:if="${showPagination ?: false}" th:replace="~{fragments/pagination :: headContent}"></th:block>
+  <script src="index.ts" type="module"></script>
+  <th:block th:if="${showPagination ?: false}" th:insert="~{components/pagination/template :: headContent}"></th:block>
 </head>
-<th:block th:fragment="post-list">
-  <!--/* post-list(posts, showPagination) */-->
+<!--/*-->
+<body></body>
+<!--*/-->
+<th:block th:fragment="content">
+  <!--/* content(posts, showPagination) */-->
   <section class="simple-post-list flex flex-auto flex-col">
     <ul class="common-post-list flex-auto">
       <th:block th:each="post : ${posts}">
@@ -43,6 +46,9 @@
         </th:block>
       </th:block>
     </ul>
-    <th:block th:if="${showPagination ?: false}" th:insert="~{fragments/pagination :: pagination(${posts})}"></th:block>
+    <th:block
+      th:if="${showPagination ?: false}"
+      th:insert="~{components/pagination/template :: content(${posts})}"
+    ></th:block>
   </section>
 </th:block>

@@ -18,7 +18,7 @@
       th:href="@{'/feed/authors/' + ${author.metadata?.name} + '.xml'}"
     />
     <script src="/src/scripts/pages/author.ts" type="module"></script>
-    <th:block th:replace="~{fragments/list/post/simple :: headContent}"></th:block>
+    <th:block th:insert="~{components/list-post-simple/template :: headContent(showPagination = true)}"></th:block>
   </head>
   <body>
     <article class="author" itemscope itemtype="http://schema.org/BlogPosting">
@@ -93,7 +93,7 @@
 
       <div class="mt-16 flex flex-auto flex-col sm:mt-20">
         <th:block
-          th:insert="~{fragments/list/post/simple :: post-list(posts = ${posts}, showPagination = true)}"
+          th:insert="~{components/list-post-simple/template :: content(posts = ${posts}, showPagination = true)}"
         ></th:block>
       </div>
     </article>

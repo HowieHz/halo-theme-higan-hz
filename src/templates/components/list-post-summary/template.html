@@ -1,8 +1,11 @@
 <head>
-  <script src="/src/scripts/utils/list/post/summary.ts" type="module"></script>
-  <th:block th:replace="~{fragments/pagination :: headContent}"></th:block>
+  <script src="index.ts" type="module"></script>
+  <th:block th:insert="~{components/pagination/template :: headContent}"></th:block>
 </head>
-<th:block th:fragment="post-list(posts)">
+<!--/*-->
+<body></body>
+<!--*/-->
+<th:block th:fragment="content(posts)">
   <section class="post-list-summary flex flex-auto flex-col">
     <div class="flex flex-auto flex-col space-y-10">
       <th:block th:each="post : ${posts}">
@@ -178,6 +181,6 @@
         </th:block>
       </th:block>
     </div>
-    <th:block th:insert="~{fragments/pagination :: pagination(${posts})}"></th:block>
+    <th:block th:insert="~{components/pagination/template :: content(${posts})}"></th:block>
   </section>
 </th:block>

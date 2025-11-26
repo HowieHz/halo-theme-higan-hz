@@ -79,7 +79,6 @@ export default function bodyInjectPlugin(options: BodyInjectOptions = {}): Plugi
       return html;
     }
 
-    console.log(ctx.path);
     // 检查是否有<body>标签
     if (!html.includes("<body") || !html.includes("</body>")) {
       console.warn(`[vite-plugin-body-inject] No <body> tag found in ${ctx.path}`);

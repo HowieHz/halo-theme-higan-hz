@@ -1,0 +1,13 @@
+export const rollupOutput = {
+  assetFileNames: () => {
+    return "assets/dist/[hash:7][extname]";
+  },
+  // JS entry files
+  // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+  entryFileNames: "assets/dist/[hash:7].js",
+  // 动态分块（chunk）
+  // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+  chunkFileNames: "assets/dist/[hash:7].js",
+};
+
+export default rollupOutput;
