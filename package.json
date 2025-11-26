@@ -6,7 +6,6 @@
     "preinstall": "npx only-allow pnpm",
     "dev": "pnpm run \"/^watch:.*/\"",
     "watch:vite": "vite build --watch",
-    "watch:vite:fragments": "vite build --watch --config vite.config.fragments.ts",
     "watch:vite:layout": "vite build --watch --config vite.config.layout.ts",
     "watch:stylus": "stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --watch",
     "watch:post-css": "postcss ./src/styles/tailwind.css -o ./tmp/styles/tailwind.css --watch",

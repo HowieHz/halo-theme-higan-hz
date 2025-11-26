@@ -6,7 +6,7 @@ import type { Plugin } from "vite";
 /**
  * Plugin options interface
  */
-interface RemoveLegacyGuardOptions {
+interface RemoveLegacyGuardJsOptions {
   /** File path patterns to check (glob format) */
   include?: string | string[];
   /** Vite base path */
@@ -46,7 +46,7 @@ function isLegacyGuardOnly(content: string): boolean {
  * @param options Plugin configuration options
  * @returns Vite plugin
  */
-export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOptions = {}): Plugin {
+export default function removeLegacyGuardJsPlugin(options: RemoveLegacyGuardJsOptions = {}): Plugin {
   const {
     // Default: check HTML files in fragments and components directories
     include = ["/src/templates/fragments/**/*.html", "/src/templates/components/**/*.html"],

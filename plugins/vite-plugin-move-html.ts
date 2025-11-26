@@ -41,6 +41,8 @@ export default function moveHtmlPlugin(opts: MoveHtmlOptions): Plugin {
   return {
     name: "vite-plugin-move-html",
     apply: "build",
+    enforce: "post",
+
     async writeBundle(bundleOptions, bundle) {
       // 规范化输出目录，已做路径校验，安全使用 resolve
       const outDir = bundleOptions.dir
