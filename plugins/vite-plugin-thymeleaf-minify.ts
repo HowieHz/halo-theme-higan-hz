@@ -45,7 +45,9 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
 
   return {
     name: "vite-plugin-thymeleaf-minify",
+    apply: "build",
     enforce: "post",
+
     transformIndexHtml: {
       order: "post", // Execute after all transformations
       handler(html, ctx) {
