@@ -3,37 +3,37 @@ import { dirname, isAbsolute, join, normalize, resolve, sep } from "path";
 import { Plugin } from "vite";
 
 interface MoveHtmlOptions {
-  /** 目标目录，相对于项目根目录，不能包含 `..` */
+  /** Target directory, relative to project root, cannot contain `..` */
   dest: string;
-  /** 展平层级，默认为 0（不展平） */
+  /** Flatten level, defaults to 0 (no flattening) */
   flatten?: number;
-  /** 是否删除原始空目录，默认 true */
+  /** Whether to delete original empty directories, defaults to true */
   removeEmptyDirs?: boolean;
 }
 
-/** 确保路径不包含 '..'，且为项目内相对路径 */
+/** Ensure path does not contain '..', and is a relative path within the project */
 function assertSafeRelative(p: string) {
   if (isAbsolute(p) || normalize(p).split(sep).includes("..")) {
-    throw new Error(`不允许的路径：${p}`);
+    throw new Error(`Disallowed path: ${p}`);
   }
   return p.replace(/^[\\/]+|[\\/]+$/g, "");
 }
 
-/** 安全的 join，只能在 rootDir 下 */
+/** Safe join, can only be within rootDir */
 /* c8 ignore next 3 */
 /* istanbul ignore next */
 /* codacy ignore next */
 function safeJoin(rootDir: string, ...segments: string[]) {
   const target = normalize(join(rootDir, ...segments));
-  // 已做路径穿越校验
+  // Path traversal validation has been done
   if (!target.startsWith(rootDir + sep)) {
-    throw new Error(`路径穿越：${target}`);
+    throw new Error(`Path traversal: ${target}`);
   }
   return target;
 }
 
 export default function moveHtmlPlugin(opts: MoveHtmlOptions): Plugin {
-  // 校验并规范化 dest
+  // Validate and normalize dest
   const safeDest = assertSafeRelative(opts.dest);
   const flattenCount = opts.flatten ?? 0;
   const removeEmptyDirs = opts.removeEmptyDirs ?? true;
@@ -44,7 +44,7 @@ export default function moveHtmlPlugin(opts: MoveHtmlOptions): Plugin {
     enforce: "post",
 
     async writeBundle(bundleOptions, bundle) {
-      // 规范化输出目录，已做路径校验，安全使用 resolve
+      // Normalize output directory, path validation has been done, safe to use resolve
       const outDir = bundleOptions.dir
         ? resolve(bundleOptions.dir)
         : bundleOptions.file
@@ -53,39 +53,39 @@ export default function moveHtmlPlugin(opts: MoveHtmlOptions): Plugin {
               throw new Error("Neither dir nor file specified in bundleOptions");
             })();
 
-      // 项目根目录绝对路径
+      // Project root absolute path
       const projectRoot = resolve(process.cwd());
 
-      // 目标目录绝对路径
+      // Target directory absolute path
       const destDir = safeJoin(projectRoot, safeDest);
 
       const movedDirs = new Set<string>();
 
       for (const rawName of Object.keys(bundle)) {
-        // 只关心 .html
+        // Only care about .html files
         if (!rawName.endsWith(".html")) continue;
 
-        // 规范文件名，不允许 '../'
+        // Normalize filename, '../' not allowed
         const name = normalize(rawName);
         if (name.split(sep).includes("..")) continue;
 
-        // 源路径
+        // Source path
         const srcPath = safeJoin(outDir, name);
 
-        // 展平处理
+        // Flatten processing
         const segments = name.split(/[/\\]/);
         const drop = Math.min(flattenCount, segments.length - 1);
         const newSegments = segments.slice(drop);
         const targetPath = safeJoin(destDir, ...newSegments);
 
-        // 确保目录存在并移动
+        // Ensure directory exists and move
         await fs.mkdir(dirname(targetPath), { recursive: true });
         await fs.rename(srcPath, targetPath);
         movedDirs.add(dirname(srcPath));
       }
 
       if (removeEmptyDirs) {
-        // 从深到浅删除空目录
+        // Delete empty directories from deep to shallow
         const sorted = Array.from(movedDirs).sort((a, b) => b.length - a.length);
         for (const dir of sorted) {
           let cur = dir;

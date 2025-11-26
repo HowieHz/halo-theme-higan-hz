@@ -6,12 +6,12 @@ import type { Plugin } from "vite";
 export default function removeEmptyCssComments(): Plugin {
   return {
     name: "remove-empty-css-comments",
-    enforce: "post", // 在其他插件之后执行
+    enforce: "post", // Execute after other plugins
     generateBundle(options, bundle) {
       for (const fileName in bundle) {
         const chunk = bundle[fileName];
         if (chunk.type === "chunk" && /\.js$/.test(fileName)) {
-          // 移除 /* empty css */ 及其各种变体
+          // Remove /* empty css */ and its various variants
           chunk.code = chunk.code.replace(/\/\*\s*empty css\s*\*\//g, "");
         }
       }
