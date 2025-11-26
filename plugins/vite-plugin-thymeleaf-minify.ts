@@ -127,6 +127,11 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
 
       console.log(`\n[thymeleaf-minify] Checking ${removedScripts.size} script(s) removed by Thymeleaf minification`);
 
+      // Track scripts that were successfully processed
+      const processedScripts = new Set<string>();
+      let deletedCount = 0;
+      let keptCount = 0;
+
       for (const [scriptSrc, htmlPaths] of removedScripts.entries()) {
         console.log(`\n[thymeleaf-minify] Checking: ${scriptSrc}`);
 
@@ -170,9 +175,12 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
           if (!isReferencedElsewhere) {
             await fs.unlink(filePath);
             console.log(`[thymeleaf-minify]   ✓ Deleted orphaned script: ${relativePath}`);
+            deletedCount++;
           } else {
             console.log(`[thymeleaf-minify]   ℹ Keeping script (still referenced): ${relativePath}`);
+            keptCount++;
           }
+          processedScripts.add(scriptSrc);
         } catch (err) {
           // File doesn't exist or can't be accessed
           if ((err as NodeJS.ErrnoException).code === "ENOENT") {
@@ -180,7 +188,19 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
           } else {
             console.log(`[thymeleaf-minify]   ⚠️ Error processing ${relativePath}: ${err}`);
           }
+          processedScripts.add(scriptSrc);
         }
+      }
+
+      // Remove all processed scripts from the checking list
+      for (const scriptSrc of processedScripts) {
+        removedScripts.delete(scriptSrc);
+      }
+
+      if (deletedCount > 0 || keptCount > 0) {
+        console.log(
+          `\n[thymeleaf-minify] Cleanup complete: deleted ${deletedCount} orphaned script(s), kept ${keptCount} referenced script(s)`,
+        );
       }
     },
   };
