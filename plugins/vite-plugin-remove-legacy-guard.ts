@@ -14,7 +14,7 @@ interface RemoveLegacyGuardOptions {
 }
 
 /**
- * Check if content contains only empty legacy guard function
+ * Check if content contains only legacy guard only function
  */
 function isLegacyGuardOnly(content: string): boolean {
   const normalizedContent = content.replace(/\s+/g, "");
@@ -38,7 +38,7 @@ function isLegacyGuardOnly(content: string): boolean {
  * - Phase 2 (writeBundle):
  *   - Resolves the output directory from the bundle options (dir, file, or cwd).
  *   - For each recorded script src, resolves the corresponding emitted JS file and reads it.
- *   - If the file is detected as an "empty legacy guard" (via isLegacyGuardOnly), the plugin:
+ *   - If the file is detected as an "legacy guard only" (via isLegacyGuardOnly), the plugin:
  *     - Deletes the emitted JS file from the output.
  *     - Removes the matching <script ... src="..."> tags from the recorded HTML files on disk.
  *   - Logs successes and non-fatal errors; failures to update individual files do not throw the build.
@@ -136,11 +136,11 @@ export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOption
           // Read file content
           const fileContent = await fs.readFile(filePath, "utf-8");
 
-          // Check if it's an empty legacy guard file
+          // Check if it's an legacy guard only file
           if (isLegacyGuardOnly(fileContent)) {
             // Delete JS file
             await fs.unlink(filePath);
-            console.log(`✓ Deleted empty legacy guard file: ${filePath}`);
+            console.log(`✓ Deleted legacy guard only file: ${filePath}`);
 
             // Remove script tags from related HTML files
             scriptsToRemove.add(scriptSrc);
