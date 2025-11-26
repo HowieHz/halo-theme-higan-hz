@@ -125,16 +125,12 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
           ? dirname(resolve(bundleOptions.file))
           : process.cwd();
 
-      console.log(`\n[thymeleaf-minify] Checking ${removedScripts.size} script(s) removed by Thymeleaf minification`);
-
       // Track scripts that were successfully processed
       const processedScripts = new Set<string>();
       let deletedCount = 0;
       let keptCount = 0;
 
       for (const [scriptSrc, htmlPaths] of removedScripts.entries()) {
-        console.log(`\n[thymeleaf-minify] Checking: ${scriptSrc}`);
-
         // Remove base path prefix
         let relativePath = scriptSrc;
         if (scriptSrc.startsWith(base)) {
@@ -145,12 +141,10 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
 
         // Build full path
         const filePath = resolve(outDir, relativePath);
-        console.log(`[thymeleaf-minify]   File path: ${filePath}`);
 
         try {
           // Check if the file exists
           await fs.access(filePath);
-          console.log(`[thymeleaf-minify]   ✓ File exists`);
 
           // Check if this script is referenced by any other HTML files
           // by checking if it exists in the final bundle output
@@ -174,19 +168,18 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
           // If not referenced anywhere, delete the JS file
           if (!isReferencedElsewhere) {
             await fs.unlink(filePath);
-            console.log(`[thymeleaf-minify]   ✓ Deleted orphaned script: ${relativePath}`);
+            console.log(`✓ Deleted orphaned script: ${filePath}`);
             deletedCount++;
           } else {
-            console.log(`[thymeleaf-minify]   ℹ Keeping script (still referenced): ${relativePath}`);
             keptCount++;
           }
           processedScripts.add(scriptSrc);
         } catch (err) {
-          // File doesn't exist or can't be accessed
+          // File doesn't exist or can't be accessed, mark as processed
           if ((err as NodeJS.ErrnoException).code === "ENOENT") {
-            console.log(`[thymeleaf-minify]   ℹ File not found (already removed or doesn't exist): ${relativePath}`);
+            console.log(`ℹ File not found (already removed or doesn't exist): ${relativePath}`);
           } else {
-            console.log(`[thymeleaf-minify]   ⚠️ Error processing ${relativePath}: ${err}`);
+            console.error(`✗ Error processing ${relativePath}: ${err}`);
           }
           processedScripts.add(scriptSrc);
         }
@@ -198,9 +191,7 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
       }
 
       if (deletedCount > 0 || keptCount > 0) {
-        console.log(
-          `\n[thymeleaf-minify] Cleanup complete: deleted ${deletedCount} orphaned script(s), kept ${keptCount} referenced script(s)`,
-        );
+        console.log(`Thymeleaf minify cleanup: deleted ${deletedCount} orphaned, kept ${keptCount} referenced`);
       }
     },
   };

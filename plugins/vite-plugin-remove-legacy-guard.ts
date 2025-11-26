@@ -76,15 +76,12 @@ export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOption
           return html;
         }
 
-        console.log(`Checking file: ${ctx.path}`);
-
         // Match all script tags and collect src
         const scriptRegex = /<script\s+type="module"\s+crossorigin\s+src="([^"]+)"[^>]*><\/script>/g;
         let match;
 
         while ((match = scriptRegex.exec(html)) !== null) {
           const scriptSrc = match[1];
-          console.log(`  Found script tag: src="${scriptSrc}"`);
 
           if (!scriptsToCheck.has(scriptSrc)) {
             scriptsToCheck.set(scriptSrc, new Set());
