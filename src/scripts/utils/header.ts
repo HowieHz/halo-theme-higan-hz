@@ -1,6 +1,7 @@
 import "./common"; // window.isVisible
-import "./animation"; // window.fadeIn, window.fadeOut
 import "../../styles/mixins/header.css";
+
+import { fadeIn, fadeOut } from "./animations";
 
 document.addEventListener("DOMContentLoaded", (): void => {
   const mobileMenuIcon: HTMLElement | null = document.querySelector("#header > #nav > ul > .icon");
@@ -13,12 +14,12 @@ document.addEventListener("DOMContentLoaded", (): void => {
     if (window.isVisible(mobileMenuItems[0])) {
       // 隐藏所有菜单项
       mobileMenuItems.forEach((item) => {
-        window.fadeOut(item, 50);
+        fadeOut(item, 50);
       });
     } else {
       // 显示所有菜单项
       mobileMenuItems.forEach((item) => {
-        window.fadeIn(item, 50);
+        fadeIn(item, 50);
       });
     }
   });

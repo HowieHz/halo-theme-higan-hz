@@ -9,20 +9,6 @@ declare global {
     scrollToTop: () => void;
 
     /**
-     * 淡入动画函数 - 使用 CSS 动画，与 window.show 逻辑保持一致
-     * @param element - 要执行动画的元素，支持单个 HTMLElement 或 NodeListOf<HTMLElement>
-     * @param duration - 动画持续时间（毫秒）
-     */
-    fadeIn: (element: HTMLElement | NodeListOf<HTMLElement>, duration?: number) => void;
-
-    /**
-     * 淡出动画函数 - 使用 CSS 动画，与 window.hide 逻辑保持一致
-     * @param element - 要执行动画的元素，支持单个 HTMLElement 或 NodeListOf<HTMLElement>
-     * @param duration - 动画持续时间（毫秒）
-     */
-    fadeOut: (element: HTMLElement | NodeListOf<HTMLElement>, duration?: number) => void;
-
-    /**
      * slideDown 效果
      * @param element - 要显示的元素
      * @param duration - 动画持续时间（毫秒），默认 200ms
@@ -35,18 +21,6 @@ declare global {
      * @param duration - 动画持续时间（毫秒），默认 200ms
      */
     slideUp: (element: HTMLElement, duration?: number) => void;
-
-    /**
-     * 显示元素
-     * @param selector - 元素、选择器或 NodeList
-     */
-    show: (selector: string | HTMLElement | NodeList) => HTMLElement | NodeList;
-
-    /**
-     * 隐藏元素
-     * @param selector - 元素、选择器或 NodeList
-     */
-    hide: (selector: string | HTMLElement | NodeList) => HTMLElement | NodeList;
 
     /**
      * 切换元素显示/隐藏状态
