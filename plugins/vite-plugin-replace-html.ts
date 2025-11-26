@@ -2,7 +2,7 @@ import picomatch from "picomatch";
 import type { IndexHtmlTransformHook, Plugin } from "vite";
 
 /**
- * 替换规则接口
+ * Replace rule interface
  */
 interface ReplaceRule {
   from: string | RegExp;
@@ -12,16 +12,16 @@ interface ReplaceRule {
 }
 
 /**
- * 插件选项接口
+ * Plugin options interface
  */
 interface ReplaceHtmlOptions {
   rules: ReplaceRule[];
 }
 
 /**
- * 在 HTML 中批量替换内容的插件
- * @param options 插件配置选项
- * @returns Vite 插件
+ * Plugin to batch replace content in HTML
+ * @param options Plugin configuration options
+ * @returns Vite plugin
  */
 export default function replaceHtmlPlugin(options: ReplaceHtmlOptions): Plugin {
   const { rules = [] } = options || {};
@@ -29,21 +29,21 @@ export default function replaceHtmlPlugin(options: ReplaceHtmlOptions): Plugin {
   const transformHook: IndexHtmlTransformHook = (html, ctx) => {
     let result = html;
     for (const rule of rules) {
-      // 检查 include 规则
+      // Check include rules
       if (rule.include) {
         const includePatterns = Array.isArray(rule.include) ? rule.include : [rule.include];
         const isIncludeMatch = picomatch(includePatterns);
         if (!isIncludeMatch(ctx.path)) {
-          continue; // 文件不在 include 列表中，跳过此规则
+          continue; // File is not in include list, skip this rule
         }
       }
 
-      // 检查 exclude 规则
+      // Check exclude rules
       if (rule.exclude) {
         const excludePatterns = Array.isArray(rule.exclude) ? rule.exclude : [rule.exclude];
         const isExcludeMatch = picomatch(excludePatterns);
         if (isExcludeMatch(ctx.path)) {
-          continue; // 文件在 exclude 列表中，跳过此规则
+          continue; // File is in exclude list, skip this rule
         }
       }
 
