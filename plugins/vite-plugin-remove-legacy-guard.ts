@@ -24,7 +24,25 @@ function isLegacyGuardOnly(content: string): boolean {
 }
 
 /**
- * Plugin to remove empty JS files containing only legacy guard function and their script tags
+ * Vite plugin that detects and removes emitted "legacy guard" JS files and their corresponding
+ * <script type="module" crossorigin src="..."> tags from HTML files during the build.
+ *
+ * Behavior
+ * - Phase 1 (transformIndexHtml - order: "post"):
+ *   - Scans included HTML files for <script type="module" crossorigin src="..."></script> tags and
+ *     records which HTML files reference each script src.
+ *   - Uses picomatch to test whether the current HTML path should be processed (based on `include`).
+ *   - If any script src has previously been marked for removal, will remove matching script tags
+ *     from the HTML being transformed.
+ *
+ * - Phase 2 (writeBundle):
+ *   - Resolves the output directory from the bundle options (dir, file, or cwd).
+ *   - For each recorded script src, resolves the corresponding emitted JS file and reads it.
+ *   - If the file is detected as an "empty legacy guard" (via isLegacyGuardOnly), the plugin:
+ *     - Deletes the emitted JS file from the output.
+ *     - Removes the matching <script ... src="..."> tags from the recorded HTML files on disk.
+ *   - Logs successes and non-fatal errors; failures to update individual files do not throw the build.
+ *
  * @param options Plugin configuration options
  * @returns Vite plugin
  */
@@ -66,7 +84,7 @@ export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOption
 
         while ((match = scriptRegex.exec(html)) !== null) {
           const scriptSrc = match[1];
-          console.log(`Found script tag: src="${scriptSrc}"`);
+          console.log(`  Found script tag: src="${scriptSrc}"`);
 
           if (!scriptsToCheck.has(scriptSrc)) {
             scriptsToCheck.set(scriptSrc, new Set());
@@ -90,6 +108,11 @@ export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOption
       },
     },
 
+    // Note: generateBundle was avoided because its emitted output can include
+    // "export function __vite_legacy_guard(){...}" plus extra imports like import "./SqU5D8O.js",
+    // which would interfere with detecting files that contain only the legacy guard,
+    // so the check is performed in writeBundle against the final written files.
+
     // Phase 2: Process files during writeBundle
     async writeBundle(bundleOptions) {
       // Get output directory: prioritize bundleOptions.dir, then bundleOptions.file directory, finally fallback to current working directory
@@ -99,11 +122,7 @@ export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOption
           ? dirname(resolve(bundleOptions.file))
           : process.cwd();
 
-      console.log(`\nProcessing legacy guard files`);
-
       for (const [scriptSrc, htmlPaths] of scriptsToCheck.entries()) {
-        console.log(`\nChecking: ${scriptSrc}`);
-
         // Remove base path prefix
         let relativePath = scriptSrc;
         if (scriptSrc.startsWith(base)) {
@@ -112,7 +131,6 @@ export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOption
 
         // Build full path
         const filePath = resolve(outDir_, relativePath);
-        console.log(`File path: ${filePath}`);
 
         try {
           // Read file content
@@ -120,18 +138,14 @@ export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOption
 
           // Check if it's an empty legacy guard file
           if (isLegacyGuardOnly(fileContent)) {
-            console.log(`✓ Detected empty legacy guard file`);
-
             // Delete JS file
             await fs.unlink(filePath);
-            console.log(`✓ Deleted: ${filePath}`);
+            console.log(`✓ Deleted empty legacy guard file: ${filePath}`);
 
             // Remove script tags from related HTML files
             scriptsToRemove.add(scriptSrc);
             for (const htmlPath of htmlPaths) {
               const htmlFilePath = resolve(outDir_, htmlPath.replace(/^\//, ""));
-              console.log(`→ Removing script from HTML: ${htmlFilePath}`);
-
               try {
                 // Read HTML file
                 let htmlContent = await fs.readFile(htmlFilePath, "utf-8");
@@ -145,16 +159,14 @@ export default function removeLegacyGuardPlugin(options: RemoveLegacyGuardOption
 
                 // Write back the modified HTML
                 await fs.writeFile(htmlFilePath, htmlContent, "utf-8");
-                console.log(`✓ Updated HTML file: ${htmlFilePath}`);
+                console.log(`✓ Removed script from HTML ${htmlFilePath}`);
               } catch (htmlErr) {
-                console.log(`⚠️ Failed to update HTML: ${htmlErr}`);
+                console.error(`✗ Failed to update HTML: ${htmlErr}`);
               }
             }
-          } else {
-            console.log(`✗ File contains other content, keep it`);
           }
         } catch (err) {
-          console.log(`⚠️ Processing failed: ${err}`);
+          console.error(`✗ Processing failed: ${err}`);
         }
       }
     },
