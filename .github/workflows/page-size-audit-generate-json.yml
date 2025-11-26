@@ -8,7 +8,7 @@ on:
         required: false
         default: 'v1.0.0'
       end_version:
-        description: '结束版本 (例如: v1.48.2，留空表示最新版本)'
+        description: '结束版本 (例如: v1.48.3，留空表示最新版本)'
         required: false
         default: ''
       create_pr:
