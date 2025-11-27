@@ -1,14 +1,9 @@
 import "../generic";
-import "../utils/create-toc";
 import "../../styles/pages/post.css";
 import "../../styles/mixins/article.css";
 import "../../styles/mixins/article-metadata.css";
 
-// 检测是否为移动设备
-window.isMobile = (): boolean => {
-  const flag = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  return flag;
-};
+import { fadeIn, fadeOut, show } from "../utils/animations";
 
 /**
  * 获取页面滚动距离（垂直方向）
@@ -102,7 +97,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
       // 大于等于 1024px 的屏幕宽度 页面完成初始化时自动显示菜单
       if (window.matchMedia("(min-width: 1024px)").matches) {
         // menuIcon.classList.add("active"); // 为 #header-post .active 样式设置，模板默认有 active，无需添加
-        window.show(menuComponents);
+        show(menuComponents);
       } else {
         menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
       }
@@ -112,11 +107,11 @@ document.addEventListener("DOMContentLoaded", (): void => {
         e.preventDefault();
         if (window.isVisible(menuComponents)) {
           menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
-          window.fadeOut(menuComponents, 50);
-          window.fadeOut(shareListComponents, 50);
+          fadeOut(menuComponents, 50);
+          fadeOut(shareListComponents, 50);
         } else {
           menuIcon.classList.add("active"); // 为 #header-post .active 样式设置
-          window.fadeIn(menuComponents, 50);
+          fadeIn(menuComponents, 50);
         }
       });
 
@@ -128,14 +123,14 @@ document.addEventListener("DOMContentLoaded", (): void => {
         // 顶部菜单按钮、顶部菜单、回到顶部按钮 根据页面滚动距离 显示/隐藏
         if (window.matchMedia("(min-width: 640px) and (max-width: 1024px)").matches) {
           if (topDistance < 50) {
-            window.fadeIn(menuIcon, 200);
-            window.fadeOut(topIcon, 200);
+            fadeIn(menuIcon, 200);
+            fadeOut(topIcon, 200);
           } else if (topDistance > 100) {
             menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
-            window.fadeOut(menuIcon, 200);
-            window.fadeOut(menuComponents, 200);
-            window.fadeOut(shareListComponents, 200);
-            window.fadeIn(topIcon, 200);
+            fadeOut(menuIcon, 200);
+            fadeOut(menuComponents, 200);
+            fadeOut(shareListComponents, 200);
+            fadeIn(topIcon, 200);
           }
         }
       });

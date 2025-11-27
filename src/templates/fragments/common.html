@@ -135,10 +135,9 @@
   <th:block th:with="permalink=${siteUrl}+${originPermalink}, title=${title}">
     <ul>
       <script vite-ignore th:inline="javascript">
-        function nativeShare() {
-          const postPermaLink = /*[[${permalink}]]*/ "";
+        function nativeShare(link) {
           const postTitle = /*[[${title}]]*/ "";
-          const shareData = { title: postTitle, url: postPermaLink };
+          const shareData = { title: postTitle, url: link };
           if (navigator.canShare?.(shareData)) {
             navigator.share(shareData);
           } else {
@@ -159,7 +158,7 @@
           th:if="${item?.name=='Native'}"
           class="icon"
           th:aria-label="#{common.shareModal.share.aria-label(${item?.aria_label})}"
-          href="javascript:nativeShare();"
+          th:href="|javascript:nativeShare('${#strings.replace(item?.url, '@URL', permalink)}');|"
         >
           <i class="iconify" th:attr="data-icon=${item?.icon}"></i
         ></a>

@@ -1,5 +1,3 @@
-import type {} from "../types/window-create-toc";
-
 /**
  * Generates a Table of Contents (TOC) from the headings within a specified HTML content element
  * and injects the generated TOC into a target DOM element.
@@ -8,7 +6,7 @@ import type {} from "../types/window-create-toc";
  * @param tocSelector - CSS selector for the DOM element where the generated TOC should be displayed.
  * @param headingSelector - A string of heading selectors (e.g., "h1, h2, h3") to select within the contentSelector element for inclusion in the TOC.
  */
-window.initTOC = (contentSelector: string, tocSelector: string, headingSelector = "h1, h2, h3, h4") => {
+export function initTOC(contentSelector: string, tocSelector: string, headingSelector = "h1, h2, h3, h4"): void {
   const contentRootDom = document.querySelector<HTMLElement>(contentSelector);
   const tocRootDom = document.querySelector<HTMLElement>(tocSelector);
 
@@ -238,4 +236,4 @@ window.initTOC = (contentSelector: string, tocSelector: string, headingSelector 
   handleTOCScrollHighlight();
   window.addEventListener("scroll", handleTOCScrollHighlight, { passive: true });
   return;
-};
+}
