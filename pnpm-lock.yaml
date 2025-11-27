@@ -23,10 +23,10 @@ importers:
         version: 9.39.1
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.7.0
-        version: 4.7.0(@vue/compiler-sfc@3.5.25)(prettier@3.6.2)
+        version: 4.7.0(@vue/compiler-sfc@3.5.25)(prettier@3.7.1)
       '@iconify/json':
         specifier: ^2.2.408
-        version: 2.2.410
+        version: 2.2.411
       '@types/alpinejs':
         specifier: ^3.13.11
         version: 3.13.11
@@ -37,8 +37,8 @@ importers:
         specifier: ^8.47.0
         version: 8.48.0(eslint@9.39.1(jiti@1.21.7))(typescript@5.9.3)
       '@typescript/native-preview':
-        specifier: 7.0.0-dev.20251125.1
-        version: 7.0.0-dev.20251125.1
+        specifier: 7.0.0-dev.20251127.1
+        version: 7.0.0-dev.20251127.1
       '@vitejs/plugin-legacy':
         specifier: ^7.2.1
         version: 7.2.1(rolldown-vite@7.2.8(@types/node@24.10.1)(esbuild@0.25.12)(jiti@1.21.7)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1))(terser@5.44.1)
@@ -65,7 +65,7 @@ importers:
         version: 1.30.0
       eslint-plugin-prettier:
         specifier: ^5.5.4
-        version: 5.5.4(eslint-config-prettier@10.1.8(eslint@9.39.1(jiti@1.21.7)))(eslint@9.39.1(jiti@1.21.7))(prettier@3.6.2)
+        version: 5.5.4(eslint-config-prettier@10.1.8(eslint@9.39.1(jiti@1.21.7)))(eslint@9.39.1(jiti@1.21.7))(prettier@3.7.1)
       eslint-plugin-vue:
         specifier: ^10.5.1
         version: 10.6.1(@typescript-eslint/parser@8.48.0(eslint@9.39.1(jiti@1.21.7))(typescript@5.9.3))(eslint@9.39.1(jiti@1.21.7))(vue-eslint-parser@10.2.0(eslint@9.39.1(jiti@1.21.7)))
@@ -101,10 +101,10 @@ importers:
         version: 10.4.0(postcss@8.5.6)
       prettier:
         specifier: ^3.6.2
-        version: 3.6.2
+        version: 3.7.1
       prettier-plugin-tailwindcss:
         specifier: ^0.7.1
-        version: 0.7.1(@ianvs/prettier-plugin-sort-imports@4.7.0(@vue/compiler-sfc@3.5.25)(prettier@3.6.2))(@trivago/prettier-plugin-sort-imports@5.2.2(@vue/compiler-sfc@3.5.25)(prettier@3.6.2))(prettier@3.6.2)
+        version: 0.7.1(@ianvs/prettier-plugin-sort-imports@4.7.0(@vue/compiler-sfc@3.5.25)(prettier@3.7.1))(@trivago/prettier-plugin-sort-imports@5.2.2(@vue/compiler-sfc@3.5.25)(prettier@3.7.1))(prettier@3.7.1)
       stylelint:
         specifier: ^16.25.0
         version: 16.26.0(typescript@5.9.3)
@@ -131,7 +131,7 @@ importers:
         version: 3.4.18(yaml@2.8.1)
       tailwindcss-patch:
         specifier: ^8.4.0
-        version: 8.4.0(tailwindcss@3.4.18(yaml@2.8.1))
+        version: 8.4.1(tailwindcss@3.4.18(yaml@2.8.1))
       typescript-eslint:
         specifier: ^8.47.0
         version: 8.48.0(eslint@9.39.1(jiti@1.21.7))(typescript@5.9.3)
@@ -1240,8 +1240,8 @@ packages:
     resolution: {integrity: sha512-1nemfyD/OJzh9ALepH7YfuuP8BdEB24Skhd8DXWh0hzcOxImbb1ZizSZkpCzAwSZSGcJFmscIBaBQu+yLyWaxQ==}
     deprecated: no longer maintained, switch to modern iconify-icon web component
 
-  '@iconify/json@2.2.410':
-    resolution: {integrity: sha512-0IhW9Sfudf3cPQHoCwr2gJMMUUkLW01WIkGoP9PbwVKXl1I/KTRHtM9IchLufT8M86QHBWRcinApzkL60TH9vA==}
+  '@iconify/json@2.2.411':
+    resolution: {integrity: sha512-lbNY5utR46XT2seUTBNiqKwd0uxSq2lJfyg8WRxpThmlS1bk79eSToT9biraG1wzKKt0tCjJos9aZxj5Us9RTw==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -1805,43 +1805,43 @@ packages:
     resolution: {integrity: sha512-T0XJMaRPOH3+LBbAfzR2jalckP1MSG/L9eUtY0DEzUyVaXJ/t6zN0nR7co5kz0Jko/nkSYCBRkz1djvjajVTTg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20251125.1':
-    resolution: {integrity: sha512-8fkL3vtHtrKoj8LGrsEfvZDNLd47ScCVOVyC+vn4t3SNGo6eLvHqaBUd5WlBEVLHAO6o71BDS4hHDNGiMc0hEA==}
+  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20251127.1':
+    resolution: {integrity: sha512-G+91ILcscZTmXN1lwsODVwcFQjWwnqxx/suPA7QE5M/lFF0R0QCfX71A1gZC93cR6pN7zgHarabsVkT0gmiT9A==}
     cpu: [arm64]
     os: [darwin]
 
-  '@typescript/native-preview-darwin-x64@7.0.0-dev.20251125.1':
-    resolution: {integrity: sha512-Odq4ZtNOzlpTbjRpdP5AaCfVRVx0L05F7cI3UpPQgXjxJejKin14z6r+k2qlo77pwnpaviM2fou+hbNX5cj1oQ==}
+  '@typescript/native-preview-darwin-x64@7.0.0-dev.20251127.1':
+    resolution: {integrity: sha512-I9pdyP8E1dgMyo1TyQ0emx154Ka4TMOXzdq5JSgIuFLZmVw6MD2zkkB3a8DbuCUyU2LNjEGJMnxW0YsY0474aQ==}
     cpu: [x64]
     os: [darwin]
 
-  '@typescript/native-preview-linux-arm64@7.0.0-dev.20251125.1':
-    resolution: {integrity: sha512-YiM49tIFLfq0LHfPVhSufBABsyS79OqurRZwznkFUiv4HHFWuZ66Ne1w2eXzv3BeZkDOnPtrkmZ+ZSAeYtoEhw==}
+  '@typescript/native-preview-linux-arm64@7.0.0-dev.20251127.1':
+    resolution: {integrity: sha512-0RR1wBYZDuC3JVkDQE5CtyFk1hJ7ZTIV0P/alVJBqYeCbqR0hJ+gHXEDkUqjxql9KM9M74Vka3cDN7GdDSufUA==}
     cpu: [arm64]
     os: [linux]
 
-  '@typescript/native-preview-linux-arm@7.0.0-dev.20251125.1':
-    resolution: {integrity: sha512-abP56lp5GIDizVjQ3/36mryOawUTY+ODtw/rUJ+XMnH/zy6OSNS4g8z8XsmTnizsLLaWrrAYD3+PCdi0c6ra8w==}
+  '@typescript/native-preview-linux-arm@7.0.0-dev.20251127.1':
+    resolution: {integrity: sha512-kofoSOUdMLchzBMoYGAGf5Pn7aa9gGEvRZfuGrKwMunq046q5/wGcogtTXxQPHhce+2GNy4Pz6W3XIMLJt4Idw==}
     cpu: [arm]
     os: [linux]
 
-  '@typescript/native-preview-linux-x64@7.0.0-dev.20251125.1':
-    resolution: {integrity: sha512-nl0itKQowgb4snWPH4LjkdSzMIalG+qDoheAqadMEDUekKexNTmUAqbK0+qje0jsW9Jc/1+MCQHIcDr20abkzA==}
+  '@typescript/native-preview-linux-x64@7.0.0-dev.20251127.1':
+    resolution: {integrity: sha512-fCCjsJRR036Zbdmh9CafrzrW8/Frr4GkttWidoCA6irkxdUffFghcvEkcxs5fyHtCidiGVKVKP2TxK94FJ/JUA==}
     cpu: [x64]
     os: [linux]
 
-  '@typescript/native-preview-win32-arm64@7.0.0-dev.20251125.1':
-    resolution: {integrity: sha512-99AZ4Lv0Ez/RqtCszFDWCE+8Qrzjjw1Bsq2DYRnszeTIbwvr3I6x3edk2gr8/EuulrQLv7fzcintyp3EQgeZlQ==}
+  '@typescript/native-preview-win32-arm64@7.0.0-dev.20251127.1':
+    resolution: {integrity: sha512-vsq5u4QuEFdRyNGEhU/F/lMGNd9c8UIH7AcgGxhHuZjWX8Ft2A/6xpFmI16QFp2xCiRTF2v+CeY+17BtCiaBxQ==}
     cpu: [arm64]
     os: [win32]
 
-  '@typescript/native-preview-win32-x64@7.0.0-dev.20251125.1':
-    resolution: {integrity: sha512-f483lMqW97udDCG0Deotbcmr+khmvcr9U0i5DB6z1ePjIVk8HkvdoFDnKuzSdtov0KvqPGkyRui0Vdqy/IwYJQ==}
+  '@typescript/native-preview-win32-x64@7.0.0-dev.20251127.1':
+    resolution: {integrity: sha512-RndvS7YZJnnAhaHxn7FnHWEq9sIJ73YGUy+L4on7hUnGJrUjBHpoFpOJCFtGzf0QN88MCqGm38pAlIkXncJKlQ==}
     cpu: [x64]
     os: [win32]
 
-  '@typescript/native-preview@7.0.0-dev.20251125.1':
-    resolution: {integrity: sha512-E1EboijTfMS99duAYDzPiIHzJDXA1xEj4UHvpjarlniYYmCFO/Rla4boiRBMns4eXNNkyEkvU4WSkjpOl0fzTg==}
+  '@typescript/native-preview@7.0.0-dev.20251127.1':
+    resolution: {integrity: sha512-R39glwtGz5GPX9LmwIJ7EtK1VVGzhIRTrApiFvupi1+sPdYPbWqANrwOMX0529AogVfUnk6X64LVq52zLi7GKQ==}
     hasBin: true
 
   '@ungap/structured-clone@1.3.0':
@@ -4000,8 +4000,8 @@ packages:
       prettier-plugin-svelte:
         optional: true
 
-  prettier@3.6.2:
-    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
+  prettier@3.7.1:
+    resolution: {integrity: sha512-RWKXE4qB3u5Z6yz7omJkjWwmTfLdcbv44jUVHC5NpfXwFGzvpQM798FGv/6WNK879tc+Cn0AAyherCl1KjbyZQ==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -4424,8 +4424,8 @@ packages:
   tailwindcss-config@1.1.2:
     resolution: {integrity: sha512-5vpQ7+B2pQAw4q8p4rXrHMMAhJ6sJ02C8lU8FRYCSUTVp7xDV+Ocz1IJGfWxTnyMW18GN2Elc/QefHfqiKVEQw==}
 
-  tailwindcss-patch@8.4.0:
-    resolution: {integrity: sha512-Vo/nKQ8bEKRjyqHWpIYood8mShJ+9B0LfAlRsTHufGRjd4o505VoMrrYoDSCwaGXYGoyR2MmDIa2n5XNjqsS8A==}
+  tailwindcss-patch@8.4.1:
+    resolution: {integrity: sha512-0nd3lMPgetDwdL+LQZdC78sGDe1du8xYdbAqTalFctWzEH87n2RmgMnqL/VMrMt7EO+eJBqxRzrjIGuUQMEmwQ==}
     hasBin: true
     peerDependencies:
       tailwindcss: '>=2.0.0'
@@ -5926,13 +5926,13 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@ianvs/prettier-plugin-sort-imports@4.7.0(@vue/compiler-sfc@3.5.25)(prettier@3.6.2)':
+  '@ianvs/prettier-plugin-sort-imports@4.7.0(@vue/compiler-sfc@3.5.25)(prettier@3.7.1)':
     dependencies:
       '@babel/generator': 7.28.5
       '@babel/parser': 7.28.5
       '@babel/traverse': 7.28.5
       '@babel/types': 7.28.5
-      prettier: 3.6.2
+      prettier: 3.7.1
       semver: 7.7.3
     optionalDependencies:
       '@vue/compiler-sfc': 3.5.25
@@ -5953,7 +5953,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify/json@2.2.410':
+  '@iconify/json@2.2.411':
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 2.0.3
@@ -6325,7 +6325,7 @@ snapshots:
       source-map-js: 1.2.1
       tailwindcss: 4.1.17
 
-  '@trivago/prettier-plugin-sort-imports@5.2.2(@vue/compiler-sfc@3.5.25)(prettier@3.6.2)':
+  '@trivago/prettier-plugin-sort-imports@5.2.2(@vue/compiler-sfc@3.5.25)(prettier@3.7.1)':
     dependencies:
       '@babel/generator': 7.28.5
       '@babel/parser': 7.28.5
@@ -6333,7 +6333,7 @@ snapshots:
       '@babel/types': 7.28.5
       javascript-natural-sort: 0.7.1
       lodash: 4.17.21
-      prettier: 3.6.2
+      prettier: 3.7.1
     optionalDependencies:
       '@vue/compiler-sfc': 3.5.25
     transitivePeerDependencies:
@@ -6482,36 +6482,36 @@ snapshots:
       '@typescript-eslint/types': 8.48.0
       eslint-visitor-keys: 4.2.1
 
-  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20251125.1':
+  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20251127.1':
     optional: true
 
-  '@typescript/native-preview-darwin-x64@7.0.0-dev.20251125.1':
+  '@typescript/native-preview-darwin-x64@7.0.0-dev.20251127.1':
     optional: true
 
-  '@typescript/native-preview-linux-arm64@7.0.0-dev.20251125.1':
+  '@typescript/native-preview-linux-arm64@7.0.0-dev.20251127.1':
     optional: true
 
-  '@typescript/native-preview-linux-arm@7.0.0-dev.20251125.1':
+  '@typescript/native-preview-linux-arm@7.0.0-dev.20251127.1':
     optional: true
 
-  '@typescript/native-preview-linux-x64@7.0.0-dev.20251125.1':
+  '@typescript/native-preview-linux-x64@7.0.0-dev.20251127.1':
     optional: true
 
-  '@typescript/native-preview-win32-arm64@7.0.0-dev.20251125.1':
+  '@typescript/native-preview-win32-arm64@7.0.0-dev.20251127.1':
     optional: true
 
-  '@typescript/native-preview-win32-x64@7.0.0-dev.20251125.1':
+  '@typescript/native-preview-win32-x64@7.0.0-dev.20251127.1':
     optional: true
 
-  '@typescript/native-preview@7.0.0-dev.20251125.1':
+  '@typescript/native-preview@7.0.0-dev.20251127.1':
     optionalDependencies:
-      '@typescript/native-preview-darwin-arm64': 7.0.0-dev.20251125.1
-      '@typescript/native-preview-darwin-x64': 7.0.0-dev.20251125.1
-      '@typescript/native-preview-linux-arm': 7.0.0-dev.20251125.1
-      '@typescript/native-preview-linux-arm64': 7.0.0-dev.20251125.1
-      '@typescript/native-preview-linux-x64': 7.0.0-dev.20251125.1
-      '@typescript/native-preview-win32-arm64': 7.0.0-dev.20251125.1
-      '@typescript/native-preview-win32-x64': 7.0.0-dev.20251125.1
+      '@typescript/native-preview-darwin-arm64': 7.0.0-dev.20251127.1
+      '@typescript/native-preview-darwin-x64': 7.0.0-dev.20251127.1
+      '@typescript/native-preview-linux-arm': 7.0.0-dev.20251127.1
+      '@typescript/native-preview-linux-arm64': 7.0.0-dev.20251127.1
+      '@typescript/native-preview-linux-x64': 7.0.0-dev.20251127.1
+      '@typescript/native-preview-win32-arm64': 7.0.0-dev.20251127.1
+      '@typescript/native-preview-win32-x64': 7.0.0-dev.20251127.1
 
   '@ungap/structured-clone@1.3.0': {}
 
@@ -7335,10 +7335,10 @@ snapshots:
     dependencies:
       jsonc-parser: 3.3.1
 
-  eslint-plugin-prettier@5.5.4(eslint-config-prettier@10.1.8(eslint@9.39.1(jiti@1.21.7)))(eslint@9.39.1(jiti@1.21.7))(prettier@3.6.2):
+  eslint-plugin-prettier@5.5.4(eslint-config-prettier@10.1.8(eslint@9.39.1(jiti@1.21.7)))(eslint@9.39.1(jiti@1.21.7))(prettier@3.7.1):
     dependencies:
       eslint: 9.39.1(jiti@1.21.7)
-      prettier: 3.6.2
+      prettier: 3.7.1
       prettier-linter-helpers: 1.0.0
       synckit: 0.11.11
     optionalDependencies:
@@ -8766,14 +8766,14 @@ snapshots:
     dependencies:
       fast-diff: 1.3.0
 
-  prettier-plugin-tailwindcss@0.7.1(@ianvs/prettier-plugin-sort-imports@4.7.0(@vue/compiler-sfc@3.5.25)(prettier@3.6.2))(@trivago/prettier-plugin-sort-imports@5.2.2(@vue/compiler-sfc@3.5.25)(prettier@3.6.2))(prettier@3.6.2):
+  prettier-plugin-tailwindcss@0.7.1(@ianvs/prettier-plugin-sort-imports@4.7.0(@vue/compiler-sfc@3.5.25)(prettier@3.7.1))(@trivago/prettier-plugin-sort-imports@5.2.2(@vue/compiler-sfc@3.5.25)(prettier@3.7.1))(prettier@3.7.1):
     dependencies:
-      prettier: 3.6.2
+      prettier: 3.7.1
     optionalDependencies:
-      '@ianvs/prettier-plugin-sort-imports': 4.7.0(@vue/compiler-sfc@3.5.25)(prettier@3.6.2)
-      '@trivago/prettier-plugin-sort-imports': 5.2.2(@vue/compiler-sfc@3.5.25)(prettier@3.6.2)
+      '@ianvs/prettier-plugin-sort-imports': 4.7.0(@vue/compiler-sfc@3.5.25)(prettier@3.7.1)
+      '@trivago/prettier-plugin-sort-imports': 5.2.2(@vue/compiler-sfc@3.5.25)(prettier@3.7.1)
 
-  prettier@3.6.2: {}
+  prettier@3.7.1: {}
 
   pretty-hrtime@1.0.3: {}
 
@@ -9250,7 +9250,7 @@ snapshots:
       jiti: 2.6.1
       lilconfig: 3.1.3
 
-  tailwindcss-patch@8.4.0(tailwindcss@3.4.18(yaml@2.8.1)):
+  tailwindcss-patch@8.4.1(tailwindcss@3.4.18(yaml@2.8.1)):
     dependencies:
       '@babel/generator': 7.28.5
       '@babel/parser': 7.28.5
