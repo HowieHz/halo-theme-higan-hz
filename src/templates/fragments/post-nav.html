@@ -4,7 +4,14 @@
 <!--*/-->
 <th:block xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
   <div id="header-post" class="fixed right-0 top-8 z-50 float-right hidden sm:block">
-    <a id="top-icon-tablet" class="hidden lg:!hidden" href="#" onclick="event.preventDefault(); scrollToTop();"
+    <a
+      id="top-icon-tablet"
+      class="hidden lg:!hidden"
+      href="#"
+      onclick="
+        event.preventDefault();
+        scrollToTop();
+      "
       ><i class="iconify iconify-middle" data-icon="material-symbols:keyboard-arrow-up"></i
     ></a>
     <span id="menu" class="mr-8">
@@ -15,7 +22,7 @@
         <a
           id="menu-icon"
           href="#"
-          onclick="event.preventDefault();"
+          onclick="event.preventDefault()"
           th:aria-label="#{fragment.post-nav.menu-icon.aria-label}"
           class="active"
         >
@@ -33,8 +40,8 @@
               th:href="@{/}"
               class="icon"
               th:aria-label="#{fragment.post-nav.actions.home-icon.aria-label}"
-              onmouseover="toggle('#i-home');"
-              onmouseout="toggle('#i-home');"
+              onmouseover="toggle('#i-home')"
+              onmouseout="toggle('#i-home')"
             >
               <i class="iconify iconify-large" data-icon="mdi:home-circle"></i>
             </a>
@@ -48,8 +55,8 @@
               <i
                 class="iconify iconify-large"
                 data-icon="mdi:chevron-left"
-                onmouseover="toggle('#i-prev');"
-                onmouseout="toggle('#i-prev');"
+                onmouseover="toggle('#i-prev')"
+                onmouseout="toggle('#i-prev')"
               ></i>
             </a>
           </li>
@@ -63,8 +70,8 @@
               <i
                 class="iconify iconify-large"
                 data-icon="ic:round-chevron-right"
-                onmouseover="toggle('#i-next');"
-                onmouseout="toggle('#i-next');"
+                onmouseover="toggle('#i-next')"
+                onmouseout="toggle('#i-next')"
               ></i>
             </a>
           </li>
@@ -73,14 +80,17 @@
             <a
               class="icon"
               href="#"
-              onclick="event.preventDefault(); scrollToTop();"
+              onclick="
+                event.preventDefault();
+                scrollToTop();
+              "
               th:aria-label="#{fragment.post-nav.actions.to-top-icon.aria-label}"
             >
               <i
                 class="iconify iconify-large"
                 data-icon="material-symbols:keyboard-arrow-up"
-                onmouseover="toggle('#i-top');"
-                onmouseout="toggle('#i-top');"
+                onmouseover="toggle('#i-top')"
+                onmouseout="toggle('#i-top')"
               ></i>
             </a>
           </li>
@@ -89,14 +99,14 @@
               class="icon"
               href="#"
               id="action-share"
-              onclick="event.preventDefault();"
+              onclick="event.preventDefault()"
               th:aria-label="#{fragment.post-nav.actions.share-icon.aria-label}"
             >
               <i
                 class="iconify iconify-middle"
                 data-icon="mdi:share-variant-outline"
-                onmouseover="toggle('#i-share');"
-                onmouseout="toggle('#i-share');"
+                onmouseover="toggle('#i-share')"
+                onmouseout="toggle('#i-share')"
               ></i>
             </a>
           </li>
