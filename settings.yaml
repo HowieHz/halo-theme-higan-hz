@@ -1413,7 +1413,7 @@ spec:
               icon: pepicons-pencil:qr-code-circle-filled
               aria_label: QRCode
             - name: Native
-              url: ""
+              url: "@URL"
               icon: mdi:share-circle
               aria_label: Native
             - name: Facebook
