@@ -384,11 +384,18 @@ jobs:
             --collect.url=http://localhost:8090/about \
             --collect.numberOfRuns=1 \
             --collect.settings.preset=desktop \
-            --collect.settings.throttling.rttMs=40 \
-            --collect.settings.throttling.throughputKbps=10240 \
+            --collect.settings.throttling.rttMs=0 \
+            --collect.settings.throttling.throughputKbps=0 \
             --collect.settings.throttling.cpuSlowdownMultiplier=1 \
+            --collect.settings.throttling.requestLatencyMs=0 \
+            --collect.settings.throttling.downloadThroughputKbps=0 \
+            --collect.settings.throttling.uploadThroughputKbps=0 \
             --upload.target=filesystem \
-            --upload.outputDir=.lighthouseci
+            --upload.outputDir=.lighthouseci || {
+              echo "❌ Lighthouse CI 执行失败"
+              ls -la ./.lighthouseci/ || echo ".lighthouseci 目录不存在"
+              exit 1
+            }
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
