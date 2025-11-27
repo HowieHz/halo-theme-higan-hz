@@ -230,13 +230,13 @@ jobs:
       - name: Disable Halo plugins
         run: |
           echo "禁用插件: PluginCommentWidget, PluginSearchWidget"
-          curl -X PATCH \
+          curl -X PUT \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/plugins/PluginCommentWidget/plugin-state \
             -u admin:admin \
             -H "Content-Type: application/json" \
             -d '{"async": false, "enabled":false}' || true
 
-          curl -X PATCH \
+          curl -X PUT \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/plugins/PluginSearchWidget/plugin-state \
             -u admin:admin \
             -H "Content-Type: application/json" \
