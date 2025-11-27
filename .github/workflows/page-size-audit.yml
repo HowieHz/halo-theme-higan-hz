@@ -228,19 +228,37 @@ jobs:
           echo "✓ 缓存已清除"
 
       - name: Disable Halo plugins
+        shell: bash
         run: |
+          set -e
+          
           echo "禁用插件: PluginCommentWidget, PluginSearchWidget"
-          curl -X PUT \
-            http://localhost:8090/apis/api.console.halo.run/v1alpha1/plugins/PluginCommentWidget/plugin-state \
-            -u admin:admin \
-            -H "Content-Type: application/json" \
-            -d '{"async": false, "enabled":false}' || true
-
-          curl -X PUT \
-            http://localhost:8090/apis/api.console.halo.run/v1alpha1/plugins/PluginSearchWidget/plugin-state \
-            -u admin:admin \
-            -H "Content-Type: application/json" \
-            -d '{"async": false, "enabled":false}' || true
+          
+          PIDS=()
+          
+          for plugin in PluginCommentWidget PluginSearchWidget; do
+            (
+              echo "🔧 禁用 ${plugin}"
+              if curl -sX PUT \
+                "http://localhost:8090/apis/api.console.halo.run/v1alpha1/plugins/${plugin}/plugin-state" \
+                -u admin:admin \
+                -H "Content-Type: application/json" \
+                -d '{"async":false,"enabled":false}'; then
+                echo "✅ ${plugin} 禁用成功"
+              else
+                echo "⚠️  ${plugin} 禁用失败(已忽略)"
+              fi
+            ) &
+            PIDS+=($!)
+          done
+          
+          echo "⏳ 等待插件禁用任务..."
+          
+          for pid in "${PIDS[@]}"; do
+            wait $pid || true
+          done
+          
+          echo "🎉 插件禁用完成"
 
       - name: Install Lighthouse CI
         run: |
