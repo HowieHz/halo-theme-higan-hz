@@ -25,7 +25,7 @@ importers:
         specifier: ^4.7.0
         version: 4.7.0(@vue/compiler-sfc@3.5.25)(prettier@3.7.1)
       '@iconify/json':
-        specifier: ^2.2.408
+        specifier: ^2.2.411
         version: 2.2.411
       '@types/alpinejs':
         specifier: ^3.13.11
@@ -34,7 +34,7 @@ importers:
         specifier: ^24.10.1
         version: 24.10.1
       '@typescript-eslint/parser':
-        specifier: ^8.47.0
+        specifier: ^8.48.0
         version: 8.48.0(eslint@9.39.1(jiti@1.21.7))(typescript@5.9.3)
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20251127.1
@@ -61,13 +61,13 @@ importers:
         specifier: ^4.16.1
         version: 4.16.1(@typescript-eslint/utils@8.48.0(eslint@9.39.1(jiti@1.21.7))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@9.39.1(jiti@1.21.7))
       eslint-plugin-oxlint:
-        specifier: ^1.29.0
+        specifier: ^1.30.0
         version: 1.30.0
       eslint-plugin-prettier:
         specifier: ^5.5.4
         version: 5.5.4(eslint-config-prettier@10.1.8(eslint@9.39.1(jiti@1.21.7)))(eslint@9.39.1(jiti@1.21.7))(prettier@3.7.1)
       eslint-plugin-vue:
-        specifier: ^10.5.1
+        specifier: ^10.6.1
         version: 10.6.1(@typescript-eslint/parser@8.48.0(eslint@9.39.1(jiti@1.21.7))(typescript@5.9.3))(eslint@9.39.1(jiti@1.21.7))(vue-eslint-parser@10.2.0(eslint@9.39.1(jiti@1.21.7)))
       globals:
         specifier: ^16.5.0
@@ -82,7 +82,7 @@ importers:
         specifier: ^0.46.0
         version: 0.46.0
       oxlint:
-        specifier: ^1.29.0
+        specifier: ^1.30.0
         version: 1.30.0(oxlint-tsgolint@0.8.3)
       oxlint-tsgolint:
         specifier: ^0.8.3
@@ -100,13 +100,13 @@ importers:
         specifier: ^10.4.0
         version: 10.4.0(postcss@8.5.6)
       prettier:
-        specifier: ^3.6.2
+        specifier: ^3.7.1
         version: 3.7.1
       prettier-plugin-tailwindcss:
         specifier: ^0.7.1
         version: 0.7.1(@ianvs/prettier-plugin-sort-imports@4.7.0(@vue/compiler-sfc@3.5.25)(prettier@3.7.1))(@trivago/prettier-plugin-sort-imports@5.2.2(@vue/compiler-sfc@3.5.25)(prettier@3.7.1))(prettier@3.7.1)
       stylelint:
-        specifier: ^16.25.0
+        specifier: ^16.26.0
         version: 16.26.0(typescript@5.9.3)
       stylelint-config-html:
         specifier: ^1.1.0
@@ -130,16 +130,16 @@ importers:
         specifier: ^3.4.18
         version: 3.4.18(yaml@2.8.1)
       tailwindcss-patch:
-        specifier: ^8.4.0
-        version: 8.4.1(tailwindcss@3.4.18(yaml@2.8.1))
+        specifier: ^8.4.2
+        version: 8.4.2(tailwindcss@3.4.18(yaml@2.8.1))
       typescript-eslint:
-        specifier: ^8.47.0
+        specifier: ^8.48.0
         version: 8.48.0(eslint@9.39.1(jiti@1.21.7))(typescript@5.9.3)
       unplugin-tailwindcss-mangle:
         specifier: ^5.0.0
         version: 5.0.0(rollup@4.53.3)
       vite:
-        specifier: npm:rolldown-vite@^7.2.5
+        specifier: npm:rolldown-vite@^7.2.8
         version: rolldown-vite@7.2.8(@types/node@24.10.1)(esbuild@0.25.12)(jiti@1.21.7)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.1)
       vite-plugin-purge-icons:
         specifier: ^0.10.0
@@ -2073,8 +2073,8 @@ packages:
   '@vueuse/shared@9.13.0':
     resolution: {integrity: sha512-UrnhU+Cnufu4S6JLCPZnkWh0WwZGUp72ktOF2DFptMlOs3TOdVv8xJN53zhHGARmVOsz5KqOls09+J1NR6sBKw==}
 
-  '@weapp-tailwindcss/shared@1.1.0':
-    resolution: {integrity: sha512-rKPNwAch2tVYpQ7j796B/wkI7Yjn6YWleUcv/gcjvRD7jtSCzKzTsLBeEGnzFX7Kkz3Z7zKfJDFvBmJ8tKhGTA==}
+  '@weapp-tailwindcss/shared@1.1.1':
+    resolution: {integrity: sha512-xgh5n9gLJ5AWC5rr65aCSt+TvIL7DC3TLm8bo7/2i4hPgLOCJYYxu3RQQYz7LBIVhmM8YoohT8r9EAF5fnOzTw==}
 
   '@whyframe/core@0.1.14':
     resolution: {integrity: sha512-cQPtXZ0zYSpa85lVZU+deMAOUfMZMKuKJGr/od8YngPfUOw4l3xIbbnR6I4xeCTfr3wqk93/pvekMjCE02w9zQ==}
@@ -2438,8 +2438,8 @@ packages:
   core-js-compat@3.46.0:
     resolution: {integrity: sha512-p9hObIIEENxSV8xIu+V68JjSeARg6UVMG5mR+JEUguG3sI6MsiS1njz2jHmyJDvA+8jX/sytkBHup6kxhM9law==}
 
-  core-js@3.46.0:
-    resolution: {integrity: sha512-vDMm9B0xnqqZ8uSBpZ8sNtRtOdmfShrvT6h2TuQGLs0Is+cR0DYbj/KWP6ALVNbWPpqA/qPLoOuppJN07humpA==}
+  core-js@3.47.0:
+    resolution: {integrity: sha512-c3Q2VVkGAUyupsjRnaNX6u8Dq2vAdzm9iuPj5FW0fRxzlxgq9Q39MDq10IvmQSpLgHQNyQzQmOo6bgGHmH3NNg==}
 
   cosmiconfig@9.0.0:
     resolution: {integrity: sha512-itvL5h8RETACmOTFc4UfIyB2RfEHi71Ax6E/PivVxq9NseKbOWpeyHEOIbmAw1rs8Ak0VursQNww7lf7YtUwzg==}
@@ -4421,11 +4421,11 @@ packages:
     resolution: {integrity: sha512-9kY+CygyYM6j02t5YFHbNz2FN5QmYGv9zAjVp4lCDjlCw7amdckXlEt/bjMhUIfj4ThGRE4gCUH5+yGnNuPo5A==}
     engines: {node: '>=10.0.0'}
 
-  tailwindcss-config@1.1.2:
-    resolution: {integrity: sha512-5vpQ7+B2pQAw4q8p4rXrHMMAhJ6sJ02C8lU8FRYCSUTVp7xDV+Ocz1IJGfWxTnyMW18GN2Elc/QefHfqiKVEQw==}
+  tailwindcss-config@1.1.3:
+    resolution: {integrity: sha512-7AN01Cwz2vd/vl6nKwoR0y/KlgpbKBREp1Q+MHJw8QF53AueVRFgU2Cqq0yhIQ4nC2wGvEJtlBCTeKYPX3TCXQ==}
 
-  tailwindcss-patch@8.4.1:
-    resolution: {integrity: sha512-0nd3lMPgetDwdL+LQZdC78sGDe1du8xYdbAqTalFctWzEH87n2RmgMnqL/VMrMt7EO+eJBqxRzrjIGuUQMEmwQ==}
+  tailwindcss-patch@8.4.2:
+    resolution: {integrity: sha512-lfIF8g4LQtW/HGkmx3qYsZrwEY4H8vu7905s4vDm5V0/Uzv59vipgwSF1g0JIxmmERP1GpmgzuTW2Vwya3Zx/w==}
     hasBin: true
     peerDependencies:
       tailwindcss: '>=2.0.0'
@@ -6584,7 +6584,7 @@ snapshots:
       babel-plugin-polyfill-regenerator: 0.6.5(@babel/core@7.28.5)
       browserslist: 4.28.0
       browserslist-to-esbuild: 2.1.1(browserslist@4.28.0)
-      core-js: 3.46.0
+      core-js: 3.47.0
       magic-string: 0.30.21
       regenerator-runtime: 0.14.1
       systemjs: 6.15.1
@@ -6732,7 +6732,7 @@ snapshots:
       - '@vue/composition-api'
       - vue
 
-  '@weapp-tailwindcss/shared@1.1.0':
+  '@weapp-tailwindcss/shared@1.1.1':
     dependencies:
       pathe: 2.0.3
 
@@ -7103,7 +7103,7 @@ snapshots:
     dependencies:
       browserslist: 4.28.0
 
-  core-js@3.46.0: {}
+  core-js@3.47.0: {}
 
   cosmiconfig@9.0.0(typescript@5.9.3):
     dependencies:
@@ -9244,13 +9244,13 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
 
-  tailwindcss-config@1.1.2:
+  tailwindcss-config@1.1.3:
     dependencies:
-      '@weapp-tailwindcss/shared': 1.1.0
+      '@weapp-tailwindcss/shared': 1.1.1
       jiti: 2.6.1
       lilconfig: 3.1.3
 
-  tailwindcss-patch@8.4.1(tailwindcss@3.4.18(yaml@2.8.1)):
+  tailwindcss-patch@8.4.2(tailwindcss@3.4.18(yaml@2.8.1)):
     dependencies:
       '@babel/generator': 7.28.5
       '@babel/parser': 7.28.5
@@ -9265,7 +9265,7 @@ snapshots:
       pathe: 2.0.3
       postcss: 8.5.6
       semver: 7.7.3
-      tailwindcss-config: 1.1.2
+      tailwindcss-config: 1.1.3
     optionalDependencies:
       tailwindcss: 3.4.18(yaml@2.8.1)
     transitivePeerDependencies:
