@@ -1,4 +1,4 @@
-import "../generic";
+import "../main";
 import "../../styles/pages/post.css";
 import "../../styles/mixins/article.css";
 import "../../styles/mixins/article-metadata.css";
