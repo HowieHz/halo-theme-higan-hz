@@ -378,6 +378,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
       function updateThemeIcon(theme) {
         const themeIcon = document.getElementById("theme-toggle-button-icon");
         if (!themeIcon) return;
+        themeIcon.style.removeProperty("display");  // <!--/* remove display: none */-->
 
         Array.from(themeIcon.classList).forEach((c) => {
           if (c.startsWith("ph--")) themeIcon.classList.remove(c);
