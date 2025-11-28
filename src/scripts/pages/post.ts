@@ -3,7 +3,7 @@ import "../../styles/pages/post.css";
 import "../../styles/mixins/article.css";
 import "../../styles/mixins/article-metadata.css";
 
-import { fadeIn, fadeOut, isVisible, show, slideDown, slideUp } from "../utils/animations";
+import { fadeIn, fadeOut, isVisible, show, slideDown, slideUp, toggle } from "../utils/animations";
 
 /**
  * 获取页面滚动距离（垂直方向）
@@ -15,6 +15,34 @@ function getTopDistance(): number {
   // 0;
   return window.scrollY || 0;
 }
+
+/**
+ * Event delegation for toggle functionality on hover
+ * Handle mouseover and mouseout events for elements with data-toggle-target attribute
+ */
+document.addEventListener("mouseover", (e: Event): void => {
+  const target = e.target as HTMLElement;
+  const toggleElement = target.closest<HTMLElement>("[data-toggle-target]");
+
+  if (toggleElement) {
+    const toggleTarget = toggleElement.dataset.toggleTarget;
+    if (toggleTarget) {
+      toggle(toggleTarget);
+    }
+  }
+});
+
+document.addEventListener("mouseout", (e: Event): void => {
+  const target = e.target as HTMLElement;
+  const toggleElement = target.closest<HTMLElement>("[data-toggle-target]");
+
+  if (toggleElement) {
+    const toggleTarget = toggleElement.dataset.toggleTarget;
+    if (toggleTarget) {
+      toggle(toggleTarget);
+    }
+  }
+});
 
 document.addEventListener("DOMContentLoaded", (): void => {
   /**

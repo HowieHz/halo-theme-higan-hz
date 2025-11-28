@@ -1,3 +1,5 @@
+import "../../styles/mixins/animation.css";
+
 /**
  * 检查元素是否可见
  * @param element - 要检查的元素
@@ -352,4 +354,40 @@ export function show(selector: string | HTMLElement | NodeList): HTMLElement | N
 export function hide(selector: string | HTMLElement | NodeList): HTMLElement | NodeList {
   const elements = typeof selector === "string" ? document.querySelectorAll(selector) : selector;
   return showHide(elements, false);
+}
+
+/**
+ * 切换元素显示/隐藏状态
+ * @param selector - 元素或选择器
+ * @param state - 可选的状态参数，true 为显示，false 为隐藏
+ * @returns 返回元素
+ */
+export function toggle(selector: string | HTMLElement | NodeList, state?: boolean): HTMLElement | NodeList {
+  const elements = typeof selector === "string" ? document.querySelectorAll(selector) : selector;
+
+  // 如果指定了 state 参数
+  if (typeof state === "boolean") {
+    return state ? show(elements) : hide(elements);
+  }
+
+  // 否则根据当前状态切换
+  let elementsArray: HTMLElement[];
+
+  if (elements instanceof HTMLElement) {
+    elementsArray = [elements];
+  } else if (elements instanceof NodeList) {
+    elementsArray = Array.from(elements) as HTMLElement[];
+  } else {
+    elementsArray = elements as HTMLElement[];
+  }
+
+  elementsArray.forEach(function (elem: HTMLElement): void {
+    if (!isVisible(elem)) {
+      show(elem);
+    } else {
+      hide(elem);
+    }
+  });
+
+  return elements;
 }
