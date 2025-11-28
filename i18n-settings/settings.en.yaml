@@ -1237,14 +1237,14 @@ spec:
                 - label: Text
                   value: { type: "text", url: "", aria-label: "", data-icon: "" }
                 - label: RSS
-                  value: { type: "rss", url: "", aria-label: "Find me on RSS", data-icon: heroicons-outline:rss }
+                  value: { type: "rss", url: "", aria-label: "Find me on RSS", data-icon: heroicons-outline--rss }
                 - label: BiliBili
                   value:
                     {
                       type: "bilibili",
                       url: "https://space.bilibili.com/",
                       aria-label: "Find me on BiliBili",
-                      data-icon: simple-icons:bilibili,
+                      data-icon: simple-icons--bilibili,
                     }
                 - label: Dribbble
                   value:
@@ -1252,17 +1252,17 @@ spec:
                       type: "dribbble",
                       url: "https://dribbble.com/",
                       aria-label: "Find me on Dribbble",
-                      data-icon: ant-design:dribbble-circle-filled,
+                      data-icon: ant-design--dribbble-circle-filled,
                     }
                 - label: Email
-                  value: { type: "email", url: "mailto:", aria-label: "Find me on Email", data-icon: ic:outline-email }
+                  value: { type: "email", url: "mailto:", aria-label: "Find me on Email", data-icon: ic--outline-email }
                 - label: Facebook
                   value:
                     {
                       type: "facebook",
                       url: "https://www.facebook.com/",
                       aria-label: "Find me on facebook",
-                      data-icon: ic:baseline-facebook,
+                      data-icon: ic--baseline-facebook,
                     }
                 - label: GitHub
                   value:
@@ -1270,7 +1270,7 @@ spec:
                       type: "github",
                       url: "https://github.com/",
                       aria-label: "Find me on GitHub",
-                      data-icon: mdi:github,
+                      data-icon: mdi--github,
                     }
                 - label: Instagram
                   value:
@@ -1278,7 +1278,7 @@ spec:
                       type: "instagram",
                       url: "https://www.instagram.com/",
                       aria-label: "Find me on Instagram",
-                      data-icon: ant-design:instagram-filled,
+                      data-icon: ant-design--instagram-filled,
                     }
                 - label: QQ
                   value:
@@ -1286,7 +1286,7 @@ spec:
                       type: "qq",
                       url: "tencent://message/?Site=&Menu=yes&uin=",
                       aria-label: "Find me on QQ",
-                      data-icon: ant-design:qq-circle-filled,
+                      data-icon: ant-design--qq-circle-filled,
                     }
                 - label: Reddit
                   value:
@@ -1294,7 +1294,7 @@ spec:
                       type: "reddit",
                       url: "https://www.reddit.com/user/",
                       aria-label: "Find me on Reddit",
-                      data-icon: ant-design:reddit-circle-filled,
+                      data-icon: ant-design--reddit-circle-filled,
                     }
                 - label: "Stack Overflow"
                   value:
@@ -1302,7 +1302,7 @@ spec:
                       type: "stack_overflow",
                       url: "https://stackoverflow.com/users/",
                       aria-label: "Find me on Stack Overflow",
-                      data-icon: mdi:stack-overflow,
+                      data-icon: mdi--stack-overflow,
                     }
                 - label: Telegram
                   value:
@@ -1310,7 +1310,7 @@ spec:
                       type: "telegram",
                       url: "https://t.me/",
                       aria-label: "Find me on Telegram",
-                      data-icon: ic:baseline-telegram,
+                      data-icon: ic--baseline-telegram,
                     }
                 - label: X
                   value:
@@ -1318,7 +1318,7 @@ spec:
                       type: "x",
                       url: "https://x.com/",
                       aria-label: "Find me on X",
-                      data-icon: ant-design:twitter-circle-filled,
+                      data-icon: ant-design--twitter-circle-filled,
                     }
                 - label: YouTube
                   value:
@@ -1326,7 +1326,7 @@ spec:
                       type: "youtube",
                       url: "https://www.youtube.com/channel/",
                       aria-label: "Find me on YouTube",
-                      data-icon: ant-design:youtube-filled,
+                      data-icon: ant-design--youtube-filled,
                     }
                 - label: Douban
                   value:
@@ -1334,7 +1334,7 @@ spec:
                       type: "douban",
                       url: "https://www.douban.com/people/",
                       aria-label: "Find me on douban",
-                      data-icon: ri:douban-line,
+                      data-icon: ri--douban-line,
                     }
                 - label: NetEase CloudMusic
                   value:
@@ -1342,7 +1342,7 @@ spec:
                       type: "neteasecloudmusic",
                       url: "https://music.163.com/#/user/home?id=",
                       aria-label: "Find me on NetEase CloudMusic",
-                      data-icon: simple-icons:neteasecloudmusic,
+                      data-icon: simple-icons--neteasecloudmusic,
                     }
                 - label: Weibo
                   value:
@@ -1350,7 +1350,7 @@ spec:
                       type: "weibo",
                       url: "https://weibo.com/",
                       aria-label: "Find me on weibo",
-                      data-icon: ant-design:weibo-circle-filled,
+                      data-icon: ant-design--weibo-circle-filled,
                     }
                 - label: Zhihu
                   value:
@@ -1358,7 +1358,7 @@ spec:
                       type: "zhihu",
                       url: "https://www.zhihu.com/people/",
                       aria-label: "Find me on zhihu",
-                      data-icon: ant-design:zhihu-circle-filled,
+                      data-icon: ant-design--zhihu-circle-filled,
                     }
             - $formkit: text
               name: input_value

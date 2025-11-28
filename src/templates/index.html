@@ -101,7 +101,41 @@
             target="_blank"
             th:attr="aria-label=${item?.type['aria-label']}"
           >
-            <i class="iconify iconify-middle" th:attr="data-icon=${item?.type['data-icon']}"></i>
+            <i class="iconify iconify-middle heroicons-outline--rss" th:if="${item?.type['type']=='rss'}"></i>
+            <i class="iconify iconify-middle simple-icons--bilibili" th:if="${item?.type['type']=='bilibili'}"></i>
+            <i
+              class="iconify iconify-middle ant-design--dribbble-circle-filled"
+              th:if="${item?.type['type']=='dribbble'}"
+            ></i>
+            <i class="iconify iconify-middle ic--outline-email" th:if="${item?.type['type']=='email'}"></i>
+            <i class="iconify iconify-middle ic--baseline-facebook" th:if="${item?.type['type']=='facebook'}"></i>
+            <i class="iconify iconify-middle mdi--github" th:if="${item?.type['type']=='github'}"></i>
+            <i
+              class="iconify iconify-middle ant-design--instagram-filled"
+              th:if="${item?.type['type']=='instagram'}"
+            ></i>
+            <i class="iconify iconify-middle ant-design--qq-circle-filled" th:if="${item?.type['type']=='qq'}"></i>
+            <i
+              class="iconify iconify-middle ant-design--reddit-circle-filled"
+              th:if="${item?.type['type']=='reddit'}"
+            ></i>
+            <i class="iconify iconify-middle mdi--stack-overflow" th:if="${item?.type['type']=='stack_overflow'}"></i>
+            <i class="iconify iconify-middle ic--baseline-telegram" th:if="${item?.type['type']=='telegram'}"></i>
+            <i class="iconify iconify-middle ant-design--twitter-circle-filled" th:if="${item?.type['type']=='x'}"></i>
+            <i class="iconify iconify-middle ant-design--youtube-filled" th:if="${item?.type['type']=='youtube'}"></i>
+            <i class="iconify iconify-middle ri--douban-line" th:if="${item?.type['type']=='douban'}"></i>
+            <i
+              class="iconify iconify-middle simple-icons--neteasecloudmusic"
+              th:if="${item?.type['type']=='neteasecloudmusic'}"
+            ></i>
+            <i
+              class="iconify iconify-middle ant-design--weibo-circle-filled"
+              th:if="${item?.type['type']=='weibo'}"
+            ></i>
+            <i
+              class="iconify iconify-middle ant-design--zhihu-circle-filled"
+              th:if="${item?.type['type']=='zhihu'}"
+            ></i>
           </a>
         </th:block>
         <th:block th:if="${#strings.equals(item?.type['type'], 'text')}">[(${item?.input_value})]</th:block>

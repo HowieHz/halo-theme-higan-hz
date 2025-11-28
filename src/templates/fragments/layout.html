@@ -377,12 +377,18 @@ html[theme="theme-[(${colorSchema.id})]"] {
 
       function updateThemeIcon(theme) {
         const themeIcon = document.getElementById("theme-toggle-button-icon");
+        if (!themeIcon) return;
+
+        Array.from(themeIcon.classList).forEach((c) => {
+          if (c.startsWith("ph--")) themeIcon.classList.remove(c);
+        });
+
         if (theme === THEME_LIGHT) {
-          themeIcon.setAttribute("data-icon", "ph:sun-bold");
+          themeIcon.classList.add("ph--sun-bold");
         } else if (theme === THEME_DARK) {
-          themeIcon.setAttribute("data-icon", "ph:moon-bold");
+          themeIcon.classList.add("ph--moon-bold");
         } else {
-          themeIcon.setAttribute("data-icon", "ph:circle-bold");
+          themeIcon.classList.add("ph--circle-bold");
         }
       }
 
