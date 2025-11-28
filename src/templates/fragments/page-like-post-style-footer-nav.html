@@ -16,11 +16,11 @@
       </div>
       <div id="actions-footer">
         <a id="menu" class="icon" href="#" onclick="event.preventDefault()">
-          <i class="iconify" data-icon="ic:baseline-menu" aria-hidden="true"></i>
+          <span class="iconify ic--baseline-menu" aria-hidden="true"></span>
           [(#{fragment.footer-nav.menu})]</a
         >
         <a id="toc" class="icon" href="#" onclick="event.preventDefault()">
-          <i class="iconify" data-icon="ic:baseline-toc" aria-hidden="true"></i>
+          <span class="iconify ic--baseline-toc" aria-hidden="true"></span>
           [(#{fragment.footer-nav.toc})]</a
         >
         <a
@@ -30,7 +30,7 @@
           onclick="event.preventDefault()"
           th:if="${theme.config?.post_styles?.is_show_share_footer}"
         >
-          <i class="iconify" data-icon="ic:baseline-share" aria-hidden="true"></i>
+          <span class="iconify ic--baseline-share" aria-hidden="true"></span>
           [(#{fragment.footer-nav.share})]</a
         >
         <a
@@ -40,7 +40,7 @@
           href="#"
           data-scroll-to-top
         >
-          <i class="iconify" data-icon="ic:baseline-arrow-upward" aria-hidden="true"></i>
+          <span class="iconify ic--baseline-arrow-upward" aria-hidden="true"></span>
         </a>
       </div>
     </div>

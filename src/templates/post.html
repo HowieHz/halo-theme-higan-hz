@@ -133,12 +133,7 @@
               <!--/* inline-block 使一个“分类面包屑”不会被分到两行 */-->
               <span class="categoryBreadcrumbs inline-block">
                 <!--/* 分类图标和第一个“分类面包屑”保持在一行。 */-->
-                <span
-                  th:if="${categoryLeafNodeIterStat.first}"
-                  class="iconify"
-                  data-icon="fa-solid:archive"
-                  data-inline="false"
-                ></span>
+                <span th:if="${categoryLeafNodeIterStat.first}" class="iconify fa-solid--archive"></span>
                 <th:block
                   th:each="category, iterStat : ${categoryFinder.getBreadcrumbs(categoryLeafNode.metadata?.name)}"
                 >
@@ -218,7 +213,7 @@
               extraApiStatsFinder.getPostWordCount({name: post.metadata.name}) : #strings.length(post.content?.content)/2 }"
             th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
           >
-            <span class="iconify" data-icon="fluent:text-edit-style-character-a-32-regular" data-inline="false"></span>
+            <span class="iconify fluent--text-edit-style-character-a-32-regular"></span>
             <span class="word-count" th:text="${wordCount}">文章字数替换位</span>
           </span>
         </div>
