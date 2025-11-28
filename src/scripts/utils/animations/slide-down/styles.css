@@ -8,7 +8,7 @@
   }
 
   to {
-    height: var(--slide-target-height, auto);
+    height: var(--target-height, auto);
     overflow: hidden;
   }
 }
