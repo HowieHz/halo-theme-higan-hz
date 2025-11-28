@@ -3,8 +3,7 @@ import type {} from "../types/window-animation";
 import "../../styles/mixins/animation.css";
 import "./common"; // window.isVisible
 
-import { hide, show } from "./animations";
-import { hideElement, showElement } from "./base-animation";
+import { hide, hideElement, show, showElement } from "./animations";
 
 // 使此文件成为模块
 export {};
