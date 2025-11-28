@@ -71,8 +71,8 @@
               import { slideUp } from "/src/scripts/utils/animations/slide-up";
 
               function toggleVisibility(element, duration_of_expand_collapse_animation) {
-                const caretRight = element.querySelector('[data-icon="mdi:chevron-right"]');
-                const caretDown = element.querySelector('[data-icon="mdi:chevron-down"]');
+                const caretRight = element.querySelector(".mdi--chevron-right");
+                const caretDown = element.querySelector(".mdi--chevron-down");
                 const nextElement = element.nextElementSibling;
 
                 if (!nextElement) {

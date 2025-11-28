@@ -43,5 +43,5 @@
 }
 
 @plugin "@iconify/tailwind4" {
-  prefixes: mdi;
+  prefixes: mdi, heroicons-outline;
 }
