@@ -4,14 +4,7 @@
 <!--*/-->
 <th:block xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
   <div id="header-post" class="fixed right-0 top-8 z-50 float-right hidden sm:block">
-    <a
-      id="top-icon-tablet"
-      class="hidden lg:!hidden"
-      href="#"
-      onclick="
-        event.preventDefault();
-        scrollToTop();
-      "
+    <a id="top-icon-tablet" class="hidden lg:!hidden" href="#" data-scroll-to-top
       ><i class="iconify iconify-middle" data-icon="material-symbols:keyboard-arrow-up"></i
     ></a>
     <span id="menu" class="mr-8">
@@ -46,10 +39,7 @@
             <a
               class="icon"
               href="#"
-              onclick="
-                event.preventDefault();
-                scrollToTop();
-              "
+              data-scroll-to-top
               th:aria-label="#{fragment.post-nav.actions.to-top-icon.aria-label}"
               data-toggle-target="#i-top"
             >

@@ -3,7 +3,17 @@ import "../../styles/pages/post.css";
 import "../../styles/mixins/article.css";
 import "../../styles/mixins/article-metadata.css";
 
-import { fadeIn, fadeOut, isVisible, show, slideDown, slideUp, toggle } from "../utils/animations";
+import { fadeIn, fadeOut, isVisible, scrollToTop, show, slideDown, slideUp, toggle } from "../utils/animations";
+
+document.addEventListener("click", (e: Event): void => {
+  const target = e.target as HTMLElement;
+  const scrollElement = target.closest<HTMLElement>("[data-scroll-to-top]");
+
+  if (scrollElement) {
+    e.preventDefault();
+    scrollToTop();
+  }
+});
 
 /**
  * 获取页面滚动距离（垂直方向）

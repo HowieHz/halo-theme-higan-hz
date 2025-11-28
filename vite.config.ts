@@ -135,7 +135,10 @@ export default defineConfig({
         "fragments-category-tree": path.resolve(__dirname, "src/templates/fragments/category-tree.html"),
         "fragments-common": path.resolve(__dirname, "src/templates/fragments/common.html"),
         "fragments-header": path.resolve(__dirname, "src/templates/fragments/header.html"),
-        "fragments-page-footer-nav": path.resolve(__dirname, "src/templates/fragments/page-footer-nav.html"),
+        "fragments-page-like-post-style-footer-nav": path.resolve(
+          __dirname,
+          "src/templates/fragments/page-like-post-style-footer-nav.html",
+        ),
         "fragments-page-like-post-style-nav": path.resolve(
           __dirname,
           "src/templates/fragments/page-like-post-style-nav.html",

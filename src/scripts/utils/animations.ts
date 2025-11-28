@@ -1,6 +1,13 @@
 import "../../styles/mixins/animation.css";
 
 /**
+ * 滚动到页面顶部
+ */
+export function scrollToTop(): void {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/**
  * 检查元素是否可见
  * @param element - 要检查的元素
  * @returns 元素是否可见
