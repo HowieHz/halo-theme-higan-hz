@@ -1,4 +1,45 @@
 /**
+ * 检查元素是否可见
+ * @param element - 要检查的元素
+ * @returns 元素是否可见
+ */
+export function isVisible(input: HTMLElement | NodeListOf<HTMLElement> | null): boolean {
+  const checkSingle = (el: HTMLElement | null): boolean => {
+    if (!el) {
+      return false;
+    }
+    const style = window.getComputedStyle(el);
+    // 基本可见性检查
+    if (style.display === "none" || style.visibility === "hidden") {
+      return false;
+    }
+    // 对于 position: fixed 的元素，offsetParent 会是 null，但这不意味着不可见
+    // 我们需要额外检查元素的位置属性
+    if (el.offsetParent === null) {
+      // 如果元素是 position: fixed，我们认为它是可见的（只要 display 和 visibility 没问题）
+      if (style.position === "fixed") {
+        return true;
+      }
+      // 如果元素或其父元素有 transform 属性，offsetParent 也可能为 null
+      // 在这种情况下，我们检查元素的尺寸和位置
+      const rect = el.getBoundingClientRect();
+      return rect.width > 0 && rect.height > 0;
+      // 其他情况下，offsetParent 为 null 通常意味着不可见
+    }
+    return true;
+  };
+
+  if (input === null) {
+    return false;
+  }
+  if (input instanceof NodeList) {
+    // 如果有一个不可见就返回 false，否则全部可见才返回 true
+    return Array.from(input).every((el) => checkSingle(el));
+  }
+  return checkSingle(input);
+}
+
+/**
  * 自定义 Toggle 函数实现
  * 用于显示/隐藏元素的工具函数集合
  * 使用示例：
@@ -77,7 +118,7 @@ export function showElement(element: HTMLElement): void {
    * 结果：元素仍然隐藏
    * 修复：element.style.display = "block"; // 覆盖 CSS 规则
    */
-  if (element.style.display === "" && !window.isVisible(element)) {
+  if (element.style.display === "" && !isVisible(element)) {
     element.style.display = getDefaultDisplay(element);
   }
 }
@@ -130,6 +171,89 @@ export function setupAnimation(
 }
 
 /**
+ * jQuery 风格的滑下动画函数 - 通过高度变化显示元素
+ * @param element - 要执行动画的元素
+ * @param duration - 动画持续时间（毫秒）
+ */
+export function slideDown(element: HTMLElement, duration = 200): void {
+  if (!element) return;
+
+  // 检查元素是否已经显示，如果已经显示则不触发动画
+  if (isVisible(element)) {
+    return;
+  }
+
+  // 先显示元素但设置高度为 0
+  showElement(element);
+
+  // 获取元素的自然高度
+  const originalHeight = element.scrollHeight;
+
+  // 设置 CSS 变量用于动画
+  element.style.setProperty("--slide-target-height", `${originalHeight}px`);
+
+  // 开始时设置高度为 0
+  element.style.height = "0px";
+  element.style.overflow = "hidden";
+
+  // 移除冲突的类并设置动画
+  element.classList.remove("slide-up");
+  element.classList.add("slide-down");
+  element.style.animationDuration = `${duration}ms`;
+
+  const handleAnimationEnd = () => {
+    element.classList.remove("slide-down");
+    element.style.animationDuration = "";
+    element.style.height = "";
+    element.style.overflow = "";
+    element.style.removeProperty("--slide-target-height");
+  };
+
+  element.addEventListener("animationend", handleAnimationEnd, { once: true });
+}
+
+/**
+ * jQuery 风格的滑上动画函数 - 通过高度变化隐藏元素
+ * @param element - 要执行动画的元素
+ * @param duration - 动画持续时间（毫秒）
+ */
+export function slideUp(element: HTMLElement, duration = 200): void {
+  if (!element) return;
+
+  // 检查元素是否已经隐藏，如果已经隐藏则不触发动画
+  if (!isVisible(element)) {
+    return;
+  }
+
+  // 获取当前高度
+  const currentHeight = element.offsetHeight;
+
+  // 设置 CSS 变量用于动画
+  element.style.setProperty("--slide-target-height", `${currentHeight}px`);
+
+  // 设置当前高度并启用 overflow hidden
+  element.style.height = `${currentHeight}px`;
+  element.style.overflow = "hidden";
+
+  // 移除冲突的类并设置动画
+  element.classList.remove("slide-down");
+  element.classList.add("slide-up");
+  element.style.animationDuration = `${duration}ms`;
+
+  const handleAnimationEnd = () => {
+    element.classList.remove("slide-up");
+    element.style.animationDuration = "";
+    element.style.height = "";
+    element.style.overflow = "";
+    element.style.removeProperty("--slide-target-height");
+    // 动画完成后使用统一的隐藏逻辑
+    hideElement(element);
+  };
+
+  element.addEventListener("animationend", handleAnimationEnd, { once: true });
+}
+
+/**
  * 淡入动画函数 - 使用 CSS 动画，与 show 逻辑保持一致
  * @param element - 要执行动画的元素，支持单个 HTMLElement 或 NodeListOf<HTMLElement>
  * @param duration - 动画持续时间（毫秒）
@@ -141,7 +265,7 @@ export function fadeIn(element: HTMLElement | NodeListOf<HTMLElement>, duration 
 
   elements.forEach((el) => {
     // 已经可见则跳过
-    if (window.isVisible(el)) return;
+    if (isVisible(el)) return;
 
     // 使用统一的显示逻辑
     showElement(el);
@@ -163,7 +287,7 @@ export function fadeOut(element: HTMLElement | NodeListOf<HTMLElement>, duration
   const elements = element instanceof HTMLElement ? [element] : Array.from(element);
 
   elements.forEach((el) => {
-    if (!window.isVisible(el)) return;
+    if (!isVisible(el)) return;
 
     // 移除冲突的类并设置动画
     el.classList.remove("fade-in");
