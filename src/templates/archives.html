@@ -36,16 +36,16 @@
           <div th:each="archive : ${archives}">
             <h2 class="cursor-pointer">
               <span th:text="${archive.year}"></span>
-              <i class="iconify iconify-large" data-icon="mdi:chevron-right" style="display: inline"></i>
-              <i class="iconify iconify-large" data-icon="mdi:chevron-down" style="display: none"></i>
+              <span class="iconify iconify-large mdi--chevron-right"></span>
+              <span class="iconify iconify-large mdi--chevron-down" style="display: none"></span>
             </h2>
             <ul class="m-0 flex-auto p-0" style="display: none">
               <th:block th:each="month : ${archive.months}">
                 <div class="month-container ml-7 flex">
                   <h3 class="-mt-2 flex-none cursor-pointer no-underline">
                     <span th:text="${month.month}" class="underline"></span>
-                    <i class="iconify iconify-large" data-icon="mdi:chevron-right" style="display: inline"></i>
-                    <i class="iconify iconify-large" data-icon="mdi:chevron-down" style="display: none"></i>
+                    <span class="iconify iconify-large mdi--chevron-right"></span>
+                    <span class="iconify iconify-large mdi--chevron-down" style="display: none"></span>
                   </h3>
                   <ul class="common-post-list flex-auto" style="display: none">
                     <li class="post-item" th:each="post : ${month.posts}">
@@ -81,12 +81,14 @@
 
                 if (isVisible(nextElement)) {
                   slideUp(nextElement, duration_of_expand_collapse_animation);
-                  caretRight.style.display = "inline";
+                  // remove the inline display style
+                  caretRight.style.removeProperty("display");
                   caretDown.style.display = "none";
                 } else {
                   slideDown(nextElement, duration_of_expand_collapse_animation);
                   caretRight.style.display = "none";
-                  caretDown.style.display = "inline";
+                  // remove the inline display style
+                  caretDown.style.removeProperty("display");
                 }
               }
 

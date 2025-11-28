@@ -41,3 +41,7 @@
 @utility inline-block {
   display: inline-block !important;
 }
+
+@plugin "@iconify/tailwind4" {
+  prefixes: mdi;
+}

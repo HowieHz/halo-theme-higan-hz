@@ -1,6 +1,6 @@
 /* iconify 样式 */
 .iconify {
-  font-size: 1rem;
+  /* font-size: 1em; default */
   text-align: center;
   vertical-align: middle;
 
@@ -8,13 +8,13 @@
 }
 
 .iconify-middle {
-  font-size: 1.2rem;
+  font-size: 1.2em;
 }
 
 .iconify-large {
-  font-size: 1.5rem;
+  font-size: 1.5em;
 }
 
 .iconify-huge {
-  font-size: 1.8rem;
+  font-size: 1.8em;
 }

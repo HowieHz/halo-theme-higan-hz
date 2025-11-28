@@ -164,7 +164,7 @@
               <!--/* inline-block 保证一个标签项的内容保持在一行。 */-->
               <span class="inline-block">
                 <!--/* 标签图标和第一个标签项保持在一行。 */-->
-                <span th:if="${iterStat.first}" class="iconify" data-icon="fa-solid:tag" data-inline="false"></span>
+                <span th:if="${iterStat.first}" class="iconify fa-solid--tag"></span>
                 <a
                   class="tag-link"
                   th:with="tagColor=${tag.spec?.color}"
@@ -188,7 +188,7 @@
             th:if="${theme.config?.post_styles?.is_show_post_views}"
             th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
           >
-            <span class="iconify" data-icon="mdi:eye-outline" data-inline="false"></span>
+            <span class="iconify mdi--eye-outline"></span>
             <span th:text="${post.stats?.visit}">文章阅读量替换位</span>
           </span>
           <!--/* 预计阅读时长 
@@ -200,7 +200,7 @@
               extraApiStatsFinder.getPostWordCount({name: post.metadata.name}) : #strings.length(post.content?.content)/2 }"
             th:title="#{page.post.estimated-reading-time(#{common.words(${wordCount})})}"
           >
-            <span class="iconify" data-icon="mdi:clock-outline" data-inline="false"></span>
+            <span class="iconify mdi--clock-outline"></span>
             <span
               class="readtime"
               th:text="#{common.min(${#numbers.formatDecimal(wordCount * 1.0 / 450, 1, 1) + '~' + #numbers.formatDecimal(wordCount * 1.0 / 350, 1, 1)})}"
