@@ -15,7 +15,7 @@ export function slideDown(element: HTMLElement, duration = 200): void {
     return;
   }
 
-  // 先显示元素但设置高度为 0
+  // 先显示元素，随后设置高度为 0
   showElement(element);
 
   // 获取元素的自然高度
@@ -24,21 +24,19 @@ export function slideDown(element: HTMLElement, duration = 200): void {
   // 设置 CSS 变量用于动画
   element.style.setProperty("--target-height", `${originalHeight}px`);
 
-  // 开始时设置高度为 0
-  element.style.height = "0px";
-  element.style.overflow = "hidden";
+  Object.assign(element.style, {
+    height: "0px", // 开始时设置高度为 0
+    overflow: "hidden",
+    animationDuration: `${duration}ms`,
+  });
 
   // 移除冲突的类并设置动画
   element.classList.remove("slide-up");
   element.classList.add("slide-down");
-  element.style.animationDuration = `${duration}ms`;
 
   const handleAnimationEnd = () => {
     element.classList.remove("slide-down");
-    element.style.animationDuration = "";
-    element.style.height = "";
-    element.style.overflow = "";
-    element.style.removeProperty("--target-height");
+    ["animation-duration", "height", "overflow", "--target-height"].forEach((p) => element.style.removeProperty(p));
   };
 
   element.addEventListener("animationend", handleAnimationEnd, { once: true });

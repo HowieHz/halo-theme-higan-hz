@@ -21,21 +21,19 @@ export function slideUp(element: HTMLElement, duration = 200): void {
   // 设置 CSS 变量用于动画
   element.style.setProperty("--target-height", `${currentHeight}px`);
 
-  // 设置当前高度并启用 overflow hidden
-  element.style.height = `${currentHeight}px`;
-  element.style.overflow = "hidden";
+  Object.assign(element.style, {
+    height: `${currentHeight}px`, // 设置当前高度并启用 overflow hidden
+    overflow: "hidden",
+    animationDuration: `${duration}ms`,
+  });
 
   // 移除冲突的类并设置动画
   element.classList.remove("slide-down");
   element.classList.add("slide-up");
-  element.style.animationDuration = `${duration}ms`;
 
   const handleAnimationEnd = () => {
     element.classList.remove("slide-up");
-    element.style.animationDuration = "";
-    element.style.height = "";
-    element.style.overflow = "";
-    element.style.removeProperty("--target-height");
+    ["animation-duration", "height", "overflow", "--target-height"].forEach((p) => element.style.removeProperty(p));
     // 动画完成后使用统一的隐藏逻辑
     hideElement(element);
   };
