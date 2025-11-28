@@ -1,6 +1,8 @@
 import "../../styles/mixins/header.css";
 
-import { fadeIn, fadeOut, isVisible } from "./animations";
+import { isVisible } from "./animations";
+import { fadeIn } from "./animations/fade-in";
+import { fadeOut } from "./animations/fade-out";
 
 document.addEventListener("DOMContentLoaded", (): void => {
   const mobileMenuIcon: HTMLElement | null = document.querySelector("#header > #nav > ul > .icon");

@@ -66,7 +66,9 @@
               </th:block>
             </ul>
             <script type="module">
-              import { isVisible, slideDown, slideUp } from "/src/scripts/utils/animations.ts";
+              import { isVisible } from "/src/scripts/utils/animations";
+              import { slideDown } from "/src/scripts/utils/animations/slide-down";
+              import { slideUp } from "/src/scripts/utils/animations/slide-up";
 
               function toggleVisibility(element, duration_of_expand_collapse_animation) {
                 const caretRight = element.querySelector('[data-icon="mdi:chevron-right"]');

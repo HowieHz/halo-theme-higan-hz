@@ -3,7 +3,11 @@ import "../../styles/pages/post.css";
 import "../../styles/mixins/article.css";
 import "../../styles/mixins/article-metadata.css";
 
-import { fadeIn, fadeOut, isVisible, scrollToTop, show, slideDown, slideUp, toggle } from "../utils/animations";
+import { isVisible, scrollToTop, show, toggle } from "../utils/animations";
+import { fadeIn } from "../utils/animations/fade-in";
+import { fadeOut } from "../utils/animations/fade-out";
+import { slideDown } from "../utils/animations/slide-down";
+import { slideUp } from "../utils/animations/slide-up";
 
 document.addEventListener("click", (e: Event): void => {
   const target = e.target as HTMLElement;
