@@ -1,5 +1,6 @@
 import path from "path";
 import { fileURLToPath } from "url";
+import tailwindcss from "@tailwindcss/vite";
 import legacy from "@vitejs/plugin-legacy";
 import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
@@ -25,6 +26,7 @@ export default defineConfig({
     PurgeIcons({
       content: ["./templates/**/*.html"],
     }),
+    tailwindcss(),
     utwm(), // obfuscate tailwindcss class
     legacy(),
     headInject({
