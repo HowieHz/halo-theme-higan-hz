@@ -19,7 +19,7 @@ export function slideUp(element: HTMLElement, duration = 200): void {
   const currentHeight = element.offsetHeight;
 
   // 设置 CSS 变量用于动画
-  element.style.setProperty("--slide-target-height", `${currentHeight}px`);
+  element.style.setProperty("--target-height", `${currentHeight}px`);
 
   // 设置当前高度并启用 overflow hidden
   element.style.height = `${currentHeight}px`;
@@ -35,7 +35,7 @@ export function slideUp(element: HTMLElement, duration = 200): void {
     element.style.animationDuration = "";
     element.style.height = "";
     element.style.overflow = "";
-    element.style.removeProperty("--slide-target-height");
+    element.style.removeProperty("--target-height");
     // 动画完成后使用统一的隐藏逻辑
     hideElement(element);
   };

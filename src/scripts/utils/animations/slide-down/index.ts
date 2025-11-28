@@ -22,7 +22,7 @@ export function slideDown(element: HTMLElement, duration = 200): void {
   const originalHeight = element.scrollHeight;
 
   // 设置 CSS 变量用于动画
-  element.style.setProperty("--slide-target-height", `${originalHeight}px`);
+  element.style.setProperty("--target-height", `${originalHeight}px`);
 
   // 开始时设置高度为 0
   element.style.height = "0px";
@@ -38,7 +38,7 @@ export function slideDown(element: HTMLElement, duration = 200): void {
     element.style.animationDuration = "";
     element.style.height = "";
     element.style.overflow = "";
-    element.style.removeProperty("--slide-target-height");
+    element.style.removeProperty("--target-height");
   };
 
   element.addEventListener("animationend", handleAnimationEnd, { once: true });
