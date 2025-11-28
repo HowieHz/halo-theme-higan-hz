@@ -1,0 +1,19 @@
+/* jQuery 风格的滑下动画 - 通过高度变化显示元素
+ * 省略 to 的写法实际渲染会卡顿
+*/
+@keyframes slide-down {
+  from {
+    height: 0;
+    overflow: hidden;
+  }
+
+  to {
+    height: var(--slide-target-height, auto);
+    overflow: hidden;
+  }
+}
+
+.slide-down {
+  animation: slide-down ease-out forwards;
+  overflow: hidden;
+}

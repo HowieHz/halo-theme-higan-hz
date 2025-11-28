@@ -29,62 +29,76 @@
         </div>
 
         <div
-          th:each="archive : ${archives}"
           th:if="${theme.config?.archives_page_styles?.is_collapse_post_list_by_publication_year_and_month}"
+          th:data-d="${theme.config?.archives_page_styles?.duration_of_expand_collapse_animation}"
+          id="d"
         >
-          <h2 onclick="toggleVisibility(this)" class="cursor-pointer">
-            <span th:text="${archive.year}"></span>
-            <i class="iconify iconify-large" data-icon="mdi:chevron-right" style="display: inline"></i>
-            <i class="iconify iconify-large" data-icon="mdi:chevron-down" style="display: none"></i>
-          </h2>
-          <ul class="m-0 flex-auto p-0" style="display: none">
-            <th:block th:each="month : ${archive.months}">
-              <div class="month-container ml-7 flex">
-                <h3 class="-mt-2 flex-none cursor-pointer no-underline" onclick="toggleVisibility(this)">
-                  <span th:text="${month.month}" class="underline"></span>
-                  <i class="iconify iconify-large" data-icon="mdi:chevron-right" style="display: inline"></i>
-                  <i class="iconify iconify-large" data-icon="mdi:chevron-down" style="display: none"></i>
-                </h3>
-                <ul class="common-post-list flex-auto" style="display: none">
-                  <li class="post-item" th:each="post : ${month.posts}">
-                    <div class="meta">
-                      <time
-                        th:datetime="${post.spec?.publishTime}"
-                        itemprop="datePublished"
-                        th:text="${#temporals.format(post.spec?.publishTime, 'dd')}"
-                        >文章发布时间替换位</time
-                      >
-                    </div>
-                    <div class="line-clamp-1">
-                      <a class="post-title" th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}"></a>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </th:block>
-          </ul>
-          <script vite-ignore th:inline="javascript">
-            function toggleVisibility(element) {
-              const caretRight = element.querySelector('[data-icon="mdi:chevron-right"]');
-              const caretDown = element.querySelector('[data-icon="mdi:chevron-down"]');
-              const nextElement = element.nextElementSibling;
-              const duration_of_expand_collapse_animation = /*[(${theme.config?.archives_page_styles?.duration_of_expand_collapse_animation})]*/ 200;
+          <div th:each="archive : ${archives}">
+            <h2 class="cursor-pointer">
+              <span th:text="${archive.year}"></span>
+              <i class="iconify iconify-large" data-icon="mdi:chevron-right" style="display: inline"></i>
+              <i class="iconify iconify-large" data-icon="mdi:chevron-down" style="display: none"></i>
+            </h2>
+            <ul class="m-0 flex-auto p-0" style="display: none">
+              <th:block th:each="month : ${archive.months}">
+                <div class="month-container ml-7 flex">
+                  <h3 class="-mt-2 flex-none cursor-pointer no-underline">
+                    <span th:text="${month.month}" class="underline"></span>
+                    <i class="iconify iconify-large" data-icon="mdi:chevron-right" style="display: inline"></i>
+                    <i class="iconify iconify-large" data-icon="mdi:chevron-down" style="display: none"></i>
+                  </h3>
+                  <ul class="common-post-list flex-auto" style="display: none">
+                    <li class="post-item" th:each="post : ${month.posts}">
+                      <div class="meta">
+                        <time
+                          th:datetime="${post.spec?.publishTime}"
+                          itemprop="datePublished"
+                          th:text="${#temporals.format(post.spec?.publishTime, 'dd')}"
+                          >文章发布时间替换位</time
+                        >
+                      </div>
+                      <div class="line-clamp-1">
+                        <a class="post-title" th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}"></a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </th:block>
+            </ul>
+            <script type="module">
+              import { isVisible } from "/src/scripts/utils/animations";
+              import { slideDown } from "/src/scripts/utils/animations/slide-down";
+              import { slideUp } from "/src/scripts/utils/animations/slide-up";
 
-              if (!nextElement) {
-                return;
+              function toggleVisibility(element, duration_of_expand_collapse_animation) {
+                const caretRight = element.querySelector('[data-icon="mdi:chevron-right"]');
+                const caretDown = element.querySelector('[data-icon="mdi:chevron-down"]');
+                const nextElement = element.nextElementSibling;
+
+                if (!nextElement) {
+                  return;
+                }
+
+                if (isVisible(nextElement)) {
+                  slideUp(nextElement, duration_of_expand_collapse_animation);
+                  caretRight.style.display = "inline";
+                  caretDown.style.display = "none";
+                } else {
+                  slideDown(nextElement, duration_of_expand_collapse_animation);
+                  caretRight.style.display = "none";
+                  caretDown.style.display = "inline";
+                }
               }
 
-              if (window.isVisible(nextElement)) {
-                window.slideUp(nextElement, duration_of_expand_collapse_animation);
-                caretRight.style.display = "inline";
-                caretDown.style.display = "none";
-              } else {
-                window.slideDown(nextElement, duration_of_expand_collapse_animation);
-                caretRight.style.display = "none";
-                caretDown.style.display = "inline";
-              }
-            }
-          </script>
+              document.addEventListener("click", (e) => {
+                // Only handle click events on h2 and h3 elements (and their children) within #d
+                const header = e.target.closest("#d h2, #d h3");
+                if (header) {
+                  toggleVisibility(header, header.closest("#d").dataset.d);
+                }
+              });
+            </script>
+          </div>
         </div>
       </div>
       <th:block th:insert="~{components/pagination/template :: content(${archives})}"></th:block>

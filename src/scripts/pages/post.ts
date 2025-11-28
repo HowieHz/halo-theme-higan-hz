@@ -1,9 +1,23 @@
-import "../generic";
+import "../main";
 import "../../styles/pages/post.css";
 import "../../styles/mixins/article.css";
 import "../../styles/mixins/article-metadata.css";
 
-import { fadeIn, fadeOut, show } from "../utils/animations";
+import { isVisible, scrollToTop, show, toggle } from "../utils/animations";
+import { fadeIn } from "../utils/animations/fade-in";
+import { fadeOut } from "../utils/animations/fade-out";
+import { slideDown } from "../utils/animations/slide-down";
+import { slideUp } from "../utils/animations/slide-up";
+
+document.addEventListener("click", (e: Event): void => {
+  const target = e.target as HTMLElement;
+  const scrollElement = target.closest<HTMLElement>("[data-scroll-to-top]");
+
+  if (scrollElement) {
+    e.preventDefault();
+    scrollToTop();
+  }
+});
 
 /**
  * 获取页面滚动距离（垂直方向）
@@ -15,6 +29,34 @@ function getTopDistance(): number {
   // 0;
   return window.scrollY || 0;
 }
+
+/**
+ * Event delegation for toggle functionality on hover
+ * Handle mouseover and mouseout events for elements with data-toggle-target attribute
+ */
+document.addEventListener("mouseover", (e: Event): void => {
+  const target = e.target as HTMLElement;
+  const toggleElement = target.closest<HTMLElement>("[data-toggle-target]");
+
+  if (toggleElement) {
+    const toggleTarget = toggleElement.dataset.toggleTarget;
+    if (toggleTarget) {
+      toggle(toggleTarget);
+    }
+  }
+});
+
+document.addEventListener("mouseout", (e: Event): void => {
+  const target = e.target as HTMLElement;
+  const toggleElement = target.closest<HTMLElement>("[data-toggle-target]");
+
+  if (toggleElement) {
+    const toggleTarget = toggleElement.dataset.toggleTarget;
+    if (toggleTarget) {
+      toggle(toggleTarget);
+    }
+  }
+});
 
 document.addEventListener("DOMContentLoaded", (): void => {
   /**
@@ -28,10 +70,10 @@ document.addEventListener("DOMContentLoaded", (): void => {
       if (!navFooter) {
         return;
       }
-      if (window.isVisible(navFooter)) {
-        window.slideUp(navFooter, 200);
+      if (isVisible(navFooter)) {
+        slideUp(navFooter, 200);
       } else {
-        window.slideDown(navFooter, 200);
+        slideDown(navFooter, 200);
       }
     });
     document.querySelector("#actions-footer > #toc")?.addEventListener("click", (): void => {
@@ -39,11 +81,11 @@ document.addEventListener("DOMContentLoaded", (): void => {
       if (!tocFooter) {
         return;
       }
-      if (window.isVisible(tocFooter)) {
-        window.slideUp(tocFooter, 200);
+      if (isVisible(tocFooter)) {
+        slideUp(tocFooter, 200);
       } else {
         // First, play the slide-down animation
-        window.slideDown(tocFooter, 200);
+        slideDown(tocFooter, 200);
 
         // Then instantly scroll to active item position
         const activeLink = tocFooter.querySelector<HTMLElement>(".toc-active");
@@ -64,10 +106,10 @@ document.addEventListener("DOMContentLoaded", (): void => {
       if (!shareFooter) {
         return;
       }
-      if (window.isVisible(shareFooter)) {
-        window.slideUp(shareFooter, 200);
+      if (isVisible(shareFooter)) {
+        slideUp(shareFooter, 200);
       } else {
-        window.slideDown(shareFooter, 200);
+        slideDown(shareFooter, 200);
       }
     });
 
@@ -77,10 +119,10 @@ document.addEventListener("DOMContentLoaded", (): void => {
       if (!shareMenu) {
         return;
       }
-      if (window.isVisible(shareMenu)) {
-        window.slideUp(shareMenu, 200);
+      if (isVisible(shareMenu)) {
+        slideUp(shareMenu, 200);
       } else {
-        window.slideDown(shareMenu, 200);
+        slideDown(shareMenu, 200);
       }
     });
 
@@ -105,7 +147,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
       // 平板端、桌面端 文章页 菜单 按钮事件
       menuIcon.addEventListener("click", (e: Event): void => {
         e.preventDefault();
-        if (window.isVisible(menuComponents)) {
+        if (isVisible(menuComponents)) {
           menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
           fadeOut(menuComponents, 50);
           fadeOut(shareListComponents, 50);
@@ -154,15 +196,15 @@ document.addEventListener("DOMContentLoaded", (): void => {
 
         // 在滚动时，关闭全部底部导航栏子菜单
         for (const footer of [tocFooter, navFooter, shareFooter]) {
-          if (footer) window.slideUp(footer, 200);
+          if (footer) slideUp(footer, 200);
         }
 
         if (topDistance > lastScrollTop) {
           // 向下滚动 -> 隐藏菜单
-          window.slideUp(footerNav, 200);
+          slideUp(footerNav, 200);
         } else {
           // 向上滚动 -> 显示菜单
-          window.slideDown(footerNav, 200);
+          slideDown(footerNav, 200);
         }
         lastScrollTop = topDistance;
 

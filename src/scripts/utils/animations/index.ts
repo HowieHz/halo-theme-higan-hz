@@ -1,4 +1,52 @@
 /**
+ * 滚动到页面顶部
+ */
+export function scrollToTop(): void {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/**
+ * 检查元素是否可见
+ * @param element - 要检查的元素
+ * @returns 元素是否可见
+ */
+export function isVisible(input: HTMLElement | NodeListOf<HTMLElement> | null): boolean {
+  const checkSingle = (el: HTMLElement | null): boolean => {
+    if (!el) {
+      return false;
+    }
+    const style = window.getComputedStyle(el);
+    // 基本可见性检查
+    if (style.display === "none" || style.visibility === "hidden") {
+      return false;
+    }
+    // 对于 position: fixed 的元素，offsetParent 会是 null，但这不意味着不可见
+    // 我们需要额外检查元素的位置属性
+    if (el.offsetParent === null) {
+      // 如果元素是 position: fixed，我们认为它是可见的（只要 display 和 visibility 没问题）
+      if (style.position === "fixed") {
+        return true;
+      }
+      // 如果元素或其父元素有 transform 属性，offsetParent 也可能为 null
+      // 在这种情况下，我们检查元素的尺寸和位置
+      const rect = el.getBoundingClientRect();
+      return rect.width > 0 && rect.height > 0;
+      // 其他情况下，offsetParent 为 null 通常意味着不可见
+    }
+    return true;
+  };
+
+  if (input === null) {
+    return false;
+  }
+  if (input instanceof NodeList) {
+    // 如果有一个不可见就返回 false，否则全部可见才返回 true
+    return Array.from(input).every((el) => checkSingle(el));
+  }
+  return checkSingle(input);
+}
+
+/**
  * 自定义 Toggle 函数实现
  * 用于显示/隐藏元素的工具函数集合
  * 使用示例：
@@ -77,7 +125,7 @@ export function showElement(element: HTMLElement): void {
    * 结果：元素仍然隐藏
    * 修复：element.style.display = "block"; // 覆盖 CSS 规则
    */
-  if (element.style.display === "" && !window.isVisible(element)) {
+  if (element.style.display === "" && !isVisible(element)) {
     element.style.display = getDefaultDisplay(element);
   }
 }
@@ -127,51 +175,6 @@ export function setupAnimation(
 
   const handleAnimationEnd = cleanupAnimation(element, className, onComplete);
   element.addEventListener("animationend", handleAnimationEnd, { once: true });
-}
-
-/**
- * 淡入动画函数 - 使用 CSS 动画，与 show 逻辑保持一致
- * @param element - 要执行动画的元素，支持单个 HTMLElement 或 NodeListOf<HTMLElement>
- * @param duration - 动画持续时间（毫秒）
- */
-export function fadeIn(element: HTMLElement | NodeListOf<HTMLElement>, duration = 200): void {
-  if (!element) return;
-
-  const elements = element instanceof HTMLElement ? [element] : Array.from(element);
-
-  elements.forEach((el) => {
-    // 已经可见则跳过
-    if (window.isVisible(el)) return;
-
-    // 使用统一的显示逻辑
-    showElement(el);
-
-    // 移除冲突的类并设置动画
-    el.classList.remove("fade-out");
-    setupAnimation(el, "fade-in", duration);
-  });
-}
-
-/**
- * 淡出动画函数 - 使用 CSS 动画，与 hide 逻辑保持一致
- * @param element - 要执行动画的元素，支持单个 HTMLElement 或 NodeListOf<HTMLElement>
- * @param duration - 动画持续时间（毫秒）
- */
-export function fadeOut(element: HTMLElement | NodeListOf<HTMLElement>, duration = 200): void {
-  if (!element) return;
-
-  const elements = element instanceof HTMLElement ? [element] : Array.from(element);
-
-  elements.forEach((el) => {
-    if (!window.isVisible(el)) return;
-
-    // 移除冲突的类并设置动画
-    el.classList.remove("fade-in");
-    setupAnimation(el, "fade-out", duration, () => {
-      // 动画完成后使用统一的隐藏逻辑
-      hideElement(el);
-    });
-  });
 }
 
 /**
@@ -228,4 +231,40 @@ export function show(selector: string | HTMLElement | NodeList): HTMLElement | N
 export function hide(selector: string | HTMLElement | NodeList): HTMLElement | NodeList {
   const elements = typeof selector === "string" ? document.querySelectorAll(selector) : selector;
   return showHide(elements, false);
+}
+
+/**
+ * 切换元素显示/隐藏状态
+ * @param selector - 元素或选择器
+ * @param state - 可选的状态参数，true 为显示，false 为隐藏
+ * @returns 返回元素
+ */
+export function toggle(selector: string | HTMLElement | NodeList, state?: boolean): HTMLElement | NodeList {
+  const elements = typeof selector === "string" ? document.querySelectorAll(selector) : selector;
+
+  // 如果指定了 state 参数
+  if (typeof state === "boolean") {
+    return state ? show(elements) : hide(elements);
+  }
+
+  // 否则根据当前状态切换
+  let elementsArray: HTMLElement[];
+
+  if (elements instanceof HTMLElement) {
+    elementsArray = [elements];
+  } else if (elements instanceof NodeList) {
+    elementsArray = Array.from(elements) as HTMLElement[];
+  } else {
+    elementsArray = elements as HTMLElement[];
+  }
+
+  elementsArray.forEach(function (elem: HTMLElement): void {
+    if (!isVisible(elem)) {
+      show(elem);
+    } else {
+      hide(elem);
+    }
+  });
+
+  return elements;
 }

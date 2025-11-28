@@ -6,7 +6,7 @@
     head = ~{::headContent},
     content = ~{::content}, 
     header = ~{}, 
-    navbar = ~{fragments/page-nav::navbar}, 
+    navbar = ~{fragments/page-like-post-style-nav::navbar}, 
     language = ${#annotations.get(singlePage, 'higan.howiehz.top/page-language')}
   )}"
 >
@@ -92,7 +92,7 @@
         </div>
       </th:block>
     </article>
-    <div th:replace="~{fragments/page-footer-nav :: footerNav}"></div>
+    <div th:replace="~{fragments/page-like-post-style-footer-nav :: footerNav}"></div>
     <script type="module">
       import { isMobile } from "/src/scripts/utils/device.ts";
       import { initTOC } from "/src/scripts/utils/toc.ts";
