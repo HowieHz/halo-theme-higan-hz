@@ -15,6 +15,9 @@ importers:
         specifier: ^3.15.2
         version: 3.15.2
     devDependencies:
+      '@dreamsicle.io/stylelint-config-tailwindcss':
+        specifier: ^1.1.2
+        version: 1.1.2(stylelint@16.26.0(typescript@5.9.3))
       '@eslint/compat':
         specifier: ^2.0.0
         version: 2.0.0(eslint@9.39.1(jiti@2.6.1))
@@ -972,6 +975,11 @@ packages:
 
   '@docsearch/js@4.3.2':
     resolution: {integrity: sha512-xdfpPXMgKRY9EW7U1vtY7gLKbLZFa9ed+t0Dacquq8zXBqAlH9HlUf0h4Mhxm0xatsVeMaIR2wr/u6g0GsZyQw==}
+
+  '@dreamsicle.io/stylelint-config-tailwindcss@1.1.2':
+    resolution: {integrity: sha512-g5nPxKyZKh139CT67tTFT3WD7kB4y4WoHLGqlmLfTjs52cvWGwFUBSiUpPnB2sSBh5efXPtw4VYv8zwPt6C19A==}
+    peerDependencies:
+      stylelint: ^16.17.0
 
   '@dual-bundle/import-meta-resolve@4.2.1':
     resolution: {integrity: sha512-id+7YRUgoUX6CgV0DtuhirQWodeeA7Lf4i2x71JS/vtA5pRb/hIGWlw+G6MeXvsM+MXrz0VAydTGElX1rAfgPg==}
@@ -5740,6 +5748,10 @@ snapshots:
   '@docsearch/js@4.3.2':
     dependencies:
       htm: 3.1.1
+
+  '@dreamsicle.io/stylelint-config-tailwindcss@1.1.2(stylelint@16.26.0(typescript@5.9.3))':
+    dependencies:
+      stylelint: 16.26.0(typescript@5.9.3)
 
   '@dual-bundle/import-meta-resolve@4.2.1': {}
 

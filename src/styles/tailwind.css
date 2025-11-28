@@ -2,7 +2,7 @@
 
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
-
+/* stylelint-disable custom-property-pattern */
 @theme {
   --text-*: initial;
   --text-sm: 0.875rem;
@@ -10,6 +10,7 @@
   --text-base: 1rem;
   --text-base--line-height: 1.75rem;
 }
+/* stylelint-enable custom-property-pattern */
 
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
