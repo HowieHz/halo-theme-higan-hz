@@ -1,16 +1,42 @@
-@tailwind base;
-@tailwind utilities;
+@layer theme, base, utilities;
 
-@layer utilities {
-  .no-underline {
-    text-decoration: none !important;
-  }
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
 
-  .break-all {
-    word-break: break-all !important;
-  }
+@theme {
+  --text-*: initial;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.75rem;
+}
 
-  .inline-block {
-    display: inline-block !important;
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
   }
+}
+
+@utility no-underline {
+  text-decoration: none !important;
+}
+
+@utility break-all {
+  word-break: break-all !important;
+}
+
+@utility inline-block {
+  display: inline-block !important;
 }

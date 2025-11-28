@@ -710,7 +710,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
 
       <div
         class="content index pt-16"
-        th:classappend="${theme.config?.styles?.is_footer_force_bottom == true} ? '!min-h-screen' : '' "
+        th:classappend="${theme.config?.styles?.is_footer_force_bottom == true} ? 'min-h-screen!' : '' "
       >
         <th:block th:replace="${header}" />
 
