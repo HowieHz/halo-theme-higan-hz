@@ -18,7 +18,7 @@
     <template x-teleport="body">
       <div>
         <div
-          class="fixed inset-0 z-50 bg-[#0006] opacity-100 backdrop-blur-sm"
+          class="fixed inset-0 z-50 bg-[#0006] opacity-100 backdrop-blur-xs"
           aria-hidden="true"
           x-show="openVideoModal"
           x-transition:enter="ease-in-out duration-200"
@@ -43,7 +43,7 @@
             <div class="flex min-h-full flex-col items-center justify-center p-4 text-center sm:p-0">
               <div
                 @click.outside="openVideoModal = false"
-                class="bg-base-100 relative my-4 transform overflow-hidden rounded-sm text-left shadow-xl transition-all sm:w-full sm:max-w-xl"
+                class="bg-base-100 relative my-4 transform overflow-hidden rounded-xs text-left shadow-xl transition-all sm:w-full sm:max-w-xl"
               >
                 <video preload="metadata" th:src="${media.url}" class="w-full" controls></video>
               </div>

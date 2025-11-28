@@ -1,8 +1,8 @@
-@import url("./mixins/text-size.css");
-@import url("./mixins/scrollbar.css");
-@import url("./mixins/iconify.css");
-@import url("./mixins/font.css");
-@import url("./mixins/color-scheme.css");
+@import "./mixins/text-size.css";
+@import "./mixins/scrollbar.css";
+@import "./mixins/iconify.css";
+@import "./mixins/font.css";
+@import "./mixins/color-scheme.css";
 
 *,
 *::before,

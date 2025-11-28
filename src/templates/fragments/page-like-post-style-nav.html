@@ -3,8 +3,8 @@
 <body></body>
 <!--*/-->
 <th:block xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
-  <div id="header-post" class="fixed right-0 top-8 z-50 float-right hidden sm:block">
-    <a id="top-icon-tablet" class="hidden lg:!hidden" href="#" data-scroll-to-top
+  <div id="header-post" class="fixed top-8 right-0 z-50 float-right hidden sm:block">
+    <a id="top-icon-tablet" class="hidden lg:hidden!" href="#" data-scroll-to-top
       ><i class="iconify iconify-middle" data-icon="material-symbols:keyboard-arrow-up"></i
     ></a>
     <span id="menu" class="mr-8">
@@ -22,7 +22,7 @@
           <i class="iconify iconify-middle -translate-y-px" data-icon="material-symbols:menu"></i>
         </a>
       </div>
-      <span id="actions" class="float-right mr-8 mt-8 hidden text-right lg:block">
+      <span id="actions" class="float-right mt-8 mr-8 hidden text-right lg:block">
         <ul class="float-right block">
           <li>
             <a
@@ -69,7 +69,7 @@
       <br />
       <div
         id="share-list"
-        class="clear-both hidden pr-8 pt-4 text-right"
+        class="clear-both hidden pt-4 pr-8 text-right"
         th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
       >
         <th:block
