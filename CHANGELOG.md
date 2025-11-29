@@ -6,8 +6,8 @@
 
 ### ⚠破坏性修改
 
-- 你需要使用新流程自定义图标，相关文档请见。
-- 相关的 `1`、`2` 配置项均需要迁移，详细请见。提供了一个一键迁移工具，请见。
+- 你需要使用新流程自定义图标，相关文档请见[教程：自定义图标](https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg)。如果你先前自定义了图标，需按照教程进行迁移。
+- “自定义分享按钮”下的配置项将会被重置，先前的配置不会被覆盖，你可通过在主题信息[“导出主题配置”](https://howiehz.top/halo-theme-higan-haozi/reference/faq#如何导出主题配置)获取。
 
 ### 🐛 错误修复
 
@@ -20,6 +20,7 @@
 
 - 增强在“自定义分享按钮 -> 分享按钮设置”中名称为“Native”（浏览器原生分享）的链接设置功能。
 - 优化部分代码，不再挂载到 window 全局变量上，优化页面体积。
+- 修复 SVG 图标未成功内联到 CSS 的问题，运行时无需再从 iconify 服务器拉取图标信息。
 - 升级 Tailwind CSS 从 v3 至 v4
 - 迁移图标系统从 `vite-plugin-purge-icons` 至 `@iconify/tailwind4`
 

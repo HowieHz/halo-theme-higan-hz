@@ -218,7 +218,9 @@
                     <span th:data-moment-name="${moment.metadata.name}" th:text="${moment.stats.upvote}"></span>
                   </a>
                 </th:block>
-                <th:block th:if="${theme.config?.moments_styles?.is_moment_comment_section_show and haloCommentEnabled}">
+                <th:block
+                  th:if="${theme.config?.moments_styles?.is_moment_comment_section_show and haloCommentEnabled}"
+                >
                   <a @click="setCurrent(name)" class="ml-1 cursor-pointer">
                     <span
                       class="iconify"
