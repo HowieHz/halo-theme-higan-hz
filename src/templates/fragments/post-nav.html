@@ -5,7 +5,7 @@
 <th:block xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
   <div id="header-post" class="fixed top-8 right-0 z-50 float-right hidden sm:block">
     <a id="top-icon-tablet" class="hidden lg:hidden!" href="#" data-scroll-to-top
-      ><i class="iconify iconify-middle" data-icon="material-symbols:keyboard-arrow-up"></i
+      ><span class="iconify iconify-middle material-symbols--keyboard-arrow-up"></span
     ></a>
     <span id="menu" class="mr-8">
       <div class="flex items-center justify-end">
@@ -19,7 +19,7 @@
           th:aria-label="#{fragment.post-nav.menu-icon.aria-label}"
           class="active"
         >
-          <i class="iconify iconify-middle -translate-y-px" data-icon="material-symbols:menu"></i>
+          <span class="iconify iconify-middle material-symbols--menu -translate-y-px"></span>
         </a>
       </div>
       <span
@@ -35,7 +35,7 @@
               th:aria-label="#{fragment.post-nav.actions.home-icon.aria-label}"
               data-toggle-target="#i-home"
             >
-              <i class="iconify iconify-large" data-icon="mdi:home-circle"></i>
+              <span class="iconify iconify-large mdi--home-circle"></span>
             </a>
           </li>
           <li th:if="${postCursor.hasPrevious()}">
@@ -45,7 +45,7 @@
               th:href="@{${postCursor.previous?.status?.permalink}}"
               data-toggle-target="#i-prev"
             >
-              <i class="iconify iconify-large" data-icon="mdi:chevron-left"></i>
+              <span class="iconify iconify-large mdi--chevron-left"></span>
             </a>
           </li>
 
@@ -56,7 +56,7 @@
               th:href="@{${postCursor.next?.status?.permalink}}"
               data-toggle-target="#i-next"
             >
-              <i class="iconify iconify-large" data-icon="ic:round-chevron-right"></i>
+              <span class="iconify iconify-large ic--round-chevron-right"></span>
             </a>
           </li>
 
@@ -68,7 +68,7 @@
               th:aria-label="#{fragment.post-nav.actions.to-top-icon.aria-label}"
               data-toggle-target="#i-top"
             >
-              <i class="iconify iconify-large" data-icon="material-symbols:keyboard-arrow-up"></i>
+              <span class="iconify iconify-large material-symbols--keyboard-arrow-up"></span>
             </a>
           </li>
           <li th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}">
@@ -80,7 +80,7 @@
               th:aria-label="#{fragment.post-nav.actions.share-icon.aria-label}"
               data-toggle-target="#i-share"
             >
-              <i class="iconify iconify-middle" data-icon="mdi:share-variant-outline"></i>
+              <span class="iconify iconify-middle mdi--share-variant-outline"></span>
             </a>
           </li>
         </ul>

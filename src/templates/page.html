@@ -46,7 +46,7 @@
               extraApiStatsFinder.getContentWordCount(singlePage.content?.content) : #strings.length(singlePage.content?.content)/2 }"
             th:title="#{page.post.estimated-reading-time(#{common.words(${wordCount})})}"
           >
-            <span class="iconify" data-icon="mdi:clock-outline" data-inline="false"></span>
+            <span class="iconify mdi--clock-outline"></span>
             <span
               class="readtime"
               th:text="#{common.min(${#numbers.formatDecimal(wordCount * 1.0 / 450, 1, 1) + '~' + #numbers.formatDecimal(wordCount * 1.0 / 350, 1, 1)})}"
@@ -64,7 +64,7 @@
               extraApiStatsFinder.getContentWordCount(singlePage.content?.content) : #strings.length(singlePage.content?.content)/2 }"
             th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
           >
-            <span class="iconify" data-icon="fluent:text-edit-style-character-a-32-regular" data-inline="false"></span>
+            <span class="iconify fluent--text-edit-style-character-a-32-regular"></span>
             <span class="word-count" th:text="${wordCount}">文章字数替换位</span>
           </span>
         </div>

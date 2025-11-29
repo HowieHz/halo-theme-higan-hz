@@ -5,9 +5,7 @@
 <th:block th:fragment="menu(showIcon)">
   <ul>
     <li class="icon" th:if="${showIcon}">
-      <a href="#" onclick="event.preventDefault()"
-        ><i class="iconify iconify-huge" data-icon="material-symbols:menu"></i
-      ></a>
+      <a href="#" onclick="event.preventDefault()"><span class="iconify iconify-huge material-symbols--menu"></span></a>
     </li>
 
     <th:block th:insert="~{fragments/common :: base-menu}"></th:block>
@@ -145,14 +143,66 @@
           }
         }
       </script>
-      <li th:each="item : ${theme?.config?.share?.share_menu_config}">
+      <li th:each="item : ${theme?.config?.share?.button_config}">
         <a
           th:if="${item?.name!='Native'}"
           class="icon"
           th:aria-label="#{common.shareModal.share.aria-label(${item?.aria_label})}"
           th:href="${#strings.replace(#strings.replace(item?.url, '@URL', permalink), '@TITLE', title)}"
         >
-          <i class="iconify" th:attr="data-icon=${item?.icon}"></i
+          <span
+            class="iconify"
+            th:style="|--svg:${item?.icon}|"
+            th:if="${item?.icon != null} and ${item?.icon != ''}"
+          ></span
+          ><span
+            class="iconify icomoon-free--mail4"
+            th:if="${item?.name=='E-mail' and (item?.icon == null or item?.icon == '')}"
+          ></span
+          ><span
+            class="iconify pepicons-pencil--qr-code-circle-filled"
+            th:if="${item?.name=='QRCode' and (item?.icon == null or item?.icon == '')}"
+          ></span
+          ><span
+            class="iconify ic--baseline-facebook"
+            th:if="${item?.name=='Facebook' and (item?.icon == null or item?.icon == '')}"
+          ></span
+          ><span
+            class="iconify mdi--twitter-circle"
+            th:if="${item?.name=='X' and (item?.icon == null or item?.icon == '')}"
+          ></span
+          ><span
+            class="iconify entypo-social--linkedin-with-circle"
+            th:if="${item?.name=='LinkedIn' and (item?.icon == null or item?.icon == '')}"
+          ></span
+          ><span
+            class="iconify mdi--pinterest"
+            th:if="${item?.name=='Pinterest' and (item?.icon == null or item?.icon == '')}"
+          ></span
+          ><span
+            class="iconify uil--telegram"
+            th:if="${item?.name=='Telegram' and (item?.icon == null or item?.icon == '')}"
+          ></span
+          ><span
+            class="iconify ant-design--qq-circle-filled"
+            th:if="${item?.name=='QQ' and (item?.icon == null or item?.icon == '')}"
+          ></span
+          ><span
+            class="iconify ant-design--weibo-circle-filled"
+            th:if="${item?.name=='Weibo' and (item?.icon == null or item?.icon == '')}"
+          ></span
+          ><span
+            class="iconify ant-design--wechat-filled"
+            th:if="${item?.name=='WeChat' and (item?.icon == null or item?.icon == '')}"
+          ></span
+          ><span
+            class="iconify cib--qzone"
+            th:if="${item?.name=='Qzone' and (item?.icon == null or item?.icon == '')}"
+          ></span
+          ><span
+            class="iconify tabler--brand-douban"
+            th:if="${item?.name=='Douban' and (item?.icon == null or item?.icon == '')}"
+          ></span
         ></a>
         <a
           th:if="${item?.name=='Native'}"
@@ -160,7 +210,15 @@
           th:aria-label="#{common.shareModal.share.aria-label(${item?.aria_label})}"
           th:href="|javascript:nativeShare('${#strings.replace(item?.url, '@URL', permalink)}');|"
         >
-          <i class="iconify" th:attr="data-icon=${item?.icon}"></i
+          <span
+            class="iconify"
+            th:style="|--svg:${item?.icon}|"
+            th:if="${item?.icon != null} and ${item?.icon != ''}"
+          ></span
+          ><span
+            class="iconify mdi--share-circle"
+            th:if="${item?.name=='Native' and (item?.icon == null or item?.icon == '')}"
+          ></span
         ></a>
       </li>
     </ul>
@@ -176,7 +234,11 @@
   type="button"
   class="border-0 bg-transparent align-middle"
 >
-  <i id="theme-toggle-button-icon" class="icon iconify iconify-large -translate-x-px -translate-y-px"></i>
+  <span
+    id="theme-toggle-button-icon"
+    style="display: none"
+    class="icon iconify iconify-large -translate-x-px -translate-y-px"
+  ></span>
   <style>
     #theme-toggle-button {
       & .icon:hover {

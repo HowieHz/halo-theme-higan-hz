@@ -7,7 +7,7 @@
 <th:block th:fragment="content(posts)">
   <div class="pager">
     <a th:href="@{${posts.prevUrl}}" th:if="${posts.hasPrevious()}" th:aria-label="#{common.previousPage.aria-label}">
-      <i class="iconify iconify-middle" data-icon="material-symbols:chevron-left"></i>
+      <span class="iconify iconify-middle material-symbols--chevron-left"></span>
     </a>
     <span
       class="page-number"
@@ -17,7 +17,7 @@
       >Page 1 of 1 填充位</span
     >
     <a th:href="@{${posts.nextUrl}}" th:if="${posts.hasNext()}" th:aria-label="#{common.nextPage.aria-label}">
-      <i class="iconify iconify-middle" data-icon="material-symbols:chevron-right"></i>
+      <span class="iconify iconify-middle material-symbols--chevron-right"></span>
     </a>
   </div>
 </th:block>

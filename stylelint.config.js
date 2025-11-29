@@ -23,7 +23,7 @@ export default {
     "at-rule-no-unknown": [
       true,
       {
-        ignoreAtRules: ["tailwind"],
+        ignoreAtRules: ["plugin"],
       },
     ],
 

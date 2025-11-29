@@ -377,12 +377,19 @@ html[theme="theme-[(${colorSchema.id})]"] {
 
       function updateThemeIcon(theme) {
         const themeIcon = document.getElementById("theme-toggle-button-icon");
+        if (!themeIcon) return;
+        themeIcon.style.removeProperty("display"); // <!--/* remove display: none */-->
+
+        Array.from(themeIcon.classList).forEach((c) => {
+          if (c.startsWith("ph--")) themeIcon.classList.remove(c);
+        });
+
         if (theme === THEME_LIGHT) {
-          themeIcon.setAttribute("data-icon", "ph:sun-bold");
+          themeIcon.classList.add("ph--sun-bold");
         } else if (theme === THEME_DARK) {
-          themeIcon.setAttribute("data-icon", "ph:moon-bold");
+          themeIcon.classList.add("ph--moon-bold");
         } else {
-          themeIcon.setAttribute("data-icon", "ph:circle-bold");
+          themeIcon.classList.add("ph--circle-bold");
         }
       }
 
@@ -730,11 +737,11 @@ html[theme="theme-[(${colorSchema.id})]"] {
                   ${item?.type == 'category'} or 
                   (${item?.type == 'wordcount'} and ${pluginFinder.available('extra-api', '3.*')})"
                 >
-                  <i
+                  <span
                     class="iconify"
-                    th:attr="data-icon=${item?.icon}"
+                    th:style="|--svg:${item?.icon}|"
                     th:if="${item?.icon != null} and ${item?.icon != ''}"
-                  ></i>
+                  ></span>
                   <th:block th:if="not ${item?.i18n_text}">
                     <span th:text="${stats.visit}" th:if="${item?.type=='visit'}"></span>
                     <span th:text="${stats.post}" th:if="${item?.type=='post'}"></span>

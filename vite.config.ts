@@ -6,8 +6,6 @@ import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
 import utwm from "unplugin-tailwindcss-mangle/vite";
 import { defineConfig } from "vite";
-// @ts-expect-error old version without types
-import PurgeIcons from "vite-plugin-purge-icons";
 
 import pkg from "./package.json";
 import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
@@ -23,9 +21,6 @@ import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 export default defineConfig({
   base: "/themes/howiehz-higan/",
   plugins: [
-    PurgeIcons({
-      content: ["./templates/**/*.html"],
-    }),
     tailwindcss(),
     utwm(), // obfuscate tailwindcss class
     legacy(),

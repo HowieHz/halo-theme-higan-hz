@@ -478,6 +478,7 @@ spec:
               name: icon
               label: 文字左侧的图标
               value: ""
+              help: "配置教程：https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
         - $formkit: checkbox
           name: is_footer_theme_info_show
           label: 页面底部主题信息
@@ -1239,133 +1240,53 @@ spec:
                                                     else: ""
               options:
                 - label: 自定义资料
-                  value: { type: "custom_sns", url: "", aria-label: "", data-icon: "" }
+                  value: { type: "custom_sns", url: "", aria-label: "" }
                 - label: 纯文本
-                  value: { type: "text", url: "", aria-label: "", data-icon: "" }
+                  value: { type: "text", url: "", aria-label: "" }
                 - label: RSS
-                  value: { type: "rss", url: "", aria-label: "Find me on RSS", data-icon: heroicons-outline:rss }
+                  value: { type: "rss", url: "", aria-label: "Find me on RSS" }
                 - label: BiliBili
-                  value:
-                    {
-                      type: "bilibili",
-                      url: "https://space.bilibili.com/",
-                      aria-label: "Find me on BiliBili",
-                      data-icon: simple-icons:bilibili,
-                    }
+                  value: { type: "bilibili", url: "https://space.bilibili.com/", aria-label: "Find me on BiliBili" }
                 - label: Dribbble
-                  value:
-                    {
-                      type: "dribbble",
-                      url: "https://dribbble.com/",
-                      aria-label: "Find me on Dribbble",
-                      data-icon: ant-design:dribbble-circle-filled,
-                    }
+                  value: { type: "dribbble", url: "https://dribbble.com/", aria-label: "Find me on Dribbble" }
                 - label: Email
-                  value: { type: "email", url: "mailto:", aria-label: "Find me on Email", data-icon: ic:outline-email }
+                  value: { type: "email", url: "mailto:", aria-label: "Find me on Email" }
                 - label: Facebook
-                  value:
-                    {
-                      type: "facebook",
-                      url: "https://www.facebook.com/",
-                      aria-label: "Find me on facebook",
-                      data-icon: ic:baseline-facebook,
-                    }
+                  value: { type: "facebook", url: "https://www.facebook.com/", aria-label: "Find me on Facebook" }
                 - label: GitHub
-                  value:
-                    {
-                      type: "github",
-                      url: "https://github.com/",
-                      aria-label: "Find me on GitHub",
-                      data-icon: mdi:github,
-                    }
+                  value: { type: "github", url: "https://github.com/", aria-label: "Find me on GitHub" }
                 - label: Instagram
-                  value:
-                    {
-                      type: "instagram",
-                      url: "https://www.instagram.com/",
-                      aria-label: "Find me on Instagram",
-                      data-icon: ant-design:instagram-filled,
-                    }
+                  value: { type: "instagram", url: "https://www.instagram.com/", aria-label: "Find me on Instagram" }
                 - label: QQ
-                  value:
-                    {
-                      type: "qq",
-                      url: "tencent://message/?Site=&Menu=yes&uin=",
-                      aria-label: "Find me on QQ",
-                      data-icon: ant-design:qq-circle-filled,
-                    }
+                  value: { type: "qq", url: "tencent://message/?Site=&Menu=yes&uin=", aria-label: "Find me on QQ" }
                 - label: Reddit
-                  value:
-                    {
-                      type: "reddit",
-                      url: "https://www.reddit.com/user/",
-                      aria-label: "Find me on Reddit",
-                      data-icon: ant-design:reddit-circle-filled,
-                    }
+                  value: { type: "reddit", url: "https://www.reddit.com/user/", aria-label: "Find me on Reddit" }
                 - label: "Stack Overflow"
                   value:
                     {
                       type: "stack_overflow",
                       url: "https://stackoverflow.com/users/",
                       aria-label: "Find me on Stack Overflow",
-                      data-icon: mdi:stack-overflow,
                     }
                 - label: Telegram
-                  value:
-                    {
-                      type: "telegram",
-                      url: "https://t.me/",
-                      aria-label: "Find me on Telegram",
-                      data-icon: ic:baseline-telegram,
-                    }
+                  value: { type: "telegram", url: "https://t.me/", aria-label: "Find me on Telegram" }
                 - label: X
-                  value:
-                    {
-                      type: "x",
-                      url: "https://x.com/",
-                      aria-label: "Find me on X",
-                      data-icon: ant-design:twitter-circle-filled,
-                    }
+                  value: { type: "x", url: "https://x.com/", aria-label: "Find me on X" }
                 - label: YouTube
-                  value:
-                    {
-                      type: "youtube",
-                      url: "https://www.youtube.com/channel/",
-                      aria-label: "Find me on YouTube",
-                      data-icon: ant-design:youtube-filled,
-                    }
+                  value: { type: "youtube", url: "https://www.youtube.com/channel/", aria-label: "Find me on YouTube" }
                 - label: 豆瓣
-                  value:
-                    {
-                      type: "douban",
-                      url: "https://www.douban.com/people/",
-                      aria-label: "Find me on douban",
-                      data-icon: ri:douban-line,
-                    }
+                  value: { type: "douban", url: "https://www.douban.com/people/", aria-label: "Find me on douban" }
                 - label: 网易云音乐
                   value:
                     {
                       type: "neteasecloudmusic",
                       url: "https://music.163.com/#/user/home?id=",
                       aria-label: "Find me on NetEase CloudMusic",
-                      data-icon: simple-icons:neteasecloudmusic,
                     }
                 - label: 微博
-                  value:
-                    {
-                      type: "weibo",
-                      url: "https://weibo.com/",
-                      aria-label: "Find me on weibo",
-                      data-icon: ant-design:weibo-circle-filled,
-                    }
+                  value: { type: "weibo", url: "https://weibo.com/", aria-label: "Find me on weibo" }
                 - label: 知乎
-                  value:
-                    {
-                      type: "zhihu",
-                      url: "https://www.zhihu.com/people/",
-                      aria-label: "Find me on zhihu",
-                      data-icon: ant-design:zhihu-circle-filled,
-                    }
+                  value: { type: "zhihu", url: "https://www.zhihu.com/people/", aria-label: "Find me on zhihu" }
             - $formkit: text
               name: input_value
               label: 值
@@ -1390,7 +1311,7 @@ spec:
               name: icon
               label: 图标
               validation: "required"
-              help: "如：ant-design:github-filled, 请前往 https://icon-sets.iconify.design/ 寻找你所需的图标"
+              help: "配置教程：https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
             - $formkit: text
               name: aria_label
               label: aria-label
@@ -1400,61 +1321,61 @@ spec:
       label: 自定义分享按钮
       formSchema:
         - $formkit: repeater
-          name: share_menu_config
+          name: button_config
           label: 分享按钮设置
           help: "@URL 和 @TITLE 是占位符，使用中会被替换为页面实际地址和标题"
           value:
+            - name: Native
+              url: "@URL"
+              icon: ""
+              aria_label: Native
             - name: E-mail
               url: "mailto:?subject=@TITLE&body=Check out this article: @URL"
-              icon: icomoon-free:mail4
+              icon: ""
               aria_label: E-mail
             - name: QRCode
               url: /themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL
-              icon: pepicons-pencil:qr-code-circle-filled
+              icon: ""
               aria_label: QRCode
-            - name: Native
-              url: "@URL"
-              icon: mdi:share-circle
-              aria_label: Native
             - name: Facebook
               url: https://facebook.com/sharer/sharer.php?u=@URL&title=@TITLE
-              icon: ic:baseline-facebook
+              icon: ""
               aria_label: Facebook
             - name: X
               url: https://x.com/share?url=@URL&title=@TITLE
-              icon: mdi:twitter-circle
+              icon: ""
               aria_label: X
             - name: LinkedIn
               url: http://www.linkedin.com/shareArticle?url=@URL&title=@TITLE
-              icon: entypo-social:linkedin-with-circle
+              icon: ""
               aria_label: LinkedIn
             - name: Pinterest
               url: https://pinterest.com/pin/create/bookmarklet/?url=@URL&title=@TITLE
-              icon: mdi:pinterest
+              icon: ""
               aria_label: Pinterest
             - name: Telegram
               url: https://telegram.me/share/url?url=@URL&text=@TITLE
-              icon: uil:telegram
+              icon: ""
               aria_label: Telegram
             - name: QQ
               url: https://connect.qq.com/widget/shareqq/iframe_index.html?url=@URL&title=@TITLE
-              icon: ant-design:qq-circle-filled
+              icon: ""
               aria_label: QQ
             - name: Weibo
               url: http://service.weibo.com/share/share.php?url=@URL&title=@TITLE
-              icon: ant-design:weibo-circle-filled
+              icon: ""
               aria_label: Weibo
             - name: WeChat
               url: /themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL
-              icon: ant-design:wechat-filled
+              icon: ""
               aria_label: WeChat
             - name: Qzone
               url: https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=@URL&title=@TITLE
-              icon: cib:qzone
+              icon: ""
               aria_label: Qzone
             - name: Douban
               url: https://www.douban.com/share/service?href=@URL&name=@TITLE
-              icon: tabler:brand-douban
+              icon: ""
               aria_label: Douban
           children:
             - $formkit: text
@@ -1471,7 +1392,7 @@ spec:
               name: icon
               label: 图标
               value: ""
-              validation: "required"
+              help: "配置后会覆盖默认图标，配置教程：https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
             - $formkit: text
               name: aria_label
               label: aria-label

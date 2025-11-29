@@ -21,26 +21,24 @@
               </time>
             </div>
             <span>
-              <i
-                class="iconify iconify-middle color-link-hover"
-                data-icon="typcn:pin-outline"
+              <span
+                class="iconify iconify-middle color-link-hover typcn--pin-outline"
                 th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='left'"
-              ></i>
+              ></span>
               <a th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}">文章标题替换位</a>
               <th:block th:if="${theme.config?.index_styles?.is_show_post_views_in_simple_post_list}">
                 <span
                   class="color-time relative z-10 mt-0.5 mb-0 p-0 text-sm"
                   th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
                 >
-                  <span class="iconify" data-icon="mdi:eye-outline" data-inline="false"></span>
+                  <span class="iconify mdi--eye-outline"></span>
                   <span th:text="${post.stats?.visit}">文章阅读量替换位</span>
                 </span>
               </th:block>
-              <i
-                class="iconify iconify-middle color-link-hover"
-                data-icon="typcn:pin-outline"
+              <span
+                class="iconify iconify-middle color-link-hover typcn--pin-outline"
                 th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='right'"
-              ></i>
+              ></span>
             </span>
           </li>
         </th:block>
