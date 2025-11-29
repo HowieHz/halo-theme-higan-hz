@@ -228,7 +228,7 @@
                 <span th:data-moment-name="${moment.metadata.name}" th:text="${moment.stats.upvote}"></span>
               </a>
             </th:block>
-            <th:block th:if="${theme.config?.moments_styles?.is_moment_comment_section_show}">
+            <th:block th:if="${theme.config?.moments_styles?.is_moment_comment_section_show and haloCommentEnabled}">
               <a href="javascript: void(0);" class="ml-1">
                 <span
                   class="iconify"
@@ -238,7 +238,7 @@
                 ></span>
                 <span th:text="${moment.stats.approvedComment}"></span>
               </a>
-              <div class="moment-comment" th:if="${haloCommentEnabled}">
+              <div class="moment-comment">
                 <halo:comment group="moment.halo.run" kind="Moment" th:name="${moment.metadata?.name}" />
               </div>
             </th:block>
