@@ -1321,61 +1321,61 @@ spec:
       label: 自定义分享按钮
       formSchema:
         - $formkit: repeater
-          name: share_menu_config
+          name: button_config
           label: 分享按钮设置
           help: "@URL 和 @TITLE 是占位符，使用中会被替换为页面实际地址和标题"
           value:
+            - name: Native
+              url: "@URL"
+              icon: ""
+              aria_label: Native
             - name: E-mail
               url: "mailto:?subject=@TITLE&body=Check out this article: @URL"
-              icon: icomoon-free:mail4
+              icon: ""
               aria_label: E-mail
             - name: QRCode
               url: /themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL
-              icon: pepicons-pencil:qr-code-circle-filled
+              icon: ""
               aria_label: QRCode
-            - name: Native
-              url: "@URL"
-              icon: mdi:share-circle
-              aria_label: Native
             - name: Facebook
               url: https://facebook.com/sharer/sharer.php?u=@URL&title=@TITLE
-              icon: ic:baseline-facebook
+              icon: ""
               aria_label: Facebook
             - name: X
               url: https://x.com/share?url=@URL&title=@TITLE
-              icon: mdi:twitter-circle
+              icon: ""
               aria_label: X
             - name: LinkedIn
               url: http://www.linkedin.com/shareArticle?url=@URL&title=@TITLE
-              icon: entypo-social:linkedin-with-circle
+              icon: ""
               aria_label: LinkedIn
             - name: Pinterest
               url: https://pinterest.com/pin/create/bookmarklet/?url=@URL&title=@TITLE
-              icon: mdi:pinterest
+              icon: ""
               aria_label: Pinterest
             - name: Telegram
               url: https://telegram.me/share/url?url=@URL&text=@TITLE
-              icon: uil:telegram
+              icon: ""
               aria_label: Telegram
             - name: QQ
               url: https://connect.qq.com/widget/shareqq/iframe_index.html?url=@URL&title=@TITLE
-              icon: ant-design:qq-circle-filled
+              icon: ""
               aria_label: QQ
             - name: Weibo
               url: http://service.weibo.com/share/share.php?url=@URL&title=@TITLE
-              icon: ant-design:weibo-circle-filled
+              icon: ""
               aria_label: Weibo
             - name: WeChat
               url: /themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL
-              icon: ant-design:wechat-filled
+              icon: ""
               aria_label: WeChat
             - name: Qzone
               url: https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=@URL&title=@TITLE
-              icon: cib:qzone
+              icon: ""
               aria_label: Qzone
             - name: Douban
               url: https://www.douban.com/share/service?href=@URL&name=@TITLE
-              icon: tabler:brand-douban
+              icon: ""
               aria_label: Douban
           children:
             - $formkit: text
@@ -1392,8 +1392,7 @@ spec:
               name: icon
               label: 图标
               value: ""
-              validation: "required"
-              help: "配置教程：https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
+              help: "配置后会覆盖默认图标，配置教程：https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
             - $formkit: text
               name: aria_label
               label: aria-label

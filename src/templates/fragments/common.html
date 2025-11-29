@@ -143,14 +143,59 @@
           }
         }
       </script>
-      <li th:each="item : ${theme?.config?.share?.share_menu_config}">
+      <li th:each="item : ${theme?.config?.share?.button_config}">
         <a
           th:if="${item?.name!='Native'}"
           class="icon"
           th:aria-label="#{common.shareModal.share.aria-label(${item?.aria_label})}"
           th:href="${#strings.replace(#strings.replace(item?.url, '@URL', permalink), '@TITLE', title)}"
         >
-          <i class="iconify" th:style="|--svg:${item?.icon}|"></i
+          <i class="iconify" th:style="|--svg:${item?.icon}|" th:if="${item?.icon != null} and ${item?.icon != ''}"></i
+          ><i
+            class="iconify icomoon-free--mail4"
+            th:if="${item?.name=='E-mail' and (item?.icon == null or item?.icon == '')}"
+          ></i
+          ><i
+            class="iconify pepicons-pencil--qr-code-circle-filled"
+            th:if="${item?.name=='QRCode' and (item?.icon == null or item?.icon == '')}"
+          ></i
+          ><i
+            class="iconify ic--baseline-facebook"
+            th:if="${item?.name=='Facebook' and (item?.icon == null or item?.icon == '')}"
+          ></i
+          ><i
+            class="iconify mdi--twitter-circle"
+            th:if="${item?.name=='X' and (item?.icon == null or item?.icon == '')}"
+          ></i
+          ><i
+            class="iconify entypo-social--linkedin-with-circle"
+            th:if="${item?.name=='LinkedIn' and (item?.icon == null or item?.icon == '')}"
+          ></i
+          ><i
+            class="iconify mdi--pinterest"
+            th:if="${item?.name=='Pinterest' and (item?.icon == null or item?.icon == '')}"
+          ></i
+          ><i
+            class="iconify uil--telegram"
+            th:if="${item?.name=='Telegram' and (item?.icon == null or item?.icon == '')}"
+          ></i
+          ><i
+            class="iconify ant-design--qq-circle-filled"
+            th:if="${item?.name=='QQ' and (item?.icon == null or item?.icon == '')}"
+          ></i
+          ><i
+            class="iconify ant-design--weibo-circle-filled"
+            th:if="${item?.name=='Weibo' and (item?.icon == null or item?.icon == '')}"
+          ></i
+          ><i
+            class="iconify ant-design--wechat-filled"
+            th:if="${item?.name=='WeChat' and (item?.icon == null or item?.icon == '')}"
+          ></i
+          ><i class="iconify cib--qzone" th:if="${item?.name=='Qzone' and (item?.icon == null or item?.icon == '')}"></i
+          ><i
+            class="iconify tabler--brand-douban"
+            th:if="${item?.name=='Douban' and (item?.icon == null or item?.icon == '')}"
+          ></i
         ></a>
         <a
           th:if="${item?.name=='Native'}"
@@ -158,7 +203,11 @@
           th:aria-label="#{common.shareModal.share.aria-label(${item?.aria_label})}"
           th:href="|javascript:nativeShare('${#strings.replace(item?.url, '@URL', permalink)}');|"
         >
-          <i class="iconify" th:style="|--svg:${item?.icon}|"></i
+          <i class="iconify" th:style="|--svg:${item?.icon}|" th:if="${item?.icon != null} and ${item?.icon != ''}"></i
+          ><i
+            class="iconify mdi--share-circle"
+            th:if="${item?.name=='Native' and (item?.icon == null or item?.icon == '')}"
+          ></i
         ></a>
       </li>
     </ul>
