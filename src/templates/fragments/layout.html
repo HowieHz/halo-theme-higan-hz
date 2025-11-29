@@ -737,11 +737,11 @@ html[theme="theme-[(${colorSchema.id})]"] {
                   ${item?.type == 'category'} or 
                   (${item?.type == 'wordcount'} and ${pluginFinder.available('extra-api', '3.*')})"
                 >
-                  <i
+                  <span
                     class="iconify"
                     th:style="|--svg:${item?.icon}|"
                     th:if="${item?.icon != null} and ${item?.icon != ''}"
-                  ></i>
+                  ></span>
                   <th:block th:if="not ${item?.i18n_text}">
                     <span th:text="${stats.visit}" th:if="${item?.type=='visit'}"></span>
                     <span th:text="${stats.post}" th:if="${item?.type=='post'}"></span>
