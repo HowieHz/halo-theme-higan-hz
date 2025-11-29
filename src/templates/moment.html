@@ -254,11 +254,8 @@
         likedMomentNames.forEach((momentName) => {
           activeUpvote(momentName);
         });
-        function liked(momentName) {
-          return likedMomentNames.includes(momentName);
-        }
         function handleLike(momentName) {
-          if (liked(momentName)) {
+          if (likedMomentNames.includes(momentName)) {
             return;
           }
           const xhr = new XMLHttpRequest();

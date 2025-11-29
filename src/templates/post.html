@@ -398,11 +398,8 @@
       likedPostNames.forEach((postName) => {
         activeUpvote(postName);
       });
-      function liked(postName) {
-        return likedPostNames.includes(postName);
-      }
       function handleLike(postName) {
-        if (liked(postName)) {
+        if (likedPostNames.includes(postName)) {
           return;
         }
         const xhr = new XMLHttpRequest();
