@@ -378,7 +378,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
       function updateThemeIcon(theme) {
         const themeIcon = document.getElementById("theme-toggle-button-icon");
         if (!themeIcon) return;
-        themeIcon.style.removeProperty("display");  // <!--/* remove display: none */-->
+        themeIcon.style.removeProperty("display"); // <!--/* remove display: none */-->
 
         Array.from(themeIcon.classList).forEach((c) => {
           if (c.startsWith("ph--")) themeIcon.classList.remove(c);
@@ -739,7 +739,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
                 >
                   <i
                     class="iconify"
-                    th:attr="data-icon=${item?.icon}"
+                    th:style="|--svg:${item?.icon}|"
                     th:if="${item?.icon != null} and ${item?.icon != ''}"
                   ></i>
                   <th:block th:if="not ${item?.i18n_text}">

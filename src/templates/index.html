@@ -150,7 +150,7 @@
               target="_blank"
               th:attr="aria-label=${custom_sns_item?.aria_label}"
             >
-              <i class="iconify iconify-middle" th:attr="data-icon=${custom_sns_item?.icon}"></i>
+              <i class="iconify iconify-middle" th:style="|--svg:${custom_sns_item?.icon}|"></i>
             </a>
           </th:block>
         </th:block>

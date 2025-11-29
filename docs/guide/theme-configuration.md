@@ -2032,12 +2032,17 @@ const QuickJumpConfig = (props) => {
 > :::
 > ::: info 💡 示例值
 >
-> `mdi:eye-outline`
+> `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M23 10a2 2 0 0 0-2-2h-6.32l.96-4.57c.02-.1.03-.21.03-.32c0-.41-.17-.79-.44-1.06L14.17 1L7.59 7.58C7.22 7.95 7 8.45 7 9v10a2 2 0 0 0 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73zM1 21h4V9H1z'/%3E%3C/svg%3E")`
 >
 > :::
 > ::: info ⚠️ 外部约束
 >
-> 合法的 [Iconify](https://icon-sets.iconify.design/) 图标。
+> - 值必须是合法的 CSS `url(...)` 格式，支持以下三种常见形式：
+>   1. 内联 SVG（data URI，百分号编码）：`url("data:image/svg+xml,%3Csvg...%3E")`
+>   2. 内联 SVG（data URI，Base64 编码）：`url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0i...")`
+>   3. 外部 SVG 文件链接：`url("/upload/myicon.svg")`（需在后台附件管理上传 `svg` 格式文件后引用）
+>
+> 获取方法请见[教程：自定义图标](/tutorial/custom-svg)。
 >
 > :::
 
@@ -5589,7 +5594,7 @@ HTML 代码也是可以的：
 
 - 识别码：任意字母、数字、下划线组合（如 `myBlog`）
 - 链接：完整的 URL（如 `https://example.com`）
-- 图标：图标代码（可从 [Iconify](https://icon-sets.iconify.design/) 查找）
+- 图标：CSS `url(...)` 格式图标代码。获取方法请见[教程：自定义图标](/tutorial/custom-svg)。
 - aria-label：无障碍标签（如 `Find me on my blog`）
 
 :::

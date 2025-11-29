@@ -1233,133 +1233,53 @@ spec:
                                                     else: ""
               options:
                 - label: Custom
-                  value: { type: "custom_sns", url: "", aria-label: "", data-icon: "" }
+                  value: { type: "custom_sns", url: "", aria-label: "" }
                 - label: Text
-                  value: { type: "text", url: "", aria-label: "", data-icon: "" }
+                  value: { type: "text", url: "", aria-label: "" }
                 - label: RSS
-                  value: { type: "rss", url: "", aria-label: "Find me on RSS", data-icon: heroicons-outline--rss }
+                  value: { type: "rss", url: "", aria-label: "Find me on RSS" }
                 - label: BiliBili
-                  value:
-                    {
-                      type: "bilibili",
-                      url: "https://space.bilibili.com/",
-                      aria-label: "Find me on BiliBili",
-                      data-icon: simple-icons--bilibili,
-                    }
+                  value: { type: "bilibili", url: "https://space.bilibili.com/", aria-label: "Find me on BiliBili" }
                 - label: Dribbble
-                  value:
-                    {
-                      type: "dribbble",
-                      url: "https://dribbble.com/",
-                      aria-label: "Find me on Dribbble",
-                      data-icon: ant-design--dribbble-circle-filled,
-                    }
+                  value: { type: "dribbble", url: "https://dribbble.com/", aria-label: "Find me on Dribbble" }
                 - label: Email
-                  value: { type: "email", url: "mailto:", aria-label: "Find me on Email", data-icon: ic--outline-email }
+                  value: { type: "email", url: "mailto:", aria-label: "Find me on Email" }
                 - label: Facebook
-                  value:
-                    {
-                      type: "facebook",
-                      url: "https://www.facebook.com/",
-                      aria-label: "Find me on facebook",
-                      data-icon: ic--baseline-facebook,
-                    }
+                  value: { type: "facebook", url: "https://www.facebook.com/", aria-label: "Find me on Facebook" }
                 - label: GitHub
-                  value:
-                    {
-                      type: "github",
-                      url: "https://github.com/",
-                      aria-label: "Find me on GitHub",
-                      data-icon: mdi--github,
-                    }
+                  value: { type: "github", url: "https://github.com/", aria-label: "Find me on GitHub" }
                 - label: Instagram
-                  value:
-                    {
-                      type: "instagram",
-                      url: "https://www.instagram.com/",
-                      aria-label: "Find me on Instagram",
-                      data-icon: ant-design--instagram-filled,
-                    }
+                  value: { type: "instagram", url: "https://www.instagram.com/", aria-label: "Find me on Instagram" }
                 - label: QQ
-                  value:
-                    {
-                      type: "qq",
-                      url: "tencent://message/?Site=&Menu=yes&uin=",
-                      aria-label: "Find me on QQ",
-                      data-icon: ant-design--qq-circle-filled,
-                    }
+                  value: { type: "qq", url: "tencent://message/?Site=&Menu=yes&uin=", aria-label: "Find me on QQ" }
                 - label: Reddit
-                  value:
-                    {
-                      type: "reddit",
-                      url: "https://www.reddit.com/user/",
-                      aria-label: "Find me on Reddit",
-                      data-icon: ant-design--reddit-circle-filled,
-                    }
+                  value: { type: "reddit", url: "https://www.reddit.com/user/", aria-label: "Find me on Reddit" }
                 - label: "Stack Overflow"
                   value:
                     {
                       type: "stack_overflow",
                       url: "https://stackoverflow.com/users/",
                       aria-label: "Find me on Stack Overflow",
-                      data-icon: mdi--stack-overflow,
                     }
                 - label: Telegram
-                  value:
-                    {
-                      type: "telegram",
-                      url: "https://t.me/",
-                      aria-label: "Find me on Telegram",
-                      data-icon: ic--baseline-telegram,
-                    }
+                  value: { type: "telegram", url: "https://t.me/", aria-label: "Find me on Telegram" }
                 - label: X
-                  value:
-                    {
-                      type: "x",
-                      url: "https://x.com/",
-                      aria-label: "Find me on X",
-                      data-icon: ant-design--twitter-circle-filled,
-                    }
+                  value: { type: "x", url: "https://x.com/", aria-label: "Find me on X" }
                 - label: YouTube
-                  value:
-                    {
-                      type: "youtube",
-                      url: "https://www.youtube.com/channel/",
-                      aria-label: "Find me on YouTube",
-                      data-icon: ant-design--youtube-filled,
-                    }
+                  value: { type: "youtube", url: "https://www.youtube.com/channel/", aria-label: "Find me on YouTube" }
                 - label: Douban
-                  value:
-                    {
-                      type: "douban",
-                      url: "https://www.douban.com/people/",
-                      aria-label: "Find me on douban",
-                      data-icon: ri--douban-line,
-                    }
+                  value: { type: "douban", url: "https://www.douban.com/people/", aria-label: "Find me on douban" }
                 - label: NetEase CloudMusic
                   value:
                     {
                       type: "neteasecloudmusic",
                       url: "https://music.163.com/#/user/home?id=",
                       aria-label: "Find me on NetEase CloudMusic",
-                      data-icon: simple-icons--neteasecloudmusic,
                     }
                 - label: Weibo
-                  value:
-                    {
-                      type: "weibo",
-                      url: "https://weibo.com/",
-                      aria-label: "Find me on weibo",
-                      data-icon: ant-design--weibo-circle-filled,
-                    }
+                  value: { type: "weibo", url: "https://weibo.com/", aria-label: "Find me on weibo" }
                 - label: Zhihu
-                  value:
-                    {
-                      type: "zhihu",
-                      url: "https://www.zhihu.com/people/",
-                      aria-label: "Find me on zhihu",
-                      data-icon: ant-design--zhihu-circle-filled,
-                    }
+                  value: { type: "zhihu", url: "https://www.zhihu.com/people/", aria-label: "Find me on zhihu" }
             - $formkit: text
               name: input_value
               label: Value
@@ -1384,7 +1304,7 @@ spec:
               name: icon
               label: Icon
               validation: "required"
-              help: "The icon of the social media information, such as: ant-design:github-filled. You can find icon information in https://icon-sets.iconify.design/"
+              help: "Configuration tutorial: https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
             - $formkit: text
               name: aria_label
               label: aria-label
@@ -1466,6 +1386,7 @@ spec:
               label: Icon
               value: ""
               validation: "required"
+              help: "Configuration tutorial: https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
             - $formkit: text
               name: aria_label
               label: aria-label

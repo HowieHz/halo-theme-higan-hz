@@ -6,6 +6,14 @@ outline: deep
 
 # 安全防护
 
+::: tip
+
+如问题仍未解决，可前往 [GitHub Issues](https://github.com/HowieHz/halo-theme-higan-hz/issues) 搜索或提交新的反馈，或加入 QQ 群 `694413711` 获取社区支持。
+
+随时欢迎您为本教程添砖加瓦。
+
+:::
+
 <script setup>
 import { ref, computed } from 'vue'
 
