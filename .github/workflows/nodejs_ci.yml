@@ -43,8 +43,11 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         id: auto-commit-action
         with:
-          commit_message: "style: auto-format and fixes"
-
+          commit_message: |
+            style: auto-format and fixes
+            
+            
+            skip-checks: true
       - name: "Run if changes have been detected"
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
         run: echo "Changes!"
