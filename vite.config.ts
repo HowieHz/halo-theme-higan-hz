@@ -128,10 +128,10 @@ export default defineConfig({
           __dirname,
           "src/templates/components/list-moment-summary/template.html",
         ),
+        "components-header": path.resolve(__dirname, "src/templates/components/header/template.html"),
         // fragments
         "fragments-category-tree": path.resolve(__dirname, "src/templates/fragments/category-tree.html"),
         "fragments-common": path.resolve(__dirname, "src/templates/fragments/common.html"),
-        "fragments-header": path.resolve(__dirname, "src/templates/fragments/header.html"),
         "fragments-page-like-post-style-footer-nav": path.resolve(
           __dirname,
           "src/templates/fragments/page-like-post-style-footer-nav.html",

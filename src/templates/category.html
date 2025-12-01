@@ -5,7 +5,7 @@
     title = ${#annotations.getOrDefault(category, 'higan.howiehz.top/page-title', category.spec?.displayName)}, 
     head = ~{::headContent},
     content = ~{::content}, 
-    header = ~{fragments/header :: content}, 
+    header = ~{components/header/template :: content}, 
     navbar = ~{}, 
     language=${#annotations.get(category, 'higan.howiehz.top/page-language')} 
   )}"

@@ -1,2 +1,2 @@
 import "./main";
-import "./utils/header"; // 对应模板片段 fragments/header.html
+import "/src/templates/components/header"; // components/header
