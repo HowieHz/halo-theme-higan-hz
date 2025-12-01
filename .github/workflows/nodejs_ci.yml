@@ -9,10 +9,15 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref }}
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
@@ -28,5 +33,23 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Format
+        run: pnpm format
+
       - name: Lint
         run: pnpm lint
+
+      - name: Commit changes
+        if: github.event_name == 'pull_request'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        id: auto-commit-action
+        with:
+          commit_message: "style: auto-format and fixes"
+
+      - name: "Run if changes have been detected"
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        run: echo "Changes!"
+
+      - name: "Run if no changes have been detected"
+        if: steps.auto-commit-action.outputs.changes_detected == 'false'
+        run: echo "No Changes!"
