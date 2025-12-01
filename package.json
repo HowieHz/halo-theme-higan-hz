@@ -8,7 +8,6 @@
     "watch:vite": "vite build --watch",
     "watch:vite:layout": "vite build --watch --config vite.config.layout.ts",
     "watch:stylus": "stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --watch",
-    "watch:post-css": "postcss ./src/styles/tailwind.css -o ./tmp/styles/tailwind.css --watch",
     "build": "pnpm run lint:type-check && tw-patch extract && vite build && vite build --config vite.config.layout.ts",
     "lint": "pnpm run \"/^lint:.*/\"",
     "lint:eslint": "oxlint --type-aware --fix && eslint --fix",
