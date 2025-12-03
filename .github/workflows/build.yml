@@ -18,7 +18,7 @@ jobs:
           mkdir -p ~/builds/tmp ~/builds/target
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
