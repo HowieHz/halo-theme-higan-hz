@@ -17,15 +17,17 @@
     >
       <!--/* random post button */-->
       <th:block th:if="${item?.type == 'random'}">
-        <a
-          href="/"
-          th:with="allPostList=${postFinder.listAll()},
-                    randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random()*#lists.size(allPostList))},
-                    postPermalink=${allPostList[randomIndex].status.permalink}"
-          th:href="${postPermalink}"
-          th:aria-label="#{fragment.menu.random-button.aria-label}"
-          th:text="#{fragment.menu.random}"
-        ></a>
+        <th:block th:with="allPostList=${postFinder.listAll()}">
+          <a
+            th:if="${not #lists.isEmpty(allPostList)}"
+            href="/"
+            th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random()*#lists.size(allPostList))},
+                      postPermalink=${allPostList[randomIndex].status.permalink}"
+            th:href="${postPermalink}"
+            th:aria-label="#{fragment.menu.random-button.aria-label}"
+            th:text="#{fragment.menu.random}"
+          ></a>
+        </th:block>
       </th:block>
       <!--/* login status button */-->
       <th:block th:if="${item?.type == 'user'}">
