@@ -79,7 +79,6 @@ export default defineConfig({
             placeholder: "Search Docs...",
             emptyText: "No results",
             heading: "Total {{searchResult}} results",
-            showDate: true,
           },
         },
       }),
