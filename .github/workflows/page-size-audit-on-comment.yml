@@ -141,7 +141,7 @@ jobs:
     
     steps:
       - name: Checkout ${{ matrix.ref_name }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ matrix.ref }}
 
@@ -485,7 +485,7 @@ jobs:
     
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ needs.check-trigger.outputs.pr_head_sha }}
       
