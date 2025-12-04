@@ -9,28 +9,24 @@
     </li>
 
     <th:block th:insert="~{fragments/common :: base-menu}"></th:block>
-    <li
-      th:each="item : ${theme.config?.styles?.extra_menu_items}"
-      th:if="${item?.type == 'random'} or 
-      ${item?.type == 'user'} or 
-      (${item?.type == 'search'} and ${pluginFinder.available('PluginSearchWidget')})"
-    >
+    <th:block th:each="item : ${theme.config?.styles?.extra_menu_items}">
       <!--/* random post button */-->
       <th:block th:if="${item?.type == 'random'}">
         <th:block th:with="allPostList=${postFinder.listAll()}">
-          <a
-            th:if="${not #lists.isEmpty(allPostList)}"
-            href="/"
-            th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random()*#lists.size(allPostList))},
-                      postPermalink=${allPostList[randomIndex].status.permalink}"
-            th:href="${postPermalink}"
-            th:aria-label="#{fragment.menu.random-button.aria-label}"
-            th:text="#{fragment.menu.random}"
-          ></a>
+          <li th:if="${not #lists.isEmpty(allPostList)}">
+            <a
+              href="/"
+              th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random()*#lists.size(allPostList))},
+                        postPermalink=${allPostList[randomIndex].status.permalink}"
+              th:href="${postPermalink}"
+              th:aria-label="#{fragment.menu.random-button.aria-label}"
+              th:text="#{fragment.menu.random}"
+            ></a>
+          </li>
         </th:block>
       </th:block>
       <!--/* login status button */-->
-      <th:block th:if="${item?.type == 'user'}">
+      <li th:if="${item?.type == 'user'}">
         <a
           sec:authorize="isAnonymous()"
           href="/login"
@@ -45,16 +41,16 @@
           href="/uc"
         >
         </a>
-      </th:block>
+      </li>
       <!--/* search widget button */-->
-      <th:block th:if="${item?.type == 'search'}">
+      <li th:if="${item?.type == 'search'} and ${pluginFinder.available('PluginSearchWidget')}">
         <a
           href="javascript:SearchWidget.open();"
           th:aria-label="#{fragment.menu.search-button.aria-label}"
           th:text="#{fragment.menu.search}"
         ></a>
-      </th:block>
-    </li>
+      </li>
+    </th:block>
   </ul>
 </th:block>
 
