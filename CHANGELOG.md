@@ -2,7 +2,25 @@
 
 <!-- markdownlint-disable MD024 -->
 
-## [1.49.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.3...v1.49.0) (未发布)
+## [1.49.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.0...v1.49.1) (2025-12-06)
+
+### 🐛 错误修复
+
+- 修复当文章页开启点赞按钮，关闭评论区时，页脚内容会与点赞按钮重叠的问题。
+- 修复当无文章发布，随机文章功能会使页面崩溃的问题。
+
+### 🔧 优化改进
+
+- 移除意外被设置的边框颜色
+- 优化图标显示样式
+
+### 🛠️ 开发体验
+
+- 重构构建流程。
+- 组件化部分模板。
+- 更新开发依赖。
+
+## [1.49.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.3...v1.49.0) (2025-11-29)
 
 ### ⚠破坏性修改
 
@@ -38,7 +56,7 @@
 
 - 重构构建流程。
 - 组件化部分模板。
-- 更新开发依赖
+- 更新开发依赖。
 
 ## [1.48.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.1...v1.48.2) (2025-11-25)
 

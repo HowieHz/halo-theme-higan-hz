@@ -1,7 +1,7 @@
 {
   "private": true,
   "type": "module",
-  "version": "1.49.0",
+  "version": "1.49.1",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "pnpm run \"/^watch:/\"",
