@@ -227,7 +227,7 @@
         <!--/* 如果下面的推荐文章，评论区等都没开，直接接上页脚。
         是 article 里最后一个元素会设置为 mb-0（也就是 last:mb-0） */-->
         <a
-          class="upvote-button mt-2 -mb-8 last:mb-0"
+          class="upvote-button mt-2 mb-0"
           th:href="|javascript:handleLike('${post.metadata.name}')|"
           th:data-post-name="${post.metadata.name}"
           th:style="'display: flex;
@@ -369,7 +369,7 @@
       <div
         th:if="${theme.config?.post_styles?.is_post_comment_section_show}
             and ${haloCommentEnabled}"
-        class="mt-10"
+        class="mt-5"
       >
         <halo:comment group="content.halo.run" kind="Post" th:name="${post.metadata?.name}" />
       </div>
