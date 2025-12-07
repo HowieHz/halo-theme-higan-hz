@@ -58,6 +58,8 @@ export default {
       },
     ],
 
+    "selector-class-pattern": null,
+
     // 其他规则
     "no-empty-source": null, // 允许空文件
     "max-nesting-depth": 99, // 限制嵌套深度
