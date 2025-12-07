@@ -83,6 +83,12 @@ export default defineConfig({
         },
       }),
     ],
+    optimizeDeps: {
+      exclude: ["@nolebase/vitepress-plugin-enhanced-readabilities/client", "vitepress", "@nolebase/ui"],
+    },
+    ssr: {
+      noExternal: ["@nolebase/vitepress-plugin-enhanced-readabilities", "@nolebase/ui"],
+    },
   },
 
   async transformHtml(code, id) {
