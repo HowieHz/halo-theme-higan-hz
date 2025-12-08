@@ -144,12 +144,12 @@ export default defineConfig({
           },
         ],
         ["meta", { property: "og:url", content: "https://howiehz.top/halo-theme-higan-haozi/" }],
-        // <script defer src="https://umami.howiehz.top/script.js" data-website-id="7b461ac5-155d-45a8-a118-178d0a2936e4" data-domains="howiehz.top"></script>
+        // <script defer src="https://um.howiehz.top/script.js" data-website-id="7b461ac5-155d-45a8-a118-178d0a2936e4" data-domains="howiehz.top"></script>
         [
           "script",
           {
             defer: "",
-            src: "https://umami.howiehz.top/script.js",
+            src: "https://um.howiehz.top/script.js",
             "data-website-id": "7b461ac5-155d-45a8-a118-178d0a2936e4",
             "data-domains": "howiehz.top",
           },
