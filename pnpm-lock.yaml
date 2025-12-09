@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@types/picomatch':
-        specifier: ^4.0.2
-        version: 4.0.2
       alpinejs:
         specifier: ^3.15.2
         version: 3.15.2
@@ -90,6 +87,9 @@ importers:
       '@types/node':
         specifier: ^24.10.1
         version: 24.10.1
+      '@types/picomatch':
+        specifier: ^4.0.2
+        version: 4.0.2
       '@typescript-eslint/parser':
         specifier: ^8.48.1
         version: 8.48.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3)
