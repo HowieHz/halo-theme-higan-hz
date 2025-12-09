@@ -1,5 +1,5 @@
-import { promises as fs } from "fs";
-import { dirname, resolve } from "path";
+import { promises as fs } from "node:fs";
+import { dirname, resolve } from "node:path";
 import picomatch from "picomatch";
 import type { Plugin } from "vite";
 
@@ -89,19 +89,21 @@ export default function removeLegacyGuardJsPlugin(options: RemoveLegacyGuardJsOp
           scriptsToCheck.get(scriptSrc)?.add(ctx.path);
         }
 
-        // If any scripts marked for removal, remove them from HTML
-        if (scriptsToRemove.size > 0) {
-          let modifiedHtml = html;
-          for (const scriptSrc of scriptsToRemove) {
-            // Create regex to match the script tag with this src
-            const scriptTagPattern = new RegExp(
-              `<script\\s+type="module"\\s+crossorigin\\s+src="${scriptSrc.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[^>]*><\\/script>\\s*`,
-              "g",
-            );
-            modifiedHtml = modifiedHtml.replace(scriptTagPattern, "");
-          }
-          return modifiedHtml;
+        if (scriptsToRemove.size === 0) {
+          return html;
         }
+
+        // If any scripts marked for removal, remove them from HTML
+        let modifiedHtml = html;
+        for (const scriptSrc of scriptsToRemove) {
+          // Create regex to match the script tag with this src
+          const scriptTagPattern = new RegExp(
+            `<script\\s+type="module"\\s+crossorigin\\s+src="${scriptSrc.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[^>]*><\\/script>\\s*`,
+            "g",
+          );
+          modifiedHtml = modifiedHtml.replace(scriptTagPattern, "");
+        }
+        return modifiedHtml;
       },
     },
 

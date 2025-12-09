@@ -1,6 +1,6 @@
-import { promises as fs } from "fs";
-import { dirname, isAbsolute, join, normalize, resolve, sep } from "path";
-import { Plugin } from "vite";
+import { promises as fs } from "node:fs";
+import { dirname, isAbsolute, join, normalize, resolve, sep } from "node:path";
+import { type Plugin } from "vite";
 
 interface MoveHtmlOptions {
   /** Target directory, relative to project root, cannot contain `..` */

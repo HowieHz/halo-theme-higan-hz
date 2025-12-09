@@ -26,7 +26,6 @@ export default defineConfig({
     lightningcss: {
       // https://cn.vitejs.dev/guide/features#lightning-css
       targets: browserslistToTargets(browserslist(pkg.browserslist)),
-      minify: true,
     },
   },
   build: {

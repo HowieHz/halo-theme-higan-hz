@@ -7,7 +7,7 @@ export default function removeEmptyCssComments(): Plugin {
   return {
     name: "remove-empty-css-comments",
     enforce: "post", // Execute after other plugins
-    generateBundle(options, bundle) {
+    generateBundle(_options, bundle) {
       for (const fileName in bundle) {
         const chunk = bundle[fileName];
         if (chunk.type === "chunk" && /\.js$/.test(fileName)) {
