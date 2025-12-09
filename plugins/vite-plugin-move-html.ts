@@ -1,5 +1,5 @@
-import { promises as fs } from "fs";
-import { dirname, isAbsolute, join, normalize, resolve, sep } from "path";
+import { promises as fs } from "node:fs";
+import { dirname, isAbsolute, join, normalize, resolve, sep } from "node:path";
 import { Plugin } from "vite";
 
 interface MoveHtmlOptions {
