@@ -84,9 +84,7 @@ export default defineConfig({
       }),
     ],
     ssr: {
-      noExternal: [
-        "@nolebase/vitepress-plugin-highlight-targeted-heading",
-      ],
+      noExternal: ["@nolebase/vitepress-plugin-highlight-targeted-heading"],
     },
   },
 
