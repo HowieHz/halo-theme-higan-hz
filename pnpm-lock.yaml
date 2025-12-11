@@ -80,13 +80,13 @@ importers:
         version: 1.2.0(tailwindcss@4.1.17)
       '@tailwindcss/vite':
         specifier: ^4.1.17
-        version: 4.1.17(rolldown-vite@7.2.10(@types/node@24.10.3)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))
+        version: 4.1.17(rolldown-vite@7.2.10(@types/node@25.0.0)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))
       '@types/alpinejs':
         specifier: ^3.13.11
         version: 3.13.11
       '@types/node':
-        specifier: ^24.10.2
-        version: 24.10.3
+        specifier: ^25.0.0
+        version: 25.0.0
       '@types/picomatch':
         specifier: ^4.0.2
         version: 4.0.2
@@ -98,7 +98,7 @@ importers:
         version: 7.0.0-dev.20251211.1
       '@vitejs/plugin-legacy':
         specifier: ^7.2.1
-        version: 7.2.1(rolldown-vite@7.2.10(@types/node@24.10.3)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))(terser@5.44.1)
+        version: 7.2.1(rolldown-vite@7.2.10(@types/node@25.0.0)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))(terser@5.44.1)
       autocorrect-node:
         specifier: ^2.14.0
         version: 2.14.0
@@ -194,7 +194,7 @@ importers:
         version: 5.0.0(rollup@4.53.3)
       vite:
         specifier: npm:rolldown-vite@^7.2.10
-        version: rolldown-vite@7.2.10(@types/node@24.10.3)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)
+        version: rolldown-vite@7.2.10(@types/node@25.0.0)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)
       vue-eslint-parser:
         specifier: ^10.2.0
         version: 10.2.0(eslint@9.39.1(jiti@2.6.1))
@@ -210,13 +210,13 @@ importers:
     devDependencies:
       '@nolebase/vitepress-plugin-highlight-targeted-heading':
         specifier: ^2.18.2
-        version: 2.18.2(vitepress@2.0.0-alpha.15(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2))
+        version: 2.18.2(vitepress@2.0.0-alpha.15(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2))
       '@whyframe/core':
         specifier: ^0.1.14
-        version: 0.1.14(vite@7.2.6(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))
+        version: 0.1.14(vite@7.2.6(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))
       '@whyframe/vue':
         specifier: ^0.1.9
-        version: 0.1.9(@whyframe/core@0.1.14(vite@7.2.6(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)))(vite@7.2.6(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))
+        version: 0.1.9(@whyframe/core@0.1.14(vite@7.2.6(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)))(vite@7.2.6(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))
       cheerio:
         specifier: ^1.1.2
         version: 1.1.2
@@ -225,10 +225,10 @@ importers:
         version: 1.4.0
       vitepress:
         specifier: 2.0.0-alpha.15
-        version: 2.0.0-alpha.15(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2)
+        version: 2.0.0-alpha.15(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2)
       vitepress-plugin-pagefind:
         specifier: ^0.4.17
-        version: 0.4.17(pagefind@1.4.0)(typescript@5.9.3)(vitepress@2.0.0-alpha.15(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2))
+        version: 0.4.17(pagefind@1.4.0)(typescript@5.9.3)(vitepress@2.0.0-alpha.15(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2))
       vue:
         specifier: ^3.5.25
         version: 3.5.25(typescript@5.9.3)
@@ -1929,8 +1929,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@24.10.3':
-    resolution: {integrity: sha512-gqkrWUsS8hcm0r44yn7/xZeV1ERva/nLgrLxFRUGb7aoNMIJfZJ3AC261zDQuOAKC7MiXai1WCpYc48jAHoShQ==}
+  '@types/node@25.0.0':
+    resolution: {integrity: sha512-rl78HwuZlaDIUSeUKkmogkhebA+8K1Hy7tddZuJ3D0xV8pZSfsYGTsliGUol1JPzu9EKnTxPC4L1fiWouStRew==}
 
   '@types/picomatch@4.0.2':
     resolution: {integrity: sha512-qHHxQ+P9PysNEGbALT8f8YOSHW0KJu6l2xU8DYY0fu/EmGxXdVnuTLvFUvBgPJMSqXq29SYHveejeAha+4AYgA==}
@@ -6224,10 +6224,10 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
 
-  '@nolebase/vitepress-plugin-highlight-targeted-heading@2.18.2(vitepress@2.0.0-alpha.15(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2))':
+  '@nolebase/vitepress-plugin-highlight-targeted-heading@2.18.2(vitepress@2.0.0-alpha.15(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2))':
     dependencies:
       less: 4.4.2
-      vitepress: 2.0.0-alpha.15(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2)
+      vitepress: 2.0.0-alpha.15(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2)
 
   '@oxc-project/runtime@0.101.0': {}
 
@@ -6552,12 +6552,12 @@ snapshots:
       '@tailwindcss/oxide-win32-arm64-msvc': 4.1.17
       '@tailwindcss/oxide-win32-x64-msvc': 4.1.17
 
-  '@tailwindcss/vite@4.1.17(rolldown-vite@7.2.10(@types/node@24.10.3)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))':
+  '@tailwindcss/vite@4.1.17(rolldown-vite@7.2.10(@types/node@25.0.0)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))':
     dependencies:
       '@tailwindcss/node': 4.1.17
       '@tailwindcss/oxide': 4.1.17
       tailwindcss: 4.1.17
-      vite: rolldown-vite@7.2.10(@types/node@24.10.3)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)
+      vite: rolldown-vite@7.2.10(@types/node@25.0.0)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)
 
   '@trivago/prettier-plugin-sort-imports@5.2.2(@vue/compiler-sfc@3.5.25)(prettier@3.7.4)':
     dependencies:
@@ -6610,7 +6610,7 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@24.10.3':
+  '@types/node@25.0.0':
     dependencies:
       undici-types: 7.16.0
 
@@ -6807,7 +6807,7 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
 
-  '@vitejs/plugin-legacy@7.2.1(rolldown-vite@7.2.10(@types/node@24.10.3)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))(terser@5.44.1)':
+  '@vitejs/plugin-legacy@7.2.1(rolldown-vite@7.2.10(@types/node@25.0.0)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))(terser@5.44.1)':
     dependencies:
       '@babel/core': 7.28.5
       '@babel/plugin-transform-dynamic-import': 7.27.1(@babel/core@7.28.5)
@@ -6822,14 +6822,14 @@ snapshots:
       regenerator-runtime: 0.14.1
       systemjs: 6.15.1
       terser: 5.44.1
-      vite: rolldown-vite@7.2.10(@types/node@24.10.3)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)
+      vite: rolldown-vite@7.2.10(@types/node@25.0.0)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-vue@6.0.2(vite@7.2.6(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))(vue@3.5.25(typescript@5.9.3))':
+  '@vitejs/plugin-vue@6.0.2(vite@7.2.6(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))(vue@3.5.25(typescript@5.9.3))':
     dependencies:
       '@rolldown/pluginutils': 1.0.0-beta.50
-      vite: 7.2.6(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)
+      vite: 7.2.6(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)
       vue: 3.5.25(typescript@5.9.3)
 
   '@vue/compiler-core@3.5.25':
@@ -6954,16 +6954,16 @@ snapshots:
     dependencies:
       pathe: 2.0.3
 
-  '@whyframe/core@0.1.14(vite@7.2.6(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))':
+  '@whyframe/core@0.1.14(vite@7.2.6(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))':
     optionalDependencies:
-      vite: 7.2.6(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)
+      vite: 7.2.6(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)
 
-  '@whyframe/vue@0.1.9(@whyframe/core@0.1.14(vite@7.2.6(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)))(vite@7.2.6(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))':
+  '@whyframe/vue@0.1.9(@whyframe/core@0.1.14(vite@7.2.6(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)))(vite@7.2.6(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))':
     dependencies:
       '@vue/compiler-dom': 3.5.25
-      '@whyframe/core': 0.1.14(vite@7.2.6(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))
+      '@whyframe/core': 0.1.14(vite@7.2.6(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))
       magic-string: 0.30.21
-      vite: 7.2.6(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)
+      vite: 7.2.6(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)
 
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:
@@ -9052,7 +9052,7 @@ snapshots:
 
   rfdc@1.4.1: {}
 
-  rolldown-vite@7.2.10(@types/node@24.10.3)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2):
+  rolldown-vite@7.2.10(@types/node@25.0.0)(esbuild@0.25.12)(jiti@2.6.1)(less@4.4.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2):
     dependencies:
       '@oxc-project/runtime': 0.101.0
       fdir: 6.5.0(picomatch@4.0.3)
@@ -9062,7 +9062,7 @@ snapshots:
       rolldown: 1.0.0-beta.53
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@types/node': 24.10.3
+      '@types/node': 25.0.0
       esbuild: 0.25.12
       fsevents: 2.3.3
       jiti: 2.6.1
@@ -9615,7 +9615,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite@7.2.6(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2):
+  vite@7.2.6(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2):
     dependencies:
       esbuild: 0.25.12
       fdir: 6.5.0(picomatch@4.0.3)
@@ -9624,7 +9624,7 @@ snapshots:
       rollup: 4.53.3
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@types/node': 24.10.3
+      '@types/node': 25.0.0
       fsevents: 2.3.3
       jiti: 2.6.1
       less: 4.4.2
@@ -9633,20 +9633,20 @@ snapshots:
       terser: 5.44.1
       yaml: 2.8.2
 
-  vitepress-plugin-pagefind@0.4.17(pagefind@1.4.0)(typescript@5.9.3)(vitepress@2.0.0-alpha.15(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2)):
+  vitepress-plugin-pagefind@0.4.17(pagefind@1.4.0)(typescript@5.9.3)(vitepress@2.0.0-alpha.15(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2)):
     dependencies:
       '@sugarat/theme-shared': 0.0.7
       '@vueuse/core': 9.13.0(vue@3.5.25(typescript@5.9.3))
       javascript-stringify: 2.1.0
       pagefind: 1.4.0
-      vitepress: 2.0.0-alpha.15(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2)
+      vitepress: 2.0.0-alpha.15(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2)
       vue: 3.5.25(typescript@5.9.3)
       vue-command-palette: 0.1.4
     transitivePeerDependencies:
       - '@vue/composition-api'
       - typescript
 
-  vitepress@2.0.0-alpha.15(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2):
+  vitepress@2.0.0-alpha.15(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(stylus@0.64.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2):
     dependencies:
       '@docsearch/css': 4.3.2
       '@docsearch/js': 4.3.2
@@ -9655,7 +9655,7 @@ snapshots:
       '@shikijs/transformers': 3.19.0
       '@shikijs/types': 3.19.0
       '@types/markdown-it': 14.1.2
-      '@vitejs/plugin-vue': 6.0.2(vite@7.2.6(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))(vue@3.5.25(typescript@5.9.3))
+      '@vitejs/plugin-vue': 6.0.2(vite@7.2.6(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2))(vue@3.5.25(typescript@5.9.3))
       '@vue/devtools-api': 8.0.5
       '@vue/shared': 3.5.25
       '@vueuse/core': 14.1.0(vue@3.5.25(typescript@5.9.3))
@@ -9664,7 +9664,7 @@ snapshots:
       mark.js: 8.11.1
       minisearch: 7.2.0
       shiki: 3.19.0
-      vite: 7.2.6(@types/node@24.10.3)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)
+      vite: 7.2.6(@types/node@25.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(yaml@2.8.2)
       vue: 3.5.25(typescript@5.9.3)
     optionalDependencies:
       postcss: 8.5.6
