@@ -28,6 +28,9 @@ spec:
           label: 允许跳转的目标区域语言代码列表
           value: []
           help: "放在前面的会被优先匹配"
+          itemLabels:
+            - type: text
+              label: $value.v
           children:
             - $formkit: text
               name: v
@@ -54,6 +57,9 @@ spec:
           if: "$anti_mirror_site === true"
           label: 域名白名单列表
           value: []
+          itemLabels:
+            - type: text
+              label: $value.input_domain
           children:
             - $formkit: text
               name: input_domain
@@ -166,6 +172,11 @@ spec:
           name: custom_color_schema
           label: 自定义配色方案
           value: []
+          itemLabels:
+            - type: text
+              label: $value.id
+            - type: text
+              label: $value.type
           children:
             - $formkit: number
               name: id
@@ -401,6 +412,9 @@ spec:
           name: extra_menu_items
           label: 额外菜单项
           help: "在菜单中添加额外的菜单项"
+          itemLabels:
+            - type: text
+              label: $value.type
           value:
             - type: "search"
           children:
@@ -432,6 +446,9 @@ spec:
           name: footer_site_stats
           if: "$is_footer_site_stats_show === true"
           label: 统计项设置
+          itemLabels:
+            - type: text
+              label: $value.type
           value:
             - type: "visit"
               i18n_text: true
@@ -547,6 +564,9 @@ spec:
           if: "$is_18n_footer_content_show === true"
           label: 自定义多语言页面最底部内容
           value: []
+          itemLabels:
+            - type: text
+              label: $value.lang
           children:
             - $formkit: text
               name: lang
@@ -650,6 +670,9 @@ spec:
           if: "$is_random_sentence_show === true"
           label: 自定义句子内容
           value: []
+          itemLabels:
+            - type: text
+              label: $value.sentence
           children:
             - $formkit: text
               name: sentence
@@ -675,6 +698,9 @@ spec:
           if: "$is_i18n_resume_show === true"
           label: 自定义多语言公告栏内容
           value: []
+          itemLabels:
+            - type: text
+              label: $value.lang
           children:
             - $formkit: text
               name: lang
@@ -1171,8 +1197,11 @@ spec:
         - $formkit: array
           name: index_sns
           label: 首页社交资料展示
-          help: 注：刷新页面后发现下面选择的“类型“消失了是正常情况，数据实际是保存着的
+          help: 注：刷新页面后发现选择的“类型“消失了是正常情况，数据实际是保存着的
           value: []
+          itemLabels:
+            - type: text
+              label: $value.type.type
           children:
             - $formkit: select
               name: type
@@ -1296,6 +1325,13 @@ spec:
           label: 设定自定义资料
           value: []
           help: 上面预设的选项可能不能满足需求，那么来这自定义属于你的资料吧！（在此处自定义完后别忘记在上面添加“自定义资料”）
+          itemLabels:
+            - type: image
+              label: $value.icon
+            - type: text
+              label: $value.id
+            - type: text
+              label: $value.url
           children:
             - $formkit: text
               name: id
@@ -1324,6 +1360,9 @@ spec:
           name: button_config
           label: 分享按钮设置
           help: "@URL 和 @TITLE 是占位符，使用中会被替换为页面实际地址和标题"
+          itemLabels:
+            - type: text
+              label: $value.name
           value:
             - name: Native
               url: "@URL"

@@ -28,6 +28,9 @@ spec:
           label: Allowed target region language code list for redirect
           value: []
           help: "The ones in front will be matched first"
+          itemLabels:
+            - type: text
+              label: $value.v
           children:
             - $formkit: text
               name: v
@@ -54,6 +57,9 @@ spec:
           if: "$anti_mirror_site === true"
           label: Domain whitelist
           value: []
+          itemLabels:
+            - type: text
+              label: $value.input_domain
           children:
             - $formkit: text
               name: input_domain
@@ -166,6 +172,11 @@ spec:
           name: custom_color_schema
           label: Custom color scheme
           value: []
+          itemLabels:
+            - type: text
+              label: $value.id
+            - type: text
+              label: $value.type
           children:
             - $formkit: number
               name: id
@@ -401,6 +412,9 @@ spec:
           name: extra_menu_items
           label: Extra menu items
           help: "Add extra items to the menu"
+          itemLabels:
+            - type: text
+              label: $value.type
           value:
             - type: "search"
           children:
@@ -432,6 +446,9 @@ spec:
           name: footer_site_stats
           if: "$is_footer_site_stats_show === true"
           label: Statistics settings
+          itemLabels:
+            - type: text
+              label: $value.type
           value:
             - type: "visit"
               i18n_text: true
@@ -547,6 +564,9 @@ spec:
           if: "$is_18n_footer_content_show === true"
           label: Custom multi-language footer content
           value: []
+          itemLabels:
+            - type: text
+              label: $value.lang
           children:
             - $formkit: text
               name: lang
@@ -649,6 +669,9 @@ spec:
           if: "$is_random_sentence_show === true"
           label: Custom sentence content
           value: []
+          itemLabels:
+            - type: text
+              label: $value.sentence
           children:
             - $formkit: text
               name: sentence
@@ -673,6 +696,9 @@ spec:
           if: "$is_i18n_resume_show === true"
           label: Custom multi-language announcement content
           value: []
+          itemLabels:
+            - type: text
+              label: $value.lang
           children:
             - $formkit: text
               name: lang
@@ -1167,6 +1193,9 @@ spec:
           label: Social media settings
           help: "You can set up your social media information here, and the theme will automatically generate the corresponding link."
           value: []
+          itemLabels:
+            - type: text
+              label: $value.type.type
           children:
             - $formkit: select
               name: type
@@ -1290,6 +1319,13 @@ spec:
           label: Custom social media information
           value: []
           help: "You can define your own social media information here."
+          itemLabels:
+            - type: image
+              label: $value.icon
+            - type: text
+              label: $value.id
+            - type: text
+              label: $value.url
           children:
             - $formkit: text
               name: id
@@ -1318,6 +1354,9 @@ spec:
           name: button_config
           label: Share Button Settings
           help: "@URL and @TITLE are placeholders that will be replaced with the actual page URL and title."
+          itemLabels:
+            - type: text
+              label: $value.name
           value:
             - name: Native
               url: "@URL"
