@@ -1330,8 +1330,6 @@ spec:
               label: $value.icon
             - type: text
               label: $value.id
-            - type: text
-              label: $value.url
           children:
             - $formkit: text
               name: id
