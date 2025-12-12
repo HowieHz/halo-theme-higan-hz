@@ -22,7 +22,7 @@ spec:
           label: Auto redirect to browser language
           value: false
           help: "If enabled, when the browser language is different from the default page language and a corresponding language page exists, it will automatically redirect to the corresponding language page."
-        - $formkit: repeater
+        - $formkit: array
           name: auto_redirect_target_language_list
           if: "$is_auto_redirect_to_browser_language === true"
           label: Allowed target region language code list for redirect
@@ -49,7 +49,7 @@ spec:
           label: Anti-mirror site
           help: "If enabled, the theme will check the domain name of the current page. If the domain name is not in the whitelist, it will jump to the target link."
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: allow_site_whitelist
           if: "$anti_mirror_site === true"
           label: Domain whitelist
@@ -162,7 +162,7 @@ spec:
           value: ""
           help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
-        - $formkit: repeater
+        - $formkit: array
           name: custom_color_schema
           label: Custom color scheme
           value: []
@@ -397,7 +397,7 @@ spec:
           if: "$is_show_header_icon===true"
           label: Avatar grayscale
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: extra_menu_items
           label: Extra menu items
           help: "Add extra items to the menu"
@@ -428,29 +428,29 @@ spec:
           name: is_footer_site_stats_show
           label: Site statistics information at the bottom of the page
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: footer_site_stats
           if: "$is_footer_site_stats_show === true"
           label: Statistics settings
           value:
             - type: "visit"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "post"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "upvote"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "comment"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "category"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "wordcount"
-              icon: ""
               i18n_text: true
+              icon: ""
           children:
             - $formkit: select
               name: type
@@ -541,7 +541,7 @@ spec:
           label: Multi-language footer content support
           help: "Halo settings - Code injection - Footer content display position is above 'Theme Information', 'Copyright Information', and 'Footer Menu'.\nThe footer content filled in here is below the 'Footer Menu', at the very bottom of the page."
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: i18n_footer_content
           if: "$is_18n_footer_content_show === true"
           label: Custom multi-language footer content
@@ -643,7 +643,7 @@ spec:
           name: is_random_sentence_show
           label: Custom random sentence display
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: random_sentence_list
           if: "$is_random_sentence_show === true"
           label: Custom sentence content
@@ -667,7 +667,7 @@ spec:
           name: is_i18n_resume_show
           label: Multi-language personal profile/announcement support
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: i18n_resume
           if: "$is_i18n_resume_show === true"
           label: Custom multi-language announcement content
@@ -1161,7 +1161,7 @@ spec:
     - group: sns
       label: Social media settings/RSS
       formSchema:
-        - $formkit: repeater
+        - $formkit: array
           name: index_sns
           label: Social media settings
           help: "You can set up your social media information here, and the theme will automatically generate the corresponding link."
@@ -1284,7 +1284,7 @@ spec:
               name: input_value
               label: Value
               validation: "required"
-        - $formkit: repeater
+        - $formkit: array
           name: custom_sns
           label: Custom social media information
           value: []
@@ -1313,7 +1313,7 @@ spec:
     - group: share
       label: Custom Share Buttons
       formSchema:
-        - $formkit: repeater
+        - $formkit: array
           name: button_config
           label: Share Button Settings
           help: "@URL and @TITLE are placeholders that will be replaced with the actual page URL and title."
