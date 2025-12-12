@@ -1307,11 +1307,11 @@ spec:
               label: 链接
               validation: "required"
               help: "如：https://howiehz.top"
-            - $formkit: text
+            - $formkit: iconify
               name: icon
               label: 图标
+              format: dataurl
               validation: "required"
-              help: "配置教程：https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
             - $formkit: text
               name: aria_label
               label: aria-label
@@ -1388,11 +1388,11 @@ spec:
               label: 链接
               value: ""
               validation: "required"
-            - $formkit: text
+            - $formkit: iconify
               name: icon
               label: 图标
+              format: dataurl
               value: ""
-              help: "配置后会覆盖默认图标，配置教程：https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
             - $formkit: text
               name: aria_label
               label: aria-label

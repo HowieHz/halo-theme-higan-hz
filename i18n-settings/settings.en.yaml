@@ -474,9 +474,10 @@ spec:
               name: i18n_text
               label: Wrap text in multiple languages
               value: true
-            - $formkit: text
+            - $formkit: iconify
               name: icon
               label: Icon to the left of the text
+              format: dataurl
               value: ""
         - $formkit: checkbox
           name: is_footer_theme_info_show
@@ -1300,11 +1301,11 @@ spec:
               label: URL
               validation: "required"
               help: "The URL of the social media information, such as: https://howiehz.top"
-            - $formkit: text
+            - $formkit: iconify
               name: icon
               label: Icon
+              format: dataurl
               validation: "required"
-              help: "Configuration tutorial: https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
             - $formkit: text
               name: aria_label
               label: aria-label
@@ -1381,11 +1382,11 @@ spec:
               label: URL
               value: ""
               validation: "required"
-            - $formkit: text
+            - $formkit: iconify
               name: icon
               label: Icon
+              format: dataurl
               value: ""
-              help: "Configuration tutorial: https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
             - $formkit: text
               name: aria_label
               label: aria-label
