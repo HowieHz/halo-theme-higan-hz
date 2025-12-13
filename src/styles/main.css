@@ -443,3 +443,7 @@ pre {
     padding: 1em;
   }
 }
+
+.min-h-100vh {
+  min-height: 100vh !important;
+}
