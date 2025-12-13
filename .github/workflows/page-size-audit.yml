@@ -358,6 +358,9 @@ jobs:
     needs: audit
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    permissions:  # use permissions because use of pr-comments
+      contents: read
+      pull-requests: write
     
     steps:
       - name: Checkout
