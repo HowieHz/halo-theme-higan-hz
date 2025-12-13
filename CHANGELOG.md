@@ -2,6 +2,12 @@
 
 <!-- markdownlint-disable MD024 -->
 
+## [1.49.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.1...v1.49.2) (2025-12-13)
+
+### 🐛 错误修复
+
+- 修复`强制页脚、页码在页面底部`配置项失效的问题。
+
 ## [1.49.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.0...v1.49.1) (2025-12-06)
 
 ### 🐛 错误修复
