@@ -4,6 +4,12 @@ outline: deep
 
 # 自定义图标
 
+::: warning
+
+此文档适用于 < 1.50.0
+
+:::
+
 ::: tip
 
 如问题仍未解决，可前往 [GitHub Issues](https://github.com/HowieHz/halo-theme-higan-hz/issues) 搜索或提交新的反馈，或加入 QQ 群 `694413711` 获取社区支持。

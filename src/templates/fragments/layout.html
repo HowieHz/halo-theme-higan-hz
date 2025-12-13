@@ -739,7 +739,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
                 >
                   <span
                     class="iconify"
-                    th:style="|--svg:${item?.icon}|"
+                    th:style="|--svg:url('${item?.icon}')|"
                     th:if="${item?.icon != null} and ${item?.icon != ''}"
                   ></span>
                   <th:block th:if="not ${item?.i18n_text}">

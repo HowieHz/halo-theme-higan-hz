@@ -8,7 +8,7 @@ on:
         required: false
         default: 'v1.0.0'
       end_version:
-        description: '结束版本 (例如: v1.49.2，留空表示最新版本)'
+        description: '结束版本 (例如: v1.50.0，留空表示最新版本)'
         required: false
         default: ''
       create_pr:
@@ -212,7 +212,7 @@ jobs:
           
           JAVA_VERSION=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}')
           echo "JAVA_VERSION=${JAVA_VERSION}" >> $GITHUB_ENV
-          HALO_VERSION="2.21.10"
+          HALO_VERSION="2.22.0-alpha.1"
           echo "HALO_VERSION=${HALO_VERSION}" >> $GITHUB_ENV
           
           mkdir -p ~/logs
