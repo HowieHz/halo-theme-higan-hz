@@ -125,6 +125,7 @@ const QuickJumpConfig = (props) => {
 - 重复器：可重复一组输入。可增加组，移除组，交换任意组顺序。
 - 代码输入框（编程语言）：提供一个多行的代码输入框，会按照指定编程语言进行高亮。
 - 附件：选择上传的附件。
+- 图标：使用 Halo CMS 提供的图标设置框，你可在其中选择任意 [iconify](https://icon-sets.iconify.design/) 图标。
 
 <!-- - 数组：多个值的列表，如 `[1, 2, 3]`
 - 对象：键值对集合，如 `{name: "张三", age: 20}`
@@ -2022,31 +2023,12 @@ const QuickJumpConfig = (props) => {
 > :::
 > ::: info 🏷️ 类型
 >
-> 字符串
+> 图标
 >
 > :::
 > ::: info ⭐ 默认值
 >
 > 空
->
-> :::
-> ::: info 💡 示例值
->
-> <!-- markdownlint-disable MD013 -->
->
-> `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M23 10a2 2 0 0 0-2-2h-6.32l.96-4.57c.02-.1.03-.21.03-.32c0-.41-.17-.79-.44-1.06L14.17 1L7.59 7.58C7.22 7.95 7 8.45 7 9v10a2 2 0 0 0 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73zM1 21h4V9H1z'/%3E%3C/svg%3E")`
->
-> <!-- markdownlint-enable MD013 -->
->
-> :::
-> ::: info ⚠️ 外部约束
->
-> - 值必须是合法的 CSS `url(...)` 格式，支持以下三种常见形式：
->   1. 内联 SVG（data URI，百分号编码）：`url("data:image/svg+xml,%3Csvg...%3E")`
->   2. 内联 SVG（data URI，Base64 编码）：`url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0i...")`
->   3. 外部 SVG 文件链接：`url("/upload/myicon.svg")`（需在后台附件管理上传 `svg` 格式文件后引用）
->
-> 获取方法请见[教程：自定义图标](/tutorial/custom-svg)。
 >
 > :::
 
@@ -5598,7 +5580,7 @@ HTML 代码也是可以的：
 
 - 识别码：任意字母、数字、下划线组合（如 `myBlog`）
 - 链接：完整的 URL（如 `https://example.com`）
-- 图标：CSS `url(...)` 格式图标代码。获取方法请见[教程：自定义图标](/tutorial/custom-svg)。
+- 图标
 - aria-label：无障碍标签（如 `Find me on my blog`）
 
 :::
@@ -5640,7 +5622,7 @@ HTML 代码也是可以的：
 ::: info ℹ️ 补充信息
 
 - `@URL` 和 `@TITLE` 是占位符，使用时会被替换为页面实际地址和标题
-- 每个分享按钮有四个可配置项：名称、链接、图标、`aria-label`（无障碍标签）
+- 每个分享按钮有四个可配置项：名称、链接、图标（设定后将覆盖默认图标）、`aria-label`（无障碍标签）
 - 可以自由调整顺序、删除或新增分享按钮
 
 :::
