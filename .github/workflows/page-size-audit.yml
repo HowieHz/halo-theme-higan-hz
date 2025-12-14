@@ -260,83 +260,114 @@ jobs:
           
           echo "🎉 插件禁用完成"
 
-      - name: Install Lighthouse CI and Argos CLI
+      - name: Run Lighthouse CI and Playwright screenshots in parallel
+        shell: bash
         run: |
-          pnpm add -g @lhci/cli@0.15.x @argos-ci/cli
-          pnpm add -w -D playwright @argos-ci/playwright
-          pnpm exec playwright install --with-deps chromium
-          echo "LHCI_VERSION=$(lhci --version)" >> $GITHUB_ENV
+          set -e
+          mkdir -p ~/logs
 
-      - name: Run Lighthouse CI
-        run: |
-          mkdir -p ./reports
-          
-          # 注意：不测试 404 页面，因为它返回 404 状态码会导致 Lighthouse 失败
-          echo "开始运行 Lighthouse CI 测试..."
-          lhci autorun \
-            --collect.url=http://localhost:8090/ \
-            --collect.url=http://localhost:8090/archives \
-            --collect.url=http://localhost:8090/archives/hello-halo \
-            --collect.url=http://localhost:8090/tags \
-            --collect.url=http://localhost:8090/tags/halo \
-            --collect.url=http://localhost:8090/categories \
-            --collect.url=http://localhost:8090/categories/default \
-            --collect.url=http://localhost:8090/authors/admin \
-            --collect.url=http://localhost:8090/about \
-            --collect.numberOfRuns=1 \
-            --collect.settings.preset=desktop \
-            --collect.settings.throttling.rttMs=0 \
-            --collect.settings.throttling.throughputKbps=0 \
-            --collect.settings.throttling.cpuSlowdownMultiplier=1 \
-            --collect.settings.throttling.requestLatencyMs=0 \
-            --collect.settings.throttling.downloadThroughputKbps=0 \
-            --collect.settings.throttling.uploadThroughputKbps=0 \
-            --upload.target=filesystem \
-            --upload.outputDir=.lighthouseci || {
-              echo "❌ Lighthouse CI 执行失败"
-              ls -la ./.lighthouseci/ || echo ".lighthouseci 目录不存在"
-              exit 1
-            }
-          
-          echo "✓ Lighthouse CI 执行完成"
+          # ============ Task A: Lighthouse CI ============
+          (
+            set -e
+            echo "📦 [LHCI] Install LHCI"
+            pnpm add -g @lhci/cli@0.15.x || true
+            echo "LHCI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV || true
 
-      - name: Take screenshots with Playwright
-        run: |
-          mkdir -p screenshots
-          node --input-type=module -e "
-          import { chromium } from 'playwright';
-          import { argosScreenshot } from '@argos-ci/playwright';
+            echo "🚀 [LHCI] Run Lighthouse CI"
+            mkdir -p ./reports
+            lhci autorun \
+              --collect.url=http://localhost:8090/ \
+              --collect.url=http://localhost:8090/archives \
+              --collect.url=http://localhost:8090/archives/hello-halo \
+              --collect.url=http://localhost:8090/tags \
+              --collect.url=http://localhost:8090/tags/halo \
+              --collect.url=http://localhost:8090/categories \
+              --collect.url=http://localhost:8090/categories/default \
+              --collect.url=http://localhost:8090/authors/admin \
+              --collect.url=http://localhost:8090/about \
+              --collect.numberOfRuns=1 \
+              --collect.settings.preset=desktop \
+              --collect.settings.throttling.rttMs=0 \
+              --collect.settings.throttling.throughputKbps=0 \
+              --collect.settings.throttling.cpuSlowdownMultiplier=1 \
+              --collect.settings.throttling.requestLatencyMs=0 \
+              --collect.settings.throttling.downloadThroughputKbps=0 \
+              --collect.settings.throttling.uploadThroughputKbps=0 \
+              --upload.target=filesystem \
+              --upload.outputDir=.lighthouseci || {
+                echo "❌ [LHCI] Lighthouse CI failed"
+                ls -la ./.lighthouseci/ || echo ".lighthouseci directory not found"
+                exit 1
+              }
+            echo "✅ [LHCI] Complete"
+          ) > ~/logs/lhci.log 2>&1 &
+          LHCI_PID=$!
 
-          (async () => {
-            const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-            const context = await browser.newContext({ baseURL: 'http://localhost:8090' });
-            const page = await context.newPage();
+          # ============ Task B: Playwright + Argos ============
+          (
+            set -e
+            echo "📦 [Playwright] Install Playwright and Argos"
+            pnpm add -g @argos-ci/cli || true
+            pnpm add -w -D playwright @argos-ci/playwright || true
+            pnpm exec playwright install --with-deps chromium
 
-            const pages = [
-              { name: 'home', path: '/' },
-              { name: 'archives', path: '/archives' },
-              { name: 'archives-hello-halo', path: '/archives/hello-halo' },
-              { name: 'tags', path: '/tags' },
-              { name: 'tags-halo', path: '/tags/halo' },
-              { name: 'categories', path: '/categories' },
-              { name: 'categories-default', path: '/categories/default' },
-              { name: 'author-admin', path: '/authors/admin' },
-              { name: 'about', path: '/about' }
-            ];
+            echo "📸 [Playwright] Take screenshots"
+            mkdir -p screenshots
+            node --input-type=module -e "
+            import { chromium } from 'playwright';
+            import { argosScreenshot } from '@argos-ci/playwright';
 
-            for (const { name, path } of pages) {
-              await page.goto(path);
-              // await page.screenshot({ path: `screenshots/${name}.png`, fullPage: true });
-              await argosScreenshot(page, name);
-            }
+            (async () => {
+              const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+              const context = await browser.newContext({ baseURL: 'http://localhost:8090' });
+              const page = await context.newPage();
 
-            await browser.close();
-          })();
-          "
+              const pages = [
+                { name: 'home', path: '/' },
+                { name: 'archives', path: '/archives' },
+                { name: 'archives-hello-halo', path: '/archives/hello-halo' },
+                { name: 'tags', path: '/tags' },
+                { name: 'tags-halo', path: '/tags/halo' },
+                { name: 'categories', path: '/categories' },
+                { name: 'categories-default', path: '/categories/default' },
+                { name: 'author-admin', path: '/authors/admin' },
+                { name: 'about', path: '/about' }
+              ];
 
-      - name: Upload screenshots to Argos
-        run: |
-          argos upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/
+              for (const { name, path } of pages) {
+                await page.goto(path);
+                await argosScreenshot(page, name);
+              }
+
+              await browser.close();
+            })();
+            "
+
+            echo "☁️ [Playwright] Upload screenshots to Argos"
+            argos upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || true
+            echo "✅ [Playwright] Complete"
+          ) > ~/logs/playwright.log 2>&1 &
+          PLAY_PID=$!
+
+          echo "⏳ Waiting parallel tasks..."
+          wait $LHCI_PID
+          LHCI_CODE=$?
+          wait $PLAY_PID
+          PLAY_CODE=$?
+
+          if [ $LHCI_CODE -ne 0 ]; then
+            echo "❌ LHCI task failed. Log output:"
+            sed -n '1,200p' ~/logs/lhci.log || true
+            exit $LHCI_CODE
+          fi
+
+          if [ $PLAY_CODE -ne 0 ]; then
+            echo "❌ Playwright task failed. Log output:"
+            sed -n '1,200p' ~/logs/playwright.log || true
+            exit $PLAY_CODE
+          fi
+
+          echo "🎉 Both LHCI and Playwright tasks succeeded"
       
       - name: Upload screenshots (${{ matrix.ref_name }})
         if: always()
@@ -643,82 +674,114 @@ jobs:
           
           echo "🎉 插件禁用完成"
 
-      - name: Install Lighthouse CI and Argos CLI
+      - name: Run Lighthouse CI and Playwright screenshots in parallel
+        shell: bash
         run: |
-          pnpm add -g @lhci/cli@0.15.x @argos-ci/cli
-          pnpm add -w -D playwright @argos-ci/playwright
-          pnpm exec playwright install --with-deps chromium
-          echo "LHCI_VERSION=$(lhci --version)" >> $GITHUB_ENV
+          set -e
+          mkdir -p ~/logs
 
-      - name: Run Lighthouse CI
-        run: |
-          mkdir -p ./reports
-          
-          echo "开始运行 Lighthouse CI 测试..."
-          lhci autorun \
-            --collect.url=http://localhost:8090/ \
-            --collect.url=http://localhost:8090/archives \
-            --collect.url=http://localhost:8090/archives/hello-halo \
-            --collect.url=http://localhost:8090/tags \
-            --collect.url=http://localhost:8090/tags/halo \
-            --collect.url=http://localhost:8090/categories \
-            --collect.url=http://localhost:8090/categories/default \
-            --collect.url=http://localhost:8090/authors/admin \
-            --collect.url=http://localhost:8090/about \
-            --collect.numberOfRuns=1 \
-            --collect.settings.preset=desktop \
-            --collect.settings.throttling.rttMs=0 \
-            --collect.settings.throttling.throughputKbps=0 \
-            --collect.settings.throttling.cpuSlowdownMultiplier=1 \
-            --collect.settings.throttling.requestLatencyMs=0 \
-            --collect.settings.throttling.downloadThroughputKbps=0 \
-            --collect.settings.throttling.uploadThroughputKbps=0 \
-            --upload.target=filesystem \
-            --upload.outputDir=.lighthouseci || {
-              echo "❌ Lighthouse CI 执行失败"
-              ls -la ./.lighthouseci/ || echo ".lighthouseci 目录不存在"
-              exit 1
-            }
-          
-          echo "✓ Lighthouse CI 执行完成"
+          # ============ Task A: Lighthouse CI ============
+          (
+            set -e
+            echo "📦 [LHCI] Install LHCI"
+            pnpm add -g @lhci/cli@0.15.x || true
+            echo "LHCI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV || true
 
-      - name: Take screenshots with Playwright
-        run: |
-          mkdir -p screenshots
-          node --input-type=module -e "
-          import { chromium } from 'playwright';
-          import { argosScreenshot } from '@argos-ci/playwright';
+            echo "🚀 [LHCI] Run Lighthouse CI"
+            mkdir -p ./reports
+            lhci autorun \
+              --collect.url=http://localhost:8090/ \
+              --collect.url=http://localhost:8090/archives \
+              --collect.url=http://localhost:8090/archives/hello-halo \
+              --collect.url=http://localhost:8090/tags \
+              --collect.url=http://localhost:8090/tags/halo \
+              --collect.url=http://localhost:8090/categories \
+              --collect.url=http://localhost:8090/categories/default \
+              --collect.url=http://localhost:8090/authors/admin \
+              --collect.url=http://localhost:8090/about \
+              --collect.numberOfRuns=1 \
+              --collect.settings.preset=desktop \
+              --collect.settings.throttling.rttMs=0 \
+              --collect.settings.throttling.throughputKbps=0 \
+              --collect.settings.throttling.cpuSlowdownMultiplier=1 \
+              --collect.settings.throttling.requestLatencyMs=0 \
+              --collect.settings.throttling.downloadThroughputKbps=0 \
+              --collect.settings.throttling.uploadThroughputKbps=0 \
+              --upload.target=filesystem \
+              --upload.outputDir=.lighthouseci || {
+                echo "❌ [LHCI] Lighthouse CI failed"
+                ls -la ./.lighthouseci/ || echo ".lighthouseci directory not found"
+                exit 1
+              }
+            echo "✅ [LHCI] Complete"
+          ) > ~/logs/lhci.log 2>&1 &
+          LHCI_PID=$!
 
-          (async () => {
-            const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-            const context = await browser.newContext({ baseURL: 'http://localhost:8090' });
-            const page = await context.newPage();
+          # ============ Task B: Playwright + Argos ============
+          (
+            set -e
+            echo "📦 [Playwright] Install Playwright and Argos"
+            pnpm add -g @argos-ci/cli || true
+            pnpm add -w -D playwright @argos-ci/playwright || true
+            pnpm exec playwright install --with-deps chromium
 
-            const pages = [
-              { name: 'home', path: '/' },
-              { name: 'archives', path: '/archives' },
-              { name: 'archives-hello-halo', path: '/archives/hello-halo' },
-              { name: 'tags', path: '/tags' },
-              { name: 'tags-halo', path: '/tags/halo' },
-              { name: 'categories', path: '/categories' },
-              { name: 'categories-default', path: '/categories/default' },
-              { name: 'author-admin', path: '/authors/admin' },
-              { name: 'about', path: '/about' }
-            ];
+            echo "📸 [Playwright] Take screenshots"
+            mkdir -p screenshots
+            node --input-type=module -e "
+            import { chromium } from 'playwright';
+            import { argosScreenshot } from '@argos-ci/playwright';
 
-            for (const { name, path } of pages) {
-              await page.goto(path);
-              // await page.screenshot({ path: `screenshots/${name}.png`, fullPage: true });
-              await argosScreenshot(page, name);
-            }
+            (async () => {
+              const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+              const context = await browser.newContext({ baseURL: 'http://localhost:8090' });
+              const page = await context.newPage();
 
-            await browser.close();
-          })();
-          "
+              const pages = [
+                { name: 'home', path: '/' },
+                { name: 'archives', path: '/archives' },
+                { name: 'archives-hello-halo', path: '/archives/hello-halo' },
+                { name: 'tags', path: '/tags' },
+                { name: 'tags-halo', path: '/tags/halo' },
+                { name: 'categories', path: '/categories' },
+                { name: 'categories-default', path: '/categories/default' },
+                { name: 'author-admin', path: '/authors/admin' },
+                { name: 'about', path: '/about' }
+              ];
 
-      - name: Upload screenshots to Argos
-        run: |
-          argos upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/
+              for (const { name, path } of pages) {
+                await page.goto(path);
+                await argosScreenshot(page, name);
+              }
+
+              await browser.close();
+            })();
+            "
+
+            echo "☁️ [Playwright] Upload screenshots to Argos"
+            argos upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || true
+            echo "✅ [Playwright] Complete"
+          ) > ~/logs/playwright.log 2>&1 &
+          PLAY_PID=$!
+
+          echo "⏳ Waiting parallel tasks..."
+          wait $LHCI_PID
+          LHCI_CODE=$?
+          wait $PLAY_PID
+          PLAY_CODE=$?
+
+          if [ $LHCI_CODE -ne 0 ]; then
+            echo "❌ LHCI task failed. Log output:"
+            sed -n '1,200p' ~/logs/lhci.log || true
+            exit $LHCI_CODE
+          fi
+
+          if [ $PLAY_CODE -ne 0 ]; then
+            echo "❌ Playwright task failed. Log output:"
+            sed -n '1,200p' ~/logs/playwright.log || true
+            exit $PLAY_CODE
+          fi
+
+          echo "🎉 Both LHCI and Playwright tasks succeeded"
       
       - name: Upload screenshots (${{ matrix.ref_name }})
         if: always()
