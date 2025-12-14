@@ -71,13 +71,23 @@ jobs:
           # ============ 任务 1: 主题构建 ============
           (
             set -e
+            # lightweight timing: record task and key step timestamps (milliseconds)
+            task_start=$(date +%s%3N)
+            echo "TASK_START:${task_start}" > ~/logs/theme.timing
+
             echo "📦 [Theme] 开始构建"
-            
+
+            step_start=$(date +%s%3N); echo "STEP_START:pnpm-install:${step_start}" >> ~/logs/theme.timing
             pnpm install
+            step_end=$(date +%s%3N); echo "STEP_END:pnpm-install:${step_end}" >> ~/logs/theme.timing
+
+            step_start=$(date +%s%3N); echo "STEP_START:pnpm-build:${step_start}" >> ~/logs/theme.timing
             pnpm build
-            
+            step_end=$(date +%s%3N); echo "STEP_END:pnpm-build:${step_end}" >> ~/logs/theme.timing
+
             mkdir -p ~/builds/tmp ~/builds/target
-            
+
+            step_start=$(date +%s%3N); echo "STEP_START:pack-files:${step_start}" >> ~/logs/theme.timing
             cp -r . ~/builds/tmp
             mkdir -p ~/builds/tmp-included
             cd ~/builds/tmp
@@ -85,7 +95,9 @@ jobs:
             cd ~/builds/tmp-included
             zip -9 -r howiehz-higan-cn.zip .
             mv howiehz-higan-cn.zip ~/builds/target/
-            
+            step_end=$(date +%s%3N); echo "STEP_END:pack-files:${step_end}" >> ~/logs/theme.timing
+
+            task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/theme.timing
             echo "✅ [Theme] 完成"
           ) > ~/logs/theme.log 2>&1 &
           THEME_PID=$!
@@ -93,15 +105,22 @@ jobs:
           # ============ 任务 2: Halo 设置 ============
           (
             set -e
+            # lightweight timing for Halo setup (milliseconds)
+            task_start=$(date +%s%3N)
+            echo "TASK_START:${task_start}" > ~/logs/halo.timing
+
             echo "🔧 [Halo] 开始设置"
-            
+
+            step_start=$(date +%s%3N); echo "STEP_START:download-jar:${step_start}" >> ~/logs/halo.timing
             # 下载 Halo
             # 优先从 GitHub Releases 下载，失败则从官方备用地址下载
             if ! wget -q "https://github.com/halo-dev/halo/releases/download/v${HALO_VERSION}/halo-${HALO_VERSION}.jar" -O ~/halo.jar; then
               wget -q "https://dl.halo.run/release/halo-${HALO_VERSION}.jar" -O ~/halo.jar
             fi
-            
+            step_end=$(date +%s%3N); echo "STEP_END:download-jar:${step_end}" >> ~/logs/halo.timing
+
             # 创建配置
+            step_start=$(date +%s%3N); echo "STEP_START:create-config:${step_start}" >> ~/logs/halo.timing
             mkdir -p ~/.halo2
             cat > ~/.halo2/application.yaml << 'EOF'
           server:
@@ -124,14 +143,18 @@ jobs:
             work-dir: ${user.home}/.halo2
             external-url: http://localhost:8090
           EOF
-            
+            step_end=$(date +%s%3N); echo "STEP_END:create-config:${step_end}" >> ~/logs/halo.timing
+
             # 启动 Halo
+            step_start=$(date +%s%3N); echo "STEP_START:start-jar:${step_start}" >> ~/logs/halo.timing
             nohup java -jar ~/halo.jar \
               --spring.config.additional-location=optional:file:${HOME}/.halo2/ \
               -Dfile.encoding=UTF-8 > ~/logs/halo-startup.log 2>&1 &
             echo $! > ~/halo.pid
-            
+            step_end=$(date +%s%3N); echo "STEP_END:start-jar:${step_end}" >> ~/logs/halo.timing
+
             # 等待就绪
+            step_start=$(date +%s%3N); echo "STEP_START:wait-readiness:${step_start}" >> ~/logs/halo.timing
             for i in {1..60}; do
               if curl -sf http://localhost:8090/actuator/health/readiness >/dev/null 2>&1; then
                 echo "✅ [Halo] 就绪 (${i}次尝试)"
@@ -140,12 +163,14 @@ jobs:
               [ $i -eq 60 ] && { echo "❌ [Halo] 超时"; cat ~/logs/halo-startup.log; exit 1; }
               sleep 1
             done
-            
+            step_end=$(date +%s%3N); echo "STEP_END:wait-readiness:${step_end}" >> ~/logs/halo.timing
+
             # 初始化系统
+            step_start=$(date +%s%3N); echo "STEP_START:init-system:${step_start}" >> ~/logs/halo.timing
             echo "正在初始化 Halo 系统..."
             response=$(curl -c /tmp/cookies.txt -s http://localhost:8090/system/setup)
-            csrf_token=$(echo "$response" | grep '_csrf' | sed -n 's/.*value="\([^"]*\)".*/\1/p')
-            
+            csrf_token=$(echo "$response" | grep '_csrf' | sed -n 's/.*value="\([^\"]*\)".*/\1/p')
+
             curl -b /tmp/cookies.txt -X POST \
               http://localhost:8090/system/setup \
               -H "Content-Type: application/x-www-form-urlencoded" \
@@ -158,7 +183,9 @@ jobs:
               -d "password=admin" \
               -d "confirmPassword=admin" \
               -L -s > /dev/null
+            step_end=$(date +%s%3N); echo "STEP_END:init-system:${step_end}" >> ~/logs/halo.timing
 
+            task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/halo.timing
             echo "✅ [Halo] 完成"
           ) > ~/logs/halo.log 2>&1 &
           HALO_PID=$!
@@ -269,15 +296,22 @@ jobs:
           # ============ Task A: Lighthouse CI ============
           (
             set -e
+            # timing for LHCI task (milliseconds)
+            task_start=$(date +%s%3N)
+            echo "TASK_START:${task_start}" > ~/logs/lhci.timing
+
             echo "📦 [LHCI] Install LHCI"
+            step_start=$(date +%s%3N); echo "STEP_START:check-lhci:${step_start}" >> ~/logs/lhci.timing
             if ! command -v lhci >/dev/null 2>&1; then
               pnpm add -g @lhci/cli@0.15.x || echo "⚠️  LHCI install failed, continuing"
             else
               echo "✓ lhci already installed"
             fi
+            step_end=$(date +%s%3N); echo "STEP_END:check-lhci:${step_end}" >> ~/logs/lhci.timing
             echo "LHCI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV
 
             echo "🚀 [LHCI] Run Lighthouse CI"
+            step_start=$(date +%s%3N); echo "STEP_START:lhci-run:${step_start}" >> ~/logs/lhci.timing
             mkdir -p ./reports
             lhci autorun \
               --collect.url=http://localhost:8090/ \
@@ -303,6 +337,8 @@ jobs:
                 ls -la ./.lighthouseci/ || echo ".lighthouseci directory not found"
                 exit 1
               }
+            step_end=$(date +%s%3N); echo "STEP_END:lhci-run:${step_end}" >> ~/logs/lhci.timing
+            task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/lhci.timing
             echo "✅ [LHCI] Complete"
           ) > ~/logs/lhci.log 2>&1 &
           LHCI_PID=$!
@@ -310,22 +346,33 @@ jobs:
           # ============ Task B: Playwright + Argos ============
           (
             set -e
+            # timing for Playwright task (milliseconds)
+            task_start=$(date +%s%3N)
+            echo "TASK_START:${task_start}" > ~/logs/playwright.timing
+
             echo "📦 [Playwright] Install Playwright and Argos"
+            step_start=$(date +%s%3N); echo "STEP_START:check-argos:${step_start}" >> ~/logs/playwright.timing
             if ! command -v argos >/dev/null 2>&1; then
               pnpm add -g @argos-ci/cli || echo "⚠️  Argos CLI install failed, continuing"
             else
               echo "✓ argos already installed"
             fi
+            step_end=$(date +%s%3N); echo "STEP_END:check-argos:${step_end}" >> ~/logs/playwright.timing
 
+            step_start=$(date +%s%3N); echo "STEP_START:check-playwright:${step_start}" >> ~/logs/playwright.timing
             if ! pnpm exec -- playwright --version >/dev/null 2>&1; then
               pnpm add -w -D playwright @argos-ci/playwright || echo "⚠️  Playwright install failed, continuing"
             else
               echo "✓ playwright already available via pnpm exec"
             fi
+            step_end=$(date +%s%3N); echo "STEP_END:check-playwright:${step_end}" >> ~/logs/playwright.timing
 
+            step_start=$(date +%s%3N); echo "STEP_START:install-browsers:${step_start}" >> ~/logs/playwright.timing
             pnpm exec playwright install --with-deps chromium
+            step_end=$(date +%s%3N); echo "STEP_END:install-browsers:${step_end}" >> ~/logs/playwright.timing
 
             echo "📸 [Playwright] Take screenshots"
+            step_start=$(date +%s%3N); echo "STEP_START:screenshots:${step_start}" >> ~/logs/playwright.timing
             mkdir -p screenshots
             node --input-type=module -e "
             import { chromium } from 'playwright';
@@ -356,13 +403,18 @@ jobs:
               await browser.close();
             })();
             "
+            step_end=$(date +%s%3N); echo "STEP_END:screenshots:${step_end}" >> ~/logs/playwright.timing
 
             echo "☁️ [Playwright] Upload screenshots to Argos"
+            step_start=$(date +%s%3N); echo "STEP_START:upload-argos:${step_start}" >> ~/logs/playwright.timing
             if [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
               argos upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || echo "⚠️ Argos upload failed"
             else
               echo "ℹ️  ARGOS_TOKEN not set; skipping Argos upload"
             fi
+            step_end=$(date +%s%3N); echo "STEP_END:upload-argos:${step_end}" >> ~/logs/playwright.timing
+
+            task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/playwright.timing
             echo "✅ [Playwright] Complete"
           ) > ~/logs/playwright.log 2>&1 &
           PLAY_PID=$!
@@ -372,6 +424,38 @@ jobs:
           LHCI_CODE=$?
           wait $PLAY_PID
           PLAY_CODE=$?
+
+          # --- Print per-task timing summaries (timing files are milliseconds; display seconds) ---
+          if ls ~/logs/*.timing >/dev/null 2>&1; then
+            echo "⏱️ Parallel tasks timing summary:"
+            for tf in ~/logs/*.timing; do
+              [ -f "$tf" ] || continue
+              name=$(basename "$tf" .timing)
+              start=$(awk -F: '/^TASK_START:/ {print $2; exit}' "$tf" || true)
+              end=$(awk -F: '/^TASK_END:/ {print $2; exit}' "$tf" || true)
+              if [ -n "$start" ] && [ -n "$end" ]; then
+                total_ms=$((end - start))
+                total_s=$(awk -v m="$total_ms" 'BEGIN{printf "%.2f", m/1000}')
+                echo "- $name: total ${total_s}s"
+              else
+                echo "- $name: total unknown"
+              fi
+
+              # list steps (order-preserving)
+              awk -F: '/^STEP_START:/ {print $2":"$3}' "$tf" | while IFS= read -r s; do
+                step_name=$(echo "$s" | cut -d: -f1)
+                step_start=$(echo "$s" | cut -d: -f2)
+                step_end=$(awk -F: -v st="$step_name" '$1=="STEP_END" && $2==st {print $3; exit}' "$tf" || true)
+                if [ -n "$step_start" ] && [ -n "$step_end" ]; then
+                  step_ms=$((step_end - step_start))
+                  step_s=$(awk -v m="$step_ms" 'BEGIN{printf "%.2f", m/1000}')
+                  echo "  - $step_name: ${step_s}s"
+                else
+                  echo "  - $step_name: unknown"
+                fi
+              done
+            done
+          fi
 
           if [ $LHCI_CODE -ne 0 ]; then
             echo "❌ LHCI task failed. Log output:"
