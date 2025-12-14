@@ -374,35 +374,7 @@ jobs:
             echo "📸 [Playwright] Take screenshots"
             step_start=$(date +%s%3N); echo "STEP_START:screenshots:${step_start}" >> ~/logs/playwright.timing
             mkdir -p screenshots
-            node --input-type=module -e "
-            import { chromium } from 'playwright';
-            import { argosScreenshot } from '@argos-ci/playwright';
-
-            (async () => {
-              const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-              const context = await browser.newContext({ baseURL: 'http://localhost:8090' });
-              const page = await context.newPage();
-
-              const pages = [
-                { name: 'home', path: '/' },
-                { name: 'archives', path: '/archives' },
-                { name: 'archives-hello-halo', path: '/archives/hello-halo' },
-                { name: 'tags', path: '/tags' },
-                { name: 'tags-halo', path: '/tags/halo' },
-                { name: 'categories', path: '/categories' },
-                { name: 'categories-default', path: '/categories/default' },
-                { name: 'author-admin', path: '/authors/admin' },
-                { name: 'about', path: '/about' }
-              ];
-
-              for (const { name, path } of pages) {
-                await page.goto(path);
-                await argosScreenshot(page, name);
-              }
-
-              await browser.close();
-            })();
-            "
+            node .github/scripts/playwright-screenshots.js
             step_end=$(date +%s%3N); echo "STEP_END:screenshots:${step_end}" >> ~/logs/playwright.timing
 
             echo "☁️ [Playwright] Upload screenshots to Argos"
@@ -851,35 +823,7 @@ jobs:
 
             echo "📸 [Playwright] Take screenshots"
             mkdir -p screenshots
-            node --input-type=module -e "
-            import { chromium } from 'playwright';
-            import { argosScreenshot } from '@argos-ci/playwright';
-
-            (async () => {
-              const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-              const context = await browser.newContext({ baseURL: 'http://localhost:8090' });
-              const page = await context.newPage();
-
-              const pages = [
-                { name: 'home', path: '/' },
-                { name: 'archives', path: '/archives' },
-                { name: 'archives-hello-halo', path: '/archives/hello-halo' },
-                { name: 'tags', path: '/tags' },
-                { name: 'tags-halo', path: '/tags/halo' },
-                { name: 'categories', path: '/categories' },
-                { name: 'categories-default', path: '/categories/default' },
-                { name: 'author-admin', path: '/authors/admin' },
-                { name: 'about', path: '/about' }
-              ];
-
-              for (const { name, path } of pages) {
-                await page.goto(path);
-                await argosScreenshot(page, name);
-              }
-
-              await browser.close();
-            })();
-            "
+            node .github/scripts/playwright-screenshots.js
 
             echo "☁️ [Playwright] Upload screenshots to Argos"
             if [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
