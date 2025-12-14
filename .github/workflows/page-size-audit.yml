@@ -327,8 +327,10 @@ jobs:
             
             for (const url of urls) {
               await page.goto(url);
-              const urlPath = url.replace('http://localhost:8090/', '').replace(/\//g, '-');
-              const filename = urlPath === '' ? 'home' : urlPath;
+              const pathname = new URL(url).pathname.replace(/^\/+|\/+$/g, '');
+              let filename = pathname ? pathname.replace(/\//g, '-') : 'home';
+              filename = filename.replace(/[^A-Za-z0-9._-]/g, '-');
+              filename = filename.replace(/-+/g, '-').slice(0, 120);
               await argosScreenshot(page, `screenshots/${filename}.png`);
             }
             
@@ -711,8 +713,10 @@ jobs:
             
             for (const url of urls) {
               await page.goto(url);
-              const urlPath = url.replace('http://localhost:8090/', '').replace(/\//g, '-');
-              const filename = urlPath === '' ? 'home' : urlPath;
+              const pathname = new URL(url).pathname.replace(/^\/+|\/+$/g, '');
+              let filename = pathname ? pathname.replace(/\//g, '-') : 'home';
+              filename = filename.replace(/[^A-Za-z0-9._-]/g, '-');
+              filename = filename.replace(/-+/g, '-').slice(0, 120);
               await argosScreenshot(page, `screenshots/${filename}.png`);
             }
             
