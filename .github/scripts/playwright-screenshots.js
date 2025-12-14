@@ -65,7 +65,11 @@ import { argosScreenshot } from '@argos-ci/playwright';
           // 名称包含 viewport id，便于识别
           await argosScreenshot(page, `${pageInfo.name}-${vp.name}`);
         } finally {
-          await page.close().catch(() => {});
+          try {
+            await page.close();
+          } catch (err) {
+            console.warn('Warning: page.close() failed:', err && err.message ? err.message : err);
+          }
         }
       }
 
