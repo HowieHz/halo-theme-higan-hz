@@ -264,7 +264,7 @@ jobs:
         run: |
           pnpm add -g @lhci/cli@0.15.x @argos-ci/cli
           pnpm add -w -D playwright @argos-ci/playwright
-          pnpm exec playwright install --with-deps
+          pnpm exec playwright install --with-deps chromium
           echo "LHCI_VERSION=$(lhci --version)" >> $GITHUB_ENV
 
       - name: Run Lighthouse CI
@@ -647,7 +647,7 @@ jobs:
         run: |
           pnpm add -g @lhci/cli@0.15.x @argos-ci/cli
           pnpm add -w -D playwright @argos-ci/playwright
-          pnpm exec playwright install --with-deps
+          pnpm exec playwright install --with-deps chromium
           echo "LHCI_VERSION=$(lhci --version)" >> $GITHUB_ENV
 
       - name: Run Lighthouse CI
