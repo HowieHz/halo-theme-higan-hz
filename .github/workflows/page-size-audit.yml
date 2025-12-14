@@ -404,7 +404,7 @@ jobs:
           path: ~/logs/
 
   audit-base:
-    name: Lighthouse Performance Audit (base)
+    name: Lighthouse Performance Audit (${{ matrix.ref_name }})
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     strategy:
