@@ -724,7 +724,7 @@ jobs:
         run: |
           argos upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/
       
-      - name: Upload screenshots (${ { matrix.ref_name } })
+      - name: Upload screenshots (${{ matrix.ref_name }})
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -733,7 +733,7 @@ jobs:
           include-hidden-files: true
           if-no-files-found: warn
         
-      - name: Upload Lighthouse raw data (${ { matrix.ref_name } })
+      - name: Upload Lighthouse raw data (${{ matrix.ref_name }})
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -742,7 +742,7 @@ jobs:
           include-hidden-files: true
           if-no-files-found: warn
 
-      - name: Generate reports (${ { matrix.ref_name } })
+      - name: Generate reports (${{ matrix.ref_name }})
         if: success()
         env:
           OUTPUT_DIR: ./reports
@@ -768,7 +768,7 @@ jobs:
           echo "找到 $json_count 个 Lighthouse 结果文件"
           node .github/scripts/generate-report.js
 
-      - name: Upload reports (${ { matrix.ref_name } })
+      - name: Upload reports (${{ matrix.ref_name }})
         uses: actions/upload-artifact@v4
         with:
           name: page-size-reports-${{ matrix.ref_name }}
