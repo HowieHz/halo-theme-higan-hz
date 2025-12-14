@@ -270,8 +270,12 @@ jobs:
           (
             set -e
             echo "📦 [LHCI] Install LHCI"
-            pnpm add -g @lhci/cli@0.15.x || true
-            echo "LHCI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV || true
+            if ! command -v lhci >/dev/null 2>&1; then
+              pnpm add -g @lhci/cli@0.15.x || echo "⚠️  LHCI install failed, continuing"
+            else
+              echo "✓ lhci already installed"
+            fi
+            echo "LHCI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV
 
             echo "🚀 [LHCI] Run Lighthouse CI"
             mkdir -p ./reports
@@ -307,8 +311,18 @@ jobs:
           (
             set -e
             echo "📦 [Playwright] Install Playwright and Argos"
-            pnpm add -g @argos-ci/cli || true
-            pnpm add -w -D playwright @argos-ci/playwright || true
+            if ! command -v argos >/dev/null 2>&1; then
+              pnpm add -g @argos-ci/cli || echo "⚠️  Argos CLI install failed, continuing"
+            else
+              echo "✓ argos already installed"
+            fi
+
+            if ! pnpm exec -- playwright --version >/dev/null 2>&1; then
+              pnpm add -w -D playwright @argos-ci/playwright || echo "⚠️  Playwright install failed, continuing"
+            else
+              echo "✓ playwright already available via pnpm exec"
+            fi
+
             pnpm exec playwright install --with-deps chromium
 
             echo "📸 [Playwright] Take screenshots"
@@ -344,7 +358,11 @@ jobs:
             "
 
             echo "☁️ [Playwright] Upload screenshots to Argos"
-            argos upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || true
+            if [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
+              argos upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || echo "⚠️ Argos upload failed"
+            else
+              echo "ℹ️  ARGOS_TOKEN not set; skipping Argos upload"
+            fi
             echo "✅ [Playwright] Complete"
           ) > ~/logs/playwright.log 2>&1 &
           PLAY_PID=$!
@@ -684,8 +702,12 @@ jobs:
           (
             set -e
             echo "📦 [LHCI] Install LHCI"
-            pnpm add -g @lhci/cli@0.15.x || true
-            echo "LHCI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV || true
+            if ! command -v lhci >/dev/null 2>&1; then
+              pnpm add -g @lhci/cli@0.15.x || echo "⚠️  LHCI install failed, continuing"
+            else
+              echo "✓ lhci already installed"
+            fi
+            echo "LHCI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV
 
             echo "🚀 [LHCI] Run Lighthouse CI"
             mkdir -p ./reports
@@ -721,8 +743,18 @@ jobs:
           (
             set -e
             echo "📦 [Playwright] Install Playwright and Argos"
-            pnpm add -g @argos-ci/cli || true
-            pnpm add -w -D playwright @argos-ci/playwright || true
+            if ! command -v argos >/dev/null 2>&1; then
+              pnpm add -g @argos-ci/cli || echo "⚠️  Argos CLI install failed, continuing"
+            else
+              echo "✓ argos already installed"
+            fi
+
+            if ! pnpm exec -- playwright --version >/dev/null 2>&1; then
+              pnpm add -w -D playwright @argos-ci/playwright || echo "⚠️  Playwright install failed, continuing"
+            else
+              echo "✓ playwright already available via pnpm exec"
+            fi
+
             pnpm exec playwright install --with-deps chromium
 
             echo "📸 [Playwright] Take screenshots"
@@ -758,7 +790,11 @@ jobs:
             "
 
             echo "☁️ [Playwright] Upload screenshots to Argos"
-            argos upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || true
+            if [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
+              argos upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || echo "⚠️ Argos upload failed"
+            else
+              echo "ℹ️  ARGOS_TOKEN not set; skipping Argos upload"
+            fi
             echo "✅ [Playwright] Complete"
           ) > ~/logs/playwright.log 2>&1 &
           PLAY_PID=$!
