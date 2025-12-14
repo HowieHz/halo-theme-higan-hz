@@ -16,8 +16,6 @@ jobs:
         include:
           - ref_name: current
             ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
-          - ref_name: base
-            ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
       fail-fast: false
     
     steps:
@@ -405,9 +403,392 @@ jobs:
           name: halo-logs-${{ matrix.ref_name }}
           path: ~/logs/
 
+  audit-base:
+    name: Lighthouse Performance Audit (base)
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - ref_name: base
+            ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
+      fail-fast: false
+    steps:
+      - name: Checkout ${{ matrix.ref_name }}
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ matrix.ref }}
+
+      - name: Copy latest .github scripts
+        run: |
+          # 获取最新的 .github 脚本（从触发 workflow 的分支）
+          # 对于 PR: 使用 head_ref (源分支)，对于其他事件: 使用 ref_name
+          BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
+          echo "工作流分支: $BRANCH_NAME"
+          
+          git fetch origin "$BRANCH_NAME"
+          git checkout "origin/$BRANCH_NAME" -- .github/scripts/
+          
+          echo "✓ 已从 $BRANCH_NAME 分支复制最新的 .github/scripts/"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Parallel Build Theme and Setup Halo
+        shell: bash
+        run: |
+          set -e
+          
+          # 记录环境信息
+          JAVA_VERSION=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}')
+          echo "JAVA_VERSION=${JAVA_VERSION}" >> $GITHUB_ENV
+          HALO_VERSION="2.22.0-alpha.1"
+          echo "HALO_VERSION=${HALO_VERSION}" >> $GITHUB_ENV
+          
+          mkdir -p ~/logs
+          
+          # ============ 任务 1: 主题构建 ============
+          (
+            set -e
+            echo "📦 [Theme] 开始构建"
+            
+            pnpm install
+            pnpm build
+            
+            mkdir -p ~/builds/tmp ~/builds/target
+            
+            cp -r . ~/builds/tmp
+            mkdir -p ~/builds/tmp-included
+            cd ~/builds/tmp
+            cat "${{ github.workspace }}/.github/include-list.txt" | xargs -I {} cp -r --parents {} ~/builds/tmp-included/
+            cd ~/builds/tmp-included
+            zip -9 -r howiehz-higan-cn.zip .
+            mv howiehz-higan-cn.zip ~/builds/target/
+            
+            echo "✅ [Theme] 完成"
+          ) > ~/logs/theme.log 2>&1 &
+          THEME_PID=$!
+          
+          # ============ 任务 2: Halo 设置 ============
+          (
+            set -e
+            echo "🔧 [Halo] 开始设置"
+            
+            if ! wget -q "https://github.com/halo-dev/halo/releases/download/v${HALO_VERSION}/halo-${HALO_VERSION}.jar" -O ~/halo.jar; then
+              wget -q "https://dl.halo.run/release/halo-${HALO_VERSION}.jar" -O ~/halo.jar
+            fi
+            
+            mkdir -p ~/.halo2
+            cat > ~/.halo2/application.yaml << 'EOF'
+          server:
+            port: 8090
+          spring:
+            r2dbc:
+              url: r2dbc:h2:file:///${user.home}/.halo2/db/halo?MODE=MySQL&DB_CLOSE_ON_EXIT=FALSE
+              username: admin
+              password: admin
+            sql:
+              init:
+                mode: always
+                platform: h2
+            thymeleaf:
+              cache: true
+          halo:
+            security:
+              basic-auth:
+                disabled: false
+            work-dir: ${user.home}/.halo2
+            external-url: http://localhost:8090
+          EOF
+            
+            nohup java -jar ~/halo.jar \
+              --spring.config.additional-location=optional:file:${HOME}/.halo2/ \
+              -Dfile.encoding=UTF-8 > ~/logs/halo-startup.log 2>&1 &
+            echo $! > ~/halo.pid
+            
+            for i in {1..60}; do
+              if curl -sf http://localhost:8090/actuator/health/readiness >/dev/null 2>&1; then
+                echo "✅ [Halo] 就绪 (${i}次尝试)"
+                break
+              fi
+              [ $i -eq 60 ] && { echo "❌ [Halo] 超时"; cat ~/logs/halo-startup.log; exit 1; }
+              sleep 1
+            done
+            
+            response=$(curl -c /tmp/cookies.txt -s http://localhost:8090/system/setup)
+            csrf_token=$(echo "$response" | grep '_csrf' | sed -n 's/.*value="\([^\"]*\)".*/\1/p')
+            
+            curl -b /tmp/cookies.txt -X POST \
+              http://localhost:8090/system/setup \
+              -H "Content-Type: application/x-www-form-urlencoded" \
+              -d "_csrf=${csrf_token}" \
+              -d "language=zh-CN" \
+              -d "externalUrl=http://localhost:8090" \
+              -d "siteTitle=0" \
+              -d "username=admin" \
+              -d "email=admin@example.com" \
+              -d "password=admin" \
+              -d "confirmPassword=admin" \
+              -L -s > /dev/null
+
+            echo "✅ [Halo] 完成"
+          ) > ~/logs/halo.log 2>&1 &
+          HALO_PID=$!
+
+          echo "⏳ 等待并行任务..."
+          
+          wait $THEME_PID
+          THEME_CODE=$?
+          wait $HALO_PID
+          HALO_CODE=$?
+          
+          if [ $THEME_CODE -ne 0 ]; then
+            echo "❌ 主题构建失败"
+            cat ~/logs/theme.log
+            exit 1
+          fi
+          
+          if [ $HALO_CODE -ne 0 ]; then
+            echo "❌ Halo 设置失败"
+            cat ~/logs/halo.log
+            exit 1
+          fi
+          
+          echo "🎉 并行任务全部成功!"
+
+      - name: Install and activate theme
+        run: |
+          THEME_ZIP_PATH="${HOME}/builds/target/howiehz-higan-cn.zip"
+          
+          if [ ! -f "$THEME_ZIP_PATH" ]; then
+            echo "❌ 主题文件不存在: $THEME_ZIP_PATH"
+            exit 1
+          fi
+          
+          echo "安装主题..."
+          response=$(curl -v -X POST \
+            http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/install \
+            -u admin:admin \
+            -F "file=@${THEME_ZIP_PATH}" \
+            -w "\nHTTP_CODE:%{http_code}" \
+            2>&1)
+          
+          http_code=$(echo "$response" | grep "HTTP_CODE:" | cut -d: -f2)
+          
+          if [ -z "$http_code" ] || ([ "$http_code" != "200" ] && [ "$http_code" != "201" ]); then
+            echo "❌ 主题安装失败 (HTTP $http_code)"
+            echo "$response"
+            exit 1
+          fi
+          
+          echo "✓ 主题已安装"
+          
+          curl -X PUT \
+            http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/activation \
+            -u admin:admin \
+            -s > /dev/null
+          
+          echo "✓ 主题已激活"
+          
+          curl -X PUT \
+            http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/invalidate-cache \
+            -u admin:admin \
+            -s > /dev/null
+          
+          echo "✓ 缓存已清除"
+
+      - name: Disable Halo plugins
+        shell: bash
+        run: |
+          set -e
+          
+          echo "禁用插件: PluginCommentWidget, PluginSearchWidget"
+          
+          PIDS=()
+          
+          for plugin in PluginCommentWidget PluginSearchWidget; do
+            (
+              echo "🔧 禁用 ${plugin}"
+              if curl -sX PUT \
+                "http://localhost:8090/apis/api.console.halo.run/v1alpha1/plugins/${plugin}/plugin-state" \
+                -u admin:admin \
+                -H "Content-Type: application/json" \
+                -d '{"async":false,"enabled":false}'; then
+                echo "✅ ${plugin} 禁用成功"
+              else
+                echo "⚠️  ${plugin} 禁用失败(已忽略)"
+              fi
+            ) &
+            PIDS+=($!)
+          done
+          
+          echo "⏳ 等待插件禁用任务..."
+          
+          for pid in "${PIDS[@]}"; do
+            wait $pid || true
+          done
+          
+          echo "🎉 插件禁用完成"
+
+      - name: Install Lighthouse CI and Argos CLI
+        run: |
+          pnpm add -g @lhci/cli@0.15.x @argos-ci/cli
+          pnpm add -w -D puppeteer @argos-ci/puppeteer
+          pnpm exec puppeteer browsers install chrome
+          echo "LHCI_VERSION=$(lhci --version)" >> $GITHUB_ENV
+
+      - name: Run Lighthouse CI
+        run: |
+          mkdir -p ./reports
+          
+          echo "开始运行 Lighthouse CI 测试..."
+          lhci autorun \
+            --collect.url=http://localhost:8090/ \
+            --collect.url=http://localhost:8090/archives \
+            --collect.url=http://localhost:8090/archives/hello-halo \
+            --collect.url=http://localhost:8090/tags \
+            --collect.url=http://localhost:8090/tags/halo \
+            --collect.url=http://localhost:8090/categories \
+            --collect.url=http://localhost:8090/categories/default \
+            --collect.url=http://localhost:8090/authors/admin \
+            --collect.url=http://localhost:8090/about \
+            --collect.numberOfRuns=1 \
+            --collect.settings.preset=desktop \
+            --collect.settings.throttling.rttMs=0 \
+            --collect.settings.throttling.throughputKbps=0 \
+            --collect.settings.throttling.cpuSlowdownMultiplier=1 \
+            --collect.settings.throttling.requestLatencyMs=0 \
+            --collect.settings.throttling.downloadThroughputKbps=0 \
+            --collect.settings.throttling.uploadThroughputKbps=0 \
+            --upload.target=filesystem \
+            --upload.outputDir=.lighthouseci || {
+              echo "❌ Lighthouse CI 执行失败"
+              ls -la ./.lighthouseci/ || echo ".lighthouseci 目录不存在"
+              exit 1
+            }
+          
+          echo "✓ Lighthouse CI 执行完成"
+
+      - name: Take screenshots with Puppeteer
+        run: |
+          mkdir -p screenshots
+          node --input-type=module -e "
+          import puppeteer from 'puppeteer';
+          import { argosScreenshot } from '@argos-ci/puppeteer';
+          
+          (async () => {
+            const browser = await puppeteer.launch({
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
+            const page = await browser.newPage();
+            
+            const urls = [
+              'http://localhost:8090/',
+              'http://localhost:8090/archives',
+              'http://localhost:8090/archives/hello-halo',
+              'http://localhost:8090/tags',
+              'http://localhost:8090/tags/halo',
+              'http://localhost:8090/categories',
+              'http://localhost:8090/categories/default',
+              'http://localhost:8090/authors/admin',
+              'http://localhost:8090/about'
+            ];
+            
+            for (const url of urls) {
+              await page.goto(url);
+              const filename = url.replace('http://localhost:8090/', '').replace(/\//g, '-') || 'home';
+              await argosScreenshot(page, `screenshots/${filename}.png`);
+            }
+            
+            await browser.close();
+          })();
+          "
+
+      - name: Upload screenshots to Argos
+        run: |
+          argos upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/
+      
+      - name: Upload screenshots (${ { matrix.ref_name } })
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ matrix.ref_name }}
+          path: ./screenshots/
+          include-hidden-files: true
+          if-no-files-found: warn
+        
+      - name: Upload Lighthouse raw data (${ { matrix.ref_name } })
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-raw-data-${{ matrix.ref_name }}
+          path: ./.lighthouseci/
+          include-hidden-files: true
+          if-no-files-found: warn
+
+      - name: Generate reports (${ { matrix.ref_name } })
+        if: success()
+        env:
+          OUTPUT_DIR: ./reports
+          LIGHTHOUSE_RESULTS_DIR: ./.lighthouseci
+          HALO_VERSION: ${{ env.HALO_VERSION }}
+          JAVA_VERSION: ${{ env.JAVA_VERSION }}
+          THEME_VERSION: ${{ matrix.ref }}
+          GITHUB_SHA: ${{ github.sha }}
+          LHCI_VERSION: ${{ env.LHCI_VERSION }}
+          REF_NAME: ${{ matrix.ref_name }}
+        run: |
+          if [ ! -d "./.lighthouseci" ]; then
+            echo "⚠️  警告：.lighthouseci 目录不存在"
+            exit 1
+          fi
+          
+          json_count=$(find ./.lighthouseci -name "lhr-*.json" | wc -l)
+          if [ "$json_count" -eq 0 ]; then
+            echo "⚠️  警告：没有找到 Lighthouse 结果文件"
+            exit 1
+          fi
+          
+          echo "找到 $json_count 个 Lighthouse 结果文件"
+          node .github/scripts/generate-report.js
+
+      - name: Upload reports (${ { matrix.ref_name } })
+        uses: actions/upload-artifact@v4
+        with:
+          name: page-size-reports-${{ matrix.ref_name }}
+          path: ./reports/
+
+      - name: Stop Halo
+        if: always()
+        run: |
+          if [ -f ~/halo.pid ]; then
+            kill $(cat ~/halo.pid) || true
+          fi
+
+      - name: Upload Halo logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: halo-logs-${{ matrix.ref_name }}
+          path: ~/logs/
+
   compare-and-comment:
     name: Compare and Comment
-    needs: audit
+    needs: [audit, audit-base]
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:  # use permissions because use of pr-comments
