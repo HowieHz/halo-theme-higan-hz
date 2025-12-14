@@ -263,8 +263,8 @@ jobs:
       - name: Install Lighthouse CI and Argos CLI
         run: |
           pnpm add -g @lhci/cli@0.15.x @argos-ci/cli
-          pnpm add -w -D puppeteer @argos-ci/puppeteer
-          pnpm exec puppeteer browsers install chrome
+          pnpm add -w -D playwright @argos-ci/playwright
+          pnpm exec playwright install --with-deps
           echo "LHCI_VERSION=$(lhci --version)" >> $GITHUB_ENV
 
       - name: Run Lighthouse CI
@@ -300,44 +300,36 @@ jobs:
           
           echo "✓ Lighthouse CI 执行完成"
 
-      - name: Take screenshots with Puppeteer
+      - name: Take screenshots with Playwright
         run: |
           mkdir -p screenshots
           node --input-type=module -e "
-          import puppeteer from 'puppeteer';
-          import { argosScreenshot } from '@argos-ci/puppeteer';
-          
+          import { chromium } from 'playwright';
+          import { argosScreenshot } from '@argos-ci/playwright';
+
           (async () => {
-            const browser = await puppeteer.launch({
-              args: ['--no-sandbox', '--disable-setuid-sandbox']
-            });
-            const page = await browser.newPage();
-            
-            const urls = [
-              'http://localhost:8090/',
-              'http://localhost:8090/archives',
-              'http://localhost:8090/archives/hello-halo',
-              'http://localhost:8090/tags',
-              'http://localhost:8090/tags/halo',
-              'http://localhost:8090/categories',
-              'http://localhost:8090/categories/default',
-              'http://localhost:8090/authors/admin',
-              'http://localhost:8090/about'
+            const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+            const context = await browser.newContext({ baseURL: 'http://localhost:8090' });
+            const page = await context.newPage();
+
+            const pages = [
+              { name: 'home', path: '/' },
+              { name: 'archives', path: '/archives' },
+              { name: 'archives-hello-halo', path: '/archives/hello-halo' },
+              { name: 'tags', path: '/tags' },
+              { name: 'tags-halo', path: '/tags/halo' },
+              { name: 'categories', path: '/categories' },
+              { name: 'categories-default', path: '/categories/default' },
+              { name: 'author-admin', path: '/authors/admin' },
+              { name: 'about', path: '/about' }
             ];
-            
-            for (const url of urls) {
-              await page.goto(url);
-              const pathname = new URL(url).pathname.replace(/^\/+|\/+$/g, '');
-              console.log('Taking screenshot of', url, '->', pathname);
-              let filename = pathname ? pathname.replace(/\//g, '-') : 'home';
-              console.log('Generated filename:', filename);
-              filename = filename.replace(/[^A-Za-z0-9._-]/g, '-');
-              console.log('Sanitized filename:', filename);
-              filename = filename.replace(/-+/g, '-').slice(0, 120);
-              console.log('Final filename:', filename);
-              await argosScreenshot(page, `screenshots/${filename}.png`);
+
+            for (const { name, path } of pages) {
+              await page.goto(path);
+              // await page.screenshot({ path: `screenshots/${name}.png`, fullPage: true });
+              await argosScreenshot(page, name);
             }
-            
+
             await browser.close();
           })();
           "
@@ -654,8 +646,8 @@ jobs:
       - name: Install Lighthouse CI and Argos CLI
         run: |
           pnpm add -g @lhci/cli@0.15.x @argos-ci/cli
-          pnpm add -w -D puppeteer @argos-ci/puppeteer
-          pnpm exec puppeteer browsers install chrome
+          pnpm add -w -D playwright @argos-ci/playwright
+          pnpm exec playwright install --with-deps
           echo "LHCI_VERSION=$(lhci --version)" >> $GITHUB_ENV
 
       - name: Run Lighthouse CI
@@ -690,44 +682,36 @@ jobs:
           
           echo "✓ Lighthouse CI 执行完成"
 
-      - name: Take screenshots with Puppeteer
+      - name: Take screenshots with Playwright
         run: |
           mkdir -p screenshots
           node --input-type=module -e "
-          import puppeteer from 'puppeteer';
-          import { argosScreenshot } from '@argos-ci/puppeteer';
-          
+          import { chromium } from 'playwright';
+          import { argosScreenshot } from '@argos-ci/playwright';
+
           (async () => {
-            const browser = await puppeteer.launch({
-              args: ['--no-sandbox', '--disable-setuid-sandbox']
-            });
-            const page = await browser.newPage();
-            
-            const urls = [
-              'http://localhost:8090/',
-              'http://localhost:8090/archives',
-              'http://localhost:8090/archives/hello-halo',
-              'http://localhost:8090/tags',
-              'http://localhost:8090/tags/halo',
-              'http://localhost:8090/categories',
-              'http://localhost:8090/categories/default',
-              'http://localhost:8090/authors/admin',
-              'http://localhost:8090/about'
+            const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+            const context = await browser.newContext({ baseURL: 'http://localhost:8090' });
+            const page = await context.newPage();
+
+            const pages = [
+              { name: 'home', path: '/' },
+              { name: 'archives', path: '/archives' },
+              { name: 'archives-hello-halo', path: '/archives/hello-halo' },
+              { name: 'tags', path: '/tags' },
+              { name: 'tags-halo', path: '/tags/halo' },
+              { name: 'categories', path: '/categories' },
+              { name: 'categories-default', path: '/categories/default' },
+              { name: 'author-admin', path: '/authors/admin' },
+              { name: 'about', path: '/about' }
             ];
-            
-            for (const url of urls) {
-              await page.goto(url);
-              const pathname = new URL(url).pathname.replace(/^\/+|\/+$/g, '');
-              console.log('Taking screenshot of', url, '->', pathname);
-              let filename = pathname ? pathname.replace(/\//g, '-') : 'home';
-              console.log('Generated filename:', filename);
-              filename = filename.replace(/[^A-Za-z0-9._-]/g, '-');
-              console.log('Sanitized filename:', filename);
-              filename = filename.replace(/-+/g, '-').slice(0, 120);
-              console.log('Final filename:', filename);
-              await argosScreenshot(page, `screenshots/${filename}.png`);
+
+            for (const { name, path } of pages) {
+              await page.goto(path);
+              // await page.screenshot({ path: `screenshots/${name}.png`, fullPage: true });
+              await argosScreenshot(page, name);
             }
-            
+
             await browser.close();
           })();
           "
