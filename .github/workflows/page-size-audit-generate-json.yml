@@ -392,7 +392,7 @@ jobs:
           echo "⏳ 等待插件禁用任务..."
           
           for pid in "${PIDS[@]}"; do
-            wait $pid || true
+            wait $pid || echo "⚠️ background job $pid exited with status $?"
           done
           
           echo "🎉 插件禁用完成"
@@ -457,7 +457,7 @@ jobs:
         if: always()
         run: |
           if [ -f ~/halo.pid ]; then
-            kill $(cat ~/halo.pid) || true
+            kill "$(cat ~/halo.pid)" 2>/dev/null || echo "⚠️ kill failed (maybe already stopped)"
           fi
 
       - name: Upload logs on failure

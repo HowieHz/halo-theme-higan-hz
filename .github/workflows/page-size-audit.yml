@@ -255,7 +255,7 @@ jobs:
           echo "⏳ 等待插件禁用任务..."
           
           for pid in "${PIDS[@]}"; do
-            wait $pid || true
+            wait $pid || echo "⚠️ background job $pid exited with status $?"
           done
           
           echo "🎉 插件禁用完成"
@@ -375,13 +375,21 @@ jobs:
 
           if [ $LHCI_CODE -ne 0 ]; then
             echo "❌ LHCI task failed. Log output:"
-            sed -n '1,200p' ~/logs/lhci.log || true
+            if [ -f ~/logs/lhci.log ]; then
+              sed -n '1,200p' ~/logs/lhci.log
+            else
+              echo "ℹ️  日志文件不存在: ~/logs/lhci.log"
+            fi
             exit $LHCI_CODE
           fi
 
           if [ $PLAY_CODE -ne 0 ]; then
             echo "❌ Playwright task failed. Log output:"
-            sed -n '1,200p' ~/logs/playwright.log || true
+            if [ -f ~/logs/playwright.log ]; then
+              sed -n '1,200p' ~/logs/playwright.log
+            else
+              echo "ℹ️  日志文件不存在: ~/logs/playwright.log"
+            fi
             exit $PLAY_CODE
           fi
 
@@ -441,7 +449,7 @@ jobs:
         if: always()
         run: |
           if [ -f ~/halo.pid ]; then
-            kill $(cat ~/halo.pid) || true
+            kill "$(cat ~/halo.pid)" 2>/dev/null || echo "⚠️ kill failed (maybe already stopped)"
           fi
 
       - name: Upload Halo logs
@@ -687,7 +695,7 @@ jobs:
           echo "⏳ 等待插件禁用任务..."
           
           for pid in "${PIDS[@]}"; do
-            wait $pid || true
+            wait $pid || echo "⚠️ background job $pid exited with status $?"
           done
           
           echo "🎉 插件禁用完成"
@@ -807,13 +815,21 @@ jobs:
 
           if [ $LHCI_CODE -ne 0 ]; then
             echo "❌ LHCI task failed. Log output:"
-            sed -n '1,200p' ~/logs/lhci.log || true
+            if [ -f ~/logs/lhci.log ]; then
+              sed -n '1,200p' ~/logs/lhci.log
+            else
+              echo "ℹ️  日志文件不存在: ~/logs/lhci.log"
+            fi
             exit $LHCI_CODE
           fi
 
           if [ $PLAY_CODE -ne 0 ]; then
             echo "❌ Playwright task failed. Log output:"
-            sed -n '1,200p' ~/logs/playwright.log || true
+            if [ -f ~/logs/playwright.log ]; then
+              sed -n '1,200p' ~/logs/playwright.log
+            else
+              echo "ℹ️  日志文件不存在: ~/logs/playwright.log"
+            fi
             exit $PLAY_CODE
           fi
 
@@ -873,7 +889,7 @@ jobs:
         if: always()
         run: |
           if [ -f ~/halo.pid ]; then
-            kill $(cat ~/halo.pid) || true
+            kill "$(cat ~/halo.pid)" 2>/dev/null || echo "⚠️ kill failed (maybe already stopped)"
           fi
 
       - name: Upload Halo logs
