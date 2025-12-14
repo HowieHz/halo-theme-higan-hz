@@ -1,6 +1,8 @@
 name: Page Size Audit
 
 on:
+  push:
+    branches: [main]
   pull_request:
     types: [ opened, synchronize, reopened ]
     branches: [main]
@@ -63,7 +65,7 @@ jobs:
           # 记录环境信息
           JAVA_VERSION=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}')
           echo "JAVA_VERSION=${JAVA_VERSION}" >> $GITHUB_ENV
-          HALO_VERSION="2.21.10"
+          HALO_VERSION="2.22.0-alpha.1"
           echo "HALO_VERSION=${HALO_VERSION}" >> $GITHUB_ENV
           
           mkdir -p ~/logs
@@ -260,9 +262,11 @@ jobs:
           
           echo "🎉 插件禁用完成"
 
-      - name: Install Lighthouse CI
+      - name: Install Lighthouse CI and Argos CLI
         run: |
-          pnpm add -g @lhci/cli@0.15.x
+          pnpm add -g @lhci/cli@0.15.x @argos-ci/cli
+          pnpm add -w -D puppeteer @argos-ci/puppeteer
+          pnpm exec puppeteer browsers install chrome
           echo "LHCI_VERSION=$(lhci --version)" >> $GITHUB_ENV
 
       - name: Run Lighthouse CI
@@ -298,6 +302,54 @@ jobs:
           
           echo "✓ Lighthouse CI 执行完成"
 
+      - name: Take screenshots with Puppeteer
+        run: |
+          mkdir -p screenshots
+          node --input-type=module -e "
+          import puppeteer from 'puppeteer';
+          import { argosScreenshot } from '@argos-ci/puppeteer';
+          
+          (async () => {
+            const browser = await puppeteer.launch({
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
+            const page = await browser.newPage();
+            
+            const urls = [
+              'http://localhost:8090/',
+              'http://localhost:8090/archives',
+              'http://localhost:8090/archives/hello-halo',
+              'http://localhost:8090/tags',
+              'http://localhost:8090/tags/halo',
+              'http://localhost:8090/categories',
+              'http://localhost:8090/categories/default',
+              'http://localhost:8090/authors/admin',
+              'http://localhost:8090/about'
+            ];
+            
+            for (const url of urls) {
+              await page.goto(url);
+              const filename = url.replace('http://localhost:8090/', '').replace(/\//g, '-') || 'home';
+              await argosScreenshot(page, \`screenshots/\${filename}.png\`);
+            }
+            
+            await browser.close();
+          })();
+          "
+
+      - name: Upload screenshots to Argos
+        run: |
+          argos upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/
+      
+      - name: Upload screenshots (${{ matrix.ref_name }})
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ matrix.ref_name }}
+          path: ./screenshots/
+          include-hidden-files: true
+          if-no-files-found: warn
+        
       - name: Upload Lighthouse raw data (${{ matrix.ref_name }})
         if: always()
         uses: actions/upload-artifact@v4
