@@ -381,14 +381,6 @@ jobs:
             echo "TASK_START:${task_start}" > ~/logs/playwright.timing
 
             echo "📦 [Playwright] Install Playwright and Argos"
-            step_start=$(date +%s%3N); echo "STEP_START:check-argos:${step_start}" >> ~/logs/playwright.timing
-            if ! command -v argos >/dev/null 2>&1; then
-              pnpm add -g @argos-ci/cli || echo "⚠️  Argos CLI install failed, continuing"
-            else
-              echo "✓ argos already installed"
-            fi
-            step_end=$(date +%s%3N); echo "STEP_END:check-argos:${step_end}" >> ~/logs/playwright.timing
-
             step_start=$(date +%s%3N); echo "STEP_START:check-playwright:${step_start}" >> ~/logs/playwright.timing
             if ! pnpm exec -- playwright --version >/dev/null 2>&1; then
               pnpm add -w -D playwright @argos-ci/playwright || echo "⚠️  Playwright install failed, continuing"
@@ -410,7 +402,7 @@ jobs:
             echo "☁️ [Playwright] Upload screenshots to Argos"
             step_start=$(date +%s%3N); echo "STEP_START:upload-argos:${step_start}" >> ~/logs/playwright.timing
             if [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
-              argos upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || echo "⚠️ Argos upload failed"
+              pnpm dlx @argos-ci/cli upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || echo "⚠️ Argos upload failed"
             else
               echo "ℹ️  ARGOS_TOKEN not set; skipping Argos upload"
             fi
@@ -902,14 +894,6 @@ jobs:
             echo "TASK_START:${task_start}" > ~/logs/playwright.timing
 
             echo "📦 [Playwright] Install Playwright and Argos"
-            step_start=$(date +%s%3N); echo "STEP_START:check-argos:${step_start}" >> ~/logs/playwright.timing
-            if ! command -v argos >/dev/null 2>&1; then
-              pnpm add -g @argos-ci/cli || echo "⚠️  Argos CLI install failed, continuing"
-            else
-              echo "✓ argos already installed"
-            fi
-            step_end=$(date +%s%3N); echo "STEP_END:check-argos:${step_end}" >> ~/logs/playwright.timing
-
             step_start=$(date +%s%3N); echo "STEP_START:check-playwright:${step_start}" >> ~/logs/playwright.timing
             if ! pnpm exec -- playwright --version >/dev/null 2>&1; then
               pnpm add -w -D playwright @argos-ci/playwright || echo "⚠️  Playwright install failed, continuing"
@@ -931,7 +915,7 @@ jobs:
             echo "☁️ [Playwright] Upload screenshots to Argos"
             step_start=$(date +%s%3N); echo "STEP_START:upload-argos:${step_start}" >> ~/logs/playwright.timing
             if [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
-              argos upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || echo "⚠️ Argos upload failed"
+              pnpm dlx @argos-ci/cli upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || echo "⚠️ Argos upload failed"
             else
               echo "ℹ️  ARGOS_TOKEN not set; skipping Argos upload"
             fi
