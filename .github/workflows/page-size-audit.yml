@@ -472,7 +472,7 @@ jobs:
           done
       
       - name: Upload screenshots (${{ matrix.ref_name }})
-        if: always()
+        if: always() && matrix.ref_name != 'base'
         uses: actions/upload-artifact@v4
         with:
           name: screenshots-${{ matrix.ref_name }}
@@ -832,157 +832,56 @@ jobs:
           
           echo "🎉 插件禁用完成"
 
-      - name: Run Lighthouse CI and Playwright screenshots in parallel
+      - name: Run Lighthouse CI (base only)
         shell: bash
         run: |
           set -e
           mkdir -p ~/logs
 
-          # ============ Task A: Lighthouse CI ============
-          (
-            set -e
-            task_start=$(date +%s%3N)
-            echo "TASK_START:${task_start}" > ~/logs/lhci.timing
+          # Only run Lighthouse CI for the base matrix
+          task_start=$(date +%s%3N)
+          echo "TASK_START:${task_start}" > ~/logs/lhci.timing
 
-            echo "📦 [LHCI] Install LHCI"
-            step_start=$(date +%s%3N); echo "STEP_START:check-lhci:${step_start}" >> ~/logs/lhci.timing
-            if ! command -v lhci >/dev/null 2>&1; then
-              pnpm add -g @lhci/cli@0.15.x || echo "⚠️  LHCI install failed, continuing"
-            else
-              echo "✓ lhci already installed"
-            fi
-            step_end=$(date +%s%3N); echo "STEP_END:check-lhci:${step_end}" >> ~/logs/lhci.timing
-            echo "LHCI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV
-
-            echo "🚀 [LHCI] Run Lighthouse CI"
-            step_start=$(date +%s%3N); echo "STEP_START:lhci-run:${step_start}" >> ~/logs/lhci.timing
-            mkdir -p ./reports
-            lhci autorun \
-              --collect.url=http://localhost:8090/ \
-              --collect.url=http://localhost:8090/archives \
-              --collect.url=http://localhost:8090/archives/hello-halo \
-              --collect.url=http://localhost:8090/tags \
-              --collect.url=http://localhost:8090/tags/halo \
-              --collect.url=http://localhost:8090/categories \
-              --collect.url=http://localhost:8090/categories/default \
-              --collect.url=http://localhost:8090/authors/admin \
-              --collect.url=http://localhost:8090/about \
-              --collect.numberOfRuns=1 \
-              --collect.settings.preset=desktop \
-              --collect.settings.throttling.rttMs=0 \
-              --collect.settings.throttling.throughputKbps=0 \
-              --collect.settings.throttling.cpuSlowdownMultiplier=1 \
-              --collect.settings.throttling.requestLatencyMs=0 \
-              --collect.settings.throttling.downloadThroughputKbps=0 \
-              --collect.settings.throttling.uploadThroughputKbps=0 \
-              --upload.target=filesystem \
-              --upload.outputDir=.lighthouseci || {
-                echo "❌ [LHCI] Lighthouse CI failed"
-                ls -la ./.lighthouseci/ || echo ".lighthouseci directory not found"
-                exit 1
-              }
-            step_end=$(date +%s%3N); echo "STEP_END:lhci-run:${step_end}" >> ~/logs/lhci.timing
-            task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/lhci.timing
-            echo "✅ [LHCI] Complete"
-          ) > ~/logs/lhci.log 2>&1 &
-          LHCI_PID=$!
-
-          # ============ Task B: Playwright + Argos ============
-          (
-            set -e
-            task_start=$(date +%s%3N)
-            echo "TASK_START:${task_start}" > ~/logs/playwright.timing
-
-            echo "📦 [Playwright] Install Playwright and Argos"
-            step_start=$(date +%s%3N); echo "STEP_START:check-playwright:${step_start}" >> ~/logs/playwright.timing
-            if ! pnpm exec -- playwright --version >/dev/null 2>&1; then
-              pnpm add -w -D playwright @argos-ci/playwright || echo "⚠️  Playwright install failed, continuing"
-            else
-              echo "✓ playwright already available via pnpm exec"
-            fi
-            step_end=$(date +%s%3N); echo "STEP_END:check-playwright:${step_end}" >> ~/logs/playwright.timing
-
-            step_start=$(date +%s%3N); echo "STEP_START:install-browsers:${step_start}" >> ~/logs/playwright.timing
-            pnpm exec playwright install --with-deps chromium
-            step_end=$(date +%s%3N); echo "STEP_END:install-browsers:${step_end}" >> ~/logs/playwright.timing
-
-            echo "📸 [Playwright] Take screenshots"
-            step_start=$(date +%s%3N); echo "STEP_START:screenshots:${step_start}" >> ~/logs/playwright.timing
-            mkdir -p screenshots
-            node .github/scripts/playwright-screenshots.js
-            step_end=$(date +%s%3N); echo "STEP_END:screenshots:${step_end}" >> ~/logs/playwright.timing
-
-            echo "☁️ [Playwright] Upload screenshots to Argos"
-            step_start=$(date +%s%3N); echo "STEP_START:upload-argos:${step_start}" >> ~/logs/playwright.timing
-            if [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
-              pnpm dlx @argos-ci/cli upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || echo "⚠️ Argos upload failed"
-            else
-              echo "ℹ️  ARGOS_TOKEN not set; skipping Argos upload"
-            fi
-            step_end=$(date +%s%3N); echo "STEP_END:upload-argos:${step_end}" >> ~/logs/playwright.timing
-
-            task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/playwright.timing
-            echo "✅ [Playwright] Complete"
-          ) > ~/logs/playwright.log 2>&1 &
-          PLAY_PID=$!
-
-          echo "⏳ Waiting parallel tasks..."
-          wait $LHCI_PID
-          LHCI_CODE=$?
-          wait $PLAY_PID
-          PLAY_CODE=$?
-
-          if [ $LHCI_CODE -ne 0 ]; then
-            echo "❌ LHCI task failed. Log output:"
-            if [ -f ~/logs/lhci.log ]; then
-              sed -n '1,200p' ~/logs/lhci.log
-            else
-              echo "ℹ️  日志文件不存在: ~/logs/lhci.log"
-            fi
-            exit $LHCI_CODE
+          echo "📦 [LHCI] Install LHCI"
+          step_start=$(date +%s%3N); echo "STEP_START:check-lhci:${step_start}" >> ~/logs/lhci.timing
+          if ! command -v lhci >/dev/null 2>&1; then
+            pnpm add -g @lhci/cli@0.15.x || echo "⚠️  LHCI install failed, continuing"
+          else
+            echo "✓ lhci already installed"
           fi
+          step_end=$(date +%s%3N); echo "STEP_END:check-lhci:${step_end}" >> ~/logs/lhci.timing
+          echo "LHCI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV
 
-          if [ $PLAY_CODE -ne 0 ]; then
-            echo "❌ Playwright task failed. Log output:"
-            if [ -f ~/logs/playwright.log ]; then
-              sed -n '1,200p' ~/logs/playwright.log
-            else
-              echo "ℹ️  日志文件不存在: ~/logs/playwright.log"
-            fi
-            exit $PLAY_CODE
-          fi
-
-          echo "🎉 Both LHCI and Playwright tasks succeeded"
-          
-          # 只输出第二组并行任务的时间统计
-          echo ""
-          echo "⏱️  第二组并行任务时间统计 (LHCI & Playwright):"
-          for tf in ~/logs/lhci.timing ~/logs/playwright.timing; do
-            [ -f "$tf" ] || continue
-            name=$(basename "$tf" .timing)
-            start=$(awk -F: '/^TASK_START:/ {print $2; exit}' "$tf" || true)
-            end=$(awk -F: '/^TASK_END:/ {print $2; exit}' "$tf" || true)
-            if [ -n "$start" ] && [ -n "$end" ]; then
-              total_ms=$((end - start))
-              total_s=$(awk -v m="$total_ms" 'BEGIN{printf "%.2f", m/1000}')
-              echo "- $name: total ${total_s}s"
-            else
-              echo "- $name: total unknown"
-            fi
-
-            awk -F: '/^STEP_START:/ {print $2":"$3}' "$tf" | while IFS= read -r s; do
-              step_name=$(echo "$s" | cut -d: -f1)
-              step_start=$(echo "$s" | cut -d: -f2)
-              step_end=$(awk -F: -v st="$step_name" '$1=="STEP_END" && $2==st {print $3; exit}' "$tf" || true)
-              if [ -n "$step_start" ] && [ -n "$step_end" ]; then
-                step_ms=$((step_end - step_start))
-                step_s=$(awk -v m="$step_ms" 'BEGIN{printf "%.2f", m/1000}')
-                echo "  - $step_name: ${step_s}s"
-              else
-                echo "  - $step_name: unknown"
-              fi
-            done
-          done
+          echo "🚀 [LHCI] Run Lighthouse CI"
+          step_start=$(date +%s%3N); echo "STEP_START:lhci-run:${step_start}" >> ~/logs/lhci.timing
+          mkdir -p ./reports
+          lhci autorun \
+            --collect.url=http://localhost:8090/ \
+            --collect.url=http://localhost:8090/archives \
+            --collect.url=http://localhost:8090/archives/hello-halo \
+            --collect.url=http://localhost:8090/tags \
+            --collect.url=http://localhost:8090/tags/halo \
+            --collect.url=http://localhost:8090/categories \
+            --collect.url=http://localhost:8090/categories/default \
+            --collect.url=http://localhost:8090/authors/admin \
+            --collect.url=http://localhost:8090/about \
+            --collect.numberOfRuns=1 \
+            --collect.settings.preset=desktop \
+            --collect.settings.throttling.rttMs=0 \
+            --collect.settings.throttling.throughputKbps=0 \
+            --collect.settings.throttling.cpuSlowdownMultiplier=1 \
+            --collect.settings.throttling.requestLatencyMs=0 \
+            --collect.settings.throttling.downloadThroughputKbps=0 \
+            --collect.settings.throttling.uploadThroughputKbps=0 \
+            --upload.target=filesystem \
+            --upload.outputDir=.lighthouseci || {
+              echo "❌ [LHCI] Lighthouse CI failed"
+              ls -la ./.lighthouseci/ || echo ".lighthouseci directory not found"
+              exit 1
+            }
+          step_end=$(date +%s%3N); echo "STEP_END:lhci-run:${step_end}" >> ~/logs/lhci.timing
+          task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/lhci.timing
+          echo "✅ [LHCI] Complete"
       
       - name: Upload screenshots (${{ matrix.ref_name }})
         if: always()
