@@ -12,9 +12,7 @@ jobs:
     name: Audit Current Version
     uses: ./.github/workflows/reusable-audit.yml
     with:
-      run_lhci: true
       run_argos: true
-      halo_version: "2.22.0-alpha.1"
       theme_ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
       ref_name: current
     secrets:
@@ -25,9 +23,6 @@ jobs:
     if: github.event_name == 'pull_request'
     uses: ./.github/workflows/reusable-audit.yml
     with:
-      run_lhci: true
-      run_argos: false
-      halo_version: "2.22.0-alpha.1"
       theme_ref: ${{ github.event.pull_request.base.sha }}
       ref_name: base
   
