@@ -536,11 +536,11 @@ jobs:
             kill "$(cat ~/halo.pid)" 2>/dev/null || echo "⚠️ kill failed (maybe already stopped)"
           fi
 
-      - name: Upload Halo logs
-        if: failure()
+      - name: Upload logs
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: halo-logs-${{ matrix.ref_name }}
+          name: logs-${{ matrix.ref_name }}
           path: ~/logs/
 
   audit-base:
@@ -1057,11 +1057,11 @@ jobs:
             kill "$(cat ~/halo.pid)" 2>/dev/null || echo "⚠️ kill failed (maybe already stopped)"
           fi
 
-      - name: Upload Halo logs
-        if: failure()
+      - name: Upload logs
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: halo-logs-${{ matrix.ref_name }}
+          name: logs-${{ matrix.ref_name }}
           path: ~/logs/
 
   compare-and-comment:
