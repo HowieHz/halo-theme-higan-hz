@@ -1,4 +1,4 @@
-name: Reusable Lighthouse Audit
+name: Reusable Audit
 
 on:
   workflow_call:
@@ -23,13 +23,28 @@ on:
         required: true
         type: string
         description: "Reference name for artifacts (current/base)"
+      output_dir:
+        required: false
+        type: string
+        default: "./reports/"
+        description: "Directory to output the generated reports"
+      output_filename:
+        required: false
+        type: string
+        default: "page-size-report"
+        description: "Base filename for the generated report"
+      json_only:
+        required: false
+        type: boolean
+        default: false
+        description: "Generate JSON report only"
     secrets:
       ARGOS_TOKEN:
         required: false
 
 jobs:
   audit:
-    name: Lighthouse Performance Audit (${{ inputs.ref_name }})
+    name: Performance Audit (${{ inputs.ref_name }})
     runs-on: ubuntu-latest
     
     steps:
@@ -571,8 +586,10 @@ jobs:
         id: generate_reports
         if: success() && inputs.run_lhci
         env:
-          OUTPUT_DIR: ./reports
-          LIGHTHOUSE_RESULTS_DIR: ./.lighthouseci
+          OUTPUT_DIR: ${{ inputs.output_dir }}
+          OUTPUT_FILENAME: ${{ inputs.output_filename }}
+          JSON_ONLY: ${{ inputs.json_only }}
+          LIGHTHOUSE_RESULTS_DIR: ./.lighthouseci/
           HALO_VERSION: ${{ env.HALO_VERSION }}
           JAVA_VERSION: ${{ env.JAVA_VERSION }}
           THEME_VERSION: ${{ inputs.theme_ref }}
@@ -599,7 +616,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: page-size-reports-${{ inputs.ref_name }}
-          path: ./reports/
+          path: ${{ inputs.output_dir }}
 
       - name: Stop Halo
         if: always()
