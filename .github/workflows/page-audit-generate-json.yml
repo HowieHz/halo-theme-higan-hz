@@ -150,6 +150,7 @@ jobs:
           output_dir: ".github/page_size_audit_results"
           output_filename: ${{ matrix.version }}
           json_only: true
+          run_lighthouse_ci: true
 
   # Step 3: Collect all reports and create a PR
   collect-and-pr:

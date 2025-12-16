@@ -3,18 +3,24 @@ name: Reusable Audit
 on:
   workflow_call:
     inputs:
-      run_lhci:
+      run_lighthouse_ci:
         required: false
         type: boolean
         default: true
-      lhci_version:
+      lighthouse_ci_version:
         required: false
         type: string
         default: "0.15.x"
-      run_argos:
+      upload_screenshots_to_argos:
         required: false
         type: boolean
         default: false
+        description: "When true, upload captured screenshots to Argos (requires ARGOS_TOKEN)."
+      upload_screenshots_artifact:
+        required: false
+        type: boolean
+        default: false
+        description: "When true, capture screenshots and upload them as a workflow artifact instead of (or in addition to) uploading to Argos."
       halo_version:
         required: false
         type: string
@@ -42,6 +48,16 @@ on:
         type: boolean
         default: false
         description: "Generate JSON report only"
+      upload_lighthouse_artifact:
+        required: false
+        type: boolean
+        default: false
+        description: "When true, upload raw Lighthouse .lighthouseci data as an artifact."
+      capture_screenshots:
+        required: false
+        type: boolean
+        default: false
+        description: "When true, run Playwright to capture screenshots (used by generate-pr-screenshots)."
     secrets:
       ARGOS_TOKEN:
         required: false
@@ -51,26 +67,38 @@ jobs:
     name: Validate Secrets & Inputs
     runs-on: ubuntu-latest
     outputs:
-      argos_available: ${{ steps.check.outputs.argos_available }}
+      argos_upload_available: ${{ steps.check.outputs.argos_upload_available }}
+      screenshots_needed: ${{ steps.check.outputs.screenshots_needed }}
     steps:
       - id: check
         continue-on-error: true
         run: |
-          # Determine whether Argos can/should run (requires input + token)
-          if [ "${{ inputs.run_argos }}" != "true" ]; then
-            echo "argos_available=false" >> $GITHUB_OUTPUT
-            echo "ARGOS not requested (run_argos != true)."
+          # Determine whether Argos upload is requested and token is available
+          if [ "${{ inputs.upload_screenshots_to_argos }}" != "true" ]; then
+            echo "argos_upload_available=false" >> $GITHUB_OUTPUT
+            echo "ARGOS upload not requested (upload_screenshots_to_argos != true)."
           elif [ -z "${{ secrets.ARGOS_TOKEN }}" ]; then
-            echo "ARGOS_TOKEN missing; Argos CLI will be skipped." 
-            echo "argos_available=false" >> $GITHUB_OUTPUT
+            echo "ARGOS_TOKEN missing; Argos upload will be skipped."
+            echo "argos_upload_available=false" >> $GITHUB_OUTPUT
           else
-            echo "argos_available=true" >> $GITHUB_OUTPUT
+            echo "argos_upload_available=true" >> $GITHUB_OUTPUT
+          fi
+
+          # Screenshots are needed if either:
+          # 1) upload_screenshots_to_argos == true AND ARGOS_TOKEN exists
+          # 2) upload_screenshots_artifact == true
+          if [ "${{ inputs.upload_screenshots_to_argos }}" = "true" ] && [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
+            echo "screenshots_needed=true" >> $GITHUB_OUTPUT
+          elif [ "${{ inputs.upload_screenshots_artifact }}" = "true" ]; then
+            echo "screenshots_needed=true" >> $GITHUB_OUTPUT
+          else
+            echo "screenshots_needed=false" >> $GITHUB_OUTPUT
           fi
 
   audit:
     needs: precheck
-    if: ${{ inputs.run_lhci == true || needs.precheck.outputs.argos_available == 'true' }}
-    name: Performance Audit (${{ inputs.ref_name }}) [LHCI=${{ inputs.run_lhci }} Argos=${{ inputs.run_argos }}]
+    if: ${{ inputs.run_lighthouse_ci == true || needs.precheck.outputs.argos_upload_available == 'true' }}
+    name: Performance Audit (${{ inputs.ref_name }}) [LighthouseCI=${{ inputs.run_lighthouse_ci }} Screenshots=${{ inputs.upload_screenshots_artifact }} UploadToArgos=${{ inputs.upload_screenshots_to_argos }}]
     runs-on: ubuntu-latest
     
     steps:
@@ -372,8 +400,8 @@ jobs:
           
           echo "🎉 Plugins disabled"
 
-      - name: Run Lighthouse CI and Argos CI in parallel
-        if: ${{ inputs.run_lhci && inputs.run_argos && needs.precheck.outputs.argos_available == 'true' }}
+      - name: Run Lighthouse CI and Playwright (parallel)
+        if: ${{ inputs.run_lighthouse_ci == true && (needs.precheck.outputs.screenshots_needed == 'true' || inputs.run_lighthouse_ci == true) }}
         shell: bash
         run: |
           set -e
@@ -389,12 +417,12 @@ jobs:
             echo "📦 [LHCI] Install LHCI"
             step_start=$(date +%s%3N); echo "STEP_START:check-lhci:${step_start}" >> ~/logs/lhci.timing
             if ! command -v lhci >/dev/null 2>&1; then
-              pnpm add -g @lhci/cli@${{ inputs.lhci_version }} || echo "⚠️  LHCI install failed, continuing"
+              pnpm add -g @lhci/cli@${{ inputs.lighthouse_ci_version }} || echo "⚠️  LHCI install failed, continuing"
             else
               echo "✓ lhci already installed"
             fi
             step_end=$(date +%s%3N); echo "STEP_END:check-lhci:${step_end}" >> ~/logs/lhci.timing
-            echo "LHCI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV
+            echo "LIGHTHOUSE_CI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV
 
             echo "🚀 [LHCI] Run Lighthouse CI"
             step_start=$(date +%s%3N); echo "STEP_START:lhci-run:${step_start}" >> ~/logs/lhci.timing
@@ -429,7 +457,8 @@ jobs:
           ) > ~/logs/lhci.log 2>&1 &
           LHCI_PID=$!
 
-          # ============ Task B: Playwright + Argos ============
+          # ============ Task B: Playwright (+ Argos if requested) ============
+          if [ "${{ inputs.capture_screenshots }}" = "true" ]; then
           (
             set -e
             # timing for Playwright task (milliseconds)
@@ -449,25 +478,18 @@ jobs:
             pnpm exec playwright install --with-deps chromium
             step_end=$(date +%s%3N); echo "STEP_END:install-browsers:${step_end}" >> ~/logs/playwright.timing
 
+
             echo "📸 [Playwright] Take screenshots"
             step_start=$(date +%s%3N); echo "STEP_START:screenshots:${step_start}" >> ~/logs/playwright.timing
             mkdir -p screenshots
             node .github/scripts/playwright-screenshots.js
             step_end=$(date +%s%3N); echo "STEP_END:screenshots:${step_end}" >> ~/logs/playwright.timing
 
-            echo "☁️ [Playwright] Upload screenshots to Argos"
-            step_start=$(date +%s%3N); echo "STEP_START:upload-argos:${step_start}" >> ~/logs/playwright.timing
-            if [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
-              pnpm dlx @argos-ci/cli upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || echo "⚠️ Argos upload failed"
-            else
-              echo "ℹ️  ARGOS_TOKEN not set; skipping Argos upload"
-            fi
-            step_end=$(date +%s%3N); echo "STEP_END:upload-argos:${step_end}" >> ~/logs/playwright.timing
-
             task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/playwright.timing
             echo "✅ [Playwright] Complete"
           ) > ~/logs/playwright.log 2>&1 &
           PLAY_PID=$!
+          fi
 
           echo "⏳ Waiting parallel tasks..."
           wait $LHCI_PID
@@ -528,7 +550,7 @@ jobs:
           done
 
       - name: Run Lighthouse CI only
-        if: ${{ inputs.run_lhci && !(inputs.run_argos && needs.precheck.outputs.argos_available == 'true') }}
+        if: ${{ inputs.run_lighthouse_ci && !(inputs.upload_screenshots_artifact == true || needs.precheck.outputs.argos_upload_available == 'true') }}
         shell: bash
         run: |
           set -e
@@ -540,13 +562,13 @@ jobs:
 
           echo "📦 [LHCI] Install LHCI"
           step_start=$(date +%s%3N); echo "STEP_START:check-lhci:${step_start}" >> ~/logs/lhci.timing
-          if ! command -v lhci >/dev/null 2>&1; then
-            pnpm add -g @lhci/cli@${{ inputs.lhci_version }} || echo "⚠️  LHCI install failed, continuing"
+            if ! command -v lhci >/dev/null 2>&1; then
+            pnpm add -g @lhci/cli@${{ inputs.lighthouse_ci_version }} || echo "⚠️  LHCI install failed, continuing"
           else
             echo "✓ lhci already installed"
           fi
           step_end=$(date +%s%3N); echo "STEP_END:check-lhci:${step_end}" >> ~/logs/lhci.timing
-          echo "LHCI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV
+          echo "LIGHTHOUSE_CI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV
 
           echo "🚀 [LHCI] Run Lighthouse CI"
           step_start=$(date +%s%3N); echo "STEP_START:lhci-run:${step_start}" >> ~/logs/lhci.timing
@@ -579,8 +601,8 @@ jobs:
           task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/lhci.timing
           echo "✅ [LHCI] Complete"
 
-      - name: Run Playwright + Argos (Argos-only)
-        if: ${{ inputs.run_argos && needs.precheck.outputs.argos_available == 'true' && inputs.run_lhci == false }}
+      - name: Run Playwright (Argos-only or Artifact-only)
+        if: ${{ (inputs.upload_screenshots_artifact == true || needs.precheck.outputs.argos_upload_available == 'true') && inputs.run_lighthouse_ci == false }}
         shell: bash
         run: |
           set -e
@@ -609,12 +631,12 @@ jobs:
           node .github/scripts/playwright-screenshots.js
           step_end=$(date +%s%3N); echo "STEP_END:screenshots:${step_end}" >> ~/logs/playwright.timing
 
-          echo "☁️ [Playwright] Upload screenshots to Argos"
+          echo "☁️ [Playwright] Handle screenshots (upload to Argos if requested)"
           step_start=$(date +%s%3N); echo "STEP_START:upload-argos:${step_start}" >> ~/logs/playwright.timing
-          if [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
+          if [ "${{ inputs.upload_screenshots_to_argos }}" = "true" ] && [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
             pnpm dlx @argos-ci/cli upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || echo "⚠️ Argos upload failed"
           else
-            echo "ℹ️  ARGOS_TOKEN not set; skipping Argos upload"
+            echo "ℹ️  Not uploading to Argos (either not requested or ARGOS_TOKEN missing). Screenshots remain in ./screenshots/ for artifact upload."
           fi
           step_end=$(date +%s%3N); echo "STEP_END:upload-argos:${step_end}" >> ~/logs/playwright.timing
 
@@ -622,7 +644,7 @@ jobs:
           echo "✅ [Playwright] Complete"
       
       - name: Upload screenshots (${{ inputs.ref_name }})
-        if: failure() && inputs.ref_name != 'base' && inputs.run_argos
+        if: ${{ (failure() && inputs.ref_name != 'base' && inputs.upload_screenshots_artifact) || inputs.upload_screenshots_artifact }}
         uses: actions/upload-artifact@v4
         with:
           name: screenshots-${{ inputs.ref_name }}
@@ -631,7 +653,7 @@ jobs:
           if-no-files-found: warn
         
       - name: Upload Lighthouse raw data (${{ inputs.ref_name }})
-        if: failure() && inputs.run_lhci
+        if: ${{ (failure() && inputs.run_lighthouse_ci) || inputs.upload_lighthouse_artifact == true }}
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-raw-data-${{ inputs.ref_name }}
@@ -641,7 +663,7 @@ jobs:
 
       - name: Generate reports (${{ inputs.ref_name }})
         id: generate_reports
-        if: success() && inputs.run_lhci
+        if: success() && inputs.run_lighthouse_ci
         env:
           OUTPUT_DIR: ${{ inputs.output_dir }}
           OUTPUT_FILENAME: ${{ inputs.output_filename }}
@@ -651,7 +673,7 @@ jobs:
           JAVA_VERSION: ${{ env.JAVA_VERSION }}
           THEME_VERSION: ${{ inputs.theme_ref }}
           GITHUB_SHA: ${{ github.sha }}
-          LHCI_VERSION: ${{ env.LHCI_VERSION }}
+          LIGHTHOUSE_CI_VERSION: ${{ env.LIGHTHOUSE_CI_VERSION }}
           REF_NAME: ${{ inputs.ref_name }}
         run: |
           if [ ! -d "./.lighthouseci" ]; then
@@ -669,7 +691,7 @@ jobs:
           node .github/scripts/generate-report.js
 
       - name: Upload reports (${{ inputs.ref_name }})
-        if: ${{ steps.generate_reports.outcome == 'success' && inputs.run_lhci }}
+        if: ${{ steps.generate_reports.outcome == 'success' && inputs.run_lighthouse_ci }}
         uses: actions/upload-artifact@v4
         with:
           name: page-size-reports-${{ inputs.ref_name }}

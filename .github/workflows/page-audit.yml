@@ -1,22 +1,18 @@
 name: Page Audit
 
 on:
-  push:
-    branches: [main]
   pull_request:
     types: [ opened, synchronize, reopened ]
-    branches: [main]
+    
 
 jobs:
   audit:
     name: Audit Current Version
     uses: ./.github/workflows/reusable-audit.yml
     with:
-      run_argos: true
       theme_ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
       ref_name: current
-    secrets:
-      ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+      run_lighthouse_ci: true
 
   audit-base:
     name: Audit Base Version
@@ -28,6 +24,7 @@ jobs:
     with:
       theme_ref: ${{ github.event.pull_request.base.sha }}
       ref_name: base
+      run_lighthouse_ci: true
   
   compare-and-comment:
     name: Compare and Comment

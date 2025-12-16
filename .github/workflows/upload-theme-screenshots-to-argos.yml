@@ -1,0 +1,79 @@
+name: Upload Theme Screenshots to Argos
+
+on:
+  workflow_run:
+    workflows: ["Generate Theme Screenshots"]
+    types: [completed]
+
+jobs:
+  upload:
+    name: Download screenshots and upload to Argos
+    # Only run when the generator workflow completed successfully
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install required packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq unzip
+
+      - name: Set run id
+        run: |
+          echo "RUN_ID=${{ github.event.workflow_run.id }}" >> $GITHUB_ENV
+          echo "REPO=${{ github.repository }}" >> $GITHUB_ENV
+
+      - name: List artifacts for workflow run
+        id: list-artifacts
+        run: |
+          api="https://api.github.com/repos/${{ github.repository }}/actions/runs/${RUN_ID}/artifacts"
+          echo "Calling: $api"
+          resp=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$api")
+          echo "$resp" > artifacts.json
+          jq -r '.artifacts[] | "name:\(.name) id:\(.id) size:\(.size)"' artifacts.json || true
+
+      - name: Download screenshots artifact
+        id: download
+        run: |
+          # Prefer exact artifact names to avoid ambiguity
+          ARTIFACT_ID=$(jq -r '.artifacts[] | select(.name=="screenshots-current") | .id' artifacts.json | head -n1)
+          if [ -z "$ARTIFACT_ID" ] || [ "$ARTIFACT_ID" = "null" ]; then
+            ARTIFACT_ID=$(jq -r '.artifacts[] | select(.name=="screenshots-base") | .id' artifacts.json | head -n1)
+          fi
+
+          # Require exact artifact name match (no fuzzy fallback)
+          if [ -z "$ARTIFACT_ID" ] || [ "$ARTIFACT_ID" = "null" ]; then
+            echo "No exact screenshots artifact (screenshots-current or screenshots-base) found for run ${RUN_ID}."
+            echo "Expected artifact name: screenshots-current or screenshots-base."
+            exit 1
+          fi
+
+          echo "Found artifact id: $ARTIFACT_ID"
+
+          curl -s -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/${ARTIFACT_ID}/zip" \
+            --output artifact.zip
+
+          unzip -q artifact.zip -d screenshots || true
+          ls -la screenshots || true
+
+      - name: Upload to Argos
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+        run: |
+          if [ -z "$ARGOS_TOKEN" ]; then
+            echo "ARGOS_TOKEN not set; cannot upload to Argos"
+            exit 1
+          fi
+
+          # Use npx to run argos cli without needing pnpm globally
+          npx --yes @argos-ci/cli upload --token "$ARGOS_TOKEN" ./screenshots/ || echo "Argos upload failed"

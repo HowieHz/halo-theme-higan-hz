@@ -144,6 +144,7 @@ jobs:
         with:
           theme_ref: ${{ matrix.ref }}
           ref_name: ${{ matrix.ref_name }}
+          run_lighthouse_ci: true
 
   # Compare and comment
   compare-and-comment:
