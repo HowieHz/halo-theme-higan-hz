@@ -43,7 +43,26 @@ on:
         required: false
 
 jobs:
+  precheck:
+    name: Validate Secrets & Inputs
+    runs-on: ubuntu-latest
+    outputs:
+      argos_available: ${{ steps.check.outputs.argos_available }}
+    steps:
+      - id: check
+        continue-on-error: true
+        run: |
+          # 检查是否需要运行 Argos CLI 且是否缺少 ARGOS_TOKEN
+          if [ "${{ inputs.run_argos }}" = "true" ] && [ -z "${{ secrets.ARGOS_TOKEN }}" ]; then
+            echo "ARGOS_TOKEN 缺失，后续 Argos CLI 将被跳过。"
+              echo "argos_available=false" >> $GITHUB_OUTPUT
+          else
+              echo "argos_available=true" >> $GITHUB_OUTPUT
+          fi
+
   audit:
+    needs: precheck
+    if: ${{ inputs.run_lhci == true || needs.precheck.outputs.argos_available == 'true' }}
     name: Performance Audit (${{ inputs.ref_name }})
     runs-on: ubuntu-latest
     
@@ -82,17 +101,6 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
-
-      - name: Validate ARGOS_TOKEN when run_argos=true
-        if: ${{ inputs.run_argos == true }}
-        run: |
-          # 当 inputs.run_argos 为 true 时，强制要求在调用方仓库中提供 ARGOS_TOKEN secret
-          if [ -z "${{ secrets.ARGOS_TOKEN }}" ]; then
-            echo "❌ inputs.run_argos=true，但未提供 secret ARGOS_TOKEN。"
-            echo "请在调用此可复用工作流的仓库中设置名为 'ARGOS_TOKEN' 的 secret。"
-            echo "调用示例：在调用工作流的 jobs 下使用 'secrets:' 将本仓库的 secret 传入。"
-            exit 1
-          fi
 
       # ========== 阶段 2: 并行执行(主要耗时部分) ==========
       - name: Parallel Build Theme and Setup Halo
@@ -358,7 +366,7 @@ jobs:
           echo "🎉 插件禁用完成"
 
       - name: Run Lighthouse CI and Argos CI in parallel
-        if: inputs.run_lhci && inputs.run_argos
+        if: ${{ inputs.run_lhci && inputs.run_argos && needs.precheck.outputs.argos_available == 'true' }}
         shell: bash
         run: |
           set -e
@@ -513,7 +521,7 @@ jobs:
           done
 
       - name: Run Lighthouse CI only
-        if: inputs.run_lhci && !inputs.run_argos
+        if: ${{ inputs.run_lhci && !(inputs.run_argos && needs.precheck.outputs.argos_available == 'true') }}
         shell: bash
         run: |
           set -e
