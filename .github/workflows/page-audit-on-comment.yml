@@ -163,18 +163,18 @@ jobs:
           ref: ${{ needs.check-trigger.outputs.pr_head_sha }}
       
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 24
       
       - name: Download current reports
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: page-size-reports-current-comment
           path: ./reports-current
       
       - name: Download latest-release reports
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: page-size-reports-latest-release-comment
           path: ./reports-latest-release
