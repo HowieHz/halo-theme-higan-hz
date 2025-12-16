@@ -14,6 +14,8 @@ jobs:
     permissions:
       actions: read
       contents: read
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Setup Node.js
@@ -21,9 +23,9 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install required packages
+      - name: Install required tools
         run: |
-          sudo apt-get update
+          sudo apt-get update -y
           sudo apt-get install -y jq unzip
 
       - name: Set run id
@@ -36,35 +38,55 @@ jobs:
         run: |
           api="https://api.github.com/repos/${{ github.repository }}/actions/runs/${RUN_ID}/artifacts"
           echo "Calling: $api"
-          resp=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$api")
+          resp=$(curl -s -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" "$api")
           echo "$resp" > artifacts.json
-          jq -r '.artifacts[] | "name:\(.name) id:\(.id) size:\(.size)"' artifacts.json || true
+          count=$(jq '.artifacts | length' artifacts.json)
+          echo "Found artifacts count: $count"
+          if [ "$count" -eq 0 ]; then
+            echo "No artifacts found for workflow run ${RUN_ID}."
+            exit 1
+          fi
 
       - name: Download screenshots artifact
         id: download
         run: |
-          # Prefer exact artifact names to avoid ambiguity
-          ARTIFACT_ID=$(jq -r '.artifacts[] | select(.name=="screenshots-current") | .id' artifacts.json | head -n1)
-          if [ -z "$ARTIFACT_ID" ] || [ "$ARTIFACT_ID" = "null" ]; then
-            ARTIFACT_ID=$(jq -r '.artifacts[] | select(.name=="screenshots-base") | .id' artifacts.json | head -n1)
+          # Find artifacts that match screenshots- prefix or exact names
+          matches=$(jq -r '.artifacts[] | select(.name | test("^screenshots(-|$)")) | .id + "::" + .name' artifacts.json || true)
+
+          # If none matched, try the legacy exact names used previously
+          if [ -z "$matches" ]; then
+            matches=$(jq -r '.artifacts[] | select(.name=="screenshots-current" or .name=="screenshots-base") | .id + "::" + .name' artifacts.json || true)
           fi
 
-          # Require exact artifact name match (no fuzzy fallback)
-          if [ -z "$ARTIFACT_ID" ] || [ "$ARTIFACT_ID" = "null" ]; then
-            echo "No exact screenshots artifact (screenshots-current or screenshots-base) found for run ${RUN_ID}."
-            echo "Expected artifact name: screenshots-current or screenshots-base."
+          if [ -z "$matches" ]; then
+            echo "No screenshots artifact found for run ${RUN_ID}. Expected artifact names starting with 'screenshots'."
             exit 1
           fi
 
-          echo "Found artifact id: $ARTIFACT_ID"
+          # If multiple matches exist, fail to avoid ambiguous uploads
+          count=$(echo "$matches" | wc -l | tr -d ' ')
+          if [ "$count" -gt 1 ]; then
+            echo "Multiple screenshots artifacts found for run ${RUN_ID}:"
+            echo "$matches"
+            echo "Refusing to continue to avoid ambiguous artifact selection."
+            exit 1
+          fi
 
-          curl -s -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/${ARTIFACT_ID}/zip" \
-            --output artifact.zip
+          ARTIFACT_ID=$(echo "$matches" | cut -d'::' -f1)
+          ARTIFACT_NAME=$(echo "$matches" | cut -d'::' -f2)
 
-          unzip -q artifact.zip -d screenshots || true
-          ls -la screenshots || true
+          echo "Found artifact: $ARTIFACT_NAME (id: $ARTIFACT_ID)"
+
+          download_url="https://api.github.com/repos/${{ github.repository }}/actions/artifacts/${ARTIFACT_ID}/zip"
+          http_status=$(curl -s -w "%{http_code}" -L -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" "$download_url" -o artifact.zip)
+          if [ "$http_status" -ne 200 ]; then
+            echo "Failed to download artifact (HTTP $http_status)."
+            exit 1
+          fi
+
+          unzip -q artifact.zip -d screenshots
+          echo "Screenshots contents:"
+          ls -la screenshots
 
       - name: Upload to Argos
         env:
@@ -75,5 +97,12 @@ jobs:
             exit 1
           fi
 
-          # Use npx to run argos cli without needing pnpm globally
-          npx --yes @argos-ci/cli upload --token "$ARGOS_TOKEN" ./screenshots/ || echo "Argos upload failed"
+          echo "Uploading screenshots to Argos (artifact: $ARTIFACT_NAME)"
+          set -o pipefail
+          npx --yes @argos-ci/cli upload --token "$ARGOS_TOKEN" ./screenshots/ 2>&1 | tee argos-upload.log
+          status=${PIPESTATUS[0]}
+          if [ "$status" -ne 0 ]; then
+            echo "Argos upload failed with exit code $status"
+            tail -n 200 argos-upload.log || true
+            exit $status
+          fi
