@@ -1,0 +1,81 @@
+name: Build and Deploy Documentation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Deploy to Halo after build'
+        required: true
+        type: boolean
+        default: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          # version: 10 <- auto use package.json with the key "packageManager", so commented this line
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build Documentation
+        run: pnpm docs:build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-dist
+          path: docs/.vitepress/dist
+
+  deploy:
+    needs: build
+    if: |
+      (github.event_name == 'release' && github.event.action == 'published' && github.event.release.target_commitish == 'main') ||
+      (github.event_name == 'workflow_dispatch' && inputs.deploy == true)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: docs-dist
+          path: docs/.vitepress/dist
+
+      - uses: pnpm/action-setup@v4
+        with:
+          # version: 10 <- auto use package.json with the key "packageManager", so commented this line
+          run_install: false
+      
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - name: Deploy Doc to Halo
+        run: |
+          pnpm --package=halo-static-pages-deploy-cli dlx halo-static-pages-deploy deploy -e ${{ secrets.DOCS_ENDPOINT }} -i ${{ secrets.DOCS_ID }} -t ${{ secrets.DOCS_PAT }} -f docs/.vitepress/dist

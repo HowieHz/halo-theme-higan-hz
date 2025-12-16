@@ -298,7 +298,7 @@ async function main() {
       haloVersion: process.env.HALO_VERSION || null,
       javaVersion: process.env.JAVA_VERSION || null,
       themeVersion: process.env.THEME_VERSION || process.env.GITHUB_SHA || null,
-      lhciVersion: process.env.LHCI_VERSION || null,
+      lhciVersion: process.env.LIGHTHOUSE_CI_VERSION || null,
       generatedAt: new Date().toISOString(),
     };
 

@@ -1,0 +1,60 @@
+name: Upload Theme Screenshots to Argos
+
+on:
+  workflow_run:
+    workflows: ["Generate Theme Screenshots"]
+    types: [completed]
+
+jobs:
+  upload:
+    name: Download screenshots and upload to Argos
+    # Only run when the generator workflow completed successfully
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Download screenshots
+        id: dl-screenshots
+        uses: actions/download-artifact@v5
+        with:
+          pattern: screenshots-*
+          merge-multiple: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+          path: ./screenshots
+
+      - name: Ensure screenshots present
+        run: |
+          if [ ! -d screenshots ] || [ -z "$(ls -A screenshots 2>/dev/null)" ]; then
+            echo "No screenshots downloaded from run ${{ github.event.workflow_run.id }}."
+            exit 1
+          fi
+
+      - name: Upload to Argos
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+        run: |
+          if [ -z "$ARGOS_TOKEN" ]; then
+            echo "ARGOS_TOKEN not set; cannot upload to Argos"
+            exit 1
+          fi
+
+          echo "Uploading screenshots to Argos (artifact: $ARTIFACT_NAME)"
+          set -o pipefail
+          npx --yes @argos-ci/cli upload --token "$ARGOS_TOKEN" ./screenshots/ 2>&1 | tee argos-upload.log
+          status=${PIPESTATUS[0]}
+          if [ "$status" -ne 0 ]; then
+            echo "Argos upload failed with exit code $status"
+            tail -n 200 argos-upload.log || true
+            exit $status
+          fi

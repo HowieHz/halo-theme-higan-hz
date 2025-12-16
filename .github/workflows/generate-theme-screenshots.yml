@@ -1,0 +1,17 @@
+name: Generate Theme Screenshots
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  generate:
+    # Call the reusable audit workflow to run only screenshot generation and upload artifact
+    uses: ./.github/workflows/reusable-audit.yml
+    with:
+      upload_screenshots_artifact: true
+      theme_ref: ${{ github.event.pull_request.head.sha }}
+      ref_name: current
+    # No ARGOS_TOKEN is passed here to keep PR runs untrusted

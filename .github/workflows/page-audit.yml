@@ -1,0 +1,90 @@
+name: Page Audit
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+    
+
+jobs:
+  audit:
+    name: Audit Current Version
+    uses: ./.github/workflows/reusable-audit.yml
+    with:
+      theme_ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+      ref_name: current
+      run_lighthouse_ci: true
+
+  audit-base:
+    name: Audit Base Version
+    # Run when the workflow is triggered by a pull request event.
+    # Use presence of `github.event.pull_request` so this works for both
+    # `pull_request` and `pull_request_target` triggers.
+    if: github.event.pull_request != null
+    uses: ./.github/workflows/reusable-audit.yml
+    with:
+      theme_ref: ${{ github.event.pull_request.base.sha }}
+      ref_name: base
+      run_lighthouse_ci: true
+  
+  compare-and-comment:
+    name: Compare and Comment
+    needs: [audit, audit-base]
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:  # use permissions because use of pr-comments
+      contents: read
+      pull-requests: write
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      
+      - name: Download current reports
+        uses: actions/download-artifact@v4
+        with:
+          name: page-size-reports-current
+          path: ./reports-current
+      
+      - name: Download base reports
+        uses: actions/download-artifact@v4
+        with:
+          name: page-size-reports-base
+          path: ./reports-base
+      
+      - name: Generate comparison report
+        run: |
+          node .github/scripts/compare-reports.js
+        env:
+          CURRENT_REPORT: ./reports-current/page-size-report.json
+          BASE_REPORT: ./reports-base/page-size-report.json
+          OUTPUT_FILE: ./comparison-report.md
+      
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        continue-on-error: true
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('./comparison-report.md', 'utf8');
+            
+            try {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: report
+              });
+              console.log('✓ Comment posted successfully');
+            } catch (error) {
+              if (error.status === 403) {
+                console.log('⚠️ Cannot post comment (insufficient permissions). This often happens for PRs created by Dependabot or other bots.');
+                console.log('📊 The report has been generated and uploaded as an artifact; it can be viewed manually.');
+              } else {
+                throw error;
+              }
+            }
