@@ -6,7 +6,7 @@ on:
       run_lighthouse_ci:
         required: false
         type: boolean
-        default: true
+        default: false
       lighthouse_ci_version:
         required: false
         type: string
@@ -53,11 +53,6 @@ on:
         type: boolean
         default: false
         description: "When true, upload raw Lighthouse .lighthouseci data as an artifact."
-      capture_screenshots:
-        required: false
-        type: boolean
-        default: false
-        description: "When true, run Playwright to capture screenshots (used by generate-pr-screenshots)."
     secrets:
       ARGOS_TOKEN:
         required: false
@@ -458,7 +453,6 @@ jobs:
           LHCI_PID=$!
 
           # ============ Task B: Playwright (+ Argos if requested) ============
-          if [ "${{ inputs.capture_screenshots }}" = "true" ]; then
           (
             set -e
             # timing for Playwright task (milliseconds)
@@ -489,7 +483,6 @@ jobs:
             echo "✅ [Playwright] Complete"
           ) > ~/logs/playwright.log 2>&1 &
           PLAY_PID=$!
-          fi
 
           echo "⏳ Waiting parallel tasks..."
           wait $LHCI_PID
