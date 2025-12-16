@@ -47,21 +47,22 @@ jobs:
     name: Validate Secrets & Inputs
     runs-on: ubuntu-latest
     outputs:
-      skip_audit: ${{ steps.check.outputs.skip_audit }}
+      argos_available: ${{ steps.check.outputs.argos_available }}
     steps:
       - id: check
+        continue-on-error: true
         run: |
-          # 检查是否需要 Argos 且是否缺少 ARGOS_TOKEN
+          # 检查是否需要运行 Argos CLI 且是否缺少 ARGOS_TOKEN
           if [ "${{ inputs.run_argos }}" = "true" ] && [ -z "${{ secrets.ARGOS_TOKEN }}" ]; then
-            echo "ARGOS_TOKEN 缺失，后续 audit job 将被跳过。"
-            echo "skip_audit=true" >> $GITHUB_OUTPUT
+            echo "ARGOS_TOKEN 缺失，后续 Argos CLI 将被跳过。"
+              echo "argos_available=false" >> $GITHUB_OUTPUT
           else
-            echo "skip_audit=false" >> $GITHUB_OUTPUT
+              echo "argos_available=true" >> $GITHUB_OUTPUT
           fi
 
   audit:
     needs: precheck
-    if: ${{ needs.precheck.outputs.skip_audit != 'true' }}
+    if: ${{ inputs.run_lhci == true || needs.precheck.outputs.argos_available == 'true' }}
     name: Performance Audit (${{ inputs.ref_name }})
     runs-on: ubuntu-latest
     
@@ -365,7 +366,7 @@ jobs:
           echo "🎉 插件禁用完成"
 
       - name: Run Lighthouse CI and Argos CI in parallel
-        if: inputs.run_lhci && inputs.run_argos
+        if: ${{ inputs.run_lhci && inputs.run_argos && needs.precheck.outputs.argos_available == 'true' }}
         shell: bash
         run: |
           set -e
@@ -520,7 +521,7 @@ jobs:
           done
 
       - name: Run Lighthouse CI only
-        if: inputs.run_lhci && !inputs.run_argos
+        if: ${{ inputs.run_lhci && !(inputs.run_argos && needs.precheck.outputs.argos_available == 'true') }}
         shell: bash
         run: |
           set -e
