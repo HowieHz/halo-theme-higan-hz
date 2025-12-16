@@ -447,6 +447,8 @@ spec:
           if: "$is_footer_site_stats_show === true"
           label: Statistics settings
           itemLabels:
+            - type: iconify
+              label: $value.icon
             - type: text
               label: $value.type
           value:
