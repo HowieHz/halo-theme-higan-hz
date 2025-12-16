@@ -1,0 +1,92 @@
+name: Build Theme
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  build:
+    name: Upload Theme
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make Build Directory
+        run: |
+          pwd
+          mkdir -p ~/builds/tmp ~/builds/target
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          # version: 10 <- auto use package.json with the key "packageManager", so commented this line
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build project
+        run: pnpm build
+
+      - name: Copy Theme Files from Original to Temp
+        run: |
+          pwd
+          cp -r . ~/builds/tmp
+
+      - name: Keep only included files
+        run: |
+          pwd
+          cd ~/builds/tmp
+          pwd
+          mkdir ~/builds/tmp-included
+          cat ~/work/halo-theme-higan-hz/halo-theme-higan-hz/.github/include-list.txt | xargs -I {} cp -r --parents {} ~/builds/tmp-included
+          rm -rf ~/builds/tmp
+          mv ~/builds/tmp-included ~/builds/tmp
+
+      - name: Zip Theme in Chinese
+        run: |
+          pwd
+          cd ~/builds/tmp
+          pwd
+
+          zip -9 -r howiehz-higan-cn.zip .
+
+          rm settings.yaml annotation-settings.yaml theme.yaml
+          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/settings.yaml settings.yaml
+          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/annotation-settings.yaml annotation-settings.yaml
+          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/theme.yaml theme.yaml
+          zip -9 -r howiehz-higan-cn.zip settings.yaml annotation-settings.yaml theme.yaml
+
+          mv howiehz-higan-cn.zip ~/builds/target
+
+      - name: Zip Theme in English
+        run: |
+          pwd
+          cd ~/builds/tmp
+          pwd
+
+          zip -9 -r howiehz-higan-en.zip .
+
+          rm settings.yaml annotation-settings.yaml theme.yaml
+          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/i18n-settings/settings.en.yaml settings.yaml
+          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/i18n-settings/annotation-settings.en.yaml annotation-settings.yaml
+          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/i18n-settings/theme.en.yaml theme.yaml
+          zip -9 -r howiehz-higan-en.zip settings.yaml annotation-settings.yaml theme.yaml
+
+          mv howiehz-higan-en.zip ~/builds/target
+
+      - name: Upload Theme Build Target
+        uses: actions/upload-artifact@v4
+        with:
+          name: theme-artifact
+          path: ~/builds/target/*

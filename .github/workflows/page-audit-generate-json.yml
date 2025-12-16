@@ -1,0 +1,218 @@
+name: "Page Audit: Generate JSON"
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_version:
+        description: 'Starting version (e.g.: v1.45.0; leave empty to use v1.0.0)'
+        required: false
+        default: 'v1.0.0'
+      end_version:
+        description: 'Ending version (e.g.: v1.50.0; leave empty to use latest)'
+        required: false
+        default: ''
+      create_pr:
+        description: 'Create a PR to submit the data files?'
+        required: true
+        default: false
+        type: boolean
+  release:
+    types: [published]
+
+jobs:
+  # Step 1: Get versions to test
+  get-versions:
+    name: Get Version List
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.get-versions.outputs.versions }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Get version list
+        id: get-versions
+        uses: actions/github-script@v7
+        with:
+          script: |
+            let startVersion, endVersion;
+            
+              if ('${{ github.event_name }}' === 'release') {
+              const releaseVersion = '${{ github.event.release.tag_name }}';
+              startVersion = releaseVersion;
+              endVersion = releaseVersion;
+              console.log(`Release triggered: testing version ${releaseVersion}`);
+            } else {
+              startVersion = '${{ github.event.inputs.start_version }}' || 'v1.0.0';
+              endVersion = '${{ github.event.inputs.end_version }}' || '';
+            }
+            
+            // Fetch all releases (with pagination)
+            console.log('Fetching all releases...');
+            const releases = [];
+            let page = 1;
+            let hasMore = true;
+            
+            while (hasMore) {
+              const { data } = await github.rest.repos.listReleases({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                per_page: 100,
+                page: page
+              });
+              
+              releases.push(...data);
+              console.log(`Fetched page ${page}, ${data.length} releases`);
+              
+              if (data.length < 100) {
+                hasMore = false;
+              } else {
+                page++;
+              }
+            }
+            
+            console.log(`Total fetched ${releases.length} releases`);
+            
+            // Filter out prereleases (using GitHub API 'prerelease' field)
+            const stableReleases = releases.filter(r => {
+              if (r.prerelease) {
+                console.log(`⊘ Skipping prerelease: ${r.tag_name}`);
+                return false;
+              }
+              return true;
+            });
+            
+            console.log(`Filtered to ${stableReleases.length} stable releases`);
+            
+            // Sort by semantic versioning (oldest to newest)
+            const parseVersion = (version) => {
+              const match = version.match(/^v?(\d+)\.(\d+)\.(\d+)(?:-(.+))?$/);
+              if (!match) return null;
+              const [, major, minor, patch] = match;
+              return {
+                major: parseInt(major, 10),
+                minor: parseInt(minor, 10),
+                patch: parseInt(patch, 10)
+              };
+            };
+            
+            stableReleases.sort((a, b) => {
+              const versionA = parseVersion(a.tag_name);
+              const versionB = parseVersion(b.tag_name);
+              
+              if (!versionA || !versionB) {
+                console.warn(`⚠️  Unable to parse version: ${a.tag_name} or ${b.tag_name}`);
+                return 0;
+              }
+              
+              if (versionA.major !== versionB.major) return versionA.major - versionB.major;
+              if (versionA.minor !== versionB.minor) return versionA.minor - versionB.minor;
+              return versionA.patch - versionB.patch;
+            });
+            
+            // Find the version range
+            const startIndex = stableReleases.findIndex(r => r.tag_name === startVersion);
+            const endIndex = endVersion ? stableReleases.findIndex(r => r.tag_name === endVersion) : stableReleases.length - 1;
+            
+            if (startIndex === -1) {
+              core.setFailed(`Cannot find start version: ${startVersion}. Available stable versions: ${stableReleases.slice(0, 10).map(r => r.tag_name).join(', ')}...`);
+              return;
+            }
+            if (endVersion && endIndex === -1) {
+              core.setFailed(`Cannot find end version: ${endVersion}`);
+              return;
+            }
+            
+            // Extract version list (from start to end)
+            const versionList = stableReleases
+              .slice(startIndex, endIndex + 1)
+              .map(r => r.tag_name);
+            
+            console.log(`Found ${versionList.length} versions:`, versionList);
+            core.setOutput('versions', JSON.stringify(versionList));
+
+  # Step 2: Run tests for each version in parallel
+  test-versions:
+    name: Test ${{ matrix.version }}
+    needs: get-versions
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ${{ fromJson(needs.get-versions.outputs.versions) }}
+      fail-fast: false  # Even if a version fails, continue testing other versions
+    
+    steps:
+      - uses: ./.github/workflows/reusable-audit.yml
+        with:
+          theme_ref: ${{ matrix.version }}
+          ref_name: ${{ matrix.version }}
+          output_dir: ".github/page_size_audit_results"
+          output_filename: ${{ matrix.version }}
+          json_only: true
+          run_lighthouse_ci: true
+
+  # Step 3: Collect all reports and create a PR
+  collect-and-pr:
+    name: Collect Reports and Create PR
+    needs: test-versions
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Download all reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: report-*
+          path: ./all-reports
+
+      - name: Copy reports to page_size_audit_results
+        if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
+        run: |
+          mkdir -p .github/page_size_audit_results
+          for dir in ./all-reports/report-*; do
+              if [ -d "$dir" ]; then
+              version=$(basename "$dir" | sed 's/report-//')
+              cp "$dir/${version}.json" ".github/page_size_audit_results/${version}.json"
+              echo "✓ Copied ${version}.json"
+            fi
+          done
+
+      - name: Create PR with data files
+        if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.PR_WORKFLOW_TOKEN }}
+          base: main  # Use 'main' as the base branch; that's sufficient for the current update flow
+          # Use a PAT instead of GITHUB_TOKEN so the created PR can trigger other workflows
+          # Required permissions (fine-grained PAT):
+          # - Contents: Read and Write (create branches and commits)
+          # - Pull requests: Read and Write (create PRs)
+          # - Workflows: Read and Write (allow PRs to trigger workflows)
+          commit-message: "chore: update page size audit results for ${{ github.event.inputs.start_version || github.event.release.tag_name }} to ${{ github.event.inputs.end_version || github.event.release.tag_name || 'latest' }}"
+          title: 'chore: Update Page Size Audit Results'
+          body: |
+            ## Page Size Audit Results Update
+            
+            This PR adds/updates page size audit results for versions:
+            - **Start Version:** ${{ github.event.inputs.start_version || github.event.release.tag_name }}
+            - **End Version:** ${{ github.event.inputs.end_version || github.event.release.tag_name || 'latest' }}
+            
+            The following JSON data files have been updated in `.github/page_size_audit_results/`:
+            - Multiple version result files
+            
+            These files will be used for generating performance trend charts.
+            
+            ---
+            *Auto-generated by Page Audit workflow*
+          branch: perf/page-size-audit-${{ github.run_number }}
+          delete-branch: true
+          labels: performance
+          add-paths: .github/page_size_audit_results/*.json
