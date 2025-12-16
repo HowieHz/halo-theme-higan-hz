@@ -1320,7 +1320,7 @@ spec:
           value: []
           help: "You can define your own social media information here."
           itemLabels:
-            - type: image
+            - type: iconify
               label: $value.icon
             - type: text
               label: $value.id

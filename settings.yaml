@@ -1326,7 +1326,7 @@ spec:
           value: []
           help: 上面预设的选项可能不能满足需求，那么来这自定义属于你的资料吧！（在此处自定义完后别忘记在上面添加“自定义资料”）
           itemLabels:
-            - type: image
+            - type: iconify
               label: $value.icon
             - type: text
               label: $value.id
