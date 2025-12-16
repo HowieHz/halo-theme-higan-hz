@@ -1359,6 +1359,8 @@ spec:
           label: 分享按钮设置
           help: "@URL 和 @TITLE 是占位符，使用中会被替换为页面实际地址和标题"
           itemLabels:
+            - type: iconify
+              label: $value.icon
             - type: text
               label: $value.name
           value:
@@ -1430,6 +1432,7 @@ spec:
               label: 图标
               format: dataurl
               value: ""
+              help: 设置后覆盖默认图标
             - $formkit: text
               name: aria_label
               label: aria-label

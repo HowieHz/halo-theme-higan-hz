@@ -1353,6 +1353,8 @@ spec:
           label: Share Button Settings
           help: "@URL and @TITLE are placeholders that will be replaced with the actual page URL and title."
           itemLabels:
+            - type: iconify
+              label: $value.icon
             - type: text
               label: $value.name
           value:
@@ -1424,6 +1426,7 @@ spec:
               label: Icon
               format: dataurl
               value: ""
+              help: Override the default icon after setting
             - $formkit: text
               name: aria_label
               label: aria-label
