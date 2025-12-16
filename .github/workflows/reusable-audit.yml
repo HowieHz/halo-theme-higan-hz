@@ -7,6 +7,10 @@ on:
         required: false
         type: boolean
         default: true
+      lhci_version:
+        required: false
+        type: string
+        default: "0.15.x"
       run_argos:
         required: false
         type: boolean
@@ -52,18 +56,21 @@ jobs:
       - id: check
         continue-on-error: true
         run: |
-          # Check whether Argos CLI should run and whether ARGOS_TOKEN is missing
-          if [ "${{ inputs.run_argos }}" = "true" ] && [ -z "${{ secrets.ARGOS_TOKEN }}" ]; then
-            echo "ARGOS_TOKEN missing; Argos CLI will be skipped."
-              echo "argos_available=false" >> $GITHUB_OUTPUT
+          # Determine whether Argos can/should run (requires input + token)
+          if [ "${{ inputs.run_argos }}" != "true" ]; then
+            echo "argos_available=false" >> $GITHUB_OUTPUT
+            echo "ARGOS not requested (run_argos != true)."
+          elif [ -z "${{ secrets.ARGOS_TOKEN }}" ]; then
+            echo "ARGOS_TOKEN missing; Argos CLI will be skipped." 
+            echo "argos_available=false" >> $GITHUB_OUTPUT
           else
-              echo "argos_available=true" >> $GITHUB_OUTPUT
+            echo "argos_available=true" >> $GITHUB_OUTPUT
           fi
 
   audit:
     needs: precheck
     if: ${{ inputs.run_lhci == true || needs.precheck.outputs.argos_available == 'true' }}
-    name: Performance Audit (${{ inputs.ref_name }})
+    name: Performance Audit (${{ inputs.ref_name }}) [LHCI=${{ inputs.run_lhci }} Argos=${{ inputs.run_argos }}]
     runs-on: ubuntu-latest
     
     steps:
@@ -382,7 +389,7 @@ jobs:
             echo "📦 [LHCI] Install LHCI"
             step_start=$(date +%s%3N); echo "STEP_START:check-lhci:${step_start}" >> ~/logs/lhci.timing
             if ! command -v lhci >/dev/null 2>&1; then
-              pnpm add -g @lhci/cli@0.15.x || echo "⚠️  LHCI install failed, continuing"
+              pnpm add -g @lhci/cli@${{ inputs.lhci_version }} || echo "⚠️  LHCI install failed, continuing"
             else
               echo "✓ lhci already installed"
             fi
@@ -534,7 +541,7 @@ jobs:
           echo "📦 [LHCI] Install LHCI"
           step_start=$(date +%s%3N); echo "STEP_START:check-lhci:${step_start}" >> ~/logs/lhci.timing
           if ! command -v lhci >/dev/null 2>&1; then
-            pnpm add -g @lhci/cli@0.15.x || echo "⚠️  LHCI install failed, continuing"
+            pnpm add -g @lhci/cli@${{ inputs.lhci_version }} || echo "⚠️  LHCI install failed, continuing"
           else
             echo "✓ lhci already installed"
           fi
@@ -571,6 +578,48 @@ jobs:
           step_end=$(date +%s%3N); echo "STEP_END:lhci-run:${step_end}" >> ~/logs/lhci.timing
           task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/lhci.timing
           echo "✅ [LHCI] Complete"
+
+      - name: Run Playwright + Argos (Argos-only)
+        if: ${{ inputs.run_argos && needs.precheck.outputs.argos_available == 'true' && inputs.run_lhci == false }}
+        shell: bash
+        run: |
+          set -e
+          mkdir -p ~/logs
+
+          # timing for Playwright+Argos task (milliseconds)
+          task_start=$(date +%s%3N)
+          echo "TASK_START:${task_start}" > ~/logs/playwright.timing
+
+          echo "📦 [Playwright] Install Playwright and Argos"
+          step_start=$(date +%s%3N); echo "STEP_START:check-playwright:${step_start}" >> ~/logs/playwright.timing
+          if ! pnpm exec -- playwright --version >/dev/null 2>&1; then
+            pnpm add -w -D playwright @argos-ci/playwright || echo "⚠️  Playwright install failed, continuing"
+          else
+            echo "✓ playwright already available via pnpm exec"
+          fi
+          step_end=$(date +%s%3N); echo "STEP_END:check-playwright:${step_end}" >> ~/logs/playwright.timing
+
+          step_start=$(date +%s%3N); echo "STEP_START:install-browsers:${step_start}" >> ~/logs/playwright.timing
+          pnpm exec playwright install --with-deps chromium
+          step_end=$(date +%s%3N); echo "STEP_END:install-browsers:${step_end}" >> ~/logs/playwright.timing
+
+          echo "📸 [Playwright] Take screenshots"
+          step_start=$(date +%s%3N); echo "STEP_START:screenshots:${step_start}" >> ~/logs/playwright.timing
+          mkdir -p screenshots
+          node .github/scripts/playwright-screenshots.js
+          step_end=$(date +%s%3N); echo "STEP_END:screenshots:${step_end}" >> ~/logs/playwright.timing
+
+          echo "☁️ [Playwright] Upload screenshots to Argos"
+          step_start=$(date +%s%3N); echo "STEP_START:upload-argos:${step_start}" >> ~/logs/playwright.timing
+          if [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
+            pnpm dlx @argos-ci/cli upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || echo "⚠️ Argos upload failed"
+          else
+            echo "ℹ️  ARGOS_TOKEN not set; skipping Argos upload"
+          fi
+          step_end=$(date +%s%3N); echo "STEP_END:upload-argos:${step_end}" >> ~/logs/playwright.timing
+
+          task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/playwright.timing
+          echo "✅ [Playwright] Complete"
       
       - name: Upload screenshots (${{ inputs.ref_name }})
         if: failure() && inputs.ref_name != 'base' && inputs.run_argos
