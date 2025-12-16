@@ -5,7 +5,7 @@ on:
     types: [created]
 
 jobs:
-  # 检查评论权限和触发条件
+  # Check comment permissions and trigger conditions
   check-trigger:
     name: Check Trigger Conditions
     if: |
@@ -50,7 +50,7 @@ jobs:
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: context.issue.number,
-                  body: '❌ 你没有权限触发此 workflow。只有仓库协作者可以使用 `/audit` 命令。'
+                  body: '❌ You do not have permission to trigger this workflow. Only repository collaborators can use the `/audit` command.'
                 });
                 core.setOutput('should_run', 'false');
                 return;
@@ -58,7 +58,7 @@ jobs:
               
               core.setOutput('should_run', 'true');
             } catch (error) {
-              core.setFailed(`检查权限失败: ${error.message}`);
+              core.setFailed(`Permission check failed: ${error.message}`);
             }
       
       - name: Get PR details
@@ -81,7 +81,7 @@ jobs:
             console.log(`Head SHA: ${pr.head.sha}`);
             console.log(`Head Ref: ${pr.head.ref}`);
 
-  # 获取最新 release 版本
+  # Get latest release version
   get-latest-release:
     name: Get Latest Release
     needs: check-trigger
@@ -105,7 +105,7 @@ jobs:
               
               core.setOutput('tag', release.tag_name);
               
-              // 获取 release tag 对应的 commit SHA
+              // Get the commit SHA for the release tag
               const { data: tag } = await github.rest.git.getRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -118,13 +118,13 @@ jobs:
               console.log(`Release SHA: ${tag.object.sha}`);
             } catch (error) {
               if (error.status === 404) {
-                core.setFailed('没有找到 release 版本。请确保仓库至少有一个 release。');
+                core.setFailed('No release found. Ensure the repository has at least one release.');
               } else {
-                core.setFailed(`获取最新 release 失败: ${error.message}`);
+                core.setFailed(`Failed to get latest release: ${error.message}`);
               }
             }
 
-  # 性能测试
+  # Performance test
   audit:
     name: Lighthouse Performance Audit (${{ matrix.ref_name }})
     needs: [check-trigger, get-latest-release]
@@ -145,7 +145,7 @@ jobs:
           theme_ref: ${{ matrix.ref }}
           ref_name: ${{ matrix.ref_name }}
 
-  # 对比和评论
+  # Compare and comment
   compare-and-comment:
     name: Compare and Comment
     needs: [check-trigger, get-latest-release, audit]
@@ -212,7 +212,7 @@ jobs:
             const fs = require('fs');
             const report = fs.readFileSync('./final-report.md', 'utf8');
             
-            // 添加成功反应
+            // Add success reaction
             await github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -220,7 +220,7 @@ jobs:
               content: '+1'
             });
             
-            // 发布评论
+            // Post comment
             try {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
@@ -228,17 +228,17 @@ jobs:
                 issue_number: ${{ needs.check-trigger.outputs.pr_number }},
                 body: report
               });
-              console.log('✓ 成功发布性能对比报告');
+              console.log('✓ Performance comparison report posted successfully');
             } catch (error) {
               if (error.status === 403) {
-                console.log('⚠️  无法发布评论（权限不足）');
-                console.log('📊 报告已生成并上传为 artifact，可以手动查看');
+                console.log('⚠️ Cannot post comment (insufficient permissions).');
+                console.log('📊 The report has been generated and uploaded as an artifact; it can be viewed manually.');
               } else {
                 throw error;
               }
             }
   
-  # 处理失败情况
+  # Handle failure cases
   handle-failure:
     name: Handle Failure
     needs: [check-trigger, audit]
@@ -253,7 +253,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            // 添加失败反应
+            // Add failure reaction
             await github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -261,10 +261,10 @@ jobs:
               content: '-1'
             });
             
-            // 发布失败通知
+            // Post failure notification
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ needs.check-trigger.outputs.pr_number }},
-              body: '❌ 性能测试失败。请查看 [workflow 运行日志](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) 了解详情。'
+              body: '❌ Performance tests failed. See the [workflow run logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.'
             });

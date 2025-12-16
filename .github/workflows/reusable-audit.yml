@@ -52,9 +52,9 @@ jobs:
       - id: check
         continue-on-error: true
         run: |
-          # 检查是否需要运行 Argos CLI 且是否缺少 ARGOS_TOKEN
+          # Check whether Argos CLI should run and whether ARGOS_TOKEN is missing
           if [ "${{ inputs.run_argos }}" = "true" ] && [ -z "${{ secrets.ARGOS_TOKEN }}" ]; then
-            echo "ARGOS_TOKEN 缺失，后续 Argos CLI 将被跳过。"
+            echo "ARGOS_TOKEN missing; Argos CLI will be skipped."
               echo "argos_available=false" >> $GITHUB_OUTPUT
           else
               echo "argos_available=true" >> $GITHUB_OUTPUT
@@ -74,17 +74,17 @@ jobs:
 
       - name: Copy latest .github scripts
         run: |
-          # 获取最新的 .github 脚本（从触发 workflow 的分支）
-          # 对于 PR: 使用 head_ref (源分支)，对于其他事件: 使用 ref_name
+          # Fetch latest .github scripts (from the branch that triggered the workflow)
+          # For PRs: use head_ref (source branch); otherwise use ref_name
           BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
-          echo "工作流分支: $BRANCH_NAME"
-          
+          echo "Workflow branch: $BRANCH_NAME"
+
           git fetch origin "$BRANCH_NAME"
           git checkout "origin/$BRANCH_NAME" -- .github/scripts/
-          
-          echo "✓ 已从 $BRANCH_NAME 分支复制最新的 .github/scripts/"
 
-      # ========== 阶段 1: 环境准备(串行,很快) ==========
+          echo "✓ Copied latest .github/scripts/ from $BRANCH_NAME"
+
+          # ========== Phase 1: Prepare environment (serial, quick) ==========
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -102,13 +102,13 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      # ========== 阶段 2: 并行执行(主要耗时部分) ==========
+      # ========== Phase 2: Parallel execution (main time-consuming part) ==========
       - name: Parallel Build Theme and Setup Halo
         shell: bash
         run: |
           set -e
           
-          # 记录环境信息
+          # Record environment information
           JAVA_VERSION=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}')
           echo "JAVA_VERSION=${JAVA_VERSION}" >> $GITHUB_ENV
           HALO_VERSION="${{ inputs.halo_version }}"
@@ -116,14 +116,14 @@ jobs:
           
           mkdir -p ~/logs
           
-          # ============ 任务 1: 主题构建 ============
+          # ============ Task 1: Theme build ============
           (
             set -e
             # lightweight timing: record task and key step timestamps (milliseconds)
             task_start=$(date +%s%3N)
             echo "TASK_START:${task_start}" > ~/logs/theme.timing
 
-            echo "📦 [Theme] 开始构建"
+            echo "📦 [Theme] Start build"
 
             step_start=$(date +%s%3N); echo "STEP_START:pnpm-install:${step_start}" >> ~/logs/theme.timing
             pnpm install
@@ -146,28 +146,28 @@ jobs:
             step_end=$(date +%s%3N); echo "STEP_END:pack-files:${step_end}" >> ~/logs/theme.timing
 
             task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/theme.timing
-            echo "✅ [Theme] 完成"
+            echo "✅ [Theme] Complete"
           ) > ~/logs/theme.log 2>&1 &
           THEME_PID=$!
           
-          # ============ 任务 2: Halo 设置 ============
+          # ============ Task 2: Halo setup ============
           (
             set -e
             # lightweight timing for Halo setup (milliseconds)
             task_start=$(date +%s%3N)
             echo "TASK_START:${task_start}" > ~/logs/halo.timing
 
-            echo "🔧 [Halo] 开始设置"
+            echo "🔧 [Halo] Start setup"
 
             step_start=$(date +%s%3N); echo "STEP_START:download-jar:${step_start}" >> ~/logs/halo.timing
-            # 下载 Halo
-            # 优先从 GitHub Releases 下载，失败则从官方备用地址下载
+            # Download Halo
+            # Try GitHub Releases first; fallback to the official mirror on failure
             if ! wget -q "https://github.com/halo-dev/halo/releases/download/v${HALO_VERSION}/halo-${HALO_VERSION}.jar" -O ~/halo.jar; then
               wget -q "https://dl.halo.run/release/halo-${HALO_VERSION}.jar" -O ~/halo.jar
             fi
             step_end=$(date +%s%3N); echo "STEP_END:download-jar:${step_end}" >> ~/logs/halo.timing
 
-            # 创建配置
+            # Create configuration
             step_start=$(date +%s%3N); echo "STEP_START:create-config:${step_start}" >> ~/logs/halo.timing
             mkdir -p ~/.halo2
             cat > ~/.halo2/application.yaml << 'EOF'
@@ -193,7 +193,7 @@ jobs:
           EOF
             step_end=$(date +%s%3N); echo "STEP_END:create-config:${step_end}" >> ~/logs/halo.timing
 
-            # 启动 Halo
+            # Start Halo
             step_start=$(date +%s%3N); echo "STEP_START:start-jar:${step_start}" >> ~/logs/halo.timing
             nohup java -jar ~/halo.jar \
               --spring.config.additional-location=optional:file:${HOME}/.halo2/ \
@@ -201,21 +201,21 @@ jobs:
             echo $! > ~/halo.pid
             step_end=$(date +%s%3N); echo "STEP_END:start-jar:${step_end}" >> ~/logs/halo.timing
 
-            # 等待就绪
+            # Wait for readiness
             step_start=$(date +%s%3N); echo "STEP_START:wait-readiness:${step_start}" >> ~/logs/halo.timing
             for i in {1..60}; do
               if curl -sf http://localhost:8090/actuator/health/readiness >/dev/null 2>&1; then
-                echo "✅ [Halo] 就绪 (${i}次尝试)"
+                echo "✅ [Halo] Ready (attempt ${i})"
                 break
               fi
-              [ $i -eq 60 ] && { echo "❌ [Halo] 超时"; cat ~/logs/halo-startup.log; exit 1; }
+              [ $i -eq 60 ] && { echo "❌ [Halo] Timeout"; cat ~/logs/halo-startup.log; exit 1; }
               sleep 1
             done
             step_end=$(date +%s%3N); echo "STEP_END:wait-readiness:${step_end}" >> ~/logs/halo.timing
 
-            # 初始化系统
+            # Initialize system
             step_start=$(date +%s%3N); echo "STEP_START:init-system:${step_start}" >> ~/logs/halo.timing
-            echo "正在初始化 Halo 系统..."
+            echo "Initializing Halo system..."
             response=$(curl -c /tmp/cookies.txt -s http://localhost:8090/system/setup)
             csrf_token=$(echo "$response" | grep '_csrf' | sed -n 's/.*value="\([^\"]*\)".*/\1/p')
 
@@ -234,12 +234,12 @@ jobs:
             step_end=$(date +%s%3N); echo "STEP_END:init-system:${step_end}" >> ~/logs/halo.timing
 
             task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/halo.timing
-            echo "✅ [Halo] 完成"
+            echo "✅ [Halo] Complete"
           ) > ~/logs/halo.log 2>&1 &
           HALO_PID=$!
           
-          # ============ 等待并检查结果 ============
-          echo "⏳ 等待并行任务..."
+          # ============ Wait and check results ============
+          echo "⏳ Waiting for parallel tasks..."
           
           wait $THEME_PID
           THEME_CODE=$?
@@ -247,22 +247,22 @@ jobs:
           HALO_CODE=$?
           
           if [ $THEME_CODE -ne 0 ]; then
-            echo "❌ 主题构建失败"
+            echo "❌ Theme build failed"
             cat ~/logs/theme.log
             exit 1
           fi
           
           if [ $HALO_CODE -ne 0 ]; then
-            echo "❌ Halo 设置失败"
+            echo "❌ Halo setup failed"
             cat ~/logs/halo.log
             exit 1
           fi
           
-          echo "🎉 并行任务全部成功!"
+          echo "🎉 All parallel tasks succeeded!"
           
-          # 输出第一个并行任务组的时间统计
+          # Output timing stats for the first parallel group
           echo ""
-          echo "⏱️  第一组并行任务时间统计 (Build & Setup):"
+          echo "⏱️  Timing for first parallel group (Build & Setup):"
           for tf in ~/logs/theme.timing ~/logs/halo.timing; do
             [ -f "$tf" ] || continue
             name=$(basename "$tf" .timing)
@@ -290,17 +290,17 @@ jobs:
             done
           done
 
-      # ========== 阶段 3: 后续步骤(串行) ==========
+      # ========== Phase 3: Subsequent steps (serial) ==========
       - name: Install and activate theme
         run: |
           THEME_ZIP_PATH="${HOME}/builds/target/howiehz-higan-cn.zip"
           
           if [ ! -f "$THEME_ZIP_PATH" ]; then
-            echo "❌ 主题文件不存在: $THEME_ZIP_PATH"
+            echo "❌ Theme file not found: $THEME_ZIP_PATH"
             exit 1
           fi
           
-          echo "安装主题..."
+          echo "Installing theme..."
           response=$(curl -v -X POST \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/install \
             -u admin:admin \
@@ -311,59 +311,59 @@ jobs:
           http_code=$(echo "$response" | grep "HTTP_CODE:" | cut -d: -f2)
           
           if [ -z "$http_code" ] || ([ "$http_code" != "200" ] && [ "$http_code" != "201" ]); then
-            echo "❌ 主题安装失败 (HTTP $http_code)"
+            echo "❌ Theme installation failed (HTTP $http_code)"
             echo "$response"
             exit 1
           fi
           
-          echo "✓ 主题已安装"
+          echo "✓ Theme installed"
           
           curl -X PUT \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/activation \
             -u admin:admin \
             -s > /dev/null
           
-          echo "✓ 主题已激活"
+          echo "✓ Theme activated"
           
           curl -X PUT \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/invalidate-cache \
             -u admin:admin \
             -s > /dev/null
           
-          echo "✓ 缓存已清除"
+          echo "✓ Cache cleared"
 
       - name: Disable Halo plugins
         shell: bash
         run: |
           set -e
           
-          echo "禁用插件: PluginCommentWidget, PluginSearchWidget"
+          echo "Disable plugins: PluginCommentWidget, PluginSearchWidget"
           
           PIDS=()
           
           for plugin in PluginCommentWidget PluginSearchWidget; do
             (
-              echo "🔧 禁用 ${plugin}"
+              echo "🔧 Disabling ${plugin}"
               if curl -sX PUT \
                 "http://localhost:8090/apis/api.console.halo.run/v1alpha1/plugins/${plugin}/plugin-state" \
                 -u admin:admin \
                 -H "Content-Type: application/json" \
                 -d '{"async":false,"enabled":false}'; then
-                echo "✅ ${plugin} 禁用成功"
+                echo "✅ ${plugin} disabled successfully"
               else
-                echo "⚠️  ${plugin} 禁用失败(已忽略)"
+                echo "⚠️  ${plugin} disable failed (ignored)"
               fi
             ) &
             PIDS+=($!)
           done
           
-          echo "⏳ 等待插件禁用任务..."
+          echo "⏳ Waiting for plugin disable tasks..."
           
           for pid in "${PIDS[@]}"; do
             wait $pid || echo "⚠️ background job $pid exited with status $?"
           done
           
-          echo "🎉 插件禁用完成"
+          echo "🎉 Plugins disabled"
 
       - name: Run Lighthouse CI and Argos CI in parallel
         if: ${{ inputs.run_lhci && inputs.run_argos && needs.precheck.outputs.argos_available == 'true' }}
@@ -473,7 +473,7 @@ jobs:
             if [ -f ~/logs/lhci.log ]; then
               sed -n '1,200p' ~/logs/lhci.log
             else
-              echo "ℹ️  日志文件不存在: ~/logs/lhci.log"
+              echo "ℹ️  Log file not found: ~/logs/lhci.log"
             fi
             exit $LHCI_CODE
           fi
@@ -483,16 +483,16 @@ jobs:
             if [ -f ~/logs/playwright.log ]; then
               sed -n '1,200p' ~/logs/playwright.log
             else
-              echo "ℹ️  日志文件不存在: ~/logs/playwright.log"
+              echo "ℹ️  Log file not found: ~/logs/playwright.log"
             fi
             exit $PLAY_CODE
           fi
 
           echo "🎉 Both LHCI and Playwright tasks succeeded"
           
-          # 只输出第二组并行任务的时间统计
+          # Only output timing for the second parallel group
           echo ""
-          echo "⏱️  第二组并行任务时间统计 (LHCI & Playwright):"
+          echo "⏱️  Timing for second parallel group (LHCI & Playwright):"
           for tf in ~/logs/lhci.timing ~/logs/playwright.timing; do
             [ -f "$tf" ] || continue
             name=$(basename "$tf" .timing)
@@ -606,17 +606,17 @@ jobs:
           REF_NAME: ${{ inputs.ref_name }}
         run: |
           if [ ! -d "./.lighthouseci" ]; then
-            echo "⚠️  警告：.lighthouseci 目录不存在"
+            echo "⚠️  Warning: .lighthouseci directory not found"
             exit 1
           fi
           
           json_count=$(find ./.lighthouseci -name "lhr-*.json" | wc -l)
           if [ "$json_count" -eq 0 ]; then
-            echo "⚠️  警告：没有找到 Lighthouse 结果文件"
+            echo "⚠️  Warning: No Lighthouse result files found"
             exit 1
           fi
           
-          echo "找到 $json_count 个 Lighthouse 结果文件"
+          echo "Found $json_count Lighthouse result files"
           node .github/scripts/generate-report.js
 
       - name: Upload reports (${{ inputs.ref_name }})

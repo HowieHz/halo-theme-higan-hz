@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       start_version:
-        description: '起始版本 (例如: v1.45.0，留空表示 v1.0.0)'
+        description: 'Starting version (e.g.: v1.45.0; leave empty to use v1.0.0)'
         required: false
         default: 'v1.0.0'
       end_version:
-        description: '结束版本 (例如: v1.50.0，留空表示最新版本)'
+        description: 'Ending version (e.g.: v1.50.0; leave empty to use latest)'
         required: false
         default: ''
       create_pr:
-        description: '是否创建 PR 提交数据文件'
+        description: 'Create a PR to submit the data files?'
         required: true
         default: false
         type: boolean
@@ -20,7 +20,7 @@ on:
     types: [published]
 
 jobs:
-  # 第一步：获取要测试的版本列表
+  # Step 1: Get versions to test
   get-versions:
     name: Get Version List
     runs-on: ubuntu-latest
@@ -38,18 +38,18 @@ jobs:
           script: |
             let startVersion, endVersion;
             
-            if ('${{ github.event_name }}' === 'release') {
+              if ('${{ github.event_name }}' === 'release') {
               const releaseVersion = '${{ github.event.release.tag_name }}';
               startVersion = releaseVersion;
               endVersion = releaseVersion;
-              console.log(`Release 触发: 测试版本 ${releaseVersion}`);
+              console.log(`Release triggered: testing version ${releaseVersion}`);
             } else {
               startVersion = '${{ github.event.inputs.start_version }}' || 'v1.0.0';
               endVersion = '${{ github.event.inputs.end_version }}' || '';
             }
             
-            // 获取所有 releases（支持分页）
-            console.log('正在获取所有 releases...');
+            // Fetch all releases (with pagination)
+            console.log('Fetching all releases...');
             const releases = [];
             let page = 1;
             let hasMore = true;
@@ -63,7 +63,7 @@ jobs:
               });
               
               releases.push(...data);
-              console.log(`已获取第 ${page} 页，共 ${data.length} 个 releases`);
+              console.log(`Fetched page ${page}, ${data.length} releases`);
               
               if (data.length < 100) {
                 hasMore = false;
@@ -72,20 +72,20 @@ jobs:
               }
             }
             
-            console.log(`总共获取 ${releases.length} 个 releases`);
+            console.log(`Total fetched ${releases.length} releases`);
             
-            // 过滤预发布版本（使用 GitHub API 的 prerelease 字段）
+            // Filter out prereleases (using GitHub API 'prerelease' field)
             const stableReleases = releases.filter(r => {
               if (r.prerelease) {
-                console.log(`⊘ 跳过预发布版本: ${r.tag_name}`);
+                console.log(`⊘ Skipping prerelease: ${r.tag_name}`);
                 return false;
               }
               return true;
             });
             
-            console.log(`过滤后得到 ${stableReleases.length} 个稳定版本`);
+            console.log(`Filtered to ${stableReleases.length} stable releases`);
             
-            // 按语义化版本排序（从旧到新）
+            // Sort by semantic versioning (oldest to newest)
             const parseVersion = (version) => {
               const match = version.match(/^v?(\d+)\.(\d+)\.(\d+)(?:-(.+))?$/);
               if (!match) return null;
@@ -102,7 +102,7 @@ jobs:
               const versionB = parseVersion(b.tag_name);
               
               if (!versionA || !versionB) {
-                console.warn(`⚠️  无法解析版本号: ${a.tag_name} 或 ${b.tag_name}`);
+                console.warn(`⚠️  Unable to parse version: ${a.tag_name} or ${b.tag_name}`);
                 return 0;
               }
               
@@ -111,28 +111,28 @@ jobs:
               return versionA.patch - versionB.patch;
             });
             
-            // 找到版本范围
+            // Find the version range
             const startIndex = stableReleases.findIndex(r => r.tag_name === startVersion);
             const endIndex = endVersion ? stableReleases.findIndex(r => r.tag_name === endVersion) : stableReleases.length - 1;
             
             if (startIndex === -1) {
-              core.setFailed(`找不到起始版本: ${startVersion}，可用的稳定版本: ${stableReleases.slice(0, 10).map(r => r.tag_name).join(', ')}...`);
+              core.setFailed(`Cannot find start version: ${startVersion}. Available stable versions: ${stableReleases.slice(0, 10).map(r => r.tag_name).join(', ')}...`);
               return;
             }
             if (endVersion && endIndex === -1) {
-              core.setFailed(`找不到结束版本: ${endVersion}`);
+              core.setFailed(`Cannot find end version: ${endVersion}`);
               return;
             }
             
-            // 提取版本列表（从起始到结束）
+            // Extract version list (from start to end)
             const versionList = stableReleases
               .slice(startIndex, endIndex + 1)
               .map(r => r.tag_name);
             
-            console.log(`找到 ${versionList.length} 个版本:`, versionList);
+            console.log(`Found ${versionList.length} versions:`, versionList);
             core.setOutput('versions', JSON.stringify(versionList));
 
-  # 第二步：并行运行每个版本的测试
+  # Step 2: Run tests for each version in parallel
   test-versions:
     name: Test ${{ matrix.version }}
     needs: get-versions
@@ -140,7 +140,7 @@ jobs:
     strategy:
       matrix:
         version: ${{ fromJson(needs.get-versions.outputs.versions) }}
-      fail-fast: false  # 即使某个版本失败，继续测试其他版本
+      fail-fast: false  # Even if a version fails, continue testing other versions
     
     steps:
       - uses: ./.github/workflows/reusable-audit.yml
@@ -151,7 +151,7 @@ jobs:
           output_filename: ${{ matrix.version }}
           json_only: true
 
-  # 第三步：汇总所有版本的数据并创建 PR
+  # Step 3: Collect all reports and create a PR
   collect-and-pr:
     name: Collect Reports and Create PR
     needs: test-versions
@@ -177,10 +177,10 @@ jobs:
         run: |
           mkdir -p .github/page_size_audit_results
           for dir in ./all-reports/report-*; do
-            if [ -d "$dir" ]; then
+              if [ -d "$dir" ]; then
               version=$(basename "$dir" | sed 's/report-//')
               cp "$dir/${version}.json" ".github/page_size_audit_results/${version}.json"
-              echo "✓ 复制 ${version}.json"
+              echo "✓ Copied ${version}.json"
             fi
           done
 
@@ -189,12 +189,12 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PR_WORKFLOW_TOKEN }}
-          base: main  # main 而不是 github.event_name == 'release' && 'main' || github.ref_name ，是因为目前只提交到 main 更新就够了
-          # 使用 PAT 而非 GITHUB_TOKEN，以便创建的 PR 能触发其他工作流
-          # 所需权限（Fine-grained PAT）：
-          # - Contents: Read and Write（创建分支和提交）
-          # - Pull requests: Read and Write（创建 PR）
-          # - Workflows: Read and Write（允许 PR 触发工作流）
+          base: main  # Use 'main' as the base branch; that's sufficient for the current update flow
+          # Use a PAT instead of GITHUB_TOKEN so the created PR can trigger other workflows
+          # Required permissions (fine-grained PAT):
+          # - Contents: Read and Write (create branches and commits)
+          # - Pull requests: Read and Write (create PRs)
+          # - Workflows: Read and Write (allow PRs to trigger workflows)
           commit-message: "chore: update page size audit results for ${{ github.event.inputs.start_version || github.event.release.tag_name }} to ${{ github.event.inputs.end_version || github.event.release.tag_name || 'latest' }}"
           title: 'chore: Update Page Size Audit Results'
           body: |

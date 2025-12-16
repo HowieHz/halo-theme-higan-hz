@@ -79,11 +79,11 @@ jobs:
                 issue_number: context.issue.number,
                 body: report
               });
-              console.log('✓ 成功发布评论');
+              console.log('✓ Comment posted successfully');
             } catch (error) {
               if (error.status === 403) {
-                console.log('⚠️  无法发布评论（权限不足）。这通常发生在 Dependabot 或其他 bot 创建的 PR 中。');
-                console.log('📊 报告已生成并上传为 artifact，可以手动查看。');
+                console.log('⚠️ Cannot post comment (insufficient permissions). This often happens for PRs created by Dependabot or other bots.');
+                console.log('📊 The report has been generated and uploaded as an artifact; it can be viewed manually.');
               } else {
                 throw error;
               }
