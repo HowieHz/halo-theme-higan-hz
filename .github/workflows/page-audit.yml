@@ -20,7 +20,10 @@ jobs:
 
   audit-base:
     name: Audit Base Version
-    if: github.event_name == 'pull_request'
+    # Run when the workflow is triggered by a pull request event.
+    # Use presence of `github.event.pull_request` so this works for both
+    # `pull_request` and `pull_request_target` triggers.
+    if: github.event.pull_request != null
     uses: ./.github/workflows/reusable-audit.yml
     with:
       theme_ref: ${{ github.event.pull_request.base.sha }}
