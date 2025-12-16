@@ -48,6 +48,17 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Validate ARGOS_TOKEN when run_argos=true
+        if: ${{ inputs.run_argos == true }}
+        run: |
+          # 当 inputs.run_argos 为 true 时，强制要求在调用方仓库中提供 ARGOS_TOKEN secret
+          if [ -z "${{ secrets.ARGOS_TOKEN }}" ]; then
+            echo "❌ inputs.run_argos=true，但未提供 secret ARGOS_TOKEN。"
+            echo "请在调用此可复用工作流的仓库中设置名为 'ARGOS_TOKEN' 的 secret。"
+            echo "调用示例：在调用工作流的 jobs 下使用 'secrets:' 将本仓库的 secret 传入。"
+            exit 1
+          fi
+
       - name: Checkout ${{ inputs.ref_name }}
         uses: actions/checkout@v6
         with:
@@ -82,17 +93,6 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
-
-      - name: Validate ARGOS_TOKEN when run_argos=true
-        if: ${{ inputs.run_argos == true }}
-        run: |
-          # 当 inputs.run_argos 为 true 时，强制要求在调用方仓库中提供 ARGOS_TOKEN secret
-          if [ -z "${{ secrets.ARGOS_TOKEN }}" ]; then
-            echo "❌ inputs.run_argos=true，但未提供 secret ARGOS_TOKEN。"
-            echo "请在调用此可复用工作流的仓库中设置名为 'ARGOS_TOKEN' 的 secret。"
-            echo "调用示例：在调用工作流的 jobs 下使用 'secrets:' 将本仓库的 secret 传入。"
-            exit 1
-          fi
 
       # ========== 阶段 2: 并行执行(主要耗时部分) ==========
       - name: Parallel Build Theme and Setup Halo
