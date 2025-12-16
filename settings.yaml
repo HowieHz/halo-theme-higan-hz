@@ -22,12 +22,15 @@ spec:
           label: 浏览器按语言自动跳转
           value: false
           help: "如启用此项，若当前浏览器语言与默认页面语言不同，且存在对应语言的页面，将自动跳转到对应语言页面。"
-        - $formkit: repeater
+        - $formkit: array
           name: auto_redirect_target_language_list
           if: "$is_auto_redirect_to_browser_language === true"
           label: 允许跳转的目标区域语言代码列表
           value: []
           help: "放在前面的会被优先匹配"
+          itemLabels:
+            - type: text
+              label: $value.v
           children:
             - $formkit: text
               name: v
@@ -49,11 +52,14 @@ spec:
           label: 仅允许使用指定域名访问
           help: 使用场景：防止站点被恶意镜像后的流量流失
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: allow_site_whitelist
           if: "$anti_mirror_site === true"
           label: 域名白名单列表
           value: []
+          itemLabels:
+            - type: text
+              label: $value.input_domain
           children:
             - $formkit: text
               name: input_domain
@@ -162,10 +168,15 @@ spec:
           value: ""
           help: "请先创建自定义配色方案，随后在此填写自定义配色方案识别码"
           validation: "required"
-        - $formkit: repeater
+        - $formkit: array
           name: custom_color_schema
           label: 自定义配色方案
           value: []
+          itemLabels:
+            - type: text
+              label: $value.id
+            - type: text
+              label: $value.type
           children:
             - $formkit: number
               name: id
@@ -397,10 +408,13 @@ spec:
           if: "$is_show_header_icon===true"
           label: 灰度头像
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: extra_menu_items
           label: 额外菜单项
           help: "在菜单中添加额外的菜单项"
+          itemLabels:
+            - type: text
+              label: $value.type
           value:
             - type: "search"
           children:
@@ -428,29 +442,34 @@ spec:
           name: is_footer_site_stats_show
           label: 页面底部站点统计信息
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: footer_site_stats
           if: "$is_footer_site_stats_show === true"
           label: 统计项设置
+          itemLabels:
+            - type: iconify
+              label: $value.icon
+            - type: text
+              label: $value.type
           value:
             - type: "visit"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "post"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "upvote"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "comment"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "category"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "wordcount"
-              icon: ""
               i18n_text: true
+              icon: ""
           children:
             - $formkit: select
               name: type
@@ -474,11 +493,11 @@ spec:
               name: i18n_text
               label: 多语言文本包裹数字
               value: true
-            - $formkit: text
+            - $formkit: iconify
               name: icon
               label: 文字左侧的图标
+              format: dataurl
               value: ""
-              help: "配置教程：https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
         - $formkit: checkbox
           name: is_footer_theme_info_show
           label: 页面底部主题信息
@@ -542,11 +561,14 @@ spec:
           label: 多语言页面最底部内容支持
           help: "Halo 设置 - 代码注入 - 页脚 的内容显示位置在“主题信息”、“版权信息”、“底部菜单”之上。\n而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。"
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: i18n_footer_content
           if: "$is_18n_footer_content_show === true"
           label: 自定义多语言页面最底部内容
           value: []
+          itemLabels:
+            - type: text
+              label: $value.lang
           children:
             - $formkit: text
               name: lang
@@ -645,11 +667,14 @@ spec:
           name: is_random_sentence_show
           label: 自定义随机显示一句话
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: random_sentence_list
           if: "$is_random_sentence_show === true"
           label: 自定义句子内容
           value: []
+          itemLabels:
+            - type: text
+              label: $value.sentence
           children:
             - $formkit: text
               name: sentence
@@ -670,11 +695,14 @@ spec:
           name: is_i18n_resume_show
           label: 多语言个人简介/公告栏支持
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: i18n_resume
           if: "$is_i18n_resume_show === true"
           label: 自定义多语言公告栏内容
           value: []
+          itemLabels:
+            - type: text
+              label: $value.lang
           children:
             - $formkit: text
               name: lang
@@ -1168,11 +1196,14 @@ spec:
     - group: sns
       label: 社交资料/RSS
       formSchema:
-        - $formkit: repeater
+        - $formkit: array
           name: index_sns
           label: 首页社交资料展示
-          help: 注：刷新页面后发现下面选择的“类型“消失了是正常情况，数据实际是保存着的
+          help: 注：刷新页面后发现选择的“类型“消失了是正常情况，数据实际是保存着的
           value: []
+          itemLabels:
+            - type: text
+              label: $value.type.type
           children:
             - $formkit: select
               name: type
@@ -1291,11 +1322,16 @@ spec:
               name: input_value
               label: 值
               validation: "required"
-        - $formkit: repeater
+        - $formkit: array
           name: custom_sns
           label: 设定自定义资料
           value: []
           help: 上面预设的选项可能不能满足需求，那么来这自定义属于你的资料吧！（在此处自定义完后别忘记在上面添加“自定义资料”）
+          itemLabels:
+            - type: iconify
+              label: $value.icon
+            - type: text
+              label: $value.id
           children:
             - $formkit: text
               name: id
@@ -1307,11 +1343,11 @@ spec:
               label: 链接
               validation: "required"
               help: "如：https://howiehz.top"
-            - $formkit: text
+            - $formkit: iconify
               name: icon
               label: 图标
+              format: dataurl
               validation: "required"
-              help: "配置教程：https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
             - $formkit: text
               name: aria_label
               label: aria-label
@@ -1320,10 +1356,15 @@ spec:
     - group: share
       label: 自定义分享按钮
       formSchema:
-        - $formkit: repeater
+        - $formkit: array
           name: button_config
           label: 分享按钮设置
           help: "@URL 和 @TITLE 是占位符，使用中会被替换为页面实际地址和标题"
+          itemLabels:
+            - type: iconify
+              label: $value.icon
+            - type: text
+              label: $value.name
           value:
             - name: Native
               url: "@URL"
@@ -1388,11 +1429,12 @@ spec:
               label: 链接
               value: ""
               validation: "required"
-            - $formkit: text
+            - $formkit: iconify
               name: icon
               label: 图标
+              format: dataurl
               value: ""
-              help: "配置后会覆盖默认图标，配置教程：https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
+              help: 设置后覆盖默认图标
             - $formkit: text
               name: aria_label
               label: aria-label

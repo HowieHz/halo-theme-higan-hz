@@ -4,7 +4,7 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/HowieHz/halo-theme-higan-hz/total)
 ![GitHub release (latest by date)](https://img.shields.io/github/downloads/HowieHz/halo-theme-higan-hz/latest/total)
 ![GitHub repo size](https://img.shields.io/github/repo-size/HowieHz/halo-theme-higan-hz)
-[![Halo Version](https://img.shields.io/badge/Halo-2.19+-brightgreen.svg)](https://halo.run)
+[![Halo Version](https://img.shields.io/badge/Halo-2.22+-brightgreen.svg)](https://halo.run)
 
 ## 说明
 
@@ -32,14 +32,15 @@
 
 ## 一些话
 
-如果你喜欢这个主题，欢迎 [Star⭐](#star-history)、[Issue🐛](https://github.com/HowieHz/halo-theme-higan-hz/issues) 或 [Pull Request🔀](https://github.com/HowieHz/halo-theme-higan-hz/pulls) 支持项目迭代。
-你的支持是我持续更新的最大动力！
+如果您觉得这个主题不错，可否点一个免费的 [Star⭐](https://github.com/HowieHz/halo-theme-higan-hz) 支持一下本项目？
+也随时欢迎 [Issue🐛](https://github.com/HowieHz/halo-theme-higan-hz/issues) 或 [Pull Request🔀](https://github.com/HowieHz/halo-theme-higan-hz/pulls) 支持项目迭代。
+您的支持是我持续更新的最大动力！
 
-如果你愿意支持我，也欢迎进群交流，让我知道除了我自己，还有许多人在使用这个主题😀
+如果您愿意支持我，也欢迎进群交流，让我知道除了我自己，还有许多人在使用这个主题😀
 
 - [主题交流群（QQ）](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=QCcmLkzDHUT22qP_-MVYSYDwlL_Jf55Y&authKey=KWfge330T3nQAJy96gacr8eyp8u0egY3tNGBFAnNjqdBdMJKQLp9I9efUU9aMiGM&noverify=0&group_code=694413711)
 
-欢迎基于本项目二次开发，不论需求多么独特，只要是本主题没实现的，就欢迎你来提 [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new)。
+欢迎基于本项目二次开发，不论需求多么独特，只要是本主题没实现的，就欢迎您来提 [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new)。
 
 最初，这个项目只是为了解决自己的一些需求。没想到现如今已有不少小伙伴在使用，并通过各种方式反馈建议，帮助我不断优化和完善。衷心感谢大家的支持与鼓励！
 另外，感谢所有通过打赏支持本项目的小伙伴，特此列出名单：[赞助名单](#感谢赞助)

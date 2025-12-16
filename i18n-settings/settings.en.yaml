@@ -22,12 +22,15 @@ spec:
           label: Auto redirect to browser language
           value: false
           help: "If enabled, when the browser language is different from the default page language and a corresponding language page exists, it will automatically redirect to the corresponding language page."
-        - $formkit: repeater
+        - $formkit: array
           name: auto_redirect_target_language_list
           if: "$is_auto_redirect_to_browser_language === true"
           label: Allowed target region language code list for redirect
           value: []
           help: "The ones in front will be matched first"
+          itemLabels:
+            - type: text
+              label: $value.v
           children:
             - $formkit: text
               name: v
@@ -49,11 +52,14 @@ spec:
           label: Anti-mirror site
           help: "If enabled, the theme will check the domain name of the current page. If the domain name is not in the whitelist, it will jump to the target link."
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: allow_site_whitelist
           if: "$anti_mirror_site === true"
           label: Domain whitelist
           value: []
+          itemLabels:
+            - type: text
+              label: $value.input_domain
           children:
             - $formkit: text
               name: input_domain
@@ -162,10 +168,15 @@ spec:
           value: ""
           help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
-        - $formkit: repeater
+        - $formkit: array
           name: custom_color_schema
           label: Custom color scheme
           value: []
+          itemLabels:
+            - type: text
+              label: $value.id
+            - type: text
+              label: $value.type
           children:
             - $formkit: number
               name: id
@@ -397,10 +408,13 @@ spec:
           if: "$is_show_header_icon===true"
           label: Avatar grayscale
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: extra_menu_items
           label: Extra menu items
           help: "Add extra items to the menu"
+          itemLabels:
+            - type: text
+              label: $value.type
           value:
             - type: "search"
           children:
@@ -428,29 +442,34 @@ spec:
           name: is_footer_site_stats_show
           label: Site statistics information at the bottom of the page
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: footer_site_stats
           if: "$is_footer_site_stats_show === true"
           label: Statistics settings
+          itemLabels:
+            - type: iconify
+              label: $value.icon
+            - type: text
+              label: $value.type
           value:
             - type: "visit"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "post"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "upvote"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "comment"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "category"
-              icon: ""
               i18n_text: true
+              icon: ""
             - type: "wordcount"
-              icon: ""
               i18n_text: true
+              icon: ""
           children:
             - $formkit: select
               name: type
@@ -474,9 +493,10 @@ spec:
               name: i18n_text
               label: Wrap text in multiple languages
               value: true
-            - $formkit: text
+            - $formkit: iconify
               name: icon
               label: Icon to the left of the text
+              format: dataurl
               value: ""
         - $formkit: checkbox
           name: is_footer_theme_info_show
@@ -541,11 +561,14 @@ spec:
           label: Multi-language footer content support
           help: "Halo settings - Code injection - Footer content display position is above 'Theme Information', 'Copyright Information', and 'Footer Menu'.\nThe footer content filled in here is below the 'Footer Menu', at the very bottom of the page."
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: i18n_footer_content
           if: "$is_18n_footer_content_show === true"
           label: Custom multi-language footer content
           value: []
+          itemLabels:
+            - type: text
+              label: $value.lang
           children:
             - $formkit: text
               name: lang
@@ -643,11 +666,14 @@ spec:
           name: is_random_sentence_show
           label: Custom random sentence display
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: random_sentence_list
           if: "$is_random_sentence_show === true"
           label: Custom sentence content
           value: []
+          itemLabels:
+            - type: text
+              label: $value.sentence
           children:
             - $formkit: text
               name: sentence
@@ -667,11 +693,14 @@ spec:
           name: is_i18n_resume_show
           label: Multi-language personal profile/announcement support
           value: false
-        - $formkit: repeater
+        - $formkit: array
           name: i18n_resume
           if: "$is_i18n_resume_show === true"
           label: Custom multi-language announcement content
           value: []
+          itemLabels:
+            - type: text
+              label: $value.lang
           children:
             - $formkit: text
               name: lang
@@ -1161,11 +1190,14 @@ spec:
     - group: sns
       label: Social media settings/RSS
       formSchema:
-        - $formkit: repeater
+        - $formkit: array
           name: index_sns
           label: Social media settings
           help: "You can set up your social media information here, and the theme will automatically generate the corresponding link."
           value: []
+          itemLabels:
+            - type: text
+              label: $value.type.type
           children:
             - $formkit: select
               name: type
@@ -1284,11 +1316,16 @@ spec:
               name: input_value
               label: Value
               validation: "required"
-        - $formkit: repeater
+        - $formkit: array
           name: custom_sns
           label: Custom social media information
           value: []
           help: "You can define your own social media information here."
+          itemLabels:
+            - type: iconify
+              label: $value.icon
+            - type: text
+              label: $value.id
           children:
             - $formkit: text
               name: id
@@ -1300,11 +1337,11 @@ spec:
               label: URL
               validation: "required"
               help: "The URL of the social media information, such as: https://howiehz.top"
-            - $formkit: text
+            - $formkit: iconify
               name: icon
               label: Icon
+              format: dataurl
               validation: "required"
-              help: "Configuration tutorial: https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
             - $formkit: text
               name: aria_label
               label: aria-label
@@ -1313,10 +1350,15 @@ spec:
     - group: share
       label: Custom Share Buttons
       formSchema:
-        - $formkit: repeater
+        - $formkit: array
           name: button_config
           label: Share Button Settings
           help: "@URL and @TITLE are placeholders that will be replaced with the actual page URL and title."
+          itemLabels:
+            - type: iconify
+              label: $value.icon
+            - type: text
+              label: $value.name
           value:
             - name: Native
               url: "@URL"
@@ -1381,11 +1423,12 @@ spec:
               label: URL
               value: ""
               validation: "required"
-            - $formkit: text
+            - $formkit: iconify
               name: icon
               label: Icon
+              format: dataurl
               value: ""
-              help: "Configuration tutorial: https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg"
+              help: Override the default icon after setting
             - $formkit: text
               name: aria_label
               label: aria-label

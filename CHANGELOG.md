@@ -2,11 +2,34 @@
 
 <!-- markdownlint-disable MD024 -->
 
+## [1.50.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.2...v1.50.0) (2025-12-24)
+
+### ⚠破坏性修改
+
+- Halo CMS 版本要求变为 `2.22+`
+- 自定义图标设置框将适配 Halo CMS 在 2.22 引入的 `iconify` 类型，您需要重新设置。
+
+### 🔧 优化改进
+
+- 将原本的重复设置项（可重复一组输入。可增加组，移除组，交换任意组顺序），更新为 Halo CMS 2.22 最新样式。
+
+### 🐛 错误修复
+
+- 修复错误页无法正常显示的问题。
+
+### 🛠️ 开发体验
+
+- 更新开发依赖。
+
 ## [1.49.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.1...v1.49.2) (2025-12-13)
 
 ### 🐛 错误修复
 
 - 修复`强制页脚、页码在页面底部`配置项失效的问题。
+
+### 🛠️ 开发体验
+
+- 更新开发依赖。
 
 ## [1.49.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.0...v1.49.1) (2025-12-06)
 
