@@ -93,7 +93,7 @@ jobs:
   audit:
     needs: precheck
     if: ${{ inputs.run_lighthouse_ci == true || needs.precheck.outputs.screenshots_needed == 'true' }}
-    name: Performance Audit (${{ inputs.ref_name }}) [LighthouseCI=${{ inputs.run_lighthouse_ci }} ScreenshotsArtifact=${{ inputs.upload_screenshots_artifact }} UploadScreenshotsToArgos=${{ inputs.upload_screenshots_to_argos }}]
+    name: Page Audit (${{ inputs.ref_name }})
     runs-on: ubuntu-latest
     
     steps:

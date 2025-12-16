@@ -126,7 +126,7 @@ jobs:
 
   # Performance test
   audit:
-    name: Lighthouse Performance Audit (${{ matrix.ref_name }})
+    name: Lighthouse Page Audit (${{ matrix.ref_name }})
     needs: [check-trigger, get-latest-release]
     if: needs.check-trigger.outputs.should_run == 'true'
     runs-on: ubuntu-latest

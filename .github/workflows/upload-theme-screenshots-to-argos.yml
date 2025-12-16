@@ -23,70 +23,22 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install required tools
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y jq unzip
+      - name: Download screenshots
+        id: dl-screenshots
+        uses: actions/download-artifact@v5
+        with:
+          pattern: screenshots-*
+          merge-multiple: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+          path: ./screenshots
 
-      - name: Set run id
+      - name: Ensure screenshots present
         run: |
-          echo "RUN_ID=${{ github.event.workflow_run.id }}" >> $GITHUB_ENV
-          echo "REPO=${{ github.repository }}" >> $GITHUB_ENV
-
-      - name: List artifacts for workflow run
-        id: list-artifacts
-        run: |
-          api="https://api.github.com/repos/${{ github.repository }}/actions/runs/${RUN_ID}/artifacts"
-          echo "Calling: $api"
-          resp=$(curl -s -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" "$api")
-          echo "$resp" > artifacts.json
-          count=$(jq '.artifacts | length' artifacts.json)
-          echo "Found artifacts count: $count"
-          if [ "$count" -eq 0 ]; then
-            echo "No artifacts found for workflow run ${RUN_ID}."
+          if [ ! -d screenshots ] || [ -z "$(ls -A screenshots 2>/dev/null)" ]; then
+            echo "No screenshots downloaded from run ${{ github.event.workflow_run.id }}."
             exit 1
           fi
-
-      - name: Download screenshots artifact
-        id: download
-        run: |
-          # Find artifacts that match screenshots- prefix or exact names
-          matches=$(jq -r '.artifacts[] | select(.name | test("^screenshots(-|$)")) | .id + "::" + .name' artifacts.json || true)
-
-          # If none matched, try the legacy exact names used previously
-          if [ -z "$matches" ]; then
-            matches=$(jq -r '.artifacts[] | select(.name=="screenshots-current" or .name=="screenshots-base") | .id + "::" + .name' artifacts.json || true)
-          fi
-
-          if [ -z "$matches" ]; then
-            echo "No screenshots artifact found for run ${RUN_ID}. Expected artifact names starting with 'screenshots'."
-            exit 1
-          fi
-
-          # If multiple matches exist, fail to avoid ambiguous uploads
-          count=$(echo "$matches" | wc -l | tr -d ' ')
-          if [ "$count" -gt 1 ]; then
-            echo "Multiple screenshots artifacts found for run ${RUN_ID}:"
-            echo "$matches"
-            echo "Refusing to continue to avoid ambiguous artifact selection."
-            exit 1
-          fi
-
-          ARTIFACT_ID=$(echo "$matches" | cut -d'::' -f1)
-          ARTIFACT_NAME=$(echo "$matches" | cut -d'::' -f2)
-
-          echo "Found artifact: $ARTIFACT_NAME (id: $ARTIFACT_ID)"
-
-          download_url="https://api.github.com/repos/${{ github.repository }}/actions/artifacts/${ARTIFACT_ID}/zip"
-          http_status=$(curl -s -w "%{http_code}" -L -H "Authorization: token $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" "$download_url" -o artifact.zip)
-          if [ "$http_status" -ne 200 ]; then
-            echo "Failed to download artifact (HTTP $http_status)."
-            exit 1
-          fi
-
-          unzip -q artifact.zip -d screenshots
-          echo "Screenshots contents:"
-          ls -la screenshots
 
       - name: Upload to Argos
         env:
