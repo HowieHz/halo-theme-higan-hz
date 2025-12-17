@@ -84,8 +84,20 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const report = fs.readFileSync('./comparison-report.md', 'utf8');
-            
+            const reportPath = './comparison-report.md';
+            let report = fs.readFileSync(reportPath, 'utf8');
+
+            // Append Actions run link for easy tracing
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const runId = context.runId || process.env.GITHUB_RUN_ID;
+            if (runId) {
+              const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${runId}`;
+              report += '\n\n---\n\n**Actions run**\n- [' + runUrl + '](' + runUrl + ')\n';
+            } else {
+              console.log('⚠️ GITHUB run id not available');
+            }
+
             try {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
@@ -131,7 +143,7 @@ jobs:
 
               let body = scores;
               if (artifactUrl) {
-                body += '\n\n---\n\nLighthouse raw data artifact: ' + artifactUrl + '\n';
+                body += '\n\n---\n\n**Raw data & reproduction**\nTo help reproduce and troubleshoot issues, the raw Lighthouse results have been uploaded as an artifact for this Actions run. Download the raw results here:\n- [Download Lighthouse raw data](' + artifactUrl + ')\n';
               }
 
               await github.rest.issues.createComment({
