@@ -34,15 +34,8 @@ async function main() {
 
       // Normalize URL: strip scheme+host, keep pathname + search
       let pathOnly = url;
-      try {
-        const u = new URL(url);
-        pathOnly = u.pathname + (u.search || '');
-      } catch (e) {
-        // fallback: remove protocol and host if present
-        if (typeof pathOnly === 'string') {
-          pathOnly = pathOnly.replace(/^https?:\/\/[^/]+/i, '');
-        }
-      }
+      const u = new URL(url);
+      pathOnly = u.pathname + (u.search || '');
 
       lines.push(`| ${pathOnly} | ${perf} | ${acc} | ${bp} | ${seo} |`);
     }
