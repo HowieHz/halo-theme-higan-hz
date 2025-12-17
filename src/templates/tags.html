@@ -10,6 +10,10 @@
   )}"
 >
   <head>
+    <meta
+      name="description"
+      th:attr="content=${#strings.isEmpty(theme.config?.tags_page_styles?.description) ? site?.seo?.description : theme.config?.tags_page_styles?.description}"
+    />
     <script src="/src/scripts/pages/tags.ts" type="module"></script>
   </head>
   <body>

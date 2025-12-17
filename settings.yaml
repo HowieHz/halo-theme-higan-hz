@@ -144,7 +144,7 @@ spec:
           id: color_schema_init
           label: 配色方案
           help: 此项无法显示所选项是正常现象，实际会正常生效。（对于启用“深浅色模式切换按钮”的情况来说，这项决定了网站刚加载完成时的配色方案。）
-          value: { theme: "auto", color-scheme: "auto" }
+          value: { theme: "dark", color-scheme: "dark" }
           options:
             - label: "跟随系统 - 绿"
               value: { theme: "auto", color-scheme: "auto" }
@@ -962,6 +962,11 @@ spec:
     - group: categories_page_styles
       label: 分类集合页样式
       formSchema:
+        - $formkit: text
+          name: description
+          label: 页面描述
+          value: ""
+          help: 设置页面的 meta description；为空时回退到站点 SEO 描述
         - $formkit: checkbox
           name: is_show_the_number_of_articles_per_category
           label: 显示每个分类下的文章数量
@@ -995,6 +1000,11 @@ spec:
     - group: tags_page_styles
       label: 标签集合页样式
       formSchema:
+        - $formkit: text
+          name: description
+          label: 页面描述
+          value: ""
+          help: 设置页面的 meta description；为空时回退到站点 SEO 描述
         - $formkit: checkbox
           name: is_show_the_number_of_posts_per_tag
           label: 显示每个标签下的文章数量
@@ -1040,6 +1050,11 @@ spec:
     - group: author_page_styles
       label: 作者详情页样式
       formSchema:
+        - $formkit: text
+          name: description
+          label: 页面描述
+          value: ""
+          help: 设置页面的 meta description；为空时回退到站点 SEO 描述
         - $formkit: checkbox
           name: is_show_rss_button
           label: 显示作者 RSS 订阅按钮
@@ -1048,6 +1063,11 @@ spec:
     - group: archives_page_styles
       label: 归档页样式
       formSchema:
+        - $formkit: text
+          name: description
+          label: 页面描述
+          value: ""
+          help: 设置页面的 meta description；为空时回退到站点 SEO 描述
         - $formkit: checkbox
           name: is_collapse_post_list_by_publication_year_and_month
           label: 按照发布年份和月份折叠文章列表

@@ -11,16 +11,11 @@ on:
         required: false
         type: string
         default: "0.15.x"
-      upload_screenshots_to_argos:
-        required: false
-        type: boolean
-        default: false
-        description: "When true, upload captured screenshots to Argos (requires ARGOS_TOKEN)."
       upload_screenshots_artifact:
         required: false
         type: boolean
         default: false
-        description: "When true, capture screenshots and upload them as a workflow artifact instead of (or in addition to) uploading to Argos."
+        description: "When true, capture screenshots and upload them as a workflow artifact."
       halo_version:
         required: false
         type: string
@@ -53,38 +48,25 @@ on:
         type: boolean
         default: false
         description: "When true, upload raw Lighthouse .lighthouseci data as an artifact."
-    secrets:
-      ARGOS_TOKEN:
+      playwright_browsers:
         required: false
+        type: string
+        default: "chromium,firefox,webkit"
+        description: "Comma-separated list of Playwright browsers to install/run (eg: 'chromium,firefox,webkit'). Empty disables Playwright browser install."
 
 jobs:
   precheck:
     name: Validate Secrets & Inputs
     runs-on: ubuntu-latest
     outputs:
-      argos_upload_available: ${{ steps.check.outputs.argos_upload_available }}
       screenshots_needed: ${{ steps.check.outputs.screenshots_needed }}
     steps:
       - id: check
         continue-on-error: true
         run: |
-          # Determine whether Argos upload is requested and token is available
-          if [ "${{ inputs.upload_screenshots_to_argos }}" != "true" ]; then
-            echo "argos_upload_available=false" >> $GITHUB_OUTPUT
-            echo "ARGOS upload not requested (upload_screenshots_to_argos != true)."
-          elif [ -z "${{ secrets.ARGOS_TOKEN }}" ]; then
-            echo "ARGOS_TOKEN missing; Argos upload will be skipped."
-            echo "argos_upload_available=false" >> $GITHUB_OUTPUT
-          else
-            echo "argos_upload_available=true" >> $GITHUB_OUTPUT
-          fi
-
           # Screenshots are needed if either:
-          # 1) upload_screenshots_to_argos == true AND ARGOS_TOKEN exists
-          # 2) upload_screenshots_artifact == true
-          if [ "${{ inputs.upload_screenshots_to_argos }}" = "true" ] && [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
-            echo "screenshots_needed=true" >> $GITHUB_OUTPUT
-          elif [ "${{ inputs.upload_screenshots_artifact }}" = "true" ]; then
+          # 1) upload_screenshots_artifact == true
+          if [ "${{ inputs.upload_screenshots_artifact }}" = "true" ]; then
             echo "screenshots_needed=true" >> $GITHUB_OUTPUT
           else
             echo "screenshots_needed=false" >> $GITHUB_OUTPUT
@@ -393,12 +375,90 @@ jobs:
           
           echo "🎉 Plugins disabled"
 
+      - name: Update site basic config favicon
+        shell: bash
+        run: |
+          set -e
+          echo "Fetching current system basic config"
+          cfg=$(curl -s -u admin:admin http://localhost:8090/apis/console.api.halo.run/v1alpha1/systemconfigs/basic)
+          if [ -z "$cfg" ]; then
+            echo "⚠️ Empty response when fetching basic config"
+            exit 1
+          fi
+
+          # Ensure jq is available
+          if ! command -v jq >/dev/null 2>&1; then
+            echo "⚠️ jq is required but not installed. Installing jq..."
+            sudo apt-get update -y && sudo apt-get install -y jq || { echo "Failed to install jq"; exit 1; }
+          fi
+
+          echo "Current config:"
+          echo "$cfg" | jq .
+
+          # Set favicon field
+          updated=$(echo "$cfg" | jq '.favicon = "/themes/howiehz-higan/assets/images/logo.avif"')
+
+          echo "Updating basic config with new favicon"
+          http_code=$(curl -s -o /tmp/put.out -w "%{http_code}" -u admin:admin -X PUT \
+            http://localhost:8090/apis/console.api.halo.run/v1alpha1/systemconfigs/basic \
+            -H "Content-Type: application/json" \
+            -d "$updated")
+
+          if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+            echo "✓ basic config updated (HTTP $http_code)"
+          else
+            echo "❌ Failed to update basic config (HTTP $http_code)"
+            echo "Response body:"; sed -n '1,200p' /tmp/put.out || true
+            exit 1
+          fi
+
+      - name: Update site SEO description
+        shell: bash
+        run: |
+          set -e
+          echo "Fetching current system seo config"
+          cfg=$(curl -s -u admin:admin http://localhost:8090/apis/console.api.halo.run/v1alpha1/systemconfigs/seo)
+          if [ -z "$cfg" ]; then
+            echo "⚠️ Empty response when fetching seo config"
+            exit 1
+          fi
+
+          # Ensure jq is available
+          if ! command -v jq >/dev/null 2>&1; then
+            echo "⚠️ jq is required but not installed. Installing jq..."
+            sudo apt-get update -y && sudo apt-get install -y jq || { echo "Failed to install jq"; exit 1; }
+          fi
+
+          echo "Current seo config:"
+          echo "$cfg" | jq .
+
+          # Set description field to "1"
+          updated=$(echo "$cfg" | jq '.description = "1"')
+
+          echo "Updating seo config with new description"
+          http_code=$(curl -s -o /tmp/put.seo.out -w "%{http_code}" -u admin:admin -X PUT \
+            http://localhost:8090/apis/console.api.halo.run/v1alpha1/systemconfigs/seo \
+            -H "Content-Type: application/json" \
+            -d "$updated")
+
+          if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+            echo "✓ seo config updated (HTTP $http_code)"
+          else
+            echo "❌ Failed to update seo config (HTTP $http_code)"
+            echo "Response body:"; sed -n '1,200p' /tmp/put.seo.out || true
+            exit 1
+          fi
+
       - name: Run Lighthouse CI and Playwright (parallel)
-        if: ${{ inputs.run_lighthouse_ci == true && (needs.precheck.outputs.screenshots_needed == 'true' || inputs.run_lighthouse_ci == true) }}
+        if: ${{ inputs.run_lighthouse_ci == true && needs.precheck.outputs.screenshots_needed == 'true' }}
         shell: bash
         run: |
           set -e
           mkdir -p ~/logs
+
+          # Expose PLAYWRIGHT_BROWSERS from workflow input to the script
+          PLAYWRIGHT_BROWSERS="${{ inputs.playwright_browsers }}"
+          export PLAYWRIGHT_BROWSERS
 
           # ============ Task A: Lighthouse CI ============
           (
@@ -450,14 +510,14 @@ jobs:
           ) > ~/logs/lhci.log 2>&1 &
           LHCI_PID=$!
 
-          # ============ Task B: Playwright (+ Argos if requested) ============
+          # ============ Task B: Playwright ============
           (
             set -e
             # timing for Playwright task (milliseconds)
             task_start=$(date +%s%3N)
             echo "TASK_START:${task_start}" > ~/logs/playwright.timing
 
-            echo "📦 [Playwright] Install Playwright and Argos"
+            echo "📦 [Playwright] Install Playwright"
             step_start=$(date +%s%3N); echo "STEP_START:check-playwright:${step_start}" >> ~/logs/playwright.timing
             if ! pnpm exec -- playwright --version >/dev/null 2>&1; then
               pnpm add -w -D playwright @argos-ci/playwright || echo "⚠️  Playwright install failed, continuing"
@@ -467,7 +527,16 @@ jobs:
             step_end=$(date +%s%3N); echo "STEP_END:check-playwright:${step_end}" >> ~/logs/playwright.timing
 
             step_start=$(date +%s%3N); echo "STEP_START:install-browsers:${step_start}" >> ~/logs/playwright.timing
-            pnpm exec playwright install --with-deps chromium
+            # Install Playwright browsers according to PLAYWRIGHT_BROWSERS (comma-separated)
+            if [ -n "$PLAYWRIGHT_BROWSERS" ]; then
+              # convert commas to spaces for CLI
+              BROWSERS=$(echo "$PLAYWRIGHT_BROWSERS" | tr ',' ' ')
+              echo "📦 Installing Playwright browsers: $BROWSERS"
+              pnpm exec playwright install --with-deps $BROWSERS || echo "⚠️ Playwright browser install failed (continuing)"
+            else
+              echo "⚠️ PLAYWRIGHT_BROWSERS is empty — defaulting to chromium"
+              pnpm exec playwright install --with-deps chromium || echo "⚠️ Playwright browser install failed (continuing)"
+            fi
             step_end=$(date +%s%3N); echo "STEP_END:install-browsers:${step_end}" >> ~/logs/playwright.timing
 
 
@@ -541,7 +610,7 @@ jobs:
           done
 
       - name: Run Lighthouse CI only
-        if: ${{ inputs.run_lighthouse_ci && !(inputs.upload_screenshots_artifact == true || needs.precheck.outputs.argos_upload_available == 'true') }}
+        if: ${{ inputs.run_lighthouse_ci && needs.precheck.outputs.screenshots_needed != 'true' }}
         shell: bash
         run: |
           set -e
@@ -592,8 +661,8 @@ jobs:
           task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/lhci.timing
           echo "✅ [LHCI] Complete"
 
-      - name: Run Playwright (Argos-only or Artifact-only)
-        if: ${{ (inputs.upload_screenshots_artifact == true || needs.precheck.outputs.argos_upload_available == 'true') && inputs.run_lighthouse_ci == false }}
+      - name: Run Playwright
+        if: ${{ inputs.run_lighthouse_ci == false && needs.precheck.outputs.screenshots_needed == 'true' }}
         shell: bash
         run: |
           set -e
@@ -613,7 +682,19 @@ jobs:
           step_end=$(date +%s%3N); echo "STEP_END:check-playwright:${step_end}" >> ~/logs/playwright.timing
 
           step_start=$(date +%s%3N); echo "STEP_START:install-browsers:${step_start}" >> ~/logs/playwright.timing
-          pnpm exec playwright install --with-deps chromium
+          # Use workflow input `playwright_browsers` when provided (comma-separated).
+          PLAYWRIGHT_BROWSERS="${{ inputs.playwright_browsers }}"
+          export PLAYWRIGHT_BROWSERS
+
+          if [ -n "$PLAYWRIGHT_BROWSERS" ]; then
+            BROWSERS=$(echo "$PLAYWRIGHT_BROWSERS" | tr ',' ' ')
+            echo "📦 Installing Playwright browsers: $BROWSERS"
+            pnpm exec playwright install --with-deps $BROWSERS || echo "⚠️ Playwright browser install failed (continuing)"
+          else
+            echo "⚠️ PLAYWRIGHT_BROWSERS is empty — defaulting to chromium"
+            pnpm exec playwright install --with-deps chromium || echo "⚠️ Playwright browser install failed (continuing)"
+          fi
+
           step_end=$(date +%s%3N); echo "STEP_END:install-browsers:${step_end}" >> ~/logs/playwright.timing
 
           echo "📸 [Playwright] Take screenshots"
@@ -621,15 +702,6 @@ jobs:
           mkdir -p screenshots
           node .github/scripts/playwright-screenshots.js
           step_end=$(date +%s%3N); echo "STEP_END:screenshots:${step_end}" >> ~/logs/playwright.timing
-
-          echo "☁️ [Playwright] Handle screenshots (upload to Argos if requested)"
-          step_start=$(date +%s%3N); echo "STEP_START:upload-argos:${step_start}" >> ~/logs/playwright.timing
-          if [ "${{ inputs.upload_screenshots_to_argos }}" = "true" ] && [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
-            pnpm dlx @argos-ci/cli upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || echo "⚠️ Argos upload failed"
-          else
-            echo "ℹ️  Not uploading to Argos (either not requested or ARGOS_TOKEN missing). Screenshots remain in ./screenshots/ for artifact upload."
-          fi
-          step_end=$(date +%s%3N); echo "STEP_END:upload-argos:${step_end}" >> ~/logs/playwright.timing
 
           task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/playwright.timing
           echo "✅ [Playwright] Complete"
@@ -679,7 +751,7 @@ jobs:
           fi
           
           echo "Found $json_count Lighthouse result files"
-          node .github/scripts/generate-report.js
+          node .github/scripts/generate-page-size-report.js
 
       - name: Upload reports (${{ inputs.ref_name }})
         if: ${{ steps.generate_reports.outcome == 'success' && inputs.run_lighthouse_ci }}
