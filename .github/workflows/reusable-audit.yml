@@ -416,6 +416,7 @@ jobs:
               --collect.settings.throttling.downloadThroughputKbps=0 \
               --collect.settings.throttling.uploadThroughputKbps=0 \
               --upload.target=filesystem \
+              --upload.target=temporary-public-storage \
               --upload.outputDir=.lighthouseci || {
                 echo "❌ [LHCI] Lighthouse CI failed"
                 ls -la ./.lighthouseci/ || echo ".lighthouseci directory not found"
@@ -560,6 +561,7 @@ jobs:
             --collect.settings.throttling.downloadThroughputKbps=0 \
             --collect.settings.throttling.uploadThroughputKbps=0 \
             --upload.target=filesystem \
+            --upload.target=temporary-public-storage \
             --upload.outputDir=.lighthouseci || {
               echo "❌ [LHCI] Lighthouse CI failed"
               ls -la ./.lighthouseci/ || echo ".lighthouseci directory not found"
