@@ -66,6 +66,14 @@ pnpm lint
 pnpm format
 ```
 
+##### 构建主题
+
+你可以运行以下的指令构建主题。
+
+```bash
+pnpm build
+```
+
 ### CI 检查
 
 本项目在 CI（GitHub Actions）对每个 PR 会运行一组质量检查：
@@ -89,14 +97,6 @@ pnpm format
 
 - 页面视觉差异检查（Visual Regression）：
   - 通过 Playwright 在桌面、平板、手机三种设备视图（Viewport）下，使用 Chromium, Firefox, WebKit 内核对关键页面截图。最后使用 Argos CI 与基线版本进行比较。
-
-##### 构建主题
-
-最后在提交前请不要忘记运行以下的指令构建主题。
-
-```bash
-pnpm build
-```
 
 ### 编写文档
 
