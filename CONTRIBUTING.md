@@ -60,7 +60,7 @@ pnpm lint
 
 ##### 格式化代码
 
-提交前请运行以下的指令的指令格式化代码。
+提交前你可以运行以下的指令以格式化代码。
 
 ```bash
 pnpm format
@@ -68,11 +68,35 @@ pnpm format
 
 ##### 构建主题
 
-最后在提交前请不要忘记运行以下的指令构建主题。
+你可以运行以下的指令构建主题。
 
 ```bash
 pnpm build
 ```
+
+### CI 检查
+
+本项目在 CI（GitHub Actions）对每个 PR 会运行一组质量检查：
+
+- Linters (`pnpm lint`)：
+  - `oxlint` + `eslint`（代码风格与类型感知检查）
+  - `stylelint`（样式表检查）
+  - `markdownlint`（文档样式检查）
+  - `autocorrect` （自动文案校正）
+  - `tsgo --noEmit`（TypeScript 类型检查）
+  - 注：均开启了自动修正，如有变更会自动提交。
+
+- 格式化 (`pnpm format`)：
+  - `stylus-supremacy`（Stylus 格式化）
+  - `prettier`（JS/TS/JSON/YAML/MD 等格式化）
+  - 注：格式化后有变更会自动提交。
+
+- Lighthouse CI：
+  - 检查页面评分，并输出报告。（需全部满分）
+  - 与基线版本进行页面资源体积差异检查，并输出报告。
+
+- 页面视觉差异检查（Visual Regression）：
+  - 通过 Playwright 在桌面、平板、手机三种设备视图（Viewport）下，使用 Chromium, Firefox, WebKit 内核对关键页面截图。最后使用 Argos CI 与基线版本进行比较。
 
 ### 编写文档
 

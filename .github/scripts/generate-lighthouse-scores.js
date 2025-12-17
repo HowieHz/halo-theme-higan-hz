@@ -42,7 +42,13 @@ async function main() {
       const u = new URL(url);
       pathOnly = u.pathname + (u.search || "");
 
-      lines.push(`| ${pathOnly} | ${perf} | ${acc} | ${bp} | ${seo} |`);
+      // Add ❌ prefix if score is less than 100
+      const perfDisplay = perf !== "-" && perf < 100 ? `❌ ${perf}` : perf;
+      const accDisplay = acc !== "-" && acc < 100 ? `❌ ${acc}` : acc;
+      const bpDisplay = bp !== "-" && bp < 100 ? `❌ ${bp}` : bp;
+      const seoDisplay = seo !== "-" && seo < 100 ? `❌ ${seo}` : seo;
+
+      lines.push(`| ${pathOnly} | ${perfDisplay} | ${accDisplay} | ${bpDisplay} | ${seoDisplay} |`);
     }
 
     await writeFile(OUTPUT_FILE, lines.join("\n"), "utf8");

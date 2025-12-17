@@ -11,6 +11,8 @@
   )}"
 >
   <head>
+    <!--/* remove after https://github.com/halo-dev/halo/issues/8054 */-->
+    <meta name="description" th:attr="content=${site?.seo?.description}" />
     <link
       th:if="${pluginFinder.available('PluginFeed')}"
       rel="alternate"
