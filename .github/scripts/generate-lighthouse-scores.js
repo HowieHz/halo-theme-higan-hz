@@ -4,7 +4,7 @@
  */
 import { readFile, writeFile } from "fs/promises";
 
-const MANIFEST = process.env.MANIFEST || "./reports-current/.lighthouseci/manifest.json";
+const MANIFEST = process.env.MANIFEST || "./lighthouse-reports-current/manifest.json";
 const OUTPUT_FILE = process.env.OUTPUT_FILE || "./lighthouse-scores.md";
 
 async function main() {

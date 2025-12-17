@@ -55,7 +55,7 @@ jobs:
         uses: actions/download-artifact@v7
         with:
           name: lighthouse-raw-data-current
-          path: ./reports-current
+          path: ./lighthouse-reports-current
       
       - name: Download base reports
         uses: actions/download-artifact@v7
@@ -75,7 +75,7 @@ jobs:
         run: |
           node .github/scripts/generate-lighthouse-scores.js
         env:
-          MANIFEST: ./reports-current/.lighthouseci/manifest.json
+          MANIFEST: ./lighthouse-reports-current/manifest.json
           OUTPUT_FILE: ./lighthouse-scores.md
       
       - name: Comment comparison report on PR
