@@ -111,8 +111,8 @@ import { chromium, firefox, devices as pwDevices, webkit } from "playwright";
         if (b.launcher === firefox) {
           // Remove unsupported mobile flags for Firefox
           // https://github.com/microsoft/playwright/issues/2787
-          if (Object.prototype.hasOwnProperty.call(contextOpts, "isMobile")) delete contextOpts.isMobile;
-          if (Object.prototype.hasOwnProperty.call(contextOpts, "hasTouch")) delete contextOpts.hasTouch;
+          if (Object.prototype.hasOwnProperty.call(contextOpts, "isMobile")) contextOpts.isMobile = false;
+          if (Object.prototype.hasOwnProperty.call(contextOpts, "hasTouch")) contextOpts.hasTouch = false;
         }
         const context = await browser.newContext(contextOpts);
 
