@@ -105,10 +105,7 @@ jobs:
 
             let body = '';
             if (comparison) body += comparison + '\n\n';
-            if (scores) {
-              if (body) body += '---\n\n';
-              body += scores + '\n\n';
-            }
+            if (scores) body += scores + '\n\n';
 
             // Try to find the artifact for lighthouse raw data in this run
             const artifactName = 'lighthouse-raw-data-current';
