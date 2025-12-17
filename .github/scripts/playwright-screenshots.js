@@ -105,7 +105,15 @@ import { chromium, firefox, devices as pwDevices, webkit } from "playwright";
         const vwLabel = vw.width && vw.height ? `${vw.width}x${vw.height}` : "unknown";
         console.log(`📷 Start viewport: ${vp.name} (${vwLabel}) on ${b.name} [device=${vp.descriptorKey}]`);
 
+        // Build context options from the device descriptor, but adjust for browser
+        // capabilities: Firefox does not support `isMobile`/`hasTouch` in newContext.
         const contextOpts = Object.assign({}, vp.descriptor, { baseURL: "http://localhost:8090" });
+        if (b.launcher === firefox) {
+          // Remove unsupported mobile flags for Firefox
+          // https://github.com/microsoft/playwright/issues/2787
+          if (contextOpts.hasOwnProperty("isMobile")) contextOpts.isMobile = false;
+          if (contextOpts.hasOwnProperty("hasTouch")) contextOpts.hasTouch = false;
+        }
         const context = await browser.newContext(contextOpts);
 
         for (const pageInfo of pages) {
