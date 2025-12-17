@@ -444,7 +444,8 @@ jobs:
             step_end=$(date +%s%3N); echo "STEP_END:check-playwright:${step_end}" >> ~/logs/playwright.timing
 
             step_start=$(date +%s%3N); echo "STEP_START:install-browsers:${step_start}" >> ~/logs/playwright.timing
-            pnpm exec playwright install --with-deps chromium
+            # Install all Playwright browsers so CI can capture screenshots on Chromium, Firefox and WebKit
+            pnpm exec playwright install --with-deps chromium firefox webkit
             step_end=$(date +%s%3N); echo "STEP_END:install-browsers:${step_end}" >> ~/logs/playwright.timing
 
 

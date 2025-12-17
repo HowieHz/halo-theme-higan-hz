@@ -1,9 +1,14 @@
 import { argosScreenshot } from "@argos-ci/playwright";
-import { chromium } from "playwright";
+import { chromium, firefox, webkit } from "playwright";
 
 (async () => {
   try {
-    const browser = await chromium.launch({ args: ["--no-sandbox", "--disable-setuid-sandbox"] });
+    // Support Chromium, Firefox and WebKit
+    const browsers = [
+      { name: 'chromium', launcher: chromium },
+      { name: 'firefox', launcher: firefox },
+      { name: 'webkit', launcher: webkit },
+    ];
 
     const pages = [
       { name: "home", path: "/" },
@@ -45,39 +50,48 @@ import { chromium } from "playwright";
       },
     ];
 
-    for (const vp of viewports) {
-      console.log(`📷 Start viewport: ${vp.name} (${vp.viewport.width}x${vp.viewport.height})`);
+    for (const b of browsers) {
+      console.log(`🔎 Start browser: ${b.name}`);
 
-      const context = await browser.newContext({
-        baseURL: "http://localhost:8090",
-        viewport: vp.viewport,
-        userAgent: vp.userAgent,
-        isMobile: vp.isMobile,
-        hasTouch: vp.hasTouch,
-      });
+      // launch args: only pass chromium-specific no-sandbox flags to chromium
+      const launchOptions = b.name === 'chromium' ? { args: ["--no-sandbox", "--disable-setuid-sandbox"] } : {};
+      const browser = await b.launcher.launch(launchOptions);
 
-      for (const pageInfo of pages) {
-        const page = await context.newPage();
-        try {
-          console.log(`  - Navigating ${pageInfo.name} on ${vp.name}`);
-          await page.goto(pageInfo.path, { waitUntil: "networkidle" });
+      for (const vp of viewports) {
+        console.log(`📷 Start viewport: ${vp.name} (${vp.viewport.width}x${vp.viewport.height}) on ${b.name}`);
 
-          // 名称包含 viewport id，便于识别
-          await argosScreenshot(page, `${pageInfo.name}-${vp.name}`);
-        } finally {
+        const context = await browser.newContext({
+          baseURL: "http://localhost:8090",
+          viewport: vp.viewport,
+          userAgent: vp.userAgent,
+          isMobile: vp.isMobile,
+          hasTouch: vp.hasTouch,
+        });
+
+        for (const pageInfo of pages) {
+          const page = await context.newPage();
           try {
-            await page.close();
-          } catch (err) {
-            console.warn("Warning: page.close() failed:", err && err.message ? err.message : err);
+            console.log(`  - Navigating ${pageInfo.name} on ${vp.name} @ ${b.name}`);
+            await page.goto(pageInfo.path, { waitUntil: "networkidle" });
+
+            // 名称包含 viewport id 和浏览器名，便于识别
+            await argosScreenshot(page, `${pageInfo.name}-${vp.name}-${b.name}`);
+          } finally {
+            try {
+              await page.close();
+            } catch (err) {
+              console.warn("Warning: page.close() failed:", err && err.message ? err.message : err);
+            }
           }
         }
+
+        await context.close();
+        console.log(`✅ ${vp.name} screenshots done on ${b.name}`);
       }
 
-      await context.close();
-      console.log(`✅ ${vp.name} screenshots done`);
+      await browser.close();
+      console.log(`✅ ${b.name} done`);
     }
-
-    await browser.close();
     console.log("🎉 All viewports done");
     process.exit(0);
   } catch (err) {
