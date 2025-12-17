@@ -155,8 +155,7 @@ function generateChangesTable(
  * 生成比较报告
  */
 function generateComparisonReport(currentReport, baseReport) {
-  let markdown = `# Page Size Comparison Report\n\n`;
-  markdown += `Comparing **current** branch with **base** branch\n\n`;
+  let markdown = ``;
 
   // 添加测试环境信息
   markdown += `**Test Environment:**\n`;
@@ -192,10 +191,14 @@ function generateComparisonReport(currentReport, baseReport) {
   if (currentReport.metadata?.lhciVersion) {
     markdown += `- Lighthouse CI Version: ${currentReport.metadata.lhciVersion}\n`;
   }
+  markdown += `\n`;
+
+  markdown += `# Page Size Comparison Report\n\n`;
+  markdown += `Comparing **current** branch with **base** branch\n\n`;
+
   if (currentReport.metadata?.generatedAt) {
     markdown += `- Generated At: ${new Date(currentReport.metadata.generatedAt).toISOString()}\n`;
   }
-  markdown += `\n`;
 
   // 定义资源类型
   const typeOrder = ["document", "script", "stylesheet", "font", "image", "fetch", "other"];
