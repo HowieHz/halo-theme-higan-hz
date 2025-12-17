@@ -48,6 +48,11 @@ on:
         type: boolean
         default: false
         description: "When true, upload raw Lighthouse .lighthouseci data as an artifact."
+      playwright_browsers:
+        required: false
+        type: string
+        default: "chromium,firefox,webkit"
+        description: "Comma-separated list of Playwright browsers to install/run (eg: 'chromium,firefox,webkit'). Empty disables Playwright browser install."
 
 jobs:
   precheck:
@@ -377,6 +382,10 @@ jobs:
           set -e
           mkdir -p ~/logs
 
+          # Expose PLAYWRIGHT_BROWSERS from workflow input to the script
+          PLAYWRIGHT_BROWSERS="${{ inputs.playwright_browsers }}"
+          export PLAYWRIGHT_BROWSERS
+
           # ============ Task A: Lighthouse CI ============
           (
             set -e
@@ -444,8 +453,15 @@ jobs:
             step_end=$(date +%s%3N); echo "STEP_END:check-playwright:${step_end}" >> ~/logs/playwright.timing
 
             step_start=$(date +%s%3N); echo "STEP_START:install-browsers:${step_start}" >> ~/logs/playwright.timing
-            # Install all Playwright browsers so CI can capture screenshots on Chromium, Firefox and WebKit
-            pnpm exec playwright install --with-deps chromium firefox webkit
+            # Install Playwright browsers according to PLAYWRIGHT_BROWSERS (comma-separated)
+            if [ -n "$PLAYWRIGHT_BROWSERS" ]; then
+              # convert commas to spaces for CLI
+              BROWSERS=$(echo "$PLAYWRIGHT_BROWSERS" | tr ',' ' ')
+              echo "📦 Installing Playwright browsers: $BROWSERS"
+              pnpm exec playwright install --with-deps $BROWSERS || echo "⚠️ Playwright browser install failed (continuing)"
+            else
+              echo "⚠️ PLAYWRIGHT_BROWSERS is empty — skipping browser install"
+            fi
             step_end=$(date +%s%3N); echo "STEP_END:install-browsers:${step_end}" >> ~/logs/playwright.timing
 
 

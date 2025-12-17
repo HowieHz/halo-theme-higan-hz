@@ -1,14 +1,44 @@
 import { argosScreenshot } from "@argos-ci/playwright";
-import { chromium, firefox, webkit } from "playwright";
+import { chromium, firefox, webkit, devices as pwDevices } from "playwright";
 
 (async () => {
   try {
-    // Support Chromium, Firefox and WebKit
-    const browsers = [
-      { name: 'chromium', launcher: chromium },
-      { name: 'firefox', launcher: firefox },
-      { name: 'webkit', launcher: webkit },
-    ];
+    // Determine which browsers to run from PLAYWRIGHT_BROWSERS env var (comma or space separated)
+    const raw = (process.env.PLAYWRIGHT_BROWSERS || '').trim();
+    const requested = raw ? raw.split(/[,\s]+/).map(s => s.trim().toLowerCase()).filter(Boolean) : [];
+
+    // Map supported install names to Playwright browser launchers and options
+    const browserFactory = {
+      chromium: { launcher: chromium, launchOptions: {} },
+      'chromium-headless-shell': { launcher: chromium, launchOptions: {} },
+      'chromium-tip-of-tree-headless-shell': { launcher: chromium, launchOptions: {} },
+      'bidi-chromium': { launcher: chromium, launchOptions: {} },
+      chrome: { launcher: chromium, launchOptions: { channel: 'chrome' } },
+      'chrome-beta': { launcher: chromium, launchOptions: { channel: 'chrome-beta' } },
+      msedge: { launcher: chromium, launchOptions: { channel: 'msedge' } },
+      'msedge-beta': { launcher: chromium, launchOptions: { channel: 'msedge-beta' } },
+      'msedge-dev': { launcher: chromium, launchOptions: { channel: 'msedge-dev' } },
+      firefox: { launcher: firefox, launchOptions: {} },
+      webkit: { launcher: webkit, launchOptions: {} },
+      'webkit-wsl': { launcher: webkit, launchOptions: {} },
+    };
+
+    let browsers = [];
+    if (requested.length > 0) {
+      for (const name of requested) {
+        if (browserFactory[name]) {
+          const entry = browserFactory[name];
+          browsers.push({ name, launcher: entry.launcher, launchOptions: entry.launchOptions });
+        } else {
+          console.warn(`⚠️ Unknown/unsupported browser requested: ${name}`);
+        }
+      }
+    }
+    if (browsers.length === 0) {
+      // default to chromium for safety
+      browsers = [{ name: 'chromium', launcher: chromium, launchOptions: {} }];
+      console.log('ℹ️ No valid PLAYWRIGHT_BROWSERS requested; defaulting to chromium');
+    }
 
     const pages = [
       { name: "home", path: "/" },
@@ -22,51 +52,56 @@ import { chromium, firefox, webkit } from "playwright";
       { name: "about", path: "/about" },
     ];
 
-    // 三种视口及对应 UA（可按需调整）
-    const viewports = [
-      {
-        name: "desktop",
-        viewport: { width: 1920, height: 1080 },
-        userAgent:
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        isMobile: false,
-        hasTouch: false,
-      },
-      {
-        name: "tablet",
-        viewport: { width: 768, height: 1024 },
-        userAgent:
-          "Mozilla/5.0 (iPad; CPU OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",
-        isMobile: true,
-        hasTouch: true,
-      },
-      {
-        name: "mobile",
-        viewport: { width: 375, height: 812 },
-        userAgent:
-          "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",
-        isMobile: true,
-        hasTouch: true,
-      },
+    // Use Playwright's built-in device descriptors for consistency with playwright.config.ts
+    // Map logical viewport names to Playwright device keys
+    const deviceMap = [
+      { name: 'desktop', key: 'Desktop Chrome' },
+      { name: 'tablet', key: 'iPad (gen 11)' },
+      { name: 'mobile', key: 'iPhone 12' },
     ];
+
+    // Build viewports array from device descriptors; if a descriptor isn't available,
+    // fall back to a reasonable default.
+    const viewports = deviceMap.map(d => {
+      const desc = pwDevices[d.key];
+      if (desc) {
+        return {
+          name: d.name,
+          descriptorKey: d.key,
+          descriptor: desc,
+        };
+      }
+      console.warn(`⚠️ Playwright device not found: ${d.key}; using fallback viewport`);
+      return {
+        name: d.name,
+        descriptorKey: d.key,
+        descriptor: {
+          viewport: d.name === 'desktop' ? { width: 1920, height: 1080 } : { width: 375, height: 812 },
+          userAgent: '',
+          isMobile: d.name !== 'desktop',
+          hasTouch: d.name !== 'desktop',
+        },
+      };
+    });
 
     for (const b of browsers) {
       console.log(`🔎 Start browser: ${b.name}`);
 
-      // launch args: only pass chromium-specific no-sandbox flags to chromium
-      const launchOptions = b.name === 'chromium' ? { args: ["--no-sandbox", "--disable-setuid-sandbox"] } : {};
+      // merge configured launchOptions with necessary defaults
+      const launchOptions = Object.assign({}, b.launchOptions || {});
+      // For Chromium-based launchers, ensure no-sandbox flags in CI
+      if (b.launcher === chromium) {
+        launchOptions.args = (launchOptions.args || []).concat(["--no-sandbox", "--disable-setuid-sandbox"]);
+      }
       const browser = await b.launcher.launch(launchOptions);
 
       for (const vp of viewports) {
-        console.log(`📷 Start viewport: ${vp.name} (${vp.viewport.width}x${vp.viewport.height}) on ${b.name}`);
+        const vw = vp.descriptor.viewport || {};
+        const vwLabel = vw.width && vw.height ? `${vw.width}x${vw.height}` : 'unknown';
+        console.log(`📷 Start viewport: ${vp.name} (${vwLabel}) on ${b.name} [device=${vp.descriptorKey}]`);
 
-        const context = await browser.newContext({
-          baseURL: "http://localhost:8090",
-          viewport: vp.viewport,
-          userAgent: vp.userAgent,
-          isMobile: vp.isMobile,
-          hasTouch: vp.hasTouch,
-        });
+        const contextOpts = Object.assign({}, vp.descriptor, { baseURL: "http://localhost:8090" });
+        const context = await browser.newContext(contextOpts);
 
         for (const pageInfo of pages) {
           const page = await context.newPage();
