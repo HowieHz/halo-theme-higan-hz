@@ -10,6 +10,7 @@
   )}"
 >
   <head>
+    <meta name="description" th:attr="content=${#strings.isEmpty(theme.config?.archives_page_styles?.description) ? theme.config?.archives_page_styles?.description : site?.seo?.description}" />
     <script src="/src/scripts/pages/archives.ts" type="module"></script>
     <th:block th:insert="~{components/list-post-simple/template :: headContent}"></th:block>
     <th:block th:insert="~{components/pagination/template :: headContent}"></th:block>

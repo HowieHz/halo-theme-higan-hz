@@ -989,6 +989,11 @@ spec:
     - group: tags_page_styles
       label: Tag Collection Page Style
       formSchema:
+        - $formkit: text
+          name: description
+          label: Page description (meta description)
+          value: ""
+          help: Used as the meta description; falls back to site SEO description when empty
         - $formkit: checkbox
           name: is_show_the_number_of_posts_per_tag
           label: Display the number of posts per tag
@@ -1034,6 +1039,11 @@ spec:
     - group: author_page_styles
       label: Author details page style
       formSchema:
+        - $formkit: text
+          name: description
+          label: Page description (meta description)
+          value: ""
+          help: Used as the meta description; falls back to site SEO description when empty
         - $formkit: checkbox
           name: is_show_rss_button
           label: Show RSS subscription button
@@ -1042,6 +1052,11 @@ spec:
     - group: archives_page_styles
       label: Archives page style
       formSchema:
+        - $formkit: text
+          name: description
+          label: Page description (meta description)
+          value: ""
+          help: Used as the meta description; falls back to site SEO description when empty
         - $formkit: checkbox
           name: is_collapse_post_list_by_publication_year_and_month
           label: Collapse post list by publication year and month

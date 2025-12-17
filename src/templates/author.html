@@ -10,6 +10,7 @@
   )}"
 >
   <head>
+    <meta name="description" th:attr="content=${#strings.isEmpty(theme.config?.author_page_styles?.description) ? theme.config?.author_page_styles?.description : site?.seo?.description}" />
     <link
       th:if="${pluginFinder.available('PluginFeed')}"
       rel="alternate"
