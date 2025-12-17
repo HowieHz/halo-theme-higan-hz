@@ -4533,6 +4533,44 @@ HTML 代码也是可以的：
 
 应用范围：[`/categories`](/reference/template-map#:~:text=/categories)。
 
+### 页面描述
+
+::: info 🎯 用途
+
+用于自定义该页面的 HTML `<meta name="description">` 内容，方便针对设置 SEO 描述。
+
+:::
+::: info 📂 配置项位置
+
+分类集合页样式 -> 页面描述
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=页面描述" />
+
+:::
+::: info 🏷️ 类型
+
+字符串
+
+:::
+::: info ⭐ 默认值
+
+空
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.categories_page_styles?.description`
+
+:::
+::: info ℹ️ 补充信息
+
+设置为空将回退到站点描述（快速跳转：<QuickJumpConfig to="/console/settings?tab=seo#:~:text=站点描述" />）
+
+:::
+
 ### 显示每个分类下的文章数量
 
 ::: info 🎯 用途

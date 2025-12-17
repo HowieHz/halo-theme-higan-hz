@@ -962,6 +962,11 @@ spec:
     - group: categories_page_styles
       label: 分类集合页样式
       formSchema:
+        - $formkit: text
+          name: description
+          label: 页面描述
+          value: ""
+          help: 设置页面的 meta description；为空时回退到站点 SEO 描述
         - $formkit: checkbox
           name: is_show_the_number_of_articles_per_category
           label: 显示每个分类下的文章数量
