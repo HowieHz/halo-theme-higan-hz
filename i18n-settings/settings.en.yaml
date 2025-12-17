@@ -144,7 +144,7 @@ spec:
           id: color_schema_init
           label: Color scheme
           help: "It is normal for the selected option not to be displayed; it will still take effect properly. (For the case where the 'Color Scheme Toggle Button' is enabled, this determines the color scheme when the website is first loaded.)"
-          value: { theme: "auto", color-scheme: "auto" }
+          value: { theme: "dark", color-scheme: "dark" }
           options:
             - label: "Follow System - Green"
               value: { theme: "auto", color-scheme: "auto" }
