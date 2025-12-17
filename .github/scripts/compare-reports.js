@@ -401,9 +401,6 @@ function generateComparisonReport(currentReport, baseReport) {
     true, // 折叠
   );
 
-  markdown += `---\n\n`;
-  markdown += `*This comparison report is automatically generated*\n`;
-
   return markdown;
 }
 
