@@ -647,7 +647,7 @@ jobs:
           fi
           
           echo "Found $json_count Lighthouse result files"
-          node .github/scripts/generate-report.js
+          node .github/scripts/generate-page-size-report.js
 
       - name: Upload reports (${{ inputs.ref_name }})
         if: ${{ steps.generate_reports.outcome == 'success' && inputs.run_lighthouse_ci }}

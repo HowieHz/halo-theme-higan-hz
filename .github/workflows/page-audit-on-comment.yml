@@ -181,7 +181,7 @@ jobs:
       
       - name: Generate comparison report
         run: |
-          node .github/scripts/compare-reports.js
+          node .github/scripts/compare-page-size-reports.js
         env:
           CURRENT_REPORT: ./reports-current/page-size-report.json
           BASE_REPORT: ./reports-latest-release/page-size-report.json
