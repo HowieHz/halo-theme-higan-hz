@@ -412,6 +412,43 @@ jobs:
             exit 1
           fi
 
+      - name: Update site SEO description
+        shell: bash
+        run: |
+          set -e
+          echo "Fetching current system seo config"
+          cfg=$(curl -s -u admin:admin http://localhost:8090/apis/console.api.halo.run/v1alpha1/systemconfigs/seo)
+          if [ -z "$cfg" ]; then
+            echo "⚠️ Empty response when fetching seo config"
+            exit 1
+          fi
+
+          # Ensure jq is available
+          if ! command -v jq >/dev/null 2>&1; then
+            echo "⚠️ jq is required but not installed. Installing jq..."
+            sudo apt-get update -y && sudo apt-get install -y jq || { echo "Failed to install jq"; exit 1; }
+          fi
+
+          echo "Current seo config:"
+          echo "$cfg" | jq .
+
+          # Set description field to "1"
+          updated=$(echo "$cfg" | jq '.description = "1"')
+
+          echo "Updating seo config with new description"
+          http_code=$(curl -s -o /tmp/put.seo.out -w "%{http_code}" -u admin:admin -X PUT \
+            http://localhost:8090/apis/console.api.halo.run/v1alpha1/systemconfigs/seo \
+            -H "Content-Type: application/json" \
+            -d "$updated")
+
+          if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+            echo "✓ seo config updated (HTTP $http_code)"
+          else
+            echo "❌ Failed to update seo config (HTTP $http_code)"
+            echo "Response body:"; sed -n '1,200p' /tmp/put.seo.out || true
+            exit 1
+          fi
+
       - name: Run Lighthouse CI and Playwright (parallel)
         if: ${{ inputs.run_lighthouse_ci == true && needs.precheck.outputs.screenshots_needed == 'true' }}
         shell: bash
