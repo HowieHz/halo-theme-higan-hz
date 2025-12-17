@@ -11,16 +11,11 @@ on:
         required: false
         type: string
         default: "0.15.x"
-      upload_screenshots_to_argos:
-        required: false
-        type: boolean
-        default: false
-        description: "When true, upload captured screenshots to Argos (requires ARGOS_TOKEN)."
       upload_screenshots_artifact:
         required: false
         type: boolean
         default: false
-        description: "When true, capture screenshots and upload them as a workflow artifact instead of (or in addition to) uploading to Argos."
+        description: "When true, capture screenshots and upload them as a workflow artifact."
       halo_version:
         required: false
         type: string
@@ -53,38 +48,20 @@ on:
         type: boolean
         default: false
         description: "When true, upload raw Lighthouse .lighthouseci data as an artifact."
-    secrets:
-      ARGOS_TOKEN:
-        required: false
 
 jobs:
   precheck:
     name: Validate Secrets & Inputs
     runs-on: ubuntu-latest
     outputs:
-      argos_upload_available: ${{ steps.check.outputs.argos_upload_available }}
       screenshots_needed: ${{ steps.check.outputs.screenshots_needed }}
     steps:
       - id: check
         continue-on-error: true
         run: |
-          # Determine whether Argos upload is requested and token is available
-          if [ "${{ inputs.upload_screenshots_to_argos }}" != "true" ]; then
-            echo "argos_upload_available=false" >> $GITHUB_OUTPUT
-            echo "ARGOS upload not requested (upload_screenshots_to_argos != true)."
-          elif [ -z "${{ secrets.ARGOS_TOKEN }}" ]; then
-            echo "ARGOS_TOKEN missing; Argos upload will be skipped."
-            echo "argos_upload_available=false" >> $GITHUB_OUTPUT
-          else
-            echo "argos_upload_available=true" >> $GITHUB_OUTPUT
-          fi
-
           # Screenshots are needed if either:
-          # 1) upload_screenshots_to_argos == true AND ARGOS_TOKEN exists
-          # 2) upload_screenshots_artifact == true
-          if [ "${{ inputs.upload_screenshots_to_argos }}" = "true" ] && [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
-            echo "screenshots_needed=true" >> $GITHUB_OUTPUT
-          elif [ "${{ inputs.upload_screenshots_artifact }}" = "true" ]; then
+          # 1) upload_screenshots_artifact == true
+          if [ "${{ inputs.upload_screenshots_artifact }}" = "true" ]; then
             echo "screenshots_needed=true" >> $GITHUB_OUTPUT
           else
             echo "screenshots_needed=false" >> $GITHUB_OUTPUT
@@ -394,7 +371,7 @@ jobs:
           echo "🎉 Plugins disabled"
 
       - name: Run Lighthouse CI and Playwright (parallel)
-        if: ${{ inputs.run_lighthouse_ci == true && (needs.precheck.outputs.screenshots_needed == 'true' || inputs.run_lighthouse_ci == true) }}
+        if: ${{ inputs.run_lighthouse_ci == true && needs.precheck.outputs.screenshots_needed == 'true' }}
         shell: bash
         run: |
           set -e
@@ -450,14 +427,14 @@ jobs:
           ) > ~/logs/lhci.log 2>&1 &
           LHCI_PID=$!
 
-          # ============ Task B: Playwright (+ Argos if requested) ============
+          # ============ Task B: Playwright ============
           (
             set -e
             # timing for Playwright task (milliseconds)
             task_start=$(date +%s%3N)
             echo "TASK_START:${task_start}" > ~/logs/playwright.timing
 
-            echo "📦 [Playwright] Install Playwright and Argos"
+            echo "📦 [Playwright] Install Playwright"
             step_start=$(date +%s%3N); echo "STEP_START:check-playwright:${step_start}" >> ~/logs/playwright.timing
             if ! pnpm exec -- playwright --version >/dev/null 2>&1; then
               pnpm add -w -D playwright @argos-ci/playwright || echo "⚠️  Playwright install failed, continuing"
@@ -541,7 +518,7 @@ jobs:
           done
 
       - name: Run Lighthouse CI only
-        if: ${{ inputs.run_lighthouse_ci && !(inputs.upload_screenshots_artifact == true || needs.precheck.outputs.argos_upload_available == 'true') }}
+        if: ${{ inputs.run_lighthouse_ci && needs.precheck.outputs.screenshots_needed != 'true' }}
         shell: bash
         run: |
           set -e
@@ -592,8 +569,8 @@ jobs:
           task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/lhci.timing
           echo "✅ [LHCI] Complete"
 
-      - name: Run Playwright (Argos-only or Artifact-only)
-        if: ${{ (inputs.upload_screenshots_artifact == true || needs.precheck.outputs.argos_upload_available == 'true') && inputs.run_lighthouse_ci == false }}
+      - name: Run Playwright
+        if: ${{ inputs.run_lighthouse_ci == false && needs.precheck.outputs.screenshots_needed == 'true' }}
         shell: bash
         run: |
           set -e
@@ -621,15 +598,6 @@ jobs:
           mkdir -p screenshots
           node .github/scripts/playwright-screenshots.js
           step_end=$(date +%s%3N); echo "STEP_END:screenshots:${step_end}" >> ~/logs/playwright.timing
-
-          echo "☁️ [Playwright] Handle screenshots (upload to Argos if requested)"
-          step_start=$(date +%s%3N); echo "STEP_START:upload-argos:${step_start}" >> ~/logs/playwright.timing
-          if [ "${{ inputs.upload_screenshots_to_argos }}" = "true" ] && [ -n "${{ secrets.ARGOS_TOKEN }}" ]; then
-            pnpm dlx @argos-ci/cli upload --token ${{ secrets.ARGOS_TOKEN }} ./screenshots/ || echo "⚠️ Argos upload failed"
-          else
-            echo "ℹ️  Not uploading to Argos (either not requested or ARGOS_TOKEN missing). Screenshots remain in ./screenshots/ for artifact upload."
-          fi
-          step_end=$(date +%s%3N); echo "STEP_END:upload-argos:${step_end}" >> ~/logs/playwright.timing
 
           task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/playwright.timing
           echo "✅ [Playwright] Complete"

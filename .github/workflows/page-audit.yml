@@ -50,6 +50,12 @@ jobs:
         with:
           name: page-size-reports-current
           path: ./reports-current
+
+      - name: Download Lighthouse raw data (current)
+        uses: actions/download-artifact@v7
+        with:
+          name: lighthouse-raw-data-current
+          path: ./reports-current
       
       - name: Download base reports
         uses: actions/download-artifact@v7
@@ -64,6 +70,13 @@ jobs:
           CURRENT_REPORT: ./reports-current/page-size-report.json
           BASE_REPORT: ./reports-base/page-size-report.json
           OUTPUT_FILE: ./comparison-report.md
+
+      - name: Generate Lighthouse scores report
+        run: |
+          node .github/scripts/generate-lighthouse-scores.js
+        env:
+          MANIFEST: ./reports-current/.lighthouseci/manifest.json
+          OUTPUT_FILE: ./lighthouse-scores.md
       
       - name: Comment comparison report on PR
         uses: actions/github-script@v7
@@ -85,6 +98,30 @@ jobs:
               if (error.status === 403) {
                 console.log('⚠️ Cannot post comment (insufficient permissions). This often happens for PRs created by Dependabot or other bots.');
                 console.log('📊 The report has been generated and uploaded as an artifact; it can be viewed manually.');
+              } else {
+                throw error;
+              }
+            }
+
+      - name: Comment Lighthouse scores on PR
+        uses: actions/github-script@v7
+        continue-on-error: true
+        with:
+          script: |
+            const fs = require('fs');
+            try {
+              const scores = fs.readFileSync('./lighthouse-scores.md', 'utf8');
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: scores
+              });
+              console.log('✓ Lighthouse scores posted successfully');
+            } catch (error) {
+              if (error.status === 403) {
+                console.log('⚠️ Cannot post Lighthouse scores (insufficient permissions).');
+                console.log('📊 Lighthouse scores report generated as an artifact; view manually if needed.');
               } else {
                 throw error;
               }
