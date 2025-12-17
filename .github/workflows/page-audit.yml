@@ -111,12 +111,36 @@ jobs:
             const fs = require('fs');
             try {
               const scores = fs.readFileSync('./lighthouse-scores.md', 'utf8');
+
+              // Try to find the artifact for lighthouse raw data in this run
+              const owner = context.repo.owner;
+              const repo = context.repo.repo;
+              const runId = context.runId || process.env.GITHUB_RUN_ID;
+              const artifactName = 'lighthouse-raw-data-current';
+              let artifactUrl = '';
+
+              try {
+                const res = await github.rest.actions.listWorkflowRunArtifacts({ owner, repo, run_id: Number(runId) });
+                const found = (res.data.artifacts || []).find(a => a.name === artifactName);
+                if (found) {
+                  artifactUrl = `https://github.com/${owner}/${repo}/actions/runs/${runId}/artifacts/${found.id}`;
+                }
+              } catch (err) {
+                console.log('⚠️ Could not list artifacts:', err.message || err);
+              }
+
+              let body = scores;
+              if (artifactUrl) {
+                body += '\n\n---\n\nLighthouse raw data artifact: ' + artifactUrl + '\n';
+              }
+
               await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
+                owner: owner,
+                repo: repo,
                 issue_number: context.issue.number,
-                body: scores
+                body: body
               });
+
               console.log('✓ Lighthouse scores posted successfully');
             } catch (error) {
               if (error.status === 403) {
