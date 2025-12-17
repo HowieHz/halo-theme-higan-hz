@@ -5,9 +5,9 @@ import { chromium, firefox, webkit } from "playwright";
   try {
     // Support Chromium, Firefox and WebKit
     const browsers = [
-      { name: 'chromium', launcher: chromium },
-      { name: 'firefox', launcher: firefox },
-      { name: 'webkit', launcher: webkit },
+      { name: "chromium", launcher: chromium },
+      { name: "firefox", launcher: firefox },
+      { name: "webkit", launcher: webkit },
     ];
 
     const pages = [
@@ -54,7 +54,7 @@ import { chromium, firefox, webkit } from "playwright";
       console.log(`🔎 Start browser: ${b.name}`);
 
       // launch args: only pass chromium-specific no-sandbox flags to chromium
-      const launchOptions = b.name === 'chromium' ? { args: ["--no-sandbox", "--disable-setuid-sandbox"] } : {};
+      const launchOptions = b.name === "chromium" ? { args: ["--no-sandbox", "--disable-setuid-sandbox"] } : {};
       const browser = await b.launcher.launch(launchOptions);
 
       for (const vp of viewports) {
