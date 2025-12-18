@@ -1,4 +1,4 @@
-name: Node.js Lint Check
+name: Node.js Format and Lint Check
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
     types: [ opened, synchronize, reopened ]
 jobs:
   check:
+    name: Node.js Format and Lint Check
     runs-on: ubuntu-latest
     
     permissions:
