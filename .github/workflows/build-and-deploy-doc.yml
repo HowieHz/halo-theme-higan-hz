@@ -18,6 +18,7 @@ on:
 
 jobs:
   build:
+    name: Build Documentation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
