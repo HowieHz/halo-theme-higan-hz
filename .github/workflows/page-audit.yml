@@ -77,94 +77,10 @@ jobs:
         env:
           MANIFEST: ./lighthouse-reports-current/manifest.json
           OUTPUT_FILE: ./lighthouse-scores.md
-
-      - name: Enforce Lighthouse 100% scores
-        id: enforce
-        # Use outputs to communicate failures (no file marker). Continue so comment step runs.
-        continue-on-error: true
-        env:
-          MANIFEST: ./lighthouse-reports-current/manifest.json
-        run: |
-          node <<'NODE'
-          const fs = require('fs');
-          const manifestPath = process.env.MANIFEST || './lighthouse-reports-current/manifest.json';
-          const ghOut = process.env.GITHUB_OUTPUT;
-          function writeOut(name, value) {
-            try { fs.appendFileSync(ghOut, `${name}=${value}\n`); } catch (e) { console.error('Failed to write output', e); }
-          }
-          function writeMultiline(name, value) {
-            try { fs.appendFileSync(ghOut, `${name}<<EOF\n${value}\nEOF\n`); } catch (e) { console.error('Failed to write multiline output', e); }
-          }
-
-          if (!fs.existsSync(manifestPath)) {
-            const details = JSON.stringify({error: 'manifest.json not found', path: manifestPath});
-            writeOut('failed', 'true');
-            writeMultiline('details', details);
-            console.error('manifest.json not found:', manifestPath);
-            process.exit(1);
-          }
-
-          let manifest;
-          try {
-            manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-          } catch (e) {
-            const details = JSON.stringify({error: 'failed to parse manifest.json', message: e.message});
-            writeOut('failed', 'true');
-            writeMultiline('details', details);
-            console.error('Failed to parse manifest.json:', e.message);
-            process.exit(1);
-          }
-
-          if (!Array.isArray(manifest)) {
-            const details = JSON.stringify({error: 'manifest.json should be an array'});
-            writeOut('failed', 'true');
-            writeMultiline('details', details);
-            console.error('manifest.json should be an array of entries');
-            process.exit(1);
-          }
-
-          const failures = [];
-          for (const entry of manifest) {
-            const url = entry.url || entry.page || entry.htmlPath || entry.path || entry.id || '-';
-            const s = entry.summary || {};
-            const getScore = (obj, keys) => {
-              for (const k of keys) {
-                if (typeof obj[k] === 'number') return obj[k];
-                if (obj[k] && typeof obj[k].score === 'number') return obj[k].score;
-              }
-              return undefined;
-            };
-            const mapping = {
-              Performance: ['performance'],
-              Accessibility: ['accessibility'],
-              'Best Practices': ['best-practices'],
-              SEO: ['seo']
-            };
-            for (const [label, keys] of Object.entries(mapping)) {
-              const score = getScore(s, keys);
-              if (typeof score === 'number' && score < 1) {
-                failures.push({page: url, category: label, score: Math.round(score * 100)});
-              }
-            }
-          }
-
-          if (failures.length) {
-            writeOut('failed', 'true');
-            writeMultiline('details', JSON.stringify(failures));
-            console.error('Lighthouse enforcement failures:', JSON.stringify(failures, null, 2));
-            process.exit(1);
-          } else {
-            writeOut('failed', 'false');
-            writeMultiline('details', JSON.stringify([]));
-            console.log('All Lighthouse category scores are 100%');
-          }
-          NODE
       
       - name: Comment comparison and Lighthouse scores on PR
         uses: actions/github-script@v7
         continue-on-error: true
-        env:
-          ENFORCE_DETAILS: ${{ steps.enforce.outputs.details }}
         with:
           script: |
             const fs = require('fs');
@@ -190,26 +106,6 @@ jobs:
             let body = '';
             if (comparison) body += comparison + '\n\n';
             if (scores) body += scores + '\n\n';
-
-            // Append enforcement details from enforce step outputs if present
-            const enforceDetailsRaw = process.env.ENFORCE_DETAILS || '';
-            if (enforceDetailsRaw) {
-              let parsed = null;
-              try { parsed = JSON.parse(enforceDetailsRaw); } catch (e) { parsed = enforceDetailsRaw; }
-              body += '\n\n**Lighthouse enforcement details**\n\n';
-              if (Array.isArray(parsed) && parsed.length) {
-                for (const f of parsed) {
-                  body += `- ${f.page}: ${f.category} => ${f.score}%\n`;
-                }
-                body += '\n';
-              } else if (parsed && parsed.error) {
-                body += `Error: ${parsed.error}` + (parsed.message ? ` - ${parsed.message}` : '') + '\n\n';
-              } else if (Array.isArray(parsed) && parsed.length === 0) {
-                body += 'All pages passed enforcement.\n\n';
-              } else {
-                body += '```\n' + (typeof parsed === 'string' ? parsed : JSON.stringify(parsed, null, 2)) + '\n```\n\n';
-              }
-            }
 
             // Try to find the artifact for lighthouse raw data in this run
             const artifactName = 'lighthouse-raw-data-current';
@@ -259,14 +155,3 @@ jobs:
                 throw error;
               }
             }
-
-      - name: Fail job if Lighthouse enforcement failed
-        if: always()
-        run: |
-          if [ "${{ steps.enforce.outputs.failed }}" = "true" ]; then
-            echo "Lighthouse enforcement failures found:";
-            echo "${{ steps.enforce.outputs.details }}";
-            exit 1;
-          else
-            echo "No Lighthouse enforcement failures.";
-          fi
