@@ -526,7 +526,7 @@ const LineChart = defineClientComponent(async () => {
 
 ## Lighthouse
 
-[![Lighthouse CI](https://img.shields.io/github/actions/workflow/status/HowieHz/halo-theme-higan-hz/page-audit.yml?branch=main&label=Lighthouse%20CI)](https://github.com/HowieHz/halo-theme-higan-hz/actions/workflows/page-audit.yml)
+[![Lighthouse CI](https://img.shields.io/github/actions/workflow/status/HowieHz/halo-theme-higan-hz/page-audit.yml?branch=main&label=Lighthouse%20CI)](https://github.com/HowieHz/halo-theme-higan-hz/actions/workflows/page-audit.yml?query=branch%3Amain)
 
 ![Lighthouse](/lighthouse-score.svg)
 
