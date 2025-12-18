@@ -446,13 +446,6 @@ jobs:
             echo "Response body:"; sed -n '1,200p' /tmp/put.seo.out || true
             exit 1
           fi
-      
-      - name: Pre-warm homepage
-        run: |
-          for i in 1 2 3; do
-            curl -fsSL -H "Cache-Control: no-cache" "http://localhost:8090/" > /dev/null || true &
-          done
-          wait
 
       - name: Run Lighthouse CI and Playwright (parallel)
         if: ${{ inputs.run_lighthouse_ci == true && needs.precheck.outputs.screenshots_needed == 'true' }}
@@ -482,7 +475,25 @@ jobs:
             step_end=$(date +%s%3N); echo "STEP_END:check-lhci:${step_end}" >> ~/logs/lhci.timing
             echo "LIGHTHOUSE_CI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV
 
+
             echo "🚀 [LHCI] Run Lighthouse CI"
+
+            # Warmup Halo CMS
+            warmup_start=$(date +%s%3N); echo "STEP_START:lhci-warmup:${warmup_start}" >> ~/logs/lhci.timing
+            lhci autorun \
+              --collect.url=http://localhost:8090/ \
+              --collect.numberOfRuns=1 \
+              --collect.settings.preset=desktop \
+              --collect.settings.throttling.rttMs=0 \
+              --collect.settings.throttling.throughputKbps=0 \
+              --collect.settings.throttling.cpuSlowdownMultiplier=1 \
+              --collect.settings.throttling.requestLatencyMs=0 \
+              --collect.settings.throttling.downloadThroughputKbps=0 \
+              --collect.settings.throttling.uploadThroughputKbps=0 \
+              --upload.target=filesystem \
+              --upload.outputDir=.lighthouseci-warmup || true
+            warmup_end=$(date +%s%3N); echo "STEP_END:lhci-warmup:${warmup_end}" >> ~/logs/lhci.timing
+
             step_start=$(date +%s%3N); echo "STEP_START:lhci-run:${step_start}" >> ~/logs/lhci.timing
             mkdir -p ./reports
             lhci autorun \
@@ -636,6 +647,23 @@ jobs:
           echo "LIGHTHOUSE_CI_VERSION=$(lhci --version 2>/dev/null || echo 'unknown')" >> $GITHUB_ENV
 
           echo "🚀 [LHCI] Run Lighthouse CI"
+
+          # Warmup Halo CMS
+          warmup_start=$(date +%s%3N); echo "STEP_START:lhci-warmup:${warmup_start}" >> ~/logs/lhci.timing
+          lhci autorun \
+            --collect.url=http://localhost:8090/ \
+            --collect.numberOfRuns=1 \
+            --collect.settings.preset=desktop \
+            --collect.settings.throttling.rttMs=0 \
+            --collect.settings.throttling.throughputKbps=0 \
+            --collect.settings.throttling.cpuSlowdownMultiplier=1 \
+            --collect.settings.throttling.requestLatencyMs=0 \
+            --collect.settings.throttling.downloadThroughputKbps=0 \
+            --collect.settings.throttling.uploadThroughputKbps=0 \
+            --upload.target=filesystem \
+            --upload.outputDir=.lighthouseci-warmup || true
+          warmup_end=$(date +%s%3N); echo "STEP_END:lhci-warmup:${warmup_end}" >> ~/logs/lhci.timing
+
           step_start=$(date +%s%3N); echo "STEP_START:lhci-run:${step_start}" >> ~/logs/lhci.timing
           mkdir -p ./reports
           lhci autorun \

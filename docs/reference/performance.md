@@ -526,11 +526,9 @@ const LineChart = defineClientComponent(async () => {
 
 ## Lighthouse
 
-::: details Lighthouse 测试结果
+[![Lighthouse CI](https://img.shields.io/github/actions/workflow/status/HowieHz/halo-theme-higan-hz/page-audit.yml?branch=main&label=Lighthouse%20CI)](https://github.com/HowieHz/halo-theme-higan-hz/actions/workflows/page-audit.yml?query=branch%3Amain)
 
-![Lighthouse](/Lighthouse-result-2024-04-15-post.png)
-
-:::
+![Lighthouse](/lighthouse-score.svg)
 
 ## 体积监测
 
