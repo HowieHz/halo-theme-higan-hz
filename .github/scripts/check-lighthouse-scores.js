@@ -12,7 +12,7 @@ async function main() {
     const url = new URL(entry.url);
     const page = url.pathname + url.search;
     const s = entry.summary || {};
-    
+
     const scores = {
       performance: Math.round((s.performance || 0) * 100),
       accessibility: Math.round((s.accessibility || 0) * 100),
@@ -20,8 +20,8 @@ async function main() {
       seo: Math.round((s.seo || 0) * 100),
     };
 
-    const failed = Object.entries(scores).filter(([_, score]) => score < 100);
-    
+    const failed = Object.entries(scores).filter(([, score]) => score < 100);
+
     if (failed.length > 0) {
       failures.push({ page, failed });
     }
