@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Upload Theme
+    name: Build and Upload Theme
     runs-on: ubuntu-latest
     steps:
       - name: Make Build Directory

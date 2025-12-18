@@ -5,9 +5,12 @@ on:
     branches: [main]
   pull_request:
     types: [opened, synchronize, reopened]
+  schedule:
+    - cron: '0 0 * * *' # Refresh baseline version screenshot dates
 
 jobs:
   generate:
+    name: Generate Theme Screenshots
     # Call the reusable audit workflow to run only screenshot generation and upload artifact
     uses: ./.github/workflows/reusable-audit.yml
     with:
