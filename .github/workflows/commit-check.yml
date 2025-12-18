@@ -7,6 +7,7 @@ on:
 
 jobs:
   commit-check:
+    name: Commit Check
     runs-on: ubuntu-latest
     permissions:  # use permissions because use of pr-comments
       contents: read
