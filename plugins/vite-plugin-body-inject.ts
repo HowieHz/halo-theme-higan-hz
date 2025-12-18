@@ -90,12 +90,12 @@ export default function bodyInjectPlugin(options: BodyInjectOptions = {}): Plugi
 
     // 1. Insert before the <body> tag
     if (beforeBodyOpen) {
-      result = result.replace(/(<body[^>]*>)/i, `${beforeBodyOpen}$1`);
+      result = result.replace(/(<body(?=\s|>)[^>]*>)/i, `${beforeBodyOpen}$1`);
     }
 
     // 2. Insert after the <body> tag
     if (afterBodyOpen) {
-      result = result.replace(/(<body[^>]*>)/i, `$1${afterBodyOpen}`);
+      result = result.replace(/(<body(?=\s|>)[^>]*>)/i, `$1${afterBodyOpen}`);
     }
 
     // 3. Insert before the </body> tag

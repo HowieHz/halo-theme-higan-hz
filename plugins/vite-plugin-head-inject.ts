@@ -90,12 +90,12 @@ export default function headInjectPlugin(options: HeadInjectOptions = {}): Plugi
 
     // 1. Insert before the <head> tag
     if (beforeHeadOpen) {
-      result = result.replace(/(<head[^>]*>)/i, `${beforeHeadOpen}$1`);
+      result = result.replace(/(<head(?=\s|>)[^>]*>)/i, `${beforeHeadOpen}$1`);
     }
 
     // 2. Insert after the <head> tag
     if (afterHeadOpen) {
-      result = result.replace(/(<head[^>]*>)/i, `$1${afterHeadOpen}`);
+      result = result.replace(/(<head(?=\s|>)[^>]*>)/i, `$1${afterHeadOpen}`);
     }
 
     // 3. Insert before the </head> tag
