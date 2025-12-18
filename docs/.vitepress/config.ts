@@ -117,6 +117,13 @@ export default defineConfig({
 
       // 移除多余的空行并返回修改后的 HTML
       return $.html().replace(/^\s*[\r\n]/gm, "");
+    } else {
+      // 对非 frames 页面，在 body 开头插入 GTM 的 noscript 回退（便于不支持 JS 的环境统计）
+      const $ = cheerio.load(code);
+      $("body").prepend(
+        `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T447LW69" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`,
+      );
+      return $.html().replace(/^\s*[\r\n]/gm, "");
     }
   },
 
@@ -146,6 +153,12 @@ export default defineConfig({
             "data-website-id": "7b461ac5-155d-45a8-a118-178d0a2936e4",
             "data-domains": "howiehz.top",
           },
+        ],
+        // Google Tag Manager (head)
+        [
+          "script",
+          {},
+          `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T447LW69');`,
         ],
       );
     }
