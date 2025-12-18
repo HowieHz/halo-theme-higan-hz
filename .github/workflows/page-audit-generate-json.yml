@@ -132,6 +132,18 @@ jobs:
             console.log(`Found ${versionList.length} versions:`, versionList);
             core.setOutput('versions', JSON.stringify(versionList));
 
+      - name: Write versions summary
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const versions = JSON.parse(`$${"{"} steps.get-versions.outputs.versions ${"}"}` || '[]');
+            const count = Array.isArray(versions) ? versions.length : 0;
+            const first = versions && versions.length ? versions[0] : '';
+            const last = versions && versions.length ? versions[versions.length-1] : '';
+            const out = `## Page Audit Versions\n\n- Versions found: ${count}\n- Range: ${first} → ${last}\n`;
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, out);
+
   # Step 2: Run tests for each version in parallel
   test-versions:
     name: Test ${{ matrix.version }}

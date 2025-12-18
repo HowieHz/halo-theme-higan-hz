@@ -98,6 +98,10 @@ pnpm build
 - 页面视觉差异检查（Visual Regression）：
   - 通过 Playwright 在桌面、平板、手机三种设备视图（Viewport）下，使用 Chromium, Firefox, WebKit 内核对关键页面截图。最后使用 Argos CI 与基线版本进行比较。
 
+- 提交检查 ([Commit-Check](https://github.com/commit-check/commit-check-action))：
+  - 检查 git 提交消息是否符合[提交规范](https://www.conventionalcommits.org/en/v1.0.0/)
+  - 检查 git 分支名称是否符合[分支规则](https://conventional-branch.github.io/)
+
 ### 编写文档
 
 开发时在项目根目录运行以下指令可启动服务器，用以实时渲染修改。

@@ -36,6 +36,13 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      - name: Write Lint summary
+        if: success()
+        run: |
+          echo "## Lint Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Lint: Passed" >> $GITHUB_STEP_SUMMARY
+
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         id: auto-commit-action
@@ -45,6 +52,7 @@ jobs:
             
             
             skip-checks: true
+      
       - name: "Run if changes have been detected"
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
         run: echo "Changes!"
@@ -52,3 +60,13 @@ jobs:
       - name: "Run if no changes have been detected"
         if: steps.auto-commit-action.outputs.changes_detected == 'false'
         run: echo "No Changes!"
+
+      - name: Write auto-commit summary
+        run: |
+          echo "## Auto-commit" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.auto-commit-action.outputs.changes_detected }}" = "true" ]; then
+            echo "- Changes detected and committed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- No changes detected" >> $GITHUB_STEP_SUMMARY
+          fi

@@ -757,6 +757,17 @@ jobs:
           echo "Found $json_count Lighthouse result files"
           node .github/scripts/generate-page-size-report.js
 
+      - name: Write audit summary
+        if: success() && inputs.run_lighthouse_ci
+        run: |
+          echo "## Page Audit Summary - ${{ inputs.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Reports directory: ${{ inputs.output_dir }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Report base name: ${{ inputs.output_filename }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Uploaded artifacts: page-size-reports-${{ inputs.ref_name }}, lighthouse-raw-data-${{ inputs.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "[View workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+
       - name: Upload reports (${{ inputs.ref_name }})
         if: ${{ steps.generate_reports.outcome == 'success' && inputs.run_lighthouse_ci }}
         uses: actions/upload-artifact@v4
