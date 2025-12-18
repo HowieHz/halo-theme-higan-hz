@@ -448,6 +448,10 @@ jobs:
             echo "Response body:"; sed -n '1,200p' /tmp/put.seo.out || true
             exit 1
           fi
+      
+      - name: Pre-warm homepage
+        run: |
+          curl -fsSL -H "Cache-Control: no-cache" "http://localhost:8090/" > /dev/null || true
 
       - name: Run Lighthouse CI and Playwright (parallel)
         if: ${{ inputs.run_lighthouse_ci == true && needs.precheck.outputs.screenshots_needed == 'true' }}
