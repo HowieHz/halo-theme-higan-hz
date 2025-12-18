@@ -6,7 +6,7 @@ on:
     
 
 jobs:
-  audit:
+  audit-current:
     name: Audit Current Version
     uses: ./.github/workflows/reusable-audit.yml
     with:
@@ -27,9 +27,28 @@ jobs:
       ref_name: base
       run_lighthouse_ci: true
   
+  lighthouse-gate:
+    name: Lighthouse Quality Gate
+    needs: [audit-base]
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - uses: actions/download-artifact@v7
+        with:
+          name: lighthouse-raw-data-current
+          path: ./lighthouse-reports-current
+      - name: Check Lighthouse Scores
+        run: node .github/scripts/check-lighthouse-scores.js
+        env:
+          MANIFEST: ./lighthouse-reports-current/manifest.json
+
   compare-and-comment:
-    name: Compare and Comment
-    needs: [audit, audit-base]
+    name: Compare Page Size and Comment Report
+    needs: [audit-current, audit-base]
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:  # use permissions because use of pr-comments
