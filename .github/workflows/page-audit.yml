@@ -29,7 +29,7 @@ jobs:
   
   lighthouse-gate:
     name: Lighthouse Quality Gate
-    needs: [audit-base]
+    needs: [audit-current]
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
