@@ -158,6 +158,21 @@ jobs:
               body += 'To help reproduce and troubleshoot issues, the raw Lighthouse results have been uploaded as an artifact for this Actions run. (artifact not available)\n';
             }
 
+            // Write the same report to the Actions job summary
+            try {
+              const fs = require('fs');
+              const summaryPath = process.env.GITHUB_STEP_SUMMARY;
+              if (summaryPath) {
+                // Append body to job summary so it appears in the Actions UI
+                fs.appendFileSync(summaryPath, body + '\n');
+                console.log('✓ Written combined report to job summary');
+              } else {
+                console.log('⚠️ GITHUB_STEP_SUMMARY not available in this runner');
+              }
+            } catch (e) {
+              console.log('⚠️ Could not write to job summary:', e.message || e);
+            } 
+
             try {
               await github.rest.issues.createComment({
                 owner: owner,
