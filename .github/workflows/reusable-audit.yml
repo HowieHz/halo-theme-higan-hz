@@ -64,8 +64,6 @@ jobs:
       - id: check
         continue-on-error: true
         run: |
-          # Screenshots are needed if either:
-          # 1) upload_screenshots_artifact == true
           if [ "${{ inputs.upload_screenshots_artifact }}" = "true" ]; then
             echo "screenshots_needed=true" >> $GITHUB_OUTPUT
           else
@@ -451,7 +449,10 @@ jobs:
       
       - name: Pre-warm homepage
         run: |
-          curl -fsSL -H "Cache-Control: no-cache" "http://localhost:8090/" > /dev/null || true
+          for i in 1 2 3; do
+            curl -fsSL -H "Cache-Control: no-cache" "http://localhost:8090/" > /dev/null || true &
+          done
+          wait
 
       - name: Run Lighthouse CI and Playwright (parallel)
         if: ${{ inputs.run_lighthouse_ci == true && needs.precheck.outputs.screenshots_needed == 'true' }}
