@@ -137,7 +137,7 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const versions = JSON.parse(`$${"{"} steps.get-versions.outputs.versions ${"}"}` || '[]');
+            const versions = JSON.parse('${{ steps.get-versions.outputs.versions }}' || '[]');
             const count = Array.isArray(versions) ? versions.length : 0;
             const first = versions && versions.length ? versions[0] : '';
             const last = versions && versions.length ? versions[versions.length-1] : '';
