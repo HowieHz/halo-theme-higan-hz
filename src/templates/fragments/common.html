@@ -150,7 +150,7 @@
         >
           <span
             class="iconify"
-            th:style="|--svg:url('${item?.icon}')|"
+            th:style="|--svg:url('${item?.icon.value}')|"
             th:if="${item?.icon != null} and ${item?.icon != ''}"
           ></span
           ><span
@@ -210,7 +210,7 @@
         >
           <span
             class="iconify"
-            th:style="|--svg:url('${item?.icon}')|"
+            th:style="|--svg:url('${item?.icon.value}')|"
             th:if="${item?.icon != null} and ${item?.icon != ''}"
           ></span
           ><span

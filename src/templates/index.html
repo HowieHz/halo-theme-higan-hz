@@ -165,7 +165,7 @@
               target="_blank"
               th:attr="aria-label=${custom_sns_item?.aria_label}"
             >
-              <span class="iconify iconify-middle" th:style="|--svg:url('${custom_sns_item?.icon}')|"></span>
+              <span class="iconify iconify-middle" th:style="|--svg:url('${custom_sns_item?.icon.value}')|"></span>
             </a>
           </th:block>
         </th:block>
