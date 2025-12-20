@@ -8,8 +8,6 @@ import { chineseSearchOptimize, pagefindPlugin } from "vitepress-plugin-pagefind
 
 import pkg from "../../package.json";
 
-const lightningcssBrowserTargets = browserslistToTargets(browserslist(pkg.browserslist));
-
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   vite: {
@@ -94,7 +92,7 @@ export default defineConfig({
       transformer: "lightningcss",
       lightningcss: {
         // https://cn.vitejs.dev/guide/features#lightning-css
-        targets: lightningcssBrowserTargets,
+        targets: browserslistToTargets(browserslist(pkg.browserslist)),
       },
     },
     build: {
