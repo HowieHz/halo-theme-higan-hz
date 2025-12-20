@@ -19,9 +19,6 @@ export default defineConfig({
     }),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
-  esbuild: {
-    legalComments: "none", // 移除所有法律注释 https://esbuild.github.io/api/#legal-comments
-  },
   css: {
     transformer: "lightningcss",
     lightningcss: {
