@@ -121,5 +121,8 @@
   },
   "dependencies": {
     "alpinejs": "^3.15.2"
+  },
+  "overrides": {
+    "vite": "npm:rolldown-vite@^7.2.10"
   }
 }
