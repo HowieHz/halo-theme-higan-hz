@@ -22,5 +22,8 @@
   "dependencies": {
     "chart.js": "^4.5.1",
     "vue-chartjs": "^5.3.3"
+  },
+  "overrides": {
+    "vite": "npm:rolldown-vite@^7.2.10"
   }
 }
