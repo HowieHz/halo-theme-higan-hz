@@ -74,6 +74,7 @@ export default defineConfig({
     legalComments: "none", // 移除所有法律注释 https://esbuild.github.io/api/#legal-comments
   },
   css: {
+    transformer: "lightningcss",
     lightningcss: {
       // https://cn.vitejs.dev/guide/features#lightning-css
       targets: browserslistToTargets(browserslist(pkg.browserslist)),
