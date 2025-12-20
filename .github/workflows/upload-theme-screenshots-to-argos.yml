@@ -54,9 +54,13 @@ jobs:
           fi
 
           echo "Uploading screenshots to Argos (artifact: $ARTIFACT_NAME)"
+          # Ensure we capture the exit status of the upload pipeline instead of exiting
+          # immediately due to the runner's default `set -e` behavior.
           set -o pipefail
+          set +e
           pnpm dlx @argos-ci/cli upload --token "$ARGOS_TOKEN" ./screenshots/ 2>&1 | tee argos-upload.log
           status=${PIPESTATUS[0]}
+          set -e
           if [ "$status" -ne 0 ]; then
             echo "Argos upload failed with exit code $status"
             tail -n 200 argos-upload.log || true
