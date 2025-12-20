@@ -18,6 +18,8 @@ import removeLegacyGuardJs from "./plugins/vite-plugin-remove-legacy-guard";
 import replaceHtmlPlugin from "./plugins/vite-plugin-replace-html";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
+const lightningcssBrowserTargets = browserslistToTargets(browserslist(pkg.browserslist));
+
 export default defineConfig({
   base: "/themes/howiehz-higan/",
   plugins: [
@@ -77,7 +79,7 @@ export default defineConfig({
     transformer: "lightningcss",
     lightningcss: {
       // https://cn.vitejs.dev/guide/features#lightning-css
-      targets: browserslistToTargets(browserslist(pkg.browserslist)),
+      targets: lightningcssBrowserTargets,
     },
   },
   build: {
