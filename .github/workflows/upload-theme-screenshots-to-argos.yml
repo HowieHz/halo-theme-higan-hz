@@ -44,15 +44,12 @@ jobs:
           fi
 
       - name: Upload to Argos
-        continue-on-error: true
         env:
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
         run: |
           if [ -z "$ARGOS_TOKEN" ]; then
             echo "ARGOS_TOKEN not set; skipping upload to Argos"
-            if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
-              echo "### Argos upload skipped: ARGOS_TOKEN not set" >> "$GITHUB_STEP_SUMMARY"
-            fi
+            echo "### Argos upload skipped: ARGOS_TOKEN not set" >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
 
@@ -63,18 +60,12 @@ jobs:
           if [ "$status" -ne 0 ]; then
             echo "Argos upload failed with exit code $status"
             tail -n 200 argos-upload.log || true
-            if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
-              {
-                echo "### Argos upload failed (exit code $status)"
-                echo
-                echo '```'
-                tail -n 200 argos-upload.log || true
-                echo '```'
-              } >> "$GITHUB_STEP_SUMMARY"
-            else
-              echo "GITHUB_STEP_SUMMARY not available; see argos-upload.log for details"
-            fi
+            echo "### Argos upload failed (exit code $status)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            tail -n 200 argos-upload.log >> $GITHUB_STEP_SUMMARY || true
+            echo '```' >> $GITHUB_STEP_SUMMARY
           fi
 
-          # Always succeed this step so the workflow continues. Errors (if any) were written to the step summary.
+          # Don't fail the workflow; we've recorded the failure in the step summary.
           exit 0

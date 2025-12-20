@@ -1,6 +1,8 @@
 import { whyframe } from "@whyframe/core";
 import { whyframeVue } from "@whyframe/vue";
+import browserslist from "browserslist";
 import * as cheerio from "cheerio";
+import { browserslistToTargets } from "lightningcss";
 import { defineConfig, type DefaultTheme } from "vitepress";
 import { chineseSearchOptimize, pagefindPlugin } from "vitepress-plugin-pagefind";
 
@@ -85,6 +87,16 @@ export default defineConfig({
     ],
     ssr: {
       noExternal: ["@nolebase/vitepress-plugin-highlight-targeted-heading"],
+    },
+    css: {
+      transformer: "lightningcss",
+      lightningcss: {
+        // https://cn.vitejs.dev/guide/features#lightning-css
+        targets: browserslistToTargets(browserslist(pkg.browserslist)),
+      },
+    },
+    build: {
+      cssMinify: "lightningcss",
     },
   },
 

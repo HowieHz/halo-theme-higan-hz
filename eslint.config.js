@@ -60,7 +60,7 @@ export default defineConfig(
     },
   },
   {
-    files: ["postcss.config.js", "scripts/**/*.js", ".github/scripts/**/*.js"],
+    files: ["scripts/**/*.js", ".github/scripts/**/*.js"],
 
     languageOptions: {
       globals: {
