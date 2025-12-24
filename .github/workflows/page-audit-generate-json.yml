@@ -181,7 +181,8 @@ jobs:
       - name: Download all reports
         uses: actions/download-artifact@v7
         with:
-          pattern: report-*
+          # reusable-audit uploads artifacts named `page-size-reports-${{ ref_name }}`
+          pattern: page-size-reports-*
           path: ./all-reports
 
       - name: Copy reports to page_size_audit_results
