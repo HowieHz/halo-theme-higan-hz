@@ -1,19 +1,19 @@
 {
   "metadata": {
-    "haloVersion": "2.21.10",
+    "haloVersion": "2.22.0",
     "javaVersion": "21.0.9",
     "themeVersion": "v1.24.0",
     "lhciVersion": "0.15.1",
-    "generatedAt": "2025-11-27T17:09:07.304Z"
+    "generatedAt": "2025-12-24T18:11:35.240Z"
   },
-  "timestamp": "2025-11-27T17:09:07.304Z",
+  "timestamp": "2025-12-24T18:11:35.240Z",
   "results": [
     {
       "url": "/",
       "resources": {
         "document": {
-          "transferSize": 2125,
-          "resourceSize": 5373
+          "transferSize": 2140,
+          "resourceSize": 5461
         },
         "font": {
           "transferSize": 0,
@@ -32,16 +32,16 @@
           "resourceSize": 224006
         },
         "fetch": {
-          "transferSize": 777,
+          "transferSize": 770,
           "resourceSize": 195
         },
         "other": {
-          "transferSize": 618,
-          "resourceSize": 216
+          "transferSize": 362,
+          "resourceSize": 275
         },
         "total": {
-          "transferSize": 692950,
-          "resourceSize": 1378956
+          "transferSize": 692702,
+          "resourceSize": 1379103
         }
       },
       "themeResources": {
@@ -70,12 +70,12 @@
           "resourceSize": 0
         },
         "other": {
-          "transferSize": 0,
-          "resourceSize": 0
+          "transferSize": 362,
+          "resourceSize": 275
         },
         "total": {
-          "transferSize": 689430,
-          "resourceSize": 1373172
+          "transferSize": 689792,
+          "resourceSize": 1373447
         }
       }
     },
@@ -83,8 +83,292 @@
       "url": "/archives",
       "resources": {
         "document": {
-          "transferSize": 2100,
-          "resourceSize": 5382
+          "transferSize": 2104,
+          "resourceSize": 5438
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 147985,
+          "resourceSize": 433321
+        },
+        "stylesheet": {
+          "transferSize": 317270,
+          "resourceSize": 715845
+        },
+        "image": {
+          "transferSize": 224175,
+          "resourceSize": 224006
+        },
+        "fetch": {
+          "transferSize": 770,
+          "resourceSize": 195
+        },
+        "other": {
+          "transferSize": 362,
+          "resourceSize": 275
+        },
+        "total": {
+          "transferSize": 692666,
+          "resourceSize": 1379080
+        }
+      },
+      "themeResources": {
+        "document": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 147985,
+          "resourceSize": 433321
+        },
+        "stylesheet": {
+          "transferSize": 317270,
+          "resourceSize": 715845
+        },
+        "image": {
+          "transferSize": 224175,
+          "resourceSize": 224006
+        },
+        "fetch": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "other": {
+          "transferSize": 362,
+          "resourceSize": 275
+        },
+        "total": {
+          "transferSize": 689792,
+          "resourceSize": 1373447
+        }
+      }
+    },
+    {
+      "url": "/archives/hello-halo",
+      "resources": {
+        "document": {
+          "transferSize": 5707,
+          "resourceSize": 23900
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 153782,
+          "resourceSize": 444319
+        },
+        "stylesheet": {
+          "transferSize": 317270,
+          "resourceSize": 715845
+        },
+        "image": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "fetch": {
+          "transferSize": 9078,
+          "resourceSize": 11929
+        },
+        "other": {
+          "transferSize": 362,
+          "resourceSize": 275
+        },
+        "total": {
+          "transferSize": 486199,
+          "resourceSize": 1196268
+        }
+      },
+      "themeResources": {
+        "document": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 151771,
+          "resourceSize": 442481
+        },
+        "stylesheet": {
+          "transferSize": 317270,
+          "resourceSize": 715845
+        },
+        "image": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "fetch": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "other": {
+          "transferSize": 362,
+          "resourceSize": 275
+        },
+        "total": {
+          "transferSize": 469403,
+          "resourceSize": 1158601
+        }
+      }
+    },
+    {
+      "url": "/tags",
+      "resources": {
+        "document": {
+          "transferSize": 1977,
+          "resourceSize": 4896
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 147985,
+          "resourceSize": 433321
+        },
+        "stylesheet": {
+          "transferSize": 317270,
+          "resourceSize": 715845
+        },
+        "image": {
+          "transferSize": 224175,
+          "resourceSize": 224006
+        },
+        "fetch": {
+          "transferSize": 770,
+          "resourceSize": 195
+        },
+        "other": {
+          "transferSize": 362,
+          "resourceSize": 275
+        },
+        "total": {
+          "transferSize": 692539,
+          "resourceSize": 1378538
+        }
+      },
+      "themeResources": {
+        "document": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 147985,
+          "resourceSize": 433321
+        },
+        "stylesheet": {
+          "transferSize": 317270,
+          "resourceSize": 715845
+        },
+        "image": {
+          "transferSize": 224175,
+          "resourceSize": 224006
+        },
+        "fetch": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "other": {
+          "transferSize": 362,
+          "resourceSize": 275
+        },
+        "total": {
+          "transferSize": 689792,
+          "resourceSize": 1373447
+        }
+      }
+    },
+    {
+      "url": "/tags/halo",
+      "resources": {
+        "document": {
+          "transferSize": 2110,
+          "resourceSize": 5289
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 147985,
+          "resourceSize": 433321
+        },
+        "stylesheet": {
+          "transferSize": 317270,
+          "resourceSize": 715845
+        },
+        "image": {
+          "transferSize": 224175,
+          "resourceSize": 224006
+        },
+        "fetch": {
+          "transferSize": 772,
+          "resourceSize": 195
+        },
+        "other": {
+          "transferSize": 362,
+          "resourceSize": 275
+        },
+        "total": {
+          "transferSize": 692674,
+          "resourceSize": 1378931
+        }
+      },
+      "themeResources": {
+        "document": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "font": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "script": {
+          "transferSize": 147985,
+          "resourceSize": 433321
+        },
+        "stylesheet": {
+          "transferSize": 317270,
+          "resourceSize": 715845
+        },
+        "image": {
+          "transferSize": 224175,
+          "resourceSize": 224006
+        },
+        "fetch": {
+          "transferSize": 0,
+          "resourceSize": 0
+        },
+        "other": {
+          "transferSize": 362,
+          "resourceSize": 275
+        },
+        "total": {
+          "transferSize": 689792,
+          "resourceSize": 1373447
+        }
+      }
+    },
+    {
+      "url": "/categories",
+      "resources": {
+        "document": {
+          "transferSize": 1990,
+          "resourceSize": 4878
         },
         "font": {
           "transferSize": 0,
@@ -107,12 +391,12 @@
           "resourceSize": 195
         },
         "other": {
-          "transferSize": 618,
-          "resourceSize": 216
+          "transferSize": 362,
+          "resourceSize": 275
         },
         "total": {
-          "transferSize": 692917,
-          "resourceSize": 1378965
+          "transferSize": 692551,
+          "resourceSize": 1378520
         }
       },
       "themeResources": {
@@ -141,163 +425,21 @@
           "resourceSize": 0
         },
         "other": {
-          "transferSize": 0,
-          "resourceSize": 0
+          "transferSize": 362,
+          "resourceSize": 275
         },
         "total": {
-          "transferSize": 689430,
-          "resourceSize": 1373172
+          "transferSize": 689792,
+          "resourceSize": 1373447
         }
       }
     },
     {
-      "url": "/archives/hello-halo",
+      "url": "/categories/default",
       "resources": {
         "document": {
-          "transferSize": 5697,
-          "resourceSize": 23836
-        },
-        "font": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "script": {
-          "transferSize": 153782,
-          "resourceSize": 444319
-        },
-        "stylesheet": {
-          "transferSize": 317270,
-          "resourceSize": 715845
-        },
-        "image": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "fetch": {
-          "transferSize": 9115,
-          "resourceSize": 11929
-        },
-        "other": {
-          "transferSize": 618,
-          "resourceSize": 216
-        },
-        "total": {
-          "transferSize": 486482,
-          "resourceSize": 1196145
-        }
-      },
-      "themeResources": {
-        "document": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "font": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "script": {
-          "transferSize": 151771,
-          "resourceSize": 442481
-        },
-        "stylesheet": {
-          "transferSize": 317270,
-          "resourceSize": 715845
-        },
-        "image": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "fetch": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "other": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "total": {
-          "transferSize": 469041,
-          "resourceSize": 1158326
-        }
-      }
-    },
-    {
-      "url": "/tags",
-      "resources": {
-        "document": {
-          "transferSize": 1974,
-          "resourceSize": 4840
-        },
-        "font": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "script": {
-          "transferSize": 147985,
-          "resourceSize": 433321
-        },
-        "stylesheet": {
-          "transferSize": 317270,
-          "resourceSize": 715845
-        },
-        "image": {
-          "transferSize": 224175,
-          "resourceSize": 224006
-        },
-        "fetch": {
-          "transferSize": 771,
-          "resourceSize": 195
-        },
-        "other": {
-          "transferSize": 618,
-          "resourceSize": 216
-        },
-        "total": {
-          "transferSize": 692793,
-          "resourceSize": 1378423
-        }
-      },
-      "themeResources": {
-        "document": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "font": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "script": {
-          "transferSize": 147985,
-          "resourceSize": 433321
-        },
-        "stylesheet": {
-          "transferSize": 317270,
-          "resourceSize": 715845
-        },
-        "image": {
-          "transferSize": 224175,
-          "resourceSize": 224006
-        },
-        "fetch": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "other": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "total": {
-          "transferSize": 689430,
-          "resourceSize": 1373172
-        }
-      }
-    },
-    {
-      "url": "/tags/halo",
-      "resources": {
-        "document": {
-          "transferSize": 2105,
-          "resourceSize": 5233
+          "transferSize": 2185,
+          "resourceSize": 5399
         },
         "font": {
           "transferSize": 0,
@@ -320,12 +462,12 @@
           "resourceSize": 195
         },
         "other": {
-          "transferSize": 618,
-          "resourceSize": 216
+          "transferSize": 362,
+          "resourceSize": 275
         },
         "total": {
-          "transferSize": 692921,
-          "resourceSize": 1378816
+          "transferSize": 692745,
+          "resourceSize": 1379041
         }
       },
       "themeResources": {
@@ -354,154 +496,12 @@
           "resourceSize": 0
         },
         "other": {
-          "transferSize": 0,
-          "resourceSize": 0
+          "transferSize": 362,
+          "resourceSize": 275
         },
         "total": {
-          "transferSize": 689430,
-          "resourceSize": 1373172
-        }
-      }
-    },
-    {
-      "url": "/categories",
-      "resources": {
-        "document": {
-          "transferSize": 1987,
-          "resourceSize": 4822
-        },
-        "font": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "script": {
-          "transferSize": 147985,
-          "resourceSize": 433321
-        },
-        "stylesheet": {
-          "transferSize": 317270,
-          "resourceSize": 715845
-        },
-        "image": {
-          "transferSize": 224175,
-          "resourceSize": 224006
-        },
-        "fetch": {
-          "transferSize": 774,
-          "resourceSize": 195
-        },
-        "other": {
-          "transferSize": 618,
-          "resourceSize": 216
-        },
-        "total": {
-          "transferSize": 692809,
-          "resourceSize": 1378405
-        }
-      },
-      "themeResources": {
-        "document": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "font": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "script": {
-          "transferSize": 147985,
-          "resourceSize": 433321
-        },
-        "stylesheet": {
-          "transferSize": 317270,
-          "resourceSize": 715845
-        },
-        "image": {
-          "transferSize": 224175,
-          "resourceSize": 224006
-        },
-        "fetch": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "other": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "total": {
-          "transferSize": 689430,
-          "resourceSize": 1373172
-        }
-      }
-    },
-    {
-      "url": "/categories/default",
-      "resources": {
-        "document": {
-          "transferSize": 2178,
-          "resourceSize": 5343
-        },
-        "font": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "script": {
-          "transferSize": 147985,
-          "resourceSize": 433321
-        },
-        "stylesheet": {
-          "transferSize": 317270,
-          "resourceSize": 715845
-        },
-        "image": {
-          "transferSize": 224175,
-          "resourceSize": 224006
-        },
-        "fetch": {
-          "transferSize": 781,
-          "resourceSize": 195
-        },
-        "other": {
-          "transferSize": 618,
-          "resourceSize": 216
-        },
-        "total": {
-          "transferSize": 693007,
-          "resourceSize": 1378926
-        }
-      },
-      "themeResources": {
-        "document": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "font": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "script": {
-          "transferSize": 147985,
-          "resourceSize": 433321
-        },
-        "stylesheet": {
-          "transferSize": 317270,
-          "resourceSize": 715845
-        },
-        "image": {
-          "transferSize": 224175,
-          "resourceSize": 224006
-        },
-        "fetch": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "other": {
-          "transferSize": 0,
-          "resourceSize": 0
-        },
-        "total": {
-          "transferSize": 689430,
-          "resourceSize": 1373172
+          "transferSize": 689792,
+          "resourceSize": 1373447
         }
       }
     },
@@ -509,8 +509,8 @@
       "url": "/authors/admin",
       "resources": {
         "document": {
-          "transferSize": 3026,
-          "resourceSize": 8901
+          "transferSize": 3027,
+          "resourceSize": 8959
         },
         "font": {
           "transferSize": 0,
@@ -525,20 +525,20 @@
           "resourceSize": 715845
         },
         "image": {
-          "transferSize": 224175,
-          "resourceSize": 224006
+          "transferSize": 448350,
+          "resourceSize": 448012
         },
         "fetch": {
-          "transferSize": 1322,
+          "transferSize": 1323,
           "resourceSize": 604
         },
         "other": {
-          "transferSize": 618,
-          "resourceSize": 216
+          "transferSize": 362,
+          "resourceSize": 275
         },
         "total": {
-          "transferSize": 694396,
-          "resourceSize": 1382893
+          "transferSize": 918317,
+          "resourceSize": 1607016
         }
       },
       "themeResources": {
@@ -559,20 +559,20 @@
           "resourceSize": 715845
         },
         "image": {
-          "transferSize": 224175,
-          "resourceSize": 224006
+          "transferSize": 448350,
+          "resourceSize": 448012
         },
         "fetch": {
           "transferSize": 0,
           "resourceSize": 0
         },
         "other": {
-          "transferSize": 0,
-          "resourceSize": 0
+          "transferSize": 362,
+          "resourceSize": 275
         },
         "total": {
-          "transferSize": 689430,
-          "resourceSize": 1373172
+          "transferSize": 913967,
+          "resourceSize": 1597453
         }
       }
     },
@@ -580,8 +580,8 @@
       "url": "/about",
       "resources": {
         "document": {
-          "transferSize": 2863,
-          "resourceSize": 6724
+          "transferSize": 2869,
+          "resourceSize": 6780
         },
         "font": {
           "transferSize": 0,
@@ -600,16 +600,16 @@
           "resourceSize": 224006
         },
         "fetch": {
-          "transferSize": 1129,
+          "transferSize": 1121,
           "resourceSize": 195
         },
         "other": {
-          "transferSize": 618,
-          "resourceSize": 216
+          "transferSize": 363,
+          "resourceSize": 276
         },
         "total": {
-          "transferSize": 699837,
-          "resourceSize": 1391305
+          "transferSize": 699580,
+          "resourceSize": 1391421
         }
       },
       "themeResources": {
@@ -638,12 +638,12 @@
           "resourceSize": 0
         },
         "other": {
-          "transferSize": 0,
-          "resourceSize": 0
+          "transferSize": 363,
+          "resourceSize": 276
         },
         "total": {
-          "transferSize": 693216,
-          "resourceSize": 1382332
+          "transferSize": 693579,
+          "resourceSize": 1382608
         }
       }
     }
