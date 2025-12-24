@@ -19,7 +19,7 @@ on:
       halo_version:
         required: false
         type: string
-        default: "2.22.0-alpha.3"
+        default: "2.22.0"
       theme_ref:
         required: false
         type: string
@@ -345,11 +345,11 @@ jobs:
         run: |
           set -e
           
-          echo "Disable plugins: PluginCommentWidget, PluginSearchWidget"
+          echo "Disable plugins: PluginCommentWidget, PluginSearchWidget, shiki, editor-hyperlink-card"
           
           PIDS=()
           
-          for plugin in PluginCommentWidget PluginSearchWidget; do
+          for plugin in PluginCommentWidget PluginSearchWidget shiki editor-hyperlink-card; do
             (
               echo "🔧 Disabling ${plugin}"
               if curl -sX PUT \
