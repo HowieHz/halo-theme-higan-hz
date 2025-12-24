@@ -127,7 +127,7 @@ spec:
           label: Enable Custom Font Files
           value: false
           help: Enable this option to use uploaded custom font files instead of the default fonts
-        - $formkit: attachment
+        - $formkit: attachmentInput
           if: "$is_custom_font_files_enable === true"
           name: custom_font_files
           label: Custom Font Files

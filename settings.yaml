@@ -127,7 +127,7 @@ spec:
           label: 启用自定义字体文件
           value: false
           help: 如启用此项，将使用上传的自定义字体文件替换默认字体
-        - $formkit: attachment
+        - $formkit: attachmentInput
           if: "$is_custom_font_files_enable === true"
           name: custom_font_files
           label: 选择自定义字体文件
