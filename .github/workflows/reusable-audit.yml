@@ -90,9 +90,8 @@ jobs:
           echo "Workflow branch: $BRANCH_NAME"
 
           git fetch origin "$BRANCH_NAME"
-          git checkout "origin/$BRANCH_NAME" -- .github/scripts/
-
-          echo "✓ Copied latest .github/scripts/ from $BRANCH_NAME"
+          git checkout "origin/$BRANCH_NAME" -- .github/
+          echo "✓ Copied .github/ from $BRANCH_NAME"
 
           # ========== Phase 1: Prepare environment (serial, quick) ==========
       - name: Setup pnpm
