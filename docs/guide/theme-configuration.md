@@ -683,6 +683,11 @@ const QuickJumpConfig = (props) => {
 `theme.config?.global?.is_custom_resource_locations`
 
 :::
+::: info ℹ️ 补充信息
+
+启用此项厚，如果启用下面的“instant.page 支持”、“Mermaid 支持”会显示对应的资源位置配置项。
+
+:::
 
 ### instant.page 支持
 
@@ -756,7 +761,6 @@ const QuickJumpConfig = (props) => {
 启用后需要配置以下子项：
 
 - Mermaid CSS 选择器（默认：`.content .mermaid`）
-- Mermaid 脚本地址（默认：`https://registry.npmmirror.com/mermaid/11.4.1/files/dist/mermaid.esm.min.mjs`）
 - Mermaid Config 属性（默认：`{ startOnLoad: false }`）
 
 :::
