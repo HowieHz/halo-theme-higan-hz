@@ -483,18 +483,27 @@ This is normal text <small>This is small text</small> This is normal text
 ### HTML 标签写法
 
 ```html
-<p><img
-  src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2311325.jpg"
-  alt="Alt text - 图片未加载则显示"
-/></p>
+<p>
+  <img
+    src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2311325.jpg"
+    alt="Alt text - 图片未加载则显示"
+  />
+</p>
 
-<p><img
-  src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg"
-  alt="Alt text - 图片未加载则显示"
-  title="Optional title - 可选的 title 值"
-/></p>
+<p>
+  <img
+    src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg"
+    alt="Alt text - 图片未加载则显示"
+    title="Optional title - 可选的 title 值"
+  />
+</p>
 
-<p><img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg" alt="cat" /></p>
+<p>
+  <img
+    src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg"
+    alt="cat"
+  />
+</p>
 ```
 
 ### 渲染效果
