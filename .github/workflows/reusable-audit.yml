@@ -85,8 +85,8 @@ jobs:
       - name: Copy latest .github scripts
         run: |
           # Fetch latest .github scripts (from the branch that triggered the workflow)
-          # For PRs: use head_ref (source branch); otherwise use ref_name
-          BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
+          # For PRs: use head_ref (source branch); otherwise use main
+          BRANCH_NAME="${{ github.head_ref || 'main' }}"
           echo "Workflow branch: $BRANCH_NAME"
 
           git fetch origin "$BRANCH_NAME"
