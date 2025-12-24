@@ -483,18 +483,18 @@ This is normal text <small>This is small text</small> This is normal text
 ### HTML 标签写法
 
 ```html
-<img
+<p><img
   src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2311325.jpg"
   alt="Alt text - 图片未加载则显示"
-/>
+/></p>
 
-<img
+<p><img
   src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg"
   alt="Alt text - 图片未加载则显示"
   title="Optional title - 可选的 title 值"
-/>
+/></p>
 
-<img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg" alt="cat" />
+<p><img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg" alt="cat" /></p>
 ```
 
 ### 渲染效果
@@ -515,21 +515,25 @@ This is normal text <small>This is small text</small> This is normal text
 
 <!-- prettier-ignore-start -->
 ```html
-<img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg" alt="cat" />
+<p><img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg" alt="cat" /></p>
 
 <div class="caption">我是图片说明文字 上面是城市夜景</div>
+<figcaption>我是图片说明文字 上面是城市夜景</figcaption>
 <div class="caption">我也是图片说明文字 <a href="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg">我是超链接</a></div>
+<figcaption>我也是图片说明文字 <a href="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg">我是超链接</a></figcaption>
 ```
 
 <!-- prettier-ignore-end -->
 
 ### 渲染效果
 
-<DefaultRender height="300px" src="/halo-theme-higan-haozi/frames/post">
-<img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg" alt="cat" />
+<DefaultRender height="400px" src="/halo-theme-higan-haozi/frames/post">
+<p><img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg" alt="cat" /></p>
 
 <div class="caption">我是图片说明文字 上面是城市夜景</div>
+<figcaption>我是图片说明文字 上面是城市夜景</figcaption>
 <div class="caption">我也是图片说明文字 <a href="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg">我是超链接</a></div>
+<figcaption>我也是图片说明文字 <a href="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg">我是超链接</a></figcaption>
 </DefaultRender>
 
 ## 响应式视频嵌入 <Badge type="tip" text="文章样式" /> <Badge type="warning" text="扩展样式" /> {#responsive-video-embed}
