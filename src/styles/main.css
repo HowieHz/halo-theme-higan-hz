@@ -211,7 +211,8 @@
       & td {
         border-bottom: none;
         font-size: var(--text-sm);
-        padding: 0 0.5rem;
+        padding-block: 0;
+        padding-inline: 0.5rem;
       }
     }
 
@@ -424,7 +425,8 @@
   code {
     border: 1px dotted var(--color-footer-mobile-1);
     border-radius: 0.125rem;
-    padding: 0 0.3125rem;
+    padding-block: 0;
+    padding-inline: 0.3125rem;
   }
 
   pre {
