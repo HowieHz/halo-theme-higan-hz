@@ -83,17 +83,17 @@ spec:
           label: Custom resource location
           value: false
           help: If enabled, custom resource locations will be used instead of the default theme locations.
-        - $formkit: text
-          name: instantpage_resource_location
-          if: "$is_custom_resource_locations === true"
-          label: instant.page resource location
-          value: "/themes/howiehz-higan/assets/lib/instantpage/5.2.0.js"
-          help: Specify the location of the instant.page library, e.g., https://cdn.example.com/instantpage.min.js
         - $formkit: checkbox
           name: is_instant_page_enable
           label: instant.page support
           value: false
           help: "If enabled, the theme will automatically load the instant.page script to improve the page loading speed."
+        - $formkit: text
+          name: instantpage_resource_location
+          if: "$is_custom_resource_locations === true && $is_instant_page_enable === true"
+          label: instant.page resource location
+          value: "/themes/howiehz-higan/assets/lib/instantpage/5.2.0.js"
+          help: Specify the location of the instant.page library, e.g., https://cdn.example.com/instantpage.min.js
         - $formkit: checkbox
           name: is_mermaid_enable
           label: Mermaid support
@@ -107,8 +107,8 @@ spec:
           value: ".content .mermaid"
         - $formkit: text
           name: mermaid_script_url
-          if: "$is_mermaid_enable === true"
-          label: Mermaid Script URL
+          if: "$is_custom_resource_locations === true && $is_mermaid_enable === true"
+          label: Mermaid Resource Location
           help: "URL to the Mermaid script. Example: https://registry.npmmirror.com/mermaid/11.4.1/files/dist/mermaid.esm.min.mjs, https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs, https://unpkg.com/mermaid@11.4.1/dist/mermaid.esm.min.mjs"
           value: "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
         - $formkit: code
