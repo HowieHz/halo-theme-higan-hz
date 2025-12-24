@@ -29,7 +29,7 @@
 
 - 更新开发依赖。
 - 将 PostCSS 替换成 Lightning CSS，构建速度提高了一倍。
-  - 将基础样式加入 `@layer base` 层级，避免覆盖 Tailwind CSS 样式。（之前 Tailwind CSS 添加的样式有 `:not(#\#)` ，Lightning CSS 最小化时删去了 `:not(#\#)` 凸显了这个问题） 
+  - 将基础样式加入 `@layer base` 层级，避免覆盖 Tailwind CSS 样式。（之前 Tailwind CSS 添加的样式有 `:not(#\#)` ，Lightning CSS 最小化时删去了 `:not(#\#)` 凸显了这个问题）
 
 ## [1.49.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.1...v1.49.2) (2025-12-13)
 
