@@ -148,21 +148,20 @@ jobs:
   test-versions:
     name: Test ${{ matrix.version }}
     needs: get-versions
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         version: ${{ fromJson(needs.get-versions.outputs.versions) }}
       fail-fast: false  # Even if a version fails, continue testing other versions
-    
-    steps:
-      - uses: ./.github/workflows/reusable-audit.yml
-        with:
-          theme_ref: ${{ matrix.version }}
-          ref_name: ${{ matrix.version }}
-          output_dir: ".github/page_size_audit_results"
-          output_filename: ${{ matrix.version }}
-          json_only: true
-          run_lighthouse_ci: true
+
+    # Call the reusable workflow at the job level (not as a step).
+    uses: ./.github/workflows/reusable-audit.yml
+    with:
+      theme_ref: ${{ matrix.version }}
+      ref_name: ${{ matrix.version }}
+      output_dir: ".github/page_size_audit_results"
+      output_filename: ${{ matrix.version }}
+      json_only: true
+      run_lighthouse_ci: true
 
   # Step 3: Collect all reports and create a PR
   collect-and-pr:
