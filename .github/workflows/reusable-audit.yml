@@ -96,7 +96,15 @@ jobs:
 
           # ========== Phase 1: Prepare environment (serial, quick) ==========
       - name: Setup pnpm
+        id: setup-pnpm
         uses: pnpm/action-setup@v4
+        continue-on-error: true
+
+      - name: Setup pnpm (fallback)
+        if: ${{ steps.setup-pnpm.outcome == 'failure' }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v6

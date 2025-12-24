@@ -16,8 +16,8 @@ jobs:
       contents: read
 
     steps:
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
           version: 10
 
