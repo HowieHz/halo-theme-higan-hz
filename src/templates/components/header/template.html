@@ -44,7 +44,7 @@
       <div id="title">
         <h1>
           <th:block th:text="${site?.title}">站点标题替换位</th:block
-          ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
+          ><th:block th:replace="~{:: theme-toggle-button}"></th:block>
         </h1>
       </div>
     </a>
@@ -53,4 +53,28 @@
     </div>
   </header>
 </th:block>
+
+<button
+  th:fragment="theme-toggle-button"
+  th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
+  id="theme-toggle-button"
+  accesskey="t"
+  title="(Alt + T)"
+  type="button"
+  class="border-0 bg-transparent align-middle"
+>
+  <span
+    id="theme-toggle-button-icon"
+    style="display: none"
+    class="icon iconify iconify-large -translate-x-px -translate-y-px"
+  ></span>
+  <style>
+    #theme-toggle-button {
+      & .icon:hover {
+        color: var(--color-link-hover);
+      }
+    }
+  </style>
+</button>
+
 <!--/* 使此模块的模板需引入文件 /utils/header.ts 以正确引入样式和脚本 */-->

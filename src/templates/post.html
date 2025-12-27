@@ -3,8 +3,8 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${#annotations.getOrDefault(post, 'higan.howiehz.top/page-title', post.spec?.title)}, 
-    head = ~{::headContent},
-    content = ~{::content}, 
+    head = ~{:: headContent},
+    content = ~{:: content}, 
     header = ~{}, 
     navbar = ~{fragments/post-nav::navbar}, 
     language=${#annotations.get(post, 'higan.howiehz.top/page-language')}
@@ -78,8 +78,7 @@
           th:classappend="${theme.config?.post_styles?.post_title_uppper} ? 'uppercase'"
           itemprop="name headline"
         >
-          <th:block th:text="${post.spec?.title}">标题替换位</th:block
-          ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
+          <th:block th:text="${post.spec?.title}">标题替换位</th:block>
         </h1>
         <div class="meta">
           <!--/* 展示文章作者名 */-->

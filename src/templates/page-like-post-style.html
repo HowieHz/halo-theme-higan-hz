@@ -3,8 +3,8 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${#annotations.getOrDefault(singlePage, 'higan.howiehz.top/page-title', singlePage.spec?.title)}, 
-    head = ~{::headContent},
-    content = ~{::content}, 
+    head = ~{:: headContent},
+    content = ~{:: content}, 
     header = ~{}, 
     navbar = ~{fragments/page-like-post-style-nav::navbar}, 
     language = ${#annotations.get(singlePage, 'higan.howiehz.top/page-language')}
@@ -43,8 +43,7 @@
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
         <h1>
-          <th:block th:text="${singlePage.spec?.title}">标题替换位</th:block
-          ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
+          <th:block th:text="${singlePage.spec?.title}">标题替换位</th:block>
         </h1>
         <div class="meta">
           <!--/* 预计阅读时长 
