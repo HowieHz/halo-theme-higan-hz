@@ -142,6 +142,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
         show(menuComponents);
       } else {
         menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
+        menuIcon.setAttribute("aria-expanded", "false"); // aria-expanded 属性设置为 false，表示菜单初始为折叠状态
       }
 
       // 平板端、桌面端 文章页 菜单 按钮事件
@@ -149,11 +150,14 @@ document.addEventListener("DOMContentLoaded", (): void => {
         e.preventDefault();
         if (isVisible(menuComponents)) {
           menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
-          fadeOut(menuComponents, 50);
-          fadeOut(shareListComponents, 50);
+          menuIcon.setAttribute("aria-expanded", "false"); // 切换 aria-expanded 属性值
+          fadeOut(menuComponents, 50); // 隐藏菜单
+          // 收起二级菜单
+          fadeOut(shareListComponents, 50); // 隐藏分享菜单
         } else {
           menuIcon.classList.add("active"); // 为 #header-post .active 样式设置
-          fadeIn(menuComponents, 50);
+          menuIcon.setAttribute("aria-expanded", "true"); // 切换 aria-expanded 属性值
+          fadeIn(menuComponents, 50); // 显示菜单
         }
       });
 
