@@ -5,7 +5,9 @@
 <th:block th:fragment="menu(showIcon)">
   <ul>
     <li class="icon" th:if="${showIcon}">
-      <a href="#" onclick="event.preventDefault()"><span class="iconify iconify-huge material-symbols--menu"></span></a>
+      <a href="#" onclick="event.preventDefault()" aria-expanded="false">
+        <span class="iconify iconify-huge material-symbols--menu"></span>
+      </a>
     </li>
 
     <th:block th:insert="~{fragments/common :: base-menu}"></th:block>
