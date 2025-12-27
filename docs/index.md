@@ -34,7 +34,7 @@ features:
     details: 提供丰富的组件样式扩展，使用自定义 HTML 标签以创建更加生动的内容展示效果。
     link: /guide/style-reference
     linkText: 了解更多
-  - icon: 🌐
+  - icon: 🌏
     title: 多语言支持
     details: 首创多语言切换，在各方面都提供完善的多语言配置项。
     link: /tutorial/i18n
@@ -53,5 +53,10 @@ features:
     title: 插件兼容性
     details: 深度适配 Halo CMS 插件生态，提供一致化的浏览体验。
     link: /guide/plugin-compatibility
+    linkText: 了解更多
+  - icon: 🌐
+    title: 浏览器兼容性
+    details: 提供了良好的浏览器兼容性。
+    link: /reference/browser-compatibility
     linkText: 了解更多
 ---
