@@ -1,8 +1,8 @@
 packages:
   - .
   - docs
+
 onlyBuiltDependencies:
-  - core-js
   - esbuild
+  - less
   - unrs-resolver
-  - vue-demi
