@@ -17,7 +17,7 @@ Higan Haozi 是一款适用于 [Halo CMS](https://github.com/halo-dev/halo) 的�
 1. 响应式设计（适配不同屏幕尺寸）
 2. [多语言支持](/tutorial/i18n)
 3. [强可配置性](./theme-configuration)
-4. [兼容性良好](#浏览器兼容性)
+4. [兼容性良好](/reference/browser-compatibility)
 5. [插件兼容性](./plugin-compatibility)
 6. [高性能表现](/reference/performance)（页面主题资源 ~70KiB(gzipped)）
 
@@ -34,7 +34,3 @@ Higan Haozi 是一款适用于 [Halo CMS](https://github.com/halo-dev/halo) 的�
 下图展示了主题部分配色风格：
 
 ![preview-1.png](/preview-1.png)
-
-## 浏览器兼容性
-
-在线查看：[兼容浏览器矩阵](https://browsersl.ist/#q=defaults%0ASafari+%3E%3D+16.4%0AChrome+%3E%3D+111%0AFirefox+%3E%3D+128)

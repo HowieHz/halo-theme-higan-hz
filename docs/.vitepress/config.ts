@@ -320,6 +320,7 @@ function nav(): DefaultTheme.NavItem[] {
       items: [
         { text: "常见问题", link: "/reference/faq" },
         { text: "性能参考", link: "/reference/performance" },
+        { text: "浏览器兼容性", link: "/reference/browser-compatibility" },
         { text: "模板文件与访问路径映射", link: "/reference/template-map" },
       ],
     },
@@ -374,6 +375,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
       items: [
         { text: "常见问题", link: "/reference/faq" },
         { text: "性能参考", link: "/reference/performance" },
+        { text: "浏览器兼容性", link: "/reference/browser-compatibility" },
         { text: "模板文件与访问路径映射", link: "/reference/template-map" },
       ],
     },

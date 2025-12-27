@@ -78,6 +78,7 @@ export default defineConfig({
     },
   },
   build: {
+    target: ["chrome111", "edge111", "firefox114", "safari16.4"],
     outDir: fileURLToPath(new URL("./templates/", import.meta.url)),
     assetsDir: "assets/dist/",
     emptyOutDir: true,
