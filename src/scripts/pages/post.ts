@@ -200,7 +200,9 @@ document.addEventListener("DOMContentLoaded", (): void => {
 
         // 在滚动时，关闭全部底部导航栏子菜单
         for (const footer of [tocFooter, navFooter, shareFooter]) {
-          if (footer) slideUp(footer, 200);
+          if (footer) {
+            slideUp(footer, 200);
+          }
         }
 
         if (topDistance > lastScrollTop) {
