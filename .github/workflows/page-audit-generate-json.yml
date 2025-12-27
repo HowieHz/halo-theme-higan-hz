@@ -14,7 +14,7 @@ on:
       create_pr:
         description: 'Create a PR to submit the data files?'
         required: true
-        default: false
+        default: true
         type: boolean
   release:
     types: [published]
@@ -185,46 +185,22 @@ jobs:
           pattern: page-size-reports-*
           path: ./all-reports
 
-      - name: Debug list downloaded artifact contents
-        run: |
-          echo "=== all-reports tree ==="
-          find ./all-reports -maxdepth 5 -type d -print || true
-          echo "=== all-reports files (first 200) ==="
-          find ./all-reports -type f -print | sed -n '1,200p' || true
-          echo "\n### Debug: all-reports tree" >> "$GITHUB_STEP_SUMMARY" || true
-          find ./all-reports -maxdepth 5 -type d -print >> "$GITHUB_STEP_SUMMARY" || true
-          echo "\n### Debug: all-reports files (first 200)" >> "$GITHUB_STEP_SUMMARY" || true
-          find ./all-reports -type f -print | sed -n '1,200p' >> "$GITHUB_STEP_SUMMARY" || true
-
       - name: Copy reports to page_size_audit_results
         if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
         run: |
           mkdir -p .github/page_size_audit_results
-          for dir in ./all-reports/page-size-reports-*; do
-              if [ -d "$dir" ]; then
-                version=$(basename "$dir" | sed 's/page-size-reports-//')
-                # Search recursively inside the artifact directory for the expected JSON file
-                file=$(find "$dir" -type f -name "${version}.json" -print -quit || true)
-                if [ -n "$file" ]; then
-                  cp "$file" ".github/page_size_audit_results/${version}.json"
-                  echo "✓ Copied ${version}.json from $file"
-                else
-                  echo "⚠️ Expected file not found inside artifact: $dir (searched for ${version}.json)"
-                fi
+          # Actual case: JSON files are placed directly under ./all-reports
+          for file in ./all-reports/*.json; do
+            if [ -f "$file" ]; then
+              filename=$(basename "$file")
+              if echo "$filename" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+\.json$'; then
+                cp "$file" ".github/page_size_audit_results/${filename}"
+                echo "✓ Copied ${filename} -> .github/page_size_audit_results/${filename}"
+              else
+                echo "⚠️ Skipping non-version artifact file: $filename"
               fi
+            fi
           done
-
-      - name: Debug list target dir after copy
-        if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
-        run: |
-          echo "=== .github/page_size_audit_results (after copy) ==="
-          ls -la .github/page_size_audit_results || true
-          echo "=== JSON files (first 200) ==="
-          find .github/page_size_audit_results -type f -name '*.json' -print | sed -n '1,200p' || true
-          echo "\n### Debug: .github/page_size_audit_results (after copy)" >> "$GITHUB_STEP_SUMMARY" || true
-          ls -la .github/page_size_audit_results >> "$GITHUB_STEP_SUMMARY" || true
-          echo "\n### Debug: JSON files (first 200)" >> "$GITHUB_STEP_SUMMARY" || true
-          find .github/page_size_audit_results -type f -name '*.json' -print | sed -n '1,200p' >> "$GITHUB_STEP_SUMMARY" || true
 
       - name: Create PR with data files
         if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
