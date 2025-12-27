@@ -191,14 +191,16 @@ jobs:
           mkdir -p .github/page_size_audit_results
           for dir in ./all-reports/page-size-reports-*; do
               if [ -d "$dir" ]; then
-              version=$(basename "$dir" | sed 's/page-size-reports-//')
-              if [ -f "$dir/${version}.json" ]; then
-                cp "$dir/${version}.json" ".github/page_size_audit_results/${version}.json"
-                echo "✓ Copied ${version}.json"
-              else
-                echo "⚠️ Expected file not found: $dir/${version}.json"
+                version=$(basename "$dir" | sed 's/page-size-reports-//')
+                # Search recursively inside the artifact directory for the expected JSON file
+                file=$(find "$dir" -type f -name "${version}.json" -print -quit || true)
+                if [ -n "$file" ]; then
+                  cp "$file" ".github/page_size_audit_results/${version}.json"
+                  echo "✓ Copied ${version}.json from $file"
+                else
+                  echo "⚠️ Expected file not found inside artifact: $dir (searched for ${version}.json)"
+                fi
               fi
-            fi
           done
 
       - name: Create PR with data files
