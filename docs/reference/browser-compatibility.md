@@ -5,6 +5,7 @@ outline: deep
 # 浏览器兼容性
 
 支持以下浏览器：
+
 - Chrome 版本大于等于 111
 - Edge 版本大于等于 111
 - Firefox 版本大于等于 114
