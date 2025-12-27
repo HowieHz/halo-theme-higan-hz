@@ -2,6 +2,17 @@
 
 <!-- markdownlint-disable MD024 -->
 
+## [1.50.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.0...v1.50.1) (2025-12-28)
+
+### 🔧 优化改进
+
+- 优化包体积。
+- 优化文档，新增[浏览器兼容性](https://howiehz.top/halo-theme-higan-haozi/reference/browser-compatibility)页面。
+
+### 🛠️ 开发体验
+
+- 更新开发依赖。
+
 ## [1.50.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.2...v1.50.0) (2025-12-24)
 
 ### ⚠破坏性修改
