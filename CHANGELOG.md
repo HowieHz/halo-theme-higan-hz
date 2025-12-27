@@ -2,7 +2,7 @@
 
 <!-- markdownlint-disable MD024 -->
 
-## [1.50.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.0...v1.50.1)
+## [1.50.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.0...v1.50.1) (2025-12-28)
 
 ### 🔧 优化改进
 
