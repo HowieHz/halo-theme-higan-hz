@@ -8,7 +8,7 @@ on:
         required: false
         default: 'v1.0.0'
       end_version:
-        description: 'Ending version (e.g.: v1.50.0; leave empty to use latest)'
+        description: 'Ending version (e.g.: v1.50.1; leave empty to use latest)'
         required: false
         default: ''
       create_pr:
@@ -185,6 +185,13 @@ jobs:
           pattern: page-size-reports-*
           path: ./all-reports
 
+      - name: Debug list downloaded artifact contents
+        run: |
+          echo "=== all-reports tree ==="
+          find ./all-reports -maxdepth 5 -type d -print || true
+          echo "=== all-reports files (first 200) ==="
+          find ./all-reports -type f -print | sed -n '1,200p' || true
+
       - name: Copy reports to page_size_audit_results
         if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
         run: |
@@ -202,6 +209,14 @@ jobs:
                 fi
               fi
           done
+
+      - name: Debug list target dir after copy
+        if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
+        run: |
+          echo "=== .github/page_size_audit_results (after copy) ==="
+          ls -la .github/page_size_audit_results || true
+          echo "=== JSON files (first 200) ==="
+          find .github/page_size_audit_results -type f -name '*.json' -print | sed -n '1,200p' || true
 
       - name: Create PR with data files
         if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
