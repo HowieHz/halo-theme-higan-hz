@@ -4,7 +4,7 @@
 <!--*/-->
 <th:block xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
   <div id="header-post" class="fixed top-8 right-0 z-50 float-right hidden sm:block">
-    <a id="top-icon-tablet" class="hidden lg:hidden!" href="#" data-scroll-to-top
+    <a id="top-icon-tablet" class="hidden lg:hidden!" href="#" role="button" data-scroll-to-top
       ><span class="iconify iconify-middle material-symbols--keyboard-arrow-up"></span
     ></a>
     <span id="menu" class="mr-8">
@@ -18,6 +18,9 @@
           onclick="event.preventDefault()"
           th:aria-label="#{fragment.post-nav.menu-icon.aria-label}"
           class="active"
+          role="button"
+          aria-expanded="true"
+          aria-controls="nav actions toc"
         >
           <span class="iconify iconify-middle material-symbols--menu -translate-y-px"></span>
         </a>
@@ -29,6 +32,7 @@
               th:href="@{/}"
               class="icon"
               th:aria-label="#{fragment.post-nav.actions.home-icon.aria-label}"
+              role="button"
               data-toggle-target="#i-home"
             >
               <span class="iconify iconify-large mdi--home-circle"></span>
@@ -41,6 +45,7 @@
               href="#"
               data-scroll-to-top
               th:aria-label="#{fragment.post-nav.actions.to-top-icon.aria-label}"
+              role="button"
               data-toggle-target="#i-top"
             >
               <span class="iconify iconify-large material-symbols--keyboard-arrow-up"></span>
@@ -53,6 +58,9 @@
               id="action-share"
               onclick="event.preventDefault()"
               th:aria-label="#{fragment.post-nav.actions.share-icon.aria-label}"
+              role="button"
+              aria-expanded="false"
+              aria-controls="share-list"
               data-toggle-target="#i-share"
             >
               <span class="iconify iconify-middle mdi--share-variant-outline"></span>

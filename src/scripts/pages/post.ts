@@ -65,25 +65,32 @@ document.addEventListener("DOMContentLoaded", (): void => {
    */
   if (document.querySelector(".post")) {
     // 移动端 文章页 底部导航栏 按钮事件 绑定
-    document.querySelector("#actions-footer > #menu")?.addEventListener("click", (): void => {
+    const footerMenuButton: HTMLElement | null = document.querySelector("#actions-footer > #menu");
+    const footerTocButton: HTMLElement | null = document.querySelector("#actions-footer > #toc");
+    const footerShareButton: HTMLElement | null = document.querySelector("#actions-footer > #share");
+    footerMenuButton?.addEventListener("click", (): void => {
       const navFooter: HTMLElement | null = document.querySelector("#nav-footer");
       if (!navFooter) {
         return;
       }
       if (isVisible(navFooter)) {
+        footerMenuButton.setAttribute("aria-expanded", "false");
         slideUp(navFooter, 200);
       } else {
+        footerMenuButton.setAttribute("aria-expanded", "true");
         slideDown(navFooter, 200);
       }
     });
-    document.querySelector("#actions-footer > #toc")?.addEventListener("click", (): void => {
+    footerTocButton?.addEventListener("click", (): void => {
       const tocFooter: HTMLElement | null = document.querySelector("#toc-footer");
       if (!tocFooter) {
         return;
       }
       if (isVisible(tocFooter)) {
+        footerTocButton.setAttribute("aria-expanded", "false");
         slideUp(tocFooter, 200);
       } else {
+        footerTocButton.setAttribute("aria-expanded", "true");
         // First, play the slide-down animation
         slideDown(tocFooter, 200);
 
@@ -101,27 +108,32 @@ document.addEventListener("DOMContentLoaded", (): void => {
         }
       }
     });
-    document.querySelector("#actions-footer > #share")?.addEventListener("click", (): void => {
+    footerShareButton?.addEventListener("click", (): void => {
       const shareFooter: HTMLElement | null = document.querySelector("#share-footer");
       if (!shareFooter) {
         return;
       }
       if (isVisible(shareFooter)) {
+        footerShareButton.setAttribute("aria-expanded", "false");
         slideUp(shareFooter, 200);
       } else {
+        footerShareButton.setAttribute("aria-expanded", "true");
         slideDown(shareFooter, 200);
       }
     });
 
     // 桌面端 文章页 导航栏 按钮事件 绑定
-    document.querySelector("#actions #action-share")?.addEventListener("click", (): void => {
+    const shareButton: HTMLElement | null = document.querySelector("#actions #action-share");
+    shareButton?.addEventListener("click", (): void => {
       const shareMenu = document.getElementById("share-list");
       if (!shareMenu) {
         return;
       }
       if (isVisible(shareMenu)) {
+        shareButton.setAttribute("aria-expanded", "false");
         slideUp(shareMenu, 200);
       } else {
+        shareButton.setAttribute("aria-expanded", "true");
         slideDown(shareMenu, 200);
       }
     });
@@ -142,6 +154,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
         show(menuComponents);
       } else {
         menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
+        menuIcon.setAttribute("aria-expanded", "false"); // aria-expanded 属性设置为 false，表示菜单初始为折叠状态
       }
 
       // 平板端、桌面端 文章页 菜单 按钮事件
@@ -149,11 +162,15 @@ document.addEventListener("DOMContentLoaded", (): void => {
         e.preventDefault();
         if (isVisible(menuComponents)) {
           menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
-          fadeOut(menuComponents, 50);
-          fadeOut(shareListComponents, 50);
+          menuIcon.setAttribute("aria-expanded", "false"); // 切换 aria-expanded 属性值
+          fadeOut(menuComponents, 50); // 隐藏菜单
+          // 收起二级菜单
+          shareButton?.setAttribute("aria-expanded", "false");
+          fadeOut(shareListComponents, 50); // 隐藏分享菜单
         } else {
           menuIcon.classList.add("active"); // 为 #header-post .active 样式设置
-          fadeIn(menuComponents, 50);
+          menuIcon.setAttribute("aria-expanded", "true"); // 切换 aria-expanded 属性值
+          fadeIn(menuComponents, 50); // 显示菜单
         }
       });
 
@@ -170,7 +187,9 @@ document.addEventListener("DOMContentLoaded", (): void => {
           } else if (topDistance > 100) {
             menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
             fadeOut(menuIcon, 200);
+            menuIcon.setAttribute("aria-expanded", "false"); // 切换 aria-expanded 属性值
             fadeOut(menuComponents, 200);
+            shareButton?.setAttribute("aria-expanded", "false");
             fadeOut(shareListComponents, 200);
             fadeIn(topIcon, 200);
           }
@@ -195,8 +214,13 @@ document.addEventListener("DOMContentLoaded", (): void => {
         const topDistance = getTopDistance();
 
         // 在滚动时，关闭全部底部导航栏子菜单
+        footerTocButton?.setAttribute("aria-expanded", "false");
+        footerMenuButton?.setAttribute("aria-expanded", "false");
+        footerShareButton?.setAttribute("aria-expanded", "false");
         for (const footer of [tocFooter, navFooter, shareFooter]) {
-          if (footer) slideUp(footer, 200);
+          if (footer) {
+            slideUp(footer, 200);
+          }
         }
 
         if (topDistance > lastScrollTop) {
