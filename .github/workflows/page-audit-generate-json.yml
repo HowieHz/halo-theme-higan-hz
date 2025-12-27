@@ -191,6 +191,10 @@ jobs:
           find ./all-reports -maxdepth 5 -type d -print || true
           echo "=== all-reports files (first 200) ==="
           find ./all-reports -type f -print | sed -n '1,200p' || true
+          echo "\n### Debug: all-reports tree" >> "$GITHUB_STEP_SUMMARY" || true
+          find ./all-reports -maxdepth 5 -type d -print >> "$GITHUB_STEP_SUMMARY" || true
+          echo "\n### Debug: all-reports files (first 200)" >> "$GITHUB_STEP_SUMMARY" || true
+          find ./all-reports -type f -print | sed -n '1,200p' >> "$GITHUB_STEP_SUMMARY" || true
 
       - name: Copy reports to page_size_audit_results
         if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
@@ -217,6 +221,10 @@ jobs:
           ls -la .github/page_size_audit_results || true
           echo "=== JSON files (first 200) ==="
           find .github/page_size_audit_results -type f -name '*.json' -print | sed -n '1,200p' || true
+          echo "\n### Debug: .github/page_size_audit_results (after copy)" >> "$GITHUB_STEP_SUMMARY" || true
+          ls -la .github/page_size_audit_results >> "$GITHUB_STEP_SUMMARY" || true
+          echo "\n### Debug: JSON files (first 200)" >> "$GITHUB_STEP_SUMMARY" || true
+          find .github/page_size_audit_results -type f -name '*.json' -print | sed -n '1,200p' >> "$GITHUB_STEP_SUMMARY" || true
 
       - name: Create PR with data files
         if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
