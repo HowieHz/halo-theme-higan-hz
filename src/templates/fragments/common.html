@@ -5,9 +5,7 @@
 <th:block th:fragment="menu(showIcon)">
   <ul>
     <li class="icon" th:if="${showIcon}">
-      <a href="#" onclick="event.preventDefault()" aria-expanded="false"
-        ><span class="iconify iconify-huge material-symbols--menu"></span
-      ></a>
+      <a href="#" onclick="event.preventDefault()"><span class="iconify iconify-huge material-symbols--menu"></span></a>
     </li>
 
     <th:block th:insert="~{fragments/common :: base-menu}"></th:block>
@@ -224,6 +222,29 @@
     </ul>
   </th:block>
 </th:block>
+
+<button
+  th:fragment="theme-toggle-button"
+  th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
+  id="theme-toggle-button"
+  accesskey="t"
+  title="(Alt + T)"
+  type="button"
+  class="border-0 bg-transparent align-middle"
+>
+  <span
+    id="theme-toggle-button-icon"
+    style="display: none"
+    class="icon iconify iconify-large -translate-x-px -translate-y-px"
+  ></span>
+  <style>
+    #theme-toggle-button {
+      & .icon:hover {
+        color: var(--color-link-hover);
+      }
+    }
+  </style>
+</button>
 
 <th:block
   th:fragment="auto-redirect"

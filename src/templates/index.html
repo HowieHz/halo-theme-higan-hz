@@ -3,8 +3,8 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${#strings.isEmpty(theme.config?.index_styles?.page_html_title) ? site.title : theme.config?.index_styles?.page_html_title}, 
-    head = ~{:: headContent},
-    content = ~{:: content}, 
+    head = ~{::headContent},
+    content = ~{::content}, 
     header = ~{components/header/template :: content}, 
     navbar = ~{}
   )}"
