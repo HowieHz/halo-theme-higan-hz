@@ -3,8 +3,8 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${#annotations.getOrDefault(singlePage, 'higan.howiehz.top/page-title', singlePage.spec?.title)}, 
-    head = ~{::headContent},
-    content = ~{::content}, 
+    head = ~{:: headContent},
+    content = ~{:: content}, 
     header = ~{components/header/template :: content}, 
     navbar = ~{}, 
     language = ${#annotations.get(singlePage, 'higan.howiehz.top/page-language')}
