@@ -1,7 +1,6 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import tailwindcss from "@tailwindcss/vite";
-import legacy from "@vitejs/plugin-legacy";
 import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
 import utwm from "unplugin-tailwindcss-mangle/vite";
@@ -23,7 +22,6 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     utwm(), // obfuscate tailwindcss class
-    legacy(),
     headInject({
       // 在 <head> 标签前插入
       beforeHeadOpen: `<th:block th:fragment="headContent">\n  <!--/*-->\n  `,
