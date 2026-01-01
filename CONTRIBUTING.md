@@ -96,7 +96,7 @@ pnpm build
   - 与基线版本进行页面资源体积差异检查，并输出报告。
 
 - 页面视觉差异检查（Visual Regression）：
-  - 通过 Playwright 在桌面、平板、手机三种设备视图（Viewport）下，使用 Chromium, Firefox, WebKit 内核对关键页面截图。最后使用 Argos CI 与基线版本进行比较。
+  - 通过 Playwright 在桌面、平板、手机三种设备视图（Viewport）下，使用 Chromium, Firefox, WebKit 内核对关键页面截图。最后使用 Argos CI 与基线版本进行比较。（为节省额度，现仅上传 Chromium 生成的截图进行比较）
 
 ### 编写文档
 
