@@ -2,6 +2,12 @@
 
 <!-- markdownlint-disable MD024 -->
 
+## [1.50.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.1...v1.50.2) (2026-1-1)
+
+### 🚀 新功能
+
+- 支持 Vditor 编辑器插件的 `[toc]` 内联目录。
+
 ## [1.50.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.0...v1.50.1) (2025-12-28)
 
 ### 🔧 优化改进
