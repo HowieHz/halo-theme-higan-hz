@@ -1,7 +1,7 @@
 import "./main.css";
 
 import { NolebaseHighlightTargetedHeading } from "@nolebase/vitepress-plugin-highlight-targeted-heading/client";
-import { useRoute } from "vitepress";
+import { type EnhanceAppContext, useRoute } from "vitepress";
 import DefaultTheme from "vitepress/theme";
 import { h } from "vue";
 
@@ -24,5 +24,15 @@ export default {
       });
     }
   },
-  enhanceApp() {},
+  enhanceApp(ctx: EnhanceAppContext) {
+    const route = useRoute();
+    if (
+      route.path.startsWith("/halo-theme-higan-haozi/frames/default") ||
+      route.path.startsWith("/halo-theme-higan-haozi/frames/post")
+    ) {
+      return;
+    } else {
+      return DefaultTheme.enhanceApp(ctx);
+    }
+  },
 };
