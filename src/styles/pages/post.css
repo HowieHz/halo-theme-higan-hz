@@ -9,7 +9,7 @@
       background: none;
 
       &:hover {
-        color: var(--color-link-hover);
+        color: var(--color-base-300);
       }
     }
   }
@@ -135,7 +135,7 @@
     }
 
     & a:hover {
-      color: var(--color-link-hover);
+      color: var(--color-base-300);
     }
 
     & .toc-link-h1 {
@@ -233,7 +233,7 @@
         background: none;
 
         &:hover {
-          color: var(--color-link-hover);
+          color: var(--color-base-300);
         }
       }
     }
@@ -329,7 +329,7 @@
       }
 
       & a:hover {
-        color: var(--color-link-hover);
+        color: var(--color-base-300);
       }
 
       & .toc-link-h1 {

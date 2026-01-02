@@ -1044,8 +1044,6 @@ const QuickJumpConfig = (props) => {
 > --toc-level-2: #e3e3e3;
 > --toc-level-3: #b0b0b0;
 > --toc-level-4: #636363;
-> --color-link-hover: #d480aa;
-> --color-link-hover-70-alpha: rgba(212,128,170,0.7);
 > comment-widget {
 >   --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
 >   --halo-comment-widget-component-form-input-border-color: #636363 !important;
