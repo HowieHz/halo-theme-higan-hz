@@ -44,10 +44,6 @@ video {
     }
   }
 
-  & .color-fg-muted {
-    color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
-  }
-
   & .moment-header {
     padding-bottom: 0.375rem;
 

@@ -30,7 +30,7 @@
                 ></span>
               </h2>
               <time
-                class="color-accent-3 relative z-10 order-first mb-3 flex items-center pl-3.5 text-sm md:hidden"
+                class="color-base-content-80 relative z-10 order-first mb-3 flex items-center pl-3.5 text-sm md:hidden"
                 th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
               >
                 <span class="absolute inset-y-0 left-0 flex items-center" aria-hidden="true">
@@ -131,7 +131,7 @@
                 th:with="max_lines=${theme.config?.index_styles?.post_excerpt_max_lines}"
               >
                 <p
-                  class="color-accent-3 relative z-10 mt-2 mb-0 p-0 text-sm"
+                  class="color-base-content-80 relative z-10 mt-2 mb-0 p-0 text-sm"
                   th:text="${post.status?.excerpt}"
                   th:classappend="|${max_lines == '1' ? 'line-clamp-1' : ''} ${max_lines == '2' ? 'line-clamp-2' : ''} ${max_lines == '3' ? 'line-clamp-3' : ''} ${max_lines == '4' ? 'line-clamp-4' : ''} ${max_lines == '5' ? 'line-clamp-5' : ''}|"
                 >
@@ -161,7 +161,7 @@
               />
             </div>
             <time
-              class="color-accent-3 relative z-10 order-first mt-1 mb-3 hidden items-center text-sm md:flex"
+              class="color-base-content-80 relative z-10 order-first mt-1 mb-3 hidden items-center text-sm md:flex"
               th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
               th:text="${#temporals.format(post.spec.publishTime, 'MMMM dd yyyy')}"
             >

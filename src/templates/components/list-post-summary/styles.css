@@ -19,6 +19,6 @@
   color: var(--color-primary);
 }
 
-.color-accent-3 {
+.color-base-content-80 {
   color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
 }
