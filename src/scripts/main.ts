@@ -1,4 +1,3 @@
-import "../styles/mixins/colors/theme.styl";
 import "../styles/main.css";
 import "../styles/mixins/tailwind.css";
 
