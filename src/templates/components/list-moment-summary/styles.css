@@ -39,7 +39,7 @@ video {
     vertical-align: middle;
 
     &:hover {
-      box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-base-content) 20%, transparent);
+      box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-base-content) 80%, transparent);
       transition: box-shadow 0.2s ease-in-out;
     }
   }
@@ -87,11 +87,11 @@ video {
   }
 
   & .tag {
-    background-color: var(--color-background-code) !important;
-    background-image: none !important;
+    background-color: var(--color-base-100);
+    background-image: none;
     border-radius: 5px;
-    box-shadow: 0 0 6px var(--color-footer-mobile-2);
-    color: var(--color-primary) !important;
+    box-shadow: 0 0 6px var(--color-base-300);
+    color: var(--color-primary);
     font-size: var(--text-sm);
     padding: 0 6px;
     text-decoration: none;
@@ -110,7 +110,7 @@ video {
 
   & .moment-body {
     & .moment-content-box {
-      box-shadow: 1px 3px 15px rgb(140 149 159 / 15%);
+      box-shadow: 1px 3px 15px var(--color-base-300);
       padding: 1rem;
 
       & .moment-content {

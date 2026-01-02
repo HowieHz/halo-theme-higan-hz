@@ -1,6 +1,6 @@
 /* 多元文章列表样式 */
 .post-list-summary .group:hover .post-card-hover {
-  background: var(--color-card-hover);
+  background: var(--color-base-300);
   opacity: 100%;
   transform: scale(0.95);
   transition:

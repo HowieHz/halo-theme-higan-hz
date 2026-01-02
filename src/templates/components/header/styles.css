@@ -34,7 +34,7 @@
 
     &.circle-avatar {
       border-radius: 50% !important;
-      box-shadow: 0 0 0 1px var(--color-avatar-border);
+      box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-base-content) 80%, transparent);
     }
 
     &.avatar-grayscale {

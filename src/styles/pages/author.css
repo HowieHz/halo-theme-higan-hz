@@ -20,7 +20,7 @@
   }
 
   & .profile-avatar {
-    border: 0.1rem solid #eae9e7;
+    border: 0.1rem solid color-mix(in oklab, var(--color-base-content) 80%, transparent);
     border-radius: 50%;
     height: 5rem;
     margin: 0 auto;
