@@ -181,7 +181,7 @@ spec:
             - $formkit: number
               name: id
               label: 自定义配色方案识别码
-              value: 1
+              value: "1"
               help: "唯一识别码，请勿重复"
               validation: "required"
             - $formkit: select
@@ -197,14 +197,106 @@ spec:
                   value: "auto"
               validation: "required"
             - $formkit: checkbox
+              name: is_css_variable_mode
+              id: is_css_variable_mode
+              label: CSS 变量模式
+              help: 若启用此项，将使用 CSS 变量来定义配色方案。切换此选项后请点击下方提交按钮，之后重新打开此项，才能正常加载子选项。
+              value: false
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: primary_color
+              label: 主题主色调
+              value: "#2bbc8a"
+              help: 主品牌色，用于按钮、链接等核心交互元素，对应 CSS 变量 --color-primary。
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: primary_content_color
+              label: 主色文字
+              value: "#212326"
+              help: 主色下的文字/图标颜色，对应 CSS 变量 --color-primary-content。
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: secondary_color
+              label: 次要品牌色
+              value: "#ccffb6"
+              help: 自然的辅助色，用于次级按钮或背景，对应 CSS 变量 --color-secondary。
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: secondary_content_color
+              label: 次要色文字
+              value: "#d5d7d8"
+              help: 次要色上的正文/图标颜色，对应 CSS 变量 --color-secondary-content。
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: accent_color
+              label: 强调品牌色
+              value: "#d480aa"
+              help: 高对比强调色，用于点缀和状态提醒，对应 CSS 变量 --color-accent。
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: accent_content_color
+              label: 强调色文字
+              value: "#212326"
+              help: 强调色下的前景内容颜色，对应 CSS 变量 --color-accent-content。
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: neutral_color
+              label: 中性深色
+              value: "#1d1f21"
+              help: UI 中非饱和部分的底色，对应 CSS 变量 --color-neutral。
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: neutral_content_color
+              label: 中性色文字
+              value: "#d5d7d8"
+              help: 中性背景下的前景颜色，对应 CSS 变量 --color-neutral-content。
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: base_100_color
+              label: 页面基础面
+              value: "#212326"
+              help: HTML 主要画布背景色，对应 CSS 变量 --color-base-100。
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: base_200_color
+              label: 基色 200
+              value: "#1c1c1c"
+              help: 更深的背景层次，对应 CSS 变量 --color-base-200。
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: base_300_color
+              label: 基色 300
+              value: "#181818"
+              help: 更深底层，对应 CSS 变量 --color-base-300。
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: base_content_color
+              label: 基色文字
+              value: "#d5d7d8"
+              help: 基色上的前景内容，对应 CSS 变量 --color-base-content。
+            - $formkit: checkbox
+              if: "$get(is_css_variable_mode).value === true"
               name: is_raw_css_output_mode
               label: CSS 原始输出模式
               help: 关闭此项后，仅需填写自定义 CSS 变量的部分，输出时会自动输出在对应 CSS 选择器中（选择器为 html[theme="theme-{id}"]（填写的”识别码“替换 {id}））。
               value: false
             - $formkit: code
+              if: "$get(is_css_variable_mode).value === true"
               name: custom_css
               label: 自定义 CSS 变量
-              help: 文档中有示例
+              help: "文档中有示例: https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration#自定义配色方案"
               language: css
               height: 150px
               value: ""

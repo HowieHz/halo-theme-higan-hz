@@ -47,21 +47,50 @@
       th:if="${not #lists.isEmpty(custom_color_schema_config)} and (${theme_config == 'custom'} or ${theme.config?.styles?.theme_dark == 'custom'} or ${theme.config?.styles?.theme_light == 'custom'} or ${theme.config?.styles?.theme_auto == 'custom'})"
     >
       <th:block th:each="colorSchema : ${custom_color_schema_config}">
-        <th:block th:switch="${colorSchema.is_raw_css_output_mode}">
-          <th:block th:case="true">
-            <!--/*/
-            <style th:inline="css">
-[(${colorSchema.custom_css})]
-            </style>
-            /*/-->
-          </th:block>
-          <th:block th:case="false">
+        <th:block
+          th:if="${theme.config?.styles?.custom_color_schema_init_id==colorSchema.id or 
+                  theme.config?.styles?.custom_theme_auto_id==colorSchema.id or 
+                  theme.config?.styles?.custom_theme_light_id==colorSchema.id or 
+                  theme.config?.styles?.custom_theme_dark_id==colorSchema.id}"
+        >
+          <th:block th:unless="${colorSchema.is_css_variable_mode}">
             <!--/*/
             <style th:inline="css">
 html[theme="theme-[(${colorSchema.id})]"] {
-[(${colorSchema.custom_css})]}
+--color-primary: [(${colorSchema.primary_color})];
+--color-primary-content: [(${colorSchema.primary_content_color})];
+--color-secondary: [(${colorSchema.secondary_color})];
+--color-secondary-content: [(${colorSchema.secondary_content_color})];
+--color-accent: [(${colorSchema.accent_color})];
+--color-accent-content: [(${colorSchema.accent_content_color})];
+--color-neutral: [(${colorSchema.neutral_color})];
+--color-neutral-content: [(${colorSchema.neutral_content_color})];
+--color-base-100: [(${colorSchema.base_100_color})];
+--color-base-200: [(${colorSchema.base_200_color})];
+--color-base-300: [(${colorSchema.base_300_color})];
+--color-base-content: [(${colorSchema.base_content_color})];
+}
             </style>
-          /*/-->
+            /*/-->
+          </th:block>
+          <th:block th:if="${colorSchema.is_css_variable_mode}">
+            <th:block th:switch="${colorSchema.is_raw_css_output_mode}">
+              <th:block th:case="true">
+                <!--/*/
+                <style th:inline="css">
+[(${colorSchema.custom_css})]
+                </style>
+                /*/-->
+              </th:block>
+              <th:block th:case="false">
+                <!--/*/
+                <style th:inline="css">
+html[theme="theme-[(${colorSchema.id})]"] {
+[(${colorSchema.custom_css})]}
+                </style>
+                /*/-->
+              </th:block>
+            </th:block>
           </th:block>
         </th:block>
       </th:block>
@@ -210,63 +239,63 @@ html[theme="theme-[(${colorSchema.id})]"] {
       </th:block>
     </th:block>
     <!--/* Theme Color Declarations */-->
-    <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+    <th:block
+      th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
+      th:with="color_schema=${theme.config?.styles?.color_schema}"
+    >
       <th:block
-        th:if="${theme.config?.styles?.color_schema=='auto-blue'}"
+        th:if="${color_schema=='auto-blue'}"
         th:insert="~{components/theme-auto-blue/template :: headContent}"
       ></th:block>
+      <th:block th:if="${color_schema=='auto'}" th:insert="~{components/theme-auto/template :: headContent}"></th:block>
       <th:block
-        th:if="${theme.config?.styles?.color_schema=='auto'}"
-        th:insert="~{components/theme-auto/template :: headContent}"
-      ></th:block>
-      <th:block
-        th:if="${theme.config?.styles?.color_schema=='dark-blue'}"
+        th:if="${color_schema=='dark-blue'}"
         th:insert="~{components/theme-dark-blue/template :: headContent}"
       ></th:block>
+      <th:block th:if="${color_schema=='dark'}" th:insert="~{components/theme-dark/template :: headContent}"></th:block>
+      <th:block th:if="${color_schema=='gray'}" th:insert="~{components/theme-gary/template :: headContent}"></th:block>
       <th:block
-        th:if="${theme.config?.styles?.color_schema=='dark'}"
-        th:insert="~{components/theme-dark/template :: headContent}"
-      ></th:block>
-      <th:block
-        th:if="${theme.config?.styles?.color_schema=='gray'}"
-        th:insert="~{components/theme-gary/template :: headContent}"
-      ></th:block>
-      <th:block
-        th:if="${theme.config?.styles?.color_schema=='light-blue'}"
+        th:if="${color_schema=='light-blue'}"
         th:insert="~{components/theme-light-blue/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme.config?.styles?.color_schema=='light'}"
+        th:if="${color_schema=='light'}"
         th:insert="~{components/theme-light/template :: headContent}"
       ></th:block>
     </th:block>
-    <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+    <th:block
+      th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
+      th:with="theme_dark=${theme.config?.styles?.theme_dark},
+              theme_light=${theme.config?.styles?.theme_light},
+              theme_auto=${theme.config?.styles?.theme_auto},
+              color_schema=${theme.config?.styles?.color_schema}"
+    >
       <th:block
-        th:if="${theme.config?.styles?.theme_dark=='auto-blue' or theme.config?.styles?.theme_light=='auto-blue' or theme.config?.styles?.theme_auto=='auto-blue' or theme.config?.styles?.color_schema=='auto-blue'}"
+        th:if="${theme_dark=='auto-blue' or theme_light=='auto-blue' or theme_auto=='auto-blue' or color_schema=='auto-blue'}"
         th:insert="~{components/theme-auto-blue/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme.config?.styles?.theme_dark=='auto' or theme.config?.styles?.theme_light=='auto' or theme.config?.styles?.theme_auto=='auto' or theme.config?.styles?.color_schema=='auto'}"
+        th:if="${theme_dark=='auto' or theme_light=='auto' or theme_auto=='auto' or color_schema=='auto'}"
         th:insert="~{components/theme-auto/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme.config?.styles?.theme_dark=='dark-blue' or theme.config?.styles?.theme_light=='dark-blue' or theme.config?.styles?.theme_auto=='dark-blue' or theme.config?.styles?.color_schema=='dark-blue'}"
+        th:if="${theme_dark=='dark-blue' or theme_light=='dark-blue' or theme_auto=='dark-blue' or color_schema=='dark-blue'}"
         th:insert="~{components/theme-dark-blue/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme.config?.styles?.theme_dark=='dark' or theme.config?.styles?.theme_light=='dark' or theme.config?.styles?.theme_auto=='dark' or theme.config?.styles?.color_schema=='dark'}"
+        th:if="${theme_dark=='dark' or theme_light=='dark' or theme_auto=='dark' or color_schema=='dark'}"
         th:insert="~{components/theme-dark/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme.config?.styles?.theme_dark=='gray' or theme.config?.styles?.theme_light=='gray' or theme.config?.styles?.theme_auto=='gray' or theme.config?.styles?.color_schema=='gray'}"
+        th:if="${theme_dark=='gray' or theme_light=='gray' or theme_auto=='gray' or color_schema=='gray'}"
         th:insert="~{components/theme-gary/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme.config?.styles?.theme_dark=='light-blue' or theme.config?.styles?.theme_light=='light-blue' or theme.config?.styles?.theme_auto=='light-blue' or theme.config?.styles?.color_schema=='light-blue'}"
+        th:if="${theme_dark=='light-blue' or theme_light=='light-blue' or theme_auto=='light-blue' or color_schema=='light-blue'}"
         th:insert="~{components/theme-light-blue/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme.config?.styles?.theme_dark=='light' or theme.config?.styles?.theme_light=='light' or theme.config?.styles?.theme_auto=='light' or theme.config?.styles?.color_schema=='light'}"
+        th:if="${theme_dark=='light' or theme_light=='light' or theme_auto=='light' or color_schema=='light'}"
         th:insert="~{components/theme-light/template :: headContent}"
       ></th:block>
     </th:block>

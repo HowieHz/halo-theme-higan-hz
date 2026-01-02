@@ -1002,6 +1002,26 @@ const QuickJumpConfig = (props) => {
 > :::
 > ::: tip 📂 配置项名
 >
+> CSS 变量模式
+>
+> :::
+> ::: info 🏷️ 类型
+>
+> 布尔值
+>
+> :::
+> ::: info ⭐ 默认值
+>
+> `false`
+>
+> :::
+> ::: info ℹ️ 补充信息
+>
+> 启用此项后，将使用 CSS 变量来定义配色方案。
+>
+> :::
+> ::: tip 📂 配置项名
+>
 > CSS 原始输出模式
 >
 > :::
@@ -1031,13 +1051,6 @@ const QuickJumpConfig = (props) => {
 > 代码输入框（CSS）
 >
 > :::
-> ::: info ⭐ 默认值
->
-> ```plaintext
->
-> ```
->
-> :::
 > ::: info ⚠️ 外部约束
 >
 > 开启 `CSS 原始输出模式` 时，你填写的内容需要是合法的 CSS 代码。  
@@ -1046,6 +1059,62 @@ const QuickJumpConfig = (props) => {
 > ```css
 > html[theme="theme-{识别码}"] {
 >   /* 你填写的内容 */
+> }
+> ```
+>
+> :::
+> ::: info ℹ️ 补充信息
+>
+> 可以使用 [daisyUI 主题生成器](https://daisyui.com/theme-generator/) 辅助设计。以下是示例 CSS 变量：
+>
+> ```plaintext
+> --color-accent: #d480aa
+> --color-accent-content: #212326
+> --color-base-100: #212326
+> --color-base-200: #1c1c1c
+> --color-base-300: #181818
+> --color-base-content: #d5d7d8
+> --color-neutral: #1d1f21
+> --color-neutral-content: #d5d7d8
+> --color-primary: #2bbc8a
+> --color-primary-content: #212326
+> --color-secondary: #ccffb6
+> --color-secondary-content: #d5d7d8
+> ```
+>
+> 以下是 `CSS 原始输出模式` 的一个示例：
+>
+> ```css
+> html[theme="auto"] {
+>   --color-accent: #d480aa;
+>   --color-accent-content: #212326;
+>   --color-base-100: #fafafa;
+>   --color-base-200: #f5f5f5;
+>   --color-base-300: #e4e4e4;
+>   --color-base-content: #333;
+>   --color-neutral: #1d1f21;
+>   --color-neutral-content: #d5d7d8;
+>   --color-primary: #b32959;
+>   --color-primary-content: #212326;
+>   --color-scrollbar: #aaa;
+>   --color-secondary: #2bbc8a;
+>   --color-secondary-content: #dddbd9;
+> }
+> @media (prefers-color-scheme: dark) {
+>   html[theme="theme-1"] {
+>     --color-accent: #d480aa;
+>     --color-accent-content: #212326;
+>     --color-base-100: #212326;
+>     --color-base-200: #1c1c1c;
+>     --color-base-300: #181818;
+>     --color-base-content: #d5d7d8;
+>     --color-neutral: #1d1f21;
+>     --color-neutral-content: #d5d7d8;
+>     --color-primary: #2bbc8a;
+>     --color-primary-content: #212326;
+>     --color-secondary: #ccffb6;
+>     --color-secondary-content: #d5d7d8;
+>   }
 > }
 > ```
 >
