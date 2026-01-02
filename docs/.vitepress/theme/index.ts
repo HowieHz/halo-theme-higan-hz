@@ -11,7 +11,6 @@ import FramePostLayout from "../components/FramePostLayout.vue";
 import "@nolebase/vitepress-plugin-highlight-targeted-heading/client/style.css";
 
 export default {
-  ...DefaultTheme,
   Layout: () => {
     const route = useRoute();
     if (route.path.startsWith("/halo-theme-higan-haozi/frames/default")) {
@@ -25,7 +24,5 @@ export default {
       });
     }
   },
-  enhanceApp() {
-    // 其他的配置...
-  },
+  enhanceApp() {},
 };
