@@ -213,7 +213,7 @@
   }
 
   & #footer-post {
-    background: var(--color-footer-mobile-2);
+    background: var(--color-base-100);
     border-radius: 2rem 2rem 0 0;
     border-top: 1px solid #666;
     bottom: 0;
@@ -276,7 +276,7 @@
     }
 
     & #actions-footer {
-      background: var(--color-footer-mobile-3);
+      background: var(--color-base-200);
       border-radius: 2rem 2rem 0 0;
       overflow: auto;
       padding: 1rem;

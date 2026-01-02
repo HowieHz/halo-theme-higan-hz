@@ -61,7 +61,7 @@ article .content blockquote p:last-child {
 }
 
 article .content blockquote::before {
-  color: var(--color-quote);
+  color: var(--color-secondary);
   content: "\201C";
   font-size: 2em;
   line-height: 0.1em;

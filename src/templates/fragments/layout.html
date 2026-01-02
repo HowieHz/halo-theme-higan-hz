@@ -635,7 +635,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </style>
     <style th:if="${theme.config?.styles?.is_show_the_quote_before_blockquote}">
       article .content blockquote::before {
-        color: var(--color-quote);
+        color: var(--color-secondary);
         content: "\201C";
         font-size: 2em;
         line-height: 0.1em;
@@ -645,7 +645,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </style>
     <style th:if="${theme.config?.styles?.is_show_the_quote_after_blockquote}">
       article .content blockquote::after {
-        color: var(--color-quote);
+        color: var(--color-secondary);
         content: "\201D";
         float: right;
         font-size: 2em;
