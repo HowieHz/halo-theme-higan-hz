@@ -1,7 +1,7 @@
 import "./main.css";
 
 import { NolebaseHighlightTargetedHeading } from "@nolebase/vitepress-plugin-highlight-targeted-heading/client";
-import { type Theme, useRoute } from "vitepress";
+import { useRoute, type Theme } from "vitepress";
 import DefaultTheme from "vitepress/theme";
 import { h } from "vue";
 
