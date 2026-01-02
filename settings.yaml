@@ -143,28 +143,28 @@ spec:
           name: color_schema
           id: color_schema_init
           label: 配色方案
-          help: 此项无法显示所选项是正常现象，实际会正常生效。（对于启用“深浅色模式切换按钮”的情况来说，这项决定了网站刚加载完成时的配色方案。）
-          value: { theme: "dark", color-scheme: "dark" }
+          help: 若启用“深浅色模式切换按钮”，这项决定了网站刚加载完成时的配色方案。
+          value: "dark"
           options:
             - label: "跟随系统 - 绿"
-              value: { theme: "auto", color-scheme: "auto" }
+              value: "auto"
             - label: "浅色 - 绿"
-              value: { theme: "light", color-scheme: "light" }
+              value: "light"
             - label: "暗色 - 绿"
-              value: { theme: "dark", color-scheme: "dark" }
+              value: "dark"
             - label: "跟随系统 - 蓝"
-              value: { theme: "auto-blue", color-scheme: "auto" }
+              value: "auto-blue"
             - label: "浅色 - 蓝"
-              value: { theme: "light-blue", color-scheme: "light" }
+              value: "light-blue"
             - label: "暗色 - 蓝"
-              value: { theme: "dark-blue", color-scheme: "dark" }
+              value: "dark-blue"
             - label: "浅色 - 灰粉"
-              value: { theme: "gray", color-scheme: "light" }
+              value: "gray"
             - label: "自定义配色"
-              value: { theme: "custom", color-scheme: "auto" }
+              value: "custom"
         - $formkit: number
           name: custom_color_schema_init_id
-          if: "$get(color_schema_init).value.theme === 'custom'"
+          if: "$get(color_schema_init).value === 'custom'"
           value: ""
           help: "请先创建自定义配色方案，随后在此填写自定义配色方案识别码"
           validation: "required"

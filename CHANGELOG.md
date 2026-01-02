@@ -2,11 +2,20 @@
 
 <!-- markdownlint-disable MD024 -->
 
-## 1.50.3
+## [1.51.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.2...v1.51.0)
+
+### ⚠破坏性修改
+
+- 更新后需重新设定 `总体样式 -> 配色方案`，以修复
+
+### 🐛 错误修复
+
+- 修复 `总体样式 -> 配色方案` 保存后无法正常显示已选项的问题
 
 ## 🔧 优化改进
 
-- 移除评论组件 v2 支持
+- 移除评论组件 v2 支持，减小包体积
+- 简化主题 CSS 变量数
 
 ## [1.50.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.1...v1.50.2) (2026-1-1)
 

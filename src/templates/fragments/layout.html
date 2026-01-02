@@ -4,8 +4,15 @@
            custom_color_schema_config=${theme.config?.styles?.custom_color_schema},
            page_language=${language ?: ('' + param.lang != '' ? '' + param.lang : (theme.config?.global?.default_page_language ?: 'zh'))}"
   th:lang="${page_language}"
-  th:attr="data-color-scheme=${theme_config['theme']} != 'custom' ? ${theme_config['color-scheme']} : null,
-           theme=${theme_config['theme']} != 'custom' ? ${theme_config['theme']} : 'theme-'+${theme.config?.styles?.custom_color_schema_init_id}"
+  th:attr="data-color-scheme=${theme_config} == 'custom' ? null :
+                            (${theme_config} == 'auto' ? 'auto' :
+                            (${theme_config} == 'light' ? 'light' :
+                            (${theme_config} == 'dark' ? 'dark' :
+                            (${theme_config} == 'auto-blue' ? 'auto' :
+                            (${theme_config} == 'light-blue' ? 'light' :
+                            (${theme_config} == 'dark-blue' ? 'dark' :
+                            (${theme_config} == 'gray' ? 'light' : 'auto'))))))),
+           theme=${theme_config} != 'custom' ? ${theme_config} : 'theme-'+${theme.config?.styles?.custom_color_schema_init_id}"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
   th:fragment="html"
@@ -25,19 +32,19 @@
     <title th:text="${#strings.defaultString(title, site.title)}"></title>
     <script
       vite-ignore
-      th:if="${theme_config['theme'] == 'custom'} or ${theme.config?.styles?.theme_dark == 'custom'} or ${theme.config?.styles?.theme_light == 'custom'} or ${theme.config?.styles?.theme_auto == 'custom'}"
+      th:if="${theme_config == 'custom'} or ${theme.config?.styles?.theme_dark == 'custom'} or ${theme.config?.styles?.theme_light == 'custom'} or ${theme.config?.styles?.theme_auto == 'custom'}"
       th:inline="javascript"
     >
       const allCustomColorSchema = /*[(${custom_color_schema_config})]*/ "";
     </script>
-    <script vite-ignore th:if="${theme_config['theme'] == 'custom'}" th:inline="javascript">
+    <script vite-ignore th:if="${theme_config == 'custom'}" th:inline="javascript">
       const customColorSchema = allCustomColorSchema.find(
         (schema) => schema.id === /*[[${theme.config?.styles?.custom_color_schema_init_id}]]*/ "1",
       );
       document.documentElement.setAttribute("data-color-scheme", customColorSchema ? customColorSchema.type : null);
     </script>
     <th:block
-      th:if="${not #lists.isEmpty(custom_color_schema_config)} and (${theme_config['theme'] == 'custom'} or ${theme.config?.styles?.theme_dark == 'custom'} or ${theme.config?.styles?.theme_light == 'custom'} or ${theme.config?.styles?.theme_auto == 'custom'})"
+      th:if="${not #lists.isEmpty(custom_color_schema_config)} and (${theme_config == 'custom'} or ${theme.config?.styles?.theme_dark == 'custom'} or ${theme.config?.styles?.theme_light == 'custom'} or ${theme.config?.styles?.theme_auto == 'custom'})"
     >
       <th:block th:each="colorSchema : ${custom_color_schema_config}">
         <th:block th:switch="${colorSchema.is_raw_css_output_mode}">
