@@ -143,28 +143,28 @@ spec:
           name: color_schema
           id: color_schema_init
           label: Color scheme
-          help: "It is normal for the selected option not to be displayed; it will still take effect properly. (For the case where the 'Color Scheme Toggle Button' is enabled, this determines the color scheme when the website is first loaded.)"
-          value: { theme: "dark", color-scheme: "dark" }
+          help: If the "Color Scheme Toggle Button" is enabled, this determines the color scheme when the website is first loaded.
+          value: "dark"
           options:
             - label: "Follow System - Green"
-              value: { theme: "auto", color-scheme: "auto" }
+              value: "auto"
             - label: "Dark - Green"
-              value: { theme: "dark", color-scheme: "dark" }
+              value: "dark"
             - label: "Light - Green"
-              value: { theme: "light", color-scheme: "light" }
+              value: "light"
             - label: "Follow System - Blue"
-              value: { theme: "auto-blue", color-scheme: "auto" }
+              value: "auto-blue"
             - label: "Dark - Blue"
-              value: { theme: "dark-blue", color-scheme: "dark" }
+              value: "dark-blue"
             - label: "Light - Blue"
-              value: { theme: "light-blue", color-scheme: "light" }
+              value: "light-blue"
             - label: "Light - Gray"
-              value: { theme: "gray", color-scheme: "light" }
+              value: "gray"
             - label: "Custom Color Scheme"
-              value: { theme: "custom", color-scheme: "auto" }
+              value: "custom"
         - $formkit: number
           name: custom_color_schema_init_id
-          if: "$get(color_schema_init).value.theme === 'custom'"
+          if: "$get(color_schema_init).value === 'custom'"
           value: ""
           help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
