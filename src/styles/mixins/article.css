@@ -11,7 +11,7 @@ article {
       margin-top: 0;
 
       & * {
-        color: var(--color-accent-3);
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
         font-size: var(--text-sm);
       }
     }
@@ -21,7 +21,7 @@ article {
     & h2,
     & .h2 {
       &::before {
-        color: var(--color-accent-1);
+        color: var(--color-primary);
         content: "#";
         font-size: 1.2rem;
         font-weight: bold;

@@ -1,7 +1,7 @@
 /* 友链页面样式开始 */
 #links {
   & li {
-    color: var(--color-text);
+    color: var(--color-base-content);
     list-style: none;
   }
 
@@ -37,7 +37,7 @@
     }
 
     & .fig-author-figure-title {
-      color: var(--color-text);
+      color: var(--color-base-content);
       font-weight: 400;
     }
 

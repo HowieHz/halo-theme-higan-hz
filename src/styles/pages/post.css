@@ -40,7 +40,7 @@
     margin-right: 2rem;
 
     &:hover {
-      color: var(--color-accent-1);
+      color: var(--color-primary);
     }
   }
 
@@ -52,16 +52,16 @@
     right: 2rem;
 
     &:hover {
-      color: var(--color-accent-1);
+      color: var(--color-primary);
     }
   }
 
   & .active {
-    color: var(--color-accent-1);
+    color: var(--color-primary);
   }
 
   & #nav {
-    color: var(--color-accent-1);
+    color: var(--color-primary);
     font-size: var(--text-sm);
     font-style: normal;
     letter-spacing: 0.01em;
@@ -71,15 +71,15 @@
       line-height: 0.9375rem;
 
       & a {
-        color: var(--color-accent-1);
+        color: var(--color-primary);
         margin-right: 0.9375rem;
 
         &:hover {
           background-image: linear-gradient(
             transparent,
             transparent 0.3125rem,
-            var(--color-accent-1) 0.3125rem,
-            var(--color-accent-1)
+            var(--color-primary) 0.3125rem,
+            var(--color-primary)
           );
           background-position: bottom;
           background-repeat: repeat-x;
@@ -88,7 +88,7 @@
       }
 
       & li {
-        border-right: 1px dotted var(--color-accent-1);
+        border-right: 1px dotted var(--color-primary);
 
         &:last-child {
           border-right: 0;
@@ -151,7 +151,7 @@
       font-size: var(--text-toc-level-2);
 
       &::before {
-        color: var(--color-accent-1);
+        color: var(--color-primary);
         content: "#";
         padding-right: 0.3125rem;
       }
@@ -175,12 +175,12 @@
     }
 
     & .toc-active {
-      color: var(--color-accent-1);
+      color: var(--color-primary);
     }
   }
 
   & .is-active-link::before {
-    background-color: var(--color-accent-1);
+    background-color: var(--color-primary);
   }
 
   & .is-collapsible {
@@ -243,15 +243,15 @@
       text-align: center;
 
       & a {
-        color: var(--color-accent-1);
+        color: var(--color-primary);
         font-size: 1em;
 
         &:hover {
           background-image: linear-gradient(
             transparent,
             transparent 0.3125rem,
-            var(--color-accent-1) 0.3125rem,
-            var(--color-accent-1)
+            var(--color-primary) 0.3125rem,
+            var(--color-primary)
           );
           background-position: bottom;
           background-repeat: repeat-x;
@@ -285,7 +285,7 @@
       width: 100%;
 
       & a {
-        color: var(--color-accent-1);
+        color: var(--color-primary);
         display: inline-block;
         padding-left: 1rem;
       }
@@ -337,11 +337,11 @@
       }
 
       & .toc-level-2 {
-        color: var(--color-text);
+        color: var(--color-base-content);
         font-size: var(--text-sm);
 
         &::before {
-          color: var(--color-accent-1);
+          color: var(--color-primary);
           content: "#";
         }
       }
@@ -366,7 +366,7 @@
       }
 
       & .toc-active {
-        color: var(--color-accent-1);
+        color: var(--color-primary);
       }
     }
   }
@@ -378,7 +378,7 @@
 .recommendations,
 .post-navigation {
   & a {
-    color: var(--color-text);
+    color: var(--color-base-content);
 
     /* 去除下划线用这个 background-image: none; */
   }

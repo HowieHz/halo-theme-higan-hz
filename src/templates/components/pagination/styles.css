@@ -5,14 +5,14 @@ div.pager {
   width: 100%;
 
   & .page-number {
-    color: var(--color-text);
+    color: var(--color-base-content);
     font-size: var(--text-sm);
   }
 
   & a {
     background-image: none;
     border-radius: 0.3125rem;
-    color: var(--color-text);
+    color: var(--color-base-content);
     padding: 0.25rem 0.375rem;
     text-decoration: none;
 
@@ -20,7 +20,7 @@ div.pager {
       background-image: none;
 
       &:not(.active) {
-        color: var(--color-accent-2);
+        color: var(--color-base-content);
       }
     }
   }

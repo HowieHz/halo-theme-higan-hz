@@ -31,17 +31,21 @@ video {
   }
 
   & .avatar {
-    background-color: var(--color-background);
-    box-shadow: 0 0 0 1px rgb(27 31 36 / 15%);
+    background-color: var(--color-base-100);
     display: inline-block;
     flex-shrink: 0;
     line-height: 1;
     overflow: hidden;
     vertical-align: middle;
+
+    &:hover {
+      box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-base-content) 20%, transparent);
+      transition: box-shadow 0.2s ease-in-out;
+    }
   }
 
   & .color-fg-muted {
-    color: var(--color-accent-3);
+    color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
   }
 
   & .moment-header {
@@ -57,7 +61,7 @@ video {
   }
 
   & .operation {
-    color: var(--color-text);
+    color: var(--color-base-content);
     padding-top: 0.5rem;
 
     & a {
@@ -87,7 +91,7 @@ video {
     background-image: none !important;
     border-radius: 5px;
     box-shadow: 0 0 6px var(--color-footer-mobile-2);
-    color: var(--color-accent-1) !important;
+    color: var(--color-primary) !important;
     font-size: var(--text-sm);
     padding: 0 6px;
     text-decoration: none;
