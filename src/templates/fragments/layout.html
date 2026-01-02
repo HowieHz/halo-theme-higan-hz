@@ -251,9 +251,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
       </th:block>
     </th:block>
     <!--/* Theme Color Declarations */-->
-    <th:block
-      th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
-    >
+    <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       <th:block
         th:if="${color_schema=='auto-blue'}"
         th:insert="~{components/theme-auto-blue/template :: headContent}"
@@ -274,9 +272,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
         th:insert="~{components/theme-light/template :: headContent}"
       ></th:block>
     </th:block>
-    <th:block
-      th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
-    >
+    <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       <th:block
         th:if="${theme_dark=='auto-blue' or theme_light=='auto-blue' or theme_auto=='auto-blue' or color_schema=='auto-blue'}"
         th:insert="~{components/theme-auto-blue/template :: headContent}"
