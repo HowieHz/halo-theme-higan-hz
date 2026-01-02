@@ -332,7 +332,7 @@
   }
 
   hr.divide {
-    border: 0 solid var(--color-divide);
+    border: 0 solid color-mix(in oklab, var(--color-base-content) 20%, transparent);
     border-top-width: 1px;
     height: 0;
 

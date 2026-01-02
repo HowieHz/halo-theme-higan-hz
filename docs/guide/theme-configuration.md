@@ -1034,8 +1034,6 @@ const QuickJumpConfig = (props) => {
 > ::: info ⭐ 默认值
 >
 > ```plaintext
-> --color-border: #908d8d;
-> --color-divide: #616161;
 > --color-footer-mobile-1: #a4a3a3;
 > --color-footer-mobile-2: #27292b;
 > --color-footer-mobile-3: #212326;
