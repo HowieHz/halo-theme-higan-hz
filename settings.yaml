@@ -296,7 +296,7 @@ spec:
               if: "$get(is_css_variable_mode).value === true"
               name: custom_css
               label: 自定义 CSS 变量
-              help: "文档中有示例: https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration#自定义配色方案"
+              help: "文档中有示例：https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration#自定义配色方案"
               language: css
               height: 150px
               value: ""
