@@ -147,7 +147,7 @@
     }
 
     & .toc-level-2 {
-      color: var(--toc-level-2);
+      color: var(--color-base-content);
       font-size: var(--text-toc-level-2);
 
       &::before {
@@ -158,12 +158,12 @@
     }
 
     & .toc-level-3 {
-      color: var(--toc-level-3);
+      color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       font-size: var(--text-toc-level-3);
     }
 
     & .toc-level-4 {
-      color: var(--toc-level-4);
+      color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
       font-size: var(--text-toc-level-4);
     }
 
@@ -347,13 +347,13 @@
       }
 
       & .toc-level-3 {
-        color: #999;
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
         font-size: 0.7rem;
         line-height: 0.9375rem;
       }
 
       & .toc-level-4 {
-        color: #777;
+        color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
         font-size: 0.65rem;
         line-height: 0.9375rem;
       }

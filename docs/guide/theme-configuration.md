@@ -1034,14 +1034,7 @@ const QuickJumpConfig = (props) => {
 > ::: info ⭐ 默认值
 >
 > ```plaintext
-> --color-scrollbar: #999;
-> --toc-level-2: #e3e3e3;
-> --toc-level-3: #b0b0b0;
-> --toc-level-4: #636363;
-> comment-widget {
->   --halo-comment-widget-component-form-input-bg-color: #1d1f21 !important;
->   --halo-comment-widget-component-form-input-border-color: #636363 !important;
-> }
+>
 > ```
 >
 > :::

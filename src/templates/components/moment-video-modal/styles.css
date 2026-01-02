@@ -7,12 +7,12 @@
   background-color: var(--color-base-200);
 }
 
-.text-base-content-60 {
-  color: var(--toc-level-3);
+.text-base-content-80 {
+  color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
 }
 
 .group:hover .group-hover-text-base-content {
-  color: var(--toc-level-3);
+  color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
 }
 
 .aspect-w-1 > * {

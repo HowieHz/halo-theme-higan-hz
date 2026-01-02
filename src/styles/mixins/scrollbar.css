@@ -1,9 +1,9 @@
 :root {
   /* 滚动条滑块的颜色 */
-  --scrollbar-thumb-color: var(--color-scrollbar);
+  --scrollbar-thumb-color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
 
   /* 滚动条滑块的颜色 鼠标悬停时 */
-  --scrollbar-thumb-hover-color: var(--color-scrollbar);
+  --scrollbar-thumb-hover-color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
 
   /* 滚动条滑块背景色 */
   --scrollbar-thumb-background-color: transparent;
