@@ -340,18 +340,12 @@ This is normal text <small>This is small text</small> This is normal text
 
 <DefaultRender height="300px">
 
-# 一级标题
-
-## 二级标题
-
-### 三级标题
-
-#### 四级标题
-
-##### 五级标题
-
-###### 六级标题
-
+<h1>一级标题</h1>
+<h2>二级标题</h2>
+<h3>三级标题</h3>
+<h4>四级标题</h4>
+<h5>五级标题</h5>
+<h6>六级标题</h6>
 <div class="h1">使用 h1 类的文本</div>
 <div class="h2">使用 h2 类的文本</div>
 
@@ -416,18 +410,12 @@ This is normal text <small>This is small text</small> This is normal text
 
 <DefaultRender height="300px">
 
-# [一级标题中的链接](https://howiehz.top)
-
-## [二级标题中的链接](https://howiehz.top)
-
-### [三级标题中的链接](https://howiehz.top)
-
-#### [四级标题中的链接](https://howiehz.top)
-
-##### [五级标题中的链接](https://howiehz.top)
-
-###### [六级标题中的链接](https://howiehz.top)
-
+<h1><a href="https://howiehz.top">一级标题中的链接</a></h1>
+<h2><a href="https://howiehz.top">二级标题中的链接</a></h2>
+<h3><a href="https://howiehz.top">三级标题中的链接</a></h3>
+<h4><a href="https://howiehz.top">四级标题中的链接</a></h4>
+<h5><a href="https://howiehz.top">五级标题中的链接</a></h5>
+<h6><a href="https://howiehz.top">六级标题中的链接</a></h6>
 <div class="h1"><a href="https://example.com">h1 类中的链接</a></div>
 <div class="h2"><a href="https://example.com">h2 类中的链接</a></div>
 </DefaultRender>

@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  vitepress:
+    hash: 3ef40b30230cc94a3774cf7586af4d82ffba6a1adef2a720eaabd8fea38ee8e7
+    path: patches/vitepress.patch
+
 importers:
 
   .:
@@ -198,13 +203,13 @@ importers:
     devDependencies:
       '@nolebase/vitepress-plugin-highlight-targeted-heading':
         specifier: ^2.18.2
-        version: 2.18.2(vitepress@2.0.0-alpha.15(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3))
+        version: 2.18.2(vitepress@2.0.0-alpha.15(patch_hash=3ef40b30230cc94a3774cf7586af4d82ffba6a1adef2a720eaabd8fea38ee8e7)(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3))
       '@whyframe/core':
         specifier: ^0.1.14
-        version: 0.1.14(rolldown-vite@7.3.0(@types/node@25.0.3)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))
+        version: 0.1.14(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(stylus@0.64.0))
       '@whyframe/vue':
         specifier: ^0.1.9
-        version: 0.1.9(@whyframe/core@0.1.14(rolldown-vite@7.3.0(@types/node@25.0.3)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)))(rolldown-vite@7.3.0(@types/node@25.0.3)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))
+        version: 0.1.9(@whyframe/core@0.1.14(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(stylus@0.64.0)))(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(stylus@0.64.0))
       browserslist:
         specifier: ^4.28.1
         version: 4.28.1
@@ -219,10 +224,10 @@ importers:
         version: 1.4.0
       vitepress:
         specifier: 2.0.0-alpha.15
-        version: 2.0.0-alpha.15(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3)
+        version: 2.0.0-alpha.15(patch_hash=3ef40b30230cc94a3774cf7586af4d82ffba6a1adef2a720eaabd8fea38ee8e7)(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3)
       vitepress-plugin-pagefind:
         specifier: ^0.4.17
-        version: 0.4.18(pagefind@1.4.0)(vitepress@2.0.0-alpha.15(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3))(vue@3.5.26(typescript@5.9.3))
+        version: 0.4.18(pagefind@1.4.0)(vitepress@2.0.0-alpha.15(patch_hash=3ef40b30230cc94a3774cf7586af4d82ffba6a1adef2a720eaabd8fea38ee8e7)(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3))(vue@3.5.26(typescript@5.9.3))
       vue:
         specifier: ^3.5.25
         version: 3.5.26(typescript@5.9.3)
@@ -4525,10 +4530,10 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.1
 
-  '@nolebase/vitepress-plugin-highlight-targeted-heading@2.18.2(vitepress@2.0.0-alpha.15(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3))':
+  '@nolebase/vitepress-plugin-highlight-targeted-heading@2.18.2(vitepress@2.0.0-alpha.15(patch_hash=3ef40b30230cc94a3774cf7586af4d82ffba6a1adef2a720eaabd8fea38ee8e7)(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3))':
     dependencies:
       less: 4.5.1
-      vitepress: 2.0.0-alpha.15(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3)
+      vitepress: 2.0.0-alpha.15(patch_hash=3ef40b30230cc94a3774cf7586af4d82ffba6a1adef2a720eaabd8fea38ee8e7)(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3)
 
   '@opentelemetry/api@1.9.0': {}
 
@@ -5206,16 +5211,16 @@ snapshots:
     dependencies:
       pathe: 2.0.3
 
-  '@whyframe/core@0.1.14(rolldown-vite@7.3.0(@types/node@25.0.3)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))':
+  '@whyframe/core@0.1.14(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(stylus@0.64.0))':
     optionalDependencies:
-      vite: rolldown-vite@7.3.0(@types/node@25.0.3)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)
+      vite: 7.3.0(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(stylus@0.64.0)
 
-  '@whyframe/vue@0.1.9(@whyframe/core@0.1.14(rolldown-vite@7.3.0(@types/node@25.0.3)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)))(rolldown-vite@7.3.0(@types/node@25.0.3)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))':
+  '@whyframe/vue@0.1.9(@whyframe/core@0.1.14(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(stylus@0.64.0)))(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(stylus@0.64.0))':
     dependencies:
       '@vue/compiler-dom': 3.5.26
-      '@whyframe/core': 0.1.14(rolldown-vite@7.3.0(@types/node@25.0.3)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))
+      '@whyframe/core': 0.1.14(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(stylus@0.64.0))
       magic-string: 0.30.21
-      vite: rolldown-vite@7.3.0(@types/node@25.0.3)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)
+      vite: 7.3.0(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(stylus@0.64.0)
 
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:
@@ -7497,18 +7502,18 @@ snapshots:
       lightningcss: 1.30.2
       stylus: 0.64.0
 
-  vitepress-plugin-pagefind@0.4.18(pagefind@1.4.0)(vitepress@2.0.0-alpha.15(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3))(vue@3.5.26(typescript@5.9.3)):
+  vitepress-plugin-pagefind@0.4.18(pagefind@1.4.0)(vitepress@2.0.0-alpha.15(patch_hash=3ef40b30230cc94a3774cf7586af4d82ffba6a1adef2a720eaabd8fea38ee8e7)(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3))(vue@3.5.26(typescript@5.9.3)):
     dependencies:
       '@sugarat/theme-shared': 0.0.7
       '@vueuse/core': 14.1.0(vue@3.5.26(typescript@5.9.3))
       javascript-stringify: 2.1.0
       pagefind: 1.4.0
-      vitepress: 2.0.0-alpha.15(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3)
+      vitepress: 2.0.0-alpha.15(patch_hash=3ef40b30230cc94a3774cf7586af4d82ffba6a1adef2a720eaabd8fea38ee8e7)(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3)
       vue-command-palette: 0.1.4
     transitivePeerDependencies:
       - vue
 
-  vitepress@2.0.0-alpha.15(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3):
+  vitepress@2.0.0-alpha.15(patch_hash=3ef40b30230cc94a3774cf7586af4d82ffba6a1adef2a720eaabd8fea38ee8e7)(@algolia/client-search@5.46.2)(@types/node@25.0.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(react@19.2.3)(search-insights@2.17.3)(stylus@0.64.0)(typescript@5.9.3):
     dependencies:
       '@docsearch/css': 4.4.0
       '@docsearch/js': 4.4.0(@algolia/client-search@5.46.2)(react@19.2.3)(search-insights@2.17.3)

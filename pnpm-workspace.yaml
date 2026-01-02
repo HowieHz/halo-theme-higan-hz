@@ -6,3 +6,6 @@ onlyBuiltDependencies:
   - esbuild
   - less
   - unrs-resolver
+
+patchedDependencies:
+  vitepress: patches/vitepress.patch
