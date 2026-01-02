@@ -1,18 +1,25 @@
 <!doctype html>
 <html
-  th:with="theme_config=${theme.config?.styles?.color_schema},
+  th:with="color_schema=${theme.config?.styles?.color_schema},
+           theme_auto=${theme.config?.styles?.theme_auto},
+           theme_light=${theme.config?.styles?.theme_light},
+           theme_dark=${theme.config?.styles?.theme_dark},
            custom_color_schema_config=${theme.config?.styles?.custom_color_schema},
+           custom_color_schema_init_id=${theme.config?.styles?.custom_color_schema_init_id},
+           custom_theme_auto_id=${theme.config?.styles?.custom_theme_auto_id},
+           custom_theme_light_id=${theme.config?.styles?.custom_theme_light_id},
+           custom_theme_dark_id=${theme.config?.styles?.custom_theme_dark_id},
            page_language=${language ?: ('' + param.lang != '' ? '' + param.lang : (theme.config?.global?.default_page_language ?: 'zh'))}"
   th:lang="${page_language}"
-  th:attr="data-color-scheme=${theme_config} == 'custom' ? null :
-                            (${theme_config} == 'auto' ? 'auto' :
-                            (${theme_config} == 'light' ? 'light' :
-                            (${theme_config} == 'dark' ? 'dark' :
-                            (${theme_config} == 'auto-blue' ? 'auto' :
-                            (${theme_config} == 'light-blue' ? 'light' :
-                            (${theme_config} == 'dark-blue' ? 'dark' :
-                            (${theme_config} == 'gray' ? 'light' : 'auto'))))))),
-           theme=${theme_config} != 'custom' ? ${theme_config} : 'theme-'+${theme.config?.styles?.custom_color_schema_init_id}"
+  th:attr="data-color-scheme=${color_schema} == 'custom' ? null :
+                            (${color_schema} == 'auto' ? 'auto' :
+                            (${color_schema} == 'light' ? 'light' :
+                            (${color_schema} == 'dark' ? 'dark' :
+                            (${color_schema} == 'auto-blue' ? 'auto' :
+                            (${color_schema} == 'light-blue' ? 'light' :
+                            (${color_schema} == 'dark-blue' ? 'dark' :
+                            (${color_schema} == 'gray' ? 'light' : 'auto'))))))),
+           theme=${color_schema} != 'custom' ? ${color_schema} : 'theme-'+${custom_color_schema_init_id}"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
   th:fragment="html"
@@ -32,27 +39,31 @@
     <title th:text="${#strings.defaultString(title, site.title)}"></title>
     <script
       vite-ignore
-      th:if="${theme_config == 'custom'} or ${theme.config?.styles?.theme_dark == 'custom'} or ${theme.config?.styles?.theme_light == 'custom'} or ${theme.config?.styles?.theme_auto == 'custom'}"
+      th:if="${color_schema == 'custom'} or ${theme_dark == 'custom'} or ${theme_light == 'custom'} or ${theme_auto == 'custom'}"
       th:inline="javascript"
     >
-      const allCustomColorSchema = /*[[${custom_color_schema_config.![{id: id, type: type}]}]]*/ "";
+      const allCustomColorSchema = [
+        /*[# th:each="c : ${custom_color_schema_config}"]*/ /*[# th:if="${custom_color_schema_init_id==c.id or custom_theme_auto_id==c.id or custom_theme_light_id==c.id or custom_theme_dark_id==c.id}"]*/
+        { id: /*[[${c.id}]]*/ "", type: /*[[${c.type}]]*/ "" },
+        /*[/]*/ /*[/]*/
+      ];
     </script>
-    <script vite-ignore th:if="${theme_config == 'custom'}" th:inline="javascript">
-      /* set data-color-scheme attribute */
+    <!--/* set data-color-scheme attribute */-->
+    <script vite-ignore th:if="${color_schema == 'custom'}" th:inline="javascript">
       const customColorSchema = allCustomColorSchema.find(
-        (schema) => schema.id === /*[[${theme.config?.styles?.custom_color_schema_init_id}]]*/ "1",
+        (schema) => schema.id === /*[[${custom_color_schema_init_id}]]*/ "1",
       );
       document.documentElement.setAttribute("data-color-scheme", customColorSchema ? customColorSchema.type : null);
     </script>
     <th:block
-      th:if="${not #lists.isEmpty(custom_color_schema_config)} and (${theme_config == 'custom'} or ${theme.config?.styles?.theme_dark == 'custom'} or ${theme.config?.styles?.theme_light == 'custom'} or ${theme.config?.styles?.theme_auto == 'custom'})"
+      th:if="${not #lists.isEmpty(custom_color_schema_config)} and (${color_schema == 'custom'} or ${theme_dark == 'custom'} or ${theme_light == 'custom'} or ${theme_auto == 'custom'})"
     >
       <th:block th:each="colorSchema : ${custom_color_schema_config}">
         <th:block
-          th:if="${theme.config?.styles?.custom_color_schema_init_id==colorSchema.id or 
-                  theme.config?.styles?.custom_theme_auto_id==colorSchema.id or 
-                  theme.config?.styles?.custom_theme_light_id==colorSchema.id or 
-                  theme.config?.styles?.custom_theme_dark_id==colorSchema.id}"
+          th:if="${custom_color_schema_init_id==colorSchema.id or 
+                  custom_theme_auto_id==colorSchema.id or 
+                  custom_theme_light_id==colorSchema.id or 
+                  custom_theme_dark_id==colorSchema.id}"
         >
           <th:block th:unless="${colorSchema.is_css_variable_mode}">
             <!--/*/
@@ -242,7 +253,6 @@ html[theme="theme-[(${colorSchema.id})]"] {
     <!--/* Theme Color Declarations */-->
     <th:block
       th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
-      th:with="color_schema=${theme.config?.styles?.color_schema}"
     >
       <th:block
         th:if="${color_schema=='auto-blue'}"
@@ -266,10 +276,6 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </th:block>
     <th:block
       th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
-      th:with="theme_dark=${theme.config?.styles?.theme_dark},
-              theme_light=${theme.config?.styles?.theme_light},
-              theme_auto=${theme.config?.styles?.theme_auto},
-              color_schema=${theme.config?.styles?.color_schema}"
     >
       <th:block
         th:if="${theme_dark=='auto-blue' or theme_light=='auto-blue' or theme_auto=='auto-blue' or color_schema=='auto-blue'}"
@@ -442,9 +448,9 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </script>
 
     <script vite-ignore th:inline="javascript" th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
-      var THEME_DARK = /*[[${theme.config?.styles?.theme_dark}]]*/ "dark";
-      var THEME_LIGHT = /*[[${theme.config?.styles?.theme_light}]]*/ "light";
-      var THEME_AUTO = /*[[${theme.config?.styles?.theme_auto}]]*/ "auto";
+      var THEME_DARK = /*[[${theme_dark}]]*/ "dark";
+      var THEME_LIGHT = /*[[${theme_light}]]*/ "light";
+      var THEME_AUTO = /*[[${theme_auto}]]*/ "auto";
       const is_save_color_scheme_settings_to_browser =
         /*[[${theme.config?.styles?.is_save_color_scheme_settings_to_browser}]]*/ "true";
 
@@ -460,7 +466,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
 
       if (THEME_DARK == "custom") {
         let customColorSchema = allCustomColorSchema.find(
-          (schema) => schema.id === /*[[${theme.config?.styles?.custom_theme_dark_id}]]*/ "1",
+          (schema) => schema.id === /*[[${custom_theme_dark_id}]]*/ "1",
         );
         if (customColorSchema) {
           THEME_DARK = "theme-" + customColorSchema.id;
@@ -469,7 +475,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
       }
       if (THEME_LIGHT == "custom") {
         let customColorSchema = allCustomColorSchema.find(
-          (schema) => schema.id === /*[[${theme.config?.styles?.custom_theme_light_id}]]*/ "1",
+          (schema) => schema.id === /*[[${custom_theme_light_id}]]*/ "1",
         );
         if (customColorSchema) {
           THEME_LIGHT = "theme-" + customColorSchema.id;
@@ -478,7 +484,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
       }
       if (THEME_AUTO == "custom") {
         let customColorSchema = allCustomColorSchema.find(
-          (schema) => schema.id === /*[[${theme.config?.styles?.custom_theme_auto_id}]]*/ "1",
+          (schema) => schema.id === /*[[${custom_theme_auto_id}]]*/ "1",
         );
         if (customColorSchema) {
           THEME_AUTO = "theme-" + customColorSchema.id;
