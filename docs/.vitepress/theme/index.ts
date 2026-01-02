@@ -1,7 +1,7 @@
 import "./main.css";
 
 import { NolebaseHighlightTargetedHeading } from "@nolebase/vitepress-plugin-highlight-targeted-heading/client";
-import { type EnhanceAppContext, useRoute } from "vitepress";
+import { type Theme, useRoute } from "vitepress";
 import DefaultTheme from "vitepress/theme";
 import { h } from "vue";
 
@@ -11,6 +11,7 @@ import FramePostLayout from "../components/FramePostLayout.vue";
 import "@nolebase/vitepress-plugin-highlight-targeted-heading/client/style.css";
 
 export default {
+  extends: DefaultTheme,
   Layout: () => {
     const route = useRoute();
     if (route.path.startsWith("/halo-theme-higan-haozi/frames/default")) {
@@ -24,15 +25,4 @@ export default {
       });
     }
   },
-  enhanceApp(ctx: EnhanceAppContext) {
-    const route = useRoute();
-    if (
-      route.path.startsWith("/halo-theme-higan-haozi/frames/default") ||
-      route.path.startsWith("/halo-theme-higan-haozi/frames/post")
-    ) {
-      return;
-    } else {
-      return DefaultTheme.enhanceApp(ctx);
-    }
-  },
-};
+} satisfies Theme;
