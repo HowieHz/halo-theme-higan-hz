@@ -3,6 +3,7 @@
 @import "./mixins/iconify.css";
 @import "./mixins/font.css";
 @import "./mixins/color-scheme.css";
+@import "./mixins/comment-widget.css";
 
 @layer base {
   *,
