@@ -131,6 +131,16 @@ export default defineConfig({
           "src/templates/components/text-size-normal/template.html",
         ),
         "components-text-size-large": path.resolve(__dirname, "src/templates/components/text-size-large/template.html"),
+        "components-theme-dark": path.resolve(__dirname, "src/templates/components/theme-dark/template.html"),
+        "components-theme-light": path.resolve(__dirname, "src/templates/components/theme-light/template.html"),
+        "components-theme-dark-blue": path.resolve(__dirname, "src/templates/components/theme-dark-blue/template.html"),
+        "components-theme-light-blue": path.resolve(
+          __dirname,
+          "src/templates/components/theme-light-blue/template.html",
+        ),
+        "components-theme-gary": path.resolve(__dirname, "src/templates/components/theme-gary/template.html"),
+        "components-theme-auto": path.resolve(__dirname, "src/templates/components/theme-auto/template.html"),
+        "components-theme-auto-blue": path.resolve(__dirname, "src/templates/components/theme-auto-blue/template.html"),
         // fragments
         "fragments-category-tree": path.resolve(__dirname, "src/templates/fragments/category-tree.html"),
         "fragments-common": path.resolve(__dirname, "src/templates/fragments/common.html"),

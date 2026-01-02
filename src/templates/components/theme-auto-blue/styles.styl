@@ -1,0 +1,9 @@
+@import "../../../styles/mixins/colors/theme-light-blue.styl"
+@import "../../../styles/mixins/colors/theme-dark-blue.styl"
+
+html[theme="auto-blue"]
+	theme-light-blue()
+
+@media (prefers-color-scheme: dark)
+	html[theme="auto-blue"]
+		theme-dark-blue()

@@ -194,19 +194,6 @@ html[theme="theme-[(${colorSchema.id})]"] {
       </style>
       /*/-->
     </th:block>
-    <!--/* Text Size Declarations */-->
-    <th:block
-      th:if="${theme.config?.styles?.text_size}=='small'"
-      th:insert="~{components/text-size-small/template :: headContent}"
-    ></th:block>
-    <th:block
-      th:if="${theme.config?.styles?.text_size}=='normal'"
-      th:insert="~{components/text-size-normal/template :: headContent}"
-    ></th:block>
-    <th:block
-      th:if="${theme.config?.styles?.text_size}=='large'"
-      th:insert="~{components/text-size-large/template :: headContent}"
-    ></th:block>
     <!--/* RSS link declaration */-->
     <th:block th:if="${pluginFinder.available('PluginFeed')}">
       <link rel="alternate" type="application/rss+xml" title="Posts - All" th:href="@{'/rss.xml'}" />
@@ -222,6 +209,80 @@ html[theme="theme-[(${colorSchema.id})]"] {
         </th:block>
       </th:block>
     </th:block>
+    <!--/* Theme Color Declarations */-->
+    <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      <th:block
+        th:if="${theme.config?.styles?.color_schema=='auto-blue'}"
+        th:insert="~{components/theme-auto-blue/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme.config?.styles?.color_schema=='auto'}"
+        th:insert="~{components/theme-auto/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme.config?.styles?.color_schema=='dark-blue'}"
+        th:insert="~{components/theme-dark-blue/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme.config?.styles?.color_schema=='dark'}"
+        th:insert="~{components/theme-dark/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme.config?.styles?.color_schema=='gray'}"
+        th:insert="~{components/theme-gary/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme.config?.styles?.color_schema=='light-blue'}"
+        th:insert="~{components/theme-light-blue/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme.config?.styles?.color_schema=='light'}"
+        th:insert="~{components/theme-light/template :: headContent}"
+      ></th:block>
+    </th:block>
+    <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      <th:block
+        th:if="${theme.config?.styles?.theme_dark=='auto-blue' or theme.config?.styles?.theme_light=='auto-blue' or theme.config?.styles?.theme_auto=='auto-blue' or theme.config?.styles?.color_schema=='auto-blue'}"
+        th:insert="~{components/theme-auto-blue/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme.config?.styles?.theme_dark=='auto' or theme.config?.styles?.theme_light=='auto' or theme.config?.styles?.theme_auto=='auto' or theme.config?.styles?.color_schema=='auto'}"
+        th:insert="~{components/theme-auto/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme.config?.styles?.theme_dark=='dark-blue' or theme.config?.styles?.theme_light=='dark-blue' or theme.config?.styles?.theme_auto=='dark-blue' or theme.config?.styles?.color_schema=='dark-blue'}"
+        th:insert="~{components/theme-dark-blue/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme.config?.styles?.theme_dark=='dark' or theme.config?.styles?.theme_light=='dark' or theme.config?.styles?.theme_auto=='dark' or theme.config?.styles?.color_schema=='dark'}"
+        th:insert="~{components/theme-dark/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme.config?.styles?.theme_dark=='gray' or theme.config?.styles?.theme_light=='gray' or theme.config?.styles?.theme_auto=='gray' or theme.config?.styles?.color_schema=='gray'}"
+        th:insert="~{components/theme-gary/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme.config?.styles?.theme_dark=='light-blue' or theme.config?.styles?.theme_light=='light-blue' or theme.config?.styles?.theme_auto=='light-blue' or theme.config?.styles?.color_schema=='light-blue'}"
+        th:insert="~{components/theme-light-blue/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme.config?.styles?.theme_dark=='light' or theme.config?.styles?.theme_light=='light' or theme.config?.styles?.theme_auto=='light' or theme.config?.styles?.color_schema=='light'}"
+        th:insert="~{components/theme-light/template :: headContent}"
+      ></th:block>
+    </th:block>
+    <!--/* Text Size Declarations */-->
+    <th:block
+      th:if="${theme.config?.styles?.text_size}=='small'"
+      th:insert="~{components/text-size-small/template :: headContent}"
+    ></th:block>
+    <th:block
+      th:if="${theme.config?.styles?.text_size}=='normal'"
+      th:insert="~{components/text-size-normal/template :: headContent}"
+    ></th:block>
+    <th:block
+      th:if="${theme.config?.styles?.text_size}=='large'"
+      th:insert="~{components/text-size-large/template :: headContent}"
+    ></th:block>
     <!--/* js/css */-->
     <th:block th:replace="${head}" />
     <!--/* instant.page */-->

@@ -2,7 +2,7 @@
 
 ## Description
 
-Provides CSS variable definitions and examples for the theme's "large" text-size variant.
+Provides CSS variable definitions for the theme's "large" text-size variant.
 
 ## Usage
 
