@@ -4,7 +4,7 @@
 
   & h1,
   & .h1 {
-    color: var(--color-text);
+    color: var(--color-base-content);
     font-size: 1.5rem;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -34,7 +34,7 @@
 
     &.circle-avatar {
       border-radius: 50% !important;
-      box-shadow: 0 0 0 1px var(--color-avatar-border);
+      box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-base-content) 80%, transparent);
     }
 
     &.avatar-grayscale {
@@ -43,7 +43,7 @@
   }
 
   & #nav {
-    color: var(--color-accent-1);
+    color: var(--color-primary);
     font-size: var(--text-sm);
     font-style: normal;
     font-weight: 400;
@@ -57,7 +57,7 @@
       padding: 0;
 
       & a {
-        color: var(--color-accent-1);
+        color: var(--color-primary);
         font-size: var(--text);
         margin-right: 0.9375rem;
 
@@ -66,8 +66,8 @@
             background-image: linear-gradient(
               transparent,
               transparent 0.3125rem,
-              var(--color-accent-1) 0.3125rem,
-              var(--color-accent-1)
+              var(--color-primary) 0.3125rem,
+              var(--color-primary)
             );
             background-position: bottom;
             background-repeat: repeat-x;
@@ -77,7 +77,7 @@
       }
 
       & li {
-        border-color: var(--color-accent-1);
+        border-color: var(--color-primary);
         border-right: 1px dotted;
         display: inline-block;
         margin-right: 0.9375rem;
@@ -112,7 +112,7 @@
             top: 4.8125rem;
 
             &.iconify {
-              color: var(--color-accent-1);
+              color: var(--color-primary);
             }
           }
         }

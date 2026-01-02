@@ -9,7 +9,7 @@
       background: none;
 
       &:hover {
-        color: var(--color-link-hover);
+        color: var(--color-accent);
       }
     }
   }
@@ -40,7 +40,7 @@
     margin-right: 2rem;
 
     &:hover {
-      color: var(--color-accent-1);
+      color: var(--color-primary);
     }
   }
 
@@ -52,16 +52,16 @@
     right: 2rem;
 
     &:hover {
-      color: var(--color-accent-1);
+      color: var(--color-primary);
     }
   }
 
   & .active {
-    color: var(--color-accent-1);
+    color: var(--color-primary);
   }
 
   & #nav {
-    color: var(--color-accent-1);
+    color: var(--color-primary);
     font-size: var(--text-sm);
     font-style: normal;
     letter-spacing: 0.01em;
@@ -71,15 +71,15 @@
       line-height: 0.9375rem;
 
       & a {
-        color: var(--color-accent-1);
+        color: var(--color-primary);
         margin-right: 0.9375rem;
 
         &:hover {
           background-image: linear-gradient(
             transparent,
             transparent 0.3125rem,
-            var(--color-accent-1) 0.3125rem,
-            var(--color-accent-1)
+            var(--color-primary) 0.3125rem,
+            var(--color-primary)
           );
           background-position: bottom;
           background-repeat: repeat-x;
@@ -88,7 +88,7 @@
       }
 
       & li {
-        border-right: 1px dotted var(--color-accent-1);
+        border-right: 1px dotted var(--color-primary);
 
         &:last-child {
           border-right: 0;
@@ -135,7 +135,7 @@
     }
 
     & a:hover {
-      color: var(--color-link-hover);
+      color: var(--color-accent);
     }
 
     & .toc-link-h1 {
@@ -147,23 +147,23 @@
     }
 
     & .toc-level-2 {
-      color: var(--toc-level-2);
+      color: var(--color-base-content);
       font-size: var(--text-toc-level-2);
 
       &::before {
-        color: var(--color-accent-1);
+        color: var(--color-primary);
         content: "#";
         padding-right: 0.3125rem;
       }
     }
 
     & .toc-level-3 {
-      color: var(--toc-level-3);
+      color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       font-size: var(--text-toc-level-3);
     }
 
     & .toc-level-4 {
-      color: var(--toc-level-4);
+      color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
       font-size: var(--text-toc-level-4);
     }
 
@@ -175,12 +175,12 @@
     }
 
     & .toc-active {
-      color: var(--color-accent-1);
+      color: var(--color-primary);
     }
   }
 
   & .is-active-link::before {
-    background-color: var(--color-accent-1);
+    background-color: var(--color-primary);
   }
 
   & .is-collapsible {
@@ -213,7 +213,7 @@
   }
 
   & #footer-post {
-    background: var(--color-footer-mobile-2);
+    background: var(--color-base-100);
     border-radius: 2rem 2rem 0 0;
     border-top: 1px solid #666;
     bottom: 0;
@@ -233,7 +233,7 @@
         background: none;
 
         &:hover {
-          color: var(--color-link-hover);
+          color: var(--color-accent);
         }
       }
     }
@@ -243,15 +243,15 @@
       text-align: center;
 
       & a {
-        color: var(--color-accent-1);
+        color: var(--color-primary);
         font-size: 1em;
 
         &:hover {
           background-image: linear-gradient(
             transparent,
             transparent 0.3125rem,
-            var(--color-accent-1) 0.3125rem,
-            var(--color-accent-1)
+            var(--color-primary) 0.3125rem,
+            var(--color-primary)
           );
           background-position: bottom;
           background-repeat: repeat-x;
@@ -276,7 +276,7 @@
     }
 
     & #actions-footer {
-      background: var(--color-footer-mobile-3);
+      background: var(--color-base-200);
       border-radius: 2rem 2rem 0 0;
       overflow: auto;
       padding: 1rem;
@@ -285,7 +285,7 @@
       width: 100%;
 
       & a {
-        color: var(--color-accent-1);
+        color: var(--color-primary);
         display: inline-block;
         padding-left: 1rem;
       }
@@ -329,7 +329,7 @@
       }
 
       & a:hover {
-        color: var(--color-link-hover);
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       }
 
       & .toc-link-h1 {
@@ -337,23 +337,23 @@
       }
 
       & .toc-level-2 {
-        color: var(--color-text);
+        color: var(--color-base-content);
         font-size: var(--text-sm);
 
         &::before {
-          color: var(--color-accent-1);
+          color: var(--color-primary);
           content: "#";
         }
       }
 
       & .toc-level-3 {
-        color: #999;
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
         font-size: 0.7rem;
         line-height: 0.9375rem;
       }
 
       & .toc-level-4 {
-        color: #777;
+        color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
         font-size: 0.65rem;
         line-height: 0.9375rem;
       }
@@ -366,7 +366,7 @@
       }
 
       & .toc-active {
-        color: var(--color-accent-1);
+        color: var(--color-primary);
       }
     }
   }
@@ -378,7 +378,7 @@
 .recommendations,
 .post-navigation {
   & a {
-    color: var(--color-text);
+    color: var(--color-base-content);
 
     /* 去除下划线用这个 background-image: none; */
   }

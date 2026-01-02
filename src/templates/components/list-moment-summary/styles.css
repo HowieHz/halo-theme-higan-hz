@@ -31,17 +31,17 @@ video {
   }
 
   & .avatar {
-    background-color: var(--color-background);
-    box-shadow: 0 0 0 1px rgb(27 31 36 / 15%);
+    background-color: var(--color-base-100);
     display: inline-block;
     flex-shrink: 0;
     line-height: 1;
     overflow: hidden;
     vertical-align: middle;
-  }
 
-  & .color-fg-muted {
-    color: var(--color-accent-3);
+    &:hover {
+      box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-base-content) 80%, transparent);
+      transition: box-shadow 0.2s ease-in-out;
+    }
   }
 
   & .moment-header {
@@ -57,7 +57,7 @@ video {
   }
 
   & .operation {
-    color: var(--color-text);
+    color: var(--color-base-content);
     padding-top: 0.5rem;
 
     & a {
@@ -83,16 +83,17 @@ video {
   }
 
   & .tag {
-    background-color: var(--color-background-code) !important;
-    background-image: none !important;
+    background-color: var(--color-base-200);
+    background-image: none;
     border-radius: 5px;
-    box-shadow: 0 0 6px var(--color-footer-mobile-2);
-    color: var(--color-accent-1) !important;
+    box-shadow: 0 0 6px var(--color-base-300);
+    color: var(--color-base-content);
     font-size: var(--text-sm);
     padding: 0 6px;
     text-decoration: none;
 
     &::before {
+      color: var(--color-primary);
       content: "#";
     }
   }
@@ -106,7 +107,8 @@ video {
 
   & .moment-body {
     & .moment-content-box {
-      box-shadow: 1px 3px 15px rgb(140 149 159 / 15%);
+      background-color: var(--color-base-100);
+      box-shadow: 1px 3px 15px var(--color-base-300);
       padding: 1rem;
 
       & .moment-content {

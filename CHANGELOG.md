@@ -2,6 +2,12 @@
 
 <!-- markdownlint-disable MD024 -->
 
+## 1.50.3
+
+## 🔧 优化改进
+
+- 移除评论组件 v2 支持
+
 ## [1.50.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.1...v1.50.2) (2026-1-1)
 
 ### 🚀 新功能

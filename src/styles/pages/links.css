@@ -1,7 +1,7 @@
 /* 友链页面样式开始 */
 #links {
   & li {
-    color: var(--color-text);
+    color: var(--color-base-content);
     list-style: none;
   }
 
@@ -16,7 +16,7 @@
   }
 
   & .fir-clickcircle {
-    border: 1px solid var(--color-footer-mobile-2);
+    border: 0.1rem solid color-mix(in oklab, var(--color-base-content) 80%, transparent);
     border-radius: 6.25rem;
     cursor: pointer;
     height: 3.75rem;
@@ -37,12 +37,12 @@
     }
 
     & .fig-author-figure-title {
-      color: var(--color-text);
+      color: var(--color-base-content);
       font-weight: 400;
     }
 
     & .fig-author-figure-description {
-      color: var(--color-footer-mobile-1);
+      color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       margin-top: 0.125rem;
     }
   }

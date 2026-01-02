@@ -28,7 +28,7 @@
           class="moment-header mt-5"
           th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event' or moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"
         >
-          <div class="color-fg-muted">
+          <div class="color-base-content-80">
             <span>
               <a
                 th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
@@ -75,13 +75,13 @@
               </a>
             </span>
             <span
-              class="color-fg-muted no-underline"
+              class="color-base-content-80 no-underline"
               th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event'}"
               th:utext="${moment.metadata?.annotations?.get('higan.howiehz.top/customize-title')}"
             >
             </span>
             <span
-              class="color-fg-muted no-underline"
+              class="color-base-content-80 no-underline"
               th:if="${moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"
               th:utext="${moment.metadata?.annotations?.get('guqing.github.io/customize-title')}"
             >
@@ -92,7 +92,7 @@
           class="moment-header"
           th:unless="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event' or moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"
         >
-          <div class="color-fg-muted">
+          <div class="color-base-content-80">
             <span>
               <a
                 th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
@@ -144,7 +144,7 @@
               th:href="@{${authorPage}}"
               th:text="${moment.owner?.displayName}"
             ></a>
-            <span class="color-fg-muted no-underline">
+            <span class="color-base-content-80 no-underline">
               <relative-time
                 tense="past"
                 th:datetime="${moment.spec.releaseTime}"
@@ -157,7 +157,7 @@
             <!--/* 预计阅读时长 
             inline-block 保证图标和数字在一行 */-->
             <span
-              class="color-fg-muted inline-block no-underline"
+              class="color-base-content-80 inline-block no-underline"
               th:if="${theme.config?.moments_styles?.is_show_post_estimated_reading_time}"
               th:with="wordCount = ${pluginFinder.available('extra-api', '3.*') ? 
                 extraApiStatsFinder.getContentWordCount(moment.spec.content?.html) : #strings.length(moment.spec.content?.html)/2 }"
@@ -175,7 +175,7 @@
             <!--/* 字数统计 
             inline-block 保证图标和数字在一行 */-->
             <span
-              class="color-fg-muted inline-block no-underline"
+              class="color-base-content-80 inline-block no-underline"
               th:if="${theme.config?.moments_styles?.is_show_post_word_count}"
               th:with="wordCount = ${pluginFinder.available('extra-api', '3.*') ? 
                 extraApiStatsFinder.getContentWordCount(moment.spec.content?.html) : #strings.length(moment.spec.content?.html)/2 }"
@@ -282,7 +282,7 @@
         function activeUpvote(momentName) {
           var dom = document.querySelector(".moment .operation a[data-moment-name='" + momentName + "']");
           if (dom) {
-            dom.style.color = "var(--color-link-hover)";
+            dom.style.color = "var(--color-accent)";
             dom.style.fontWeight = "500";
           }
         }

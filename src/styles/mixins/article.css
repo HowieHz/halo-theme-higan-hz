@@ -11,7 +11,7 @@ article {
       margin-top: 0;
 
       & * {
-        color: var(--color-accent-3);
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
         font-size: var(--text-sm);
       }
     }
@@ -21,7 +21,7 @@ article {
     & h2,
     & .h2 {
       &::before {
-        color: var(--color-accent-1);
+        color: var(--color-primary);
         content: "#";
         font-size: 1.2rem;
         font-weight: bold;
@@ -33,7 +33,7 @@ article {
 
     & .caption,
     & figcaption {
-      color: var(--color-footer-mobile-1);
+      color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       display: block;
       font-size: 0.9em;
       margin-top: 0.5em;
@@ -70,7 +70,7 @@ article {
 
     & blockquote {
       background: inherit;
-      color: var(--color-quote);
+      color: var(--color-secondary);
       font-weight: bold;
       margin: 1rem 0.625rem;
       padding: 0.5em 0.625rem;
@@ -81,7 +81,7 @@ article {
       }
 
       & footer {
-        color: var(--color-footer-mobile-1);
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
         font-size: var(--text-xs);
         margin: var(--text) * 1.725 0;
 
@@ -89,19 +89,19 @@ article {
           background-image: linear-gradient(
             transparent,
             transparent 0.3125rem,
-            var(--color-footer-mobile-1) 0.3125rem,
-            var(--color-footer-mobile-1)
+            color-mix(in oklab, var(--color-base-content) 80%, transparent) 0.3125rem,
+            color-mix(in oklab, var(--color-base-content) 80%, transparent)
           );
-          color: var(--color-footer-mobile-1);
+          color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
 
           &:hover {
             background-image: linear-gradient(
               transparent,
               transparent 0.25rem,
-              var(--color-link-hover) 0.25rem,
-              var(--color-link-hover)
+              var(--color-accent) 0.25rem,
+              var(--color-accent)
             );
-            color: var(--color-link-hover);
+            color: var(--color-accent);
           }
         }
 
