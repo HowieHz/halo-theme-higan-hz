@@ -93,8 +93,8 @@ video {
     text-decoration: none;
 
     &::before {
-      content: "#";
       color: var(--color-primary);
+      content: "#";
     }
   }
 
