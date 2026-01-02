@@ -83,17 +83,18 @@ video {
   }
 
   & .tag {
-    background-color: var(--color-base-100);
+    background-color: var(--color-base-200);
     background-image: none;
     border-radius: 5px;
     box-shadow: 0 0 6px var(--color-base-300);
-    color: var(--color-primary);
+    color: var(--color-base-content);
     font-size: var(--text-sm);
     padding: 0 6px;
     text-decoration: none;
 
     &::before {
       content: "#";
+      color: var(--color-primary);
     }
   }
 
@@ -106,6 +107,7 @@ video {
 
   & .moment-body {
     & .moment-content-box {
+      background-color: var(--color-base-100);
       box-shadow: 1px 3px 15px var(--color-base-300);
       padding: 1rem;
 

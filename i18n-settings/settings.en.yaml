@@ -1145,8 +1145,8 @@ spec:
           name: img_onmouseover
           if: "$is_enable_advanced_options === true"
           label: Custom image onmouseover attribute
-          help: "Default value: this.style.boxShadow='0 0 7.5px var(--color-base-300), 0 0 7.5px var(--color-base-300)';"
-          value: "this.style.boxShadow='0 0 7.5px var(--color-base-300), 0 0 7.5px var(--color-base-300)';"
+          help: "Default value: this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
+          value: "this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
         - $formkit: text
           name: img_onmouseout
           if: "$is_enable_advanced_options === true"

@@ -98,10 +98,10 @@ article {
             background-image: linear-gradient(
               transparent,
               transparent 0.25rem,
-              var(--color-base-300) 0.25rem,
-              var(--color-base-300)
+              var(--color-accent) 0.25rem,
+              var(--color-accent)
             );
-            color: var(--color-base-300);
+            color: var(--color-accent);
           }
         }
 

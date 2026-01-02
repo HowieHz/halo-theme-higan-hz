@@ -1156,8 +1156,8 @@ spec:
           name: img_onmouseover
           if: "$is_enable_advanced_options === true"
           label: 自定义图片 onmouseover 属性
-          help: "默认值：this.style.boxShadow='0 0 7.5px var(--color-base-300), 0 0 7.5px var(--color-base-300)';"
-          value: "this.style.boxShadow='0 0 7.5px var(--color-base-300), 0 0 7.5px var(--color-base-300)';"
+          help: "默认值：this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
+          value: "this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
         - $formkit: text
           name: img_onmouseout
           if: "$is_enable_advanced_options === true"

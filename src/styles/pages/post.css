@@ -9,7 +9,7 @@
       background: none;
 
       &:hover {
-        color: var(--color-base-300);
+        color: var(--color-accent);
       }
     }
   }
@@ -135,7 +135,7 @@
     }
 
     & a:hover {
-      color: var(--color-base-300);
+      color: var(--color-accent);
     }
 
     & .toc-link-h1 {
@@ -233,7 +233,7 @@
         background: none;
 
         &:hover {
-          color: var(--color-base-300);
+          color: var(--color-accent);
         }
       }
     }
@@ -329,7 +329,7 @@
       }
 
       & a:hover {
-        color: var(--color-base-300);
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       }
 
       & .toc-link-h1 {
