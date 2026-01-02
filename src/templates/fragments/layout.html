@@ -194,6 +194,19 @@ html[theme="theme-[(${colorSchema.id})]"] {
       </style>
       /*/-->
     </th:block>
+    <!--/* Text Size Declarations */-->
+    <th:block
+      th:if="${theme.config?.styles?.text_size}=='small'"
+      th:insert="~{components/text-size-small/template :: headContent}"
+    ></th:block>
+    <th:block
+      th:if="${theme.config?.styles?.text_size}=='normal'"
+      th:insert="~{components/text-size-normal/template :: headContent}"
+    ></th:block>
+    <th:block
+      th:if="${theme.config?.styles?.text_size}=='large'"
+      th:insert="~{components/text-size-large/template :: headContent}"
+    ></th:block>
     <!--/* RSS link declaration */-->
     <th:block th:if="${pluginFinder.available('PluginFeed')}">
       <link rel="alternate" type="application/rss+xml" title="Posts - All" th:href="@{'/rss.xml'}" />

@@ -23,10 +23,10 @@ onMounted(async () => {
 </template>
 
 <style src="./default.css" scoped></style>
-<style src="./post.css" scoped></style>
 <!-- 导入主题样式 -->
 <style src="../../../src/styles/mixins/colors/theme.styl" scoped></style>
 <style src="../../../src/styles/main.css" scoped></style>
+<style src="../../../src/templates/components/text-size-normal/styles.css" scoped></style>
 <!-- 导入 post 页样式 -->
 <style src="../../../src/styles/pages/post.css" scoped></style>
 <style src="../../../src/styles/mixins/article.css" scoped></style>

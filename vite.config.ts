@@ -125,6 +125,12 @@ export default defineConfig({
           "src/templates/components/list-moment-summary/template.html",
         ),
         "components-header": path.resolve(__dirname, "src/templates/components/header/template.html"),
+        "components-text-size-small": path.resolve(__dirname, "src/templates/components/text-size-small/template.html"),
+        "components-text-size-normal": path.resolve(
+          __dirname,
+          "src/templates/components/text-size-normal/template.html",
+        ),
+        "components-text-size-large": path.resolve(__dirname, "src/templates/components/text-size-large/template.html"),
         // fragments
         "fragments-category-tree": path.resolve(__dirname, "src/templates/fragments/category-tree.html"),
         "fragments-common": path.resolve(__dirname, "src/templates/fragments/common.html"),
