@@ -35,9 +35,10 @@
       th:if="${theme_config == 'custom'} or ${theme.config?.styles?.theme_dark == 'custom'} or ${theme.config?.styles?.theme_light == 'custom'} or ${theme.config?.styles?.theme_auto == 'custom'}"
       th:inline="javascript"
     >
-      const allCustomColorSchema = /*[(${custom_color_schema_config})]*/ "";
+      const allCustomColorSchema = /*[[${custom_color_schema_config.![{id: id, type: type}]}]]*/ "";
     </script>
     <script vite-ignore th:if="${theme_config == 'custom'}" th:inline="javascript">
+      /* set data-color-scheme attribute */
       const customColorSchema = allCustomColorSchema.find(
         (schema) => schema.id === /*[[${theme.config?.styles?.custom_color_schema_init_id}]]*/ "1",
       );
