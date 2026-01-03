@@ -411,10 +411,6 @@
     }
   }
 
-  .color-base-300 {
-    color: var(--color-base-300);
-  }
-
   .color-time,
   a.color-time {
     color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
