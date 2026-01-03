@@ -13,6 +13,7 @@
 
 - 支持使用 Halo CMS 2.22 新引入的控件来自定义主题配色。
   - 即使你没有任何前端知识，现在也能简单地自定义主题配色了！
+  - 详情请阅读：[教程：自定义配色方案](https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-theme)
 
 ### 🐛 错误修复
 
