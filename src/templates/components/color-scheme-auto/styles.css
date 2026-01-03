@@ -1,12 +1,4 @@
-/* 设定 color-scheme */
-[data-color-scheme="light"] {
-  color-scheme: only light;
-}
-
-[data-color-scheme="dark"] {
-  color-scheme: only dark;
-}
-
+/* Set color-scheme */
 [data-color-scheme="auto"] {
   color-scheme: normal;
 }

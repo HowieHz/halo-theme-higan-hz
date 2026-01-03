@@ -332,7 +332,7 @@ spec:
         - $formkit: number
           name: custom_theme_auto_id
           label: 自定义配色方案识别码
-          if: "$theme_auto === 'custom'"
+          if: "$is_show_color_scheme_toggle_button == true && $theme_auto === 'custom'"
           value: ""
           help: "请先创建自定义配色方案，随后在此填写自定义配色方案识别码"
           validation: "required"
@@ -362,7 +362,7 @@ spec:
         - $formkit: number
           name: custom_theme_light_id
           label: 自定义配色方案识别码
-          if: "$theme_light === 'custom'"
+          if: "$is_show_color_scheme_toggle_button == true && $theme_light === 'custom'"
           value: ""
           help: "请先创建自定义配色方案，随后在此填写自定义配色方案识别码"
           validation: "required"
@@ -392,7 +392,7 @@ spec:
         - $formkit: number
           name: custom_theme_dark_id
           label: 自定义配色方案识别码
-          if: "$theme_dark === 'custom'"
+          if: "$is_show_color_scheme_toggle_button == true && $theme_dark === 'custom'"
           value: ""
           help: "请先创建自定义配色方案，随后在此填写自定义配色方案识别码"
           validation: "required"

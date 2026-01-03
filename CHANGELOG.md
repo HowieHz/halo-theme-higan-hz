@@ -29,6 +29,7 @@
 - 按需加载自定义样式，减小页面体积。
 - 配置文件尽量不使用 `if: "$get(xxx).value === 'xxx'"`，减小配置页错乱的概率。
 - 组件化评论组件样式支持，按需加载，减少页面体积。
+- 组件化页面 `color-scheme` 设定，按需加载，减少页面体积。
 
 ## [1.50.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.1...v1.50.2) (2026-1-1)
 
