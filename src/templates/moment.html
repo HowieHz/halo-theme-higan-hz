@@ -27,7 +27,7 @@
   </head>
   <body>
     <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
-      <div class="content common-post-list" x-data="momentComment">
+      <div class="content common-post-list" th:attr="x-data=|momentComment('${moment.metadata.name}')|">
         <div
           class="moment-header mt-5"
           th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event'}"
