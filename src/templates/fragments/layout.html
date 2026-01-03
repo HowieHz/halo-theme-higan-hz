@@ -53,6 +53,238 @@
       </th:block>
     </th:block>
     <!--/* RSS link declaration end */-->
+    <!--/* Custom Font Declarations start */-->
+    <th:block
+      th:if="${theme.config?.styles?.is_custom_font_files_enable}"
+      th:with="font=${#objects.nullSafe(theme.config?.styles?.custom_font_files, #theme.assets('/dist/MesloLGS-Regular.woff2'))},
+              ext=${font.substring(font.lastIndexOf('.') + 1)},
+              format=${ext == 'woff2' ? 'woff2' : 
+                (ext == 'woff' ? 'woff' : 
+                (ext == 'ttf' ? 'truetype' : 
+                (ext == 'otf' ? 'opentype' : 
+                (ext == 'eot' ? 'embedded-opentype' : 
+                ((ext == 'ttc' or ext == 'otc') ? 'collection' : ext)))))},
+              mime=${ext == 'woff2' ? 'font/woff2' : 
+                (ext == 'woff' ? 'font/woff' : 
+                (ext == 'ttf' ? 'font/ttf' : 
+                (ext == 'otf' ? 'font/otf' : 
+                (ext == 'sfnt' ? 'font/sfnt' : 
+                (ext == 'eot' ? 'application/vnd.ms-fontobject' : 
+                ((ext == 'ttc' or ext == 'otc') ? 'font/collection' : 'application/octet-stream'))))))}"
+    >
+      <link rel="preload" th:href="${font}" as="font" th:type="${mime}" crossorigin />
+      <!--/*/
+      <style th:inline="css">
+        @font-face {
+          font-display: swap;
+          font-family: "custom";
+          font-style: normal;
+          font-weight: 400;
+          src:
+            local("[(${theme.config?.styles?.custom_font_name})]"),
+            url("[(${font})]") format("[(${format})]");
+        }
+        :root {
+          --higan-font-family:
+            custom, ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont, segoe ui, roboto, helvetica neue,
+            arial, noto sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", segoe ui symbol, "Noto Color Emoji" !important;
+        }
+      </style>
+      /*/-->
+    </th:block>
+    <!--/* Custom Font Declarations end */-->
+    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute start */-->
+    <script
+      vite-ignore
+      th:if="${color_schema == 'custom'} or ${theme_dark == 'custom'} or ${theme_light == 'custom'} or ${theme_auto == 'custom'}"
+      th:inline="javascript"
+    >
+      const allCustomColorSchema = [
+        /*[# th:each="c : ${custom_color_schema_config}"]*/ /*[# th:if="${custom_color_schema_init_id==c.id or custom_theme_auto_id==c.id or custom_theme_light_id==c.id or custom_theme_dark_id==c.id}"]*/
+        { id: /*[[${c.id}]]*/ "", type: /*[[${c.type}]]*/ "" },
+        /*[/]*/ /*[/]*/
+      ];
+    </script>
+    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute end */-->
+    <!--/* set data-color-scheme attribute for custom color schema start */-->
+    <script vite-ignore th:if="${color_schema == 'custom'}" th:inline="javascript">
+      const customColorSchema = allCustomColorSchema.find(
+        (schema) => schema.id === /*[[${custom_color_schema_init_id}]]*/ "1",
+      );
+      document.documentElement.setAttribute("data-color-scheme", customColorSchema ? customColorSchema.type : null);
+    </script>
+    <!--/* set data-color-scheme attribute for custom color schema end */-->
+    <!--/* Custom Theme Declarations start */-->
+    <th:block
+      th:if="${not #lists.isEmpty(custom_color_schema_config)} and (${color_schema == 'custom'} or ${theme_dark == 'custom'} or ${theme_light == 'custom'} or ${theme_auto == 'custom'})"
+    >
+      <th:block th:each="colorSchema : ${custom_color_schema_config}">
+        <th:block
+          th:if="${custom_color_schema_init_id==colorSchema.id or 
+                  custom_theme_auto_id==colorSchema.id or 
+                  custom_theme_light_id==colorSchema.id or 
+                  custom_theme_dark_id==colorSchema.id}"
+        >
+          <!--/* Color Scheme Declarations Start */-->
+          <th:block
+            th:if="${colorSchema.type == 'dark'}"
+            th:insert="~{components/color-scheme-dark/template :: headContent}"
+          ></th:block>
+          <th:block
+            th:if="${colorSchema.type == 'light'}"
+            th:insert="~{components/color-scheme-light/template :: headContent}"
+          ></th:block>
+          <th:block
+            th:if="${colorSchema.type == 'auto'}"
+            th:insert="~{components/color-scheme-auto/template :: headContent}"
+          ></th:block>
+          <!--/* Color Scheme Declarations End */-->
+          <!--/* Theme Color CSS Variables Declarations Start */-->
+          <th:block th:unless="${colorSchema.is_css_variable_mode}">
+            <!--/*/
+            <style th:inline="css">
+html[theme="theme-[(${colorSchema.id})]"] {
+--color-primary: [(${colorSchema.primary_color})];
+--color-primary-content: [(${colorSchema.primary_content_color})];
+--color-secondary: [(${colorSchema.secondary_color})];
+--color-secondary-content: [(${colorSchema.secondary_content_color})];
+--color-accent: [(${colorSchema.accent_color})];
+--color-accent-content: [(${colorSchema.accent_content_color})];
+--color-neutral: [(${colorSchema.neutral_color})];
+--color-neutral-content: [(${colorSchema.neutral_content_color})];
+--color-base-100: [(${colorSchema.base_100_color})];
+--color-base-200: [(${colorSchema.base_200_color})];
+--color-base-300: [(${colorSchema.base_300_color})];
+--color-base-content: [(${colorSchema.base_content_color})];
+}
+            </style>
+            /*/-->
+          </th:block>
+          <th:block th:if="${colorSchema.is_css_variable_mode}">
+            <th:block th:switch="${colorSchema.is_raw_css_output_mode}">
+              <th:block th:case="true">
+                <!--/*/
+                <style th:inline="css">
+[(${colorSchema.custom_css})]
+                </style>
+                /*/-->
+              </th:block>
+              <th:block th:case="false">
+                <!--/*/
+                <style th:inline="css">
+html[theme="theme-[(${colorSchema.id})]"] {
+[(${colorSchema.custom_css})]}
+                </style>
+                /*/-->
+              </th:block>
+            </th:block>
+          </th:block>
+          <!--/* Theme Color CSS Variables Declarations End */-->
+        </th:block>
+      </th:block>
+    </th:block>
+    <!--/* Custom Theme Declarations end */-->
+    <!--/* Preset Themes' Color Scheme Declarations start */-->
+    <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      <th:block
+        th:if="${color_schema} == 'light' or ${color_schema} == 'light-blue' or ${color_schema} == 'gray'"
+        th:insert="~{components/color-scheme-light/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${color_schema} == 'dark' or ${color_schema} == 'dark-blue'"
+        th:insert="~{components/color-scheme-dark/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${color_schema} == 'auto' or ${color_schema} == 'auto-blue'"
+        th:insert="~{components/color-scheme-auto/template :: headContent}"
+      ></th:block>
+    </th:block>
+    <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      <th:block
+        th:if="${theme_dark == 'light' or theme_light == 'light' or theme_auto == 'light' or color_schema == 'light' or
+                theme_dark == 'light-blue' or theme_light == 'light-blue' or theme_auto == 'light-blue' or color_schema == 'light-blue' or
+                theme_dark == 'gray' or theme_light == 'gray' or theme_auto == 'gray' or color_schema == 'gray'}"
+        th:insert="~{components/color-scheme-light/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark == 'dark' or theme_light == 'dark' or theme_auto == 'dark' or color_schema == 'dark' or
+                theme_dark == 'dark-blue' or theme_light == 'dark-blue' or theme_auto == 'dark-blue' or color_schema == 'dark-blue'}"
+        th:insert="~{components/color-scheme-dark/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark == 'auto' or theme_light == 'auto' or theme_auto == 'auto' or color_schema == 'auto' or
+                theme_dark == 'auto-blue' or theme_light == 'auto-blue' or theme_auto == 'auto-blue' or color_schema == 'auto-blue'}"
+        th:insert="~{components/color-scheme-auto/template :: headContent}"
+      ></th:block>
+    </th:block>
+    <!--/* Preset Themes' Color Scheme Declarations end */-->
+    <!--/* Preset Themes' Color CSS Variables Declarations start */-->
+    <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      <th:block
+        th:if="${color_schema=='auto-blue'}"
+        th:insert="~{components/theme-auto-blue/template :: headContent}"
+      ></th:block>
+      <th:block th:if="${color_schema=='auto'}" th:insert="~{components/theme-auto/template :: headContent}"></th:block>
+      <th:block
+        th:if="${color_schema=='dark-blue'}"
+        th:insert="~{components/theme-dark-blue/template :: headContent}"
+      ></th:block>
+      <th:block th:if="${color_schema=='dark'}" th:insert="~{components/theme-dark/template :: headContent}"></th:block>
+      <th:block th:if="${color_schema=='gray'}" th:insert="~{components/theme-gary/template :: headContent}"></th:block>
+      <th:block
+        th:if="${color_schema=='light-blue'}"
+        th:insert="~{components/theme-light-blue/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${color_schema=='light'}"
+        th:insert="~{components/theme-light/template :: headContent}"
+      ></th:block>
+    </th:block>
+    <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      <th:block
+        th:if="${theme_dark=='auto-blue' or theme_light=='auto-blue' or theme_auto=='auto-blue' or color_schema=='auto-blue'}"
+        th:insert="~{components/theme-auto-blue/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark=='auto' or theme_light=='auto' or theme_auto=='auto' or color_schema=='auto'}"
+        th:insert="~{components/theme-auto/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark=='dark-blue' or theme_light=='dark-blue' or theme_auto=='dark-blue' or color_schema=='dark-blue'}"
+        th:insert="~{components/theme-dark-blue/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark=='dark' or theme_light=='dark' or theme_auto=='dark' or color_schema=='dark'}"
+        th:insert="~{components/theme-dark/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark=='gray' or theme_light=='gray' or theme_auto=='gray' or color_schema=='gray'}"
+        th:insert="~{components/theme-gary/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark=='light-blue' or theme_light=='light-blue' or theme_auto=='light-blue' or color_schema=='light-blue'}"
+        th:insert="~{components/theme-light-blue/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark=='light' or theme_light=='light' or theme_auto=='light' or color_schema=='light'}"
+        th:insert="~{components/theme-light/template :: headContent}"
+      ></th:block>
+    </th:block>
+    <!--/* Preset Themes' Color CSS Variables Declarations end */-->
+    <!--/* Preset Text Size CSS Variables Declarations start */-->
+    <th:block
+      th:if="${theme.config?.styles?.text_size}=='small'"
+      th:insert="~{components/text-size-small/template :: headContent}"
+    ></th:block>
+    <th:block
+      th:if="${theme.config?.styles?.text_size}=='normal'"
+      th:insert="~{components/text-size-normal/template :: headContent}"
+    ></th:block>
+    <th:block
+      th:if="${theme.config?.styles?.text_size}=='large'"
+      th:insert="~{components/text-size-large/template :: headContent}"
+    ></th:block>
+    <!--/* Preset Text Size CSS VariablesDeclarations end */-->
     <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script Start */-->
     <script vite-ignore th:if="${theme.config?.global?.anti_mirror_site}" th:inline="javascript">
       (function () {
@@ -147,236 +379,6 @@
       })();
     </script>
     <!--/* Auto Redirect to Browser Language Script End */-->
-    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute start */-->
-    <script
-      vite-ignore
-      th:if="${color_schema == 'custom'} or ${theme_dark == 'custom'} or ${theme_light == 'custom'} or ${theme_auto == 'custom'}"
-      th:inline="javascript"
-    >
-      const allCustomColorSchema = [
-        /*[# th:each="c : ${custom_color_schema_config}"]*/ /*[# th:if="${custom_color_schema_init_id==c.id or custom_theme_auto_id==c.id or custom_theme_light_id==c.id or custom_theme_dark_id==c.id}"]*/
-        { id: /*[[${c.id}]]*/ "", type: /*[[${c.type}]]*/ "" },
-        /*[/]*/ /*[/]*/
-      ];
-    </script>
-    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute end */-->
-    <!--/* set data-color-scheme attribute for custom color schema start */-->
-    <script vite-ignore th:if="${color_schema == 'custom'}" th:inline="javascript">
-      const customColorSchema = allCustomColorSchema.find(
-        (schema) => schema.id === /*[[${custom_color_schema_init_id}]]*/ "1",
-      );
-      document.documentElement.setAttribute("data-color-scheme", customColorSchema ? customColorSchema.type : null);
-    </script>
-    <!--/* set data-color-scheme attribute for custom color schema end */-->
-    <!--/* Custom Theme Declarations start */-->
-    <th:block
-      th:if="${not #lists.isEmpty(custom_color_schema_config)} and (${color_schema == 'custom'} or ${theme_dark == 'custom'} or ${theme_light == 'custom'} or ${theme_auto == 'custom'})"
-    >
-      <th:block th:each="colorSchema : ${custom_color_schema_config}">
-        <th:block
-          th:if="${custom_color_schema_init_id==colorSchema.id or 
-                  custom_theme_auto_id==colorSchema.id or 
-                  custom_theme_light_id==colorSchema.id or 
-                  custom_theme_dark_id==colorSchema.id}"
-        >
-          <!--/* Color Scheme Declarations */-->
-          <th:block
-            th:if="${colorSchema.type == 'dark'}"
-            th:insert="~{components/color-scheme-dark/template :: headContent}"
-          ></th:block>
-          <th:block
-            th:if="${colorSchema.type == 'light'}"
-            th:insert="~{components/color-scheme-light/template :: headContent}"
-          ></th:block>
-          <th:block
-            th:if="${colorSchema.type == 'auto'}"
-            th:insert="~{components/color-scheme-auto/template :: headContent}"
-          ></th:block>
-          <!--/* Theme Color Declarations */-->
-          <th:block th:unless="${colorSchema.is_css_variable_mode}">
-            <!--/*/
-            <style th:inline="css">
-html[theme="theme-[(${colorSchema.id})]"] {
---color-primary: [(${colorSchema.primary_color})];
---color-primary-content: [(${colorSchema.primary_content_color})];
---color-secondary: [(${colorSchema.secondary_color})];
---color-secondary-content: [(${colorSchema.secondary_content_color})];
---color-accent: [(${colorSchema.accent_color})];
---color-accent-content: [(${colorSchema.accent_content_color})];
---color-neutral: [(${colorSchema.neutral_color})];
---color-neutral-content: [(${colorSchema.neutral_content_color})];
---color-base-100: [(${colorSchema.base_100_color})];
---color-base-200: [(${colorSchema.base_200_color})];
---color-base-300: [(${colorSchema.base_300_color})];
---color-base-content: [(${colorSchema.base_content_color})];
-}
-            </style>
-            /*/-->
-          </th:block>
-          <th:block th:if="${colorSchema.is_css_variable_mode}">
-            <th:block th:switch="${colorSchema.is_raw_css_output_mode}">
-              <th:block th:case="true">
-                <!--/*/
-                <style th:inline="css">
-[(${colorSchema.custom_css})]
-                </style>
-                /*/-->
-              </th:block>
-              <th:block th:case="false">
-                <!--/*/
-                <style th:inline="css">
-html[theme="theme-[(${colorSchema.id})]"] {
-[(${colorSchema.custom_css})]}
-                </style>
-                /*/-->
-              </th:block>
-            </th:block>
-          </th:block>
-        </th:block>
-      </th:block>
-    </th:block>
-    <!--/* Custom Theme Declarations end */-->
-    <!--/* Custom Font Declarations start */-->
-    <th:block
-      th:if="${theme.config?.styles?.is_custom_font_files_enable}"
-      th:with="font=${#objects.nullSafe(theme.config?.styles?.custom_font_files, #theme.assets('/dist/MesloLGS-Regular.woff2'))},
-              ext=${font.substring(font.lastIndexOf('.') + 1)},
-              format=${ext == 'woff2' ? 'woff2' : 
-                (ext == 'woff' ? 'woff' : 
-                (ext == 'ttf' ? 'truetype' : 
-                (ext == 'otf' ? 'opentype' : 
-                (ext == 'eot' ? 'embedded-opentype' : 
-                ((ext == 'ttc' or ext == 'otc') ? 'collection' : ext)))))},
-              mime=${ext == 'woff2' ? 'font/woff2' : 
-                (ext == 'woff' ? 'font/woff' : 
-                (ext == 'ttf' ? 'font/ttf' : 
-                (ext == 'otf' ? 'font/otf' : 
-                (ext == 'sfnt' ? 'font/sfnt' : 
-                (ext == 'eot' ? 'application/vnd.ms-fontobject' : 
-                ((ext == 'ttc' or ext == 'otc') ? 'font/collection' : 'application/octet-stream'))))))}"
-    >
-      <link rel="preload" th:href="${font}" as="font" th:type="${mime}" crossorigin />
-      <!--/*/
-      <style th:inline="css">
-        @font-face {
-          font-display: swap;
-          font-family: "custom";
-          font-style: normal;
-          font-weight: 400;
-          src:
-            local("[(${theme.config?.styles?.custom_font_name})]"),
-            url("[(${font})]") format("[(${format})]");
-        }
-        :root {
-          --higan-font-family:
-            custom, ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont, segoe ui, roboto, helvetica neue,
-            arial, noto sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", segoe ui symbol, "Noto Color Emoji" !important;
-        }
-      </style>
-      /*/-->
-    </th:block>
-    <!--/* Custom Font Declarations end */-->
-    <!--/* Preset Themes' Color Scheme Declarations start */-->
-    <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
-      <th:block
-        th:if="${color_schema} == 'light' or ${color_schema} == 'light-blue' or ${color_schema} == 'gray'"
-        th:insert="~{components/color-scheme-light/template :: headContent}"
-      ></th:block>
-      <th:block
-        th:if="${color_schema} == 'dark' or ${color_schema} == 'dark-blue'"
-        th:insert="~{components/color-scheme-dark/template :: headContent}"
-      ></th:block>
-      <th:block
-        th:if="${color_schema} == 'auto' or ${color_schema} == 'auto-blue'"
-        th:insert="~{components/color-scheme-auto/template :: headContent}"
-      ></th:block>
-    </th:block>
-    <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
-      <th:block
-        th:if="${theme_dark == 'light' or theme_light == 'light' or theme_auto == 'light' or color_schema == 'light' or
-                theme_dark == 'light-blue' or theme_light == 'light-blue' or theme_auto == 'light-blue' or color_schema == 'light-blue' or
-                theme_dark == 'gray' or theme_light == 'gray' or theme_auto == 'gray' or color_schema == 'gray'}"
-        th:insert="~{components/color-scheme-light/template :: headContent}"
-      ></th:block>
-      <th:block
-        th:if="${theme_dark == 'dark' or theme_light == 'dark' or theme_auto == 'dark' or color_schema == 'dark' or
-                theme_dark == 'dark-blue' or theme_light == 'dark-blue' or theme_auto == 'dark-blue' or color_schema == 'dark-blue'}"
-        th:insert="~{components/color-scheme-dark/template :: headContent}"
-      ></th:block>
-      <th:block
-        th:if="${theme_dark == 'auto' or theme_light == 'auto' or theme_auto == 'auto' or color_schema == 'auto' or
-                theme_dark == 'auto-blue' or theme_light == 'auto-blue' or theme_auto == 'auto-blue' or color_schema == 'auto-blue'}"
-        th:insert="~{components/color-scheme-auto/template :: headContent}"
-      ></th:block>
-    </th:block>
-    <!--/* Preset Themes' Color Scheme Declarations end */-->
-    <!--/* Preset Themes' Color Declarations start */-->
-    <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
-      <th:block
-        th:if="${color_schema=='auto-blue'}"
-        th:insert="~{components/theme-auto-blue/template :: headContent}"
-      ></th:block>
-      <th:block th:if="${color_schema=='auto'}" th:insert="~{components/theme-auto/template :: headContent}"></th:block>
-      <th:block
-        th:if="${color_schema=='dark-blue'}"
-        th:insert="~{components/theme-dark-blue/template :: headContent}"
-      ></th:block>
-      <th:block th:if="${color_schema=='dark'}" th:insert="~{components/theme-dark/template :: headContent}"></th:block>
-      <th:block th:if="${color_schema=='gray'}" th:insert="~{components/theme-gary/template :: headContent}"></th:block>
-      <th:block
-        th:if="${color_schema=='light-blue'}"
-        th:insert="~{components/theme-light-blue/template :: headContent}"
-      ></th:block>
-      <th:block
-        th:if="${color_schema=='light'}"
-        th:insert="~{components/theme-light/template :: headContent}"
-      ></th:block>
-    </th:block>
-    <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
-      <th:block
-        th:if="${theme_dark=='auto-blue' or theme_light=='auto-blue' or theme_auto=='auto-blue' or color_schema=='auto-blue'}"
-        th:insert="~{components/theme-auto-blue/template :: headContent}"
-      ></th:block>
-      <th:block
-        th:if="${theme_dark=='auto' or theme_light=='auto' or theme_auto=='auto' or color_schema=='auto'}"
-        th:insert="~{components/theme-auto/template :: headContent}"
-      ></th:block>
-      <th:block
-        th:if="${theme_dark=='dark-blue' or theme_light=='dark-blue' or theme_auto=='dark-blue' or color_schema=='dark-blue'}"
-        th:insert="~{components/theme-dark-blue/template :: headContent}"
-      ></th:block>
-      <th:block
-        th:if="${theme_dark=='dark' or theme_light=='dark' or theme_auto=='dark' or color_schema=='dark'}"
-        th:insert="~{components/theme-dark/template :: headContent}"
-      ></th:block>
-      <th:block
-        th:if="${theme_dark=='gray' or theme_light=='gray' or theme_auto=='gray' or color_schema=='gray'}"
-        th:insert="~{components/theme-gary/template :: headContent}"
-      ></th:block>
-      <th:block
-        th:if="${theme_dark=='light-blue' or theme_light=='light-blue' or theme_auto=='light-blue' or color_schema=='light-blue'}"
-        th:insert="~{components/theme-light-blue/template :: headContent}"
-      ></th:block>
-      <th:block
-        th:if="${theme_dark=='light' or theme_light=='light' or theme_auto=='light' or color_schema=='light'}"
-        th:insert="~{components/theme-light/template :: headContent}"
-      ></th:block>
-    </th:block>
-    <!--/* Preset Themes' Color Declarations end */-->
-    <!--/* Preset Text Size Declarations start */-->
-    <th:block
-      th:if="${theme.config?.styles?.text_size}=='small'"
-      th:insert="~{components/text-size-small/template :: headContent}"
-    ></th:block>
-    <th:block
-      th:if="${theme.config?.styles?.text_size}=='normal'"
-      th:insert="~{components/text-size-normal/template :: headContent}"
-    ></th:block>
-    <th:block
-      th:if="${theme.config?.styles?.text_size}=='large'"
-      th:insert="~{components/text-size-large/template :: headContent}"
-    ></th:block>
-    <!--/* Preset Text Size Declarations end */-->
     <!--/* js/css injection start */-->
     <th:block th:replace="${head}" />
     <!--/* js/css injection end */-->
