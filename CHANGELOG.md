@@ -26,6 +26,7 @@
 - 简化主题 CSS 变量数。
 - 按需加载字号声明，减小资源体积。
 - 按需加载自定义样式，减小页面体积。
+- 配置文件尽量不使用 `if: "$get(xxx).value === 'xxx'"`，减小配置页错乱的概率。
 
 ## [1.50.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.1...v1.50.2) (2026-1-1)
 
