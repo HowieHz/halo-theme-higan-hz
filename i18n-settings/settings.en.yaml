@@ -163,8 +163,9 @@ spec:
             - label: "Custom Color Scheme"
               value: "custom"
         - $formkit: number
+          label: Custom Color Scheme Identifier
           name: custom_color_schema_init_id
-          if: "$get(color_schema_init).value === 'custom'"
+          if: "$color_schema === 'custom'"
           value: ""
           help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
@@ -330,7 +331,8 @@ spec:
               value: "custom"
         - $formkit: number
           name: custom_theme_auto_id
-          if: "$get(custom_theme_auto).value === 'custom'"
+          label: Custom Color Scheme Identifier
+          if: "$theme_auto === 'custom'"
           value: ""
           help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
@@ -359,7 +361,8 @@ spec:
               value: "custom"
         - $formkit: number
           name: custom_theme_light_id
-          if: "$get(custom_theme_light).value === 'custom'"
+          label: Custom Color Scheme Identifier
+          if: "$theme_light === 'custom'"
           value: ""
           help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
@@ -388,7 +391,8 @@ spec:
               value: "custom"
         - $formkit: number
           name: custom_theme_dark_id
-          if: "$get(custom_theme_dark).value === 'custom'"
+          label: Custom Color Scheme Identifier
+          if: "$theme_dark === 'custom'"
           value: ""
           help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
