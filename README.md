@@ -6,12 +6,14 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/HowieHz/halo-theme-higan-hz)
 [![Halo Version](https://img.shields.io/badge/Halo-2.22.0+-brightgreen.svg)](https://halo.run)
 
-## 说明
+## 简介
 
-一款响应式、简洁清爽的个人网站 Halo CMS 主题。
+Higan Haozi 是一款响应式、简洁清爽的个人网站主题，适用于 [Halo CMS](https://github.com/halo-dev/halo)。
 
 想了解更多吗？欢迎访问[文档](https://howiehz.top/halo-theme-higan-haozi/)进一步了解此主题。  
 也可以访问[示例站点](https://howiehz.top/)进行体验。
+
+> 👉 [快速开始](https://howiehz.top/halo-theme-higan-haozi/guide/getting-started)
 
 ## 特点
 
@@ -26,7 +28,7 @@
 
 ## 预览
 
-下图展示了主题部分配色风格：
+本主题支持[自定义配色方案](https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-theme)。下图展示了部分预设配色方案：
 
 ![preview-1](./docs/public/preview-1.png)
 
@@ -61,7 +63,11 @@
 
 ## 贡献指南
 
-见 [CONTRIBUTING](./CONTRIBUTING)
+见 [CONTRIBUTING](./CONTRIBUTING.md)
+
+## 更新日志
+
+见 [CHANGELOG](./CHANGELOG.md)
 
 ## 项目状态
 
