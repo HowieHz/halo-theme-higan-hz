@@ -27,7 +27,7 @@
   </head>
   <body>
     <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
-      <div class="content common-post-list">
+      <div class="content common-post-list" x-data="momentComment">
         <div
           class="moment-header mt-5"
           th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event'}"
@@ -227,7 +227,7 @@
               </a>
             </th:block>
             <th:block th:if="${theme.config?.moments_styles?.is_moment_comment_section_show and haloCommentEnabled}">
-              <a href="javascript: void(0);" class="ml-1">
+              <a @click="setCurrent(name)" class="ml-1 cursor-pointer">
                 <span
                   class="iconify"
                   style="
@@ -236,7 +236,7 @@
                 ></span>
                 <span th:text="${moment.stats.approvedComment}"></span>
               </a>
-              <div class="moment-comment">
+              <div class="moment-comment" x-show="current === name">
                 <halo:comment group="moment.halo.run" kind="Moment" th:name="${moment.metadata?.name}" />
               </div>
             </th:block>

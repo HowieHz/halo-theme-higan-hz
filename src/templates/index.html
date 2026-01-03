@@ -18,7 +18,12 @@
       <th:block th:insert="~{components/list-post-simple/template :: headContent(showPagination = true)}"></th:block>
     </th:block>
     <th:block th:if="${theme?.config.index_styles?.list_layout=='moment-list-summary'}">
-      <th:block th:insert="~{components/list-moment-summary/template :: headContent}"></th:block>
+      <th:block
+        th:insert="~{components/list-moment-summary/template :: headContent(
+            moments=${momentFinder.list(
+              posts.page,
+              theme.config?.index_styles?.moment_list_page_size)})}"
+      ></th:block>
     </th:block>
   </head>
   <body>

@@ -18,7 +18,7 @@
       th:href="@{'/moments/rss.xml'}"
     />
     <script src="/src/scripts/pages/moments.ts" type="module"></script>
-    <th:block th:insert="~{components/list-moment-summary/template :: headContent}"></th:block>
+    <th:block th:insert="~{components/list-moment-summary/template :: headContent(moments=${moments})}"></th:block>
   </head>
   <body>
     <th:block

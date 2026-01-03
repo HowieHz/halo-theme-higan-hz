@@ -3,7 +3,7 @@
   <th:block th:insert="~{components/pagination/template :: headContent}"></th:block>
   <th:block th:insert="~{components/moment-video-modal/template :: headContent}"></th:block>
   <th:block
-    th:if="${theme.config?.moments_styles?.is_moment_comment_section_show and haloCommentEnabled}"
+    th:if="${theme.config?.moments_styles?.is_moment_comment_section_show and haloCommentEnabled and !#lists.isEmpty(moments.items)}"
     th:insert="~{components/halo-comment-widget/template :: headContent}"
   ></th:block>
 </head>
