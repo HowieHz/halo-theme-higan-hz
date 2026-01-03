@@ -312,7 +312,7 @@ function nav(): DefaultTheme.NavItem[] {
         { text: "多语言支持", link: "/tutorial/i18n" },
         { text: "性能优化", link: "/tutorial/performance" },
         { text: "安全实践", link: "/tutorial/security" },
-        { text: "自定义图标", link: "/tutorial/custom-svg" },
+        { text: "自定义配色方案", link: "/tutorial/custom-theme" },
       ],
     },
     {
@@ -367,7 +367,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: "多语言支持", link: "/tutorial/i18n" },
         { text: "性能优化", link: "/tutorial/performance" },
         { text: "安全防护", link: "/tutorial/security" },
-        { text: "自定义图标", link: "/tutorial/custom-svg" },
+        { text: "自定义配色方案", link: "/tutorial/custom-theme" },
       ],
     },
     {
