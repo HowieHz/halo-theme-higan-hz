@@ -125,6 +125,10 @@ export default defineConfig({
           "src/templates/components/list-moment-summary/template.html",
         ),
         "components-header": path.resolve(__dirname, "src/templates/components/header/template.html"),
+        "components-halo-comment-widget": path.resolve(
+          __dirname,
+          "src/templates/components/halo-comment-widget/template.html",
+        ),
         "components-text-size-small": path.resolve(__dirname, "src/templates/components/text-size-small/template.html"),
         "components-text-size-normal": path.resolve(
           __dirname,

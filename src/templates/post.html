@@ -49,6 +49,10 @@
       </th:block>
     </th:block>
     <script src="/src/scripts/pages/post.ts" type="module"></script>
+    <th:block
+      th:if="${theme.config?.post_styles?.is_post_comment_section_show and haloCommentEnabled}"
+      th:insert="~{components/halo-comment-widget/template :: headContent}"
+    ></th:block>
   </head>
   <body>
     <!--/*/
@@ -361,16 +365,10 @@
         </span>
       </th:block>
 
-      <!--/* 上一个也是分隔线或者点赞按钮，就会隐藏，是 CSS 样式做的工作 */-->
-      <th:block th:if="${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show}">
-        <hr class="divide mt-10 mb-0" />
-      </th:block>
+      <!--/* 上一个也是分隔线或者点赞按钮，这个 hr 就会隐藏，这个隐藏逻辑是 CSS 样式做的工作 */-->
+      <hr th:if="${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show}" class="divide mt-10 mb-0" />
 
-      <div
-        th:if="${theme.config?.post_styles?.is_post_comment_section_show}
-            and ${haloCommentEnabled}"
-        class="mt-5"
-      >
+      <div th:if="${theme.config?.post_styles?.is_post_comment_section_show and haloCommentEnabled}" class="mt-5">
         <halo:comment group="content.halo.run" kind="Post" th:name="${post.metadata?.name}" />
       </div>
     </article>
