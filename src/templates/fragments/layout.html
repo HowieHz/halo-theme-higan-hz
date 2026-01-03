@@ -37,76 +37,23 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="${#strings.defaultString(title, site.title)}"></title>
-    <script
-      vite-ignore
-      th:if="${color_schema == 'custom'} or ${theme_dark == 'custom'} or ${theme_light == 'custom'} or ${theme_auto == 'custom'}"
-      th:inline="javascript"
-    >
-      const allCustomColorSchema = [
-        /*[# th:each="c : ${custom_color_schema_config}"]*/ /*[# th:if="${custom_color_schema_init_id==c.id or custom_theme_auto_id==c.id or custom_theme_light_id==c.id or custom_theme_dark_id==c.id}"]*/
-        { id: /*[[${c.id}]]*/ "", type: /*[[${c.type}]]*/ "" },
-        /*[/]*/ /*[/]*/
-      ];
-    </script>
-    <!--/* set data-color-scheme attribute */-->
-    <script vite-ignore th:if="${color_schema == 'custom'}" th:inline="javascript">
-      const customColorSchema = allCustomColorSchema.find(
-        (schema) => schema.id === /*[[${custom_color_schema_init_id}]]*/ "1",
-      );
-      document.documentElement.setAttribute("data-color-scheme", customColorSchema ? customColorSchema.type : null);
-    </script>
-    <th:block
-      th:if="${not #lists.isEmpty(custom_color_schema_config)} and (${color_schema == 'custom'} or ${theme_dark == 'custom'} or ${theme_light == 'custom'} or ${theme_auto == 'custom'})"
-    >
-      <th:block th:each="colorSchema : ${custom_color_schema_config}">
-        <th:block
-          th:if="${custom_color_schema_init_id==colorSchema.id or 
-                  custom_theme_auto_id==colorSchema.id or 
-                  custom_theme_light_id==colorSchema.id or 
-                  custom_theme_dark_id==colorSchema.id}"
-        >
-          <th:block th:unless="${colorSchema.is_css_variable_mode}">
-            <!--/*/
-            <style th:inline="css">
-html[theme="theme-[(${colorSchema.id})]"] {
---color-primary: [(${colorSchema.primary_color})];
---color-primary-content: [(${colorSchema.primary_content_color})];
---color-secondary: [(${colorSchema.secondary_color})];
---color-secondary-content: [(${colorSchema.secondary_content_color})];
---color-accent: [(${colorSchema.accent_color})];
---color-accent-content: [(${colorSchema.accent_content_color})];
---color-neutral: [(${colorSchema.neutral_color})];
---color-neutral-content: [(${colorSchema.neutral_content_color})];
---color-base-100: [(${colorSchema.base_100_color})];
---color-base-200: [(${colorSchema.base_200_color})];
---color-base-300: [(${colorSchema.base_300_color})];
---color-base-content: [(${colorSchema.base_content_color})];
-}
-            </style>
-            /*/-->
-          </th:block>
-          <th:block th:if="${colorSchema.is_css_variable_mode}">
-            <th:block th:switch="${colorSchema.is_raw_css_output_mode}">
-              <th:block th:case="true">
-                <!--/*/
-                <style th:inline="css">
-[(${colorSchema.custom_css})]
-                </style>
-                /*/-->
-              </th:block>
-              <th:block th:case="false">
-                <!--/*/
-                <style th:inline="css">
-html[theme="theme-[(${colorSchema.id})]"] {
-[(${colorSchema.custom_css})]}
-                </style>
-                /*/-->
-              </th:block>
-            </th:block>
-          </th:block>
+    <!--/* RSS link declaration start */-->
+    <th:block th:if="${pluginFinder.available('PluginFeed')}">
+      <link rel="alternate" type="application/rss+xml" title="Posts - All" th:href="@{'/rss.xml'}" />
+      <th:block th:each="item : ${theme?.config?.sns?.index_sns}">
+        <th:block th:if="${#strings.equals(item?.type['type'], 'rss')}" th:with="href=${item?.input_value}">
+          <link
+            th:if="${href != '/rss.xml'}"
+            rel="alternate"
+            type="application/rss+xml"
+            title="RSS feed"
+            th:href="@{${href}}"
+          />
         </th:block>
       </th:block>
     </th:block>
+    <!--/* RSS link declaration end */-->
+    <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script Start */-->
     <script vite-ignore th:if="${theme.config?.global?.anti_mirror_site}" th:inline="javascript">
       (function () {
         // <!--/* 获取被编码后的目标链接 */-->
@@ -133,6 +80,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
         }
       })();
     </script>
+    <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script End */-->
+    <!--/* Auto Redirect to Browser Language Script Start */-->
     <script vite-ignore th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}" th:inline="javascript">
       (function () {
         // <!--/* 设计思路：
@@ -197,6 +146,97 @@ html[theme="theme-[(${colorSchema.id})]"] {
         window.location.href = url;
       })();
     </script>
+    <!--/* Auto Redirect to Browser Language Script End */-->
+    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute start */-->
+    <script
+      vite-ignore
+      th:if="${color_schema == 'custom'} or ${theme_dark == 'custom'} or ${theme_light == 'custom'} or ${theme_auto == 'custom'}"
+      th:inline="javascript"
+    >
+      const allCustomColorSchema = [
+        /*[# th:each="c : ${custom_color_schema_config}"]*/ /*[# th:if="${custom_color_schema_init_id==c.id or custom_theme_auto_id==c.id or custom_theme_light_id==c.id or custom_theme_dark_id==c.id}"]*/
+        { id: /*[[${c.id}]]*/ "", type: /*[[${c.type}]]*/ "" },
+        /*[/]*/ /*[/]*/
+      ];
+    </script>
+    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute end */-->
+    <!--/* set data-color-scheme attribute for custom color schema start */-->
+    <script vite-ignore th:if="${color_schema == 'custom'}" th:inline="javascript">
+      const customColorSchema = allCustomColorSchema.find(
+        (schema) => schema.id === /*[[${custom_color_schema_init_id}]]*/ "1",
+      );
+      document.documentElement.setAttribute("data-color-scheme", customColorSchema ? customColorSchema.type : null);
+    </script>
+    <!--/* set data-color-scheme attribute for custom color schema end */-->
+    <!--/* Custom Theme Declarations start */-->
+    <th:block
+      th:if="${not #lists.isEmpty(custom_color_schema_config)} and (${color_schema == 'custom'} or ${theme_dark == 'custom'} or ${theme_light == 'custom'} or ${theme_auto == 'custom'})"
+    >
+      <th:block th:each="colorSchema : ${custom_color_schema_config}">
+        <th:block
+          th:if="${custom_color_schema_init_id==colorSchema.id or 
+                  custom_theme_auto_id==colorSchema.id or 
+                  custom_theme_light_id==colorSchema.id or 
+                  custom_theme_dark_id==colorSchema.id}"
+        >
+          <!--/* Color Scheme Declarations */-->
+          <th:block
+            th:if="${colorSchema.type == 'dark'}"
+            th:insert="~{components/color-scheme-dark/template :: headContent}"
+          ></th:block>
+          <th:block
+            th:if="${colorSchema.type == 'light'}"
+            th:insert="~{components/color-scheme-light/template :: headContent}"
+          ></th:block>
+          <th:block
+            th:if="${colorSchema.type == 'auto'}"
+            th:insert="~{components/color-scheme-auto/template :: headContent}"
+          ></th:block>
+          <!--/* Theme Color Declarations */-->
+          <th:block th:unless="${colorSchema.is_css_variable_mode}">
+            <!--/*/
+            <style th:inline="css">
+html[theme="theme-[(${colorSchema.id})]"] {
+--color-primary: [(${colorSchema.primary_color})];
+--color-primary-content: [(${colorSchema.primary_content_color})];
+--color-secondary: [(${colorSchema.secondary_color})];
+--color-secondary-content: [(${colorSchema.secondary_content_color})];
+--color-accent: [(${colorSchema.accent_color})];
+--color-accent-content: [(${colorSchema.accent_content_color})];
+--color-neutral: [(${colorSchema.neutral_color})];
+--color-neutral-content: [(${colorSchema.neutral_content_color})];
+--color-base-100: [(${colorSchema.base_100_color})];
+--color-base-200: [(${colorSchema.base_200_color})];
+--color-base-300: [(${colorSchema.base_300_color})];
+--color-base-content: [(${colorSchema.base_content_color})];
+}
+            </style>
+            /*/-->
+          </th:block>
+          <th:block th:if="${colorSchema.is_css_variable_mode}">
+            <th:block th:switch="${colorSchema.is_raw_css_output_mode}">
+              <th:block th:case="true">
+                <!--/*/
+                <style th:inline="css">
+[(${colorSchema.custom_css})]
+                </style>
+                /*/-->
+              </th:block>
+              <th:block th:case="false">
+                <!--/*/
+                <style th:inline="css">
+html[theme="theme-[(${colorSchema.id})]"] {
+[(${colorSchema.custom_css})]}
+                </style>
+                /*/-->
+              </th:block>
+            </th:block>
+          </th:block>
+        </th:block>
+      </th:block>
+    </th:block>
+    <!--/* Custom Theme Declarations end */-->
+    <!--/* Custom Font Declarations start */-->
     <th:block
       th:if="${theme.config?.styles?.is_custom_font_files_enable}"
       th:with="font=${#objects.nullSafe(theme.config?.styles?.custom_font_files, #theme.assets('/dist/MesloLGS-Regular.woff2'))},
@@ -235,22 +275,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
       </style>
       /*/-->
     </th:block>
-    <!--/* RSS link declaration */-->
-    <th:block th:if="${pluginFinder.available('PluginFeed')}">
-      <link rel="alternate" type="application/rss+xml" title="Posts - All" th:href="@{'/rss.xml'}" />
-      <th:block th:each="item : ${theme?.config?.sns?.index_sns}">
-        <th:block th:if="${#strings.equals(item?.type['type'], 'rss')}" th:with="href=${item?.input_value}">
-          <link
-            th:if="${href != '/rss.xml'}"
-            rel="alternate"
-            type="application/rss+xml"
-            title="RSS feed"
-            th:href="@{${href}}"
-          />
-        </th:block>
-      </th:block>
-    </th:block>
-    <!--/* Color Scheme Declarations*/-->
+    <!--/* Custom Font Declarations end */-->
+    <!--/* Preset Themes' Color Scheme Declarations start */-->
     <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       <th:block
         th:if="${color_schema} == 'light' or ${color_schema} == 'light-blue' or ${color_schema} == 'gray'"
@@ -283,7 +309,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
         th:insert="~{components/color-scheme-auto/template :: headContent}"
       ></th:block>
     </th:block>
-    <!--/* Theme Color Declarations */-->
+    <!--/* Preset Themes' Color Scheme Declarations end */-->
+    <!--/* Preset Themes' Color Declarations start */-->
     <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       <th:block
         th:if="${color_schema=='auto-blue'}"
@@ -335,7 +362,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
         th:insert="~{components/theme-light/template :: headContent}"
       ></th:block>
     </th:block>
-    <!--/* Text Size Declarations */-->
+    <!--/* Preset Themes' Color Declarations end */-->
+    <!--/* Preset Text Size Declarations start */-->
     <th:block
       th:if="${theme.config?.styles?.text_size}=='small'"
       th:insert="~{components/text-size-small/template :: headContent}"
@@ -348,9 +376,11 @@ html[theme="theme-[(${colorSchema.id})]"] {
       th:if="${theme.config?.styles?.text_size}=='large'"
       th:insert="~{components/text-size-large/template :: headContent}"
     ></th:block>
-    <!--/* js/css */-->
+    <!--/* Preset Text Size Declarations end */-->
+    <!--/* js/css injection start */-->
     <th:block th:replace="${head}" />
-    <!--/* instant.page */-->
+    <!--/* js/css injection end */-->
+    <!--/* instant.page injection start */-->
     <script
       th:src="@{/assets/lib/instantpage/5.2.0.js(v=${theme.spec.version})}"
       th:if="${theme.config?.global?.is_instant_page_enable} and not ${theme.config?.global?.is_custom_resource_locations}"
@@ -363,7 +393,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
       type="module"
       defer
     ></script>
-    <!--/* Mermaid */-->
+    <!--/* instant.page injection end */-->
+    <!--/* Mermaid injection start */-->
     <script vite-ignore type="module" th:inline="javascript" th:if="${theme.config?.global?.is_mermaid_enable}">
       import mermaid from /*[[${theme.config?.global?.mermaid_script_url}]]*/ "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
 
@@ -475,7 +506,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
         item.setAttribute("data-processed", "true");
       });
     </script>
-
+    <!--/* Mermaid injection end */-->
+    <!--/* Color Scheme Toggle Button Script Start */-->
     <script vite-ignore th:inline="javascript" th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       var THEME_DARK = /*[[${theme_dark}]]*/ "dark";
       var THEME_LIGHT = /*[[${theme_light}]]*/ "light";
@@ -624,6 +656,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
         document.getElementById("theme-toggle-button").addEventListener("click", toggleTheme);
       });
     </script>
+    <!--/* Color Scheme Toggle Button Script End */-->
   </head>
 
   <body class="transition-colors duration-300" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
