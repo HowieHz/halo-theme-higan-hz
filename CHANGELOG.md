@@ -2,6 +2,12 @@
 
 <!-- markdownlint-disable MD024 -->
 
+## [1.51.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.0...v1.51.1) (2026-1-4)
+
+### 🐛 错误修复
+
+- 修复首页文章列表置顶图标使用颜色错误的问题。
+
 ## [1.51.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.2...v1.51.0) (2026-1-3)
 
 ### ⚠破坏性修改
@@ -31,6 +37,7 @@
 - 配置文件尽量不使用 `if: "$get(xxx).value === 'xxx'"`，减小配置页错乱的概率。
 - 组件化评论组件样式支持，按需加载，减少页面体积。
 - 组件化页面 `color-scheme` 设定，按需加载，减少页面体积。
+- 优化瞬间页标签样式。
 
 ## [1.50.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.1...v1.50.2) (2026-1-1)
 
