@@ -236,6 +236,27 @@ jobs:
                 throw error;
               }
             }
+
+      - name: Add failure reaction and comment on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Add failure reaction
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ needs.check-trigger.outputs.comment_id }},
+              content: '-1'
+            });
+            
+            // Post failure notification
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ needs.check-trigger.outputs.pr_number }},
+              body: '❌ Report generation failed. See the [workflow run logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.'
+            });
   
   # Handle failure cases
   handle-failure:
