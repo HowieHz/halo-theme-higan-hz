@@ -956,6 +956,11 @@ const QuickJumpConfig = (props) => {
 重复器
 
 :::
+::: info ℹ️ 补充信息
+
+使用方法请参考 [教程：自定义配色方案](/tutorial/custom-theme)
+
+:::
 
 > [!NOTE] ⭐ 默认值
 >
@@ -1065,7 +1070,7 @@ const QuickJumpConfig = (props) => {
 > :::
 > ::: info ℹ️ 补充信息
 >
-> 可以使用 [daisyUI 主题生成器](https://daisyui.com/theme-generator/) 辅助设计。以下是示例 CSS 变量：
+> 以下是示例 CSS 变量：
 >
 > ```plaintext
 > --color-accent: #d480aa
