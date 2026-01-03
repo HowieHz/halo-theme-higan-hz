@@ -197,14 +197,106 @@ spec:
                   value: "auto"
               validation: "required"
             - $formkit: checkbox
+              name: is_css_variable_mode
+              id: is_css_variable_mode
+              label: CSS Variable Mode
+              help: If enabled, CSS variables will be used to define the color scheme. After toggling this option, please click the submit button below, then reopen this item to load the sub-options normally.
+              value: false
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: primary_color
+              label: Primary Color
+              value: "#2bbc8a"
+              help: Primary brand color, used for buttons, links, and other core interactive elements, corresponding to CSS variable --color-primary.
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: primary_content_color
+              label: Primary Content Color
+              value: "#212326"
+              help: Text/icon color under primary color, corresponding to CSS variable --color-primary-content.
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: secondary_color
+              label: Secondary Color
+              value: "#ccffb6"
+              help: Natural auxiliary color, used for secondary buttons or backgrounds, corresponding to CSS variable --color-secondary.
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: secondary_content_color
+              label: Secondary Content Color
+              value: "#d5d7d8"
+              help: Text/icon color on secondary color, corresponding to CSS variable --color-secondary-content.
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: accent_color
+              label: Accent Color
+              value: "#d480aa"
+              help: High-contrast accent color, used for embellishments and status reminders, corresponding to CSS variable --color-accent.
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: accent_content_color
+              label: Accent Content Color
+              value: "#212326"
+              help: Foreground content color under accent color, corresponding to CSS variable --color-accent-content.
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: neutral_color
+              label: Neutral Color
+              value: "#1d1f21"
+              help: Base color for unsaturated parts in UI, corresponding to CSS variable --color-neutral.
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: neutral_content_color
+              label: Neutral Content Color
+              value: "#d5d7d8"
+              help: Foreground color on neutral background, corresponding to CSS variable --color-neutral-content.
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: base_100_color
+              label: Base 100 Color
+              value: "#212326"
+              help: Main canvas background of html, corresponding to CSS variable --color-base-100.
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: base_200_color
+              label: Base 200 Color
+              value: "#1c1c1c"
+              help: Deeper background layer, corresponding to CSS variable --color-base-200.
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: base_300_color
+              label: Base 300 Color
+              value: "#181818"
+              help: Even deeper layer, corresponding to CSS variable --color-base-300.
+            - $formkit: color
+              if: "$get(is_css_variable_mode).value === false"
+              format: hex
+              name: base_content_color
+              label: Base Content Color
+              value: "#d5d7d8"
+              help: Foreground content on base color, corresponding to CSS variable --color-base-content.
+            - $formkit: checkbox
+              if: "$get(is_css_variable_mode).value === true"
               name: is_raw_css_output_mode
               label: Raw CSS Output Mode
-              help: 'After disabling this option, you only need to fill in the custom CSS variables part, and it will be automatically output in the corresponding CSS selector (the selector is html[theme="theme-{id}"] (replace {id} with the "identifier" filled in here)).'
+              help: When this is disabled, you only need to fill in the custom CSS variables part, and the output will automatically be in the corresponding CSS selector (selector is html[theme="theme-{id}"] (replace {id} with the entered identifier)).
               value: false
             - $formkit: code
+              if: "$get(is_css_variable_mode).value === true"
               name: custom_css
               label: Custom CSS Variables
-              help: "There are examples in the documentation"
+              help: "Examples in the documentation"
               language: css
               height: 150px
               value: ""
