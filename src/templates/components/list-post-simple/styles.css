@@ -1,4 +1,8 @@
 /* 文章列表样式 */
+.color-accent {
+  color: var(--color-accent);
+}
+
 .common-post-list {
   margin: 0;
   padding: 0;

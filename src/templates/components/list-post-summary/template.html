@@ -17,7 +17,7 @@
                   class="post-card-hover absolute -inset-x-4 -inset-y-2 z-0 opacity-0 sm:-inset-x-6 sm:rounded-2xl"
                 ></div>
                 <span
-                  class="iconify iconify-middle color-base-300 typcn--pin-outline relative z-10"
+                  class="iconify iconify-middle color-accent typcn--pin-outline relative z-10"
                   th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='left'"
                 ></span>
                 <a th:href="@{${post.status?.permalink}}">
@@ -25,7 +25,7 @@
                   <span class="relative z-10" th:text="${post.spec?.title}">文章标题替换位</span>
                 </a>
                 <span
-                  class="iconify iconify-middle color-base-300 typcn--pin-outline relative z-10"
+                  class="iconify iconify-middle color-accent typcn--pin-outline relative z-10"
                   th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='right'"
                 ></span>
               </h2>
@@ -140,7 +140,7 @@
               </th:block>
               <div
                 aria-hidden="true"
-                class="color-accent-1 relative z-10 mt-4 flex items-center text-sm font-medium"
+                class="color-primary relative z-10 mt-4 flex items-center text-sm font-medium"
                 th:text="#{page.index.postListPermalinkText}"
                 th:if="${theme.config?.index_styles?.is_show_index_post_list_permalink_text}"
               >
