@@ -47,16 +47,16 @@ const customCssText = computed(() => customProperties.value.join('\n'))
 ### 生成配色方案
 
 首先打开 [daisyUI 主题生成器](https://daisyui.com/theme-generator/)。  
-如下图，你可以在左侧的黄色框选部分选择预设配色方案，然后在中间红色框选部分自定义颜色。  
+如下图，您可以在左侧的黄色框选部分选择预设配色方案，然后在中间红色框选部分自定义颜色。  
 完成自定义后，点击上方的 `CSS` 按钮。
 
 ![tutorial-custom-theme-1.avif](/tutorial-custom-theme-1.avif)
 
-弹出下图的框，点击右上角 `Copy to clipboard` 按钮，复制你的配色方案到剪贴板。
+弹出下图的框，点击右上角 `Copy to clipboard` 按钮，复制您的配色方案到剪贴板。
 
 ![tutorial-custom-theme-2.avif](/tutorial-custom-theme-2.avif)
 
-在下方输入框粘贴你的配色方案：
+在下方输入框粘贴您的配色方案：
 
 <style>
 textarea {
@@ -117,7 +117,7 @@ textarea {
 
 :::
 
-先在上方红色框选部分选择你的主题色彩模式。然后在下方红色框选部分粘贴刚才解析得到的 CSS 变量。最后点击底部的`提交`按钮。
+先在上方红色框选部分选择您的主题色彩模式。然后在下方红色框选部分粘贴刚才解析得到的 CSS 变量。最后点击底部的`提交`按钮。
 
 ![tutorial-custom-theme-7.avif](/tutorial-custom-theme-7.avif)
 
