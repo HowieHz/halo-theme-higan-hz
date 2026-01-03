@@ -168,13 +168,13 @@ jobs:
       - name: Download current reports
         uses: actions/download-artifact@v7
         with:
-          name: page-size-reports-current-comment
+          name: page-size-reports-current
           path: ./reports-current
       
       - name: Download latest-release reports
         uses: actions/download-artifact@v7
         with:
-          name: page-size-reports-latest-release-comment
+          name: page-size-reports-latest-release
           path: ./reports-latest-release
       
       - name: Generate comparison report
