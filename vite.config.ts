@@ -129,6 +129,18 @@ export default defineConfig({
           __dirname,
           "src/templates/components/halo-comment-widget/template.html",
         ),
+        "components-color-scheme-light": path.resolve(
+          __dirname,
+          "src/templates/components/color-scheme-light/template.html",
+        ),
+        "components-color-scheme-dark": path.resolve(
+          __dirname,
+          "src/templates/components/color-scheme-dark/template.html",
+        ),
+        "components-color-scheme-auto": path.resolve(
+          __dirname,
+          "src/templates/components/color-scheme-auto/template.html",
+        ),
         "components-text-size-small": path.resolve(__dirname, "src/templates/components/text-size-small/template.html"),
         "components-text-size-normal": path.resolve(
           __dirname,

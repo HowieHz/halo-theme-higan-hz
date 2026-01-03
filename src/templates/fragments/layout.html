@@ -250,6 +250,39 @@ html[theme="theme-[(${colorSchema.id})]"] {
         </th:block>
       </th:block>
     </th:block>
+    <!--/* Color Scheme Declarations*/-->
+    <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      <th:block
+        th:if="${color_schema} == 'light' or ${color_schema} == 'light-blue' or ${color_schema} == 'gray'"
+        th:insert="~{components/color-scheme-light/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${color_schema} == 'dark' or ${color_schema} == 'dark-blue'"
+        th:insert="~{components/color-scheme-dark/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${color_schema} == 'auto' or ${color_schema} == 'auto-blue'"
+        th:insert="~{components/color-scheme-auto/template :: headContent}"
+      ></th:block>
+    </th:block>
+    <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      <th:block
+        th:if="${theme_dark == 'light' or theme_light == 'light' or theme_auto == 'light' or color_schema == 'light' or
+                theme_dark == 'light-blue' or theme_light == 'light-blue' or theme_auto == 'light-blue' or color_schema == 'light-blue' or
+                theme_dark == 'gray' or theme_light == 'gray' or theme_auto == 'gray' or color_schema == 'gray'}"
+        th:insert="~{components/color-scheme-light/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark == 'dark' or theme_light == 'dark' or theme_auto == 'dark' or color_schema == 'dark' or
+                theme_dark == 'dark-blue' or theme_light == 'dark-blue' or theme_auto == 'dark-blue' or color_schema == 'dark-blue'}"
+        th:insert="~{components/color-scheme-dark/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark == 'auto' or theme_light == 'auto' or theme_auto == 'auto' or color_schema == 'auto' or
+                theme_dark == 'auto-blue' or theme_light == 'auto-blue' or theme_auto == 'auto-blue' or color_schema == 'auto-blue'}"
+        th:insert="~{components/color-scheme-auto/template :: headContent}"
+      ></th:block>
+    </th:block>
     <!--/* Theme Color Declarations */-->
     <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       <th:block
