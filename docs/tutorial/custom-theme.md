@@ -75,7 +75,7 @@ textarea {
 
 <textarea
   v-model="themeInput"
-  placeholder="请在此处粘贴 disyUI 生成的配色方案" />
+  placeholder="请在此处粘贴 daisyUI 生成的配色方案" />
 
 <div v-if="themeModeMessage">
 
