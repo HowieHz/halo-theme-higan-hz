@@ -1,5 +1,5 @@
-/* Comment Widget Colors v3 */
-/* 适配 https://github.com/halo-dev/plugin-comment-widget */
+/* Offical Comment Widget Colors v3 */
+/* Adapted for https://github.com/halo-dev/plugin-comment-widget */
 comment-widget {
   --halo-cw-muted-1-color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
   --halo-cw-muted-2-color: color-mix(in oklab, var(--color-base-content) 60%, transparent);

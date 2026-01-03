@@ -1,5 +1,5 @@
-export default () => ({
-  current: "",
+export default (initialCurrent: string = "") => ({
+  current: initialCurrent,
   isOpen(id: string) {
     return id === this.current;
   },

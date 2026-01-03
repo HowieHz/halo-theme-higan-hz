@@ -2,6 +2,10 @@
   <script src="index.ts" type="module"></script>
   <th:block th:insert="~{components/pagination/template :: headContent}"></th:block>
   <th:block th:insert="~{components/moment-video-modal/template :: headContent}"></th:block>
+  <th:block
+    th:if="${theme.config?.moments_styles?.is_moment_comment_section_show and haloCommentEnabled and !#lists.isEmpty(moments.items)}"
+    th:insert="~{components/halo-comment-widget/template :: headContent}"
+  ></th:block>
 </head>
 <!--/*-->
 <!--平衡考虑，忽略这个的 polyfill-->
@@ -15,7 +19,7 @@
           <li th:each="moment : ${moments.items}" class="moment-item" th:id="${moment.metadata.name}">
             <div
               class="moment-header"
-              th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event' or moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"
+              th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event'}"
             >
               <div class="color-base-content-80">
                 <span>
@@ -69,17 +73,11 @@
                   th:utext="${moment.metadata?.annotations?.get('higan.howiehz.top/customize-title')}"
                 >
                 </span>
-                <span
-                  class="color-base-content-80 no-underline"
-                  th:if="${moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"
-                  th:utext="${moment.metadata?.annotations?.get('guqing.github.io/customize-title')}"
-                >
-                </span>
               </div>
             </div>
             <div
               class="moment-header"
-              th:unless="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event' or moment.metadata?.labels?.get('guqing.github.io/type')=='github-user-public-event'}"
+              th:unless="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event'}"
             >
               <div class="color-base-content-80">
                 <span th:if="${not isIndexPage or theme?.config.index_styles?.is_show_moment_avatar}">

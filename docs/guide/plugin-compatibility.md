@@ -33,7 +33,7 @@ outline: deep
 
 主题提供了瞬间页（`/moments`）支持，详情请阅读[瞬间页样式](/guide/theme-configuration#瞬间页样式)相关文档。
 
-- 瞬间页面可用于展示 GitHub 活动，此用法请看 [howiehz/ghu-events-moments](https://github.com/howiehz/ghu-events-moments) 或 [guqing/ghu-events-moments](https://github.com/guqing/ghu-events-moments)（兼容原主题数据类型）
+- 瞬间页面可用于展示 GitHub 活动，此用法请看 [howiehz/ghu-events-moments](https://github.com/howiehz/ghu-events-moments)
 
 ## 评论区
 

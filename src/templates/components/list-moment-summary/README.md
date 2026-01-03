@@ -10,6 +10,12 @@ It also shows estimated reading time, word count, supports upvote functionality,
 Head Content (for including necessary scripts/styles)
 
 ```html
+<th:block th:insert="~{components/list-moment-summary/template :: headContent(moments)}"></th:block>
+```
+
+or
+
+```html
 <th:block th:insert="~{components/list-moment-summary/template :: headContent}"></th:block>
 ```
 

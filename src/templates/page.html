@@ -12,6 +12,10 @@
 >
   <head>
     <script src="/src/scripts/pages/page.ts" type="module"></script>
+    <th:block
+      th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show and haloCommentEnabled}"
+      th:insert="~{components/halo-comment-widget/template :: headContent}"
+    ></th:block>
   </head>
   <body>
     <style th:if="${theme.config?.custom_page_styles?.is_optimize_content_paragraph_spacing}">
@@ -72,14 +76,16 @@
       <div class="content flex-auto" itemprop="articleBody" th:utext="${singlePage.content?.content}">
         singlePage formatted content
       </div>
-      <th:block th:if="${theme.config?.custom_page_styles?.is_dividing_line_at_the_end_of_content_show}">
-        <hr class="divide my-10" />
-      </th:block>
-      <th:block th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show}">
-        <div class="post-comment" th:if="${haloCommentEnabled}">
-          <halo:comment group="content.halo.run" kind="SinglePage" th:name="${singlePage.metadata?.name}" />
-        </div>
-      </th:block>
+      <hr
+        th:if="${theme.config?.custom_page_styles?.is_dividing_line_at_the_end_of_content_show}"
+        class="divide my-10"
+      />
+      <div
+        class="post-comment"
+        th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show and haloCommentEnabled}"
+      >
+        <halo:comment group="content.halo.run" kind="SinglePage" th:name="${singlePage.metadata?.name}" />
+      </div>
     </article>
   </body>
 </th:block>
