@@ -75,7 +75,8 @@
                   this.checkAndLoadMoreImages(); // <!--/* 检查是否可能要接着加载图片 */-->
                   requestAnimationFrame(() => {
                     // <!--/* 加载动画 fade in */-->
-                    item.style.transition = "opacity [(${theme.config?.photos_styles?.img_transition_duration_after_load})]s";
+                    item.style.transition =
+                      "opacity [(${theme.config?.photos_styles?.img_transition_duration_after_load})]s";
                     item.style.opacity = 1;
                   });
                 };

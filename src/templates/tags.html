@@ -80,7 +80,9 @@
             a.href = tag.status?.permalink || "#";
             // <!--/* 正常情况 tag.spec?.displayName 必定存在 */-->
             const displayName = tag.spec?.displayName || "";
-            a.textContent = isShowPostCount ? `${displayName}${leftChar}${tag.postCount || 0}${rightChar}` : displayName;
+            a.textContent = isShowPostCount
+              ? `${displayName}${leftChar}${tag.postCount || 0}${rightChar}`
+              : displayName;
             li.appendChild(a);
             fragment.appendChild(li);
           });

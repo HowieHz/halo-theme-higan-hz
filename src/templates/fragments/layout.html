@@ -528,21 +528,27 @@ html[theme="theme-[(${colorSchema.id})]"] {
       };
 
       if (THEME_DARK == "custom") {
-        let customColorSchema = allCustomColorSchema.find((schema) => schema.id === /*[[${custom_theme_dark_id}]]*/ "1");
+        let customColorSchema = allCustomColorSchema.find(
+          (schema) => schema.id === /*[[${custom_theme_dark_id}]]*/ "1",
+        );
         if (customColorSchema) {
           THEME_DARK = "theme-" + customColorSchema.id;
           themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
         }
       }
       if (THEME_LIGHT == "custom") {
-        let customColorSchema = allCustomColorSchema.find((schema) => schema.id === /*[[${custom_theme_light_id}]]*/ "1");
+        let customColorSchema = allCustomColorSchema.find(
+          (schema) => schema.id === /*[[${custom_theme_light_id}]]*/ "1",
+        );
         if (customColorSchema) {
           THEME_LIGHT = "theme-" + customColorSchema.id;
           themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
         }
       }
       if (THEME_AUTO == "custom") {
-        let customColorSchema = allCustomColorSchema.find((schema) => schema.id === /*[[${custom_theme_auto_id}]]*/ "1");
+        let customColorSchema = allCustomColorSchema.find(
+          (schema) => schema.id === /*[[${custom_theme_auto_id}]]*/ "1",
+        );
         if (customColorSchema) {
           THEME_AUTO = "theme-" + customColorSchema.id;
           themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
