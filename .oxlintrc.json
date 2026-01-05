@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["vue", "typescript", "unicorn"],
+  "plugins": ["vue", "typescript"],
   "categories": {
     "correctness": "off"
   },
@@ -83,6 +83,7 @@
     "no-sparse-arrays": "error",
     "no-this-before-super": "error",
     "no-undef": "error",
+    "no-unexpected-multiline": "error",
     "no-unreachable": "error",
     "no-unsafe-finally": "error",
     "no-unsafe-negation": "error",
@@ -173,7 +174,39 @@
       }
     },
     {
-      "files": ["**/*.js", "**/*.ts", "**/*.vue"],
+      "files": ["**/*.js", "**/*.ts"],
+      "globals": {
+        "CSSStyleProperties": "readonly",
+        "Temporal": "readonly"
+      },
+      "env": {
+        "es2026": true,
+        "browser": true
+      }
+    },
+    {
+      "files": ["**/*.html"],
+      "globals": {
+        "CSSStyleProperties": "readonly",
+        "Temporal": "readonly"
+      },
+      "env": {
+        "browser": true
+      }
+    },
+    {
+      "files": ["public/assets/qrcode.html"],
+      "globals": {
+        "CSSStyleProperties": "readonly",
+        "Temporal": "readonly",
+        "QRious": "readonly"
+      },
+      "env": {
+        "browser": true
+      }
+    },
+    {
+      "files": ["**/*.vue"],
       "globals": {
         "CSSStyleProperties": "readonly",
         "Temporal": "readonly"

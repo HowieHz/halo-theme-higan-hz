@@ -79,16 +79,44 @@ pnpm build
 本项目在 CI（GitHub Actions）对每个 PR 会运行一组质量检查：
 
 - Linters (`pnpm lint`)：
-  - `oxlint` + `eslint`（代码风格与类型感知检查）
-  - `stylelint`（样式表检查）
-  - `markdownlint`（文档样式检查）
-  - `autocorrect` （自动文案校正）
-  - `tsgo --noEmit`（TypeScript 类型检查）
+  - `oxlint` + `eslint`: 代码风格与类型感知检查
+    - 范围：
+      - JavaScript 文件
+      - TypeScript 文件
+      - HTML 文件（仅内联 `script` 块）
+      - Vue 文件（包括内联 `script` 块）
+  - `stylelint`: 样式表检查
+    - 范围：
+      - CSS 文件
+      - HTML 文件（仅内联 `style` 块）
+      - Vue 文件（仅内联 `style` 块）
+    - 备注：Stylelint 比较特殊，`**/*.{css,html,vue}` 不会进入 `.` 开头的文件夹，所以需要写额外的路径匹配。
+  - `markdownlint`: 文档样式检查
+    - 范围：
+      - Markdown 文件
+  - `autocorrect`: 自动文案校正
+    - 范围：
+      - 其[支持的文件格式](https://github.com/huacnlee/autocorrect/tree/main/autocorrect/grammar)
+  - `tsgo --noEmit`: TypeScript 类型检查
+    - 范围：
+      - TypeScript 文件
   - 注：均开启了自动修正，如有变更会自动提交。
 
 - 格式化 (`pnpm format`)：
-  - `stylus-supremacy`（Stylus 格式化）
-  - `prettier`（JS/TS/JSON/YAML/MD 等格式化）
+  - `stylus-supremacy`: Stylus 格式化
+    - 范围：
+      - Stylus 文件
+  - `prettier`: 格式化
+    - 范围：
+      - JSON 文件
+      - JSONC 文件
+      - YAML 文件
+      - Markdown 文件
+      - CSS 文件
+      - JavaScript 文件
+      - TypeScript 文件
+      - Vue 文件
+      - HTML 文件
   - 注：格式化后有变更会自动提交。
 
 - Lighthouse CI：

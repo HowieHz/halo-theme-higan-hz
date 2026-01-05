@@ -3,8 +3,8 @@ import { fileURLToPath } from "node:url";
 import { includeIgnoreFile } from "@eslint/compat";
 import js from "@eslint/js";
 import tsParser from "@typescript-eslint/parser";
+import html from "eslint-plugin-html";
 import oxlint from "eslint-plugin-oxlint";
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import pluginVue from "eslint-plugin-vue";
 import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
@@ -34,6 +34,27 @@ export default defineConfig(
     },
   },
   {
+    files: ["**/*.html"],
+    plugins: { html },
+    languageOptions: {
+      sourceType: "script",
+      globals: {
+        ...globals.browser,
+      },
+    },
+  },
+  {
+    files: ["public/assets/qrcode.html"],
+    plugins: { html },
+    languageOptions: {
+      sourceType: "script",
+      globals: {
+        ...globals.browser,
+        QRious: "readonly",
+      },
+    },
+  },
+  {
     files: ["**/*.vue"],
 
     languageOptions: {
@@ -58,6 +79,9 @@ export default defineConfig(
         },
       },
     },
+    rules: {
+      "vue/max-attributes-per-line": "off",
+    },
   },
   {
     files: ["scripts/**/*.js", ".github/scripts/**/*.js"],
@@ -68,6 +92,5 @@ export default defineConfig(
       },
     },
   },
-  eslintPluginPrettierRecommended,
   ...oxlint.buildFromOxlintConfigFile("./.oxlintrc.json"),
 );

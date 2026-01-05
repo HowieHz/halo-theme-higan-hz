@@ -83,7 +83,7 @@ article {
       & footer {
         color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
         font-size: var(--text-xs);
-        margin: var(--text) * 1.725 0;
+        margin: calc(var(--text) * 1.725) 0;
 
         & a {
           background-image: linear-gradient(
