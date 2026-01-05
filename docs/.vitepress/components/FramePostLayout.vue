@@ -18,7 +18,7 @@ onMounted(async () => {
 
 <template>
   <article id="article-tag" class="post">
-    <div id="vp-app" ref="el" class="content loading"></div>
+    <div id="vp-app" ref="el" class="content loading" />
   </article>
 </template>
 
