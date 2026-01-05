@@ -83,6 +83,7 @@ pnpm build
     - 范围：
       - JavaScript 文件
       - TypeScript 文件
+      - HTML 文件（仅内联 `script` 块）
       - Vue 文件（包括内联 `script` 块）
   - `stylelint`: 样式表检查
     - 范围：

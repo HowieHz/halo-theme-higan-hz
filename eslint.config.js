@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { includeIgnoreFile } from "@eslint/compat";
 import js from "@eslint/js";
 import tsParser from "@typescript-eslint/parser";
+import html from "eslint-plugin-html";
 import oxlint from "eslint-plugin-oxlint";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import pluginVue from "eslint-plugin-vue";
@@ -30,6 +31,27 @@ export default defineConfig(
       sourceType: "module",
       globals: {
         ...globals.browser,
+      },
+    },
+  },
+  {
+    files: ["**/*.html"],
+    plugins: { html },
+    languageOptions: {
+      sourceType: "script",
+      globals: {
+        ...globals.browser,
+      },
+    },
+  },
+  {
+    files: ["public/assets/qrcode.html"],
+    plugins: { html },
+    languageOptions: {
+      sourceType: "script",
+      globals: {
+        ...globals.browser,
+        QRious: "readonly",
       },
     },
   },
