@@ -2,7 +2,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { includeIgnoreFile } from "@eslint/compat";
 import js from "@eslint/js";
-import html from "@html-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import oxlint from "eslint-plugin-oxlint";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
@@ -58,18 +57,6 @@ export default defineConfig(
           "<template>": "espree",
         },
       },
-    },
-  },
-  {
-    files: ["**/*.html"],
-    plugins: {
-      html,
-    },
-    // When using the recommended rules
-    extends: ["html/recommended"],
-    language: "html/html",
-    rules: {
-      "html/no-duplicate-class": "error",
     },
   },
   {
