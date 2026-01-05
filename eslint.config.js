@@ -79,6 +79,9 @@ export default defineConfig(
         },
       },
     },
+    rules: {
+      "vue/max-attributes-per-line": "off",
+    },
   },
   {
     files: ["scripts/**/*.js", ".github/scripts/**/*.js"],
