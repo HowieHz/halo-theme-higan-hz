@@ -105,7 +105,7 @@ pnpm build
     - 范围：
       - Stylus 文件
   - `prettier`: 格式化
-    - 范围:
+    - 范围：
       - JSON 文件
       - JSONC 文件
       - YAML 文件
