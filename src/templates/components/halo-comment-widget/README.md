@@ -16,11 +16,7 @@ Content Insertion
 
 ```html
 <div th:if="${haloCommentEnabled}">
-    <halo:comment
-        group="content.halo.run"
-        kind="Post"
-        th:attr="name=${post.metadata.name}"
-    />
+  <halo:comment group="content.halo.run" kind="Post" th:attr="name=${post.metadata.name}" />
 </div>
 ```
 

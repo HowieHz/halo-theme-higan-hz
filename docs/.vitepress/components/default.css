@@ -1,7 +1,20 @@
 #vp-app {
   /* 用主题的 font-family，避免多次加载 inter 字体 */
-  font-family: "Meslo LG S", ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont, "segoe ui", roboto,
-    "helvetica neue", arial, "noto sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "segoe ui symbol",
+  font-family:
+    "Meslo LG S",
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    blinkmacsystemfont,
+    "segoe ui",
+    roboto,
+    "helvetica neue",
+    arial,
+    "noto sans",
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "segoe ui symbol",
     "Noto Color Emoji";
   height: 100vh;
   padding: 2rem;
@@ -11,7 +24,7 @@
 /* 加载状态：显示 spinner，隐藏内容 */
 #vp-app.loading {
   position: relative;
-  
+
   /* 隐藏子元素 */
   & > * {
     opacity: 0%;
@@ -24,8 +37,8 @@
   aspect-ratio: 1;
   border: 3px solid rgb(0 0 0 / 10%);
   border-radius: 50%;
-  border-top-color: var(--vp-c-brand-2);  /* 和 var(--vp-c-brand-1) 区分，说明已经加载好 iframe，在内部渲染 */
-  content: '';
+  border-top-color: var(--vp-c-brand-2); /* 和 var(--vp-c-brand-1) 区分，说明已经加载好 iframe，在内部渲染 */
+  content: "";
   inset: 0;
   margin: auto;
   position: absolute;
@@ -33,7 +46,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* 
