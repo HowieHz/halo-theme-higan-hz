@@ -5371,6 +5371,53 @@ HTML 代码也是可以的：
 
 :::
 
+## 链接页样式
+
+本分组用于配置链接页（友情链接页）的显示样式。
+
+::: tip 📌 前提条件
+使用链接页功能需要安装并启用 [链接管理插件](https://www.halo.run/store/apps/app-hfbQg)。
+:::
+
+### 头像优先样式
+
+::: info 🎯 用途
+
+启用后，链接页将使用强调头像的网格布局，每行最多显示三个链接，适合需要突出展示链接站点头像的场景。
+
+:::
+
+::: details 📝 详细说明
+
+- **默认样式**：关闭时使用传统的横向列表布局，头像较小，信息在头像右侧排列
+- **头像优先样式**：开启时使用网格卡片布局
+  - 采用响应式三列网格（移动端自动变为单列）
+  - 头像居中显示，尺寸更大（5rem）
+  - 链接信息垂直排列在头像下方
+  - 悬停时卡片上浮并有阴影效果
+  - 头像在悬停时会放大并改变边框颜色
+
+:::
+
+::: details 💾 在 Halo 设置中如何配置
+
+1. 进入 Halo 后台
+2. 点击左侧"外观" → "主题" → "Higan Haozi" → "设置"
+3. 找到"链接页样式"分组
+4. 开启"头像优先样式"开关
+
+:::
+
+::: details 🤖 此功能涉及的配置项代码位置
+
+<QuickJumpConfigPage to="/console/themes/theme-howiehz-higan/settings#/formkit/groups/links_page_styles?activeTab=basic" label="Halo 后台配置页面（需要先填写右侧的基础站点 URL）" />
+
+在主题的 `theme.yaml` 中的值：
+
+`theme.config?.links_page_styles?.is_head_first_style`
+
+:::
+
 ## 错误页样式
 
 ### 页面自动重定向

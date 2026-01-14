@@ -52,6 +52,76 @@
     display: flex;
     position: relative;
   }
+
+  /* 头像优先样式 */
+  & .head-first-style {
+    & .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 0;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+
+    & .link-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
+      border: 0.0625rem solid color-mix(in oklab, var(--color-base-content) 20%, transparent);
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+      text-align: center;
+
+      &:hover {
+        transform: translateY(-0.25rem);
+        box-shadow: 0 0.5rem 1rem color-mix(in oklab, var(--color-base-content) 15%, transparent);
+        border-color: var(--color-primary);
+      }
+    }
+
+    & .link-avatar {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 50%;
+      border: 0.1875rem solid color-mix(in oklab, var(--color-base-content) 80%, transparent);
+      object-fit: cover;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+
+      .link-card:hover & {
+        transform: scale(1.1);
+        border-color: var(--color-primary);
+      }
+    }
+
+    & .link-info {
+      width: 100%;
+    }
+
+    & .link-title {
+      color: var(--color-base-content);
+      font-weight: 600;
+      font-size: 1.125rem;
+      margin-bottom: 0.5rem;
+      word-break: break-word;
+    }
+
+    & .link-description {
+      color: color-mix(in oklab, var(--color-base-content) 70%, transparent);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
 }
 
 /* 友链页面样式结束 */

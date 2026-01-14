@@ -2,6 +2,12 @@
 
 <!-- markdownlint-disable MD024 -->
 
+## [Unreleased]
+
+### 🚀 新功能
+
+- 链接页新增"头像优先样式"布局选项，支持三列网格展示，强调头像显示。
+
 ## [1.52.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.51.1...v1.52.0) (2026-1-14)
 
 ### ⚠破坏性修改

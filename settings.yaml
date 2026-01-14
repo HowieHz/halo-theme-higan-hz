@@ -1559,3 +1559,24 @@ spec:
           name: is_moment_comment_section_show
           label: 启用评论区
           value: true
+    - group: links_page_styles
+      label: 链接页样式
+      formSchema:
+        - $el: div
+          children:
+            - $el: span
+              children: 需
+            - $el: a
+              attrs:
+                href: "https://www.halo.run/store/apps/app-hfbQg"
+                style: |
+                  text-decoration: underline;
+                  text-underline-offset: 0.25em;
+                target: "_blank"
+              children: 链接管理插件
+            - $el: span
+              children: 启用后方可使用。
+        - $formkit: switch
+          name: is_head_first_style
+          label: 头像优先样式
+          value: false
