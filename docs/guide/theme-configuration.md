@@ -5371,6 +5371,186 @@ HTML 代码也是可以的：
 
 :::
 
+## 错误页样式
+
+### 页面自动重定向
+
+::: info 🎯 用途
+
+在错误页面（如 `404`）自动跳转到指定页面。
+
+:::
+::: info 📂 配置项位置
+
+错误页样式 -> 页面自动重定向
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/error_page_styles#:~:text=页面自动重定向" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.error_page_styles?.is_auto_redirect`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后可以配置
+
+- 跳转目标链接
+  - 类型：字符串
+  - 默认值：`/`
+  - 外部约束：合法的相对/绝对链接
+- 跳转等待时间（单位：秒）
+  - 类型：整数
+  - 默认值：`5`
+
+:::
+
+## 社交资料/RSS
+
+### 首页社交资料展示
+
+::: info 🎯 用途
+
+在首页展示社交媒体链接和 RSS 订阅等资料。
+
+:::
+::: info 📂 配置项位置
+
+社交资料/RSS -> 首页社交资料展示
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/sns#:~:text=首页社交资料展示" />
+
+:::
+::: info 🏷️ 类型
+
+数组（可重复添加多个社交资料）
+
+:::
+::: info ⭐ 默认值
+
+空数组 `[]`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.sns?.index_sns`
+
+:::
+::: info ℹ️ 补充信息
+
+- 支持多种预设社交平台：RSS、BiliBili、Dribbble、Email、Facebook、GitHub、Instagram、QQ、Reddit、Stack Overflow、Telegram、X（Twitter）、YouTube、豆瓣、网易云音乐、微博、知乎等
+- 支持自定义社交资料
+- 支持纯文本显示
+- 可通过"设定自定义资料"配置自己的社交平台
+
+:::
+
+### 设定自定义资料
+
+::: info 🎯 用途
+
+定义自己的社交资料，用于在首页社交资料展示中使用。
+
+:::
+::: info 📂 配置项位置
+
+社交资料/RSS -> 设定自定义资料
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/sns#:~:text=设定自定义资料" />
+
+:::
+::: info 🏷️ 类型
+
+重复器
+
+:::
+::: info ⭐ 默认值
+
+空
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.sns?.custom_sns`
+
+:::
+::: info ℹ️ 补充信息
+
+提供了主流平台的预设值，只需要填写对应平台的识别码就可以添加。
+
+除此之外，你也可以添加自定义资料。
+
+每个自定义资料需要配置：
+
+- 识别码：任意字母、数字、下划线组合（如 `myBlog`）
+- 链接：完整的 URL（如 `https://example.com`）
+- 图标
+- aria-label：无障碍标签（如 `Find me on my blog`）
+
+:::
+
+## 自定义分享按钮
+
+### 分享按钮设置
+
+::: info 🎯 用途
+
+配置文章页面的分享按钮列表，支持多种分享方式。
+
+:::
+::: info 📂 配置项位置
+
+自定义分享按钮 -> 分享按钮设置
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/share#:~:text=分享按钮设置" />
+
+:::
+::: info 🏷️ 类型
+
+重复器
+
+:::
+::: info ⭐ 默认值
+
+包含多个预设分享按钮：E-mail、QRCode、Native、Facebook、X、LinkedIn、Pinterest、Telegram、QQ、Weibo、WeChat、Qzone、Douban
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.share?.button_config`
+
+:::
+::: info ℹ️ 补充信息
+
+- `@URL` 和 `@TITLE` 是占位符，使用时会被替换为页面实际地址和标题
+- 每个分享按钮有四个可配置项：名称、链接、图标（设定后将覆盖默认图标）、`aria-label`（无障碍标签）
+- 可以自由调整顺序、删除或新增分享按钮
+
+:::
+
 ## 图库页样式
 
 需[图库管理插件](/guide/plugin-compatibility#图库页)启用后方可使用。
@@ -5649,186 +5829,6 @@ HTML 代码也是可以的：
 ::: info 🧩 模板变量
 
 `theme.config?.moments_styles?.is_moment_comment_section_show`
-
-:::
-
-## 错误页样式
-
-### 页面自动重定向
-
-::: info 🎯 用途
-
-在错误页面（如 `404`）自动跳转到指定页面。
-
-:::
-::: info 📂 配置项位置
-
-错误页样式 -> 页面自动重定向
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/error_page_styles#:~:text=页面自动重定向" />
-
-:::
-::: info 🏷️ 类型
-
-布尔值
-
-:::
-::: info ⭐ 默认值
-
-`true`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.error_page_styles?.is_auto_redirect`
-
-:::
-::: info ℹ️ 补充信息
-
-启用后可以配置
-
-- 跳转目标链接
-  - 类型：字符串
-  - 默认值：`/`
-  - 外部约束：合法的相对/绝对链接
-- 跳转等待时间（单位：秒）
-  - 类型：整数
-  - 默认值：`5`
-
-:::
-
-## 社交资料/RSS
-
-### 首页社交资料展示
-
-::: info 🎯 用途
-
-在首页展示社交媒体链接和 RSS 订阅等资料。
-
-:::
-::: info 📂 配置项位置
-
-社交资料/RSS -> 首页社交资料展示
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/sns#:~:text=首页社交资料展示" />
-
-:::
-::: info 🏷️ 类型
-
-数组（可重复添加多个社交资料）
-
-:::
-::: info ⭐ 默认值
-
-空数组 `[]`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.sns?.index_sns`
-
-:::
-::: info ℹ️ 补充信息
-
-- 支持多种预设社交平台：RSS、BiliBili、Dribbble、Email、Facebook、GitHub、Instagram、QQ、Reddit、Stack Overflow、Telegram、X（Twitter）、YouTube、豆瓣、网易云音乐、微博、知乎等
-- 支持自定义社交资料
-- 支持纯文本显示
-- 可通过"设定自定义资料"配置自己的社交平台
-
-:::
-
-### 设定自定义资料
-
-::: info 🎯 用途
-
-定义自己的社交资料，用于在首页社交资料展示中使用。
-
-:::
-::: info 📂 配置项位置
-
-社交资料/RSS -> 设定自定义资料
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/sns#:~:text=设定自定义资料" />
-
-:::
-::: info 🏷️ 类型
-
-重复器
-
-:::
-::: info ⭐ 默认值
-
-空
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.sns?.custom_sns`
-
-:::
-::: info ℹ️ 补充信息
-
-提供了主流平台的预设值，只需要填写对应平台的识别码就可以添加。
-
-除此之外，你也可以添加自定义资料。
-
-每个自定义资料需要配置：
-
-- 识别码：任意字母、数字、下划线组合（如 `myBlog`）
-- 链接：完整的 URL（如 `https://example.com`）
-- 图标
-- aria-label：无障碍标签（如 `Find me on my blog`）
-
-:::
-
-## 自定义分享按钮
-
-### 分享按钮设置
-
-::: info 🎯 用途
-
-配置文章页面的分享按钮列表，支持多种分享方式。
-
-:::
-::: info 📂 配置项位置
-
-自定义分享按钮 -> 分享按钮设置
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/share#:~:text=分享按钮设置" />
-
-:::
-::: info 🏷️ 类型
-
-重复器
-
-:::
-::: info ⭐ 默认值
-
-包含多个预设分享按钮：E-mail、QRCode、Native、Facebook、X、LinkedIn、Pinterest、Telegram、QQ、Weibo、WeChat、Qzone、Douban
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.share?.button_config`
-
-:::
-::: info ℹ️ 补充信息
-
-- `@URL` 和 `@TITLE` 是占位符，使用时会被替换为页面实际地址和标题
-- 每个分享按钮有四个可配置项：名称、链接、图标（设定后将覆盖默认图标）、`aria-label`（无障碍标签）
-- 可以自由调整顺序、删除或新增分享按钮
 
 :::
 

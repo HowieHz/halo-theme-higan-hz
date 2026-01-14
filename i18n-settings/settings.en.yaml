@@ -1172,88 +1172,6 @@ spec:
           name: is_custom_page_comment_section_show
           label: Enable comment section
           value: true
-    - group: photos_styles
-      label: Photo Page Style
-      formSchema:
-        - $formkit: text
-          name: img_border_radius
-          label: Image border radius
-          value: "8px"
-          help: "Set the border radius of the image. All CSS length units are allowed, such as: 0px, 5px, 10%, 1rem."
-        - $formkit: number
-          name: img_transition_duration_after_load
-          label: Image fade-in animation duration
-          value: 0.2
-          help: "Set the image fade-in animation duration, in seconds."
-        - $formkit: switch
-          name: is_show_photo_group_name
-          if: "$is_enable_masonry_layout === false"
-          label: Group title
-          value: false
-        - $formkit: switch
-          name: is_enable_masonry_layout
-          label: Masonry layout
-          value: true
-        - $formkit: number
-          name: max_masonry_columns
-          if: "$is_enable_masonry_layout === true"
-          label: Maximum number of masonry columns
-          value: 3
-          help: "Set the maximum number of masonry columns."
-        - $formkit: number
-          name: min_masonry_columns
-          if: "$is_enable_masonry_layout === true"
-          label: Minimum number of masonry columns
-          value: 2
-          help: "Set the minimum number of masonry columns."
-        - $formkit: number
-          name: min_img_width
-          if: "$is_enable_masonry_layout === true"
-          label: Minimum width of images in masonry layout
-          value: 300
-          help: "Set the minimum width of images in masonry layout. Unit: px"
-        - $formkit: number
-          name: masonry_gap
-          if: "$is_enable_masonry_layout === true"
-          label: Masonry gap width
-          value: 9
-          help: "Set the gap width for the masonry layout. Unit: px"
-        - $formkit: switch
-          name: is_enable_advanced_options
-          label: Advanced configuration options
-          value: false
-          help: "This configuration item requires frontend knowledge."
-        - $formkit: text
-          name: img_onmouseover
-          if: "$is_enable_advanced_options === true"
-          label: Custom image onmouseover attribute
-          help: "Default value: this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
-          value: "this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
-        - $formkit: text
-          name: img_onmouseout
-          if: "$is_enable_advanced_options === true"
-          label: Custom image onmouseout attribute
-          help: "Default value: this.style.boxShadow='none';"
-          value: "this.style.boxShadow='none';"
-    - group: moments_styles
-      label: Moments page style
-      formSchema:
-        - $formkit: switch
-          name: is_show_post_estimated_reading_time
-          label: Show estimated reading time of the post
-          value: false
-        - $formkit: switch
-          name: is_show_post_word_count
-          label: Show word count of the post
-          value: false
-        - $formkit: switch
-          name: is_moment_upvote_button_show
-          label: Enable upvote button
-          value: true
-        - $formkit: switch
-          name: is_moment_comment_section_show
-          label: Enable comment section
-          value: true
     - group: error_page_styles
       label: Error Page Style
       formSchema:
@@ -1520,3 +1438,114 @@ spec:
               value: ""
               help: The name in the aria-label
               validation: "required"
+    - group: photos_styles
+      label: Photo Page Style
+      formSchema:
+        - $el: div
+          children: 
+            - $el: span
+              children: Requires the 
+            - $el: a
+              attrs:
+                href: "https://www.halo.run/store/apps/app-BmQJW"
+                style: |
+                  text-decoration: underline;
+                  text-underline-offset: 0.25em;
+                target: "_blank"
+              children: Photo Gallery Management Plugin
+            - $el: span
+              children: to be enabled for use.
+        - $formkit: text
+          name: img_border_radius
+          label: Image border radius
+          value: "8px"
+          help: "Set the border radius of the image. All CSS length units are allowed, such as: 0px, 5px, 10%, 1rem."
+        - $formkit: number
+          name: img_transition_duration_after_load
+          label: Image fade-in animation duration
+          value: 0.2
+          help: "Set the image fade-in animation duration, in seconds."
+        - $formkit: switch
+          name: is_show_photo_group_name
+          if: "$is_enable_masonry_layout === false"
+          label: Group title
+          value: false
+        - $formkit: switch
+          name: is_enable_masonry_layout
+          label: Masonry layout
+          value: true
+        - $formkit: number
+          name: max_masonry_columns
+          if: "$is_enable_masonry_layout === true"
+          label: Maximum number of masonry columns
+          value: 3
+          help: "Set the maximum number of masonry columns."
+        - $formkit: number
+          name: min_masonry_columns
+          if: "$is_enable_masonry_layout === true"
+          label: Minimum number of masonry columns
+          value: 2
+          help: "Set the minimum number of masonry columns."
+        - $formkit: number
+          name: min_img_width
+          if: "$is_enable_masonry_layout === true"
+          label: Minimum width of images in masonry layout
+          value: 300
+          help: "Set the minimum width of images in masonry layout. Unit: px"
+        - $formkit: number
+          name: masonry_gap
+          if: "$is_enable_masonry_layout === true"
+          label: Masonry gap width
+          value: 9
+          help: "Set the gap width for the masonry layout. Unit: px"
+        - $formkit: switch
+          name: is_enable_advanced_options
+          label: Advanced configuration options
+          value: false
+          help: "This configuration item requires frontend knowledge."
+        - $formkit: text
+          name: img_onmouseover
+          if: "$is_enable_advanced_options === true"
+          label: Custom image onmouseover attribute
+          help: "Default value: this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
+          value: "this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
+        - $formkit: text
+          name: img_onmouseout
+          if: "$is_enable_advanced_options === true"
+          label: Custom image onmouseout attribute
+          help: "Default value: this.style.boxShadow='none';"
+          value: "this.style.boxShadow='none';"
+    - group: moments_styles
+      label: Moments page style
+      formSchema:
+        - $el: div
+          children: 
+            - $el: span
+              children: Requires the 
+            - $el: a
+              attrs:
+                href: "https://www.halo.run/store/apps/app-SnwWD"
+                style: |
+                  text-decoration: underline;
+                  text-underline-offset: 0.25em;
+                target: "_blank"
+              children: Moments Plugin
+            - $el: span
+              children: to be enabled for use.
+        - $formkit: switch
+          name: is_show_post_estimated_reading_time
+          label: Show estimated reading time of the post
+          value: false
+        - $formkit: switch
+          name: is_show_post_word_count
+          label: Show word count of the post
+          value: false
+        - $formkit: switch
+          name: is_moment_upvote_button_show
+          label: Enable upvote button
+          value: true
+        - $formkit: switch
+          name: is_moment_comment_section_show
+          label: Enable comment section
+          value: true
+    
