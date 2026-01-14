@@ -1442,9 +1442,9 @@ spec:
       label: Photo Page Style
       formSchema:
         - $el: div
-          children: 
+          children:
             - $el: span
-              children: Requires the 
+              children: Requires the
             - $el: a
               attrs:
                 href: "https://www.halo.run/store/apps/app-BmQJW"
@@ -1519,9 +1519,9 @@ spec:
       label: Moments page style
       formSchema:
         - $el: div
-          children: 
+          children:
             - $el: span
-              children: Requires the 
+              children: Requires the
             - $el: a
               attrs:
                 href: "https://www.halo.run/store/apps/app-SnwWD"
@@ -1548,4 +1548,3 @@ spec:
           name: is_moment_comment_section_show
           label: Enable comment section
           value: true
-    
