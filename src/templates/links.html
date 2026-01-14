@@ -14,7 +14,7 @@
   </head>
   <body>
     <article id="links" class="post" itemscope itemtype="http://schema.org/BlogPosting">
-      <div class="content">
+      <div class="content" th:unless="${theme.config?.links_page_styles?.is_head_first_style}">
         <th:block th:each="group : ${groups}" th:if="${not #lists.isEmpty(group.links)}">
           <h3 th:if="${#lists.size(groups) > 1}" th:text="${group.spec.displayName}"></h3>
           <ul>
@@ -33,6 +33,35 @@
                     <div class="fig-author-figure-description" th:utext="${link.spec.description}"></div>
                   </figcaption>
                 </figure>
+              </a>
+            </li>
+          </ul>
+        </th:block>
+      </div>
+      <div class="content head-first-style" th:if="${theme.config?.links_page_styles?.is_head_first_style}">
+        <th:block th:each="group : ${groups}" th:if="${not #lists.isEmpty(group.links)}">
+          <h3 th:if="${#lists.size(groups) > 1}" th:text="${group.spec.displayName}"></h3>
+          <ul class="links-grid">
+            <li
+              th:each="link : ${group.links}"
+              th:with="max_lines=${theme.config?.links_page_styles?.link_description_max_lines}"
+            >
+              <a class="link-card" rel="noopener" target="_blank" th:href="@{${link.spec.url}}">
+                <img
+                  loading="lazy"
+                  class="link-avatar"
+                  th:src="${link.spec.logo}"
+                  th:alt="${link.spec.displayName}"
+                  th:aria-label="#{page.links.link-logo.aria-label}"
+                />
+                <div class="link-info">
+                  <div class="link-title" th:text="${link.spec.displayName}"></div>
+                  <div
+                    class="link-description"
+                    th:utext="${link.spec.description}"
+                    th:classappend="|${max_lines == '1' ? 'v-line-clamp-1' : ''} ${max_lines == '2' ? 'v-line-clamp-2' : ''} ${max_lines == '3' ? 'v-line-clamp-3' : ''} ${max_lines == '4' ? 'v-line-clamp-4' : ''} ${max_lines == '5' ? 'v-line-clamp-5' : ''}|"
+                  ></div>
+                </div>
               </a>
             </li>
           </ul>

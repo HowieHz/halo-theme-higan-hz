@@ -61,7 +61,7 @@
         font-size: var(--text);
         margin-right: 0.9375rem;
 
-        @media screen and (width >= 640px) {
+        @media (width >= 640px) {
           &:hover {
             background-image: linear-gradient(
               transparent,
@@ -92,7 +92,7 @@
           }
         }
 
-        @media screen and (width < 640px) {
+        @media (width < 640px) {
           border-right: 0;
 
           /* display: none; 为了覆盖上面的 display: inline-block; */
@@ -128,7 +128,7 @@
     filter: none;
   }
 
-  @media screen and (width < 640px) {
+  @media (width < 640px) {
     & #title {
       display: table;
       margin-right: 5rem;

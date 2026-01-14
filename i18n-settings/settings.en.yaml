@@ -1438,6 +1438,36 @@ spec:
               value: ""
               help: The name in the aria-label
               validation: "required"
+    - group: links_page_styles
+      label: Links Page Style
+      formSchema:
+        - $el: div
+          children:
+            - $el: span
+              children: Requires the
+            - $el: a
+              attrs:
+                href: "https://www.halo.run/store/apps/app-hfbQg"
+                style: |
+                  text-decoration: underline;
+                  text-underline-offset: 0.25em;
+                target: "_blank"
+              children: Links Management Plugin
+            - $el: span
+              children: to be enabled for use.
+        - $formkit: switch
+          name: is_head_first_style
+          label: Avatar-First Style
+          value: false
+        - $formkit: number
+          name: link_description_max_lines
+          if: "$is_head_first_style === true"
+          label: Link Description Maximum Lines
+          value: 2
+          min: 1
+          max: 5
+          step: 1
+          help: "Value range: 1-5"
     - group: photos_styles
       label: Photo Page Style
       formSchema:

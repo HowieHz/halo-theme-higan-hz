@@ -21,6 +21,12 @@ outline: deep
 
 主题提供了友链页（`/links`）支持。
 
+## 链接页
+
+插件 [plugin-links](https://github.com/halo-sigs/plugin-links)（[应用市场页面](https://www.halo.run/store/apps/app-hfbQg)）
+
+主题提供了链接页（`/links`）支持，详情请阅读[链接页样式](/guide/theme-configuration#链接页样式)相关文档。
+
 ## 图库页
 
 插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)（[应用市场页面](https://www.halo.run/store/apps/app-BmQJW)）

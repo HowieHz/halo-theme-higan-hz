@@ -208,7 +208,7 @@
 /* 文章页移动端底部菜单 */
 
 #footer-post-container {
-  @media screen and (width >= 640px) {
+  @media (width >= 640px) {
     display: none;
   }
 

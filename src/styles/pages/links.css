@@ -45,12 +45,86 @@
     & .fig-author-figure-description {
       color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       margin-top: 0.125rem;
+      overflow: hidden;
+      overflow-wrap: break-word;
+      word-break: break-all;
     }
   }
 
   & .fir-imageover {
     display: flex;
     position: relative;
+  }
+
+  /* 头像优先样式 */
+  & .head-first-style {
+    & .links-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      padding: 0;
+
+      @media (width < 640px) {
+        gap: 1rem;
+        grid-template-columns: 1fr;
+      }
+    }
+
+    & .link-card {
+      align-items: center;
+      border: 0.0625rem solid color-mix(in oklab, var(--color-base-content) 20%, transparent);
+      border-radius: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-color: var(--color-primary);
+        box-shadow: 0 0.5rem 1rem color-mix(in oklab, var(--color-base-content) 15%, transparent);
+        transform: translateY(-0.25rem);
+      }
+    }
+
+    & .link-avatar {
+      border: 0.1875rem solid color-mix(in oklab, var(--color-base-content) 80%, transparent);
+      border-radius: 50%;
+      height: 5rem;
+      margin-bottom: 1rem;
+      object-fit: cover;
+      transition: all 0.3s ease;
+      width: 5rem;
+
+      .link-card:hover & {
+        border-color: var(--color-primary);
+        transform: scale(1.1);
+      }
+    }
+
+    & .link-info {
+      width: 100%;
+    }
+
+    & .link-title {
+      color: var(--color-base-content);
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      overflow-wrap: break-word;
+    }
+
+    & .link-description {
+      -webkit-box-orient: vertical;
+      color: color-mix(in oklab, var(--color-base-content) 70%, transparent);
+      display: -webkit-box;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      overflow: hidden;
+      overflow-wrap: break-word;
+      word-break: break-all;
+    }
   }
 }
 
