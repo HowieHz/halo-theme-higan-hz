@@ -45,6 +45,9 @@
     & .fig-author-figure-description {
       color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       margin-top: 0.125rem;
+      overflow: hidden;
+      overflow-wrap: break-word;
+      word-break: break-all;
     }
   }
 
