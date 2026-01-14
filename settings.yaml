@@ -846,7 +846,7 @@ spec:
           name: post_excerpt_max_lines
           if: "$list_layout === 'post-list-summary'"
           label: 多元列表文章摘要行数上限
-          value: 3
+          value: "3"
           min: 1
           max: 5
           step: 1
@@ -1474,7 +1474,7 @@ spec:
           name: link_description_max_lines
           if: "$is_head_first_style === true"
           label: 链接描述行数上限
-          value: 2
+          value: "2"
           min: 1
           max: 5
           step: 1
