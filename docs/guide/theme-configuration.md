@@ -5553,7 +5553,7 @@ HTML 代码也是可以的：
 
 ## 链接页样式
 
-需[链接管理插件](/guide/plugin-compatibility#瞬间页)启用后方可使用。
+需[链接管理插件](/guide/plugin-compatibility#链接页)启用后方可使用。
 
 ### 头像优先样式
 
