@@ -42,7 +42,7 @@
         <th:block th:each="group : ${groups}" th:if="${not #lists.isEmpty(group.links)}">
           <h3 th:if="${#lists.size(groups) > 1}" th:text="${group.spec.displayName}"></h3>
           <ul class="links-grid">
-            <li th:each="link : ${group.links}">
+            <li th:each="link : ${group.links}" th:with="max_lines=${theme.config?.links_page_styles?.link_description_max_lines}">
               <a class="link-card" rel="noopener" target="_blank" th:href="@{${link.spec.url}}">
                 <img
                   loading="lazy"
@@ -53,7 +53,11 @@
                 />
                 <div class="link-info">
                   <div class="link-title" th:text="${link.spec.displayName}"></div>
-                  <div class="link-description" th:utext="${link.spec.description}"></div>
+                  <div 
+                    class="link-description" 
+                    th:utext="${link.spec.description}"
+                    th:classappend="|${max_lines == '1' ? 'line-clamp-1' : ''} ${max_lines == '2' ? 'line-clamp-2' : ''} ${max_lines == '3' ? 'line-clamp-3' : ''} ${max_lines == '4' ? 'line-clamp-4' : ''} ${max_lines == '5' ? 'line-clamp-5' : ''}|"
+                  ></div>
                 </div>
               </a>
             </li>

@@ -1580,3 +1580,12 @@ spec:
           name: is_head_first_style
           label: 头像优先样式
           value: false
+        - $formkit: number
+          name: link_description_max_lines
+          if: "$is_head_first_style === true"
+          label: 链接描述行数上限
+          value: 2
+          min: 1
+          max: 5
+          step: 1
+          help: "填写值范围为 1-5"

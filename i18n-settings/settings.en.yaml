@@ -1569,3 +1569,12 @@ spec:
           name: is_head_first_style
           label: Avatar-First Style
           value: false
+        - $formkit: number
+          name: link_description_max_lines
+          if: "$is_head_first_style === true"
+          label: Link Description Maximum Lines
+          value: 2
+          min: 1
+          max: 5
+          step: 1
+          help: "Value range: 1-5"
