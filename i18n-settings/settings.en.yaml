@@ -843,7 +843,10 @@ spec:
           name: post_excerpt_max_lines
           if: "$list_layout === 'post-list-summary'"
           label: Maximum number of lines in the post list summary
-          value: 3
+          value: "3"
+          min: 1
+          max: 5
+          step: 1
           help: "The value range is 1-5"
         - $formkit: switch
           name: is_show_index_post_list_permalink_text
@@ -1463,7 +1466,7 @@ spec:
           name: link_description_max_lines
           if: "$is_head_first_style === true"
           label: Link Description Maximum Lines
-          value: 2
+          value: "2"
           min: 1
           max: 5
           step: 1
