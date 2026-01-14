@@ -440,4 +440,40 @@
   .min-h-100vh {
     min-height: 100vh !important;
   }
+
+  /* 多行文本截断类 因为 tailwindcss 混淆插件有 bug，所以自定义一套 */
+  .v-line-clamp-1 {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+  }
+
+  .v-line-clamp-2 {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .v-line-clamp-3 {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .v-line-clamp-4 {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+  }
+
+  .v-line-clamp-5 {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+  }
 }
