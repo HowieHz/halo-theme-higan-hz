@@ -1183,88 +1183,6 @@ spec:
           name: is_custom_page_comment_section_show
           label: 页面评论区
           value: true
-    - group: photos_styles
-      label: 图库页样式
-      formSchema:
-        - $formkit: text
-          name: img_border_radius
-          label: 图片圆角宽度
-          value: "8px"
-          help: "设置图片的圆角宽度。允许使用所有 CSS 长度单位，如：0px, 5px, 10%, 1rem。"
-        - $formkit: number
-          name: img_transition_duration_after_load
-          label: 图片渐入动画时间
-          value: 0.2
-          help: "设置图片渐入动画时间，单位秒。"
-        - $formkit: switch
-          name: is_show_photo_group_name
-          if: "$is_enable_masonry_layout === false"
-          label: 显示分组标题
-          value: false
-        - $formkit: switch
-          name: is_enable_masonry_layout
-          label: 启用瀑布流布局
-          value: true
-        - $formkit: number
-          name: max_masonry_columns
-          if: "$is_enable_masonry_layout === true"
-          label: 瀑布流最大列数
-          value: 3
-          help: "设置瀑布流布局的最大列数。"
-        - $formkit: number
-          name: min_masonry_columns
-          if: "$is_enable_masonry_layout === true"
-          label: 瀑布流最小列数
-          value: 2
-          help: "设置瀑布流布局的最小列数。"
-        - $formkit: number
-          name: min_img_width
-          if: "$is_enable_masonry_layout === true"
-          label: 瀑布流最小图片宽度
-          value: 300
-          help: "设置瀑布流布局中图片的最小宽度。单位 px"
-        - $formkit: number
-          name: masonry_gap
-          if: "$is_enable_masonry_layout === true"
-          label: 瀑布流间隔宽度
-          value: 9
-          help: "设置瀑布流布局的间隔宽度。单位 px"
-        - $formkit: switch
-          name: is_enable_advanced_options
-          label: 进阶配置选项
-          value: false
-          help: 此处的配置项需要前端知识
-        - $formkit: text
-          name: img_onmouseover
-          if: "$is_enable_advanced_options === true"
-          label: 自定义图片 onmouseover 属性
-          help: "默认值：this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
-          value: "this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
-        - $formkit: text
-          name: img_onmouseout
-          if: "$is_enable_advanced_options === true"
-          label: 自定义图片 onmouseout 属性
-          help: "默认值：this.style.boxShadow='none';"
-          value: "this.style.boxShadow='none';"
-    - group: moments_styles
-      label: 瞬间页样式
-      formSchema:
-        - $formkit: switch
-          name: is_show_post_estimated_reading_time
-          label: 帖文预计阅读时间
-          value: false
-        - $formkit: switch
-          name: is_show_post_word_count
-          label: 帖文字数统计
-          value: false
-        - $formkit: switch
-          name: is_moment_upvote_button_show
-          label: 启用点赞按钮
-          value: true
-        - $formkit: switch
-          name: is_moment_comment_section_show
-          label: 启用评论区
-          value: true
     - group: error_page_styles
       label: 错误页样式
       formSchema:
@@ -1531,3 +1449,113 @@ spec:
               value: ""
               help: 无障碍标签中的名称
               validation: "required"
+    - group: photos_styles
+      label: 图库页样式
+      formSchema:
+        - $el: div
+          children:
+            - $el: span
+              children: 需
+            - $el: a
+              attrs:
+                href: "https://www.halo.run/store/apps/app-BmQJW"
+                style: |
+                  text-decoration: underline;
+                  text-underline-offset: 0.25em;
+                target: "_blank"
+              children: 图库管理插件
+            - $el: span
+              children: 启用后方可使用。
+        - $formkit: text
+          name: img_border_radius
+          label: 图片圆角宽度
+          value: "8px"
+          help: "设置图片的圆角宽度。允许使用所有 CSS 长度单位，如：0px, 5px, 10%, 1rem。"
+        - $formkit: number
+          name: img_transition_duration_after_load
+          label: 图片渐入动画时间
+          value: 0.2
+          help: "设置图片渐入动画时间，单位秒。"
+        - $formkit: switch
+          name: is_show_photo_group_name
+          if: "$is_enable_masonry_layout === false"
+          label: 显示分组标题
+          value: false
+        - $formkit: switch
+          name: is_enable_masonry_layout
+          label: 启用瀑布流布局
+          value: true
+        - $formkit: number
+          name: max_masonry_columns
+          if: "$is_enable_masonry_layout === true"
+          label: 瀑布流最大列数
+          value: 3
+          help: "设置瀑布流布局的最大列数。"
+        - $formkit: number
+          name: min_masonry_columns
+          if: "$is_enable_masonry_layout === true"
+          label: 瀑布流最小列数
+          value: 2
+          help: "设置瀑布流布局的最小列数。"
+        - $formkit: number
+          name: min_img_width
+          if: "$is_enable_masonry_layout === true"
+          label: 瀑布流最小图片宽度
+          value: 300
+          help: "设置瀑布流布局中图片的最小宽度。单位 px"
+        - $formkit: number
+          name: masonry_gap
+          if: "$is_enable_masonry_layout === true"
+          label: 瀑布流间隔宽度
+          value: 9
+          help: "设置瀑布流布局的间隔宽度。单位 px"
+        - $formkit: switch
+          name: is_enable_advanced_options
+          label: 进阶配置选项
+          value: false
+          help: 此处的配置项需要前端知识
+        - $formkit: text
+          name: img_onmouseover
+          if: "$is_enable_advanced_options === true"
+          label: 自定义图片 onmouseover 属性
+          help: "默认值：this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
+          value: "this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
+        - $formkit: text
+          name: img_onmouseout
+          if: "$is_enable_advanced_options === true"
+          label: 自定义图片 onmouseout 属性
+          help: "默认值：this.style.boxShadow='none';"
+          value: "this.style.boxShadow='none';"
+    - group: moments_styles
+      label: 瞬间页样式
+      formSchema:
+        - $el: div
+          children:
+            - $el: span
+              children: 需
+            - $el: a
+              attrs:
+                href: "https://www.halo.run/store/apps/app-SnwWD"
+                style: |
+                  text-decoration: underline;
+                  text-underline-offset: 0.25em;
+                target: "_blank"
+              children: 瞬间插件
+            - $el: span
+              children: 启用后方可使用。
+        - $formkit: switch
+          name: is_show_post_estimated_reading_time
+          label: 帖文预计阅读时间
+          value: false
+        - $formkit: switch
+          name: is_show_post_word_count
+          label: 帖文字数统计
+          value: false
+        - $formkit: switch
+          name: is_moment_upvote_button_show
+          label: 启用点赞按钮
+          value: true
+        - $formkit: switch
+          name: is_moment_comment_section_show
+          label: 启用评论区
+          value: true
