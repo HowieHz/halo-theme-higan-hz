@@ -12,12 +12,12 @@ spec:
           label: Default page language
           value: "zh"
           help: "Default page language, e.g., zh or en. If this field is left empty, zh will be used by default. To switch languages, add ?lang=language_code to the end of the URL, for example: https://example.com/?lang=en"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_i18n_prefix_match_mode
           label: I18n prefix match mode
           value: true
           help: "If enabled, the multi-language feature will use prefix match mode. See documentation for details."
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_auto_redirect_to_browser_language
           label: Auto redirect to browser language
           value: false
@@ -37,17 +37,17 @@ spec:
               label: "Region language code"
               validation: "required"
               help: "e.g. zh, zh_CN, en, en_US"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_i18n_menu_show
           label: Enable multi-language menu support
           value: false
           help: "If enabled, the theme will automatically generate a multi-language menu based on the menu name. For details, please refer to the documentation."
-        - $formkit: checkbox
+        - $formkit: switch
           name: upgrade_insecure_requests
           label: CSP:upgrade-insecure-requests
           value: false
           help: "If enabled, the theme will add the upgrade-insecure-requests directive to the Content-Security-Policy header."
-        - $formkit: checkbox
+        - $formkit: switch
           name: anti_mirror_site
           label: Anti-mirror site
           help: "If enabled, the theme will check the domain name of the current page. If the domain name is not in the whitelist, it will jump to the target link."
@@ -72,18 +72,18 @@ spec:
           label: Target link (base64 encoded)
           help: "When the domain name of the current page is not in the whitelist, the theme will jump to the target link."
           value: "bG9jYWxob3N0"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_keep_path_and_query
           if: "$anti_mirror_site === true"
           label: Keep path and query
           help: "If enabled, the theme will keep the path and query parameters of the current page when jumping to the target link."
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_custom_resource_locations
           label: Custom resource location
           value: false
           help: If enabled, custom resource locations will be used instead of the default theme locations.
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_instant_page_enable
           label: instant.page support
           value: false
@@ -94,7 +94,7 @@ spec:
           label: instant.page resource location
           value: "/themes/howiehz-higan/assets/lib/instantpage/5.2.0.js"
           help: Specify the location of the instant.page library, e.g., https://cdn.example.com/instantpage.min.js
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_mermaid_enable
           label: Mermaid support
           value: false
@@ -122,7 +122,7 @@ spec:
     - group: styles
       label: Style
       formSchema:
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_custom_font_files_enable
           label: Enable Custom Font Files
           value: false
@@ -197,7 +197,7 @@ spec:
                 - label: "Auto Mode"
                   value: "auto"
               validation: "required"
-            - $formkit: checkbox
+            - $formkit: switch
               name: is_css_variable_mode
               id: is_css_variable_mode
               label: CSS Variable Mode
@@ -287,7 +287,7 @@ spec:
               label: Base Content Color
               value: "#d5d7d8"
               help: Foreground content on base color, corresponding to CSS variable --color-base-content.
-            - $formkit: checkbox
+            - $formkit: switch
               if: "$get(is_css_variable_mode).value === true"
               name: is_raw_css_output_mode
               label: Raw CSS Output Mode
@@ -301,7 +301,7 @@ spec:
               language: css
               height: 150px
               value: ""
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_color_scheme_toggle_button
           label: Color Scheme Toggle Button
           value: false
@@ -396,13 +396,13 @@ spec:
           value: ""
           help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_auto_switch_color_scheme_based_on_browser_settings
           if: "$is_show_color_scheme_toggle_button===true"
           label: Automatically switch color scheme based on browser settings
           value: true
           help: "If enabled, it will first read the saved color scheme selection from the browser. If there is no saved selection, it will automatically switch to light/dark mode based on the browser theme settings."
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_save_color_scheme_settings_to_browser
           if: "$is_show_color_scheme_toggle_button===true"
           label: Save color scheme settings to browser
@@ -419,7 +419,7 @@ spec:
               value: "normal"
             - label: "Large"
               value: "large"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_max_width_settings
           label: Custom content area maximum width
           value: true
@@ -431,7 +431,7 @@ spec:
           value: 48rem
           placeholder: "Default: 48rem"
           help: "Allow all CSS length units, such as: 48rem, 780px, 70vw, 70%."
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_min_width_settings
           label: Custom content area minimum width
           value: false
@@ -442,13 +442,13 @@ spec:
           value: 48rem
           placeholder: "Default: 48rem"
           help: "Allow all CSS length units, such as: 48rem, 780px, 70vw, 70%. When the screen width is less than the minimum width, content area will be less than the minimum width."
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_force_min_width_settings
           if: "$is_min_width_settings===true"
           label: Force content area minimum width
           value: false
           help: "If enabled, the content area will always be larger than the minimum width. So when the screen width is less than the minimum width, vertical scrolling will appear."
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_content_width_style_settings
           label: Custom content area width style
           value: false
@@ -460,7 +460,7 @@ spec:
           value: fit-content
           placeholder: "Default: fit-content"
           help: "This determines the style value of the width attribute corresponding to the content area style."
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_header_icon
           label: Header icon
           value: true
@@ -468,12 +468,12 @@ spec:
           name: icon
           if: "$is_show_header_icon===true"
           label: Custom header icon
-        - $formkit: checkbox
+        - $formkit: switch
           name: avatar_circle
           if: "$is_show_header_icon===true"
           label: Circle avatar
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: avatar_grayout
           if: "$is_show_header_icon===true"
           label: Avatar grayscale
@@ -500,15 +500,15 @@ spec:
                 - label: "Search (requires 'search-widget' plugin)"
                   value: "search"
               validation: "required"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_header_menu
           label: Header menu
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_page_number
           label: Display page number
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_footer_site_stats_show
           label: Site statistics information at the bottom of the page
           value: false
@@ -559,7 +559,7 @@ spec:
                 - label: "Total number of words(requires 'Extra API' plugin support)"
                   value: "wordcount"
               validation: "required"
-            - $formkit: checkbox
+            - $formkit: switch
               name: i18n_text
               label: Wrap text in multiple languages
               value: true
@@ -568,7 +568,7 @@ spec:
               label: Icon to the left of the text
               format: dataurl
               value: ""
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_footer_theme_info_show
           label: Theme information in the footer
           value: true
@@ -598,7 +598,7 @@ spec:
               value: Halo Pro
             - label: Halo Professional Edition
               value: Halo Professional Edition
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_footer_copyright_show
           label: Footer theme copyright information in the footer
           value: true
@@ -607,15 +607,15 @@ spec:
           name: footer_copyright_custom_name
           label: Custom copyright signature
           help: "If left blank, the site title will be used as the signature"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_footer_force_bottom
           label: Footer, Page number force to the bottom
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_footer_menu_show
           label: Footer menu
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_footer_content_show
           label: Footer content at the bottom
           help: "If enabled, the theme will display the content at the bottom."
@@ -626,7 +626,7 @@ spec:
           label: Footer content at the bottom (support HTML code block)
           language: html
           height: 150px
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_18n_footer_content_show
           label: Multi-language footer content support
           help: "Halo settings - Code injection - Footer content display position is above 'Theme Information', 'Copyright Information', and 'Footer Menu'.\nThe footer content filled in here is below the 'Footer Menu', at the very bottom of the page."
@@ -650,27 +650,27 @@ spec:
               label: Footer content at the bottom (support HTML code block)
               language: html
               height: 150px
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_h3_underline
           label: Add underline to H3 headings
           value: true
           help: "If enabled, an underline will be displayed below H3 headings to make them stand out more."
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_preserve_empty_lines_in_blockquote
           label: Preserve empty lines in blockquote
           value: true
           help: "If enabled, empty lines in blockquotes will be preserved; otherwise, they will be automatically removed. Blockquotes are represented by the > symbol in Markdown."
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_the_quote_before_blockquote
           label: Show the quote before Blockquote
           value: true
           help: "If enabled, the theme will display the quote before the blockquote. In Markdown, you can use the > symbol to create a blockquote."
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_the_quote_after_blockquote
           label: Show the quote after Blockquote
           value: false
           help: "If enabled, the theme will display the quote after the blockquote. In Markdown, you can use the > symbol to create a blockquote."
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_the_table_bottom_border
           label: Table bottom border for each row (excluding the header)
           value: false
@@ -722,7 +722,7 @@ spec:
           label: Page title
           help: "The title of the page, which will be displayed in the browser title bar."
           value: ""
-        - $formkit: checkbox
+        - $formkit: switch
           name: hitokoto
           label: Hitokoto
           value: false
@@ -732,7 +732,7 @@ spec:
           label: hitokoto link
           value: https://v1.hitokoto.cn/?encode=js
           help: "Default: https://v1.hitokoto.cn/?encode=js, Doc: https://developer.hitokoto.cn/sentence/"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_random_sentence_show
           label: Custom random sentence display
           value: false
@@ -749,7 +749,7 @@ spec:
               name: sentence
               label: "One Sentence"
               validation: "required"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_resume_show
           label: Personal profile/Announcement content
           value: false
@@ -759,7 +759,7 @@ spec:
           label: Personal profile/Announcement content (support HTML code block)
           language: html
           height: 150px
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_i18n_resume_show
           label: Multi-language personal profile/announcement support
           value: false
@@ -782,12 +782,12 @@ spec:
               label: Personal profile/Announcement content (support HTML code block)
               language: html
               height: 150px
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_find_me_left_text
           label: Display the text on the left side of the social media information
           help: "If enabled, the theme will display the text on the left side of the social media information."
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_index_post_list_title
           label: Enable post list title
           help: "If enabled, the theme will display the title of the post list."
@@ -804,37 +804,37 @@ spec:
             - label: "Moment list"
               value: "moment-list-summary"
           help: "The 'Moment list' requires the 'Moments' plugin to be enabled for proper use."
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_views_in_simple_post_list
           if: "$list_layout === 'simple-post-list'"
           label: Display post views in simple post list
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_categories_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
           label: Display post categories in post list summary
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_tags_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
           label: Display post tags in post list summary
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_views_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
           label: Display post views in post list summary
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_estimated_reading_time_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
           label: Display post estimated reading time in post list summary
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_word_count_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
           label: Display post word count in post list summary
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_excerpt_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
           label: Display post excerpt in post list summary
@@ -845,13 +845,13 @@ spec:
           label: Maximum number of lines in the post list summary
           value: 3
           help: "The value range is 1-5"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_index_post_list_permalink_text
           if: "$list_layout === 'post-list-summary'"
           label: Display the text of the post list permalink
           help: "If enabled, the theme will display the text of the post list permalink."
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_cover_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
           label: Display post cover in the post list summary
@@ -862,17 +862,17 @@ spec:
           if: "$list_layout === 'moment-list-summary'"
           validation: required|Number
           value: 10
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_moment_avatar
           if: "$list_layout === 'moment-list-summary'"
           label: Show author avatar in moment list
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_moment_nickname
           if: "$list_layout === 'moment-list-summary'"
           label: Show author nickname in moment list
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_pin_icon_show
           label: Top icon display on the post list
           value: true
@@ -889,12 +889,12 @@ spec:
     - group: post_styles
       label: Post page style
       formSchema:
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_optimize_content_paragraph_spacing
           label: Optimize article paragraph spacing display
           value: false
           help: When enabled, adds minimum height to article content paragraphs to improve blank line display
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_enable_paragraph_first_line_indent
           label: Enable paragraph first-line indent
           value: false
@@ -905,45 +905,45 @@ spec:
           label: First-line indent value
           value: "2em"
           help: "Set the size of the first-line indent. All CSS length units are allowed, such as: 2em, 32px, 2rem, etc. Recommended: 2em"
-        - $formkit: checkbox
+        - $formkit: switch
           name: post_title_uppper
           label: Post title uppercase
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_publish_time
           label: Post publish time
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_publish_time_left_text
           if: "$is_show_post_publish_time === true"
           label: Post publish time left text
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_updated_time
           label: Post update time
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_updated_time_left_text
           if: "$is_show_post_updated_time === true"
           label: Post update time left text
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_views
           label: Show post views
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_estimated_reading_time
           label: Show estimated reading time of the article
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_word_count
           label: Show post word count
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_nav_share_button
           label: Share button in desktop menu
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_custom_toc_max_width
           label: Custom sidebar table of contents maximum width
           value: false
@@ -955,11 +955,11 @@ spec:
           value: 20rem
           placeholder: "Default: 20rem"
           help: "Controls the maximum width of the table of contents sidebar on article pages. All CSS length units are allowed, such as: 20rem, 300px, 30vw."
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_dividing_line_at_the_end_of_post_show
           label: Enable dividing line at the end of the post
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_post_upvote_button_show
           label: Upvote button at the bottom of the post
           value: false
@@ -975,7 +975,7 @@ spec:
           label: Upvote button height
           value: "1rem"
           help: "Set the height of the upvote button. All CSS length units are allowed, such as: 5px, 1rem."
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_upvote_count
           if: "$is_post_upvote_button_show === true"
           label: Display post upvote count
@@ -992,7 +992,7 @@ spec:
               value: "center"
             - label: "Right"
               value: "right"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_post_recommended_articles_show
           label: Recommended articles at the bottom of the post
           value: false
@@ -1005,20 +1005,20 @@ spec:
           min: 1
           max: 10
           help: "Set the number of recommended articles displayed at the bottom of the post"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_post_prev_next_navigation_show
           label: Adjacent article navigation at the bottom of the post
           value: false
           help: When enabled, navigation links to the previous and next articles will be displayed at the bottom of the post
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_post_comment_section_show
           label: Enable comment section
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_footer_nav
           label: Mobile footer navigation
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_share_footer
           if: "$is_show_footer_nav === true"
           label: Share buttons in the mobile footer navigation
@@ -1026,7 +1026,7 @@ spec:
     - group: categories_page_styles
       label: Category page style
       formSchema:
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_the_number_of_articles_per_category
           label: Display the number of articles per category
           value: true
@@ -1040,18 +1040,18 @@ spec:
           if: "$is_show_the_number_of_articles_per_category === true"
           label: "Characters to the right of the number of articles"
           value: ")"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_multi_layer_categories
           label: Display multi-layer categories
           value: true
     - group: category_page_styles
       label: Category details page style
       formSchema:
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_views_in_post_list
           label: Display post views in post list
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_rss_button
           label: Show RSS subscription button
           value: false
@@ -1064,7 +1064,7 @@ spec:
           label: Page description (meta description)
           value: ""
           help: Used as the meta description; falls back to site SEO description when empty
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_the_number_of_posts_per_tag
           label: Display the number of posts per tag
           value: true
@@ -1097,11 +1097,11 @@ spec:
     - group: tag_page_styles
       label: Tag details page style
       formSchema:
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_views_in_post_list
           label: Display post views in post list
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_rss_button
           label: Show RSS subscription button
           value: false
@@ -1114,7 +1114,7 @@ spec:
           label: Page description (meta description)
           value: ""
           help: Used as the meta description; falls back to site SEO description when empty
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_rss_button
           label: Show RSS subscription button
           value: false
@@ -1127,7 +1127,7 @@ spec:
           label: Page description (meta description)
           value: ""
           help: Used as the meta description; falls back to site SEO description when empty
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_collapse_post_list_by_publication_year_and_month
           label: Collapse post list by publication year and month
           value: false
@@ -1140,12 +1140,12 @@ spec:
     - group: custom_page_styles
       label: Custom page style
       formSchema:
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_optimize_content_paragraph_spacing
           label: Optimize article paragraph spacing display
           value: false
           help: When enabled, adds minimum height to article content paragraphs to improve blank line display
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_enable_paragraph_first_line_indent
           label: Enable paragraph first-line indent
           value: false
@@ -1156,19 +1156,19 @@ spec:
           label: First-line indent value
           value: "2em"
           help: "Set the size of the first-line indent. All CSS length units are allowed, such as: 2em, 32px, 2rem, etc. Recommended: 2em"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_estimated_reading_time
           label: Show estimated reading time of the article
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_word_count
           label: Show word count of the article
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_dividing_line_at_the_end_of_content_show
           label: Enable dividing line at the end of the content
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_custom_page_comment_section_show
           label: Enable comment section
           value: true
@@ -1185,12 +1185,12 @@ spec:
           label: Image fade-in animation duration
           value: 0.2
           help: "Set the image fade-in animation duration, in seconds."
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_photo_group_name
           if: "$is_enable_masonry_layout === false"
           label: Group title
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_enable_masonry_layout
           label: Masonry layout
           value: true
@@ -1218,7 +1218,7 @@ spec:
           label: Masonry gap width
           value: 9
           help: "Set the gap width for the masonry layout. Unit: px"
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_enable_advanced_options
           label: Advanced configuration options
           value: false
@@ -1238,26 +1238,26 @@ spec:
     - group: moments_styles
       label: Moments page style
       formSchema:
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_estimated_reading_time
           label: Show estimated reading time of the post
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_show_post_word_count
           label: Show word count of the post
           value: false
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_moment_upvote_button_show
           label: Enable upvote button
           value: true
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_moment_comment_section_show
           label: Enable comment section
           value: true
     - group: error_page_styles
       label: Error Page Style
       formSchema:
-        - $formkit: checkbox
+        - $formkit: switch
           name: is_auto_redirect
           label: Page auto-redirect
           value: true
