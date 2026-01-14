@@ -73,6 +73,7 @@
       border-radius: 0.5rem;
       display: flex;
       flex-direction: column;
+      height: 100%;
       padding: 1.5rem;
       text-align: center;
       transition: all 0.3s ease;
@@ -116,6 +117,7 @@
       color: color-mix(in oklab, var(--color-base-content) 70%, transparent);
       display: -webkit-box;
       font-size: 0.875rem;
+      line-clamp: 2;
       -webkit-line-clamp: 2;
       line-height: 1.5;
       overflow: hidden;
