@@ -2,6 +2,16 @@
 
 <!-- markdownlint-disable MD024 -->
 
+## [1.52.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.51.1...v1.52.0) (2026-1-14)
+
+### ⚠破坏性修改
+
+- Halo CMS 最低要求版本从 2.22.0 变更为 2.22.1
+
+### 🚀 新功能
+
+- 将配置项出现的 checkbox 控件更新为 switch 控件。（勾选框变开关样式）
+
 ## [1.51.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.0...v1.51.1) (2026-1-4)
 
 ### 🐛 错误修复

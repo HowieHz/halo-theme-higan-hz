@@ -27,12 +27,12 @@ spec:
     - $formkit: "text"
       name: "higan.howiehz.top/page-language"
       label: "页面语言"
-    - $formkit: "checkbox"
+    - $formkit: "switch"
       label: "显示在文章列表中"
       name: "higan.howiehz.top/show-in-post-list"
       value: "true"
-      on-value: "true"
-      off-value: "false"
+      onValue: "true"
+      offValue: "false"
 
 ---
 apiVersion: v1alpha1
