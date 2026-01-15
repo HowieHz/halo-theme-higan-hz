@@ -400,6 +400,32 @@
       }
     }
 
+    & .submenu-container {
+      & .submenu-toggle {
+        background: none;
+        border: none;
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+
+        &:hover {
+          color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+        }
+
+        &:focus {
+          outline: 2px solid color-mix(in oklab, var(--color-base-content) 80%, transparent);
+        }
+      }
+
+      & .submenu-link {
+        background-image: none;
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+        text-decoration: underline;
+
+        &:hover {
+          color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+        }
+      }
+    }
+
     & .footer-left {
       line-height: 1.25rem;
       vertical-align: middle;
