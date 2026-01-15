@@ -4,7 +4,11 @@ outline: deep
 
 <!-- markdownlint-disable MD013 -->
 
-<!-- This documentation is AI-generated. You can help improve it by submitting an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new). -->
+::: info Info
+
+This documentation is AI-generated. You can help improve it by submitting an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new).
+
+:::
 
 # Template Files and Access Path Mapping
 

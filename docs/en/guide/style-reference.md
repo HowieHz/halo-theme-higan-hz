@@ -1,7 +1,11 @@
 ---
 outline: deep
 ---
-<!-- This documentation is AI-generated. You can help improve it by submitting an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new). -->
+::: info Info
+
+This documentation is AI-generated. You can help improve it by submitting an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new).
+
+:::
 
 
 <!-- markdownlint-disable MD013 MD024 MD025 MD033 -->
@@ -9,7 +13,7 @@ outline: deep
 # Style Reference
 
 <script setup>
-import DefaultRender from '../.vitepress/components/DefaultRender.vue';
+import DefaultRender from '../../.vitepress/components/DefaultRender.vue';
 </script>
 
 This documentation demonstrates the theme's basic styles, extended styles, and their syntax.
