@@ -373,6 +373,8 @@
       display: inline-block;
       margin-right: 0.9375rem;
       vertical-align: middle;
+      align-items: center;
+      justify-content: center;
 
       & a,
       & span {
