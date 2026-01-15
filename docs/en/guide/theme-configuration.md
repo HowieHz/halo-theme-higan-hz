@@ -164,7 +164,7 @@ If the configured value does not meet this requirement, the theme may not work p
 :::  
 ::: info 🧩 Template Variable
 
-Variables provided for template developers to read this configuration value. Can be used via `${模板变量}` .
+Variables provided for template developers to read this configuration value. Can be used via `${template variable}` .
 
 :::
 ::: info ℹ️ Additional Information
@@ -175,21 +175,21 @@ Supplementary information.
 
 ## Global
 
-### 默认page语言
+### Default Page Language
 
 ::: info 🎯 Purpose
 
-Specify站点根标签 `<html>` 的 `lang` 属性默认值，Used for辅助无障碍、SEO 以及浏览器/插件的语言感知（例：浏览器Whether弹出page翻译提醒）。
+Specify the site root tag `<html>`  `lang` attribute default value, used to assist accessibility, SEO, and browser/plugin language detection (e.g., whether the browser prompts for page translation).
 
 :::
 ::: info 📂 Configuration Item Location
 
-全局 -> 默认page语言
+Global -> Default Page Language
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=默认page语言" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Default Page Language" />
 
 :::
 ::: info 🏷️ Type
@@ -219,26 +219,26 @@ Set值Requires满足 [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/
 :::
 ::: info ℹ️ Additional Information
 
-- 安全性：Set的语言值的will自动转义，无Requires担心 XSS 注入攻击。
-- Set优先级：请查阅[page语言Set优先级](/reference/faq#page语言Set优先级)。
+- Security: The set language value will be automatically escaped, no need to worry about XSS injection attacks.
+- Setting priority: Please refer to [page language setting priority](/reference/faq#page语言Set优先级).
 
 :::
 
-### 多语言功can前缀匹配模式
+### Multilingual Function Prefix Matching Mode
 
 ::: info 🎯 Purpose
 
-Enable多语言功can的前缀匹配模式，使主题can够更灵活地匹配语言Set。
+Enable the prefix matching mode for multilingual functionality, allowing the theme to match language settings more flexibly.
 
 :::
 ::: info 📂 Configuration Item Location
 
-全局 -> 多语言功can前缀匹配模式
+Global -> Multilingual Function Prefix Matching Mode
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=多语言功can前缀匹配模式" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Multilingual Function Prefix Matching Mode" />
 
 :::
 ::: info 🏷️ Type
@@ -258,25 +258,25 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-具体Use方法请参考[前缀匹配模式说明](/tutorial/i18n.md#前缀匹配模式说明)。
+For specific usage methods, please refer to [Prefix Matching Mode Description](/tutorial/i18n.md#前缀匹配模式说明).
 
 :::
 
-### 浏览器按语言自动跳转
+### Auto-redirect Based on Browser Language
 
 ::: info 🎯 Purpose
 
-根据浏览器的语言Set，自动跳转到对应语言的page。
+Automatically redirect to the corresponding language page based on the browser language settings.
 
 :::
 ::: info 📂 Configuration Item Location
 
-全局 -> 浏览器按语言自动跳转
+Global -> Auto-redirect Based on Browser Language
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=浏览器按语言自动跳转" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Auto-redirect Based on Browser Language" />
 
 :::
 ::: info 🏷️ Type
@@ -296,17 +296,17 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Enablethis option后，If浏览器语言与默认page语言不同，且浏览器语言存In于[Allow跳转的目标区域语言代码列表](#Allow跳转的目标区域语言代码列表)，将自动跳转到对应page。
+Enablethis option后，If浏览器语言与Default Page Language不同，且浏览器语言存In于[Allowed Target Language Code List for Redirects](#Allowed Target Language Code List for Redirects)，将自动跳转到对应page。
 
-Enable后请参照[浏览器按语言自动跳转Use指南](/tutorial/i18n#浏览器按语言自动跳转Use指南)进行Configuration。
+Enable后请参照[Auto-redirect Based on Browser LanguageUse指南](/tutorial/i18n#Auto-redirect Based on Browser LanguageUse指南)进行Configuration。
 
 When enabled, you can configure:
 
-- [Allow跳转的目标区域语言代码列表](#Allow跳转的目标区域语言代码列表)
+- [Allowed Target Language Code List for Redirects](#Allowed Target Language Code List for Redirects)
 
 :::
 
-### Allow跳转的目标区域语言代码列表
+### Allowed Target Language Code List for Redirects
 
 ::: info 🎯 Purpose
 
@@ -315,14 +315,14 @@ SetAllow的自动跳转目标语言。
 :::
 ::: info 📂 Configuration Item Location
 
-（[全局 -> 浏览器按语言自动跳转](#浏览器按语言自动跳转)EnablewhenDisplay）
+（[Global -> Auto-redirect Based on Browser Language](#Auto-redirect Based on Browser Language)When enabled, will display）
 
-全局 -> Allow跳转的目标区域语言代码列表
+Global -> Allowed Target Language Code List for Redirects
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Allow跳转的目标区域语言代码列表" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Allowed Target Language Code List for Redirects" />
 
 :::
 ::: info 🏷️ Type
@@ -376,29 +376,29 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-Enable[浏览器按语言自动跳转](#浏览器按语言自动跳转)后，If浏览器语言与默认page语言不同，且浏览器语言存In于this option，将自动跳转到对应page。
+Enable[Auto-redirect Based on Browser Language](#Auto-redirect Based on Browser Language)后，If浏览器语言与Default Page Language不同，且浏览器语言存In于this option，将自动跳转到对应page。
 
-请参照[浏览器按语言自动跳转Use指南](/tutorial/i18n#浏览器按语言自动跳转Use指南)进行Configuration。
+请参照[Auto-redirect Based on Browser LanguageUse指南](/tutorial/i18n#Auto-redirect Based on Browser LanguageUse指南)进行Configuration。
 
 匹配顺序从上到下。
 
 :::
 
-### 多语言菜单Support
+### Multilingual Menu Support
 
 ::: info 🎯 Purpose
 
-Enable多语言菜单Support，AllowIn菜单中Display不同语言的内容。
+EnableMultilingual Menu Support，AllowIn菜单中Display不同语言的内容。
 
 :::
 ::: info 📂 Configuration Item Location
 
-全局 -> 多语言菜单Support
+Global -> Multilingual Menu Support
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=多语言菜单Support" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Multilingual Menu Support" />
 
 :::
 ::: info 🏷️ Type
@@ -431,7 +431,7 @@ Enable后请参照[多语言菜单Use指南](/tutorial/i18n#多语言菜单Use�
 :::
 ::: info 📂 Configuration Item Location
 
-全局 -> CSP:upgrade-insecure-requests
+Global -> CSP:upgrade-insecure-requests
 
 :::
 ::: info ⚡ Quick Jump
@@ -455,7 +455,7 @@ Boolean
 
 :::
 
-### 仅AllowUseSpecify域名访问
+### Only Allow Access from Specified Domains
 
 ::: info 🎯 Purpose
 
@@ -464,12 +464,12 @@ Boolean
 :::
 ::: info 📂 Configuration Item Location
 
-全局 -> 仅AllowUseSpecify域名访问
+Global -> Only Allow Access from Specified Domains
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=仅AllowUseSpecify域名访问" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Only Allow Access from Specified Domains" />
 
 :::
 ::: info 🏷️ Type
@@ -489,33 +489,33 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Enable后请参照[Enable仅AllowUseSpecify域名访问](/tutorial/security#Enable仅AllowUseSpecify域名访问)进行Configuration。
+Enable后请参照[EnableOnly Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains)进行Configuration。
 
 When enabled, you can configure:
 
-- [域名白名单列表](#域名白名单列表)
-- [目标链接](#目标链接)
+- [Domain Whitelist](#Domain Whitelist)
+- [Target Link](#Target Link)
 - [跳转后Whether保留路径和查询参数](#跳转后Whether保留路径和查询参数)
 
 :::
 
-### 域名白名单列表
+### Domain Whitelist
 
 ::: info 🎯 Purpose
 
-Set域名白名单列表。
+SetDomain Whitelist。
 
 :::
 ::: info 📂 Configuration Item Location
 
-（[全局 -> 仅AllowUseSpecify域名访问](#仅AllowUseSpecify域名访问)EnablewhenDisplay）
+（[Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains)When enabled, will display）
 
-全局 -> 域名白名单列表
+Global -> Domain Whitelist
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=域名白名单列表" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Domain Whitelist" />
 
 :::
 ::: info 🏷️ Type
@@ -559,27 +559,27 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-请参照[Enable仅AllowUseSpecify域名访问](/tutorial/security#Enable仅AllowUseSpecify域名访问)进行Configuration。
+请参照[EnableOnly Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains)进行Configuration。
 
 :::
 
-### 目标链接
+### Target Link
 
 ::: info 🎯 Purpose
 
-Set域名白名单列表。
+SetDomain Whitelist。
 
 :::
 ::: info 📂 Configuration Item Location
 
-（[全局 -> 仅AllowUseSpecify域名访问](#仅AllowUseSpecify域名访问)EnablewhenDisplay）
+（[Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains)When enabled, will display）
 
-全局 -> 目标链接
+Global -> Target Link
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=目标链接" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Target Link" />
 
 :::
 ::: info 🏷️ Type
@@ -604,7 +604,7 @@ String
 :::
 ::: info ℹ️ Additional Information
 
-请参照[Enable仅AllowUseSpecify域名访问](/tutorial/security#Enable仅AllowUseSpecify域名访问)进行Configuration。
+请参照[EnableOnly Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains)进行Configuration。
 
 :::
 
@@ -617,9 +617,9 @@ Set跳转后Whether保留路径和查询参数。
 :::
 ::: info 📂 Configuration Item Location
 
-（[全局 -> 仅AllowUseSpecify域名访问](#仅AllowUseSpecify域名访问)EnablewhenDisplay）
+（[Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains)When enabled, will display）
 
-全局 -> 跳转后Whether保留路径和查询参数
+Global -> 跳转后Whether保留路径和查询参数
 
 :::
 ::: info ⚡ Quick Jump
@@ -644,16 +644,16 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-请参照[Enable仅AllowUseSpecify域名访问](/tutorial/security#Enable仅AllowUseSpecify域名访问)进行Configuration。
+请参照[EnableOnly Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains)进行Configuration。
 
-假设用户访问的链接为 `http://localhost/a/b?a=1`，[目标链接](#目标链接)Set为（Base 64 编码前）`https://p.com`：
+假设用户访问的链接为 `http://localhost/a/b?a=1`，[Target Link](#Target Link)Set为（Base 64 编码前）`https://p.com`：
 
 - Disablethis optionwill跳转到：`https://p.com`
 - Enablethis optionwill跳转到：`https://p.com/a/b?a=1`
 
 :::
 
-### Custom资源位置地址
+### Custom Resource Location Address
 
 ::: info 🎯 Purpose
 
@@ -662,12 +662,12 @@ Specify资源将UseCustom的资源位置地址，而不是主题默认的地址�
 :::
 ::: info 📂 Configuration Item Location
 
-全局 -> Custom资源位置地址
+Global -> Custom Resource Location Address
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Custom资源位置地址" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Custom Resource Location Address" />
 
 :::
 ::: info 🏷️ Type
@@ -700,7 +700,7 @@ Enablethis option厚，IfEnable下面的“instant.page Support”、“Mermaid 
 :::
 ::: info 📂 Configuration Item Location
 
-全局 -> instant.page Support
+Global -> instant.page Support
 
 :::
 ::: info ⚡ Quick Jump
@@ -733,7 +733,7 @@ Enable Mermaid 图表渲染功can，SupportInpost中绘制流程图、when序图
 :::
 ::: info 📂 Configuration Item Location
 
-全局 -> Mermaid Support
+Global -> Mermaid Support
 
 :::
 ::: info ⚡ Quick Jump
@@ -778,7 +778,7 @@ Use上传的Custom字体文件替换默认字体。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> EnableCustom字体文件
+General Styles -> EnableCustom字体文件
 
 :::
 ::: info ⚡ Quick Jump
@@ -819,9 +819,9 @@ Used for选择上传的字体文件替换默认字体文件。Support `.woff2`/`
 :::
 ::: info 📂 Configuration Item Location
 
-（[总体样式 -> EnableCustom字体文件](#EnableCustom字体文件)EnablewhenDisplay）
+（[General Styles -> EnableCustom字体文件](#EnableCustom字体文件)When enabled, will display）
 
-总体样式 -> 选择Custom字体文件
+General Styles -> 选择Custom字体文件
 
 :::
 ::: info ⚡ Quick Jump
@@ -850,9 +850,9 @@ Ifthis option置Empty，则即Use户本地已安装this字体，也不willUse本
 :::
 ::: info 📂 Configuration Item Location
 
-（[总体样式 -> EnableCustom字体文件](#EnableCustom字体文件)EnablewhenDisplay）
+（[General Styles -> EnableCustom字体文件](#EnableCustom字体文件)When enabled, will display）
 
-总体样式 -> Custom字体名称
+General Styles -> Custom字体名称
 
 :::
 ::: info ⚡ Quick Jump
@@ -895,7 +895,7 @@ Set网站的整体配色方案，Support多种内置主题和Custom配色。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 配色方案
+General Styles -> 配色方案
 
 :::
 ::: info ⚡ Quick Jump
@@ -945,7 +945,7 @@ SetCustom配色方案。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> Custom配色方案
+General Styles -> Custom配色方案
 
 :::
 ::: info ⚡ Quick Jump
@@ -1137,7 +1137,7 @@ IfEnablethis option，将In大标题旁Display明暗模式切换按钮。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 深浅色模式切换按钮
+General Styles -> 深浅色模式切换按钮
 
 :::
 ::: info ⚡ Quick Jump
@@ -1186,9 +1186,9 @@ Set深浅色模式切换按钮中自动模式的配色方案。
 :::
 ::: info 📂 Configuration Item Location
 
-（[总体样式 -> 深浅色模式切换按钮](#深浅色模式切换按钮)EnablewhenDisplay）
+（[General Styles -> 深浅色模式切换按钮](#深浅色模式切换按钮)When enabled, will display）
 
-总体样式 -> 自动模式配色方案
+General Styles -> 自动模式配色方案
 
 :::
 ::: info ⚡ Quick Jump
@@ -1237,9 +1237,9 @@ Set深浅色模式切换按钮中浅色模式的配色方案。
 :::
 ::: info 📂 Configuration Item Location
 
-（[总体样式 -> 深浅色模式切换按钮](#深浅色模式切换按钮)EnablewhenDisplay）
+（[General Styles -> 深浅色模式切换按钮](#深浅色模式切换按钮)When enabled, will display）
 
-总体样式 -> 浅色模式配色方案
+General Styles -> 浅色模式配色方案
 
 :::
 ::: info ⚡ Quick Jump
@@ -1288,9 +1288,9 @@ Set深浅色模式切换按钮中深色模式的配色方案。
 :::
 ::: info 📂 Configuration Item Location
 
-（[总体样式 -> 深浅色模式切换按钮](#深浅色模式切换按钮)EnablewhenDisplay）
+（[General Styles -> 深浅色模式切换按钮](#深浅色模式切换按钮)When enabled, will display）
 
-总体样式 -> 深色模式配色方案
+General Styles -> 深色模式配色方案
 
 :::
 ::: info ⚡ Quick Jump
@@ -1339,7 +1339,7 @@ Set网站的整体字体大小。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 字体大小
+General Styles -> 字体大小
 
 :::
 ::: info ⚡ Quick Jump
@@ -1378,7 +1378,7 @@ Whether定义内容区域最大宽度。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> Custom内容区域最大宽度
+General Styles -> Custom内容区域最大宽度
 
 :::
 ::: info ⚡ Quick Jump
@@ -1421,9 +1421,9 @@ Set内容区域的最大宽度。
 :::
 ::: info 📂 Configuration Item Location
 
-（[总体样式 -> Custom内容区域最大宽度](#Custom内容区域最大宽度)EnablewhenDisplay）
+（[General Styles -> Custom内容区域最大宽度](#Custom内容区域最大宽度)When enabled, will display）
 
-总体样式 -> 内容区域最大宽度
+General Styles -> 内容区域最大宽度
 
 :::
 ::: info ⚡ Quick Jump
@@ -1466,7 +1466,7 @@ Whether定义内容区域最小宽度。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> Custom内容区域最小宽度
+General Styles -> Custom内容区域最小宽度
 
 :::
 ::: info ⚡ Quick Jump
@@ -1509,9 +1509,9 @@ Set内容区域的最小宽度。
 :::
 ::: info 📂 Configuration Item Location
 
-（[总体样式 -> Custom内容区域最小宽度](#Custom内容区域最小宽度)EnablewhenDisplay）
+（[General Styles -> Custom内容区域最小宽度](#Custom内容区域最小宽度)When enabled, will display）
 
-总体样式 -> 内容区域最小宽度
+General Styles -> 内容区域最小宽度
 
 :::
 ::: info ⚡ Quick Jump
@@ -1554,9 +1554,9 @@ Controls whether强制应用内容区域最小宽度。
 :::
 ::: info 📂 Configuration Item Location
 
-（[总体样式 -> Custom内容区域最小宽度](#Custom内容区域最小宽度)EnablewhenDisplay）
+（[General Styles -> Custom内容区域最小宽度](#Custom内容区域最小宽度)When enabled, will display）
 
-总体样式 -> 强制应用内容区域最小宽度
+General Styles -> 强制应用内容区域最小宽度
 
 :::
 ::: info ⚡ Quick Jump
@@ -1595,7 +1595,7 @@ Whether定义内容区域宽度属性。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> Custom内容区域宽度属性
+General Styles -> Custom内容区域宽度属性
 
 :::
 ::: info ⚡ Quick Jump
@@ -1635,9 +1635,9 @@ When enabled, you can configure:
 :::
 ::: info 📂 Configuration Item Location
 
-（[总体样式 -> Custom内容区域宽度属性](/guide/theme-configuration#Custom内容区域宽度属性)EnablewhenDisplay）
+（[General Styles -> Custom内容区域宽度属性](/guide/theme-configuration#Custom内容区域宽度属性)When enabled, will display）
 
-总体样式 -> 内容区域宽度样式
+General Styles -> 内容区域宽度样式
 
 :::
 ::: info ⚡ Quick Jump
@@ -1685,7 +1685,7 @@ Controls whetherIn页眉Display头像。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> WhetherDisplay页眉头像
+General Styles -> WhetherDisplay页眉头像
 
 :::
 ::: info ⚡ Quick Jump
@@ -1727,9 +1727,9 @@ Used for选择上传的图片作为页眉头像。未Set将Use默认头像 `/the
 :::
 ::: info 📂 Configuration Item Location
 
-（[全局 -> 页眉头像Display](#页眉头像Display)EnablewhenDisplay）
+（[Global -> 页眉头像Display](#页眉头像Display)When enabled, will display）
 
-总体样式 -> Custom页眉头像
+General Styles -> Custom页眉头像
 
 :::
 ::: info ⚡ Quick Jump
@@ -1757,9 +1757,9 @@ Controls whether强制将头像裁切为圆形。
 :::
 ::: info 📂 Configuration Item Location
 
-（[全局 -> 页眉头像Display](#页眉头像Display)EnablewhenDisplay）
+（[Global -> 页眉头像Display](#页眉头像Display)When enabled, will display）
 
-总体样式 -> 圆形头像
+General Styles -> 圆形头像
 
 :::
 ::: info ⚡ Quick Jump
@@ -1792,9 +1792,9 @@ Controls whether强制将头像以灰度处理。
 :::
 ::: info 📂 Configuration Item Location
 
-（[全局 -> 页眉头像Display](#页眉头像Display)EnablewhenDisplay）
+（[Global -> 页眉头像Display](#页眉头像Display)When enabled, will display）
 
-总体样式 -> 灰度头像
+General Styles -> 灰度头像
 
 :::
 ::: info ⚡ Quick Jump
@@ -1827,7 +1827,7 @@ Controls whetherIn菜单Display额外菜单项。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 额外菜单项
+General Styles -> 额外菜单项
 
 :::
 ::: info ⚡ Quick Jump
@@ -1898,7 +1898,7 @@ Controls whetherDisplay页眉菜单。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> Display页眉菜单
+General Styles -> Display页眉菜单
 
 :::
 ::: info ⚡ Quick Jump
@@ -1931,7 +1931,7 @@ Controls whetherDisplay页码。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> Display页码
+General Styles -> Display页码
 
 :::
 ::: info ⚡ Quick Jump
@@ -1964,7 +1964,7 @@ Controls whetherDisplaypage底部站点统计信息。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> page底部站点统计信息
+General Styles -> page底部站点统计信息
 
 :::
 ::: info ⚡ Quick Jump
@@ -2004,9 +2004,9 @@ Set统计项。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> page底部站点统计信息](#page底部站点统计信息)EnablewhenDisplay）
+（[Home Page Style -> page底部站点统计信息](#page底部站点统计信息)When enabled, will display）
 
-总体样式 -> 统计项Set
+General Styles -> 统计项Set
 
 :::
 ::: info ⚡ Quick Jump
@@ -2096,7 +2096,7 @@ Controls whetherDisplaypage底部主题信息。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> page底部主题信息
+General Styles -> page底部主题信息
 
 :::
 ::: info ⚡ Quick Jump
@@ -2137,9 +2137,9 @@ Setpage底部主题信息所展示的主题名。
 :::
 ::: info 📂 Configuration Item Location
 
-（[总体样式 -> page底部主题信息](#page底部主题信息)EnablewhenDisplay）
+（[General Styles -> page底部主题信息](#page底部主题信息)When enabled, will display）
 
-总体样式 -> 版权信息Custom署名
+General Styles -> 版权信息Custom署名
 
 :::
 ::: info ⚡ Quick Jump
@@ -2178,9 +2178,9 @@ Setpage底部主题信息所展示的 Halo 版本。
 :::
 ::: info 📂 Configuration Item Location
 
-（[总体样式 -> page底部主题信息](#page底部主题信息)EnablewhenDisplay）
+（[General Styles -> page底部主题信息](#page底部主题信息)When enabled, will display）
 
-总体样式 -> page底部主题信息所展示的 Halo 版本
+General Styles -> page底部主题信息所展示的 Halo 版本
 
 :::
 ::: info ⚡ Quick Jump
@@ -2219,7 +2219,7 @@ Controls whetherDisplaypage底部版权信息。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> page底部版权信息
+General Styles -> page底部版权信息
 
 :::
 ::: info ⚡ Quick Jump
@@ -2259,9 +2259,9 @@ Setpage底部版权信息的署名。
 :::
 ::: info 📂 Configuration Item Location
 
-（[总体样式 -> page底部版权信息](#page底部版权信息)EnablewhenDisplay）
+（[General Styles -> page底部版权信息](#page底部版权信息)When enabled, will display）
 
-总体样式 -> 版权信息Custom署名
+General Styles -> 版权信息Custom署名
 
 :::
 ::: info ⚡ Quick Jump
@@ -2299,7 +2299,7 @@ Controls whether强制页脚、页码Inpage底部。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 强制页脚、页码Inpage底部
+General Styles -> 强制页脚、页码Inpage底部
 
 :::
 ::: info ⚡ Quick Jump
@@ -2332,7 +2332,7 @@ Controls whetherDisplaypage底部菜单。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> page底部菜单
+General Styles -> page底部菜单
 
 :::
 ::: info ⚡ Quick Jump
@@ -2365,7 +2365,7 @@ Boolean
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 添加内容到page最底部
+General Styles -> 添加内容到page最底部
 
 :::
 ::: info ⚡ Quick Jump
@@ -2410,9 +2410,9 @@ Setpage最底部内容内容。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> page最底部内容](#page最底部内容)EnablewhenDisplay）
+（[Home Page Style -> page最底部内容](#page最底部内容)When enabled, will display）
 
-首页样式 -> page最底部内容
+Home Page Style -> page最底部内容
 
 :::
 ::: info ⚡ Quick Jump
@@ -2463,9 +2463,9 @@ Controls whetherEnable多语言page最底部内容Support。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> page最底部内容](#page最底部内容)EnablewhenDisplay）
+（[Home Page Style -> page最底部内容](#page最底部内容)When enabled, will display）
 
-首页样式 -> 多语言page最底部内容Support
+Home Page Style -> 多语言page最底部内容Support
 
 :::
 ::: info ⚡ Quick Jump
@@ -2503,9 +2503,9 @@ Set多语言page最底部内容内容。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> page最底部内容](#page最底部内容)EnablewhenDisplay）
+（[Home Page Style -> page最底部内容](#page最底部内容)When enabled, will display）
 
-首页样式 -> Custom多语言page最底部内容
+Home Page Style -> Custom多语言page最底部内容
 
 :::
 ::: info ⚡ Quick Jump
@@ -2600,7 +2600,7 @@ Enablewhen，In三级标题（h3）下方Display下划线装饰，让标题更�
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 为三级标题添加下划线
+General Styles -> 为三级标题添加下划线
 
 :::
 ::: info ⚡ Quick Jump
@@ -2633,7 +2633,7 @@ In引用块中保留Empty行，否则将自动删除引用块中的Empty行。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 引用块保留Empty行
+General Styles -> 引用块保留Empty行
 
 :::
 ::: info ⚡ Quick Jump
@@ -2671,7 +2671,7 @@ In引用块前添加引号。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 引用块前添加引号
+General Styles -> 引用块前添加引号
 
 :::
 ::: info ⚡ Quick Jump
@@ -2704,7 +2704,7 @@ In引用块后添加引号。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 引用块后添加引号
+General Styles -> 引用块后添加引号
 
 :::
 ::: info ⚡ Quick Jump
@@ -2737,7 +2737,7 @@ Whether为表格每行底部添加表格线（除表头）。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 表格行间线（除表头）
+General Styles -> 表格行间线（除表头）
 
 :::
 ::: info ⚡ Quick Jump
@@ -2782,11 +2782,11 @@ Set表格每行底部添表格线的宽度（除表头）。
 
 <!-- markdownlint-disable MD051 -->
 
-（[总体样式 -> 表格行间线（除表头）](#表格行间线-除表头)EnablewhenDisplay）
+（[General Styles -> 表格行间线（除表头）](#表格行间线-除表头)When enabled, will display）
 
 <!-- markdownlint-enable MD051 -->
 
-总体样式 -> 表格行间线宽度（除表头）
+General Styles -> 表格行间线宽度（除表头）
 
 :::
 ::: info ⚡ Quick Jump
@@ -2829,7 +2829,7 @@ Set[标题](/guide/style-reference#标题)的上边距 (`margin-top`) 倍率。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 标题上边距倍率
+General Styles -> 标题上边距倍率
 
 :::
 ::: info ⚡ Quick Jump
@@ -2877,7 +2877,7 @@ Set[标题](/guide/style-reference#标题)的下边距 (`margin-bottom`) 倍率�
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 标题下边距倍率
+General Styles -> 标题下边距倍率
 
 :::
 ::: info ⚡ Quick Jump
@@ -2920,7 +2920,7 @@ Set[段落](/guide/style-reference#段落)的上边距倍率。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 段落上边距倍率
+General Styles -> 段落上边距倍率
 
 :::
 ::: info ⚡ Quick Jump
@@ -2963,7 +2963,7 @@ Set[段落](/guide/style-reference#段落)的下边距倍率。
 :::
 ::: info 📂 Configuration Item Location
 
-总体样式 -> 段落下边距倍率
+General Styles -> 段落下边距倍率
 
 :::
 ::: info ⚡ Quick Jump
@@ -3010,7 +3010,7 @@ Custom主页的 HTML 标题（willDisplayIn浏览器标签页上）。
 :::
 ::: info 📂 Configuration Item Location
 
-首页样式 -> 主页 HTML 标题
+Home Page Style -> 主页 HTML 标题
 
 :::
 ::: info ⚡ Quick Jump
@@ -3053,7 +3053,7 @@ WhetherIn首页Display一言（hitokoto）随机句子服务的内容。
 :::
 ::: info 📂 Configuration Item Location
 
-首页样式 -> 一言（hitokoto）
+Home Page Style -> 一言（hitokoto）
 
 :::
 ::: info ⚡ Quick Jump
@@ -3095,7 +3095,7 @@ WhetherIn首页随机Display一句话。
 :::
 ::: info 📂 Configuration Item Location
 
-首页样式 -> Custom随机Display一句话
+Home Page Style -> Custom随机Display一句话
 
 :::
 ::: info ⚡ Quick Jump
@@ -3135,7 +3135,7 @@ In首页Display个人简介or公告栏内容。
 :::
 ::: info 📂 Configuration Item Location
 
-首页样式 -> 个人简介/公告栏
+Home Page Style -> 个人简介/公告栏
 
 :::
 ::: info ⚡ Quick Jump
@@ -3179,11 +3179,11 @@ Controls whetherEnable多语言个人简介/公告栏Support。
 
 <!-- markdownlint-disable MD051 -->
 
-（[首页样式 -> 个人简介/公告栏](#个人简介-公告栏)EnablewhenDisplay）
+（[Home Page Style -> 个人简介/公告栏](#个人简介-公告栏)When enabled, will display）
 
 <!-- markdownlint-enable MD051 -->
 
-首页样式 -> 多语言个人简介/公告栏Support
+Home Page Style -> 多语言个人简介/公告栏Support
 
 :::
 ::: info ⚡ Quick Jump
@@ -3223,11 +3223,11 @@ Set多语言公告栏内容。
 
 <!-- markdownlint-disable MD051 -->
 
-（[首页样式 -> 个人简介/公告栏](#个人简介-公告栏)EnablewhenDisplay）
+（[Home Page Style -> 个人简介/公告栏](#个人简介-公告栏)When enabled, will display）
 
 <!-- markdownlint-enable MD051 -->
 
-首页样式 -> Custom多语言公告栏内容
+Home Page Style -> Custom多语言公告栏内容
 
 :::
 ::: info ⚡ Quick Jump
@@ -3322,7 +3322,7 @@ Controls whetherDisplay首页社交资料Icon左侧的文字。
 :::
 ::: info 📂 Configuration Item Location
 
-首页样式 -> 社交资料Icon左侧文字
+Home Page Style -> 社交资料Icon左侧文字
 
 :::
 ::: info ⚡ Quick Jump
@@ -3355,7 +3355,7 @@ Controls whetherDisplay首页post列表的标题。
 :::
 ::: info 📂 Configuration Item Location
 
-首页样式 -> 首页post列表标题
+Home Page Style -> 首页post列表标题
 
 :::
 ::: info ⚡ Quick Jump
@@ -3388,7 +3388,7 @@ Boolean
 :::
 ::: info 📂 Configuration Item Location
 
-首页样式 -> 主页列表布局
+Home Page Style -> 主页列表布局
 
 :::
 ::: info ⚡ Quick Jump
@@ -3456,9 +3456,9 @@ Controls whetherIn简洁列表中Displaypost阅读量。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> 主页列表布局](#主页列表布局)Set为“简洁post列表”whenDisplay）
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set为“简洁post列表”whenDisplay）
 
-首页样式 -> 简洁列表Displaypost阅读量
+Home Page Style -> 简洁列表Displaypost阅读量
 
 :::
 ::: info ⚡ Quick Jump
@@ -3491,9 +3491,9 @@ Controls whetherIn多元列表中Displaypost分类。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
 
-首页样式 -> 多元列表Displaypost分类
+Home Page Style -> 多元列表Displaypost分类
 
 :::
 ::: info ⚡ Quick Jump
@@ -3526,9 +3526,9 @@ Controls whetherIn多元列表中Displaypost标签。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
 
-首页样式 -> 多元列表Displaypost标签
+Home Page Style -> 多元列表Displaypost标签
 
 :::
 ::: info ⚡ Quick Jump
@@ -3561,9 +3561,9 @@ Controls whetherIn多元列表中Displaypost阅读量。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
 
-首页样式 -> 多元列表Displaypost阅读量
+Home Page Style -> 多元列表Displaypost阅读量
 
 :::
 ::: info ⚡ Quick Jump
@@ -3596,9 +3596,9 @@ Controls whetherIn多元列表中Displaypost预计阅读when间。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
 
-首页样式 -> 多元列表Displaypost预计阅读when间
+Home Page Style -> 多元列表Displaypost预计阅读when间
 
 :::
 ::: info ⚡ Quick Jump
@@ -3636,9 +3636,9 @@ Controls whetherIn多元列表中Displaypost字数统计。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
 
-首页样式 -> 多元列表Displaypost字数统计
+Home Page Style -> 多元列表Displaypost字数统计
 
 :::
 ::: info ⚡ Quick Jump
@@ -3676,9 +3676,9 @@ Controls whetherIn多元列表中Displaypost摘要。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
 
-首页样式 -> 多元列表Displaypost摘要
+Home Page Style -> 多元列表Displaypost摘要
 
 :::
 ::: info ⚡ Quick Jump
@@ -3711,9 +3711,9 @@ Set多元列表中post摘要的最大行数。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
 
-首页样式 -> 多元列表post摘要行数上限
+Home Page Style -> 多元列表post摘要行数上限
 
 :::
 ::: info ⚡ Quick Jump
@@ -3751,9 +3751,9 @@ Controls whetherIn多元列表中Display跳转post链接的提示文字。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
 
-首页样式 -> 多元列表跳转post链接所用提示文字
+Home Page Style -> 多元列表跳转post链接所用提示文字
 
 :::
 ::: info ⚡ Quick Jump
@@ -3791,9 +3791,9 @@ Controls whetherIn多元列表中Displaypost封面。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set为“多元post列表”whenDisplay）
 
-首页样式 -> 多元列表Displaypost封面
+Home Page Style -> 多元列表Displaypost封面
 
 :::
 ::: info ⚡ Quick Jump
@@ -3826,9 +3826,9 @@ Set瞬间列表中Display的条目数量。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> 主页列表布局](#主页列表布局)Set为“瞬间列表”whenDisplay）
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set为“瞬间列表”whenDisplay）
 
-首页样式 -> 瞬间列表Display条数
+Home Page Style -> 瞬间列表Display条数
 
 :::
 ::: info ⚡ Quick Jump
@@ -3861,9 +3861,9 @@ Controls whetherIn瞬间列表中Display条目作者头像。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> 主页列表布局](#主页列表布局)Set为“瞬间列表”whenDisplay）
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set为“瞬间列表”whenDisplay）
 
-首页样式 -> 瞬间列表Display条目作者头像
+Home Page Style -> 瞬间列表Display条目作者头像
 
 :::
 ::: info ⚡ Quick Jump
@@ -3896,9 +3896,9 @@ Controls whetherIn瞬间列表中Display条目作者昵称。
 :::
 ::: info 📂 Configuration Item Location
 
-（[首页样式 -> 主页列表布局](#主页列表布局)Set为“瞬间列表”whenDisplay）
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set为“瞬间列表”whenDisplay）
 
-首页样式 -> 瞬间列表Display条目作者昵称
+Home Page Style -> 瞬间列表Display条目作者昵称
 
 :::
 ::: info ⚡ Quick Jump
@@ -3931,7 +3931,7 @@ Inpost列表中为置顶postDisplay特殊icon.
 :::
 ::: info 📂 Configuration Item Location
 
-首页样式 -> post列表置顶Icon
+Home Page Style -> post列表置顶Icon
 
 :::
 ::: info ⚡ Quick Jump
@@ -4597,7 +4597,7 @@ Used forCustomthispage的 HTML `<meta name="description">` 内容，方便针对
 :::
 ::: info 📂 Configuration Item Location
 
-分类集合页样式 -> page描述
+Categories Page Style -> page描述
 
 :::
 ::: info ⚡ Quick Jump
@@ -4635,7 +4635,7 @@ Controls whetherIn分类列表中Display每个分类包含的post数量。
 :::
 ::: info 📂 Configuration Item Location
 
-分类集合页样式 -> Display每个分类下的post数量
+Categories Page Style -> Display每个分类下的post数量
 
 :::
 ::: info ⚡ Quick Jump
@@ -4680,7 +4680,7 @@ Controls whetherIn分类page展示子分类。
 :::
 ::: info 📂 Configuration Item Location
 
-分类集合页样式 -> WhetherDisplay多层分类
+Categories Page Style -> WhetherDisplay多层分类
 
 :::
 ::: info ⚡ Quick Jump
@@ -4717,7 +4717,7 @@ In分类详情页Displaypost阅读量。
 :::
 ::: info 📂 Configuration Item Location
 
-分类详情页样式 -> post列表Displaypost阅读量
+Category Detail Page Style -> post列表Displaypost阅读量
 
 :::
 ::: info ⚡ Quick Jump
@@ -4750,7 +4750,7 @@ In分类详情页Display RSS 订阅按钮。
 :::
 ::: info 📂 Configuration Item Location
 
-分类详情页样式 -> 分类 RSS 订阅按钮
+Category Detail Page Style -> 分类 RSS 订阅按钮
 
 :::
 ::: info ⚡ Quick Jump
@@ -4792,7 +4792,7 @@ Used forCustomthispage的 HTML `<meta name="description">` 内容，方便针对
 :::
 ::: info 📂 Configuration Item Location
 
-标签集合页样式 -> page描述
+Tags Page Style -> page描述
 
 :::
 ::: info ⚡ Quick Jump
@@ -4830,7 +4830,7 @@ Controls whetherIn分类列表中Display每个标签包含的post数量。
 :::
 ::: info 📂 Configuration Item Location
 
-标签集合页样式 -> Display每个标签下的post数量
+Tags Page Style -> Display每个标签下的post数量
 
 :::
 ::: info ⚡ Quick Jump
@@ -4874,7 +4874,7 @@ Set标签In标签集合页的排序方式。
 :::
 ::: info 📂 Configuration Item Location
 
-标签集合页样式 -> 标签排序方式
+Tags Page Style -> 标签排序方式
 
 :::
 ::: info ⚡ Quick Jump
@@ -4919,7 +4919,7 @@ In标签详情页Displaypost阅读量。
 :::
 ::: info 📂 Configuration Item Location
 
-标签详情页样式 -> post列表Displaypost阅读量
+Tag Detail Page Style -> post列表Displaypost阅读量
 
 :::
 ::: info ⚡ Quick Jump
@@ -4952,7 +4952,7 @@ In标签详情页Display RSS 订阅按钮。
 :::
 ::: info 📂 Configuration Item Location
 
-标签详情页样式 -> Display标签 RSS 订阅按钮
+Tag Detail Page Style -> Display标签 RSS 订阅按钮
 
 :::
 ::: info ⚡ Quick Jump
@@ -4994,7 +4994,7 @@ Used forCustomthispage的 HTML `<meta name="description">` 内容，方便针对
 :::
 ::: info 📂 Configuration Item Location
 
-作者详情页样式 -> page描述
+Author Detail Page Style -> page描述
 
 :::
 ::: info ⚡ Quick Jump
@@ -5032,7 +5032,7 @@ In作者详情页Display RSS 订阅按钮。
 :::
 ::: info 📂 Configuration Item Location
 
-作者详情页样式 -> Display作者 RSS 订阅按钮
+Author Detail Page Style -> Display作者 RSS 订阅按钮
 
 :::
 ::: info ⚡ Quick Jump
@@ -5074,7 +5074,7 @@ Used forCustomthispage的 HTML `<meta name="description">` 内容，方便针对
 :::
 ::: info 📂 Configuration Item Location
 
-归档页样式 -> page描述
+Archives Page Style -> page描述
 
 :::
 ::: info ⚡ Quick Jump
@@ -5112,7 +5112,7 @@ In归档page中，按照post发布的年份和月份将post列表折叠Display�
 :::
 ::: info 📂 Configuration Item Location
 
-归档页样式 -> 按照发布年份和月份折叠post列表
+Archives Page Style -> 按照发布年份和月份折叠post列表
 
 :::
 ::: info ⚡ Quick Jump
@@ -5384,7 +5384,7 @@ In错误page（如 `404`）自动跳转到Specifypage。
 :::
 ::: info 📂 Configuration Item Location
 
-错误页样式 -> page自动重定向
+Error Page Style -> page自动重定向
 
 :::
 ::: info ⚡ Quick Jump
@@ -5411,7 +5411,7 @@ Boolean
 
 When enabled, you can configure
 
-- 跳转目标链接
+- 跳转Target Link
   - 类型：String
   - 默认值：`/`
   - 外部约束：合法的相对/绝对链接
@@ -5566,7 +5566,7 @@ Enable后，链接页将Use强调头像的网格布局，每行最多Display三�
 :::
 ::: info 📂 Configuration Item Location
 
-链接页样式 -> 头像优先样式
+Links Page Style -> 头像优先样式
 
 :::
 ::: info ⚡ Quick Jump
@@ -5610,9 +5610,9 @@ Set链接描述的最大行数。
 :::
 ::: info 📂 Configuration Item Location
 
-（[链接页样式 -> 头像优先样式](#头像优先样式)EnablewhenDisplay）
+（[Links Page Style -> 头像优先样式](#头像优先样式)When enabled, will display）
 
-链接页样式 -> 链接描述行数上限
+Links Page Style -> 链接描述行数上限
 
 :::
 ::: info ⚡ Quick Jump
@@ -5789,7 +5789,7 @@ In帖子开头Display根据字数估算的阅读when间。
 :::
 ::: info 📂 Configuration Item Location
 
-瞬间页样式 -> moment预计阅读when间
+Moments Page Style -> moment预计阅读when间
 
 :::
 ::: info ⚡ Quick Jump
@@ -5827,7 +5827,7 @@ In帖子开头Displaypost的总字数。
 :::
 ::: info 📂 Configuration Item Location
 
-瞬间页样式 -> moment字数统计
+Moments Page Style -> moment字数统计
 
 :::
 ::: info ⚡ Quick Jump
@@ -5865,7 +5865,7 @@ In瞬间pageDisplay点赞按钮。
 :::
 ::: info 📂 Configuration Item Location
 
-瞬间页样式 -> Enable点赞按钮
+Moments Page Style -> Enable点赞按钮
 
 :::
 ::: info ⚡ Quick Jump
@@ -5898,7 +5898,7 @@ Controls whetherIn瞬间pageDisplay评论区。
 :::
 ::: info 📂 Configuration Item Location
 
-瞬间页样式 -> Enable评论区
+Moments Page Style -> Enable评论区
 
 :::
 ::: info ⚡ Quick Jump
