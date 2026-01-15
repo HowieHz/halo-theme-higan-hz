@@ -27,18 +27,18 @@ const pageUrls = {
   about: '/about'
 }
 
-// Page Chinese names
+// Page display names
 const pageNames = {
-  average: '平均每个页面',
-  home: '首页',
-  archives: '文章归档',
-  post: '文章详情',
-  tags: '标签集合',
-  tagDetail: '标签详情',
-  categories: '分类集合',
-  categoryDetail: '分类详情',
-  author: '作者详情',
-  about: '独立页面'
+  average: 'Average Per Page',
+  home: 'Home',
+  archives: 'Archives',
+  post: 'Post Detail',
+  tags: 'Tags Collection',
+  tagDetail: 'Tag Detail',
+  categories: 'Categories Collection',
+  categoryDetail: 'Category Detail',
+  author: 'Author Detail',
+  about: 'Single Page'
 }
 
 // Resource type configuration
@@ -68,14 +68,14 @@ const resourceColors = computed(() => isDark.value ? {
 })
 
 const resourceLabels = {
-  document: '文档',
-  font: '字体',
-  script: '脚本',
-  stylesheet: '样式表',
-  image: '图片',
-  fetch: '数据请求',
-  other: '其他',
-  total: '总计'
+  document: 'Document',
+  font: 'Font',
+  script: 'Script',
+  stylesheet: 'Stylesheet',
+  image: 'Image',
+  fetch: 'Fetch',
+  other: 'Other',
+  total: 'Total'
 }
 
 // Store all chart data
@@ -104,9 +104,9 @@ const ProgressBar = defineComponent({
   },
   setup(props) {
     const stageNames = {
-      dataLoading: '数据加载',
-      dataProcessing: '数据排序与处理',
-      chartCreation: '图表数据创建'
+      dataLoading: 'Loading Data',
+      dataProcessing: 'Sorting and Processing Data',
+      chartCreation: 'Creating Chart Data'
     }
 
     return () => {
@@ -133,7 +133,7 @@ const ProgressBar = defineComponent({
             marginBottom: '0.5rem',
             color: textColor
           }
-        }, `正在${stageNames[props.stage]}...`),
+        }, `${stageNames[props.stage]}...`),
         h('div', {
           style: {
             width: '100%',
@@ -159,7 +159,7 @@ const ProgressBar = defineComponent({
             marginTop: '0.5rem',
             color: textColor
           }
-        }, `进度: ${props.progress}%`)
+        }, `Progress: ${props.progress}%`)
       ])
     }
   }
@@ -197,7 +197,7 @@ const chartOptions = computed(() => ({
     x: {
       title: {
         display: true,
-        text: '版本',
+        text: 'Version',
         color: isDark.value ? '#e2e8f0' : '#2c3e50'
       },
       ticks: {
