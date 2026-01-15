@@ -60,14 +60,43 @@
   <th:block th:with="menuItems = ${menuFinder.getPrimary().menuItems}">
     <th:block th:unless="${theme.config?.global?.is_i18n_menu_show}">
       <!--/* 普通 menu */-->
-      <li th:each="menuItem : ${menuItems}" class="matched-menu">
-        <a
-          th:href="@{${menuItem?.status?.href}}"
-          th:target="${menuItem?.spec?.target?.value}"
-          th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItem.status?.displayName})}"
-          th:text="${menuItem?.status?.displayName}"
-          >目录项填充位置</a
-        >
+      <li th:each="menuItem : ${menuItems}" class="matched-menu" th:classappend="${#lists.isEmpty(menuItem?.children) ? '' : 'has-submenu'}">
+        <th:block th:if="${#lists.isEmpty(menuItem?.children)}">
+          <!--/* 没有子菜单的普通菜单项 */-->
+          <a
+            th:href="@{${menuItem?.status?.href}}"
+            th:target="${menuItem?.spec?.target?.value}"
+            th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItem.status?.displayName})}"
+            th:text="${menuItem?.status?.displayName}"
+            >目录项填充位置</a
+          >
+        </th:block>
+        <th:block th:unless="${#lists.isEmpty(menuItem?.children)}">
+          <!--/* 有子菜单的菜单项 */-->
+          <span class="submenu-container">
+            <a
+              class="submenu-link"
+              th:href="@{${menuItem.children[0]?.status?.href}}"
+              th:target="${menuItem.children[0]?.spec?.target?.value}"
+              th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItem.children[0].status?.displayName})}"
+              th:text="${menuItem.children[0]?.status?.displayName}"
+              th:attr="data-submenu-hrefs=${#strings.arrayJoin(menuItem.children.![status.href].toArray(), '|')},
+                      data-submenu-targets=${#strings.arrayJoin(menuItem.children.![spec.target.value].toArray(), '|')},
+                      data-submenu-labels=${#strings.arrayJoin(menuItem.children.![status.displayName].toArray(), '|')},
+                      data-submenu-index='0',
+                      data-submenu-count=${#lists.size(menuItem.children)}"
+              >子菜单项填充位置</a
+            >
+            <button
+              class="submenu-toggle"
+              aria-label="Next submenu item"
+              th:if="${#lists.size(menuItem.children) > 1}"
+              type="button"
+            >
+              <span class="iconify material-symbols--keyboard-arrow-down"></span>
+            </button>
+          </span>
+        </th:block>
       </li>
     </th:block>
 
