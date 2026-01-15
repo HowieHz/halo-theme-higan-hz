@@ -99,6 +99,7 @@
               th:aria-label="#{fragment.post-nav.toc-icon.aria-label}"
               id="action-toc-tablet"
               role="button"
+              data-toggle-target="#i-toc"
             >
               <span class="iconify iconify-large ic--baseline-toc"></span>
             </a>
@@ -124,6 +125,7 @@
         <span id="i-next" class="info hidden">[(#{fragment.post-nav.next})]</span>
 
         <span id="i-top" class="info hidden">[(#{fragment.post-nav.toTop})]</span>
+        <span id="i-toc" class="info hidden lg:hidden">[(#{fragment.post-nav.toc})]</span>
         <span id="i-share" class="info hidden" th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
           >[(#{fragment.post-nav.sharePost})]</span
         >
