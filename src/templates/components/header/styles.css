@@ -134,14 +134,9 @@
 
           &.has-submenu {
             & .submenu-container {
-              display: flex;
-              flex-direction: column;
-              gap: 0.5rem;
-            }
-
-            & .submenu-toggle {
               align-self: flex-start;
-              margin-left: 4.375rem;
+              display: flex;
+              flex-direction: row;
             }
           }
         }
