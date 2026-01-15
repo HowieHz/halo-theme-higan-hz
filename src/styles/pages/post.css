@@ -55,6 +55,17 @@
     }
   }
 
+  & #toc-icon-tablet {
+    bottom: 5rem;
+    margin-left: 0.9375rem;
+    position: fixed;
+    right: 2rem;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+
   & .active {
     color: var(--color-primary);
   }
