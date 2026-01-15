@@ -6,6 +6,8 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/HowieHz/halo-theme-higan-hz)
 [![Halo Version](https://img.shields.io/badge/Halo-2.22.1+-brightgreen.svg)](https://halo.run)
 
+**简体中文** | [English](./README.en.md)
+
 ## 简介
 
 Higan Haozi 是一款响应式、简洁清爽的个人网站主题，适用于 [Halo CMS](https://github.com/halo-dev/halo)。

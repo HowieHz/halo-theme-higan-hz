@@ -1,5 +1,7 @@
 # 贡献指南
 
+**简体中文** | [English](./CONTRIBUTING.en.md)
+
 ## 项目结构
 
 - [模板文件与访问路径映射](https://howiehz.top/halo-theme-higan-haozi/reference/template-map)
