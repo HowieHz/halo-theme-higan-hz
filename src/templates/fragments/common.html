@@ -60,7 +60,11 @@
   <th:block th:with="menuItems = ${menuFinder.getPrimary().menuItems}">
     <th:block th:unless="${theme.config?.global?.is_i18n_menu_show}">
       <!--/* 普通 menu */-->
-      <li th:each="menuItem : ${menuItems}" class="matched-menu" th:classappend="${#lists.isEmpty(menuItem?.children) ? '' : 'has-submenu'}">
+      <li
+        th:each="menuItem : ${menuItems}"
+        class="matched-menu"
+        th:classappend="${#lists.isEmpty(menuItem?.children) ? '' : 'has-submenu'}"
+      >
         <th:block th:if="${#lists.isEmpty(menuItem?.children)}">
           <!--/* 没有子菜单的普通菜单项 */-->
           <a
