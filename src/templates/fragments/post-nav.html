@@ -89,6 +89,20 @@
               <span class="iconify iconify-large material-symbols--keyboard-arrow-up"></span>
             </a>
           </li>
+          <li class="lg:hidden">
+            <a
+              class="icon"
+              href="#"
+              onclick="event.preventDefault()"
+              aria-expanded="false"
+              aria-controls="toc-overlay-tablet"
+              th:aria-label="#{fragment.post-nav.toc-icon.aria-label}"
+              id="action-toc-tablet"
+              role="button"
+            >
+              <span class="iconify iconify-large ic--baseline-toc"></span>
+            </a>
+          </li>
           <li th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}">
             <a
               class="icon"

@@ -182,17 +182,19 @@ document.addEventListener("DOMContentLoaded", (): void => {
       const tocOverlayTablet: HTMLElement | null = document.querySelector("#toc-overlay-tablet");
       const tocOverlayClose: HTMLElement | null = document.querySelector("#toc-overlay-close");
       const tocOverlayBackdrop: HTMLElement | null = document.querySelector("#toc-overlay-backdrop");
+      const actionTocTablet: HTMLElement | null = document.querySelector("#action-toc-tablet");
+      const actionTocTabletMenu: HTMLElement | null = document.querySelector("#action-toc-tablet-menu");
 
-      // TOC 按钮点击事件
-      tocIconTablet.addEventListener("click", (): void => {
-        if (!tocOverlayTablet) {
+      // 通用的 TOC overlay 打开/关闭函数
+      const toggleTocOverlay = (button: HTMLElement | null): void => {
+        if (!tocOverlayTablet || !button) {
           return;
         }
         if (isVisible(tocOverlayTablet)) {
-          tocIconTablet.setAttribute("aria-expanded", "false");
+          button.setAttribute("aria-expanded", "false");
           fadeOut(tocOverlayTablet, ANIMATION_DURATION);
         } else {
-          tocIconTablet.setAttribute("aria-expanded", "true");
+          button.setAttribute("aria-expanded", "true");
           fadeIn(tocOverlayTablet, ANIMATION_DURATION);
 
           // 滚动到激活的目录项
@@ -207,12 +209,28 @@ document.addEventListener("DOMContentLoaded", (): void => {
             }, ANIMATION_DURATION);
           }
         }
+      };
+
+      // TOC 按钮点击事件（浮动按钮）
+      tocIconTablet.addEventListener("click", (): void => {
+        toggleTocOverlay(tocIconTablet);
+      });
+
+      // actions 菜单中的 TOC 按钮点击事件
+      actionTocTablet?.addEventListener("click", (): void => {
+        toggleTocOverlay(actionTocTablet);
+      });
+
+      actionTocTabletMenu?.addEventListener("click", (): void => {
+        toggleTocOverlay(actionTocTabletMenu);
       });
 
       // 关闭按钮点击事件
       tocOverlayClose?.addEventListener("click", (): void => {
         if (tocOverlayTablet) {
           tocIconTablet.setAttribute("aria-expanded", "false");
+          actionTocTablet?.setAttribute("aria-expanded", "false");
+          actionTocTabletMenu?.setAttribute("aria-expanded", "false");
           fadeOut(tocOverlayTablet, ANIMATION_DURATION);
         }
       });
@@ -221,6 +239,8 @@ document.addEventListener("DOMContentLoaded", (): void => {
       tocOverlayBackdrop?.addEventListener("click", (): void => {
         if (tocOverlayTablet) {
           tocIconTablet.setAttribute("aria-expanded", "false");
+          actionTocTablet?.setAttribute("aria-expanded", "false");
+          actionTocTabletMenu?.setAttribute("aria-expanded", "false");
           fadeOut(tocOverlayTablet, ANIMATION_DURATION);
         }
       });
@@ -233,6 +253,8 @@ document.addEventListener("DOMContentLoaded", (): void => {
             const tocLink = target.closest<HTMLElement>(".toc-link");
             if (tocLink) {
               tocIconTablet.setAttribute("aria-expanded", "false");
+              actionTocTablet?.setAttribute("aria-expanded", "false");
+              actionTocTabletMenu?.setAttribute("aria-expanded", "false");
               fadeOut(tocOverlayTablet, ANIMATION_DURATION);
             }
           }
