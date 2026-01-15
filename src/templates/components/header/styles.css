@@ -50,11 +50,16 @@
     letter-spacing: 0.01em;
 
     & ul {
-      display: inline-table;
+      display: flex;
       line-height: 0.9375rem;
       list-style-type: none;
       margin: 8px 0 0;
       padding: 0;
+
+      @media (width < 640px) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
 
       & a {
         color: var(--color-primary);
@@ -79,7 +84,6 @@
       & li {
         border-color: var(--color-primary);
         border-right: 1px dotted;
-        display: inline-block;
         margin-right: 0.9375rem;
         vertical-align: middle;
 
