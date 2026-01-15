@@ -50,8 +50,8 @@
     letter-spacing: 0.01em;
 
     & ul {
-      display: flex;
       align-items: flex-start;
+      display: flex;
       line-height: 0.9375rem;
       list-style-type: none;
       margin: 8px 0 0;
