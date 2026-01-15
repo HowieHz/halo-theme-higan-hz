@@ -2,15 +2,15 @@
 outline: deep
 ---
 
+<!-- markdownlint-disable MD033 -->
+
+# Performance Reference
+
 ::: info Info
 
 This documentation is AI-generated. You can help improve it by submitting an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new).
 
 :::
-
-<!-- markdownlint-disable MD033 -->
-
-# Performance Reference
 
 <script setup lang="ts">
 import { ref, onMounted, computed, watch, h, defineComponent } from 'vue'

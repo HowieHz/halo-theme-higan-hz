@@ -2,15 +2,15 @@
 outline: deep
 ---
 
+<!-- markdownlint-disable MD033 MD013 -->
+
+# Custom Color Scheme
+
 ::: info Info
 
 This documentation is AI-generated. You can help improve it by submitting an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new).
 
 :::
-
-<!-- markdownlint-disable MD033 -->
-
-# Custom Color Scheme
 
 ::: tip
 

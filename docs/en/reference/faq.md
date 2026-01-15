@@ -2,13 +2,15 @@
 outline: deep
 ---
 
+<!-- markdownlint-disable MD013 -->
+
+# FAQ
+
 ::: info Info
 
 This documentation is AI-generated. You can help improve it by submitting an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new).
 
 :::
-
-# FAQ
 
 This document summarizes the most common questions and solutions encountered during use and secondary development.
 

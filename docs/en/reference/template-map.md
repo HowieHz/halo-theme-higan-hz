@@ -4,13 +4,13 @@ outline: deep
 
 <!-- markdownlint-disable MD013 -->
 
+# Template Files and Access Path Mapping
+
 ::: info Info
 
 This documentation is AI-generated. You can help improve it by submitting an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new).
 
 :::
-
-# Template Files and Access Path Mapping
 
 The following table summarizes the main template files of this theme, corresponding access paths, and Halo CMS official template documentation.
 

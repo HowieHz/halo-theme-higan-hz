@@ -2,13 +2,15 @@
 outline: deep
 ---
 
+<!-- markdownlint-disable MD013 -->
+
+# Plugin Compatibility
+
 ::: info Info
 
 This documentation is AI-generated. You can help improve it by submitting an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new).
 
 :::
-
-# Plugin Compatibility
 
 All of the following are optional plugins.
 
