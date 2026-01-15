@@ -271,15 +271,19 @@
     & ol {
       list-style-type: none;
       margin: 0;
-      padding-left: 1.25rem;
+      padding: 0;
 
       & li {
         line-height: 1.875rem;
       }
     }
 
-    & a:hover {
-      color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+    & a {
+      color: inherit;
+
+      &:hover {
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+      }
     }
 
     & .toc-text {
