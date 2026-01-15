@@ -2,13 +2,15 @@
 outline: deep
 ---
 
+<!-- markdownlint-disable MD013 -->
+
+# Plugin Compatibility
+
 ::: info Info
 
 This documentation is AI-generated. You can help improve it by submitting an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new).
 
 :::
-
-# Plugin Compatibility
 
 All of the following are optional plugins.
 
@@ -18,26 +20,26 @@ Plugin [plugin-extra-api](https://github.com/HowieHz/halo-plugin-extra-api) ([Ap
 
 After enabling the plugin (lite version):
 
-- [Post Estimated Reading Time](/guide/theme-configuration#文章预计阅读时间), [Post Word Count](/guide/theme-configuration#文章字数统计), [Page Estimated Reading Time](/guide/theme-configuration#页面预计阅读时间), [Page Word Count](/guide/theme-configuration#页面字数统计), [Moment Estimated Reading Time](/guide/theme-configuration#帖文预计阅读时间), [Moment Word Count](/guide/theme-configuration#帖文字数统计), [Multi-list Post Estimated Reading Time](/guide/theme-configuration#多元列表显示文章预计阅读时间), [Multi-list Post Word Count](/guide/theme-configuration#多元列表显示文章字数统计) will automatically apply more accurate metrics from the plugin.
-- [Footer Site Statistics](/guide/theme-configuration#页面底部站点统计信息) will support "Total Word Count" statistics display.
+- [Post Estimated Reading Time](/en/guide/theme-configuration#post预计阅读when间), [Post Word Count](/en/guide/theme-configuration#post字数统计), [Page Estimated Reading Time](/en/guide/theme-configuration#page预计阅读when间), [Page Word Count](/en/guide/theme-configuration#page字数统计), [Moment Estimated Reading Time](/en/guide/theme-configuration#moment预计阅读when间), [Moment Word Count](/en/guide/theme-configuration#moment字数统计), [Multi-list Post Estimated Reading Time](/en/guide/theme-configuration#多元列表displaypost预计阅读when间), [Multi-list Post Word Count](/en/guide/theme-configuration#多元列表displaypost字数统计) will automatically apply more accurate metrics from the plugin.
+- [Footer Site Statistics](/en/guide/theme-configuration#page底部站点统计信息) will support "Total Word Count" statistics display.
 
 ## Links Page
 
 Plugin [plugin-links](https://github.com/halo-sigs/plugin-links) ([App Store Page](https://www.halo.run/store/apps/app-hfbQg))
 
-The theme provides links page (`/links`) support, please read [Links Page Style](/guide/theme-configuration#链接页样式) related documentation for details.
+The theme provides links page (`/links`) support, please read [Links Page Style](/en/guide/theme-configuration#links-page-style) related documentation for details.
 
 ## Photo Gallery Page
 
 Plugin [plugin-photos](https://github.com/halo-sigs/plugin-photos) ([App Store Page](https://www.halo.run/store/apps/app-BmQJW))
 
-The theme provides photo gallery page (`/photos`) support, please read [Photo Gallery Page Style](/guide/theme-configuration#图库页样式) related documentation for details.
+The theme provides photo gallery page (`/photos`) support, please read [Photo Gallery Page Style](/en/guide/theme-configuration#photo-gallery-page-style) related documentation for details.
 
 ## Moments Page
 
 Plugin [plugin-moments](https://github.com/halo-sigs/plugin-moments) ([App Store Page](https://www.halo.run/store/apps/app-SnwWD))
 
-The theme provides moments page (`/moments`) support, please read [Moments Page Style](/guide/theme-configuration#瞬间页样式) related documentation for details.
+The theme provides moments page (`/moments`) support, please read [Moments Page Style](/en/guide/theme-configuration#moments-page-style) related documentation for details.
 
 - The moments page can be used to display GitHub activity, see [howiehz/ghu-events-moments](https://github.com/howiehz/ghu-events-moments) for this usage
 
@@ -81,7 +83,7 @@ Recommended page matching rules:
 
 ## Mermaid and PlantUML Support
 
-The theme itself provides [Mermaid Support](/guide/theme-configuration#mermaid-支持), as well as [Mermaid Adaptation for Light/Dark Theme Switching](/guide/style-reference#mermaid-适配明暗主题切换) support.
+The theme itself provides [Mermaid Support](/en/guide/theme-configuration#mermaid-support), as well as [Mermaid Adaptation for Light/Dark Theme Switching](/en/guide/style-reference#mermaid-adapting-to-lightdark-theme-switching) support.
 
 In addition, you can also install plugin [plugin-text-diagram](https://github.com/halo-sigs/plugin-text-diagram) ([App Store Page](https://www.halo.run/store/apps/app-ahBRi)), which provides Mermaid and PlantUML support.
 
@@ -91,6 +93,6 @@ Plugin [plugin-feed](https://github.com/halo-dev/plugin-feed) ([App Store Page](
 
 After enabling the plugin:
 
-- You can use [Category RSS Subscribe Button](/guide/theme-configuration#显示分类-rss-订阅按钮).
-- You can use [Tag RSS Subscribe Button](/guide/theme-configuration#显示标签-rss-订阅按钮).
-- You can use [Author RSS Subscribe Button](/guide/theme-configuration#显示作者-rss-订阅按钮).
+- You can use [Category RSS Subscribe Button](/en/guide/theme-configuration#display分类-rss-订阅按钮).
+- You can use [Tag RSS Subscribe Button](/en/guide/theme-configuration#display标签-rss-订阅按钮).
+- You can use [Author RSS Subscribe Button](/en/guide/theme-configuration#display作者-rss-订阅按钮).

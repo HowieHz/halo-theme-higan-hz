@@ -4,13 +4,13 @@ outline: deep
 
 <!-- markdownlint-disable MD013 -->
 
+# Template Files and Access Path Mapping
+
 ::: info Info
 
 This documentation is AI-generated. You can help improve it by submitting an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new).
 
 :::
-
-# Template Files and Access Path Mapping
 
 The following table summarizes the main template files of this theme, corresponding access paths, and Halo CMS official template documentation.
 
@@ -21,19 +21,19 @@ This is useful for secondary development, configuring menu paths, and referencin
 Template files are located in the `src/templates` folder.  
 In the default access path column in the table, `{xxx}` represents variables (please fill in actual values), and `(xxx)` represents optional values (please fill in as needed).
 
-| Template File               | Page Rendered       | Default Access Path                                                                           | Documentation                                                                           |
-| --------------------------- | ------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `index.html`                | Home Page           | `/(page/{page})`                                                                              | [Index](https://docs.halo.run/developer-guide/theme/template-variables/index_)          |
-| `post.html`                 | Post Detail         | `/archives/{slug}` (can be modified in Halo CMS backend)                                      | [Post](https://docs.halo.run/developer-guide/theme/template-variables/post)             |
-| `page.html`                 | Single Page         | `/{slug}`                                                                                     | [Page](https://docs.halo.run/developer-guide/theme/template-variables/page)             |
-| `page-like-post-style.html` | Single Page         | `/{slug}` (Custom template: [Post Page Style](/guide/metadata-configuration#post-page-style)) | [Page](https://docs.halo.run/developer-guide/theme/template-variables/page)             |
-| `archives.html`             | Post Archive        | `/archives(/{year}(/{month}))`                                                                | [Archives](https://docs.halo.run/developer-guide/theme/template-variables/archives)     |
-| `tags.html`                 | Tag Collection      | `/tags`                                                                                       | [Tags](https://docs.halo.run/developer-guide/theme/template-variables/tags)             |
-| `tag.html`                  | Tag Detail          | `/tags/{slug}`                                                                                | [Tag](https://docs.halo.run/developer-guide/theme/template-variables/tag)               |
-| `categories.html`           | Category Collection | `/categories`                                                                                 | [Categories](https://docs.halo.run/developer-guide/theme/template-variables/categories) |
-| `category.html`             | Category Detail     | `/categories/{slug}`                                                                          | [Category](https://docs.halo.run/developer-guide/theme/template-variables/category)     |
-| `author.html`               | Author Detail       | `/authors/{name}`                                                                             | [Author](https://docs.halo.run/developer-guide/theme/template-variables/author)         |
-| `error/*.html`              | Error Page          | No fixed access path, determined by exception                                                 | [Error Pages](https://docs.halo.run/developer-guide/theme/template-variables/error)     |
+| Template File               | Page Rendered       | Default Access Path                                                                              | Documentation                                                                           |
+| --------------------------- | ------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------- |
+| `index.html`                | Home Page           | `/(page/{page})`                                                                                 | [Index](https://docs.halo.run/developer-guide/theme/template-variables/index_)          |
+| `post.html`                 | Post Detail         | `/archives/{slug}` (can be modified in Halo CMS backend)                                         | [Post](https://docs.halo.run/developer-guide/theme/template-variables/post)             |
+| `page.html`                 | Single Page         | `/{slug}`                                                                                        | [Page](https://docs.halo.run/developer-guide/theme/template-variables/page)             |
+| `page-like-post-style.html` | Single Page         | `/{slug}` (Custom template: [Post Page Style](/en/guide/metadata-configuration#post-page-style)) | [Page](https://docs.halo.run/developer-guide/theme/template-variables/page)             |
+| `archives.html`             | Post Archive        | `/archives(/{year}(/{month}))`                                                                   | [Archives](https://docs.halo.run/developer-guide/theme/template-variables/archives)     |
+| `tags.html`                 | Tag Collection      | `/tags`                                                                                          | [Tags](https://docs.halo.run/developer-guide/theme/template-variables/tags)             |
+| `tag.html`                  | Tag Detail          | `/tags/{slug}`                                                                                   | [Tag](https://docs.halo.run/developer-guide/theme/template-variables/tag)               |
+| `categories.html`           | Category Collection | `/categories`                                                                                    | [Categories](https://docs.halo.run/developer-guide/theme/template-variables/categories) |
+| `category.html`             | Category Detail     | `/categories/{slug}`                                                                             | [Category](https://docs.halo.run/developer-guide/theme/template-variables/category)     |
+| `author.html`               | Author Detail       | `/authors/{name}`                                                                                | [Author](https://docs.halo.run/developer-guide/theme/template-variables/author)         |
+| `error/*.html`              | Error Page          | No fixed access path, determined by exception                                                    | [Error Pages](https://docs.halo.run/developer-guide/theme/template-variables/error)     |
 
 ## Plugin Pages
 

@@ -2,15 +2,15 @@
 outline: deep
 ---
 
+<!-- markdownlint-disable MD013 MD024 MD025 MD033 -->
+
+# Style Reference
+
 ::: info Info
 
 This documentation is AI-generated. You can help improve it by submitting an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new).
 
 :::
-
-<!-- markdownlint-disable MD013 MD024 MD025 MD033 -->
-
-# Style Reference
 
 <script setup>
 import DefaultRender from '../../.vitepress/components/DefaultRender.vue';
@@ -28,7 +28,7 @@ The displayed styles are theme defaults; some styles can be adjusted according t
 
 ::: details
 
-Related Documentation: [模板文件and访问路径映射](/reference/template-map)
+Related Documentation: [模板文件 and 访问路径映射](/en/reference/template-map)
 
 - <Badge type="tip" text="General Style" /> Applicable template file scope: Every page。
 - <Badge type="tip" text="Content Style" /> Applicable template file scope: `archives.html`, `category.html`, `links.html`, `moments.html`, `moment.html`, `page.html`, `photos.html`, `post.html`, `tag.html`. `5xx.html`, `404.html`。CSS selector is `.content`。
@@ -144,10 +144,10 @@ print("世界，你好！")
 ~~~
 
 ````markdown
-_嵌套code块示例_
+_嵌套 code 块示例_
 
 ```python
-print("嵌套code块")
+print("嵌套 code 块")
 ```
 ````
 `````
@@ -171,7 +171,7 @@ and this is not a
 line break.
 
 在这一行末尾空两格  
-也可以产生一个line break.
+也可以产生一个 line break.
 
 Empty lines are not displayed by default. If you enable `文章页样式 - 文章页样式 - 优化文章段落空行显示`, empty lines will be displayed.
 ```
@@ -197,7 +197,7 @@ and this is not a
 line break.
 
 Also, two spaces at the end of this line  
-也可以产生一个line break.
+也可以产生一个 line break.
 
 Empty lines are not displayed by default. If you enable `文章页样式 - 文章页样式 - 优化文章段落空行显示`, empty lines will be displayed.
 
@@ -229,8 +229,8 @@ From <cite>Documentation Writing Guide</cite>
 
 <!-- prettier-ignore-start -->
 ```html
-Normal text<sup>superscript<sup>上superscript<sup>上上superscript<sup>上上上superscript</sup></sup></sup></sup>
-Normal text<sub>subscript<sub>下subscript<sub>下下subscript<sub>下下下subscript</sub></sub></sub></sub>
+Normal text<sup>superscript<sup>上 superscript<sup>上上 superscript<sup>上上上 superscript</sup></sup></sup></sup>
+Normal text<sub>subscript<sub>下 subscript<sub>下下 subscript<sub>下下下 subscript</sub></sub></sub></sub>
 
 Normal text<sup>superscript</sup>and<sub>subscript</sub>
 ```
@@ -240,8 +240,8 @@ Normal text<sup>superscript</sup>and<sub>subscript</sub>
 
 <DefaultRender height="100px">
 
-Normal text<sup>superscript<sup>上superscript<sup>上上superscript<sup>上上上superscript</sup></sup></sup></sup>
-Normal text<sub>subscript<sub>下subscript<sub>下下subscript<sub>下下下subscript</sub></sub></sub></sub>
+Normal text<sup>superscript<sup>上 superscript<sup>上上 superscript<sup>上上上 superscript</sup></sup></sup></sup>
+Normal text<sub>subscript<sub>下 subscript<sub>下下 subscript<sub>下下下 subscript</sub></sub></sub></sub>
 
 Normal text<sup>superscript</sup>and<sub>subscript</sub>
 
@@ -253,7 +253,7 @@ Normal text<sup>superscript</sup>and<sub>subscript</sub>
 
 <!-- prettier-ignore-start -->
 ```html
-这是Normal text <small>This is small text</small> 这是Normal text
+这是 Normal text <small>This is small text</small> 这是 Normal text
 
 This is normal text <small>This is small text</small> This is normal text
 ```
@@ -263,7 +263,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 <DefaultRender>
 
-这是Normal text <small>This is small text</small> 这是Normal text
+这是 Normal text <small>This is small text</small> 这是 Normal text
 
 This is normal text <small>This is small text</small> This is normal text
 
@@ -278,7 +278,7 @@ This is normal text <small>This is small text</small> This is normal text
 This text contains an abbreviation, hover over it on devices that support hovering to see the tooltip:<abbr title="Hypertext Markup Language">HTML</abbr>
 
 When <strong>device does not support hovering</strong> or in <strong>print mode</strong>, the full term will be displayed as `(全称)` after the abbreviation.
-For example, on touch devices, the above "HTML" will automatically display as "HTML(Hypertext Markup Language)"。
+For example, on touch devices, the above "HTML" will automatically display as "HTML(Hypertext Markup Language)".
 
 <abbr title="Hypertext Markup Language"><a href="https://example.com">HTML - This line will apply both a tag styles in posts, so there are two layers of underline</a></abbr>
 
@@ -545,7 +545,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 ::: tip
 
-包裹在 `<div class="video-container"></div>` 内使得嵌入的视频宽度能随着页面宽度减小，方法From [CSS: Elastic Videos - Web Designer Wall](https://webdesignerwall.com/tutorials/css-elastic-videos)。
+包裹在 `<div class="video-container"></div>` 内使得嵌入的视频宽度能随着页面宽度减小，方法 From [CSS: Elastic Videos - Web Designer Wall](https://webdesignerwall.com/tutorials/css-elastic-videos)。
 
 :::
 
@@ -592,7 +592,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 >
 > > 这是嵌套引用内容
 >
-> 这层引用内容回到了第One layer
+> 这层引用内容回到了第 One layer
 ```
 
 ### Rendering Effect
@@ -607,7 +607,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 >
 > > 这是嵌套引用内容
 >
-> 这层引用内容回到了第One layer
+> 这层引用内容回到了第 One layer
 
 <!-- markdownlint-enable MD028 -->
 
@@ -999,10 +999,10 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 ### Mermaid 适配明暗主题切换
 
 以下方法均为 HTML 标签写法。  
-相关链接：[如何在编辑器中使用 HTML 写法](#如何在编辑器中使用-html-写法)
+相关链接：[How to Use HTML Syntax in the Editor](#how-to-use-html-syntax-in-the-editor)
 
 ::: details 方法一 <Badge type="tip" text="默认编辑器可用" /> <Badge type="tip" text="Vditor 编辑器可用" />  
-Need to enable [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+Need to enable [Mermaid 支持](/en/guide/theme-configuration#mermaid-支持)。  
 图表只写一遍，自动生成浅色/深色模式下两种图表。  
 缺点：不兼容 Vditor 编辑器的实时预览。
 
@@ -1016,7 +1016,7 @@ Need to enable [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。
 
 :::
 ::: details 方法二 <Badge type="tip" text="默认编辑器可用" />  
-Need to enable [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+Need to enable [Mermaid 支持](/en/guide/theme-configuration#mermaid-支持)。  
 手动管理浅色/深色模式下的图表。
 
 <!-- prettier-ignore-start -->
@@ -1035,7 +1035,7 @@ Need to enable [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。
 
 :::
 ::: details 方法三 <Badge type="tip" text="Vditor 编辑器可用" />  
-Need to enable [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+Need to enable [Mermaid 支持](/en/guide/theme-configuration#mermaid-支持)。  
 原理：由于主题的 Mermaid 初始化先加载，可在 Vditor 自带的 Mermaid 渲染前抢先渲染生成。  
 缺点：一张图会多被渲染一遍（被 Vditor 自带的 Mermaid 多渲染一遍）。  
 优点：兼容 Vditor 编辑器的实时预览。
@@ -1055,7 +1055,7 @@ Need to enable [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。
 
 :::
 ::: details 方法四 <Badge type="tip" text="Vditor 编辑器可用" />  
-需关闭 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+需关闭 [Mermaid 支持](/en/guide/theme-configuration#mermaid-支持)。  
 缺点：同样内容要复制粘贴一遍。由于是完全使用 Vditor 自带的渲染，所以主题设置中有关 Mermaid 的设置会失效。会继承上游的 bug，如 [mermaid-js/mermaid@5741](https://github.com/mermaid-js/mermaid/issues/5741)。  
 优点：兼容 Vditor 编辑器的实时预览，兼容性最好。完全使用 Vditor 自带的渲染，和预览表现一致。
 

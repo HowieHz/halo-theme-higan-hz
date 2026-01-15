@@ -2,15 +2,15 @@
 outline: deep
 ---
 
+<!-- markdownlint-disable MD033 MD013 -->
+
+# Security Protection
+
 ::: info Info
 
 This documentation is AI-generated. You can help improve it by submitting an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new).
 
 :::
-
-<!-- markdownlint-disable MD033 -->
-
-# Security Protection
 
 ::: tip
 
@@ -38,7 +38,7 @@ const encodedUrl = computed(() => {
 
 ## Enable CSP:upgrade-insecure-requests
 
-Enable [CSP:upgrade-insecure-requests](/guide/theme-configuration#csp-upgrade-insecure-requests) to ensure all resources are loaded over encrypted connections, reducing man-in-the-middle attack risks.
+Enable [CSP:upgrade-insecure-requests](/en/guide/theme-configuration#csp-upgrade-insecure-requests) to ensure all resources are loaded over encrypted connections, reducing man-in-the-middle attack risks.
 This also avoids errors when HTTPS pages reference HTTP resources.
 
 Related documentation: [CSP: upgrade-insecure-requests - HTTP | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
@@ -46,7 +46,7 @@ Related documentation: [CSP: upgrade-insecure-requests - HTTP | MDN](https://dev
 ## Enable Domain Whitelist Access Only
 
 Many bloggers' sites have been cloned by malicious mirror sites. These malicious clones replace original site links, diverting site traffic and affecting SEO.  
-Therefore, I developed the [Domain Whitelist Access Only](/guide/theme-configuration#仅允许使用指定域名访问) feature to address this issue.
+Therefore, I developed the [Domain Whitelist Access Only](/en/guide/theme-configuration#仅允许使用指定域名访问) feature to address this issue.
 
 ::: info URL to Base64
 
@@ -56,4 +56,4 @@ Therefore, I developed the [Domain Whitelist Access Only](/guide/theme-configura
 :::
 
 Enter your complete site URL in the input box above to generate the Base64 encoded result.  
-After enabling [Domain Whitelist Access Only](/guide/theme-configuration#仅允许使用指定域名访问), enter the Base64 encoded result in "Domain Whitelist List" and "Base64 Encoded Target URL" to defend against malicious cloning.
+After enabling [Domain Whitelist Access Only](/en/guide/theme-configuration#仅允许使用指定域名访问), enter the Base64 encoded result in "Domain Whitelist List" and "Base64 Encoded Target URL" to defend against malicious cloning.
