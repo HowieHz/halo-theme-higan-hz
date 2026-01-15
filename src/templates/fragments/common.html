@@ -96,7 +96,7 @@
     <th:block th:each="menuItem : ${menuItems}">
       <th:block th:if="${#strings.equals(menuItem.spec.displayName, theme.config?.global?.default_page_language)}">
         <th:block th:each="menuItemChildren : ${menuItem.children}">
-          <li style="display: none" class="default-menu">
+          <li style="display: none" class="default-menu" th:classappend="${#lists.isEmpty(menuItemChildren?.children) ? '' : 'has-submenu'}">
             <th:block th:replace="~{:: menu-item-content(${menuItemChildren})}"></th:block>
           </li>
         </th:block>
