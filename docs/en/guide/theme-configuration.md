@@ -11,35 +11,35 @@ outline: deep
 <script setup>
 import { ref, computed, h } from 'vue'
 
-const inputBaseUrl = ref('') // 用户输入的基础链接
+const inputBaseUrl = ref('') // User input base URL
 
 const canJump = computed(() => inputBaseUrl.value.trim().length > 0)
 
 function prefixHref(href) {
   if (!href) return href
-  // When不can跳转when，返回page内锚点，指向警告元素（省去每处的三元判断）
+  // When cannot jump, return in-page anchor pointing to warning element (avoids ternary judgment everywhere)
   if (!canJump.value) return '#quick-jump-warning'
-  // If是绝对链接（含协议），直接返回
+  // If it's an absolute link (with protocol), return directly
   if (/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(href)) return href
-  const base = inputBaseUrl.value.trim().replace(/\/+$/,'') // 去除末尾斜杠
-  const path = href.replace(/^\/+/, '') // 去除前置斜杠
+  const base = inputBaseUrl.value.trim().replace(/\/+$/,'') // Remove trailing slashes
+  const path = href.replace(/^\/+/, '') // Remove leading slashes
   if (!base) return href.startsWith('/') ? ('/' + path) : path
   return base + '/' + path
 }
 
 /**
- * QuickJumpConfigPage — 轻量函数式链接组件（返回 <a> 节点）
+ * QuickJumpConfigPage — Lightweight functional link component (returns <a> node)
  *
- * 行为概述
- * - 根据 props.to 生成最终 href（通过 prefixHref 处理站点基础地址与绝对链接）
- * - When用户未填写基础站点（canJump === false）when，prefixHref 返回 "#quick-jump-warning"
- *   并且链接will添加 aria-describedby="quick-jump-warning"、aria-disabled="true"、tabindex="-1"
+ * Behavior Overview
+ * - Generate final href based on props.to (process site base address and absolute links through prefixHref)
+ * - When user hasn't filled in base site (canJump === false), prefixHref returns "#quick-jump-warning"
+ *   and the link will add aria-describedby="quick-jump-warning", aria-disabled="true", tabindex="-1"
  *
  * Props
- * - to: string（必Requires） — 目标路径
- * - label?: string — 链接Display文本，默认回退到 to
- * - ariaLabel?: string — 无障碍文本，默认回退到 to
- * - showRealUrl?: boolean — Whether展示实际跳转链接，为 true 将强制覆盖 label
+ * - to: string (required) — Target path
+ * - label?: string — Link display text, defaults to to
+ * - ariaLabel?: string — Accessibility text, defaults to to
+ * - showRealUrl?: boolean — Whether to display actual jump link, if true will force override label
  */
 const QuickJumpConfig = (props) => {
   const to = props.to
@@ -60,7 +60,7 @@ const QuickJumpConfig = (props) => {
     attrs.target = "_self"
   }
 
-  // When不can跳转when，添加无障碍提示
+  // When cannot jump, add accessibility prompt
   if (!canJump.value) {
     attrs['aria-describedby'] = 'quick-jump-warning'
     attrs['aria-disabled'] = 'true'
@@ -79,14 +79,14 @@ After your site has installed the latest version of the theme, you can fill in y
 This will enable quick jump links in this documentation, jumping to the corresponding configuration item in the backend with one click.
 
 :::
-::: info 站点链接
+::: info Site Link
 
 <input v-model="inputBaseUrl" placeholder="Please enter your Halo site link here. Example: https://example.com" style="width:100%" />
 
 :::
 <template v-if="canJump">
 
-::: info 请确保此链接can访问
+::: info Please ensure this link is accessible
 
 <QuickJumpConfig to="/console" showRealUrl=true />  
 Quick jump links will only work when the above link is accessible.
@@ -97,7 +97,7 @@ Quick jump links will only work when the above link is accessible.
 
 ## Example
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Explains the purpose of the configuration item.
 
@@ -177,7 +177,7 @@ Supplementary information.
 
 ### 默认page语言
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Specify站点根标签 `<html>` 的 `lang` 属性默认值，Used for辅助无障碍、SEO 以及浏览器/插件的语言感知（例：浏览器Whether弹出page翻译提醒）。
 
@@ -226,7 +226,7 @@ Set值Requires满足 [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/
 
 ### 多语言功can前缀匹配模式
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Enable多语言功can的前缀匹配模式，使主题can够更灵活地匹配语言Set。
 
@@ -264,7 +264,7 @@ Boolean
 
 ### 浏览器按语言自动跳转
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 根据浏览器的语言Set，自动跳转到对应语言的page。
 
@@ -308,7 +308,7 @@ When enabled, you can configure:
 
 ### Allow跳转的目标区域语言代码列表
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 SetAllow的自动跳转目标语言。
 
@@ -386,7 +386,7 @@ Enable[浏览器按语言自动跳转](#浏览器按语言自动跳转)后，If�
 
 ### 多语言菜单Support
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Enable多语言菜单Support，AllowIn菜单中Display不同语言的内容。
 
@@ -424,7 +424,7 @@ Enable后请参照[多语言菜单Use指南](/tutorial/i18n#多语言菜单Use�
 
 ### CSP:upgrade-insecure-requests
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 自动将非跳转的不安全资源请求升级到 HTTPS，包括When前域名以及第三方请求。
 
@@ -457,7 +457,7 @@ Boolean
 
 ### 仅AllowUseSpecify域名访问
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 防止站点被恶意镜像后的流量流失，仅Allow白名单中的域名访问。
 
@@ -501,7 +501,7 @@ When enabled, you can configure:
 
 ### 域名白名单列表
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set域名白名单列表。
 
@@ -565,7 +565,7 @@ Empty
 
 ### 目标链接
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set域名白名单列表。
 
@@ -610,7 +610,7 @@ String
 
 ### 跳转后Whether保留路径和查询参数
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set跳转后Whether保留路径和查询参数。
 
@@ -655,7 +655,7 @@ Boolean
 
 ### Custom资源位置地址
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Specify资源将UseCustom的资源位置地址，而不是主题默认的地址。
 
@@ -693,7 +693,7 @@ Enablethis option厚，IfEnable下面的“instant.page Support”、“Mermaid 
 
 ### instant.page Support
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 自动加载 instant.page 脚本，预加载链接以提升page加载速度。
 
@@ -726,7 +726,7 @@ Boolean
 
 ### Mermaid Support
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Enable Mermaid 图表渲染功can，SupportInpost中绘制流程图、when序图等。
 
@@ -771,7 +771,7 @@ Enable后Requires要Configuration以下子项：
 
 ### EnableCustom字体文件
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Use上传的Custom字体文件替换默认字体。
 
@@ -812,7 +812,7 @@ When enabled, you can configure:
 
 ### Custom字体文件
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Used for选择上传的字体文件替换默认字体文件。Support `.woff2`/`.woff`/`.ttf`/`.otf`/`.eot`/`.ttc`/`.otc`/`.sfnt` 格式的字体文件。
 
@@ -842,7 +842,7 @@ Attachment
 
 ### Custom字体名称
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 正确填写this option后，If用户本地安装已经此字体，则应用本地版本。  
 Ifthis option置Empty，则即Use户本地已安装this字体，也不willUse本地版本，而是从网络下载字体文件。
@@ -888,7 +888,7 @@ Empty
 
 ### 配色方案
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set网站的整体配色方案，Support多种内置主题和Custom配色。
 
@@ -938,7 +938,7 @@ Option
 
 ### Custom配色方案
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 SetCustom配色方案。
 
@@ -1129,7 +1129,7 @@ Use方法请参考 [教程：Custom配色方案](/tutorial/custom-theme)
 
 ### 深浅色模式切换按钮
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 IfEnablethis option，将In大标题旁Display明暗模式切换按钮。  
 切换逻辑为：浅色模式 -> 深色模式 -> 自动模式 -> 浅色模式。
@@ -1179,7 +1179,7 @@ When enabled, you can configure:
 
 ### 自动模式配色方案
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set深浅色模式切换按钮中自动模式的配色方案。
 
@@ -1230,7 +1230,7 @@ Option
 
 ### 浅色模式配色方案
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set深浅色模式切换按钮中浅色模式的配色方案。
 
@@ -1281,7 +1281,7 @@ Option
 
 ### 深色模式配色方案
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set深浅色模式切换按钮中深色模式的配色方案。
 
@@ -1332,7 +1332,7 @@ Option
 
 ### 字体大小
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set网站的整体字体大小。
 
@@ -1371,7 +1371,7 @@ Option
 
 ### Custom内容区域最大宽度
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Whether定义内容区域最大宽度。
 
@@ -1414,7 +1414,7 @@ When enabled, you can configure:
 
 ### 内容区域最大宽度
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set内容区域的最大宽度。
 
@@ -1459,7 +1459,7 @@ Valid CSS length unit.
 
 ### Custom内容区域最小宽度
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Whether定义内容区域最小宽度。
 
@@ -1502,7 +1502,7 @@ When enabled, you can configure:
 
 ### 内容区域最小宽度
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set内容区域的最小宽度。
 
@@ -1547,7 +1547,7 @@ Valid CSS length unit.
 
 ### 强制应用内容区域最小宽度
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whether强制应用内容区域最小宽度。
 
@@ -1588,7 +1588,7 @@ Boolean
 
 ### Custom内容区域宽度属性
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Whether定义内容区域宽度属性。
 
@@ -1628,7 +1628,7 @@ When enabled, you can configure:
 
 ### 内容区域宽度样式
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 决定内容区域宽度样式。
 
@@ -1678,7 +1678,7 @@ String
 
 ### 页眉头像Display
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn页眉Display头像。
 
@@ -1720,7 +1720,7 @@ When enabled, you can configure:
 
 ### Custom页眉头像
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Used for选择上传的图片作为页眉头像。未Set将Use默认头像 `/themes/howiehz-higan/images/logo.{avif,webp,png}`。
 
@@ -1750,7 +1750,7 @@ Attachment
 
 ### 圆形头像
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whether强制将头像裁切为圆形。
 
@@ -1785,7 +1785,7 @@ Boolean
 
 ### 灰度头像
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whether强制将头像以灰度处理。
 
@@ -1820,7 +1820,7 @@ Boolean
 
 ### 额外菜单项
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn菜单Display额外菜单项。
 
@@ -1891,7 +1891,7 @@ Repeater
 
 ### Display页眉菜单
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherDisplay页眉菜单。
 
@@ -1924,7 +1924,7 @@ Boolean
 
 ### Display页码
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherDisplay页码。
 
@@ -1957,7 +1957,7 @@ Boolean
 
 ### page底部站点统计信息
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherDisplaypage底部站点统计信息。
 
@@ -1997,7 +1997,7 @@ When enabled, you can configure:
 
 ### 统计项Set
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set统计项。
 
@@ -2089,7 +2089,7 @@ Repeater
 
 ### page底部主题信息
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherDisplaypage底部主题信息。
 
@@ -2130,7 +2130,7 @@ When enabled, you can configure:
 
 #### page底部主题信息所展示的主题名
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Setpage底部主题信息所展示的主题名。
 
@@ -2171,7 +2171,7 @@ Higan Haozi（internal value `Higan Haozi`）
 
 #### page底部主题信息所展示的 Halo 版本
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Setpage底部主题信息所展示的 Halo 版本。
 
@@ -2212,7 +2212,7 @@ Halo（internal value `Halo`）
 
 ### page底部版权信息
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherDisplaypage底部版权信息。
 
@@ -2252,7 +2252,7 @@ When enabled, you can configure:
 
 #### 版权信息Custom署名
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Setpage底部版权信息的署名。
 
@@ -2292,7 +2292,7 @@ Empty
 
 ### 强制页脚、页码Inpage底部
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whether强制页脚、页码Inpage底部。
 
@@ -2325,7 +2325,7 @@ Boolean
 
 ### page底部菜单
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherDisplaypage底部菜单。
 
@@ -2358,7 +2358,7 @@ Boolean
 
 ### 添加内容到page最底部
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 控制添加内容到page最底部。
 
@@ -2403,7 +2403,7 @@ When enabled, you can configure:
 
 #### page最底部内容
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Setpage最底部内容内容。
 
@@ -2456,7 +2456,7 @@ HTML 代码也是can以的：
 
 #### 多语言page最底部内容Support
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherEnable多语言page最底部内容Support。
 
@@ -2496,7 +2496,7 @@ Enable后请参照[多语言page最底部内容Use指南](/tutorial/i18n#多语�
 
 #### Custom多语言page最底部内容
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set多语言page最底部内容内容。
 
@@ -2593,7 +2593,7 @@ Repeater
 
 ### 为三级标题添加下划线
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Enablewhen，In三级标题（h3）下方Display下划线装饰，让标题更加突出。
 
@@ -2626,7 +2626,7 @@ Boolean
 
 ### 引用块保留Empty行
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In引用块中保留Empty行，否则将自动删除引用块中的Empty行。
 
@@ -2664,7 +2664,7 @@ Boolean
 
 ### 引用块前添加引号
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In引用块前添加引号。
 
@@ -2697,7 +2697,7 @@ Boolean
 
 ### 引用块后添加引号
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In引用块后添加引号。
 
@@ -2730,7 +2730,7 @@ Boolean
 
 ### 表格行间线（除表头）
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Whether为表格每行底部添加表格线（除表头）。
 
@@ -2773,7 +2773,7 @@ When enabled, you can configure:
 
 ### 表格行间线宽度（除表头）
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set表格每行底部添表格线的宽度（除表头）。
 
@@ -2822,7 +2822,7 @@ Valid CSS length unit.
 
 ### 标题上边距倍率
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set[标题](/guide/style-reference#标题)的上边距 (`margin-top`) 倍率。
 
@@ -2870,7 +2870,7 @@ Float/Integer
 
 ### 标题下边距倍率
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set[标题](/guide/style-reference#标题)的下边距 (`margin-bottom`) 倍率。
 
@@ -2913,7 +2913,7 @@ Float/Integer
 
 ### 段落上边距倍率
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set[段落](/guide/style-reference#段落)的上边距倍率。
 
@@ -2956,7 +2956,7 @@ Float/Integer
 
 ### 段落下边距倍率
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set[段落](/guide/style-reference#段落)的下边距倍率。
 
@@ -3003,7 +3003,7 @@ Float/Integer
 
 ### 主页 HTML 标题
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Custom主页的 HTML 标题（willDisplayIn浏览器标签页上）。
 
@@ -3046,7 +3046,7 @@ IfConfiguration值过长，cancan影响 SEO 和pageDisplay效果。
 
 ### 一言（hitokoto）
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 WhetherIn首页Display一言（hitokoto）随机句子服务的内容。
 
@@ -3088,7 +3088,7 @@ When enabled, you can configure
 
 ### Custom随机Display一句话
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 WhetherIn首页随机Display一句话。
 
@@ -3128,7 +3128,7 @@ When enabled, you can configure
 
 ### 个人简介/公告栏
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In首页Display个人简介or公告栏内容。
 
@@ -3170,7 +3170,7 @@ When enabled, you can configure
 
 #### 多语言个人简介/公告栏Support
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherEnable多语言个人简介/公告栏Support。
 
@@ -3214,7 +3214,7 @@ Enable后请参照[多语言个人简介/公告栏Use指南](/tutorial/i18n#多�
 
 #### Custom多语言公告栏内容
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set多语言公告栏内容。
 
@@ -3315,7 +3315,7 @@ Repeater
 
 ### 社交资料Icon左侧文字
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherDisplay首页社交资料Icon左侧的文字。
 
@@ -3348,7 +3348,7 @@ Boolean
 
 ### 首页post列表标题
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherDisplay首页post列表的标题。
 
@@ -3381,7 +3381,7 @@ Boolean
 
 ### 主页列表布局
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 选择首页的post列表Display样式。
 
@@ -3449,7 +3449,7 @@ Option
 
 ### 简洁列表Displaypost阅读量
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn简洁列表中Displaypost阅读量。
 
@@ -3484,7 +3484,7 @@ Boolean
 
 ### 多元列表Displaypost分类
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn多元列表中Displaypost分类。
 
@@ -3519,7 +3519,7 @@ Boolean
 
 ### 多元列表Displaypost标签
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn多元列表中Displaypost标签。
 
@@ -3554,7 +3554,7 @@ Boolean
 
 ### 多元列表Displaypost阅读量
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn多元列表中Displaypost阅读量。
 
@@ -3589,7 +3589,7 @@ Boolean
 
 ### 多元列表Displaypost预计阅读when间
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn多元列表中Displaypost预计阅读when间。
 
@@ -3629,7 +3629,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动Ena
 
 ### 多元列表Displaypost字数统计
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn多元列表中Displaypost字数统计。
 
@@ -3669,7 +3669,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动Ena
 
 ### 多元列表Displaypost摘要
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn多元列表中Displaypost摘要。
 
@@ -3704,7 +3704,7 @@ Boolean
 
 ### 多元列表post摘要行数上限
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set多元列表中post摘要的最大行数。
 
@@ -3744,7 +3744,7 @@ Range 1-5
 
 ### 多元列表跳转post链接所用提示文字
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn多元列表中Display跳转post链接的提示文字。
 
@@ -3784,7 +3784,7 @@ Boolean
 
 ### 多元列表Displaypost封面
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn多元列表中Displaypost封面。
 
@@ -3819,7 +3819,7 @@ Boolean
 
 ### 瞬间列表Display条数
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set瞬间列表中Display的条目数量。
 
@@ -3854,7 +3854,7 @@ Integer
 
 ### 瞬间列表Display条目作者头像
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn瞬间列表中Display条目作者头像。
 
@@ -3889,7 +3889,7 @@ Boolean
 
 ### 瞬间列表Display条目作者昵称
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn瞬间列表中Display条目作者昵称。
 
@@ -3924,7 +3924,7 @@ Boolean
 
 ### post列表置顶Icon
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Inpost列表中为置顶postDisplay特殊icon.
 
@@ -3968,7 +3968,7 @@ When enabled, you can configure
 
 ### 优化post段落Empty行Display
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 为post内容段落添加最小高度，以DisplayEmpty行。
 
@@ -4007,7 +4007,7 @@ Boolean
 
 ### 文档段落首行缩进
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 为post内容段落首行添加缩进样式。
 
@@ -4050,7 +4050,7 @@ When enabled, you can configure
 
 ### post标题大写
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 将post标题中字符转换为对应大写表示。
 
@@ -4085,7 +4085,7 @@ Boolean
 
 ### post发布when间
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Inpostpage顶部Displaypost的发布when间。
 
@@ -4125,7 +4125,7 @@ When enabled, you can configure
 
 ### post更新when间
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Inpostpage顶部Displaypost的最后更新when间。
 
@@ -4165,7 +4165,7 @@ When enabled, you can configure
 
 ### post阅读量
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 InpostpageDisplaypost的阅读量统计。
 
@@ -4198,7 +4198,7 @@ Boolean
 
 ### post预计阅读when间
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 InpostpageDisplay根据post字数估算的阅读when间。
 
@@ -4236,7 +4236,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动Ena
 
 ### post字数统计
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 InpostpageDisplaypost的总字数。
 
@@ -4274,7 +4274,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动Ena
 
 ### 桌面端菜单中的分享按钮
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn桌面端postpage的菜单中Display分享按钮。
 
@@ -4307,7 +4307,7 @@ Boolean
 
 ### Custom侧边目录最大宽度
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Enable后can以Configuration
 
@@ -4352,7 +4352,7 @@ When enabled, you can configure
 
 ### post末尾的的分隔线
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherDisplaypost末尾的的分隔线。
 
@@ -4385,7 +4385,7 @@ Boolean
 
 ### post底部的点赞按钮
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherDisplaypost底部的点赞按钮。
 
@@ -4434,7 +4434,7 @@ When enabled, you can configure
 
 ### post底部的推荐post
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherInpost底部Display推荐post列表。
 
@@ -4480,7 +4480,7 @@ When enabled, you can configure
 
 ### post底部的相邻post导航
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Enable后将Inpost底部Display上一篇和下一篇post的导航链接。
 
@@ -4513,7 +4513,7 @@ Boolean
 
 ### post评论区
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherInpostpageDisplay评论区。
 
@@ -4546,7 +4546,7 @@ Boolean
 
 ### 移动端底部导航栏
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn移动端postpage底部Display导航栏。
 
@@ -4590,7 +4590,7 @@ When enabled, you can configure
 
 ### 分类集合页page描述
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Used forCustomthispage的 HTML `<meta name="description">` 内容，方便针对Set SEO 描述。
 
@@ -4628,7 +4628,7 @@ Set为Empty将回退到站点描述（快速跳转：<QuickJumpConfig to="/conso
 
 ### Display每个分类下的post数量
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn分类列表中Display每个分类包含的post数量。
 
@@ -4673,7 +4673,7 @@ When enabled, you can configure
 
 ### Display多层分类
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn分类page展示子分类。
 
@@ -4710,7 +4710,7 @@ Boolean
 
 ### 分类详情页post列表Displaypost阅读量
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In分类详情页Displaypost阅读量。
 
@@ -4743,7 +4743,7 @@ Boolean
 
 ### Display分类 RSS 订阅按钮
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In分类详情页Display RSS 订阅按钮。
 
@@ -4785,7 +4785,7 @@ Requires [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)Enable�
 
 ### 标签集合页page描述
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Used forCustomthispage的 HTML `<meta name="description">` 内容，方便针对Set SEO 描述。
 
@@ -4823,7 +4823,7 @@ Set为Empty将回退到站点描述（快速跳转：<QuickJumpConfig to="/conso
 
 ### Display每个标签下的post数量
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn分类列表中Display每个标签包含的post数量。
 
@@ -4867,7 +4867,7 @@ When enabled, you can configure
 
 ### 标签排序方式
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set标签In标签集合页的排序方式。
 
@@ -4912,7 +4912,7 @@ Option
 
 ### 标签详情页post列表Displaypost阅读量
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In标签详情页Displaypost阅读量。
 
@@ -4945,7 +4945,7 @@ Boolean
 
 ### Display标签 RSS 订阅按钮
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In标签详情页Display RSS 订阅按钮。
 
@@ -4987,7 +4987,7 @@ Requires [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)Enable�
 
 ### 作者详情页page描述
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Used forCustomthispage的 HTML `<meta name="description">` 内容，方便针对Set SEO 描述。
 
@@ -5025,7 +5025,7 @@ Set为Empty将回退到站点描述（快速跳转：<QuickJumpConfig to="/conso
 
 ### Display作者 RSS 订阅按钮
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In作者详情页Display RSS 订阅按钮。
 
@@ -5067,7 +5067,7 @@ Requires [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)Enable�
 
 ### 归档页page描述
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Used forCustomthispage的 HTML `<meta name="description">` 内容，方便针对Set SEO 描述。
 
@@ -5105,7 +5105,7 @@ Set为Empty将回退到站点描述（快速跳转：<QuickJumpConfig to="/conso
 
 ### 按照发布年份和月份折叠post列表
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In归档page中，按照post发布的年份和月份将post列表折叠Display。
 
@@ -5151,7 +5151,7 @@ When enabled, you can configure
 
 ### 优化段落Empty行Display
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 为Custompage内容段落添加最小高度，以DisplayEmpty行。
 
@@ -5190,7 +5190,7 @@ Boolean
 
 ### Custompage段落首行缩进
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 为内容段落首行添加缩进样式。
 
@@ -5233,7 +5233,7 @@ When enabled, you can configure
 
 ### page预计阅读when间
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 InpageDisplay根据post字数估算的阅读when间。
 
@@ -5271,7 +5271,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动Ena
 
 ### page字数统计
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 InpageDisplaypost的总字数。
 
@@ -5309,7 +5309,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动Ena
 
 ### page正文内容末尾分隔线
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherDisplaypage正文内容末尾的的分隔线。
 
@@ -5342,7 +5342,7 @@ Boolean
 
 ### page评论区
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherInpageDisplay评论区。
 
@@ -5377,7 +5377,7 @@ Boolean
 
 ### page自动重定向
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In错误page（如 `404`）自动跳转到Specifypage。
 
@@ -5425,7 +5425,7 @@ When enabled, you can configure
 
 ### 首页社交资料展示
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In首页展示社交媒体链接和 RSS 订阅等资料。
 
@@ -5466,7 +5466,7 @@ Empty数组 `[]`
 
 ### SetCustom资料
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 定义自己的社交资料，Used forIn首页社交资料展示中.
 
@@ -5515,7 +5515,7 @@ Provide了主流平台的预设值，只Requires要填写对应平台的识别�
 
 ### 分享按钮Set
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Configurationpostpage的分享按钮列表，Support多种分享方式。
 
@@ -5559,7 +5559,7 @@ Requires[链接管理插件](/guide/plugin-compatibility#链接页)Enable后方c
 
 ### 头像优先样式
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Enable后，链接页将Use强调头像的网格布局，每行最多Display三个链接，适合Requires要突出展示链接站点头像的场景。
 
@@ -5603,7 +5603,7 @@ Boolean
 
 ### 链接描述行数上限
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set链接描述的最大行数。
 
@@ -5647,7 +5647,7 @@ Requires[图库管理插件](/guide/plugin-compatibility#图库页)Enable后方c
 
 ### 图片圆角宽度
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set相册page中图片的圆角宽度。
 
@@ -5690,7 +5690,7 @@ Valid CSS length unit.
 
 ### 图片渐入动画when间
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Set相册page中图片渐入动画when间。
 
@@ -5728,7 +5728,7 @@ Integer/Float（Unit: seconds）
 
 ### Enable瀑布流布局
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In相册pageUse瀑布流布局展示图片。
 
@@ -5782,7 +5782,7 @@ Requires[瞬间管理插件](/guide/plugin-compatibility#瞬间页)Enable后方c
 
 ### moment预计阅读when间
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In帖子开头Display根据字数估算的阅读when间。
 
@@ -5820,7 +5820,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动Ena
 
 ### moment字数统计
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In帖子开头Displaypost的总字数。
 
@@ -5858,7 +5858,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动Ena
 
 ### 瞬间页点赞按钮
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 In瞬间pageDisplay点赞按钮。
 
@@ -5891,7 +5891,7 @@ Boolean
 
 ### 瞬间页评论区
 
-::: info 🎯 用途
+::: info 🎯 Purpose
 
 Controls whetherIn瞬间pageDisplay评论区。
 
