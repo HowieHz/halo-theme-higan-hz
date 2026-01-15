@@ -1,12 +1,12 @@
 ---
 outline: deep
 ---
+
 ::: info Info
 
 This documentation is AI-generated. You can help improve it by submitting an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new).
 
 :::
-
 
 <!-- markdownlint-disable MD033 -->
 
@@ -183,7 +183,7 @@ Supplementary information.
 
 ::: info 🎯 Purpose
 
-Specify the site root tag `<html>`  `lang` attribute default value, used to assist accessibility, SEO, and browser/plugin language detection (e.g., whether the browser prompts for page translation).
+Specify the site root tag `<html>` `lang` attribute default value, used to assist accessibility, SEO, and browser/plugin language detection (e.g., whether the browser prompts for page translation).
 
 :::
 ::: info 📂 Configuration Item Location
