@@ -38,12 +38,7 @@
           <div class="friends-list">
             <div th:each="friend : ${friends.items}" th:with="spec = ${friend.spec}" class="friend-item">
               <div class="friend-header">
-                <img
-                  th:src="${spec.logo}"
-                  th:alt="${spec.author}"
-                  class="friend-avatar"
-                  loading="lazy"
-                />
+                <img th:src="${spec.logo}" th:alt="${spec.author}" class="friend-avatar" loading="lazy" />
                 <div class="friend-info">
                   <a
                     th:href="${spec.url}"
@@ -77,7 +72,10 @@
             >
               <span th:text="#{common.previousPage}">上一页</span>
             </a>
-            <span class="pagination-current" th:text="#{common.page-number.text(${friends.page}, ${friends.totalPages})}">
+            <span
+              class="pagination-current"
+              th:text="#{common.page-number.text(${friends.page}, ${friends.totalPages})}"
+            >
             </span>
             <a
               th:if="${friends.hasNext()}"
