@@ -383,7 +383,13 @@
         // <!--/* generate toc
         // wontfix：如果电脑屏幕较窄，文章页用的是底部导航栏，目录按钮按了之后不会显示目录
         // 但是目录按钮在手机端是正常的，为了保证性能，不做特殊处理 */-->
-        initTOC("article > .content", isMobile() ? "#toc-footer" : "#toc");
+        if (isMobile()) {
+          initTOC("article > .content", "#toc-footer");
+        } else if (window.matchMedia("(min-width: 640px) and (max-width: 1024px)").matches) {
+          initTOC("article > .content", "#toc-tablet");
+        } else {
+          initTOC("article > .content", "#toc");
+        }
       });
     </script>
     <script vite-ignore th:inline="javascript" th:if="${theme.config?.post_styles?.is_post_upvote_button_show}">
