@@ -80,9 +80,9 @@
               th:target="${menuItem.children[0]?.spec?.target?.value}"
               th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItem.children[0].status?.displayName})}"
               th:text="${menuItem.children[0]?.status?.displayName}"
-              th:attr="data-submenu-hrefs=${#strings.arrayJoin(menuItem.children.![status.href].toArray(), '|')},
-                      data-submenu-targets=${#strings.arrayJoin(menuItem.children.![spec.target.value].toArray(), '|')},
-                      data-submenu-labels=${#strings.arrayJoin(menuItem.children.![status.displayName].toArray(), '|')},
+              th:attr="data-submenu-hrefs=${#strings.arrayJoin(menuItem.children.![status.href].toArray(), '|||')},
+                      data-submenu-targets=${#strings.arrayJoin(menuItem.children.![spec.target.value].toArray(), '|||')},
+                      data-submenu-labels=${#strings.arrayJoin(menuItem.children.![status.displayName].toArray(), '|||')},
                       data-submenu-index='0',
                       data-submenu-count=${#lists.size(menuItem.children)}"
               >子菜单项填充位置</a
