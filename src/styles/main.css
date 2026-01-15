@@ -368,9 +368,11 @@
     }
 
     & li {
+      align-items: center;
       border-color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       border-right: 1px solid;
       display: inline-block;
+      justify-content: center;
       margin-right: 0.9375rem;
       vertical-align: middle;
 
@@ -397,6 +399,25 @@
 
       &:hover {
         color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+      }
+    }
+
+    & .submenu-container {
+      & .submenu-toggle {
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+
+        &:hover {
+          color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+        }
+      }
+
+      & .submenu-link {
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+        margin-right: 0;
+
+        &:hover {
+          color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+        }
       }
     }
 

@@ -50,11 +50,16 @@
     letter-spacing: 0.01em;
 
     & ul {
-      display: inline-table;
+      align-items: flex-start;
+      display: flex;
       line-height: 0.9375rem;
       list-style-type: none;
       margin: 8px 0 0;
       padding: 0;
+
+      @media (width < 640px) {
+        flex-direction: column;
+      }
 
       & a {
         color: var(--color-primary);
@@ -79,7 +84,6 @@
       & li {
         border-color: var(--color-primary);
         border-right: 1px dotted;
-        display: inline-block;
         margin-right: 0.9375rem;
         vertical-align: middle;
 
@@ -89,6 +93,18 @@
 
           & a {
             margin-right: 0;
+          }
+        }
+
+        &.has-submenu {
+          & .submenu-container {
+            & .submenu-toggle {
+              color: var(--color-primary);
+
+              &:hover {
+                color: var(--color-accent);
+              }
+            }
           }
         }
 
@@ -113,6 +129,14 @@
 
             &.iconify {
               color: var(--color-primary);
+            }
+          }
+
+          &.has-submenu {
+            & .submenu-container {
+              align-self: flex-start;
+              display: flex;
+              flex-direction: row;
             }
           }
         }
