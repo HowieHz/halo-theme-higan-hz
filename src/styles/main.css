@@ -368,13 +368,13 @@
     }
 
     & li {
+      align-items: center;
       border-color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       border-right: 1px solid;
       display: inline-block;
+      justify-content: center;
       margin-right: 0.9375rem;
       vertical-align: middle;
-      align-items: center;
-      justify-content: center;
 
       & a,
       & span {
