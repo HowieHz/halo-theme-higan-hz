@@ -4,6 +4,7 @@
 <!--*/-->
 <th:block xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
   <div id="header-post" class="fixed top-8 right-0 z-50 float-right hidden sm:block">
+    <!--/* only show on tablet start, display when the page is not at the top */-->
     <a id="top-icon-tablet" class="hidden lg:hidden!" href="#" role="button" data-scroll-to-top
       ><span class="iconify iconify-large material-symbols--keyboard-arrow-up"></span
     ></a>
@@ -18,6 +19,7 @@
       th:aria-label="#{fragment.post-nav.toc-icon.aria-label}"
       ><span class="iconify iconify-large ic--baseline-toc"></span
     ></a>
+    <!--/* only show on tablet end */-->
     <span id="menu" class="mr-8">
       <div class="flex items-center justify-end">
         <span id="nav" class="hidden lg:block">
@@ -126,7 +128,7 @@
         <span id="i-next" class="info hidden">[(#{fragment.post-nav.next})]</span>
 
         <span id="i-top" class="info hidden">[(#{fragment.post-nav.toTop})]</span>
-        <span id="i-toc" class="info hidden lg:hidden">[(#{fragment.post-nav.toc})]</span>
+        <span id="i-toc" class="info hidden">[(#{fragment.post-nav.toc})]</span>
         <span id="i-share" class="info hidden" th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
           >[(#{fragment.post-nav.sharePost})]</span
         >
@@ -146,7 +148,7 @@
       <div id="toc" class="hidden lg:block"></div>
     </span>
   </div>
-  <div id="toc-overlay-tablet" class="hidden lg:hidden!">
+  <div id="toc-overlay-tablet" class="hidden">
     <div id="toc-overlay-backdrop"></div>
     <div id="toc-overlay-content">
       <div id="toc-overlay-header">
