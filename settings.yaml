@@ -620,6 +620,21 @@ spec:
           label: 添加内容到页面最底部
           help: "Halo 设置 - 代码注入 - 页脚 的内容显示位置在“主题信息”、“版权信息”、“底部菜单”之上。\n而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。"
           value: false
+        - $formkit: select
+          name: footer_content_position
+          if: "$is_footer_content_show === true"
+          label: 内容显示位置
+          value: "bottom"
+          options:
+            - label: "页面底部"
+              value: "bottom"
+            - label: "侧边栏 - 左下角"
+              value: "sidebar-left-bottom"
+            - label: "侧边栏 - 右上角"
+              value: "sidebar-right-top"
+            - label: "侧边栏 - 右下角"
+              value: "sidebar-right-bottom"
+          help: "宽屏下的显示位置。窄屏和手机端，侧边栏内容会移动到页面底部。"
         - $formkit: code
           name: footer_content
           if: "$is_footer_content_show === true"

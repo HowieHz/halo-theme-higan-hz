@@ -894,6 +894,17 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </style>
     /*/-->
     <div class="max-width min-width content-width mx-auto px-4 sm:px-8">
+      <!--/* Sidebar content for non-bottom positions */-->
+      <div
+        class="sidebar-content"
+        th:if="${theme.config?.styles?.is_footer_content_show and theme.config?.styles?.footer_content_position != 'bottom'}"
+        th:classappend="|sidebar-${theme.config?.styles?.footer_content_position}|"
+      >
+        <div class="sidebar-inner">
+          <p th:utext="${theme.config?.styles?.footer_content}"></p>
+        </div>
+      </div>
+
       <th:block th:replace="${navbar}" />
 
       <div
@@ -991,7 +1002,18 @@ html[theme="theme-[(${colorSchema.id})]"] {
               <th:block th:insert="~{fragments/common :: base-menu}"></th:block>
             </ul>
           </div>
-          <div class="footer-bottom" th:if="${theme.config?.styles?.is_footer_content_show}">
+          <!-- Show sidebar content at bottom on narrow screens, or regular footer content when position is bottom -->
+          <div 
+            class="footer-bottom" 
+            th:if="${theme.config?.styles?.is_footer_content_show and (theme.config?.styles?.footer_content_position == null or theme.config?.styles?.footer_content_position == 'bottom')}"
+          >
+            <p th:utext="${theme.config?.styles?.footer_content}"></p>
+          </div>
+          <!-- Mobile fallback: show sidebar content at bottom on narrow screens -->
+          <div 
+            class="footer-bottom footer-bottom-mobile" 
+            th:if="${theme.config?.styles?.is_footer_content_show and theme.config?.styles?.footer_content_position != null and theme.config?.styles?.footer_content_position != 'bottom'}"
+          >
             <p th:utext="${theme.config?.styles?.footer_content}"></p>
           </div>
           <th:block

@@ -620,6 +620,21 @@ spec:
           label: Footer content at the bottom
           help: "If enabled, the theme will display the content at the bottom."
           value: false
+        - $formkit: select
+          name: footer_content_position
+          if: "$is_footer_content_show === true"
+          label: Content Position
+          value: "bottom"
+          options:
+            - label: "Page Bottom"
+              value: "bottom"
+            - label: "Sidebar - Left Bottom"
+              value: "sidebar-left-bottom"
+            - label: "Sidebar - Right Top"
+              value: "sidebar-right-top"
+            - label: "Sidebar - Right Bottom"
+              value: "sidebar-right-bottom"
+          help: "Position on wide screens. On narrow screens and mobile, sidebar content will be moved to the page bottom."
         - $formkit: code
           name: footer_content
           if: "$is_footer_content_show === true"

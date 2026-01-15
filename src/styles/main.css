@@ -411,6 +411,54 @@
     }
   }
 
+  /* Sidebar content positioning */
+  .sidebar-content {
+    position: fixed;
+    z-index: 100;
+    background: var(--color-base-200);
+    border: 1px solid color-mix(in oklab, var(--color-base-content) 20%, transparent);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    max-width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    & .sidebar-inner {
+      line-height: 1.25rem;
+      vertical-align: middle;
+      font-size: var(--text-xs);
+      color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+    }
+    
+    /* Hide on narrow screens (less than 1024px), show at page bottom via footer-bottom-mobile */
+    @media (width < 1024px) {
+      display: none;
+    }
+  }
+  
+  .sidebar-sidebar-left-bottom {
+    bottom: 2rem;
+    left: 2rem;
+  }
+  
+  .sidebar-sidebar-right-top {
+    top: 6rem;
+    right: 2rem;
+  }
+  
+  .sidebar-sidebar-right-bottom {
+    bottom: 2rem;
+    right: 2rem;
+  }
+  
+  /* Mobile fallback for sidebar content - only show on narrow screens */
+  .footer-bottom-mobile {
+    display: none;
+    
+    @media (width < 1024px) {
+      display: block;
+    }
+  }
+
   .color-time,
   a.color-time {
     color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
