@@ -34,7 +34,7 @@ features:
     details: "Provides a wide range of component style extensions and custom HTML tags to create more vivid content displays."
     link: /en/guide/style-reference
     linkText: "Learn More"
-  - icon: 🌐
+  - icon: 🌏
     title: "Multilingual Support"
     details: "Introduces multilingual switching with comprehensive options available across the board."
     link: /en/tutorial/i18n
@@ -53,5 +53,10 @@ features:
     title: "Plugin Compatibility"
     details: "Deeply aligned with the Halo CMS plugin ecosystem to deliver a consistent browsing experience."
     link: /en/guide/plugin-compatibility
+    linkText: "Learn More"
+  - icon: 🌐
+    title: "Browser Compatibility"
+    details: "Provides good browser compatibility."
+    link: /en/reference/browser-compatibility
     linkText: "Learn More"
 ---

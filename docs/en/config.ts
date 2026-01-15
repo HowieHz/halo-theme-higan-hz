@@ -10,19 +10,6 @@ export default defineConfig({
   description:
     "Higan Haozi is a responsive, clean, and refreshing personal website theme for Halo CMS. This is the Higan Haozi documentation site, covering key features, configuration instructions, plugin compatibility, and example demonstrations.",
 
-  markdown: {
-    container: {
-      tipLabel: "Tip",
-      warningLabel: "Warning",
-      dangerLabel: "Danger",
-      infoLabel: "Info",
-      detailsLabel: "Details",
-    },
-    image: {
-      lazyLoading: true,
-    },
-  },
-
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: { src: "/ico.ico", width: 24, height: 24 },
@@ -79,21 +66,21 @@ function nav(): DefaultTheme.NavItem[] {
         {
           text: "Introduction",
           items: [
-            { text: "What is Higan Haozi?", link: "/guide/what-is-higan-haozi" },
-            { text: "Getting Started", link: "/guide/getting-started" },
+            { text: "What is Higan Haozi?", link: "/en/guide/what-is-higan-haozi" },
+            { text: "Getting Started", link: "/en/guide/getting-started" },
           ],
         },
         {
           text: "Writing",
-          items: [{ text: "Style Reference", link: "/guide/style-reference" }],
+          items: [{ text: "Style Reference", link: "/en/guide/style-reference" }],
         },
         {
           text: "Configuration & Extensions",
           items: [
-            { text: "Installation & Upgrade", link: "/guide/getting-started/" },
-            { text: "Theme Configuration", link: "/guide/theme-configuration" },
-            { text: "Metadata Configuration", link: "/guide/metadata-configuration" },
-            { text: "Plugin Compatibility", link: "/guide/plugin-compatibility" },
+            { text: "Installation & Upgrade", link: "/en/guide/getting-started/" },
+            { text: "Theme Configuration", link: "/en/guide/theme-configuration" },
+            { text: "Metadata Configuration", link: "/en/guide/metadata-configuration" },
+            { text: "Plugin Compatibility", link: "/en/guide/plugin-compatibility" },
           ],
         },
       ],
@@ -101,22 +88,22 @@ function nav(): DefaultTheme.NavItem[] {
     {
       text: "Tutorials",
       items: [
-        { text: "Internationalization", link: "/tutorial/i18n" },
-        { text: "Performance Optimization", link: "/tutorial/performance" },
-        { text: "Security Practices", link: "/tutorial/security" },
-        { text: "Custom Theme", link: "/tutorial/custom-theme" },
+        { text: "Internationalization", link: "/en/tutorial/i18n" },
+        { text: "Performance Optimization", link: "/en/tutorial/performance" },
+        { text: "Security Practices", link: "/en/tutorial/security" },
+        { text: "Custom Theme", link: "/en/tutorial/custom-theme" },
       ],
     },
     {
       text: "Reference",
       items: [
-        { text: "FAQ", link: "/reference/faq" },
-        { text: "Performance Reference", link: "/reference/performance" },
-        { text: "Browser Compatibility", link: "/reference/browser-compatibility" },
-        { text: "Template Map", link: "/reference/template-map" },
+        { text: "FAQ", link: "/en/reference/faq" },
+        { text: "Performance Reference", link: "/en/reference/performance" },
+        { text: "Browser Compatibility", link: "/en/reference/browser-compatibility" },
+        { text: "Template Map", link: "/en/reference/template-map" },
       ],
     },
-    { text: "Demo Site", link: "https://howiehz.top" },
+    { text: "Demo Site", link: "https://howiehz.top/?lang=en" },
     {
       text: pkg.version,
       items: [
@@ -136,39 +123,39 @@ function sidebar(): DefaultTheme.SidebarItem[] {
     {
       text: "Introduction",
       items: [
-        { text: "What is Higan Haozi?", link: "/guide/what-is-higan-haozi" },
-        { text: "Getting Started", link: "/guide/getting-started" },
+        { text: "What is Higan Haozi?", link: "/en/guide/what-is-higan-haozi" },
+        { text: "Getting Started", link: "/en/guide/getting-started" },
       ],
     },
     {
       text: "Writing",
-      items: [{ text: "Style Reference", link: "/guide/style-reference" }],
+      items: [{ text: "Style Reference", link: "/en/guide/style-reference" }],
     },
     {
       text: "Configuration & Extensions",
       items: [
-        { text: "Installation & Upgrade", link: "/guide/installation-and-upgrade" },
-        { text: "Theme Configuration", link: "/guide/theme-configuration" },
-        { text: "Metadata Configuration", link: "/guide/metadata-configuration" },
-        { text: "Plugin Compatibility", link: "/guide/plugin-compatibility" },
+        { text: "Installation & Upgrade", link: "/en/guide/installation-and-upgrade" },
+        { text: "Theme Configuration", link: "/en/guide/theme-configuration" },
+        { text: "Metadata Configuration", link: "/en/guide/metadata-configuration" },
+        { text: "Plugin Compatibility", link: "/en/guide/plugin-compatibility" },
       ],
     },
     {
       text: "Tutorials",
       items: [
-        { text: "Internationalization", link: "/tutorial/i18n" },
-        { text: "Performance Optimization", link: "/tutorial/performance" },
-        { text: "Security Practices", link: "/tutorial/security" },
-        { text: "Custom Theme", link: "/tutorial/custom-theme" },
+        { text: "Internationalization", link: "/en/tutorial/i18n" },
+        { text: "Performance Optimization", link: "/en/tutorial/performance" },
+        { text: "Security Practices", link: "/en/tutorial/security" },
+        { text: "Custom Theme", link: "/en/tutorial/custom-theme" },
       ],
     },
     {
       text: "Reference",
       items: [
-        { text: "FAQ", link: "/reference/faq" },
-        { text: "Performance Reference", link: "/reference/performance" },
-        { text: "Browser Compatibility", link: "/reference/browser-compatibility" },
-        { text: "Template Map", link: "/reference/template-map" },
+        { text: "FAQ", link: "/en/reference/faq" },
+        { text: "Performance Reference", link: "/en/reference/performance" },
+        { text: "Browser Compatibility", link: "/en/reference/browser-compatibility" },
+        { text: "Template Map", link: "/en/reference/template-map" },
       ],
     },
   ];
