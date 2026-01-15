@@ -59,7 +59,7 @@
 <th:block th:fragment="base-menu">
   <th:block th:with="menuItems = ${menuFinder.getPrimary().menuItems}">
     <th:block th:unless="${theme.config?.global?.is_i18n_menu_show}">
-      <!--/* 普通 menu */-->
+      <!--/* 普通菜单 */-->
       <li
         th:each="menuItem : ${menuItems}"
         class="matched-menu"
