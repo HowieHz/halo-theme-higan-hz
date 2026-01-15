@@ -300,9 +300,9 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Enablethis option后，If浏览器语言与Default Page Language不同，且浏览器语言存In于[Allowed Target Language Code List for Redirects](#Allowed Target Language Code List for Redirects)，将自动跳转到对应page。
+After enabling this option, if the browser language differs from the Default Page Language and the browser language exists in the [Allowed Target Language Code List for Redirects](#Allowed Target Language Code List for Redirects), it will automatically redirect to the corresponding page.
 
-Enable后请参照[Auto-redirect Based on Browser LanguageUse指南](/tutorial/i18n#Auto-redirect Based on Browser LanguageUse指南)进行Configuration。
+After enabling, please refer to the [Auto-redirect Based on Browser Language Guide](/tutorial/i18n#Auto-redirect Based on Browser LanguageUse指南) for configuration.
 
 When enabled, you can configure:
 
@@ -314,7 +314,7 @@ When enabled, you can configure:
 
 ::: info 🎯 Purpose
 
-SetAllow的自动跳转目标语言。
+Set allowed auto-redirect target languages.
 
 :::
 ::: info 📂 Configuration Item Location
