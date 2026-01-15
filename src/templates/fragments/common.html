@@ -78,11 +78,7 @@
         <th:block th:unless="${#lists.isEmpty(menuItem?.children)}">
           <!--/* 有子菜单的菜单项 */-->
           <span class="submenu-container">
-            <button
-              class="submenu-toggle"
-              aria-label="Next submenu item"
-              type="button"
-            >
+            <button class="submenu-toggle" aria-label="Next submenu item" type="button">
               <span class="iconify material-symbols--keyboard-arrow-down"></span>
             </button>
             <a
