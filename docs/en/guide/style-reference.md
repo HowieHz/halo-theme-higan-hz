@@ -28,7 +28,7 @@ The displayed styles are theme defaults; some styles can be adjusted according t
 
 ::: details
 
-Related Documentation: [模板文件and访问路径映射](/reference/template-map)
+Related Documentation: [模板文件and访问路径映射](/en/reference/template-map)
 
 - <Badge type="tip" text="General Style" /> Applicable template file scope: Every page。
 - <Badge type="tip" text="Content Style" /> Applicable template file scope: `archives.html`, `category.html`, `links.html`, `moments.html`, `moment.html`, `page.html`, `photos.html`, `post.html`, `tag.html`. `5xx.html`, `404.html`。CSS selector is `.content`。
@@ -1002,7 +1002,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 相关链接：[如何在编辑器中使用 HTML 写法](#如何在编辑器中使用-html-写法)
 
 ::: details 方法一 <Badge type="tip" text="默认编辑器可用" /> <Badge type="tip" text="Vditor 编辑器可用" />  
-Need to enable [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+Need to enable [Mermaid 支持](/en/guide/theme-configuration#mermaid-支持)。  
 图表只写一遍，自动生成浅色/深色模式下两种图表。  
 缺点：不兼容 Vditor 编辑器的实时预览。
 
@@ -1016,7 +1016,7 @@ Need to enable [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。
 
 :::
 ::: details 方法二 <Badge type="tip" text="默认编辑器可用" />  
-Need to enable [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+Need to enable [Mermaid 支持](/en/guide/theme-configuration#mermaid-支持)。  
 手动管理浅色/深色模式下的图表。
 
 <!-- prettier-ignore-start -->
@@ -1035,7 +1035,7 @@ Need to enable [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。
 
 :::
 ::: details 方法三 <Badge type="tip" text="Vditor 编辑器可用" />  
-Need to enable [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+Need to enable [Mermaid 支持](/en/guide/theme-configuration#mermaid-支持)。  
 原理：由于主题的 Mermaid 初始化先加载，可在 Vditor 自带的 Mermaid 渲染前抢先渲染生成。  
 缺点：一张图会多被渲染一遍（被 Vditor 自带的 Mermaid 多渲染一遍）。  
 优点：兼容 Vditor 编辑器的实时预览。
@@ -1055,7 +1055,7 @@ Need to enable [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。
 
 :::
 ::: details 方法四 <Badge type="tip" text="Vditor 编辑器可用" />  
-需关闭 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+需关闭 [Mermaid 支持](/en/guide/theme-configuration#mermaid-支持)。  
 缺点：同样内容要复制粘贴一遍。由于是完全使用 Vditor 自带的渲染，所以主题设置中有关 Mermaid 的设置会失效。会继承上游的 bug，如 [mermaid-js/mermaid@5741](https://github.com/mermaid-js/mermaid/issues/5741)。  
 优点：兼容 Vditor 编辑器的实时预览，兼容性最好。完全使用 Vditor 自带的渲染，和预览表现一致。
 

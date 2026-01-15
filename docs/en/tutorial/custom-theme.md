@@ -101,7 +101,7 @@ textarea {
 
 ### Add Custom Color Scheme
 
-Navigate to the ["General Styling -> Custom Color Scheme"](/guide/theme-configuration#自定义配色方案) configuration item. As shown below, click the add button:
+Navigate to the ["General Styling -> Custom Color Scheme"](/en/guide/theme-configuration#自定义配色方案) configuration item. As shown below, click the add button:
 
 ![tutorial-custom-theme-3.avif](/tutorial-custom-theme-3.avif)
 

@@ -21,15 +21,15 @@ We welcome your support through [Star⭐](https://github.com/HowieHz/halo-theme-
 Built on a clean and refreshing foundation, this theme adheres to the following core principles:
 
 1. Responsive design (adapts to different screen sizes)
-2. [Multilingual support](/tutorial/i18n)
+2. [Multilingual support](/en/tutorial/i18n)
 3. [Highly configurable](./theme-configuration)
-4. [Good compatibility](/reference/browser-compatibility)
+4. [Good compatibility](/en/reference/browser-compatibility)
 5. [Plugin compatibility](./plugin-compatibility)
-6. [High performance](/reference/performance) (page theme resources ~70KiB gzipped)
+6. [High performance](/en/reference/performance) (page theme resources ~70KiB gzipped)
 
 ## Preview
 
-This theme supports [custom color schemes](/tutorial/custom-theme). The following images showcase some preset color schemes:
+This theme supports [custom color schemes](/en/tutorial/custom-theme). The following images showcase some preset color schemes:
 
 ![preview-1.png](/preview-1.png)
 

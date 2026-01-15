@@ -22,8 +22,8 @@ If the problem remains unsolved, you can search for or submit new feedback at [G
 
 ### How to point a menu to a specific tag or category page
 
-- Create a "Custom Link" in the menu with any name, and fill in the link address according to the [Template Map](/reference/template-map). For example, tag archive `/tags/{actual-tag-slug}`, category archive `/categories/{actual-category-slug}`.
-- Paths for more pages (such as tag list, category list, archive page) can be found in [Template File and Access Path Mapping](/reference/template-map).
+- Create a "Custom Link" in the menu with any name, and fill in the link address according to the [Template Map](/en/reference/template-map). For example, tag archive `/tags/{actual-tag-slug}`, category archive `/categories/{actual-category-slug}`.
+- Paths for more pages (such as tag list, category list, archive page) can be found in [Template File and Access Path Mapping](/en/reference/template-map).
 - After submitting the changes, refresh the front end to confirm the results.
 
 ### Styling issues after enabling the theme
@@ -38,7 +38,7 @@ If the problem remains unsolved, you can search for or submit new feedback at [G
 
 ### Multilingual menu enabled but not working
 
-Please read the [Multilingual Menu Usage Guide](/tutorial/i18n#multilingual-menu-usage-guide).
+Please read the [Multilingual Menu Usage Guide](/en/tutorial/i18n#multilingual-menu-usage-guide).
 
 ### How to reset all configurations to default values
 
@@ -58,7 +58,7 @@ Go to `/console/theme`, then click the three dots on the far right of the theme 
 
 The `lang` attribute priority for the site root tag `<html>`:
 
-1. The `language` metadata explicitly specified in the metadata of [posts](/guide/metadata-configuration#post-page-title), [categories](/guide/metadata-configuration#category-page-title), [tags](/guide/metadata-configuration#tag-metadata), and [pages](/guide/metadata-configuration#page-metadata).
+1. The `language` metadata explicitly specified in the metadata of [posts](/en/guide/metadata-configuration#post-page-title), [categories](/en/guide/metadata-configuration#category-page-title), [tags](/en/guide/metadata-configuration#tag-metadata), and [pages](/en/guide/metadata-configuration#page-metadata).
 2. URL query parameter `?lang=`.
-3. The [default page language](/guide/theme-configuration#default-page-language) in theme settings.
+3. The [default page language](/en/guide/theme-configuration#default-page-language) in theme settings.
 4. If all of the above are empty, it falls back to `zh`.

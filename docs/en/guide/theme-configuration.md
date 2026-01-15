@@ -32,7 +32,7 @@ function prefixHref(href) {
 }
 
 /**
- * QuickJumpConfigPage — Lightweight functional link component (returns <a> node)
+ * QuickJumpConfig — Lightweight functional link component (returns <a> node)
  *
  * Behavior Overview
  * - Generate final href based on props.to (process site base address and absolute links through prefixHref)
@@ -213,7 +213,7 @@ String
 :::
 ::: info ⚠️ External Constraints
 
-Set值Requires满足 [BCP 47](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=The%20attribute%20contains%20a%20single%20BCP%2047%20language%20tag)，否则无效。
+The set value must comply with [BCP 47](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=The%20attribute%20contains%20a%20single%20BCP%2047%20language%20tag), otherwise it will be invalid.
 
 :::
 ::: info 🧩 Template Variable
