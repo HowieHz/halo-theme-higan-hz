@@ -96,7 +96,11 @@
     <th:block th:each="menuItem : ${menuItems}">
       <th:block th:if="${#strings.equals(menuItem.spec.displayName, theme.config?.global?.default_page_language)}">
         <th:block th:each="menuItemChildren : ${menuItem.children}">
-          <li style="display: none" class="default-menu" th:classappend="${#lists.isEmpty(menuItemChildren?.children) ? '' : 'has-submenu'}">
+          <li
+            style="display: none"
+            class="default-menu"
+            th:classappend="${#lists.isEmpty(menuItemChildren?.children) ? '' : 'has-submenu'}"
+          >
             <th:block th:replace="~{:: menu-item-content(${menuItemChildren})}"></th:block>
           </li>
         </th:block>
@@ -126,7 +130,7 @@
   </th:block>
   <th:block th:unless="${#lists.isEmpty(item?.children)}">
     <!--/* 有子菜单的菜单项 */-->
-    <span class="submenu-container inline-flex cursor-pointer justify-center">
+    <span class="submenu-container cursor-pointer justify-center">
       <button
         class="submenu-toggle m-0 border-none bg-transparent p-0 focus:outline-none"
         aria-label="Next submenu item"
