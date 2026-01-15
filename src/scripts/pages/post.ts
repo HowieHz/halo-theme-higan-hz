@@ -226,13 +226,15 @@ document.addEventListener("DOMContentLoaded", (): void => {
       });
 
       // 点击 TOC 项目后关闭 overlay
-      if (tocOverlayTablet) {
+      if (tocOverlayTablet && tocIconTablet) {
         tocOverlayTablet.addEventListener("click", (e: Event): void => {
-          const target = e.target as HTMLElement;
-          const tocLink = target.closest<HTMLElement>(".toc-link");
-          if (tocLink && tocIconTablet) {
-            tocIconTablet.setAttribute("aria-expanded", "false");
-            fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+          const target = e.target;
+          if (target instanceof HTMLElement) {
+            const tocLink = target.closest<HTMLElement>(".toc-link");
+            if (tocLink) {
+              tocIconTablet.setAttribute("aria-expanded", "false");
+              fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+            }
           }
         });
       }
