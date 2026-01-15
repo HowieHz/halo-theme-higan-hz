@@ -300,9 +300,9 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-After enabling this option, if the browser language differs from the Default Page Language and the browser language exists in the [Allowed Target Language Code List for Redirects](#Allowed Target Language Code List for Redirects), it will automatically redirect to the corresponding page.
+After enabling this option, if the browser language differs from the Default Page Language and the browser language exists in the [Allowed Target Language Code List for Redirects](#allowed-target-language-code-list-for-redirects), it will automatically redirect to the corresponding page.
 
-After enabling, please refer to the [Auto-redirect Based on Browser Language Guide](/tutorial/i18n#Auto-redirect Based on Browser LanguageUse指南) for configuration.
+After enabling, please refer to the [Auto-redirect Based on Browser Language Guide](/tutorial/i18n#auto-redirect-based-on-browser-language-guide) for configuration.
 
 When enabled, you can configure:
 
@@ -340,11 +340,11 @@ Empty
 
 :::
 
-> [!NOTE] 💡 示例值
+> [!NOTE] 💡 Example Values
 >
-> ::: tip 📂 Configuration项名
+> ::: tip 📂 Configuration Item Name
 >
-> 语言代码
+> Language Code
 >
 > :::
 > ::: info 🏷️ Type
@@ -359,7 +359,7 @@ Empty
 > :::
 > ::: info 💡 Example Values
 >
-> `zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+> `zh`, `zh-CN`, `zh-Hans`, `en`, `en-US`
 >
 > :::
 > ::: info 🔒 Internal Constraints
@@ -369,7 +369,7 @@ Empty
 > :::
 > ::: info ⚠️ External Constraints
 >
-> Set值Requires满足 [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82)，否则无效。
+> The set value must comply with [BCP 47](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=The%20attribute%20contains%20a%20single%20BCP%2047%20language%20tag), otherwise it will be invalid.
 >
 > :::
 
