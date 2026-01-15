@@ -77,10 +77,12 @@ document.addEventListener("DOMContentLoaded", (): void => {
       if (icon) {
         if (currentIndex === count - 1) {
           // 最后一个子菜单，显示向上箭头
-          icon.className = "iconify material-symbols--keyboard-arrow-up";
+          icon.classList.remove("material-symbols--keyboard-arrow-down");
+          icon.classList.add("material-symbols--keyboard-arrow-up");
         } else {
           // 不是最后一个，显示向下箭头
-          icon.className = "iconify material-symbols--keyboard-arrow-down";
+          icon.classList.remove("material-symbols--keyboard-arrow-up");
+          icon.classList.add("material-symbols--keyboard-arrow-down");
         }
       }
     });

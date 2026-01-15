@@ -77,9 +77,13 @@
         </th:block>
         <th:block th:unless="${#lists.isEmpty(menuItem?.children)}">
           <!--/* 有子菜单的菜单项 */-->
-          <span class="submenu-container">
-            <button class="submenu-toggle" aria-label="Next submenu item" type="button">
-              <span class="iconify material-symbols--keyboard-arrow-down"></span>
+          <span class="submenu-container inline-flex cursor-pointer justify-center">
+            <button
+              class="submenu-toggle m-0 border-none bg-transparent p-0 focus:outline-none"
+              aria-label="Next submenu item"
+              type="button"
+            >
+              <span class="iconify iconify-middle material-symbols--keyboard-arrow-down mr-1"></span>
             </button>
             <a
               class="submenu-link"
