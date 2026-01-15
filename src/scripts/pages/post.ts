@@ -78,10 +78,10 @@ document.addEventListener("DOMContentLoaded", (): void => {
       }
       if (isVisible(navFooter)) {
         footerMenuButton.setAttribute("aria-expanded", "false");
-        slideUp(navFooter, 200);
+        slideUp(navFooter, ANIMATION_DURATION);
       } else {
         footerMenuButton.setAttribute("aria-expanded", "true");
-        slideDown(navFooter, 200);
+        slideDown(navFooter, ANIMATION_DURATION);
       }
     });
     footerTocButton?.addEventListener("click", (): void => {
@@ -91,11 +91,11 @@ document.addEventListener("DOMContentLoaded", (): void => {
       }
       if (isVisible(tocFooter)) {
         footerTocButton.setAttribute("aria-expanded", "false");
-        slideUp(tocFooter, 200);
+        slideUp(tocFooter, ANIMATION_DURATION);
       } else {
         footerTocButton.setAttribute("aria-expanded", "true");
         // First, play the slide-down animation
-        slideDown(tocFooter, 200);
+        slideDown(tocFooter, ANIMATION_DURATION);
 
         // Then instantly scroll to active item position
         const activeLink = tocFooter.querySelector<HTMLElement>(".toc-active");
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
               block: "center",
               inline: "center",
             });
-          }, 200);
+          }, ANIMATION_DURATION);
         }
       }
     });
@@ -118,10 +118,10 @@ document.addEventListener("DOMContentLoaded", (): void => {
       }
       if (isVisible(shareFooter)) {
         footerShareButton.setAttribute("aria-expanded", "false");
-        slideUp(shareFooter, 200);
+        slideUp(shareFooter, ANIMATION_DURATION);
       } else {
         footerShareButton.setAttribute("aria-expanded", "true");
-        slideDown(shareFooter, 200);
+        slideDown(shareFooter, ANIMATION_DURATION);
       }
     });
 
@@ -134,10 +134,10 @@ document.addEventListener("DOMContentLoaded", (): void => {
       }
       if (isVisible(shareMenu)) {
         shareButton.setAttribute("aria-expanded", "false");
-        slideUp(shareMenu, 200);
+        slideUp(shareMenu, ANIMATION_DURATION);
       } else {
         shareButton.setAttribute("aria-expanded", "true");
-        slideDown(shareMenu, 200);
+        slideDown(shareMenu, ANIMATION_DURATION);
       }
     });
 
@@ -269,18 +269,18 @@ document.addEventListener("DOMContentLoaded", (): void => {
         // 顶部菜单按钮、顶部菜单、回到顶部按钮、TOC 按钮 根据页面滚动距离 显示/隐藏
         if (window.matchMedia("(min-width: 640px) and (max-width: 1024px)").matches) {
           if (topDistance < 50) {
-            fadeIn(menuIcon, 200);
-            fadeOut(topIcon, 200);
-            fadeOut(tocIconTablet, 200);
+            fadeIn(menuIcon, ANIMATION_DURATION);
+            fadeOut(topIcon, ANIMATION_DURATION);
+            fadeOut(tocIconTablet, ANIMATION_DURATION);
           } else if (topDistance > 100) {
             menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
-            fadeOut(menuIcon, 200);
+            fadeOut(menuIcon, ANIMATION_DURATION);
             menuIcon.setAttribute("aria-expanded", "false"); // 切换 aria-expanded 属性值
-            fadeOut(menuComponents, 200);
+            fadeOut(menuComponents, ANIMATION_DURATION);
             shareButton?.setAttribute("aria-expanded", "false");
-            fadeOut(shareListComponents, 200);
-            fadeIn(topIcon, 200);
-            fadeIn(tocIconTablet, 200);
+            fadeOut(shareListComponents, ANIMATION_DURATION);
+            fadeIn(topIcon, ANIMATION_DURATION);
+            fadeIn(tocIconTablet, ANIMATION_DURATION);
           }
         }
       });
@@ -308,16 +308,16 @@ document.addEventListener("DOMContentLoaded", (): void => {
         footerShareButton?.setAttribute("aria-expanded", "false");
         for (const footer of [tocFooter, navFooter, shareFooter]) {
           if (footer) {
-            slideUp(footer, 200);
+            slideUp(footer, ANIMATION_DURATION);
           }
         }
 
         if (topDistance > lastScrollTop) {
           // 向下滚动 -> 隐藏菜单
-          slideUp(footerNav, 200);
+          slideUp(footerNav, ANIMATION_DURATION);
         } else {
           // 向上滚动 -> 显示菜单
-          slideDown(footerNav, 200);
+          slideDown(footerNav, ANIMATION_DURATION);
         }
         lastScrollTop = topDistance;
 
