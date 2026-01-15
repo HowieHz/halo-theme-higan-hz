@@ -60,50 +60,9 @@
   <th:block th:with="menuItems = ${menuFinder.getPrimary().menuItems}">
     <th:block th:unless="${theme.config?.global?.is_i18n_menu_show}">
       <!--/* 普通菜单 */-->
-      <li
-        th:each="menuItem : ${menuItems}"
-        class="matched-menu"
-        th:classappend="${#lists.isEmpty(menuItem?.children) ? '' : 'has-submenu'}"
-      >
-        <th:block th:if="${#lists.isEmpty(menuItem?.children)}">
-          <!--/* 没有子菜单的普通菜单项 */-->
-          <a
-            th:href="@{${menuItem?.status?.href}}"
-            th:target="${menuItem?.spec?.target?.value}"
-            th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItem.status?.displayName})}"
-            th:text="${menuItem?.status?.displayName}"
-            >目录项填充位置</a
-          >
-        </th:block>
-        <th:block th:unless="${#lists.isEmpty(menuItem?.children)}">
-          <!--/* 有子菜单的菜单项 */-->
-          <span class="submenu-container inline-flex cursor-pointer justify-center">
-            <button
-              class="submenu-toggle m-0 border-none bg-transparent p-0 focus:outline-none"
-              aria-label="Next submenu item"
-              type="button"
-            >
-              <span class="iconify iconify-middle material-symbols--keyboard-arrow-down mr-1"></span>
-            </button>
-            <a
-              class="submenu-link"
-              th:href="@{${menuItem?.status?.href}}"
-              th:target="${menuItem?.spec?.target?.value}"
-              th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItem.status?.displayName})}"
-              th:text="${menuItem?.status?.displayName}"
-              th:attr="data-parent-href=${menuItem?.status?.href},
-                      data-parent-target=${menuItem?.spec?.target?.value},
-                      data-parent-label=${menuItem?.status?.displayName},
-                      data-submenu-hrefs=${#strings.arrayJoin(menuItem.children.![status.href].toArray(), '|||')},
-                      data-submenu-targets=${#strings.arrayJoin(menuItem.children.![spec.target.value].toArray(), '|||')},
-                      data-submenu-labels=${#strings.arrayJoin(menuItem.children.![status.displayName].toArray(), '|||')},
-                      data-submenu-index='0',
-                      data-submenu-count=${#lists.size(menuItem.children) + 1}"
-              >菜单项填充位置</a
-            >
-          </span>
-        </th:block>
-      </li>
+      <th:block th:each="menuItem : ${menuItems}">
+        <th:block th:insert="~{fragments/common :: menu-item(${menuItem})}"></th:block>
+      </th:block>
     </th:block>
 
     <th:block
@@ -112,50 +71,9 @@
       <!--/* i18n menu 全等匹配模式 */-->
       <th:block th:each="menuItem : ${menuItems}">
         <th:block th:if="${#strings.equals(menuItem.spec.displayName, page_language)}">
-          <li
-            th:each="menuItemChildren : ${menuItem?.children}"
-            class="matched-menu"
-            th:classappend="${#lists.isEmpty(menuItemChildren?.children) ? '' : 'has-submenu'}"
-          >
-            <th:block th:if="${#lists.isEmpty(menuItemChildren?.children)}">
-              <!--/* 没有子菜单的 i18n 菜单项 */-->
-              <a
-                th:href="@{${menuItemChildren?.status?.href}}"
-                th:target="${menuItemChildren?.spec?.target?.value}"
-                th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItemChildren.status?.displayName})}"
-                th:text="${menuItemChildren?.status?.displayName}"
-                >目录项填充位置</a
-              >
-            </th:block>
-            <th:block th:unless="${#lists.isEmpty(menuItemChildren?.children)}">
-              <!--/* 有子菜单的 i18n 菜单项 */-->
-              <span class="submenu-container inline-flex cursor-pointer justify-center">
-                <button
-                  class="submenu-toggle m-0 border-none bg-transparent p-0 focus:outline-none"
-                  aria-label="Next submenu item"
-                  type="button"
-                >
-                  <span class="iconify iconify-middle material-symbols--keyboard-arrow-down mr-1"></span>
-                </button>
-                <a
-                  class="submenu-link"
-                  th:href="@{${menuItemChildren?.status?.href}}"
-                  th:target="${menuItemChildren?.spec?.target?.value}"
-                  th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItemChildren.status?.displayName})}"
-                  th:text="${menuItemChildren?.status?.displayName}"
-                  th:attr="data-parent-href=${menuItemChildren?.status?.href},
-                          data-parent-target=${menuItemChildren?.spec?.target?.value},
-                          data-parent-label=${menuItemChildren?.status?.displayName},
-                          data-submenu-hrefs=${#strings.arrayJoin(menuItemChildren.children.![status.href].toArray(), '|||')},
-                          data-submenu-targets=${#strings.arrayJoin(menuItemChildren.children.![spec.target.value].toArray(), '|||')},
-                          data-submenu-labels=${#strings.arrayJoin(menuItemChildren.children.![status.displayName].toArray(), '|||')},
-                          data-submenu-index='0',
-                          data-submenu-count=${#lists.size(menuItemChildren.children) + 1}"
-                  >菜单项填充位置</a
-                >
-              </span>
-            </th:block>
-          </li>
+          <th:block th:each="menuItemChildren : ${menuItem?.children}">
+            <th:block th:insert="~{fragments/common :: menu-item(${menuItemChildren})}"></th:block>
+          </th:block>
         </th:block>
       </th:block>
     </th:block>
@@ -164,50 +82,9 @@
       <!--/* i18n menu 前缀匹配模式 */-->
       <th:block th:each="menuItem : ${menuItems}">
         <th:block th:if="${#strings.startsWith(page_language, menuItem.spec.displayName)}">
-          <li
-            th:each="menuItemChildren : ${menuItem?.children}"
-            class="matched-menu"
-            th:classappend="${#lists.isEmpty(menuItemChildren?.children) ? '' : 'has-submenu'}"
-          >
-            <th:block th:if="${#lists.isEmpty(menuItemChildren?.children)}">
-              <!--/* 没有子菜单的 i18n 菜单项 */-->
-              <a
-                th:href="@{${menuItemChildren?.status?.href}}"
-                th:target="${menuItemChildren?.spec?.target?.value}"
-                th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItemChildren.status?.displayName})}"
-                th:text="${menuItemChildren?.status?.displayName}"
-                >目录项填充位置</a
-              >
-            </th:block>
-            <th:block th:unless="${#lists.isEmpty(menuItemChildren?.children)}">
-              <!--/* 有子菜单的 i18n 菜单项 */-->
-              <span class="submenu-container inline-flex cursor-pointer justify-center">
-                <button
-                  class="submenu-toggle m-0 border-none bg-transparent p-0 focus:outline-none"
-                  aria-label="Next submenu item"
-                  type="button"
-                >
-                  <span class="iconify iconify-middle material-symbols--keyboard-arrow-down mr-1"></span>
-                </button>
-                <a
-                  class="submenu-link"
-                  th:href="@{${menuItemChildren?.status?.href}}"
-                  th:target="${menuItemChildren?.spec?.target?.value}"
-                  th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItemChildren.status?.displayName})}"
-                  th:text="${menuItemChildren?.status?.displayName}"
-                  th:attr="data-parent-href=${menuItemChildren?.status?.href},
-                          data-parent-target=${menuItemChildren?.spec?.target?.value},
-                          data-parent-label=${menuItemChildren?.status?.displayName},
-                          data-submenu-hrefs=${#strings.arrayJoin(menuItemChildren.children.![status.href].toArray(), '|||')},
-                          data-submenu-targets=${#strings.arrayJoin(menuItemChildren.children.![spec.target.value].toArray(), '|||')},
-                          data-submenu-labels=${#strings.arrayJoin(menuItemChildren.children.![status.displayName].toArray(), '|||')},
-                          data-submenu-index='0',
-                          data-submenu-count=${#lists.size(menuItemChildren.children) + 1}"
-                  >菜单项填充位置</a
-                >
-              </span>
-            </th:block>
-          </li>
+          <th:block th:each="menuItemChildren : ${menuItem?.children}">
+            <th:block th:insert="~{fragments/common :: menu-item(${menuItemChildren})}"></th:block>
+          </th:block>
         </th:block>
       </th:block>
     </th:block>
@@ -216,54 +93,64 @@
       <!--/* i18n menu 全等匹配模式 匹配默认菜单 */-->
       <th:block th:each="menuItem : ${menuItems}">
         <th:block th:if="${#strings.equals(menuItem.spec.displayName, theme.config?.global?.default_page_language)}">
-          <li
-            th:each="menuItemChildren : ${menuItem.children}"
-            style="display: none"
-            class="default-menu"
-            th:classappend="${#lists.isEmpty(menuItemChildren?.children) ? '' : 'has-submenu'}"
-          >
-            <th:block th:if="${#lists.isEmpty(menuItemChildren?.children)}">
-              <!--/* 没有子菜单的默认菜单项 */-->
-              <a
-                th:href="@{${menuItemChildren.status?.href}}"
-                th:target="${menuItemChildren.spec.target?.value}"
-                th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItemChildren.status?.displayName})}"
-                th:text="${menuItemChildren.status?.displayName}"
-                >目录项填充位置</a
-              >
-            </th:block>
-            <th:block th:unless="${#lists.isEmpty(menuItemChildren?.children)}">
-              <!--/* 有子菜单的默认菜单项 */-->
-              <span class="submenu-container inline-flex cursor-pointer justify-center">
-                <button
-                  class="submenu-toggle m-0 border-none bg-transparent p-0 focus:outline-none"
-                  aria-label="Next submenu item"
-                  type="button"
-                >
-                  <span class="iconify iconify-middle material-symbols--keyboard-arrow-down mr-1"></span>
-                </button>
-                <a
-                  class="submenu-link"
-                  th:href="@{${menuItemChildren?.status?.href}}"
-                  th:target="${menuItemChildren?.spec?.target?.value}"
-                  th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItemChildren.status?.displayName})}"
-                  th:text="${menuItemChildren?.status?.displayName}"
-                  th:attr="data-parent-href=${menuItemChildren?.status?.href},
-                          data-parent-target=${menuItemChildren?.spec?.target?.value},
-                          data-parent-label=${menuItemChildren?.status?.displayName},
-                          data-submenu-hrefs=${#strings.arrayJoin(menuItemChildren.children.![status.href].toArray(), '|||')},
-                          data-submenu-targets=${#strings.arrayJoin(menuItemChildren.children.![spec.target.value].toArray(), '|||')},
-                          data-submenu-labels=${#strings.arrayJoin(menuItemChildren.children.![status.displayName].toArray(), '|||')},
-                          data-submenu-index='0',
-                          data-submenu-count=${#lists.size(menuItemChildren.children) + 1}"
-                  >菜单项填充位置</a
-                >
-              </span>
-            </th:block>
-          </li>
+          <th:block th:each="menuItemChildren : ${menuItem.children}">
+            <li style="display: none" class="default-menu">
+              <th:block th:replace="~{fragments/common :: menu-item-content(${menuItemChildren})}"></th:block>
+            </li>
+          </th:block>
         </th:block>
       </th:block>
     </th:block>
+  </th:block>
+</th:block>
+
+<th:block th:fragment="menu-item(item)">
+  <li
+    class="matched-menu"
+    th:classappend="${#lists.isEmpty(item?.children) ? '' : 'has-submenu'}"
+  >
+    <th:block th:replace="~{fragments/common :: menu-item-content(${item})}"></th:block>
+  </li>
+</th:block>
+
+<th:block th:fragment="menu-item-content(item)">
+  <th:block th:if="${#lists.isEmpty(item?.children)}">
+    <!--/* 没有子菜单的菜单项 */-->
+    <a
+      th:href="@{${item?.status?.href}}"
+      th:target="${item?.spec?.target?.value}"
+      th:aria-label="#{fragment.menu.menuItem.aria-label(${item.status?.displayName})}"
+      th:text="${item?.status?.displayName}"
+      >目录项填充位置</a
+    >
+  </th:block>
+  <th:block th:unless="${#lists.isEmpty(item?.children)}">
+    <!--/* 有子菜单的菜单项 */-->
+    <span class="submenu-container inline-flex cursor-pointer justify-center">
+      <button
+        class="submenu-toggle m-0 border-none bg-transparent p-0 focus:outline-none"
+        aria-label="Next submenu item"
+        type="button"
+      >
+        <span class="iconify iconify-middle material-symbols--keyboard-arrow-down mr-1"></span>
+      </button>
+      <a
+        class="submenu-link"
+        th:href="@{${item?.status?.href}}"
+        th:target="${item?.spec?.target?.value}"
+        th:aria-label="#{fragment.menu.menuItem.aria-label(${item.status?.displayName})}"
+        th:text="${item?.status?.displayName}"
+        th:attr="data-parent-href=${item?.status?.href},
+                data-parent-target=${item?.spec?.target?.value},
+                data-parent-label=${item?.status?.displayName},
+                data-submenu-hrefs=${#strings.arrayJoin(item.children.![status.href].toArray(), '|||')},
+                data-submenu-targets=${#strings.arrayJoin(item.children.![spec.target.value].toArray(), '|||')},
+                data-submenu-labels=${#strings.arrayJoin(item.children.![status.displayName].toArray(), '|||')},
+                data-submenu-index='0',
+                data-submenu-count=${#lists.size(item.children) + 1}"
+        >菜单项填充位置</a
+      >
+    </span>
   </th:block>
 </th:block>
 
