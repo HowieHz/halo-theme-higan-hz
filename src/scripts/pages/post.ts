@@ -145,8 +145,9 @@ document.addEventListener("DOMContentLoaded", (): void => {
     const shareListComponents: HTMLElement | null = document.querySelector<HTMLElement>("#menu #share-list");
     const menuIcon: HTMLElement | null = document.querySelector<HTMLElement>("#menu-icon");
     const topIcon: HTMLElement | null = document.querySelector<HTMLElement>("#top-icon-tablet");
+    const tocIconTablet: HTMLElement | null = document.querySelector<HTMLElement>("#toc-icon-tablet");
 
-    if (menuComponents && shareListComponents && menuIcon && topIcon) {
+    if (menuComponents && shareListComponents && menuIcon && topIcon && tocIconTablet) {
       // 在高分辨率笔记本电脑和桌面端显示菜单
       // 大于等于 1024px 的屏幕宽度 页面完成初始化时自动显示菜单
       if (window.matchMedia("(min-width: 1024px)").matches) {
@@ -174,16 +175,64 @@ document.addEventListener("DOMContentLoaded", (): void => {
         }
       });
 
-      // 平板端 文章页 导航栏、回到顶部按钮 页面滚动相关逻辑
+      // 平板端 TOC 按钮和 overlay 事件
+      const tocOverlayTablet: HTMLElement | null = document.querySelector("#toc-overlay-tablet");
+      const tocOverlayClose: HTMLElement | null = document.querySelector("#toc-overlay-close");
+      const tocOverlayBackdrop: HTMLElement | null = document.querySelector("#toc-overlay-backdrop");
+
+      // TOC 按钮点击事件
+      tocIconTablet.addEventListener("click", (): void => {
+        if (!tocOverlayTablet) {
+          return;
+        }
+        if (isVisible(tocOverlayTablet)) {
+          tocIconTablet.setAttribute("aria-expanded", "false");
+          fadeOut(tocOverlayTablet, 200);
+        } else {
+          tocIconTablet.setAttribute("aria-expanded", "true");
+          fadeIn(tocOverlayTablet, 200);
+
+          // 滚动到激活的目录项
+          const activeLink = tocOverlayTablet.querySelector<HTMLElement>(".toc-active");
+          if (activeLink) {
+            setTimeout(() => {
+              activeLink.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+                inline: "center",
+              });
+            }, 200);
+          }
+        }
+      });
+
+      // 关闭按钮点击事件
+      tocOverlayClose?.addEventListener("click", (): void => {
+        if (tocOverlayTablet) {
+          tocIconTablet.setAttribute("aria-expanded", "false");
+          fadeOut(tocOverlayTablet, 200);
+        }
+      });
+
+      // 点击背景关闭
+      tocOverlayBackdrop?.addEventListener("click", (): void => {
+        if (tocOverlayTablet) {
+          tocIconTablet.setAttribute("aria-expanded", "false");
+          fadeOut(tocOverlayTablet, 200);
+        }
+      });
+
+      // 平板端 文章页 导航栏、回到顶部按钮、TOC 按钮 页面滚动相关逻辑
       // 添加滚动监听器，用于隐藏/显示导航链接
       window.addEventListener("scroll", (): void => {
         const topDistance = getTopDistance();
 
-        // 顶部菜单按钮、顶部菜单、回到顶部按钮 根据页面滚动距离 显示/隐藏
+        // 顶部菜单按钮、顶部菜单、回到顶部按钮、TOC 按钮 根据页面滚动距离 显示/隐藏
         if (window.matchMedia("(min-width: 640px) and (max-width: 1024px)").matches) {
           if (topDistance < 50) {
             fadeIn(menuIcon, 200);
             fadeOut(topIcon, 200);
+            fadeOut(tocIconTablet, 200);
           } else if (topDistance > 100) {
             menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
             fadeOut(menuIcon, 200);
@@ -192,6 +241,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
             shareButton?.setAttribute("aria-expanded", "false");
             fadeOut(shareListComponents, 200);
             fadeIn(topIcon, 200);
+            fadeIn(tocIconTablet, 200);
           }
         }
       });

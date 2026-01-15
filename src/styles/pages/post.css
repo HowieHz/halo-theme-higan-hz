@@ -56,6 +56,18 @@
     }
   }
 
+  & #toc-icon-tablet {
+    bottom: 5rem;
+    margin-left: 0.9375rem;
+    margin-right: 2rem;
+    position: fixed;
+    right: 2rem;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+
   & .active {
     color: var(--color-primary);
   }
@@ -189,6 +201,136 @@
 }
 
 /* 文章页桌面端/平板端文章右上角菜单 end */
+
+/* 平板端 TOC Overlay 样式 */
+#toc-overlay-tablet {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 60;
+
+  @media (width >= 1024px) {
+    display: none !important;
+  }
+
+  @media (width < 640px) {
+    display: none !important;
+  }
+
+  & #toc-overlay-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: color-mix(in oklab, var(--color-base-100) 50%, transparent);
+    backdrop-filter: blur(4px);
+  }
+
+  & #toc-overlay-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--color-base-100);
+    border: 1px solid var(--color-primary);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    max-width: 90%;
+    max-height: 80vh;
+    overflow: auto;
+    box-shadow: 0 10px 40px color-mix(in oklab, var(--color-base-content) 20%, transparent);
+  }
+
+  & #toc-overlay-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-primary);
+    font-weight: 500;
+    font-size: var(--text-lg);
+
+    & a {
+      background: none;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--color-accent);
+      }
+    }
+  }
+
+  & #toc-tablet {
+    font-size: var(--text);
+    text-align: left;
+
+    & ol {
+      list-style-type: none;
+      margin: 0;
+      padding-left: 1.25rem;
+
+      & li {
+        line-height: 1.875rem;
+      }
+    }
+
+    & a:hover {
+      color: var(--color-accent);
+    }
+
+    & .toc-text {
+      overflow-wrap: break-word;
+    }
+
+    & .toc-link-h1 {
+      font-style: italic;
+    }
+
+    & .toc-level-2 > .toc-link-h2 {
+      font-weight: 500;
+    }
+
+    & .toc-level-2 {
+      color: var(--color-base-content);
+      font-size: var(--text-toc-level-2);
+
+      &::before {
+        color: var(--color-primary);
+        content: "#";
+        padding-right: 0.3125rem;
+      }
+    }
+
+    & .toc-level-3 {
+      color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+      font-size: var(--text-toc-level-3);
+    }
+
+    & .toc-level-4 {
+      color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+      font-size: var(--text-toc-level-4);
+    }
+
+    /* 隐藏 5 6 级标题和序号 */
+    & .toc-level-5,
+    & .toc-level-6,
+    & .toc-number {
+      display: none;
+    }
+
+    & .toc-active {
+      color: var(--color-primary);
+    }
+  }
+}
+
+/* 平板端 TOC Overlay 样式 end */
 
 /* toc collapsible 目录展开相关样式 */
 .toc-child {
