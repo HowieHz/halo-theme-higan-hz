@@ -10,10 +10,10 @@ hero:
   actions:
     - theme: brand
       text: "What is Higan Haozi?"
-      link: /guide/what-is-higan-haozi
+      link: /en/guide/what-is-higan-haozi
     - theme: alt
       text: "Quick Start"
-      link: /guide/getting-started
+      link: /en/guide/getting-started
     - theme: alt
       text: "GitHub"
       link: https://github.com/HowieHz/halo-theme-higan-hz
@@ -22,36 +22,41 @@ features:
   - icon: 📱
     title: "Responsive Design"
     details: "No matter whether visitors use a phone, tablet, or computer, they will enjoy a comfortable reading experience."
-    link: https://howiehz.top
+    link: https://howiehz.top/?lang=en
     linkText: "Try It Out"
   - icon: ⚙️
     title: "Highly Configurable"
     details: "Ships with a ready-to-use set of defaults and offers a high degree of configuration freedom."
-    link: /guide/theme-configuration
+    link: /en/guide/theme-configuration
     linkText: "Learn More"
   - icon: 🎨
     title: "Component Style Extensions"
     details: "Provides a wide range of component style extensions and custom HTML tags to create more vivid content displays."
-    link: /guide/style-reference
+    link: /en/guide/style-reference
     linkText: "Learn More"
-  - icon: 🌐
+  - icon: 🌏
     title: "Multilingual Support"
     details: "Introduces multilingual switching with comprehensive options available across the board."
-    link: /tutorial/i18n
+    link: /en/tutorial/i18n
     linkText: "Learn More"
   - icon: ⚡
     title: "High Performance"
     details: "Deeply optimized with streamlined code, fewer external dependencies, and page-level splitting for ultra-fast responses and smooth interactions."
-    link: /reference/performance
+    link: /en/reference/performance
     linkText: "Learn More"
   - icon: 🔒
     title: "Security Safeguards"
     details: "Built-in anti-cloning, automatic HTTPS upgrades for HTTP resources, and more to keep the site secure."
-    link: /tutorial/security
+    link: /en/tutorial/security
     linkText: "Learn More"
   - icon: 🧩
     title: "Plugin Compatibility"
     details: "Deeply aligned with the Halo CMS plugin ecosystem to deliver a consistent browsing experience."
-    link: /guide/plugin-compatibility
+    link: /en/guide/plugin-compatibility
+    linkText: "Learn More"
+  - icon: 🌐
+    title: "Browser Compatibility"
+    details: "Provides good browser compatibility."
+    link: /en/reference/browser-compatibility
     linkText: "Learn More"
 ---
