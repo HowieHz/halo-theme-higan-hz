@@ -204,11 +204,11 @@
 
 /* 平板端 TOC Overlay 样式 */
 #toc-overlay-tablet {
+  height: 100%;
+  left: 0;
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
   z-index: 60;
 
   @media (width >= 1024px) {
@@ -220,45 +220,45 @@
   }
 
   & #toc-overlay-backdrop {
+    backdrop-filter: blur(4px);
+    background: color-mix(in oklab, var(--color-base-100) 50%, transparent);
+    height: 100%;
+    left: 0;
     position: absolute;
     top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
-    background: color-mix(in oklab, var(--color-base-100) 50%, transparent);
-    backdrop-filter: blur(4px);
   }
 
   & #toc-overlay-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background: var(--color-base-100);
     border: 1px solid var(--color-primary);
     border-radius: 0.5rem;
-    padding: 1.5rem;
-    max-width: 90%;
-    max-height: 80vh;
-    overflow: auto;
     box-shadow: 0 10px 40px color-mix(in oklab, var(--color-base-content) 20%, transparent);
+    left: 50%;
+    max-height: 80vh;
+    max-width: 90%;
+    overflow: auto;
+    padding: 1.5rem;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 
   & #toc-overlay-header {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid var(--color-primary);
+    display: flex;
+    font-size: var(--text-lg);
+    font-weight: 500;
+    justify-content: space-between;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--color-primary);
-    font-weight: 500;
-    font-size: var(--text-lg);
 
     & a {
       background: none;
       color: inherit;
-      text-decoration: none;
       cursor: pointer;
+      text-decoration: none;
 
       &:hover {
         color: var(--color-accent);
