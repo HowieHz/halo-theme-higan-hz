@@ -1,0 +1,99 @@
+<!doctype html>
+<th:block
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: html(
+    title = #{page.friends.page-title}, 
+    head = ~{:: headContent},
+    content = ~{:: content}, 
+    header = ~{components/header/template :: content}, 
+    navbar = ~{}
+  )}"
+>
+  <head>
+    <script src="/src/scripts/pages/friends.ts" type="module"></script>
+  </head>
+  <body>
+    <article id="friends" class="post" itemscope itemtype="http://schema.org/BlogPosting">
+      <div class="content">
+        <th:block th:if="${statistical != null}">
+          <div class="friends-stats">
+            <ul>
+              <li>
+                <span th:text="#{page.friends.stats.friendsNum}">订阅数</span>:
+                <strong th:text="${statistical.friendsNum}">0</strong>
+              </li>
+              <li>
+                <span th:text="#{page.friends.stats.activeNum}">活跃订阅</span>:
+                <strong th:text="${statistical.activeNum}">0</strong>
+              </li>
+              <li>
+                <span th:text="#{page.friends.stats.articleNum}">文章数</span>:
+                <strong th:text="${statistical.articleNum}">0</strong>
+              </li>
+            </ul>
+          </div>
+        </th:block>
+
+        <th:block th:if="${friends != null and not #lists.isEmpty(friends.items)}">
+          <div class="friends-list">
+            <div th:each="friend : ${friends.items}" th:with="spec = ${friend.spec}" class="friend-item">
+              <div class="friend-header">
+                <img
+                  th:src="${spec.logo}"
+                  th:alt="${spec.author}"
+                  class="friend-avatar"
+                  loading="lazy"
+                />
+                <div class="friend-info">
+                  <a
+                    th:href="${spec.url}"
+                    target="_blank"
+                    rel="noopener"
+                    class="friend-author"
+                    th:text="${spec.author}"
+                  ></a>
+                  <time
+                    th:if="${spec.pubDate != null}"
+                    th:datetime="${#temporals.format(spec.pubDate, 'yyyy-MM-dd\'T\'HH:mm:ss')}"
+                    class="friend-date"
+                    th:text="${#temporals.format(spec.pubDate, 'yyyy-MM-dd HH:mm')}"
+                  ></time>
+                </div>
+              </div>
+              <div class="friend-content">
+                <a th:href="${spec.link}" target="_blank" rel="noopener" class="friend-title" th:text="${spec.title}">
+                </a>
+                <p th:if="${spec.description}" class="friend-description" th:text="${spec.description}"></p>
+              </div>
+            </div>
+          </div>
+
+          <div th:if="${friends.hasPrevious() || friends.hasNext()}" class="pagination">
+            <a
+              th:if="${friends.hasPrevious()}"
+              th:href="@{${friends.prevUrl}}"
+              class="pagination-prev"
+              th:aria-label="#{common.previousPage.aria-label}"
+            >
+              <span th:text="#{common.previousPage}">上一页</span>
+            </a>
+            <span class="pagination-current" th:text="#{common.page-number.text(${friends.page}, ${friends.totalPages})}">
+            </span>
+            <a
+              th:if="${friends.hasNext()}"
+              th:href="@{${friends.nextUrl}}"
+              class="pagination-next"
+              th:aria-label="#{common.nextPage.aria-label}"
+            >
+              <span th:text="#{common.nextPage}">下一页</span>
+            </a>
+          </div>
+        </th:block>
+
+        <div th:if="${friends == null or #lists.isEmpty(friends.items)}" class="friends-empty">
+          <p th:text="#{page.friends.empty}">暂无订阅内容</p>
+        </div>
+      </div>
+    </article>
+  </body>
+</th:block>

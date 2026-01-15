@@ -37,6 +37,7 @@ outline: deep
 | 模板文件       | 页面     | 默认路径                             | 依赖插件                                                      |
 | -------------- | -------- | ------------------------------------ | ------------------------------------------------------------- |
 | `links.html`   | 友链列表 | `/links`                             | [plugin-links](https://github.com/halo-sigs/plugin-links)     |
+| `friends.html` | 朋友圈   | `/friends`                           | [plugin-friends](https://github.com/chengzhongxue/plugin-friends) |
 | `photos.html`  | 图库页面 | `/photos`、`/photos/page/{page}`     | [plugin-photos](https://github.com/halo-sigs/plugin-photos)   |
 | `moments.html` | 瞬间列表 | `/moments(/page/{page})(?tag={tag})` | [plugin-moments](https://github.com/halo-sigs/plugin-moments) |
 | `moment.html`  | 瞬间详情 | `/moments/{name}`                    | [plugin-moments](https://github.com/halo-sigs/plugin-moments) |

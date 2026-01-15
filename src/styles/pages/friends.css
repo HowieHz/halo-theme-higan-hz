@@ -1,0 +1,143 @@
+.friends-stats {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-base-200);
+}
+
+.friends-stats ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+.friends-stats li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.friends-stats strong {
+  color: var(--color-primary);
+  font-size: 1.2em;
+}
+
+.friends-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.friend-item {
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-base-200);
+  transition: all 0.2s ease;
+}
+
+.friend-item:hover {
+  background-color: var(--color-base-300);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.friend-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.friend-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.friend-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.friend-author {
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.friend-author:hover {
+  text-decoration: underline;
+}
+
+.friend-date {
+  font-size: 0.875rem;
+  color: var(--color-base-content);
+  opacity: 0.7;
+}
+
+.friend-content {
+  padding-left: calc(48px + 1rem);
+}
+
+.friend-title {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+}
+
+.friend-title:hover {
+  text-decoration: underline;
+}
+
+.friend-description {
+  margin: 0;
+  color: var(--color-base-content);
+  opacity: 0.85;
+  line-height: 1.6;
+}
+
+.friends-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--color-base-content);
+  opacity: 0.6;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-base-300);
+}
+
+.pagination-prev,
+.pagination-next {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  background-color: var(--color-primary);
+  color: var(--color-primary-content);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.pagination-prev:hover,
+.pagination-next:hover {
+  background-color: var(--color-accent);
+  transform: scale(1.05);
+}
+
+.pagination-current {
+  padding: 0.5rem 1rem;
+  color: var(--color-base-content);
+}

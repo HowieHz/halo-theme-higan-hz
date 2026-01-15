@@ -27,6 +27,12 @@ outline: deep
 
 主题提供了链接页（`/links`）支持，详情请阅读[链接页样式](/guide/theme-configuration#链接页样式)相关文档。
 
+## 朋友圈页
+
+插件 [plugin-friends](https://github.com/chengzhongxue/plugin-friends)（[应用市场页面](https://www.halo.run/store/apps/app-yISsV)）
+
+主题提供了朋友圈页面（`/friends`）支持。朋友圈插件可以订阅其他博客的 RSS 链接，并展示订阅内容。
+
 ## 图库页
 
 插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)（[应用市场页面](https://www.halo.run/store/apps/app-BmQJW)）
