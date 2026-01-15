@@ -1228,7 +1228,7 @@ Option
 :::
 ::: info ℹ️ Additional Information
 
-选择“Custom 配色”when，Requires 要配合[Custom 配色方案](#Custom配色方案)Use，并填写 Custom 配色方案识别码。
+选择“Custom 配色”when，Requires 要配合[Custom 配色方案](#custom-配色方案)Use，并填写 Custom 配色方案识别码。
 
 :::
 
@@ -1330,7 +1330,7 @@ Option
 :::
 ::: info ℹ️ Additional Information
 
-选择"Custom 配色"when，Requires 要配合[Custom 配色方案](#Custom配色方案)Use，并填写 Custom 配色方案识别码。
+选择"Custom 配色"when，Requires 要配合[Custom 配色方案](#custom-配色方案)Use，并填写 Custom 配色方案识别码。
 
 :::
 
@@ -1425,7 +1425,7 @@ Set 内容区域的最大宽度。
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> Custom 内容区域最大宽度](#Custom内容区域最大宽度)When enabled, will display）
+（[General Styles -> Custom 内容区域最大宽度](#custom-内容区域最大宽度)When enabled, will display）
 
 General Styles -> 内容区域最大宽度
 
@@ -1513,7 +1513,7 @@ Set 内容区域的最小宽度。
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> Custom 内容区域最小宽度](#Custom内容区域最小宽度)When enabled, will display）
+（[General Styles -> Custom 内容区域最小宽度](#custom-内容区域最小宽度)When enabled, will display）
 
 General Styles -> 内容区域最小宽度
 
@@ -1558,7 +1558,7 @@ Controls whether 强制应用内容区域最小宽度。
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> Custom 内容区域最小宽度](#Custom内容区域最小宽度)When enabled, will display）
+（[General Styles -> Custom 内容区域最小宽度](#custom-内容区域最小宽度)When enabled, will display）
 
 General Styles -> 强制应用内容区域最小宽度
 
@@ -1761,7 +1761,7 @@ Controls whether 强制将头像裁切为圆形。
 :::
 ::: info 📂 Configuration Item Location
 
-（[Global -> 页眉头像 Display](#页眉头像Display)When enabled, will display）
+（[Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display）
 
 General Styles -> 圆形头像
 
@@ -1796,7 +1796,7 @@ Controls whether 强制将头像以灰度处理。
 :::
 ::: info 📂 Configuration Item Location
 
-（[Global -> 页眉头像 Display](#页眉头像Display)When enabled, will display）
+（[Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display）
 
 General Styles -> 灰度头像
 
@@ -2182,7 +2182,7 @@ Setpage 底部主题信息所展示的 Halo 版本。
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> page 底部主题信息](#page底部主题信息)When enabled, will display）
+（[General Styles -> page 底部主题信息](#page-底部主题信息)When enabled, will display）
 
 General Styles -> page 底部主题信息所展示的 Halo 版本
 
@@ -2467,7 +2467,7 @@ Controls whetherEnable 多语言 page 最底部内容 Support。
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> page 最底部内容](#page最底部内容)When enabled, will display）
+（[Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display）
 
 Home Page Style -> 多语言 page 最底部内容 Support
 
