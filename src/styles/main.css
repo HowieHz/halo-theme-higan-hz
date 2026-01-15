@@ -410,8 +410,8 @@
       }
 
       & .submenu-link {
-        margin-right: 0;
         color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+        margin-right: 0;
 
         &:hover {
           color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
