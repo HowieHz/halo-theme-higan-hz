@@ -499,7 +499,7 @@ When enabled, you can configure:
 
 - [Domain Whitelist](#Domain Whitelist)
 - [Target Link](#Target Link)
-- [跳转后 Whether 保留路径和查询参数](#跳转后Whether保留路径和查询参数)
+- [跳转后 Whether 保留路径和查询参数](#跳转后-whether-保留路径和查询参数)
 
 :::
 
@@ -809,8 +809,8 @@ Boolean
 
 When enabled, you can configure:
 
-- [Custom 字体文件](#Custom字体文件)
-- [Custom 字体名称](#Custom字体名称)
+- [Custom 字体文件](#custom-字体文件)
+- [Custom 字体名称](#custom-字体名称)
 
 :::
 
@@ -823,7 +823,7 @@ Used for 选择上传的字体文件替换默认字体文件。Support `.woff2`/
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> EnableCustom 字体文件](#EnableCustom字体文件)When enabled, will display）
+（[General Styles -> EnableCustom 字体文件](#enablecustom-字体文件)When enabled, will display）
 
 General Styles -> 选择 Custom 字体文件
 
@@ -854,7 +854,7 @@ Ifthis option 置 Empty，则即 Use 户本地已安装 this 字体，也不 wil
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> EnableCustom 字体文件](#EnableCustom字体文件)When enabled, will display）
+（[General Styles -> EnableCustom 字体文件](#enablecustom-字体文件)When enabled, will display）
 
 General Styles -> Custom 字体名称
 
@@ -936,7 +936,7 @@ Option
 ::: info ℹ️ Additional Information
 
 - 对于 Enable[深浅色模式切换按钮](#深浅色模式切换按钮)的情况，这项决定了网站刚加载完成 when 的默认配色方案。
-- 选择"Custom 配色"when，Requires 要配合[Custom 配色方案](#Custom配色方案).
+- 选择"Custom 配色"when，Requires 要配合[Custom 配色方案](#custom-配色方案).
 
 :::
 
@@ -1279,7 +1279,7 @@ Option
 :::
 ::: info ℹ️ Additional Information
 
-选择"Custom 配色"when，Requires 要配合[Custom 配色方案](#Custom配色方案)Use，并填写 Custom 配色方案识别码。
+选择"Custom 配色"when，Requires 要配合[Custom 配色方案](#custom-配色方案)Use，并填写 Custom 配色方案识别码。
 
 :::
 
@@ -1716,7 +1716,7 @@ Boolean
 
 When enabled, you can configure:
 
-- [Custom 页眉头像](#Custom页眉头像)
+- [Custom 页眉头像](#custom-页眉头像)
 - [圆形头像](#圆形头像)
 - [灰度头像](#灰度头像)
 
@@ -1731,7 +1731,7 @@ Used for 选择上传的图片作为页眉头像。未 Set 将 Use 默认头像 
 :::
 ::: info 📂 Configuration Item Location
 
-（[Global -> 页眉头像 Display](#页眉头像Display)When enabled, will display）
+（[Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display）
 
 General Styles -> Custom 页眉头像
 
@@ -1995,7 +1995,7 @@ Boolean
 
 When enabled, you can configure:
 
-- [统计项 Set](#统计项Set)
+- [统计项 Set](#统计项-set)
 
 :::
 
@@ -2008,7 +2008,7 @@ Set 统计项。
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> page 底部站点统计信息](#page底部站点统计信息)When enabled, will display）
+（[Home Page Style -> page 底部站点统计信息](#page-底部站点统计信息)When enabled, will display）
 
 General Styles -> 统计项 Set
 
@@ -2127,8 +2127,8 @@ Boolean
 
 When enabled, you can configure:
 
-- [page 底部主题信息所展示的主题名](#page底部主题信息所展示的主题名)
-- [page 底部主题信息所展示的 Halo 版本](#page底部主题信息所展示的-halo-版本)
+- [page 底部主题信息所展示的主题名](#page-底部主题信息所展示的主题名)
+- [page 底部主题信息所展示的 Halo 版本](#page-底部主题信息所展示的-halo-版本)
 
 :::
 
@@ -2141,7 +2141,7 @@ Setpage 底部主题信息所展示的主题名。
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> page 底部主题信息](#page底部主题信息)When enabled, will display）
+（[General Styles -> page 底部主题信息](#page-底部主题信息)When enabled, will display）
 
 General Styles -> 版权信息 Custom 署名
 
@@ -2250,7 +2250,7 @@ Boolean
 
 When enabled, you can configure:
 
-- [版权信息 Custom 署名](#版权信息Custom署名)
+- [版权信息 Custom 署名](#版权信息-custom-署名)
 
 :::
 
@@ -2263,7 +2263,7 @@ Setpage 底部版权信息的署名。
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> page 底部版权信息](#page底部版权信息)When enabled, will display）
+（[General Styles -> page 底部版权信息](#page-底部版权信息)When enabled, will display）
 
 General Styles -> 版权信息 Custom 署名
 
@@ -2399,9 +2399,9 @@ In Halo CMS 的后台（<QuickJumpConfig to="/console/settings?tab=codeInjection
 
 When enabled, you can configure:
 
-- [page 最底部内容](#page最底部内容)
-- [多语言 page 最底部内容 Support](#多语言page最底部内容Support)
-  - [Custom 多语言 page 最底部内容](#Custom多语言page最底部内容)
+- [page 最底部内容](#page-最底部内容)
+- [多语言 page 最底部内容 Support](#多语言-page-最底部内容-support)
+  - [Custom 多语言 page 最底部内容](#custom-多语言-page-最底部内容)
 
 :::
 
@@ -2414,7 +2414,7 @@ Setpage 最底部内容内容。
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> page 最底部内容](#page最底部内容)When enabled, will display）
+（[Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display）
 
 Home Page Style -> page 最底部内容
 
@@ -2507,7 +2507,7 @@ Set 多语言 page 最底部内容内容。
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> page 最底部内容](#page最底部内容)When enabled, will display）
+（[Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display）
 
 Home Page Style -> Custom 多语言 page 最底部内容
 
@@ -3429,25 +3429,25 @@ Option
 
 简洁列表 When enabled, you can configure
 
-- [Displaypost 阅读量](#简洁列表Displaypost阅读量)
+- [Displaypost 阅读量](#简洁列表-displaypost-阅读量)
 
 多元列表 When enabled, you can configure
 
-- [Displaypost 分类](#多元列表Displaypost分类)
-- [Displaypost 标签](#多元列表Displaypost标签)
-- [Displaypost 阅读量](#多元列表Displaypost阅读量)
-- [Displaypost 预计阅读 when 间](#多元列表Displaypost预计阅读when间)
-- [Displaypost 字数统计](#多元列表Displaypost字数统计)
-- [Displaypost 摘要](#多元列表Displaypost摘要)
-- [post 摘要行数上限](#多元列表post摘要行数上限)
-- [跳转 post 链接所用提示文字](#多元列表跳转post链接所用提示文字)
-- [Displaypost 封面](#多元列表Displaypost封面)
+- [Displaypost 分类](#多元列表-displaypost-分类)
+- [Displaypost 标签](#多元列表-displaypost-标签)
+- [Displaypost 阅读量](#多元列表-displaypost-阅读量)
+- [Displaypost 预计阅读 when 间](#多元列表-displaypost-预计阅读-when-间)
+- [Displaypost 字数统计](#多元列表-displaypost-字数统计)
+- [Displaypost 摘要](#多元列表-displaypost-摘要)
+- [post 摘要行数上限](#多元列表-post-摘要行数上限)
+- [跳转 post 链接所用提示文字](#多元列表跳转-post-链接所用提示文字)
+- [Displaypost 封面](#多元列表-displaypost-封面)
 
 瞬间列表 When enabled, you can configure
 
-- [Display 条数](#瞬间列表Display条数)
-- [Display 条目作者头像](#瞬间列表Display条目作者头像)
-- [Display 条目作者昵称](#瞬间列表Display条目作者昵称)
+- [Display 条数](#瞬间列表-display-条数)
+- [Display 条目作者头像](#瞬间列表-display-条目作者头像)
+- [Display 条目作者昵称](#瞬间列表-display-条目作者昵称)
 
 :::
 
