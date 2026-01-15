@@ -421,39 +421,39 @@
     padding: 1rem;
     position: fixed;
     z-index: 100;
-    
+
     & .sidebar-inner {
       color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       font-size: var(--text-xs);
       line-height: 1.25rem;
       vertical-align: middle;
     }
-    
+
     /* Hide on narrow screens (less than 1024px), show at page bottom via footer-bottom-mobile */
     @media (width < 1024px) {
       display: none;
     }
   }
-  
+
   .sidebar-sidebar-left-bottom {
     bottom: 2rem;
     left: 2rem;
   }
-  
+
   .sidebar-sidebar-right-top {
     right: 2rem;
     top: 6rem;
   }
-  
+
   .sidebar-sidebar-right-bottom {
     bottom: 2rem;
     right: 2rem;
   }
-  
+
   /* Mobile fallback for sidebar content - only show on narrow screens */
   .footer-bottom-mobile {
     display: none;
-    
+
     @media (width < 1024px) {
       display: block;
     }
