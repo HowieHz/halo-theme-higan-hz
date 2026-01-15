@@ -7,6 +7,17 @@
     <a id="top-icon-tablet" class="hidden lg:hidden!" href="#" role="button" data-scroll-to-top
       ><span class="iconify iconify-large material-symbols--keyboard-arrow-up"></span
     ></a>
+    <a
+      id="toc-icon-tablet"
+      class="hidden lg:hidden!"
+      href="#"
+      role="button"
+      onclick="event.preventDefault()"
+      aria-expanded="false"
+      aria-controls="toc-overlay-tablet"
+      th:aria-label="#{fragment.post-nav.toc-icon.aria-label}"
+      ><span class="iconify iconify-large ic--baseline-toc"></span
+    ></a>
     <span id="menu" class="mr-8">
       <div class="flex items-center justify-end">
         <span id="nav" class="hidden lg:block">
@@ -86,5 +97,23 @@
       </div>
       <div id="toc" class="hidden lg:block"></div>
     </span>
+  </div>
+  <div id="toc-overlay-tablet" class="hidden lg:hidden!">
+    <div id="toc-overlay-backdrop"></div>
+    <div id="toc-overlay-content">
+      <div id="toc-overlay-header">
+        <span th:text="#{fragment.post-nav.toc}">目录</span>
+        <a
+          id="toc-overlay-close"
+          href="#"
+          role="button"
+          onclick="event.preventDefault()"
+          th:aria-label="#{fragment.post-nav.close-toc.aria-label}"
+        >
+          <span class="iconify ic--baseline-close"></span>
+        </a>
+      </div>
+      <div id="toc-tablet"></div>
+    </div>
   </div>
 </th:block>
