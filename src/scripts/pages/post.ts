@@ -9,6 +9,9 @@ import { fadeOut } from "../utils/animations/fade-out";
 import { slideDown } from "../utils/animations/slide-down";
 import { slideUp } from "../utils/animations/slide-up";
 
+// Animation durations in milliseconds
+const ANIMATION_DURATION = 200;
+
 document.addEventListener("click", (e: Event): void => {
   const target = e.target as HTMLElement;
   const scrollElement = target.closest<HTMLElement>("[data-scroll-to-top]");
@@ -187,10 +190,10 @@ document.addEventListener("DOMContentLoaded", (): void => {
         }
         if (isVisible(tocOverlayTablet)) {
           tocIconTablet.setAttribute("aria-expanded", "false");
-          fadeOut(tocOverlayTablet, 200);
+          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
         } else {
           tocIconTablet.setAttribute("aria-expanded", "true");
-          fadeIn(tocOverlayTablet, 200);
+          fadeIn(tocOverlayTablet, ANIMATION_DURATION);
 
           // 滚动到激活的目录项
           const activeLink = tocOverlayTablet.querySelector<HTMLElement>(".toc-active");
@@ -201,7 +204,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
                 block: "center",
                 inline: "center",
               });
-            }, 200);
+            }, ANIMATION_DURATION);
           }
         }
       });
@@ -210,7 +213,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
       tocOverlayClose?.addEventListener("click", (): void => {
         if (tocOverlayTablet) {
           tocIconTablet.setAttribute("aria-expanded", "false");
-          fadeOut(tocOverlayTablet, 200);
+          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
         }
       });
 
@@ -218,7 +221,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
       tocOverlayBackdrop?.addEventListener("click", (): void => {
         if (tocOverlayTablet) {
           tocIconTablet.setAttribute("aria-expanded", "false");
-          fadeOut(tocOverlayTablet, 200);
+          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
         }
       });
 
