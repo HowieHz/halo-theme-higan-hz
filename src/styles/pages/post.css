@@ -1,229 +1,6 @@
-/* 文章页桌面端/平板端文章右上角菜单 */
-#header-post {
-  & a {
-    background: none;
-    color: inherit;
-    text-decoration: none;
-
-    &.icon {
-      background: none;
-
-      &:hover {
-        color: var(--color-accent);
-      }
-    }
-  }
-
-  & ol {
-    list-style-type: none;
-  }
-
-  & ul {
-    display: inline-block;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-
-    & li {
-      display: inline-block;
-      margin-right: 0.9375rem;
-      vertical-align: middle;
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
-
-  & #menu-icon {
-    margin-left: 0.9375rem;
-    margin-right: 2rem;
-
-    &:hover {
-      color: var(--color-primary);
-    }
-  }
-
-  & #top-icon-tablet {
-    bottom: 2rem;
-    margin-left: 0.9375rem;
-    margin-right: 2rem;
-    position: fixed;
-    right: 2rem;
-
-    &:hover {
-      color: var(--color-primary);
-    }
-  }
-
-  & .active {
-    color: var(--color-primary);
-  }
-
-  & #nav {
-    color: var(--color-primary);
-    font-size: var(--text-sm);
-    font-style: normal;
-    letter-spacing: 0.01em;
-
-    & ul {
-      display: inline-table;
-      line-height: 0.9375rem;
-
-      & a {
-        color: var(--color-primary);
-        margin-right: 0.9375rem;
-
-        &:hover {
-          background-image: linear-gradient(
-            transparent,
-            transparent 0.3125rem,
-            var(--color-primary) 0.3125rem,
-            var(--color-primary)
-          );
-          background-position: bottom;
-          background-repeat: repeat-x;
-          background-size: 100% 0.375rem;
-        }
-      }
-
-      & li {
-        border-right: 1px dotted var(--color-primary);
-
-        &:last-child {
-          border-right: 0;
-          margin-right: 0;
-
-          & a {
-            margin-right: 0;
-          }
-        }
-      }
-    }
-  }
-
-  & #actions {
-    direction: ltr;
-
-    & .info {
-      float: left;
-      font-style: italic;
-      margin-right: 2rem;
-    }
-  }
-
-  & #share-list {
-    & li {
-      display: block;
-      margin: 0;
-    }
-  }
-
-  & #toc {
-    clear: both;
-    float: right;
-    font-size: var(--text);
-    margin-top: 1rem;
-    max-height: calc(95vh - 7rem);
-    max-width: 20em;
-    overflow: auto;
-    padding-right: 2rem;
-    text-align: right;
-
-    & .toc-text {
-      overflow-wrap: break-word;
-    }
-
-    & a:hover {
-      color: var(--color-accent);
-    }
-
-    & .toc-link-h1 {
-      font-style: italic;
-    }
-
-    & .toc-level-2 > .toc-link-h2 {
-      font-weight: 500;
-    }
-
-    & .toc-level-2 {
-      color: var(--color-base-content);
-      font-size: var(--text-toc-level-2);
-
-      &::before {
-        color: var(--color-primary);
-        content: "#";
-        padding-right: 0.3125rem;
-      }
-    }
-
-    & .toc-level-3 {
-      color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
-      font-size: var(--text-toc-level-3);
-    }
-
-    & .toc-level-4 {
-      color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
-      font-size: var(--text-toc-level-4);
-    }
-
-    /* 隐藏 5 6 级标题和序号 */
-    & .toc-level-5,
-    & .toc-level-6,
-    & .toc-number {
-      display: none;
-    }
-
-    & .toc-active {
-      color: var(--color-primary);
-    }
-  }
-
-  & .is-active-link::before {
-    background-color: var(--color-primary);
-  }
-
-  & .is-collapsible {
-    transition: all 0.2s ease-in-out;
-  }
-}
-
-/* 文章页桌面端/平板端文章右上角菜单 end */
-
-/* toc collapsible 目录展开相关样式 */
-.toc-child {
-  display: none;
-
-  &:has(.toc-active) {
-    display: block;
-  }
-}
-
-.toc-active + .toc-child {
-  display: block;
-}
-
-/* toc collapsible 目录展开相关样式 end */
-
-/* 文章页移动端底部菜单 */
-
-#footer-post-container {
-  @media (width >= 640px) {
-    display: none;
-  }
-
-  & #footer-post {
-    background: var(--color-base-100);
-    border-radius: 2rem 2rem 0 0;
-    border-top: 1px solid #666;
-    bottom: 0;
-    left: 0;
-    position: fixed;
-    right: 0;
-    transition: opacity 0.2s;
-    width: 100%;
-    z-index: 5000000;
-
+@layer base {
+  /* 文章页桌面端/平板端文章右上角菜单 */
+  #header-post {
     & a {
       background: none;
       color: inherit;
@@ -238,98 +15,280 @@
       }
     }
 
-    & #nav-footer {
-      padding: 1rem;
-      text-align: center;
+    & ol {
+      list-style-type: none;
+    }
+
+    & ul {
+      display: inline-block;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      & li {
+        display: inline-block;
+        margin-right: 0.9375rem;
+        vertical-align: middle;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    & #menu-icon {
+      margin-left: 0.9375rem;
+      margin-right: 2rem;
+
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+
+    & #top-icon-tablet {
+      bottom: 2rem;
+      margin-left: 0.9375rem;
+      position: fixed;
+      right: 2rem;
+
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+
+    & #toc-icon-tablet {
+      bottom: 5rem;
+      margin-left: 0.9375rem;
+      position: fixed;
+      right: 2rem;
+
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
+
+    & .active {
+      color: var(--color-primary);
+    }
+
+    & #nav {
+      color: var(--color-primary);
+      font-size: var(--text-sm);
+      font-style: normal;
+      letter-spacing: 0.01em;
+
+      & ul {
+        display: inline-table;
+        line-height: 0.9375rem;
+
+        & a {
+          color: var(--color-primary);
+          margin-right: 0.9375rem;
+
+          &:hover {
+            background-image: linear-gradient(
+              transparent,
+              transparent 0.3125rem,
+              var(--color-primary) 0.3125rem,
+              var(--color-primary)
+            );
+            background-position: bottom;
+            background-repeat: repeat-x;
+            background-size: 100% 0.375rem;
+          }
+        }
+
+        & li {
+          border-right: 1px dotted var(--color-primary);
+
+          &:last-child {
+            border-right: 0;
+            margin-right: 0;
+
+            & a {
+              margin-right: 0;
+            }
+          }
+        }
+      }
+    }
+
+    & #actions {
+      direction: ltr;
+
+      & .info {
+        float: left;
+        font-style: italic;
+        margin-right: 2rem;
+      }
+    }
+
+    & #share-list {
+      & li {
+        display: block;
+        margin: 0;
+      }
+    }
+
+    & #toc {
+      clear: both;
+      float: right;
+      font-size: var(--text);
+      margin-top: 1rem;
+      max-height: calc(95vh - 7rem);
+      max-width: 20em;
+      overflow: auto;
+      padding-right: 2rem;
+      text-align: right;
+
+      & .toc-text {
+        overflow-wrap: break-word;
+      }
+
+      & a:hover {
+        color: var(--color-accent);
+      }
+
+      & .toc-link-h1 {
+        font-style: italic;
+      }
+
+      & .toc-level-2 > .toc-link-h2 {
+        font-weight: 500;
+      }
+
+      & .toc-level-2 {
+        color: var(--color-base-content);
+        font-size: var(--text-toc-level-2);
+
+        &::before {
+          color: var(--color-primary);
+          content: "#";
+          padding-right: 0.3125rem;
+        }
+      }
+
+      & .toc-level-3 {
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+        font-size: var(--text-toc-level-3);
+      }
+
+      & .toc-level-4 {
+        color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+        font-size: var(--text-toc-level-4);
+      }
+
+      /* 隐藏 5 6 级标题和序号 */
+      & .toc-level-5,
+      & .toc-level-6,
+      & .toc-number {
+        display: none;
+      }
+
+      & .toc-active {
+        color: var(--color-primary);
+      }
+    }
+
+    & .is-active-link::before {
+      background-color: var(--color-primary);
+    }
+
+    & .is-collapsible {
+      transition: all 0.2s ease-in-out;
+    }
+  }
+
+  /* 文章页桌面端/平板端文章右上角菜单 end */
+
+  /* 平板端 TOC Overlay 样式 */
+  #toc-overlay-tablet {
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 60;
+
+    @media (width >= 1024px) {
+      display: none !important;
+    }
+
+    @media (width < 640px) {
+      display: none !important;
+    }
+
+    & #toc-overlay-backdrop {
+      backdrop-filter: blur(4px);
+      background: color-mix(in oklab, var(--color-base-100) 50%, transparent);
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+
+    & #toc-overlay-content {
+      background: var(--color-base-100);
+      border: 1px solid var(--color-primary);
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 40px color-mix(in oklab, var(--color-base-content) 20%, transparent);
+      left: 50%;
+      max-height: 80vh;
+      max-width: 90%;
+      overflow: auto;
+      padding: 1.5rem;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    & #toc-overlay-header {
+      align-items: center;
+      border-bottom: 1px solid color-mix(in oklab, var(--color-base-content) 40%, transparent);
+      display: flex;
+      font-size: var(--text-lg);
+      font-weight: 500;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
 
       & a {
-        color: var(--color-primary);
-        font-size: 1em;
+        background: none;
+        color: inherit;
+        cursor: pointer;
+        text-decoration: none;
 
         &:hover {
-          background-image: linear-gradient(
-            transparent,
-            transparent 0.3125rem,
-            var(--color-primary) 0.3125rem,
-            var(--color-primary)
-          );
-          background-position: bottom;
-          background-repeat: repeat-x;
-          background-size: 100% 0.375rem;
-        }
-      }
-
-      & ul {
-        display: table;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-
-        & li {
-          display: inline-table;
-          padding: 0 0.625rem;
-          vertical-align: middle;
-          width: 20%;
+          color: var(--color-accent);
         }
       }
     }
 
-    & #actions-footer {
-      background: var(--color-base-200);
-      border-radius: 2rem 2rem 0 0;
-      overflow: auto;
-      padding: 1rem;
-      text-align: center;
-      white-space: nowrap;
-      width: 100%;
-
-      & a {
-        color: var(--color-primary);
-        display: inline-block;
-        padding-left: 1rem;
-      }
-    }
-
-    & #share-footer {
-      padding: calc(1rem - 0.625rem) 1rem;
-      text-align: center;
-
-      & ul {
-        display: table;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-
-        & li {
-          display: inline-table;
-          padding: 0.625rem;
-          vertical-align: middle;
-          width: 20%;
-        }
-      }
-    }
-
-    & #toc-footer {
-      clear: both;
-      margin: 2rem 0 1rem;
-      max-height: calc(50vh - 4rem);
-      overflow: auto;
+    & #toc-tablet {
+      font-size: var(--text);
       text-align: left;
 
       & ol {
         list-style-type: none;
         margin: 0;
-        padding-left: 1.25rem;
+        padding: 0;
 
         & li {
           line-height: 1.875rem;
         }
       }
 
-      & a:hover {
-        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+      & a {
+        color: inherit;
+
+        &:hover {
+          color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+        }
+      }
+
+      & .toc-text {
+        overflow-wrap: break-word;
       }
 
       & .toc-link-h1 {
@@ -370,18 +329,202 @@
       }
     }
   }
-}
 
-/* 文章页移动端底部菜单 end */
+  /* 平板端 TOC Overlay 样式 end */
 
-/* 文章页正文末尾 推荐文章和相邻导航字体颜色设置 */
-.recommendations,
-.post-navigation {
-  & a {
-    color: var(--color-base-content);
+  /* toc collapsible 目录展开相关样式 */
+  .toc-child {
+    display: none;
 
-    /* 去除下划线用这个 background-image: none; */
+    &:has(.toc-active) {
+      display: block;
+    }
   }
-}
 
-/* 文章页正文末尾 推荐文章和相邻导航字体颜色设置 end */
+  .toc-active + .toc-child {
+    display: block;
+  }
+
+  /* toc collapsible 目录展开相关样式 end */
+
+  /* 文章页移动端底部菜单 */
+
+  #footer-post-container {
+    @media (width >= 640px) {
+      display: none;
+    }
+
+    & #footer-post {
+      background: var(--color-base-100);
+      border-radius: 2rem 2rem 0 0;
+      border-top: 1px solid #666;
+      bottom: 0;
+      left: 0;
+      position: fixed;
+      right: 0;
+      transition: opacity 0.2s;
+      width: 100%;
+      z-index: 5000000;
+
+      & a {
+        background: none;
+        color: inherit;
+        text-decoration: none;
+
+        &.icon {
+          background: none;
+
+          &:hover {
+            color: var(--color-accent);
+          }
+        }
+      }
+
+      & #nav-footer {
+        padding: 1rem;
+        text-align: center;
+
+        & a {
+          color: var(--color-primary);
+          font-size: 1em;
+
+          &:hover {
+            background-image: linear-gradient(
+              transparent,
+              transparent 0.3125rem,
+              var(--color-primary) 0.3125rem,
+              var(--color-primary)
+            );
+            background-position: bottom;
+            background-repeat: repeat-x;
+            background-size: 100% 0.375rem;
+          }
+        }
+
+        & ul {
+          display: table;
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          width: 100%;
+
+          & li {
+            display: inline-table;
+            padding: 0 0.625rem;
+            vertical-align: middle;
+            width: 20%;
+          }
+        }
+      }
+
+      & #actions-footer {
+        background: var(--color-base-200);
+        border-radius: 2rem 2rem 0 0;
+        overflow: auto;
+        padding: 1rem;
+        text-align: center;
+        white-space: nowrap;
+        width: 100%;
+
+        & a {
+          color: var(--color-primary);
+          display: inline-block;
+          padding-left: 1rem;
+        }
+      }
+
+      & #share-footer {
+        padding: calc(1rem - 0.625rem) 1rem;
+        text-align: center;
+
+        & ul {
+          display: table;
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          width: 100%;
+
+          & li {
+            display: inline-table;
+            padding: 0.625rem;
+            vertical-align: middle;
+            width: 20%;
+          }
+        }
+      }
+
+      & #toc-footer {
+        clear: both;
+        margin: 2rem 0 1rem;
+        max-height: calc(50vh - 4rem);
+        overflow: auto;
+        text-align: left;
+
+        & ol {
+          list-style-type: none;
+          margin: 0;
+          padding-left: 1.25rem;
+
+          & li {
+            line-height: 1.875rem;
+          }
+        }
+
+        & a:hover {
+          color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+        }
+
+        & .toc-link-h1 {
+          font-style: italic;
+        }
+
+        & .toc-level-2 {
+          color: var(--color-base-content);
+          font-size: var(--text-sm);
+
+          &::before {
+            color: var(--color-primary);
+            content: "#";
+          }
+        }
+
+        & .toc-level-3 {
+          color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+          font-size: 0.7rem;
+          line-height: 0.9375rem;
+        }
+
+        & .toc-level-4 {
+          color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+          font-size: 0.65rem;
+          line-height: 0.9375rem;
+        }
+
+        /* 隐藏 5 6 级标题和序号 */
+        & .toc-level-5,
+        & .toc-level-6,
+        & .toc-number {
+          display: none;
+        }
+
+        & .toc-active {
+          color: var(--color-primary);
+        }
+      }
+    }
+  }
+
+  /* 文章页移动端底部菜单 end */
+
+  /* 文章页正文末尾 推荐文章和相邻导航字体颜色设置 */
+  .recommendations,
+  .post-navigation {
+    & a {
+      color: var(--color-base-content);
+
+      /* 去除下划线用这个 background-image: none; */
+    }
+  }
+
+  /* 文章页正文末尾 推荐文章和相邻导航字体颜色设置 end */
+}
