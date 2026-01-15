@@ -78,27 +78,29 @@
         <th:block th:unless="${#lists.isEmpty(menuItem?.children)}">
           <!--/* 有子菜单的菜单项 */-->
           <span class="submenu-container">
-            <a
-              class="submenu-link"
-              th:href="@{${menuItem.children[0]?.status?.href}}"
-              th:target="${menuItem.children[0]?.spec?.target?.value}"
-              th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItem.children[0].status?.displayName})}"
-              th:text="${menuItem.children[0]?.status?.displayName}"
-              th:attr="data-submenu-hrefs=${#strings.arrayJoin(menuItem.children.![status.href].toArray(), '|||')},
-                      data-submenu-targets=${#strings.arrayJoin(menuItem.children.![spec.target.value].toArray(), '|||')},
-                      data-submenu-labels=${#strings.arrayJoin(menuItem.children.![status.displayName].toArray(), '|||')},
-                      data-submenu-index='0',
-                      data-submenu-count=${#lists.size(menuItem.children)}"
-              >子菜单项填充位置</a
-            >
             <button
               class="submenu-toggle"
               aria-label="Next submenu item"
-              th:if="${#lists.size(menuItem.children) > 1}"
               type="button"
             >
               <span class="iconify material-symbols--keyboard-arrow-down"></span>
             </button>
+            <a
+              class="submenu-link"
+              th:href="@{${menuItem?.status?.href}}"
+              th:target="${menuItem?.spec?.target?.value}"
+              th:aria-label="#{fragment.menu.menuItem.aria-label(${menuItem.status?.displayName})}"
+              th:text="${menuItem?.status?.displayName}"
+              th:attr="data-parent-href=${menuItem?.status?.href},
+                      data-parent-target=${menuItem?.spec?.target?.value},
+                      data-parent-label=${menuItem?.status?.displayName},
+                      data-submenu-hrefs=${#strings.arrayJoin(menuItem.children.![status.href].toArray(), '|||')},
+                      data-submenu-targets=${#strings.arrayJoin(menuItem.children.![spec.target.value].toArray(), '|||')},
+                      data-submenu-labels=${#strings.arrayJoin(menuItem.children.![status.displayName].toArray(), '|||')},
+                      data-submenu-index='0',
+                      data-submenu-count=${#lists.size(menuItem.children) + 1}"
+              >菜单项填充位置</a
+            >
           </span>
         </th:block>
       </li>

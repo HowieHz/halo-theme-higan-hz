@@ -37,27 +37,40 @@ document.addEventListener("DOMContentLoaded", (): void => {
       const link = toggle.parentElement?.querySelector(".submenu-link") as HTMLAnchorElement;
       if (!link) return;
 
+      const parentHref = link.getAttribute("data-parent-href") || "";
+      const parentTarget = link.getAttribute("data-parent-target") || "";
+      const parentLabel = link.getAttribute("data-parent-label") || "";
       const hrefs = link.getAttribute("data-submenu-hrefs")?.split("|||") || [];
       const targets = link.getAttribute("data-submenu-targets")?.split("|||") || [];
       const labels = link.getAttribute("data-submenu-labels")?.split("|||") || [];
       const count = parseInt(link.getAttribute("data-submenu-count") || "0", 10);
       let currentIndex = parseInt(link.getAttribute("data-submenu-index") || "0", 10);
 
-      // 验证数组长度一致性
-      if (count === 0 || hrefs.length !== count || targets.length !== count || labels.length !== count) {
+      // 验证数组长度一致性（count = 1 parent + N children）
+      if (count === 0 || hrefs.length !== count - 1 || targets.length !== count - 1 || labels.length !== count - 1) {
         console.error("Submenu data is inconsistent");
         return;
       }
 
-      // 循环到下一个子菜单项
+      // 循环到下一个菜单项
       currentIndex = (currentIndex + 1) % count;
 
       // 更新链接
-      link.href = hrefs[currentIndex] || "";
-      link.target = targets[currentIndex] || "";
-      link.textContent = labels[currentIndex] || "";
+      if (currentIndex === 0) {
+        // 显示父菜单
+        link.href = parentHref;
+        link.target = parentTarget;
+        link.textContent = parentLabel;
+        link.setAttribute("aria-label", parentLabel);
+      } else {
+        // 显示子菜单（index 1 对应 children[0]）
+        const childIndex = currentIndex - 1;
+        link.href = hrefs[childIndex] || "";
+        link.target = targets[childIndex] || "";
+        link.textContent = labels[childIndex] || "";
+        link.setAttribute("aria-label", labels[childIndex] || "");
+      }
       link.setAttribute("data-submenu-index", currentIndex.toString());
-      link.setAttribute("aria-label", labels[currentIndex] || "");
 
       // 更新按钮图标
       const icon = toggle.querySelector(".iconify");

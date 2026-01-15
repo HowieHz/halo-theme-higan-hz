@@ -100,7 +100,7 @@
           }
 
           & .submenu-link {
-            margin-right: 0;
+            margin-right: 0.9375rem;
           }
 
           & .submenu-toggle {
@@ -113,7 +113,6 @@
             justify-content: center;
             line-height: 1;
             margin: 0;
-            margin-right: 0.9375rem;
             padding: 0;
             transition: transform 0.2s ease;
 
