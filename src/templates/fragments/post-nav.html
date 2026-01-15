@@ -76,8 +76,8 @@
               <span class="iconify iconify-large ic--round-chevron-right"></span>
             </a>
           </li>
-
-          <li class="hidden lg:block">
+          <!--/* only show to top button on desktop */-->
+          <li class="hidden lg:inline-block">
             <a
               class="icon"
               href="#"
@@ -89,6 +89,7 @@
               <span class="iconify iconify-large material-symbols--keyboard-arrow-up"></span>
             </a>
           </li>
+          <!--/* only show toc button on tablet */-->
           <li class="lg:hidden">
             <a
               class="icon"
@@ -157,7 +158,7 @@
           onclick="event.preventDefault()"
           th:aria-label="#{fragment.post-nav.close-toc.aria-label}"
         >
-          <span class="iconify ic--baseline-close"></span>
+          <span class="iconify iconify-large ic--baseline-close"></span>
         </a>
       </div>
       <div id="toc-tablet"></div>
