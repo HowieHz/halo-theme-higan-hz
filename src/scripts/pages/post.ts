@@ -9,6 +9,9 @@ import { fadeOut } from "../utils/animations/fade-out";
 import { slideDown } from "../utils/animations/slide-down";
 import { slideUp } from "../utils/animations/slide-up";
 
+// Animation durations in milliseconds
+const ANIMATION_DURATION = 200;
+
 document.addEventListener("click", (e: Event): void => {
   const target = e.target as HTMLElement;
   const scrollElement = target.closest<HTMLElement>("[data-scroll-to-top]");
@@ -75,10 +78,10 @@ document.addEventListener("DOMContentLoaded", (): void => {
       }
       if (isVisible(navFooter)) {
         footerMenuButton.setAttribute("aria-expanded", "false");
-        slideUp(navFooter, 200);
+        slideUp(navFooter, ANIMATION_DURATION);
       } else {
         footerMenuButton.setAttribute("aria-expanded", "true");
-        slideDown(navFooter, 200);
+        slideDown(navFooter, ANIMATION_DURATION);
       }
     });
     footerTocButton?.addEventListener("click", (): void => {
@@ -88,11 +91,11 @@ document.addEventListener("DOMContentLoaded", (): void => {
       }
       if (isVisible(tocFooter)) {
         footerTocButton.setAttribute("aria-expanded", "false");
-        slideUp(tocFooter, 200);
+        slideUp(tocFooter, ANIMATION_DURATION);
       } else {
         footerTocButton.setAttribute("aria-expanded", "true");
         // First, play the slide-down animation
-        slideDown(tocFooter, 200);
+        slideDown(tocFooter, ANIMATION_DURATION);
 
         // Then instantly scroll to active item position
         const activeLink = tocFooter.querySelector<HTMLElement>(".toc-active");
@@ -104,7 +107,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
               block: "center",
               inline: "center",
             });
-          }, 200);
+          }, ANIMATION_DURATION);
         }
       }
     });
@@ -115,10 +118,10 @@ document.addEventListener("DOMContentLoaded", (): void => {
       }
       if (isVisible(shareFooter)) {
         footerShareButton.setAttribute("aria-expanded", "false");
-        slideUp(shareFooter, 200);
+        slideUp(shareFooter, ANIMATION_DURATION);
       } else {
         footerShareButton.setAttribute("aria-expanded", "true");
-        slideDown(shareFooter, 200);
+        slideDown(shareFooter, ANIMATION_DURATION);
       }
     });
 
@@ -131,10 +134,10 @@ document.addEventListener("DOMContentLoaded", (): void => {
       }
       if (isVisible(shareMenu)) {
         shareButton.setAttribute("aria-expanded", "false");
-        slideUp(shareMenu, 200);
+        slideUp(shareMenu, ANIMATION_DURATION);
       } else {
         shareButton.setAttribute("aria-expanded", "true");
-        slideDown(shareMenu, 200);
+        slideDown(shareMenu, ANIMATION_DURATION);
       }
     });
 
@@ -145,8 +148,9 @@ document.addEventListener("DOMContentLoaded", (): void => {
     const shareListComponents: HTMLElement | null = document.querySelector<HTMLElement>("#menu #share-list");
     const menuIcon: HTMLElement | null = document.querySelector<HTMLElement>("#menu-icon");
     const topIcon: HTMLElement | null = document.querySelector<HTMLElement>("#top-icon-tablet");
+    const tocIconTablet: HTMLElement | null = document.querySelector<HTMLElement>("#toc-icon-tablet");
 
-    if (menuComponents && shareListComponents && menuIcon && topIcon) {
+    if (menuComponents && shareListComponents && menuIcon && topIcon && tocIconTablet) {
       // 在高分辨率笔记本电脑和桌面端显示菜单
       // 大于等于 1024px 的屏幕宽度 页面完成初始化时自动显示菜单
       if (window.matchMedia("(min-width: 1024px)").matches) {
@@ -174,24 +178,109 @@ document.addEventListener("DOMContentLoaded", (): void => {
         }
       });
 
-      // 平板端 文章页 导航栏、回到顶部按钮 页面滚动相关逻辑
+      // 平板端 TOC 按钮和 overlay 事件
+      const tocOverlayTablet: HTMLElement | null = document.querySelector("#toc-overlay-tablet");
+      const tocOverlayClose: HTMLElement | null = document.querySelector("#toc-overlay-close");
+      const tocOverlayBackdrop: HTMLElement | null = document.querySelector("#toc-overlay-backdrop");
+      const actionTocTablet: HTMLElement | null = document.querySelector("#action-toc-tablet");
+      const actionTocTabletMenu: HTMLElement | null = document.querySelector("#action-toc-tablet-menu");
+
+      // 通用的 TOC overlay 打开/关闭函数
+      const toggleTocOverlay = (button: HTMLElement | null): void => {
+        if (!tocOverlayTablet || !button) {
+          return;
+        }
+        if (isVisible(tocOverlayTablet)) {
+          button.setAttribute("aria-expanded", "false");
+          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+        } else {
+          button.setAttribute("aria-expanded", "true");
+          fadeIn(tocOverlayTablet, ANIMATION_DURATION);
+
+          // 滚动到激活的目录项
+          const activeLink = tocOverlayTablet.querySelector<HTMLElement>(".toc-active");
+          if (activeLink) {
+            setTimeout(() => {
+              activeLink.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+                inline: "center",
+              });
+            }, ANIMATION_DURATION);
+          }
+        }
+      };
+
+      // TOC 按钮点击事件（浮动按钮）
+      tocIconTablet.addEventListener("click", (): void => {
+        toggleTocOverlay(tocIconTablet);
+      });
+
+      // actions 菜单中的 TOC 按钮点击事件
+      actionTocTablet?.addEventListener("click", (): void => {
+        toggleTocOverlay(actionTocTablet);
+      });
+
+      actionTocTabletMenu?.addEventListener("click", (): void => {
+        toggleTocOverlay(actionTocTabletMenu);
+      });
+
+      // 关闭按钮点击事件
+      tocOverlayClose?.addEventListener("click", (): void => {
+        if (tocOverlayTablet) {
+          tocIconTablet.setAttribute("aria-expanded", "false");
+          actionTocTablet?.setAttribute("aria-expanded", "false");
+          actionTocTabletMenu?.setAttribute("aria-expanded", "false");
+          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+        }
+      });
+
+      // 点击背景关闭
+      tocOverlayBackdrop?.addEventListener("click", (): void => {
+        if (tocOverlayTablet) {
+          tocIconTablet.setAttribute("aria-expanded", "false");
+          actionTocTablet?.setAttribute("aria-expanded", "false");
+          actionTocTabletMenu?.setAttribute("aria-expanded", "false");
+          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+        }
+      });
+
+      // 点击 TOC 项目后关闭 overlay
+      if (tocOverlayTablet) {
+        tocOverlayTablet.addEventListener("click", (e: Event): void => {
+          const target = e.target;
+          if (target instanceof HTMLElement) {
+            const tocLink = target.closest<HTMLElement>(".toc-link");
+            if (tocLink) {
+              tocIconTablet.setAttribute("aria-expanded", "false");
+              actionTocTablet?.setAttribute("aria-expanded", "false");
+              actionTocTabletMenu?.setAttribute("aria-expanded", "false");
+              fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+            }
+          }
+        });
+      }
+
+      // 平板端 文章页 导航栏、回到顶部按钮、TOC 按钮 页面滚动相关逻辑
       // 添加滚动监听器，用于隐藏/显示导航链接
       window.addEventListener("scroll", (): void => {
         const topDistance = getTopDistance();
 
-        // 顶部菜单按钮、顶部菜单、回到顶部按钮 根据页面滚动距离 显示/隐藏
+        // 顶部菜单按钮、顶部菜单、回到顶部按钮、TOC 按钮 根据页面滚动距离 显示/隐藏
         if (window.matchMedia("(min-width: 640px) and (max-width: 1024px)").matches) {
           if (topDistance < 50) {
-            fadeIn(menuIcon, 200);
-            fadeOut(topIcon, 200);
+            fadeIn(menuIcon, ANIMATION_DURATION);
+            fadeOut(topIcon, ANIMATION_DURATION);
+            fadeOut(tocIconTablet, ANIMATION_DURATION);
           } else if (topDistance > 100) {
             menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
-            fadeOut(menuIcon, 200);
+            fadeOut(menuIcon, ANIMATION_DURATION);
             menuIcon.setAttribute("aria-expanded", "false"); // 切换 aria-expanded 属性值
-            fadeOut(menuComponents, 200);
+            fadeOut(menuComponents, ANIMATION_DURATION);
             shareButton?.setAttribute("aria-expanded", "false");
-            fadeOut(shareListComponents, 200);
-            fadeIn(topIcon, 200);
+            fadeOut(shareListComponents, ANIMATION_DURATION);
+            fadeIn(topIcon, ANIMATION_DURATION);
+            fadeIn(tocIconTablet, ANIMATION_DURATION);
           }
         }
       });
@@ -219,16 +308,16 @@ document.addEventListener("DOMContentLoaded", (): void => {
         footerShareButton?.setAttribute("aria-expanded", "false");
         for (const footer of [tocFooter, navFooter, shareFooter]) {
           if (footer) {
-            slideUp(footer, 200);
+            slideUp(footer, ANIMATION_DURATION);
           }
         }
 
         if (topDistance > lastScrollTop) {
           // 向下滚动 -> 隐藏菜单
-          slideUp(footerNav, 200);
+          slideUp(footerNav, ANIMATION_DURATION);
         } else {
           // 向上滚动 -> 显示菜单
-          slideDown(footerNav, 200);
+          slideDown(footerNav, ANIMATION_DURATION);
         }
         lastScrollTop = topDistance;
 
