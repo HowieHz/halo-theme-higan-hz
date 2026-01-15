@@ -7,17 +7,6 @@
     <a id="top-icon-tablet" class="hidden lg:hidden!" href="#" role="button" data-scroll-to-top
       ><span class="iconify iconify-large material-symbols--keyboard-arrow-up"></span
     ></a>
-    <a
-      id="toc-icon-tablet"
-      class="hidden lg:hidden!"
-      href="#"
-      role="button"
-      onclick="event.preventDefault()"
-      aria-expanded="false"
-      aria-controls="toc-overlay-tablet"
-      th:aria-label="#{fragment.post-nav.toc-icon.aria-label}"
-      ><span class="iconify iconify-large ic--baseline-toc"></span
-    ></a>
     <span id="menu" class="mr-8">
       <div class="flex items-center justify-end">
         <span id="nav" class="hidden lg:block">
@@ -79,7 +68,7 @@
 
           <li>
             <a
-              class="icon"
+              class="icon hidden lg:inline-block"
               href="#"
               data-scroll-to-top
               th:aria-label="#{fragment.post-nav.actions.to-top-icon.aria-label}"
@@ -87,6 +76,18 @@
               data-toggle-target="#i-top"
             >
               <span class="iconify iconify-large material-symbols--keyboard-arrow-up"></span>
+            </a>
+            <a
+              class="icon inline-block lg:hidden"
+              href="#"
+              onclick="event.preventDefault()"
+              aria-expanded="false"
+              aria-controls="toc-overlay-tablet"
+              th:aria-label="#{fragment.post-nav.toc-icon.aria-label}"
+              id="action-toc-tablet"
+              role="button"
+            >
+              <span class="iconify iconify-large ic--baseline-toc"></span>
             </a>
           </li>
           <li th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}">

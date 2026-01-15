@@ -55,17 +55,6 @@
     }
   }
 
-  & #toc-icon-tablet {
-    bottom: 5rem;
-    margin-left: 0.9375rem;
-    position: fixed;
-    right: 2rem;
-
-    &:hover {
-      color: var(--color-primary);
-    }
-  }
-
   & .active {
     color: var(--color-primary);
   }
@@ -279,7 +268,7 @@
     }
 
     & a:hover {
-      color: var(--color-accent);
+      color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
     }
 
     & .toc-text {
@@ -290,29 +279,26 @@
       font-style: italic;
     }
 
-    & .toc-level-2 > .toc-link-h2 {
-      font-weight: 500;
-    }
-
     & .toc-level-2 {
       color: var(--color-base-content);
-      font-size: var(--text-toc-level-2);
+      font-size: var(--text-sm);
 
       &::before {
         color: var(--color-primary);
         content: "#";
-        padding-right: 0.3125rem;
       }
     }
 
     & .toc-level-3 {
       color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
-      font-size: var(--text-toc-level-3);
+      font-size: 0.7rem;
+      line-height: 0.9375rem;
     }
 
     & .toc-level-4 {
       color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
-      font-size: var(--text-toc-level-4);
+      font-size: 0.65rem;
+      line-height: 0.9375rem;
     }
 
     /* 隐藏 5 6 级标题和序号 */

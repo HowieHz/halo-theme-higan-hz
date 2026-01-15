@@ -148,9 +148,9 @@ document.addEventListener("DOMContentLoaded", (): void => {
     const shareListComponents: HTMLElement | null = document.querySelector<HTMLElement>("#menu #share-list");
     const menuIcon: HTMLElement | null = document.querySelector<HTMLElement>("#menu-icon");
     const topIcon: HTMLElement | null = document.querySelector<HTMLElement>("#top-icon-tablet");
-    const tocIconTablet: HTMLElement | null = document.querySelector<HTMLElement>("#toc-icon-tablet");
+    const tocIconTablet: HTMLElement | null = document.querySelector<HTMLElement>("#action-toc-tablet");
 
-    if (menuComponents && shareListComponents && menuIcon && topIcon && tocIconTablet) {
+    if (menuComponents && shareListComponents && menuIcon && topIcon) {
       // 在高分辨率笔记本电脑和桌面端显示菜单
       // 大于等于 1024px 的屏幕宽度 页面完成初始化时自动显示菜单
       if (window.matchMedia("(min-width: 1024px)").matches) {
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
       const tocOverlayBackdrop: HTMLElement | null = document.querySelector("#toc-overlay-backdrop");
 
       // TOC 按钮点击事件
-      tocIconTablet.addEventListener("click", (): void => {
+      tocIconTablet?.addEventListener("click", (): void => {
         if (!tocOverlayTablet) {
           return;
         }
@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
 
       // 关闭按钮点击事件
       tocOverlayClose?.addEventListener("click", (): void => {
-        if (tocOverlayTablet) {
+        if (tocOverlayTablet && tocIconTablet) {
           tocIconTablet.setAttribute("aria-expanded", "false");
           fadeOut(tocOverlayTablet, ANIMATION_DURATION);
         }
@@ -219,23 +219,34 @@ document.addEventListener("DOMContentLoaded", (): void => {
 
       // 点击背景关闭
       tocOverlayBackdrop?.addEventListener("click", (): void => {
-        if (tocOverlayTablet) {
+        if (tocOverlayTablet && tocIconTablet) {
           tocIconTablet.setAttribute("aria-expanded", "false");
           fadeOut(tocOverlayTablet, ANIMATION_DURATION);
         }
       });
 
-      // 平板端 文章页 导航栏、回到顶部按钮、TOC 按钮 页面滚动相关逻辑
+      // 点击 TOC 项目后关闭 overlay
+      if (tocOverlayTablet) {
+        tocOverlayTablet.addEventListener("click", (e: Event): void => {
+          const target = e.target as HTMLElement;
+          const tocLink = target.closest<HTMLElement>(".toc-link");
+          if (tocLink && tocIconTablet) {
+            tocIconTablet.setAttribute("aria-expanded", "false");
+            fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+          }
+        });
+      }
+
+      // 平板端 文章页 导航栏、回到顶部按钮 页面滚动相关逻辑
       // 添加滚动监听器，用于隐藏/显示导航链接
       window.addEventListener("scroll", (): void => {
         const topDistance = getTopDistance();
 
-        // 顶部菜单按钮、顶部菜单、回到顶部按钮、TOC 按钮 根据页面滚动距离 显示/隐藏
+        // 顶部菜单按钮、顶部菜单、回到顶部按钮 根据页面滚动距离 显示/隐藏
         if (window.matchMedia("(min-width: 640px) and (max-width: 1024px)").matches) {
           if (topDistance < 50) {
             fadeIn(menuIcon, 200);
             fadeOut(topIcon, 200);
-            fadeOut(tocIconTablet, 200);
           } else if (topDistance > 100) {
             menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
             fadeOut(menuIcon, 200);
@@ -244,7 +255,6 @@ document.addEventListener("DOMContentLoaded", (): void => {
             shareButton?.setAttribute("aria-expanded", "false");
             fadeOut(shareListComponents, 200);
             fadeIn(topIcon, 200);
-            fadeIn(tocIconTablet, 200);
           }
         }
       });
