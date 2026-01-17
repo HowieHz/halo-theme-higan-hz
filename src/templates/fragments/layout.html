@@ -179,6 +179,33 @@
         samp,
         var,
         pre,
+        p,
+        span,
+        div,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        article,
+        section,
+        aside,
+        main,
+        li,
+        dd,
+        dt,
+        blockquote,
+        pre,
+        code,
+        td,
+        th,
+        label,
+        legend,
+        figcaption,
+        a span,
+        a p,
+        a div,
         [role="textbox"],
         [role="searchbox"] {
           cursor: url("[(*{custom_cursor_files_text})]"), text;
@@ -211,13 +238,6 @@
         audio::-webkit-media-controls,
         img[onclick],
         img[role="button"],
-        ::-webkit-scrollbar-thumb,
-        ::-webkit-file-upload-button,
-        ::-ms-browse,
-        ::-webkit-search-cancel-button,
-        ::-ms-clear,
-        ::-webkit-clear-button,
-        ::-webkit-calendar-picker-indicator,
         option,
         summary,
         li[onclick],
@@ -235,13 +255,23 @@
         [role="switch"],
         [role="checkbox"],
         [role="radio"],
-        [role="combobox"] {
+        [role="combobox"],
+        *::-webkit-clear-button,
+        *::-webkit-scrollbar-thumb,
+        *::-webkit-file-upload-button,
+        *::-webkit-search-cancel-button,
+        *::-webkit-calendar-picker-indicator {
           cursor: url("[(*{custom_cursor_files_pointer})]"), pointer;
         }
         /*[/]*/
         /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_crosshair)}"]*/
         canvas {
           cursor: url("[(*{custom_cursor_files_crosshair})]"), crosshair;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_vertical_text)}"]*/
+        [style*="writing-mode: vertical"] {
+          cursor: url("[(*{custom_cursor_files_vertical_text})]"), vertical-text;
         }
         /*[/]*/
       </style>
