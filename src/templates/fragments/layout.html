@@ -94,10 +94,7 @@
     </th:block>
     <!--/* Custom Font Declarations end */-->
     <!--/* Custom Cursor Declarations start */-->
-    <th:block
-      th:if="${theme.config?.styles?.is_custom_cursor_files_enable}"
-      th:object="${theme.config?.styles}"
-    >
+    <th:block th:if="${theme.config?.styles?.is_custom_cursor_files_enable}" th:object="${theme.config?.styles}">
       <!--/*/
       <style th:inline="css">
         /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_default)}"]*/
