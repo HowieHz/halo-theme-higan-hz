@@ -163,7 +163,7 @@ spec:
           name: is_show_unused_cursor_files
           label: 展示未使用的光标文件配置项
           value: false
-          help: 一般无需修改此项。
+          help: 一般无需启用此项。
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_auto
