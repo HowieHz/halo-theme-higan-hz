@@ -260,7 +260,8 @@
         *::-webkit-scrollbar-thumb,
         *::-webkit-file-upload-button,
         *::-webkit-search-cancel-button,
-        *::-webkit-calendar-picker-indicator {
+        *::-webkit-calendar-picker-indicator,
+        .v-cursor-pointer {
           cursor: url("[(*{custom_cursor_files_pointer})]"), pointer;
         }
         /*[/]*/
@@ -276,6 +277,13 @@
         /*[/]*/
       </style>
       /*/-->
+    </th:block>
+    <th:block th:unless="theme.config?.styles?.is_custom_cursor_files_enable">
+      <style>
+        .v-cursor-pointer {
+          cursor: pointer;
+        }
+      </style>
     </th:block>
     <!--/* Custom Cursor Declarations end */-->
     <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute start */-->

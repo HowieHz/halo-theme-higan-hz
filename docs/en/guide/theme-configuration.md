@@ -890,6 +890,39 @@ Empty
 
 :::
 
+### Enable Custom Cursor Files
+
+::: info 🎯 Purpose
+
+Replace the default cursor set with uploaded custom cursor files.
+
+:::
+::: info 📂 Configuration Item Location
+
+Style -> Enable Custom Cursor Files
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Enable%20Custom%20Cursor%20Files" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.styles?.is_custom_cursor_files_enable`
+
+:::
+
 ### 配色方案
 
 ::: info 🎯 Purpose

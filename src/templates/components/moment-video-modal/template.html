@@ -9,7 +9,7 @@
     <video preload="metadata" th:src="${media.url}" class="m-0 h-full object-cover"></video>
     <div
       th:if="${#strings.equals(media.type,'VIDEO')}"
-      class="color-base-200 absolute flex h-full w-full cursor-pointer items-center justify-center rounded-lg opacity-50 transition-all hover:opacity-70"
+      class="color-base-200 absolute flex h-full w-full v-cursor-pointer items-center justify-center rounded-lg opacity-50 transition-all hover:opacity-70"
       @click="openVideoModal = true"
     >
       <span class="iconify iconify-large material-symbols--play-circle-outline"></span>
