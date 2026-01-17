@@ -126,7 +126,7 @@ spec:
           name: is_custom_font_files_enable
           label: 启用自定义字体文件
           value: false
-          help: 如启用此项，将使用上传的自定义字体文件替换默认字体
+          help: 如启用此项，将使用上传的自定义字体文件替换默认字体。
         - $formkit: attachmentInput
           if: "$is_custom_font_files_enable === true"
           name: custom_font_files
@@ -138,6 +138,241 @@ spec:
           name: custom_font_name
           label: 自定义字体名称
           help: "请填写上传字体文件内部声明的“字体全名 (nameID=4)”或“PostScript 名 (nameID=6)”，如：My Custom Font Regular 或 MyCustomFont-Regular；如果不知道也可以置空。若置空，则即使用户本地已安装该字体，也不会使用本地版本，而是继续从网络下载。"
+          value: ""
+        - $formkit: switch
+          name: is_custom_cursor_files_enable
+          label: 启用自定义光标文件
+          value: false
+          help: 如启用此项，将使用上传的自定义光标替换默认光标组。
+        - $el: div
+          children:
+            - $el: span
+              children: 可参照
+            - $el: a
+              attrs:
+                href: "https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/Properties/cursor#%E5%85%B3%E9%94%AE%E5%AD%97%E5%80%BC"
+                style: |
+                  text-decoration: underline;
+                  text-underline-offset: 0.25em;
+                target: "_blank"
+              children: 此处文档
+            - $el: span
+              children: 辅助设置。
+        - $formkit: switch
+          if: "$is_custom_cursor_files_enable === true"
+          name: is_show_unused_cursor_files
+          label: 展示未使用的光标文件配置项
+          value: false
+          help: 一般无需启用此项。
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_auto
+          label: 选择自动指针文件（CSS 声明为 auto）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换自动指针。描述：根据上下文自动选择合适的指针，可设定为默认指针。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_default
+          label: 选择默认指针文件（CSS 声明为 default）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换默认指针。描述：默认指针，通常是箭头。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_context_menu
+          label: 选择菜单指针文件（CSS 声明为 context-menu）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换菜单指针。描述：指针下有可用内容目录。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_help
+          label: 选择帮助指针文件（CSS 声明为 help）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换帮助指针。描述：指示帮助。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_pointer
+          label: 选择指针文件（CSS 声明为 pointer）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换指针。描述：悬浮于连接上时，通常为手。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_progress
+          label: 选择进度指针文件（CSS 声明为 progress）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换进度指针。描述：程序后台繁忙，用户仍可交互（与 wait 相反）。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_wait
+          label: 选择等待指针文件（CSS 声明为 wait）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换等待指针。描述：程序繁忙，用户不可交互（与 progress 相反）。图标一般为沙漏或者表。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_cell
+          label: 选择单元格指针文件（CSS 声明为 cell）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换单元格指针。描述：指示单元格可被选中。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_crosshair
+          label: 选择十字指针文件（CSS 声明为 crosshair）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换十字指针。描述：交叉指针，通常指示位图中的框选。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_text
+          label: 选择文本指针文件（CSS 声明为 text）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换文本指针。描述：指示文字可被选中。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_vertical_text
+          label: 选择垂直文本指针文件（CSS 声明为 vertical-text）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换垂直文本指针。描述：指示垂直文字可被选中。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_alias
+          label: 选择别名指针文件（CSS 声明为 alias）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换别名指针。描述：复制或快捷方式将要被创建。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_copy
+          label: 选择复制指针文件（CSS 声明为 copy）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换复制指针。描述：指示可复制。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_move
+          label: 选择移动指针文件（CSS 声明为 move）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换移动指针。描述：被悬浮的物体可被移动。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_no_drop
+          label: 选择禁止拖放指针文件（CSS 声明为 no-drop）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换禁止拖放指针。描述：当前位置不能扔下。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_not_allowed
+          label: 选择不允许指针文件（CSS 声明为 not-allowed）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换不允许指针。描述：不能执行。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_grab
+          label: 选择抓取指针文件（CSS 声明为 grab）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换抓取指针。描述：可抓取。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_grabbing
+          label: 选择抓取中指针文件（CSS 声明为 grabbing）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换抓取中指针。描述：抓取中。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_all_scroll
+          label: 选择全滚动指针文件（CSS 声明为 all-scroll）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换全滚动指针。描述：元素可任意方向滚动（平移）。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_col_resize
+          label: 选择列调整指针文件（CSS 声明为 col-resize）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换列调整指针。描述：元素可被重设宽度。通常被渲染为中间有一条竖线分割的左右两个箭头。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_row_resize
+          label: 选择行调整指针文件（CSS 声明为 row-resize）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换行调整指针。描述：元素可被重设高度。通常被渲染为中间有一条横线分割的上下两个箭头。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_n_resize
+          label: 选择北调整指针文件（CSS 声明为 n-resize）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换北调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_e_resize
+          label: 选择东调整指针文件（CSS 声明为 e-resize）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换东调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_s_resize
+          label: 选择南调整指针文件（CSS 声明为 s-resize）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换南调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_w_resize
+          label: 选择西调整指针文件（CSS 声明为 w-resize）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换西调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_ne_resize
+          label: 选择东北调整指针文件（CSS 声明为 ne-resize）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换东北调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_nw_resize
+          label: 选择西北调整指针文件（CSS 声明为 nw-resize）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换西北调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_se_resize
+          label: 选择东南调整指针文件（CSS 声明为 se-resize）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换东南调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_sw_resize
+          label: 选择西南调整指针文件（CSS 声明为 sw-resize）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换西南调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_ew_resize
+          label: 选择东西调整指针文件（CSS 声明为 ew-resize）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换东西调整指针。描述：指示双向重新设置大小。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_ns_resize
+          label: 选择南北调整指针文件（CSS 声明为 ns-resize）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换南北调整指针。描述：指示双向重新设置大小。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_nesw_resize
+          label: 选择东北西南调整指针文件（CSS 声明为 nesw-resize）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换东北西南调整指针。描述：指示双向重新设置大小。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_nwse_resize
+          label: 选择西北东南调整指针文件（CSS 声明为 nwse-resize）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换西北东南调整指针。描述：指示双向重新设置大小。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_zoom_in
+          label: 选择放大指针文件（CSS 声明为 zoom-in）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换放大指针。描述：指示可被放大。
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_zoom_out
+          label: 选择缩小指针文件（CSS 声明为 zoom-out）
+          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换缩小指针。描述：指示可被缩小。
           value: ""
         - $formkit: select
           name: color_schema

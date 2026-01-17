@@ -139,6 +139,241 @@ spec:
           label: Font Name (Full Name/PostScript Name)
           help: 'Enter the font''s internal "Full Name (nameID=4)" or "PostScript Name (nameID=6)", e.g., My Custom Font Regular or MyCustomFont-Regular. You may leave this blank if unknown. If left blank, even if the font is installed locally, it will not be used and the web font will still be downloaded.'
           value: ""
+        - $formkit: switch
+          name: is_custom_cursor_files_enable
+          label: Enable Custom Cursor Files
+          value: false
+          help: If enabled, uploaded custom cursors will replace the default cursor set.
+        - $el: div
+          children:
+            - $el: span
+              children: Refer to
+            - $el: a
+              attrs:
+                href: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/cursor#keyword"
+                style: |
+                  text-decoration: underline;
+                  text-underline-offset: 0.25em;
+                target: "_blank"
+              children: this documentation
+            - $el: span
+              children: for auxiliary settings.
+        - $formkit: switch
+          if: "$is_custom_cursor_files_enable === true"
+          name: is_show_unused_cursor_files
+          label: Show Unused Cursor File Configurations
+          value: false
+          help: Generally, there is no need to enable this option.
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_auto
+          label: Select Auto Cursor File (CSS declared as auto)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default auto cursor. Description: Automatically selects the appropriate cursor based on context, can be set as the default cursor."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_default
+          label: Select Default Cursor File (CSS declared as default)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default cursor. Description: The default cursor, usually an arrow."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_context_menu
+          label: Select Context Menu Cursor File (CSS declared as context-menu)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default context menu cursor. Description: Indicates a context menu is available."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_help
+          label: Select Help Cursor File (CSS declared as help)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default help cursor. Description: Indicates help is available."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_pointer
+          label: Select Pointer Cursor File (CSS declared as pointer)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default pointer cursor. Description: Usually a hand when hovering over a link."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_progress
+          label: Select Progress Cursor File (CSS declared as progress)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default progress cursor. Description: The program is busy in the background, but the user can still interact (opposite of wait)."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_wait
+          label: Select Wait Cursor File (CSS declared as wait)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default wait cursor. Description: The program is busy, and the user cannot interact (opposite of progress). The icon is usually an hourglass or a watch."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_cell
+          label: Select Cell Cursor File (CSS declared as cell)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default cell cursor. Description: Indicates a cell can be selected."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_crosshair
+          label: Select Crosshair Cursor File (CSS declared as crosshair)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default crosshair cursor. Description: Crosshair cursor, usually indicates selection in a bitmap."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_text
+          label: Select Text Cursor File (CSS declared as text)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default text cursor. Description: Indicates text can be selected."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_vertical_text
+          label: Select Vertical Text Cursor File (CSS declared as vertical-text)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default vertical-text cursor. Description: Indicates vertical text can be selected."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_alias
+          label: Select Alias Cursor File (CSS declared as alias)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default alias cursor. Description: Copy or shortcut will be created."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_copy
+          label: Select Copy Cursor File (CSS declared as copy)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default copy cursor. Description: Indicates copy."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_move
+          label: Select Move Cursor File (CSS declared as move)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default move cursor. Description: The hovered object can be moved."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_no_drop
+          label: Select No Drop Cursor File (CSS declared as no-drop)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default no-drop cursor. Description: The current position cannot be dropped."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_not_allowed
+          label: Select Not Allowed Cursor File (CSS declared as not-allowed)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default not-allowed cursor. Description: Action not allowed."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_grab
+          label: Select Grab Cursor File (CSS declared as grab)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default grab cursor. Description: Can be grabbed."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true"
+          name: custom_cursor_files_grabbing
+          label: Select Grabbing Cursor File (CSS declared as grabbing)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default grabbing cursor. Description: Grabbing."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_all_scroll
+          label: Select All Scroll Cursor File (CSS declared as all-scroll)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default all-scroll cursor. Description: Element can be scrolled (panned) in any direction."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_col_resize
+          label: Select Column Resize Cursor File (CSS declared as col-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default column resize cursor. Description: Element can be resized in width. Usually rendered as two arrows separated by a vertical line in the middle."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_row_resize
+          label: Select Row Resize Cursor File (CSS declared as row-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default row resize cursor. Description: Element can be resized in height. Usually rendered as two arrows separated by a horizontal line in the middle."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_n_resize
+          label: Select North Resize Cursor File (CSS declared as n-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default north resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_e_resize
+          label: Select East Resize Cursor File (CSS declared as e-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default east resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_s_resize
+          label: Select South Resize Cursor File (CSS declared as s-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default south resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_w_resize
+          label: Select West Resize Cursor File (CSS declared as w-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default west resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_ne_resize
+          label: Select Northeast Resize Cursor File (CSS declared as ne-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default northeast resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_nw_resize
+          label: Select Northwest Resize Cursor File (CSS declared as nw-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default northwest resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_se_resize
+          label: Select Southeast Resize Cursor File (CSS declared as se-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default southeast resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_sw_resize
+          label: Select Southwest Resize Cursor File (CSS declared as sw-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default southwest resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_ew_resize
+          label: Select East-West Resize Cursor File (CSS declared as ew-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default east-west resize cursor. Description: Indicates bidirectional resizing."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_ns_resize
+          label: Select North-South Resize Cursor File (CSS declared as ns-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default north-south resize cursor. Description: Indicates bidirectional resizing."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_nesw_resize
+          label: Select Northeast-Southwest Resize Cursor File (CSS declared as nesw-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default northeast-southwest resize cursor. Description: Indicates bidirectional resizing."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_nwse_resize
+          label: Select Northwest-Southeast Resize Cursor File (CSS declared as nwse-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default northwest-southeast resize cursor. Description: Indicates bidirectional resizing."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_zoom_in
+          label: Select Zoom-In Cursor File (CSS declared as zoom-in)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default zoom-in cursor. Description: Indicates zooming in."
+          value: ""
+        - $formkit: attachmentInput
+          if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
+          name: custom_cursor_files_zoom_out
+          label: Select Zoom-Out Cursor File (CSS declared as zoom-out)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default zoom-out cursor. Description: Indicates zooming out."
+          value: ""
         - $formkit: select
           name: color_schema
           id: color_schema_init

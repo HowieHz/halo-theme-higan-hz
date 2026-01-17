@@ -38,7 +38,7 @@
           id="d"
         >
           <div th:each="archive : ${archives}">
-            <h2 class="cursor-pointer">
+            <h2 class="v-cursor-pointer">
               <span th:text="${archive.year}"></span>
               <span class="iconify iconify-large mdi--chevron-right"></span>
               <span class="iconify iconify-large mdi--chevron-down" style="display: none"></span>
@@ -46,7 +46,7 @@
             <ul class="m-0 flex-auto p-0" style="display: none">
               <th:block th:each="month : ${archive.months}">
                 <div class="month-container ml-7 flex">
-                  <h3 class="-mt-2 flex-none cursor-pointer no-underline">
+                  <h3 class="v-cursor-pointer -mt-2 flex-none no-underline">
                     <span th:text="${month.month}" class="underline"></span>
                     <span class="iconify iconify-large mdi--chevron-right"></span>
                     <span class="iconify iconify-large mdi--chevron-down" style="display: none"></span>

@@ -93,6 +93,196 @@
       /*/-->
     </th:block>
     <!--/* Custom Font Declarations end */-->
+    <!--/* Custom Cursor Declarations start */-->
+    <th:block th:if="${theme.config?.styles?.is_custom_cursor_files_enable}" th:object="${theme.config?.styles}">
+      <!--/*/
+      <style th:inline="css">
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_default)}"]*/
+        :root,
+        label,
+        input::-webkit-inner-spin-button,
+        input[type="button" i],
+        input[type="submit" i],
+        input[type="reset" i],
+        input[type="file" i]::-webkit-file-upload-button,
+        button,
+        select {
+          cursor: url("[(*{custom_cursor_files_default})]"), default;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_move)}"]*/
+        .mozGrabber:-moz-native-anonymous {
+          cursor: url("[(*{custom_cursor_files_move})]"), move;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_not_allowed)}"]*/
+        :disabled,
+        [aria-disabled="true"] {
+          cursor: url("[(*{custom_cursor_files_not_allowed})]"), not-allowed;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_help)}"]*/
+        [title],
+        abbr,
+        acronym,
+        [role="tooltip"] {
+          cursor: url("[(*{custom_cursor_files_help})]"), help;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_ew_resize)}"]*/
+        input[type="range"],
+        [role="slider"] {
+          cursor: url("[(*{custom_cursor_files_ew_resize})]"), ew-resize;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_grab)}"]*/
+        [draggable="true"],
+        input[type="range"]::-webkit-slider-thumb {
+          cursor: url("[(*{custom_cursor_files_grab})]"), grab;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_grabbing)}"]*/
+        [draggable="true"]:active,
+        input[type="range"]::-webkit-slider-thumb:active {
+          cursor: url("[(*{custom_cursor_files_grabbing})]"), grabbing;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_cell)}"]*/
+        td,
+        th,
+        [role="grid"],
+        [role="gridcell"] {
+          cursor: url("[(*{custom_cursor_files_cell})]"), cell;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_wait)}"]*/
+        [aria-busy="true"] {
+          cursor: url("[(*{custom_cursor_files_wait})]"), wait;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_text)}"]*/
+        input:not([type]),
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="search"],
+        input[type="tel"],
+        input[type="url"],
+        input[type="number"],
+        [contenteditable="true"],
+        textarea,
+        code,
+        kbd,
+        samp,
+        var,
+        pre,
+        p,
+        span,
+        div,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        article,
+        section,
+        aside,
+        main,
+        li,
+        dd,
+        dt,
+        blockquote,
+        pre,
+        code,
+        td,
+        th,
+        label,
+        legend,
+        figcaption,
+        a span,
+        a p,
+        a div,
+        [role="textbox"],
+        [role="searchbox"] {
+          cursor: url("[(*{custom_cursor_files_text})]"), text;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_pointer)}"]*/
+        area,
+        a,
+        a:-webkit-any-link,
+        button,
+        select,
+        label,
+        input[type="button"],
+        input[type="submit"],
+        input[type="reset"],
+        input[type="file"],
+        input[type="checkbox"],
+        input[type="radio"],
+        input[type="color"],
+        input[type="date"],
+        input[type="datetime-local"],
+        input[type="time"],
+        input[type="month"],
+        input[type="week"],
+        input[type="range"],
+        input[type="image"],
+        video,
+        audio,
+        video::-webkit-media-controls,
+        audio::-webkit-media-controls,
+        img[onclick],
+        img[role="button"],
+        option,
+        summary,
+        li[onclick],
+        li[role="button"],
+        tr[onclick],
+        svg [onclick],
+        [role="button"],
+        [role="link"],
+        [role="menuitem"],
+        [role="menuitemcheckbox"],
+        [role="menuitemradio"],
+        [role="tab"],
+        [role="treeitem"],
+        [role="option"],
+        [role="switch"],
+        [role="checkbox"],
+        [role="radio"],
+        [role="combobox"],
+        *::-webkit-clear-button,
+        *::-webkit-scrollbar-thumb,
+        *::-webkit-file-upload-button,
+        *::-webkit-search-cancel-button,
+        *::-webkit-calendar-picker-indicator,
+        .v-cursor-pointer {
+          cursor: url("[(*{custom_cursor_files_pointer})]"), pointer;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_crosshair)}"]*/
+        canvas {
+          cursor: url("[(*{custom_cursor_files_crosshair})]"), crosshair;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_vertical_text)}"]*/
+        [style*="writing-mode: vertical"] {
+          cursor: url("[(*{custom_cursor_files_vertical_text})]"), vertical-text;
+        }
+        /*[/]*/
+      </style>
+      /*/-->
+    </th:block>
+    <th:block th:unless="${theme.config?.styles?.is_custom_cursor_files_enable}">
+      <style>
+        .v-cursor-pointer {
+          cursor: pointer;
+        }
+      </style>
+    </th:block>
+    <!--/* Custom Cursor Declarations end */-->
     <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute start */-->
     <script
       vite-ignore
