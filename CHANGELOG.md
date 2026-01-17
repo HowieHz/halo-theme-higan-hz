@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### 🚀 新功能
+
+- 支持自定义指针。
+
 ## [1.52.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.52.0...v1.52.1) (2026-1-16)
 
 ### 🚀 新功能
