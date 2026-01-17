@@ -275,7 +275,7 @@
       </style>
       /*/-->
     </th:block>
-    <th:block th:unless="theme.config?.styles?.is_custom_cursor_files_enable">
+    <th:block th:unless="${theme.config?.styles?.is_custom_cursor_files_enable}">
       <style>
         .v-cursor-pointer {
           cursor: pointer;
