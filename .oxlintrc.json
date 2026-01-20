@@ -177,10 +177,6 @@
     },
     {
       "files": ["**/*.js", "**/*.ts"],
-      "globals": {
-        "CSSStyleProperties": "readonly",
-        "Temporal": "readonly"
-      },
       "env": {
         "es2026": true,
         "browser": true
@@ -188,10 +184,6 @@
     },
     {
       "files": ["**/*.html"],
-      "globals": {
-        "CSSStyleProperties": "readonly",
-        "Temporal": "readonly"
-      },
       "env": {
         "browser": true
       }
@@ -199,8 +191,6 @@
     {
       "files": ["public/assets/qrcode.html"],
       "globals": {
-        "CSSStyleProperties": "readonly",
-        "Temporal": "readonly",
         "QRious": "readonly"
       },
       "env": {
@@ -209,10 +199,6 @@
     },
     {
       "files": ["**/*.vue"],
-      "globals": {
-        "CSSStyleProperties": "readonly",
-        "Temporal": "readonly"
-      },
       "env": {
         "es2026": true,
         "browser": true
