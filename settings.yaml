@@ -732,7 +732,7 @@ spec:
                   value: "random"
                 - label: "用户账号"
                   value: "user"
-                - label: "搜索（需“搜索组件插件”支持）"
+                - label: "搜索（需“搜索组件”插件支持）"
                   value: "search"
               validation: "required"
         - $formkit: switch
