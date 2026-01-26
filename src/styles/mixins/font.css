@@ -1,9 +1,7 @@
 @import "../../assets/fonts/meslo-LG/result.css";
 
 :root {
-  --higan-font-family:
-    "Meslo LG S", ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont, segoe ui, roboto, helvetica neue, arial,
-    noto sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", segoe ui symbol, "Noto Color Emoji";
+  --higan-font-family: "Meslo LG S", system-ui;
 }
 
 body {
