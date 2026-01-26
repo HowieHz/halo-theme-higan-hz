@@ -18,8 +18,8 @@ importers:
         version: 3.15.4
     devDependencies:
       '@dreamsicle.io/stylelint-config-tailwindcss':
-        specifier: ^1.1.2
-        version: 1.1.2(stylelint@17.0.0(typescript@5.9.3))
+        specifier: ^1.2.2
+        version: 1.2.2(stylelint@17.0.0(typescript@5.9.3))
       '@eslint/compat':
         specifier: ^2.0.1
         version: 2.0.1(eslint@9.39.2(jiti@2.6.1))
@@ -455,10 +455,10 @@ packages:
       search-insights:
         optional: true
 
-  '@dreamsicle.io/stylelint-config-tailwindcss@1.1.2':
-    resolution: {integrity: sha512-g5nPxKyZKh139CT67tTFT3WD7kB4y4WoHLGqlmLfTjs52cvWGwFUBSiUpPnB2sSBh5efXPtw4VYv8zwPt6C19A==}
+  '@dreamsicle.io/stylelint-config-tailwindcss@1.2.2':
+    resolution: {integrity: sha512-MFwpR3adGHftLjFVYNd6NXepiJMXcVLhY00znLZN7rv/zhbYyOLSPzfotNOvBw647Zb9Wm/lMsMk08i4VkZI/g==}
     peerDependencies:
-      stylelint: ^16.17.0
+      stylelint: ^16.17.0 || ^17.0.0
 
   '@emnapi/core@1.8.1':
     resolution: {integrity: sha512-AvT9QFpxK0Zd8J0jopedNm+w/2fIzvtPKPjqyw9jwvBaReTTqPBk9Hixaz7KbjimP+QNz605/XnjFcDAL2pqBg==}
@@ -4265,7 +4265,7 @@ snapshots:
     transitivePeerDependencies:
       - '@algolia/client-search'
 
-  '@dreamsicle.io/stylelint-config-tailwindcss@1.1.2(stylelint@17.0.0(typescript@5.9.3))':
+  '@dreamsicle.io/stylelint-config-tailwindcss@1.2.2(stylelint@17.0.0(typescript@5.9.3))':
     dependencies:
       stylelint: 17.0.0(typescript@5.9.3)
 
