@@ -1,6 +1,6 @@
 #vp-app {
   /* 用主题的 font-family，避免多次加载 inter 字体 */
-  font-family: "Meslo LG S", system-ui;
+  font-family: "Meslo LG S";
   height: 100vh;
   padding: 2rem;
   width: 100%;
