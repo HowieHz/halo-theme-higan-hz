@@ -366,7 +366,6 @@
     }
 
     & li {
-      align-items: center;
       border-color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       border-right: 1px solid;
       display: inline-block;
