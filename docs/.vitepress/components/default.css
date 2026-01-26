@@ -1,6 +1,21 @@
 #vp-app {
   /* 用主题的 font-family，避免多次加载 inter 字体 */
-  font-family: "Meslo LG S";
+  font-family:
+    "Meslo LG S",
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    blinkmacsystemfont,
+    "segoe ui",
+    roboto,
+    "helvetica neue",
+    arial,
+    "noto sans",
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "segoe ui symbol",
+    "Noto Color Emoji";
   height: 100vh;
   padding: 2rem;
   width: 100%;
