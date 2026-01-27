@@ -40,7 +40,7 @@
         </th:block>
       </th:block>
     </ul>
-    <script th:inline="javascript" th:if="${theme.config?.tags_page_styles?.tags_sort_order!='default'}">
+    <script vite-ignore th:inline="javascript" th:if="${theme.config?.tags_page_styles?.tags_sort_order!='default'}">
       const tagsSortOrder = /*[[${theme.config?.tags_page_styles?.tags_sort_order}]]*/ "count_desc";
       const isShowPostCount = /*[[${theme.config?.tags_page_styles?.is_show_the_number_of_posts_per_tag}]]*/ true;
       const leftChar = /*[[${theme.config?.tags_page_styles?.characters_to_the_left_of_the_number_of_posts}]]*/ "(";

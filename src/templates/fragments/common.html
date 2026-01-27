@@ -163,7 +163,7 @@
 >
   <th:block th:with="permalink=${siteUrl}+${originPermalink}, title=${title}">
     <ul>
-      <script th:inline="javascript">
+      <script vite-ignore th:inline="javascript">
         function nativeShare(link) {
           const postTitle = /*[[${title}]]*/ "";
           const shareData = { title: postTitle, url: link };
@@ -284,7 +284,7 @@
   th:with="siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1)== '/'}? ${#strings.substring(site.url,0,#strings.length(site.url) - 1)}:${site.url}"
 >
   <p id="countdown" style="opacity: 0%; transition: opacity 1s"></p>
-  <script th:inline="javascript">
+  <script vite-ignore th:inline="javascript">
     const countdownElement = document.getElementById("countdown");
     const siteUrl = /*[[${siteUrl}]]*/ "";
     var targetUrl = /*[[${theme.config?.error_page_styles?.target_url}]]*/ "/";

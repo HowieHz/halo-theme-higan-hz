@@ -392,7 +392,7 @@
         }
       });
     </script>
-    <script th:inline="javascript" th:if="${theme.config?.post_styles?.is_post_upvote_button_show}">
+    <script vite-ignore th:inline="javascript" th:if="${theme.config?.post_styles?.is_post_upvote_button_show}">
       const likes_localstorage_key = "higan.likes.post.ids";
       let likedPostNames = JSON.parse(localStorage.getItem(likes_localstorage_key) || "[]");
       likedPostNames.forEach((postName) => {
