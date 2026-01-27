@@ -290,7 +290,6 @@
     <!--/* Custom Cursor Declarations end */-->
     <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute start */-->
     <script
-      vite-ignore
       th:if="${color_schema == 'custom'} or ${theme_dark == 'custom'} or ${theme_light == 'custom'} or ${theme_auto == 'custom'}"
       th:inline="javascript"
     >
@@ -302,7 +301,7 @@
     </script>
     <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute end */-->
     <!--/* set data-color-scheme attribute for custom color schema start */-->
-    <script vite-ignore th:if="${color_schema == 'custom'}" th:inline="javascript">
+    <script th:if="${color_schema == 'custom'}" th:inline="javascript">
       const customColorSchema = allCustomColorSchema.find(
         (schema) => schema.id === /*[[${custom_color_schema_init_id}]]*/ "1",
       );
@@ -481,7 +480,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
     ></th:block>
     <!--/* Preset Text Size CSS VariablesDeclarations end */-->
     <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script Start */-->
-    <script vite-ignore th:if="${theme.config?.global?.anti_mirror_site}" th:inline="javascript">
+    <script th:if="${theme.config?.global?.anti_mirror_site}" th:inline="javascript">
       (function () {
         // <!--/* 获取被编码后的目标链接 */-->
         var encodedRedirectUrl = /*[[${theme?.config?.global?.target_url}]]*/ "bG9jYWxob3N0";
@@ -509,7 +508,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </script>
     <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script End */-->
     <!--/* Auto Redirect to Browser Language Script Start */-->
-    <script vite-ignore th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}" th:inline="javascript">
+    <script th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}" th:inline="javascript">
       (function () {
         // <!--/* 设计思路：
         // 1. 如果 ${language} 已经传入，也就是已经在元数据强行指定了页面语言，则不跳转
@@ -705,7 +704,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </script>
     <!--/* Mermaid injection end */-->
     <!--/* Color Scheme Toggle Button Script Start */-->
-    <script vite-ignore th:inline="javascript" th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+    <script th:inline="javascript" th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       var THEME_DARK = /*[[${theme_dark}]]*/ "dark";
       var THEME_LIGHT = /*[[${theme_light}]]*/ "light";
       var THEME_AUTO = /*[[${theme_auto}]]*/ "auto";
