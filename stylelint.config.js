@@ -58,7 +58,17 @@ export default {
       },
     ],
 
+    // 关闭类选择器命名规则
     "selector-class-pattern": null,
+
+    "value-keyword-case": [
+      "lower",
+      {
+        ignoreProperties: [
+          "/^--.*font-family.*/", // 忽略所有包含 font-family 的 CSS 变量
+        ],
+      },
+    ],
 
     // 其他规则
     "no-empty-source": null, // 允许空文件
