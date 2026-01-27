@@ -61,8 +61,9 @@ export default {
     // 关闭类选择器命名规则
     "selector-class-pattern": null,
 
+    // 值关键字大小写规则
     "value-keyword-case": [
-      "lower",
+      "lower",  // 关键字要求小写
       {
         ignoreProperties: [
           "/^--.*font-family.*/", // 忽略所有包含 font-family 的 CSS 变量
