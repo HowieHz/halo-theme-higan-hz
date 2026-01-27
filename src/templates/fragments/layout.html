@@ -89,10 +89,21 @@
             custom, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
             Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
         }
+        :root.webkit {
+          --higan-font-family: custom !important;
+        }
       </style>
       /*/-->
     </th:block>
     <!--/* Custom Font Declarations end */-->
+    <!--/* WebKit Detection start */-->
+    <script>
+      let ua = navigator.userAgent;
+      if (!/(apple)?webkit\/537\.36/i.test(ua) && /(apple)?webkit/i.test(ua)) {
+        document.documentElement.classList.add("webkit");
+      }
+    </script>
+    <!--/* WebKit Detection end */-->
     <!--/* Custom Cursor Declarations start */-->
     <th:block th:if="${theme.config?.styles?.is_custom_cursor_files_enable}" th:object="${theme.config?.styles}">
       <!--/*/
