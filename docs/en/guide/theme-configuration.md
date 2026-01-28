@@ -840,7 +840,7 @@ Repeater
 :::
 ::: info 🧩 Template Variable
 
-`theme.config?.styles?.custom_font_files`
+`theme.config?.styles?.custom_font_configs`
 
 :::
 

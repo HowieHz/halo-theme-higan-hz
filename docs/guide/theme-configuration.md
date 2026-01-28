@@ -834,7 +834,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 🧩 模板变量
 
-`theme.config?.styles?.custom_font_files`
+`theme.config?.styles?.custom_font_configs`
 
 :::
 

@@ -129,7 +129,7 @@ spec:
           help: 如启用此项，将使用上传的自定义字体文件替换默认字体。
         - $formkit: array
           if: "$is_custom_font_files_enable === true"
-          name: custom_font_files
+          name: custom_font_configs
           label: 自定义字体文件
           value: []
           itemLabels:
@@ -153,7 +153,7 @@ spec:
             - $formkit: select
               name: font_weight
               validation: "required"
-              value: "auto"
+              value: "400"
               label: 字体粗细
               options:
                 - label: "自动（auto —— 由浏览器决定使用何种粗细）"

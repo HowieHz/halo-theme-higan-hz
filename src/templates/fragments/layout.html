@@ -56,7 +56,7 @@
     <!--/* Custom Font Declarations start */-->
     <th:block th:if="${theme.config?.styles?.is_custom_font_files_enable}">
       <th:block
-        th:each="fontConfig : ${theme.config?.styles?.custom_font_files}"
+        th:each="fontConfig : ${theme.config?.styles?.custom_font_configs}"
         th:with="fontStyle=${fontConfig.font_style},
                 fontWeight=${fontConfig.font_weight},
                 fontFile=${fontConfig.font_file},
