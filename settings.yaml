@@ -140,10 +140,13 @@ spec:
           children:
             - $formkit: select
               name: font_style
+              id: font_style
               validation: "required"
               value: "normal"
               label: 字体样式
               options:
+                - label: "自定义值"
+                  value: "custom"
                 - label: "常规（normal）"
                   value: "normal"
                 - label: "斜体（italic —— 与常规不同的斜体字形）"
@@ -151,6 +154,12 @@ spec:
                 - label: "倾斜（oblique —— 常规字形被倾斜几度）"
                   value: "oblique"
               help: https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/At-rules/@font-face/font-style
+            - $formkit: text
+              name: custom_font_style
+              if: "$get(font_style).value === 'custom'"
+              validation: "required"
+              value: "oblique 30deg 50deg"
+              label: 自定义字体样式值
             - $formkit: select
               name: font_weight
               id: font_weight

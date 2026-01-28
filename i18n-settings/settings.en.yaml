@@ -140,10 +140,13 @@ spec:
           children:
             - $formkit: select
               name: font_style
+              id: font_style
               validation: "required"
               value: "normal"
               label: Font style
               options:
+                - label: "Custom Value"
+                  value: "custom"
                 - label: "Normal"
                   value: "normal"
                 - label: "Italic"
@@ -151,6 +154,12 @@ spec:
                 - label: "Oblique"
                   value: "oblique"
               help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-style
+            - $formkit: text
+              name: custom_font_style
+              if: "$get(font_style).value === 'custom'"
+              validation: "required"
+              value: "oblique 30deg 50deg"
+              label: Custom Font Style Value
             - $formkit: select
               name: font_weight
               id: font_weight
