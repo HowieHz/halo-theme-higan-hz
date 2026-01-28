@@ -77,9 +77,9 @@
         /*[#
           th:each="fontConfig : ${theme.config?.styles?.custom_font_configs}"
           th:with="fontStyle=${fontConfig.font_style},
-            CustomFontStyle=${fontConfig.custom_font_style},
+            customFontStyle=${fontConfig.custom_font_style},
             fontWeight=${fontConfig.font_weight},
-            CustomFontWeight=${fontConfig.custom_font_weight},
+            customFontWeight=${fontConfig.custom_font_weight},
             fontDisplay=${fontConfig.font_display},
             fontUnicodeRange=${fontConfig.font_unicode_range},
             fontFile=${fontConfig.font_file},
@@ -89,30 +89,56 @@
               (fontExt == 'ttf' ? 'truetype' : 
               (fontExt == 'otf' ? 'opentype' : 
               (fontExt == 'eot' ? 'embedded-opentype' : 
-              ((fontExt == 'ttc' or fontExt == 'otc') ? 'collection' : fontExt)))))}"
+              ((fontExt == 'ttc' or fontExt == 'otc') ? 'collection' : fontExt)))))},
+            fontName=${theme.config?.styles?.custom_font_name}"
         ]*/
-          /*[# th:if="${#strings.isEmpty(fontUnicodeRange)}"]*/
-            @font-face {
-              font-display: [(${fontDisplay})];
-              font-family: "custom";
-              font-style: [(${fontStyle == 'custom' ? CustomFontStyle : fontStyle})];
-              font-weight: [(${fontWeight == 'custom' ? CustomFontWeight : fontWeight})];
-              src:
-                local("[(${theme.config?.styles?.custom_font_name})]"),
-                url("[(${fontFile})]") format("[(${fontFormat})]");
-            }
+          /*[# th:if="${#strings.isEmpty(fontName)}"]*/
+            /*[# th:if="${#strings.isEmpty(fontUnicodeRange)}"]*/
+              @font-face {
+                font-display: [(${fontDisplay})];
+                font-family: "custom";
+                font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
+                font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
+                src:
+                  url("[(${fontFile})]") format("[(${fontFormat})]");
+              }
+            /*[/]*/
+            /*[# th:unless="${#strings.isEmpty(fontUnicodeRange)}"]*/
+              @font-face {
+                font-display: [(${fontDisplay})];
+                font-family: "custom";
+                font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
+                font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
+                src:
+                  url("[(${fontFile})]") format("[(${fontFormat})]");
+                unicode-range: [(${fontUnicodeRange})];
+              }
+            /*[/]*/
           /*[/]*/
-          /*[# th:unless="${#strings.isEmpty(fontUnicodeRange)}"]*/
-            @font-face {
-              font-display: [(${fontDisplay})];
-              font-family: "custom";
-              font-style: [(${fontStyle == 'custom' ? CustomFontStyle : fontStyle})];
-              font-weight: [(${fontWeight == 'custom' ? CustomFontWeight : fontWeight})];
-              src:
-                local("[(${theme.config?.styles?.custom_font_name})]"),
-                url("[(${fontFile})]") format("[(${fontFormat})]");
-              unicode-range: [(${fontUnicodeRange})];
-            }
+          /*[# th:unless="${#strings.isEmpty(fontName)}"]*/
+            /*[# th:if="${#strings.isEmpty(fontUnicodeRange)}"]*/
+              @font-face {
+                font-display: [(${fontDisplay})];
+                font-family: "custom";
+                font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
+                font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
+                src:
+                  local("[(${fontName})]"),
+                  url("[(${fontFile})]") format("[(${fontFormat})]");
+              }
+            /*[/]*/
+            /*[# th:unless="${#strings.isEmpty(fontUnicodeRange)}"]*/
+              @font-face {
+                font-display: [(${fontDisplay})];
+                font-family: "custom";
+                font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
+                font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
+                src:
+                  local("[(${fontName})]"),
+                  url("[(${fontFile})]") format("[(${fontFormat})]");
+                unicode-range: [(${fontUnicodeRange})];
+              }
+            /*[/]*/
           /*[/]*/
         /*[/]*/
       </style>
