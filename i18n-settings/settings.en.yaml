@@ -127,12 +127,103 @@ spec:
           label: Enable Custom Font Files
           value: false
           help: Enable this option to use uploaded custom font files instead of the default fonts
-        - $formkit: attachmentInput
+        - $formkit: array
           if: "$is_custom_font_files_enable === true"
-          name: custom_font_files
-          label: Custom Font Files
-          help: Upload .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt font files. The theme will prioritize these files over the default fonts.
-          value: ""
+          name: custom_font_configs
+          label: Custom font files
+          value: []
+          itemLabels:
+            - type: text
+              label: $value.font_style
+            - type: text
+              label: $value.font_weight
+          children:
+            - $formkit: select
+              name: font_style
+              id: font_style
+              validation: "required"
+              value: "normal"
+              label: Font style
+              options:
+                - label: "Custom Value"
+                  value: "custom"
+                - label: "Normal"
+                  value: "normal"
+                - label: "Italic"
+                  value: "italic"
+                - label: "Oblique"
+                  value: "oblique"
+              help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-style
+            - $formkit: text
+              name: custom_font_style
+              if: "$get(font_style).value === 'custom'"
+              validation: "required"
+              value: "oblique 30deg 50deg"
+              label: Custom Font Style Value
+            - $formkit: select
+              name: font_weight
+              id: font_weight
+              validation: "required"
+              value: "400"
+              label: Font weight
+              options:
+                - label: "Custom Value"
+                  value: "custom"
+                - label: "Auto (auto — let the browser decide)"
+                  value: "auto"
+                - label: "Thin/Hairline (100)"
+                  value: "100"
+                - label: "Extra Light/Ultra Light (200)"
+                  value: "200"
+                - label: "Light (300)"
+                  value: "300"
+                - label: "Normal (400)"
+                  value: "400"
+                - label: "Medium (500)"
+                  value: "500"
+                - label: "Semi Bold/Demi Bold (600)"
+                  value: "600"
+                - label: "Bold (700)"
+                  value: "700"
+                - label: "Extra Bold/Ultra Bold (800)"
+                  value: "800"
+                - label: "Black/Heavy (900)"
+                  value: "900"
+              help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-weight
+            - $formkit: text
+              if: "$get(font_weight).value === 'custom'"
+              name: custom_font_weight
+              label: Custom Font Weight Value
+              validation: "required"
+              value: "1 1000"
+            - $formkit: select
+              name: font_display
+              validation: "required"
+              value: "swap"
+              label: Font Display Strategy
+              options:
+                - label: "Auto"
+                  value: "auto"
+                - label: "Block"
+                  value: "block"
+                - label: "Swap"
+                  value: "swap"
+                - label: "Fallback"
+                  value: "fallback"
+                - label: "Optional"
+                  value: "optional"
+              help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-display
+            - $formkit: text
+              name: font_unicode_range
+              label: Font Unicode Range
+              help: "Specify the Unicode range supported by the font, e.g., U+000-5FF (Latin and Basic Latin Supplement), U+4E00-9FFF (CJK Unified Ideographs), etc. Leave blank to support all Unicode characters. Documentation: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/unicode-range"
+              value: ""
+            - $formkit: attachmentInput
+              name: font_file
+              validation: "required"
+              label: Select font file
+              help: "Upload .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt font files. The theme will prioritize these files to replace the default fonts."
+              value: ""
         - $formkit: text
           if: "$is_custom_font_files_enable === true"
           name: custom_font_name

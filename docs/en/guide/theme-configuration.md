@@ -835,12 +835,12 @@ General Styles -> 选择 Custom 字体文件
 :::
 ::: info 🏷️ Type
 
-Attachment
+Repeater
 
 :::
 ::: info 🧩 Template Variable
 
-`theme.config?.styles?.custom_font_files`
+`theme.config?.styles?.custom_font_configs`
 
 :::
 

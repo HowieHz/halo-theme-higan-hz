@@ -829,12 +829,12 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 🏷️ 类型
 
-附件
+重复器
 
 :::
 ::: info 🧩 模板变量
 
-`theme.config?.styles?.custom_font_files`
+`theme.config?.styles?.custom_font_configs`
 
 :::
 

@@ -127,12 +127,103 @@ spec:
           label: 启用自定义字体文件
           value: false
           help: 如启用此项，将使用上传的自定义字体文件替换默认字体。
-        - $formkit: attachmentInput
+        - $formkit: array
           if: "$is_custom_font_files_enable === true"
-          name: custom_font_files
-          label: 选择自定义字体文件
-          help: 上传 .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt 字体文件，主题会优先使用这些文件替换默认字体
-          value: ""
+          name: custom_font_configs
+          label: 自定义字体文件
+          value: []
+          itemLabels:
+            - type: text
+              label: $value.font_style
+            - type: text
+              label: $value.font_weight
+          children:
+            - $formkit: select
+              name: font_style
+              id: font_style
+              validation: "required"
+              value: "normal"
+              label: 字体样式
+              options:
+                - label: "自定义值"
+                  value: "custom"
+                - label: "常规（normal）"
+                  value: "normal"
+                - label: "斜体（italic —— 与常规不同的斜体字形）"
+                  value: "italic"
+                - label: "倾斜（oblique —— 常规字形被倾斜几度）"
+                  value: "oblique"
+              help: https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/At-rules/@font-face/font-style
+            - $formkit: text
+              name: custom_font_style
+              if: "$get(font_style).value === 'custom'"
+              validation: "required"
+              value: "oblique 30deg 50deg"
+              label: 自定义字体样式值
+            - $formkit: select
+              name: font_weight
+              id: font_weight
+              validation: "required"
+              value: "400"
+              label: 字体粗细
+              options:
+                - label: "自定义值"
+                  value: "custom"
+                - label: "自动（auto —— 由浏览器决定使用何种粗细）"
+                  value: "auto"
+                - label: "极细（100 —— Thin (Hairline)）"
+                  value: "100"
+                - label: "细体（200 —— Extra Light (Ultra Light)）"
+                  value: "200"
+                - label: "轻体（300 —— Light）"
+                  value: "300"
+                - label: "常规（400 —— Normal）"
+                  value: "400"
+                - label: "中等（500 —— Medium）"
+                  value: "500"
+                - label: "半粗体（600 —— Semi Bold (Demi Bold)）"
+                  value: "600"
+                - label: "粗体（700 —— Bold）"
+                  value: "700"
+                - label: "特粗体（800 —— Extra Bold (Ultra Bold)）"
+                  value: "800"
+                - label: "黑体（900 —— Black (Heavy)）"
+                  value: "900"
+              help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-weight
+            - $formkit: text
+              if: "$get(font_weight).value === 'custom'"
+              name: custom_font_weight
+              label: 自定义字体粗细值
+              validation: "required"
+              value: "1 1000"
+            - $formkit: select
+              name: font_display
+              validation: "required"
+              value: "swap"
+              label: 字体显示策略
+              options:
+                - label: "自动（auto）"
+                  value: "auto"
+                - label: "堵塞（block）"
+                  value: "block"
+                - label: "交换（swap）"
+                  value: "swap"
+                - label: "回退（fallback）"
+                  value: "fallback"
+                - label: "可选（optional）"
+                  value: "optional"
+              help: https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/At-rules/@font-face/font-display
+            - $formkit: text
+              name: font_unicode_range
+              label: 字体 Unicode 范围
+              help: "指定字体所支持的 Unicode 范围，例如：U+000-5FF（拉丁文和基本拉丁文补充）、U+4E00-9FFF（汉字）等。留空则表示支持所有 Unicode 字符。相关文档：https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/unicode-range"
+              value: ""
+            - $formkit: attachmentInput
+              name: font_file
+              validation: "required"
+              label: 选择字体文件
+              help: 上传 .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt 字体文件，主题会优先使用这些文件替换默认字体
+              value: ""
         - $formkit: text
           if: "$is_custom_font_files_enable === true"
           name: custom_font_name
