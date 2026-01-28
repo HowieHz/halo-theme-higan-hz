@@ -127,12 +127,60 @@ spec:
           label: Enable Custom Font Files
           value: false
           help: Enable this option to use uploaded custom font files instead of the default fonts
-        - $formkit: attachmentInput
+        - $formkit: array
           if: "$is_custom_font_files_enable === true"
           name: custom_font_files
-          label: Custom Font Files
-          help: Upload .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt font files. The theme will prioritize these files over the default fonts.
-          value: ""
+          label: Custom font files
+          value: []
+          itemLabels:
+            - type: text
+              label: $value.font_style
+            - type: text
+              label: $value.font_weight
+          children:
+            - $formkit: select
+              name: font_style
+              validation: "required"
+              value: "normal"
+              label: Font style
+              options:
+                - label: "Normal"
+                  value: "normal"
+                - label: "Italic"
+                  value: "italic"
+                - label: "Oblique"
+                  value: "oblique"
+            - $formkit: select
+              name: font_weight
+              validation: "required"
+              value: "auto"
+              label: Font weight
+              options:
+                - label: "Auto (auto — let the browser decide)"
+                  value: "auto"
+                - label: "Thin/Hairline (100)"
+                  value: "100"
+                - label: "Extra Light/Ultra Light (200)"
+                  value: "200"
+                - label: "Light (300)"
+                  value: "300"
+                - label: "Normal (400)"
+                  value: "400"
+                - label: "Medium (500)"
+                  value: "500"
+                - label: "Semi Bold/Demi Bold (600)"
+                  value: "600"
+                - label: "Bold (700)"
+                  value: "700"
+                - label: "Extra Bold/Ultra Bold (800)"
+                  value: "800"
+                - label: "Black/Heavy (900)"
+                  value: "900"
+            - $formkit: attachmentInput
+              name: font_file
+              label: Select font file
+              help: "Upload .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt font files. The theme will prioritize these files to replace the default fonts."
+              value: ""
         - $formkit: text
           if: "$is_custom_font_files_enable === true"
           name: custom_font_name

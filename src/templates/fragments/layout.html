@@ -54,46 +54,53 @@
     </th:block>
     <!--/* RSS link declaration end */-->
     <!--/* Custom Font Declarations start */-->
-    <th:block
-      th:if="${theme.config?.styles?.is_custom_font_files_enable}"
-      th:with="font=${#objects.nullSafe(theme.config?.styles?.custom_font_files, #theme.assets('/dist/MesloLGS-Regular.woff2'))},
-              ext=${font.substring(font.lastIndexOf('.') + 1)},
-              format=${ext == 'woff2' ? 'woff2' : 
-                (ext == 'woff' ? 'woff' : 
-                (ext == 'ttf' ? 'truetype' : 
-                (ext == 'otf' ? 'opentype' : 
-                (ext == 'eot' ? 'embedded-opentype' : 
-                ((ext == 'ttc' or ext == 'otc') ? 'collection' : ext)))))},
-              mime=${ext == 'woff2' ? 'font/woff2' : 
-                (ext == 'woff' ? 'font/woff' : 
-                (ext == 'ttf' ? 'font/ttf' : 
-                (ext == 'otf' ? 'font/otf' : 
-                (ext == 'sfnt' ? 'font/sfnt' : 
-                (ext == 'eot' ? 'application/vnd.ms-fontobject' : 
-                ((ext == 'ttc' or ext == 'otc') ? 'font/collection' : 'application/octet-stream'))))))}"
-    >
-      <link rel="preload" th:href="${font}" as="font" th:type="${mime}" crossorigin />
-      <!--/*/
-      <style th:inline="css">
-        @font-face {
-          font-display: swap;
-          font-family: "custom";
-          font-style: normal;
-          font-weight: 400;
-          src:
-            local("[(${theme.config?.styles?.custom_font_name})]"),
-            url("[(${font})]") format("[(${format})]");
-        }
+    <th:block th:if="${theme.config?.styles?.is_custom_font_files_enable}">
+      <th:block
+        th:each="fontConfig : ${theme.config?.styles?.custom_font_files}"
+        th:with="fontStyle=${fontConfig.font_style},
+                fontWeight=${fontConfig.font_weight},
+                fontFile=${fontConfig.font_file},
+                fontExt=${fontFile.substring(fontFile.lastIndexOf('.') + 1)},
+                fontFormat=${fontExt == 'woff2' ? 'woff2' : 
+                  (fontExt == 'woff' ? 'woff' : 
+                  (fontExt == 'ttf' ? 'truetype' : 
+                  (fontExt == 'otf' ? 'opentype' : 
+                  (fontExt == 'eot' ? 'embedded-opentype' : 
+                  ((fontExt == 'ttc' or fontExt == 'otc') ? 'collection' : fontExt)))))},
+                fontMime=${fontExt == 'woff2' ? 'font/woff2' : 
+                  (fontExt == 'woff' ? 'font/woff' : 
+                  (fontExt == 'ttf' ? 'font/ttf' : 
+                  (fontExt == 'otf' ? 'font/otf' : 
+                  (fontExt == 'sfnt' ? 'font/sfnt' : 
+                  (fontExt == 'eot' ? 'application/vnd.ms-fontobject' : 
+                  ((fontExt == 'ttc' or fontExt == 'otc') ? 'font/collection' : 'application/octet-stream'))))))}"
+      >
+        <link rel="preload" th:href="${fontFile}" as="font" th:type="${fontMime}" crossorigin />
+        <!--/*/
+        <style th:inline="css">
+          @font-face {
+            font-display: swap;
+            font-family: "custom";
+            font-style: [(${fontStyle})];
+            font-weight: [(${fontWeight})];
+            src:
+              local("[(${theme.config?.styles?.custom_font_name})]"),
+              url("[(${fontFile})]") format("[(${fontFormat})]");
+          }
+        </style>
+        /*/-->
+      </th:block>
+      <style>
         :root {
           --higan-font-family:
             custom, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif,
             "Apple Color Emoji", "Segoe UI Emoji" !important;
         }
+
         :root.webkit {
           --higan-font-family: custom !important;
         }
       </style>
-      /*/-->
     </th:block>
     <!--/* Custom Font Declarations end */-->
     <!--/* WebKit Detection start */-->

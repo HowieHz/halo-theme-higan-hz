@@ -829,7 +829,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 🏷️ 类型
 
-附件
+重复器
 
 :::
 ::: info 🧩 模板变量

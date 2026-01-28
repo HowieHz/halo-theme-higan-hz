@@ -835,7 +835,7 @@ General Styles -> 选择 Custom 字体文件
 :::
 ::: info 🏷️ Type
 
-Attachment
+Repeater
 
 :::
 ::: info 🧩 Template Variable
