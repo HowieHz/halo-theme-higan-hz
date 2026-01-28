@@ -55,6 +55,7 @@
     <!--/* RSS link declaration end */-->
     <!--/* Custom Font Declarations start */-->
     <th:block th:if="${theme.config?.styles?.is_custom_font_files_enable}">
+      <!--/* Custom Font Preload Declarations start */-->
       <th:block
         th:each="fontConfig : ${theme.config?.styles?.custom_font_configs}"
         th:with="fontFile=${fontConfig.font_file},
@@ -69,6 +70,8 @@
       >
         <link rel="preload" th:href="${fontFile}" as="font" th:type="${fontMime}" crossorigin />
       </th:block>
+      <!--/* Custom Font Preload Declarations end */-->
+      <!--/* Custom Font @font-face Declarations start */-->
       <th:block
         th:each="fontConfig : ${theme.config?.styles?.custom_font_configs}"
         th:with="fontStyle=${fontConfig.font_style},
@@ -99,6 +102,8 @@
         </style>
         /*/-->
       </th:block>
+      <!--/* Custom Font @font-face Declarations end */-->
+      <!--/* Custom Font font-family Declarations start */-->
       <style>
         :root {
           --higan-font-family:
@@ -110,6 +115,7 @@
           --higan-font-family: custom !important;
         }
       </style>
+      <!--/* Custom Font font-family Declarations end */-->
     </th:block>
     <!--/* Custom Font Declarations end */-->
     <!--/* WebKit Detection start */-->
