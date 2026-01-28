@@ -99,8 +99,7 @@
                 font-family: "custom";
                 font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
                 font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
-                src:
-                  url("[(${fontFile})]") format("[(${fontFormat})]");
+                src: url("[(${fontFile})]") format("[(${fontFormat})]");
               }
             /*[/]*/
             /*[# th:unless="${#strings.isEmpty(fontUnicodeRange)}"]*/
@@ -109,8 +108,7 @@
                 font-family: "custom";
                 font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
                 font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
-                src:
-                  url("[(${fontFile})]") format("[(${fontFormat})]");
+                src: url("[(${fontFile})]") format("[(${fontFormat})]");
                 unicode-range: [(${fontUnicodeRange})];
               }
             /*[/]*/
@@ -122,9 +120,7 @@
                 font-family: "custom";
                 font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
                 font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
-                src:
-                  local("[(${fontName})]"),
-                  url("[(${fontFile})]") format("[(${fontFormat})]");
+                src: local("[(${fontName})]"), url("[(${fontFile})]") format("[(${fontFormat})]");
               }
             /*[/]*/
             /*[# th:unless="${#strings.isEmpty(fontUnicodeRange)}"]*/
@@ -133,9 +129,7 @@
                 font-family: "custom";
                 font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
                 font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
-                src:
-                  local("[(${fontName})]"),
-                  url("[(${fontFile})]") format("[(${fontFormat})]");
+                src: local("[(${fontName})]"), url("[(${fontFile})]") format("[(${fontFormat})]");
                 unicode-range: [(${fontUnicodeRange})];
               }
             /*[/]*/
