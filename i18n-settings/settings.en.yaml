@@ -150,12 +150,15 @@ spec:
                   value: "italic"
                 - label: "Oblique"
                   value: "oblique"
+              help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-style
             - $formkit: select
               name: font_weight
               validation: "required"
               value: "400"
               label: Font weight
               options:
+                - label: "Custom Value"
+                  value: "custom"
                 - label: "Auto (auto — let the browser decide)"
                   value: "auto"
                 - label: "Thin/Hairline (100)"
@@ -176,6 +179,30 @@ spec:
                   value: "800"
                 - label: "Black/Heavy (900)"
                   value: "900"
+              help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-weight
+            - $formkit: text
+              if: "$font_weight === 'custom'"
+              name: custom_font_weight
+              label: Custom Font Weight Value
+              validation: "required"
+              value: "1 1000"
+            - $formkit: select
+              name: font_display
+              validation: "required"
+              value: "swap"
+              label: Font Display Strategy
+              options:
+                - label: "Auto"
+                  value: "auto"
+                - label: "Block"
+                  value: "block"
+                - label: "Swap"
+                  value: "swap"
+                - label: "Fallback"
+                  value: "fallback"
+                - label: "Optional"
+                  value: "optional"
+              help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-display
             - $formkit: attachmentInput
               name: font_file
               label: Select font file

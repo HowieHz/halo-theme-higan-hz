@@ -150,12 +150,15 @@ spec:
                   value: "italic"
                 - label: "倾斜（oblique —— 常规字形被倾斜几度）"
                   value: "oblique"
+              help: https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/At-rules/@font-face/font-style
             - $formkit: select
               name: font_weight
               validation: "required"
               value: "400"
               label: 字体粗细
               options:
+                - label: "自定义值"
+                  value: "custom"
                 - label: "自动（auto —— 由浏览器决定使用何种粗细）"
                   value: "auto"
                 - label: "极细（100 —— Thin (Hairline)）"
@@ -176,6 +179,30 @@ spec:
                   value: "800"
                 - label: "黑体（900 —— Black (Heavy)）"
                   value: "900"
+              help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-weight
+            - $formkit: text
+              if: "$font_weight === 'custom'"
+              name: custom_font_weight
+              label: 自定义字体粗细值
+              validation: "required"
+              value: "1 1000"
+            - $formkit: select
+              name: font_display
+              validation: "required"
+              value: "swap"
+              label: 字体显示策略
+              options:
+                - label: "自动（auto）"
+                  value: "auto"
+                - label: "堵塞（block）"
+                  value: "block"
+                - label: "交换（swap）"
+                  value: "swap"
+                - label: "回退（fallback）"
+                  value: "fallback"
+                - label: "可选（optional）"
+                  value: "optional"
+              help: https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/At-rules/@font-face/font-display
             - $formkit: attachmentInput
               name: font_file
               label: 选择字体文件
