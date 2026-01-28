@@ -14,8 +14,8 @@ importers:
   .:
     dependencies:
       alpinejs:
-        specifier: ^3.15.4
-        version: 3.15.4
+        specifier: ^3.15.5
+        version: 3.15.5
     devDependencies:
       '@dreamsicle.io/stylelint-config-tailwindcss':
         specifier: ^1.2.2
@@ -1719,8 +1719,8 @@ packages:
     resolution: {integrity: sha512-n/NdPglzmkcNYZfIT3Fo8pnDR/lKiK1kZ1Yaa315UoLyHymADhWw15+bzN5gBxrCA8KyeNu0JJD6mLtTov43lQ==}
     engines: {node: '>= 14.0.0'}
 
-  alpinejs@3.15.4:
-    resolution: {integrity: sha512-lDpOdoVo0bhFjgl310k1qw3kbpUYwM/v0WByvAchsO93bl3o1rrgr0P/ssx3CimwEtNfXbmwKbtHbqTRCTTH9g==}
+  alpinejs@3.15.5:
+    resolution: {integrity: sha512-l1R4em/uCUr7eJimcO/b0L1+H2tVcB1Y7cQ3d+pzwVnv0zWs7gw4MhwdsLjfLccWV2iH0ahlfaJWitNRFOZdvQ==}
 
   ansi-regex@2.1.1:
     resolution: {integrity: sha512-TIGnTpdo+E3+pCyAluZvtED5p5wCqLdezCyhPZzKPcxvFplEt4i+W7OONCKgeZFT3+y5NZZfOOS/Bdcanm1MYA==}
@@ -5373,7 +5373,7 @@ snapshots:
       '@algolia/requester-fetch': 5.46.3
       '@algolia/requester-node-http': 5.46.3
 
-  alpinejs@3.15.4:
+  alpinejs@3.15.5:
     dependencies:
       '@vue/reactivity': 3.1.5
 
