@@ -57,6 +57,20 @@
     <th:block th:if="${theme.config?.styles?.is_custom_font_files_enable}">
       <th:block
         th:each="fontConfig : ${theme.config?.styles?.custom_font_configs}"
+        th:with="fontFile=${fontConfig.font_file},
+                fontExt=${fontFile.substring(fontFile.lastIndexOf('.') + 1)},
+                fontMime=${fontExt == 'woff2' ? 'font/woff2' : 
+                  (fontExt == 'woff' ? 'font/woff' : 
+                  (fontExt == 'ttf' ? 'font/ttf' : 
+                  (fontExt == 'otf' ? 'font/otf' : 
+                  (fontExt == 'sfnt' ? 'font/sfnt' : 
+                  (fontExt == 'eot' ? 'application/vnd.ms-fontobject' : 
+                  ((fontExt == 'ttc' or fontExt == 'otc') ? 'font/collection' : 'application/octet-stream'))))))}"
+      >
+        <link rel="preload" th:href="${fontFile}" as="font" th:type="${fontMime}" crossorigin />
+      </th:block>
+      <th:block
+        th:each="fontConfig : ${theme.config?.styles?.custom_font_configs}"
         th:with="fontStyle=${fontConfig.font_style},
                 CustomFontStyle=${fontConfig.custom_font_style},
                 fontWeight=${fontConfig.font_weight},
@@ -69,16 +83,8 @@
                   (fontExt == 'ttf' ? 'truetype' : 
                   (fontExt == 'otf' ? 'opentype' : 
                   (fontExt == 'eot' ? 'embedded-opentype' : 
-                  ((fontExt == 'ttc' or fontExt == 'otc') ? 'collection' : fontExt)))))},
-                fontMime=${fontExt == 'woff2' ? 'font/woff2' : 
-                  (fontExt == 'woff' ? 'font/woff' : 
-                  (fontExt == 'ttf' ? 'font/ttf' : 
-                  (fontExt == 'otf' ? 'font/otf' : 
-                  (fontExt == 'sfnt' ? 'font/sfnt' : 
-                  (fontExt == 'eot' ? 'application/vnd.ms-fontobject' : 
-                  ((fontExt == 'ttc' or fontExt == 'otc') ? 'font/collection' : 'application/octet-stream'))))))}"
+                  ((fontExt == 'ttc' or fontExt == 'otc') ? 'collection' : fontExt)))))}"
       >
-        <link rel="preload" th:href="${fontFile}" as="font" th:type="${fontMime}" crossorigin />
         <!--/*/
         <style th:inline="css">
           @font-face {
