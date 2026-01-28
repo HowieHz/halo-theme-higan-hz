@@ -153,6 +153,7 @@ spec:
               help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-style
             - $formkit: select
               name: font_weight
+              id: font_weight
               validation: "required"
               value: "400"
               label: Font weight
@@ -181,7 +182,7 @@ spec:
                   value: "900"
               help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-weight
             - $formkit: text
-              if: "$font_weight === 'custom'"
+              if: "$get(font_weight).value === 'custom'"
               name: custom_font_weight
               label: Custom Font Weight Value
               validation: "required"
