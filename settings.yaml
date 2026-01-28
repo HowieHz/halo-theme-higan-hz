@@ -213,8 +213,14 @@ spec:
                 - label: "可选（optional）"
                   value: "optional"
               help: https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/At-rules/@font-face/font-display
+            - $formkit: text
+              name: font_unicode_range
+              label: 字体 Unicode 范围
+              help: "指定字体所支持的 Unicode 范围，例如：U+000-5FF（拉丁文和基本拉丁文补充）、U+4E00-9FFF（汉字）等。留空则表示支持所有 Unicode 字符。相关文档：https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/unicode-range"
+              value: ""
             - $formkit: attachmentInput
               name: font_file
+              validation: "required"
               label: 选择字体文件
               help: 上传 .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt 字体文件，主题会优先使用这些文件替换默认字体
               value: ""

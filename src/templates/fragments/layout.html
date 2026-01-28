@@ -81,6 +81,7 @@
             fontWeight=${fontConfig.font_weight},
             CustomFontWeight=${fontConfig.custom_font_weight},
             fontDisplay=${fontConfig.font_display},
+            fontUnicodeRange=${fontConfig.font_unicode_range},
             fontFile=${fontConfig.font_file},
             fontExt=${fontFile.substring(fontFile.lastIndexOf('.') + 1)},
             fontFormat=${fontExt == 'woff2' ? 'woff2' : 
@@ -90,15 +91,29 @@
               (fontExt == 'eot' ? 'embedded-opentype' : 
               ((fontExt == 'ttc' or fontExt == 'otc') ? 'collection' : fontExt)))))}"
         ]*/
-        @font-face {
-          font-display: [(${fontDisplay})];
-          font-family: "custom";
-          font-style: [(${fontStyle == 'custom' ? CustomFontStyle : fontStyle})];
-          font-weight: [(${fontWeight == 'custom' ? CustomFontWeight : fontWeight})];
-          src:
-            local("[(${theme.config?.styles?.custom_font_name})]"),
-            url("[(${fontFile})]") format("[(${fontFormat})]");
-        }
+          /*[# th:if="${#strings.isEmpty(fontUnicodeRange)}"]*/
+            @font-face {
+              font-display: [(${fontDisplay})];
+              font-family: "custom";
+              font-style: [(${fontStyle == 'custom' ? CustomFontStyle : fontStyle})];
+              font-weight: [(${fontWeight == 'custom' ? CustomFontWeight : fontWeight})];
+              src:
+                local("[(${theme.config?.styles?.custom_font_name})]"),
+                url("[(${fontFile})]") format("[(${fontFormat})]");
+            }
+          /*[/]*/
+          /*[# th:unless="${#strings.isEmpty(fontUnicodeRange)}"]*/
+            @font-face {
+              font-display: [(${fontDisplay})];
+              font-family: "custom";
+              font-style: [(${fontStyle == 'custom' ? CustomFontStyle : fontStyle})];
+              font-weight: [(${fontWeight == 'custom' ? CustomFontWeight : fontWeight})];
+              src:
+                local("[(${theme.config?.styles?.custom_font_name})]"),
+                url("[(${fontFile})]") format("[(${fontFormat})]");
+              unicode-range: [(${fontUnicodeRange})];
+            }
+          /*[/]*/
         /*[/]*/
       </style>
       /*/-->

@@ -213,8 +213,14 @@ spec:
                 - label: "Optional"
                   value: "optional"
               help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-display
+            - $formkit: text
+              name: font_unicode_range
+              label: Font Unicode Range
+              help: "Specify the Unicode range supported by the font, e.g., U+000-5FF (Latin and Basic Latin Supplement), U+4E00-9FFF (CJK Unified Ideographs), etc. Leave blank to support all Unicode characters. Documentation: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/unicode-range"
+              value: ""
             - $formkit: attachmentInput
               name: font_file
+              validation: "required"
               label: Select font file
               help: "Upload .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt font files. The theme will prioritize these files to replace the default fonts."
               value: ""
