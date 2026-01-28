@@ -27,7 +27,7 @@ Built on a clean and refreshing foundation, this theme adheres to the following 
 3. [Highly configurable](./theme-configuration)
 4. [Good compatibility](/en/reference/browser-compatibility)
 5. [Plugin compatibility](./plugin-compatibility)
-6. [High performance](/en/reference/performance) (page theme resources ~70KiB gzipped)
+6. [High performance](/en/reference/performance) (page theme resources ~90KiB gzipped)
 
 ## Preview
 
