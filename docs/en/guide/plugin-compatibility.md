@@ -43,6 +43,12 @@ The theme provides moments page (`/moments`) support, please read [Moments Page 
 
 - The moments page can be used to display GitHub activity, see [howiehz/ghu-events-moments](https://github.com/howiehz/ghu-events-moments) for this usage
 
+## Friends Circle
+
+Plugin [plugin-friends](https://github.com/chengzhongxue/plugin-friends) ([App Store Page](https://www.halo.run/store/apps/app-yISsV))
+
+The theme provides friends circle page (`/friends`) support, which displays posts from subscribed friend blogs.
+
 ## Comment Section
 
 Choose one of the following plugins:

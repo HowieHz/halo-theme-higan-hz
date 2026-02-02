@@ -46,6 +46,7 @@ In the default access path column in the table, `{xxx}` represents variables (pl
 | `photos.html`  | Photos Page   | `/photos`, `/photos/page/{page}`     | [plugin-photos](https://github.com/halo-sigs/plugin-photos)   |
 | `moments.html` | Moments List  | `/moments(/page/{page})(?tag={tag})` | [plugin-moments](https://github.com/halo-sigs/plugin-moments) |
 | `moment.html`  | Moment Detail | `/moments/{name}`                    | [plugin-moments](https://github.com/halo-sigs/plugin-moments) |
+| `friends.html` | Friends Circle | `/friends(/page/{page})?linkName={linkName}` | [plugin-friends](https://github.com/chengzhongxue/plugin-friends) |
 
 ### Other Plugin Adaptations
 

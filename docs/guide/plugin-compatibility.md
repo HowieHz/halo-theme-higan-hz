@@ -41,6 +41,12 @@ outline: deep
 
 - 瞬间页面可用于展示 GitHub 活动，此用法请看 [howiehz/ghu-events-moments](https://github.com/howiehz/ghu-events-moments)
 
+## 朋友圈
+
+插件 [plugin-friends](https://github.com/chengzhongxue/plugin-friends)（[应用市场页面](https://www.halo.run/store/apps/app-yISsV)）
+
+主题提供了朋友圈页面（`/friends`）支持，可展示订阅的朋友博客文章。
+
 ## 评论区
 
 以下插件任选其一即可：
