@@ -1139,6 +1139,16 @@ spec:
           label: 简洁列表显示文章阅读量
           value: false
         - $formkit: switch
+          name: is_show_post_pubdate_in_simple_post_list
+          if: "$list_layout === 'simple-post-list'"
+          label: 简洁列表显示发布日期
+          value: true
+        - $formkit: switch
+          name: is_show_post_pubdate_in_post_list_summary
+          if: "$list_layout === 'post-list-summary'"
+          label: 多元列表显示发布日期
+          value: true
+        - $formkit: switch
           name: is_show_post_categories_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
           label: 多元列表显示文章分类

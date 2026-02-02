@@ -3462,10 +3462,12 @@ Option
 
 简洁列表 When enabled, you can configure
 
+- [Display publish date](#简洁列表-display-publish-date)
 - [Displaypost 阅读量](#简洁列表-displaypost-阅读量)
 
 多元列表 When enabled, you can configure
 
+- [Display publish date](#多元列表-display-publish-date)
 - [Displaypost 分类](#多元列表-displaypost-分类)
 - [Displaypost 标签](#多元列表-displaypost-标签)
 - [Displaypost 阅读量](#多元列表-displaypost-阅读量)
@@ -3481,6 +3483,41 @@ Option
 - [Display 条数](#瞬间列表-display-条数)
 - [Display 条目作者头像](#瞬间列表-display-条目作者头像)
 - [Display 条目作者昵称](#瞬间列表-display-条目作者昵称)
+
+:::
+
+### 简洁列表 Display publish date
+
+::: info 🎯 Purpose
+
+Controls whether to display publish date in the simple post list.
+
+:::
+::: info 📂 Configuration Item Location
+
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为"简洁 post 列表"whenDisplay）
+
+Home Page Style -> 简洁列表 Display publish date
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=简洁列表显示发布日期" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_show_post_pubdate_in_simple_post_list`
 
 :::
 
@@ -3516,6 +3553,41 @@ Boolean
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_post_views_in_simple_post_list`
+
+:::
+
+### 多元列表 Display publish date
+
+::: info 🎯 Purpose
+
+Controls whether to display publish date in the post list summary.
+
+:::
+::: info 📂 Configuration Item Location
+
+（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为"多元 post 列表"whenDisplay）
+
+Home Page Style -> 多元列表 Display publish date
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表显示发布日期" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_show_post_pubdate_in_post_list_summary`
 
 :::
 
