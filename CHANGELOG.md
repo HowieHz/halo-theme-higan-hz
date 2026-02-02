@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [1.55.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.54.0...v1.55.0) (2026-2-3)
+
 ### 🚀 新功能
 
 - 适配[朋友圈](https://github.com/chengzhongxue/plugin-friends-new)（[应用市场页面](https://www.halo.run/store/apps/app-yISsV)）插件。
@@ -17,9 +19,9 @@
 
 - 修复 `首页样式 -> 主页列表布局` 选择“瞬间列表”时，在页数大于 1 时无法加载页面的问题。
 
-## 🔧 优化改进
+### 🔧 优化改进
 
-- 优化英文文档翻译质量
+- 优化英文文档翻译质量。
 
 ## [1.54.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.53.1...v1.54.0) (2026-1-28)
 
