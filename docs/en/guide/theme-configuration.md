@@ -224,7 +224,7 @@ The set value must comply with [BCP 47](https://developer.mozilla.org/en-US/docs
 ::: info ℹ️ Additional Information
 
 - Security: The set language value will be automatically escaped, no need to worry about XSS injection attacks.
-- Setting priority: Please refer to [page language setting priority](/reference/faq#page语言Set优先级).
+- Setting priority: Please refer to [page language setting priority](/reference/faq#page language setting priority).
 
 :::
 
@@ -380,9 +380,9 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-Enable[Auto-redirect Based on Browser Language](#Auto-redirect Based on Browser Language)后，If 浏览器语言与 Default Page Language 不同，且浏览器语言存 In 于 this option，将自动跳转到对应 page。
+After enabling [Auto-redirect Based on Browser Language](#Auto-redirect Based on Browser Language), if the browser language is different from the Default Page Language and the browser language exists in this option, it will automatically redirect to the corresponding page.
 
-请参照[Auto-redirect Based on Browser LanguageUse 指南](/tutorial/i18n#Auto-redirect Based on Browser LanguageUse指南)进行 Configuration。
+Please refer to the [Auto-redirect Based on Browser Language Usage Guide](/tutorial/i18n#Auto-redirect Based on Browser LanguageUse指南) for configuration.
 
 匹配顺序从上到下。
 
@@ -392,7 +392,7 @@ Enable[Auto-redirect Based on Browser Language](#Auto-redirect Based on Browser 
 
 ::: info 🎯 Purpose
 
-EnableMultilingual Menu Support，AllowIn 菜单中 Display 不同语言的内容。
+Enable Multilingual Menu Support, allowing the menu to display content in different languages.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -422,7 +422,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Enable 后请参照[多语言菜单 Use 指南](/tutorial/i18n#多语言菜单Use指南)进行 Configuration。
+After enabling, please refer to the [Multilingual Menu Usage Guide](/tutorial/i18n#多语言菜单Use指南) for configuration.
 
 :::
 
@@ -430,7 +430,7 @@ Enable 后请参照[多语言菜单 Use 指南](/tutorial/i18n#多语言菜单Us
 
 ::: info 🎯 Purpose
 
-自动将非跳转的不安全资源请求升级到 HTTPS，包括 When 前域名以及第三方请求。
+Automatically upgrade non-redirected insecure resource requests to HTTPS, including the current domain and third-party requests.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -463,7 +463,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-防止站点被恶意镜像后的流量流失，仅 Allow 白名单中的域名访问。
+Prevent traffic loss after the site is maliciously mirrored, only allowing access from domains in the whitelist.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -493,7 +493,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Enable 后请参照[EnableOnly Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains)进行 Configuration。
+After enabling, please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains) for configuration.
 
 When enabled, you can configure:
 
@@ -507,7 +507,7 @@ When enabled, you can configure:
 
 ::: info 🎯 Purpose
 
-SetDomain Whitelist.
+Set the Domain Whitelist.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -563,7 +563,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-请参照[EnableOnly Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains)进行 Configuration。
+Please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains) for configuration.
 
 :::
 
@@ -608,27 +608,27 @@ String
 :::
 ::: info ℹ️ Additional Information
 
-请参照[EnableOnly Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains)进行 Configuration。
+Please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains) for configuration.
 
 :::
 
-### 跳转后 Whether 保留路径和查询参数
+### Keep Path and Query Parameters After Redirect
 
 ::: info 🎯 Purpose
 
-Set 跳转后 Whether 保留路径和查询参数。
+Set whether to keep path and query parameters after redirect.
 
 :::
 ::: info 📂 Configuration Item Location
 
 （[Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains)When enabled, will display)
 
-Global -> 跳转后 Whether 保留路径和查询参数
+Global -> Keep Path and Query Parameters After Redirect
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=跳转后Whether保留路径和查询参数" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Keep path and query" />
 
 :::
 ::: info 🏷️ Type
@@ -648,12 +648,12 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-请参照[EnableOnly Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains)进行 Configuration。
+Please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains) for configuration.
 
-假设用户访问的链接为 `http://localhost/a/b?a=1`，[Target Link](#Target Link)Set 为（Base 64 编码前）`https://p.com`：
+Assuming the user accesses the link `http://localhost/a/b?a=1`, and the [Target Link](#Target Link) is set to (before Base 64 encoding) `https://p.com`:
 
-- Disablethis optionwill 跳转到：`https://p.com`
-- Enablethis optionwill 跳转到：`https://p.com/a/b?a=1`
+- With this option disabled, it will redirect to: `https://p.com`
+- With this option enabled, it will redirect to: `https://p.com/a/b?a=1`
 
 :::
 
@@ -661,7 +661,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Specify 资源将 UseCustom 的资源位置地址，而不是主题默认的地址。
+Specify that resources will use custom resource location addresses instead of the theme's default addresses.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -773,21 +773,21 @@ Enable 后 Requires 要 Configuration 以下子项：
 
 ## General Styles
 
-### EnableCustom 字体文件
+### Enable Custom Font Files
 
 ::: info 🎯 Purpose
 
-Use 上传的 Custom 字体文件替换默认字体。
+Use uploaded custom font files to replace the default fonts.
 
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> EnableCustom 字体文件
+General Styles -> Enable Custom Font Files
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=EnableCustom字体文件" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Enable Custom Font Files" />
 
 :::
 ::: info 🏷️ Type
@@ -809,28 +809,28 @@ Boolean
 
 When enabled, you can configure:
 
-- [Custom 字体文件](#custom-字体文件)
-- [Custom 字体名称](#custom-字体名称)
+- [Custom Font Files](#custom-font-files)
+- [Font Name](#font-name)
 
 :::
 
-### Custom 字体文件
+### Custom Font Files
 
 ::: info 🎯 Purpose
 
-Used for 选择上传的字体文件替换默认字体文件。Support `.woff2`/`.woff`/`.ttf`/`.otf`/`.eot`/`.ttc`/`.otc`/`.sfnt` 格式的字体文件。
+Used to select uploaded font files to replace the default font files. Supports `.woff2`/`.woff`/`.ttf`/`.otf`/`.eot`/`.ttc`/`.otc`/`.sfnt` format font files.
 
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> EnableCustom 字体文件](#enablecustom-字体文件)When enabled, will display）
+（[General Styles -> Enable Custom Font Files](#enable-custom-font-files)When enabled, will display）
 
-General Styles -> 选择 Custom 字体文件
+General Styles -> Custom Font Files
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=选择Custom字体文件" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom font files" />
 
 :::
 ::: info 🏷️ Type
@@ -844,24 +844,24 @@ Repeater
 
 :::
 
-### Custom 字体名称
+### Font Name (Full Name/PostScript Name)
 
 ::: info 🎯 Purpose
 
-正确填写 this option 后，If 用户本地安装已经此字体，则应用本地版本。  
-Ifthis option 置 Empty，则即 Use 户本地已安装 this 字体，也不 willUse 本地版本，而是从网络下载字体文件。
+After correctly filling in this option, if the user has this font installed locally, the local version will be used.  
+If this option is left empty, even if the user has this font installed locally, the local version will not be used, and the font file will be downloaded from the network.
 
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> EnableCustom 字体文件](#enablecustom-字体文件)When enabled, will display）
+（[General Styles -> Enable Custom Font Files](#enable-custom-font-files)When enabled, will display）
 
-General Styles -> Custom 字体名称
+General Styles -> Font Name (Full Name/PostScript Name)
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom字体名称" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Font Name" />
 
 :::
 ::: info 🏷️ Type
@@ -879,9 +879,9 @@ Empty
 `My Custom Font Regular`、`MyCustomFont-Regular`
 
 :::
-::: info 外部约束
+::: info External Constraints
 
-对应字体文件内部声明的“字体全名 (`nameID=4`)”or“PostScript 名 (`nameID=6`)”。
+Corresponds to the "Full font name (`nameID=4`)" or "PostScript name (`nameID=6`)" declared inside the font file.
 
 :::
 ::: info 🧩 Template Variable
@@ -923,21 +923,21 @@ Boolean
 
 :::
 
-### 配色方案
+### Color Scheme
 
 ::: info 🎯 Purpose
 
-Set 网站的整体配色方案，Support 多种内置主题和 Custom 配色。
+Set the overall color scheme of the website, supporting multiple built-in themes and custom colors.
 
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 配色方案
+General Styles -> Color Scheme
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=配色方案" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Color scheme" />
 
 :::
 ::: info 🏷️ Type
@@ -968,26 +968,26 @@ Option
 :::
 ::: info ℹ️ Additional Information
 
-- 对于 Enable[深浅色模式切换按钮](#深浅色模式切换按钮)的情况，这项决定了网站刚加载完成 when 的默认配色方案。
-- 选择"Custom 配色"when，Requires 要配合[Custom 配色方案](#custom-配色方案).
+- For cases where [Light/Dark Mode Toggle Button](#light-dark-mode-toggle-button) is enabled, this determines the default color scheme when the website first loads.
+- When selecting "Custom Color Scheme", it needs to be used with [Custom Color Scheme](#custom-color-scheme).
 
 :::
 
-### Custom 配色方案
+### Custom Color Scheme
 
 ::: info 🎯 Purpose
 
-SetCustom 配色方案。
+Set custom color scheme.
 
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> Custom 配色方案
+General Styles -> Custom Color Scheme
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom配色方案" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom Color Scheme" />
 
 :::
 ::: info 🏷️ Type
@@ -997,7 +997,7 @@ Repeater
 :::
 ::: info ℹ️ Additional Information
 
-Use 方法请参考 [教程：Custom 配色方案](/tutorial/custom-theme)
+For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-theme)
 
 :::
 
@@ -1005,7 +1005,7 @@ Use 方法请参考 [教程：Custom 配色方案](/tutorial/custom-theme)
 >
 > ::: tip 📂 Configuration 项名
 >
-> Custom 配色方案识别码
+> Custom Color Scheme Identifier
 >
 > :::
 > ::: info 🏷️ Type
@@ -1020,12 +1020,12 @@ Use 方法请参考 [教程：Custom 配色方案](/tutorial/custom-theme)
 > :::
 > ::: info ℹ️ Additional Information
 >
-> 唯一识别码，请勿重复。
+> Unique identifier, do not duplicate.
 >
 > :::
 > ::: tip 📂 Configuration 项名
 >
-> 主题色彩模式
+> Theme Color Mode
 >
 > :::
 > ::: info 🏷️ Type
@@ -1035,13 +1035,13 @@ Use 方法请参考 [教程：Custom 配色方案](/tutorial/custom-theme)
 > :::
 > ::: info ⭐ Default Value
 >
-> `深色模式`（internal value `dark`）
+> `Dark Mode`（internal value `dark`）
 >
 > :::
 > ::: info 💡 Other Options
 >
-> - `浅色模式`（internal value `light`）
-> - `自动模式`（internal value `auto`）
+> - `Light Mode`（internal value `light`）
+> - `Auto Mode`（internal value `auto`）
 >
 > :::
 > ::: tip 📂 Configuration 项名
@@ -1061,7 +1061,7 @@ Use 方法请参考 [教程：Custom 配色方案](/tutorial/custom-theme)
 > :::
 > ::: info ℹ️ Additional Information
 >
-> Enablethis option 后，将 Use CSS 变量来定义配色方案。
+> After enabling this option, CSS variables will be used to define the color scheme.
 >
 > :::
 > ::: tip 📂 Configuration 项名
@@ -1164,22 +1164,22 @@ Use 方法请参考 [教程：Custom 配色方案](/tutorial/custom-theme)
 >
 > :::
 
-### 深浅色模式切换按钮
+### Light/Dark Mode Toggle Button
 
 ::: info 🎯 Purpose
 
 IfEnablethis option，将 In 大标题旁 Display 明暗模式切换按钮。  
-切换逻辑为：浅色模式 -> 深色模式 -> 自动模式 -> 浅色模式。
+Toggle logic: Light Mode -> Dark Mode -> Auto Mode -> Light Mode.
 
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 深浅色模式切换按钮
+General Styles -> Light/Dark Mode Toggle Button
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=深浅色模式切换按钮" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Light/Dark Mode Toggle Button" />
 
 :::
 ::: info 🏷️ Type
@@ -1200,7 +1200,7 @@ Boolean
 ::: info ℹ️ Additional Information
 
 “自动模式配色方案”选择与“浅色模式配色方案”相同即 canDisable 自动模式。  
-切换逻辑将变为：浅色模式 -> 深色模式 -> 浅色模式。
+Toggle logic will become: Light Mode -> Dark Mode -> Light Mode.
 
 When enabled, you can configure:
 
@@ -1214,23 +1214,23 @@ When enabled, you can configure:
 
 :::
 
-### 自动模式配色方案
+### Auto Mode Color Scheme
 
 ::: info 🎯 Purpose
 
-Set 深浅色模式切换按钮中自动模式的配色方案。
+Set the color scheme for Auto Mode in the Light/Dark Mode Toggle Button.
 
 :::
 ::: info 📂 Configuration Item Location
 
 （[General Styles -> 深浅色模式切换按钮](#深浅色模式切换按钮)When enabled, will display）
 
-General Styles -> 自动模式配色方案
+General Styles -> Auto Mode Color Scheme
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=自动模式配色方案" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Auto Mode Color Scheme" />
 
 :::
 ::: info 🏷️ Type
@@ -1265,23 +1265,23 @@ Option
 
 :::
 
-### 浅色模式配色方案
+### Light Mode Color Scheme
 
 ::: info 🎯 Purpose
 
-Set 深浅色模式切换按钮中浅色模式的配色方案。
+Set the color scheme for Light Mode in the Light/Dark Mode Toggle Button.
 
 :::
 ::: info 📂 Configuration Item Location
 
 （[General Styles -> 深浅色模式切换按钮](#深浅色模式切换按钮)When enabled, will display）
 
-General Styles -> 浅色模式配色方案
+General Styles -> Light Mode Color Scheme
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=浅色模式配色方案" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Light Mode Color Scheme" />
 
 :::
 ::: info 🏷️ Type
@@ -1316,23 +1316,23 @@ Option
 
 :::
 
-### 深色模式配色方案
+### Dark Mode Color Scheme
 
 ::: info 🎯 Purpose
 
-Set 深浅色模式切换按钮中深色模式的配色方案。
+Set the color scheme for Dark Mode in the Light/Dark Mode Toggle Button.
 
 :::
 ::: info 📂 Configuration Item Location
 
 （[General Styles -> 深浅色模式切换按钮](#深浅色模式切换按钮)When enabled, will display）
 
-General Styles -> 深色模式配色方案
+General Styles -> Dark Mode Color Scheme
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=深色模式配色方案" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Dark Mode Color Scheme" />
 
 :::
 ::: info 🏷️ Type
@@ -1367,7 +1367,7 @@ Option
 
 :::
 
-### 字体大小
+### Font Size
 
 ::: info 🎯 Purpose
 
@@ -1376,12 +1376,12 @@ Set 网站的整体字体大小。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 字体大小
+General Styles -> Font Size
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=字体大小" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Font Size" />
 
 :::
 ::: info 🏷️ Type
@@ -1406,7 +1406,7 @@ Option
 
 :::
 
-### Custom 内容区域最大宽度
+### Custom Content Area Maximum Width
 
 ::: info 🎯 Purpose
 
@@ -1415,12 +1415,12 @@ Whether 定义内容区域最大宽度。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> Custom 内容区域最大宽度
+General Styles -> Custom Content Area Maximum Width
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom内容区域最大宽度" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom Content Area Maximum Width" />
 
 :::
 ::: info 🏷️ Type
@@ -1449,7 +1449,7 @@ When enabled, you can configure:
 
 :::
 
-### 内容区域最大宽度
+### Content Area Maximum Width
 
 ::: info 🎯 Purpose
 
@@ -1460,12 +1460,12 @@ Set 内容区域的最大宽度。
 
 （[General Styles -> Custom 内容区域最大宽度](#custom-内容区域最大宽度)When enabled, will display）
 
-General Styles -> 内容区域最大宽度
+General Styles -> Content Area Maximum Width
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=内容区域最大宽度" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content Area Maximum Width" />
 
 :::
 ::: info 🏷️ Type
@@ -1494,7 +1494,7 @@ Valid CSS length unit.
 
 :::
 
-### Custom 内容区域最小宽度
+### Custom Content Area Minimum Width
 
 ::: info 🎯 Purpose
 
@@ -1503,12 +1503,12 @@ Whether 定义内容区域最小宽度。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> Custom 内容区域最小宽度
+General Styles -> Custom Content Area Minimum Width
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom内容区域最小宽度" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom Content Area Minimum Width" />
 
 :::
 ::: info 🏷️ Type
@@ -1537,7 +1537,7 @@ When enabled, you can configure:
 
 :::
 
-### 内容区域最小宽度
+### Content Area Minimum Width
 
 ::: info 🎯 Purpose
 
@@ -1548,12 +1548,12 @@ Set 内容区域的最小宽度。
 
 （[General Styles -> Custom 内容区域最小宽度](#custom-内容区域最小宽度)When enabled, will display）
 
-General Styles -> 内容区域最小宽度
+General Styles -> Content Area Minimum Width
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=内容区域最小宽度" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content Area Minimum Width" />
 
 :::
 ::: info 🏷️ Type
@@ -1582,7 +1582,7 @@ Valid CSS length unit.
 
 :::
 
-### 强制应用内容区域最小宽度
+### Force Apply Content Area Minimum Width
 
 ::: info 🎯 Purpose
 
@@ -1593,12 +1593,12 @@ Controls whether 强制应用内容区域最小宽度。
 
 （[General Styles -> Custom 内容区域最小宽度](#custom-内容区域最小宽度)When enabled, will display）
 
-General Styles -> 强制应用内容区域最小宽度
+General Styles -> Force Apply Content Area Minimum Width
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=强制应用内容区域最小宽度" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Force Apply Content Area Minimum Width" />
 
 :::
 ::: info 🏷️ Type
@@ -1623,7 +1623,7 @@ Boolean
 
 :::
 
-### Custom 内容区域宽度属性
+### Custom Content Area Width Property
 
 ::: info 🎯 Purpose
 
@@ -1632,12 +1632,12 @@ Whether 定义内容区域宽度属性。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> Custom 内容区域宽度属性
+General Styles -> Custom Content Area Width Property
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom内容区域宽度属性" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom Content Area Width Property" />
 
 :::
 ::: info 🏷️ Type
@@ -1663,7 +1663,7 @@ When enabled, you can configure:
 
 :::
 
-### 内容区域宽度样式
+### Content Area Width Style
 
 ::: info 🎯 Purpose
 
@@ -1674,12 +1674,12 @@ When enabled, you can configure:
 
 （[General Styles -> Custom 内容区域宽度属性](/guide/theme-configuration#Custom内容区域宽度属性)When enabled, will display）
 
-General Styles -> 内容区域宽度样式
+General Styles -> Content Area Width Style
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=内容区域宽度样式" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content Area Width Style" />
 
 :::
 ::: info 🏷️ Type
@@ -1713,7 +1713,7 @@ String
 
 :::
 
-### 页眉头像 Display
+### Header Avatar Display
 
 ::: info 🎯 Purpose
 
@@ -1722,12 +1722,12 @@ Controls whetherIn 页眉 Display 头像。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> WhetherDisplay 页眉头像
+General Styles -> Header Avatar Display
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=WhetherDisplay页眉头像" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Header Avatar Display" />
 
 :::
 ::: info 🏷️ Type
@@ -1755,7 +1755,7 @@ When enabled, you can configure:
 
 :::
 
-### Custom 页眉头像
+### Custom Header Avatar
 
 ::: info 🎯 Purpose
 
@@ -1766,12 +1766,12 @@ Used for 选择上传的图片作为页眉头像。未 Set 将 Use 默认头像 
 
 （[Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display）
 
-General Styles -> Custom 页眉头像
+General Styles -> Custom Header Avatar
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom页眉头像" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom Header Avatar" />
 
 :::
 ::: info 🏷️ Type
@@ -1785,7 +1785,7 @@ Attachment
 
 :::
 
-### 圆形头像
+### Circular Avatar
 
 ::: info 🎯 Purpose
 
@@ -1796,12 +1796,12 @@ Controls whether 强制将头像裁切为圆形。
 
 （[Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display）
 
-General Styles -> 圆形头像
+General Styles -> Circular Avatar
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=圆形头像" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Circular Avatar" />
 
 :::
 ::: info 🏷️ Type
@@ -1820,7 +1820,7 @@ Boolean
 
 :::
 
-### 灰度头像
+### Grayscale Avatar
 
 ::: info 🎯 Purpose
 
@@ -1831,12 +1831,12 @@ Controls whether 强制将头像以灰度处理。
 
 （[Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display）
 
-General Styles -> 灰度头像
+General Styles -> Grayscale Avatar
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=灰度头像" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Grayscale Avatar" />
 
 :::
 ::: info 🏷️ Type
@@ -1855,7 +1855,7 @@ Boolean
 
 :::
 
-### 额外菜单项
+### Additional Menu Items
 
 ::: info 🎯 Purpose
 
@@ -1864,12 +1864,12 @@ Controls whetherIn 菜单 Display 额外菜单项。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 额外菜单项
+General Styles -> Additional Menu Items
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=额外菜单项" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Additional Menu Items" />
 
 :::
 ::: info 🏷️ Type
@@ -1926,7 +1926,7 @@ Repeater
 
 :::
 
-### Display 页眉菜单
+### Display Header Menu
 
 ::: info 🎯 Purpose
 
@@ -1935,12 +1935,12 @@ Controls whetherDisplay 页眉菜单。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> Display 页眉菜单
+General Styles -> Display Header Menu
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Display页眉菜单" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Display Header Menu" />
 
 :::
 ::: info 🏷️ Type
@@ -1959,7 +1959,7 @@ Boolean
 
 :::
 
-### Display 页码
+### Display Page Numbers
 
 ::: info 🎯 Purpose
 
@@ -1968,12 +1968,12 @@ Controls whetherDisplay 页码。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> Display 页码
+General Styles -> Display Page Numbers
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Display页码" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Display Page Numbers" />
 
 :::
 ::: info 🏷️ Type
@@ -1992,7 +1992,7 @@ Boolean
 
 :::
 
-### page 底部站点统计信息
+### Site Statistics at Page Bottom
 
 ::: info 🎯 Purpose
 
@@ -2001,12 +2001,12 @@ Controls whetherDisplaypage 底部站点统计信息。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> page 底部站点统计信息
+General Styles -> Site Statistics at Page Bottom
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=page底部站点统计信息" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Site Statistics at Page Bottom" />
 
 :::
 ::: info 🏷️ Type
@@ -2032,7 +2032,7 @@ When enabled, you can configure:
 
 :::
 
-### 统计项 Set
+### Statistics Item Settings
 
 ::: info 🎯 Purpose
 
@@ -2043,12 +2043,12 @@ Set 统计项。
 
 （[Home Page Style -> page 底部站点统计信息](#page-底部站点统计信息)When enabled, will display）
 
-General Styles -> 统计项 Set
+General Styles -> Statistics Item Settings
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=统计项Set" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Statistics Item Settings" />
 
 :::
 ::: info 🏷️ Type
@@ -2124,7 +2124,7 @@ Repeater
 >
 > :::
 
-### page 底部主题信息
+### Theme Information at Page Bottom
 
 ::: info 🎯 Purpose
 
@@ -2133,12 +2133,12 @@ Controls whetherDisplaypage 底部主题信息。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> page 底部主题信息
+General Styles -> Theme Information at Page Bottom
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=page底部主题信息" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Theme Information at Page Bottom" />
 
 :::
 ::: info 🏷️ Type
@@ -2165,7 +2165,7 @@ When enabled, you can configure:
 
 :::
 
-#### page 底部主题信息所展示的主题名
+#### Theme Name Displayed in Theme Information at Page Bottom
 
 ::: info 🎯 Purpose
 
@@ -2176,12 +2176,12 @@ Setpage 底部主题信息所展示的主题名。
 
 （[General Styles -> page 底部主题信息](#page-底部主题信息)When enabled, will display）
 
-General Styles -> 版权信息 Custom 署名
+General Styles -> Custom Attribution in Copyright Information
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=page底部主题信息所展示的主题名" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Theme Name Displayed in Theme Information at Page Bottom" />
 
 :::
 ::: info 🏷️ Type
@@ -2206,7 +2206,7 @@ Higan Haozi (internal value `Higan Haozi`）
 
 :::
 
-#### page 底部主题信息所展示的 Halo 版本
+#### Halo Version Displayed in Theme Information at Page Bottom
 
 ::: info 🎯 Purpose
 
@@ -2217,12 +2217,12 @@ Setpage 底部主题信息所展示的 Halo 版本。
 
 （[General Styles -> page 底部主题信息](#page-底部主题信息)When enabled, will display）
 
-General Styles -> page 底部主题信息所展示的 Halo 版本
+General Styles -> Halo Version Displayed in Theme Information at Page Bottom
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=page底部主题信息所展示的%20Halo%20版本" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Halo Version Displayed in Theme Information at Page Bottom" />
 
 :::
 ::: info 🏷️ Type
@@ -2247,7 +2247,7 @@ Halo (internal value `Halo`）
 
 :::
 
-### page 底部版权信息
+### Copyright Information at Page Bottom
 
 ::: info 🎯 Purpose
 
@@ -2256,12 +2256,12 @@ Controls whetherDisplaypage 底部版权信息。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> page 底部版权信息
+General Styles -> Copyright Information at Page Bottom
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=page底部版权信息" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Copyright Information at Page Bottom" />
 
 :::
 ::: info 🏷️ Type
@@ -2287,7 +2287,7 @@ When enabled, you can configure:
 
 :::
 
-#### 版权信息 Custom 署名
+#### Custom Attribution in Copyright Information
 
 ::: info 🎯 Purpose
 
@@ -2298,12 +2298,12 @@ Setpage 底部版权信息的署名。
 
 （[General Styles -> page 底部版权信息](#page-底部版权信息)When enabled, will display）
 
-General Styles -> 版权信息 Custom 署名
+General Styles -> Custom Attribution in Copyright Information
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=版权信息Custom署名" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom Attribution in Copyright Information" />
 
 :::
 ::: info 🏷️ Type
@@ -2327,7 +2327,7 @@ Empty
 
 :::
 
-### 强制页脚、页码 Inpage 底部
+### Force Footer and Page Numbers at Page Bottom
 
 ::: info 🎯 Purpose
 
@@ -2336,12 +2336,12 @@ Controls whether 强制页脚、页码 Inpage 底部。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 强制页脚、页码 Inpage 底部
+General Styles -> Force Footer and Page Numbers at Page Bottom
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=强制页脚、页码Inpage底部" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Force Footer and Page Numbers at Page Bottom" />
 
 :::
 ::: info 🏷️ Type
@@ -2360,7 +2360,7 @@ Boolean
 
 :::
 
-### page 底部菜单
+### Menu at Page Bottom
 
 ::: info 🎯 Purpose
 
@@ -2369,12 +2369,12 @@ Controls whetherDisplaypage 底部菜单。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> page 底部菜单
+General Styles -> Menu at Page Bottom
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=page底部菜单" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Menu at Page Bottom" />
 
 :::
 ::: info 🏷️ Type
@@ -2393,7 +2393,7 @@ Boolean
 
 :::
 
-### 添加内容到 page 最底部
+### Add Content to Bottom of Page
 
 ::: info 🎯 Purpose
 
@@ -2402,12 +2402,12 @@ Boolean
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 添加内容到 page 最底部
+General Styles -> Add Content to Bottom of Page
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=添加内容到page最底部" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add Content to Bottom of Page" />
 
 :::
 ::: info 🏷️ Type
@@ -2427,7 +2427,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-In Halo CMS 的后台（<QuickJumpConfig to="/console/settings?tab=codeInjection:~:text=页脚" label="快速跳转" />）Set 的页脚内容，Display 位置 In“主题信息”、“版权信息”、“底部菜单”之上。  
+In Halo CMS backend （<QuickJumpConfig to="/console/settings?tab=codeInjection:~:text=Footer" label="Quick Jump" />）Set 的页脚内容，Display 位置 In“主题信息”、“版权信息”、“底部菜单”之上。  
 而此处填写页脚内容的 In“底部菜单”之下，为 page 的最底部。
 
 When enabled, you can configure:
@@ -2438,7 +2438,7 @@ When enabled, you can configure:
 
 :::
 
-#### page 最底部内容
+#### Content at Bottom of Page
 
 ::: info 🎯 Purpose
 
@@ -2449,12 +2449,12 @@ Setpage 最底部内容内容。
 
 （[Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display）
 
-Home Page Style -> page 最底部内容
+Home Page Style -> Content at Bottom of Page
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=page最底部内容" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content at Bottom of Page" />
 
 :::
 ::: info 🏷️ Type
@@ -2491,7 +2491,7 @@ HTML 代码也是 can 以的：
 
 :::
 
-#### 多语言 page 最底部内容 Support
+#### Multi-language Support for Content at Bottom of Page
 
 ::: info 🎯 Purpose
 
@@ -2502,12 +2502,12 @@ Controls whetherEnable 多语言 page 最底部内容 Support。
 
 （[Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display）
 
-Home Page Style -> 多语言 page 最底部内容 Support
+Home Page Style -> Multi-language Support for Content at Bottom of Page
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多语言page最底部内容Support" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Multi-language Support for Content at Bottom of Page" />
 
 :::
 ::: info 🏷️ Type
@@ -2531,7 +2531,7 @@ Enable 后请参照[多语言 page 最底部内容 Use 指南](/tutorial/i18n#�
 
 :::
 
-#### Custom 多语言 page 最底部内容
+#### Custom Multi-language Content at Bottom of Page
 
 ::: info 🎯 Purpose
 
@@ -2542,12 +2542,12 @@ Set 多语言 page 最底部内容内容。
 
 （[Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display）
 
-Home Page Style -> Custom 多语言 page 最底部内容
+Home Page Style -> Custom Multi-language Content at Bottom of Page
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Custom多语言page最底部内容" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Custom Multi-language Content at Bottom of Page" />
 
 :::
 ::: info 🏷️ Type
@@ -2628,7 +2628,7 @@ Repeater
 
 :::
 
-### 为三级标题添加下划线
+### Add Underline to H3 Headings
 
 ::: info 🎯 Purpose
 
@@ -2637,12 +2637,12 @@ Enablewhen，In 三级标题（h3）下方 Display 下划线装饰，让标题�
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 为三级标题添加下划线
+General Styles -> Add Underline to H3 Headings
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=为三级标题添加下划线" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add underline to H3 headings" />
 
 :::
 ::: info 🏷️ Type
@@ -2661,21 +2661,21 @@ Boolean
 
 :::
 
-### 引用块保留 Empty 行
+### Preserve Empty Lines in Block Quotes
 
 ::: info 🎯 Purpose
 
-In 引用块中保留 Empty 行，否则将自动删除引用块中的 Empty 行。
+Preserve empty lines in block quotes; otherwise, empty lines in block quotes will be automatically removed.
 
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 引用块保留 Empty 行
+General Styles -> Preserve Empty Lines in Block Quotes
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=引用块保留Empty行" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Preserve Empty Lines in Block Quotes" />
 
 :::
 ::: info 🏷️ Type
@@ -2699,21 +2699,21 @@ Boolean
 
 :::
 
-### 引用块前添加引号
+### Add Quotation Mark Before Block Quote
 
 ::: info 🎯 Purpose
 
-In 引用块前添加引号。
+Add quotation mark before block quote.
 
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 引用块前添加引号
+General Styles -> Add Quotation Mark Before Block Quote
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=引用块前添加引号" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add quotation mark before block quote" />
 
 :::
 ::: info 🏷️ Type
@@ -2732,21 +2732,21 @@ Boolean
 
 :::
 
-### 引用块后添加引号
+### Add Quotation Mark After Block Quote
 
 ::: info 🎯 Purpose
 
-In 引用块后添加引号。
+Add quotation mark after block quote.
 
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 引用块后添加引号
+General Styles -> Add Quotation Mark After Block Quote
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=引用块后添加引号" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add quotation mark after block quote" />
 
 :::
 ::: info 🏷️ Type
@@ -2765,7 +2765,7 @@ Boolean
 
 :::
 
-### 表格行间线（除表头）
+### Table Row Lines (Excluding Header)
 
 ::: info 🎯 Purpose
 
@@ -2774,12 +2774,12 @@ Whether 为表格每行底部添加表格线（除表头）。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 表格行间线（除表头）
+General Styles -> Table Row Lines (Excluding Header)
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=表格行间线" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Table row lines" />
 
 :::
 ::: info 🏷️ Type
@@ -2808,7 +2808,7 @@ When enabled, you can configure:
 
 :::
 
-### 表格行间线宽度（除表头）
+### Table Row Line Width (Excluding Header)
 
 ::: info 🎯 Purpose
 
@@ -2823,12 +2823,12 @@ Set 表格每行底部添表格线的宽度（除表头）。
 
 <!-- markdownlint-enable MD051 -->
 
-General Styles -> 表格行间线宽度（除表头）
+General Styles -> Table Row Line Width (Excluding Header)
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=表格行间线宽度" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Table row line width" />
 
 :::
 ::: info 🏷️ Type
@@ -2857,7 +2857,7 @@ Valid CSS length unit.
 
 :::
 
-### 标题上边距倍率
+### Heading Top Margin Multiplier
 
 ::: info 🎯 Purpose
 
@@ -2866,12 +2866,12 @@ Set[标题](/guide/style-reference#标题)的上边距 (`margin-top`) 倍率。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 标题上边距倍率
+General Styles -> Heading Top Margin Multiplier
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=标题上边距倍率" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Heading top margin multiplier" />
 
 :::
 ::: info 🏷️ Type
@@ -2905,7 +2905,7 @@ Float/Integer
 
 :::
 
-### 标题下边距倍率
+### Heading Bottom Margin Multiplier
 
 ::: info 🎯 Purpose
 
@@ -2914,12 +2914,12 @@ Set[标题](/guide/style-reference#标题)的下边距 (`margin-bottom`) 倍率�
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 标题下边距倍率
+General Styles -> Heading Bottom Margin Multiplier
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=标题下边距倍率" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Heading bottom margin multiplier" />
 
 :::
 ::: info 🏷️ Type
@@ -2948,7 +2948,7 @@ Float/Integer
 
 :::
 
-### 段落上边距倍率
+### Paragraph Top Margin Multiplier
 
 ::: info 🎯 Purpose
 
@@ -2957,12 +2957,12 @@ Set[段落](/guide/style-reference#段落)的上边距倍率。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 段落上边距倍率
+General Styles -> Paragraph Top Margin Multiplier
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=段落上边距倍率" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Paragraph top margin multiplier" />
 
 :::
 ::: info 🏷️ Type
@@ -2991,7 +2991,7 @@ Float/Integer
 
 :::
 
-### 段落下边距倍率
+### Paragraph Bottom Margin Multiplier
 
 ::: info 🎯 Purpose
 
@@ -3000,12 +3000,12 @@ Set[段落](/guide/style-reference#段落)的下边距倍率。
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> 段落下边距倍率
+General Styles -> Paragraph Bottom Margin Multiplier
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=段落下边距倍率" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Paragraph bottom margin multiplier" />
 
 :::
 ::: info 🏷️ Type
@@ -3038,7 +3038,7 @@ Float/Integer
 
 应用 Range：[`/(page/{page})`](</reference/template-map#:~:text=/(page/%7Bpage%7D)>)。
 
-### 主页 HTML 标题
+### Homepage HTML Title
 
 ::: info 🎯 Purpose
 
@@ -3047,12 +3047,12 @@ Custom 主页的 HTML 标题（willDisplayIn 浏览器标签页上）。
 :::
 ::: info 📂 Configuration Item Location
 
-Home Page Style -> 主页 HTML 标题
+Home Page Style -> Homepage HTML Title
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=主页%20HTML%20标题" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Homepage HTML title" />
 
 :::
 ::: info 🏷️ Type
@@ -3077,11 +3077,11 @@ IfConfiguration 值过长，cancan 影响 SEO 和 pageDisplay 效果。
 :::
 ::: info ℹ️ Additional Information
 
-如置 Empty 则取值 Halo CMS 的后台（<QuickJumpConfig to="/console/settings:~:text=站点标题" label="快速跳转" />）Set 的站点标题。
+If left empty, the value will be taken from Halo CMS backend （<QuickJumpConfig to="/console/settings:~:text=Site title" label="Quick Jump" />) site title setting.
 
 :::
 
-### 一言（hitokoto）
+### Hitokoto (One Quote)
 
 ::: info 🎯 Purpose
 
@@ -3090,12 +3090,12 @@ WhetherIn 首页 Display 一言（hitokoto）随机句子服务的内容。
 :::
 ::: info 📂 Configuration Item Location
 
-Home Page Style -> 一言（hitokoto）
+Home Page Style -> Hitokoto (One Quote)
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=一言（hitokoto）" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Hitokoto" />
 
 :::
 ::: info 🏷️ Type
@@ -3123,7 +3123,7 @@ When enabled, you can configure
 
 :::
 
-### Custom 随机 Display 一句话
+### Custom Random Display Quote
 
 ::: info 🎯 Purpose
 
@@ -3132,12 +3132,12 @@ WhetherIn 首页随机 Display 一句话。
 :::
 ::: info 📂 Configuration Item Location
 
-Home Page Style -> Custom 随机 Display 一句话
+Home Page Style -> Custom Random Display Quote
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Custom随机Display一句话" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Custom Random Display Quote" />
 
 :::
 ::: info 🏷️ Type
@@ -3163,7 +3163,7 @@ When enabled, you can configure
 
 :::
 
-### 个人简介/公告栏
+### Personal Profile/Announcement
 
 ::: info 🎯 Purpose
 
@@ -3172,12 +3172,12 @@ In 首页 Display 个人简介 or 公告栏内容。
 :::
 ::: info 📂 Configuration Item Location
 
-Home Page Style -> 个人简介/公告栏
+Home Page Style -> Personal Profile/Announcement
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=个人简介/公告栏" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Personal profile/Announcement" />
 
 :::
 ::: info 🏷️ Type
@@ -3205,7 +3205,7 @@ When enabled, you can configure
 
 :::
 
-#### 多语言个人简介/公告栏 Support
+#### Multi-language Personal Profile/Announcement Support
 
 ::: info 🎯 Purpose
 
@@ -3220,12 +3220,12 @@ Controls whetherEnable 多语言个人简介/公告栏 Support。
 
 <!-- markdownlint-enable MD051 -->
 
-Home Page Style -> 多语言个人简介/公告栏 Support
+Home Page Style -> Multi-language Personal Profile/Announcement Support
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多语言个人简介/公告栏Support" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Multi-language personal profile/announcement support" />
 
 :::
 ::: info 🏷️ Type
@@ -3249,7 +3249,7 @@ Enable 后请参照[多语言个人简介/公告栏 Use 指南](/tutorial/i18n#�
 
 :::
 
-#### Custom 多语言公告栏内容
+#### Custom Multi-language Announcement Content
 
 ::: info 🎯 Purpose
 
@@ -3264,12 +3264,12 @@ Set 多语言公告栏内容。
 
 <!-- markdownlint-enable MD051 -->
 
-Home Page Style -> Custom 多语言公告栏内容
+Home Page Style -> Custom Multi-language Announcement Content
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Custom多语言公告栏内容" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Personal profile/Announcement content" />
 
 :::
 ::: info 🏷️ Type
@@ -3350,7 +3350,7 @@ Repeater
 
 :::
 
-### 社交资料 Icon 左侧文字
+### Display Text on the Left Side of Social Media Icons
 
 ::: info 🎯 Purpose
 
@@ -3359,12 +3359,12 @@ Controls whetherDisplay 首页社交资料 Icon 左侧的文字。
 :::
 ::: info 📂 Configuration Item Location
 
-Home Page Style -> 社交资料 Icon 左侧文字
+Home Page Style -> Display Text on the Left Side of Social Media Icons
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=社交资料Icon左侧文字" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display Text on the Left Side of Social Media Icons" />
 
 :::
 ::: info 🏷️ Type
@@ -3383,7 +3383,7 @@ Boolean
 
 :::
 
-### 首页 post 列表标题
+### Home Page Post List Title
 
 ::: info 🎯 Purpose
 
@@ -3392,12 +3392,12 @@ Controls whetherDisplay 首页 post 列表的标题。
 :::
 ::: info 📂 Configuration Item Location
 
-Home Page Style -> 首页 post 列表标题
+Home Page Style -> Home Page Post List Title
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=首页post列表标题" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Enable post list title" />
 
 :::
 ::: info 🏷️ Type
@@ -3416,7 +3416,7 @@ Boolean
 
 :::
 
-### 主页列表布局
+### Home Page List Layout
 
 ::: info 🎯 Purpose
 
@@ -3425,12 +3425,12 @@ Boolean
 :::
 ::: info 📂 Configuration Item Location
 
-Home Page Style -> 主页列表布局
+Home Page Style -> Home Page List Layout
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=主页列表布局" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Home page post list layout" />
 
 :::
 ::: info 🏷️ Type
@@ -3484,7 +3484,7 @@ Option
 
 :::
 
-### 简洁列表 Displaypost 阅读量
+### Display Post Views in Simple List
 
 ::: info 🎯 Purpose
 
@@ -3495,12 +3495,12 @@ Controls whetherIn 简洁列表中 Displaypost 阅读量。
 
 （[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“简洁 post 列表”whenDisplay）
 
-Home Page Style -> 简洁列表 Displaypost 阅读量
+Home Page Style -> Display Post Views in Simple List
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=简洁列表Displaypost阅读量" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display Post Views in Simple List" />
 
 :::
 ::: info 🏷️ Type
@@ -3519,7 +3519,7 @@ Boolean
 
 :::
 
-### 多元列表 Displaypost 分类
+### Display Post Categories in Post List Summary
 
 ::: info 🎯 Purpose
 
@@ -3530,12 +3530,12 @@ Controls whetherIn 多元列表中 Displaypost 分类。
 
 （[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
 
-Home Page Style -> 多元列表 Displaypost 分类
+Home Page Style -> Display Post Categories in Post List Summary
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表Displaypost分类" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display Post Categories in Post List Summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3554,7 +3554,7 @@ Boolean
 
 :::
 
-### 多元列表 Displaypost 标签
+### Display Post Tags in Post List Summary
 
 ::: info 🎯 Purpose
 
@@ -3565,12 +3565,12 @@ Controls whetherIn 多元列表中 Displaypost 标签。
 
 （[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
 
-Home Page Style -> 多元列表 Displaypost 标签
+Home Page Style -> Display Post Tags in Post List Summary
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表Displaypost标签" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display Post Tags in Post List Summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3589,7 +3589,7 @@ Boolean
 
 :::
 
-### 多元列表 Displaypost 阅读量
+### Display Post Views in Post List Summary
 
 ::: info 🎯 Purpose
 
@@ -3600,12 +3600,12 @@ Controls whetherIn 多元列表中 Displaypost 阅读量。
 
 （[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
 
-Home Page Style -> 多元列表 Displaypost 阅读量
+Home Page Style -> Display Post Views in Post List Summary
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表Displaypost阅读量" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display Post Views in Post List Summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3624,7 +3624,7 @@ Boolean
 
 :::
 
-### 多元列表 Displaypost 预计阅读 when 间
+### Display Post Estimated Reading Time in Post List Summary
 
 ::: info 🎯 Purpose
 
@@ -3635,12 +3635,12 @@ Controls whetherIn 多元列表中 Displaypost 预计阅读 when 间。
 
 （[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
 
-Home Page Style -> 多元列表 Displaypost 预计阅读 when 间
+Home Page Style -> Display Post Estimated Reading Time in Post List Summary
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表Displaypost预计阅读when间" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display post estimated reading time in post list summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3664,7 +3664,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 :::
 
-### 多元列表 Displaypost 字数统计
+### Display Post Word Count in Post List Summary
 
 ::: info 🎯 Purpose
 
@@ -3675,12 +3675,12 @@ Controls whetherIn 多元列表中 Displaypost 字数统计。
 
 （[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
 
-Home Page Style -> 多元列表 Displaypost 字数统计
+Home Page Style -> Display Post Word Count in Post List Summary
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表Displaypost字数统计" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display post word count in post list summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3704,7 +3704,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 :::
 
-### 多元列表 Displaypost 摘要
+### Display Post Excerpt in Post List Summary
 
 ::: info 🎯 Purpose
 
@@ -3715,12 +3715,12 @@ Controls whetherIn 多元列表中 Displaypost 摘要。
 
 （[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
 
-Home Page Style -> 多元列表 Displaypost 摘要
+Home Page Style -> Display Post Excerpt in Post List Summary
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表Displaypost摘要" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display post excerpt in post list summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3739,7 +3739,7 @@ Boolean
 
 :::
 
-### 多元列表 post 摘要行数上限
+### Maximum Lines for Post Excerpt in Post List Summary
 
 ::: info 🎯 Purpose
 
@@ -3750,12 +3750,12 @@ Set 多元列表中 post 摘要的最大行数。
 
 （[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
 
-Home Page Style -> 多元列表 post 摘要行数上限
+Home Page Style -> Maximum Lines for Post Excerpt in Post List Summary
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表post摘要行数上限" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Maximum number of lines in the post list summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3779,7 +3779,7 @@ Range 1-5
 
 :::
 
-### 多元列表跳转 post 链接所用提示文字
+### Link Text for Post List Summary
 
 ::: info 🎯 Purpose
 
@@ -3790,12 +3790,12 @@ Controls whetherIn 多元列表中 Display 跳转 post 链接的提示文字。
 
 （[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
 
-Home Page Style -> 多元列表跳转 post 链接所用提示文字
+Home Page Style -> Link Text for Post List Summary
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表跳转post链接所用提示文字" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display the text of the post list permalink" />
 
 :::
 ::: info 🏷️ Type
@@ -3819,7 +3819,7 @@ Boolean
 
 :::
 
-### 多元列表 Displaypost 封面
+### Display Post Cover in Post List Summary
 
 ::: info 🎯 Purpose
 
@@ -3830,12 +3830,12 @@ Controls whetherIn 多元列表中 Displaypost 封面。
 
 （[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
 
-Home Page Style -> 多元列表 Displaypost 封面
+Home Page Style -> Display Post Cover in Post List Summary
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表Displaypost封面" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display Post Cover in Post List Summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3854,7 +3854,7 @@ Boolean
 
 :::
 
-### 瞬间列表 Display 条数
+### Number of Moments Per Page
 
 ::: info 🎯 Purpose
 
@@ -3865,12 +3865,12 @@ Set 瞬间列表中 Display 的条目数量。
 
 （[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“瞬间列表”whenDisplay）
 
-Home Page Style -> 瞬间列表 Display 条数
+Home Page Style -> Number of Moments Per Page
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=瞬间列表Display条数" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Number of Moments Per Page" />
 
 :::
 ::: info 🏷️ Type
@@ -3889,7 +3889,7 @@ Integer
 
 :::
 
-### 瞬间列表 Display 条目作者头像
+### Show Author Avatar in Moment List
 
 ::: info 🎯 Purpose
 
@@ -3900,12 +3900,12 @@ Controls whetherIn 瞬间列表中 Display 条目作者头像。
 
 （[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“瞬间列表”whenDisplay）
 
-Home Page Style -> 瞬间列表 Display 条目作者头像
+Home Page Style -> Show Author Avatar in Moment List
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=瞬间列表Display条目作者头像" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show Author Avatar in Moment List" />
 
 :::
 ::: info 🏷️ Type
@@ -3924,7 +3924,7 @@ Boolean
 
 :::
 
-### 瞬间列表 Display 条目作者昵称
+### Show Author Nickname in Moment List
 
 ::: info 🎯 Purpose
 
@@ -3935,12 +3935,12 @@ Controls whetherIn 瞬间列表中 Display 条目作者昵称。
 
 （[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“瞬间列表”whenDisplay）
 
-Home Page Style -> 瞬间列表 Display 条目作者昵称
+Home Page Style -> Show Author Nickname in Moment List
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=瞬间列表Display条目作者昵称" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show Author Nickname in Moment List" />
 
 :::
 ::: info 🏷️ Type
@@ -3959,7 +3959,7 @@ Boolean
 
 :::
 
-### post 列表置顶 Icon
+### Top Icon Display on Post List
 
 ::: info 🎯 Purpose
 
@@ -3968,12 +3968,12 @@ Inpost 列表中为置顶 postDisplay 特殊 icon.
 :::
 ::: info 📂 Configuration Item Location
 
-Home Page Style -> post 列表置顶 Icon
+Home Page Style -> Top Icon Display on Post List
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=post列表置顶Icon" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Top Icon Display on Post List" />
 
 :::
 ::: info 🏷️ Type
@@ -4003,7 +4003,7 @@ When enabled, you can configure
 
 应用 Range：[`/archives/{slug}`](/reference/template-map#:~:text=/archives/%7Bslug%7D)。
 
-### 优化 post 段落 Empty 行 Display
+### Optimize Post Paragraph Spacing Display
 
 ::: info 🎯 Purpose
 
@@ -4017,7 +4017,7 @@ post 页样式 -> 优化 post 段落 Empty 行 Display
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=优化post段落Empty行Display" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Optimize Post Paragraph Spacing Display" />
 
 :::
 ::: info 🏷️ Type
@@ -4042,7 +4042,7 @@ Boolean
 
 :::
 
-### 文档段落首行缩进
+### Document Paragraph First-line Indent
 
 ::: info 🎯 Purpose
 
@@ -4051,12 +4051,12 @@ Boolean
 :::
 ::: info 📂 Configuration Item Location
 
-post 页样式 -> 段落首行缩进
+Post Page Style -> Paragraph First-line Indent
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=段落首行缩进" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable paragraph first-line indent" />
 
 :::
 ::: info 🏷️ Type
@@ -4085,7 +4085,7 @@ When enabled, you can configure
 
 :::
 
-### post 标题大写
+### Post Title Uppercase
 
 ::: info 🎯 Purpose
 
@@ -4101,7 +4101,7 @@ post 页样式 -> post 标题大写
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=post标题大写" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Post title uppercase" />
 
 :::
 ::: info 🏷️ Type
@@ -4120,7 +4120,7 @@ Boolean
 
 :::
 
-### post 发布 when 间
+### Post Publish Time
 
 ::: info 🎯 Purpose
 
@@ -4134,7 +4134,7 @@ post 页样式 -> post 发布 when 间
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=post发布when间" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Post Publish Time" />
 
 :::
 ::: info 🏷️ Type
@@ -4160,7 +4160,7 @@ When enabled, you can configure
 
 :::
 
-### post 更新 when 间
+### Post Update Time
 
 ::: info 🎯 Purpose
 
@@ -4174,7 +4174,7 @@ post 页样式 -> post 更新 when 间
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=post更新when间" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Post Update Time" />
 
 :::
 ::: info 🏷️ Type
@@ -4200,7 +4200,7 @@ When enabled, you can configure
 
 :::
 
-### post 阅读量
+### Show Post Views
 
 ::: info 🎯 Purpose
 
@@ -4214,7 +4214,7 @@ post 页样式 -> post 阅读量
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=post阅读量" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show post views" />
 
 :::
 ::: info 🏷️ Type
@@ -4233,7 +4233,7 @@ Boolean
 
 :::
 
-### post 预计阅读 when 间
+### Show Estimated Reading Time of Post
 
 ::: info 🎯 Purpose
 
@@ -4247,7 +4247,7 @@ post 页样式 -> post 预计阅读 when 间
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=post预计阅读when间" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show Estimated Reading Time of Post" />
 
 :::
 ::: info 🏷️ Type
@@ -4271,7 +4271,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 :::
 
-### post 字数统计
+### Show Post Word Count
 
 ::: info 🎯 Purpose
 
@@ -4285,7 +4285,7 @@ post 页样式 -> post 字数统计
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=post字数统计" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show post word count" />
 
 :::
 ::: info 🏷️ Type
@@ -4309,7 +4309,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 :::
 
-### 桌面端菜单中的分享按钮
+### Share Button in Desktop Menu
 
 ::: info 🎯 Purpose
 
@@ -4318,12 +4318,12 @@ Controls whetherIn 桌面端 postpage 的菜单中 Display 分享按钮。
 :::
 ::: info 📂 Configuration Item Location
 
-post 页样式 -> 桌面端菜单中的分享按钮
+Post Page Style -> Share Button in Desktop Menu
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=桌面端菜单中的分享按钮" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Share button in desktop menu" />
 
 :::
 ::: info 🏷️ Type
@@ -4342,7 +4342,7 @@ Boolean
 
 :::
 
-### Custom 侧边目录最大宽度
+### Custom Sidebar Table of Contents Maximum Width
 
 ::: info 🎯 Purpose
 
@@ -4358,7 +4358,7 @@ post 页样式 -> Custom 侧边目录最大宽度
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Custom侧边目录最大宽度" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Custom Sidebar Table of Contents Maximum Width" />
 
 :::
 ::: info 🏷️ Type
@@ -4387,7 +4387,7 @@ When enabled, you can configure
 
 :::
 
-### post 末尾的的分隔线
+### Enable Dividing Line at End of Post
 
 ::: info 🎯 Purpose
 
@@ -4401,7 +4401,7 @@ post 页样式 -> post 末尾的的分隔线
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=post末尾的的分隔线" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable dividing line at the end of the post" />
 
 :::
 ::: info 🏷️ Type
@@ -4420,7 +4420,7 @@ Boolean
 
 :::
 
-### post 底部的点赞按钮
+### Upvote Button at Bottom of Post
 
 ::: info 🎯 Purpose
 
@@ -4434,7 +4434,7 @@ post 页样式 -> post 底部的点赞按钮
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=post底部的点赞按钮" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Upvote button at the bottom of the post" />
 
 :::
 ::: info 🏷️ Type
@@ -4469,7 +4469,7 @@ When enabled, you can configure
 
 :::
 
-### post 底部的推荐 post
+### Recommended Articles at Bottom of Post
 
 ::: info 🎯 Purpose
 
@@ -4485,7 +4485,7 @@ post 页样式 -> post 底部的推荐 post
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=post底部的推荐post" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Recommended articles at the bottom of the post" />
 
 :::
 ::: info 🏷️ Type
@@ -4515,7 +4515,7 @@ When enabled, you can configure
 
 :::
 
-### post 底部的相邻 post 导航
+### Adjacent Article Navigation at Bottom of Post
 
 ::: info 🎯 Purpose
 
@@ -4529,7 +4529,7 @@ post 页样式 -> post 底部的相邻 post 导航
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=post底部的相邻post导航" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Adjacent article navigation at the bottom of the post" />
 
 :::
 ::: info 🏷️ Type
@@ -4548,7 +4548,7 @@ Boolean
 
 :::
 
-### post 评论区
+### Post Comment Section
 
 ::: info 🎯 Purpose
 
@@ -4562,7 +4562,7 @@ post 页样式 -> post 评论区
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=post评论区" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable comment section" />
 
 :::
 ::: info 🏷️ Type
@@ -4581,7 +4581,7 @@ Boolean
 
 :::
 
-### 移动端底部导航栏
+### Mobile Bottom Navigation Bar
 
 ::: info 🎯 Purpose
 
@@ -4590,12 +4590,12 @@ Controls whetherIn 移动端 postpage 底部 Display 导航栏。
 :::
 ::: info 📂 Configuration Item Location
 
-post 页样式 -> 移动端底部导航栏
+Post Page Style -> Mobile Bottom Navigation Bar
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=移动端底部导航栏" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Mobile footer navigation" />
 
 :::
 ::: info 🏷️ Type
@@ -4617,7 +4617,7 @@ Boolean
 
 When enabled, you can configure
 
-- 移动端底部导航栏中的分享按钮
+- Share buttons in mobile bottom navigation bar
 
 :::
 
@@ -4625,7 +4625,7 @@ When enabled, you can configure
 
 应用 Range：[`/categories`](/reference/template-map#:~:text=/categories)。
 
-### 分类集合页 page 描述
+### Category Page Description
 
 ::: info 🎯 Purpose
 
@@ -4634,12 +4634,12 @@ Used forCustomthispage 的 HTML `<meta name="description">` 内容，方便针�
 :::
 ::: info 📂 Configuration Item Location
 
-Categories Page Style -> page 描述
+Categories Page Style -> Page Description
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=page描述" />
+<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Page description (meta description)" />
 
 :::
 ::: info 🏷️ Type
@@ -4659,11 +4659,11 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-Set 为 Empty 将回退到站点描述（快速跳转：<QuickJumpConfig to="/console/settings?tab=seo#:~:text=站点描述" />）
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=站点描述" />）
 
 :::
 
-### Display 每个分类下的 post 数量
+### Display Number of Posts Per Category
 
 ::: info 🎯 Purpose
 
@@ -4672,12 +4672,12 @@ Controls whetherIn 分类列表中 Display 每个分类包含的 post 数量。
 :::
 ::: info 📂 Configuration Item Location
 
-Categories Page Style -> Display 每个分类下的 post 数量
+Categories Page Style -> Display Number of Posts Per Category
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Display每个分类下的post数量" />
+<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Display Number of Posts Per Category" />
 
 :::
 ::: info 🏷️ Type
@@ -4708,7 +4708,7 @@ When enabled, you can configure
 
 :::
 
-### Display 多层分类
+### Display Multi-layer Categories
 
 ::: info 🎯 Purpose
 
@@ -4717,12 +4717,12 @@ Controls whetherIn 分类 page 展示子分类。
 :::
 ::: info 📂 Configuration Item Location
 
-Categories Page Style -> WhetherDisplay 多层分类
+Categories Page Style -> Display Multi-layer Categories
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=WhetherDisplay多层分类" />
+<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Display multi-layer categories" />
 
 :::
 ::: info 🏷️ Type
@@ -4745,7 +4745,7 @@ Boolean
 
 应用 Range：[`/categories/{slug}`](/reference/template-map#:~:text=/categories/%7Bslug%7D)。
 
-### 分类详情页 post 列表 Displaypost 阅读量
+### Display Post Views in Category Details Page Post List
 
 ::: info 🎯 Purpose
 
@@ -4759,7 +4759,7 @@ Category Detail Page Style -> post 列表 Displaypost 阅读量
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=post列表Displaypost阅读量" />
+<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Display post views in post list" />
 
 :::
 ::: info 🏷️ Type
@@ -4778,7 +4778,7 @@ Boolean
 
 :::
 
-### Display 分类 RSS 订阅按钮
+### Show Category RSS Subscription Button
 
 ::: info 🎯 Purpose
 
@@ -4792,7 +4792,7 @@ Category Detail Page Style -> 分类 RSS 订阅按钮
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=分类%20RSS%20订阅按钮" />
+<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Show RSS subscription button" />
 
 :::
 ::: info 🏷️ Type
@@ -4820,7 +4820,7 @@ Requires [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)Enable 
 
 应用 Range：[`/tags`](/reference/template-map#:~:text=/tags)。
 
-### 标签集合页 page 描述
+### Tag Collection Page Description
 
 ::: info 🎯 Purpose
 
@@ -4829,12 +4829,12 @@ Used forCustomthispage 的 HTML `<meta name="description">` 内容，方便针�
 :::
 ::: info 📂 Configuration Item Location
 
-Tags Page Style -> page 描述
+Tags Page Style -> Page Description
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=page描述" />
+<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Page description (meta description)" />
 
 :::
 ::: info 🏷️ Type
@@ -4854,11 +4854,11 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-Set 为 Empty 将回退到站点描述（快速跳转：<QuickJumpConfig to="/console/settings?tab=seo#:~:text=站点描述" />）
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=站点描述" />）
 
 :::
 
-### Display 每个标签下的 post 数量
+### Display Number of Posts Per Tag
 
 ::: info 🎯 Purpose
 
@@ -4867,12 +4867,12 @@ Controls whetherIn 分类列表中 Display 每个标签包含的 post 数量。
 :::
 ::: info 📂 Configuration Item Location
 
-Tags Page Style -> Display 每个标签下的 post 数量
+Tags Page Style -> Display Number of Posts Per Tag
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Display每个标签下的post数量" />
+<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Display Number of Posts Per Tag" />
 
 :::
 ::: info 🏷️ Type
@@ -4902,7 +4902,7 @@ When enabled, you can configure
   - 默认值：`)`
     :::
 
-### 标签排序方式
+### Tag Sort Order
 
 ::: info 🎯 Purpose
 
@@ -4911,12 +4911,12 @@ Set 标签 In 标签集合页的排序方式。
 :::
 ::: info 📂 Configuration Item Location
 
-Tags Page Style -> 标签排序方式
+Tags Page Style -> Tag Sort Order
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=标签排序方式" />
+<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Tag sort order" />
 
 :::
 ::: info 🏷️ Type
@@ -4947,7 +4947,7 @@ Option
 
 应用 Range：[`/tags/{slug}`](/reference/template-map#:~:text=/tags/%7Bslug%7D)。
 
-### 标签详情页 post 列表 Displaypost 阅读量
+### Display Post Views in Tag Details Page Post List
 
 ::: info 🎯 Purpose
 
@@ -4961,7 +4961,7 @@ Tag Detail Page Style -> post 列表 Displaypost 阅读量
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=post列表Displaypost阅读量" />
+<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Display post views in post list" />
 
 :::
 ::: info 🏷️ Type
@@ -4980,7 +4980,7 @@ Boolean
 
 :::
 
-### Display 标签 RSS 订阅按钮
+### Show Tag RSS Subscription Button
 
 ::: info 🎯 Purpose
 
@@ -4994,7 +4994,7 @@ Tag Detail Page Style -> Display 标签 RSS 订阅按钮
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Display标签%20RSS%20订阅按钮" />
+<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Show RSS subscription button" />
 
 :::
 ::: info 🏷️ Type
@@ -5022,7 +5022,7 @@ Requires [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)Enable 
 
 应用 Range：[`/authors/{name}`](/reference/template-map#:~:text=/authors/%7Bname%7D)。
 
-### 作者详情页 page 描述
+### Author Details Page Description
 
 ::: info 🎯 Purpose
 
@@ -5031,12 +5031,12 @@ Used forCustomthispage 的 HTML `<meta name="description">` 内容，方便针�
 :::
 ::: info 📂 Configuration Item Location
 
-Author Detail Page Style -> page 描述
+Author Detail Page Style -> Page Description
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=page描述" />
+<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=Page description (meta description)" />
 
 :::
 ::: info 🏷️ Type
@@ -5056,11 +5056,11 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-Set 为 Empty 将回退到站点描述（快速跳转：<QuickJumpConfig to="/console/settings?tab=seo#:~:text=站点描述" />）
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=站点描述" />）
 
 :::
 
-### Display 作者 RSS 订阅按钮
+### Show Author RSS Subscription Button
 
 ::: info 🎯 Purpose
 
@@ -5069,12 +5069,12 @@ In 作者详情页 Display RSS 订阅按钮。
 :::
 ::: info 📂 Configuration Item Location
 
-Author Detail Page Style -> Display 作者 RSS 订阅按钮
+Author Detail Page Style -> Show Author RSS Subscription Button
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=Display作者%20RSS%20订阅按钮" />
+<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=Show RSS subscription button" />
 
 :::
 ::: info 🏷️ Type
@@ -5102,7 +5102,7 @@ Requires [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)Enable 
 
 应用 Range：[`/archives(/{year}(/{month}))`](</reference/template-map#:~:text=/archives(/%7Byear%7D(/%7Bmonth%7D))>)。
 
-### 归档页 page 描述
+### Archives Page Description
 
 ::: info 🎯 Purpose
 
@@ -5111,12 +5111,12 @@ Used forCustomthispage 的 HTML `<meta name="description">` 内容，方便针�
 :::
 ::: info 📂 Configuration Item Location
 
-Archives Page Style -> page 描述
+Archives Page Style -> Page Description
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=page描述" />
+<QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=Page description (meta description)" />
 
 :::
 ::: info 🏷️ Type
@@ -5136,11 +5136,11 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-Set 为 Empty 将回退到站点描述（快速跳转：<QuickJumpConfig to="/console/settings?tab=seo#:~:text=站点描述" />）
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=站点描述" />）
 
 :::
 
-### 按照发布年份和月份折叠 post 列表
+### Collapse Post List by Publication Year and Month
 
 ::: info 🎯 Purpose
 
@@ -5149,12 +5149,12 @@ In 归档 page 中，按照 post 发布的年份和月份将 post 列表折叠 D
 :::
 ::: info 📂 Configuration Item Location
 
-Archives Page Style -> 按照发布年份和月份折叠 post 列表
+Archives Page Style -> Collapse Post List by Publication Year and Month
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=按照发布年份和月份折叠post列表" />
+<QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=Collapse post list by publication year and month" />
 
 :::
 ::: info 🏷️ Type
@@ -5186,7 +5186,7 @@ When enabled, you can configure
 
 应用 Range：[`/{slug}`](/reference/template-map#:~:text=/%7Bslug%7D)。
 
-### 优化段落 Empty 行 Display
+### Optimize Paragraph Spacing Display
 
 ::: info 🎯 Purpose
 
@@ -5200,7 +5200,7 @@ Custompage 样式 -> 优化段落 Empty 行 Display
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=优化段落Empty行Display" />
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Optimize Paragraph Spacing Display" />
 
 :::
 ::: info 🏷️ Type
@@ -5225,7 +5225,7 @@ Boolean
 
 :::
 
-### Custompage 段落首行缩进
+### Enable Paragraph First-line Indent
 
 ::: info 🎯 Purpose
 
@@ -5234,12 +5234,12 @@ Boolean
 :::
 ::: info 📂 Configuration Item Location
 
-Custompage 样式 -> 段落首行缩进
+Custom Page Style -> Paragraph First-line Indent
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=段落首行缩进" />
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Enable paragraph first-line indent" />
 
 :::
 ::: info 🏷️ Type
@@ -5268,7 +5268,7 @@ When enabled, you can configure
 
 :::
 
-### page 预计阅读 when 间
+### Show Estimated Reading Time of Page
 
 ::: info 🎯 Purpose
 
@@ -5282,7 +5282,7 @@ Custompage 样式 -> page 预计阅读 when 间
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=page预计阅读when间" />
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Show Estimated Reading Time of Page" />
 
 :::
 ::: info 🏷️ Type
@@ -5306,7 +5306,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 :::
 
-### page 字数统计
+### Show Word Count of Page
 
 ::: info 🎯 Purpose
 
@@ -5320,7 +5320,7 @@ Custompage 样式 -> page 字数统计
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=page字数统计" />
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Show Word Count of Page" />
 
 :::
 ::: info 🏷️ Type
@@ -5344,7 +5344,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 :::
 
-### page 正文内容末尾分隔线
+### Enable Dividing Line at End of Page Content
 
 ::: info 🎯 Purpose
 
@@ -5358,7 +5358,7 @@ Custompage 样式 -> page 正文内容末尾分隔线
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=page正文内容末尾分隔线" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable Dividing Line at End of Page Content" />
 
 :::
 ::: info 🏷️ Type
@@ -5377,7 +5377,7 @@ Boolean
 
 :::
 
-### page 评论区
+### Enable Comment Section
 
 ::: info 🎯 Purpose
 
@@ -5391,7 +5391,7 @@ Custompage 样式 -> page 评论区
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=page评论区" />
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Enable Comment Section" />
 
 :::
 ::: info 🏷️ Type
@@ -5412,7 +5412,7 @@ Boolean
 
 ## Error Page Style
 
-### page 自动重定向
+### Page Auto-redirect
 
 ::: info 🎯 Purpose
 
@@ -5460,7 +5460,7 @@ When enabled, you can configure
 
 ## Social Profile/RSS
 
-### 首页社交资料展示
+### Home Page Social Profile Display
 
 ::: info 🎯 Purpose
 
@@ -5474,7 +5474,7 @@ In 首页展示社交媒体链接和 RSS 订阅等资料。
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/sns#:~:text=首页社交资料展示" />
+<QuickJumpConfig to="/console/theme/settings/sns#:~:text=Home page social profile display" />
 
 :::
 ::: info 🏷️ Type
@@ -5501,7 +5501,7 @@ Empty 数组 `[]`
 
 :::
 
-### SetCustom 资料
+### Social Media Settings
 
 ::: info 🎯 Purpose
 
@@ -5515,7 +5515,7 @@ Empty 数组 `[]`
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/sns#:~:text=SetCustom资料" />
+<QuickJumpConfig to="/console/theme/settings/sns#:~:text=Social media settings" />
 
 :::
 ::: info 🏷️ Type
@@ -5550,7 +5550,7 @@ Provide 了主流平台的预设值，只 Requires 要填写对应平台的识�
 
 ## Custom Share Buttons
 
-### 分享按钮 Set
+### Share Button Settings
 
 ::: info 🎯 Purpose
 
@@ -5564,7 +5564,7 @@ Custom 分享按钮 -> 分享按钮 Set
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/share#:~:text=分享按钮Set" />
+<QuickJumpConfig to="/console/theme/settings/share#:~:text=Custom Share Buttons" />
 
 :::
 ::: info 🏷️ Type
@@ -5594,7 +5594,7 @@ Repeater
 
 Requires[链接管理插件](/guide/plugin-compatibility#链接页)Enable 后方 can.
 
-### 头像优先样式
+### Avatar-First Style
 
 ::: info 🎯 Purpose
 
@@ -5608,7 +5608,7 @@ Links Page Style -> 头像优先样式
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/links_page_styles#:~:text=头像优先样式" />
+<QuickJumpConfig to="/console/theme/settings/links_page_styles#:~:text=Avatar-First Style" />
 
 :::
 ::: info 🏷️ Type
@@ -5638,7 +5638,7 @@ Boolean
 
 :::
 
-### 链接描述行数上限
+### Link Description Maximum Lines
 
 ::: info 🎯 Purpose
 
@@ -5654,7 +5654,7 @@ Links Page Style -> 链接描述行数上限
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/links_page_styles#:~:text=链接描述行数上限" />
+<QuickJumpConfig to="/console/theme/settings/links_page_styles#:~:text=Link Description Maximum Lines" />
 
 :::
 ::: info 🏷️ Type
@@ -5682,7 +5682,7 @@ Range 1-5
 
 Requires[图库管理插件](/guide/plugin-compatibility#图库页)Enable 后方 can.
 
-### 图片圆角宽度
+### Image Border Radius
 
 ::: info 🎯 Purpose
 
@@ -5696,7 +5696,7 @@ Set 相册 page 中图片的圆角宽度。
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=图片圆角宽度" />
+<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Image border radius" />
 
 :::
 ::: info 🏷️ Type
@@ -5725,7 +5725,7 @@ Valid CSS length unit.
 
 :::
 
-### 图片渐入动画 when 间
+### Image Fade-in Animation Duration
 
 ::: info 🎯 Purpose
 
@@ -5739,7 +5739,7 @@ Set 相册 page 中图片渐入动画 when 间。
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=图片渐入动画when间" />
+<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Image Fade-in Animation Duration" />
 
 :::
 ::: info 🏷️ Type
@@ -5763,7 +5763,7 @@ Integer/Float (Unit: seconds)
 
 :::
 
-### Enable 瀑布流布局
+### Enable Masonry Layout
 
 ::: info 🎯 Purpose
 
@@ -5777,7 +5777,7 @@ In 相册 pageUse 瀑布流布局展示图片。
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Enable瀑布流布局" />
+<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Enable Masonry Layout" />
 
 :::
 ::: info 🏷️ Type
@@ -5817,7 +5817,7 @@ Disable 后 can 以 Configuration
 
 Requires[瞬间管理插件](/guide/plugin-compatibility#瞬间页)Enable 后方 can.
 
-### moment 预计阅读 when 间
+### Show Estimated Reading Time of Moment
 
 ::: info 🎯 Purpose
 
@@ -5826,12 +5826,12 @@ In 帖子开头 Display 根据字数估算的阅读 when 间。
 :::
 ::: info 📂 Configuration Item Location
 
-Moments Page Style -> moment 预计阅读 when 间
+Moments Page Style -> Show Estimated Reading Time of Moment
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=moment预计阅读when间" />
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Show Estimated Reading Time of Moment" />
 
 :::
 ::: info 🏷️ Type
@@ -5855,7 +5855,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 :::
 
-### moment 字数统计
+### Show Word Count of Moment
 
 ::: info 🎯 Purpose
 
@@ -5864,12 +5864,12 @@ In 帖子开头 Displaypost 的总字数。
 :::
 ::: info 📂 Configuration Item Location
 
-Moments Page Style -> moment 字数统计
+Moments Page Style -> Show Word Count of Moment
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=moment字数统计" />
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Show Word Count of Moment" />
 
 :::
 ::: info 🏷️ Type
@@ -5893,7 +5893,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 :::
 
-### 瞬间页点赞按钮
+### Moment Page Upvote Button
 
 ::: info 🎯 Purpose
 
@@ -5902,12 +5902,12 @@ In 瞬间 pageDisplay 点赞按钮。
 :::
 ::: info 📂 Configuration Item Location
 
-Moments Page Style -> Enable 点赞按钮
+Moments Page Style -> Enable Upvote Button
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Enable点赞按钮" />
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Enable upvote button" />
 
 :::
 ::: info 🏷️ Type
@@ -5926,7 +5926,7 @@ Boolean
 
 :::
 
-### 瞬间页评论区
+### Moment Page Comment Section
 
 ::: info 🎯 Purpose
 
@@ -5935,12 +5935,12 @@ Controls whetherIn 瞬间 pageDisplay 评论区。
 :::
 ::: info 📂 Configuration Item Location
 
-Moments Page Style -> Enable 评论区
+Moments Page Style -> Enable Comment Section
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Enable评论区" />
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Enable comment section" />
 
 :::
 ::: info 🏷️ Type
@@ -6213,4 +6213,4 @@ Boolean
 
 你 can 以进一步了解：
 
-- [元数据 Configuration 项](/guide/metadata-configuration)
+- [Metadata Configuration Items](/guide/metadata-configuration)
