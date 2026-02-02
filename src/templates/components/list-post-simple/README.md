@@ -16,10 +16,13 @@ Head Content (for including necessary scripts/styles)
 Content Insertion
 
 ```html
-<th:block th:insert="~{components/list-post-simple/template :: content(posts, showPagination)}"></th:block>
+<th:block
+  th:insert="~{components/list-post-simple/template :: content(posts, showPagination, pageTemplateName)}"
+></th:block>
 ```
 
 ## Parameters
 
 - `posts`: A collection of post objects to be displayed in the list.
 - `showPagination`: An optional boolean indicating whether to display pagination controls. Defaults to `false` if not provided.
+- `pageTemplateName`: An optional parameter, pass in a string representing the page template name.

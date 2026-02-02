@@ -15,10 +15,19 @@ Head Content (for including necessary scripts/styles)
 
 Content Insertion (for displaying pagination controls)
 
+For UrlContextListResult:
+
 ```html
 <th:block th:insert="~{components/pagination/template :: content(posts)}"></th:block>
+```
+
+For ListResult:
+
+```html
+<th:block th:insert="~{components/pagination/template :: content(posts=${posts}, isListResult=true)}"></th:block>
 ```
 
 ## Parameters
 
 - `posts`: A pagination object containing pagination data with methods like `hasPrevious()`, `hasNext()` and properties including `prevUrl`, `nextUrl`, `totalPages`, and `page`.
+  - If `posts` does not have `prevUrl` or `nextUrl`, pass `isListResult=true`.
