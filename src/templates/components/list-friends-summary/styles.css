@@ -24,15 +24,15 @@
 }
 
 .friend-author {
-  display: flex;
   align-items: center;
+  display: flex;
 }
 
 .friend-author-avatar {
-  width: 1.5rem;
-  height: 1.5rem;
   border-radius: 50%;
+  height: 1.5rem;
   object-fit: cover;
+  width: 1.5rem;
 }
 
 .friend-author-link {
