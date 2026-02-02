@@ -1915,3 +1915,47 @@ spec:
           name: is_moment_comment_section_show
           label: 启用评论区
           value: true
+    - group: friends_page_styles
+      label: 朋友圈页面样式
+      formSchema:
+        - $el: div
+          children:
+            - $el: span
+              children: 需
+            - $el: a
+              attrs:
+                href: "https://www.halo.run/store/apps/app-yISsV"
+                style: |
+                  text-decoration: underline;
+                  text-underline-offset: 0.25em;
+                target: "_blank"
+              children: 朋友圈插件
+            - $el: span
+              children: 启用后方可使用。
+        - $formkit: switch
+          name: is_show_friend_author
+          label: 显示作者信息
+          value: true
+          help: 显示作者头像和名称
+        - $formkit: switch
+          name: is_show_friend_description
+          label: 显示文章描述
+          value: true
+        - $formkit: number
+          name: friend_description_max_lines
+          if: "$is_show_friend_description === true"
+          label: 文章描述行数上限
+          value: "3"
+          min: 1
+          max: 5
+          step: 1
+          help: "填写值范围为 1-5"
+        - $formkit: switch
+          name: is_show_friend_permalink_text
+          label: 显示跳转链接提示文字
+          help: "如关闭此项，朋友圈列表文章项将不显示跳转链接文字"
+          value: true
+        - $formkit: switch
+          name: is_show_friend_pubdate
+          label: 显示发布日期
+          value: true

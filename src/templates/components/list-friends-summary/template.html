@@ -21,6 +21,7 @@
               </a>
             </h2>
             <time
+              th:if="${theme.config?.friends_page_styles?.is_show_friend_pubdate}"
               class="color-base-content-80 relative z-10 order-first mb-3 flex items-center pl-3.5 text-sm md:hidden"
               th:datetime="${#temporals.format(spec.pubDate, 'yyyy-MM-dd')}"
             >
@@ -29,7 +30,10 @@
               </span>
               <th:block th:text="${#temporals.format(spec.pubDate, 'MMMM dd yyyy')}"></th:block>
             </time>
-            <div class="friend-author color-time relative z-20 mt-0.5 mb-0 flex items-center text-sm">
+            <div
+              th:if="${theme.config?.friends_page_styles?.is_show_friend_author}"
+              class="friend-author color-time relative z-20 mt-0.5 mb-0 flex items-center text-sm"
+            >
               <img
                 th:src="${spec.logo}"
                 th:alt="${spec.author}"
@@ -40,13 +44,20 @@
                 <span th:text="${spec.author}">作者名称替换位</span>
               </a>
             </div>
-            <p
-              class="color-base-content-80 v-line-clamp-3 relative z-10 mt-2 mb-0 p-0 text-sm"
-              th:text="${spec.description}"
+            <th:block
+              th:if="${theme.config?.friends_page_styles?.is_show_friend_description}"
+              th:with="max_lines=${theme.config?.friends_page_styles?.friend_description_max_lines}"
             >
-              文章描述替换位
-            </p>
+              <p
+                class="color-base-content-80 relative z-10 mt-2 mb-0 p-0 text-sm"
+                th:text="${spec.description}"
+                th:classappend="|${max_lines == '1' ? 'v-line-clamp-1' : ''} ${max_lines == '2' ? 'v-line-clamp-2' : ''} ${max_lines == '3' ? 'v-line-clamp-3' : ''} ${max_lines == '4' ? 'v-line-clamp-4' : ''} ${max_lines == '5' ? 'v-line-clamp-5' : ''}|"
+              >
+                文章描述替换位
+              </p>
+            </th:block>
             <div
+              th:if="${theme.config?.friends_page_styles?.is_show_friend_permalink_text}"
               aria-hidden="true"
               class="color-primary relative z-10 mt-4 flex items-center text-sm font-medium"
               th:text="#{page.friends.postListPermalinkText}"
@@ -55,6 +66,7 @@
             </div>
           </div>
           <time
+            th:if="${theme.config?.friends_page_styles?.is_show_friend_pubdate}"
             class="color-base-content-80 relative z-10 order-first mt-1 mb-3 hidden items-center text-sm md:flex"
             th:datetime="${#temporals.format(spec.pubDate, 'yyyy-MM-dd')}"
             th:text="${#temporals.format(spec.pubDate, 'MMMM dd yyyy')}"

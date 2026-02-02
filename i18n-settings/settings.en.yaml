@@ -1907,3 +1907,47 @@ spec:
           name: is_moment_comment_section_show
           label: Enable comment section
           value: true
+    - group: friends_page_styles
+      label: Friends page style
+      formSchema:
+        - $el: div
+          children:
+            - $el: span
+              children: Requires the
+            - $el: a
+              attrs:
+                href: "https://www.halo.run/store/apps/app-yISsV"
+                style: |
+                  text-decoration: underline;
+                  text-underline-offset: 0.25em;
+                target: "_blank"
+              children: Friends Plugin
+            - $el: span
+              children: to be enabled for use.
+        - $formkit: switch
+          name: is_show_friend_author
+          label: Show author information
+          value: true
+          help: Show author avatar and name
+        - $formkit: switch
+          name: is_show_friend_description
+          label: Show post description
+          value: true
+        - $formkit: number
+          name: friend_description_max_lines
+          if: "$is_show_friend_description === true"
+          label: Maximum lines for post description
+          value: "3"
+          min: 1
+          max: 5
+          step: 1
+          help: "Valid range is 1-5"
+        - $formkit: switch
+          name: is_show_friend_permalink_text
+          label: Show link text
+          help: "If disabled, the friends list will not display link text"
+          value: true
+        - $formkit: switch
+          name: is_show_friend_pubdate
+          label: Show publish date
+          value: true
