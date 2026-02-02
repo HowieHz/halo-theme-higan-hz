@@ -133,11 +133,11 @@ The value type of this configuration item.
 - Attachment: Select uploaded attachments.
 - Icon: Use the icon setting box provided by Halo CMS, where you can select any [iconify](https://icon-sets.iconify.design/) icon.
 
-<!-- - 数组：多个值的列表，如 `[1, 2, 3]`
-- 对象：键值对集合，如 `{name: "张三", age: 20}`
-- URL：网址链接，如 `https://example.com`
-- 颜色值：如 `#FF5733`、`rgb(255, 87, 51)`
-- CSS 长度值：如 `1rem`、`1px`、`1em`、`50%`、`1vw` -->
+<!-- - Array: List of multiple values, e.g., `[1, 2, 3]`
+- Object: Collection of key-value pairs, e.g., `{name: "John", age: 20}`
+- URL: Web address link, e.g., `https://example.com`
+- Color value: e.g., `#FF5733`, `rgb(255, 87, 51)`
+- CSS length value: e.g., `1rem`, `1px`, `1em`, `50%`, `1vw` -->
 
 :::
 
@@ -262,7 +262,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-For specific usage methods, please refer to [Prefix Matching Mode Description](/tutorial/i18n.md#前缀匹配模式说明).
+For specific usage methods, please refer to [Prefix Matching Mode Description](/tutorial/i18n.md#prefix-matching-mode-description).
 
 :::
 
@@ -382,7 +382,7 @@ Empty
 
 After enabling [Auto-redirect Based on Browser Language](#Auto-redirect Based on Browser Language), if the browser language is different from the Default Page Language and the browser language exists in this option, it will automatically redirect to the corresponding page.
 
-Please refer to the [Auto-redirect Based on Browser Language Usage Guide](/tutorial/i18n#Auto-redirect Based on Browser LanguageUse指南) for configuration.
+Please refer to the [Auto-redirect Based on Browser Language Usage Guide](/tutorial/i18n#auto-redirect-based-on-browser-language-usage-guide) for configuration.
 
 Matching order is from top to bottom.
 
@@ -422,7 +422,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-After enabling, please refer to the [Multilingual Menu Usage Guide](/tutorial/i18n#多语言菜单Use指南) for configuration.
+After enabling, please refer to the [Multilingual Menu Usage Guide](/tutorial/i18n#multi-language-menu-usage-guide) for configuration.
 
 :::
 
@@ -493,13 +493,13 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-After enabling, please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains) for configuration.
+After enabling, please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#enable-only-allow-access-from-specified-domains) for configuration.
 
 When enabled, you can configure:
 
 - [Domain Whitelist](#Domain Whitelist)
 - [Target Link](#Target Link)
-- [跳转后 Whether 保留路径和查询参数](#跳转后-whether-保留路径和查询参数)
+- [Keep Path and Query Parameters After Redirect](#keep-path-and-query-parameters-after-redirect)
 
 :::
 
@@ -533,11 +533,11 @@ Empty
 
 :::
 
-> [!NOTE] 💡 示例值
+> [!NOTE] 💡 Example Value
 >
-> ::: tip 📂 Configuration 项名
+> ::: tip 📂 Configuration Item Name
 >
-> Base64 编码后的域名
+> Base64-encoded domain name
 >
 > :::
 > ::: info 🏷️ Type
@@ -563,7 +563,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-Please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains) for configuration.
+Please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#enable-only-allow-access-from-specified-domains) for configuration.
 
 :::
 
@@ -608,7 +608,7 @@ String
 :::
 ::: info ℹ️ Additional Information
 
-Please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains) for configuration.
+Please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#enable-only-allow-access-from-specified-domains) for configuration.
 
 :::
 
@@ -648,7 +648,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#EnableOnly Allow Access from Specified Domains) for configuration.
+Please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#enable-only-allow-access-from-specified-domains) for configuration.
 
 Assuming the user accesses the link `http://localhost/a/b?a=1`, and the [Target Link](#Target Link) is set to (before Base 64 encoding) `https://p.com`:
 
@@ -691,7 +691,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Enablethis option 厚，IfEnable 下面的“instant.page Support”、“Mermaid Support”willDisplay 对应的资源位置 Configuration 项。
+After enabling this option, if you enable the "instant.page Support" or "Mermaid Support" options below, the corresponding resource location configuration items will be displayed.
 
 :::
 
@@ -699,7 +699,7 @@ Enablethis option 厚，IfEnable 下面的“instant.page Support”、“Mermai
 
 ::: info 🎯 Purpose
 
-自动加载 instant.page 脚本，预加载链接以提升 page 加载速度。
+Automatically load the instant.page script to preload links and improve page loading speed.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -732,7 +732,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Enable Mermaid 图表渲染功 can，SupportInpost 中绘制流程图、when 序图等。
+Enable Mermaid chart rendering functionality to support drawing flowcharts, sequence diagrams, etc. in posts.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -762,12 +762,12 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-图表 canSupport 明暗切换，具体 Use 方法请看：[Mermaid 适配明暗主题切换](/guide/style-reference#mermaid-适配明暗主题切换)
+Charts can support light/dark theme switching. For specific usage methods, please see: [Mermaid Light/Dark Theme Adaptation](/guide/style-reference#mermaid-light-dark-theme-adaptation)
 
-Enable 后 Requires 要 Configuration 以下子项：
+After enabling, you need to configure the following sub-items:
 
-- Mermaid CSS 选择器（Default: `.content .mermaid`）
-- Mermaid Config 属性（Default: `{ startOnLoad: false }`）
+- Mermaid CSS Selector (Default: `.content .mermaid`)
+- Mermaid Config Property (Default: `{ startOnLoad: false }`)
 
 :::
 
@@ -947,17 +947,17 @@ Option
 :::
 ::: info ⭐ Default Value
 
-`暗色 - 绿`（internal value `dark`）
+`Dark - Green`（internal value `dark`）
 
 :::
 ::: info 💡 Other Options
 
-- `跟随系统 - 绿`（internal value `auto`）
-- `浅色 - 绿`（internal value `light`）
-- `跟随系统 - 蓝`（internal value `auto-blue`）
-- `浅色 - 蓝`（internal value `light-blue`）
-- `暗色 - 蓝`（internal value `dark-blue`）
-- `浅色 - 灰粉`（internal value `gray`）
+- `Follow System - Green`（internal value `auto`）
+- `Light - Green`（internal value `light`）
+- `Follow System - Blue`（internal value `auto-blue`）
+- `Light - Blue`（internal value `light-blue`）
+- `Dark - Blue`（internal value `dark-blue`）
+- `Light - Gray Pink`（internal value `gray`）
 - `Custom配色`（internal value `custom`）
 
 :::
@@ -1204,9 +1204,9 @@ Toggle logic will become: Light Mode -> Dark Mode -> Light Mode.
 
 When enabled, you can configure:
 
-- [自动模式配色方案](#自动模式配色方案)
-- [浅色模式配色方案](#浅色模式配色方案)
-- [深色模式配色方案](#深色模式配色方案)
+- [Auto Mode Color Scheme](#auto-mode-color-scheme)
+- [Light Mode Color Scheme](#light-mode-color-scheme)
+- [Dark Mode Color Scheme](#dark-mode-color-scheme)
 
 相关说明：
 
@@ -1223,7 +1223,7 @@ Set the color scheme for Auto Mode in the Light/Dark Mode Toggle Button.
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> 深浅色模式切换按钮](#深浅色模式切换按钮)When enabled, will display）
+(When [General Styles -> Light/Dark Mode Toggle Button](#light-dark-mode-toggle-button) is enabled, will display)
 
 General Styles -> Auto Mode Color Scheme
 
@@ -1240,17 +1240,17 @@ Option
 :::
 ::: info ⭐ Default Value
 
-`跟随系统 - 绿`（internal value `auto`）
+`Follow System - Green`（internal value `auto`）
 
 :::
 ::: info 💡 Other Options
 
-- `浅色 - 绿`（internal value `light`）
-- `暗色 - 绿`（internal value `dark`）
-- `跟随系统 - 蓝`（internal value `auto-blue`）
-- `浅色 - 蓝`（internal value `light-blue`）
-- `暗色 - 蓝`（internal value `dark-blue`）
-- `浅色 - 灰粉`（internal value `gray`）
+- `Light - Green`（internal value `light`）
+- `Dark - Green`（internal value `dark`）
+- `Follow System - Blue`（internal value `auto-blue`）
+- `Light - Blue`（internal value `light-blue`）
+- `Dark - Blue`（internal value `dark-blue`）
+- `Light - Gray Pink`（internal value `gray`）
 - `Custom配色`（internal value `custom`）
 
 :::
@@ -1274,7 +1274,7 @@ Set the color scheme for Light Mode in the Light/Dark Mode Toggle Button.
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> 深浅色模式切换按钮](#深浅色模式切换按钮)When enabled, will display）
+(When [General Styles -> Light/Dark Mode Toggle Button](#light-dark-mode-toggle-button) is enabled, will display)
 
 General Styles -> Light Mode Color Scheme
 
@@ -1291,17 +1291,17 @@ Option
 :::
 ::: info ⭐ Default Value
 
-`浅色 - 绿`（internal value `light`）
+`Light - Green`（internal value `light`）
 
 :::
 ::: info 💡 Other Options
 
-- `跟随系统 - 绿`（internal value `auto`）
-- `暗色 - 绿`（internal value `dark`）
-- `跟随系统 - 蓝`（internal value `auto-blue`）
-- `浅色 - 蓝`（internal value `light-blue`）
-- `暗色 - 蓝`（internal value `dark-blue`）
-- `浅色 - 灰粉`（internal value `gray`）
+- `Follow System - Green`（internal value `auto`）
+- `Dark - Green`（internal value `dark`）
+- `Follow System - Blue`（internal value `auto-blue`）
+- `Light - Blue`（internal value `light-blue`）
+- `Dark - Blue`（internal value `dark-blue`）
+- `Light - Gray Pink`（internal value `gray`）
 - `Custom配色`（internal value `custom`）
 
 :::
@@ -1325,7 +1325,7 @@ Set the color scheme for Dark Mode in the Light/Dark Mode Toggle Button.
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> 深浅色模式切换按钮](#深浅色模式切换按钮)When enabled, will display）
+(When [General Styles -> Light/Dark Mode Toggle Button](#light-dark-mode-toggle-button) is enabled, will display)
 
 General Styles -> Dark Mode Color Scheme
 
@@ -1342,17 +1342,17 @@ Option
 :::
 ::: info ⭐ Default Value
 
-`暗色 - 绿`（internal value `dark`）
+`Dark - Green`（internal value `dark`）
 
 :::
 ::: info 💡 Other Options
 
-- `跟随系统 - 绿`（internal value `auto`）
-- `浅色 - 绿`（internal value `light`）
-- `跟随系统 - 蓝`（internal value `auto-blue`）
-- `浅色 - 蓝`（internal value `light-blue`）
-- `暗色 - 蓝`（internal value `dark-blue`）
-- `浅色 - 灰粉`（internal value `gray`）
+- `Follow System - Green`（internal value `auto`）
+- `Light - Green`（internal value `light`）
+- `Follow System - Blue`（internal value `auto-blue`）
+- `Light - Blue`（internal value `light-blue`）
+- `Dark - Blue`（internal value `dark-blue`）
+- `Light - Gray Pink`（internal value `gray`）
 - `Custom配色`（internal value `custom`）
 
 :::

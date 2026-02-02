@@ -28,7 +28,7 @@ The displayed styles are theme defaults; some styles can be adjusted according t
 
 ::: details
 
-Related Documentation: [模板文件 and 访问路径映射](/en/reference/template-map)
+Related Documentation: [Template Files and Access Path Mapping](/en/reference/template-map)
 
 - <Badge type="tip" text="General Style" /> Applicable template file scope: Every page。
 - <Badge type="tip" text="Content Style" /> Applicable template file scope: `archives.html`, `category.html`, `links.html`, `moments.html`, `moment.html`, `page.html`, `photos.html`, `post.html`, `tag.html`. `5xx.html`, `404.html`。CSS selector is `.content`。
@@ -53,13 +53,13 @@ Related Documentation: [模板文件 and 访问路径映射](/en/reference/templ
 
 This section lists the extended styles implemented by this theme.
 
-- [缩写](#abbreviation)
-- [响应式视频嵌入](#responsive-video-embed)
-- [引用块脚注](#blockquote-footnote)
-- [拉引用块](#pullquote)
-- [水平分割线（特殊样式）](#horizontal-divider-special-style)
-- [隐藏/剧透](#hidden-spoiler-content)
-- [明暗模式显隐块](#light-dark-mode-visibility-block)
+- [Abbreviation](#abbreviation)
+- [Responsive Video Embed](#responsive-video-embed)
+- [Blockquote Footnote](#blockquote-footnote)
+- [Pullquote](#pullquote)
+- [Horizontal Divider (Special Style)](#horizontal-divider-special-style)
+- [Hidden/Spoiler Content](#hidden-spoiler-content)
+- [Light/Dark Mode Visibility Block](#light-dark-mode-visibility-block)
 
 ## Italic/Emphasis <Badge type="tip" text="General Style" />
 
@@ -144,7 +144,7 @@ print("世界，你好！")
 ~~~
 
 ````markdown
-_嵌套 code 块示例_
+_Nested code block example_
 
 ```python
 print("嵌套 code 块")
@@ -155,14 +155,14 @@ print("嵌套 code 块")
 
 ### Multi-line Code Block Rendering Effect
 
-渲染效果随实际渲染器（如 `shiki`，`highlight.js`）变化，故不做渲染展示。
+The rendering effect varies with the actual renderer (such as `shiki`, `highlight.js`), so no rendering demonstration is provided.
 
 ## Paragraph <Badge type="tip" text="General Style" />
 
 ### Paragraph Markdown Syntax
 
 ```markdown
-This is a regular paragraph, testing text alignment and line height.This paragraph contains some common formatting like**bold**、*italic*和 `code`。According to your CSS, this text should have appropriate line height and alignment.
+This is a regular paragraph, testing text alignment and line height.This paragraph contains some common formatting like **bold**, *italic* and `code`. According to your CSS, this text should have appropriate line height and alignment.
 
 This is another paragraph, this is a\
 line break.
@@ -171,9 +171,9 @@ and this is not a
 line break.
 
 在这一行末尾空两格  
-也可以产生一个 line break.
+will also create a line break.
 
-Empty lines are not displayed by default. If you enable `文章页样式 - 文章页样式 - 优化文章段落空行显示`, empty lines will be displayed.
+Empty lines are not displayed by default. If you enable `Post Page Styles - Post Page Styles - Optimize Empty Line Display in Article Paragraphs`, empty lines will be displayed.
 ```
 
 ### Paragraph HTML Tag Syntax
@@ -188,7 +188,7 @@ Empty lines are not displayed by default. If you enable `文章页样式 - 文�
 
 <DefaultRender height="325px">
 
-This is a regular paragraph, testing text alignment and line height.This paragraph contains some common formatting like**bold**、*italic*和 `code`。According to your CSS, this text should have appropriate line height and alignment.
+This is a regular paragraph, testing text alignment and line height.This paragraph contains some common formatting like **bold**, *italic* and `code`. According to your CSS, this text should have appropriate line height and alignment.
 
 This is another paragraph, this is a\
 line break.
@@ -197,9 +197,9 @@ and this is not a
 line break.
 
 Also, two spaces at the end of this line  
-也可以产生一个 line break.
+will also create a line break.
 
-Empty lines are not displayed by default. If you enable `文章页样式 - 文章页样式 - 优化文章段落空行显示`, empty lines will be displayed.
+Empty lines are not displayed by default. If you enable `Post Page Styles - Post Page Styles - Optimize Empty Line Display in Article Paragraphs`, empty lines will be displayed.
 
 </DefaultRender>
 
@@ -229,8 +229,8 @@ From <cite>Documentation Writing Guide</cite>
 
 <!-- prettier-ignore-start -->
 ```html
-Normal text<sup>superscript<sup>上 superscript<sup>上上 superscript<sup>上上上 superscript</sup></sup></sup></sup>
-Normal text<sub>subscript<sub>下 subscript<sub>下下 subscript<sub>下下下 subscript</sub></sub></sub></sub>
+Normal text<sup>superscript<sup>super superscript<sup>super super superscript<sup>super super super superscript</sup></sup></sup></sup>
+Normal text<sub>subscript<sub>sub subscript<sub>sub sub subscript<sub>sub sub sub subscript</sub></sub></sub></sub>
 
 Normal text<sup>superscript</sup>and<sub>subscript</sub>
 ```
@@ -240,8 +240,8 @@ Normal text<sup>superscript</sup>and<sub>subscript</sub>
 
 <DefaultRender height="100px">
 
-Normal text<sup>superscript<sup>上 superscript<sup>上上 superscript<sup>上上上 superscript</sup></sup></sup></sup>
-Normal text<sub>subscript<sub>下 subscript<sub>下下 subscript<sub>下下下 subscript</sub></sub></sub></sub>
+Normal text<sup>superscript<sup>super superscript<sup>super super superscript<sup>super super super superscript</sup></sup></sup></sup>
+Normal text<sub>subscript<sub>sub subscript<sub>sub sub subscript<sub>sub sub sub subscript</sub></sub></sub></sub>
 
 Normal text<sup>superscript</sup>and<sub>subscript</sub>
 
@@ -253,7 +253,7 @@ Normal text<sup>superscript</sup>and<sub>subscript</sub>
 
 <!-- prettier-ignore-start -->
 ```html
-这是 Normal text <small>This is small text</small> 这是 Normal text
+This is Normal text <small>This is small text</small> This is Normal text
 
 This is normal text <small>This is small text</small> This is normal text
 ```
@@ -263,7 +263,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 <DefaultRender>
 
-这是 Normal text <small>This is small text</small> 这是 Normal text
+This is Normal text <small>This is small text</small> This is Normal text
 
 This is normal text <small>This is small text</small> This is normal text
 
@@ -282,7 +282,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 <abbr title="Hypertext Markup Language"><a href="https://example.com">HTML - This line will apply both a tag styles in posts, so there are two layers of underline</a></abbr>
 
-<abbr title="我是提示">This tag has a title attribute, so hovering over it will show a tooltip.</abbr>
+<abbr title="I am a tooltip">This tag has a title attribute, so hovering over it will show a tooltip.</abbr>
 
 <abbr>Actually <abbr>title</abbr> is optional</abbr>
 
@@ -301,7 +301,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 <abbr title="Hypertext Markup Language"><a href="https://example.com">HTML - This line will apply both a tag styles in posts, so there are two layers of underline</a></abbr>
 
-<abbr title="我是提示">This tag has a title attribute, so hovering over it will show a tooltip.</abbr>
+<abbr title="I am a tooltip">This tag has a title attribute, so hovering over it will show a tooltip.</abbr>
 
 <abbr>Actually <abbr>title</abbr> is optional</abbr>
 
