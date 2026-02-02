@@ -5990,6 +5990,82 @@ HTML 代码也是可以的：
 
 :::
 
+### 显示作者头像
+
+::: info 🎯 用途
+
+在朋友圈列表中显示文章作者的头像。点击头像可以前往作者的网站。
+
+:::
+::: info 📂 配置项位置
+
+朋友圈页面样式 -> 显示作者头像
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=显示作者头像" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.friends_page_styles?.is_show_friend_author_avatar`
+
+:::
+::: info ℹ️ 补充信息
+
+仅在"显示作者信息"选项启用时生效。
+
+:::
+
+### 显示作者名称
+
+::: info 🎯 用途
+
+在朋友圈列表中显示文章作者的名称。点击名称可以前往作者的网站。
+
+:::
+::: info 📂 配置项位置
+
+朋友圈页面样式 -> 显示作者名称
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=显示作者名称" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.friends_page_styles?.is_show_friend_author_name`
+
+:::
+::: info ℹ️ 补充信息
+
+仅在"显示作者信息"选项启用时生效。
+
+:::
+
 ### 显示文章描述
 
 ::: info 🎯 用途

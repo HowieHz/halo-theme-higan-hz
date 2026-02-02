@@ -5996,6 +5996,82 @@ Boolean
 
 :::
 
+### Show Author Avatar
+
+::: info 🎯 Purpose
+
+Display the author's avatar in the friends list. Clicking the avatar will navigate to the author's website.
+
+:::
+::: info 📂 Configuration Item Location
+
+Friends Page Style -> Show Author Avatar
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show author avatar" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.friends_page_styles?.is_show_friend_author_avatar`
+
+:::
+::: info ℹ️ Additional Information
+
+Only takes effect when "Show Author Information" option is enabled.
+
+:::
+
+### Show Author Name
+
+::: info 🎯 Purpose
+
+Display the author's name in the friends list. Clicking the name will navigate to the author's website.
+
+:::
+::: info 📂 Configuration Item Location
+
+Friends Page Style -> Show Author Name
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show author name" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.friends_page_styles?.is_show_friend_author_name`
+
+:::
+::: info ℹ️ Additional Information
+
+Only takes effect when "Show Author Information" option is enabled.
+
+:::
+
 ### Show Post Description
 
 ::: info 🎯 Purpose

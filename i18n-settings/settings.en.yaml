@@ -1930,6 +1930,16 @@ spec:
           value: true
           help: Show author avatar and name
         - $formkit: switch
+          name: is_show_friend_author_avatar
+          if: "$is_show_friend_author === true"
+          label: Show author avatar
+          value: true
+        - $formkit: switch
+          name: is_show_friend_author_name
+          if: "$is_show_friend_author === true"
+          label: Show author name
+          value: true
+        - $formkit: switch
           name: is_show_friend_description
           label: Show post description
           value: true

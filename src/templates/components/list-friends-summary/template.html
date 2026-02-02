@@ -15,7 +15,7 @@
               <div
                 class="friend-card-hover absolute -inset-x-4 -inset-y-2 z-0 opacity-0 sm:-inset-x-6 sm:rounded-2xl"
               ></div>
-              <a th:href="@{${spec.postLink}}" target="_blank">
+              <a th:href="@{${spec.postLink}}" target="_blank" rel="noopener">
                 <span class="absolute -inset-x-4 -inset-y-2 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
                 <span class="relative z-10" th:text="${spec.title}">文章标题替换位</span>
               </a>
@@ -34,13 +34,27 @@
               th:if="${theme.config?.friends_page_styles?.is_show_friend_author}"
               class="friend-author color-time relative z-20 mt-0.5 mb-0 flex items-center text-sm"
             >
-              <img
-                th:src="${spec.logo}"
-                th:alt="${spec.author}"
-                class="friend-author-avatar mr-2 h-6 w-6 rounded-full"
-                loading="lazy"
-              />
-              <a th:href="@{${spec.authorUrl}}" target="_blank" class="friend-author-link">
+              <a
+                th:if="${theme.config?.friends_page_styles?.is_show_friend_author_avatar}"
+                th:href="@{${spec.authorUrl}}"
+                target="_blank"
+                rel="noopener"
+                class="mr-2"
+              >
+                <img
+                  th:src="${spec.logo}"
+                  th:alt="${spec.author}"
+                  class="friend-author-avatar h-6 w-6 rounded-full"
+                  loading="lazy"
+                />
+              </a>
+              <a
+                th:if="${theme.config?.friends_page_styles?.is_show_friend_author_name}"
+                th:href="@{${spec.authorUrl}}"
+                target="_blank"
+                rel="noopener"
+                class="friend-author-link"
+              >
                 <span th:text="${spec.author}">作者名称替换位</span>
               </a>
             </div>
