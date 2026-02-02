@@ -40,12 +40,12 @@ In the default access path column in the table, `{xxx}` represents variables (pl
 Template files are located in the `src/templates` folder.  
 In the default access path column in the table, `{xxx}` represents variables (please fill in actual values), and `(xxx)` represents optional values.
 
-| Template File  | Page                        | Default Path                                   | Required Plugin                                                   |
-| -------------- | --------------------------- | ---------------------------------------------- | ----------------------------------------------------------------- |
-| `links.html`   | Links List                  | `/links`                                       | [plugin-links](https://github.com/halo-sigs/plugin-links)         |
-| `photos.html`  | Photos Page                 | `/photos`, `/photos/page/{page}`               | [plugin-photos](https://github.com/halo-sigs/plugin-photos)       |
-| `moments.html` | Moments List                | `/moments(/page/{page})(?tag={tag})`           | [plugin-moments](https://github.com/halo-sigs/plugin-moments)     |
-| `moment.html`  | Moment Detail               | `/moments/{name}`                              | [plugin-moments](https://github.com/halo-sigs/plugin-moments)     |
+| Template File  | Page                        | Default Path                                   | Required Plugin                                                       |
+| -------------- | --------------------------- | ---------------------------------------------- | --------------------------------------------------------------------- |
+| `links.html`   | Links List                  | `/links`                                       | [plugin-links](https://github.com/halo-sigs/plugin-links)             |
+| `photos.html`  | Photos Page                 | `/photos`, `/photos/page/{page}`               | [plugin-photos](https://github.com/halo-sigs/plugin-photos)           |
+| `moments.html` | Moments List                | `/moments(/page/{page})(?tag={tag})`           | [plugin-moments](https://github.com/halo-sigs/plugin-moments)         |
+| `moment.html`  | Moment Detail               | `/moments/{name}`                              | [plugin-moments](https://github.com/halo-sigs/plugin-moments)         |
 | `friends.html` | Moments (Feed Subscription) | `/friends(/page/{page})(?linkName={linkName})` | [plugin-friends](https://github.com/chengzhongxue/plugin-friends-new) |
 
 ### Other Plugin Adaptations
