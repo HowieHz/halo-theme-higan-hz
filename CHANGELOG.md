@@ -10,6 +10,10 @@
   - 介绍文档：[朋友圈插件介绍](https://howiehz.top/halo-theme-higan-haozi/guide/plugin-compatibility#朋友圈-订阅聚合)
   - 新增相关配置项：[朋友圈页面样式配置项](https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration#朋友圈页面样式)
 
+## 🔧 优化改进
+
+- 优化英文文档翻译质量
+
 ## [1.54.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.53.1...v1.54.0) (2026-1-28)
 
 ### ⚠破坏性修改
