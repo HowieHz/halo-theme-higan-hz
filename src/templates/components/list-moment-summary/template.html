@@ -237,7 +237,7 @@
           </li>
         </ul>
       </div>
-      <th:block th:insert="~{components/pagination/template :: content(${moments})}"></th:block>
+      <th:block th:insert="~{components/pagination/template :: content(posts=${moments}, isListResult=true)}"></th:block>
     </div>
     <script th:inline="javascript" th:if="${theme.config?.moments_styles?.is_moment_upvote_button_show}">
       const likes_localstorage_key = "higan.likes.moment.ids";
