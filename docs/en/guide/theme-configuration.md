@@ -193,7 +193,7 @@ Global -> Default Page Language
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Default Page Language" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Default%20Page%20Language" />
 
 :::
 ::: info 🏷️ Type
@@ -242,7 +242,7 @@ Global -> Multilingual Function Prefix Matching Mode
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Multilingual Function Prefix Matching Mode" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Multilingual%20Function%20Prefix%20Matching%20Mode" />
 
 :::
 ::: info 🏷️ Type
@@ -280,7 +280,7 @@ Global -> Auto-redirect Based on Browser Language
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Auto-redirect Based on Browser Language" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Auto-redirect%20Based%20on%20Browser%20Language" />
 
 :::
 ::: info 🏷️ Type
@@ -326,7 +326,7 @@ Global -> Allowed Target Language Code List for Redirects
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Allowed Target Language Code List for Redirects" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Allowed%20Target%20Language%20Code%20List%20for%20Redirects" />
 
 :::
 ::: info 🏷️ Type
@@ -402,7 +402,7 @@ Global -> Multilingual Menu Support
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Multilingual Menu Support" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Multilingual%20Menu%20Support" />
 
 :::
 ::: info 🏷️ Type
@@ -473,7 +473,7 @@ Global -> Only Allow Access from Specified Domains
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Only Allow Access from Specified Domains" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Only%20Allow%20Access%20from%20Specified%20Domains" />
 
 :::
 ::: info 🏷️ Type
@@ -519,7 +519,7 @@ Global -> Domain Whitelist
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Domain Whitelist" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Domain%20Whitelist" />
 
 :::
 ::: info 🏷️ Type
@@ -583,7 +583,7 @@ Global -> Target Link
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Target Link" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Target%20Link" />
 
 :::
 ::: info 🏷️ Type
@@ -628,7 +628,7 @@ Global -> Keep Path and Query Parameters After Redirect
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Keep path and query" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Keep%20path%20and%20query" />
 
 :::
 ::: info 🏷️ Type
@@ -671,7 +671,7 @@ Global -> Custom Resource Location Address
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Custom Resource Location Address" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Custom%20Resource%20Location%20Address" />
 
 :::
 ::: info 🏷️ Type
@@ -787,7 +787,7 @@ General Styles -> Enable Custom Font Files
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Enable Custom Font Files" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Enable%20Custom%20Font%20Files" />
 
 :::
 ::: info 🏷️ Type
@@ -830,7 +830,7 @@ General Styles -> Custom Font Files
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom font files" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20font%20files" />
 
 :::
 ::: info 🏷️ Type
@@ -861,7 +861,7 @@ General Styles -> Font Name (Full Name/PostScript Name)
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Font Name" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Font%20Name" />
 
 :::
 ::: info 🏷️ Type
@@ -937,7 +937,7 @@ General Styles -> Color Scheme
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Color scheme" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Color%20scheme" />
 
 :::
 ::: info 🏷️ Type
@@ -987,7 +987,7 @@ General Styles -> Custom Color Scheme
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom Color Scheme" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20Color%20Scheme" />
 
 :::
 ::: info 🏷️ Type
@@ -1179,7 +1179,7 @@ General Styles -> Light/Dark Mode Toggle Button
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Light/Dark Mode Toggle Button" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Light/Dark%20Mode%20Toggle%20Button" />
 
 :::
 ::: info 🏷️ Type
@@ -1230,7 +1230,7 @@ General Styles -> Auto Mode Color Scheme
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Auto Mode Color Scheme" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Auto%20Mode%20Color%20Scheme" />
 
 :::
 ::: info 🏷️ Type
@@ -1281,7 +1281,7 @@ General Styles -> Light Mode Color Scheme
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Light Mode Color Scheme" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Light%20Mode%20Color%20Scheme" />
 
 :::
 ::: info 🏷️ Type
@@ -1332,7 +1332,7 @@ General Styles -> Dark Mode Color Scheme
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Dark Mode Color Scheme" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Dark%20Mode%20Color%20Scheme" />
 
 :::
 ::: info 🏷️ Type
@@ -1381,7 +1381,7 @@ General Styles -> Font Size
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Font Size" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Font%20Size" />
 
 :::
 ::: info 🏷️ Type
@@ -1420,7 +1420,7 @@ General Styles -> Custom Content Area Maximum Width
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom Content Area Maximum Width" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20Content%20Area%20Maximum%20Width" />
 
 :::
 ::: info 🏷️ Type
@@ -1465,7 +1465,7 @@ General Styles -> Content Area Maximum Width
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content Area Maximum Width" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content%20Area%20Maximum%20Width" />
 
 :::
 ::: info 🏷️ Type
@@ -1508,7 +1508,7 @@ General Styles -> Custom Content Area Minimum Width
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom Content Area Minimum Width" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20Content%20Area%20Minimum%20Width" />
 
 :::
 ::: info 🏷️ Type
@@ -1553,7 +1553,7 @@ General Styles -> Content Area Minimum Width
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content Area Minimum Width" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content%20Area%20Minimum%20Width" />
 
 :::
 ::: info 🏷️ Type
@@ -1598,7 +1598,7 @@ General Styles -> Force Apply Content Area Minimum Width
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Force Apply Content Area Minimum Width" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Force%20Apply%20Content%20Area%20Minimum%20Width" />
 
 :::
 ::: info 🏷️ Type
@@ -1637,7 +1637,7 @@ General Styles -> Custom Content Area Width Property
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom Content Area Width Property" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20Content%20Area%20Width%20Property" />
 
 :::
 ::: info 🏷️ Type
@@ -1679,7 +1679,7 @@ General Styles -> Content Area Width Style
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content Area Width Style" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content%20Area%20Width%20Style" />
 
 :::
 ::: info 🏷️ Type
@@ -1727,7 +1727,7 @@ General Styles -> Header Avatar Display
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Header Avatar Display" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Header%20Avatar%20Display" />
 
 :::
 ::: info 🏷️ Type
@@ -1771,7 +1771,7 @@ General Styles -> Custom Header Avatar
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom Header Avatar" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20Header%20Avatar" />
 
 :::
 ::: info 🏷️ Type
@@ -1801,7 +1801,7 @@ General Styles -> Circular Avatar
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Circular Avatar" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Circular%20Avatar" />
 
 :::
 ::: info 🏷️ Type
@@ -1836,7 +1836,7 @@ General Styles -> Grayscale Avatar
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Grayscale Avatar" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Grayscale%20Avatar" />
 
 :::
 ::: info 🏷️ Type
@@ -1869,7 +1869,7 @@ General Styles -> Additional Menu Items
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Additional Menu Items" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Additional%20Menu%20Items" />
 
 :::
 ::: info 🏷️ Type
@@ -1940,7 +1940,7 @@ General Styles -> Display Header Menu
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Display Header Menu" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Display%20Header%20Menu" />
 
 :::
 ::: info 🏷️ Type
@@ -1973,7 +1973,7 @@ General Styles -> Display Page Numbers
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Display Page Numbers" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Display%20Page%20Numbers" />
 
 :::
 ::: info 🏷️ Type
@@ -2006,7 +2006,7 @@ General Styles -> Site Statistics at Page Bottom
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Site Statistics at Page Bottom" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Site%20Statistics%20at%20Page%20Bottom" />
 
 :::
 ::: info 🏷️ Type
@@ -2048,7 +2048,7 @@ General Styles -> Statistics Item Settings
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Statistics Item Settings" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Statistics%20Item%20Settings" />
 
 :::
 ::: info 🏷️ Type
@@ -2138,7 +2138,7 @@ General Styles -> Theme Information at Page Bottom
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Theme Information at Page Bottom" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Theme%20Information%20at%20Page%20Bottom" />
 
 :::
 ::: info 🏷️ Type
@@ -2181,7 +2181,7 @@ General Styles -> Custom Attribution in Copyright Information
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Theme Name Displayed in Theme Information at Page Bottom" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Theme%20Name%20Displayed%20in%20Theme%20Information%20at%20Page%20Bottom" />
 
 :::
 ::: info 🏷️ Type
@@ -2222,7 +2222,7 @@ General Styles -> Halo Version Displayed in Theme Information at Page Bottom
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Halo Version Displayed in Theme Information at Page Bottom" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Halo%20Version%20Displayed%20in%20Theme%20Information%20at%20Page%20Bottom" />
 
 :::
 ::: info 🏷️ Type
@@ -2261,7 +2261,7 @@ General Styles -> Copyright Information at Page Bottom
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Copyright Information at Page Bottom" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Copyright%20Information%20at%20Page%20Bottom" />
 
 :::
 ::: info 🏷️ Type
@@ -2303,7 +2303,7 @@ General Styles -> Custom Attribution in Copyright Information
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom Attribution in Copyright Information" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20Attribution%20in%20Copyright%20Information" />
 
 :::
 ::: info 🏷️ Type
@@ -2341,7 +2341,7 @@ General Styles -> Force Footer and Page Numbers at Page Bottom
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Force Footer and Page Numbers at Page Bottom" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Force%20Footer%20and%20Page%20Numbers%20at%20Page%20Bottom" />
 
 :::
 ::: info 🏷️ Type
@@ -2374,7 +2374,7 @@ General Styles -> Menu at Page Bottom
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Menu at Page Bottom" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Menu%20at%20Page%20Bottom" />
 
 :::
 ::: info 🏷️ Type
@@ -2407,7 +2407,7 @@ General Styles -> Add Content to Bottom of Page
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add Content to Bottom of Page" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add%20Content%20to%20Bottom%20of%20Page" />
 
 :::
 ::: info 🏷️ Type
@@ -2454,7 +2454,7 @@ Home Page Style -> Content at Bottom of Page
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content at Bottom of Page" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content%20at%20Bottom%20of%20Page" />
 
 :::
 ::: info 🏷️ Type
@@ -2507,7 +2507,7 @@ Home Page Style -> Multi-language Support for Content at Bottom of Page
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Multi-language Support for Content at Bottom of Page" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Multi-language%20Support%20for%20Content%20at%20Bottom%20of%20Page" />
 
 :::
 ::: info 🏷️ Type
@@ -2547,7 +2547,7 @@ Home Page Style -> Custom Multi-language Content at Bottom of Page
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Custom Multi-language Content at Bottom of Page" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Custom%20Multi-language%20Content%20at%20Bottom%20of%20Page" />
 
 :::
 ::: info 🏷️ Type
@@ -2642,7 +2642,7 @@ General Styles -> Add Underline to H3 Headings
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add underline to H3 headings" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add%20underline%20to%20H3%20headings" />
 
 :::
 ::: info 🏷️ Type
@@ -2675,7 +2675,7 @@ General Styles -> Preserve Empty Lines in Block Quotes
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Preserve Empty Lines in Block Quotes" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Preserve%20Empty%20Lines%20in%20Block%20Quotes" />
 
 :::
 ::: info 🏷️ Type
@@ -2713,7 +2713,7 @@ General Styles -> Add Quotation Mark Before Block Quote
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add quotation mark before block quote" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add%20quotation%20mark%20before%20block%20quote" />
 
 :::
 ::: info 🏷️ Type
@@ -2746,7 +2746,7 @@ General Styles -> Add Quotation Mark After Block Quote
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add quotation mark after block quote" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add%20quotation%20mark%20after%20block%20quote" />
 
 :::
 ::: info 🏷️ Type
@@ -2779,7 +2779,7 @@ General Styles -> Table Row Lines (Excluding Header)
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Table row lines" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Table%20row%20lines" />
 
 :::
 ::: info 🏷️ Type
@@ -2828,7 +2828,7 @@ General Styles -> Table Row Line Width (Excluding Header)
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Table row line width" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Table%20row%20line%20width" />
 
 :::
 ::: info 🏷️ Type
@@ -2871,7 +2871,7 @@ General Styles -> Heading Top Margin Multiplier
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Heading top margin multiplier" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Heading%20top%20margin%20multiplier" />
 
 :::
 ::: info 🏷️ Type
@@ -2919,7 +2919,7 @@ General Styles -> Heading Bottom Margin Multiplier
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Heading bottom margin multiplier" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Heading%20bottom%20margin%20multiplier" />
 
 :::
 ::: info 🏷️ Type
@@ -2962,7 +2962,7 @@ General Styles -> Paragraph Top Margin Multiplier
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Paragraph top margin multiplier" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Paragraph%20top%20margin%20multiplier" />
 
 :::
 ::: info 🏷️ Type
@@ -3005,7 +3005,7 @@ General Styles -> Paragraph Bottom Margin Multiplier
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Paragraph bottom margin multiplier" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Paragraph%20bottom%20margin%20multiplier" />
 
 :::
 ::: info 🏷️ Type
@@ -3052,7 +3052,7 @@ Home Page Style -> Homepage HTML Title
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Homepage HTML title" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Homepage%20HTML%20title" />
 
 :::
 ::: info 🏷️ Type
@@ -3137,7 +3137,7 @@ Home Page Style -> Custom Random Display Quote
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Custom Random Display Quote" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Custom%20Random%20Display%20Quote" />
 
 :::
 ::: info 🏷️ Type
@@ -3177,7 +3177,7 @@ Home Page Style -> Personal Profile/Announcement
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Personal profile/Announcement" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Personal%20profile/Announcement" />
 
 :::
 ::: info 🏷️ Type
@@ -3225,7 +3225,7 @@ Home Page Style -> Multi-language Personal Profile/Announcement Support
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Multi-language personal profile/announcement support" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Multi-language%20personal%20profile/announcement%20support" />
 
 :::
 ::: info 🏷️ Type
@@ -3269,7 +3269,7 @@ Home Page Style -> Custom Multi-language Announcement Content
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Personal profile/Announcement content" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Personal%20profile/Announcement%20content" />
 
 :::
 ::: info 🏷️ Type
@@ -3364,7 +3364,7 @@ Home Page Style -> Display Text on the Left Side of Social Media Icons
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display Text on the Left Side of Social Media Icons" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20Text%20on%20the%20Left%20Side%20of%20Social%20Media%20Icons" />
 
 :::
 ::: info 🏷️ Type
@@ -3397,7 +3397,7 @@ Home Page Style -> Home Page Post List Title
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Enable post list title" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Enable%20post%20list%20title" />
 
 :::
 ::: info 🏷️ Type
@@ -3430,7 +3430,7 @@ Home Page Style -> Home Page List Layout
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Home page post list layout" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Home%20page%20post%20list%20layout" />
 
 :::
 ::: info 🏷️ Type
@@ -3500,7 +3500,7 @@ Home Page Style -> Display Post Views in Simple List
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display Post Views in Simple List" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20Post%20Views%20in%20Simple%20List" />
 
 :::
 ::: info 🏷️ Type
@@ -3535,7 +3535,7 @@ Home Page Style -> Display Post Categories in Post List Summary
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display Post Categories in Post List Summary" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20Post%20Categories%20in%20Post%20List%20Summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3570,7 +3570,7 @@ Home Page Style -> Display Post Tags in Post List Summary
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display Post Tags in Post List Summary" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20Post%20Tags%20in%20Post%20List%20Summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3605,7 +3605,7 @@ Home Page Style -> Display Post Views in Post List Summary
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display Post Views in Post List Summary" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20Post%20Views%20in%20Post%20List%20Summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3640,7 +3640,7 @@ Home Page Style -> Display Post Estimated Reading Time in Post List Summary
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display post estimated reading time in post list summary" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20post%20estimated%20reading%20time%20in%20post%20list%20summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3680,7 +3680,7 @@ Home Page Style -> Display Post Word Count in Post List Summary
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display post word count in post list summary" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20post%20word%20count%20in%20post%20list%20summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3720,7 +3720,7 @@ Home Page Style -> Display Post Excerpt in Post List Summary
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display post excerpt in post list summary" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20post%20excerpt%20in%20post%20list%20summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3755,7 +3755,7 @@ Home Page Style -> Maximum Lines for Post Excerpt in Post List Summary
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Maximum number of lines in the post list summary" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Maximum%20number%20of%20lines%20in%20the%20post%20list%20summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3795,7 +3795,7 @@ Home Page Style -> Link Text for Post List Summary
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display the text of the post list permalink" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20the%20text%20of%20the%20post%20list%20permalink" />
 
 :::
 ::: info 🏷️ Type
@@ -3835,7 +3835,7 @@ Home Page Style -> Display Post Cover in Post List Summary
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display Post Cover in Post List Summary" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20Post%20Cover%20in%20Post%20List%20Summary" />
 
 :::
 ::: info 🏷️ Type
@@ -3870,7 +3870,7 @@ Home Page Style -> Number of Moments Per Page
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Number of Moments Per Page" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Number%20of%20Moments%20Per%20Page" />
 
 :::
 ::: info 🏷️ Type
@@ -3905,7 +3905,7 @@ Home Page Style -> Show Author Avatar in Moment List
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show Author Avatar in Moment List" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20Author%20Avatar%20in%20Moment%20List" />
 
 :::
 ::: info 🏷️ Type
@@ -3940,7 +3940,7 @@ Home Page Style -> Show Author Nickname in Moment List
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show Author Nickname in Moment List" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20Author%20Nickname%20in%20Moment%20List" />
 
 :::
 ::: info 🏷️ Type
@@ -3973,7 +3973,7 @@ Home Page Style -> Top Icon Display on Post List
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Top Icon Display on Post List" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Top%20Icon%20Display%20on%20Post%20List" />
 
 :::
 ::: info 🏷️ Type
@@ -4017,7 +4017,7 @@ post 页样式 -> 优化 post 段落 Empty 行 Display
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Optimize Post Paragraph Spacing Display" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Optimize%20Post%20Paragraph%20Spacing%20Display" />
 
 :::
 ::: info 🏷️ Type
@@ -4056,7 +4056,7 @@ Post Page Style -> Paragraph First-line Indent
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable paragraph first-line indent" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable%20paragraph%20first-line%20indent" />
 
 :::
 ::: info 🏷️ Type
@@ -4101,7 +4101,7 @@ post 页样式 -> post 标题大写
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Post title uppercase" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Post%20title%20uppercase" />
 
 :::
 ::: info 🏷️ Type
@@ -4134,7 +4134,7 @@ post 页样式 -> post 发布 when 间
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Post Publish Time" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Post%20Publish%20Time" />
 
 :::
 ::: info 🏷️ Type
@@ -4174,7 +4174,7 @@ post 页样式 -> post 更新 when 间
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Post Update Time" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Post%20Update%20Time" />
 
 :::
 ::: info 🏷️ Type
@@ -4214,7 +4214,7 @@ post 页样式 -> post 阅读量
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show post views" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show%20post%20views" />
 
 :::
 ::: info 🏷️ Type
@@ -4247,7 +4247,7 @@ post 页样式 -> post 预计阅读 when 间
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show Estimated Reading Time of Post" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show%20Estimated%20Reading%20Time%20of%20Post" />
 
 :::
 ::: info 🏷️ Type
@@ -4285,7 +4285,7 @@ post 页样式 -> post 字数统计
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show post word count" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show%20post%20word%20count" />
 
 :::
 ::: info 🏷️ Type
@@ -4323,7 +4323,7 @@ Post Page Style -> Share Button in Desktop Menu
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Share button in desktop menu" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Share%20button%20in%20desktop%20menu" />
 
 :::
 ::: info 🏷️ Type
@@ -4358,7 +4358,7 @@ post 页样式 -> Custom 侧边目录最大宽度
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Custom Sidebar Table of Contents Maximum Width" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Custom%20Sidebar%20Table%20of%20Contents%20Maximum%20Width" />
 
 :::
 ::: info 🏷️ Type
@@ -4401,7 +4401,7 @@ post 页样式 -> post 末尾的的分隔线
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable dividing line at the end of the post" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable%20dividing%20line%20at%20the%20end%20of%20the%20post" />
 
 :::
 ::: info 🏷️ Type
@@ -4434,7 +4434,7 @@ post 页样式 -> post 底部的点赞按钮
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Upvote button at the bottom of the post" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Upvote%20button%20at%20the%20bottom%20of%20the%20post" />
 
 :::
 ::: info 🏷️ Type
@@ -4485,7 +4485,7 @@ post 页样式 -> post 底部的推荐 post
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Recommended articles at the bottom of the post" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Recommended%20articles%20at%20the%20bottom%20of%20the%20post" />
 
 :::
 ::: info 🏷️ Type
@@ -4529,7 +4529,7 @@ post 页样式 -> post 底部的相邻 post 导航
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Adjacent article navigation at the bottom of the post" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Adjacent%20article%20navigation%20at%20the%20bottom%20of%20the%20post" />
 
 :::
 ::: info 🏷️ Type
@@ -4562,7 +4562,7 @@ post 页样式 -> post 评论区
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable comment section" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable%20comment%20section" />
 
 :::
 ::: info 🏷️ Type
@@ -4595,7 +4595,7 @@ Post Page Style -> Mobile Bottom Navigation Bar
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Mobile footer navigation" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Mobile%20footer%20navigation" />
 
 :::
 ::: info 🏷️ Type
@@ -4639,7 +4639,7 @@ Categories Page Style -> Page Description
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Page description (meta description)" />
+<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Page%20description%20(meta%20description)" />
 
 :::
 ::: info 🏷️ Type
@@ -4659,7 +4659,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />)
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site%20description" />)
 
 :::
 
@@ -4677,7 +4677,7 @@ Categories Page Style -> Display Number of Posts Per Category
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Display Number of Posts Per Category" />
+<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Display%20Number%20of%20Posts%20Per%20Category" />
 
 :::
 ::: info 🏷️ Type
@@ -4722,7 +4722,7 @@ Categories Page Style -> Display Multi-layer Categories
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Display multi-layer categories" />
+<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Display%20multi-layer%20categories" />
 
 :::
 ::: info 🏷️ Type
@@ -4759,7 +4759,7 @@ Category Detail Page Style -> post 列表 Displaypost 阅读量
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Display post views in post list" />
+<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Display%20post%20views%20in%20post%20list" />
 
 :::
 ::: info 🏷️ Type
@@ -4792,7 +4792,7 @@ Category Detail Page Style -> 分类 RSS 订阅按钮
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Show RSS subscription button" />
+<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Show%20RSS%20subscription%20button" />
 
 :::
 ::: info 🏷️ Type
@@ -4834,7 +4834,7 @@ Tags Page Style -> Page Description
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Page description (meta description)" />
+<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Page%20description%20(meta%20description)" />
 
 :::
 ::: info 🏷️ Type
@@ -4854,7 +4854,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />)
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site%20description" />)
 
 :::
 
@@ -4872,7 +4872,7 @@ Tags Page Style -> Display Number of Posts Per Tag
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Display Number of Posts Per Tag" />
+<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Display%20Number%20of%20Posts%20Per%20Tag" />
 
 :::
 ::: info 🏷️ Type
@@ -4916,7 +4916,7 @@ Tags Page Style -> Tag Sort Order
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Tag sort order" />
+<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Tag%20sort%20order" />
 
 :::
 ::: info 🏷️ Type
@@ -4961,7 +4961,7 @@ Tag Detail Page Style -> post 列表 Displaypost 阅读量
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Display post views in post list" />
+<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Display%20post%20views%20in%20post%20list" />
 
 :::
 ::: info 🏷️ Type
@@ -4994,7 +4994,7 @@ Tag Detail Page Style -> Display 标签 RSS 订阅按钮
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Show RSS subscription button" />
+<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Show%20RSS%20subscription%20button" />
 
 :::
 ::: info 🏷️ Type
@@ -5036,7 +5036,7 @@ Author Detail Page Style -> Page Description
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=Page description (meta description)" />
+<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=Page%20description%20(meta%20description)" />
 
 :::
 ::: info 🏷️ Type
@@ -5056,7 +5056,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />)
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site%20description" />)
 
 :::
 
@@ -5074,7 +5074,7 @@ Author Detail Page Style -> Show Author RSS Subscription Button
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=Show RSS subscription button" />
+<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=Show%20RSS%20subscription%20button" />
 
 :::
 ::: info 🏷️ Type
@@ -5116,7 +5116,7 @@ Archives Page Style -> Page Description
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=Page description (meta description)" />
+<QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=Page%20description%20(meta%20description)" />
 
 :::
 ::: info 🏷️ Type
@@ -5136,7 +5136,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />)
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site%20description" />)
 
 :::
 
@@ -5154,7 +5154,7 @@ Archives Page Style -> Collapse Post List by Publication Year and Month
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=Collapse post list by publication year and month" />
+<QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=Collapse%20post%20list%20by%20publication%20year%20and%20month" />
 
 :::
 ::: info 🏷️ Type
@@ -5200,7 +5200,7 @@ Custompage 样式 -> 优化段落 Empty 行 Display
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Optimize Paragraph Spacing Display" />
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Optimize%20Paragraph%20Spacing%20Display" />
 
 :::
 ::: info 🏷️ Type
@@ -5239,7 +5239,7 @@ Custom Page Style -> Paragraph First-line Indent
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Enable paragraph first-line indent" />
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Enable%20paragraph%20first-line%20indent" />
 
 :::
 ::: info 🏷️ Type
@@ -5282,7 +5282,7 @@ Custompage 样式 -> page 预计阅读 when 间
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Show Estimated Reading Time of Page" />
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Show%20Estimated%20Reading%20Time%20of%20Page" />
 
 :::
 ::: info 🏷️ Type
@@ -5320,7 +5320,7 @@ Custompage 样式 -> page 字数统计
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Show Word Count of Page" />
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Show%20Word%20Count%20of%20Page" />
 
 :::
 ::: info 🏷️ Type
@@ -5358,7 +5358,7 @@ Custompage 样式 -> page 正文内容末尾分隔线
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable Dividing Line at End of Page Content" />
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable%20Dividing%20Line%20at%20End%20of%20Page%20Content" />
 
 :::
 ::: info 🏷️ Type
@@ -5391,7 +5391,7 @@ Custompage 样式 -> page 评论区
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Enable Comment Section" />
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Enable%20Comment%20Section" />
 
 :::
 ::: info 🏷️ Type
@@ -5474,7 +5474,7 @@ In 首页展示社交媒体链接和 RSS 订阅等资料.
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/sns#:~:text=Home page social profile display" />
+<QuickJumpConfig to="/console/theme/settings/sns#:~:text=Home%20page%20social%20profile%20display" />
 
 :::
 ::: info 🏷️ Type
@@ -5515,7 +5515,7 @@ Empty 数组 `[]`
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/sns#:~:text=Social media settings" />
+<QuickJumpConfig to="/console/theme/settings/sns#:~:text=Social%20media%20settings" />
 
 :::
 ::: info 🏷️ Type
@@ -5564,7 +5564,7 @@ Custom 分享按钮 -> 分享按钮 Set
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/share#:~:text=Custom Share Buttons" />
+<QuickJumpConfig to="/console/theme/settings/share#:~:text=Custom%20Share%20Buttons" />
 
 :::
 ::: info 🏷️ Type
@@ -5608,7 +5608,7 @@ Links Page Style -> 头像优先样式
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/links_page_styles#:~:text=Avatar-First Style" />
+<QuickJumpConfig to="/console/theme/settings/links_page_styles#:~:text=Avatar-First%20Style" />
 
 :::
 ::: info 🏷️ Type
@@ -5654,7 +5654,7 @@ Links Page Style -> 链接描述行数上限
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/links_page_styles#:~:text=Link Description Maximum Lines" />
+<QuickJumpConfig to="/console/theme/settings/links_page_styles#:~:text=Link%20Description%20Maximum%20Lines" />
 
 :::
 ::: info 🏷️ Type
@@ -5696,7 +5696,7 @@ Set 相册 page 中图片的圆角宽度.
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Image border radius" />
+<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Image%20border%20radius" />
 
 :::
 ::: info 🏷️ Type
@@ -5739,7 +5739,7 @@ Set 相册 page 中图片渐入动画 when 间.
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Image Fade-in Animation Duration" />
+<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Image%20Fade-in%20Animation%20Duration" />
 
 :::
 ::: info 🏷️ Type
@@ -5777,7 +5777,7 @@ In 相册 pageUse 瀑布流布局展示图片.
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Enable Masonry Layout" />
+<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Enable%20Masonry%20Layout" />
 
 :::
 ::: info 🏷️ Type
@@ -5831,7 +5831,7 @@ Moments Page Style -> Show Estimated Reading Time of Moment
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Show Estimated Reading Time of Moment" />
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Show%20Estimated%20Reading%20Time%20of%20Moment" />
 
 :::
 ::: info 🏷️ Type
@@ -5869,7 +5869,7 @@ Moments Page Style -> Show Word Count of Moment
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Show Word Count of Moment" />
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Show%20Word%20Count%20of%20Moment" />
 
 :::
 ::: info 🏷️ Type
@@ -5907,7 +5907,7 @@ Moments Page Style -> Enable Upvote Button
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Enable upvote button" />
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Enable%20upvote%20button" />
 
 :::
 ::: info 🏷️ Type
@@ -5940,7 +5940,7 @@ Moments Page Style -> Enable Comment Section
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Enable comment section" />
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Enable%20comment%20section" />
 
 :::
 ::: info 🏷️ Type
@@ -5977,7 +5977,7 @@ Friends Page Style -> Show Publish Date
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show publish date" />
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show%20publish%20date" />
 
 :::
 ::: info 🏷️ Type
@@ -6010,7 +6010,7 @@ Friends Page Style -> Show Author Information
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show author information" />
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show%20author%20information" />
 
 :::
 ::: info 🏷️ Type
@@ -6043,7 +6043,7 @@ Friends Page Style -> Show Author Avatar
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show author avatar" />
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show%20author%20avatar" />
 
 :::
 ::: info 🏷️ Type
@@ -6081,7 +6081,7 @@ Friends Page Style -> Show Author Name
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show author name" />
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show%20author%20name" />
 
 :::
 ::: info 🏷️ Type
@@ -6119,7 +6119,7 @@ Friends Page Style -> Show Post Description
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show post description" />
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show%20post%20description" />
 
 :::
 ::: info 🏷️ Type
@@ -6152,7 +6152,7 @@ Friends Page Style -> Maximum Lines for Post Description
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Maximum lines for post description" />
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Maximum%20lines%20for%20post%20description" />
 
 :::
 ::: info 🏷️ Type
@@ -6190,7 +6190,7 @@ Friends Page Style -> Show Link Text
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show link text" />
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show%20link%20text" />
 
 :::
 ::: info 🏷️ Type
