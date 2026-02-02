@@ -41,12 +41,12 @@ const encodedUrl = computed(() => {
 Enable [CSP:upgrade-insecure-requests](/en/guide/theme-configuration#csp-upgrade-insecure-requests) to ensure all resources are loaded over encrypted connections, reducing man-in-the-middle attack risks.
 This also avoids errors when HTTPS pages reference HTTP resources.
 
-Related documentation: [CSP: upgrade-insecure-requests - HTTP | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
+Related documentation: [CSP: upgrade-insecure-requests - HTTP | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
 
 ## Enable Domain Whitelist Access Only
 
 Many bloggers' sites have been cloned by malicious mirror sites. These malicious clones replace original site links, diverting site traffic and affecting SEO.  
-Therefore, I developed the [Domain Whitelist Access Only](/en/guide/theme-configuration#仅允许使用指定域名访问) feature to address this issue.
+Therefore, I developed the [Domain Whitelist Access Only](/en/guide/theme-configuration#only-allow-access-from-specified-domains) feature to address this issue.
 
 ::: info URL to Base64
 
@@ -56,4 +56,4 @@ Therefore, I developed the [Domain Whitelist Access Only](/en/guide/theme-config
 :::
 
 Enter your complete site URL in the input box above to generate the Base64 encoded result.  
-After enabling [Domain Whitelist Access Only](/en/guide/theme-configuration#仅允许使用指定域名访问), enter the Base64 encoded result in "Domain Whitelist List" and "Base64 Encoded Target URL" to defend against malicious cloning.
+After enabling [Domain Whitelist Access Only](/en/guide/theme-configuration#only-allow-access-from-specified-domains), enter the Base64 encoded result in "Domain Whitelist List" and "Base64 Encoded Target URL" to defend against malicious cloning.

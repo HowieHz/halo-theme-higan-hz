@@ -241,15 +241,15 @@ const chartOptions = computed(() => ({
 onMounted(async () => {
   // Clear possible existing timers (handling hot reload cases)
   try {
-    console.timeEnd('📊 图表初始化总耗时')
-    console.timeEnd('  1️⃣ 数据加载')
-    console.timeEnd('  2️⃣ 数据排序与处理')
-    console.timeEnd('  3️⃣ 图表数据创建')
+    console.timeEnd('📊 Chart Initialization Total Time')
+    console.timeEnd('  1️⃣ Data Loading')
+    console.timeEnd('  2️⃣ Data Sorting and Processing')
+    console.timeEnd('  3️⃣ Chart Data Creation')
   } catch (e) {
     // Ignore non-existent timer errors
   }
   
-  console.time('📊 图表初始化总耗时')
+  console.time('📊 Chart Initialization Total Time')
   isLoading.value = true
   loadingProgress.value = 0
   
@@ -265,7 +265,7 @@ onMounted(async () => {
   }
   
   try {
-    console.time('  1️⃣ 数据加载')
+    console.time('  1️⃣ Data Loading')
     loadingStage.value = 'dataLoading'
 
     // Dynamically import all JSON files
@@ -300,9 +300,9 @@ onMounted(async () => {
     allData.push(...results.filter(item => item !== null))
     stageProgress.value.dataLoading = 100
 
-    console.timeEnd('  1️⃣ 数据加载')
+    console.timeEnd('  1️⃣ Data Loading')
 
-    console.time('  2️⃣ 数据排序与处理')
+    console.time('  2️⃣ Data Sorting and Processing')
     loadingStage.value = 'dataProcessing'
     loadingProgress.value = 0
     // Sort by version
@@ -398,12 +398,12 @@ onMounted(async () => {
 
     stageProgress.value.dataProcessing = 100
     loadingProgress.value = 100
-    console.timeEnd('  2️⃣ 数据排序与处理')
+    console.timeEnd('  2️⃣ Data Sorting and Processing')
 
     // Save raw data
     rawDatasets.value = { datasets, versions }
 
-    console.time('  3️⃣ 图表数据创建')
+    console.time('  3️⃣ Chart Data Creation')
     loadingStage.value = 'chartCreation'
     loadingProgress.value = 0
 
@@ -482,16 +482,16 @@ onMounted(async () => {
     createChartDatasets()
     stageProgress.value.chartCreation = 100
     loadingProgress.value = 100
-    console.timeEnd('  3️⃣ 图表数据创建')
+    console.timeEnd('  3️⃣ Chart Data Creation')
 
-    console.timeEnd('📊 图表初始化总耗时')
+    console.timeEnd('📊 Chart Initialization Total Time')
 
     // Watch theme changes, recreate chart data
     watch(isDark, () => {
       createChartDatasets()
     })
   } catch (error) {
-    console.error('加载数据失败:', error)
+    console.error('Failed to load data:', error)
   } finally {
     isLoading.value = false
     loadingProgress.value = 100

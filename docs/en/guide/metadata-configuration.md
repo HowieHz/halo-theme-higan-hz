@@ -227,7 +227,7 @@ Fallback to post title when empty:
 
 ::: info 🎯 Purpose
 
-Sets the page language (HTML `lang` attribute) of the post on the browse page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#页面语言设定优先级).
+Sets the page language (HTML `lang` attribute) of the post on the browse page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#page-language-setting-priority).
 
 :::
 ::: info 📂 Configuration Item Location
@@ -265,7 +265,7 @@ The set value must comply with [BCP 47](https://developer.mozilla.org/zh-CN/docs
 
 ::: info 🎯 Purpose
 
-Sets whether the post is displayed in the post list (including [Home](/guide/theme-configuration#首页样式), [Tag Detail Page](/guide/theme-configuration#标签详情页样式), [Category Detail Page](/guide/theme-configuration#分类详情页样式), [Author Detail Page](/guide/theme-configuration#作者详情页样式), [Archive Page](/guide/theme-configuration#归档页样式)).
+Sets whether the post is displayed in the post list (including [Home](/guide/theme-configuration#home-page-style), [Tag Detail Page](/guide/theme-configuration#tag-detail-page-style), [Category Detail Page](/guide/theme-configuration#category-detail-page-style), [Author Detail Page](/guide/theme-configuration#author-detail-page-style), [Archive Page](/guide/theme-configuration#archives-page-style)).
 
 :::
 ::: info 📂 Configuration Item Location
@@ -340,7 +340,7 @@ Fallback to category name when empty:
 
 ::: info 🎯 Purpose
 
-Sets the page language (HTML `lang` attribute) of the category detail page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#页面语言设定优先级).
+Sets the page language (HTML `lang` attribute) of the category detail page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#page-language-setting-priority).
 
 :::
 ::: info 📂 Configuration Item Location
@@ -425,7 +425,7 @@ Fallback to site title when empty:
 
 ::: info 🎯 Purpose
 
-Sets the page language (HTML `lang` attribute) of the tag detail page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#页面语言设定优先级).
+Sets the page language (HTML `lang` attribute) of the tag detail page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#page-language-setting-priority).
 
 :::
 ::: info 📂 Configuration Item Location
@@ -487,7 +487,7 @@ Mainly reflected in:
 
 1. Desktop top menu (sidebar table of contents, back to top button, share menu)
 2. Mobile bottom menu (collapsible table of contents, back to top button, share menu)
-3. And, menu and table of contents related settings remain consistent with corresponding settings under [Post Page Style](/guide/theme-configuration#文章页样式).
+3. And, menu and table of contents related settings remain consistent with corresponding settings under [Post Page Style](/guide/theme-configuration#post-page-style).
 
 :::
 
@@ -536,7 +536,7 @@ Fallback to site title when empty:
 
 ::: info 🎯 Purpose
 
-Sets the page language (HTML `lang` attribute). If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#页面语言设定优先级).
+Sets the page language (HTML `lang` attribute). If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#page-language-setting-priority).
 
 :::
 ::: info 📂 Configuration Item Location
