@@ -5953,6 +5953,256 @@ HTML 代码也是可以的：
 
 :::
 
+## 朋友圈页面样式
+
+需[朋友圈插件](/guide/plugin-compatibility#朋友圈-订阅聚合)启用后方可使用。
+
+### 显示发布日期
+
+::: info 🎯 用途
+
+在朋友圈列表中显示文章的发布日期。
+
+:::
+::: info 📂 配置项位置
+
+朋友圈页面样式 -> 显示发布日期
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=显示发布日期" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.friends_page_styles?.is_show_friend_pubdate`
+
+:::
+
+### 显示作者信息
+
+::: info 🎯 用途
+
+在朋友圈列表中显示文章作者的头像和名称。
+
+:::
+::: info 📂 配置项位置
+
+朋友圈页面样式 -> 显示作者信息
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=显示作者信息" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.friends_page_styles?.is_show_friend_author`
+
+:::
+
+### 显示作者头像
+
+::: info 🎯 用途
+
+在朋友圈列表中显示文章作者的头像。点击头像可以前往作者的网站。
+
+:::
+::: info 📂 配置项位置
+
+朋友圈页面样式 -> 显示作者头像
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=显示作者头像" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.friends_page_styles?.is_show_friend_author_avatar`
+
+:::
+::: info ℹ️ 补充信息
+
+仅在"显示作者信息"选项启用时生效。
+
+:::
+
+### 显示作者名称
+
+::: info 🎯 用途
+
+在朋友圈列表中显示文章作者的名称。点击名称可以前往作者的网站。
+
+:::
+::: info 📂 配置项位置
+
+朋友圈页面样式 -> 显示作者名称
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=显示作者名称" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.friends_page_styles?.is_show_friend_author_name`
+
+:::
+::: info ℹ️ 补充信息
+
+仅在"显示作者信息"选项启用时生效。
+
+:::
+
+### 显示文章描述
+
+::: info 🎯 用途
+
+在朋友圈列表中显示文章的描述/摘要。
+
+:::
+::: info 📂 配置项位置
+
+朋友圈页面样式 -> 显示文章描述
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=显示文章描述" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.friends_page_styles?.is_show_friend_description`
+
+:::
+
+### 文章描述行数上限
+
+::: info 🎯 用途
+
+控制朋友圈列表中文章描述显示的最大行数。
+
+:::
+::: info 📂 配置项位置
+
+朋友圈页面样式 -> 文章描述行数上限
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=文章描述行数上限" />
+
+:::
+::: info 🏷️ 类型
+
+数字（1-5）
+
+:::
+::: info ⭐ 默认值
+
+`3`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.friends_page_styles?.friend_description_max_lines`
+
+:::
+::: info ℹ️ 补充信息
+
+仅在"显示文章描述"选项启用时生效。
+
+:::
+
+### 显示跳转链接提示文字
+
+::: info 🎯 用途
+
+在朋友圈列表项中显示跳转链接的提示文字（如"阅读原文"）。
+
+:::
+::: info 📂 配置项位置
+
+朋友圈页面样式 -> 显示跳转链接提示文字
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=显示跳转链接提示文字" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.friends_page_styles?.is_show_friend_permalink_text`
+
+:::
+
 ## 下一步
 
 你可以进一步了解：

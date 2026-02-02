@@ -34,12 +34,13 @@ outline: deep
 模板文件在 `src/templates` 文件夹下。  
 表格默认访问路径中 `{xxx}` 表示变量，请填入实际值。`(xxx)` 表示可选值。
 
-| 模板文件       | 页面     | 默认路径                             | 依赖插件                                                      |
-| -------------- | -------- | ------------------------------------ | ------------------------------------------------------------- |
-| `links.html`   | 友链列表 | `/links`                             | [plugin-links](https://github.com/halo-sigs/plugin-links)     |
-| `photos.html`  | 图库页面 | `/photos`、`/photos/page/{page}`     | [plugin-photos](https://github.com/halo-sigs/plugin-photos)   |
-| `moments.html` | 瞬间列表 | `/moments(/page/{page})(?tag={tag})` | [plugin-moments](https://github.com/halo-sigs/plugin-moments) |
-| `moment.html`  | 瞬间详情 | `/moments/{name}`                    | [plugin-moments](https://github.com/halo-sigs/plugin-moments) |
+| 模板文件       | 页面               | 默认路径                                   | 依赖插件                                                              |
+| -------------- | ------------------ | ------------------------------------------ | --------------------------------------------------------------------- |
+| `links.html`   | 友链列表           | `/links`                                   | [plugin-links](https://github.com/halo-sigs/plugin-links)             |
+| `photos.html`  | 图库页面           | `/photos`、`/photos/page/{page}`           | [plugin-photos](https://github.com/halo-sigs/plugin-photos)           |
+| `moments.html` | 瞬间列表           | `/moments(/page/{page})(?tag={tag})`       | [plugin-moments](https://github.com/halo-sigs/plugin-moments)         |
+| `moment.html`  | 瞬间详情           | `/moments/{name}`                          | [plugin-moments](https://github.com/halo-sigs/plugin-moments)         |
+| `friends.html` | 朋友圈（订阅聚合） | `/friends(/page/{page})(?linkName={name})` | [plugin-friends](https://github.com/chengzhongxue/plugin-friends-new) |
 
 ### 其他插件适配
 

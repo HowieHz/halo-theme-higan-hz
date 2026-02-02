@@ -105,6 +105,7 @@ export default defineConfig({
         post: path.resolve(__dirname, "src/templates/post.html"),
         tag: path.resolve(__dirname, "src/templates/tag.html"),
         tags: path.resolve(__dirname, "src/templates/tags.html"),
+        friends: path.resolve(__dirname, "src/templates/friends.html"),
         error: path.resolve(__dirname, "src/templates/error/error.html"),
         // components
         "components-moment-video-modal": path.resolve(
@@ -119,6 +120,10 @@ export default defineConfig({
         "components-list-post-summary": path.resolve(
           __dirname,
           "src/templates/components/list-post-summary/template.html",
+        ),
+        "components-list-friends-summary": path.resolve(
+          __dirname,
+          "src/templates/components/list-friends-summary/template.html",
         ),
         "components-list-moment-summary": path.resolve(
           __dirname,

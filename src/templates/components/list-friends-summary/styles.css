@@ -1,0 +1,55 @@
+/* 朋友圈文章列表样式 */
+.friends-list-summary .group:hover .friend-card-hover {
+  background: color-mix(in oklab, var(--color-base-content) 5%, var(--color-base-100));
+  opacity: 100%;
+  transform: scale(0.95);
+  transition:
+    color 0.2s,
+    background-color 0.2s,
+    border-color 0.2s,
+    text-decoration-color 0.2s,
+    fill 0.2s,
+    stroke 0.2s,
+    opacity 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+
+.color-primary {
+  color: var(--color-primary);
+}
+
+.color-base-content-80 {
+  color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+}
+
+.friend-author {
+  align-items: center;
+  display: flex;
+}
+
+.friend-author-avatar {
+  border-radius: 50%;
+  height: 1.5rem;
+  object-fit: cover;
+  width: 1.5rem;
+}
+
+.friend-author-link {
+  background-image: linear-gradient(
+    transparent,
+    transparent 0.3125rem,
+    color-mix(in oklab, var(--color-base-content) 60%, transparent) 0.3125rem,
+    color-mix(in oklab, var(--color-base-content) 60%, transparent)
+  );
+  color: var(--color-time);
+
+  &:hover {
+    background-image: linear-gradient(
+      transparent,
+      transparent 0.3125rem,
+      var(--color-accent) 0.3125rem,
+      var(--color-accent)
+    );
+  }
+}

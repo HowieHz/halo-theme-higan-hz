@@ -19,6 +19,6 @@ Content Insertion (for displaying pagination controls)
 <th:block th:insert="~{components/pagination/template :: content(posts)}"></th:block>
 ```
 
-## API
+## Parameters
 
 - `posts`: A pagination object containing pagination data with methods like `hasPrevious()`, `hasNext()` and properties including `prevUrl`, `nextUrl`, `totalPages`, and `page`.

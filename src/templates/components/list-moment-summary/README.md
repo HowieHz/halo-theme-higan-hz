@@ -25,7 +25,7 @@ Content Insertion
 <th:block th:insert="~{components/list-moment-summary/template :: content(moments, isIndexPage)}"></th:block>
 ```
 
-## API
+## Parameters
 
 - `moments`: A collection of moment objects to be displayed in the list.
 - `isIndexPage`: A boolean indicating whether the current page is the index page.

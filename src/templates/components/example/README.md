@@ -19,6 +19,6 @@ Content Insertion
 <th:block th:insert="~{components/example/template :: content(parameter)}"></th:block>
 ```
 
-## API
+## Parameters
 
 - `parameter`: Description of the parameter that this component accepts.

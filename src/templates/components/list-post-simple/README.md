@@ -19,7 +19,7 @@ Content Insertion
 <th:block th:insert="~{components/list-post-simple/template :: content(posts, showPagination)}"></th:block>
 ```
 
-## API
+## Parameters
 
 - `posts`: A collection of post objects to be displayed in the list.
 - `showPagination`: An optional boolean indicating whether to display pagination controls. Defaults to `false` if not provided.

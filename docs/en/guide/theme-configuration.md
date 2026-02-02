@@ -5959,6 +5959,256 @@ Boolean
 
 :::
 
+## Friends Page Style
+
+Requires the [Friends Plugin](/en/guide/plugin-compatibility#moments-feed-subscription) to be enabled for use.
+
+### Show Publish Date
+
+::: info 🎯 Purpose
+
+Display the publication date of posts in the friends list.
+
+:::
+::: info 📂 Configuration Item Location
+
+Friends Page Style -> Show Publish Date
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show publish date" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.friends_page_styles?.is_show_friend_pubdate`
+
+:::
+
+### Show Author Information
+
+::: info 🎯 Purpose
+
+Display the author's avatar and name in the friends list.
+
+:::
+::: info 📂 Configuration Item Location
+
+Friends Page Style -> Show Author Information
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show author information" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.friends_page_styles?.is_show_friend_author`
+
+:::
+
+### Show Author Avatar
+
+::: info 🎯 Purpose
+
+Display the author's avatar in the friends list. Clicking the avatar will navigate to the author's website.
+
+:::
+::: info 📂 Configuration Item Location
+
+Friends Page Style -> Show Author Avatar
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show author avatar" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.friends_page_styles?.is_show_friend_author_avatar`
+
+:::
+::: info ℹ️ Additional Information
+
+Only takes effect when "Show Author Information" option is enabled.
+
+:::
+
+### Show Author Name
+
+::: info 🎯 Purpose
+
+Display the author's name in the friends list. Clicking the name will navigate to the author's website.
+
+:::
+::: info 📂 Configuration Item Location
+
+Friends Page Style -> Show Author Name
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show author name" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.friends_page_styles?.is_show_friend_author_name`
+
+:::
+::: info ℹ️ Additional Information
+
+Only takes effect when "Show Author Information" option is enabled.
+
+:::
+
+### Show Post Description
+
+::: info 🎯 Purpose
+
+Display the post description/excerpt in the friends list.
+
+:::
+::: info 📂 Configuration Item Location
+
+Friends Page Style -> Show Post Description
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show post description" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.friends_page_styles?.is_show_friend_description`
+
+:::
+
+### Maximum Lines for Post Description
+
+::: info 🎯 Purpose
+
+Control the maximum number of lines displayed for post descriptions in the friends list.
+
+:::
+::: info 📂 Configuration Item Location
+
+Friends Page Style -> Maximum Lines for Post Description
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Maximum lines for post description" />
+
+:::
+::: info 🏷️ Type
+
+Number (1-5)
+
+:::
+::: info ⭐ Default Value
+
+`3`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.friends_page_styles?.friend_description_max_lines`
+
+:::
+::: info ℹ️ Additional Information
+
+Only takes effect when "Show Post Description" option is enabled.
+
+:::
+
+### Show Link Text
+
+::: info 🎯 Purpose
+
+Display link text (such as "Read original") in friends list items.
+
+:::
+::: info 📂 Configuration Item Location
+
+Friends Page Style -> Show Link Text
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show link text" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.friends_page_styles?.is_show_friend_permalink_text`
+
+:::
+
 ## Next Steps
 
 你 can 以进一步了解：
