@@ -3118,7 +3118,7 @@ Boolean
 When enabled, you can configure
 
 - Hitokoto service link:
-  - Default Value：`https://v1.hitokoto.cn/?encode=js`
+  - Default Value:`https://v1.hitokoto.cn/?encode=js`
   - Additional notes: Related information can be obtained by reading the [documentation](https://developer.hitokoto.cn/sentence/)
 
 :::
@@ -4382,7 +4382,7 @@ When enabled, you can configure
 
 - Sidebar Table of Contents Maximum Width
   - Type: String
-  - Default Value：`20rem`
+  - Default Value:`20rem`
   - External constraints: CSS length units. Such as: 20rem, 300px, 30vw.
 
 :::
@@ -4458,11 +4458,11 @@ When enabled, you can configure
 
 - Like button width
   - Type: String
-  - Default Value：`1rem`
+  - Default Value:`1rem`
   - External constraints: CSS length units. Such as: 20rem, 300px, 30vw.
 - Like button height
   - Type: String
-  - Default Value：`1rem`
+  - Default Value:`1rem`
   - External constraints: CSS length units. Such as: 20rem, 300px, 30vw.
 - Display post like count
 - Like button position
@@ -4701,10 +4701,10 @@ When enabled, you can configure
 
 - Character to the left of post count
   - Type: String
-  - Default Value：`(`
+  - Default Value:`(`
 - Character to the right of post count
   - Type: String
-  - Default Value：`)`
+  - Default Value:`)`
 
 :::
 
@@ -4896,10 +4896,10 @@ When enabled, you can configure
 
 - Character to the left of post count
   - Type: String
-  - Default Value：`(`
+  - Default Value:`(`
 - Character to the right of post count
   - Type: String
-  - Default Value：`)`
+  - Default Value:`)`
     :::
 
 ### Tag Sort Order
@@ -5178,7 +5178,7 @@ When enabled, you can configure
 
 - Expand/collapse animation duration (Unit: milliseconds)
   - Type: Float/Integer
-  - Default Value：`200`
+  - Default Value:`200`
 
 :::
 
@@ -5450,11 +5450,11 @@ When enabled, you can configure
 
 - Redirect target link
   - Type: String
-  - Default Value：`/`
+  - Default Value:`/`
   - External constraints: Valid relative/absolute link
 - Redirect wait time (Unit: seconds)
   - Type: Integer
-  - Default Value：`5`
+  - Default Value:`5`
 
 :::
 
