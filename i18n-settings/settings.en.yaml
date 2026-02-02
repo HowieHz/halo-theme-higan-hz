@@ -973,9 +973,10 @@ spec:
               validation: "required"
             - $formkit: code
               name: footer_content
-              label: Footer content at the bottom (support HTML code block)
+              label: Footer content at the bottom
               language: html
               height: 150px
+              help: support HTML code block
         - $formkit: switch
           name: is_h3_underline
           label: Add underline to H3 headings
@@ -1077,14 +1078,15 @@ spec:
               validation: "required"
         - $formkit: switch
           name: is_resume_show
-          label: Personal profile/Announcement content
+          label: Personal profile/Announcement
           value: false
         - $formkit: code
           name: resume
           if: "$is_resume_show === true"
-          label: Personal profile/Announcement content (support HTML code block)
+          label: Personal profile/Announcement content
           language: html
           height: 150px
+          help: support HTML code block
         - $formkit: switch
           name: is_i18n_resume_show
           label: Multi-language personal profile/announcement support
@@ -1105,9 +1107,10 @@ spec:
               validation: "required"
             - $formkit: code
               name: resume
-              label: Personal profile/Announcement content (support HTML code block)
+              label: Personal profile/Announcement content
               language: html
               height: 150px
+              help: support HTML code block
         - $formkit: switch
           name: is_show_find_me_left_text
           label: Display the text on the left side of the social media information
@@ -1355,6 +1358,11 @@ spec:
     - group: categories_page_styles
       label: Category page style
       formSchema:
+        - $formkit: text
+          name: description
+          label: Page description (meta description)
+          value: ""
+          help: Used as the meta description; falls back to site SEO description when empty
         - $formkit: switch
           name: is_show_the_number_of_articles_per_category
           label: Display the number of articles per category
