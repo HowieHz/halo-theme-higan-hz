@@ -37,10 +37,4 @@
 
 .friend-author-link {
   color: var(--color-time);
-  text-decoration: none;
-}
-
-.friend-author-link:hover {
-  color: var(--color-primary);
-  text-decoration: underline;
 }
