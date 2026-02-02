@@ -40,7 +40,7 @@ outline: deep
 | `photos.html`  | 图库页面 | `/photos`、`/photos/page/{page}`     | [plugin-photos](https://github.com/halo-sigs/plugin-photos)   |
 | `moments.html` | 瞬间列表 | `/moments(/page/{page})(?tag={tag})` | [plugin-moments](https://github.com/halo-sigs/plugin-moments) |
 | `moment.html`  | 瞬间详情 | `/moments/{name}`                    | [plugin-moments](https://github.com/halo-sigs/plugin-moments) |
-| `friends.html` | 朋友圈   | `/friends(/page/{page})?linkName={linkName}` | [plugin-friends](https://github.com/chengzhongxue/plugin-friends) |
+| `friends.html` | 朋友圈（订阅聚合） | `/friends(/page/{page})?linkName={linkName}` | [plugin-friends](https://github.com/chengzhongxue/plugin-friends) |
 
 ### 其他插件适配
 
