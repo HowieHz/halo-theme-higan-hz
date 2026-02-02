@@ -37,4 +37,19 @@
 
 .friend-author-link {
   color: var(--color-time);
+  background-image: linear-gradient(
+    transparent,
+    transparent 0.3125rem,
+    color-mix(in oklab, var(--color-base-content) 60%, transparent) 0.3125rem,
+    color-mix(in oklab, var(--color-base-content) 60%, transparent)
+  );
+
+  &:hover {
+    background-image: linear-gradient(
+      transparent,
+      transparent 0.3125rem,
+      var(--color-accent) 0.3125rem,
+      var(--color-accent)
+    );
+  }
 }
