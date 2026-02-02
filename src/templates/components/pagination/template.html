@@ -24,7 +24,11 @@
   <div class="pager" th:if="${isListResult}" th:with="prevPage=${posts.page - 1}, nextPage=${posts.page + 1}">
     <!--/* 适用于 ListResult
     列表分页没有 prevUrl 和 nextUrl，需自行计算 URL，格式：/page/页码；当 /page/1 时省略该段 */-->
-    <a th:href="@{${prevPage == 1} ? '/' : '/page/' + ${prevPage}}" th:if="${posts.hasPrevious()}" th:aria-label="#{common.previousPage.aria-label}">
+    <a
+      th:href="@{${prevPage == 1} ? '/' : '/page/' + ${prevPage}}"
+      th:if="${posts.hasPrevious()}"
+      th:aria-label="#{common.previousPage.aria-label}"
+    >
       <span class="iconify iconify-middle material-symbols--chevron-left"></span>
     </a>
     <span
