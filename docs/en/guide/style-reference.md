@@ -162,7 +162,7 @@ The rendering effect varies with the actual renderer (such as `shiki`, `highligh
 ### Paragraph Markdown Syntax
 
 ```markdown
-This is a regular paragraph, testing text alignment and line height.This paragraph contains some common formatting like **bold**, *italic* and `code`. According to your CSS, this text should have appropriate line height and alignment.
+This is a regular paragraph, testing text alignment and line height.This paragraph contains some common formatting like **bold**, _italic_ and `code`. According to your CSS, this text should have appropriate line height and alignment.
 
 This is another paragraph, this is a\
 line break.
@@ -188,7 +188,7 @@ Empty lines are not displayed by default. If you enable `Post Page Styles - Post
 
 <DefaultRender height="325px">
 
-This is a regular paragraph, testing text alignment and line height.This paragraph contains some common formatting like **bold**, *italic* and `code`. According to your CSS, this text should have appropriate line height and alignment.
+This is a regular paragraph, testing text alignment and line height.This paragraph contains some common formatting like **bold**, _italic_ and `code`. According to your CSS, this text should have appropriate line height and alignment.
 
 This is another paragraph, this is a\
 line break.
