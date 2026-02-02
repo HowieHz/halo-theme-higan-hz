@@ -1134,10 +1134,20 @@ spec:
               value: "moment-list-summary"
           help: "The 'Moment list' requires the 'Moments' plugin to be enabled for proper use."
         - $formkit: switch
+          name: is_show_post_pubdate_in_simple_post_list
+          if: "$list_layout === 'simple-post-list'"
+          label: Display publish date in simple post list
+          value: true
+        - $formkit: switch
           name: is_show_post_views_in_simple_post_list
           if: "$list_layout === 'simple-post-list'"
           label: Display post views in simple post list
           value: false
+        - $formkit: switch
+          name: is_show_post_pubdate_in_post_list_summary
+          if: "$list_layout === 'post-list-summary'"
+          label: Display publish date in post list summary
+          value: true
         - $formkit: switch
           name: is_show_post_categories_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"

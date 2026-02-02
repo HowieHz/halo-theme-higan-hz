@@ -16,9 +16,10 @@ Head Content (for including necessary scripts/styles)
 Content Insertion
 
 ```html
-<th:block th:insert="~{components/list-post-summary/template :: content(posts)}"></th:block>
+<th:block th:insert="~{components/list-post-summary/template :: content(posts, pageTemplateName)}"></th:block>
 ```
 
 ## Parameters
 
 - `posts`: A collection of post objects to be displayed in the list.
+- `pageTemplateName`: An optional parameter, pass in a string representing the page template name.

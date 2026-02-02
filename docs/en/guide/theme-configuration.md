@@ -3462,10 +3462,12 @@ Different configuration options will be displayed based on the selected layout t
 
 When Simple List is enabled, you can configure
 
+- [Display Publish Date in Simple List](#display-publish-date-in-simple-list)
 - [Display Post Views in Simple List](#display-post-views-in-simple-list)
 
 When Multi-element List is enabled, you can configure
 
+- [Display Publish Date in Post List Summary](#display-publish-date-in-post-list-summary)
 - [Display Post Categories in Post List Summary](#display-post-categories-in-post-list-summary)
 - [Display Post Tags in Post List Summary](#display-post-tags-in-post-list-summary)
 - [Display Post Views in Post List Summary](#display-post-views-in-post-list-summary)
@@ -3481,6 +3483,41 @@ When Moments List is enabled, you can configure
 - [Number of Moments Per Page](#number-of-moments-per-page)
 - [Show Author Avatar in Moment List](#show-author-avatar-in-moment-list)
 - [Show Author Nickname in Moment List](#show-author-nickname-in-moment-list)
+
+:::
+
+### Display Publish Date in Simple List
+
+::: info 🎯 Purpose
+
+Controls whether to display the publication date of posts in the simple list.
+
+:::
+::: info 📂 Configuration Item Location
+
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Simple Post List")
+
+Home Page Style -> Display Publish Date in Simple List
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20publish%20date%20in%20simple%20post%20list" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_show_post_pubdate_in_simple_post_list`
 
 :::
 
@@ -3519,6 +3556,41 @@ Boolean
 
 :::
 
+### Display Publish Date in Post List Summary
+
+::: info 🎯 Purpose
+
+Controls whether to display the publication date of posts in the post list summary.
+
+:::
+::: info 📂 Configuration Item Location
+
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Rich Post List")
+
+Home Page Style -> Display Publish Date in Post List Summary
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20publish%20date%20in%20post%20list%20summary" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_show_post_pubdate_in_post_list_summary`
+
+:::
+
 ### Display Post Categories in Post List Summary
 
 ::: info 🎯 Purpose
@@ -3541,7 +3613,6 @@ Home Page Style -> Display Post Categories in Post List Summary
 ::: info 🏷️ Type
 
 Boolean
-
 :::
 ::: info ⭐ Default Value
 

@@ -12,7 +12,11 @@
       <th:block th:each="post : ${posts}">
         <th:block th:if="${#annotations.getOrDefault(post, 'higan.howiehz.top/show-in-post-list', 'true')=='true'}">
           <li class="post-item">
-            <div class="meta">
+            <div
+              class="meta"
+              th:if="${pageTemplateName == null 
+                    or (pageTemplateName == 'index' and theme.config?.index_styles?.is_show_post_pubdate_in_simple_post_list)}"
+            >
               <time
                 th:datetime="${post.spec.publishTime}"
                 itemprop="datePublished"
