@@ -6,6 +6,9 @@
 
 ### 🚀 新功能
 
+- 新增首页文章列表发布日期显示控制功能。
+  - 简洁文章列表：新增`简洁列表显示发布日期`配置项，允许控制是否显示文章发布日期（默认为开启）。
+  - 多元文章列表：新增`多元列表显示发布日期`配置项，允许控制是否显示文章发布日期（默认为开启）。
 - 适配[朋友圈](https://github.com/chengzhongxue/plugin-friends-new)（[应用市场页面](https://www.halo.run/store/apps/app-yISsV)）插件。
   - 介绍文档：[朋友圈插件介绍](https://howiehz.top/halo-theme-higan-haozi/guide/plugin-compatibility#朋友圈-订阅聚合)
   - 新增相关配置项：[朋友圈页面样式配置项](https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration#朋友圈页面样式)
