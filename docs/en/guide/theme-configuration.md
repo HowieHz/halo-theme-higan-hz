@@ -123,9 +123,9 @@ The value type of this configuration item.
 
 ::: tip Here are some common types
 
-- String: A sequence of characters, such as `abc123`,`zh-CN`.
-- Integer: Whole numbers, such as `-1`,`0`,`100`.
-- Float: Numbers with decimal points, such as `1.2`,`0.3`,`4.5`.
+- String: A sequence of characters, such as `abc123`, `zh-CN`.
+- Integer: Whole numbers, such as `-1`, `0`, `100`.
+- Float: Numbers with decimal points, such as `1.2`, `0.3`, `4.5`.
 - Boolean: `true` or `false`. In actual configuration items, it appears as a switch, on is `true`, off is `false`.
 - Option: Fixed options are provided, just select directly.
 - Repeater: Can repeat a group of inputs. Can add groups, remove groups, swap order of any groups.
@@ -224,7 +224,7 @@ The set value must comply with [BCP 47](https://developer.mozilla.org/en-US/docs
 ::: info ℹ️ Additional Information
 
 - Security: The set language value will be automatically escaped, no need to worry about XSS injection attacks.
-- Setting priority: Please refer to [page language setting priority](/reference/faq#page language setting priority).
+- Setting priority: Please refer to [page language setting priority](/reference/faq#page-language-setting-priority).
 
 :::
 
@@ -319,7 +319,7 @@ Set allowed auto-redirect target languages.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Global -> Auto-redirect Based on Browser Language](#Auto-redirect Based on Browser Language)When enabled, will display)
+([Global -> Auto-redirect Based on Browser Language](#Auto-redirect Based on Browser Language)When enabled, will display)
 
 Global -> Allowed Target Language Code List for Redirects
 
@@ -512,7 +512,7 @@ Set the Domain Whitelist.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains)When enabled, will display)
+([Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains)When enabled, will display)
 
 Global -> Domain Whitelist
 
@@ -576,7 +576,7 @@ SetDomain Whitelist.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains)When enabled, will display)
+([Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains)When enabled, will display)
 
 Global -> Target Link
 
@@ -621,7 +621,7 @@ Set whether to keep path and query parameters after redirect.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains)When enabled, will display)
+([Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains)When enabled, will display)
 
 Global -> Keep Path and Query Parameters After Redirect
 
@@ -823,7 +823,7 @@ Used to select uploaded font files to replace the default font files. Supports `
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> Enable Custom Font Files](#enable-custom-font-files)When enabled, will display）
+([General Styles -> Enable Custom Font Files](#enable-custom-font-files)When enabled, will display)
 
 General Styles -> Custom Font Files
 
@@ -854,7 +854,7 @@ If this option is left empty, even if the user has this font installed locally, 
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> Enable Custom Font Files](#enable-custom-font-files)When enabled, will display）
+([General Styles -> Enable Custom Font Files](#enable-custom-font-files)When enabled, will display)
 
 General Styles -> Font Name (Full Name/PostScript Name)
 
@@ -947,18 +947,18 @@ Option
 :::
 ::: info ⭐ Default Value
 
-`Dark - Green`（internal value `dark`）
+`Dark - Green`(internal value `dark`)
 
 :::
 ::: info 💡 Other Options
 
-- `Follow System - Green`（internal value `auto`）
-- `Light - Green`（internal value `light`）
-- `Follow System - Blue`（internal value `auto-blue`）
-- `Light - Blue`（internal value `light-blue`）
-- `Dark - Blue`（internal value `dark-blue`）
-- `Light - Gray Pink`（internal value `gray`）
-- `Custom Color Scheme`（internal value `custom`）
+- `Follow System - Green`(internal value `auto`)
+- `Light - Green`(internal value `light`)
+- `Follow System - Blue`(internal value `auto-blue`)
+- `Light - Blue`(internal value `light-blue`)
+- `Dark - Blue`(internal value `dark-blue`)
+- `Light - Gray Pink`(internal value `gray`)
+- `Custom Color Scheme`(internal value `custom`)
 
 :::
 ::: info 🧩 Template Variable
@@ -1035,13 +1035,13 @@ For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-
 > :::
 > ::: info ⭐ Default Value
 >
-> `Dark Mode`（internal value `dark`）
+> `Dark Mode`(internal value `dark`)
 >
 > :::
 > ::: info 💡 Other Options
 >
-> - `Light Mode`（internal value `light`）
-> - `Auto Mode`（internal value `auto`）
+> - `Light Mode`(internal value `light`)
+> - `Auto Mode`(internal value `auto`)
 >
 > :::
 > ::: tip 📂 Configuration Item Name
@@ -1082,7 +1082,7 @@ For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-
 > ::: info ℹ️ Additional Information
 >
 > Disablethis option 后，仅 Requires 填写 Custom CSS Variables的部分.  
-> 输出 whenwill 自动输出 In 对应 CSS 选择器中（选择器为 `html[theme="theme-{identifier}"]`）.
+> 输出 whenwill 自动输出 In 对应 CSS 选择器中(选择器为 `html[theme="theme-{identifier}"]`).
 >
 > :::
 > ::: tip 📂 Configuration Item Name
@@ -1092,7 +1092,7 @@ For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-
 > :::
 > ::: info 🏷️ Type
 >
-> Code input box (CSS）
+> Code input box (CSS)
 >
 > :::
 > ::: info ⚠️ External Constraints
@@ -1240,18 +1240,18 @@ Option
 :::
 ::: info ⭐ Default Value
 
-`Follow System - Green`（internal value `auto`）
+`Follow System - Green`(internal value `auto`)
 
 :::
 ::: info 💡 Other Options
 
-- `Light - Green`（internal value `light`）
-- `Dark - Green`（internal value `dark`）
-- `Follow System - Blue`（internal value `auto-blue`）
-- `Light - Blue`（internal value `light-blue`）
-- `Dark - Blue`（internal value `dark-blue`）
-- `Light - Gray Pink`（internal value `gray`）
-- `Custom Color Scheme`（internal value `custom`）
+- `Light - Green`(internal value `light`)
+- `Dark - Green`(internal value `dark`)
+- `Follow System - Blue`(internal value `auto-blue`)
+- `Light - Blue`(internal value `light-blue`)
+- `Dark - Blue`(internal value `dark-blue`)
+- `Light - Gray Pink`(internal value `gray`)
+- `Custom Color Scheme`(internal value `custom`)
 
 :::
 ::: info 🧩 Template Variable
@@ -1261,7 +1261,7 @@ Option
 :::
 ::: info ℹ️ Additional Information
 
-选择“Custom Color Scheme”when，Requires 要配合[Custom Color Scheme方案](#custom-配色方案)Use，并填写 Custom Color Scheme方案identifier.
+When "Custom Color Scheme" is selected, you need to use it with [Custom Color Scheme](#custom-color-scheme) and fill in the Custom Color Scheme identifier.
 
 :::
 
@@ -1291,18 +1291,18 @@ Option
 :::
 ::: info ⭐ Default Value
 
-`Light - Green`（internal value `light`）
+`Light - Green`(internal value `light`)
 
 :::
 ::: info 💡 Other Options
 
-- `Follow System - Green`（internal value `auto`）
-- `Dark - Green`（internal value `dark`）
-- `Follow System - Blue`（internal value `auto-blue`）
-- `Light - Blue`（internal value `light-blue`）
-- `Dark - Blue`（internal value `dark-blue`）
-- `Light - Gray Pink`（internal value `gray`）
-- `Custom Color Scheme`（internal value `custom`）
+- `Follow System - Green`(internal value `auto`)
+- `Dark - Green`(internal value `dark`)
+- `Follow System - Blue`(internal value `auto-blue`)
+- `Light - Blue`(internal value `light-blue`)
+- `Dark - Blue`(internal value `dark-blue`)
+- `Light - Gray Pink`(internal value `gray`)
+- `Custom Color Scheme`(internal value `custom`)
 
 :::
 ::: info 🧩 Template Variable
@@ -1312,7 +1312,7 @@ Option
 :::
 ::: info ℹ️ Additional Information
 
-选择"Custom Color Scheme"when，Requires 要配合[Custom Color Scheme方案](#custom-配色方案)Use，并填写 Custom Color Scheme方案identifier.
+When "Custom Color Scheme" is selected, you need to use it with [Custom Color Scheme](#custom-color-scheme) and fill in the Custom Color Scheme identifier.
 
 :::
 
@@ -1342,18 +1342,18 @@ Option
 :::
 ::: info ⭐ Default Value
 
-`Dark - Green`（internal value `dark`）
+`Dark - Green`(internal value `dark`)
 
 :::
 ::: info 💡 Other Options
 
-- `Follow System - Green`（internal value `auto`）
-- `Light - Green`（internal value `light`）
-- `Follow System - Blue`（internal value `auto-blue`）
-- `Light - Blue`（internal value `light-blue`）
-- `Dark - Blue`（internal value `dark-blue`）
-- `Light - Gray Pink`（internal value `gray`）
-- `Custom Color Scheme`（internal value `custom`）
+- `Follow System - Green`(internal value `auto`)
+- `Light - Green`(internal value `light`)
+- `Follow System - Blue`(internal value `auto-blue`)
+- `Light - Blue`(internal value `light-blue`)
+- `Dark - Blue`(internal value `dark-blue`)
+- `Light - Gray Pink`(internal value `gray`)
+- `Custom Color Scheme`(internal value `custom`)
 
 :::
 ::: info 🧩 Template Variable
@@ -1363,7 +1363,7 @@ Option
 :::
 ::: info ℹ️ Additional Information
 
-选择"Custom Color Scheme"when，Requires 要配合[Custom Color Scheme方案](#custom-配色方案)Use，并填写 Custom Color Scheme方案identifier.
+When "Custom Color Scheme" is selected, you need to use it with [Custom Color Scheme](#custom-color-scheme) and fill in the Custom Color Scheme identifier.
 
 :::
 
@@ -1391,13 +1391,13 @@ Option
 :::
 ::: info ⭐ Default Value
 
-`小字体`（internal value `small`）
+`小字体`(internal value `small`)
 
 :::
 ::: info 💡 Other Options
 
-- `常规`（internal value `normal`）
-- `大字体`（internal value `large`）
+- `常规`(internal value `normal`)
+- `大字体`(internal value `large`)
 
 :::
 ::: info 🧩 Template Variable
@@ -1445,7 +1445,7 @@ If 想 Disablethis option，建议 Enable"Content Area Minimum Width"和"Custom 
 
 When enabled, you can configure:
 
-- [Content Area Maximum Width](#Content Area Maximum Width)
+- [Content Area Maximum Width](#content-area-maximum-width)
 
 :::
 
@@ -1458,7 +1458,7 @@ Set 内容区域的最大宽度.
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> Custom Content Area Maximum Width](#custom-Content Area Maximum Width)When enabled, will display）
+([General Styles -> Custom Content Area Maximum Width](#custom-Content Area Maximum Width)When enabled, will display)
 
 General Styles -> Content Area Maximum Width
 
@@ -1532,7 +1532,7 @@ When 窗口宽度小于此此 Set 宽度 when，实际 willUse 窗口宽度.以�
 
 When enabled, you can configure:
 
-- [Content Area Minimum Width](#Content Area Minimum Width)
+- [Content Area Minimum Width](#content-area-minimum-width)
 - [强制应用Content Area Minimum Width](#强制应用Content Area Minimum Width)
 
 :::
@@ -1546,7 +1546,7 @@ Set 内容区域的最小宽度.
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> Custom Content Area Minimum Width](#custom-Content Area Minimum Width)When enabled, will display）
+([General Styles -> Custom Content Area Minimum Width](#custom-Content Area Minimum Width)When enabled, will display)
 
 General Styles -> Content Area Minimum Width
 
@@ -1591,7 +1591,7 @@ Controls whether 强制应用Content Area Minimum Width.
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> Custom Content Area Minimum Width](#custom-Content Area Minimum Width)When enabled, will display）
+([General Styles -> Custom Content Area Minimum Width](#custom-Content Area Minimum Width)When enabled, will display)
 
 General Styles -> Force Apply Content Area Minimum Width
 
@@ -1672,7 +1672,7 @@ When enabled, you can configure:
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> Custom Content Area Width Property](/guide/theme-configuration#CustomContent Area Width Property)When enabled, will display）
+([General Styles -> Custom Content Area Width Property](/guide/theme-configuration#CustomContent Area Width Property)When enabled, will display)
 
 General Styles -> Content Area Width Style
 
@@ -1709,7 +1709,7 @@ String
 :::
 ::: info ℹ️ Additional Information
 
-Default Value效果为：使内容区域宽度等于最宽的内容的宽度.（this option 实际是 InSet 内容区域的 `width` 属性对应的样式值）
+Default Value效果为：使内容区域宽度等于最宽的内容的宽度.(this option 实际是 InSet 内容区域的 `width` 属性对应的样式值)
 
 :::
 
@@ -1764,7 +1764,7 @@ Used for 选择上传的图片作为页眉头像.未 Set 将 Use 默认头像 `/
 :::
 ::: info 📂 Configuration Item Location
 
-（[Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display）
+([Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display)
 
 General Styles -> Custom Header Avatar
 
@@ -1794,7 +1794,7 @@ Controls whether 强制将头像裁切为圆形.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display）
+([Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display)
 
 General Styles -> Circular Avatar
 
@@ -1829,7 +1829,7 @@ Controls whether 强制将头像以灰度处理.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display）
+([Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display)
 
 General Styles -> Grayscale Avatar
 
@@ -1879,7 +1879,7 @@ Repeater
 :::
 ::: info ⭐ Default Value
 
-包含一个预设：搜索（Requires[搜索组件插件](/guide/plugin-compatibility#搜索组件)）.
+包含一个预设：搜索(Requires[搜索组件插件](/guide/plugin-compatibility#搜索组件)).
 
 :::
 
@@ -1897,13 +1897,13 @@ Repeater
 > :::
 > ::: info ⭐ Default Value
 >
-> 搜索（Requires[搜索组件插件](/guide/plugin-compatibility#搜索组件)）（internal value `search`）
+> 搜索(Requires[搜索组件插件](/guide/plugin-compatibility#搜索组件))(internal value `search`)
 >
 > :::
 > ::: info 💡 Other Options
 >
-> - 随机 post（internal value `random`）
-> - 用户账号（internal value `user`）
+> - 随机 post(internal value `random`)
+> - 用户账号(internal value `user`)
 >
 > :::
 > ::: info 🔒 Internal Constraints
@@ -2041,7 +2041,7 @@ Set 统计项.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> page 底部站点统计信息](#page-底部站点统计信息)When enabled, will display）
+([Home Page Style -> page 底部站点统计信息](#page-底部站点统计信息)When enabled, will display)
 
 General Styles -> Statistics Item Settings
 
@@ -2058,7 +2058,7 @@ Repeater
 :::
 ::: info ⭐ Default Value
 
-包含多个预设分享按钮：总阅读量,总 post 数,总点赞数,总评论数,总分类数,总字数（Requires[API 扩展包插件](/guide/plugin-compatibility#api-扩展包)）.
+包含多个预设分享按钮：总阅读量,总 post 数,总点赞数,总评论数,总分类数,总字数(Requires[API 扩展包插件](/guide/plugin-compatibility#api-扩展包)).
 
 :::
 
@@ -2076,16 +2076,16 @@ Repeater
 > :::
 > ::: info ⭐ Default Value
 >
-> 总阅读量（internal value `visit`）
+> 总阅读量(internal value `visit`)
 >
 > :::
 > ::: info 💡 Other Options
 >
-> - 总 post 数（internal value `post`）
-> - 总点赞数（internal value `upvote`）
-> - 总评论数（internal value `comment`）
-> - 总分类数（internal value `category`）
-> - 总字数（internal value `wordcount`）
+> - 总 post 数(internal value `post`)
+> - 总点赞数(internal value `upvote`)
+> - 总评论数(internal value `comment`)
+> - 总分类数(internal value `category`)
+> - 总字数(internal value `wordcount`)
 >
 > :::
 > ::: info 🔒 Internal Constraints
@@ -2174,7 +2174,7 @@ Setpage 底部主题信息所展示的主题名.
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> page 底部主题信息](#page-底部主题信息)When enabled, will display）
+([General Styles -> page 底部主题信息](#page-底部主题信息)When enabled, will display)
 
 General Styles -> Custom Attribution in Copyright Information
 
@@ -2191,13 +2191,13 @@ Option
 :::
 ::: info ⭐ Default Value
 
-Higan Haozi (internal value `Higan Haozi`）
+Higan Haozi (internal value `Higan Haozi`)
 
 :::
 ::: info 💡 Other Options
 
-- Higan（internal value `Higan`）
-- 彼岸（internal value `彼岸`）
+- Higan(internal value `Higan`)
+- 彼岸(internal value `彼岸`)
 
 :::
 ::: info 🧩 Template Variable
@@ -2215,7 +2215,7 @@ Setpage 底部主题信息所展示的 Halo 版本.
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> page 底部主题信息](#page-底部主题信息)When enabled, will display）
+([General Styles -> page 底部主题信息](#page-底部主题信息)When enabled, will display)
 
 General Styles -> Halo Version Displayed in Theme Information at Page Bottom
 
@@ -2232,13 +2232,13 @@ Option
 :::
 ::: info ⭐ Default Value
 
-Halo (internal value `Halo`）
+Halo (internal value `Halo`)
 
 :::
 ::: info 💡 Other Options
 
-- Halo Pro（internal value `Halo Pro`）
-- Halo 专业版（internal value `Halo 专业版`）
+- Halo Pro(internal value `Halo Pro`)
+- Halo 专业版(internal value `Halo 专业版`)
 
 :::
 ::: info 🧩 Template Variable
@@ -2296,7 +2296,7 @@ Setpage 底部版权信息的署名.
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> page 底部版权信息](#page-底部版权信息)When enabled, will display）
+([General Styles -> page 底部版权信息](#page-底部版权信息)When enabled, will display)
 
 General Styles -> Custom Attribution in Copyright Information
 
@@ -2447,7 +2447,7 @@ Setpage 最底部内容内容.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display）
+([Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display)
 
 Home Page Style -> Content at Bottom of Page
 
@@ -2500,7 +2500,7 @@ Controls whetherEnable 多语言 page 最底部内容 Support.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display）
+([Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display)
 
 Home Page Style -> Multi-language Support for Content at Bottom of Page
 
@@ -2540,7 +2540,7 @@ Set 多语言 page 最底部内容内容.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display）
+([Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display)
 
 Home Page Style -> Custom Multi-language Content at Bottom of Page
 
@@ -2595,7 +2595,7 @@ Repeater
 > :::
 > ::: info 🏷️ Type
 >
-> Code input box (HTML）
+> Code input box (HTML)
 >
 > :::
 > ::: info ⭐ Default Value
@@ -2632,7 +2632,7 @@ Repeater
 
 ::: info 🎯 Purpose
 
-Enablewhen，In 三级标题（h3）下方 Display 下划线装饰，让标题更加突出.
+Enablewhen，In 三级标题(h3)下方 Display 下划线装饰，让标题更加突出.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2769,7 +2769,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Whether 为表格每行底部添加表格线（除表头）.
+Whether 为表格每行底部添加表格线(除表头).
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2803,7 +2803,7 @@ When enabled, you can configure:
 
 <!-- markdownlint-disable MD051 -->
 
-- [表格行间线宽度（除表头）](#表格行间线宽度-除表头)
+- [表格行间线宽度(除表头)](#表格行间线宽度-除表头)
 <!-- markdownlint-enable MD051 -->
 
 :::
@@ -2812,14 +2812,14 @@ When enabled, you can configure:
 
 ::: info 🎯 Purpose
 
-Set 表格每行底部添表格线的宽度（除表头）.
+Set 表格每行底部添表格线的宽度(除表头).
 
 :::
 ::: info 📂 Configuration Item Location
 
 <!-- markdownlint-disable MD051 -->
 
-（[General Styles -> 表格行间线（除表头）](#表格行间线-除表头)When enabled, will display）
+([General Styles -> 表格行间线(除表头)](#表格行间线-除表头)When enabled, will display)
 
 <!-- markdownlint-enable MD051 -->
 
@@ -3042,7 +3042,7 @@ Float/Integer
 
 ::: info 🎯 Purpose
 
-Custom 主页的 HTML 标题（willDisplayIn 浏览器标签页上）.
+Custom 主页的 HTML 标题(willDisplayIn 浏览器标签页上).
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3077,7 +3077,7 @@ IfConfiguration 值过长，cancan 影响 SEO 和 pageDisplay 效果.
 :::
 ::: info ℹ️ Additional Information
 
-If left empty, the value will be taken from Halo CMS backend （<QuickJumpConfig to="/console/settings:~:text=Site title" label="Quick Jump" />) site title setting.
+If left empty, the value will be taken from Halo CMS backend (<QuickJumpConfig to="/console/settings:~:text=Site title" label="Quick Jump" />) site title setting.
 
 :::
 
@@ -3085,7 +3085,7 @@ If left empty, the value will be taken from Halo CMS backend （<QuickJumpConfig
 
 ::: info 🎯 Purpose
 
-WhetherIn 首页 Display 一言（hitokoto）随机句子服务的内容.
+WhetherIn 首页 Display 一言(hitokoto)随机句子服务的内容.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3117,7 +3117,7 @@ Boolean
 
 When enabled, you can configure
 
-- 一言（hitokoto）服务链接：
+- 一言(hitokoto)服务链接：
   - Default Value：`https://v1.hitokoto.cn/?encode=js`
   - 补充说明：相关信息 can 阅读其[文档](https://developer.hitokoto.cn/sentence/)获取
 
@@ -3216,7 +3216,7 @@ Controls whetherEnable 多语言个人简介/公告栏 Support.
 
 <!-- markdownlint-disable MD051 -->
 
-（[Home Page Style -> 个人简介/公告栏](#个人简介-公告栏)When enabled, will display）
+([Home Page Style -> 个人简介/公告栏](#个人简介-公告栏)When enabled, will display)
 
 <!-- markdownlint-enable MD051 -->
 
@@ -3260,7 +3260,7 @@ Set 多语言公告栏内容.
 
 <!-- markdownlint-disable MD051 -->
 
-（[Home Page Style -> 个人简介/公告栏](#个人简介-公告栏)When enabled, will display）
+([Home Page Style -> 个人简介/公告栏](#个人简介-公告栏)When enabled, will display)
 
 <!-- markdownlint-enable MD051 -->
 
@@ -3317,7 +3317,7 @@ Repeater
 > :::
 > ::: info 🏷️ Type
 >
-> Code input box (HTML）
+> Code input box (HTML)
 >
 > :::
 > ::: info ⭐ Default Value
@@ -3440,13 +3440,13 @@ Option
 :::
 ::: info ⭐ Default Value
 
-`简洁post列表`（internal value `simple-post-list`）
+`简洁post列表`(internal value `simple-post-list`)
 
 :::
 ::: info 💡 Other Options
 
-- 多元 post 列表（internal value `post-list-summary`）
-- 瞬间列表（internal value `moment-list-summary`）
+- 多元 post 列表(internal value `post-list-summary`)
+- 瞬间列表(internal value `moment-list-summary`)
 
 :::
 ::: info 🧩 Template Variable
@@ -3493,7 +3493,7 @@ Controls whetherIn 简洁列表中 Displaypost 阅读量.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“简洁 post 列表”whenDisplay）
+([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“简洁 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Views in Simple List
 
@@ -3528,7 +3528,7 @@ Controls whetherIn 多元列表中 Displaypost 分类.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
+([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Categories in Post List Summary
 
@@ -3563,7 +3563,7 @@ Controls whetherIn 多元列表中 Displaypost 标签.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
+([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Tags in Post List Summary
 
@@ -3598,7 +3598,7 @@ Controls whetherIn 多元列表中 Displaypost 阅读量.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
+([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Views in Post List Summary
 
@@ -3633,7 +3633,7 @@ Controls whetherIn 多元列表中 Displaypost 预计阅读 when 间.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
+([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Estimated Reading Time in Post List Summary
 
@@ -3673,7 +3673,7 @@ Controls whetherIn 多元列表中 Displaypost 字数统计.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
+([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Word Count in Post List Summary
 
@@ -3713,7 +3713,7 @@ Controls whetherIn 多元列表中 Displaypost 摘要.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
+([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Excerpt in Post List Summary
 
@@ -3748,7 +3748,7 @@ Set 多元列表中 post 摘要的最大行数.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
+([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Maximum Lines for Post Excerpt in Post List Summary
 
@@ -3788,7 +3788,7 @@ Controls whetherIn 多元列表中 Display 跳转 post 链接的提示文字.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
+([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Link Text for Post List Summary
 
@@ -3828,7 +3828,7 @@ Controls whetherIn 多元列表中 Displaypost 封面.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay）
+([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Cover in Post List Summary
 
@@ -3863,7 +3863,7 @@ Set 瞬间列表中 Display 的条目数量.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“瞬间列表”whenDisplay）
+([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“瞬间列表”whenDisplay)
 
 Home Page Style -> Number of Moments Per Page
 
@@ -3898,7 +3898,7 @@ Controls whetherIn 瞬间列表中 Display 条目作者头像.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“瞬间列表”whenDisplay）
+([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“瞬间列表”whenDisplay)
 
 Home Page Style -> Show Author Avatar in Moment List
 
@@ -3933,7 +3933,7 @@ Controls whetherIn 瞬间列表中 Display 条目作者昵称.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Home Page Style -> 主页列表布局](#主页列表布局)Set 为“瞬间列表”whenDisplay）
+([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“瞬间列表”whenDisplay)
 
 Home Page Style -> Show Author Nickname in Moment List
 
@@ -3995,7 +3995,7 @@ Boolean
 
 When enabled, you can configure
 
-- 置顶 Icon 的位置（标题左侧 or 右侧），默认为右侧.
+- 置顶 Icon 的位置(标题左侧 or 右侧)，默认为右侧.
 
 :::
 
@@ -4080,7 +4080,7 @@ When enabled, you can configure
 
 - 首行缩进值
   - 类型：String
-  - Default Value：`2em`（2 字符宽度）
+  - Default Value：`2em`(2 字符宽度)
   - 外部约束：CSS 长度单位.Such as: 20rem, 300px, 30vw.
 
 :::
@@ -4659,7 +4659,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />）
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />)
 
 :::
 
@@ -4854,7 +4854,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />）
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />)
 
 :::
 
@@ -4926,15 +4926,15 @@ Option
 :::
 ::: info ⭐ Default Value
 
-默认（internal value `default`）
+默认(internal value `default`)
 
 :::
 ::: info 💡 Other Options
 
-- 按 post 数量从多到少（internal value `count_desc`）
-- 按 post 数量从少到多（internal value `count_asc`）
-- 按名称升序（internal value `name_asc`）
-- 按名称降序（internal value `name_desc`）
+- 按 post 数量从多到少(internal value `count_desc`)
+- 按 post 数量从少到多(internal value `count_asc`)
+- 按名称升序(internal value `name_asc`)
+- 按名称降序(internal value `name_desc`)
 
 :::
 ::: info 🧩 Template Variable
@@ -5056,7 +5056,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />）
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />)
 
 :::
 
@@ -5136,7 +5136,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />）
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />)
 
 :::
 
@@ -5176,7 +5176,7 @@ Boolean
 
 When enabled, you can configure
 
-- 展开折叠动画 when 长（Unit: 毫 seconds）
+- 展开折叠动画 when 长(Unit: 毫 seconds)
   - 类型：Float/Integer
   - Default Value：`200`
 
@@ -5263,7 +5263,7 @@ When enabled, you can configure
 
 - 首行缩进值
   - 类型：String
-  - Default Value：`2em`（2 字符宽度）
+  - Default Value：`2em`(2 字符宽度)
   - 外部约束：CSS 长度单位.Such as: 20rem, 300px, 30vw.
 
 :::
@@ -5416,7 +5416,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-In 错误 page（如 `404`）自动跳转到 Specifypage.
+In 错误 page(如 `404`)自动跳转到 Specifypage.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5452,7 +5452,7 @@ When enabled, you can configure
   - 类型：String
   - Default Value：`/`
   - 外部约束：合法的相对/绝对链接
-- 跳转等待 when 间（Unit: seconds）
+- 跳转等待 when 间(Unit: seconds)
   - 类型：Integer
   - Default Value：`5`
 
@@ -5479,7 +5479,7 @@ In 首页展示社交媒体链接和 RSS 订阅等资料.
 :::
 ::: info 🏷️ Type
 
-数组（can 重复添加多个社交资料）
+数组(can 重复添加多个社交资料)
 
 :::
 ::: info ⭐ Default Value
@@ -5494,7 +5494,7 @@ Empty 数组 `[]`
 :::
 ::: info ℹ️ Additional Information
 
-- Support 多种预设社交平台：RSS,BiliBili,Dribbble,Email,Facebook,GitHub,Instagram,QQ,Reddit,Stack Overflow,Telegram,X（Twitter）,YouTube,豆瓣,网易云音乐,微博,知乎等
+- Support 多种预设社交平台：RSS,BiliBili,Dribbble,Email,Facebook,GitHub,Instagram,QQ,Reddit,Stack Overflow,Telegram,X(Twitter),YouTube,豆瓣,网易云音乐,微博,知乎等
 - SupportCustom 社交资料
 - Support 纯文本 Display
 - can 通过"SetCustom 资料"Configuration 自己的社交平台
@@ -5541,10 +5541,10 @@ Provide 了主流平台的预设值，只 Requires 要填写对应平台的ident
 
 每个 Custom 资料 Requires 要 Configuration：
 
-- identifier：任意字母,Number,下划线组合（如 `myBlog`）
-- 链接：完整的 URL（如 `https://example.com`）
+- identifier：任意字母,Number,下划线组合(如 `myBlog`)
+- 链接：完整的 URL(如 `https://example.com`)
 - Icon
-- aria-label：无障碍标签（如 `Find me on my blog`）
+- aria-label：无障碍标签(如 `Find me on my blog`)
 
 :::
 
@@ -5585,7 +5585,7 @@ Repeater
 ::: info ℹ️ Additional Information
 
 - `@URL` 和 `@TITLE` 是占位符，Usewhenwill 被替换为 page 实际地址和标题
-- 每个分享按钮有四个 canConfiguration 项：名称,链接,Icon（Set 后将覆盖默认 Icon）,`aria-label`（无障碍标签）
+- 每个分享按钮有四个 canConfiguration 项：名称,链接,Icon(Set 后将覆盖默认 Icon),`aria-label`(无障碍标签)
 - can 以自由调整顺序,删除 or 新增分享按钮
 
 :::
@@ -5630,7 +5630,7 @@ Boolean
 
 - **默认样式**：DisablewhenUse 传统的横向列表布局，头像较小，信息 In 头像右侧排列
 - **头像优先样式**：EnablewhenUse 网格卡片布局
-  - 采用响应式三列网格（根据 page 宽度，自动选择列数，最高三列）
+  - 采用响应式三列网格(根据 page 宽度，自动选择列数，最高三列)
   - 头像居中 Display，尺寸更大
   - 链接信息垂直排列 In 头像下方
   - 鼠标悬停 when 卡片上浮并有阴影效果
@@ -5647,7 +5647,7 @@ Set 链接描述的最大行数.
 :::
 ::: info 📂 Configuration Item Location
 
-（[Links Page Style -> 头像优先样式](#头像优先样式)When enabled, will display）
+([Links Page Style -> 头像优先样式](#头像优先样式)When enabled, will display)
 
 Links Page Style -> 链接描述行数上限
 
