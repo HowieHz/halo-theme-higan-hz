@@ -3463,20 +3463,20 @@ Option
 简洁列表 When enabled, you can configure
 
 - [Display publish date](#简洁列表-display-publish-date)
-- [Displaypost 阅读量](#简洁列表-displaypost-阅读量)
+- [Display post 阅读量](#简洁列表-displaypost-阅读量)
 
 多元列表 When enabled, you can configure
 
 - [Display publish date](#多元列表-display-publish-date)
-- [Displaypost 分类](#多元列表-displaypost-分类)
-- [Displaypost 标签](#多元列表-displaypost-标签)
-- [Displaypost 阅读量](#多元列表-displaypost-阅读量)
-- [Displaypost 预计阅读 when 间](#多元列表-displaypost-预计阅读-when-间)
-- [Displaypost 字数统计](#多元列表-displaypost-字数统计)
-- [Displaypost 摘要](#多元列表-displaypost-摘要)
+- [Display post 分类](#多元列表-displaypost-分类)
+- [Display post 标签](#多元列表-displaypost-标签)
+- [Display post 阅读量](#多元列表-displaypost-阅读量)
+- [Display post 预计阅读 when 间](#多元列表-displaypost-预计阅读-when-间)
+- [Display post 字数统计](#多元列表-displaypost-字数统计)
+- [Display post 摘要](#多元列表-displaypost-摘要)
 - [post 摘要行数上限](#多元列表-post-摘要行数上限)
 - [跳转 post 链接所用提示文字](#多元列表跳转-post-链接所用提示文字)
-- [Displaypost 封面](#多元列表-displaypost-封面)
+- [Display post 封面](#多元列表-displaypost-封面)
 
 瞬间列表 When enabled, you can configure
 
@@ -3521,7 +3521,7 @@ Boolean
 
 :::
 
-### 简洁列表 Displaypost 阅读量
+### 简洁列表 Display post 阅读量
 
 ::: info 🎯 Purpose
 
@@ -3591,7 +3591,7 @@ Boolean
 
 :::
 
-### 多元列表 Displaypost 分类
+### 多元列表 Display post 分类
 
 ::: info 🎯 Purpose
 
@@ -3626,7 +3626,7 @@ Boolean
 
 :::
 
-### 多元列表 Displaypost 标签
+### 多元列表 Display post 标签
 
 ::: info 🎯 Purpose
 
@@ -3661,7 +3661,7 @@ Boolean
 
 :::
 
-### 多元列表 Displaypost 阅读量
+### 多元列表 Display post 阅读量
 
 ::: info 🎯 Purpose
 
@@ -3696,7 +3696,7 @@ Boolean
 
 :::
 
-### 多元列表 Displaypost 预计阅读 when 间
+### 多元列表 Display post 预计阅读 when 间
 
 ::: info 🎯 Purpose
 
@@ -3736,7 +3736,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 :::
 
-### 多元列表 Displaypost 字数统计
+### 多元列表 Display post 字数统计
 
 ::: info 🎯 Purpose
 
@@ -3776,7 +3776,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 :::
 
-### 多元列表 Displaypost 摘要
+### 多元列表 Display post 摘要
 
 ::: info 🎯 Purpose
 
@@ -3891,7 +3891,7 @@ Boolean
 
 :::
 
-### 多元列表 Displaypost 封面
+### 多元列表 Display post 封面
 
 ::: info 🎯 Purpose
 
