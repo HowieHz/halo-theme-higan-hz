@@ -123,10 +123,10 @@ The value type of this configuration item.
 
 ::: tip Here are some common types
 
-- String: A sequence of characters, such as `abc123`、`zh-CN`。
-- Integer: Whole numbers, such as `-1`、`0`、`100`。
-- Float: Numbers with decimal points, such as `1.2`、`0.3`、`4.5`。
-- Boolean: `true` or `false`. In actual configuration items, it appears as a switch, on is `true`, off is `false`。
+- String: A sequence of characters, such as `abc123`,`zh-CN`.
+- Integer: Whole numbers, such as `-1`,`0`,`100`.
+- Float: Numbers with decimal points, such as `1.2`,`0.3`,`4.5`.
+- Boolean: `true` or `false`. In actual configuration items, it appears as a switch, on is `true`, off is `false`.
 - Option: Fixed options are provided, just select directly.
 - Repeater: Can repeat a group of inputs. Can add groups, remove groups, swap order of any groups.
 - Code input box (programming language): Provides a multi-line code input box, which will be highlighted according to the specified programming language.
@@ -208,7 +208,7 @@ String
 :::
 ::: info 💡 Example Values
 
-`zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+`zh`,`zh-CN`,`zh-Hans`,`en`,`en-US`
 
 :::
 ::: info ⚠️ External Constraints
@@ -876,7 +876,7 @@ Empty
 :::
 ::: info 💡 Example Values
 
-`My Custom Font Regular`、`MyCustomFont-Regular`
+`My Custom Font Regular`,`MyCustomFont-Regular`
 
 :::
 ::: info External Constraints
@@ -958,7 +958,7 @@ Option
 - `Light - Blue`（internal value `light-blue`）
 - `Dark - Blue`（internal value `dark-blue`）
 - `Light - Gray Pink`（internal value `gray`）
-- `Custom配色`（internal value `custom`）
+- `Custom Color Scheme`（internal value `custom`）
 
 :::
 ::: info 🧩 Template Variable
@@ -1001,16 +1001,16 @@ For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-
 
 :::
 
-> [!NOTE] ⭐ 默认值
+> [!NOTE] ⭐ Default Value
 >
-> ::: tip 📂 Configuration 项名
+> ::: tip 📂 Configuration Item Name
 >
 > Custom Color Scheme Identifier
 >
 > :::
 > ::: info 🏷️ Type
 >
-> 数字
+> Number
 >
 > :::
 > ::: info ⭐ Default Value
@@ -1023,7 +1023,7 @@ For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-
 > Unique identifier, do not duplicate.
 >
 > :::
-> ::: tip 📂 Configuration 项名
+> ::: tip 📂 Configuration Item Name
 >
 > Theme Color Mode
 >
@@ -1044,9 +1044,9 @@ For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-
 > - `Auto Mode`（internal value `auto`）
 >
 > :::
-> ::: tip 📂 Configuration 项名
+> ::: tip 📂 Configuration Item Name
 >
-> CSS 变量模式
+> CSS Variable Mode
 >
 > :::
 > ::: info 🏷️ Type
@@ -1064,9 +1064,9 @@ For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-
 > After enabling this option, CSS variables will be used to define the color scheme.
 >
 > :::
-> ::: tip 📂 Configuration 项名
+> ::: tip 📂 Configuration Item Name
 >
-> CSS 原始输出模式
+> CSS Raw Output Mode
 >
 > :::
 > ::: info 🏷️ Type
@@ -1081,13 +1081,13 @@ For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-
 > :::
 > ::: info ℹ️ Additional Information
 >
-> Disablethis option 后，仅 Requires 填写 Custom CSS 变量的部分。  
-> 输出 whenwill 自动输出 In 对应 CSS 选择器中（选择器为 `html[theme="theme-{识别码}"]`）。
+> Disablethis option 后，仅 Requires 填写 Custom CSS Variables的部分.  
+> 输出 whenwill 自动输出 In 对应 CSS 选择器中（选择器为 `html[theme="theme-{identifier}"]`）.
 >
 > :::
-> ::: tip 📂 Configuration 项名
+> ::: tip 📂 Configuration Item Name
 >
-> Custom CSS 变量
+> Custom CSS Variables
 >
 > :::
 > ::: info 🏷️ Type
@@ -1097,11 +1097,11 @@ For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-
 > :::
 > ::: info ⚠️ External Constraints
 >
-> Enable `CSS 原始输出模式` when，你填写的内容 Requires 要是合法的 CSS 代码。  
-> Disable `CSS 原始输出模式` when，以下内容 Requires 要是合法的 CSS 代码：
+> Enable `CSS Raw Output Mode` when，你填写的内容 Requires 要是合法的 CSS 代码.  
+> Disable `CSS Raw Output Mode` when，以下内容 Requires 要是合法的 CSS 代码：
 >
 > ```css
-> html[theme="theme-{识别码}"] {
+> html[theme="theme-{identifier}"] {
 >   /* 你填写的内容 */
 > }
 > ```
@@ -1126,7 +1126,7 @@ For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-
 > --color-secondary-content: #d5d7d8
 > ```
 >
-> 以下是 `CSS 原始输出模式` 的一个示例：
+> 以下是 `CSS Raw Output Mode` 的一个示例：
 >
 > ```css
 > html[theme="auto"] {
@@ -1199,7 +1199,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-“自动模式配色方案”选择与“浅色模式配色方案”相同即 canDisable 自动模式。  
+Selecting the same "Auto Mode Color Scheme" as "Light Mode Color Scheme" will disable auto mode.
 Toggle logic will become: Light Mode -> Dark Mode -> Light Mode.
 
 When enabled, you can configure:
@@ -1251,7 +1251,7 @@ Option
 - `Light - Blue`（internal value `light-blue`）
 - `Dark - Blue`（internal value `dark-blue`）
 - `Light - Gray Pink`（internal value `gray`）
-- `Custom配色`（internal value `custom`）
+- `Custom Color Scheme`（internal value `custom`）
 
 :::
 ::: info 🧩 Template Variable
@@ -1261,7 +1261,7 @@ Option
 :::
 ::: info ℹ️ Additional Information
 
-选择“Custom 配色”when，Requires 要配合[Custom 配色方案](#custom-配色方案)Use，并填写 Custom 配色方案识别码。
+选择“Custom Color Scheme”when，Requires 要配合[Custom Color Scheme方案](#custom-配色方案)Use，并填写 Custom Color Scheme方案identifier.
 
 :::
 
@@ -1302,7 +1302,7 @@ Option
 - `Light - Blue`（internal value `light-blue`）
 - `Dark - Blue`（internal value `dark-blue`）
 - `Light - Gray Pink`（internal value `gray`）
-- `Custom配色`（internal value `custom`）
+- `Custom Color Scheme`（internal value `custom`）
 
 :::
 ::: info 🧩 Template Variable
@@ -1312,7 +1312,7 @@ Option
 :::
 ::: info ℹ️ Additional Information
 
-选择"Custom 配色"when，Requires 要配合[Custom 配色方案](#custom-配色方案)Use，并填写 Custom 配色方案识别码。
+选择"Custom Color Scheme"when，Requires 要配合[Custom Color Scheme方案](#custom-配色方案)Use，并填写 Custom Color Scheme方案identifier.
 
 :::
 
@@ -1353,7 +1353,7 @@ Option
 - `Light - Blue`（internal value `light-blue`）
 - `Dark - Blue`（internal value `dark-blue`）
 - `Light - Gray Pink`（internal value `gray`）
-- `Custom配色`（internal value `custom`）
+- `Custom Color Scheme`（internal value `custom`）
 
 :::
 ::: info 🧩 Template Variable
@@ -1363,7 +1363,7 @@ Option
 :::
 ::: info ℹ️ Additional Information
 
-选择"Custom 配色"when，Requires 要配合[Custom 配色方案](#custom-配色方案)Use，并填写 Custom 配色方案识别码。
+选择"Custom Color Scheme"when，Requires 要配合[Custom Color Scheme方案](#custom-配色方案)Use，并填写 Custom Color Scheme方案identifier.
 
 :::
 
@@ -1371,7 +1371,7 @@ Option
 
 ::: info 🎯 Purpose
 
-Set 网站的整体字体大小。
+Set 网站的整体字体大小.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -1410,7 +1410,7 @@ Option
 
 ::: info 🎯 Purpose
 
-Whether 定义内容区域最大宽度。
+Whether 定义Content Area Maximum Width.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -1440,12 +1440,12 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-IfDisablethis option，内容区域最大宽度 will 随着 page 宽度变化而变化，但 cancan 出现内容整体偏左的现象。  
-If 想 Disablethis option，建议 Enable"内容区域最小宽度"和"Custom 内容区域宽度属性"。
+IfDisablethis option，Content Area Maximum Width will 随着 page 宽度变化而变化，但 cancan 出现内容整体偏左的现象.  
+If 想 Disablethis option，建议 Enable"Content Area Minimum Width"和"Custom Content Area Width Property".
 
 When enabled, you can configure:
 
-- [内容区域最大宽度](#内容区域最大宽度)
+- [Content Area Maximum Width](#Content Area Maximum Width)
 
 :::
 
@@ -1453,12 +1453,12 @@ When enabled, you can configure:
 
 ::: info 🎯 Purpose
 
-Set 内容区域的最大宽度。
+Set 内容区域的最大宽度.
 
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> Custom 内容区域最大宽度](#custom-内容区域最大宽度)When enabled, will display）
+（[General Styles -> Custom Content Area Maximum Width](#custom-Content Area Maximum Width)When enabled, will display）
 
 General Styles -> Content Area Maximum Width
 
@@ -1480,7 +1480,7 @@ String
 :::
 ::: info 💡 Example Values
 
-`20rem`、`300px`、`30vw`
+`20rem`,`300px`,`30vw`
 
 :::
 ::: info ⚠️ External Constraints
@@ -1498,7 +1498,7 @@ Valid CSS length unit.
 
 ::: info 🎯 Purpose
 
-Whether 定义内容区域最小宽度。
+Whether 定义Content Area Minimum Width.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -1528,12 +1528,12 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-When 窗口宽度小于此此 Set 宽度 when，实际 willUse 窗口宽度。以避免出现横向滚动条。
+When 窗口宽度小于此此 Set 宽度 when，实际 willUse 窗口宽度.以避免出现横向滚动条.
 
 When enabled, you can configure:
 
-- [内容区域最小宽度](#内容区域最小宽度)
-- [强制应用内容区域最小宽度](#强制应用内容区域最小宽度)
+- [Content Area Minimum Width](#Content Area Minimum Width)
+- [强制应用Content Area Minimum Width](#强制应用Content Area Minimum Width)
 
 :::
 
@@ -1541,12 +1541,12 @@ When enabled, you can configure:
 
 ::: info 🎯 Purpose
 
-Set 内容区域的最小宽度。
+Set 内容区域的最小宽度.
 
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> Custom 内容区域最小宽度](#custom-内容区域最小宽度)When enabled, will display）
+（[General Styles -> Custom Content Area Minimum Width](#custom-Content Area Minimum Width)When enabled, will display）
 
 General Styles -> Content Area Minimum Width
 
@@ -1568,7 +1568,7 @@ String
 :::
 ::: info 💡 Example Values
 
-`20rem`、`300px`、`30vw`
+`20rem`,`300px`,`30vw`
 
 :::
 ::: info ⚠️ External Constraints
@@ -1586,12 +1586,12 @@ Valid CSS length unit.
 
 ::: info 🎯 Purpose
 
-Controls whether 强制应用内容区域最小宽度。
+Controls whether 强制应用Content Area Minimum Width.
 
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> Custom 内容区域最小宽度](#custom-内容区域最小宽度)When enabled, will display）
+（[General Styles -> Custom Content Area Minimum Width](#custom-Content Area Minimum Width)When enabled, will display）
 
 General Styles -> Force Apply Content Area Minimum Width
 
@@ -1618,8 +1618,8 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-- Disablewhen：When 窗口宽度小于 Set 的最小宽度 when，实际 willUse 窗口宽度。以避免出现横向滚动条。
-- Enablewhen：强制使内容 Display 区域不小于 Set 的最小宽度，即使出现横向滚动条。
+- Disablewhen：When 窗口宽度小于 Set 的最小宽度 when，实际 willUse 窗口宽度.以避免出现横向滚动条.
+- Enablewhen：强制使内容 Display 区域不小于 Set 的最小宽度，即使出现横向滚动条.
 
 :::
 
@@ -1627,7 +1627,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Whether 定义内容区域宽度属性。
+Whether 定义Content Area Width Property.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -1667,12 +1667,12 @@ When enabled, you can configure:
 
 ::: info 🎯 Purpose
 
-决定内容区域宽度样式。
+决定内容区域宽度样式.
 
 :::
 ::: info 📂 Configuration Item Location
 
-（[General Styles -> Custom 内容区域宽度属性](/guide/theme-configuration#Custom内容区域宽度属性)When enabled, will display）
+（[General Styles -> Custom Content Area Width Property](/guide/theme-configuration#CustomContent Area Width Property)When enabled, will display）
 
 General Styles -> Content Area Width Style
 
@@ -1694,12 +1694,12 @@ String
 :::
 ::: info 💡 Example Values
 
-`max-content`、`min-content`
+`max-content`,`min-content`
 
 :::
 ::: info ⚠️ External Constraints
 
-符合[文档](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/Properties/width#%E5%80%BC)对值的要求。
+符合[文档](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/Properties/width#%E5%80%BC)对值的要求.
 
 :::
 ::: info 🧩 Template Variable
@@ -1709,7 +1709,7 @@ String
 :::
 ::: info ℹ️ Additional Information
 
-默认值效果为：使内容区域宽度等于最宽的内容的宽度。（this option 实际是 InSet 内容区域的 `width` 属性对应的样式值）
+Default Value效果为：使内容区域宽度等于最宽的内容的宽度.（this option 实际是 InSet 内容区域的 `width` 属性对应的样式值）
 
 :::
 
@@ -1717,7 +1717,7 @@ String
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 页眉 Display 头像。
+Controls whetherIn 页眉 Display 头像.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -1759,7 +1759,7 @@ When enabled, you can configure:
 
 ::: info 🎯 Purpose
 
-Used for 选择上传的图片作为页眉头像。未 Set 将 Use 默认头像 `/themes/howiehz-higan/images/logo.{avif,webp,png}`。
+Used for 选择上传的图片作为页眉头像.未 Set 将 Use 默认头像 `/themes/howiehz-higan/images/logo.{avif,webp,png}`.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -1789,7 +1789,7 @@ Attachment
 
 ::: info 🎯 Purpose
 
-Controls whether 强制将头像裁切为圆形。
+Controls whether 强制将头像裁切为圆形.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -1824,7 +1824,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whether 强制将头像以灰度处理。
+Controls whether 强制将头像以灰度处理.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -1859,7 +1859,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 菜单 Display 额外菜单项。
+Controls whetherIn 菜单 Display 额外菜单项.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -1879,13 +1879,13 @@ Repeater
 :::
 ::: info ⭐ Default Value
 
-包含一个预设：搜索（Requires[搜索组件插件](/guide/plugin-compatibility#搜索组件)）。
+包含一个预设：搜索（Requires[搜索组件插件](/guide/plugin-compatibility#搜索组件)）.
 
 :::
 
 > [!NOTE] 💡 示例值
 >
-> ::: tip 📂 Configuration 项名
+> ::: tip 📂 Configuration Item Name
 >
 > 菜单项类型
 >
@@ -1915,8 +1915,8 @@ Repeater
 >
 > 对于`用户账号`类型：
 >
-> - 未登录 when，菜单 Display `登录`，点击后跳转 `/login` page。
-> - 已登录 when，菜单 Display 用户名，点击后跳转 `/uc` page。
+> - 未登录 when，菜单 Display `登录`，点击后跳转 `/login` page.
+> - 已登录 when，菜单 Display 用户名，点击后跳转 `/uc` page.
 >
 > :::
 
@@ -1930,7 +1930,7 @@ Repeater
 
 ::: info 🎯 Purpose
 
-Controls whetherDisplay 页眉菜单。
+Controls whetherDisplay 页眉菜单.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -1963,7 +1963,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherDisplay 页码。
+Controls whetherDisplay 页码.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -1996,7 +1996,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherDisplaypage 底部站点统计信息。
+Controls whetherDisplaypage 底部站点统计信息.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2036,7 +2036,7 @@ When enabled, you can configure:
 
 ::: info 🎯 Purpose
 
-Set 统计项。
+Set 统计项.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2058,13 +2058,13 @@ Repeater
 :::
 ::: info ⭐ Default Value
 
-包含多个预设分享按钮：总阅读量、总 post 数、总点赞数、总评论数、总分类数、总字数（Requires[API 扩展包插件](/guide/plugin-compatibility#api-扩展包)）。
+包含多个预设分享按钮：总阅读量,总 post 数,总点赞数,总评论数,总分类数,总字数（Requires[API 扩展包插件](/guide/plugin-compatibility#api-扩展包)）.
 
 :::
 
 > [!NOTE] 💡 示例值
 >
-> ::: tip 📂 Configuration 项名
+> ::: tip 📂 Configuration Item Name
 >
 > 统计项
 >
@@ -2093,9 +2093,9 @@ Repeater
 > Required field
 >
 > :::
-> ::: tip 📂 Configuration 项名
+> ::: tip 📂 Configuration Item Name
 >
-> 多语言文本包裹数字
+> 多语言文本包裹Number
 >
 > :::
 > ::: info 🏷️ Type
@@ -2108,7 +2108,7 @@ Repeater
 > `true`
 >
 > :::
-> ::: tip 📂 Configuration 项名
+> ::: tip 📂 Configuration Item Name
 >
 > 文字左侧的 Icon
 >
@@ -2128,7 +2128,7 @@ Repeater
 
 ::: info 🎯 Purpose
 
-Controls whetherDisplaypage 底部主题信息。
+Controls whetherDisplaypage 底部主题信息.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2169,7 +2169,7 @@ When enabled, you can configure:
 
 ::: info 🎯 Purpose
 
-Setpage 底部主题信息所展示的主题名。
+Setpage 底部主题信息所展示的主题名.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2210,7 +2210,7 @@ Higan Haozi (internal value `Higan Haozi`）
 
 ::: info 🎯 Purpose
 
-Setpage 底部主题信息所展示的 Halo 版本。
+Setpage 底部主题信息所展示的 Halo 版本.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2251,7 +2251,7 @@ Halo (internal value `Halo`）
 
 ::: info 🎯 Purpose
 
-Controls whetherDisplaypage 底部版权信息。
+Controls whetherDisplaypage 底部版权信息.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2291,7 +2291,7 @@ When enabled, you can configure:
 
 ::: info 🎯 Purpose
 
-Setpage 底部版权信息的署名。
+Setpage 底部版权信息的署名.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2331,7 +2331,7 @@ Empty
 
 ::: info 🎯 Purpose
 
-Controls whether 强制页脚、页码 Inpage 底部。
+Controls whether 强制页脚,页码 Inpage 底部.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2364,7 +2364,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherDisplaypage 底部菜单。
+Controls whetherDisplaypage 底部菜单.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2397,7 +2397,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-控制添加内容到 page 最底部。
+控制添加内容到 page 最底部.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2442,7 +2442,7 @@ When enabled, you can configure:
 
 ::: info 🎯 Purpose
 
-Setpage 最底部内容内容。
+Setpage 最底部内容内容.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2482,7 +2482,7 @@ HTML 代码也是 can 以的：
 :::
 ::: info ⚠️ External Constraints
 
-合法的 HTML 代码。
+合法的 HTML 代码.
 
 :::
 ::: info 🧩 Template Variable
@@ -2495,7 +2495,7 @@ HTML 代码也是 can 以的：
 
 ::: info 🎯 Purpose
 
-Controls whetherEnable 多语言 page 最底部内容 Support。
+Controls whetherEnable 多语言 page 最底部内容 Support.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2535,7 +2535,7 @@ Enable 后请参照[多语言 page 最底部内容 Use 指南](/tutorial/i18n#�
 
 ::: info 🎯 Purpose
 
-Set 多语言 page 最底部内容内容。
+Set 多语言 page 最底部内容内容.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2556,9 +2556,9 @@ Repeater
 
 :::
 
-> [!NOTE] ⭐ 默认值
+> [!NOTE] ⭐ Default Value
 >
-> ::: tip 📂 Configuration 项名
+> ::: tip 📂 Configuration Item Name
 >
 > 语言代码
 >
@@ -2575,7 +2575,7 @@ Repeater
 > :::
 > ::: info 💡 Example Values
 >
-> `zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+> `zh`,`zh-CN`,`zh-Hans`,`en`,`en-US`
 >
 > :::
 > ::: info 🔒 Internal Constraints
@@ -2585,10 +2585,10 @@ Repeater
 > :::
 > ::: info ⚠️ External Constraints
 >
-> Set 值 Requires 满足 [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82)，否则无效。
+> Set 值 Requires 满足 [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82)，否则无效.
 >
 > :::
-> ::: tip 📂 Configuration 项名
+> ::: tip 📂 Configuration Item Name
 >
 > page 最底部内容
 >
@@ -2618,7 +2618,7 @@ Repeater
 > :::
 > ::: info ⚠️ External Constraints
 >
-> 合法的 HTML 代码。
+> 合法的 HTML 代码.
 >
 > :::
 
@@ -2632,7 +2632,7 @@ Repeater
 
 ::: info 🎯 Purpose
 
-Enablewhen，In 三级标题（h3）下方 Display 下划线装饰，让标题更加突出。
+Enablewhen，In 三级标题（h3）下方 Display 下划线装饰，让标题更加突出.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2695,7 +2695,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-引用块写法请参考[写作样式](/guide/style-reference#引用块)。
+引用块写法请参考[写作样式](/guide/style-reference#引用块).
 
 :::
 
@@ -2769,7 +2769,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Whether 为表格每行底部添加表格线（除表头）。
+Whether 为表格每行底部添加表格线（除表头）.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2812,7 +2812,7 @@ When enabled, you can configure:
 
 ::: info 🎯 Purpose
 
-Set 表格每行底部添表格线的宽度（除表头）。
+Set 表格每行底部添表格线的宽度（除表头）.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2843,7 +2843,7 @@ String
 :::
 ::: info 💡 Example Values
 
-`0px`、`5px`、`10%`、`1rem`
+`0px`,`5px`,`10%`,`1rem`
 
 :::
 ::: info ⚠️ External Constraints
@@ -2861,7 +2861,7 @@ Valid CSS length unit.
 
 ::: info 🎯 Purpose
 
-Set[标题](/guide/style-reference#标题)的上边距 (`margin-top`) 倍率。
+Set[标题](/guide/style-reference#标题)的上边距 (`margin-top`) 倍率.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2886,7 +2886,7 @@ Float/Integer
 :::
 ::: info 💡 Example Values
 
-`0.5`、`1`、`1.5`、`2`
+`0.5`,`1`,`1.5`,`2`
 
 :::
 ::: info 🔒 Internal Constraints
@@ -2901,7 +2901,7 @@ Float/Integer
 :::
 ::: info ℹ️ Additional Information
 
-值为 1 表示 Use 默认边距，小于 1 减小边距，大于 1 增加边距。
+值为 1 表示 Use 默认边距，小于 1 减小边距，大于 1 增加边距.
 
 :::
 
@@ -2909,7 +2909,7 @@ Float/Integer
 
 ::: info 🎯 Purpose
 
-Set[标题](/guide/style-reference#标题)的下边距 (`margin-bottom`) 倍率。
+Set[标题](/guide/style-reference#标题)的下边距 (`margin-bottom`) 倍率.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2934,7 +2934,7 @@ Float/Integer
 :::
 ::: info 💡 Example Values
 
-`0.5`、`1`、`1.5`、`2`
+`0.5`,`1`,`1.5`,`2`
 
 :::
 ::: info 🔒 Internal Constraints
@@ -2952,7 +2952,7 @@ Float/Integer
 
 ::: info 🎯 Purpose
 
-Set[段落](/guide/style-reference#段落)的上边距倍率。
+Set[段落](/guide/style-reference#段落)的上边距倍率.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -2977,7 +2977,7 @@ Float/Integer
 :::
 ::: info 💡 Example Values
 
-`0.5`、`1`、`1.5`、`2`
+`0.5`,`1`,`1.5`,`2`
 
 :::
 ::: info 🔒 Internal Constraints
@@ -2995,7 +2995,7 @@ Float/Integer
 
 ::: info 🎯 Purpose
 
-Set[段落](/guide/style-reference#段落)的下边距倍率。
+Set[段落](/guide/style-reference#段落)的下边距倍率.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3020,7 +3020,7 @@ Float/Integer
 :::
 ::: info 💡 Example Values
 
-`0.5`、`1`、`1.5`、`2`
+`0.5`,`1`,`1.5`,`2`
 
 :::
 ::: info 🔒 Internal Constraints
@@ -3036,13 +3036,13 @@ Float/Integer
 
 ## Home Page Style
 
-应用 Range：[`/(page/{page})`](</reference/template-map#:~:text=/(page/%7Bpage%7D)>)。
+应用 Range：[`/(page/{page})`](</reference/template-map#:~:text=/(page/%7Bpage%7D)>).
 
 ### Homepage HTML Title
 
 ::: info 🎯 Purpose
 
-Custom 主页的 HTML 标题（willDisplayIn 浏览器标签页上）。
+Custom 主页的 HTML 标题（willDisplayIn 浏览器标签页上）.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3067,7 +3067,7 @@ Empty
 :::
 ::: info ⚠️ External Constraints
 
-IfConfiguration 值过长，cancan 影响 SEO 和 pageDisplay 效果。
+IfConfiguration 值过长，cancan 影响 SEO 和 pageDisplay 效果.
 
 :::
 ::: info 🧩 Template Variable
@@ -3085,7 +3085,7 @@ If left empty, the value will be taken from Halo CMS backend （<QuickJumpConfig
 
 ::: info 🎯 Purpose
 
-WhetherIn 首页 Display 一言（hitokoto）随机句子服务的内容。
+WhetherIn 首页 Display 一言（hitokoto）随机句子服务的内容.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3118,7 +3118,7 @@ Boolean
 When enabled, you can configure
 
 - 一言（hitokoto）服务链接：
-  - 默认值：`https://v1.hitokoto.cn/?encode=js`
+  - Default Value：`https://v1.hitokoto.cn/?encode=js`
   - 补充说明：相关信息 can 阅读其[文档](https://developer.hitokoto.cn/sentence/)获取
 
 :::
@@ -3127,7 +3127,7 @@ When enabled, you can configure
 
 ::: info 🎯 Purpose
 
-WhetherIn 首页随机 Display 一句话。
+WhetherIn 首页随机 Display 一句话.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3167,7 +3167,7 @@ When enabled, you can configure
 
 ::: info 🎯 Purpose
 
-In 首页 Display 个人简介 or 公告栏内容。
+In 首页 Display 个人简介 or 公告栏内容.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3209,7 +3209,7 @@ When enabled, you can configure
 
 ::: info 🎯 Purpose
 
-Controls whetherEnable 多语言个人简介/公告栏 Support。
+Controls whetherEnable 多语言个人简介/公告栏 Support.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3253,7 +3253,7 @@ Enable 后请参照[多语言个人简介/公告栏 Use 指南](/tutorial/i18n#�
 
 ::: info 🎯 Purpose
 
-Set 多语言公告栏内容。
+Set 多语言公告栏内容.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3278,9 +3278,9 @@ Repeater
 
 :::
 
-> [!NOTE] ⭐ 默认值
+> [!NOTE] ⭐ Default Value
 >
-> ::: tip 📂 Configuration 项名
+> ::: tip 📂 Configuration Item Name
 >
 > 语言代码
 >
@@ -3297,7 +3297,7 @@ Repeater
 > :::
 > ::: info 💡 Example Values
 >
-> `zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+> `zh`,`zh-CN`,`zh-Hans`,`en`,`en-US`
 >
 > :::
 > ::: info 🔒 Internal Constraints
@@ -3307,10 +3307,10 @@ Repeater
 > :::
 > ::: info ⚠️ External Constraints
 >
-> Set 值 Requires 满足 [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82)，否则无效。
+> Set 值 Requires 满足 [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82)，否则无效.
 >
 > :::
-> ::: tip 📂 Configuration 项名
+> ::: tip 📂 Configuration Item Name
 >
 > 个人简介/公告栏内容
 >
@@ -3340,7 +3340,7 @@ Repeater
 > :::
 > ::: info ⚠️ External Constraints
 >
-> 合法的 HTML 代码。
+> 合法的 HTML 代码.
 >
 > :::
 
@@ -3354,7 +3354,7 @@ Repeater
 
 ::: info 🎯 Purpose
 
-Controls whetherDisplay 首页社交资料 Icon 左侧的文字。
+Controls whetherDisplay 首页社交资料 Icon 左侧的文字.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3387,7 +3387,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherDisplay 首页 post 列表的标题。
+Controls whetherDisplay 首页 post 列表的标题.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3420,7 +3420,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-选择首页的 post 列表 Display 样式。
+选择首页的 post 列表 Display 样式.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3458,7 +3458,7 @@ Option
 
 "瞬间列表"Requires[瞬间页](/guide/plugin-compatibility#瞬间页)插件 Enable 后方 can.
 
-根据选择的布局类型，willDisplay 不同的 ConfigurationOption。
+根据选择的布局类型，willDisplay 不同的 ConfigurationOption.
 
 简洁列表 When enabled, you can configure
 
@@ -3488,7 +3488,7 @@ Option
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 简洁列表中 Displaypost 阅读量。
+Controls whetherIn 简洁列表中 Displaypost 阅读量.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3523,7 +3523,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 多元列表中 Displaypost 分类。
+Controls whetherIn 多元列表中 Displaypost 分类.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3558,7 +3558,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 多元列表中 Displaypost 标签。
+Controls whetherIn 多元列表中 Displaypost 标签.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3593,7 +3593,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 多元列表中 Displaypost 阅读量。
+Controls whetherIn 多元列表中 Displaypost 阅读量.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3628,7 +3628,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 多元列表中 Displaypost 预计阅读 when 间。
+Controls whetherIn 多元列表中 Displaypost 预计阅读 when 间.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3660,7 +3660,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法。
+Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法.
 
 :::
 
@@ -3668,7 +3668,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 多元列表中 Displaypost 字数统计。
+Controls whetherIn 多元列表中 Displaypost 字数统计.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3700,7 +3700,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法。
+Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法.
 
 :::
 
@@ -3708,7 +3708,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 多元列表中 Displaypost 摘要。
+Controls whetherIn 多元列表中 Displaypost 摘要.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3743,7 +3743,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Set 多元列表中 post 摘要的最大行数。
+Set 多元列表中 post 摘要的最大行数.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3783,7 +3783,7 @@ Range 1-5
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 多元列表中 Display 跳转 post 链接的提示文字。
+Controls whetherIn 多元列表中 Display 跳转 post 链接的提示文字.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3823,7 +3823,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 多元列表中 Displaypost 封面。
+Controls whetherIn 多元列表中 Displaypost 封面.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3858,7 +3858,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Set 瞬间列表中 Display 的条目数量。
+Set 瞬间列表中 Display 的条目数量.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3893,7 +3893,7 @@ Integer
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 瞬间列表中 Display 条目作者头像。
+Controls whetherIn 瞬间列表中 Display 条目作者头像.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3928,7 +3928,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 瞬间列表中 Display 条目作者昵称。
+Controls whetherIn 瞬间列表中 Display 条目作者昵称.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3995,19 +3995,19 @@ Boolean
 
 When enabled, you can configure
 
-- 置顶 Icon 的位置（标题左侧 or 右侧），默认为右侧。
+- 置顶 Icon 的位置（标题左侧 or 右侧），默认为右侧.
 
 :::
 
 ## Post Page Style
 
-应用 Range：[`/archives/{slug}`](/reference/template-map#:~:text=/archives/%7Bslug%7D)。
+应用 Range：[`/archives/{slug}`](/reference/template-map#:~:text=/archives/%7Bslug%7D).
 
 ### Optimize Post Paragraph Spacing Display
 
 ::: info 🎯 Purpose
 
-为 post 内容段落添加最小高度，以 DisplayEmpty 行。
+为 post 内容段落添加最小高度，以 DisplayEmpty 行.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4037,8 +4037,8 @@ Boolean
 :::
 ::: details ℹ️ 补充信息
 
-不同 Markdown 编辑器所用解析器不同，故此 Configuration 项反映到最终渲染结果上，cancanwill 有所不同。  
-相关链接：[babelmark3](https://babelmark.github.io/) 是一个对比不同 Markdown 解析器解析结果的网站。
+不同 Markdown 编辑器所用解析器不同，故此 Configuration 项反映到最终渲染结果上，cancanwill 有所不同.  
+相关链接：[babelmark3](https://babelmark.github.io/) 是一个对比不同 Markdown 解析器解析结果的网站.
 
 :::
 
@@ -4046,7 +4046,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-为 post 内容段落首行添加缩进样式。
+为 post 内容段落首行添加缩进样式.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4080,8 +4080,8 @@ When enabled, you can configure
 
 - 首行缩进值
   - 类型：String
-  - 默认值：`2em`（2 字符宽度）
-  - 外部约束：CSS 长度单位。Such as: 20rem, 300px, 30vw。
+  - Default Value：`2em`（2 字符宽度）
+  - 外部约束：CSS 长度单位.Such as: 20rem, 300px, 30vw.
 
 :::
 
@@ -4089,9 +4089,9 @@ When enabled, you can configure
 
 ::: info 🎯 Purpose
 
-将 post 标题中字符转换为对应大写表示。
+将 post 标题中字符转换为对应大写表示.
 
-Such as: `a` 转换为 `A`。
+Such as: `a` 转换为 `A`.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4124,7 +4124,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Inpostpage 顶部 Displaypost 的发布 when 间。
+Inpostpage 顶部 Displaypost 的发布 when 间.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4164,7 +4164,7 @@ When enabled, you can configure
 
 ::: info 🎯 Purpose
 
-Inpostpage 顶部 Displaypost 的最后更新 when 间。
+Inpostpage 顶部 Displaypost 的最后更新 when 间.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4204,7 +4204,7 @@ When enabled, you can configure
 
 ::: info 🎯 Purpose
 
-InpostpageDisplaypost 的阅读量统计。
+InpostpageDisplaypost 的阅读量统计.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4237,7 +4237,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-InpostpageDisplay 根据 post 字数估算的阅读 when 间。
+InpostpageDisplay 根据 post 字数估算的阅读 when 间.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4267,7 +4267,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法。
+Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法.
 
 :::
 
@@ -4275,7 +4275,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 ::: info 🎯 Purpose
 
-InpostpageDisplaypost 的总字数。
+InpostpageDisplaypost 的总字数.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4305,7 +4305,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法。
+Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法.
 
 :::
 
@@ -4313,7 +4313,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 桌面端 postpage 的菜单中 Display 分享按钮。
+Controls whetherIn 桌面端 postpage 的菜单中 Display 分享按钮.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4348,7 +4348,7 @@ Boolean
 
 Enable 后 can 以 Configuration
 
-- postpage 右侧边栏目录的最大宽度。
+- postpage 右侧边栏目录的最大宽度.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4382,8 +4382,8 @@ When enabled, you can configure
 
 - 侧边目录最大宽度
   - 类型：String
-  - 默认值：`20rem`
-  - 外部约束：CSS 长度单位。Such as: 20rem, 300px, 30vw。
+  - Default Value：`20rem`
+  - 外部约束：CSS 长度单位.Such as: 20rem, 300px, 30vw.
 
 :::
 
@@ -4391,7 +4391,7 @@ When enabled, you can configure
 
 ::: info 🎯 Purpose
 
-Controls whetherDisplaypost 末尾的的分隔线。
+Controls whetherDisplaypost 末尾的的分隔线.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4424,7 +4424,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherDisplaypost 底部的点赞按钮。
+Controls whetherDisplaypost 底部的点赞按钮.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4458,12 +4458,12 @@ When enabled, you can configure
 
 - 点赞按钮宽度
   - 类型：String
-  - 默认值：`1rem`
-  - 外部约束：CSS 长度单位。Such as: 20rem, 300px, 30vw。
+  - Default Value：`1rem`
+  - 外部约束：CSS 长度单位.Such as: 20rem, 300px, 30vw.
 - 点赞按钮高度
   - 类型：String
-  - 默认值：`1rem`
-  - 外部约束：CSS 长度单位。Such as: 20rem, 300px, 30vw。
+  - Default Value：`1rem`
+  - 外部约束：CSS 长度单位.Such as: 20rem, 300px, 30vw.
 - 展示 post 获赞数
 - 点赞按钮位置
 
@@ -4473,9 +4473,9 @@ When enabled, you can configure
 
 ::: info 🎯 Purpose
 
-Controls whetherInpost 底部 Display 推荐 post 列表。
+Controls whetherInpost 底部 Display 推荐 post 列表.
 
-原理：读取 When 前 post**第一个分类**，并且随机输出其中 If 干个 post。
+原理：读取 When 前 post**第一个分类**，并且随机输出其中 If 干个 post.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4505,9 +4505,9 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-IfWhen 前 postIn 随机列表中 will 被剔除，因此实际推荐 post 数 cancan 小于 Set 的“推荐 post 数量”。  
-IfWhen 前 post**未 Set 分类**，this 功 canwill 被**Disable**。  
-If**分类仅有一篇 post**，this 功 canwill 被**Disable**。
+IfWhen 前 postIn 随机列表中 will 被剔除，因此实际推荐 post 数 cancan 小于 Set 的“推荐 post 数量”.  
+IfWhen 前 post**未 Set 分类**，this 功 canwill 被**Disable**.  
+If**分类仅有一篇 post**，this 功 canwill 被**Disable**.
 
 When enabled, you can configure
 
@@ -4519,7 +4519,7 @@ When enabled, you can configure
 
 ::: info 🎯 Purpose
 
-Enable 后将 Inpost 底部 Display 上一篇和下一篇 post 的导航链接。
+Enable 后将 Inpost 底部 Display 上一篇和下一篇 post 的导航链接.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4552,7 +4552,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherInpostpageDisplay 评论区。
+Controls whetherInpostpageDisplay 评论区.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4585,7 +4585,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 移动端 postpage 底部 Display 导航栏。
+Controls whetherIn 移动端 postpage 底部 Display 导航栏.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4623,13 +4623,13 @@ When enabled, you can configure
 
 ## Categories Page Style
 
-应用 Range：[`/categories`](/reference/template-map#:~:text=/categories)。
+应用 Range：[`/categories`](/reference/template-map#:~:text=/categories).
 
 ### Category Page Description
 
 ::: info 🎯 Purpose
 
-Used forCustomthispage 的 HTML `<meta name="description">` 内容，方便针对 Set SEO 描述。
+Used forCustomthispage 的 HTML `<meta name="description">` 内容，方便针对 Set SEO 描述.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4667,7 +4667,7 @@ If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig 
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 分类列表中 Display 每个分类包含的 post 数量。
+Controls whetherIn 分类列表中 Display 每个分类包含的 post 数量.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4701,10 +4701,10 @@ When enabled, you can configure
 
 - Inpost 数量左侧的字符
   - 类型：String
-  - 默认值：`(`
+  - Default Value：`(`
 - Inpost 数量右侧的字符
   - 类型：String
-  - 默认值：`)`
+  - Default Value：`)`
 
 :::
 
@@ -4712,7 +4712,7 @@ When enabled, you can configure
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 分类 page 展示子分类。
+Controls whetherIn 分类 page 展示子分类.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4743,13 +4743,13 @@ Boolean
 
 ## Category Detail Page Style
 
-应用 Range：[`/categories/{slug}`](/reference/template-map#:~:text=/categories/%7Bslug%7D)。
+应用 Range：[`/categories/{slug}`](/reference/template-map#:~:text=/categories/%7Bslug%7D).
 
 ### Display Post Views in Category Details Page Post List
 
 ::: info 🎯 Purpose
 
-In 分类详情页 Displaypost 阅读量。
+In 分类详情页 Displaypost 阅读量.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4782,7 +4782,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-In 分类详情页 Display RSS 订阅按钮。
+In 分类详情页 Display RSS 订阅按钮.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4818,13 +4818,13 @@ Requires [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)Enable 
 
 ## Tags Page Style
 
-应用 Range：[`/tags`](/reference/template-map#:~:text=/tags)。
+应用 Range：[`/tags`](/reference/template-map#:~:text=/tags).
 
 ### Tag Collection Page Description
 
 ::: info 🎯 Purpose
 
-Used forCustomthispage 的 HTML `<meta name="description">` 内容，方便针对 Set SEO 描述。
+Used forCustomthispage 的 HTML `<meta name="description">` 内容，方便针对 Set SEO 描述.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4862,7 +4862,7 @@ If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig 
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 分类列表中 Display 每个标签包含的 post 数量。
+Controls whetherIn 分类列表中 Display 每个标签包含的 post 数量.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4896,17 +4896,17 @@ When enabled, you can configure
 
 - Inpost 数量左侧的字符
   - 类型：String
-  - 默认值：`(`
+  - Default Value：`(`
 - Inpost 数量右侧的字符
   - 类型：String
-  - 默认值：`)`
+  - Default Value：`)`
     :::
 
 ### Tag Sort Order
 
 ::: info 🎯 Purpose
 
-Set 标签 In 标签集合页的排序方式。
+Set 标签 In 标签集合页的排序方式.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4945,13 +4945,13 @@ Option
 
 ## Tag Detail Page Style
 
-应用 Range：[`/tags/{slug}`](/reference/template-map#:~:text=/tags/%7Bslug%7D)。
+应用 Range：[`/tags/{slug}`](/reference/template-map#:~:text=/tags/%7Bslug%7D).
 
 ### Display Post Views in Tag Details Page Post List
 
 ::: info 🎯 Purpose
 
-In 标签详情页 Displaypost 阅读量。
+In 标签详情页 Displaypost 阅读量.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -4984,7 +4984,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-In 标签详情页 Display RSS 订阅按钮。
+In 标签详情页 Display RSS 订阅按钮.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5020,13 +5020,13 @@ Requires [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)Enable 
 
 ## Author Detail Page Style
 
-应用 Range：[`/authors/{name}`](/reference/template-map#:~:text=/authors/%7Bname%7D)。
+应用 Range：[`/authors/{name}`](/reference/template-map#:~:text=/authors/%7Bname%7D).
 
 ### Author Details Page Description
 
 ::: info 🎯 Purpose
 
-Used forCustomthispage 的 HTML `<meta name="description">` 内容，方便针对 Set SEO 描述。
+Used forCustomthispage 的 HTML `<meta name="description">` 内容，方便针对 Set SEO 描述.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5064,7 +5064,7 @@ If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig 
 
 ::: info 🎯 Purpose
 
-In 作者详情页 Display RSS 订阅按钮。
+In 作者详情页 Display RSS 订阅按钮.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5100,13 +5100,13 @@ Requires [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)Enable 
 
 ## Archives Page Style
 
-应用 Range：[`/archives(/{year}(/{month}))`](</reference/template-map#:~:text=/archives(/%7Byear%7D(/%7Bmonth%7D))>)。
+应用 Range：[`/archives(/{year}(/{month}))`](</reference/template-map#:~:text=/archives(/%7Byear%7D(/%7Bmonth%7D))>).
 
 ### Archives Page Description
 
 ::: info 🎯 Purpose
 
-Used forCustomthispage 的 HTML `<meta name="description">` 内容，方便针对 Set SEO 描述。
+Used forCustomthispage 的 HTML `<meta name="description">` 内容，方便针对 Set SEO 描述.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5144,7 +5144,7 @@ If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig 
 
 ::: info 🎯 Purpose
 
-In 归档 page 中，按照 post 发布的年份和月份将 post 列表折叠 Display。
+In 归档 page 中，按照 post 发布的年份和月份将 post 列表折叠 Display.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5178,19 +5178,19 @@ When enabled, you can configure
 
 - 展开折叠动画 when 长（Unit: 毫 seconds）
   - 类型：Float/Integer
-  - 默认值：`200`
+  - Default Value：`200`
 
 :::
 
 ## Custom Page Style
 
-应用 Range：[`/{slug}`](/reference/template-map#:~:text=/%7Bslug%7D)。
+应用 Range：[`/{slug}`](/reference/template-map#:~:text=/%7Bslug%7D).
 
 ### Optimize Paragraph Spacing Display
 
 ::: info 🎯 Purpose
 
-为 Custompage 内容段落添加最小高度，以 DisplayEmpty 行。
+为 Custompage 内容段落添加最小高度，以 DisplayEmpty 行.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5220,8 +5220,8 @@ Boolean
 :::
 ::: details ℹ️ 补充信息
 
-不同 Markdown 编辑器所用解析器不同，故此 Configuration 项反映到最终渲染结果上，cancanwill 有所不同。  
-相关链接：[babelmark3](https://babelmark.github.io/) 是一个对比不同 Markdown 解析器解析结果的网站。
+不同 Markdown 编辑器所用解析器不同，故此 Configuration 项反映到最终渲染结果上，cancanwill 有所不同.  
+相关链接：[babelmark3](https://babelmark.github.io/) 是一个对比不同 Markdown 解析器解析结果的网站.
 
 :::
 
@@ -5229,7 +5229,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-为内容段落首行添加缩进样式。
+为内容段落首行添加缩进样式.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5263,8 +5263,8 @@ When enabled, you can configure
 
 - 首行缩进值
   - 类型：String
-  - 默认值：`2em`（2 字符宽度）
-  - 外部约束：CSS 长度单位。Such as: 20rem, 300px, 30vw。
+  - Default Value：`2em`（2 字符宽度）
+  - 外部约束：CSS 长度单位.Such as: 20rem, 300px, 30vw.
 
 :::
 
@@ -5272,7 +5272,7 @@ When enabled, you can configure
 
 ::: info 🎯 Purpose
 
-InpageDisplay 根据 post 字数估算的阅读 when 间。
+InpageDisplay 根据 post 字数估算的阅读 when 间.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5302,7 +5302,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法。
+Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法.
 
 :::
 
@@ -5310,7 +5310,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 ::: info 🎯 Purpose
 
-InpageDisplaypost 的总字数。
+InpageDisplaypost 的总字数.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5340,7 +5340,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法。
+Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法.
 
 :::
 
@@ -5348,7 +5348,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 ::: info 🎯 Purpose
 
-Controls whetherDisplaypage 正文内容末尾的的分隔线。
+Controls whetherDisplaypage 正文内容末尾的的分隔线.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5381,7 +5381,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherInpageDisplay 评论区。
+Controls whetherInpageDisplay 评论区.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5416,7 +5416,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-In 错误 page（如 `404`）自动跳转到 Specifypage。
+In 错误 page（如 `404`）自动跳转到 Specifypage.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5450,11 +5450,11 @@ When enabled, you can configure
 
 - 跳转 Target Link
   - 类型：String
-  - 默认值：`/`
+  - Default Value：`/`
   - 外部约束：合法的相对/绝对链接
 - 跳转等待 when 间（Unit: seconds）
   - 类型：Integer
-  - 默认值：`5`
+  - Default Value：`5`
 
 :::
 
@@ -5464,7 +5464,7 @@ When enabled, you can configure
 
 ::: info 🎯 Purpose
 
-In 首页展示社交媒体链接和 RSS 订阅等资料。
+In 首页展示社交媒体链接和 RSS 订阅等资料.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5494,7 +5494,7 @@ Empty 数组 `[]`
 :::
 ::: info ℹ️ Additional Information
 
-- Support 多种预设社交平台：RSS、BiliBili、Dribbble、Email、Facebook、GitHub、Instagram、QQ、Reddit、Stack Overflow、Telegram、X（Twitter）、YouTube、豆瓣、网易云音乐、微博、知乎等
+- Support 多种预设社交平台：RSS,BiliBili,Dribbble,Email,Facebook,GitHub,Instagram,QQ,Reddit,Stack Overflow,Telegram,X（Twitter）,YouTube,豆瓣,网易云音乐,微博,知乎等
 - SupportCustom 社交资料
 - Support 纯文本 Display
 - can 通过"SetCustom 资料"Configuration 自己的社交平台
@@ -5505,7 +5505,7 @@ Empty 数组 `[]`
 
 ::: info 🎯 Purpose
 
-定义自己的社交资料，Used forIn 首页社交资料展示中。
+定义自己的社交资料，Used forIn 首页社交资料展示中.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5535,13 +5535,13 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-Provide 了主流平台的预设值，只 Requires 要填写对应平台的识别码就 can 以添加。
+Provide 了主流平台的预设值，只 Requires 要填写对应平台的identifier就 can 以添加.
 
-除此之外，你也 can 以添加 Custom 资料。
+除此之外，你也 can 以添加 Custom 资料.
 
 每个 Custom 资料 Requires 要 Configuration：
 
-- 识别码：任意字母、数字、下划线组合（如 `myBlog`）
+- identifier：任意字母,Number,下划线组合（如 `myBlog`）
 - 链接：完整的 URL（如 `https://example.com`）
 - Icon
 - aria-label：无障碍标签（如 `Find me on my blog`）
@@ -5554,7 +5554,7 @@ Provide 了主流平台的预设值，只 Requires 要填写对应平台的识�
 
 ::: info 🎯 Purpose
 
-Configurationpostpage 的分享按钮列表，Support 多种分享方式。
+Configurationpostpage 的分享按钮列表，Support 多种分享方式.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5574,7 +5574,7 @@ Repeater
 :::
 ::: info ⭐ Default Value
 
-包含多个预设分享按钮：E-mail、QRCode、Native、Facebook、X、LinkedIn、Pinterest、Telegram、QQ、Weibo、WeChat、Qzone、Douban
+包含多个预设分享按钮：E-mail,QRCode,Native,Facebook,X,LinkedIn,Pinterest,Telegram,QQ,Weibo,WeChat,Qzone,Douban
 
 :::
 ::: info 🧩 Template Variable
@@ -5585,8 +5585,8 @@ Repeater
 ::: info ℹ️ Additional Information
 
 - `@URL` 和 `@TITLE` 是占位符，Usewhenwill 被替换为 page 实际地址和标题
-- 每个分享按钮有四个 canConfiguration 项：名称、链接、Icon（Set 后将覆盖默认 Icon）、`aria-label`（无障碍标签）
-- can 以自由调整顺序、删除 or 新增分享按钮
+- 每个分享按钮有四个 canConfiguration 项：名称,链接,Icon（Set 后将覆盖默认 Icon）,`aria-label`（无障碍标签）
+- can 以自由调整顺序,删除 or 新增分享按钮
 
 :::
 
@@ -5598,7 +5598,7 @@ Requires[链接管理插件](/guide/plugin-compatibility#链接页)Enable 后方
 
 ::: info 🎯 Purpose
 
-Enable 后，链接页将 Use 强调头像的网格布局，每行最多 Display 三个链接，适合 Requires 要突出展示链接站点头像的场景。
+Enable 后，链接页将 Use 强调头像的网格布局，每行最多 Display 三个链接，适合 Requires 要突出展示链接站点头像的场景.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5642,7 +5642,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Set 链接描述的最大行数。
+Set 链接描述的最大行数.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5686,7 +5686,7 @@ Requires[图库管理插件](/guide/plugin-compatibility#图库页)Enable 后方
 
 ::: info 🎯 Purpose
 
-Set 相册 page 中图片的圆角宽度。
+Set 相册 page 中图片的圆角宽度.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5711,7 +5711,7 @@ String
 :::
 ::: info 💡 Example Values
 
-`0px`、`5px`、`10%`、`1rem`
+`0px`,`5px`,`10%`,`1rem`
 
 :::
 ::: info ⚠️ External Constraints
@@ -5729,7 +5729,7 @@ Valid CSS length unit.
 
 ::: info 🎯 Purpose
 
-Set 相册 page 中图片渐入动画 when 间。
+Set 相册 page 中图片渐入动画 when 间.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5754,7 +5754,7 @@ Integer/Float (Unit: seconds)
 :::
 ::: info 💡 Example Values
 
-`1`、`0`
+`1`,`0`
 
 :::
 ::: info 🧩 Template Variable
@@ -5767,7 +5767,7 @@ Integer/Float (Unit: seconds)
 
 ::: info 🎯 Purpose
 
-In 相册 pageUse 瀑布流布局展示图片。
+In 相册 pageUse 瀑布流布局展示图片.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5821,7 +5821,7 @@ Requires[瞬间管理插件](/guide/plugin-compatibility#瞬间页)Enable 后方
 
 ::: info 🎯 Purpose
 
-In 帖子开头 Display 根据字数估算的阅读 when 间。
+In 帖子开头 Display 根据字数估算的阅读 when 间.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5851,7 +5851,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法。
+Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法.
 
 :::
 
@@ -5859,7 +5859,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 ::: info 🎯 Purpose
 
-In 帖子开头 Displaypost 的总字数。
+In 帖子开头 Displaypost 的总字数.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5889,7 +5889,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法。
+Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 Enable 更准确的计量方法.
 
 :::
 
@@ -5897,7 +5897,7 @@ Enable [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动 En
 
 ::: info 🎯 Purpose
 
-In 瞬间 pageDisplay 点赞按钮。
+In 瞬间 pageDisplay 点赞按钮.
 
 :::
 ::: info 📂 Configuration Item Location
@@ -5930,7 +5930,7 @@ Boolean
 
 ::: info 🎯 Purpose
 
-Controls whetherIn 瞬间 pageDisplay 评论区。
+Controls whetherIn 瞬间 pageDisplay 评论区.
 
 :::
 ::: info 📂 Configuration Item Location
