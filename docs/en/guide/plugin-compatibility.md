@@ -20,8 +20,8 @@ Plugin [plugin-extra-api](https://github.com/HowieHz/halo-plugin-extra-api) ([Ap
 
 After enabling the plugin (lite version):
 
-- [Post Estimated Reading Time](/en/guide/theme-configuration#post预计阅读when间), [Post Word Count](/en/guide/theme-configuration#post字数统计), [Page Estimated Reading Time](/en/guide/theme-configuration#page预计阅读when间), [Page Word Count](/en/guide/theme-configuration#page字数统计), [Moment Estimated Reading Time](/en/guide/theme-configuration#moment预计阅读when间), [Moment Word Count](/en/guide/theme-configuration#moment字数统计), [Multi-list Post Estimated Reading Time](/en/guide/theme-configuration#多元列表displaypost预计阅读when间), [Multi-list Post Word Count](/en/guide/theme-configuration#多元列表displaypost字数统计) will automatically apply more accurate metrics from the plugin.
-- [Footer Site Statistics](/en/guide/theme-configuration#page底部站点统计信息) will support "Total Word Count" statistics display.
+- [Post Estimated Reading Time](/en/guide/theme-configuration#show-estimated-reading-time-of-post), [Post Word Count](/en/guide/theme-configuration#show-post-word-count), [Page Estimated Reading Time](/en/guide/theme-configuration#show-estimated-reading-time-of-page), [Page Word Count](/en/guide/theme-configuration#show-word-count-of-page), [Moment Estimated Reading Time](/en/guide/theme-configuration#show-estimated-reading-time-of-moment), [Moment Word Count](/en/guide/theme-configuration#show-word-count-of-moment), [Multi-list Post Estimated Reading Time](/en/guide/theme-configuration#display-post-estimated-reading-time-in-post-list-summary), [Multi-list Post Word Count](/en/guide/theme-configuration#display-post-word-count-in-post-list-summary) will automatically apply more accurate metrics from the plugin.
+- [Footer Site Statistics](/en/guide/theme-configuration#site-statistics-at-page-bottom) will support "Total Word Count" statistics display.
 
 ## Links Page
 
@@ -99,6 +99,6 @@ Plugin [plugin-feed](https://github.com/halo-dev/plugin-feed) ([App Store Page](
 
 After enabling the plugin:
 
-- You can use [Category RSS Subscribe Button](/en/guide/theme-configuration#display分类-rss-订阅按钮).
-- You can use [Tag RSS Subscribe Button](/en/guide/theme-configuration#display标签-rss-订阅按钮).
-- You can use [Author RSS Subscribe Button](/en/guide/theme-configuration#display作者-rss-订阅按钮).
+- You can use [Category RSS Subscribe Button](/en/guide/theme-configuration#show-category-rss-subscription-button).
+- You can use [Tag RSS Subscribe Button](/en/guide/theme-configuration#show-tag-rss-subscription-button).
+- You can use [Author RSS Subscribe Button](/en/guide/theme-configuration#show-author-rss-subscription-button).

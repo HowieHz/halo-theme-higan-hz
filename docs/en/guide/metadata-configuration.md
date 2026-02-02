@@ -227,7 +227,7 @@ Fallback to post title when empty:
 
 ::: info 🎯 Purpose
 
-Sets the page language (HTML `lang` attribute) of the post on the browse page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#页面语言设定优先级).
+Sets the page language (HTML `lang` attribute) of the post on the browse page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#page-language-setting-priority).
 
 :::
 ::: info 📂 Configuration Item Location
@@ -340,7 +340,7 @@ Fallback to category name when empty:
 
 ::: info 🎯 Purpose
 
-Sets the page language (HTML `lang` attribute) of the category detail page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#页面语言设定优先级).
+Sets the page language (HTML `lang` attribute) of the category detail page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#page-language-setting-priority).
 
 :::
 ::: info 📂 Configuration Item Location
@@ -425,7 +425,7 @@ Fallback to site title when empty:
 
 ::: info 🎯 Purpose
 
-Sets the page language (HTML `lang` attribute) of the tag detail page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#页面语言设定优先级).
+Sets the page language (HTML `lang` attribute) of the tag detail page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#page-language-setting-priority).
 
 :::
 ::: info 📂 Configuration Item Location
@@ -536,7 +536,7 @@ Fallback to site title when empty:
 
 ::: info 🎯 Purpose
 
-Sets the page language (HTML `lang` attribute). If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#页面语言设定优先级).
+Sets the page language (HTML `lang` attribute). If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#page-language-setting-priority).
 
 :::
 ::: info 📂 Configuration Item Location

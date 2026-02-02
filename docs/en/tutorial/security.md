@@ -41,7 +41,7 @@ const encodedUrl = computed(() => {
 Enable [CSP:upgrade-insecure-requests](/en/guide/theme-configuration#csp-upgrade-insecure-requests) to ensure all resources are loaded over encrypted connections, reducing man-in-the-middle attack risks.
 This also avoids errors when HTTPS pages reference HTTP resources.
 
-Related documentation: [CSP: upgrade-insecure-requests - HTTP | MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
+Related documentation: [CSP: upgrade-insecure-requests - HTTP | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
 
 ## Enable Domain Whitelist Access Only
 
