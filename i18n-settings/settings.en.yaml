@@ -1928,7 +1928,7 @@ spec:
           name: is_show_friend_author
           label: Show author information
           value: true
-          help: Show author avatar and name
+          help: Author information includes author avatar and name
         - $formkit: switch
           name: is_show_friend_author_avatar
           if: "$is_show_friend_author === true"

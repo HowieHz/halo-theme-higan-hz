@@ -5955,7 +5955,7 @@ HTML 代码也是可以的：
 
 ## 朋友圈页面样式
 
-需[朋友圈插件](/guide/plugin-compatibility#朋友圈订阅聚合)启用后方可使用。
+需[朋友圈插件](/guide/plugin-compatibility#朋友圈-订阅聚合)启用后方可使用。
 
 ### 显示作者信息
 
