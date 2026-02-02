@@ -384,7 +384,7 @@ After enabling [Auto-redirect Based on Browser Language](#Auto-redirect Based on
 
 Please refer to the [Auto-redirect Based on Browser Language Usage Guide](/tutorial/i18n#Auto-redirect Based on Browser LanguageUse指南) for configuration.
 
-匹配顺序从上到下。
+Matching order is from top to bottom.
 
 :::
 
@@ -1168,7 +1168,7 @@ For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-
 
 ::: info 🎯 Purpose
 
-IfEnablethis option，将 In 大标题旁 Display 明暗模式切换按钮。  
+If this option is enabled, a light/dark mode toggle button will be displayed next to the main title.  
 Toggle logic: Light Mode -> Dark Mode -> Auto Mode -> Light Mode.
 
 :::
@@ -2427,14 +2427,14 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-In Halo CMS backend （<QuickJumpConfig to="/console/settings?tab=codeInjection:~:text=Footer" label="Quick Jump" />）Set 的页脚内容，Display 位置 In“主题信息”、“版权信息”、“底部菜单”之上。  
-而此处填写页脚内容的 In“底部菜单”之下，为 page 的最底部。
+In Halo CMS backend (<QuickJumpConfig to="/console/settings?tab=codeInjection:~:text=Footer" label="Quick Jump" />), the footer content set there will be displayed above "Theme Information", "Copyright Information", and "Menu at Page Bottom".
+The footer content filled in here will be displayed below "Menu at Page Bottom", at the very bottom of the page.
 
 When enabled, you can configure:
 
-- [page 最底部内容](#page-最底部内容)
-- [多语言 page 最底部内容 Support](#多语言-page-最底部内容-support)
-  - [Custom 多语言 page 最底部内容](#custom-多语言-page-最底部内容)
+- [Content at Bottom of Page](#page-最底部内容)
+- [Multi-language Support for Content at Bottom of Page](#多语言-page-最底部内容-support)
+  - [Custom Multi-language Content at Bottom of Page](#custom-多语言-page-最底部内容)
 
 :::
 
@@ -4659,7 +4659,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=站点描述" />）
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />）
 
 :::
 
@@ -4854,7 +4854,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=站点描述" />）
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />）
 
 :::
 
@@ -5056,7 +5056,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=站点描述" />）
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />）
 
 :::
 
@@ -5136,7 +5136,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=站点描述" />）
+If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site description" />）
 
 :::
 
@@ -6211,6 +6211,6 @@ Boolean
 
 ## Next Steps
 
-你 can 以进一步了解：
+You can learn more about:
 
 - [Metadata Configuration Items](/guide/metadata-configuration)
