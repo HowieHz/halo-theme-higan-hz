@@ -46,7 +46,7 @@ Related documentation: [CSP: upgrade-insecure-requests - HTTP | MDN](https://dev
 ## Enable Domain Whitelist Access Only
 
 Many bloggers' sites have been cloned by malicious mirror sites. These malicious clones replace original site links, diverting site traffic and affecting SEO.  
-Therefore, I developed the [Domain Whitelist Access Only](/en/guide/theme-configuration#仅允许使用指定域名访问) feature to address this issue.
+Therefore, I developed the [Domain Whitelist Access Only](/en/guide/theme-configuration#only-allow-access-from-specified-domains) feature to address this issue.
 
 ::: info URL to Base64
 
@@ -56,4 +56,4 @@ Therefore, I developed the [Domain Whitelist Access Only](/en/guide/theme-config
 :::
 
 Enter your complete site URL in the input box above to generate the Base64 encoded result.  
-After enabling [Domain Whitelist Access Only](/en/guide/theme-configuration#仅允许使用指定域名访问), enter the Base64 encoded result in "Domain Whitelist List" and "Base64 Encoded Target URL" to defend against malicious cloning.
+After enabling [Domain Whitelist Access Only](/en/guide/theme-configuration#only-allow-access-from-specified-domains), enter the Base64 encoded result in "Domain Whitelist List" and "Base64 Encoded Target URL" to defend against malicious cloning.

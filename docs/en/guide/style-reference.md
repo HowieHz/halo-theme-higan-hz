@@ -41,10 +41,10 @@ Related Documentation: [Template Files and Access Path Mapping](/en/reference/te
 ::: details
 
 - Usage in the default editor:
-  1. Need to enable [Markdown / HTML 内容块插件](https://github.com/halo-sigs/plugin-hybrid-edit-block)([应用市场页面](https://www.halo.run/store/apps/app-NgHnY))。
+  1. Need to enable [Markdown / HTML Content Block Plugin](https://github.com/halo-sigs/plugin-hybrid-edit-block) ([App Store Page](https://www.halo.run/store/apps/app-NgHnY)).
   2. Type in the default editor `/html` and select to insert an HTML code block.
 - Usage in Vditor editor:
-  1. Need to enable [Vditor 编辑器插件](https://github.com/justice2001/halo-plugin-vditor)([应用市场页面](https://www.halo.run/store/apps/app-uBcYw))，and enter the post edit page, set the post editor to Vditor editor.
+  1. Need to enable [Vditor Editor Plugin](https://github.com/justice2001/halo-plugin-vditor) ([App Store Page](https://www.halo.run/store/apps/app-uBcYw)), and enter the post edit page, set the post editor to Vditor editor.
   2. Vditor editor natively supports HTML tags, just write directly.
 
 :::

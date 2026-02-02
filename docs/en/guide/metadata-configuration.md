@@ -265,7 +265,7 @@ The set value must comply with [BCP 47](https://developer.mozilla.org/zh-CN/docs
 
 ::: info 🎯 Purpose
 
-Sets whether the post is displayed in the post list (including [Home](/guide/theme-configuration#首页样式), [Tag Detail Page](/guide/theme-configuration#标签详情页样式), [Category Detail Page](/guide/theme-configuration#分类详情页样式), [Author Detail Page](/guide/theme-configuration#作者详情页样式), [Archive Page](/guide/theme-configuration#归档页样式)).
+Sets whether the post is displayed in the post list (including [Home](/guide/theme-configuration#home-page-style), [Tag Detail Page](/guide/theme-configuration#tag-detail-page-style), [Category Detail Page](/guide/theme-configuration#category-detail-page-style), [Author Detail Page](/guide/theme-configuration#author-detail-page-style), [Archive Page](/guide/theme-configuration#archives-page-style)).
 
 :::
 ::: info 📂 Configuration Item Location
@@ -487,7 +487,7 @@ Mainly reflected in:
 
 1. Desktop top menu (sidebar table of contents, back to top button, share menu)
 2. Mobile bottom menu (collapsible table of contents, back to top button, share menu)
-3. And, menu and table of contents related settings remain consistent with corresponding settings under [Post Page Style](/guide/theme-configuration#文章页样式).
+3. And, menu and table of contents related settings remain consistent with corresponding settings under [Post Page Style](/guide/theme-configuration#post-page-style).
 
 :::
 

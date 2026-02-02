@@ -2237,8 +2237,8 @@ Halo (internal value `Halo`)
 :::
 ::: info 💡 Other Options
 
-- Halo Pro(internal value `Halo Pro`)
-- Halo Pro (internal value `Halo 专业版`)
+- Halo Pro (internal value `Halo Pro`)
+- Halo Professional Edition (internal value `Halo Professional Edition`)
 
 :::
 ::: info 🧩 Template Variable
