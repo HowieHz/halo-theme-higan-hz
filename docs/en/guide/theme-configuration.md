@@ -3486,7 +3486,6 @@ When Moments List is enabled, you can configure
 
 :::
 
-### Display Post Views in Simple List
 ### Display Publish Date in Simple List
 
 ::: info 🎯 Purpose
@@ -3522,6 +3521,7 @@ Boolean
 
 :::
 
+### Display Post Views in Simple List
 
 ::: info 🎯 Purpose
 
@@ -3555,12 +3555,6 @@ Boolean
 `theme.config?.index_styles?.is_show_post_views_in_simple_post_list`
 
 :::
-
-### Display Post Categories in Post List Summary
-
-::: info 🎯 Purpose
-
-Controls whether to display post categories in the multi-element list.
 
 ### Display Publish Date in Post List Summary
 
@@ -3597,6 +3591,12 @@ Boolean
 
 :::
 
+### Display Post Categories in Post List Summary
+
+::: info 🎯 Purpose
+
+Controls whether to display post categories in the multi-element list.
+
 :::
 ::: info 📂 Configuration Item Location
 
@@ -3613,7 +3613,6 @@ Home Page Style -> Display Post Categories in Post List Summary
 ::: info 🏷️ Type
 
 Boolean
-
 :::
 ::: info ⭐ Default Value
 
