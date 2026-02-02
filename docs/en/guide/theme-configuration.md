@@ -319,7 +319,7 @@ Set allowed auto-redirect target languages.
 :::
 ::: info 📂 Configuration Item Location
 
-([Global -> Auto-redirect Based on Browser Language](#Auto-redirect Based on Browser Language)When enabled, will display)
+([Global -> Auto-redirect Based on Browser Language](#Auto-redirect Based on Browser Language) When enabled, will display)
 
 Global -> Allowed Target Language Code List for Redirects
 
@@ -512,7 +512,7 @@ Set the Domain Whitelist.
 :::
 ::: info 📂 Configuration Item Location
 
-([Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains)When enabled, will display)
+([Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains) When enabled, will display)
 
 Global -> Domain Whitelist
 
@@ -576,7 +576,7 @@ SetDomain Whitelist.
 :::
 ::: info 📂 Configuration Item Location
 
-([Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains)When enabled, will display)
+([Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains) When enabled, will display)
 
 Global -> Target Link
 
@@ -621,7 +621,7 @@ Set whether to keep path and query parameters after redirect.
 :::
 ::: info 📂 Configuration Item Location
 
-([Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains)When enabled, will display)
+([Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains) When enabled, will display)
 
 Global -> Keep Path and Query Parameters After Redirect
 
@@ -823,7 +823,7 @@ Used to select uploaded font files to replace the default font files. Supports `
 :::
 ::: info 📂 Configuration Item Location
 
-([General Styles -> Enable Custom Font Files](#enable-custom-font-files)When enabled, will display)
+([General Styles -> Enable Custom Font Files](#enable-custom-font-files) When enabled, will display)
 
 General Styles -> Custom Font Files
 
@@ -854,7 +854,7 @@ If this option is left empty, even if the user has this font installed locally, 
 :::
 ::: info 📂 Configuration Item Location
 
-([General Styles -> Enable Custom Font Files](#enable-custom-font-files)When enabled, will display)
+([General Styles -> Enable Custom Font Files](#enable-custom-font-files) When enabled, will display)
 
 General Styles -> Font Name (Full Name/PostScript Name)
 
@@ -1391,13 +1391,13 @@ Option
 :::
 ::: info ⭐ Default Value
 
-`Small` (internal value `small`)
+`Small`(internal value `small`)
 
 :::
 ::: info 💡 Other Options
 
-- `Regular` (internal value `normal`)
-- `Large` (internal value `large`)
+- `Regular`(internal value `normal`)
+- `Large`(internal value `large`)
 
 :::
 ::: info 🧩 Template Variable
@@ -1458,7 +1458,7 @@ Set the maximum width of the content area.
 :::
 ::: info 📂 Configuration Item Location
 
-([General Styles -> Custom Content Area Maximum Width](#custom-Content Area Maximum Width)When enabled, will display)
+([General Styles -> Custom Content Area Maximum Width](#custom-Content Area Maximum Width) When enabled, will display)
 
 General Styles -> Content Area Maximum Width
 
@@ -1546,7 +1546,7 @@ Set the minimum width of the content area.
 :::
 ::: info 📂 Configuration Item Location
 
-([General Styles -> Custom Content Area Minimum Width](#custom-Content Area Minimum Width)When enabled, will display)
+([General Styles -> Custom Content Area Minimum Width](#custom-Content Area Minimum Width) When enabled, will display)
 
 General Styles -> Content Area Minimum Width
 
@@ -1591,7 +1591,7 @@ Controls whether to force apply Content Area Minimum Width.
 :::
 ::: info 📂 Configuration Item Location
 
-([General Styles -> Custom Content Area Minimum Width](#custom-Content Area Minimum Width)When enabled, will display)
+([General Styles -> Custom Content Area Minimum Width](#custom-Content Area Minimum Width) When enabled, will display)
 
 General Styles -> Force Apply Content Area Minimum Width
 
@@ -1672,7 +1672,7 @@ Determines the content area width style.
 :::
 ::: info 📂 Configuration Item Location
 
-([General Styles -> Custom Content Area Width Property](/guide/theme-configuration#CustomContent Area Width Property)When enabled, will display)
+([General Styles -> Custom Content Area Width Property](/guide/theme-configuration#CustomContent Area Width Property) When enabled, will display)
 
 General Styles -> Content Area Width Style
 
@@ -1764,7 +1764,7 @@ Used to select an uploaded image as the header avatar. If not set, the default a
 :::
 ::: info 📂 Configuration Item Location
 
-([Global -> Header Avatar Display](#header-avatar-display)When enabled, will display)
+([Global -> Header Avatar Display](#header-avatar-display) When enabled, will display)
 
 General Styles -> Custom Header Avatar
 
@@ -1794,7 +1794,7 @@ Controls whether to force crop the avatar into a circle.
 :::
 ::: info 📂 Configuration Item Location
 
-([Global -> Header Avatar Display](#header-avatar-display)When enabled, will display)
+([Global -> Header Avatar Display](#header-avatar-display) When enabled, will display)
 
 General Styles -> Circular Avatar
 
@@ -1829,7 +1829,7 @@ Controls whether to force grayscale processing of the avatar.
 :::
 ::: info 📂 Configuration Item Location
 
-([Global -> Header Avatar Display](#header-avatar-display)When enabled, will display)
+([Global -> Header Avatar Display](#header-avatar-display) When enabled, will display)
 
 General Styles -> Grayscale Avatar
 
@@ -1879,7 +1879,7 @@ Repeater
 :::
 ::: info ⭐ Default Value
 
-Includes one preset: Search (Requires [Search Component Plugin](/guide/plugin-compatibility#search-component)).
+Includes one preset: Search (requires [Search Component Plugin](/guide/plugin-compatibility#search-component)).
 
 :::
 
@@ -1897,7 +1897,7 @@ Includes one preset: Search (Requires [Search Component Plugin](/guide/plugin-co
 > :::
 > ::: info ⭐ Default Value
 >
-> `Search` (Requires [Search Component Plugin](/guide/plugin-compatibility#search-component)) (internal value `search`)
+> `Search`(requires [Search Component Plugin](/guide/plugin-compatibility#search-component))(internal value `search`)
 >
 > :::
 > ::: info 💡 Other Options
@@ -2041,7 +2041,7 @@ Set statistics items.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Site Statistics at Page Bottom](#site-statistics-at-page-bottom)When enabled, will display)
+([Home Page Style -> Site Statistics at Page Bottom](#site-statistics-at-page-bottom) When enabled, will display)
 
 General Styles -> Statistics Item Settings
 
@@ -2058,7 +2058,7 @@ Repeater
 :::
 ::: info ⭐ Default Value
 
-Includes multiple preset share buttons: Total Views, Total Posts, Total Likes, Total Comments, Total Categories, Total Words (Requires [API Extension Plugin](/guide/plugin-compatibility#api-extension)).
+Includes multiple preset share buttons: Total Views, Total Posts, Total Likes, Total Comments, Total Categories, Total Words (requires [API Extension Plugin](/guide/plugin-compatibility#api-extension)).
 
 :::
 
@@ -2174,7 +2174,7 @@ Set the theme name displayed in the page footer theme information.
 :::
 ::: info 📂 Configuration Item Location
 
-([General Styles -> Theme Information at Page Bottom](#theme-information-at-page-bottom)When enabled, will display)
+([General Styles -> Theme Information at Page Bottom](#theme-information-at-page-bottom) When enabled, will display)
 
 General Styles -> Custom Attribution in Copyright Information
 
@@ -2215,7 +2215,7 @@ Set the Halo version displayed in the page footer theme information.
 :::
 ::: info 📂 Configuration Item Location
 
-([General Styles -> Theme Information at Page Bottom](#theme-information-at-page-bottom)When enabled, will display)
+([General Styles -> Theme Information at Page Bottom](#theme-information-at-page-bottom) When enabled, will display)
 
 General Styles -> Halo Version Displayed in Theme Information at Page Bottom
 
@@ -2296,7 +2296,7 @@ Set the attribution for copyright information at the page footer.
 :::
 ::: info 📂 Configuration Item Location
 
-([General Styles -> Copyright Information at Page Bottom](#copyright-information-at-page-bottom)When enabled, will display)
+([General Styles -> Copyright Information at Page Bottom](#copyright-information-at-page-bottom) When enabled, will display)
 
 General Styles -> Custom Attribution in Copyright Information
 
@@ -2447,7 +2447,7 @@ Set the content for the very bottom of the page.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Content at Bottom of Page](#content-at-bottom-of-page)When enabled, will display)
+([Home Page Style -> Content at Bottom of Page](#content-at-bottom-of-page) When enabled, will display)
 
 Home Page Style -> Content at Bottom of Page
 
@@ -2500,7 +2500,7 @@ Controls whether to enable multilingual support for page bottom content.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Content at Bottom of Page](#content-at-bottom-of-page)When enabled, will display)
+([Home Page Style -> Content at Bottom of Page](#content-at-bottom-of-page) When enabled, will display)
 
 Home Page Style -> Multi-language Support for Content at Bottom of Page
 
@@ -2540,7 +2540,7 @@ Set the multilingual page bottom content.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Content at Bottom of Page](#content-at-bottom-of-page)When enabled, will display)
+([Home Page Style -> Content at Bottom of Page](#content-at-bottom-of-page) When enabled, will display)
 
 Home Page Style -> Custom Multi-language Content at Bottom of Page
 
@@ -2819,7 +2819,7 @@ Set the width of table lines added at the bottom of each table row (except heade
 
 <!-- markdownlint-disable MD051 -->
 
-([General Styles -> Table Row Lines (Except Header)](#table-row-lines-except-header)When enabled, will display)
+([General Styles -> Table Row Lines (Except Header)](#table-row-lines-except-header) When enabled, will display)
 
 <!-- markdownlint-enable MD051 -->
 
@@ -3216,7 +3216,7 @@ Controls whether to enable multilingual personal profile/announcement support.
 
 <!-- markdownlint-disable MD051 -->
 
-([Home Page Style -> Personal Profile/Announcement](#personal-profile-announcement)When enabled, will display)
+([Home Page Style -> Personal Profile/Announcement](#personal-profile-announcement) When enabled, will display)
 
 <!-- markdownlint-enable MD051 -->
 
@@ -3260,7 +3260,7 @@ Set multilingual announcement content.
 
 <!-- markdownlint-disable MD051 -->
 
-([Home Page Style -> Personal Profile/Announcement](#personal-profile-announcement)When enabled, will display)
+([Home Page Style -> Personal Profile/Announcement](#personal-profile-announcement) When enabled, will display)
 
 <!-- markdownlint-enable MD051 -->
 
@@ -3440,13 +3440,13 @@ Option
 :::
 ::: info ⭐ Default Value
 
-`Simple Post List` (internal value `simple-post-list`)
+`Simple Post List`(internal value `simple-post-list`)
 
 :::
 ::: info 💡 Other Options
 
-- `Multi-element Post List` (internal value `post-list-summary`)
-- `Moments List` (internal value `moment-list-summary`)
+- `Multi-element Post List`(internal value `post-list-summary`)
+- `Moments List`(internal value `moment-list-summary`)
 
 :::
 ::: info 🧩 Template Variable
@@ -3493,7 +3493,7 @@ Controls whether to display post view count in the simple list.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Home Page List Layout](#home-page-list-layout)Displayed when set to "Simple Post List")
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Simple Post List")
 
 Home Page Style -> Display Post Views in Simple List
 
@@ -3528,7 +3528,7 @@ Controls whether to display post categories in the multi-element list.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Home Page List Layout](#home-page-list-layout)Displayed when set to "Multi-element Post List")
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
 
 Home Page Style -> Display Post Categories in Post List Summary
 
@@ -3563,7 +3563,7 @@ Controls whether to display post tags in the multi-element list.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Home Page List Layout](#home-page-list-layout)Displayed when set to "Multi-element Post List")
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
 
 Home Page Style -> Display Post Tags in Post List Summary
 
@@ -3598,7 +3598,7 @@ Controls whether to display post view count in the multi-element list.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Home Page List Layout](#home-page-list-layout)Displayed when set to "Multi-element Post List")
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
 
 Home Page Style -> Display Post Views in Post List Summary
 
@@ -3633,7 +3633,7 @@ Controls whether to display estimated reading time in the multi-element list.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Home Page List Layout](#home-page-list-layout)Displayed when set to "Multi-element Post List")
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
 
 Home Page Style -> Display Post Estimated Reading Time in Post List Summary
 
@@ -3673,7 +3673,7 @@ Controls whether to display post word count in the multi-element list.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Home Page List Layout](#home-page-list-layout)Displayed when set to "Multi-element Post List")
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
 
 Home Page Style -> Display Post Word Count in Post List Summary
 
@@ -3713,7 +3713,7 @@ Controls whether to display post excerpt in the multi-element list.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Home Page List Layout](#home-page-list-layout)Displayed when set to "Multi-element Post List")
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
 
 Home Page Style -> Display Post Excerpt in Post List Summary
 
@@ -3748,7 +3748,7 @@ Set the maximum number of lines for post excerpt in the multi-element list.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Home Page List Layout](#home-page-list-layout)Displayed when set to "Multi-element Post List")
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
 
 Home Page Style -> Maximum Lines for Post Excerpt in Post List Summary
 
@@ -3788,7 +3788,7 @@ Controls whether to display the prompt text for the post link in the multi-eleme
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Home Page List Layout](#home-page-list-layout)Displayed when set to "Multi-element Post List")
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
 
 Home Page Style -> Link Text for Post List Summary
 
@@ -3828,7 +3828,7 @@ Controls whether to display post cover in the multi-element list.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Home Page List Layout](#home-page-list-layout)Displayed when set to "Multi-element Post List")
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
 
 Home Page Style -> Display Post Cover in Post List Summary
 
@@ -3863,7 +3863,7 @@ Set the number of items displayed in the moments list.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Home Page List Layout](#home-page-list-layout)Displayed when set to "Moments List")
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Moments List")
 
 Home Page Style -> Number of Moments Per Page
 
@@ -3898,7 +3898,7 @@ Controls whether to display the author avatar in the moments list.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Home Page List Layout](#home-page-list-layout)Displayed when set to "Moments List")
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Moments List")
 
 Home Page Style -> Show Author Avatar in Moment List
 
@@ -3933,7 +3933,7 @@ Controls whether to display the author nickname in the moments list.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Home Page List Layout](#home-page-list-layout)Displayed when set to "Moments List")
+([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Moments List")
 
 Home Page Style -> Show Author Nickname in Moment List
 
@@ -5647,7 +5647,7 @@ Set the maximum number of lines for link descriptions.
 :::
 ::: info 📂 Configuration Item Location
 
-([Links Page Style -> Avatar-First Style](#avatar-first-style)When enabled, will display)
+([Links Page Style -> Avatar-First Style](#avatar-first-style) When enabled, will display)
 
 Links Page Style -> Link Description Line Limit
 
