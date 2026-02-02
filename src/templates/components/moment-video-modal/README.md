@@ -19,6 +19,6 @@ Content Insertion (for displaying the video modal)
 <th:block th:insert="~{components/moment-video-modal/template :: content(media)}"></th:block>
 ```
 
-## API
+## Parameters
 
 - `media`: A media object containing video data with `type` (should be 'VIDEO') and `url` properties.

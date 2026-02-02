@@ -19,6 +19,6 @@ Content Insertion
 <th:block th:insert="~{components/list-post-summary/template :: content(posts)}"></th:block>
 ```
 
-## API
+## Parameters
 
 - `posts`: A collection of post objects to be displayed in the list.
