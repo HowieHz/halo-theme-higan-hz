@@ -5957,6 +5957,39 @@ HTML 代码也是可以的：
 
 需[朋友圈插件](/guide/plugin-compatibility#朋友圈-订阅聚合)启用后方可使用。
 
+### 显示发布日期
+
+::: info 🎯 用途
+
+在朋友圈列表中显示文章的发布日期。
+
+:::
+::: info 📂 配置项位置
+
+朋友圈页面样式 -> 显示发布日期
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=显示发布日期" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.friends_page_styles?.is_show_friend_pubdate`
+
+:::
+
 ### 显示作者信息
 
 ::: info 🎯 用途
@@ -6167,39 +6200,6 @@ HTML 代码也是可以的：
 ::: info 🧩 模板变量
 
 `theme.config?.friends_page_styles?.is_show_friend_permalink_text`
-
-:::
-
-### 显示发布日期
-
-::: info 🎯 用途
-
-在朋友圈列表中显示文章的发布日期。
-
-:::
-::: info 📂 配置项位置
-
-朋友圈页面样式 -> 显示发布日期
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=显示发布日期" />
-
-:::
-::: info 🏷️ 类型
-
-布尔值
-
-:::
-::: info ⭐ 默认值
-
-`true`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.friends_page_styles?.is_show_friend_pubdate`
 
 :::
 

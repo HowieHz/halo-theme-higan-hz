@@ -6,7 +6,7 @@
 
 ### 🚀 新功能
 
-- 适配[朋友圈](https://github.com/chengzhongxue/plugin-friends)（[应用市场页面](https://www.halo.run/store/apps/app-yISsV)）插件。
+- 适配[朋友圈](https://github.com/chengzhongxue/plugin-friends-new)（[应用市场页面](https://www.halo.run/store/apps/app-yISsV)）插件。
   - 介绍文档：[朋友圈插件介绍](https://howiehz.top/halo-theme-higan-haozi/guide/plugin-compatibility#朋友圈-订阅聚合)
   - 新增相关配置项：[朋友圈页面样式配置项](https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration#朋友圈页面样式)
 

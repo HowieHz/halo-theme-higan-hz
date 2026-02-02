@@ -1,6 +1,6 @@
 # List Friends Summary Component
 
-A component for listing friends' posts, used to display the list of articles from the [friends plugin](https://github.com/chengzhongxue/plugin-friends).
+A component for listing friends' posts, used to display the list of articles from the [friends plugin](https://github.com/chengzhongxue/plugin-friends-new).
 
 Related documentation: <https://docs.kunkunyu.com/docs/plugin-friends/finder-api>
 

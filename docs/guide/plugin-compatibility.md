@@ -43,7 +43,7 @@ outline: deep
 
 ## 朋友圈（订阅聚合）
 
-插件 [plugin-friends](https://github.com/chengzhongxue/plugin-friends)（[应用市场页面](https://www.halo.run/store/apps/app-yISsV)）
+插件 [plugin-friends](https://github.com/chengzhongxue/plugin-friends-new)（[应用市场页面](https://www.halo.run/store/apps/app-yISsV)）
 
 主题提供了朋友圈订阅聚合页面（`/friends`）支持，可展示订阅的朋友博客文章。此功能与上述瞬间页不同——它通过聚合外部 RSS/Atom 订阅源来展示内容。
 

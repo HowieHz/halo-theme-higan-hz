@@ -1933,6 +1933,10 @@ spec:
             - $el: span
               children: 启用后方可使用。
         - $formkit: switch
+          name: is_show_friend_pubdate
+          label: 显示发布日期
+          value: true
+        - $formkit: switch
           name: is_show_friend_author
           label: 显示作者信息
           value: true
@@ -1964,8 +1968,4 @@ spec:
           name: is_show_friend_permalink_text
           label: 显示跳转链接提示文字
           help: "如关闭此项，朋友圈列表文章项将不显示跳转链接文字"
-          value: true
-        - $formkit: switch
-          name: is_show_friend_pubdate
-          label: 显示发布日期
           value: true

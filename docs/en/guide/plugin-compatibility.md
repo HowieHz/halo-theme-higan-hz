@@ -45,7 +45,7 @@ The theme provides moments page (`/moments`) support, please read [Moments Page 
 
 ## Moments (Feed Subscription)
 
-Plugin [plugin-friends](https://github.com/chengzhongxue/plugin-friends) ([App Store Page](https://www.halo.run/store/apps/app-yISsV))
+Plugin [plugin-friends](https://github.com/chengzhongxue/plugin-friends-new) ([App Store Page](https://www.halo.run/store/apps/app-yISsV))
 
 The theme provides moments feed subscription page (`/friends`) support, which displays posts from subscribed friend blogs. This is different from the Moments page above - this aggregates content from external RSS/Atom feeds.
 

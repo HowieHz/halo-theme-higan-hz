@@ -1925,6 +1925,10 @@ spec:
             - $el: span
               children: to be enabled for use.
         - $formkit: switch
+          name: is_show_friend_pubdate
+          label: Show publish date
+          value: true
+        - $formkit: switch
           name: is_show_friend_author
           label: Show author information
           value: true
@@ -1956,8 +1960,4 @@ spec:
           name: is_show_friend_permalink_text
           label: Show link text
           help: "If disabled, the friends list will not display link text"
-          value: true
-        - $formkit: switch
-          name: is_show_friend_pubdate
-          label: Show publish date
           value: true

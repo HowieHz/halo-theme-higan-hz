@@ -5963,6 +5963,39 @@ Boolean
 
 Requires the [Friends Plugin](/en/guide/plugin-compatibility#moments-feed-subscription) to be enabled for use.
 
+### Show Publish Date
+
+::: info 🎯 Purpose
+
+Display the publication date of posts in the friends list.
+
+:::
+::: info 📂 Configuration Item Location
+
+Friends Page Style -> Show Publish Date
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show publish date" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.friends_page_styles?.is_show_friend_pubdate`
+
+:::
+
 ### Show Author Information
 
 ::: info 🎯 Purpose
@@ -6173,39 +6206,6 @@ Boolean
 ::: info 🧩 Template Variable
 
 `theme.config?.friends_page_styles?.is_show_friend_permalink_text`
-
-:::
-
-### Show Publish Date
-
-::: info 🎯 Purpose
-
-Display the publication date of posts in the friends list.
-
-:::
-::: info 📂 Configuration Item Location
-
-Friends Page Style -> Show Publish Date
-
-:::
-::: info ⚡ Quick Jump
-
-<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show publish date" />
-
-:::
-::: info 🏷️ Type
-
-Boolean
-
-:::
-::: info ⭐ Default Value
-
-`true`
-
-:::
-::: info 🧩 Template Variable
-
-`theme.config?.friends_page_styles?.is_show_friend_pubdate`
 
 :::
 
