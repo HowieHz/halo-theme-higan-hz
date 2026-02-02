@@ -63,7 +63,7 @@ This section lists the extended styles implemented by this theme.
 
 ## Italic/Emphasis <Badge type="tip" text="General Style" />
 
-### Markdown Syntax
+### Italic/Emphasis Markdown Syntax
 
 <!-- prettier-ignore-start -->
 ```markdown
@@ -72,13 +72,13 @@ _This is emphasized text_
 ```
 <!-- prettier-ignore-end -->
 
-### HTML Tag Syntax
+### Italic/Emphasis HTML Tag Syntax
 
 ```html
 <em>This is emphasized text</em>
 ```
 
-### Rendering Effect
+### Italic/Emphasis Rendering Effect
 
 <DefaultRender>
 <em>This is emphasized text</em>
@@ -86,7 +86,7 @@ _This is emphasized text_
 
 ## Bold <Badge type="tip" text="General Style" />
 
-### Markdown Syntax
+### Bold Markdown Syntax
 
 <!-- prettier-ignore-start -->
 ```markdown
@@ -95,13 +95,13 @@ __This is bold text__
 ```
 <!-- prettier-ignore-end -->
 
-### HTML Tag Syntax
+### Bold HTML Tag Syntax
 
 ```html
 <strong>This is bold text</strong>
 ```
 
-### Rendering Effect
+### Bold Rendering Effect
 
 <DefaultRender>
 <strong>This is bold text</strong>
@@ -109,19 +109,19 @@ __This is bold text__
 
 ## Inline Code <Badge type="tip" text="General Style" />
 
-### Markdown Syntax
+### Inline Code Markdown Syntax
 
 ```markdown
 `print("世界，你好！")`
 ```
 
-### HTML Tag Syntax
+### Inline Code HTML Tag Syntax
 
 ```html
 <code>print("世界，你好！")</code>
 ```
 
-### Rendering Effect
+### Inline Code Rendering Effect
 
 <DefaultRender>
 
@@ -131,7 +131,7 @@ __This is bold text__
 
 ## Multi-line Code Block <Badge type="tip" text="General Style" />
 
-### Markdown Syntax
+### Multi-line Code Block Markdown Syntax
 
 <!-- prettier-ignore-start -->
 `````markdown
@@ -153,13 +153,13 @@ print("嵌套 code 块")
 `````
 <!-- prettier-ignore-end -->
 
-### Rendering Effect
+### Multi-line Code Block Rendering Effect
 
 渲染效果随实际渲染器（如 `shiki`，`highlight.js`）变化，故不做渲染展示。
 
 ## Paragraph <Badge type="tip" text="General Style" />
 
-### Markdown Syntax
+### Paragraph Markdown Syntax
 
 ```markdown
 This is a regular paragraph, testing text alignment and line height.This paragraph contains some common formatting like**bold**、*italic*和 `code`。According to your CSS, this text should have appropriate line height and alignment.
@@ -176,7 +176,7 @@ line break.
 Empty lines are not displayed by default. If you enable `文章页样式 - 文章页样式 - 优化文章段落空行显示`, empty lines will be displayed.
 ```
 
-### HTML Tag Syntax
+### Paragraph HTML Tag Syntax
 
 <!-- prettier-ignore-start -->
 ```html
@@ -184,7 +184,7 @@ Empty lines are not displayed by default. If you enable `文章页样式 - 文�
 ```
 <!-- prettier-ignore-end -->
 
-### Rendering Effect
+### Paragraph Rendering Effect
 
 <DefaultRender height="325px">
 
@@ -205,7 +205,7 @@ Empty lines are not displayed by default. If you enable `文章页样式 - 文�
 
 ## Citation Source <Badge type="tip" text="General Style" />
 
-### HTML Tag Syntax
+### Citation Source HTML Tag Syntax
 
 ```html
 From<cite>"Documentation Writing Guide"</cite>
@@ -213,7 +213,7 @@ From<cite>"Documentation Writing Guide"</cite>
 From <cite>Documentation Writing Guide</cite>
 ```
 
-### Rendering Effect
+### Citation Source Rendering Effect
 
 <DefaultRender>
 
@@ -225,7 +225,7 @@ From <cite>Documentation Writing Guide</cite>
 
 ## Superscript and Subscript <Badge type="tip" text="General Style" />
 
-### HTML Tag Syntax
+### Superscript and Subscript HTML Tag Syntax
 
 <!-- prettier-ignore-start -->
 ```html
@@ -236,7 +236,7 @@ Normal text<sup>superscript</sup>and<sub>subscript</sub>
 ```
 <!-- prettier-ignore-end -->
 
-### Rendering Effect
+### Superscript and Subscript Rendering Effect
 
 <DefaultRender height="100px">
 
@@ -249,7 +249,7 @@ Normal text<sup>superscript</sup>and<sub>subscript</sub>
 
 ## Small Text <Badge type="tip" text="General Style" />
 
-### HTML Tag Syntax
+### Small Text HTML Tag Syntax
 
 <!-- prettier-ignore-start -->
 ```html
@@ -259,7 +259,7 @@ This is normal text <small>This is small text</small> This is normal text
 ```
 <!-- prettier-ignore-end -->
 
-### Rendering Effect
+### Small Text Rendering Effect
 
 <DefaultRender>
 
@@ -271,7 +271,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 ## Abbreviation <Badge type="tip" text="General Style" /> <Badge type="warning" text="Extended Style" /> {#abbreviation}
 
-### HTML Tag Syntax
+### Abbreviation HTML Tag Syntax
 
 <!-- prettier-ignore-start -->
 ```html
@@ -290,7 +290,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 ```
 <!-- prettier-ignore-end -->
 
-### Rendering Effect
+### Abbreviation Rendering Effect
 
 <DefaultRender height="300px">
 
@@ -309,9 +309,9 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 </DefaultRender>
 
-## 标题 <Badge type="tip" text="General Style" />
+## Heading <Badge type="tip" text="General Style" />
 
-### Markdown Syntax
+### Heading Markdown Syntax
 
 <!-- prettier-ignore-start -->
 ```markdown
@@ -324,7 +324,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 ```
 <!-- prettier-ignore-end -->
 
-### HTML Tag Syntax
+### Heading HTML Tag Syntax
 
 ```html
 <h1>一级标题</h1>
@@ -335,14 +335,14 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 <h6>六级标题</h6>
 ```
 
-### HTML Class Syntax
+### Heading HTML Class Syntax
 
 ```html
 <div class="h1">使用 h1 类的文本</div>
 <div class="h2">使用 h2 类的文本</div>
 ```
 
-### Rendering Effect
+### Heading Rendering Effect
 
 <DefaultRender height="300px">
 
@@ -357,21 +357,21 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 </DefaultRender>
 
-## 文章二级标题样式 <Badge type="tip" text="Post Style" />
+## Post Second Level Heading Style <Badge type="tip" text="Post Style" />
 
-### Markdown Syntax
+### Post Second Level Heading Style Markdown Syntax
 
 ```markdown
 ## 在此处 h2 标题前应有一个 `#` 字符
 ```
 
-### HTML Tag Syntax
+### There should be a `#` character before the h2 heading here HTML Tag Syntax
 
 ```html
 <h2>在此处 h2 标题前应有一个 <code>#</code> 字符</h2>
 ```
 
-### Rendering Effect
+### There should be a `#` character before the h2 heading here Rendering Effect
 
 <DefaultRender src="/halo-theme-higan-haozi/frames/post">
 
@@ -379,9 +379,9 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 </DefaultRender>
 
-## 标题中的链接 <Badge type="tip" text="General Style" />
+## Link in Heading <Badge type="tip" text="General Style" />
 
-### Markdown Syntax
+### Link in Heading Markdown Syntax
 
 <!-- prettier-ignore-start -->
 ```markdown
@@ -394,7 +394,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 ```
 <!-- prettier-ignore-end -->
 
-### HTML Tag Syntax
+### [二级标题中的链接](https://howiehz.top) HTML Tag Syntax
 
 ```html
 <h1><a href="https://howiehz.top">一级标题中的链接</a></h1>
@@ -405,14 +405,14 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 <h6><a href="https://howiehz.top">六级标题中的链接</a></h6>
 ```
 
-### HTML Class Syntax
+### [二级标题中的链接](https://howiehz.top) HTML Class Syntax
 
 ```html
 <div class="h1"><a href="https://example.com">h1 类中的链接</a></div>
 <div class="h2"><a href="https://example.com">h2 类中的链接</a></div>
 ```
 
-### Rendering Effect
+### [二级标题中的链接](https://howiehz.top) Rendering Effect
 
 <DefaultRender height="300px">
 
@@ -426,21 +426,21 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 <div class="h2"><a href="https://example.com">h2 类中的链接</a></div>
 </DefaultRender>
 
-## 链接 <Badge type="tip" text="Content Style" />
+## Link <Badge type="tip" text="Content Style" />
 
-### Markdown Syntax
+### Link Markdown Syntax
 
 ```markdown
 [这是普通链接](https://example.com)，有下划线效果。鼠标悬停时下划线颜色会变化。
 ```
 
-### HTML Tag Syntax
+### Link HTML Tag Syntax
 
 ```html
 <a href="https://example.com">这是普通链接</a>，有下划线效果。鼠标悬停时下划线颜色会变化。
 ```
 
-### Rendering Effect
+### Link Rendering Effect
 
 <DefaultRender>
 
@@ -448,7 +448,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 </DefaultRender>
 
-## 图标链接 <Badge type="tip" text="Content Style" />
+## Icon Link <Badge type="tip" text="Content Style" />
 
 <!-- prettier-ignore-start -->
 ```html
@@ -456,15 +456,15 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 ```
 <!-- prettier-ignore-end -->
 
-### Rendering Effect
+### Icon Link Rendering Effect
 
 <DefaultRender>
 <a class="icon" href="javascript:void(0);">这里有一个带有 `class="icon"` 的超链接标签：用于图标链接，没有下划线，鼠标悬停时颜色会变化</a>
 </DefaultRender>
 
-## 图片嵌入 <Badge type="tip" text="Post Style" />
+## Image Embed <Badge type="tip" text="Post Style" />
 
-### Markdown Syntax
+### Image Embed Markdown Syntax
 
 ```markdown
 ![Alt text - 图片未加载则显示](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2311325.jpg)
@@ -474,7 +474,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 ![cat](https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg)
 ```
 
-### HTML Tag Syntax
+### Image Embed HTML Tag Syntax
 
 ```html
 <p>
@@ -500,7 +500,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 </p>
 ```
 
-### Rendering Effect
+### Image Embed Rendering Effect
 
 <DefaultRender height="300px" src="/halo-theme-higan-haozi/frames/post">
 
@@ -512,9 +512,9 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 </DefaultRender>
 
-## 说明文字 <Badge type="tip" text="Post Style" />
+## Caption <Badge type="tip" text="Post Style" />
 
-### HTML Tag Syntax
+### Caption HTML Tag Syntax
 
 <!-- prettier-ignore-start -->
 ```html
@@ -528,7 +528,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 <!-- prettier-ignore-end -->
 
-### Rendering Effect
+### Caption Rendering Effect
 
 <DefaultRender height="400px" src="/halo-theme-higan-haozi/frames/post">
 <p><img src="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-878514.jpg" alt="cat" /></p>
@@ -539,9 +539,9 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 <figcaption>我也是图片说明文字 <a href="https://probberechts.github.io/hexo-theme-cactus/cactus-dark/public/assets/wallpaper-2572384.jpg">我是超链接</a></figcaption>
 </DefaultRender>
 
-## 响应式视频嵌入 <Badge type="tip" text="Post Style" /> <Badge type="warning" text="Extended Style" /> {#responsive-video-embed}
+## Responsive Video Embed <Badge type="tip" text="Post Style" /> <Badge type="warning" text="Extended Style" /> {#responsive-video-embed}
 
-### HTML Tag Syntax
+### Responsive Video Embed HTML Tag Syntax
 
 ::: tip
 
@@ -564,7 +564,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 </div>
 ```
 
-### Rendering Effect
+### Responsive Video Embed Rendering Effect
 
 <DefaultRender height="400px" src="/halo-theme-higan-haozi/frames/post">
 <div class="video-container">
@@ -581,9 +581,9 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 </div>
 </DefaultRender>
 
-## 引用块 <Badge type="tip" text="Post Style" />
+## Blockquote <Badge type="tip" text="Post Style" />
 
-### Markdown Syntax
+### Blockquote Markdown Syntax
 
 ```markdown
 > 引用内容
@@ -595,7 +595,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 > 这层引用内容回到了第 One layer
 ```
 
-### Rendering Effect
+### Blockquote Rendering Effect
 
 <DefaultRender height="400px" src="/halo-theme-higan-haozi/frames/post">
 
@@ -613,9 +613,9 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 </DefaultRender>
 
-## 引用块脚注 <Badge type="tip" text="Post Style" /> <Badge type="warning" text="Extended Style" /> {#blockquote-footnote}
+## Blockquote Footnote <Badge type="tip" text="Post Style" /> <Badge type="warning" text="Extended Style" /> {#blockquote-footnote}
 
-### Markdown Syntax
+### Blockquote Footnote Markdown Syntax
 
 ```markdown
 > 引用内容
@@ -635,7 +635,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 > <footer><a href="https://example.com">作者链接</a><cite>作者名</cite></footer>
 ```
 
-### Rendering Effect
+### Blockquote Footnote Rendering Effect
 
 <DefaultRender height="600px" src="/halo-theme-higan-haozi/frames/post">
 
@@ -661,9 +661,9 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 </DefaultRender>
 
-## 拉引用块 <Badge type="tip" text="Post Style" /> <Badge type="warning" text="Extended Style" /> {#pullquote}
+## Pullquote <Badge type="tip" text="Post Style" /> <Badge type="warning" text="Extended Style" /> {#pullquote}
 
-### HTML Tag Syntax
+### Pullquote HTML Tag Syntax
 
 <!-- prettier-ignore-start -->
 ```html
@@ -699,7 +699,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 ```
 <!-- prettier-ignore-end -->
 
-### Rendering Effect
+### Pullquote Rendering Effect
 
 <DefaultRender height="500px" src="/halo-theme-higan-haozi/frames/post">
 <div style="clear: both">
@@ -733,9 +733,9 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 </div>
 </DefaultRender>
 
-## 无序列表 <Badge type="tip" text="General Style" />
+## Unordered List <Badge type="tip" text="General Style" />
 
-### Markdown Syntax
+### Unordered List Markdown Syntax
 
 ```markdown
 - 列表项一
@@ -745,7 +745,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 - 列表项三
 ```
 
-### HTML Tag Syntax
+### Unordered List HTML Tag Syntax
 
 ```html
 <ul>
@@ -761,7 +761,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 </ul>
 ```
 
-### Rendering Effect
+### Unordered List Rendering Effect
 
 <DefaultRender height="250px">
 
@@ -773,9 +773,9 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 </DefaultRender>
 
-## 有序列表 <Badge type="tip" text="General Style" />
+## Ordered List <Badge type="tip" text="General Style" />
 
-### Markdown Syntax
+### Ordered List Markdown Syntax
 
 ```markdown
 1. 第一项
@@ -785,7 +785,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 3. 第三项
 ```
 
-### HTML Tag Syntax
+### Ordered List HTML Tag Syntax
 
 ```html
 <ol>
@@ -801,7 +801,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 </ol>
 ```
 
-### Rendering Effect
+### Ordered List Rendering Effect
 
 <DefaultRender height="250px">
 
@@ -813,9 +813,9 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 </DefaultRender>
 
-## 定义列表 <Badge type="tip" text="General Style" />
+## Definition List <Badge type="tip" text="General Style" />
 
-### HTML Tag Syntax
+### Definition List HTML Tag Syntax
 
 ```html
 <dl>
@@ -826,7 +826,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 </dl>
 ```
 
-### Rendering Effect
+### Definition List Rendering Effect
 
 <DefaultRender height="250px">
 <dl>
@@ -837,9 +837,9 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 </dl>
 </DefaultRender>
 
-## 表格 <Badge type="tip" text="General Style" />
+## Table <Badge type="tip" text="General Style" />
 
-### Markdown Syntax
+### Table Markdown Syntax
 
 ```markdown
 | 名称     | 平均时间复杂度 | 空间复杂度 |
@@ -849,7 +849,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 | 快速排序 | O(n log n)     | O(log n)   |
 ```
 
-### HTML Tag Syntax
+### Table HTML Tag Syntax
 
 ```html
 <table>
@@ -880,7 +880,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 </table>
 ```
 
-### Rendering Effect
+### Table Rendering Effect
 
 <DefaultRender height="200px">
 
@@ -892,21 +892,21 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 </DefaultRender>
 
-## 水平分割线 <Badge type="tip" text="General Style" /> {#horizontal-divider-special-style}
+## Horizontal Divider <Badge type="tip" text="General Style" /> {#horizontal-divider-special-style}
 
-### Markdown Syntax
+### Horizontal Divider Markdown Syntax
 
 ```markdown
 ---
 ```
 
-### HTML Tag Syntax
+### Horizontal Divider HTML Tag Syntax
 
 ```html
 <hr />
 ```
 
-### Rendering Effect
+### Horizontal Divider Rendering Effect
 
 <DefaultRender>
 
@@ -914,23 +914,23 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 </DefaultRender>
 
-## 水平分割线（特殊样式） <Badge type="tip" text="General Style" /> <Badge type="warning" text="Extended Style" />
+## Horizontal Divider (Special Style) <Badge type="tip" text="General Style" /> <Badge type="warning" text="Extended Style" />
 
-### HTML Class Syntax
+### Horizontal Divider (Special Style) HTML Class Syntax
 
 ```html
 <hr class="divide" />
 ```
 
-### Rendering Effect
+### Horizontal Divider (Special Style) Rendering Effect
 
 <DefaultRender>
 <hr class='divide' />
 </DefaultRender>
 
-## 隐藏/剧透 <Badge type="tip" text="General Style" /> <Badge type="warning" text="Extended Style" /> {#hidden-spoiler-content}
+## Hidden/Spoiler <Badge type="tip" text="General Style" /> <Badge type="warning" text="Extended Style" /> {#hidden-spoiler-content}
 
-### HTML Tag Syntax
+### Hidden/Spoiler HTML Tag Syntax
 
 <!-- prettier-ignore-start -->
 ```html
@@ -945,7 +945,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 ```
 <!-- prettier-ignore-end -->
 
-### Rendering Effect
+### Hidden/Spoiler Rendering Effect
 
 <DefaultRender height="250px">
 
@@ -960,9 +960,9 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 </DefaultRender>
 
-## 长单词测试 <Badge type="tip" text="Content Style" />
+## Long Word Test <Badge type="tip" text="Content Style" />
 
-### HTML Tag Syntax
+### Long Word Test HTML Tag Syntax
 
 <!-- prettier-ignore-start -->
 ```html
@@ -972,7 +972,7 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 ```
 <!-- prettier-ignore-end -->
 
-### Rendering Result
+### Long Word Test Rendering Result
 
 <DefaultRender height="300px">
 
@@ -982,21 +982,21 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 </DefaultRender>
 
-## 明暗模式显隐块 <Badge type="tip" text="Post Style" /> <Badge type="warning" text="Extended Style" /> {#light-dark-mode-visibility-block}
+## Light/Dark Mode Visibility Block <Badge type="tip" text="Post Style" /> <Badge type="warning" text="Extended Style" /> {#light-dark-mode-visibility-block}
 
 ```html
 <div class="light">这段内容只在亮色模式/自动模式 (亮色) 下显示。试试切换页面主题。</div>
 <div class="dark">这段内容只在暗色模式/自动模式 (暗色) 下显示。试试切换页面主题。</div>
 ```
 
-### Rendering Effect
+### Light/Dark Mode Visibility Block Rendering Effect
 
 <DefaultRender src="/halo-theme-higan-haozi/frames/post">
 <div class="light">这段内容只在亮色模式/自动模式 (亮色) 下显示。试试切换页面主题。</div>
 <div class="dark">这段内容只在暗色模式/自动模式 (暗色) 下显示。试试切换页面主题。</div>
 </DefaultRender>
 
-### Mermaid 适配明暗主题切换
+### Mermaid Light/Dark Theme Adaptation
 
 以下方法均为 HTML 标签写法。  
 相关链接：[How to Use HTML Syntax in the Editor](#how-to-use-html-syntax-in-the-editor)
