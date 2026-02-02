@@ -1391,13 +1391,13 @@ Option
 :::
 ::: info ⭐ Default Value
 
-`Small`(internal value `small`)
+`Small` (internal value `small`)
 
 :::
 ::: info 💡 Other Options
 
-- `Regular`(internal value `normal`)
-- `Large`(internal value `large`)
+- `Regular` (internal value `normal`)
+- `Large` (internal value `large`)
 
 :::
 ::: info 🧩 Template Variable
@@ -1897,7 +1897,7 @@ Includes one preset: Search (Requires [Search Component Plugin](/guide/plugin-co
 > :::
 > ::: info ⭐ Default Value
 >
-> Search (Requires [Search Component Plugin](/guide/plugin-compatibility#search-component)) (internal value `search`)
+> `Search` (Requires [Search Component Plugin](/guide/plugin-compatibility#search-component)) (internal value `search`)
 >
 > :::
 > ::: info 💡 Other Options
@@ -3440,13 +3440,13 @@ Option
 :::
 ::: info ⭐ Default Value
 
-Simple Post List (internal value `simple-post-list`)
+`Simple Post List` (internal value `simple-post-list`)
 
 :::
 ::: info 💡 Other Options
 
-- Multi-element Post List (internal value `post-list-summary`)
-- Moments List (internal value `moment-list-summary`)
+- `Multi-element Post List` (internal value `post-list-summary`)
+- `Moments List` (internal value `moment-list-summary`)
 
 :::
 ::: info 🧩 Template Variable
