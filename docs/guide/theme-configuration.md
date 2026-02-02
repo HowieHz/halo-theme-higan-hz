@@ -3602,6 +3602,7 @@ HTML 代码也是可以的：
 ::: info ⚡ 快速跳转
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多元列表显示文章分类" />
+
 :::
 ::: info 🏷️ 类型
 
