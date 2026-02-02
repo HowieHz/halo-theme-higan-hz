@@ -37,8 +37,8 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2
       '@iconify-json/fluent':
-        specifier: ^1.2.37
-        version: 1.2.37
+        specifier: ^1.2.38
+        version: 1.2.38
       '@iconify-json/heroicons-outline':
         specifier: ^1.2.1
         version: 1.2.1
@@ -201,10 +201,10 @@ importers:
         version: 2.18.2(vitepress@2.0.0-alpha.16(@types/node@25.1.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.6)(stylus@0.64.0)(typescript@5.9.3))
       '@whyframe/core':
         specifier: ^0.1.14
-        version: 0.1.14(vite@7.3.1(@types/node@25.1.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0))
+        version: 0.1.14(rolldown-vite@7.3.1(@types/node@25.1.0)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))
       '@whyframe/vue':
         specifier: ^0.1.9
-        version: 0.1.9(@whyframe/core@0.1.14(vite@7.3.1(@types/node@25.1.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0)))(vite@7.3.1(@types/node@25.1.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0))
+        version: 0.1.9(@whyframe/core@0.1.14(rolldown-vite@7.3.1(@types/node@25.1.0)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)))(rolldown-vite@7.3.1(@types/node@25.1.0)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))
       browserslist:
         specifier: ^4.28.1
         version: 4.28.1
@@ -592,8 +592,8 @@ packages:
   '@iconify-json/fa-solid@1.2.2':
     resolution: {integrity: sha512-V8TDk62dGswAwbWwoSTnaoiTVEfQyjLCq4/TPmI29evFb9GwPyU0OGX4+BdQMGsDDzk8ByR81RjR618FtELSaw==}
 
-  '@iconify-json/fluent@1.2.37':
-    resolution: {integrity: sha512-wNm8JXU1eV+M3ONGIG0pwb4X8PoEfYDdLRt0xCUcOofoy0WxXRldB0dkmILnXhLZmCNVWRzt9z/3I6xS+8YNGQ==}
+  '@iconify-json/fluent@1.2.38':
+    resolution: {integrity: sha512-5+MsS9aePYHoxMO5+/kXkhSYRhctvgSyxt/7r0Xc3CHpOq4Rcu8x7GSfIzxOwP16T0Y8M471ykRe5xmU4MzBPQ==}
 
   '@iconify-json/heroicons-outline@1.2.1':
     resolution: {integrity: sha512-QNYV4/KsW8Ww9a3B+hxDntS5BwLLbErKpL1V3MkvB8X+ZVTX5VLxjlj8rAEih+GCDWzaiZJOrdO/pagvsuBkXg==}
@@ -4125,7 +4125,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/fluent@1.2.37':
+  '@iconify-json/fluent@1.2.38':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -4982,16 +4982,16 @@ snapshots:
     dependencies:
       pathe: 2.0.3
 
-  '@whyframe/core@0.1.14(vite@7.3.1(@types/node@25.1.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0))':
+  '@whyframe/core@0.1.14(rolldown-vite@7.3.1(@types/node@25.1.0)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))':
     optionalDependencies:
-      vite: 7.3.1(@types/node@25.1.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0)
+      vite: rolldown-vite@7.3.1(@types/node@25.1.0)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)
 
-  '@whyframe/vue@0.1.9(@whyframe/core@0.1.14(vite@7.3.1(@types/node@25.1.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0)))(vite@7.3.1(@types/node@25.1.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0))':
+  '@whyframe/vue@0.1.9(@whyframe/core@0.1.14(rolldown-vite@7.3.1(@types/node@25.1.0)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)))(rolldown-vite@7.3.1(@types/node@25.1.0)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))':
     dependencies:
       '@vue/compiler-dom': 3.5.26
-      '@whyframe/core': 0.1.14(vite@7.3.1(@types/node@25.1.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0))
+      '@whyframe/core': 0.1.14(rolldown-vite@7.3.1(@types/node@25.1.0)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))
       magic-string: 0.30.21
-      vite: 7.3.1(@types/node@25.1.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0)
+      vite: rolldown-vite@7.3.1(@types/node@25.1.0)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)
 
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:
