@@ -2196,8 +2196,8 @@ Higan Haozi (internal value `Higan Haozi`)
 :::
 ::: info 💡 Other Options
 
-- Higan(internal value `Higan`)
-- Higan (internal value `彼岸`)
+- Higan (internal value `Higan`)
+- 彼岸 (internal value `彼岸`)
 
 :::
 ::: info 🧩 Template Variable
