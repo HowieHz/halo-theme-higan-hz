@@ -3077,7 +3077,7 @@ IfConfiguration 值过长，cancan 影响 SEO 和 pageDisplay 效果.
 :::
 ::: info ℹ️ Additional Information
 
-If left empty, the value will be taken from Halo CMS backend (<QuickJumpConfig to="/console/settings:~:text=Site title" label="Quick Jump" />) site title setting.
+If left empty, the value will be taken from Halo CMS backend (<QuickJumpConfig to="/console/settings:~:text=Site%20title" label="Quick Jump" />) site title setting.
 
 :::
 
