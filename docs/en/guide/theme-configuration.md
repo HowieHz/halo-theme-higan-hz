@@ -810,7 +810,7 @@ Boolean
 When enabled, you can configure:
 
 - [Custom Font Files](#custom-font-files)
-- [Font Name](#font-name)
+- [Font Name (Full Name/PostScript Name)](#font-name-full-namepostscript-name)
 
 :::
 
@@ -968,7 +968,7 @@ Option
 :::
 ::: info ℹ️ Additional Information
 
-- For cases where [Light/Dark Mode Toggle Button](#light-dark-mode-toggle-button) is enabled, this determines the default color scheme when the website first loads.
+- For cases where [Light/Dark Mode Toggle Button](#lightdark-mode-toggle-button) is enabled, this determines the default color scheme when the website first loads.
 - When selecting "Custom Color Scheme", it needs to be used with [Custom Color Scheme](#custom-color-scheme).
 
 :::
@@ -1223,7 +1223,7 @@ Set the color scheme for Auto Mode in the Light/Dark Mode Toggle Button.
 :::
 ::: info 📂 Configuration Item Location
 
-(When [General Styles -> Light/Dark Mode Toggle Button](#light-dark-mode-toggle-button) is enabled, will display)
+(When [General Styles -> Light/Dark Mode Toggle Button](#lightdark-mode-toggle-button) is enabled, will display)
 
 General Styles -> Auto Mode Color Scheme
 
@@ -1274,7 +1274,7 @@ Set the color scheme for Light Mode in the Light/Dark Mode Toggle Button.
 :::
 ::: info 📂 Configuration Item Location
 
-(When [General Styles -> Light/Dark Mode Toggle Button](#light-dark-mode-toggle-button) is enabled, will display)
+(When [General Styles -> Light/Dark Mode Toggle Button](#lightdark-mode-toggle-button) is enabled, will display)
 
 General Styles -> Light Mode Color Scheme
 
@@ -1325,7 +1325,7 @@ Set the color scheme for Dark Mode in the Light/Dark Mode Toggle Button.
 :::
 ::: info 📂 Configuration Item Location
 
-(When [General Styles -> Light/Dark Mode Toggle Button](#light-dark-mode-toggle-button) is enabled, will display)
+(When [General Styles -> Light/Dark Mode Toggle Button](#lightdark-mode-toggle-button) is enabled, will display)
 
 General Styles -> Dark Mode Color Scheme
 
@@ -1659,7 +1659,7 @@ Boolean
 
 When enabled, you can configure:
 
-- [内容区域宽度样式](#内容区域宽度样式)
+- [Content Area Width Style](#content-area-width-style)
 
 :::
 
@@ -1749,9 +1749,9 @@ Boolean
 
 When enabled, you can configure:
 
-- [Custom 页眉头像](#custom-页眉头像)
-- [圆形头像](#圆形头像)
-- [灰度头像](#灰度头像)
+- [Custom Header Avatar](#custom-header-avatar)
+- [Circular Avatar](#circular-avatar)
+- [Grayscale Avatar](#grayscale-avatar)
 
 :::
 
@@ -1764,7 +1764,7 @@ Used for 选择上传的图片作为页眉头像.未 Set 将 Use 默认头像 `/
 :::
 ::: info 📂 Configuration Item Location
 
-([Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display)
+([Global -> Header Avatar Display](#header-avatar-display)When enabled, will display)
 
 General Styles -> Custom Header Avatar
 
@@ -1794,7 +1794,7 @@ Controls whether 强制将头像裁切为圆形.
 :::
 ::: info 📂 Configuration Item Location
 
-([Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display)
+([Global -> Header Avatar Display](#header-avatar-display)When enabled, will display)
 
 General Styles -> Circular Avatar
 
@@ -1829,7 +1829,7 @@ Controls whether 强制将头像以灰度处理.
 :::
 ::: info 📂 Configuration Item Location
 
-([Global -> 页眉头像 Display](#页眉头像-display)When enabled, will display)
+([Global -> Header Avatar Display](#header-avatar-display)When enabled, will display)
 
 General Styles -> Grayscale Avatar
 
@@ -2028,7 +2028,7 @@ Boolean
 
 When enabled, you can configure:
 
-- [统计项 Set](#统计项-set)
+- [Statistics Item Settings](#statistics-item-settings)
 
 :::
 
@@ -2041,7 +2041,7 @@ Set 统计项.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> page 底部站点统计信息](#page-底部站点统计信息)When enabled, will display)
+([Home Page Style -> Site Statistics at Page Bottom](#site-statistics-at-page-bottom)When enabled, will display)
 
 General Styles -> Statistics Item Settings
 
@@ -2160,8 +2160,8 @@ Boolean
 
 When enabled, you can configure:
 
-- [page 底部主题信息所展示的主题名](#page-底部主题信息所展示的主题名)
-- [page 底部主题信息所展示的 Halo 版本](#page-底部主题信息所展示的-halo-版本)
+- [Theme Name Displayed in Theme Information at Page Bottom](#theme-name-displayed-in-theme-information-at-page-bottom)
+- [Halo Version Displayed in Theme Information at Page Bottom](#halo-version-displayed-in-theme-information-at-page-bottom)
 
 :::
 
@@ -2174,7 +2174,7 @@ Setpage 底部主题信息所展示的主题名.
 :::
 ::: info 📂 Configuration Item Location
 
-([General Styles -> page 底部主题信息](#page-底部主题信息)When enabled, will display)
+([General Styles -> Theme Information at Page Bottom](#theme-information-at-page-bottom)When enabled, will display)
 
 General Styles -> Custom Attribution in Copyright Information
 
@@ -2215,7 +2215,7 @@ Setpage 底部主题信息所展示的 Halo 版本.
 :::
 ::: info 📂 Configuration Item Location
 
-([General Styles -> page 底部主题信息](#page-底部主题信息)When enabled, will display)
+([General Styles -> Theme Information at Page Bottom](#theme-information-at-page-bottom)When enabled, will display)
 
 General Styles -> Halo Version Displayed in Theme Information at Page Bottom
 
@@ -2283,7 +2283,7 @@ Boolean
 
 When enabled, you can configure:
 
-- [版权信息 Custom 署名](#版权信息-custom-署名)
+- [Custom Attribution in Copyright Information](#custom-attribution-in-copyright-information)
 
 :::
 
@@ -2296,7 +2296,7 @@ Setpage 底部版权信息的署名.
 :::
 ::: info 📂 Configuration Item Location
 
-([General Styles -> page 底部版权信息](#page-底部版权信息)When enabled, will display)
+([General Styles -> Copyright Information at Page Bottom](#copyright-information-at-page-bottom)When enabled, will display)
 
 General Styles -> Custom Attribution in Copyright Information
 
@@ -2432,9 +2432,9 @@ The footer content filled in here will be displayed below "Menu at Page Bottom",
 
 When enabled, you can configure:
 
-- [Content at Bottom of Page](#page-最底部内容)
-- [Multi-language Support for Content at Bottom of Page](#多语言-page-最底部内容-support)
-  - [Custom Multi-language Content at Bottom of Page](#custom-多语言-page-最底部内容)
+- [Content at Bottom of Page](#content-at-bottom-of-page)
+- [Multi-language Support for Content at Bottom of Page](#multi-language-support-for-content-at-bottom-of-page)
+  - [Custom Multi-language Content at Bottom of Page](#custom-multi-language-content-at-bottom-of-page)
 
 :::
 
@@ -2447,7 +2447,7 @@ Setpage 最底部内容内容.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display)
+([Home Page Style -> Content at Bottom of Page](#content-at-bottom-of-page)When enabled, will display)
 
 Home Page Style -> Content at Bottom of Page
 
@@ -2500,7 +2500,7 @@ Controls whetherEnable 多语言 page 最底部内容 Support.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display)
+([Home Page Style -> Content at Bottom of Page](#content-at-bottom-of-page)When enabled, will display)
 
 Home Page Style -> Multi-language Support for Content at Bottom of Page
 
@@ -2540,7 +2540,7 @@ Set 多语言 page 最底部内容内容.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> page 最底部内容](#page-最底部内容)When enabled, will display)
+([Home Page Style -> Content at Bottom of Page](#content-at-bottom-of-page)When enabled, will display)
 
 Home Page Style -> Custom Multi-language Content at Bottom of Page
 
@@ -3462,25 +3462,25 @@ Option
 
 简洁列表 When enabled, you can configure
 
-- [Displaypost 阅读量](#简洁列表-displaypost-阅读量)
+- [Display Post Views in Simple List](#display-post-views-in-simple-list)
 
 多元列表 When enabled, you can configure
 
-- [Displaypost 分类](#多元列表-displaypost-分类)
-- [Displaypost 标签](#多元列表-displaypost-标签)
-- [Displaypost 阅读量](#多元列表-displaypost-阅读量)
-- [Displaypost 预计阅读 when 间](#多元列表-displaypost-预计阅读-when-间)
-- [Displaypost 字数统计](#多元列表-displaypost-字数统计)
-- [Displaypost 摘要](#多元列表-displaypost-摘要)
-- [post 摘要行数上限](#多元列表-post-摘要行数上限)
-- [跳转 post 链接所用提示文字](#多元列表跳转-post-链接所用提示文字)
-- [Displaypost 封面](#多元列表-displaypost-封面)
+- [Display Post Categories in Post List Summary](#display-post-categories-in-post-list-summary)
+- [Display Post Tags in Post List Summary](#display-post-tags-in-post-list-summary)
+- [Display Post Views in Post List Summary](#display-post-views-in-post-list-summary)
+- [Display Post Estimated Reading Time in Post List Summary](#display-post-estimated-reading-time-in-post-list-summary)
+- [Display Post Word Count in Post List Summary](#display-post-word-count-in-post-list-summary)
+- [Display Post Excerpt in Post List Summary](#display-post-excerpt-in-post-list-summary)
+- [Maximum Lines for Post Excerpt in Post List Summary](#maximum-lines-for-post-excerpt-in-post-list-summary)
+- [Link Text for Post List Summary](#link-text-for-post-list-summary)
+- [Display Post Cover in Post List Summary](#display-post-cover-in-post-list-summary)
 
 瞬间列表 When enabled, you can configure
 
-- [Display 条数](#瞬间列表-display-条数)
-- [Display 条目作者头像](#瞬间列表-display-条目作者头像)
-- [Display 条目作者昵称](#瞬间列表-display-条目作者昵称)
+- [Number of Moments Per Page](#number-of-moments-per-page)
+- [Show Author Avatar in Moment List](#show-author-avatar-in-moment-list)
+- [Show Author Nickname in Moment List](#show-author-nickname-in-moment-list)
 
 :::
 
@@ -3493,7 +3493,7 @@ Controls whetherIn 简洁列表中 Displaypost 阅读量.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“简洁 post 列表”whenDisplay)
+([Home Page Style -> Home Page List Layout](#home-page-list-layout)Set 为“简洁 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Views in Simple List
 
@@ -3528,7 +3528,7 @@ Controls whetherIn 多元列表中 Displaypost 分类.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
+([Home Page Style -> Home Page List Layout](#home-page-list-layout)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Categories in Post List Summary
 
@@ -3563,7 +3563,7 @@ Controls whetherIn 多元列表中 Displaypost 标签.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
+([Home Page Style -> Home Page List Layout](#home-page-list-layout)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Tags in Post List Summary
 
@@ -3598,7 +3598,7 @@ Controls whetherIn 多元列表中 Displaypost 阅读量.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
+([Home Page Style -> Home Page List Layout](#home-page-list-layout)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Views in Post List Summary
 
@@ -3633,7 +3633,7 @@ Controls whetherIn 多元列表中 Displaypost 预计阅读 when 间.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
+([Home Page Style -> Home Page List Layout](#home-page-list-layout)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Estimated Reading Time in Post List Summary
 
@@ -3673,7 +3673,7 @@ Controls whetherIn 多元列表中 Displaypost 字数统计.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
+([Home Page Style -> Home Page List Layout](#home-page-list-layout)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Word Count in Post List Summary
 
@@ -3713,7 +3713,7 @@ Controls whetherIn 多元列表中 Displaypost 摘要.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
+([Home Page Style -> Home Page List Layout](#home-page-list-layout)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Excerpt in Post List Summary
 
@@ -3748,7 +3748,7 @@ Set 多元列表中 post 摘要的最大行数.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
+([Home Page Style -> Home Page List Layout](#home-page-list-layout)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Maximum Lines for Post Excerpt in Post List Summary
 
@@ -3788,7 +3788,7 @@ Controls whetherIn 多元列表中 Display 跳转 post 链接的提示文字.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
+([Home Page Style -> Home Page List Layout](#home-page-list-layout)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Link Text for Post List Summary
 
@@ -3828,7 +3828,7 @@ Controls whetherIn 多元列表中 Displaypost 封面.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“多元 post 列表”whenDisplay)
+([Home Page Style -> Home Page List Layout](#home-page-list-layout)Set 为“多元 post 列表”whenDisplay)
 
 Home Page Style -> Display Post Cover in Post List Summary
 
@@ -3863,7 +3863,7 @@ Set 瞬间列表中 Display 的条目数量.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“瞬间列表”whenDisplay)
+([Home Page Style -> Home Page List Layout](#home-page-list-layout)Set 为“瞬间列表”whenDisplay)
 
 Home Page Style -> Number of Moments Per Page
 
@@ -3898,7 +3898,7 @@ Controls whetherIn 瞬间列表中 Display 条目作者头像.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“瞬间列表”whenDisplay)
+([Home Page Style -> Home Page List Layout](#home-page-list-layout)Set 为“瞬间列表”whenDisplay)
 
 Home Page Style -> Show Author Avatar in Moment List
 
@@ -3933,7 +3933,7 @@ Controls whetherIn 瞬间列表中 Display 条目作者昵称.
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> 主页列表布局](#主页列表布局)Set 为“瞬间列表”whenDisplay)
+([Home Page Style -> Home Page List Layout](#home-page-list-layout)Set 为“瞬间列表”whenDisplay)
 
 Home Page Style -> Show Author Nickname in Moment List
 
@@ -5647,7 +5647,7 @@ Set 链接描述的最大行数.
 :::
 ::: info 📂 Configuration Item Location
 
-([Links Page Style -> 头像优先样式](#头像优先样式)When enabled, will display)
+([Links Page Style -> Avatar-First Style](#avatar-first-style)When enabled, will display)
 
 Links Page Style -> 链接描述行数上限
 
