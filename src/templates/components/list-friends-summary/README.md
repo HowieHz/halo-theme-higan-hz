@@ -18,7 +18,6 @@ Content Insertion
 <th:block th:insert="~{components/list-friends-summary/template :: content(friends, pageTemplateName)}"></th:block>
 ```
 
-
 ## Parameters
 
 - `friends`: [UrlContextListResult\<FriendPostVo\>](#urlcontextlistresultfriendpostvo) - Friends' Posts data, including pagination information.
