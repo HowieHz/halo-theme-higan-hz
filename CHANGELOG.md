@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [1.56.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.55.1...v1.56.0) (2026-2-3)
+
 ### 🚀 新功能
 
 - 新增首页朋友圈列表布局功能。
