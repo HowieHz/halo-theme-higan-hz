@@ -88,8 +88,8 @@
           <th:block th:each="resumeItem : ${resumeItems}">
             <th:block
               th:if="${page_language != null
-                               and resumeItem.lang != null
-                               and #strings.startsWith(page_language, resumeItem.lang)}"
+                       and resumeItem.lang != null
+                       and #strings.startsWith(page_language, resumeItem.lang)}"
             >
               <p
                 class="blog-description matched-resume"

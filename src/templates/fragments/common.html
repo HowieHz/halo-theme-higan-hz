@@ -90,9 +90,11 @@
              and theme.config?.global?.is_i18n_prefix_match_mode}"
   >
     <th:block th:each="menuItem : ${menuItems}">
-      <th:block th:if="${page_language != null
-                         and menuItem.status.displayName != null
-                         and #strings.startsWith(page_language, menuItem.status.displayName)}">
+      <th:block
+        th:if="${page_language != null
+                 and menuItem.status.displayName != null
+                 and #strings.startsWith(page_language, menuItem.status.displayName)}"
+      >
         <th:block th:each="menuItemChildren : ${menuItem?.children}">
           <th:block th:insert="~{:: menu-item(${menuItemChildren})}"></th:block>
         </th:block>
