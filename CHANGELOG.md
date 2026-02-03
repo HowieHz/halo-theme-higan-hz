@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [1.56.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.56.1...v1.56.2) (2026-2-4)
+
+### 🐛 错误修复
+
+- 修复启用“全局 -> 多语言功能前缀匹配模式”且根菜单存在非自定义链接类型时会触发内部错误的问题。
+
 ## [1.56.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.56.0...v1.56.1) (2026-2-4)
 
 ### 🐛 错误修复
