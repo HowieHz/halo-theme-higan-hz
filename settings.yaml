@@ -1220,6 +1220,26 @@ spec:
           label: 瞬间列表显示条目发布时间
           value: true
         - $formkit: switch
+          name: is_show_moment_estimated_reading_time
+          if: "$list_layout === 'moment-list-summary'"
+          label: 瞬间列表显示条目预计阅读时间
+          value: false
+        - $formkit: switch
+          name: is_show_moment_word_count
+          if: "$list_layout === 'moment-list-summary'"
+          label: 瞬间列表显示条目字数统计
+          value: false
+        - $formkit: switch
+          name: is_moment_upvote_button_show
+          if: "$list_layout === 'moment-list-summary'"
+          label: 瞬间列表启用点赞按钮
+          value: true
+        - $formkit: switch
+          name: is_moment_comment_section_show
+          if: "$list_layout === 'moment-list-summary'"
+          label: 瞬间列表启用评论区
+          value: true
+        - $formkit: switch
           name: is_pin_icon_show
           label: 文章列表置顶图标
           value: true
