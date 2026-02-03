@@ -3457,9 +3457,8 @@ Option
 :::
 ::: info ℹ️ Additional Information
 
-"Moments List" requires the [Moments Page](/guide/plugin-compatibility#moments-page) plugin to be enabled.
-
-"Friends List" requires the [Friends](/guide/plugin-compatibility#moments-feed-subscription) plugin to be enabled.
+- "Moments List" requires the [Moments](/guide/plugin-compatibility#moments-page) plugin to be enabled.
+- "Friends List" requires the [Friends](/guide/plugin-compatibility#moments-feed-subscription) plugin to be enabled.
 
 Different configuration options will be displayed based on the selected layout type.
 

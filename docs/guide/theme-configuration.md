@@ -3451,9 +3451,8 @@ HTML 代码也是可以的：
 :::
 ::: info ℹ️ 补充信息
 
-"瞬间列表"需[瞬间页](/guide/plugin-compatibility#瞬间页)插件启用后方可使用。
-
-"朋友圈列表"需[朋友圈](/guide/plugin-compatibility#朋友圈-订阅聚合)插件启用后方可使用。
+- “瞬间列表”需[瞬间](/guide/plugin-compatibility#瞬间页)插件启用后方可使用。
+- “朋友圈列表”需[朋友圈](/guide/plugin-compatibility#朋友圈-订阅聚合)插件启用后方可使用。
 
 根据选择的布局类型，会显示不同的配置选项。
 
