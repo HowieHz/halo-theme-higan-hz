@@ -5202,6 +5202,39 @@ Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscript
 
 :::
 
+### Display Post Publish Date in Author Detail Page Post List
+
+::: info 🎯 Purpose
+
+Display post publish date in the post list on the author detail page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Author Detail Page Style -> Display post publish date in post list
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=Display%20post%20publish%20date%20in%20post%20list" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.author_page_styles?.is_show_post_pubdate_in_post_list`
+
+:::
+
 ## Archives Page Style
 
 Application Range: [`/archives(/{year}(/{month}))`](</reference/template-map#:~:text=/archives(/%7Byear%7D(/%7Bmonth%7D))>).

@@ -14,9 +14,10 @@
           <li class="post-item">
             <div
               class="meta"
-              th:if="${not (#strings.equals(pageTemplateName, 'index') or #strings.equals(pageTemplateName, 'category')) or
+              th:if="${not (#strings.equals(pageTemplateName, 'index') or #strings.equals(pageTemplateName, 'category') or #strings.equals(pageTemplateName, 'author')) or
                     (#strings.equals(pageTemplateName, 'index') and theme.config?.index_styles?.is_show_post_pubdate_in_simple_post_list) or
-                    (#strings.equals(pageTemplateName, 'category') and theme.config?.category_page_styles?.is_show_post_pubdate_in_post_list)}"
+                    (#strings.equals(pageTemplateName, 'category') and theme.config?.category_page_styles?.is_show_post_pubdate_in_post_list) or
+                    (#strings.equals(pageTemplateName, 'author') and theme.config?.author_page_styles?.is_show_post_pubdate_in_post_list)}"
             >
               <time
                 th:datetime="${post.spec.publishTime}"
