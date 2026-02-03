@@ -21,7 +21,8 @@
     <th:block th:insert="~{components/list-moment-summary/template :: headContent}"></th:block>
     <th:block th:insert="~{components/moment-video-modal/template :: headContent}"></th:block>
     <th:block
-      th:if="${theme.config?.moments_styles?.is_moment_comment_section_show and haloCommentEnabled}"
+      th:if="${theme.config?.moments_styles?.is_moment_comment_section_show
+               and haloCommentEnabled}"
       th:insert="~{components/halo-comment-widget/template :: headContent}"
     ></th:block>
   </head>
@@ -30,7 +31,7 @@
       <div class="content common-post-list" th:attr="x-data=|momentComment('${moment.metadata.name}')|">
         <div
           class="moment-header mt-5"
-          th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event'}"
+          th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type') == 'github-user-public-event'}"
         >
           <div class="color-base-content-80">
             <span>
@@ -80,7 +81,7 @@
             </span>
             <span
               class="color-base-content-80 no-underline"
-              th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event'}"
+              th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type') == 'github-user-public-event'}"
               th:utext="${moment.metadata?.annotations?.get('higan.howiehz.top/customize-title')}"
             >
             </span>
@@ -156,8 +157,9 @@
             <span
               class="color-base-content-80 inline-block no-underline"
               th:if="${theme.config?.moments_styles?.is_show_post_estimated_reading_time}"
-              th:with="wordCount = ${pluginFinder.available('extra-api', '3.*') ? 
-                extraApiStatsFinder.getContentWordCount(moment.spec.content?.html) : #strings.length(moment.spec.content?.html)/2 }"
+              th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
+                                     ? extraApiStatsFinder.getContentWordCount(moment.spec.content?.html)
+                                     : #strings.length(moment.spec.content?.html)/2 }"
               th:title="#{page.post.estimated-reading-time(#{common.words(${wordCount})})}"
             >
               <span class="iconify mdi--clock-outline"></span>
@@ -174,8 +176,9 @@
             <span
               class="color-base-content-80 inline-block no-underline"
               th:if="${theme.config?.moments_styles?.is_show_post_word_count}"
-              th:with="wordCount = ${pluginFinder.available('extra-api', '3.*') ? 
-                extraApiStatsFinder.getContentWordCount(moment.spec.content?.html) : #strings.length(moment.spec.content?.html)/2 }"
+              th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
+                                     ? extraApiStatsFinder.getContentWordCount(moment.spec.content?.html)
+                                     : #strings.length(moment.spec.content?.html)/2 }"
               th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
             >
               <span class="iconify fluent--text-edit-style-character-a-32-regular"></span>
@@ -206,7 +209,8 @@
             </div>
           </div>
           <div
-            th:if="${theme.config?.moments_styles?.is_moment_upvote_button_show or theme.config?.moments_styles?.is_moment_comment_section_show}"
+            th:if="${theme.config?.moments_styles?.is_moment_upvote_button_show 
+                     or theme.config?.moments_styles?.is_moment_comment_section_show}"
             th:attr="x-data=|{name: '${moment.metadata.name}'}|"
             class="operation"
           >
@@ -225,7 +229,10 @@
                 <span th:data-moment-name="${moment.metadata.name}" th:text="${moment.stats.upvote}"></span>
               </a>
             </th:block>
-            <th:block th:if="${theme.config?.moments_styles?.is_moment_comment_section_show and haloCommentEnabled}">
+            <th:block
+              th:if="${theme.config?.moments_styles?.is_moment_comment_section_show
+                       and haloCommentEnabled}"
+            >
               <a @click="setCurrent(name)" class="v-cursor-pointer ml-1">
                 <span
                   class="iconify"

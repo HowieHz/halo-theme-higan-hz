@@ -14,7 +14,7 @@
     <th:block th:if="${pluginFinder.available('PluginFeed')}">
       <th:block th:each="contributor : ${post?.contributors}">
         <link
-          th:if="${contributor.permalink} != '/authors/ghost'"
+          th:unless="#strings.equals(${contributor.permalink}, '/authors/ghost')"
           rel="alternate"
           type="application/rss+xml"
           th:title="'Posts - Author: ' + ${contributor?.displayName}"
@@ -22,7 +22,7 @@
         />
       </th:block>
 
-      <th:block th:if="${!#lists.isEmpty(post.categories)}">
+      <th:block th:unless="${#lists.isEmpty(post.categories)}">
         <th:block th:each="categoryLeafNode, categoryLeafNodeIterStat : ${post.categories}">
           <th:block>
             <th:block th:each="category, iterStat : ${categoryFinder.getBreadcrumbs(categoryLeafNode.metadata?.name)}">
@@ -37,7 +37,7 @@
         </th:block>
       </th:block>
 
-      <th:block th:if="${!#lists.isEmpty(post.tags)}">
+      <th:block th:unless="${#lists.isEmpty(post.tags)}">
         <th:block th:each="tag, iterStat : ${post.tags}">
           <link
             rel="alternate"
@@ -50,7 +50,8 @@
     </th:block>
     <script src="/src/scripts/pages/post.ts" type="module"></script>
     <th:block
-      th:if="${theme.config?.post_styles?.is_post_comment_section_show and haloCommentEnabled}"
+      th:if="${theme.config?.post_styles?.is_post_comment_section_show
+               and haloCommentEnabled}"
       th:insert="~{components/halo-comment-widget/template :: headContent}"
     ></th:block>
   </head>
@@ -94,7 +95,7 @@
             th:each="contributor : ${post?.contributors}"
           >
             <a
-              th:if="${contributor.permalink} != '/authors/ghost'"
+              th:unless="#strings.equals(${contributor.permalink}, '/authors/ghost')"
               th:href="${contributor.permalink}"
               itemprop="name"
               th:text="${contributor?.displayName}"
@@ -132,7 +133,7 @@
           <span class="meta-separator hidden before:content-['|'] last:hidden sm:inline"></span>
 
           <!--/* 使用 sm:inlne 而不是 sm:inline-block 是希望能在很多“分类面包屑”的情况下自动换行 */-->
-          <div class="article-category block sm:inline" th:if="${!#lists.isEmpty(post.categories)}">
+          <div class="article-category block sm:inline" th:unless="${#lists.isEmpty(post.categories)}">
             <th:block th:each="categoryLeafNode, categoryLeafNodeIterStat : ${post.categories}">
               <!--/* inline-block 使一个“分类面包屑”不会被分到两行 */-->
               <span class="categoryBreadcrumbs inline-block">
@@ -148,9 +149,13 @@
                   >
                     文章分类名替换位 </a
                   ><!--/*
-                  */--><span th:if="${!iterStat.last}"> ></span
+                  */--><span th:unless="${iterStat.last}"> ></span
                   ><!--/* 除最后一个“分类面包屑”没有逗号，其他“分类面包屑”末尾都有逗号，并且和这个“分类面包屑”保持在一行。
-                  */--><span th:if="${iterStat.last and !categoryLeafNodeIterStat.last}">,</span>
+                  */--><span
+                    th:if="${iterStat.last
+                             and !categoryLeafNodeIterStat.last}"
+                    >,</span
+                  >
                   <!--/* 逗号需要写在此层 th:block，然后用注释连接起来，否则逗号前会出现空格 */-->
                 </th:block>
               </span>
@@ -158,7 +163,7 @@
           </div>
 
           <!--/* 使用 sm:inlne 而不是 sm:inline-block 是希望能在很多标签项的情况下自动换行 */-->
-          <div class="article-tag block sm:inline" th:if="${!#lists.isEmpty(post.tags)}">
+          <div class="article-tag block sm:inline" th:unless="${#lists.isEmpty(post.tags)}">
             <th:block th:each="tag, iterStat : ${post.tags}">
               <!--/* inline-block 保证一个标签项的内容保持在一行。 */-->
               <span class="inline-block">
@@ -176,7 +181,7 @@
                 >
                   文章标签名替换位 </a
                 ><!--/*
-                */--><span th:if="${!iterStat.last}">,</span>
+                */--><span th:unless="${iterStat.last}">,</span>
               </span>
             </th:block>
           </div>
@@ -195,8 +200,9 @@
           <span
             class="inline-block"
             th:if="${theme.config?.post_styles?.is_show_post_estimated_reading_time}"
-            th:with="wordCount = ${pluginFinder.available('extra-api', '3.*') ? 
-              extraApiStatsFinder.getPostWordCount({name: post.metadata.name}) : #strings.length(post.content?.content)/2 }"
+            th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
+                                   ? extraApiStatsFinder.getPostWordCount({name: post.metadata.name})
+                                   : #strings.length(post.content?.content) / 2 }"
             th:title="#{page.post.estimated-reading-time(#{common.words(${wordCount})})}"
           >
             <span class="iconify mdi--clock-outline"></span>
@@ -213,8 +219,9 @@
           <span
             class="inline-block"
             th:if="${theme.config?.post_styles?.is_show_post_word_count}"
-            th:with="wordCount = ${pluginFinder.available('extra-api', '3.*') ? 
-              extraApiStatsFinder.getPostWordCount({name: post.metadata.name}) : #strings.length(post.content?.content)/2 }"
+            th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
+                                   ? extraApiStatsFinder.getPostWordCount({name: post.metadata.name})
+                                   : #strings.length(post.content?.content) / 2 }"
             th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
           >
             <span class="iconify fluent--text-edit-style-character-a-32-regular"></span>
@@ -261,7 +268,7 @@
       <!--/* 改进点：进行检查让推荐列表不出现当前页面文章 */-->
       <th:block
         th:if="${theme.config?.post_styles?.is_post_recommended_articles_show
-            and not #lists.isEmpty(post.categories)}"
+                 and !#lists.isEmpty(post.categories)}"
         th:with="firstCategoryName=${post.categories[0].metadata.name},
                    n=${#conversions.convert(theme.config?.post_styles?.post_recommended_articles_count, 'java.lang.Integer')},
                    postFinderResult=${postFinder.list({

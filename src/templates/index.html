@@ -11,21 +11,22 @@
 >
   <head>
     <script src="/src/scripts/pages/index.ts" type="module"></script>
-    <th:block th:if="${theme?.config.index_styles?.list_layout=='post-list-summary'}">
+    <th:block th:if="${theme?.config.index_styles?.list_layout == 'post-list-summary'}">
       <th:block th:insert="~{components/list-post-summary/template :: headContent}"></th:block>
     </th:block>
-    <th:block th:if="${theme?.config.index_styles?.list_layout=='simple-post-list'}">
+    <th:block th:if="${theme?.config.index_styles?.list_layout == 'simple-post-list'}">
       <th:block th:insert="~{components/list-post-simple/template :: headContent(showPagination = true)}"></th:block>
     </th:block>
-    <th:block th:if="${theme?.config.index_styles?.list_layout=='moment-list-summary'}">
-      <th:block th:if="${pluginFinder.available('PluginMoments')}">
-        <th:block
-          th:insert="~{components/list-moment-summary/template :: headContent(
-              moments=${momentFinder.list(
-                posts.page,
-                theme.config?.index_styles?.moment_list_page_size)})}"
-        ></th:block>
-      </th:block>
+    <th:block
+      th:if="${theme?.config.index_styles?.list_layout == 'moment-list-summary'
+               and pluginFinder.available('PluginMoments')}"
+    >
+      <th:block
+        th:insert="~{components/list-moment-summary/template :: headContent(
+            moments=${momentFinder.list(
+              posts.page,
+              theme.config?.index_styles?.moment_list_page_size)})}"
+      ></th:block>
     </th:block>
   </head>
   <body>
@@ -35,7 +36,7 @@
         <p class="hitokoto"></p>
       </th:block>
       <th:block
-        th:if="${theme.config?.index_styles?.is_random_sentence_show} and ${not #lists.isEmpty(theme.config?.index_styles?.random_sentence_list)}"
+        th:if="${theme.config?.index_styles?.is_random_sentence_show and !#lists.isEmpty(theme.config?.index_styles?.random_sentence_list)}"
       >
         <p
           th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config?.index_styles?.random_sentence_list))}"
@@ -54,7 +55,7 @@
         th:if="${theme.config?.index_styles?.is_i18n_resume_show}"
         th:with="resumeItems = ${theme.config?.index_styles?.i18n_resume}"
       >
-        <th:block th:if="not ${theme.config?.global?.is_i18n_prefix_match_mode}">
+        <th:block th:unless="${theme.config?.global?.is_i18n_prefix_match_mode}">
           <!--/* i18n 公告栏 全等匹配模式 */-->
           <th:block th:each="resumeItem : ${resumeItems}">
             <th:block th:if="${#strings.equals(resumeItem.lang, page_language)}">
@@ -94,13 +95,13 @@
       </th:block>
     </section>
 
-    <p id="findMe" th:if="${not #arrays.isEmpty(theme?.config?.sns?.index_sns)}">
+    <p id="findMe" th:unless="${#arrays.isEmpty(theme?.config?.sns?.index_sns)}">
       <th:block th:text="#{page.index.findMeLeftText}" th:if="${theme.config?.index_styles?.is_show_find_me_left_text}">
         社交资料图标左侧文字替换位</th:block
       >
       <th:block th:each="item : ${theme?.config?.sns?.index_sns}">
         <th:block
-          th:if="${not #strings.equals(item?.type['type'], 'text')} and ${not #strings.equals(item?.type['type'], 'custom_sns')}"
+          th:unless="${#strings.equals(item?.type['type'], 'text') or #strings.equals(item?.type['type'], 'custom_sns')}"
         >
           <a
             class="icon"
@@ -108,55 +109,73 @@
             target="_blank"
             th:attr="aria-label=${item?.type['aria-label']}"
           >
-            <span class="iconify iconify-middle heroicons-outline--rss" th:if="${item?.type['type']=='rss'}"></span>
+            <span
+              class="iconify iconify-middle heroicons-outline--rss"
+              th:if="${#strings.equals(item?.type['type'], 'rss')}"
+            ></span>
             <span
               class="iconify iconify-middle simple-icons--bilibili"
-              th:if="${item?.type['type']=='bilibili'}"
+              th:if="${#strings.equals(item?.type['type'], 'bilibili')}"
             ></span>
             <span
               class="iconify iconify-middle ant-design--dribbble-circle-filled"
-              th:if="${item?.type['type']=='dribbble'}"
+              th:if="${#strings.equals(item?.type['type'], 'dribbble')}"
             ></span>
-            <span class="iconify iconify-middle ic--outline-email" th:if="${item?.type['type']=='email'}"></span>
-            <span class="iconify iconify-middle ic--baseline-facebook" th:if="${item?.type['type']=='facebook'}"></span>
-            <span class="iconify iconify-middle mdi--github" th:if="${item?.type['type']=='github'}"></span>
+            <span
+              class="iconify iconify-middle ic--outline-email"
+              th:if="${#strings.equals(item?.type['type'], 'email')}"
+            ></span>
+            <span
+              class="iconify iconify-middle ic--baseline-facebook"
+              th:if="${#strings.equals(item?.type['type'], 'facebook')}"
+            ></span>
+            <span
+              class="iconify iconify-middle mdi--github"
+              th:if="${#strings.equals(item?.type['type'], 'github')}"
+            ></span>
             <span
               class="iconify iconify-middle ant-design--instagram-filled"
-              th:if="${item?.type['type']=='instagram'}"
+              th:if="${#strings.equals(item?.type['type'], 'instagram')}"
             ></span>
             <span
               class="iconify iconify-middle ant-design--qq-circle-filled"
-              th:if="${item?.type['type']=='qq'}"
+              th:if="${#strings.equals(item?.type['type'], 'qq')}"
             ></span>
             <span
               class="iconify iconify-middle ant-design--reddit-circle-filled"
-              th:if="${item?.type['type']=='reddit'}"
+              th:if="${#strings.equals(item?.type['type'], 'reddit')}"
             ></span>
             <span
               class="iconify iconify-middle mdi--stack-overflow"
-              th:if="${item?.type['type']=='stack_overflow'}"
+              th:if="${#strings.equals(item?.type['type'], 'stack_overflow')}"
             ></span>
-            <span class="iconify iconify-middle ic--baseline-telegram" th:if="${item?.type['type']=='telegram'}"></span>
+            <span
+              class="iconify iconify-middle ic--baseline-telegram"
+              th:if="${#strings.equals(item?.type['type'], 'telegram')}"
+            ></span>
             <span
               class="iconify iconify-middle ant-design--twitter-circle-filled"
-              th:if="${item?.type['type']=='x'}"
+              th:if="${#strings.equals(item?.type['type'], 'x')}"
             ></span>
             <span
               class="iconify iconify-middle ant-design--youtube-filled"
-              th:if="${item?.type['type']=='youtube'}"
+              th:if="${#strings.equals(item?.type['type'], 'youtube')}"
             ></span>
-            <span class="iconify iconify-middle ri--douban-line" th:if="${item?.type['type']=='douban'}"></span>
+            <span
+              class="iconify iconify-middle ri--douban-line"
+              th:if="${#strings.equals(item?.type['type'], 'douban')}"
+            ></span>
             <span
               class="iconify iconify-middle simple-icons--neteasecloudmusic"
-              th:if="${item?.type['type']=='neteasecloudmusic'}"
+              th:if="${#strings.equals(item?.type['type'], 'neteasecloudmusic')}"
             ></span>
             <span
               class="iconify iconify-middle ant-design--weibo-circle-filled"
-              th:if="${item?.type['type']=='weibo'}"
+              th:if="${#strings.equals(item?.type['type'], 'weibo')}"
             ></span>
             <span
               class="iconify iconify-middle ant-design--zhihu-circle-filled"
-              th:if="${item?.type['type']=='zhihu'}"
+              th:if="${#strings.equals(item?.type['type'], 'zhihu')}"
             ></span>
           </a>
         </th:block>
@@ -179,7 +198,7 @@
       </th:block>
     </p>
 
-    <th:block th:if="${theme?.config.index_styles?.list_layout=='post-list-summary'}">
+    <th:block th:if="${theme?.config.index_styles?.list_layout == 'post-list-summary'}">
       <span class="h1" th:if="${theme.config?.index_styles?.is_show_index_post_list_title}">
         <a th:href="@{/archives}" th:text="#{page.index.postListTitle}">首页文章列表标题替换位</a>
       </span>
@@ -187,7 +206,7 @@
         th:insert="~{components/list-post-summary/template :: content(posts = ${posts}, pageTemplateName = 'index')}"
       ></th:block>
     </th:block>
-    <th:block th:if="${theme?.config.index_styles?.list_layout=='simple-post-list'}">
+    <th:block th:if="${theme?.config.index_styles?.list_layout == 'simple-post-list'}">
       <span class="h1" th:if="${theme.config?.index_styles?.is_show_index_post_list_title}">
         <a th:href="@{/archives}" th:text="#{page.index.postListTitle}">首页文章列表标题替换位</a>
       </span>
@@ -195,7 +214,7 @@
         th:insert="~{components/list-post-simple/template :: content(posts = ${posts}, showPagination = true, pageTemplateName = 'index')}"
       ></th:block>
     </th:block>
-    <th:block th:if="${theme?.config.index_styles?.list_layout=='moment-list-summary'}">
+    <th:block th:if="${theme?.config.index_styles?.list_layout == 'moment-list-summary'}">
       <th:block th:if="${pluginFinder.available('PluginMoments')}">
         <th:block
           th:insert="~{components/list-moment-summary/template :: content(
