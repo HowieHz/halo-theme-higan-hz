@@ -1265,7 +1265,10 @@ html[theme="theme-[(${colorSchema.id})]"] {
                     <span th:text="${stats.upvote}" th:if="${item?.type == 'upvote'}"></span>
                     <span th:text="${stats.comment}" th:if="${item?.type == 'comment'}"></span>
                     <span th:text="${stats.category}" th:if="${item?.type == 'category'}"></span>
-                    <span th:text="${extraApiStatsFinder.getPostWordCount()}" th:if="${item?.type == 'wordcount'}"></span>
+                    <span
+                      th:text="${extraApiStatsFinder.getPostWordCount()}"
+                      th:if="${item?.type == 'wordcount'}"
+                    ></span>
                   </th:block>
                   <th:block th:if="${item?.i18n_text}">
                     <span th:text="#{common.siteTotalVisit(${stats.visit})}" th:if="${item?.type == 'visit'}"></span>

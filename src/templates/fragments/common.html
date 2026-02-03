@@ -170,8 +170,10 @@
                        ? #strings.substring(site.url, 0, #strings.length(site.url) - 1)
                        : site.url}"
 >
-  <th:block th:with="permalink = ${siteUrl} + ${originPermalink},
-                     title = ${title}">
+  <th:block
+    th:with="permalink = ${siteUrl} + ${originPermalink},
+                     title = ${title}"
+  >
     <ul>
       <script th:inline="javascript">
         function nativeShare(link) {
