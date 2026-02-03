@@ -4811,6 +4811,44 @@ HTML 代码也是可以的：
 
 应用范围：[`/categories/{slug}`](/reference/template-map#:~:text=/categories/%7Bslug%7D)。
 
+### 显示分类 RSS 订阅按钮
+
+::: info 🎯 用途
+
+在分类详情页显示 RSS 订阅按钮。
+
+:::
+::: info 📂 配置项位置
+
+分类详情页样式 -> 分类 RSS 订阅按钮
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=分类%20RSS%20订阅按钮" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.category_page_styles?.is_show_rss_button`
+
+:::
+::: info ⚠️ 外部约束
+
+需 [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)启用后方可使用。
+
+:::
+
 ### 分类详情页文章列表显示文章发布时间
 
 ::: info 🎯 用途
@@ -4877,21 +4915,25 @@ HTML 代码也是可以的：
 
 :::
 
-### 显示分类 RSS 订阅按钮
+## 标签集合页样式
+
+应用范围：[`/tags`](/reference/template-map#:~:text=/tags)。
+
+### 显示标签 RSS 订阅按钮
 
 ::: info 🎯 用途
 
-在分类详情页显示 RSS 订阅按钮。
+在标签详情页显示 RSS 订阅按钮。
 
 :::
 ::: info 📂 配置项位置
 
-分类详情页样式 -> 分类 RSS 订阅按钮
+标签详情页样式 -> 显示标签 RSS 订阅按钮
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=分类%20RSS%20订阅按钮" />
+<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=显示标签%20RSS%20订阅按钮" />
 
 :::
 ::: info 🏷️ 类型
@@ -4906,7 +4948,7 @@ HTML 代码也是可以的：
 :::
 ::: info 🧩 模板变量
 
-`theme.config?.category_page_styles?.is_show_rss_button`
+`theme.config?.tag_page_styles?.is_show_rss_button`
 
 :::
 ::: info ⚠️ 外部约束
@@ -4914,10 +4956,6 @@ HTML 代码也是可以的：
 需 [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)启用后方可使用。
 
 :::
-
-## 标签集合页样式
-
-应用范围：[`/tags`](/reference/template-map#:~:text=/tags)。
 
 ### 标签集合页页面描述
 
@@ -5109,44 +5147,6 @@ HTML 代码也是可以的：
 ::: info 🧩 模板变量
 
 `theme.config?.tag_page_styles?.is_show_post_views_in_post_list`
-
-:::
-
-### 显示标签 RSS 订阅按钮
-
-::: info 🎯 用途
-
-在标签详情页显示 RSS 订阅按钮。
-
-:::
-::: info 📂 配置项位置
-
-标签详情页样式 -> 显示标签 RSS 订阅按钮
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=显示标签%20RSS%20订阅按钮" />
-
-:::
-::: info 🏷️ 类型
-
-布尔值
-
-:::
-::: info ⭐ 默认值
-
-`false`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.tag_page_styles?.is_show_rss_button`
-
-:::
-::: info ⚠️ 外部约束
-
-需 [RSS 订阅插件](/guide/plugin-compatibility#rss-订阅插件)启用后方可使用。
 
 :::
 

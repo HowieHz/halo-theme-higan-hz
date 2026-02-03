@@ -4816,6 +4816,44 @@ Boolean
 
 Application Range: [`/categories/{slug}`](/reference/template-map#:~:text=/categories/%7Bslug%7D).
 
+### Show Category RSS Subscription Button
+
+::: info 🎯 Purpose
+
+Display RSS subscription button on the category detail page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Category Detail Page Style -> Category RSS Subscription Button
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Show%20RSS%20subscription%20button" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.category_page_styles?.is_show_rss_button`
+
+:::
+::: info ⚠️ External Constraints
+
+Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscription-plugin) to be enabled.
+
+:::
+
 ### Display Post Publish Date in Category Details Page Post List
 
 ::: info 🎯 Purpose
@@ -4879,44 +4917,6 @@ Boolean
 ::: info 🧩 Template Variable
 
 `theme.config?.category_page_styles?.is_show_post_views_in_post_list`
-
-:::
-
-### Show Category RSS Subscription Button
-
-::: info 🎯 Purpose
-
-Display RSS subscription button on the category detail page.
-
-:::
-::: info 📂 Configuration Item Location
-
-Category Detail Page Style -> Category RSS Subscription Button
-
-:::
-::: info ⚡ Quick Jump
-
-<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Show%20RSS%20subscription%20button" />
-
-:::
-::: info 🏷️ Type
-
-Boolean
-
-:::
-::: info ⭐ Default Value
-
-`false`
-
-:::
-::: info 🧩 Template Variable
-
-`theme.config?.category_page_styles?.is_show_rss_button`
-
-:::
-::: info ⚠️ External Constraints
-
-Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscription-plugin) to be enabled.
 
 :::
 
@@ -5051,6 +5051,44 @@ Default (internal value `default`)
 
 Application Range: [`/tags/{slug}`](/reference/template-map#:~:text=/tags/%7Bslug%7D).
 
+### Show Tag RSS Subscription Button
+
+::: info 🎯 Purpose
+
+Display RSS subscription button on the tag detail page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Tag Detail Page Style -> Display Tag RSS Subscription Button
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Show%20RSS%20subscription%20button" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.tag_page_styles?.is_show_rss_button`
+
+:::
+::: info ⚠️ External Constraints
+
+Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscription-plugin) to be enabled.
+
+:::
+
 ### Display Post Publish Date in Tag Details Page Post List
 
 ::: info 🎯 Purpose
@@ -5114,44 +5152,6 @@ Boolean
 ::: info 🧩 Template Variable
 
 `theme.config?.tag_page_styles?.is_show_post_views_in_post_list`
-
-:::
-
-### Show Tag RSS Subscription Button
-
-::: info 🎯 Purpose
-
-Display RSS subscription button on the tag detail page.
-
-:::
-::: info 📂 Configuration Item Location
-
-Tag Detail Page Style -> Display Tag RSS Subscription Button
-
-:::
-::: info ⚡ Quick Jump
-
-<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Show%20RSS%20subscription%20button" />
-
-:::
-::: info 🏷️ Type
-
-Boolean
-
-:::
-::: info ⭐ Default Value
-
-`false`
-
-:::
-::: info 🧩 Template Variable
-
-`theme.config?.tag_page_styles?.is_show_rss_button`
-
-:::
-::: info ⚠️ External Constraints
-
-Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscription-plugin) to be enabled.
 
 :::
 
