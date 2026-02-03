@@ -136,7 +136,7 @@
                   th:href="@{${authorPage}}"
                   th:text="${moment.owner?.displayName}"
                 ></a>
-                <span 
+                <span
                   class="color-base-content-80 no-underline"
                   th:if="${not (#strings.equals(pageTemplateName, 'index') or #strings.equals(pageTemplateName, 'moments')) or
                             (#strings.equals(pageTemplateName, 'index') and theme?.config.index_styles?.is_show_moment_pubdate) or
