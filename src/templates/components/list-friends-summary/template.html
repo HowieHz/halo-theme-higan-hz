@@ -5,7 +5,7 @@
 <!--/*-->
 <body></body>
 <!--*/-->
-<th:block th:fragment="content(friends)">
+<th:block th:fragment="content(friends, pageTemplateName)">
   <section class="friends-list-summary flex flex-auto flex-col">
     <div class="flex flex-auto flex-col space-y-10">
       <th:block th:each="friend : ${friends.items}" th:with="spec = ${friend.spec}">
@@ -89,6 +89,13 @@
         </div>
       </th:block>
     </div>
-    <th:block th:insert="~{components/pagination/template :: content(${friends})}"></th:block>
+    <th:block
+      th:if="${#strings.equals(pageTemplateName, 'index')}"
+      th:insert="~{components/pagination/template :: content(posts = ${friends}, isListResult = true)}"
+    ></th:block>
+    <th:block
+      th:if="${#strings.equals(pageTemplateName, 'friends')}"
+      th:insert="~{components/pagination/template :: content(posts = ${friends})}"
+    ></th:block>
   </section>
 </th:block>

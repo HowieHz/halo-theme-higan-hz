@@ -15,12 +15,13 @@ Head Content (for including necessary scripts/styles)
 Content Insertion
 
 ```html
-<th:block th:insert="~{components/list-friends-summary/template :: content(${friends})}"></th:block>
+<th:block th:insert="~{components/list-friends-summary/template :: content(friends, pageTemplateName)}"></th:block>
 ```
 
 ## Parameters
 
 - `friends`: [UrlContextListResult\<FriendPostVo\>](#urlcontextlistresultfriendpostvo) - Friends' Posts data, including pagination information.
+- `pageTemplateName`: pass in a string representing the page template name.
 
 ## TypeDefinitions
 
