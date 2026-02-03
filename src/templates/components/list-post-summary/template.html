@@ -30,8 +30,7 @@
                 ></span>
               </h2>
               <time
-                th:if="${pageTemplateName == null
-                      or (pageTemplateName == 'index' and theme.config?.index_styles?.is_show_post_pubdate_in_post_list_summary)}"
+                th:if="${#strings.equals(pageTemplateName, 'index') and theme.config?.index_styles?.is_show_post_pubdate_in_post_list_summary}"
                 class="color-base-content-80 relative z-10 order-first mb-3 flex items-center pl-3.5 text-sm md:hidden"
                 th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
               >
@@ -163,8 +162,7 @@
               />
             </div>
             <time
-              th:if="${pageTemplateName == null
-                    or (pageTemplateName == 'index' and theme.config?.index_styles?.is_show_post_pubdate_in_post_list_summary)}"
+              th:if="${#strings.equals(pageTemplateName, 'index') and theme.config?.index_styles?.is_show_post_pubdate_in_post_list_summary}"
               class="color-base-content-80 relative z-10 order-first mt-1 mb-3 hidden items-center text-sm md:flex"
               th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
               th:text="${#temporals.format(post.spec.publishTime, 'MMMM dd yyyy')}"
