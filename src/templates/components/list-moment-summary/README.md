@@ -28,4 +28,4 @@ Content Insertion
 ## Parameters
 
 - `moments`: A collection of moment objects to be displayed in the list.
-- `pageTemplateName`: An optional parameter, pass in a string representing the page template name.
+- `pageTemplateName`: pass in a string representing the page template name.
