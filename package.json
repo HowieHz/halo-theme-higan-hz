@@ -77,7 +77,7 @@
     "@iconify-json/pepicons-pencil": "^1.2.3",
     "@iconify-json/ph": "^1.2.2",
     "@iconify-json/ri": "^1.2.9",
-    "@iconify-json/simple-icons": "^1.2.68",
+    "@iconify-json/simple-icons": "^1.2.69",
     "@iconify-json/tabler": "^1.2.26",
     "@iconify-json/typcn": "^1.2.2",
     "@iconify-json/uil": "^1.2.3",
@@ -87,20 +87,20 @@
     "@types/node": "^25.2.0",
     "@types/picomatch": "^4.0.2",
     "@typescript-eslint/parser": "^8.54.0",
-    "@typescript/native-preview": "7.0.0-dev.20260201.1",
+    "@typescript/native-preview": "7.0.0-dev.20260203.1",
     "autocorrect-node": "^2.14.0",
     "browserslist": "^4.28.1",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-html": "^8.1.4",
     "eslint-plugin-import-x": "^4.16.1",
-    "eslint-plugin-oxlint": "^1.42.0",
+    "eslint-plugin-oxlint": "^1.43.0",
     "eslint-plugin-vue": "^10.7.0",
     "globals": "^17.3.0",
     "husky": "^9.1.7",
     "lightningcss": "^1.31.1",
     "markdownlint-cli": "^0.47.0",
-    "oxlint": "^1.42.0",
+    "oxlint": "^1.43.0",
     "oxlint-tsgolint": "^0.11.4",
     "picomatch": "^4.0.3",
     "prettier": "^3.8.1",
@@ -120,7 +120,7 @@
     "vue-eslint-parser": "^10.2.0"
   },
   "dependencies": {
-    "alpinejs": "^3.15.6"
+    "alpinejs": "^3.15.8"
   },
   "overrides": {
     "vite": "npm:rolldown-vite@^7.3.0"
