@@ -1215,6 +1215,11 @@ spec:
           label: 瞬间列表显示条目作者昵称
           value: true
         - $formkit: switch
+          name: is_show_moment_pubdate
+          if: "$list_layout === 'moment-list-summary'"
+          label: 瞬间列表显示条目发布时间
+          value: true
+        - $formkit: switch
           name: is_pin_icon_show
           label: 文章列表置顶图标
           value: true

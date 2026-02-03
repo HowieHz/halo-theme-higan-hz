@@ -3483,6 +3483,7 @@ When Moments List is enabled, you can configure
 - [Number of Moments Per Page](#number-of-moments-per-page)
 - [Show Author Avatar in Moment List](#show-author-avatar-in-moment-list)
 - [Show Author Nickname in Moment List](#show-author-nickname-in-moment-list)
+- [Show Post Publication Date in Moment List](#show-post-publication-date-in-moment-list)
 
 :::
 
@@ -4027,6 +4028,41 @@ Boolean
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_moment_nickname`
+
+:::
+
+### Show Post Publication Date in Moment List
+
+::: info 🎯 Purpose
+
+Control whether to display the post publication date in the moment list.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Displayed when [Home Page Style -> Home List Layout](#home-list-layout) is set to "Moment List")
+
+Home Page Style -> Show Post Publication Date in Moment List
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20Post%20Publication%20Date%20in%20Moment%20List" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_show_moment_pubdate`
 
 :::
 
