@@ -1352,7 +1352,9 @@ html[theme="theme-[(${colorSchema.id})]"] {
             <th:block th:if="${theme.config?.global?.is_i18n_prefix_match_mode}">
               <!--/* i18n 页面底部内容 前缀匹配模式 */-->
               <th:block th:each="footerContentItem : ${footerContentItems}">
-                <th:block th:if="${#strings.startsWith(param.lang, footerContentItem.lang)}">
+                <th:block th:if="${param.lang != null
+                                   and footerContentItem.lang != null
+                                   and #strings.startsWith(param.lang, footerContentItem.lang)}">
                   <div class="footer-bottom matched-footer-content">
                     <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
                   </div>
