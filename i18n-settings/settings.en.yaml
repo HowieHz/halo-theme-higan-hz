@@ -1395,6 +1395,11 @@ spec:
       label: Category details page style
       formSchema:
         - $formkit: switch
+          name: is_show_rss_button
+          label: Show RSS subscription button
+          value: false
+          help: "Requires enabling the RSS plugin (https://www.halo.run/store/apps/app-KhIVw)"
+        - $formkit: switch
           name: is_show_post_pubdate_in_post_list
           label: Display post publish date in post list
           value: true
@@ -1402,11 +1407,6 @@ spec:
           name: is_show_post_views_in_post_list
           label: Display post views in post list
           value: false
-        - $formkit: switch
-          name: is_show_rss_button
-          label: Show RSS subscription button
-          value: false
-          help: "Requires enabling the RSS plugin (https://www.halo.run/store/apps/app-KhIVw)"
     - group: tags_page_styles
       label: Tag Collection Page Style
       formSchema:
@@ -1449,6 +1449,11 @@ spec:
       label: Tag details page style
       formSchema:
         - $formkit: switch
+          name: is_show_rss_button
+          label: Show RSS subscription button
+          value: false
+          help: "Requires enabling the RSS plugin (https://www.halo.run/store/apps/app-KhIVw)"
+        - $formkit: switch
           name: is_show_post_pubdate_in_post_list
           label: Display post publish date in post list
           value: true
@@ -1456,11 +1461,6 @@ spec:
           name: is_show_post_views_in_post_list
           label: Display post views in post list
           value: false
-        - $formkit: switch
-          name: is_show_rss_button
-          label: Show RSS subscription button
-          value: false
-          help: "Requires enabling the RSS plugin (https://www.halo.run/store/apps/app-KhIVw)"
     - group: author_page_styles
       label: Author details page style
       formSchema:
@@ -1474,6 +1474,10 @@ spec:
           label: Show RSS subscription button
           value: false
           help: "Requires enabling the RSS plugin (https://www.halo.run/store/apps/app-KhIVw)"
+        - $formkit: switch
+          name: is_show_post_pubdate_in_post_list
+          label: Display post publish date in post list
+          value: true
     - group: archives_page_styles
       label: Archives page style
       formSchema:
