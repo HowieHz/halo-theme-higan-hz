@@ -4816,6 +4816,44 @@ Boolean
 
 Application Range: [`/categories/{slug}`](/reference/template-map#:~:text=/categories/%7Bslug%7D).
 
+### Show Category RSS Subscription Button
+
+::: info 🎯 Purpose
+
+Display RSS subscription button on the category detail page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Category Detail Page Style -> Category RSS Subscription Button
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Show%20RSS%20subscription%20button" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.category_page_styles?.is_show_rss_button`
+
+:::
+::: info ⚠️ External Constraints
+
+Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscription-plugin) to be enabled.
+
+:::
+
 ### Display Post Publish Date in Category Details Page Post List
 
 ::: info 🎯 Purpose
@@ -4879,44 +4917,6 @@ Boolean
 ::: info 🧩 Template Variable
 
 `theme.config?.category_page_styles?.is_show_post_views_in_post_list`
-
-:::
-
-### Show Category RSS Subscription Button
-
-::: info 🎯 Purpose
-
-Display RSS subscription button on the category detail page.
-
-:::
-::: info 📂 Configuration Item Location
-
-Category Detail Page Style -> Category RSS Subscription Button
-
-:::
-::: info ⚡ Quick Jump
-
-<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Show%20RSS%20subscription%20button" />
-
-:::
-::: info 🏷️ Type
-
-Boolean
-
-:::
-::: info ⭐ Default Value
-
-`false`
-
-:::
-::: info 🧩 Template Variable
-
-`theme.config?.category_page_styles?.is_show_rss_button`
-
-:::
-::: info ⚠️ External Constraints
-
-Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscription-plugin) to be enabled.
 
 :::
 
@@ -5051,39 +5051,6 @@ Default (internal value `default`)
 
 Application Range: [`/tags/{slug}`](/reference/template-map#:~:text=/tags/%7Bslug%7D).
 
-### Display Post Views in Tag Details Page Post List
-
-::: info 🎯 Purpose
-
-Display post view count on the tag detail page.
-
-:::
-::: info 📂 Configuration Item Location
-
-Tag Detail Page Style -> Display Post View Count in Post List
-
-:::
-::: info ⚡ Quick Jump
-
-<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Display%20post%20views%20in%20post%20list" />
-
-:::
-::: info 🏷️ Type
-
-Boolean
-
-:::
-::: info ⭐ Default Value
-
-`false`
-
-:::
-::: info 🧩 Template Variable
-
-`theme.config?.tag_page_styles?.is_show_post_views_in_post_list`
-
-:::
-
 ### Show Tag RSS Subscription Button
 
 ::: info 🎯 Purpose
@@ -5119,6 +5086,72 @@ Boolean
 ::: info ⚠️ External Constraints
 
 Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscription-plugin) to be enabled.
+
+:::
+
+### Display Post Publish Date in Tag Details Page Post List
+
+::: info 🎯 Purpose
+
+Display post publication date in the post list on the tag detail page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Tag Detail Page Style -> Display post publish date in post list
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Display%20post%20publish%20date%20in%20post%20list" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.tag_page_styles?.is_show_post_pubdate_in_post_list`
+
+:::
+
+### Display Post Views in Tag Details Page Post List
+
+::: info 🎯 Purpose
+
+Display post view count on the tag detail page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Tag Detail Page Style -> Display Post View Count in Post List
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Display%20post%20views%20in%20post%20list" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.tag_page_styles?.is_show_post_views_in_post_list`
 
 :::
 
@@ -5199,6 +5232,39 @@ Boolean
 ::: info ⚠️ External Constraints
 
 Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscription-plugin) to be enabled.
+
+:::
+
+### Display Post Publish Date in Author Detail Page Post List
+
+::: info 🎯 Purpose
+
+Display post publish date in the post list on the author detail page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Author Detail Page Style -> Display post publish date in post list
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=Display%20post%20publish%20date%20in%20post%20list" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.author_page_styles?.is_show_post_pubdate_in_post_list`
 
 :::
 

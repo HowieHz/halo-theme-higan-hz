@@ -1395,6 +1395,11 @@ spec:
       label: 分类详情页样式
       formSchema:
         - $formkit: switch
+          name: is_show_rss_button
+          label: 分类 RSS 订阅按钮
+          value: false
+          help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
+        - $formkit: switch
           name: is_show_post_pubdate_in_post_list
           label: 文章列表显示文章发布时间
           value: true
@@ -1402,11 +1407,6 @@ spec:
           name: is_show_post_views_in_post_list
           label: 文章列表显示文章阅读量
           value: false
-        - $formkit: switch
-          name: is_show_rss_button
-          label: 分类 RSS 订阅按钮
-          value: false
-          help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
     - group: tags_page_styles
       label: 标签集合页样式
       formSchema:
@@ -1449,14 +1449,18 @@ spec:
       label: 标签详情页样式
       formSchema:
         - $formkit: switch
-          name: is_show_post_views_in_post_list
-          label: 文章列表显示文章阅读量
-          value: false
-        - $formkit: switch
           name: is_show_rss_button
           label: 显示标签 RSS 订阅按钮
           value: false
           help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
+        - $formkit: switch
+          name: is_show_post_pubdate_in_post_list
+          label: 文章列表显示文章发布时间
+          value: true
+        - $formkit: switch
+          name: is_show_post_views_in_post_list
+          label: 文章列表显示文章阅读量
+          value: false
     - group: author_page_styles
       label: 作者详情页样式
       formSchema:
@@ -1470,6 +1474,10 @@ spec:
           label: 显示作者 RSS 订阅按钮
           value: false
           help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
+        - $formkit: switch
+          name: is_show_post_pubdate_in_post_list
+          label: 文章列表显示文章发布时间
+          value: true
     - group: archives_page_styles
       label: 归档页样式
       formSchema:
