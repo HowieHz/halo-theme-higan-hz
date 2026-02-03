@@ -32,7 +32,7 @@
     </th:block>
     <th:block
       th:if="${theme?.config.index_styles?.list_layout == 'friends-list-summary'
-               and pluginFinder.available('PluginFriends')}"
+               and pluginFinder.available('plugin-friends')}"
     >
       <th:block
         th:insert="~{components/list-friends-summary/template :: headContent(
@@ -253,7 +253,7 @@
       </th:block>
     </th:block>
     <th:block th:if="${theme?.config.index_styles?.list_layout == 'friends-list-summary'}">
-      <th:block th:if="${pluginFinder.available('PluginFriends')}">
+      <th:block th:if="${pluginFinder.available('plugin-friends')}">
         <th:block
           th:insert="~{components/list-friends-summary/template :: content(
             friends = ${friendFinder.list({
@@ -263,7 +263,7 @@
           )}"
         ></th:block>
       </th:block>
-      <th:block th:unless="${pluginFinder.available('PluginFriends')}">
+      <th:block th:unless="${pluginFinder.available('plugin-friends')}">
         <p th:text="#{page.index.friendsPluginNotAvailable}">插件未启用提示替换位</p>
         <p>
           [[#{page.index.friendsPluginNotAvailableDescription}]]<a
