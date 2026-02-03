@@ -4234,7 +4234,6 @@ Boolean
 
 :::
 
-
 ### Number of Friends Per Page
 
 ::: info 🎯 Purpose
@@ -4514,6 +4513,7 @@ Boolean
 `theme.config?.index_styles?.is_show_friend_permalink_text`
 
 :::
+
 ### Top Icon Display on Post List
 
 ::: info 🎯 Purpose
