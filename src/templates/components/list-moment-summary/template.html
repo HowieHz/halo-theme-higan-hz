@@ -140,7 +140,8 @@
                 ></a>
                 <span
                   class="color-base-content-80 no-underline"
-                  th:if="${not (#strings.equals(pageTemplateName, 'index') or #strings.equals(pageTemplateName, 'moments')) or
+                  th:if="${not (#strings.equals(pageTemplateName, 'index') or
+                                #strings.equals(pageTemplateName, 'moments')) or
                             (#strings.equals(pageTemplateName, 'index') and theme?.config.index_styles?.is_show_moment_pubdate) or
                             (#strings.equals(pageTemplateName, 'moments') and theme?.config.moments_styles?.is_show_post_pubdate)}"
                 >
@@ -156,7 +157,8 @@
                 inline-block 保证图标和数字在一行 */-->
                 <span
                   class="color-base-content-80 inline-block no-underline"
-                  th:if="${not (#strings.equals(pageTemplateName, 'index') or #strings.equals(pageTemplateName, 'moments')) or
+                  th:if="${not (#strings.equals(pageTemplateName, 'index') or
+                                #strings.equals(pageTemplateName, 'moments')) or
                             (#strings.equals(pageTemplateName, 'index') and theme?.config.index_styles?.is_show_moment_estimated_reading_time) or
                             (#strings.equals(pageTemplateName, 'moments') and theme?.config.moments_styles?.is_show_post_estimated_reading_time)}"
                   th:with="wordCount = ${pluginFinder.available('extra-api', '3.*') ? 
@@ -176,7 +178,8 @@
                 inline-block 保证图标和数字在一行 */-->
                 <span
                   class="color-base-content-80 inline-block no-underline"
-                  th:if="${not (#strings.equals(pageTemplateName, 'index') or #strings.equals(pageTemplateName, 'moments')) or
+                  th:if="${not (#strings.equals(pageTemplateName, 'index') or
+                                #strings.equals(pageTemplateName, 'moments')) or
                             (#strings.equals(pageTemplateName, 'index') and theme?.config.index_styles?.is_show_moment_word_count) or
                             (#strings.equals(pageTemplateName, 'moments') and theme?.config.moments_styles?.is_show_post_word_count)}"
                   th:with="wordCount = ${pluginFinder.available('extra-api', '3.*') ? 
@@ -211,15 +214,19 @@
                 </div>
               </div>
               <div
-                th:if="${(not (#strings.equals(pageTemplateName, 'index') or #strings.equals(pageTemplateName, 'moments')) or
+                th:if="${(not (#strings.equals(pageTemplateName, 'index') or
+                               #strings.equals(pageTemplateName, 'moments')) or
                           (#strings.equals(pageTemplateName, 'index') and (theme?.config.index_styles?.is_moment_upvote_button_show or theme?.config.index_styles?.is_moment_comment_section_show)) or
                           (#strings.equals(pageTemplateName, 'moments') and (theme?.config.moments_styles?.is_moment_upvote_button_show or theme?.config.moments_styles?.is_moment_comment_section_show)))}"
                 th:attr="x-data=|{name: '${moment.metadata.name}'}|"
                 class="operation"
               >
-                <th:block th:if="${not (#strings.equals(pageTemplateName, 'index') or #strings.equals(pageTemplateName, 'moments')) or
+                <th:block
+                  th:if="${not (#strings.equals(pageTemplateName, 'index') or
+                                        #strings.equals(pageTemplateName, 'moments')) or
                                     (#strings.equals(pageTemplateName, 'index') and theme?.config.index_styles?.is_moment_upvote_button_show) or
-                                    (#strings.equals(pageTemplateName, 'moments') and theme?.config.moments_styles?.is_moment_upvote_button_show)}">
+                                    (#strings.equals(pageTemplateName, 'moments') and theme?.config.moments_styles?.is_moment_upvote_button_show)}"
+                >
                   <a
                     th:href="|javascript:handleLike('${moment.metadata.name}')|"
                     th:data-moment-name="${moment.metadata.name}"
@@ -235,7 +242,8 @@
                   </a>
                 </th:block>
                 <th:block
-                  th:if="${(not (#strings.equals(pageTemplateName, 'index') or #strings.equals(pageTemplateName, 'moments')) or
+                  th:if="${(not (#strings.equals(pageTemplateName, 'index') or
+                                 #strings.equals(pageTemplateName, 'moments')) or
                             (#strings.equals(pageTemplateName, 'index') and theme?.config.index_styles?.is_moment_comment_section_show) or
                             (#strings.equals(pageTemplateName, 'moments') and theme?.config.moments_styles?.is_moment_comment_section_show)) and haloCommentEnabled}"
                 >
@@ -266,9 +274,12 @@
         th:insert="~{components/pagination/template :: content(posts=${moments})}"
       ></th:block>
     </div>
-    <script th:inline="javascript" th:if="${not (#strings.equals(pageTemplateName, 'index') or #strings.equals(pageTemplateName, 'moments')) or
+    <script
+      th:inline="javascript"
+      th:if="${not (#strings.equals(pageTemplateName, 'index') or #strings.equals(pageTemplateName, 'moments')) or
                                                 (#strings.equals(pageTemplateName, 'index') and theme?.config.index_styles?.is_moment_upvote_button_show) or
-                                                (#strings.equals(pageTemplateName, 'moments') and theme?.config.moments_styles?.is_moment_upvote_button_show)}">
+                                                (#strings.equals(pageTemplateName, 'moments') and theme?.config.moments_styles?.is_moment_upvote_button_show)}"
+    >
       const likes_localstorage_key = "higan.likes.moment.ids";
       let likedMomentNames = JSON.parse(localStorage.getItem(likes_localstorage_key) || "[]");
       likedMomentNames.forEach((momentName) => {
