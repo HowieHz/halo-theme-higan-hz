@@ -49,7 +49,7 @@
       <!--/* search widget button */-->
       <li
         th:if="${item?.type == 'search'
-                   and pluginFinder.available('PluginSearchWidget')}"
+                 and pluginFinder.available('PluginSearchWidget')}"
       >
         <a
           href="javascript:SearchWidget.open();"
@@ -87,7 +87,7 @@
   <!--/* 多语言前缀匹配模式 start */-->
   <th:block
     th:if="${theme.config?.global?.is_i18n_menu_show
-                     and theme.config?.global?.is_i18n_prefix_match_mode}"
+             and theme.config?.global?.is_i18n_prefix_match_mode}"
   >
     <th:block th:each="menuItem : ${menuItems}">
       <th:block th:if="${#strings.startsWith(page_language, menuItem.spec.displayName)}">
@@ -172,7 +172,7 @@
 >
   <th:block
     th:with="permalink = ${siteUrl} + ${originPermalink},
-                     title = ${title}"
+             title = ${title}"
   >
     <ul>
       <script th:inline="javascript">
