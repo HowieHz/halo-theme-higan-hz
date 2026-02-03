@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [1.56.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.56.0...v1.56.1) (2026-2-4)
+
+### 🐛 错误修复
+
+- 修复模板中未闭合的引号。
+
 ## [1.56.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.55.1...v1.56.0) (2026-2-4)
 
 ### 🚀 新功能
