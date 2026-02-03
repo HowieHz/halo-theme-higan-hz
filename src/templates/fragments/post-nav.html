@@ -41,7 +41,7 @@
       <span
         id="actions"
         class="float-right mt-8 mr-8 hidden text-right lg:block"
-        th:with="postCursor=${postFinder.cursor(post.metadata?.name)}"
+        th:with="postCursor = ${postFinder.cursor(post.metadata?.name)}"
       >
         <ul class="float-right block">
           <li>

@@ -24,7 +24,7 @@
       <th:block th:if="${theme.config?.tags_page_styles?.tags_sort_order == 'default'}">
         <th:block th:each="tag : ${tags}">
           <li
-            th:with="tagColor=${tag.spec?.color}"
+            th:with="tagColor = ${tag.spec?.color}"
             th:style="${tagColor != null
                       and !#strings.equalsIgnoreCase(tagColor, '#ffffff')}
                     ? |--tag-hash-color:${tagColor};|

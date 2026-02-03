@@ -6,23 +6,39 @@
   <header id="header">
     <a th:href="@{/}">
       <th:block
-        th:with="styles=${theme.config?.styles},
-                fallbackLogoAvif=${#theme.assets('/images/logo.avif')},
-                fallbackLogoWebp=${#theme.assets('/images/logo.webp')},
-                fallbackLogoPng=${#theme.assets('/images/logo.png')},
-                logoUri=${#strings.defaultString(#objects.nullSafe(styles?.icon, site?.logo), fallbackLogoAvif)},
-                ext=${logoUri.substring(logoUri.lastIndexOf('.') + 1).toLowerCase()},
-                imageType=${ext == 'avif' ? 'image/avif' : 
-                  (ext == 'webp' ? 'image/webp' : 
-                  (ext == 'png' ? 'image/png' : 
-                  (ext == 'apng' ? 'image/apng' : 
-                  ((ext == 'jpg' or ext == 'jpeg' or ext == 'jfif' or ext == 'pjpeg' or ext == 'pjp') ? 'image/jpeg' : 
-                  (ext == 'gif' ? 'image/gif' : 
-                  (ext == 'svg' ? 'image/svg+xml' : 
-                  (ext == 'bmp' ? 'image/bmp' : 
-                  ((ext == 'ico' or ext == 'cur') ? 'image/x-icon' : 
-                  ((ext == 'tif' or ext == 'tiff') ? 'image/tiff' : 
-                  'image/png')))))))))}"
+        th:with="styles = ${theme.config?.styles},
+                 fallbackLogoAvif = ${#theme.assets('/images/logo.avif')},
+                 fallbackLogoWebp = ${#theme.assets('/images/logo.webp')},
+                 fallbackLogoPng = ${#theme.assets('/images/logo.png')},
+                 logoUri = ${#strings.defaultString(#objects.nullSafe(styles?.icon, site?.logo), fallbackLogoAvif)},
+                 ext = ${logoUri.substring(logoUri.lastIndexOf('.') + 1).toLowerCase()},
+                 imageType = ${ext == 'avif'
+                               ? 'image/avif'
+                               : (ext == 'webp'
+                                  ? 'image/webp'
+                                  : (ext == 'png'
+                                     ? 'image/png'
+                                     : (ext == 'apng'
+                                        ? 'image/apng'
+                                        : ((ext == 'jpg'
+                                            or ext == 'jpeg'
+                                            or ext == 'jfif'
+                                            or ext == 'pjpeg'
+                                            or ext == 'pjp')
+                                           ? 'image/jpeg'
+                                           : (ext == 'gif'
+                                              ? 'image/gif'
+                                              : (ext == 'svg'
+                                                 ? 'image/svg+xml'
+                                                 : (ext == 'bmp'
+                                                    ? 'image/bmp'
+                                                    : ((ext == 'ico'
+                                                        or ext == 'cur')
+                                                       ? 'image/x-icon'
+                                                       : ((ext == 'tif'
+                                                           or ext == 'tiff')
+                                                          ? 'image/tiff'
+                                                          : 'image/png')))))))))}"
       >
         <div
           id="logo"

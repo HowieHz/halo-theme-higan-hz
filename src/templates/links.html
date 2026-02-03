@@ -44,7 +44,7 @@
           <ul class="links-grid">
             <li
               th:each="link : ${group.links}"
-              th:with="max_lines=${theme.config?.links_page_styles?.link_description_max_lines}"
+              th:with="max_lines = ${theme.config?.links_page_styles?.link_description_max_lines}"
             >
               <a class="link-card" rel="noopener" target="_blank" th:href="@{${link.spec.url}}">
                 <img

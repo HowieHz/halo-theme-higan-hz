@@ -88,7 +88,7 @@
                   <th:block th:each="tag : ${post.tags}">
                     <a
                       class="tag-link color-time"
-                      th:with="tagColor=${tag.spec?.color}"
+                      th:with="tagColor = ${tag.spec?.color}"
                       th:href="@{${tag.status?.permalink}}"
                       th:text="${tag.spec?.displayName}"
                       th:style="${tagColor != null
@@ -141,7 +141,7 @@
               </th:block>
               <th:block
                 th:if="${theme.config?.index_styles?.is_show_post_excerpt_in_post_list_summary}"
-                th:with="max_lines=${theme.config?.index_styles?.post_excerpt_max_lines}"
+                th:with="max_lines = ${theme.config?.index_styles?.post_excerpt_max_lines}"
               >
                 <p
                   class="color-base-content-80 relative z-10 mt-2 mb-0 p-0 text-sm"

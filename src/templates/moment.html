@@ -36,39 +36,55 @@
           <div class="color-base-content-80">
             <span>
               <a
-                th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
+                th:with="authorPage = ${#strings.append('/authors/',moment.owner?.name)}"
                 th:href="@{${authorPage}}"
                 class="inline-block"
               >
                 <picture>
                   <source
-                    th:with="defaultAvifAvatar=${#theme.assets('/images/logo.avif')},
-                            avatarUri=${#strings.defaultString(moment.owner?.avatar, defaultAvifAvatar)},
-                            ext=${avatarUri.substring(avatarUri.lastIndexOf('.') + 1).toLowerCase()},
-                            imageType=${ext == 'avif' ? 'image/avif' : 
-                              (ext == 'webp' ? 'image/webp' : 
-                              (ext == 'png' ? 'image/png' : 
-                              (ext == 'apng' ? 'image/apng' : 
-                              ((ext == 'jpg' or ext == 'jpeg' or ext == 'jfif' or ext == 'pjpeg' or ext == 'pjp') ? 'image/jpeg' : 
-                              (ext == 'gif' ? 'image/gif' : 
-                              (ext == 'svg' ? 'image/svg+xml' : 
-                              (ext == 'bmp' ? 'image/bmp' : 
-                              ((ext == 'ico' or ext == 'cur') ? 'image/x-icon' : 
-                              ((ext == 'tif' or ext == 'tiff') ? 'image/tiff' : 
-                              'image/png')))))))))}"
+                    th:with="defaultAvifAvatar = ${#theme.assets('/images/logo.avif')},
+                             avatarUri = ${#strings.defaultString(moment.owner?.avatar, defaultAvifAvatar)},
+                             ext = ${avatarUri.substring(avatarUri.lastIndexOf('.') + 1).toLowerCase()},
+                             imageType = ${ext == 'avif'
+                                           ? 'image/avif'
+                                           : (ext == 'webp'
+                                              ? 'image/webp'
+                                              : (ext == 'png'
+                                                 ? 'image/png'
+                                                 : (ext == 'apng'
+                                                    ? 'image/apng'
+                                                    : ((ext == 'jpg'
+                                                        or ext == 'jpeg'
+                                                        or ext == 'jfif'
+                                                        or ext == 'pjpeg'
+                                                        or ext == 'pjp')
+                                                       ? 'image/jpeg'
+                                                       : (ext == 'gif'
+                                                          ? 'image/gif'
+                                                          : (ext == 'svg'
+                                                             ? 'image/svg+xml'
+                                                             : (ext == 'bmp'
+                                                                ? 'image/bmp'
+                                                                : ((ext == 'ico'
+                                                                    or ext == 'cur')
+                                                                   ? 'image/x-icon'
+                                                                   : ((ext == 'tif'
+                                                                       or ext == 'tiff')
+                                                                      ? 'image/tiff'
+                                                                      : 'image/png')))))))))}"
                     th:srcset="${avatarUri}"
                     sizes="400px"
                     th:type="${imageType}"
                   />
                   <source
-                    th:with="defaultWebpAvatar=${#theme.assets('/images/logo.webp')}"
+                    th:with="defaultWebpAvatar = ${#theme.assets('/images/logo.webp')}"
                     th:srcset="|${thumbnail.gen(defaultWebpAvatar, 's')} 400w|"
                     sizes="400px"
                     type="image/webp"
                   />
                   <img
                     class="avatar-user avatar"
-                    th:with="defaultPngAvatar=${#theme.assets('/images/logo.png')}"
+                    th:with="defaultPngAvatar = ${#theme.assets('/images/logo.png')}"
                     th:src="${defaultPngAvatar}"
                     size="400px"
                     width="32"
@@ -94,39 +110,55 @@
           <div class="color-base-content-80">
             <span>
               <a
-                th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
+                th:with="authorPage = ${#strings.append('/authors/',moment.owner?.name)}"
                 th:href="@{${authorPage}}"
                 class="inline-block"
               >
                 <picture>
                   <source
-                    th:with="defaultAvifAvatar=${#theme.assets('/images/logo.avif')},
-                            avatarUri=${#strings.defaultString(moment.owner?.avatar, defaultAvifAvatar)},
-                            ext=${avatarUri.substring(avatarUri.lastIndexOf('.') + 1).toLowerCase()},
-                            imageType=${ext == 'avif' ? 'image/avif' : 
-                              (ext == 'webp' ? 'image/webp' : 
-                              (ext == 'png' ? 'image/png' : 
-                              (ext == 'apng' ? 'image/apng' : 
-                              ((ext == 'jpg' or ext == 'jpeg' or ext == 'jfif' or ext == 'pjpeg' or ext == 'pjp') ? 'image/jpeg' : 
-                              (ext == 'gif' ? 'image/gif' : 
-                              (ext == 'svg' ? 'image/svg+xml' : 
-                              (ext == 'bmp' ? 'image/bmp' : 
-                              ((ext == 'ico' or ext == 'cur') ? 'image/x-icon' : 
-                              ((ext == 'tif' or ext == 'tiff') ? 'image/tiff' : 
-                              'image/png')))))))))}"
+                    th:with="defaultAvifAvatar = ${#theme.assets('/images/logo.avif')},
+                            avatarUri = ${#strings.defaultString(moment.owner?.avatar, defaultAvifAvatar)},
+                            ext = ${avatarUri.substring(avatarUri.lastIndexOf('.') + 1).toLowerCase()},
+                            imageType = ${ext == 'avif'
+                                          ? 'image/avif'
+                                          : (ext == 'webp'
+                                             ? 'image/webp'
+                                             : (ext == 'png'
+                                                ? 'image/png'
+                                                : (ext == 'apng'
+                                                   ? 'image/apng'
+                                                   : ((ext == 'jpg'
+                                                       or ext == 'jpeg'
+                                                       or ext == 'jfif'
+                                                       or ext == 'pjpeg'
+                                                       or ext == 'pjp')
+                                                      ? 'image/jpeg'
+                                                      : (ext == 'gif' 
+                                                         ? 'image/gif'
+                                                         : (ext == 'svg'
+                                                            ? 'image/svg+xml'
+                                                            : (ext == 'bmp'
+                                                               ? 'image/bmp'
+                                                               : ((ext == 'ico'
+                                                                   or ext == 'cur') 
+                                                                  ? 'image/x-icon'
+                                                                  : ((ext == 'tif'
+                                                                      or ext == 'tiff')
+                                                                     ? 'image/tiff'
+                                                                     : 'image/png')))))))))}"
                     th:srcset="${avatarUri}"
                     sizes="400px"
                     th:type="${imageType}"
                   />
                   <source
-                    th:with="defaultWebpAvatar=${#theme.assets('/images/logo.webp')}"
+                    th:with="defaultWebpAvatar = ${#theme.assets('/images/logo.webp')}"
                     th:srcset="|${thumbnail.gen(defaultWebpAvatar, 's')} 400w|"
                     sizes="400px"
                     type="image/webp"
                   />
                   <img
                     class="avatar-user avatar"
-                    th:with="defaultPngAvatar=${#theme.assets('/images/logo.png')}"
+                    th:with="defaultPngAvatar = ${#theme.assets('/images/logo.png')}"
                     th:src="${defaultPngAvatar}"
                     size="400px"
                     width="32"
@@ -139,7 +171,7 @@
             </span>
             <a
               class="inline-block break-all no-underline"
-              th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
+              th:with="authorPage = ${#strings.append('/authors/',moment.owner?.name)}"
               th:href="@{${authorPage}}"
               th:text="${moment.owner?.displayName}"
             ></a>
@@ -159,7 +191,7 @@
               th:if="${theme.config?.moments_styles?.is_show_post_estimated_reading_time}"
               th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                      ? extraApiStatsFinder.getContentWordCount(moment.spec.content?.html)
-                                     : #strings.length(moment.spec.content?.html)/2 }"
+                                     : #strings.length(moment.spec.content?.html) / 2 }"
               th:title="#{page.post.estimated-reading-time(#{common.words(${wordCount})})}"
             >
               <span class="iconify mdi--clock-outline"></span>
@@ -178,7 +210,7 @@
               th:if="${theme.config?.moments_styles?.is_show_post_word_count}"
               th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                      ? extraApiStatsFinder.getContentWordCount(moment.spec.content?.html)
-                                     : #strings.length(moment.spec.content?.html)/2 }"
+                                     : #strings.length(moment.spec.content?.html) / 2 }"
               th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
             >
               <span class="iconify fluent--text-edit-style-character-a-32-regular"></span>
@@ -189,7 +221,7 @@
         <div class="moment-body">
           <div class="moment-content-box">
             <div class="moment-content" th:utext="${moment.spec.content?.html}"></div>
-            <div class="medium" th:with="medium=${moment.spec.content?.medium}">
+            <div class="medium" th:with="medium = ${moment.spec.content?.medium}">
               <th:block th:each="media : ${medium}">
                 <img
                   th:if="${#strings.equals(media.type, 'PHOTO')}"

@@ -12,7 +12,7 @@
     </a>
     <span
       class="page-number"
-      th:with="totalPage=${posts.totalPages}"
+      th:with="totalPage = ${posts.totalPages}"
       th:text="#{common.page-number.text(${posts.page}, ${totalPage})}"
       th:if="${posts.totalPages > 1
                and theme.config?.styles?.is_show_page_number}"
@@ -22,7 +22,8 @@
       <span class="iconify iconify-middle material-symbols--chevron-right"></span>
     </a>
   </div>
-  <div class="pager" th:if="${isListResult}" th:with="prevPage=${posts.page - 1}, nextPage=${posts.page + 1}">
+  <div class="pager" th:if="${isListResult}" th:with="prevPage = ${posts.page - 1},
+                                                      nextPage = ${posts.page + 1}">
     <!--/* 适用于 ListResult
     列表分页没有 prevUrl 和 nextUrl，需自行计算 URL，格式：/page/页码；当 /page/1 时省略该段 */-->
     <a

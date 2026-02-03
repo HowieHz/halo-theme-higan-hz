@@ -48,7 +48,7 @@
             th:if="${theme.config?.custom_page_styles?.is_show_post_estimated_reading_time}"
             th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                    ? extraApiStatsFinder.getContentWordCount(singlePage.content?.content)
-                                   : #strings.length(singlePage.content?.content)/2 }"
+                                   : #strings.length(singlePage.content?.content) / 2 }"
             th:title="#{page.post.estimated-reading-time(#{common.words(${wordCount})})}"
           >
             <span class="iconify mdi--clock-outline"></span>
@@ -67,7 +67,7 @@
             th:if="${theme.config?.custom_page_styles?.is_show_post_word_count}"
             th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                    ? extraApiStatsFinder.getContentWordCount(singlePage.content?.content)
-                                   : #strings.length(singlePage.content?.content)/2 }"
+                                   : #strings.length(singlePage.content?.content) / 2 }"
             th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
           >
             <span class="iconify fluent--text-edit-style-character-a-32-regular"></span>

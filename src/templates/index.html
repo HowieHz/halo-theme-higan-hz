@@ -39,7 +39,7 @@
         th:if="${theme.config?.index_styles?.is_random_sentence_show and !#lists.isEmpty(theme.config?.index_styles?.random_sentence_list)}"
       >
         <p
-          th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config?.index_styles?.random_sentence_list))}"
+          th:with="randomIndex = ${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config?.index_styles?.random_sentence_list))}"
           id="randomSentence"
           th:text="${theme.config?.index_styles?.random_sentence_list[randomIndex]['sentence']}"
         ></p>
@@ -47,7 +47,7 @@
       <th:block th:if="${theme.config?.index_styles?.is_resume_show}">
         <p
           class="blog-description"
-          th:with="defaultResume=${#strings.defaultString(site?.seo?.description, '')}"
+          th:with="defaultResume = ${#strings.defaultString(site?.seo?.description, '')}"
           th:utext="${#strings.defaultString(theme.config?.index_styles?.resume, defaultResume)}"
         ></p>
       </th:block>
@@ -61,7 +61,7 @@
             <th:block th:if="${#strings.equals(resumeItem.lang, page_language)}">
               <p
                 class="blog-description matched-resume"
-                th:with="defaultResume=${#strings.defaultString(site?.seo?.description, '')}"
+                th:with="defaultResume = ${#strings.defaultString(site?.seo?.description, '')}"
                 th:utext="${#strings.defaultString(resumeItem.resume, defaultResume)}"
               ></p>
             </th:block>
@@ -74,7 +74,7 @@
             <th:block th:if="${#strings.startsWith(page_language, resumeItem.lang)}">
               <p
                 class="blog-description matched-resume"
-                th:with="defaultResume=${#strings.defaultString(site?.seo?.description, '')}"
+                th:with="defaultResume = ${#strings.defaultString(site?.seo?.description, '')}"
                 th:utext="${#strings.defaultString(resumeItem.resume, defaultResume)}"
               ></p>
             </th:block>
@@ -87,7 +87,7 @@
             <p
               class="blog-description default-resume"
               style="display: none"
-              th:with="defaultResume=${#strings.defaultString(site?.seo?.description, '')}"
+              th:with="defaultResume = ${#strings.defaultString(site?.seo?.description, '')}"
               th:utext="${#strings.defaultString(resumeItem.resume, defaultResume)}"
             ></p>
           </th:block>

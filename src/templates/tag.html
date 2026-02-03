@@ -26,7 +26,7 @@
   <body>
     <div id="archive" class="content flex-auto">
       <h1
-        th:with="tagColor=${tag.spec?.color}"
+        th:with="tagColor = ${tag.spec?.color}"
         th:style="${tagColor != null
                   and !#strings.equalsIgnoreCase(tagColor, '#ffffff')}
                 ? |--tag-hash-color:${tagColor};|
