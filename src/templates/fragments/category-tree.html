@@ -10,7 +10,8 @@
       ></th:block>
     </a>
     <th:block
-      th:if="${not #lists.isEmpty(category.children) and theme.config?.categories_page_styles?.is_show_multi_layer_categories}"
+      th:if="${!#lists.isEmpty(category.children)
+               and theme.config?.categories_page_styles?.is_show_multi_layer_categories}"
     >
       <th:block th:replace="~{fragments/category-tree :: next(categories=${category.children})}"></th:block>
     </th:block>

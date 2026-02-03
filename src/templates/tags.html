@@ -20,8 +20,8 @@
     <h1>
       <th:block th:text="#{page.tags.title}">标题替换位</th:block>
     </h1>
-    <ul th:if="${!#lists.isEmpty(tags)}" class="flex-auto" id="tags-list">
-      <th:block th:if="${theme.config?.tags_page_styles?.tags_sort_order=='default'}">
+    <ul th:unless="${#lists.isEmpty(tags)}" class="flex-auto" id="tags-list">
+      <th:block th:if="${theme.config?.tags_page_styles?.tags_sort_order == 'default'}">
         <th:block th:each="tag : ${tags}">
           <li
             th:with="tagColor=${tag.spec?.color}"
@@ -40,7 +40,7 @@
         </th:block>
       </th:block>
     </ul>
-    <script th:inline="javascript" th:if="${theme.config?.tags_page_styles?.tags_sort_order!='default'}">
+    <script th:inline="javascript" th:if="${theme.config?.tags_page_styles?.tags_sort_order != 'default'}">
       const tagsSortOrder = /*[[${theme.config?.tags_page_styles?.tags_sort_order}]]*/ "count_desc";
       const isShowPostCount = /*[[${theme.config?.tags_page_styles?.is_show_the_number_of_posts_per_tag}]]*/ true;
       const leftChar = /*[[${theme.config?.tags_page_styles?.characters_to_the_left_of_the_number_of_posts}]]*/ "(";

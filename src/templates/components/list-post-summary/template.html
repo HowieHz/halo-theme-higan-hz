@@ -9,7 +9,7 @@
   <section class="post-list-summary flex flex-auto flex-col">
     <div class="flex flex-auto flex-col space-y-10">
       <th:block th:each="post : ${posts}">
-        <th:block th:if="${#annotations.getOrDefault(post, 'higan.howiehz.top/show-in-post-list', 'true')=='true'}">
+        <th:block th:if="${#annotations.getOrDefault(post, 'higan.howiehz.top/show-in-post-list', 'true') == 'true'}">
           <div class="grid grid-cols-1 md:grid-cols-4 md:items-baseline">
             <div class="group relative flex flex-col md:col-span-3">
               <h2 class="color-text static m-0 text-base font-semibold tracking-tight">
@@ -18,7 +18,9 @@
                 ></div>
                 <span
                   class="iconify iconify-middle color-accent typcn--pin-outline relative z-10"
-                  th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='left'"
+                  th:if="${post.spec.pinned
+                           and theme.config?.index_styles?.is_pin_icon_show
+                           and theme.config?.index_styles?.pin_icon_position == 'left'}"
                 ></span>
                 <a th:href="@{${post.status?.permalink}}">
                   <span class="absolute -inset-x-4 -inset-y-2 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
@@ -26,12 +28,15 @@
                 </a>
                 <span
                   class="iconify iconify-middle color-accent typcn--pin-outline relative z-10"
-                  th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='right'"
+                  th:if="${post.spec.pinned
+                           and theme.config?.index_styles?.is_pin_icon_show
+                           and theme.config?.index_styles?.pin_icon_position == 'right'}"
                 ></span>
               </h2>
               <time
-                th:if="${not #strings.equals(pageTemplateName, 'index') or
-                      (#strings.equals(pageTemplateName, 'index') and theme.config?.index_styles?.is_show_post_pubdate_in_post_list_summary)}"
+                th:if="${!#strings.equals(pageTemplateName, 'index')
+                         or (#strings.equals(pageTemplateName, 'index')
+                             and theme.config?.index_styles?.is_show_post_pubdate_in_post_list_summary)}"
                 class="color-base-content-80 relative z-10 order-first mb-3 flex items-center pl-3.5 text-sm md:hidden"
                 th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
               >
@@ -44,7 +49,7 @@
                 <!--/* 使用 sm:inlne 而不是 sm:inline-block 是希望能在很多“分类面包屑”的情况下自动换行 */-->
                 <div
                   class="article-category color-time relative z-20 mt-0.5 mb-0 block p-0 text-sm sm:inline"
-                  th:if="${!#lists.isEmpty(post.categories)}"
+                  th:unless="${#lists.isEmpty(post.categories)}"
                 >
                   <th:block th:each="categoryLeafNode, categoryLeafNodeIterStat : ${post.categories}">
                     <!--/* inline-block 使一个“分类面包屑”不会被分到两行 */-->
@@ -61,9 +66,13 @@
                         >
                           文章分类名替换位 </a
                         ><!--/*
-                      */--><span th:if="${!iterStat.last}"> ></span
+                      */--><span th:unless="${iterStat.last}"> ></span
                         ><!--/* 除最后一个“分类面包屑”没有逗号，其他“分类面包屑”末尾都有逗号，并且和这个“分类面包屑”保持在一行。
-                      */--><span th:if="${iterStat.last and !categoryLeafNodeIterStat.last}">,</span>
+                      */--><span
+                          th:if="${iterStat.last
+                                   and !categoryLeafNodeIterStat.last}"
+                          >,</span
+                        >
                         <!--/* 逗号需要写在此层 th:block，然后用注释连接起来，否则逗号前会出现空格 */-->
                       </th:block>
                     </span>
@@ -73,7 +82,7 @@
               <th:block th:if="${theme.config?.index_styles?.is_show_post_tags_in_post_list_summary}">
                 <div
                   class="article-tag color-time relative z-20 mt-0.5 mb-0 block p-0 text-sm sm:inline"
-                  th:if="${!#lists.isEmpty(post.tags)}"
+                  th:unless="${#lists.isEmpty(post.tags)}"
                 >
                   <span class="iconify mdi--tag-outline"></span>
                   <th:block th:each="tag : ${post.tags}">
@@ -151,7 +160,8 @@
                 跳转文章链接所用提示文字替换位
               </div>
               <img
-                th:if="${theme.config?.index_styles?.is_show_post_cover_in_post_list_summary} and ${not #strings.isEmpty(post.spec.cover)}"
+                th:if="${theme.config?.index_styles?.is_show_post_cover_in_post_list_summary
+                         and !#strings.isEmpty(post.spec.cover)}"
                 th:src="${post.spec.cover}"
                 th:alt="${post.spec?.title}"
                 th:srcset="|
@@ -165,8 +175,9 @@
               />
             </div>
             <time
-              th:if="${not #strings.equals(pageTemplateName, 'index') or
-                    (#strings.equals(pageTemplateName, 'index') and theme.config?.index_styles?.is_show_post_pubdate_in_post_list_summary)}"
+              th:if="${!#strings.equals(pageTemplateName, 'index')
+                       or (#strings.equals(pageTemplateName, 'index')
+                           and theme.config?.index_styles?.is_show_post_pubdate_in_post_list_summary)}"
               class="color-base-content-80 relative z-10 order-first mt-1 mb-3 hidden items-center text-sm md:flex"
               th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
               th:text="${#temporals.format(post.spec.publishTime, 'MMMM dd yyyy')}"

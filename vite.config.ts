@@ -159,7 +159,7 @@ export default defineConfig({
           __dirname,
           "src/templates/components/theme-light-blue/template.html",
         ),
-        "components-theme-gary": path.resolve(__dirname, "src/templates/components/theme-gary/template.html"),
+        "components-theme-gray": path.resolve(__dirname, "src/templates/components/theme-gray/template.html"),
         "components-theme-auto": path.resolve(__dirname, "src/templates/components/theme-auto/template.html"),
         "components-theme-auto-blue": path.resolve(__dirname, "src/templates/components/theme-auto-blue/template.html"),
         // fragments

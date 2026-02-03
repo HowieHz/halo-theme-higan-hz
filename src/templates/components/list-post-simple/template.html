@@ -10,20 +10,25 @@
   <section class="simple-post-list flex flex-auto flex-col">
     <ul class="common-post-list flex-auto">
       <th:block th:each="post : ${posts}">
-        <th:block th:if="${#annotations.getOrDefault(post, 'higan.howiehz.top/show-in-post-list', 'true')=='true'}">
+        <th:block th:if="${#annotations.getOrDefault(post, 'higan.howiehz.top/show-in-post-list', 'true') == 'true'}">
           <li class="post-item">
             <div
               class="meta"
-              th:if="${not (#strings.equals(pageTemplateName, 'index') or 
-                            #strings.equals(pageTemplateName, 'category') or 
-                            #strings.equals(pageTemplateName, 'tag') or 
-                            #strings.equals(pageTemplateName, 'author') or 
-                            #strings.equals(pageTemplateName, 'archives')) or
-                    (#strings.equals(pageTemplateName, 'index') and theme.config?.index_styles?.is_show_post_pubdate_in_simple_post_list) or
-                    (#strings.equals(pageTemplateName, 'category') and theme.config?.category_page_styles?.is_show_post_pubdate_in_post_list) or
-                    (#strings.equals(pageTemplateName, 'tag') and theme.config?.tag_page_styles?.is_show_post_pubdate_in_post_list) or
-                    (#strings.equals(pageTemplateName, 'author') and theme.config?.author_page_styles?.is_show_post_pubdate_in_post_list) or
-                    (#strings.equals(pageTemplateName, 'archives') and theme.config?.archives_page_styles?.is_show_post_pubdate_in_post_list)}"
+              th:if="${!(#strings.equals(pageTemplateName, 'index')
+                         or #strings.equals(pageTemplateName, 'category')
+                         or #strings.equals(pageTemplateName, 'tag')
+                         or #strings.equals(pageTemplateName, 'author')
+                         or #strings.equals(pageTemplateName, 'archives'))
+                       or (#strings.equals(pageTemplateName, 'index')
+                           and theme.config?.index_styles?.is_show_post_pubdate_in_simple_post_list)
+                       or (#strings.equals(pageTemplateName, 'category')
+                           and theme.config?.category_page_styles?.is_show_post_pubdate_in_post_list)
+                       or (#strings.equals(pageTemplateName, 'tag')
+                           and theme.config?.tag_page_styles?.is_show_post_pubdate_in_post_list)
+                       or (#strings.equals(pageTemplateName, 'author')
+                           and theme.config?.author_page_styles?.is_show_post_pubdate_in_post_list)
+                       or (#strings.equals(pageTemplateName, 'archives')
+                           and theme.config?.archives_page_styles?.is_show_post_pubdate_in_post_list)}"
             >
               <time
                 th:datetime="${post.spec.publishTime}"
@@ -35,7 +40,9 @@
             <span>
               <span
                 class="iconify iconify-middle color-accent typcn--pin-outline"
-                th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='left'"
+                th:if="${post.spec.pinned
+                         and theme.config?.index_styles?.is_pin_icon_show
+                         and theme.config?.index_styles?.pin_icon_position == 'left'}"
               ></span>
               <a th:href="@{${post.status?.permalink}}" th:text="${post.spec?.title}">文章标题替换位</a>
               <th:block th:if="${theme.config?.index_styles?.is_show_post_views_in_simple_post_list}">
@@ -49,7 +56,9 @@
               </th:block>
               <span
                 class="iconify iconify-middle color-accent typcn--pin-outline"
-                th:if="${post.spec.pinned} and ${theme.config?.index_styles?.is_pin_icon_show} and ${theme.config?.index_styles?.pin_icon_position}=='right'"
+                th:if="${post.spec.pinned
+                         and theme.config?.index_styles?.is_pin_icon_show
+                         and theme.config?.index_styles?.pin_icon_position == 'right'}"
               ></span>
             </span>
           </li>
