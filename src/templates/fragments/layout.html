@@ -543,8 +543,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
         var encodedRedirectUrl = /*[[${theme?.config?.global?.target_url}]]*/ "bG9jYWxob3N0";
 
         // <!--/* 获取域名白名单 */-->
-        var rawDomainWhiteList = /*[[${theme?.config?.global?.allow_site_whitelist}]]*/ null;
-        if (rawDomainWhiteList == null) {
+        var rawDomainWhiteList = /*[[${theme?.config?.global?.allow_site_whitelist}]]*/ [];
+        if (rawDomainWhiteList.length === 0) {
           return;
         }
         var domainWhiteList = rawDomainWhiteList.map((item) => atob(item.realNode.input_domain));
