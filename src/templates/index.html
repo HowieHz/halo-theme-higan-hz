@@ -197,10 +197,10 @@
       <th:block th:if="${pluginFinder.available('PluginMoments')}">
         <th:block
           th:insert="~{components/list-moment-summary/template :: content(
-            moments=${momentFinder.list(
+            moments = ${momentFinder.list(
               posts.page,
               theme.config?.index_styles?.moment_list_page_size)},
-            isIndexPage=true
+            pageTemplateName = 'index'
           )}"
         ></th:block>
       </th:block>

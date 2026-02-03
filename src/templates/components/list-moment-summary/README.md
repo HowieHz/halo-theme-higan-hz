@@ -22,10 +22,10 @@ or
 Content Insertion
 
 ```html
-<th:block th:insert="~{components/list-moment-summary/template :: content(moments, isIndexPage)}"></th:block>
+<th:block th:insert="~{components/list-moment-summary/template :: content(moments, pageTemplateName)}"></th:block>
 ```
 
 ## Parameters
 
 - `moments`: A collection of moment objects to be displayed in the list.
-- `isIndexPage`: A boolean indicating whether the current page is the index page.
+- `pageTemplateName`: pass in a string representing the page template name.
