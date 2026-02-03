@@ -76,7 +76,7 @@
              and !theme.config?.global?.is_i18n_prefix_match_mode}"
   >
     <th:block th:each="menuItem : ${menuItems}">
-      <th:block th:if="${#strings.equals(menuItem.spec.displayName, page_language)}">
+      <th:block th:if="${#strings.equals(menuItem.status.displayName, page_language)}">
         <th:block th:each="menuItemChildren : ${menuItem?.children}">
           <th:block th:insert="~{:: menu-item(${menuItemChildren})}"></th:block>
         </th:block>
@@ -91,8 +91,8 @@
   >
     <th:block th:each="menuItem : ${menuItems}">
       <th:block th:if="${page_language != null
-                         and menuItem.spec.displayName != null
-                         and #strings.startsWith(page_language, menuItem.spec.displayName)}">
+                         and menuItem.status.displayName != null
+                         and #strings.startsWith(page_language, menuItem.status.displayName)}">
         <th:block th:each="menuItemChildren : ${menuItem?.children}">
           <th:block th:insert="~{:: menu-item(${menuItemChildren})}"></th:block>
         </th:block>
@@ -103,7 +103,7 @@
   <!--/* 隐藏的默认语言菜单项，在未成功匹配时显示 start */-->
   <th:block th:if="${theme.config?.global?.is_i18n_menu_show}">
     <th:block th:each="menuItem : ${menuItems}">
-      <th:block th:if="${#strings.equals(menuItem.spec.displayName, theme.config?.global?.default_page_language)}">
+      <th:block th:if="${#strings.equals(menuItem.status.displayName, theme.config?.global?.default_page_language)}">
         <th:block th:each="menuItemChildren : ${menuItem.children}">
           <li
             style="display: none"
