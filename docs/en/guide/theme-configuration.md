@@ -3484,6 +3484,10 @@ When Moments List is enabled, you can configure
 - [Show Author Avatar in Moment List](#show-author-avatar-in-moment-list)
 - [Show Author Nickname in Moment List](#show-author-nickname-in-moment-list)
 - [Show Post Publication Date in Moment List](#show-post-publication-date-in-moment-list)
+- [Show Estimated Reading Time in Moment List](#show-estimated-reading-time-in-moment-list)
+- [Show Word Count in Moment List](#show-word-count-in-moment-list)
+- [Enable Upvote Button in Moment List](#enable-upvote-button-in-moment-list)
+- [Enable Comment Section in Moment List](#enable-comment-section-in-moment-list)
 
 :::
 
@@ -4063,6 +4067,156 @@ Boolean
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_moment_pubdate`
+
+:::
+
+### Show Estimated Reading Time in Moment List
+
+::: info 🎯 Purpose
+
+Control whether to display the estimated reading time in the moment list.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Displayed when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Moment List")
+
+Home Page Style -> Show Estimated Reading Time in Moment List
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20Estimated%20Reading%20Time%20in%20Moment%20List" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_show_moment_estimated_reading_time`
+
+:::
+::: info ℹ️ Additional Information
+
+After enabling the [API Extension](/guide/plugin-compatibility#api-extension) plugin, a more accurate measurement method will be automatically enabled.
+
+:::
+
+### Show Word Count in Moment List
+
+::: info 🎯 Purpose
+
+Control whether to display the word count in the moment list.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Displayed when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Moment List")
+
+Home Page Style -> Show Word Count in Moment List
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20Word%20Count%20in%20Moment%20List" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_show_moment_word_count`
+
+:::
+::: info ℹ️ Additional Information
+
+After enabling the [API Extension](/guide/plugin-compatibility#api-extension) plugin, a more accurate measurement method will be automatically enabled.
+
+:::
+
+### Enable Upvote Button in Moment List
+
+::: info 🎯 Purpose
+
+Control whether to enable the upvote button in the moment list.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Displayed when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Moment List")
+
+Home Page Style -> Enable Upvote Button in Moment List
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Enable%20Upvote%20Button%20in%20Moment%20List" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_moment_upvote_button_show`
+
+:::
+
+### Enable Comment Section in Moment List
+
+::: info 🎯 Purpose
+
+Control whether to enable the comment section in the moment list.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Displayed when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Moment List")
+
+Home Page Style -> Enable Comment Section in Moment List
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Enable%20Comment%20Section%20in%20Moment%20List" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_moment_comment_section_show`
 
 :::
 

@@ -3478,6 +3478,10 @@ HTML 代码也是可以的：
 - [显示条目作者头像](#瞬间列表显示条目作者头像)
 - [显示条目作者昵称](#瞬间列表显示条目作者昵称)
 - [显示条目发布时间](#瞬间列表显示条目发布时间)
+- [显示条目预计阅读时间](#瞬间列表显示条目预计阅读时间)
+- [显示条目字数统计](#瞬间列表显示条目字数统计)
+- [启用点赞按钮](#瞬间列表启用点赞按钮)
+- [启用评论区](#瞬间列表启用评论区)
 
 :::
 
@@ -4058,6 +4062,156 @@ HTML 代码也是可以的：
 ::: info 🧩 模板变量
 
 `theme.config?.index_styles?.is_show_moment_pubdate`
+
+:::
+
+### 瞬间列表显示条目预计阅读时间
+
+::: info 🎯 用途
+
+控制是否在瞬间列表中显示条目的预计阅读时间。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为"瞬间列表"时显示）
+
+首页样式 -> 瞬间列表显示条目预计阅读时间
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=瞬间列表显示条目预计阅读时间" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_moment_estimated_reading_time`
+
+:::
+::: info ℹ️ 补充信息
+
+启用 [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动启用更准确的计量方法。
+
+:::
+
+### 瞬间列表显示条目字数统计
+
+::: info 🎯 用途
+
+控制是否在瞬间列表中显示条目的字数统计。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为"瞬间列表"时显示）
+
+首页样式 -> 瞬间列表显示条目字数统计
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=瞬间列表显示条目字数统计" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_moment_word_count`
+
+:::
+::: info ℹ️ 补充信息
+
+启用 [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动启用更准确的计量方法。
+
+:::
+
+### 瞬间列表启用点赞按钮
+
+::: info 🎯 用途
+
+控制是否在瞬间列表中启用点赞按钮。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为"瞬间列表"时显示）
+
+首页样式 -> 瞬间列表启用点赞按钮
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=瞬间列表启用点赞按钮" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_moment_upvote_button_show`
+
+:::
+
+### 瞬间列表启用评论区
+
+::: info 🎯 用途
+
+控制是否在瞬间列表中启用评论区。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为"瞬间列表"时显示）
+
+首页样式 -> 瞬间列表启用评论区
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=瞬间列表启用评论区" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_moment_comment_section_show`
 
 :::
 
