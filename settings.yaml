@@ -1479,6 +1479,10 @@ spec:
           value: ""
           help: 设置页面的 meta description；为空时回退到站点 SEO 描述
         - $formkit: switch
+          name: is_show_post_pubdate_in_post_list
+          label: 文章列表显示文章发布时间
+          value: true
+        - $formkit: switch
           name: is_collapse_post_list_by_publication_year_and_month
           label: 按照发布年份和月份折叠文章列表
           value: false

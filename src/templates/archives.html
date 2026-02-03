@@ -27,7 +27,7 @@
         >
           <h2 th:text="${archive.year}"></h2>
           <th:block th:each="month : ${archive.months}">
-            <th:block th:insert="~{components/list-post-simple/template :: content(posts = ${month.posts})}">
+            <th:block th:insert="~{components/list-post-simple/template :: content(posts = ${month.posts}, pageTemplateName = 'archives')}">
             </th:block>
           </th:block>
         </div>
