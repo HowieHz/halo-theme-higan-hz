@@ -13,7 +13,8 @@
   <head>
     <script src="/src/scripts/pages/page_like_post_style.ts" type="module"></script>
     <th:block
-      th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show and haloCommentEnabled}"
+      th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show
+               and haloCommentEnabled}"
       th:insert="~{components/halo-comment-widget/template :: headContent}"
     ></th:block>
   </head>
@@ -56,8 +57,9 @@
           <span
             class="inline-block"
             th:if="${theme.config?.custom_page_styles?.is_show_post_estimated_reading_time}"
-            th:with="wordCount = ${pluginFinder.available('extra-api', '3.*') ? 
-              extraApiStatsFinder.getContentWordCount(singlePage.content?.content) : #strings.length(singlePage.content?.content)/2 }"
+            th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
+                                   ? extraApiStatsFinder.getContentWordCount(singlePage.content?.content)
+                                   : #strings.length(singlePage.content?.content) / 2 }"
             th:title="#{page.post.estimated-reading-time(#{common.words(${wordCount})})}"
           >
             <span class="iconify mdi--clock-outline"></span>
@@ -74,8 +76,9 @@
           <span
             class="inline-block"
             th:if="${theme.config?.custom_page_styles?.is_show_post_word_count}"
-            th:with="wordCount = ${pluginFinder.available('extra-api', '3.*') ? 
-              extraApiStatsFinder.getContentWordCount(singlePage.content?.content) : #strings.length(singlePage.content?.content)/2 }"
+            th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
+                                   ? extraApiStatsFinder.getContentWordCount(singlePage.content?.content)
+                                   : #strings.length(singlePage.content?.content) / 2 }"
             th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
           >
             <span class="iconify fluent--text-edit-style-character-a-32-regular"></span>
@@ -93,7 +96,8 @@
       />
       <div
         class="post-comment"
-        th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show and haloCommentEnabled}"
+        th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show
+                 and haloCommentEnabled}"
       >
         <halo:comment group="content.halo.run" kind="SinglePage" th:name="${singlePage.metadata?.name}" />
       </div>

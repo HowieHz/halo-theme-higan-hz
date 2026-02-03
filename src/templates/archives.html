@@ -23,7 +23,7 @@
       <div class="flex-1">
         <div
           th:each="archive : ${archives}"
-          th:if="not ${theme.config?.archives_page_styles?.is_collapse_post_list_by_publication_year_and_month}"
+          th:unless="${theme.config?.archives_page_styles?.is_collapse_post_list_by_publication_year_and_month}"
         >
           <h2 th:text="${archive.year}"></h2>
           <th:block th:each="month : ${archive.months}">

@@ -15,7 +15,7 @@
   <body>
     <article id="links" class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <div class="content" th:unless="${theme.config?.links_page_styles?.is_head_first_style}">
-        <th:block th:each="group : ${groups}" th:if="${not #lists.isEmpty(group.links)}">
+        <th:block th:each="group : ${groups}" th:unless="${#lists.isEmpty(group.links)}">
           <h3 th:if="${#lists.size(groups) > 1}" th:text="${group.spec.displayName}"></h3>
           <ul>
             <li th:each="link : ${group.links}">
@@ -39,12 +39,12 @@
         </th:block>
       </div>
       <div class="content head-first-style" th:if="${theme.config?.links_page_styles?.is_head_first_style}">
-        <th:block th:each="group : ${groups}" th:if="${not #lists.isEmpty(group.links)}">
+        <th:block th:each="group : ${groups}" th:unless="${#lists.isEmpty(group.links)}">
           <h3 th:if="${#lists.size(groups) > 1}" th:text="${group.spec.displayName}"></h3>
           <ul class="links-grid">
             <li
               th:each="link : ${group.links}"
-              th:with="max_lines=${theme.config?.links_page_styles?.link_description_max_lines}"
+              th:with="max_lines = ${theme.config?.links_page_styles?.link_description_max_lines}"
             >
               <a class="link-card" rel="noopener" target="_blank" th:href="@{${link.spec.url}}">
                 <img

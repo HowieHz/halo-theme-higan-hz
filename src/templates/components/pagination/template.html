@@ -12,16 +12,22 @@
     </a>
     <span
       class="page-number"
-      th:with="totalPage=${posts.totalPages}"
+      th:with="totalPage = ${posts.totalPages}"
       th:text="#{common.page-number.text(${posts.page}, ${totalPage})}"
-      th:if="${posts.totalPages > 1 and theme.config?.styles?.is_show_page_number}"
+      th:if="${posts.totalPages > 1
+               and theme.config?.styles?.is_show_page_number}"
       >Page 1 of 1 填充位</span
     >
     <a th:href="@{${posts.nextUrl}}" th:if="${posts.hasNext()}" th:aria-label="#{common.nextPage.aria-label}">
       <span class="iconify iconify-middle material-symbols--chevron-right"></span>
     </a>
   </div>
-  <div class="pager" th:if="${isListResult}" th:with="prevPage=${posts.page - 1}, nextPage=${posts.page + 1}">
+  <div
+    class="pager"
+    th:if="${isListResult}"
+    th:with="prevPage = ${posts.page - 1},
+             nextPage = ${posts.page + 1}"
+  >
     <!--/* 适用于 ListResult
     列表分页没有 prevUrl 和 nextUrl，需自行计算 URL，格式：/page/页码；当 /page/1 时省略该段 */-->
     <a
@@ -35,7 +41,8 @@
       class="page-number"
       th:with="totalPage=${posts.totalPages}"
       th:text="#{common.page-number.text(${posts.page}, ${totalPage})}"
-      th:if="${posts.totalPages > 1 and theme.config?.styles?.is_show_page_number}"
+      th:if="${posts.totalPages > 1
+               and theme.config?.styles?.is_show_page_number}"
       >Page 1 of 1 填充位</span
     >
     <a th:href="@{'/page/' + ${nextPage}}" th:if="${posts.hasNext()}" th:aria-label="#{common.nextPage.aria-label}">

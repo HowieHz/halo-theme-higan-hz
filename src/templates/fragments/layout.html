@@ -1,14 +1,14 @@
 <!doctype html>
 <html
-  th:with="color_schema=${theme.config?.styles?.color_schema},
-           theme_auto=${theme.config?.styles?.theme_auto},
-           theme_light=${theme.config?.styles?.theme_light},
-           theme_dark=${theme.config?.styles?.theme_dark},
-           custom_color_schema_config=${theme.config?.styles?.custom_color_schema},
-           custom_color_schema_init_id=${theme.config?.styles?.custom_color_schema_init_id},
-           custom_theme_auto_id=${theme.config?.styles?.custom_theme_auto_id},
-           custom_theme_light_id=${theme.config?.styles?.custom_theme_light_id},
-           custom_theme_dark_id=${theme.config?.styles?.custom_theme_dark_id},
+  th:with="color_schema = ${theme.config?.styles?.color_schema},
+           theme_auto = ${theme.config?.styles?.theme_auto},
+           theme_light = ${theme.config?.styles?.theme_light},
+           theme_dark = ${theme.config?.styles?.theme_dark},
+           custom_color_schema_config = ${theme.config?.styles?.custom_color_schema},
+           custom_color_schema_init_id = ${theme.config?.styles?.custom_color_schema_init_id},
+           custom_theme_auto_id = ${theme.config?.styles?.custom_theme_auto_id},
+           custom_theme_light_id = ${theme.config?.styles?.custom_theme_light_id},
+           custom_theme_dark_id = ${theme.config?.styles?.custom_theme_dark_id},
            page_language=${language ?: ('' + param.lang != '' ? '' + param.lang : (theme.config?.global?.default_page_language ?: 'zh'))}"
   th:lang="${page_language}"
   th:attr="data-color-scheme=${color_schema} == 'custom' ? null :
@@ -41,7 +41,7 @@
     <th:block th:if="${pluginFinder.available('PluginFeed')}">
       <link rel="alternate" type="application/rss+xml" title="Posts - All" th:href="@{'/rss.xml'}" />
       <th:block th:each="item : ${theme?.config?.sns?.index_sns}">
-        <th:block th:if="${#strings.equals(item?.type['type'], 'rss')}" th:with="href=${item?.input_value}">
+        <th:block th:if="${#strings.equals(item?.type['type'], 'rss')}" th:with="href = ${item?.input_value}">
           <link
             th:if="${href != '/rss.xml'}"
             rel="alternate"
@@ -58,15 +58,24 @@
       <!--/* Custom Font Preload Declarations start */-->
       <th:block
         th:each="fontConfig : ${theme.config?.styles?.custom_font_configs}"
-        th:with="fontFile=${fontConfig.font_file},
-                fontExt=${fontFile.substring(fontFile.lastIndexOf('.') + 1)},
-                fontMime=${fontExt == 'woff2' ? 'font/woff2' : 
-                  (fontExt == 'woff' ? 'font/woff' : 
-                  (fontExt == 'ttf' ? 'font/ttf' : 
-                  (fontExt == 'otf' ? 'font/otf' : 
-                  (fontExt == 'sfnt' ? 'font/sfnt' : 
-                  (fontExt == 'eot' ? 'application/vnd.ms-fontobject' : 
-                  ((fontExt == 'ttc' or fontExt == 'otc') ? 'font/collection' : 'application/octet-stream'))))))}"
+        th:with="fontFile = ${fontConfig.font_file},
+                fontExt = ${fontFile.substring(fontFile.lastIndexOf('.') + 1)},
+                fontMime = ${fontExt == 'woff2'
+                             ? 'font/woff2'
+                             : (fontExt == 'woff'
+                                ? 'font/woff'
+                                : (fontExt == 'ttf'
+                                   ? 'font/ttf'
+                                   : (fontExt == 'otf'
+                                      ? 'font/otf'
+                                      : (fontExt == 'sfnt'
+                                         ? 'font/sfnt'
+                                         : (fontExt == 'eot'
+                                            ? 'application/vnd.ms-fontobject'
+                                            : ((fontExt == 'ttc'
+                                                or fontExt == 'otc')
+                                               ? 'font/collection'
+                                               : 'application/octet-stream'))))))}"
       >
         <link rel="preload" th:href="${fontFile}" as="font" th:type="${fontMime}" crossorigin />
       </th:block>
@@ -76,21 +85,29 @@
       <style th:inline="css">
         /*[#
           th:each="fontConfig : ${theme.config?.styles?.custom_font_configs}"
-          th:with="fontStyle=${fontConfig.font_style},
-            customFontStyle=${fontConfig.custom_font_style},
-            fontWeight=${fontConfig.font_weight},
-            customFontWeight=${fontConfig.custom_font_weight},
-            fontDisplay=${fontConfig.font_display},
-            fontUnicodeRange=${fontConfig.font_unicode_range},
-            fontFile=${fontConfig.font_file},
-            fontExt=${fontFile.substring(fontFile.lastIndexOf('.') + 1)},
-            fontFormat=${fontExt == 'woff2' ? 'woff2' : 
-              (fontExt == 'woff' ? 'woff' : 
-              (fontExt == 'ttf' ? 'truetype' : 
-              (fontExt == 'otf' ? 'opentype' : 
-              (fontExt == 'eot' ? 'embedded-opentype' : 
-              ((fontExt == 'ttc' or fontExt == 'otc') ? 'collection' : fontExt)))))},
-            fontName=${theme.config?.styles?.custom_font_name}"
+          th:with="fontStyle = ${fontConfig.font_style},
+                   customFontStyle = ${fontConfig.custom_font_style},
+                   fontWeight = ${fontConfig.font_weight},
+                   customFontWeight = ${fontConfig.custom_font_weight},
+                   fontDisplay = ${fontConfig.font_display},
+                   fontUnicodeRange = ${fontConfig.font_unicode_range},
+                   fontFile = ${fontConfig.font_file},
+                   fontExt = ${fontFile.substring(fontFile.lastIndexOf('.') + 1)},
+                   fontFormat=${fontExt == 'woff2'
+                                ? 'woff2'
+                                : (fontExt == 'woff'
+                                   ? 'woff'
+                                   : (fontExt == 'ttf'
+                                      ? 'truetype'
+                                      : (fontExt == 'otf'
+                                         ? 'opentype'
+                                         : (fontExt == 'eot'
+                                            ? 'embedded-opentype'
+                                            : ((fontExt == 'ttc'
+                                                or fontExt == 'otc')
+                                               ? 'collection'
+                                               : fontExt)))))},
+                   fontName = ${theme.config?.styles?.custom_font_name}"
         ]*/
           /*[# th:if="${#strings.isEmpty(fontName)}"]*/
             /*[# th:if="${#strings.isEmpty(fontUnicodeRange)}"]*/
@@ -347,11 +364,17 @@
     <!--/* Custom Cursor Declarations end */-->
     <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute start */-->
     <script
-      th:if="${color_schema == 'custom'} or ${theme_dark == 'custom'} or ${theme_light == 'custom'} or ${theme_auto == 'custom'}"
+      th:if="${color_schema == 'custom'
+               or theme_dark == 'custom'
+               or theme_light == 'custom'
+               or theme_auto == 'custom'}"
       th:inline="javascript"
     >
       const allCustomColorSchema = [
-        /*[# th:each="c : ${custom_color_schema_config}"]*/ /*[# th:if="${custom_color_schema_init_id==c.id or custom_theme_auto_id==c.id or custom_theme_light_id==c.id or custom_theme_dark_id==c.id}"]*/
+        /*[# th:each="c : ${custom_color_schema_config}"]*/ /*[# th:if="${custom_color_schema_init_id == c.id
+                                                                          or custom_theme_auto_id == c.id
+                                                                          or custom_theme_light_id == c.id
+                                                                          or custom_theme_dark_id == c.id}"]*/
         { id: /*[[${c.id}]]*/ "", type: /*[[${c.type}]]*/ "" },
         /*[/]*/ /*[/]*/
       ];
@@ -367,14 +390,18 @@
     <!--/* set data-color-scheme attribute for custom color schema end */-->
     <!--/* Custom Theme Declarations start */-->
     <th:block
-      th:if="${not #lists.isEmpty(custom_color_schema_config)} and (${color_schema == 'custom'} or ${theme_dark == 'custom'} or ${theme_light == 'custom'} or ${theme_auto == 'custom'})"
+      th:if="${!#lists.isEmpty(custom_color_schema_config)
+               and (color_schema == 'custom'
+                    or theme_dark == 'custom'
+                    or theme_light == 'custom'
+                    or theme_auto == 'custom')}"
     >
       <th:block th:each="colorSchema : ${custom_color_schema_config}">
         <th:block
-          th:if="${custom_color_schema_init_id==colorSchema.id or 
-                  custom_theme_auto_id==colorSchema.id or 
-                  custom_theme_light_id==colorSchema.id or 
-                  custom_theme_dark_id==colorSchema.id}"
+          th:if="${custom_color_schema_init_id == colorSchema.id or 
+                   custom_theme_auto_id == colorSchema.id or 
+                   custom_theme_light_id == colorSchema.id or 
+                   custom_theme_dark_id == colorSchema.id}"
         >
           <!--/* Color Scheme Declarations Start */-->
           <th:block
@@ -438,33 +465,58 @@ html[theme="theme-[(${colorSchema.id})]"] {
     <!--/* Preset Themes' Color Scheme Declarations start */-->
     <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       <th:block
-        th:if="${color_schema} == 'light' or ${color_schema} == 'light-blue' or ${color_schema} == 'gray'"
+        th:if="${color_schema == 'light'
+                 or color_schema == 'light-blue'
+                 or color_schema == 'gray'}"
         th:insert="~{components/color-scheme-light/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${color_schema} == 'dark' or ${color_schema} == 'dark-blue'"
+        th:if="${color_schema == 'dark'
+                 or color_schema == 'dark-blue'}"
         th:insert="~{components/color-scheme-dark/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${color_schema} == 'auto' or ${color_schema} == 'auto-blue'"
+        th:if="${color_schema == 'auto'
+                 or color_schema == 'auto-blue'}"
         th:insert="~{components/color-scheme-auto/template :: headContent}"
       ></th:block>
     </th:block>
     <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       <th:block
-        th:if="${theme_dark == 'light' or theme_light == 'light' or theme_auto == 'light' or color_schema == 'light' or
-                theme_dark == 'light-blue' or theme_light == 'light-blue' or theme_auto == 'light-blue' or color_schema == 'light-blue' or
-                theme_dark == 'gray' or theme_light == 'gray' or theme_auto == 'gray' or color_schema == 'gray'}"
+        th:if="${theme_dark == 'light
+                 or theme_light == 'light'
+                 or theme_auto == 'light'
+                 or color_schema == 'light'
+                 or theme_dark == 'light-blue'
+                 or theme_light == 'light-blue'
+                 or theme_auto == 'light-blue'
+                 or color_schema == 'light-blue'
+                 or theme_dark == 'gray'
+                 or theme_light == 'gray'
+                 or theme_auto == 'gray'
+                 or color_schema == 'gray'}"
         th:insert="~{components/color-scheme-light/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme_dark == 'dark' or theme_light == 'dark' or theme_auto == 'dark' or color_schema == 'dark' or
-                theme_dark == 'dark-blue' or theme_light == 'dark-blue' or theme_auto == 'dark-blue' or color_schema == 'dark-blue'}"
+        th:if="${theme_dark == 'dark'
+                 or theme_light == 'dark'
+                 or theme_auto == 'dark'
+                 or color_schema == 'dark'
+                 or theme_dark == 'dark-blue'
+                 or theme_light == 'dark-blue'
+                 or theme_auto == 'dark-blue'
+                 or color_schema == 'dark-blue'}"
         th:insert="~{components/color-scheme-dark/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme_dark == 'auto' or theme_light == 'auto' or theme_auto == 'auto' or color_schema == 'auto' or
-                theme_dark == 'auto-blue' or theme_light == 'auto-blue' or theme_auto == 'auto-blue' or color_schema == 'auto-blue'}"
+        th:if="${theme_dark == 'auto'
+                 or theme_light == 'auto'
+                 or theme_auto == 'auto'
+                 or color_schema == 'auto'
+                 or theme_dark == 'auto-blue'
+                 or theme_light == 'auto-blue'
+                 or theme_auto == 'auto-blue'
+                 or color_schema == 'auto-blue'}"
         th:insert="~{components/color-scheme-auto/template :: headContent}"
       ></th:block>
     </th:block>
@@ -472,67 +524,97 @@ html[theme="theme-[(${colorSchema.id})]"] {
     <!--/* Preset Themes' Color CSS Variables Declarations start */-->
     <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       <th:block
-        th:if="${color_schema=='auto-blue'}"
+        th:if="${color_schema == 'auto-blue'}"
         th:insert="~{components/theme-auto-blue/template :: headContent}"
       ></th:block>
-      <th:block th:if="${color_schema=='auto'}" th:insert="~{components/theme-auto/template :: headContent}"></th:block>
       <th:block
-        th:if="${color_schema=='dark-blue'}"
+        th:if="${color_schema == 'auto'}"
+        th:insert="~{components/theme-auto/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${color_schema == 'dark-blue'}"
         th:insert="~{components/theme-dark-blue/template :: headContent}"
       ></th:block>
-      <th:block th:if="${color_schema=='dark'}" th:insert="~{components/theme-dark/template :: headContent}"></th:block>
-      <th:block th:if="${color_schema=='gray'}" th:insert="~{components/theme-gary/template :: headContent}"></th:block>
       <th:block
-        th:if="${color_schema=='light-blue'}"
+        th:if="${color_schema == 'dark'}"
+        th:insert="~{components/theme-dark/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${color_schema == 'gray'}"
+        th:insert="~{components/theme-gray/template :: headContent}"
+      ></th:block>
+      <th:block
+        th:if="${color_schema == 'light-blue'}"
         th:insert="~{components/theme-light-blue/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${color_schema=='light'}"
+        th:if="${color_schema == 'light'}"
         th:insert="~{components/theme-light/template :: headContent}"
       ></th:block>
     </th:block>
     <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       <th:block
-        th:if="${theme_dark=='auto-blue' or theme_light=='auto-blue' or theme_auto=='auto-blue' or color_schema=='auto-blue'}"
+        th:if="${theme_dark == 'auto-blue'
+                 or theme_light == 'auto-blue'
+                 or theme_auto == 'auto-blue'
+                 or color_schema == 'auto-blue'}"
         th:insert="~{components/theme-auto-blue/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme_dark=='auto' or theme_light=='auto' or theme_auto=='auto' or color_schema=='auto'}"
+        th:if="${theme_dark == 'auto'
+                 or theme_light == 'auto'
+                 or theme_auto == 'auto'
+                 or color_schema == 'auto'}"
         th:insert="~{components/theme-auto/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme_dark=='dark-blue' or theme_light=='dark-blue' or theme_auto=='dark-blue' or color_schema=='dark-blue'}"
+        th:if="${theme_dark == 'dark-blue'
+                 or theme_light == 'dark-blue'
+                 or theme_auto == 'dark-blue'
+                 or color_schema == 'dark-blue'}"
         th:insert="~{components/theme-dark-blue/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme_dark=='dark' or theme_light=='dark' or theme_auto=='dark' or color_schema=='dark'}"
+        th:if="${theme_dark == 'dark'
+                 or theme_light == 'dark'
+                 or theme_auto == 'dark'
+                 or color_schema == 'dark'}"
         th:insert="~{components/theme-dark/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme_dark=='gray' or theme_light=='gray' or theme_auto=='gray' or color_schema=='gray'}"
-        th:insert="~{components/theme-gary/template :: headContent}"
+        th:if="${theme_dark == 'gray'
+                 or theme_light == 'gray'
+                 or theme_auto == 'gray'
+                 or color_schema == 'gray'}"
+        th:insert="~{components/theme-gray/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme_dark=='light-blue' or theme_light=='light-blue' or theme_auto=='light-blue' or color_schema=='light-blue'}"
+        th:if="${theme_dark == 'light-blue'
+                 or theme_light == 'light-blue'
+                 or theme_auto == 'light-blue'
+                 or color_schema == 'light-blue'}"
         th:insert="~{components/theme-light-blue/template :: headContent}"
       ></th:block>
       <th:block
-        th:if="${theme_dark=='light' or theme_light=='light' or theme_auto=='light' or color_schema=='light'}"
+        th:if="${theme_dark == 'light'
+                 or theme_light == 'light'
+                 or theme_auto == 'light'
+                 or color_schema == 'light'}"
         th:insert="~{components/theme-light/template :: headContent}"
       ></th:block>
     </th:block>
     <!--/* Preset Themes' Color CSS Variables Declarations end */-->
     <!--/* Preset Text Size CSS Variables Declarations start */-->
     <th:block
-      th:if="${theme.config?.styles?.text_size}=='small'"
+      th:if="${theme.config?.styles?.text_size == 'small'}"
       th:insert="~{components/text-size-small/template :: headContent}"
     ></th:block>
     <th:block
-      th:if="${theme.config?.styles?.text_size}=='normal'"
+      th:if="${theme.config?.styles?.text_size == 'normal'}"
       th:insert="~{components/text-size-normal/template :: headContent}"
     ></th:block>
     <th:block
-      th:if="${theme.config?.styles?.text_size}=='large'"
+      th:if="${theme.config?.styles?.text_size == 'large'}"
       th:insert="~{components/text-size-large/template :: headContent}"
     ></th:block>
     <!--/* Preset Text Size CSS VariablesDeclarations end */-->
@@ -634,18 +716,20 @@ html[theme="theme-[(${colorSchema.id})]"] {
     <th:block th:replace="${head}" />
     <!--/* js/css injection end */-->
     <!--/* instant.page injection start */-->
-    <script
-      th:src="@{/assets/lib/instantpage/5.2.0.js(v=${theme.spec.version})}"
-      th:if="${theme.config?.global?.is_instant_page_enable} and not ${theme.config?.global?.is_custom_resource_locations}"
-      type="module"
-      defer
-    ></script>
-    <script
-      th:src="${theme.config?.global?.instantpage_resource_location}"
-      th:if="${theme.config?.global?.is_instant_page_enable} and ${theme.config?.global?.is_custom_resource_locations}"
-      type="module"
-      defer
-    ></script>
+    <th:block th:if="${theme.config?.global?.is_instant_page_enable}">
+      <script
+        th:src="@{/assets/lib/instantpage/5.2.0.js(v=${theme.spec.version})}"
+        th:unless="${theme.config?.global?.is_custom_resource_locations}"
+        type="module"
+        defer
+      ></script>
+      <script
+        th:src="${theme.config?.global?.instantpage_resource_location}"
+        th:if="${theme.config?.global?.is_custom_resource_locations}"
+        type="module"
+        defer
+      ></script>
+    </th:block>
     <!--/* instant.page injection end */-->
     <!--/* Mermaid injection start */-->
     <script vite-ignore type="module" th:inline="javascript" th:if="${theme.config?.global?.is_mermaid_enable}">
@@ -1162,48 +1246,53 @@ html[theme="theme-[(${colorSchema.id})]"] {
               <ul class="site-stats" th:with="stats = ${siteStatsFinder.getStats()}">
                 <li
                   th:each="item : ${theme.config?.styles?.footer_site_stats}"
-                  th:if="${item?.type == 'visit'} or 
-                  ${item?.type == 'post'} or 
-                  ${item?.type == 'upvote'} or 
-                  ${item?.type == 'comment'} or 
-                  ${item?.type == 'category'} or 
-                  (${item?.type == 'wordcount'} and ${pluginFinder.available('extra-api', '3.*')})"
+                  th:if="${item?.type == 'visit'
+                           or item?.type == 'post'
+                           or item?.type == 'upvote'
+                           or item?.type == 'comment'
+                           or item?.type == 'category'
+                           or (item?.type == 'wordcount' 
+                               and pluginFinder.available('extra-api', '3.*'))}"
                 >
                   <span
                     class="iconify"
                     th:style="|--svg:url('${item?.icon.value}')|"
-                    th:if="${item?.icon != null} and ${item?.icon != ''}"
+                    th:if="${item?.icon != null and item?.icon != ''}"
                   ></span>
                   <th:block th:if="not ${item?.i18n_text}">
-                    <span th:text="${stats.visit}" th:if="${item?.type=='visit'}"></span>
-                    <span th:text="${stats.post}" th:if="${item?.type=='post'}"></span>
-                    <span th:text="${stats.upvote}" th:if="${item?.type=='upvote'}"></span>
-                    <span th:text="${stats.comment}" th:if="${item?.type=='comment'}"></span>
-                    <span th:text="${stats.category}" th:if="${item?.type=='category'}"></span>
-                    <span th:text="${extraApiStatsFinder.getPostWordCount()}" th:if="${item?.type=='wordcount'}"></span>
+                    <span th:text="${stats.visit}" th:if="${item?.type == 'visit'}"></span>
+                    <span th:text="${stats.post}" th:if="${item?.type == 'post'}"></span>
+                    <span th:text="${stats.upvote}" th:if="${item?.type == 'upvote'}"></span>
+                    <span th:text="${stats.comment}" th:if="${item?.type == 'comment'}"></span>
+                    <span th:text="${stats.category}" th:if="${item?.type == 'category'}"></span>
+                    <span
+                      th:text="${extraApiStatsFinder.getPostWordCount()}"
+                      th:if="${item?.type == 'wordcount'}"
+                    ></span>
                   </th:block>
                   <th:block th:if="${item?.i18n_text}">
-                    <span th:text="#{common.siteTotalVisit(${stats.visit})}" th:if="${item?.type=='visit'}"></span>
-                    <span th:text="#{common.siteTotalPost(${stats.post})}" th:if="${item?.type=='post'}"></span>
-                    <span th:text="#{common.siteTotalUpvote(${stats.upvote})}" th:if="${item?.type=='upvote'}"></span>
+                    <span th:text="#{common.siteTotalVisit(${stats.visit})}" th:if="${item?.type == 'visit'}"></span>
+                    <span th:text="#{common.siteTotalPost(${stats.post})}" th:if="${item?.type == 'post'}"></span>
+                    <span th:text="#{common.siteTotalUpvote(${stats.upvote})}" th:if="${item?.type == 'upvote'}"></span>
                     <span
                       th:text="#{common.siteTotalComment(${stats.comment})}"
-                      th:if="${item?.type=='comment'}"
+                      th:if="${item?.type == 'comment'}"
                     ></span>
                     <span
                       th:text="#{common.siteTotalCategory(${stats.category})}"
-                      th:if="${item?.type=='category'}"
+                      th:if="${item?.type == 'category'}"
                     ></span>
                     <span
                       th:text="#{common.siteTotalWordcount(${extraApiStatsFinder.getPostWordCount()})}"
-                      th:if="${item?.type=='wordcount'}"
+                      th:if="${item?.type == 'wordcount'}"
                     ></span>
                   </th:block>
                 </li>
               </ul>
             </div>
             <div
-              th:if="${theme.config?.styles?.is_footer_theme_info_show} or ${theme.config?.styles?.is_footer_copyright_show}"
+              th:if="${theme.config?.styles?.is_footer_theme_info_show
+                       or theme.config?.styles?.is_footer_copyright_show}"
             >
               <br />
               <span class="info" th:if="${theme.config?.styles?.is_footer_theme_info_show}">
@@ -1228,7 +1317,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
                 ©
                 <span
                   id="site_date"
-                  th:with="now=${#temporals.createNow()}"
+                  th:with="now = ${#temporals.createNow()}"
                   th:text="${#temporals.format(now, 'yyyy')}"
                 ></span>
                 <span

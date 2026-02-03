@@ -151,7 +151,7 @@
         vite-ignore
         type="module"
         th:inline="javascript"
-        th:if="not ${theme.config?.photos_styles?.is_enable_masonry_layout}"
+        th:unless="${theme.config?.photos_styles?.is_enable_masonry_layout}"
       >
         const photos = document.querySelectorAll(".photo-groups img");
         var nextImageIndex = 0; // <!--/* 存储下一个需要加载的图片的 index */-->
@@ -250,7 +250,7 @@
         <div
           class="photo-groups"
           th:each="group : ${groups}"
-          th:if="not ${theme.config?.photos_styles?.is_enable_masonry_layout}"
+          th:unless="${theme.config?.photos_styles?.is_enable_masonry_layout}"
         >
           <h2 th:text="${group.spec.displayName}" th:if="${theme.config?.photos_styles?.is_show_photo_group_name}"></h2>
           <ul class="photo-list">

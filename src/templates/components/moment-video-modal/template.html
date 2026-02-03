@@ -5,10 +5,10 @@
 <body></body>
 <!--*/-->
 <th:block th:fragment="content(media)">
-  <div th:if="${#strings.equals(media.type,'VIDEO')}" x-data="{openVideoModal:false}" class="aspect-h-1 aspect-w-1">
+  <div th:if="${#strings.equals(media.type, 'VIDEO')}" x-data="{openVideoModal:false}" class="aspect-h-1 aspect-w-1">
     <video preload="metadata" th:src="${media.url}" class="m-0 h-full object-cover"></video>
     <div
-      th:if="${#strings.equals(media.type,'VIDEO')}"
+      th:if="${#strings.equals(media.type, 'VIDEO')}"
       class="color-base-200 v-cursor-pointer absolute flex h-full w-full items-center justify-center rounded-lg opacity-50 transition-all hover:opacity-70"
       @click="openVideoModal = true"
     >

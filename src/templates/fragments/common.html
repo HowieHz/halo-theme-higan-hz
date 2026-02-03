@@ -16,12 +16,12 @@
     <th:block th:each="item : ${theme.config?.styles?.extra_menu_items}">
       <!--/* random post button */-->
       <th:block th:if="${item?.type == 'random'}">
-        <th:block th:with="allPostList=${postFinder.listAll()}">
-          <li th:if="${not #lists.isEmpty(allPostList)}">
+        <th:block th:with="allPostList = ${postFinder.listAll()}">
+          <li th:unless="${#lists.isEmpty(allPostList)}">
             <a
               href="/"
-              th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random()*#lists.size(allPostList))},
-                        postPermalink=${allPostList[randomIndex].status.permalink}"
+              th:with="randomIndex = ${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(allPostList))},
+                       postPermalink = ${allPostList[randomIndex].status.permalink}"
               th:href="${postPermalink}"
               th:aria-label="#{fragment.menu.random-button.aria-label}"
               th:text="#{fragment.menu.random}"
@@ -47,7 +47,10 @@
         </a>
       </li>
       <!--/* search widget button */-->
-      <li th:if="${item?.type == 'search'} and ${pluginFinder.available('PluginSearchWidget')}">
+      <li
+        th:if="${item?.type == 'search'
+                 and pluginFinder.available('PluginSearchWidget')}"
+      >
         <a
           href="javascript:SearchWidget.open();"
           th:aria-label="#{fragment.menu.search-button.aria-label}"
@@ -69,7 +72,8 @@
   <!--/* 多语言菜单 start */-->
   <!--/* 多语言全等匹配模式 start */-->
   <th:block
-    th:if="${theme.config?.global?.is_i18n_menu_show} and not ${theme.config?.global?.is_i18n_prefix_match_mode}"
+    th:if="${theme.config?.global?.is_i18n_menu_show
+             and !theme.config?.global?.is_i18n_prefix_match_mode}"
   >
     <th:block th:each="menuItem : ${menuItems}">
       <th:block th:if="${#strings.equals(menuItem.spec.displayName, page_language)}">
@@ -81,7 +85,10 @@
   </th:block>
   <!--/* 多语言全等匹配模式 end */-->
   <!--/* 多语言前缀匹配模式 start */-->
-  <th:block th:if="${theme.config?.global?.is_i18n_menu_show} and ${theme.config?.global?.is_i18n_prefix_match_mode}">
+  <th:block
+    th:if="${theme.config?.global?.is_i18n_menu_show
+             and theme.config?.global?.is_i18n_prefix_match_mode}"
+  >
     <th:block th:each="menuItem : ${menuItems}">
       <th:block th:if="${#strings.startsWith(page_language, menuItem.spec.displayName)}">
         <th:block th:each="menuItemChildren : ${menuItem?.children}">
@@ -159,9 +166,14 @@
 
 <th:block
   th:fragment="share(originPermalink,title)"
-  th:with="siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1)== '/'}? ${#strings.substring(site.url,0,#strings.length(site.url) - 1)}:${site.url}"
+  th:with="siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1) == '/'
+                       ? #strings.substring(site.url, 0, #strings.length(site.url) - 1)
+                       : site.url}"
 >
-  <th:block th:with="permalink=${siteUrl}+${originPermalink}, title=${title}">
+  <th:block
+    th:with="permalink = ${siteUrl} + ${originPermalink},
+             title = ${title}"
+  >
     <ul>
       <script th:inline="javascript">
         function nativeShare(link) {
@@ -176,7 +188,7 @@
       </script>
       <li th:each="item : ${theme?.config?.share?.button_config}">
         <a
-          th:if="${item?.name!='Native'}"
+          th:if="${item?.name != 'Native'}"
           class="icon"
           th:aria-label="#{common.shareModal.share.aria-label(${item?.aria_label})}"
           th:href="${#strings.replace(#strings.replace(item?.url, '@URL', permalink), '@TITLE', title)}"
@@ -188,55 +200,55 @@
           ></span
           ><span
             class="iconify icomoon-free--mail4"
-            th:if="${item?.name=='E-mail' and (item?.icon == null or item?.icon == '')}"
+            th:if="${item?.name == 'E-mail' and (item?.icon == null or item?.icon == '')}"
           ></span
           ><span
             class="iconify pepicons-pencil--qr-code-circle-filled"
-            th:if="${item?.name=='QRCode' and (item?.icon == null or item?.icon == '')}"
+            th:if="${item?.name == 'QRCode' and (item?.icon == null or item?.icon == '')}"
           ></span
           ><span
             class="iconify ic--baseline-facebook"
-            th:if="${item?.name=='Facebook' and (item?.icon == null or item?.icon == '')}"
+            th:if="${item?.name == 'Facebook' and (item?.icon == null or item?.icon == '')}"
           ></span
           ><span
             class="iconify mdi--twitter-circle"
-            th:if="${item?.name=='X' and (item?.icon == null or item?.icon == '')}"
+            th:if="${item?.name == 'X' and (item?.icon == null or item?.icon == '')}"
           ></span
           ><span
             class="iconify entypo-social--linkedin-with-circle"
-            th:if="${item?.name=='LinkedIn' and (item?.icon == null or item?.icon == '')}"
+            th:if="${item?.name == 'LinkedIn' and (item?.icon == null or item?.icon == '')}"
           ></span
           ><span
             class="iconify mdi--pinterest"
-            th:if="${item?.name=='Pinterest' and (item?.icon == null or item?.icon == '')}"
+            th:if="${item?.name == 'Pinterest' and (item?.icon == null or item?.icon == '')}"
           ></span
           ><span
             class="iconify uil--telegram"
-            th:if="${item?.name=='Telegram' and (item?.icon == null or item?.icon == '')}"
+            th:if="${item?.name == 'Telegram' and (item?.icon == null or item?.icon == '')}"
           ></span
           ><span
             class="iconify ant-design--qq-circle-filled"
-            th:if="${item?.name=='QQ' and (item?.icon == null or item?.icon == '')}"
+            th:if="${item?.name == 'QQ' and (item?.icon == null or item?.icon == '')}"
           ></span
           ><span
             class="iconify ant-design--weibo-circle-filled"
-            th:if="${item?.name=='Weibo' and (item?.icon == null or item?.icon == '')}"
+            th:if="${item?.name == 'Weibo' and (item?.icon == null or item?.icon == '')}"
           ></span
           ><span
             class="iconify ant-design--wechat-filled"
-            th:if="${item?.name=='WeChat' and (item?.icon == null or item?.icon == '')}"
+            th:if="${item?.name == 'WeChat' and (item?.icon == null or item?.icon == '')}"
           ></span
           ><span
             class="iconify cib--qzone"
-            th:if="${item?.name=='Qzone' and (item?.icon == null or item?.icon == '')}"
+            th:if="${item?.name == 'Qzone' and (item?.icon == null or item?.icon == '')}"
           ></span
           ><span
             class="iconify tabler--brand-douban"
-            th:if="${item?.name=='Douban' and (item?.icon == null or item?.icon == '')}"
+            th:if="${item?.name == 'Douban' and (item?.icon == null or item?.icon == '')}"
           ></span
         ></a>
         <a
-          th:if="${item?.name=='Native'}"
+          th:if="${item?.name == 'Native'}"
           class="icon"
           th:aria-label="#{common.shareModal.share.aria-label(${item?.aria_label})}"
           th:href="|javascript:nativeShare('${#strings.replace(item?.url, '@URL', permalink)}');|"
@@ -244,11 +256,11 @@
           <span
             class="iconify"
             th:style="|--svg:url('${item?.icon.value}')|"
-            th:if="${item?.icon != null} and ${item?.icon != ''}"
+            th:if="${item?.icon != null and item?.icon != ''}"
           ></span
           ><span
             class="iconify mdi--share-circle"
-            th:if="${item?.name=='Native' and (item?.icon == null or item?.icon == '')}"
+            th:if="${item?.name == 'Native' and (item?.icon == null or item?.icon == '')}"
           ></span
         ></a>
       </li>
@@ -281,7 +293,9 @@
 
 <th:block
   th:fragment="auto-redirect"
-  th:with="siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1)== '/'}? ${#strings.substring(site.url,0,#strings.length(site.url) - 1)}:${site.url}"
+  th:with="siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1) == '/'
+                       ? #strings.substring(site.url, 0, #strings.length(site.url) - 1)
+                       : site.url}"
 >
   <p id="countdown" style="opacity: 0%; transition: opacity 1s"></p>
   <script th:inline="javascript">
