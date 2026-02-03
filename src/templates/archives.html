@@ -56,8 +56,8 @@
                   <ul class="common-post-list flex-auto" style="display: none">
                     <li class="post-item" th:each="post : ${month.posts}">
                       <div
-                        class="meta"
                         th:if="${theme.config?.archives_page_styles?.is_show_post_pubdate_in_post_list}"
+                        class="meta"
                       >
                         <time
                           th:datetime="${post.spec?.publishTime}"
