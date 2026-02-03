@@ -1470,14 +1470,14 @@ spec:
           value: ""
           help: 设置页面的 meta description；为空时回退到站点 SEO 描述
         - $formkit: switch
-          name: is_show_post_pubdate_in_post_list
-          label: 文章列表显示文章发布时间
-          value: true
-        - $formkit: switch
           name: is_show_rss_button
           label: 显示作者 RSS 订阅按钮
           value: false
           help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
+        - $formkit: switch
+          name: is_show_post_pubdate_in_post_list
+          label: 文章列表显示文章发布时间
+          value: true
     - group: archives_page_styles
       label: 归档页样式
       formSchema:
