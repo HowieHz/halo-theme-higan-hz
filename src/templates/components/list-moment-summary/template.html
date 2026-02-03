@@ -11,7 +11,7 @@
 <!--平衡考虑，忽略这个的 polyfill-->
 <body></body>
 <!--*/-->
-<th:block th:fragment="content(moments, isIndexPage)">
+<th:block th:fragment="content(moments, pageTemplateName)">
   <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
     <div class="content flex-auto">
       <div class="common-post-list flex-auto">
@@ -80,7 +80,8 @@
               th:unless="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event'}"
             >
               <div class="color-base-content-80">
-                <span th:if="${not isIndexPage or theme?.config.index_styles?.is_show_moment_avatar}">
+                <span th:if="${not #strings.equals(pageTemplateName, 'index') or
+                            (#strings.equals(pageTemplateName, 'index') and theme?.config.index_styles?.is_show_moment_avatar)}">
                   <a
                     th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
                     th:href="@{${authorPage}}"
@@ -126,7 +127,8 @@
                   </a>
                 </span>
                 <a
-                  th:if="${not isIndexPage or theme?.config.index_styles?.is_show_moment_nickname}"
+                  th:if="${not #strings.equals(pageTemplateName, 'index') or 
+                        (#strings.equals(pageTemplateName, 'index') and theme?.config.index_styles?.is_show_moment_nickname)}"
                   class="inline-block break-all no-underline"
                   th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
                   th:href="@{${authorPage}}"
@@ -238,11 +240,11 @@
         </ul>
       </div>
       <th:block
-        th:if="${isIndexPage}"
+        th:if="${#strings.equals(pageTemplateName, 'index')}"
         th:insert="~{components/pagination/template :: content(posts=${moments}, isListResult=true)}"
       ></th:block>
       <th:block
-        th:unless="${isIndexPage}"
+        th:if="${#strings.equals(pageTemplateName, 'moments')}"
         th:insert="~{components/pagination/template :: content(posts=${moments})}"
       ></th:block>
     </div>
