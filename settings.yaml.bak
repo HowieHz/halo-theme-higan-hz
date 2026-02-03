@@ -1132,9 +1132,7 @@ spec:
               value: "post-list-summary"
             - label: "瞬间列表"
               value: "moment-list-summary"
-            - label: "朋友圈列表"
-              value: "friends-list-summary"
-          help: "瞬间列表"需"瞬间"插件启用方可正常使用，"朋友圈列表"需"朋友圈"插件启用方可正常使用
+          help: “瞬间列表”需“瞬间”插件启用方可正常使用
         - $formkit: switch
           name: is_show_post_pubdate_in_simple_post_list
           if: "$list_layout === 'simple-post-list'"
@@ -1240,53 +1238,6 @@ spec:
           name: is_moment_comment_section_show
           if: "$list_layout === 'moment-list-summary'"
           label: 瞬间列表启用评论区
-          value: true
-        - $formkit: text
-          label: 朋友圈列表显示条数
-          name: friends_list_page_size
-          if: "$list_layout === 'friends-list-summary'"
-          validation: required|Number
-          value: 10
-        - $formkit: switch
-          name: is_show_friend_pubdate
-          if: "$list_layout === 'friends-list-summary'"
-          label: 朋友圈列表显示发布日期
-          value: true
-        - $formkit: switch
-          name: is_show_friend_author
-          if: "$list_layout === 'friends-list-summary'"
-          label: 朋友圈列表显示作者信息
-          value: true
-          help: 作者信息包括作者头像和名称
-        - $formkit: switch
-          name: is_show_friend_author_avatar
-          if: "$list_layout === 'friends-list-summary' && $is_show_friend_author === true"
-          label: 朋友圈列表显示作者头像
-          value: true
-        - $formkit: switch
-          name: is_show_friend_author_name
-          if: "$list_layout === 'friends-list-summary' && $is_show_friend_author === true"
-          label: 朋友圈列表显示作者名称
-          value: true
-        - $formkit: switch
-          name: is_show_friend_description
-          if: "$list_layout === 'friends-list-summary'"
-          label: 朋友圈列表显示文章描述
-          value: true
-        - $formkit: number
-          name: friend_description_max_lines
-          if: "$list_layout === 'friends-list-summary' && $is_show_friend_description === true"
-          label: 朋友圈列表文章描述行数上限
-          value: "3"
-          min: 1
-          max: 5
-          step: 1
-          help: "填写值范围为 1-5"
-        - $formkit: switch
-          name: is_show_friend_permalink_text
-          if: "$list_layout === 'friends-list-summary'"
-          label: 朋友圈列表显示跳转链接提示文字
-          help: "如关闭此项，朋友圈列表文章项将不显示跳转链接文字"
           value: true
         - $formkit: switch
           name: is_pin_icon_show

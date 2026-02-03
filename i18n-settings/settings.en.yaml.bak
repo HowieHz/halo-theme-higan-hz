@@ -5,57 +5,57 @@ metadata:
 spec:
   forms:
     - group: global
-      label: 全局
+      label: Global
       formSchema:
         - $formkit: text
           name: default_page_language
-          label: 默认页面语言
+          label: Default page language
           value: "zh"
-          help: "默认页面语言，例如：zh、en。若此项为空，则默认为 zh。切换语言的方法是在 URL 后添加 ?lang=语言代码，例如：https://example.com/?lang=en"
+          help: "Default page language, e.g., zh or en. If this field is left empty, zh will be used by default. To switch languages, add ?lang=language_code to the end of the URL, for example: https://example.com/?lang=en"
         - $formkit: switch
           name: is_i18n_prefix_match_mode
-          label: 多语言功能前缀匹配模式
+          label: I18n prefix match mode
           value: true
-          help: 如启用此项，则多语言功能将启用前缀匹配模式，具体使用方法请看文档。
+          help: "If enabled, the multi-language feature will use prefix match mode. See documentation for details."
         - $formkit: switch
           name: is_auto_redirect_to_browser_language
-          label: 浏览器按语言自动跳转
+          label: Auto redirect to browser language
           value: false
-          help: "如启用此项，若当前浏览器语言与默认页面语言不同，且存在对应语言的页面，将自动跳转到对应语言页面。"
+          help: "If enabled, when the browser language is different from the default page language and a corresponding language page exists, it will automatically redirect to the corresponding language page."
         - $formkit: array
           name: auto_redirect_target_language_list
           if: "$is_auto_redirect_to_browser_language === true"
-          label: 允许跳转的目标区域语言代码列表
+          label: Allowed target region language code list for redirect
           value: []
-          help: "放在前面的会被优先匹配"
+          help: "The ones in front will be matched first"
           itemLabels:
             - type: text
               label: $value.v
           children:
             - $formkit: text
               name: v
-              label: "语言代码"
+              label: "Region language code"
               validation: "required"
-              help: "如 zh、zh_CN、en、en_US"
+              help: "e.g. zh, zh_CN, en, en_US"
         - $formkit: switch
           name: is_i18n_menu_show
-          label: 多语言菜单支持
+          label: Enable multi-language menu support
           value: false
-          help: 如启用此项，将启用多语言菜单支持，具体使用方法请看文档。
+          help: "If enabled, the theme will automatically generate a multi-language menu based on the menu name. For details, please refer to the documentation."
         - $formkit: switch
           name: upgrade_insecure_requests
           label: CSP:upgrade-insecure-requests
           value: false
-          help: 如启用此项，非跳转（non-navigational）的不安全资源请求将会自动升级到 HTTPS（包括第当前域名以及第三方请求）
+          help: "If enabled, the theme will add the upgrade-insecure-requests directive to the Content-Security-Policy header."
         - $formkit: switch
           name: anti_mirror_site
-          label: 仅允许使用指定域名访问
-          help: 使用场景：防止站点被恶意镜像后的流量流失
+          label: Anti-mirror site
+          help: "If enabled, the theme will check the domain name of the current page. If the domain name is not in the whitelist, it will jump to the target link."
           value: false
         - $formkit: array
           name: allow_site_whitelist
           if: "$anti_mirror_site === true"
-          label: 域名白名单列表
+          label: Domain whitelist
           value: []
           itemLabels:
             - type: text
@@ -63,74 +63,74 @@ spec:
           children:
             - $formkit: text
               name: input_domain
-              label: "Base64 编码后的域名"
+              label: Domain (base64 encoded)
               validation: "required"
-              help: "可使用 Base64 在线编码工具进行编码（编码前的内容仅包括域名，不包括协议（如 https://），端口（如 :8080），路径（如 /archive/1.html）。请在输入框输入编码后的内容！）\n例1编码前：howiehz.top\n编码后：aG93aWVoei50b3A=\n例2编码前：localhost\n编码后：bG9jYWxob3N0"
+              help: "For example, the domain name is howiehz.top, the base64 encoding is aG93aWVoei50b3A="
         - $formkit: text
           name: target_url
           if: "$anti_mirror_site === true"
-          label: "目标链接"
-          help: "Base64 编码后的目标链接。检测到当前页面域名不在白名单中，就会跳转到目标链接（编码前的内容包括完整域名。请在输入框仅输入编码后的内容！）\n示例：编码前 https://howiehz.top\n编码后 aHR0cHM6Ly9ob3dpZWh6LnRvcA=="
+          label: Target link (base64 encoded)
+          help: "When the domain name of the current page is not in the whitelist, the theme will jump to the target link."
           value: "bG9jYWxob3N0"
         - $formkit: switch
           name: is_keep_path_and_query
           if: "$anti_mirror_site === true"
-          label: "跳转后是否保留路径和查询参数"
-          help: "例：假设当前页面为 localhost/a/b?a=1，目标链接为 https://p.com。关闭此项会跳转到 https://p.com，而开启此项会跳转到 https://p.com/a/b?a=1"
+          label: Keep path and query
+          help: "If enabled, the theme will keep the path and query parameters of the current page when jumping to the target link."
           value: true
         - $formkit: switch
           name: is_custom_resource_locations
-          label: 自定义资源位置地址
+          label: Custom resource location
           value: false
-          help: 如启用此项，将使用自定义的资源位置地址，而不是主题默认的地址。
+          help: If enabled, custom resource locations will be used instead of the default theme locations.
         - $formkit: switch
           name: is_instant_page_enable
-          label: instant.page 支持
+          label: instant.page support
           value: false
-          help: 如启用此项，主题将自动加载 instant.page 脚本，以提升页面加载速度。
+          help: "If enabled, the theme will automatically load the instant.page script to improve the page loading speed."
         - $formkit: text
           name: instantpage_resource_location
           if: "$is_custom_resource_locations === true && $is_instant_page_enable === true"
-          label: instant.page 资源位置
+          label: instant.page resource location
           value: "/themes/howiehz-higan/assets/lib/instantpage/5.2.0.js"
-          help: "指定 instant.page 库的资源位置，例如：https://cdn.example.com/instantpage.min.js"
+          help: Specify the location of the instant.page library, e.g., https://cdn.example.com/instantpage.min.js
         - $formkit: switch
           name: is_mermaid_enable
-          label: Mermaid 支持
+          label: Mermaid support
           value: false
-          help: 如启用此项，主题将自动加载 Mermaid 脚本，以启用对应支持。
+          help: If enabled, the theme will automatically load the Mermaid script
         - $formkit: text
           name: mermaid_selector
           if: "$is_mermaid_enable === true"
-          label: "Mermaid CSS 选择器"
-          help: "CSS 选择器，用于指定 Mermaid 渲染的区域。默认值为 .content .mermaid"
+          label: Mermaid CSS selector
+          help: CSS selector for Mermaid diagrams
           value: ".content .mermaid"
         - $formkit: text
           name: mermaid_script_url
           if: "$is_custom_resource_locations === true && $is_mermaid_enable === true"
-          label: "Mermaid 资源位置"
-          help: "指定脚本地址，示例：https://registry.npmmirror.com/mermaid/11.4.1/files/dist/mermaid.esm.min.mjs, https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs, https://unpkg.com/mermaid@11.4.1/dist/mermaid.esm.min.mjs"
-          value: "https://registry.npmmirror.com/mermaid/11.4.1/files/dist/mermaid.esm.min.mjs"
+          label: Mermaid Resource Location
+          help: "URL to the Mermaid script. Example: https://registry.npmmirror.com/mermaid/11.4.1/files/dist/mermaid.esm.min.mjs, https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs, https://unpkg.com/mermaid@11.4.1/dist/mermaid.esm.min.mjs"
+          value: "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"
         - $formkit: code
           name: mermaid_config
           if: "$is_mermaid_enable === true"
-          label: Mermaid Config 属性
-          help: 文档：https://mermaid.js.org/config/schema-docs/config.html#mermaid-config-properties
+          label: Mermaid Config Properties
+          help: "Docs: https://mermaid.js.org/config/schema-docs/config.html#mermaid-config-properties"
           language: javascript
           height: 150px
           value: "{ startOnLoad: false }"
     - group: styles
-      label: 总体样式
+      label: Style
       formSchema:
         - $formkit: switch
           name: is_custom_font_files_enable
-          label: 启用自定义字体文件
+          label: Enable Custom Font Files
           value: false
-          help: 如启用此项，将使用上传的自定义字体文件替换默认字体。
+          help: Enable this option to use uploaded custom font files instead of the default fonts
         - $formkit: array
           if: "$is_custom_font_files_enable === true"
           name: custom_font_configs
-          label: 自定义字体文件
+          label: Custom font files
           value: []
           itemLabels:
             - type: text
@@ -143,361 +143,361 @@ spec:
               id: font_style
               validation: "required"
               value: "normal"
-              label: 字体样式
+              label: Font style
               options:
-                - label: "自定义值"
+                - label: "Custom Value"
                   value: "custom"
-                - label: "常规（normal）"
+                - label: "Normal"
                   value: "normal"
-                - label: "斜体（italic —— 与常规不同的斜体字形）"
+                - label: "Italic"
                   value: "italic"
-                - label: "倾斜（oblique —— 常规字形被倾斜几度）"
+                - label: "Oblique"
                   value: "oblique"
-              help: https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/At-rules/@font-face/font-style
+              help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-style
             - $formkit: text
               name: custom_font_style
               if: "$get(font_style).value === 'custom'"
               validation: "required"
               value: "oblique 30deg 50deg"
-              label: 自定义字体样式值
+              label: Custom Font Style Value
             - $formkit: select
               name: font_weight
               id: font_weight
               validation: "required"
               value: "400"
-              label: 字体粗细
+              label: Font weight
               options:
-                - label: "自定义值"
+                - label: "Custom Value"
                   value: "custom"
-                - label: "自动（auto —— 由浏览器决定使用何种粗细）"
+                - label: "Auto (auto — let the browser decide)"
                   value: "auto"
-                - label: "极细（100 —— Thin (Hairline)）"
+                - label: "Thin/Hairline (100)"
                   value: "100"
-                - label: "细体（200 —— Extra Light (Ultra Light)）"
+                - label: "Extra Light/Ultra Light (200)"
                   value: "200"
-                - label: "轻体（300 —— Light）"
+                - label: "Light (300)"
                   value: "300"
-                - label: "常规（400 —— Normal）"
+                - label: "Normal (400)"
                   value: "400"
-                - label: "中等（500 —— Medium）"
+                - label: "Medium (500)"
                   value: "500"
-                - label: "半粗体（600 —— Semi Bold (Demi Bold)）"
+                - label: "Semi Bold/Demi Bold (600)"
                   value: "600"
-                - label: "粗体（700 —— Bold）"
+                - label: "Bold (700)"
                   value: "700"
-                - label: "特粗体（800 —— Extra Bold (Ultra Bold)）"
+                - label: "Extra Bold/Ultra Bold (800)"
                   value: "800"
-                - label: "黑体（900 —— Black (Heavy)）"
+                - label: "Black/Heavy (900)"
                   value: "900"
               help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-weight
             - $formkit: text
               if: "$get(font_weight).value === 'custom'"
               name: custom_font_weight
-              label: 自定义字体粗细值
+              label: Custom Font Weight Value
               validation: "required"
               value: "1 1000"
             - $formkit: select
               name: font_display
               validation: "required"
               value: "swap"
-              label: 字体显示策略
+              label: Font Display Strategy
               options:
-                - label: "自动（auto）"
+                - label: "Auto"
                   value: "auto"
-                - label: "堵塞（block）"
+                - label: "Block"
                   value: "block"
-                - label: "交换（swap）"
+                - label: "Swap"
                   value: "swap"
-                - label: "回退（fallback）"
+                - label: "Fallback"
                   value: "fallback"
-                - label: "可选（optional）"
+                - label: "Optional"
                   value: "optional"
-              help: https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/At-rules/@font-face/font-display
+              help: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-display
             - $formkit: text
               name: font_unicode_range
-              label: 字体 Unicode 范围
-              help: "指定字体所支持的 Unicode 范围，例如：U+000-5FF（拉丁文和基本拉丁文补充）、U+4E00-9FFF（汉字）等。留空则表示支持所有 Unicode 字符。相关文档：https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/unicode-range"
+              label: Font Unicode Range
+              help: "Specify the Unicode range supported by the font, e.g., U+000-5FF (Latin and Basic Latin Supplement), U+4E00-9FFF (CJK Unified Ideographs), etc. Leave blank to support all Unicode characters. Documentation: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/unicode-range"
               value: ""
             - $formkit: attachmentInput
               name: font_file
               validation: "required"
-              label: 选择字体文件
-              help: 上传 .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt 字体文件，主题会优先使用这些文件替换默认字体
+              label: Select font file
+              help: "Upload .woff2/.woff/.ttf/.otf/.eot/.ttc/.otc/.sfnt font files. The theme will prioritize these files to replace the default fonts."
               value: ""
         - $formkit: text
           if: "$is_custom_font_files_enable === true"
           name: custom_font_name
-          label: 自定义字体名称
-          help: "请填写上传字体文件内部声明的“字体全名 (nameID=4)”或“PostScript 名 (nameID=6)”，如：My Custom Font Regular 或 MyCustomFont-Regular；如果不知道也可以置空。若置空，则即使用户本地已安装该字体，也不会使用本地版本，而是继续从网络下载。"
+          label: Font Name (Full Name/PostScript Name)
+          help: 'Enter the font''s internal "Full Name (nameID=4)" or "PostScript Name (nameID=6)", e.g., My Custom Font Regular or MyCustomFont-Regular. You may leave this blank if unknown. If left blank, even if the font is installed locally, it will not be used and the web font will still be downloaded.'
           value: ""
         - $formkit: switch
           name: is_custom_cursor_files_enable
-          label: 启用自定义光标文件
+          label: Enable Custom Cursor Files
           value: false
-          help: 如启用此项，将使用上传的自定义光标替换默认光标组。
+          help: If enabled, uploaded custom cursors will replace the default cursor set.
         - $el: div
           children:
             - $el: span
-              children: 可参照
+              children: Refer to
             - $el: a
               attrs:
-                href: "https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/Properties/cursor#%E5%85%B3%E9%94%AE%E5%AD%97%E5%80%BC"
+                href: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/cursor#keyword"
                 style: |
                   text-decoration: underline;
                   text-underline-offset: 0.25em;
                 target: "_blank"
-              children: 此处文档
+              children: this documentation
             - $el: span
-              children: 辅助设置。
+              children: for auxiliary settings.
         - $formkit: switch
           if: "$is_custom_cursor_files_enable === true"
           name: is_show_unused_cursor_files
-          label: 展示未使用的光标文件配置项
+          label: Show Unused Cursor File Configurations
           value: false
-          help: 一般无需启用此项。
+          help: Generally, there is no need to enable this option.
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_auto
-          label: 选择自动指针文件（CSS 声明为 auto）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换自动指针。描述：根据上下文自动选择合适的指针，可设定为默认指针。
+          label: Select Auto Cursor File (CSS declared as auto)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default auto cursor. Description: Automatically selects the appropriate cursor based on context, can be set as the default cursor."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true"
           name: custom_cursor_files_default
-          label: 选择默认指针文件（CSS 声明为 default）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换默认指针。描述：默认指针，通常是箭头。
+          label: Select Default Cursor File (CSS declared as default)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default cursor. Description: The default cursor, usually an arrow."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_context_menu
-          label: 选择菜单指针文件（CSS 声明为 context-menu）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换菜单指针。描述：指针下有可用内容目录。
+          label: Select Context Menu Cursor File (CSS declared as context-menu)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default context menu cursor. Description: Indicates a context menu is available."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true"
           name: custom_cursor_files_help
-          label: 选择帮助指针文件（CSS 声明为 help）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换帮助指针。描述：指示帮助。
+          label: Select Help Cursor File (CSS declared as help)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default help cursor. Description: Indicates help is available."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true"
           name: custom_cursor_files_pointer
-          label: 选择指针文件（CSS 声明为 pointer）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换指针。描述：悬浮于连接上时，通常为手。
+          label: Select Pointer Cursor File (CSS declared as pointer)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default pointer cursor. Description: Usually a hand when hovering over a link."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_progress
-          label: 选择进度指针文件（CSS 声明为 progress）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换进度指针。描述：程序后台繁忙，用户仍可交互（与 wait 相反）。
+          label: Select Progress Cursor File (CSS declared as progress)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default progress cursor. Description: The program is busy in the background, but the user can still interact (opposite of wait)."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true"
           name: custom_cursor_files_wait
-          label: 选择等待指针文件（CSS 声明为 wait）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换等待指针。描述：程序繁忙，用户不可交互（与 progress 相反）。图标一般为沙漏或者表。
+          label: Select Wait Cursor File (CSS declared as wait)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default wait cursor. Description: The program is busy, and the user cannot interact (opposite of progress). The icon is usually an hourglass or a watch."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true"
           name: custom_cursor_files_cell
-          label: 选择单元格指针文件（CSS 声明为 cell）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换单元格指针。描述：指示单元格可被选中。
+          label: Select Cell Cursor File (CSS declared as cell)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default cell cursor. Description: Indicates a cell can be selected."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true"
           name: custom_cursor_files_crosshair
-          label: 选择十字指针文件（CSS 声明为 crosshair）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换十字指针。描述：交叉指针，通常指示位图中的框选。
+          label: Select Crosshair Cursor File (CSS declared as crosshair)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default crosshair cursor. Description: Crosshair cursor, usually indicates selection in a bitmap."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true"
           name: custom_cursor_files_text
-          label: 选择文本指针文件（CSS 声明为 text）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换文本指针。描述：指示文字可被选中。
+          label: Select Text Cursor File (CSS declared as text)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default text cursor. Description: Indicates text can be selected."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true"
           name: custom_cursor_files_vertical_text
-          label: 选择垂直文本指针文件（CSS 声明为 vertical-text）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换垂直文本指针。描述：指示垂直文字可被选中。
+          label: Select Vertical Text Cursor File (CSS declared as vertical-text)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default vertical-text cursor. Description: Indicates vertical text can be selected."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_alias
-          label: 选择别名指针文件（CSS 声明为 alias）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换别名指针。描述：复制或快捷方式将要被创建。
+          label: Select Alias Cursor File (CSS declared as alias)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default alias cursor. Description: Copy or shortcut will be created."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true"
           name: custom_cursor_files_copy
-          label: 选择复制指针文件（CSS 声明为 copy）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换复制指针。描述：指示可复制。
+          label: Select Copy Cursor File (CSS declared as copy)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default copy cursor. Description: Indicates copy."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true"
           name: custom_cursor_files_move
-          label: 选择移动指针文件（CSS 声明为 move）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换移动指针。描述：被悬浮的物体可被移动。
+          label: Select Move Cursor File (CSS declared as move)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default move cursor. Description: The hovered object can be moved."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_no_drop
-          label: 选择禁止拖放指针文件（CSS 声明为 no-drop）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换禁止拖放指针。描述：当前位置不能扔下。
+          label: Select No Drop Cursor File (CSS declared as no-drop)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default no-drop cursor. Description: The current position cannot be dropped."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true"
           name: custom_cursor_files_not_allowed
-          label: 选择不允许指针文件（CSS 声明为 not-allowed）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换不允许指针。描述：不能执行。
+          label: Select Not Allowed Cursor File (CSS declared as not-allowed)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default not-allowed cursor. Description: Action not allowed."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true"
           name: custom_cursor_files_grab
-          label: 选择抓取指针文件（CSS 声明为 grab）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换抓取指针。描述：可抓取。
+          label: Select Grab Cursor File (CSS declared as grab)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default grab cursor. Description: Can be grabbed."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true"
           name: custom_cursor_files_grabbing
-          label: 选择抓取中指针文件（CSS 声明为 grabbing）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换抓取中指针。描述：抓取中。
+          label: Select Grabbing Cursor File (CSS declared as grabbing)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default grabbing cursor. Description: Grabbing."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_all_scroll
-          label: 选择全滚动指针文件（CSS 声明为 all-scroll）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换全滚动指针。描述：元素可任意方向滚动（平移）。
+          label: Select All Scroll Cursor File (CSS declared as all-scroll)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default all-scroll cursor. Description: Element can be scrolled (panned) in any direction."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_col_resize
-          label: 选择列调整指针文件（CSS 声明为 col-resize）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换列调整指针。描述：元素可被重设宽度。通常被渲染为中间有一条竖线分割的左右两个箭头。
+          label: Select Column Resize Cursor File (CSS declared as col-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default column resize cursor. Description: Element can be resized in width. Usually rendered as two arrows separated by a vertical line in the middle."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_row_resize
-          label: 选择行调整指针文件（CSS 声明为 row-resize）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换行调整指针。描述：元素可被重设高度。通常被渲染为中间有一条横线分割的上下两个箭头。
+          label: Select Row Resize Cursor File (CSS declared as row-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default row resize cursor. Description: Element can be resized in height. Usually rendered as two arrows separated by a horizontal line in the middle."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_n_resize
-          label: 选择北调整指针文件（CSS 声明为 n-resize）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换北调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          label: Select North Resize Cursor File (CSS declared as n-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default north resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_e_resize
-          label: 选择东调整指针文件（CSS 声明为 e-resize）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换东调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          label: Select East Resize Cursor File (CSS declared as e-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default east resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_s_resize
-          label: 选择南调整指针文件（CSS 声明为 s-resize）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换南调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          label: Select South Resize Cursor File (CSS declared as s-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default south resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_w_resize
-          label: 选择西调整指针文件（CSS 声明为 w-resize）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换西调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          label: Select West Resize Cursor File (CSS declared as w-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default west resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_ne_resize
-          label: 选择东北调整指针文件（CSS 声明为 ne-resize）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换东北调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          label: Select Northeast Resize Cursor File (CSS declared as ne-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default northeast resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_nw_resize
-          label: 选择西北调整指针文件（CSS 声明为 nw-resize）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换西北调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          label: Select Northwest Resize Cursor File (CSS declared as nw-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default northwest resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_se_resize
-          label: 选择东南调整指针文件（CSS 声明为 se-resize）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换东南调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          label: Select Southeast Resize Cursor File (CSS declared as se-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default southeast resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_sw_resize
-          label: 选择西南调整指针文件（CSS 声明为 sw-resize）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换西南调整指针。描述：某条边将被移动。例如元素盒的东南角被移动时使用 se-resize。
+          label: Select Southwest Resize Cursor File (CSS declared as sw-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default southwest resize cursor. Description: One edge will be moved. For example, se-resize is used when the southeast corner of an element box is moved."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_ew_resize
-          label: 选择东西调整指针文件（CSS 声明为 ew-resize）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换东西调整指针。描述：指示双向重新设置大小。
+          label: Select East-West Resize Cursor File (CSS declared as ew-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default east-west resize cursor. Description: Indicates bidirectional resizing."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_ns_resize
-          label: 选择南北调整指针文件（CSS 声明为 ns-resize）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换南北调整指针。描述：指示双向重新设置大小。
+          label: Select North-South Resize Cursor File (CSS declared as ns-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default north-south resize cursor. Description: Indicates bidirectional resizing."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_nesw_resize
-          label: 选择东北西南调整指针文件（CSS 声明为 nesw-resize）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换东北西南调整指针。描述：指示双向重新设置大小。
+          label: Select Northeast-Southwest Resize Cursor File (CSS declared as nesw-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default northeast-southwest resize cursor. Description: Indicates bidirectional resizing."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_nwse_resize
-          label: 选择西北东南调整指针文件（CSS 声明为 nwse-resize）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换西北东南调整指针。描述：指示双向重新设置大小。
+          label: Select Northwest-Southeast Resize Cursor File (CSS declared as nwse-resize)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default northwest-southeast resize cursor. Description: Indicates bidirectional resizing."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_zoom_in
-          label: 选择放大指针文件（CSS 声明为 zoom-in）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换放大指针。描述：指示可被放大。
+          label: Select Zoom-In Cursor File (CSS declared as zoom-in)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default zoom-in cursor. Description: Indicates zooming in."
           value: ""
         - $formkit: attachmentInput
           if: "$is_custom_cursor_files_enable === true && $is_show_unused_cursor_files === true"
           name: custom_cursor_files_zoom_out
-          label: 选择缩小指针文件（CSS 声明为 zoom-out）
-          help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换缩小指针。描述：指示可被缩小。
+          label: Select Zoom-Out Cursor File (CSS declared as zoom-out)
+          help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default zoom-out cursor. Description: Indicates zooming out."
           value: ""
         - $formkit: select
           name: color_schema
           id: color_schema_init
-          label: 配色方案
-          help: 若启用“深浅色模式切换按钮”，这项决定了网站刚加载完成时的配色方案。
+          label: Color scheme
+          help: If the "Color Scheme Toggle Button" is enabled, this determines the color scheme when the website is first loaded.
           value: "dark"
           options:
-            - label: "跟随系统 - 绿"
+            - label: "Follow System - Green"
               value: "auto"
-            - label: "浅色 - 绿"
-              value: "light"
-            - label: "暗色 - 绿"
+            - label: "Dark - Green"
               value: "dark"
-            - label: "跟随系统 - 蓝"
+            - label: "Light - Green"
+              value: "light"
+            - label: "Follow System - Blue"
               value: "auto-blue"
-            - label: "浅色 - 蓝"
-              value: "light-blue"
-            - label: "暗色 - 蓝"
+            - label: "Dark - Blue"
               value: "dark-blue"
-            - label: "浅色 - 灰粉"
+            - label: "Light - Blue"
+              value: "light-blue"
+            - label: "Light - Gray"
               value: "gray"
-            - label: "自定义配色"
+            - label: "Custom Color Scheme"
               value: "custom"
         - $formkit: number
-          label: 自定义配色方案识别码
+          label: Custom Color Scheme Identifier
           name: custom_color_schema_init_id
           if: "$color_schema === 'custom'"
           value: ""
-          help: "请先创建自定义配色方案，随后在此填写自定义配色方案识别码"
+          help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
         - $formkit: array
           name: custom_color_schema
-          label: 自定义配色方案
+          label: Custom color scheme
           value: []
           itemLabels:
             - type: text
@@ -507,307 +507,307 @@ spec:
           children:
             - $formkit: number
               name: id
-              label: 自定义配色方案识别码
-              value: "1"
-              help: "唯一识别码，请勿重复"
+              label: Custom color scheme identifier
+              value: 1
+              help: "Unique identifier, please do not duplicate"
               validation: "required"
             - $formkit: select
               name: type
-              label: 主题色彩模式
+              label: Theme color scheme
               value: "dark"
               options:
-                - label: "深色模式"
+                - label: "Dark Mode"
                   value: "dark"
-                - label: "浅色模式"
+                - label: "Light Mode"
                   value: "light"
-                - label: "自动模式"
+                - label: "Auto Mode"
                   value: "auto"
               validation: "required"
             - $formkit: switch
               name: is_css_variable_mode
               id: is_css_variable_mode
-              label: CSS 变量模式
-              help: 若启用此项，将使用 CSS 变量来定义配色方案。切换此选项后请点击下方提交按钮，之后重新打开此项，才能正常加载子选项。
+              label: CSS Variable Mode
+              help: If enabled, CSS variables will be used to define the color scheme. After toggling this option, please click the submit button below, then reopen this item to load the sub-options normally.
               value: false
             - $formkit: color
               if: "$get(is_css_variable_mode).value === false"
               format: hex
               name: primary_color
-              label: 主题主色调
+              label: Primary Color
               value: "#2bbc8a"
-              help: 主品牌色，用于按钮、链接等核心交互元素，对应 CSS 变量 --color-primary。
+              help: Primary brand color, used for buttons, links, and other core interactive elements, corresponding to CSS variable --color-primary.
             - $formkit: color
               if: "$get(is_css_variable_mode).value === false"
               format: hex
               name: primary_content_color
-              label: 主色文字
+              label: Primary Content Color
               value: "#212326"
-              help: 主色下的文字/图标颜色，对应 CSS 变量 --color-primary-content。
+              help: Text/icon color under primary color, corresponding to CSS variable --color-primary-content.
             - $formkit: color
               if: "$get(is_css_variable_mode).value === false"
               format: hex
               name: secondary_color
-              label: 次要品牌色
+              label: Secondary Color
               value: "#ccffb6"
-              help: 自然的辅助色，用于次级按钮或背景，对应 CSS 变量 --color-secondary。
+              help: Natural auxiliary color, used for secondary buttons or backgrounds, corresponding to CSS variable --color-secondary.
             - $formkit: color
               if: "$get(is_css_variable_mode).value === false"
               format: hex
               name: secondary_content_color
-              label: 次要色文字
+              label: Secondary Content Color
               value: "#d5d7d8"
-              help: 次要色上的正文/图标颜色，对应 CSS 变量 --color-secondary-content。
+              help: Text/icon color on secondary color, corresponding to CSS variable --color-secondary-content.
             - $formkit: color
               if: "$get(is_css_variable_mode).value === false"
               format: hex
               name: accent_color
-              label: 强调品牌色
+              label: Accent Color
               value: "#d480aa"
-              help: 高对比强调色，用于点缀和状态提醒，对应 CSS 变量 --color-accent。
+              help: High-contrast accent color, used for embellishments and status reminders, corresponding to CSS variable --color-accent.
             - $formkit: color
               if: "$get(is_css_variable_mode).value === false"
               format: hex
               name: accent_content_color
-              label: 强调色文字
+              label: Accent Content Color
               value: "#212326"
-              help: 强调色下的前景内容颜色，对应 CSS 变量 --color-accent-content。
+              help: Foreground content color under accent color, corresponding to CSS variable --color-accent-content.
             - $formkit: color
               if: "$get(is_css_variable_mode).value === false"
               format: hex
               name: neutral_color
-              label: 中性深色
+              label: Neutral Color
               value: "#1d1f21"
-              help: UI 中非饱和部分的底色，对应 CSS 变量 --color-neutral。
+              help: Base color for unsaturated parts in UI, corresponding to CSS variable --color-neutral.
             - $formkit: color
               if: "$get(is_css_variable_mode).value === false"
               format: hex
               name: neutral_content_color
-              label: 中性色文字
+              label: Neutral Content Color
               value: "#d5d7d8"
-              help: 中性背景下的前景颜色，对应 CSS 变量 --color-neutral-content。
+              help: Foreground color on neutral background, corresponding to CSS variable --color-neutral-content.
             - $formkit: color
               if: "$get(is_css_variable_mode).value === false"
               format: hex
               name: base_100_color
-              label: 页面基础面
+              label: Base 100 Color
               value: "#212326"
-              help: HTML 主要画布背景色，对应 CSS 变量 --color-base-100。
+              help: Main canvas background of html, corresponding to CSS variable --color-base-100.
             - $formkit: color
               if: "$get(is_css_variable_mode).value === false"
               format: hex
               name: base_200_color
-              label: 基色 200
+              label: Base 200 Color
               value: "#1c1c1c"
-              help: 更深的背景层次，对应 CSS 变量 --color-base-200。
+              help: Deeper background layer, corresponding to CSS variable --color-base-200.
             - $formkit: color
               if: "$get(is_css_variable_mode).value === false"
               format: hex
               name: base_300_color
-              label: 基色 300
+              label: Base 300 Color
               value: "#181818"
-              help: 更深底层，对应 CSS 变量 --color-base-300。
+              help: Even deeper layer, corresponding to CSS variable --color-base-300.
             - $formkit: color
               if: "$get(is_css_variable_mode).value === false"
               format: hex
               name: base_content_color
-              label: 基色文字
+              label: Base Content Color
               value: "#d5d7d8"
-              help: 基色上的前景内容，对应 CSS 变量 --color-base-content。
+              help: Foreground content on base color, corresponding to CSS variable --color-base-content.
             - $formkit: switch
               if: "$get(is_css_variable_mode).value === true"
               name: is_raw_css_output_mode
-              label: CSS 原始输出模式
-              help: 关闭此项后，仅需填写自定义 CSS 变量的部分，输出时会自动输出在对应 CSS 选择器中（选择器为 html[theme="theme-{id}"]（填写的”识别码“替换 {id}））。
+              label: Raw CSS Output Mode
+              help: When this is disabled, you only need to fill in the custom CSS variables part, and the output will automatically be in the corresponding CSS selector (selector is html[theme="theme-{id}"] (replace {id} with the entered identifier)).
               value: false
             - $formkit: code
               if: "$get(is_css_variable_mode).value === true"
               name: custom_css
-              label: 自定义 CSS 变量
-              help: "文档中有示例：https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration#自定义配色方案"
+              label: Custom CSS Variables
+              help: "Examples in the documentation"
               language: css
               height: 150px
               value: ""
         - $formkit: switch
           name: is_show_color_scheme_toggle_button
-          label: 深浅色模式切换按钮
+          label: Color Scheme Toggle Button
           value: false
-          help: （切换此项后，请点击下方保存按钮，再之后刷新此页面）若启用此项，将在大标题旁显示明暗模式切换按钮。并且在 浅色模式 -> 深色模式 -> 自动模式 -> 浅色模式 中自动切换。注：“自动模式配色方案”选择一种浅色方案即可禁用自动模式。（具体运行逻辑请查看文档）
+          help: "(After toggling this option, please click the save button below and then refresh the page.) If enabled, a light/dark mode toggle button will appear next to the main title. It will automatically cycle through Light Mode -> Dark Mode -> Auto Mode -> Light Mode. Note: Selecting a light color scheme for 'Auto Mode' will disable Auto Mode. (For detailed implementation logic, please refer to the documentation.)"
         - $formkit: select
           name: theme_auto
           id: custom_theme_auto
           if: "$is_show_color_scheme_toggle_button===true"
-          label: 自动模式配色方案
+          label: Auto Mode Color Scheme
           value: "auto"
           options:
-            - label: "跟随系统 - 绿"
+            - label: "Follow System - Green"
               value: "auto"
-            - label: "浅色 - 绿"
+            - label: "Light - Green"
               value: "light"
-            - label: "暗色 - 绿"
+            - label: "Dark - Green"
               value: "dark"
-            - label: "跟随系统 - 蓝"
+            - label: "Follow System - Blue"
               value: "auto-blue"
-            - label: "浅色 - 蓝"
+            - label: "Light - Blue"
               value: "light-blue"
-            - label: "暗色 - 蓝"
+            - label: "Dark - Blue"
               value: "dark-blue"
-            - label: "浅色 - 灰粉"
+            - label: "Light - Gray"
               value: "gray"
-            - label: "自定义配色"
+            - label: "Custom Color Scheme"
               value: "custom"
         - $formkit: number
           name: custom_theme_auto_id
-          label: 自定义配色方案识别码
+          label: Custom Color Scheme Identifier
           if: "$is_show_color_scheme_toggle_button == true && $theme_auto === 'custom'"
           value: ""
-          help: "请先创建自定义配色方案，随后在此填写自定义配色方案识别码"
+          help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
         - $formkit: select
           name: theme_light
           id: custom_theme_light
           if: "$is_show_color_scheme_toggle_button===true"
-          label: 浅色模式配色方案
+          label: Light Mode Color Scheme
           value: "light"
           options:
-            - label: "跟随系统 - 绿"
+            - label: "Follow System - Green"
               value: "auto"
-            - label: "浅色 - 绿"
+            - label: "Light - Green"
               value: "light"
-            - label: "暗色 - 绿"
+            - label: "Dark - Green"
               value: "dark"
-            - label: "跟随系统 - 蓝"
+            - label: "Follow System - Blue"
               value: "auto-blue"
-            - label: "浅色 - 蓝"
+            - label: "Light - Blue"
               value: "light-blue"
-            - label: "暗色 - 蓝"
+            - label: "Dark - Blue"
               value: "dark-blue"
-            - label: "浅色 - 灰粉"
+            - label: "Light - Gray"
               value: "gray"
-            - label: "自定义配色"
+            - label: "Custom Color Scheme"
               value: "custom"
         - $formkit: number
           name: custom_theme_light_id
-          label: 自定义配色方案识别码
+          label: Custom Color Scheme Identifier
           if: "$is_show_color_scheme_toggle_button == true && $theme_light === 'custom'"
           value: ""
-          help: "请先创建自定义配色方案，随后在此填写自定义配色方案识别码"
+          help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
         - $formkit: select
           name: theme_dark
           id: custom_theme_dark
           if: "$is_show_color_scheme_toggle_button===true"
-          label: 深色模式配色方案
+          label: Dark Mode Color Scheme
           value: "dark"
           options:
-            - label: "跟随系统 - 绿"
+            - label: "Follow System - Green"
               value: "auto"
-            - label: "浅色 - 绿"
+            - label: "Light - Green"
               value: "light"
-            - label: "暗色 - 绿"
+            - label: "Dark - Green"
               value: "dark"
-            - label: "跟随系统 - 蓝"
+            - label: "Follow System - Blue"
               value: "auto-blue"
-            - label: "浅色 - 蓝"
+            - label: "Light - Blue"
               value: "light-blue"
-            - label: "暗色 - 蓝"
+            - label: "Dark - Blue"
               value: "dark-blue"
-            - label: "浅色 - 灰粉"
+            - label: "Light - Gray"
               value: "gray"
-            - label: "自定义配色"
+            - label: "Custom Color Scheme"
               value: "custom"
         - $formkit: number
           name: custom_theme_dark_id
-          label: 自定义配色方案识别码
+          label: Custom Color Scheme Identifier
           if: "$is_show_color_scheme_toggle_button == true && $theme_dark === 'custom'"
           value: ""
-          help: "请先创建自定义配色方案，随后在此填写自定义配色方案识别码"
+          help: "Please create a custom color scheme first, then fill in the custom color scheme ID here."
           validation: "required"
         - $formkit: switch
           name: is_auto_switch_color_scheme_based_on_browser_settings
           if: "$is_show_color_scheme_toggle_button===true"
-          label: 根据浏览器设置自动切换配色
+          label: Automatically switch color scheme based on browser settings
           value: true
-          help: 如果启用这项，首先会读取浏览器中已保存的配色选择，如果没有保存的选择，则会根据浏览器主题设置自动切换为浅/深色配色。
+          help: "If enabled, it will first read the saved color scheme selection from the browser. If there is no saved selection, it will automatically switch to light/dark mode based on the browser theme settings."
         - $formkit: switch
           name: is_save_color_scheme_settings_to_browser
           if: "$is_show_color_scheme_toggle_button===true"
-          label: 保存配色设置到浏览器中
+          label: Save color scheme settings to browser
           value: true
-          help: 如果启用这项，按下配色切换按钮后，将会保存当前的配色选择到浏览器存储中。
+          help: "If enabled, the current color scheme selection will be saved to the browser storage after pressing the color scheme toggle button."
         - $formkit: select
           name: text_size
-          label: 字体大小
+          label: Text size
           value: "small"
           options:
-            - label: "小字体"
+            - label: "Small"
               value: "small"
-            - label: "常规"
+            - label: "Normal"
               value: "normal"
-            - label: "大字体"
+            - label: "Large"
               value: "large"
         - $formkit: switch
           name: is_max_width_settings
-          label: 自定义内容区域最大宽度
+          label: Custom content area maximum width
           value: true
-          help: 如不开启此项，内容区域最大宽度会随着页面宽度变化而变化。但可能出现内容整体偏左的现象。建议关闭此项的同时开启“内容区域最小宽度”，“自定义内容区域宽度属性”并保持默认值。
+          help: "If enabled, you can customize the maximum width of the content area."
         - $formkit: text
           name: max_width
           if: "$is_max_width_settings===true"
-          label: 内容区域最大宽度
+          label: Maximum width of content area
           value: 48rem
-          placeholder: "默认值：48rem"
-          help: "允许全部 CSS 长度单位，如：48rem, 780px, 70vw, 70%。宽度最大值设置较大时可能会出现内容整体偏左的现象。为解决这个问题，可同时开启“内容区域最小宽度”，“自定义内容区域宽度属性”并保持默认值。"
+          placeholder: "Default: 48rem"
+          help: "Allow all CSS length units, such as: 48rem, 780px, 70vw, 70%."
         - $formkit: switch
           name: is_min_width_settings
-          label: 自定义内容区域最小宽度
+          label: Custom content area minimum width
           value: false
         - $formkit: text
           name: min_width
           if: "$is_min_width_settings===true"
-          label: 内容区域最小宽度
+          label: Minimum width of content area
           value: 48rem
-          placeholder: "默认值：48rem"
-          help: "允许全部 CSS 长度单位，如：48rem, 780px, 70vw, 70%。当此设置宽度大于窗口宽度时，主题会使用窗口宽度。以避免出现横向滚动条。"
+          placeholder: "Default: 48rem"
+          help: "Allow all CSS length units, such as: 48rem, 780px, 70vw, 70%. When the screen width is less than the minimum width, content area will be less than the minimum width."
         - $formkit: switch
           name: is_force_min_width_settings
           if: "$is_min_width_settings===true"
-          label: 强制应用内容区域最小宽度
+          label: Force content area minimum width
           value: false
-          help: "启用时，强制使内容显示区域不小于设定的最小宽度，即使出现横向滚动条。"
+          help: "If enabled, the content area will always be larger than the minimum width. So when the screen width is less than the minimum width, vertical scrolling will appear."
         - $formkit: switch
           name: is_content_width_style_settings
-          label: 自定义内容区域宽度属性
+          label: Custom content area width style
           value: false
-          help: 如不开启此项，内容区域宽度默认设置为最大宽度
+          help: "This determines the content area width style."
         - $formkit: text
           name: content_width_style
           if: "$is_content_width_style_settings===true"
-          label: 内容区域宽度样式
+          label: Width style of content area
           value: fit-content
-          placeholder: "默认值：fit-content"
-          help: "此项决定了内容区域宽度。默认值效果为：使内容区域宽度=最宽的内容的宽度。（此项实际是在设置内容区域的 width 属性对应的样式值）"
+          placeholder: "Default: fit-content"
+          help: "This determines the style value of the width attribute corresponding to the content area style."
         - $formkit: switch
           name: is_show_header_icon
-          label: 是否显示页眉头像
+          label: Header icon
           value: true
         - $formkit: attachment
           name: icon
           if: "$is_show_header_icon===true"
-          label: 自定义页眉头像
+          label: Custom header icon
         - $formkit: switch
           name: avatar_circle
           if: "$is_show_header_icon===true"
-          label: 圆形头像
+          label: Circle avatar
           value: false
         - $formkit: switch
           name: avatar_grayout
           if: "$is_show_header_icon===true"
-          label: 灰度头像
+          label: Avatar grayscale
           value: false
         - $formkit: array
           name: extra_menu_items
-          label: 额外菜单项
-          help: "在菜单中添加额外的菜单项"
+          label: Extra menu items
+          help: "Add extra items to the menu"
           itemLabels:
             - type: text
               label: $value.type
@@ -816,32 +816,32 @@ spec:
           children:
             - $formkit: select
               name: type
-              label: 菜单项类型
+              label: Menu item type
               value: "search"
               options:
-                - label: "随机文章"
+                - label: "Random post"
                   value: "random"
-                - label: "用户账号"
+                - label: "User account"
                   value: "user"
-                - label: "搜索（需“搜索组件”插件支持）"
+                - label: "Search (requires 'search-widget' plugin)"
                   value: "search"
               validation: "required"
         - $formkit: switch
           name: is_show_header_menu
-          label: 显示页眉菜单
+          label: Header menu
           value: true
         - $formkit: switch
           name: is_show_page_number
-          label: 显示页码
+          label: Display page number
           value: true
         - $formkit: switch
           name: is_footer_site_stats_show
-          label: 页面底部站点统计信息
+          label: Site statistics information at the bottom of the page
           value: false
         - $formkit: array
           name: footer_site_stats
           if: "$is_footer_site_stats_show === true"
-          label: 统计项设置
+          label: Statistics settings
           itemLabels:
             - type: iconify
               label: $value.icon
@@ -869,40 +869,40 @@ spec:
           children:
             - $formkit: select
               name: type
-              label: 统计项
-              value: "visit"
+              label: Statistics item
+              value: ""
               options:
-                - label: "总阅读量"
+                - label: "Total Views"
                   value: "visit"
-                - label: "总文章数"
+                - label: "Total number of articles"
                   value: "post"
-                - label: "总点赞数"
+                - label: "Total Upvotes"
                   value: "upvote"
-                - label: "总评论数"
+                - label: "Total number of comments"
                   value: "comment"
-                - label: "总分类数"
+                - label: "Total number of categories"
                   value: "category"
-                - label: "总字数（需“API 扩展包”插件支持）"
+                - label: "Total number of words(requires 'Extra API' plugin support)"
                   value: "wordcount"
               validation: "required"
             - $formkit: switch
               name: i18n_text
-              label: 多语言文本包裹数字
+              label: Wrap text in multiple languages
               value: true
             - $formkit: iconify
               name: icon
-              label: 文字左侧的图标
+              label: Icon to the left of the text
               format: dataurl
               value: ""
         - $formkit: switch
           name: is_footer_theme_info_show
-          label: 页面底部主题信息
+          label: Theme information in the footer
           value: true
         - $formkit: radio
           name: footer_theme_info_theme_name
           if: "$is_footer_theme_info_show === true"
-          label: 页面底部主题信息所展示的主题名
-          value: Higan Haozi
+          label: Theme name displayed in the footer theme information
+          value: higan-hz
           # autocorrect-disable
           options:
             - label: Higan Haozi
@@ -915,52 +915,52 @@ spec:
         - $formkit: radio
           name: footer_theme_info_halo_version_name
           if: "$is_footer_theme_info_show === true"
-          label: 页面底部主题信息所展示的 Halo 版本
+          label: Halo version displayed in the footer theme information
           value: Halo
           options:
             - label: Halo
               value: Halo
             - label: Halo Pro
               value: Halo Pro
-            - label: Halo 专业版
-              value: Halo 专业版
+            - label: Halo Professional Edition
+              value: Halo Professional Edition
         - $formkit: switch
           name: is_footer_copyright_show
-          label: 页面底部版权信息
+          label: Footer theme copyright information in the footer
           value: true
         - $formkit: text
           if: "$is_footer_copyright_show === true"
           name: footer_copyright_custom_name
-          label: 版权信息自定义署名
-          help: "如果不填写，则使用站点标题作为署名"
+          label: Custom copyright signature
+          help: "If left blank, the site title will be used as the signature"
         - $formkit: switch
           name: is_footer_force_bottom
-          label: 强制页脚、页码在页面底部
+          label: Footer, Page number force to the bottom
           value: true
         - $formkit: switch
           name: is_footer_menu_show
-          label: 页面底部菜单
+          label: Footer menu
           value: true
         - $formkit: switch
           name: is_footer_content_show
-          label: 添加内容到页面最底部
-          help: "Halo 设置 - 代码注入 - 页脚 的内容显示位置在“主题信息”、“版权信息”、“底部菜单”之上。\n而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。"
+          label: Footer content at the bottom
+          help: "If enabled, the theme will display the content at the bottom."
           value: false
         - $formkit: code
           name: footer_content
           if: "$is_footer_content_show === true"
-          label: 页面最底部内容
+          label: Footer content at the bottom (support HTML code block)
           language: html
           height: 150px
         - $formkit: switch
           name: is_18n_footer_content_show
-          label: 多语言页面最底部内容支持
-          help: "Halo 设置 - 代码注入 - 页脚 的内容显示位置在“主题信息”、“版权信息”、“底部菜单”之上。\n而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。"
+          label: Multi-language footer content support
+          help: "Halo settings - Code injection - Footer content display position is above 'Theme Information', 'Copyright Information', and 'Footer Menu'.\nThe footer content filled in here is below the 'Footer Menu', at the very bottom of the page."
           value: false
         - $formkit: array
           name: i18n_footer_content
           if: "$is_18n_footer_content_show === true"
-          label: 自定义多语言页面最底部内容
+          label: Custom multi-language footer content
           value: []
           itemLabels:
             - type: text
@@ -968,105 +968,105 @@ spec:
           children:
             - $formkit: text
               name: lang
-              label: 语言代码
+              label: Language code
               value: "zh"
               validation: "required"
             - $formkit: code
               name: footer_content
-              label: 页面最底部内容
+              label: Footer content at the bottom
               language: html
               height: 150px
-              help: 支持 HTML 代码块
+              help: support HTML code block
         - $formkit: switch
           name: is_h3_underline
-          label: 为三级标题添加下划线
+          label: Add underline to H3 headings
           value: true
-          help: 开启后，三级标题（h3）下方将显示下划线装饰，让标题更加突出。
+          help: "If enabled, an underline will be displayed below H3 headings to make them stand out more."
         - $formkit: switch
           name: is_preserve_empty_lines_in_blockquote
-          label: 引用块保留空行
+          label: Preserve empty lines in blockquote
           value: true
-          help: 如启用此项，将在保留引用块中的空行，否则将自动删除引用块中的空行。引用块在 Markdown 中使用 > 表示。
+          help: "If enabled, empty lines in blockquotes will be preserved; otherwise, they will be automatically removed. Blockquotes are represented by the > symbol in Markdown."
         - $formkit: switch
           name: is_show_the_quote_before_blockquote
-          label: 引用块前添加引号
+          label: Show the quote before Blockquote
           value: true
-          help: 如启用此项，将在引用块前添加引号。引用块在 Markdown 中使用 > 表示。
+          help: "If enabled, the theme will display the quote before the blockquote. In Markdown, you can use the > symbol to create a blockquote."
         - $formkit: switch
           name: is_show_the_quote_after_blockquote
-          label: 引用块后添加引号
+          label: Show the quote after Blockquote
           value: false
-          help: 如启用此项，将在引用块后添加引号。引用块在 Markdown 中使用 > 表示。
+          help: "If enabled, the theme will display the quote after the blockquote. In Markdown, you can use the > symbol to create a blockquote."
         - $formkit: switch
           name: is_show_the_table_bottom_border
-          label: 表格行间线（除表头）
+          label: Table bottom border for each row (excluding the header)
           value: false
-          help: 如启用此项，表格每行底部都将添加表格线（除去表头）
+          help: "If enabled, a border will be added to the bottom of each table row."
         - $formkit: text
           name: table_bottom_border_width
           if: "$is_show_the_table_bottom_border===true"
-          label: 表格行间线宽度（除表头）
+          label: Table bottom border width for each row (excluding the header)
           value: 0.1rem
-          placeholder: "默认值：0.1rem"
-          help: "允许全部 CSS 长度单位，如：48rem, 780px, 70vw, 70%。"
+          placeholder: "Default: 0.1rem"
+          help: "Allow all CSS length units, such as: 48rem, 780px, 70vw, 70%."
         - $formkit: number
           name: heading_margin_top_multiplier
-          label: 标题上边距倍率
+          label: Heading margin-top multiplier
           value: 1
           step: 0.1
           min: 0
           max: 5
-          help: "设置标题 (h1, h2 等) 的上边距 (margin-top) 倍率，值为 1 表示使用默认边距，小于 1 减小边距，大于 1 增加边距"
+          help: "Set the margin-top multiplier for headings (h1, h2, etc.). Value of 1 means use default margins, less than 1 reduces margins, greater than 1 increases margins"
         - $formkit: number
           name: heading_margin_bottom_multiplier
-          label: 标题下边距倍率
+          label: Heading margin-bottom multiplier
           value: 1
           step: 0.1
           min: 0
           max: 5
-          help: "设置标题 (h1, h2 等) 的下边距 (margin-bottom) 倍率，值为 1 表示使用默认边距，小于 1 减小边距，大于 1 增加边距"
+          help: "Set the margin-bottom multiplier for headings (h1, h2, etc.). Value of 1 means use default margins, less than 1 reduces margins, greater than 1 increases margins"
         - $formkit: number
           name: paragraph_margin_top_multiplier
-          label: 段落上边距倍率
+          label: Paragraph margin-top multiplier
           value: 1
           step: 0.1
           min: 0
           max: 5
-          help: "设置段落 (p 标签) 的上边距倍率，值为 1 表示使用默认边距，小于 1 减小边距，大于 1 增加边距"
+          help: "Set the margin-top multiplier for paragraphs (p). Value of 1 means use default margins, less than 1 reduces margins, greater than 1 increases margins"
         - $formkit: number
           name: paragraph_margin_bottom_multiplier
-          label: 段落下边距倍率
+          label: Paragraph margin-bottom multiplier
           value: 1
           step: 0.1
           min: 0
           max: 5
-          help: "设置段落 (p 标签) 的下边距倍率，值为 1 表示使用默认边距，小于 1 减小边距，大于 1 增加边距"
+          help: "Set the margin-bottom multiplier for paragraphs (p). Value of 1 means use default margins, less than 1 reduces margins, greater than 1 increases margins"
     - group: index_styles
-      label: 首页样式
+      label: Home page style
       formSchema:
         - $formkit: text
           name: page_html_title
-          label: "主页 HTML 标题"
-          help: "如置空则取值自“Halo 设置 - 基本设置 - 站点标题”"
+          label: Page title
+          help: "The title of the page, which will be displayed in the browser title bar."
           value: ""
         - $formkit: switch
           name: hitokoto
-          label: 一言（hitokoto）
+          label: Hitokoto
           value: false
         - $formkit: text
           name: hitokoto_link
           if: "$hitokoto === true"
-          label: 一言（hitokoto）服务链接
+          label: hitokoto link
           value: https://v1.hitokoto.cn/?encode=js
-          help: "默认值：https://v1.hitokoto.cn/?encode=js、文档：https://developer.hitokoto.cn/sentence/"
+          help: "Default: https://v1.hitokoto.cn/?encode=js, Doc: https://developer.hitokoto.cn/sentence/"
         - $formkit: switch
           name: is_random_sentence_show
-          label: 自定义随机显示一句话
+          label: Custom random sentence display
           value: false
         - $formkit: array
           name: random_sentence_list
           if: "$is_random_sentence_show === true"
-          label: 自定义句子内容
+          label: Custom sentence content
           value: []
           itemLabels:
             - type: text
@@ -1074,27 +1074,27 @@ spec:
           children:
             - $formkit: text
               name: sentence
-              label: "一句话"
+              label: "One Sentence"
               validation: "required"
         - $formkit: switch
           name: is_resume_show
-          label: 个人简介/公告栏
+          label: Personal profile/Announcement
           value: false
         - $formkit: code
           name: resume
           if: "$is_resume_show === true"
-          label: 个人简介/公告栏内容
+          label: Personal profile/Announcement content
           language: html
           height: 150px
-          help: 支持 HTML 代码块
+          help: support HTML code block
         - $formkit: switch
           name: is_i18n_resume_show
-          label: 多语言个人简介/公告栏支持
+          label: Multi-language personal profile/announcement support
           value: false
         - $formkit: array
           name: i18n_resume
           if: "$is_i18n_resume_show === true"
-          label: 自定义多语言公告栏内容
+          label: Custom multi-language announcement content
           value: []
           itemLabels:
             - type: text
@@ -1102,106 +1102,104 @@ spec:
           children:
             - $formkit: text
               name: lang
-              label: 语言代码
-              value: "zh"
+              label: Language code
+              value: "en"
               validation: "required"
             - $formkit: code
               name: resume
-              label: 个人简介/公告栏内容
+              label: Personal profile/Announcement content
               language: html
               height: 150px
-              help: 支持 HTML 代码块
+              help: support HTML code block
         - $formkit: switch
           name: is_show_find_me_left_text
-          label: 社交资料图标左侧文字
-          help: "如关闭此项，将隐藏社交资料图标左侧文字"
+          label: Display the text on the left side of the social media information
+          help: "If enabled, the theme will display the text on the left side of the social media information."
           value: true
         - $formkit: switch
           name: is_show_index_post_list_title
-          label: 首页文章列表标题
-          help: "如关闭此项，首页文章列表将不显示标题"
+          label: Enable post list title
+          help: "If enabled, the theme will display the title of the post list."
           value: true
         - $formkit: select
           name: list_layout
-          label: 主页列表布局
+          label: Home page post list layout
           value: "simple-post-list"
           options:
-            - label: "简洁文章列表"
+            - label: "Simple post list"
               value: "simple-post-list"
-            - label: "多元文章列表"
+            - label: "Rich post list"
               value: "post-list-summary"
-            - label: "瞬间列表"
+            - label: "Moment list"
               value: "moment-list-summary"
-            - label: "朋友圈列表"
-              value: "friends-list-summary"
-          help: "瞬间列表"需"瞬间"插件启用方可正常使用，"朋友圈列表"需"朋友圈"插件启用方可正常使用
+          help: "The 'Moment list' requires the 'Moments' plugin to be enabled for proper use."
         - $formkit: switch
           name: is_show_post_pubdate_in_simple_post_list
           if: "$list_layout === 'simple-post-list'"
-          label: 简洁列表显示发布日期
+          label: Display publish date in simple post list
           value: true
         - $formkit: switch
           name: is_show_post_views_in_simple_post_list
           if: "$list_layout === 'simple-post-list'"
-          label: 简洁列表显示文章阅读量
+          label: Display post views in simple post list
           value: false
         - $formkit: switch
           name: is_show_post_pubdate_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
-          label: 多元列表显示发布日期
+          label: Display publish date in post list summary
           value: true
         - $formkit: switch
           name: is_show_post_categories_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
-          label: 多元列表显示文章分类
+          label: Display post categories in post list summary
           value: true
         - $formkit: switch
           name: is_show_post_tags_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
-          label: 多元列表显示文章标签
+          label: Display post tags in post list summary
           value: true
         - $formkit: switch
           name: is_show_post_views_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
-          label: 多元列表显示文章阅读量
+          label: Display post views in post list summary
           value: true
         - $formkit: switch
           name: is_show_post_estimated_reading_time_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
-          label: 多元列表显示文章预计阅读时间
+          label: Display post estimated reading time in post list summary
           value: false
         - $formkit: switch
           name: is_show_post_word_count_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
-          label: 多元列表显示文章字数统计
+          label: Display post word count in post list summary
           value: false
         - $formkit: switch
           name: is_show_post_excerpt_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
-          label: 多元列表显示文章摘要
+          label: Display post excerpt in post list summary
           value: true
         - $formkit: number
           name: post_excerpt_max_lines
           if: "$list_layout === 'post-list-summary'"
-          label: 多元列表文章摘要行数上限
+          label: Maximum number of lines in the post list summary
           value: "3"
           min: 1
           max: 5
           step: 1
-          help: "填写值范围为 1-5"
+          help: "The value range is 1-5"
         - $formkit: switch
           name: is_show_index_post_list_permalink_text
           if: "$list_layout === 'post-list-summary'"
-          label: 多元列表跳转文章链接所用提示文字
-          help: "如关闭此项，首页文章列表文章项将不显示跳转链接文字"
+          label: Display the text of the post list permalink
+          help: "If enabled, the theme will display the text of the post list permalink."
           value: true
         - $formkit: switch
           name: is_show_post_cover_in_post_list_summary
           if: "$list_layout === 'post-list-summary'"
-          label: 多元列表显示文章封面
+          label: Display post cover in the post list summary
           value: true
         - $formkit: text
-          label: 瞬间列表显示条数
+          label: Number of moments per page
           name: moment_list_page_size
           if: "$list_layout === 'moment-list-summary'"
           validation: required|Number
@@ -1209,431 +1207,384 @@ spec:
         - $formkit: switch
           name: is_show_moment_avatar
           if: "$list_layout === 'moment-list-summary'"
-          label: 瞬间列表显示条目作者头像
+          label: Show author avatar in moment list
           value: true
         - $formkit: switch
           name: is_show_moment_nickname
           if: "$list_layout === 'moment-list-summary'"
-          label: 瞬间列表显示条目作者昵称
+          label: Show author nickname in moment list
           value: true
         - $formkit: switch
           name: is_show_moment_pubdate
           if: "$list_layout === 'moment-list-summary'"
-          label: 瞬间列表显示条目发布时间
+          label: Show post publication date in moment list
           value: true
         - $formkit: switch
           name: is_show_moment_estimated_reading_time
           if: "$list_layout === 'moment-list-summary'"
-          label: 瞬间列表显示条目预计阅读时间
+          label: Show estimated reading time in moment list
           value: false
         - $formkit: switch
           name: is_show_moment_word_count
           if: "$list_layout === 'moment-list-summary'"
-          label: 瞬间列表显示条目字数统计
+          label: Show word count in moment list
           value: false
         - $formkit: switch
           name: is_moment_upvote_button_show
           if: "$list_layout === 'moment-list-summary'"
-          label: 瞬间列表启用点赞按钮
+          label: Enable upvote button in moment list
           value: true
         - $formkit: switch
           name: is_moment_comment_section_show
           if: "$list_layout === 'moment-list-summary'"
-          label: 瞬间列表启用评论区
-          value: true
-        - $formkit: text
-          label: 朋友圈列表显示条数
-          name: friends_list_page_size
-          if: "$list_layout === 'friends-list-summary'"
-          validation: required|Number
-          value: 10
-        - $formkit: switch
-          name: is_show_friend_pubdate
-          if: "$list_layout === 'friends-list-summary'"
-          label: 朋友圈列表显示发布日期
-          value: true
-        - $formkit: switch
-          name: is_show_friend_author
-          if: "$list_layout === 'friends-list-summary'"
-          label: 朋友圈列表显示作者信息
-          value: true
-          help: 作者信息包括作者头像和名称
-        - $formkit: switch
-          name: is_show_friend_author_avatar
-          if: "$list_layout === 'friends-list-summary' && $is_show_friend_author === true"
-          label: 朋友圈列表显示作者头像
-          value: true
-        - $formkit: switch
-          name: is_show_friend_author_name
-          if: "$list_layout === 'friends-list-summary' && $is_show_friend_author === true"
-          label: 朋友圈列表显示作者名称
-          value: true
-        - $formkit: switch
-          name: is_show_friend_description
-          if: "$list_layout === 'friends-list-summary'"
-          label: 朋友圈列表显示文章描述
-          value: true
-        - $formkit: number
-          name: friend_description_max_lines
-          if: "$list_layout === 'friends-list-summary' && $is_show_friend_description === true"
-          label: 朋友圈列表文章描述行数上限
-          value: "3"
-          min: 1
-          max: 5
-          step: 1
-          help: "填写值范围为 1-5"
-        - $formkit: switch
-          name: is_show_friend_permalink_text
-          if: "$list_layout === 'friends-list-summary'"
-          label: 朋友圈列表显示跳转链接提示文字
-          help: "如关闭此项，朋友圈列表文章项将不显示跳转链接文字"
+          label: Enable comment section in moment list
           value: true
         - $formkit: switch
           name: is_pin_icon_show
-          label: 文章列表置顶图标
+          label: Top icon display on the post list
           value: true
         - $formkit: select
           name: pin_icon_position
           if: "$is_pin_icon_show===true"
-          label: 置顶图标位置
+          label: Top icon position
           value: "right"
           options:
-            - label: "标题左侧"
+            - label: "Left side of the title"
               value: "left"
-            - label: "标题右侧"
+            - label: "Right side of the title"
               value: "right"
     - group: post_styles
-      label: 文章页样式
+      label: Post page style
       formSchema:
         - $formkit: switch
           name: is_optimize_content_paragraph_spacing
-          label: 优化文章段落空行显示
+          label: Optimize article paragraph spacing display
           value: false
-          help: 启用后，为文章内容段落添加最小高度，改善空行显示效果
+          help: When enabled, adds minimum height to article content paragraphs to improve blank line display
         - $formkit: switch
           name: is_enable_paragraph_first_line_indent
-          label: 段落首行缩进
+          label: Enable paragraph first-line indent
           value: false
-          help: 启用后，文章段落将使用首行缩进样式，通常为 2 个汉字宽度（2em）
+          help: When enabled, article paragraphs will use first-line indent style, typically 2 character widths (2em)
         - $formkit: text
           name: paragraph_first_line_indent_value
           if: "$is_enable_paragraph_first_line_indent === true"
-          label: 首行缩进值
+          label: First-line indent value
           value: "2em"
-          help: "设置首行缩进的大小。允许使用所有 CSS 长度单位，如：2em, 32px, 2rem 等。推荐使用 2em"
+          help: "Set the size of the first-line indent. All CSS length units are allowed, such as: 2em, 32px, 2rem, etc. Recommended: 2em"
         - $formkit: switch
           name: post_title_uppper
-          label: 文章标题大写
+          label: Post title uppercase
           value: false
         - $formkit: switch
           name: is_show_post_publish_time
-          label: 文章发布时间
+          label: Post publish time
           value: true
         - $formkit: switch
           name: is_show_post_publish_time_left_text
           if: "$is_show_post_publish_time === true"
-          label: 文章发布时间左侧文字
+          label: Post publish time left text
           value: false
         - $formkit: switch
           name: is_show_post_updated_time
-          label: 文章更新时间
+          label: Post update time
           value: false
         - $formkit: switch
           name: is_show_post_updated_time_left_text
           if: "$is_show_post_updated_time === true"
-          label: 文章更新时间左侧文字
+          label: Post update time left text
           value: false
         - $formkit: switch
           name: is_show_post_views
-          label: 文章阅读量
+          label: Show post views
           value: true
         - $formkit: switch
           name: is_show_post_estimated_reading_time
-          label: 文章预计阅读时间
+          label: Show estimated reading time of the article
           value: false
         - $formkit: switch
           name: is_show_post_word_count
-          label: 文章字数统计
+          label: Show post word count
           value: false
         - $formkit: switch
           name: is_show_post_nav_share_button
-          label: 桌面端菜单中的分享按钮
+          label: Share button in desktop menu
           value: true
         - $formkit: switch
           name: is_custom_toc_max_width
-          label: 自定义侧边目录最大宽度
+          label: Custom sidebar table of contents maximum width
           value: false
-          help: 开启后可以设置文章页面右侧边栏目录的最大宽度。
+          help: When enabled, you can set the maximum width of the table of contents sidebar on article pages.
         - $formkit: text
           name: toc_max_width
           if: "$is_custom_toc_max_width === true"
-          label: 侧边目录最大宽度
+          label: Sidebar table of contents maximum width
           value: 20rem
-          placeholder: "默认值：20rem"
-          help: "控制文章右侧边栏目录的最大宽度。允许全部 CSS 长度单位，如：20rem, 300px, 30vw。"
+          placeholder: "Default: 20rem"
+          help: "Controls the maximum width of the table of contents sidebar on article pages. All CSS length units are allowed, such as: 20rem, 300px, 30vw."
         - $formkit: switch
           name: is_dividing_line_at_the_end_of_post_show
-          label: 文章末尾的的分隔线
+          label: Enable dividing line at the end of the post
           value: true
         - $formkit: switch
           name: is_post_upvote_button_show
-          label: 文章底部的点赞按钮
+          label: Upvote button at the bottom of the post
           value: false
         - $formkit: text
           name: post_upvote_button_width
           if: "$is_post_upvote_button_show === true"
-          label: 点赞按钮宽度
+          label: Upvote button width
           value: "1rem"
-          help: "设置点赞按钮的宽度。允许使用所有 CSS 长度单位，如：5px, 1rem。"
+          help: "Set the width of the upvote button. All CSS length units are allowed, such as: 5px, 1rem."
         - $formkit: text
           name: post_upvote_button_height
           if: "$is_post_upvote_button_show === true"
-          label: 点赞按钮高度
+          label: Upvote button height
           value: "1rem"
-          help: "设置点赞按钮的高度。允许使用所有 CSS 长度单位，如：5px, 1rem。"
+          help: "Set the height of the upvote button. All CSS length units are allowed, such as: 5px, 1rem."
         - $formkit: switch
           name: is_show_post_upvote_count
           if: "$is_post_upvote_button_show === true"
-          label: 展示文章获赞数
+          label: Display post upvote count
           value: false
         - $formkit: select
           name: post_upvote_button_position
           if: "$is_post_upvote_button_show === true"
-          label: 点赞按钮位置
+          label: Upvote button position
           value: "center"
           options:
-            - label: "靠左"
+            - label: "Left"
               value: "left"
-            - label: "居中"
+            - label: "Center"
               value: "center"
-            - label: "靠右"
+            - label: "Right"
               value: "right"
         - $formkit: switch
           name: is_post_recommended_articles_show
-          label: 文章底部的推荐文章
+          label: Recommended articles at the bottom of the post
           value: false
-          help: 开启后将在文章底部显示推荐文章列表。
+          help: "When enabled, recommended articles will be displayed at the bottom of the post. Note: This works by reading the first category of the current article and randomly outputting several articles from it. If the current article appears in the list, it will be removed, so the number of recommended articles may be less than the current recommendation count. If the current article has no category assigned, this feature will be disabled. If a category has only one article, this feature will be disabled."
         - $formkit: number
           name: post_recommended_articles_count
           if: "$is_post_recommended_articles_show === true"
-          label: 推荐文章数量
+          label: Number of recommended articles
           value: 3
           min: 1
           max: 10
-          help: "设置文章底部显示的推荐文章数量"
+          help: "Set the number of recommended articles displayed at the bottom of the post"
         - $formkit: switch
           name: is_post_prev_next_navigation_show
-          label: 文章底部的相邻文章导航
+          label: Adjacent article navigation at the bottom of the post
           value: false
-          help: 开启后将在文章底部显示上一篇和下一篇文章的导航链接
+          help: When enabled, navigation links to the previous and next articles will be displayed at the bottom of the post
         - $formkit: switch
           name: is_post_comment_section_show
-          label: 文章评论区
+          label: Enable comment section
           value: true
         - $formkit: switch
           name: is_show_footer_nav
-          label: 移动端底部导航栏
+          label: Mobile footer navigation
           value: true
         - $formkit: switch
           name: is_show_share_footer
           if: "$is_show_footer_nav === true"
-          label: 移动端底部导航栏中的分享按钮
+          label: Share buttons in the mobile footer navigation
           value: true
     - group: categories_page_styles
-      label: 分类集合页样式
+      label: Category page style
       formSchema:
         - $formkit: text
           name: description
-          label: 页面描述
+          label: Page description (meta description)
           value: ""
-          help: 设置页面的 meta description；为空时回退到站点 SEO 描述
+          help: Used as the meta description; falls back to site SEO description when empty
         - $formkit: switch
           name: is_show_the_number_of_articles_per_category
-          label: 显示每个分类下的文章数量
+          label: Display the number of articles per category
           value: true
         - $formkit: text
           name: characters_to_the_left_of_the_number_of_posts
           if: "$is_show_the_number_of_articles_per_category === true"
-          label: "在文章数量左侧的字符"
+          label: "Characters to the left of the number of articles"
           value: "("
         - $formkit: text
           name: characters_to_the_right_of_the_number_of_posts
           if: "$is_show_the_number_of_articles_per_category === true"
-          label: "在文章数量右侧的字符"
+          label: "Characters to the right of the number of articles"
           value: ")"
         - $formkit: switch
           name: is_show_multi_layer_categories
-          label: 显示多层分类
+          label: Display multi-layer categories
           value: true
     - group: category_page_styles
-      label: 分类详情页样式
+      label: Category details page style
       formSchema:
         - $formkit: switch
           name: is_show_rss_button
-          label: 分类 RSS 订阅按钮
+          label: Show RSS subscription button
           value: false
-          help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
+          help: "Requires enabling the RSS plugin (https://www.halo.run/store/apps/app-KhIVw)"
         - $formkit: switch
           name: is_show_post_pubdate_in_post_list
-          label: 文章列表显示文章发布时间
+          label: Display post publish date in post list
           value: true
         - $formkit: switch
           name: is_show_post_views_in_post_list
-          label: 文章列表显示文章阅读量
+          label: Display post views in post list
           value: false
     - group: tags_page_styles
-      label: 标签集合页样式
+      label: Tag Collection Page Style
       formSchema:
         - $formkit: text
           name: description
-          label: 页面描述
+          label: Page description (meta description)
           value: ""
-          help: 设置页面的 meta description；为空时回退到站点 SEO 描述
+          help: Used as the meta description; falls back to site SEO description when empty
         - $formkit: switch
           name: is_show_the_number_of_posts_per_tag
-          label: 显示每个标签下的文章数量
+          label: Display the number of posts per tag
           value: true
         - $formkit: text
           name: characters_to_the_left_of_the_number_of_posts
           if: "$is_show_the_number_of_posts_per_tag === true"
-          label: "在文章数量左侧的字符"
+          label: "Characters to the left of the number of posts"
           value: "("
         - $formkit: text
           name: characters_to_the_right_of_the_number_of_posts
           if: "$is_show_the_number_of_posts_per_tag === true"
-          label: "在文章数量右侧的字符"
+          label: "Characters to the right of the number of posts"
           value: ")"
         - $formkit: select
           name: tags_sort_order
-          label: 标签排序方式
+          label: Tag sort order
           value: "default"
           options:
-            - label: "默认"
-              value: "default"
-            - label: "按文章数量从多到少"
-              value: "count_desc"
-            - label: "按文章数量从少到多"
-              value: "count_asc"
-            - label: "按名称升序"
-              value: "name_asc"
-            - label: "按名称降序"
-              value: "name_desc"
-          help: "选择标签在标签集合页的排序方式"
+        - label: "Default"
+          value: "default"
+        - label: "By post count descending"
+          value: "count_desc"
+        - label: "By post count ascending"
+          value: "count_asc"
+        - label: "By name ascending"
+          value: "name_asc"
+        - label: "By name descending"
+          value: "name_desc"
+          help: "Select the sorting method for tags on the tag collection page"
     - group: tag_page_styles
-      label: 标签详情页样式
+      label: Tag details page style
       formSchema:
         - $formkit: switch
           name: is_show_rss_button
-          label: 显示标签 RSS 订阅按钮
+          label: Show RSS subscription button
           value: false
-          help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
+          help: "Requires enabling the RSS plugin (https://www.halo.run/store/apps/app-KhIVw)"
         - $formkit: switch
           name: is_show_post_pubdate_in_post_list
-          label: 文章列表显示文章发布时间
+          label: Display post publish date in post list
           value: true
         - $formkit: switch
           name: is_show_post_views_in_post_list
-          label: 文章列表显示文章阅读量
+          label: Display post views in post list
           value: false
     - group: author_page_styles
-      label: 作者详情页样式
+      label: Author details page style
       formSchema:
         - $formkit: text
           name: description
-          label: 页面描述
+          label: Page description (meta description)
           value: ""
-          help: 设置页面的 meta description；为空时回退到站点 SEO 描述
+          help: Used as the meta description; falls back to site SEO description when empty
         - $formkit: switch
           name: is_show_rss_button
-          label: 显示作者 RSS 订阅按钮
+          label: Show RSS subscription button
           value: false
-          help: 需启用 RSS 插件（https://www.halo.run/store/apps/app-KhIVw）
+          help: "Requires enabling the RSS plugin (https://www.halo.run/store/apps/app-KhIVw)"
         - $formkit: switch
           name: is_show_post_pubdate_in_post_list
-          label: 文章列表显示文章发布时间
+          label: Display post publish date in post list
           value: true
     - group: archives_page_styles
-      label: 归档页样式
+      label: Archives page style
       formSchema:
         - $formkit: text
           name: description
-          label: 页面描述
+          label: Page description (meta description)
           value: ""
-          help: 设置页面的 meta description；为空时回退到站点 SEO 描述
+          help: Used as the meta description; falls back to site SEO description when empty
         - $formkit: switch
           name: is_show_post_pubdate_in_post_list
-          label: 文章列表显示文章发布时间
+          label: Display post publish date in post list
           value: true
         - $formkit: switch
           name: is_collapse_post_list_by_publication_year_and_month
-          label: 按照发布年份和月份折叠文章列表
+          label: Collapse post list by publication year and month
           value: false
         - $formkit: number
           name: duration_of_expand_collapse_animation
           if: "$is_collapse_post_list_by_publication_year_and_month === true"
-          label: 展开折叠动画时长
-          help: 单位毫秒
+          label: Duration of expand/collapse animation
+          help: "Unit: milliseconds"
           value: 200
     - group: custom_page_styles
-      label: 自定义页面样式
+      label: Custom page style
       formSchema:
         - $formkit: switch
           name: is_optimize_content_paragraph_spacing
-          label: 优化段落空行显示
+          label: Optimize article paragraph spacing display
           value: false
-          help: 启用后，为内容段落添加最小高度，改善空行显示效果
+          help: When enabled, adds minimum height to article content paragraphs to improve blank line display
         - $formkit: switch
           name: is_enable_paragraph_first_line_indent
-          label: 段落首行缩进
+          label: Enable paragraph first-line indent
           value: false
-          help: 启用后，文章段落将使用首行缩进样式，通常为 2 个汉字宽度（2em）
+          help: When enabled, article paragraphs will use first-line indent style, typically 2 character widths (2em)
         - $formkit: text
           name: paragraph_first_line_indent_value
           if: "$is_enable_paragraph_first_line_indent === true"
-          label: 首行缩进值
+          label: First-line indent value
           value: "2em"
-          help: "设置首行缩进的大小。允许使用所有 CSS 长度单位，如：2em, 32px, 2rem 等。推荐使用 2em"
+          help: "Set the size of the first-line indent. All CSS length units are allowed, such as: 2em, 32px, 2rem, etc. Recommended: 2em"
         - $formkit: switch
           name: is_show_post_estimated_reading_time
-          label: 页面预计阅读时间
+          label: Show estimated reading time of the article
           value: false
         - $formkit: switch
           name: is_show_post_word_count
-          label: 页面字数统计
+          label: Show word count of the article
           value: false
         - $formkit: switch
           name: is_dividing_line_at_the_end_of_content_show
-          label: 页面正文内容末尾分隔线
+          label: Enable dividing line at the end of the content
           value: true
         - $formkit: switch
           name: is_custom_page_comment_section_show
-          label: 页面评论区
+          label: Enable comment section
           value: true
     - group: error_page_styles
-      label: 错误页样式
+      label: Error Page Style
       formSchema:
         - $formkit: switch
           name: is_auto_redirect
-          label: 页面自动重定向
+          label: Page auto-redirect
           value: true
         - $formkit: text
           name: target_url
           if: "$is_auto_redirect === true"
-          label: 跳转目标链接
+          label: Redirect target URL
           value: "/"
         - $formkit: number
           name: redirect_wait_time
           if: "$is_auto_redirect === true"
-          label: 跳转等待时间
+          label: Redirect wait time
           value: 5
-          help: "设置跳转等待时间，单位秒。"
+          help: "Set the wait time for redirect, in seconds."
     - group: sns
-      label: 社交资料/RSS
+      label: Social media settings/RSS
       formSchema:
         - $formkit: array
           name: index_sns
-          label: 首页社交资料展示
-          help: 注：刷新页面后发现选择的“类型“消失了是正常情况，数据实际是保存着的
+          label: Social media settings
+          help: "You can set up your social media information here, and the theme will automatically generate the corresponding link."
           value: []
           itemLabels:
             - type: text
@@ -1642,71 +1593,71 @@ spec:
             - $formkit: select
               name: type
               id: index_sns_type
-              label: 类型
+              label: Type
               validation: "required"
-              placeholder: "请选择你要展示的社交资料"
+              placeholder: "Please select"
               help:
                 if: "$get(index_sns_type).value.type === 'custom_sns'"
-                then: "在此处填写在下方定义的识别码"
+                then: "Enter the id"
                 else:
                   if: "$get(index_sns_type).value.type === 'text'"
-                  then: "填入任意纯文本"
+                  then: "Enter any text"
                   else:
                     if: "$get(index_sns_type).value.type === 'rss'"
-                    then: "填入 feed 地址，示例：/rss.xml"
+                    then: "Enter the feed address, e.g., /rss.xml"
                     else:
                       if: "$get(index_sns_type).value.type === 'bilibili'"
-                      then: "只需填入 uid"
+                      then: "Enter the UID only"
                       else:
                         if: "$get(index_sns_type).value.type === 'dribbble'"
-                        then: "只需填入用户名"
+                        then: "Enter the username only"
                         else:
                           if: "$get(index_sns_type).value.type === 'email'"
-                          then: "只需填入邮箱地址"
+                          then: "Enter the email address only"
                           else:
                             if: "$get(index_sns_type).value.type === 'facebook'"
-                            then: "只需填入用户名"
+                            then: "Enter the username only"
                             else:
                               if: "$get(index_sns_type).value.type === 'github'"
-                              then: "只需填入用户名"
+                              then: "Enter the username only"
                               else:
                                 if: "$get(index_sns_type).value.type === 'instagram'"
-                                then: "只需填入用户名"
+                                then: "Enter the username only"
                                 else:
                                   if: "$get(index_sns_type).value.type === 'qq'"
-                                  then: "只需填入 QQ 号"
+                                  then: "Enter the QQ number only"
                                   else:
                                     if: "$get(index_sns_type).value.type === 'reddit'"
-                                    then: "只需填入 ID"
+                                    then: "Enter the ID only"
                                     else:
                                       if: "$get(index_sns_type).value.type === 'stack_overflow'"
-                                      then: "只需填入个人主页网址在 users/ 后的部分"
+                                      then: "Enter the part of the personal homepage URL after users/"
                                       else:
                                         if: "$get(index_sns_type).value.type === 'telegram'"
-                                        then: "只需填入 ID"
+                                        then: "Enter the ID only"
                                         else:
                                           if: "$get(index_sns_type).value.type === 'x'"
-                                          then: "只需填入用户名"
+                                          then: "Enter the username only"
                                           else:
                                             if: "$get(index_sns_type).value.type === 'youtube'"
-                                            then: "只需填写频道网址在 channel/ 后的部分"
+                                            then: "Enter the part of the channel URL after channel/"
                                             else:
                                               if: "$get(index_sns_type).value.type === 'douban'"
-                                              then: "只需填写个人主页网址在 people/ 后的部分"
+                                              then: "Enter the part of the personal homepage URL after people/"
                                               else:
                                                 if: "$get(index_sns_type).value.type === 'neteasecloudmusic'"
-                                                then: "只需填写个人主页网址在 ?id= 后的部分"
+                                                then: "Enter the part of the personal homepage URL after ?id="
                                                 else:
                                                   if: "$get(index_sns_type).value.type === 'weibo'"
-                                                  then: "只需填入 ID"
+                                                  then: "Enter the ID only"
                                                   else:
                                                     if: "$get(index_sns_type).value.type === 'zhihu'"
-                                                    then: "只需填写个人主页网址在 people/ 后的部分"
+                                                    then: "Enter the part of the personal homepage URL after people/"
                                                     else: ""
               options:
-                - label: 自定义资料
+                - label: Custom
                   value: { type: "custom_sns", url: "", aria-label: "" }
-                - label: 纯文本
+                - label: Text
                   value: { type: "text", url: "", aria-label: "" }
                 - label: RSS
                   value: { type: "rss", url: "", aria-label: "Find me on RSS" }
@@ -1739,28 +1690,28 @@ spec:
                   value: { type: "x", url: "https://x.com/", aria-label: "Find me on X" }
                 - label: YouTube
                   value: { type: "youtube", url: "https://www.youtube.com/channel/", aria-label: "Find me on YouTube" }
-                - label: 豆瓣
+                - label: Douban
                   value: { type: "douban", url: "https://www.douban.com/people/", aria-label: "Find me on douban" }
-                - label: 网易云音乐
+                - label: NetEase CloudMusic
                   value:
                     {
                       type: "neteasecloudmusic",
                       url: "https://music.163.com/#/user/home?id=",
                       aria-label: "Find me on NetEase CloudMusic",
                     }
-                - label: 微博
+                - label: Weibo
                   value: { type: "weibo", url: "https://weibo.com/", aria-label: "Find me on weibo" }
-                - label: 知乎
+                - label: Zhihu
                   value: { type: "zhihu", url: "https://www.zhihu.com/people/", aria-label: "Find me on zhihu" }
             - $formkit: text
               name: input_value
-              label: 值
+              label: Value
               validation: "required"
         - $formkit: array
           name: custom_sns
-          label: 设定自定义资料
+          label: Custom social media information
           value: []
-          help: 上面预设的选项可能不能满足需求，那么来这自定义属于你的资料吧！（在此处自定义完后别忘记在上面添加“自定义资料”）
+          help: "You can define your own social media information here."
           itemLabels:
             - type: iconify
               label: $value.icon
@@ -1769,31 +1720,31 @@ spec:
           children:
             - $formkit: text
               name: id
-              label: 识别码
+              label: ID
               validation: "required"
-              help: 任意字母，数字，下划线组合，如：myBlog
+              help: "The unique identifier of the social media information, such as: github2, twitter2."
             - $formkit: text
               name: url
-              label: 链接
+              label: URL
               validation: "required"
-              help: "如：https://howiehz.top"
+              help: "The URL of the social media information, such as: https://howiehz.top"
             - $formkit: iconify
               name: icon
-              label: 图标
+              label: Icon
               format: dataurl
               validation: "required"
             - $formkit: text
               name: aria_label
               label: aria-label
               validation: "required"
-              help: 无障碍标签，方便视障人士读屏，如：Find me on my blog
+              help: "The aria-label of the social media information, such as: Find me on Github"
     - group: share
-      label: 自定义分享按钮
+      label: Custom Share Buttons
       formSchema:
         - $formkit: array
           name: button_config
-          label: 分享按钮设置
-          help: "@URL 和 @TITLE 是占位符，使用中会被替换为页面实际地址和标题"
+          label: Share Button Settings
+          help: "@URL and @TITLE are placeholders that will be replaced with the actual page URL and title."
           itemLabels:
             - type: iconify
               label: $value.icon
@@ -1855,33 +1806,33 @@ spec:
           children:
             - $formkit: text
               name: name
-              label: 名称
+              label: Name
               value: ""
               validation: "required"
             - $formkit: text
               name: url
-              label: 链接
+              label: URL
               value: ""
               validation: "required"
             - $formkit: iconify
               name: icon
-              label: 图标
+              label: Icon
               format: dataurl
               value: ""
-              help: 设置后覆盖默认图标
+              help: Override the default icon after setting
             - $formkit: text
               name: aria_label
               label: aria-label
               value: ""
-              help: 无障碍标签中的名称
+              help: The name in the aria-label
               validation: "required"
     - group: links_page_styles
-      label: 链接页样式
+      label: Links Page Style
       formSchema:
         - $el: div
           children:
             - $el: span
-              children: 需
+              children: Requires the
             - $el: a
               attrs:
                 href: "https://www.halo.run/store/apps/app-hfbQg"
@@ -1889,29 +1840,29 @@ spec:
                   text-decoration: underline;
                   text-underline-offset: 0.25em;
                 target: "_blank"
-              children: 链接管理插件
+              children: Links Management Plugin
             - $el: span
-              children: 启用后方可使用。
+              children: to be enabled for use.
         - $formkit: switch
           name: is_head_first_style
-          label: 头像优先样式
+          label: Avatar-First Style
           value: false
         - $formkit: number
           name: link_description_max_lines
           if: "$is_head_first_style === true"
-          label: 链接描述行数上限
+          label: Link Description Maximum Lines
           value: "2"
           min: 1
           max: 5
           step: 1
-          help: "填写值范围为 1-5"
+          help: "Value range: 1-5"
     - group: photos_styles
-      label: 图库页样式
+      label: Photo Page Style
       formSchema:
         - $el: div
           children:
             - $el: span
-              children: 需
+              children: Requires the
             - $el: a
               attrs:
                 href: "https://www.halo.run/store/apps/app-BmQJW"
@@ -1919,76 +1870,76 @@ spec:
                   text-decoration: underline;
                   text-underline-offset: 0.25em;
                 target: "_blank"
-              children: 图库管理插件
+              children: Photo Gallery Management Plugin
             - $el: span
-              children: 启用后方可使用。
+              children: to be enabled for use.
         - $formkit: text
           name: img_border_radius
-          label: 图片圆角宽度
+          label: Image border radius
           value: "8px"
-          help: "设置图片的圆角宽度。允许使用所有 CSS 长度单位，如：0px, 5px, 10%, 1rem。"
+          help: "Set the border radius of the image. All CSS length units are allowed, such as: 0px, 5px, 10%, 1rem."
         - $formkit: number
           name: img_transition_duration_after_load
-          label: 图片渐入动画时间
+          label: Image fade-in animation duration
           value: 0.2
-          help: "设置图片渐入动画时间，单位秒。"
+          help: "Set the image fade-in animation duration, in seconds."
         - $formkit: switch
           name: is_show_photo_group_name
           if: "$is_enable_masonry_layout === false"
-          label: 显示分组标题
+          label: Group title
           value: false
         - $formkit: switch
           name: is_enable_masonry_layout
-          label: 启用瀑布流布局
+          label: Masonry layout
           value: true
         - $formkit: number
           name: max_masonry_columns
           if: "$is_enable_masonry_layout === true"
-          label: 瀑布流最大列数
+          label: Maximum number of masonry columns
           value: 3
-          help: "设置瀑布流布局的最大列数。"
+          help: "Set the maximum number of masonry columns."
         - $formkit: number
           name: min_masonry_columns
           if: "$is_enable_masonry_layout === true"
-          label: 瀑布流最小列数
+          label: Minimum number of masonry columns
           value: 2
-          help: "设置瀑布流布局的最小列数。"
+          help: "Set the minimum number of masonry columns."
         - $formkit: number
           name: min_img_width
           if: "$is_enable_masonry_layout === true"
-          label: 瀑布流最小图片宽度
+          label: Minimum width of images in masonry layout
           value: 300
-          help: "设置瀑布流布局中图片的最小宽度。单位 px"
+          help: "Set the minimum width of images in masonry layout. Unit: px"
         - $formkit: number
           name: masonry_gap
           if: "$is_enable_masonry_layout === true"
-          label: 瀑布流间隔宽度
+          label: Masonry gap width
           value: 9
-          help: "设置瀑布流布局的间隔宽度。单位 px"
+          help: "Set the gap width for the masonry layout. Unit: px"
         - $formkit: switch
           name: is_enable_advanced_options
-          label: 进阶配置选项
+          label: Advanced configuration options
           value: false
-          help: 此处的配置项需要前端知识
+          help: "This configuration item requires frontend knowledge."
         - $formkit: text
           name: img_onmouseover
           if: "$is_enable_advanced_options === true"
-          label: 自定义图片 onmouseover 属性
-          help: "默认值：this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
+          label: Custom image onmouseover attribute
+          help: "Default value: this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
           value: "this.style.boxShadow='0 0 7.5px var(--color-accent), 0 0 7.5px var(--color-accent)';"
         - $formkit: text
           name: img_onmouseout
           if: "$is_enable_advanced_options === true"
-          label: 自定义图片 onmouseout 属性
-          help: "默认值：this.style.boxShadow='none';"
+          label: Custom image onmouseout attribute
+          help: "Default value: this.style.boxShadow='none';"
           value: "this.style.boxShadow='none';"
     - group: moments_styles
-      label: 瞬间页样式
+      label: Moments page style
       formSchema:
         - $el: div
           children:
             - $el: span
-              children: 需
+              children: Requires the
             - $el: a
               attrs:
                 href: "https://www.halo.run/store/apps/app-SnwWD"
@@ -1996,36 +1947,36 @@ spec:
                   text-decoration: underline;
                   text-underline-offset: 0.25em;
                 target: "_blank"
-              children: 瞬间插件
+              children: Moments Plugin
             - $el: span
-              children: 启用后方可使用。
+              children: to be enabled for use.
         - $formkit: switch
           name: is_show_post_pubdate
-          label: 帖文发布时间
+          label: Show post publication date
           value: true
         - $formkit: switch
           name: is_show_post_estimated_reading_time
-          label: 帖文预计阅读时间
+          label: Show estimated reading time of the post
           value: false
         - $formkit: switch
           name: is_show_post_word_count
-          label: 帖文字数统计
+          label: Show word count of the post
           value: false
         - $formkit: switch
           name: is_moment_upvote_button_show
-          label: 启用点赞按钮
+          label: Enable upvote button
           value: true
         - $formkit: switch
           name: is_moment_comment_section_show
-          label: 启用评论区
+          label: Enable comment section
           value: true
     - group: friends_page_styles
-      label: 朋友圈页面样式
+      label: Friends page style
       formSchema:
         - $el: div
           children:
             - $el: span
-              children: 需
+              children: Requires the
             - $el: a
               attrs:
                 href: "https://www.halo.run/store/apps/app-yISsV"
@@ -2033,43 +1984,43 @@ spec:
                   text-decoration: underline;
                   text-underline-offset: 0.25em;
                 target: "_blank"
-              children: 朋友圈插件
+              children: Friends Plugin
             - $el: span
-              children: 启用后方可使用。
+              children: to be enabled for use.
         - $formkit: switch
           name: is_show_friend_pubdate
-          label: 显示发布日期
+          label: Show publish date
           value: true
         - $formkit: switch
           name: is_show_friend_author
-          label: 显示作者信息
+          label: Show author information
           value: true
-          help: 作者信息包括作者头像和名称
+          help: Author information includes author avatar and name
         - $formkit: switch
           name: is_show_friend_author_avatar
           if: "$is_show_friend_author === true"
-          label: 显示作者头像
+          label: Show author avatar
           value: true
         - $formkit: switch
           name: is_show_friend_author_name
           if: "$is_show_friend_author === true"
-          label: 显示作者名称
+          label: Show author name
           value: true
         - $formkit: switch
           name: is_show_friend_description
-          label: 显示文章描述
+          label: Show post description
           value: true
         - $formkit: number
           name: friend_description_max_lines
           if: "$is_show_friend_description === true"
-          label: 文章描述行数上限
+          label: Maximum lines for post description
           value: "3"
           min: 1
           max: 5
           step: 1
-          help: "填写值范围为 1-5"
+          help: "Valid range is 1-5"
         - $formkit: switch
           name: is_show_friend_permalink_text
-          label: 显示跳转链接提示文字
-          help: "如关闭此项，朋友圈列表文章项将不显示跳转链接文字"
+          label: Show link text
+          help: "If disabled, the friends list will not display link text"
           value: true
