@@ -1487,6 +1487,10 @@ spec:
           value: ""
           help: Used as the meta description; falls back to site SEO description when empty
         - $formkit: switch
+          name: is_show_post_pubdate_in_post_list
+          label: Display post publish date in post list
+          value: true
+        - $formkit: switch
           name: is_collapse_post_list_by_publication_year_and_month
           label: Collapse post list by publication year and month
           value: false

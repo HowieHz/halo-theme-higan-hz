@@ -27,7 +27,9 @@
         >
           <h2 th:text="${archive.year}"></h2>
           <th:block th:each="month : ${archive.months}">
-            <th:block th:insert="~{components/list-post-simple/template :: content(posts = ${month.posts})}">
+            <th:block
+              th:insert="~{components/list-post-simple/template :: content(posts = ${month.posts}, pageTemplateName = 'archives')}"
+            >
             </th:block>
           </th:block>
         </div>
@@ -53,7 +55,10 @@
                   </h3>
                   <ul class="common-post-list flex-auto" style="display: none">
                     <li class="post-item" th:each="post : ${month.posts}">
-                      <div class="meta">
+                      <div
+                        th:if="${theme.config?.archives_page_styles?.is_show_post_pubdate_in_post_list}"
+                        class="meta"
+                      >
                         <time
                           th:datetime="${post.spec?.publishTime}"
                           itemprop="datePublished"

@@ -5310,6 +5310,39 @@ If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig 
 
 :::
 
+### Display Post Publish Date in Archives Page Post List
+
+::: info 🎯 Purpose
+
+Display the post publish date in the post list on the archives page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Archives Page Style -> Display Post Publish Date in Post List
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=Display%20post%20publish%20date%20in%20post%20list" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.archives_page_styles?.is_show_post_pubdate_in_post_list`
+
+:::
+
 ### Collapse Post List by Publication Year and Month
 
 ::: info 🎯 Purpose
