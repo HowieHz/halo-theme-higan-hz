@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [1.55.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.55.0...v1.55.1) (2026-2-3)
+
+### 🐛 错误修复
+
+- 修复瞬间页（`/moments`）翻页组件链接不正确的问题。
+
 ## [1.55.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.54.0...v1.55.0) (2026-2-3)
 
 ### 🚀 新功能

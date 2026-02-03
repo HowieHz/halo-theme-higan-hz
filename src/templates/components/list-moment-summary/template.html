@@ -238,7 +238,12 @@
         </ul>
       </div>
       <th:block
+        th:if="${isIndexPage}"
         th:insert="~{components/pagination/template :: content(posts=${moments}, isListResult=true)}"
+      ></th:block>
+      <th:block
+        th:unless="${isIndexPage}"
+        th:insert="~{components/pagination/template :: content(posts=${moments})}"
       ></th:block>
     </div>
     <script th:inline="javascript" th:if="${theme.config?.moments_styles?.is_moment_upvote_button_show}">
