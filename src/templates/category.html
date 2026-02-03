@@ -41,7 +41,7 @@
       </h1>
 
       <th:block
-        th:insert="~{components/list-post-simple/template :: content(posts = ${posts}, showPagination = true)}"
+        th:insert="~{components/list-post-simple/template :: content(posts = ${posts}, showPagination = true, pageTemplateName = 'category')}"
       ></th:block>
     </div>
   </body>
