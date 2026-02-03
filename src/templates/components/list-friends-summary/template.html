@@ -21,7 +21,8 @@
               </a>
             </h2>
             <time
-              th:if="${!#strings.equals(pageTemplateName, 'index')
+              th:if="${!(#strings.equals(pageTemplateName, 'index')
+                         or #strings.equals(pageTemplateName, 'friends'))
                        or (#strings.equals(pageTemplateName, 'index')
                            and theme?.config.index_styles?.is_show_friend_pubdate)
                        or (#strings.equals(pageTemplateName, 'friends')
@@ -35,7 +36,8 @@
               <th:block th:text="${#temporals.format(spec.pubDate, 'MMMM dd yyyy')}"></th:block>
             </time>
             <div
-              th:if="${!#strings.equals(pageTemplateName, 'index')
+              th:if="${!(#strings.equals(pageTemplateName, 'index')
+                         or #strings.equals(pageTemplateName, 'friends'))
                        or (#strings.equals(pageTemplateName, 'index')
                            and theme?.config.index_styles?.is_show_friend_author)
                        or (#strings.equals(pageTemplateName, 'friends')
@@ -43,7 +45,8 @@
               class="friend-author color-time relative z-20 mt-0.5 mb-0 flex items-center text-sm"
             >
               <a
-                th:if="${!#strings.equals(pageTemplateName, 'index')
+                th:if="${!(#strings.equals(pageTemplateName, 'index')
+                           or #strings.equals(pageTemplateName, 'friends'))
                          or (#strings.equals(pageTemplateName, 'index')
                              and theme?.config.index_styles?.is_show_friend_author_avatar)
                          or (#strings.equals(pageTemplateName, 'friends')
@@ -61,7 +64,8 @@
                 />
               </a>
               <a
-                th:if="${!#strings.equals(pageTemplateName, 'index')
+                th:if="${!(#strings.equals(pageTemplateName, 'index')
+                           or #strings.equals(pageTemplateName, 'friends'))
                          or (#strings.equals(pageTemplateName, 'index')
                              and theme?.config.index_styles?.is_show_friend_author_name)
                          or (#strings.equals(pageTemplateName, 'friends')
@@ -75,7 +79,8 @@
               </a>
             </div>
             <th:block
-              th:if="${!#strings.equals(pageTemplateName, 'index')
+              th:if="${!(#strings.equals(pageTemplateName, 'index')
+                         or #strings.equals(pageTemplateName, 'friends'))
                        or (#strings.equals(pageTemplateName, 'index')
                            and theme?.config.index_styles?.is_show_friend_description)
                        or (#strings.equals(pageTemplateName, 'friends')
@@ -93,7 +98,8 @@
               </p>
             </th:block>
             <div
-              th:if="${!#strings.equals(pageTemplateName, 'index')
+              th:if="${!(#strings.equals(pageTemplateName, 'index')
+                         or #strings.equals(pageTemplateName, 'friends'))
                        or (#strings.equals(pageTemplateName, 'index')
                            and theme?.config.index_styles?.is_show_friend_permalink_text)
                        or (#strings.equals(pageTemplateName, 'friends')
@@ -106,7 +112,8 @@
             </div>
           </div>
           <time
-            th:if="${!#strings.equals(pageTemplateName, 'index')
+            th:if="${!(#strings.equals(pageTemplateName, 'index')
+                       or #strings.equals(pageTemplateName, 'friends'))
                      or (#strings.equals(pageTemplateName, 'index')
                          and theme?.config.index_styles?.is_show_friend_pubdate)
                      or (#strings.equals(pageTemplateName, 'friends')
