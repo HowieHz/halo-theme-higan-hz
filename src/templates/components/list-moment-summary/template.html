@@ -323,11 +323,11 @@
       </div>
       <th:block
         th:if="${#strings.equals(pageTemplateName, 'index')}"
-        th:insert="~{components/pagination/template :: content(posts = ${moments}, isListResult = true)}"
+        th:insert="~{components/pagination/template :: content(posts=${moments}, isListResult=true)}"
       ></th:block>
       <th:block
         th:if="${#strings.equals(pageTemplateName, 'moments')}"
-        th:insert="~{components/pagination/template :: content(posts = ${moments})}"
+        th:insert="~{components/pagination/template :: content(posts=${moments})}"
       ></th:block>
     </div>
     <script

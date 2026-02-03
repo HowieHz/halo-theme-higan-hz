@@ -24,7 +24,7 @@ For UrlContextListResult:
 For ListResult:
 
 ```html
-<th:block th:insert="~{components/pagination/template :: content(posts = ${posts}, isListResult = true)}"></th:block>
+<th:block th:insert="~{components/pagination/template :: content(posts=${posts}, isListResult=true)}"></th:block>
 ```
 
 ## Parameters

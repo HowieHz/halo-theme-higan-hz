@@ -18,9 +18,7 @@
       <span class="h1">
         <a th:href="@{/friends}" th:text="#{page.friends.title}">朋友圈标题替换位</a>
       </span>
-      <th:block
-        th:insert="~{components/list-friends-summary/template :: content(friends = ${friends}, pageTemplateName = 'friends')}"
-      ></th:block>
+      <th:block th:insert="~{components/list-friends-summary/template :: content(${friends})}"></th:block>
     </article>
   </body>
 </th:block>
