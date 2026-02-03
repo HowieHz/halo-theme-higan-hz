@@ -1395,6 +1395,10 @@ spec:
       label: Category details page style
       formSchema:
         - $formkit: switch
+          name: is_show_post_pubdate_in_post_list
+          label: Display post publish date in post list
+          value: true
+        - $formkit: switch
           name: is_show_post_views_in_post_list
           label: Display post views in post list
           value: false

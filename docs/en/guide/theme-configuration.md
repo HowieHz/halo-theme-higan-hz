@@ -4816,6 +4816,39 @@ Boolean
 
 Application Range: [`/categories/{slug}`](/reference/template-map#:~:text=/categories/%7Bslug%7D).
 
+### Display Post Publish Date in Category Details Page Post List
+
+::: info 🎯 Purpose
+
+Display the post publish date in the post list on the category detail page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Category Detail Page Style -> Display Post Publish Date in Post List
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Display%20post%20publish%20date%20in%20post%20list" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.category_page_styles?.is_show_post_pubdate_in_post_list`
+
+:::
+
 ### Display Post Views in Category Details Page Post List
 
 ::: info 🎯 Purpose
