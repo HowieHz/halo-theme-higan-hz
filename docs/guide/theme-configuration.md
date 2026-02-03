@@ -4229,7 +4229,6 @@ HTML 代码也是可以的：
 
 :::
 
-
 ### 朋友圈列表显示条数
 
 ::: info 🎯 用途
@@ -4509,6 +4508,7 @@ HTML 代码也是可以的：
 `theme.config?.index_styles?.is_show_friend_permalink_text`
 
 :::
+
 ### 文章列表置顶图标
 
 ::: info 🎯 用途

@@ -1134,7 +1134,7 @@ spec:
               value: "moment-list-summary"
             - label: "Friends list"
               value: "friends-list-summary"
-          help: "The \"Moment list\" requires the \"Moments\" plugin to be enabled for proper use, and the \"Friends list\" requires the \"Friends\" plugin to be enabled for proper use."
+          help: 'The "Moment list" requires the "Moments" plugin to be enabled for proper use, and the "Friends list" requires the "Friends" plugin to be enabled for proper use.'
         - $formkit: switch
           name: is_show_post_pubdate_in_simple_post_list
           if: "$list_layout === 'simple-post-list'"
