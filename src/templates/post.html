@@ -14,7 +14,7 @@
     <th:block th:if="${pluginFinder.available('PluginFeed')}">
       <th:block th:each="contributor : ${post?.contributors}">
         <link
-          th:unless="#strings.equals(${contributor.permalink}, '/authors/ghost')"
+          th:unless="${#strings.equals(contributor.permalink, '/authors/ghost')}"
           rel="alternate"
           type="application/rss+xml"
           th:title="'Posts - Author: ' + ${contributor?.displayName}"
@@ -95,7 +95,7 @@
             th:each="contributor : ${post?.contributors}"
           >
             <a
-              th:unless="#strings.equals(${contributor.permalink}, '/authors/ghost')"
+              th:unless="${#strings.equals(contributor.permalink, '/authors/ghost')}"
               th:href="${contributor.permalink}"
               itemprop="name"
               th:text="${contributor?.displayName}"

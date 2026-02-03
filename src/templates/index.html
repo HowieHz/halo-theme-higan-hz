@@ -23,9 +23,11 @@
     >
       <th:block
         th:insert="~{components/list-moment-summary/template :: headContent(
-            moments=${momentFinder.list(
-              posts.page,
-              theme.config?.index_styles?.moment_list_page_size)})}"
+                       moments=${momentFinder.list(
+                         posts.page,
+                         theme.config?.index_styles?.moment_list_page_size
+                       )}
+                   )}"
       ></th:block>
     </th:block>
   </head>
