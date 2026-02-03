@@ -57,7 +57,7 @@
         <th:block th:if="not ${theme.config?.global?.is_i18n_prefix_match_mode}">
           <!--/* i18n 公告栏 全等匹配模式 */-->
           <th:block th:each="resumeItem : ${resumeItems}">
-            <th:block th:if="${#strings.equals(resumeItem.lang, page_language}">
+            <th:block th:if="${#strings.equals(resumeItem.lang, page_language)}">
               <p
                 class="blog-description matched-resume"
                 th:with="defaultResume=${#strings.defaultString(site?.seo?.description, '')}"
