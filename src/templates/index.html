@@ -18,12 +18,14 @@
       <th:block th:insert="~{components/list-post-simple/template :: headContent(showPagination = true)}"></th:block>
     </th:block>
     <th:block th:if="${theme?.config.index_styles?.list_layout=='moment-list-summary'}">
-      <th:block
-        th:insert="~{components/list-moment-summary/template :: headContent(
-            moments=${momentFinder.list(
-              posts.page,
-              theme.config?.index_styles?.moment_list_page_size)})}"
-      ></th:block>
+      <th:block th:if="${pluginFinder.available('PluginMoments')}">
+        <th:block
+          th:insert="~{components/list-moment-summary/template :: headContent(
+              moments=${momentFinder.list(
+                posts.page,
+                theme.config?.index_styles?.moment_list_page_size)})}"
+        ></th:block>
+      </th:block>
     </th:block>
   </head>
   <body>
@@ -203,6 +205,17 @@
             pageTemplateName = 'index'
           )}"
         ></th:block>
+      </th:block>
+      <th:block th:unless="${pluginFinder.available('PluginMoments')}">
+        <p th:text="#{page.index.momentsPluginNotAvailable}">插件未启用提示替换位</p>
+        <p>
+          [[#{page.index.momentsPluginNotAvailableDescription}]]<a
+            th:text="#{page.index.momentsPluginDocsLink}"
+            href="https://howiehz.top/halo-theme-higan-haozi/guide/plugin-compatibility#%E7%9E%AC%E9%97%B4%E9%A1%B5"
+            rel="noopener"
+            target="_blank"
+          ></a>
+        </p>
       </th:block>
     </th:block>
   </body>
