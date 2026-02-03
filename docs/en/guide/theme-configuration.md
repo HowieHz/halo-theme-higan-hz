@@ -4040,7 +4040,7 @@ Control whether to display the post publication date in the moment list.
 :::
 ::: info 📂 Configuration Item Location
 
-(Displayed when [Home Page Style -> Home List Layout](#home-list-layout) is set to "Moment List")
+(Displayed when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Moment List")
 
 Home Page Style -> Show Post Publication Date in Moment List
 
