@@ -1914,6 +1914,10 @@ spec:
             - $el: span
               children: to be enabled for use.
         - $formkit: switch
+          name: is_show_post_pubdate
+          label: Show post publication date
+          value: true
+        - $formkit: switch
           name: is_show_post_estimated_reading_time
           label: Show estimated reading time of the post
           value: false

@@ -1914,6 +1914,10 @@ spec:
             - $el: span
               children: 启用后方可使用。
         - $formkit: switch
+          name: is_show_post_pubdate
+          label: 帖文发布时间
+          value: true
+        - $formkit: switch
           name: is_show_post_estimated_reading_time
           label: 帖文预计阅读时间
           value: false

@@ -5921,6 +5921,39 @@ When disabled, you can configure
 
 Requires the [Moments Management Plugin](/guide/plugin-compatibility#moments-page) to be enabled.
 
+### Show Post Publication Date
+
+::: info 🎯 Purpose
+
+Control whether to display the post publication date in the moment list on the moments page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Moments Page Style -> Show Post Publication Date
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Show%20Post%20Publication%20Date" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.moments_styles?.is_show_post_pubdate`
+
+:::
+
 ### Show Estimated Reading Time of Moment
 
 ::: info 🎯 Purpose
