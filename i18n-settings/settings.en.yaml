@@ -1134,7 +1134,7 @@ spec:
               value: "moment-list-summary"
             - label: "Friends list"
               value: "friends-list-summary"
-          help: "The 'Moment list' requires the 'Moments' plugin to be enabled for proper use, and the 'Friends list' requires the 'Friends' plugin to be enabled for proper use."
+          help: "The \"Moment list\" requires the \"Moments\" plugin to be enabled for proper use, and the \"Friends list\" requires the \"Friends\" plugin to be enabled for proper use."
         - $formkit: switch
           name: is_show_post_pubdate_in_simple_post_list
           if: "$list_layout === 'simple-post-list'"
@@ -1200,11 +1200,11 @@ spec:
           if: "$list_layout === 'post-list-summary'"
           label: Display post cover in the post list summary
           value: true
-        - $formkit: text
+        - $formkit: number
           label: Number of moments per page
           name: moment_list_page_size
           if: "$list_layout === 'moment-list-summary'"
-          validation: required|Number
+          validation: required
           value: 10
         - $formkit: switch
           name: is_show_moment_avatar
@@ -1241,11 +1241,11 @@ spec:
           if: "$list_layout === 'moment-list-summary'"
           label: Enable comment section in moment list
           value: true
-        - $formkit: text
+        - $formkit: number
           label: Number of items to display in friends list
           name: friends_list_page_size
           if: "$list_layout === 'friends-list-summary'"
-          validation: required|Number
+          validation: required
           value: 10
         - $formkit: switch
           name: is_show_friend_pubdate
