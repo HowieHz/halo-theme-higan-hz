@@ -80,8 +80,10 @@
               th:unless="${moment.metadata?.labels?.get('higan.howiehz.top/type')=='github-user-public-event'}"
             >
               <div class="color-base-content-80">
-                <span th:if="${not #strings.equals(pageTemplateName, 'index') or
-                            (#strings.equals(pageTemplateName, 'index') and theme?.config.index_styles?.is_show_moment_avatar)}">
+                <span
+                  th:if="${not #strings.equals(pageTemplateName, 'index') or
+                            (#strings.equals(pageTemplateName, 'index') and theme?.config.index_styles?.is_show_moment_avatar)}"
+                >
                   <a
                     th:with="authorPage=${#strings.append('/authors/',moment.owner?.name)}"
                     th:href="@{${authorPage}}"
