@@ -143,14 +143,13 @@
               th:text="${moment.owner?.displayName}"
             ></a>
             <span class="color-base-content-80 no-underline">
-              <relative-time
-                tense="past"
+              <time
                 th:datetime="${moment.spec.releaseTime}"
-                data-view-component="true"
+                itemprop="datePublished"
                 th:title="${#temporals.format(moment.spec.releaseTime, 'yyyy-MM-dd')}"
                 th:text="${#temporals.format(moment.spec.releaseTime, 'MMMM dd yyyy')}"
               >
-              </relative-time>
+              </time>
             </span>
             <!--/* 预计阅读时长 
             inline-block 保证图标和数字在一行 */-->
