@@ -30,6 +30,19 @@
                    )}"
       ></th:block>
     </th:block>
+    <th:block
+      th:if="${theme?.config.index_styles?.list_layout == 'friends-list-summary'
+               and pluginFinder.available('plugin-friends')}"
+    >
+      <th:block
+        th:insert="~{components/list-friends-summary/template :: headContent(
+                       friends=${friendFinder.list({
+                         page: posts.page,
+                         size: theme.config?.index_styles?.friends_list_page_size
+                       })}
+                   )}"
+      ></th:block>
+    </th:block>
   </head>
   <body>
     <section id="about">
@@ -233,6 +246,29 @@
           [[#{page.index.momentsPluginNotAvailableDescription}]]<a
             th:text="#{page.index.momentsPluginDocsLinkText}"
             th:href="#{page.index.momentsPluginDocsLink}"
+            rel="noopener"
+            target="_blank"
+          ></a>
+        </p>
+      </th:block>
+    </th:block>
+    <th:block th:if="${theme?.config.index_styles?.list_layout == 'friends-list-summary'}">
+      <th:block th:if="${pluginFinder.available('plugin-friends')}">
+        <th:block
+          th:insert="~{components/list-friends-summary/template :: content(
+            friends = ${friendFinder.list({
+              page: posts.page,
+              size: theme.config?.index_styles?.friends_list_page_size})},
+            pageTemplateName = 'index'
+          )}"
+        ></th:block>
+      </th:block>
+      <th:block th:unless="${pluginFinder.available('plugin-friends')}">
+        <p th:text="#{page.index.friendsPluginNotAvailable}">插件未启用提示替换位</p>
+        <p>
+          [[#{page.index.friendsPluginNotAvailableDescription}]]<a
+            th:text="#{page.index.friendsPluginDocsLinkText}"
+            th:href="#{page.index.friendsPluginDocsLink}"
             rel="noopener"
             target="_blank"
           ></a>

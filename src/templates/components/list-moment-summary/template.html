@@ -1,7 +1,11 @@
 <head>
   <script src="index.ts" type="module"></script>
+  <!--/* 翻页组件应始终加载；即使页码超出范围，组件也仍需存在 */-->
   <th:block th:insert="~{components/pagination/template :: headContent}"></th:block>
-  <th:block th:insert="~{components/moment-video-modal/template :: headContent}"></th:block>
+  <th:block
+    th:unless="${#lists.isEmpty(moments.items)}"
+    th:insert="~{components/moment-video-modal/template :: headContent}"
+  ></th:block>
   <th:block
     th:if="${(!(#strings.equals(pageTemplateName, 'index')
                    or #strings.equals(pageTemplateName, 'moments'))
@@ -15,7 +19,6 @@
   ></th:block>
 </head>
 <!--/*-->
-<!--平衡考虑，忽略这个的 polyfill-->
 <body></body>
 <!--*/-->
 <th:block th:fragment="content(moments, pageTemplateName)">

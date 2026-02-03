@@ -3447,6 +3447,7 @@ Option
 
 - `Multi-element Post List` (internal value `post-list-summary`)
 - `Moments List` (internal value `moment-list-summary`)
+- `Friends List` (internal value `friends-list-summary`)
 
 :::
 ::: info 🧩 Template Variable
@@ -3457,6 +3458,8 @@ Option
 ::: info ℹ️ Additional Information
 
 "Moments List" requires the [Moments Page](/guide/plugin-compatibility#moments-page) plugin to be enabled.
+
+"Friends List" requires the [Friends](/guide/plugin-compatibility#moments-feed-subscription) plugin to be enabled.
 
 Different configuration options will be displayed based on the selected layout type.
 
@@ -3488,6 +3491,17 @@ When Moments List is enabled, you can configure
 - [Show Word Count in Moment List](#show-word-count-in-moment-list)
 - [Enable Upvote Button in Moment List](#enable-upvote-button-in-moment-list)
 - [Enable Comment Section in Moment List](#enable-comment-section-in-moment-list)
+
+When Friends List is enabled, you can configure
+
+- [Number of Friends Per Page](#number-of-friends-per-page)
+- [Show Publish Date in Friends List](#show-publish-date-in-friends-list)
+- [Show Author Information in Friends List](#show-author-information-in-friends-list)
+- [Show Author Avatar in Friends List](#show-author-avatar-in-friends-list)
+- [Show Author Name in Friends List](#show-author-name-in-friends-list)
+- [Show Post Description in Friends List](#show-post-description-in-friends-list)
+- [Maximum Lines for Post Description in Friends List](#maximum-lines-for-post-description-in-friends-list)
+- [Show Link Text in Friends List](#show-link-text-in-friends-list)
 
 :::
 
@@ -4217,6 +4231,286 @@ Boolean
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_moment_comment_section_show`
+
+:::
+
+### Number of Friends Per Page
+
+::: info 🎯 Purpose
+
+Set the number of friends posts to display per page on the homepage.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List")
+
+Home Page Style -> Number of items to display in friends list
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Number%20of%20items%20to%20display%20in%20friends%20list" />
+
+:::
+::: info 🏷️ Type
+
+Number
+
+:::
+::: info ⭐ Default Value
+
+`10`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.friends_list_page_size`
+
+:::
+
+### Show Publish Date in Friends List
+
+::: info 🎯 Purpose
+
+Controls whether to display the publication date of posts in the friends list.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List")
+
+Home Page Style -> Show publish date in friends list
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20publish%20date%20in%20friends%20list" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_show_friend_pubdate`
+
+:::
+
+### Show Author Information in Friends List
+
+::: info 🎯 Purpose
+
+Controls whether to display author information (including avatar and name) in the friends list.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List")
+
+Home Page Style -> Show author information in friends list
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20author%20information%20in%20friends%20list" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_show_friend_author`
+
+:::
+
+### Show Author Avatar in Friends List
+
+::: info 🎯 Purpose
+
+Controls whether to display the author avatar in the friends list.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List" and [Show Author Information in Friends List](#show-author-information-in-friends-list) is enabled)
+
+Home Page Style -> Show author avatar in friends list
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20author%20avatar%20in%20friends%20list" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_show_friend_author_avatar`
+
+:::
+
+### Show Author Name in Friends List
+
+::: info 🎯 Purpose
+
+Controls whether to display the author name in the friends list.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List" and [Show Author Information in Friends List](#show-author-information-in-friends-list) is enabled)
+
+Home Page Style -> Show author name in friends list
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20author%20name%20in%20friends%20list" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_show_friend_author_name`
+
+:::
+
+### Show Post Description in Friends List
+
+::: info 🎯 Purpose
+
+Controls whether to display post descriptions in the friends list.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List")
+
+Home Page Style -> Show post description in friends list
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20post%20description%20in%20friends%20list" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_show_friend_description`
+
+:::
+
+### Maximum Lines for Post Description in Friends List
+
+::: info 🎯 Purpose
+
+Set the maximum number of lines for post descriptions in the friends list.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List" and [Show Post Description in Friends List](#show-post-description-in-friends-list) is enabled)
+
+Home Page Style -> Maximum lines for post description in friends list
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Maximum%20lines%20for%20post%20description%20in%20friends%20list" />
+
+:::
+::: info 🏷️ Type
+
+Number (1-5)
+
+:::
+::: info ⭐ Default Value
+
+`3`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.friend_description_max_lines`
+
+:::
+
+### Show Link Text in Friends List
+
+::: info 🎯 Purpose
+
+Controls whether to display the link text in friends list posts.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List")
+
+Home Page Style -> Show link text in friends list
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20link%20text%20in%20friends%20list" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_show_friend_permalink_text`
 
 :::
 

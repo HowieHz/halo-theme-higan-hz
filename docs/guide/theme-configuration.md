@@ -3441,6 +3441,7 @@ HTML 代码也是可以的：
 
 - 多元文章列表（内部值 `post-list-summary`）
 - 瞬间列表（内部值 `moment-list-summary`）
+- 朋友圈列表（内部值 `friends-list-summary`）
 
 :::
 ::: info 🧩 模板变量
@@ -3451,6 +3452,8 @@ HTML 代码也是可以的：
 ::: info ℹ️ 补充信息
 
 "瞬间列表"需[瞬间页](/guide/plugin-compatibility#瞬间页)插件启用后方可使用。
+
+"朋友圈列表"需[朋友圈](/guide/plugin-compatibility#朋友圈-订阅聚合)插件启用后方可使用。
 
 根据选择的布局类型，会显示不同的配置选项。
 
@@ -3482,6 +3485,17 @@ HTML 代码也是可以的：
 - [显示条目字数统计](#瞬间列表显示条目字数统计)
 - [启用点赞按钮](#瞬间列表启用点赞按钮)
 - [启用评论区](#瞬间列表启用评论区)
+
+朋友圈列表启用后可以配置
+
+- [显示条数](#朋友圈列表显示条数)
+- [显示发布日期](#朋友圈列表显示发布日期)
+- [显示作者信息](#朋友圈列表显示作者信息)
+- [显示作者头像](#朋友圈列表显示作者头像)
+- [显示作者名称](#朋友圈列表显示作者名称)
+- [显示文章描述](#朋友圈列表显示文章描述)
+- [文章描述行数上限](#朋友圈列表文章描述行数上限)
+- [显示跳转链接提示文字](#朋友圈列表显示跳转链接提示文字)
 
 :::
 
@@ -4212,6 +4226,286 @@ HTML 代码也是可以的：
 ::: info 🧩 模板变量
 
 `theme.config?.index_styles?.is_moment_comment_section_show`
+
+:::
+
+### 朋友圈列表显示条数
+
+::: info 🎯 用途
+
+设置朋友圈列表在首页显示的文章条数。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为"朋友圈列表"时显示）
+
+首页样式 -> 朋友圈列表显示条数
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=朋友圈列表显示条数" />
+
+:::
+::: info 🏷️ 类型
+
+数字
+
+:::
+::: info ⭐ 默认值
+
+`10`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.friends_list_page_size`
+
+:::
+
+### 朋友圈列表显示发布日期
+
+::: info 🎯 用途
+
+控制是否在朋友圈列表中显示文章的发布日期。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为"朋友圈列表"时显示）
+
+首页样式 -> 朋友圈列表显示发布日期
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=朋友圈列表显示发布日期" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_friend_pubdate`
+
+:::
+
+### 朋友圈列表显示作者信息
+
+::: info 🎯 用途
+
+控制是否在朋友圈列表中显示作者信息（包括头像和名称）。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为"朋友圈列表"时显示）
+
+首页样式 -> 朋友圈列表显示作者信息
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=朋友圈列表显示作者信息" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_friend_author`
+
+:::
+
+### 朋友圈列表显示作者头像
+
+::: info 🎯 用途
+
+控制是否在朋友圈列表中显示作者头像。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为"朋友圈列表"且[朋友圈列表显示作者信息](#朋友圈列表显示作者信息)启用时显示）
+
+首页样式 -> 朋友圈列表显示作者头像
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=朋友圈列表显示作者头像" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_friend_author_avatar`
+
+:::
+
+### 朋友圈列表显示作者名称
+
+::: info 🎯 用途
+
+控制是否在朋友圈列表中显示作者名称。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为"朋友圈列表"且[朋友圈列表显示作者信息](#朋友圈列表显示作者信息)启用时显示）
+
+首页样式 -> 朋友圈列表显示作者名称
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=朋友圈列表显示作者名称" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_friend_author_name`
+
+:::
+
+### 朋友圈列表显示文章描述
+
+::: info 🎯 用途
+
+控制是否在朋友圈列表中显示文章描述。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为"朋友圈列表"时显示）
+
+首页样式 -> 朋友圈列表显示文章描述
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=朋友圈列表显示文章描述" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_friend_description`
+
+:::
+
+### 朋友圈列表文章描述行数上限
+
+::: info 🎯 用途
+
+设置朋友圈列表中文章描述显示的最大行数。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为"朋友圈列表"且[朋友圈列表显示文章描述](#朋友圈列表显示文章描述)启用时显示）
+
+首页样式 -> 朋友圈列表文章描述行数上限
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=朋友圈列表文章描述行数上限" />
+
+:::
+::: info 🏷️ 类型
+
+数字（1-5）
+
+:::
+::: info ⭐ 默认值
+
+`3`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.friend_description_max_lines`
+
+:::
+
+### 朋友圈列表显示跳转链接提示文字
+
+::: info 🎯 用途
+
+控制是否在朋友圈列表文章项中显示跳转链接的提示文字。
+
+:::
+::: info 📂 配置项位置
+
+（[首页样式 -> 主页列表布局](#主页列表布局)设置为"朋友圈列表"时显示）
+
+首页样式 -> 朋友圈列表显示跳转链接提示文字
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=朋友圈列表显示跳转链接提示文字" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_show_friend_permalink_text`
 
 :::
 

@@ -1132,7 +1132,9 @@ spec:
               value: "post-list-summary"
             - label: "Moment list"
               value: "moment-list-summary"
-          help: "The 'Moment list' requires the 'Moments' plugin to be enabled for proper use."
+            - label: "Friends list"
+              value: "friends-list-summary"
+          help: 'The "Moment list" requires the "Moments" plugin to be enabled for proper use, and the "Friends list" requires the "Friends" plugin to be enabled for proper use.'
         - $formkit: switch
           name: is_show_post_pubdate_in_simple_post_list
           if: "$list_layout === 'simple-post-list'"
@@ -1198,11 +1200,11 @@ spec:
           if: "$list_layout === 'post-list-summary'"
           label: Display post cover in the post list summary
           value: true
-        - $formkit: text
+        - $formkit: number
           label: Number of moments per page
           name: moment_list_page_size
           if: "$list_layout === 'moment-list-summary'"
-          validation: required|Number
+          validation: required
           value: 10
         - $formkit: switch
           name: is_show_moment_avatar
@@ -1238,6 +1240,53 @@ spec:
           name: is_moment_comment_section_show
           if: "$list_layout === 'moment-list-summary'"
           label: Enable comment section in moment list
+          value: true
+        - $formkit: number
+          label: Number of items to display in friends list
+          name: friends_list_page_size
+          if: "$list_layout === 'friends-list-summary'"
+          validation: required
+          value: 10
+        - $formkit: switch
+          name: is_show_friend_pubdate
+          if: "$list_layout === 'friends-list-summary'"
+          label: Show publish date in friends list
+          value: true
+        - $formkit: switch
+          name: is_show_friend_author
+          if: "$list_layout === 'friends-list-summary'"
+          label: Show author information in friends list
+          value: true
+          help: Author information includes avatar and name
+        - $formkit: switch
+          name: is_show_friend_author_avatar
+          if: "$list_layout === 'friends-list-summary' && $is_show_friend_author === true"
+          label: Show author avatar in friends list
+          value: true
+        - $formkit: switch
+          name: is_show_friend_author_name
+          if: "$list_layout === 'friends-list-summary' && $is_show_friend_author === true"
+          label: Show author name in friends list
+          value: true
+        - $formkit: switch
+          name: is_show_friend_description
+          if: "$list_layout === 'friends-list-summary'"
+          label: Show post description in friends list
+          value: true
+        - $formkit: number
+          name: friend_description_max_lines
+          if: "$list_layout === 'friends-list-summary' && $is_show_friend_description === true"
+          label: Maximum lines for post description in friends list
+          value: "3"
+          min: 1
+          max: 5
+          step: 1
+          help: "Valid range is 1-5"
+        - $formkit: switch
+          name: is_show_friend_permalink_text
+          if: "$list_layout === 'friends-list-summary'"
+          label: Show link text in friends list
+          help: "If disabled, the friends list will not display the link text"
           value: true
         - $formkit: switch
           name: is_pin_icon_show
