@@ -11,7 +11,7 @@
 >
   <head>
     <script src="/src/scripts/pages/friends.ts" type="module"></script>
-    <th:block th:insert="~{components/list-friends-summary/template :: headContent}"></th:block>
+    <th:block th:insert="~{components/list-friends-summary/template :: headContent(friends = ${friends})}"></th:block>
   </head>
   <body>
     <article id="friends" class="friends" itemscope itemtype="http://schema.org/CollectionPage">

@@ -9,7 +9,13 @@ Related documentation: <https://docs.kunkunyu.com/docs/plugin-friends/finder-api
 Head Content (for including necessary scripts/styles)
 
 ```html
-<th:block th:insert="~{components/list-friends-summary/template :: headContent}"></th:block>
+<th:block th:insert="~{components/list-friends-summary/template :: headContent(friends)}"></th:block>
+```
+
+or
+
+```html
+<th:block th:insert="~{components/list-moment-summary/template :: headContent}"></th:block>
 ```
 
 Content Insertion
@@ -20,7 +26,7 @@ Content Insertion
 
 ## Parameters
 
-- `friends`: [UrlContextListResult\<FriendPostVo\>](#urlcontextlistresultfriendpostvo) - Friends' Posts data, including pagination information.
+- `friends`: [UrlContextListResult\<FriendPostVo\>](#urlcontextlistresultfriendpostvo) or [ListResult\<FriendPostVo\>](#listresultfriendpostvo) - Friends' Posts data, including pagination information.
 - `pageTemplateName`: pass in a string representing the page template name.
 
 ## TypeDefinitions
@@ -46,6 +52,22 @@ Content Insertion
     "description": "string", // Content
     "pubDate": "date", // Article publication time
   },
+}
+```
+
+### ListResult\<FriendPostVo\>
+
+```jsonc
+{
+  "page": 0, // Current page number
+  "size": 0, // Number of items per page
+  "total": 0, // Total number of items
+  "items": "List<#FriendPostVo>", // List of friend posts
+  "first": true, // Whether it is the first page
+  "last": true, // Whether it is the last page
+  "hasNext": true, // Whether there is a next page
+  "hasPrevious": true, // Whether there is a previous page
+  "totalPages": 0, // Total pages
 }
 ```
 
