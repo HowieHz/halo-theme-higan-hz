@@ -125,25 +125,47 @@
             return Math.max(MIN_MASONRY_COLUMNS, Math.min(columns, MAX_MASONRY_COLUMNS));
           }
 
-          const waterfallInstance = new Waterfall({
-            $el: document.querySelector(".photo-list"),
-            columns: calculateColumns(),
-            gap: /*[(${theme.config?.photos_styles?.masonry_gap})]*/ 10,
+          const photoLists = document.querySelectorAll(".photo-list");
+          const waterfallInstances = [];
+
+          photoLists.forEach(($el) => {
+            const waterfallInstance = new Waterfall({
+              $el: $el,
+              columns: calculateColumns(),
+              gap: /*[(${theme.config?.photos_styles?.masonry_gap})]*/ 10,
+            });
+            waterfallInstances.push(waterfallInstance);
           });
 
+          const checkAllWaterfalls = () => {
+            waterfallInstances.forEach((waterfallInstance) => {
+              waterfallInstance.checkAndLoadMoreImages();
+            });
+          };
+
+          let resizeScheduled = false;
           window.addEventListener("resize", () => {
-            const newColumns = calculateColumns();
-            if (newColumns !== waterfallInstance.columns) {
-              waterfallInstance.columns = newColumns;
-              waterfallInstance.reset();
-              waterfallInstance.render();
+            if (!resizeScheduled) {
+              resizeScheduled = true;
+              requestAnimationFrame(() => {
+                const newColumns = calculateColumns();
+                waterfallInstances.forEach((waterfallInstance) => {
+                  if (newColumns !== waterfallInstance.columns) {
+                    waterfallInstance.columns = newColumns;
+                    waterfallInstance.reset();
+                    waterfallInstance.render();
+                  }
+                });
+                checkAllWaterfalls();
+                resizeScheduled = false;
+              });
             }
           });
-          window.addEventListener("scroll", () => waterfallInstance.checkAndLoadMoreImages());
-          window.addEventListener("resize", () => waterfallInstance.checkAndLoadMoreImages());
+
+          window.addEventListener("scroll", checkAllWaterfalls);
 
           // <!--/* 加载第一张图片，以及递归加载其他的图片 */-->
-          waterfallInstance.checkAndLoadMoreImages();
+          checkAllWaterfalls();
         };
       </script>
 
@@ -218,8 +240,13 @@
         });
       </script>
       <div class="content">
-        <ul class="photo-list">
-          <th:block th:each="group : ${groups}" th:if="${theme.config?.photos_styles?.is_enable_masonry_layout}">
+        <!--/* Masonry layout without group titles */-->
+        <ul
+          class="photo-list"
+          th:if="${theme.config?.photos_styles?.is_enable_masonry_layout
+                   and !theme.config?.photos_styles?.is_show_photo_group_name}"
+        >
+          <th:block th:each="group : ${groups}">
             <th:block th:each="photo : ${group.photos}">
               <li class="photo-image">
                 <img
@@ -247,6 +274,43 @@
           </th:block>
         </ul>
 
+        <!--/* Masonry layout with group titles */-->
+        <div
+          class="photo-groups"
+          th:each="group : ${groups}"
+          th:if="${theme.config?.photos_styles?.is_enable_masonry_layout
+                   and theme.config?.photos_styles?.is_show_photo_group_name}"
+        >
+          <h2 th:text="${group.spec.displayName}"></h2>
+          <ul class="photo-list">
+            <th:block th:each="photo : ${group.photos}">
+              <li class="photo-image">
+                <img
+                  th:src="@{${photo.spec.url}}"
+                  th:srcset="|
+                  ${thumbnail.gen(photo.spec.url, 's')} 400w,
+                  ${thumbnail.gen(photo.spec.url, 'm')} 800w,
+                  ${thumbnail.gen(photo.spec.url, 'l')} 1200w,
+                  ${thumbnail.gen(photo.spec.url, 'xl')} 1600w
+                  |"
+                  sizes="(max-width: 1600px) 100vw, 1600px"
+                  th:title="${photo.spec.displayName}"
+                  th:alt="${photo.spec.description}"
+                  loading="lazy"
+                  th:style="'display: none;
+                    width: 100%;
+                    height: auto;
+                    transition: box-shadow 0.1s ease-in, box-shadow 0.3s ease-out;
+                    border-radius:' + ${theme.config?.photos_styles?.img_border_radius} + ';'"
+                  th:data-img-onmouseover="${theme.config?.photos_styles?.img_onmouseover}"
+                  th:data-img-onmouseout="${theme.config?.photos_styles?.img_onmouseout}"
+                />
+              </li>
+            </th:block>
+          </ul>
+        </div>
+
+        <!--/* Non-masonry layout */-->
         <div
           class="photo-groups"
           th:each="group : ${groups}"

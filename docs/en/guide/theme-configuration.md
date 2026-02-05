@@ -6449,6 +6449,46 @@ Integer/Float (Unit: seconds)
 
 :::
 
+### Display Group Titles
+
+::: info 🎯 Purpose
+
+Control whether to display group titles on the gallery page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Gallery Page Style -> Display Group Titles
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Group%20title" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.photos_styles?.is_show_photo_group_name`
+
+:::
+::: info ℹ️ Additional Information
+
+- When the [masonry layout](#enable-masonry-layout) is enabled:
+  - Enabling this option creates a separate masonry layout for each group.
+  - Disabling this option merges all groups into a single masonry layout.
+
+:::
+
 ### Enable Masonry Layout
 
 ::: info 🎯 Purpose
@@ -6492,10 +6532,6 @@ When enabled, you can configure
 - Advanced configuration options
   - Custom image onmouseover attribute
   - Custom image onmouseout attribute
-
-When disabled, you can configure
-
-- Display group titles
 
 :::
 
