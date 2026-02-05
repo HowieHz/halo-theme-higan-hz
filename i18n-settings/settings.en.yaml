@@ -1934,7 +1934,6 @@ spec:
           help: "Set the image fade-in animation duration, in seconds."
         - $formkit: switch
           name: is_show_photo_group_name
-          if: "$is_enable_masonry_layout === false"
           label: Group title
           value: false
         - $formkit: switch

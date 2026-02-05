@@ -1934,7 +1934,6 @@ spec:
           help: "设置图片渐入动画时间，单位秒。"
         - $formkit: switch
           name: is_show_photo_group_name
-          if: "$is_enable_masonry_layout === false"
           label: 显示分组标题
           value: false
         - $formkit: switch
