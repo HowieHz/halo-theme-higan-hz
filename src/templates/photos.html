@@ -236,7 +236,6 @@
         <!--/* Masonry layout without group titles */-->
         <ul
           class="photo-list"
-          style="position: relative;"
           th:if="${theme.config?.photos_styles?.is_enable_masonry_layout
                    and !theme.config?.photos_styles?.is_show_photo_group_name}"
         >
@@ -276,7 +275,7 @@
                    and theme.config?.photos_styles?.is_show_photo_group_name}"
         >
           <h2 th:text="${group.spec.displayName}"></h2>
-          <ul class="photo-list" style="position: relative;">
+          <ul class="photo-list">
             <th:block th:each="photo : ${group.photos}">
               <li class="photo-image">
                 <img

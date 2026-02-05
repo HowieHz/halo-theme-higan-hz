@@ -2,6 +2,7 @@
 .photos {
   & .photo-list {
     list-style: none;
+    position: relative;
 
     & li:last-child {
       margin-bottom: 0;
