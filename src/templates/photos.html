@@ -137,6 +137,12 @@
             waterfallInstances.push(waterfallInstance);
           });
 
+          const checkAllWaterfalls = () => {
+            waterfallInstances.forEach((waterfallInstance) => {
+              waterfallInstance.checkAndLoadMoreImages();
+            });
+          };
+
           window.addEventListener("resize", () => {
             const newColumns = calculateColumns();
             waterfallInstances.forEach((waterfallInstance) => {
@@ -146,16 +152,10 @@
                 waterfallInstance.render();
               }
             });
+            checkAllWaterfalls();
           });
 
-          const checkAllWaterfalls = () => {
-            waterfallInstances.forEach((waterfallInstance) => {
-              waterfallInstance.checkAndLoadMoreImages();
-            });
-          };
-
           window.addEventListener("scroll", checkAllWaterfalls);
-          window.addEventListener("resize", checkAllWaterfalls);
 
           // <!--/* 加载第一张图片，以及递归加载其他的图片 */-->
           checkAllWaterfalls();
