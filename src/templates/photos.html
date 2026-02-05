@@ -233,10 +233,11 @@
         });
       </script>
       <div class="content">
-        <!-- Masonry layout without group titles -->
+        <!--/* Masonry layout without group titles */-->
         <ul
           class="photo-list"
-          th:if="${theme.config?.photos_styles?.is_enable_masonry_layout and !theme.config?.photos_styles?.is_show_photo_group_name}"
+          th:if="${theme.config?.photos_styles?.is_enable_masonry_layout
+                   and !theme.config?.photos_styles?.is_show_photo_group_name}"
         >
           <th:block th:each="group : ${groups}">
             <th:block th:each="photo : ${group.photos}">
@@ -266,11 +267,12 @@
           </th:block>
         </ul>
 
-        <!-- Masonry layout with group titles -->
+        <!--/* Masonry layout with group titles */-->
         <div
           class="photo-groups"
           th:each="group : ${groups}"
-          th:if="${theme.config?.photos_styles?.is_enable_masonry_layout and theme.config?.photos_styles?.is_show_photo_group_name}"
+          th:if="${theme.config?.photos_styles?.is_enable_masonry_layout
+                   and theme.config?.photos_styles?.is_show_photo_group_name}"
         >
           <h2 th:text="${group.spec.displayName}"></h2>
           <ul class="photo-list">
@@ -301,7 +303,7 @@
           </ul>
         </div>
 
-        <!-- Non-masonry layout -->
+        <!--/* Non-masonry layout */-->
         <div
           class="photo-groups"
           th:each="group : ${groups}"
