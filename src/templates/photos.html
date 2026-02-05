@@ -143,16 +143,23 @@
             });
           };
 
+          let resizeScheduled = false;
           window.addEventListener("resize", () => {
-            const newColumns = calculateColumns();
-            waterfallInstances.forEach((waterfallInstance) => {
-              if (newColumns !== waterfallInstance.columns) {
-                waterfallInstance.columns = newColumns;
-                waterfallInstance.reset();
-                waterfallInstance.render();
-              }
-            });
-            checkAllWaterfalls();
+            if (!resizeScheduled) {
+              resizeScheduled = true;
+              requestAnimationFrame(() => {
+                const newColumns = calculateColumns();
+                waterfallInstances.forEach((waterfallInstance) => {
+                  if (newColumns !== waterfallInstance.columns) {
+                    waterfallInstance.columns = newColumns;
+                    waterfallInstance.reset();
+                    waterfallInstance.render();
+                  }
+                });
+                checkAllWaterfalls();
+                resizeScheduled = false;
+              });
+            }
           });
 
           window.addEventListener("scroll", checkAllWaterfalls);
