@@ -25,7 +25,7 @@
               th:if="${!(#strings.equals(pageTemplateName, 'index')
                          or #strings.equals(pageTemplateName, 'friends'))
                        or (#strings.equals(pageTemplateName, 'index')
-                           and theme?.config.index_styles?.is_show_friend_pubdate)
+                           and theme.config?.index_styles?.is_show_friend_pubdate)
                        or (#strings.equals(pageTemplateName, 'friends')
                            and theme.config?.friends_page_styles?.is_show_friend_pubdate)}"
               class="color-base-content-80 relative z-10 order-first mb-3 flex items-center pl-3.5 text-sm md:hidden"
@@ -40,7 +40,7 @@
               th:if="${!(#strings.equals(pageTemplateName, 'index')
                          or #strings.equals(pageTemplateName, 'friends'))
                        or (#strings.equals(pageTemplateName, 'index')
-                           and theme?.config.index_styles?.is_show_friend_author)
+                           and theme.config?.index_styles?.is_show_friend_author)
                        or (#strings.equals(pageTemplateName, 'friends')
                            and theme.config?.friends_page_styles?.is_show_friend_author)}"
               class="friend-author color-time relative z-20 mt-0.5 mb-0 flex items-center text-sm"
@@ -49,7 +49,7 @@
                 th:if="${!(#strings.equals(pageTemplateName, 'index')
                            or #strings.equals(pageTemplateName, 'friends'))
                          or (#strings.equals(pageTemplateName, 'index')
-                             and theme?.config.index_styles?.is_show_friend_author_avatar)
+                             and theme.config?.index_styles?.is_show_friend_author_avatar)
                          or (#strings.equals(pageTemplateName, 'friends')
                              and theme.config?.friends_page_styles?.is_show_friend_author_avatar)}"
                 th:href="@{${spec.authorUrl}}"
@@ -68,7 +68,7 @@
                 th:if="${!(#strings.equals(pageTemplateName, 'index')
                            or #strings.equals(pageTemplateName, 'friends'))
                          or (#strings.equals(pageTemplateName, 'index')
-                             and theme?.config.index_styles?.is_show_friend_author_name)
+                             and theme.config?.index_styles?.is_show_friend_author_name)
                          or (#strings.equals(pageTemplateName, 'friends')
                              and theme.config?.friends_page_styles?.is_show_friend_author_name)}"
                 th:href="@{${spec.authorUrl}}"
@@ -83,7 +83,7 @@
               th:if="${!(#strings.equals(pageTemplateName, 'index')
                          or #strings.equals(pageTemplateName, 'friends'))
                        or (#strings.equals(pageTemplateName, 'index')
-                           and theme?.config.index_styles?.is_show_friend_description)
+                           and theme.config?.index_styles?.is_show_friend_description)
                        or (#strings.equals(pageTemplateName, 'friends')
                            and theme.config?.friends_page_styles?.is_show_friend_description)}"
               th:with="max_lines = ${#strings.equals(pageTemplateName, 'index')
@@ -104,7 +104,7 @@
               th:if="${!(#strings.equals(pageTemplateName, 'index')
                          or #strings.equals(pageTemplateName, 'friends'))
                        or (#strings.equals(pageTemplateName, 'index')
-                           and theme?.config.index_styles?.is_show_friend_permalink_text)
+                           and theme.config?.index_styles?.is_show_friend_permalink_text)
                        or (#strings.equals(pageTemplateName, 'friends')
                            and theme.config?.friends_page_styles?.is_show_friend_permalink_text)}"
               aria-hidden="true"
@@ -118,7 +118,7 @@
             th:if="${!(#strings.equals(pageTemplateName, 'index')
                        or #strings.equals(pageTemplateName, 'friends'))
                      or (#strings.equals(pageTemplateName, 'index')
-                         and theme?.config.index_styles?.is_show_friend_pubdate)
+                         and theme.config?.index_styles?.is_show_friend_pubdate)
                      or (#strings.equals(pageTemplateName, 'friends')
                          and theme.config?.friends_page_styles?.is_show_friend_pubdate)}"
             class="color-base-content-80 relative z-10 order-first mt-1 mb-3 hidden items-center text-sm md:flex"

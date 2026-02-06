@@ -40,7 +40,7 @@
     <!--/* RSS link declaration start */-->
     <th:block th:if="${pluginFinder.available('PluginFeed')}">
       <link rel="alternate" type="application/rss+xml" title="Posts - All" th:href="@{'/rss.xml'}" />
-      <th:block th:each="item : ${theme?.config?.sns?.index_sns}">
+      <th:block th:each="item : ${theme.config?.sns?.index_sns}">
         <th:block th:if="${#strings.equals(item?.type['type'], 'rss')}" th:with="href = ${item?.input_value}">
           <link
             th:if="${href != '/rss.xml'}"
@@ -622,17 +622,17 @@ html[theme="theme-[(${colorSchema.id})]"] {
     <script th:if="${theme.config?.global?.anti_mirror_site}" th:inline="javascript">
       (function () {
         // <!--/* 获取被编码后的目标链接 */-->
-        var encodedRedirectUrl = /*[[${theme?.config?.global?.target_url}]]*/ "bG9jYWxob3N0";
+        var encodedRedirectUrl = /*[[${theme.config?.global?.target_url}]]*/ "bG9jYWxob3N0";
 
         // <!--/* 获取域名白名单 */-->
-        var rawDomainWhiteList = /*[[${theme?.config?.global?.allow_site_whitelist}]]*/ [];
+        var rawDomainWhiteList = /*[[${theme.config?.global?.allow_site_whitelist}]]*/ [];
         if (rawDomainWhiteList.length === 0) {
           return;
         }
         var domainWhiteList = rawDomainWhiteList.map((item) => atob(item.realNode.input_domain));
 
         // <!--/* 检查是否保留路径和查询参数，并且生成跳转后的目标链接 */-->
-        var is_keep_path_and_query = /*[[${theme?.config?.global?.is_keep_path_and_query}]]*/ true;
+        var is_keep_path_and_query = /*[[${theme.config?.global?.is_keep_path_and_query}]]*/ true;
         if (is_keep_path_and_query) {
           var targetRedirectUrl = atob(encodedRedirectUrl) + window.location.pathname + window.location.search;
         } else {
@@ -676,7 +676,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
         }
 
         // <!--/* 获取配置项默认语言 */-->
-        let defaultLang = /*[[${theme?.config?.global?.default_page_language}]]*/ "zh";
+        let defaultLang = /*[[${theme.config?.global?.default_page_language}]]*/ "zh";
         if (!defaultLang) {
           defaultLang = "zh";
         }
@@ -687,9 +687,9 @@ html[theme="theme-[(${colorSchema.id})]"] {
         // */-->
         const browserLang = navigator.language;
 
-        const originLangList = /*[(${theme?.config?.global?.auto_redirect_target_language_list})]*/ [];
+        const originLangList = /*[(${theme.config?.global?.auto_redirect_target_language_list})]*/ [];
         const targetLangs = originLangList.map((item) => item.v);
-        const prefixMode = /*[[${theme?.config?.global?.is_i18n_prefix_match_mode}]]*/ true;
+        const prefixMode = /*[[${theme.config?.global?.is_i18n_prefix_match_mode}]]*/ true;
 
         let matchedLang = prefixMode
           ? targetLangs.find((lang) => browserLang.startsWith(lang))

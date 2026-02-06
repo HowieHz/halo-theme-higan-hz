@@ -10,9 +10,9 @@
     th:if="${(!(#strings.equals(pageTemplateName, 'index')
                    or #strings.equals(pageTemplateName, 'moments'))
               or (#strings.equals(pageTemplateName, 'index') 
-                  and theme?.config.index_styles?.is_moment_comment_section_show)
+                  and theme.config?.index_styles?.is_moment_comment_section_show)
               or (#strings.equals(pageTemplateName, 'moments') 
-                  and theme?.config.moments_styles?.is_moment_comment_section_show)) 
+                  and theme.config?.moments_styles?.is_moment_comment_section_show)) 
              and haloCommentEnabled 
              and !#lists.isEmpty(moments.items)}"
     th:insert="~{components/halo-comment-widget/template :: headContent}"
@@ -109,7 +109,7 @@
                 <span
                   th:if="${!#strings.equals(pageTemplateName, 'index')
                            or (#strings.equals(pageTemplateName, 'index') 
-                               and theme?.config.index_styles?.is_show_moment_avatar)}"
+                               and theme.config?.index_styles?.is_show_moment_avatar)}"
                 >
                   <a
                     th:with="authorPage = ${#strings.append('/authors/', moment.owner?.name)}"
@@ -174,7 +174,7 @@
                 <a
                   th:if="${!#strings.equals(pageTemplateName, 'index')
                            or (#strings.equals(pageTemplateName, 'index') 
-                           and theme?.config.index_styles?.is_show_moment_nickname)}"
+                           and theme.config?.index_styles?.is_show_moment_nickname)}"
                   class="inline-block break-all no-underline"
                   th:with="authorPage = ${#strings.append('/authors/',moment.owner?.name)}"
                   th:href="@{${authorPage}}"
@@ -185,9 +185,9 @@
                   th:if="${!(#strings.equals(pageTemplateName, 'index')
                              or #strings.equals(pageTemplateName, 'moments'))
                            or (#strings.equals(pageTemplateName, 'index') 
-                               and theme?.config.index_styles?.is_show_moment_pubdate)
+                               and theme.config?.index_styles?.is_show_moment_pubdate)
                            or (#strings.equals(pageTemplateName, 'moments')
-                               and theme?.config.moments_styles?.is_show_post_pubdate)}"
+                               and theme.config?.moments_styles?.is_show_post_pubdate)}"
                 >
                   <time
                     th:datetime="${moment.spec.releaseTime}"
@@ -204,9 +204,9 @@
                   th:if="${!(#strings.equals(pageTemplateName, 'index')
                              or #strings.equals(pageTemplateName, 'moments'))
                            or (#strings.equals(pageTemplateName, 'index')
-                               and theme?.config.index_styles?.is_show_moment_estimated_reading_time)
+                               and theme.config?.index_styles?.is_show_moment_estimated_reading_time)
                            or (#strings.equals(pageTemplateName, 'moments')
-                               and theme?.config.moments_styles?.is_show_post_estimated_reading_time)}"
+                               and theme.config?.moments_styles?.is_show_post_estimated_reading_time)}"
                   th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                          ? extraApiStatsFinder.getContentWordCount(moment.spec.content?.html)
                                          : #strings.length(moment.spec.content?.html) / 2 }"
@@ -228,9 +228,9 @@
                   th:if="${!(#strings.equals(pageTemplateName, 'index')
                              or #strings.equals(pageTemplateName, 'moments'))
                            or (#strings.equals(pageTemplateName, 'index')
-                               and theme?.config.index_styles?.is_show_moment_word_count)
+                               and theme.config?.index_styles?.is_show_moment_word_count)
                            or (#strings.equals(pageTemplateName, 'moments') 
-                               and theme?.config.moments_styles?.is_show_post_word_count)}"
+                               and theme.config?.moments_styles?.is_show_post_word_count)}"
                   th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                          ? extraApiStatsFinder.getContentWordCount(moment.spec.content?.html)
                                          : #strings.length(moment.spec.content?.html) / 2 }"
@@ -267,11 +267,11 @@
                 th:if="${(!(#strings.equals(pageTemplateName, 'index')
                             or #strings.equals(pageTemplateName, 'moments'))
                           or (#strings.equals(pageTemplateName, 'index')
-                              and (theme?.config.index_styles?.is_moment_upvote_button_show
-                                   or theme?.config.index_styles?.is_moment_comment_section_show))
+                              and (theme.config?.index_styles?.is_moment_upvote_button_show
+                                   or theme.config?.index_styles?.is_moment_comment_section_show))
                           or (#strings.equals(pageTemplateName, 'moments')
-                              and (theme?.config.moments_styles?.is_moment_upvote_button_show
-                                   or theme?.config.moments_styles?.is_moment_comment_section_show)))}"
+                              and (theme.config?.moments_styles?.is_moment_upvote_button_show
+                                   or theme.config?.moments_styles?.is_moment_comment_section_show)))}"
                 th:attr="x-data=|{name: '${moment.metadata.name}'}|"
                 class="operation"
               >
@@ -279,9 +279,9 @@
                   th:if="${!(#strings.equals(pageTemplateName, 'index')
                              or #strings.equals(pageTemplateName, 'moments'))
                            or (#strings.equals(pageTemplateName, 'index')
-                               and theme?.config.index_styles?.is_moment_upvote_button_show)
+                               and theme.config?.index_styles?.is_moment_upvote_button_show)
                            or (#strings.equals(pageTemplateName, 'moments')
-                               and theme?.config.moments_styles?.is_moment_upvote_button_show)}"
+                               and theme.config?.moments_styles?.is_moment_upvote_button_show)}"
                 >
                   <a
                     th:href="|javascript:handleLike('${moment.metadata.name}')|"
@@ -301,9 +301,9 @@
                   th:if="${(!(#strings.equals(pageTemplateName, 'index')
                               or #strings.equals(pageTemplateName, 'moments'))
                             or (#strings.equals(pageTemplateName, 'index')
-                                and theme?.config.index_styles?.is_moment_comment_section_show)
+                                and theme.config?.index_styles?.is_moment_comment_section_show)
                             or (#strings.equals(pageTemplateName, 'moments')
-                                and theme?.config.moments_styles?.is_moment_comment_section_show))
+                                and theme.config?.moments_styles?.is_moment_comment_section_show))
                            and haloCommentEnabled}"
                 >
                   <a @click="setCurrent(name)" class="v-cursor-pointer ml-1">
@@ -338,9 +338,9 @@
       th:if="${!(#strings.equals(pageTemplateName, 'index')
                  or #strings.equals(pageTemplateName, 'moments'))
                or (#strings.equals(pageTemplateName, 'index')
-                   and theme?.config.index_styles?.is_moment_upvote_button_show)
+                   and theme.config?.index_styles?.is_moment_upvote_button_show)
                or (#strings.equals(pageTemplateName, 'moments')
-                   and theme?.config.moments_styles?.is_moment_upvote_button_show)}"
+                   and theme.config?.moments_styles?.is_moment_upvote_button_show)}"
     >
       const likes_localstorage_key = "higan.likes.moment.ids";
       let likedMomentNames = JSON.parse(localStorage.getItem(likes_localstorage_key) || "[]");
