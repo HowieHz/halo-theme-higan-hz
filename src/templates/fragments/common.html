@@ -190,7 +190,7 @@
           }
         }
       </script>
-      <li th:each="item : ${theme?.config?.share?.button_config}">
+      <li th:each="item : ${theme.config?.share?.button_config}">
         <a
           th:if="${item?.name != 'Native'}"
           class="icon"
