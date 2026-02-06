@@ -187,7 +187,7 @@
                            or (#strings.equals(pageTemplateName, 'index') 
                                and (theme.config?.index_styles?.is_show_moment_pubdate ?: true))
                            or (#strings.equals(pageTemplateName, 'moments')
-                               and theme.config?.moments_styles?.is_show_post_pubdate)}"
+                               and (theme.config?.moments_styles?.is_show_post_pubdate ?: true))}"
                 >
                   <time
                     th:datetime="${moment.spec.releaseTime}"
