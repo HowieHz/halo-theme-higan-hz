@@ -29,6 +29,11 @@ export default defineConfig({
             [constants.BROTLI_PARAM_QUALITY]: 11,
           },
         }),
+        defineAlgorithm("zstandard", {
+          params: {
+            [constants.ZSTD_c_compressionLevel]: 22,
+          },
+        }),
       ],
       // src/templates/**/*.html are template files and should not be compressed
       exclude: [/^src\/templates\/.*\.html$/],
