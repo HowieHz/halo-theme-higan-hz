@@ -31,6 +31,7 @@ export default defineConfig({
         }),
         defineAlgorithm("zstandard", {
           params: {
+            // The maximum compression level is 22, but memory consumption becomes very large and can cause build failures
             [constants.ZSTD_c_compressionLevel]: 21,
           },
         }),
