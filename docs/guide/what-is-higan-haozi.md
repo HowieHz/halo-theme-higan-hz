@@ -19,7 +19,7 @@ Higan Haozi 是一款响应式、简洁清爽的个人网站主题，适用于 [
 3. [强可配置性](./theme-configuration)
 4. [兼容性良好](/reference/browser-compatibility)
 5. [插件兼容性](./plugin-compatibility)
-6. [高性能表现](/reference/performance)（页面主题资源 ~90KiB(gzipped)）
+6. [高性能表现](/reference/performance)（页面主题资源 ~80 KiB (压缩后)）
 
 ## 预览
 

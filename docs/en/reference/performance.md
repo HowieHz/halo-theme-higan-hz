@@ -540,7 +540,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### Average Per Page
 
-::: details Theme Resources (gzipped)
+::: details Theme Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.average?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -558,7 +558,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details Page Resources (gzipped)
+::: details Page Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.average?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -578,7 +578,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### Home Page
 
-::: details Theme Resources (gzipped)
+::: details Theme Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.home?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -596,7 +596,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details Page Resources (gzipped)
+::: details Page Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.home?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -616,7 +616,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### Archives
 
-::: details Theme Resources (gzipped)
+::: details Theme Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.archives?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -634,7 +634,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details Page Resources (gzipped)
+::: details Page Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.archives?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -654,7 +654,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### Post Detail
 
-::: details Theme Resources (gzipped)
+::: details Theme Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.post?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -672,7 +672,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details Page Resources (gzipped)
+::: details Page Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.post?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -692,7 +692,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### Tags Collection
 
-::: details Theme Resources (gzipped)
+::: details Theme Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.tags?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -710,7 +710,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details Page Resources (gzipped)
+::: details Page Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.tags?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -730,7 +730,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### Tag Detail
 
-::: details Theme Resources (gzipped)
+::: details Theme Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.tagDetail?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -748,7 +748,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details Page Resources (gzipped)
+::: details Page Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.tagDetail?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -768,7 +768,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### Categories Collection
 
-::: details Theme Resources (gzipped)
+::: details Theme Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.categories?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -786,7 +786,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details Page Resources (gzipped)
+::: details Page Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.categories?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -806,7 +806,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### Category Detail
 
-::: details Theme Resources (gzipped)
+::: details Theme Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.categoryDetail?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -824,7 +824,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details Page Resources (gzipped)
+::: details Page Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.categoryDetail?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -844,7 +844,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### Author Detail
 
-::: details Theme Resources (gzipped)
+::: details Theme Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.author?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -862,7 +862,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details Page Resources (gzipped)
+::: details Page Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.author?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -882,7 +882,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### Single Page
 
-::: details Theme Resources (gzipped)
+::: details Theme Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.about?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -900,7 +900,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details Page Resources (gzipped)
+::: details Page Resources (zipped)
 
 <ProgressBar :isLoading="chartLoadingStatus.about?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 

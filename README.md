@@ -26,7 +26,7 @@ Higan Haozi 是一款响应式、简洁清爽的个人网站主题，适用于 [
 3. [强可配置性](https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration)
 4. [兼容性良好](https://howiehz.top/halo-theme-higan-haozi/reference/browser-compatibility)
 5. [插件兼容性](https://howiehz.top/halo-theme-higan-haozi/guide/plugin-compatibility)
-6. [高性能表现](https://howiehz.top/halo-theme-higan-haozi/reference/performance)（页面主题资源 ~90KiB(gzipped)）
+6. [高性能表现](https://howiehz.top/halo-theme-higan-haozi/reference/performance)（页面主题资源 ~80 KiB（压缩后））
 
 ## 预览
 

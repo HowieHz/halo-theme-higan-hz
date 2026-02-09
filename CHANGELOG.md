@@ -9,6 +9,17 @@
 - 为主题资源添加 SRI 信息以提高安全性。
 - 调整 instant.page 脚本注入位置，优化加载速度。
 - 修订[安全防护文档](https://howiehz.top/halo-theme-higan-haozi/tutorial/security)。
+- 主题的静态资源已提供预压缩版本，便于在支持的服务器上直接使用：
+  - 文件类型：
+    - `.js`：`.js.gz`、`.js.br`、`.js.zst`
+    - `.css`：`.css.gz`、`.css.br`、`.css.zst`
+  - 对应算法与压缩等级：
+    - `*.gz` — gzip（压缩等级 9，最高）
+    - `*.br` — brotli（压缩等级 11，最高）
+    - `*.zst` — zstandard（压缩等级 21，已使用最大值减 1，以避免构建时内存不足）
+  - 自动提供与服务器配置：
+    - 直接使用 Halo CMS 时，服务器会自动提供 `.br` 文件。
+    - 使用 Nginx/Apache 等服务器时，请参考[配置文档](https://howiehz.top/halo-theme-higan-haozi/tutorial/performance)以启用预压缩文件的自动交付。
 
 ### 🛠️ 开发体验
 
