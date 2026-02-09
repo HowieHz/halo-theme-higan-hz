@@ -20,7 +20,7 @@ Contributions to this tutorial are always welcome.
 
 ## Using Pre-compressed Assets
 
-The theme's static assets are available in pre-compressed versions for direct use on supported servers.
+Pre-compressed versions of the theme's static resources are provided to conserve server memory and bandwidth.
 
 - Pre-compressed file types:
   - `.js`: `.js.gz`, `.js.br`, `.js.zst`
