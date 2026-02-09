@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [1.57.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.0...v1.57.1) (2026-2-10)
+
 ## 🔧 优化改进
 
 - 为主题资源添加 SRI 信息以提高安全性。
