@@ -80,7 +80,7 @@ export default defineConfig({
         }),
         defineAlgorithm("zstandard", {
           params: {
-            [constants.ZSTD_c_compressionLevel]: 22,
+            [constants.ZSTD_c_compressionLevel]: 21,
           },
         }),
       ],
