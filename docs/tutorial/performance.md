@@ -39,17 +39,25 @@ http {
     # 启用 gzip_static 模块以提供预压缩的 .gz 文件
     gzip_static on;
 
+    # 如果找不到静态文件则回退到动态压缩
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
     # 启用 brotli_static 以提供预压缩的 .br 文件
     # 需要 ngx_brotli 模块: https://github.com/google/ngx_brotli
     brotli_static on;
+
+    # 如果找不到静态文件则回退到动态压缩
+    brotli on;
+    brotli_types application/atom+xml application/javascript application/json application/vnd.api+json application/rss+xml application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml;
 
     # 启用 zstd_static 以提供预压缩的 .zst 文件
     # 需要 zstd-nginx-module 模块: https://github.com/tokers/zstd-nginx-module
     zstd_static on;
 
     # 如果找不到静态文件则回退到动态压缩
-    gzip on;
-    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+    zstd on;
+    zstd_types application/atom+xml application/javascript application/json application/vnd.api+json application/rss+xml application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml;
 
     server {
         listen 80;
@@ -68,7 +76,7 @@ http {
 ```apache
 # 启用 mod_deflate 以实现回退动态压缩
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+    AddOutputFilterByType DEFLATE application/atom+xml application/javascript application/json application/vnd.api+json application/rss+xml application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml
 </IfModule>
 
 # 提供预压缩文件

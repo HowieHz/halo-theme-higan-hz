@@ -45,17 +45,25 @@ http {
     # Enable gzip_static module to serve pre-compressed .gz files
     gzip_static on;
 
+    # Fallback to dynamic compression if static file not found
+    gzip on;
+    gzip_types application/atom+xml application/javascript application/json application/vnd.api+json application/rss+xml application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml;
+
     # Enable brotli_static to serve pre-compressed .br files
     # Requires ngx_brotli module: https://github.com/google/ngx_brotli
     brotli_static on;
+
+    # Fallback to dynamic compression if static file not found
+    brotli on;
+    brotli_types application/atom+xml application/javascript application/json application/vnd.api+json application/rss+xml application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml;
 
     # Enable zstd_static to serve pre-compressed .zst files
     # Requires zstd-nginx-module module: https://github.com/tokers/zstd-nginx-module
     zstd_static on;
 
     # Fallback to dynamic compression if static file not found
-    gzip on;
-    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+    zstd on;
+    zstd_types application/atom+xml application/javascript application/json application/vnd.api+json application/rss+xml application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml;
 
     server {
         listen 80;
@@ -74,7 +82,7 @@ http {
 ```apache
 # Enable mod_deflate for fallback dynamic compression
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+    AddOutputFilterByType DEFLATE application/atom+xml application/javascript application/json application/vnd.api+json application/rss+xml application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml
 </IfModule>
 
 # Serve pre-compressed files
