@@ -715,27 +715,6 @@ html[theme="theme-[(${colorSchema.id})]"] {
     <!--/* js/css injection start */-->
     <th:block th:replace="${head}" />
     <!--/* js/css injection end */-->
-    <!--/* instant.page injection start */-->
-    <th:block th:if="${theme.config?.global?.is_instant_page_enable}">
-      <script
-        skip-sri
-        th:unless="${theme.config?.global?.is_custom_resource_locations}"
-        type="module"
-        crossorigin
-        th:src="@{/assets/lib/instantpage/5.2.0.js(v=${theme.spec.version})}"
-        integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"
-        defer
-      ></script>
-      <script
-        skip-sri
-        th:if="${theme.config?.global?.is_custom_resource_locations}"
-        type="module"
-        crossorigin
-        th:src="${theme.config?.global?.instantpage_resource_location}"
-        defer
-      ></script>
-    </th:block>
-    <!--/* instant.page injection end */-->
     <!--/* Mermaid injection start */-->
     <script vite-ignore type="module" th:inline="javascript" th:if="${theme.config?.global?.is_mermaid_enable}">
       import mermaid from /*[[${theme.config?.global?.mermaid_script_url}]]*/ "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
@@ -1381,5 +1360,27 @@ html[theme="theme-[(${colorSchema.id})]"] {
         </footer>
       </div>
     </div>
+    <!--/* instant.page injection start */-->
+    <th:block th:if="${theme.config?.global?.is_instant_page_enable}">
+      <script
+        skip-sri
+        th:unless="${theme.config?.global?.is_custom_resource_locations}"
+        type="module"
+        crossorigin
+        th:src="@{/assets/lib/instantpage/5.2.0.js(v=${theme.spec.version})}"
+        integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"
+        defer
+      ></script>
+      <script
+        skip-sri
+        th:if="${theme.config?.global?.is_custom_resource_locations}"
+        type="module"
+        crossorigin
+        th:src="${theme.config?.global?.instantpage_resource_location}"
+        integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"
+        defer
+      ></script>
+    </th:block>
+    <!--/* instant.page injection end */-->
   </body>
 </html>

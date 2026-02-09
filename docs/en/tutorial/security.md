@@ -57,3 +57,21 @@ Therefore, I developed the [Domain Whitelist Access Only](/en/guide/theme-config
 
 Enter your complete site URL in the input box above to generate the Base64 encoded result.  
 After enabling [Domain Whitelist Access Only](/en/guide/theme-configuration#only-allow-access-from-specified-domains), enter the Base64 encoded result in "Domain Whitelist List" and "Base64 Encoded Target URL" to defend against malicious cloning.
+
+## Add SRI Validation for External Resources
+
+Subresource Integrity (SRI) ensures that static assets loaded from third-party CDNs have not been tampered with, mitigating NPM supply-chain poisoning attacks via public CDNs. By adding the integrity attribute to script or link tags and pairing it with crossorigin, the browser can verify the asset hash.
+
+All JavaScript and CSS assets in this theme already include SRI validation metadata.
+
+SRI example:
+
+```html
+<!-- JavaScript -->
+<script src="https://example.com/lib.min.js" integrity="sha384-BASE64_HASH_HERE" crossorigin></script>
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://example.com/style.min.css" integrity="sha384-BASE64_HASH_HERE" crossorigin />
+```
+
+You can generate SRI metadata using online tools (for example, [srihash.org](https://srihash.org/)).

@@ -51,3 +51,21 @@ const encodedUrl = computed(() => {
 
 将你的站点完整链接输入上方输入框，即可生成 Base64 编码结果。  
 开启[仅允许使用指定域名访问](/guide/theme-configuration#仅允许使用指定域名访问)后，在“域名白名单列表”和“Base64 编码后的目标链接”输入 Base64 编码后的结果，即可防御恶意克隆。
+
+## 为外部资源添加 SRI 验证
+
+Subresource Integrity (SRI) 可确保从第三方 CDN 加载的静态资源未被篡改，避免基于公共 CDN 的 NPM 供应链投毒攻击。通过在 script 或 link 标签上添加 integrity 属性并配合 crossorigin 使用，可以在浏览器端验证文件哈希。
+
+本主题的 JavaScript 和 CSS 资源均已添加 SRI 验证信息。
+
+添加 SRI 示例：
+
+```html
+<!-- JavaScript -->
+<script src="https://example.com/lib.min.js" integrity="sha384-BASE64_HASH_HERE" crossorigin></script>
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://example.com/style.min.css" integrity="sha384-BASE64_HASH_HERE" crossorigin />
+```
+
+可使用在线工具（例如 [srihash.org](https://srihash.org/)）生成 SRI 信息。
