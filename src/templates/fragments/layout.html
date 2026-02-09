@@ -718,12 +718,14 @@ html[theme="theme-[(${colorSchema.id})]"] {
     <!--/* instant.page injection start */-->
     <th:block th:if="${theme.config?.global?.is_instant_page_enable}">
       <script
+        skip-sri
         th:src="@{/assets/lib/instantpage/5.2.0.js(v=${theme.spec.version})}"
         th:unless="${theme.config?.global?.is_custom_resource_locations}"
         type="module"
         defer
       ></script>
       <script
+        skip-sri
         th:src="${theme.config?.global?.instantpage_resource_location}"
         th:if="${theme.config?.global?.is_custom_resource_locations}"
         type="module"

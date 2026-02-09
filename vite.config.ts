@@ -5,6 +5,7 @@ import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
 import utwm from "unplugin-tailwindcss-mangle/vite";
 import { defineConfig } from "vite";
+import { sri } from "vite-plugin-sri3";
 
 import pkg from "./package.json";
 import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
@@ -66,6 +67,7 @@ export default defineConfig({
     thymeleafMinify({
       base: "/themes/howiehz-higan/",
     }),
+    sri(),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
   css: {

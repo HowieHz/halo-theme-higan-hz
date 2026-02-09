@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  vite-plugin-sri3:
+    hash: cac2c8e9e12f7181a9f48835b6b50853e187d7e7604a3e9aba39ca295ca1a8b7
+    path: patches/vite-plugin-sri3.patch
+
 importers:
 
   .:
@@ -183,6 +188,9 @@ importers:
       vite:
         specifier: npm:rolldown-vite@^7.3.1
         version: rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)
+      vite-plugin-sri3:
+        specifier: ^1.1.0
+        version: 1.1.0(patch_hash=cac2c8e9e12f7181a9f48835b6b50853e187d7e7604a3e9aba39ca295ca1a8b7)(rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))
       vue-eslint-parser:
         specifier: ^10.2.0
         version: 10.2.0(eslint@9.39.2(jiti@2.6.1))
@@ -201,10 +209,10 @@ importers:
         version: 2.18.2(vitepress@2.0.0-alpha.16(@types/node@25.2.2)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.6)(stylus@0.64.0)(typescript@5.9.3))
       '@whyframe/core':
         specifier: ^0.1.14
-        version: 0.1.14(rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))
+        version: 0.1.14(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0))
       '@whyframe/vue':
         specifier: ^0.1.9
-        version: 0.1.9(@whyframe/core@0.1.14(rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)))(rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))
+        version: 0.1.9(@whyframe/core@0.1.14(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0)))(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0))
       browserslist:
         specifier: ^4.28.1
         version: 4.28.1
@@ -3699,6 +3707,12 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
+  vite-plugin-sri3@1.1.0:
+    resolution: {integrity: sha512-YirrIphWhC1J4Nc9z8pjeQaUZD9mL4xvl4XKw1xr6rUJxIY6LJ0aFUOouCShFvsOQ5xk8usuK3SXxZyeaOFzFQ==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      vite: ^2 || ^3 || ^4 || ^5 || ^6 || ^7
+
   vite@7.3.1:
     resolution: {integrity: sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -5046,16 +5060,16 @@ snapshots:
     dependencies:
       pathe: 2.0.3
 
-  '@whyframe/core@0.1.14(rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))':
+  '@whyframe/core@0.1.14(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0))':
     optionalDependencies:
-      vite: rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)
+      vite: 7.3.1(@types/node@25.2.2)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0)
 
-  '@whyframe/vue@0.1.9(@whyframe/core@0.1.14(rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)))(rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))':
+  '@whyframe/vue@0.1.9(@whyframe/core@0.1.14(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0)))(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0))':
     dependencies:
       '@vue/compiler-dom': 3.5.26
-      '@whyframe/core': 0.1.14(rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))
+      '@whyframe/core': 0.1.14(vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0))
       magic-string: 0.30.21
-      vite: rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)
+      vite: 7.3.1(@types/node@25.2.2)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0)
 
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:
@@ -7312,6 +7326,10 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
+
+  vite-plugin-sri3@1.1.0(patch_hash=cac2c8e9e12f7181a9f48835b6b50853e187d7e7604a3e9aba39ca295ca1a8b7)(rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)):
+    dependencies:
+      vite: rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)
 
   vite@7.3.1(@types/node@25.2.2)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0):
     dependencies:

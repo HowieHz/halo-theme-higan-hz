@@ -47,7 +47,7 @@
   <body>
     <section id="about">
       <th:block th:if="${theme.config?.index_styles?.hitokoto}">
-        <script th:src="${theme.config?.index_styles?.hitokoto_link}" defer></script>
+        <script skip-sri th:src="${theme.config?.index_styles?.hitokoto_link}" defer></script>
         <p class="hitokoto"></p>
       </th:block>
       <th:block

@@ -1,0 +1,259 @@
+diff --git a/README.md b/README.md
+index 4d94865e8537de3a2f60146c35d554c40dcef5d7..688db5ba8ee354f4ecdb7393dbd61817246a7362 100644
+--- a/README.md
++++ b/README.md
+@@ -3,6 +3,7 @@
+ [Subresource Integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) in [Vite](https://vitejs.dev/)
+ 
+ - Zero dependencies
++- [Changelog](./CHANGELOG.md)
+ 
+ ## Requirement
+ - Vite >= 2
+@@ -24,6 +25,8 @@ pnpm i -D vite-plugin-sri3
+ // vite.config.(js|ts|mjs|mts)
+ import { defineConfig } from 'vite'
+ import sri from 'vite-plugin-sri3'
++// Alternatively, use the named export:
++// import { sri } from 'vite-plugin-sri3'
+ 
+ export default defineConfig({
+   plugins: [
+@@ -45,10 +48,23 @@ Default: `false`
+ sri({ ignoreMissingAsset: true })
+ ```
+ 
++## Skip SRI on specific tags
++
++Add the `skip-sri` attribute to any `script` or `link` tag to prevent SRI injection.
++
++```html
++<script type="module" src="/path/to/asset.js" skip-sri></script>
++<link rel="stylesheet" href="/path/to/asset.css" skip-sri />
++```
++
+ ## Q&A
+ - Why not `rollup-plugin-sri` or `@small-tech/vite-plugin-sri` ?
+   - They can't work well in vite 4/5.
+ 
++## Tests & Coverage
++- Run `pnpm coverage` to execute the Vitest suite with instrumentation; inspect the generated `coverage/` reports locally or in CI artifacts.
++- `pnpm test:e2e` invokes Playwright to validate healthy and tampered builds in Chromium, ensuring runtime SRI enforcement still triggers errors when hashes mismatch.
++- Integration fixtures rebuild the sample Vite app and assert deterministic `sha384` hashes so plugin regressions surface before release.
+ 
+ ## Thanks
+ - [`rollup-plugin-sri`](https://github.com/JonasKruckenberg/rollup-plugin-sri)
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index a573b8f087955b8e4954dc255c7bdd5aeaf63e28..de9291c693df95e1da1e485fe9dc69097d0d0352 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -1,6 +1,7 @@
+ import type { Plugin, HookHandler } from 'vite';
+ export type GenerateBundle = HookHandler<Plugin['generateBundle']>;
+-export declare function sri(options?: {
++export default function sri(options?: {
+     ignoreMissingAsset: boolean;
+ }): Plugin;
++export { sri };
+ //# sourceMappingURL=index.d.ts.map
+\ No newline at end of file
+diff --git a/dist/index.d.ts.map b/dist/index.d.ts.map
+index f2c0195abf78c818c4df2d70539765e6c6e4a2bb..f13f99e58fcc6284d87c2c79ab90ed2ea3acabe6 100644
+--- a/dist/index.d.ts.map
++++ b/dist/index.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../src/index.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,MAAM,EAAE,WAAW,EAAE,MAAM,MAAM,CAAA;AAS/C,MAAM,MAAM,cAAc,GAAG,WAAW,CAAC,MAAM,CAAC,gBAAgB,CAAC,CAAC,CAAA;AAmBlE,wBAAgB,GAAG,CAAE,OAAO,CAAC,EAAE;IAAE,kBAAkB,EAAE,OAAO,CAAA;CAAE,GAAG,MAAM,CA8EtE"}
+\ No newline at end of file
++{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../src/index.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,MAAM,EAAE,WAAW,EAAE,MAAM,MAAM,CAAA;AAS/C,MAAM,MAAM,cAAc,GAAG,WAAW,CAAC,MAAM,CAAC,gBAAgB,CAAC,CAAC,CAAA;AAmBlE,MAAM,CAAC,OAAO,UAAU,GAAG,CAAE,OAAO,CAAC,EAAE;IAAE,kBAAkB,EAAE,OAAO,CAAA;CAAE,GAAG,MAAM,CAmI9E;AAED,OAAO,EAAE,GAAG,EAAE,CAAA"}
+\ No newline at end of file
+diff --git a/dist/index.js b/dist/index.js
+index a8accd59c11d16b22156e4a050b40086402f9b79..d2c2935c47369a8f86ddb81371cd3d5fda056015 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -4,12 +4,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+ };
+ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.sri = void 0;
+-const crypto_1 = require("crypto");
+-const path_1 = __importDefault(require("path"));
++const node_crypto_1 = require("node:crypto");
++const promises_1 = require("node:fs/promises");
++const node_path_1 = __importDefault(require("node:path"));
+ const VITE_INTERNAL_ANALYSIS_PLUGIN = 'vite:build-import-analysis';
+ const EXTERNAL_SCRIPT_RE = /<script[^<>]*['"]*src['"]*=['"]*([^ '"]+)['"]*[^<>]*><\/script>/g;
+ const EXTERNAL_CSS_RE = /<link[^<>]*['"]*rel['"]*=['"]*stylesheet['"]*[^<>]+['"]*href['"]*=['"]([^^ '"]+)['"][^<>]*>/g;
+ const EXTERNAL_MODULE_RE = /<link[^<>]*['"]*rel['"]*=['"]*modulepreload['"]*[^<>]+['"]*href['"]*=['"]([^^ '"]+)['"][^<>]*>/g;
++const SKIP_SRI_TAG_RE = /\sskip-sri(\s|=|>|\/)/i;
++const SKIP_SRI_ATTR_STRIP_RE = /\s+skip-sri(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>\/]+))?\s*/gi;
+ function hijackGenerateBundle(plugin, afterHook) {
+     const hook = plugin.generateBundle;
+     if (typeof hook === 'object' && hook.handler) {
+@@ -34,39 +37,88 @@ function sri(options) {
+         apply: 'build',
+         configResolved(config) {
+             const generateBundle = async function (_, bundle) {
++                const isRemoteUrl = (url) => /^https?:\/\//i.test(url);
++                // Remove base from URL to match bundle keys
++                const normalizeBaseUrl = (url) => {
++                    if (config.base === './' || config.base === '')
++                        return url;
++                    const base = config.base.endsWith('/') ? config.base : `${config.base}/`;
++                    return url.startsWith(base) ? url.slice(base.length) : url;
++                };
+                 const getBundleKey = (htmlPath, url) => {
+                     if (config.base === './' || config.base === '') {
+-                        return path_1.default.posix.resolve(htmlPath, url);
++                        return node_path_1.default.posix.normalize(node_path_1.default.posix.join(node_path_1.default.posix.dirname(htmlPath), url));
+                     }
+-                    return url.replace(config.base, '');
++                    return normalizeBaseUrl(url);
+                 };
+-                const calculateIntegrity = async (htmlPath, url) => {
+-                    let source;
+-                    const resourcePath = url;
+-                    if (resourcePath.startsWith('http')) {
+-                        source = new Uint8Array(await (await fetch(resourcePath)).arrayBuffer());
++                const readPublicAsset = async (htmlPath, url) => {
++                    const publicDir = config.publicDir;
++                    if (!publicDir)
++                        return null;
++                    let publicUrl = normalizeBaseUrl(url);
++                    // Remove query string and fragment for filesystem lookup
++                    publicUrl = publicUrl.split(/[?#]/)[0];
++                    if (config.base === './' || config.base === '') {
++                        publicUrl = node_path_1.default.posix.normalize(node_path_1.default.posix.join(node_path_1.default.posix.dirname(htmlPath), publicUrl));
++                    }
++                    // decode URL-encoded parts
++                    let decoded;
++                    try {
++                        decoded = decodeURIComponent(publicUrl);
+                     }
+-                    else {
+-                        const bundleItem = bundle[getBundleKey(htmlPath, url)];
+-                        if (!bundleItem) {
+-                            if (ignoreMissingAsset)
+-                                return null;
+-                            throw new Error(`Asset ${url} not found in bundle`);
+-                        }
+-                        source = bundleItem.type === 'chunk' ? bundleItem.code : bundleItem.source;
++                    catch {
++                        decoded = publicUrl;
+                     }
+-                    return `sha384-${(0, crypto_1.createHash)('sha384').update(source).digest().toString('base64')}`;
++                    // Resolve against publicDir and prevent path traversal
++                    const filePath = node_path_1.default.resolve(publicDir, decoded);
++                    const rel = node_path_1.default.relative(publicDir, filePath);
++                    if (rel.startsWith('..') || node_path_1.default.isAbsolute(rel))
++                        return null;
++                    try {
++                        return await (0, promises_1.readFile)(filePath);
++                    }
++                    catch {
++                        return null;
++                    }
++                };
++                const calculateIntegrity = async (source) => {
++                    return `sha384-${(0, node_crypto_1.createHash)('sha384').update(source).digest().toString('base64')}`;
++                };
++                const stripSkipSriAttributes = (value) => value.replace(SKIP_SRI_ATTR_STRIP_RE, (match, offset) => {
++                    const nextChar = value[offset + match.length] ?? '';
++                    if (nextChar === '>' || nextChar === '/' || nextChar === '')
++                        return '';
++                    return ' ';
++                });
++                const getAssetSource = async (htmlPath, url) => {
++                    if (isRemoteUrl(url)) {
++                        return new Uint8Array(await (await fetch(url)).arrayBuffer());
++                    }
++                    const bundleItem = bundle[getBundleKey(htmlPath, url)];
++                    if (bundleItem) {
++                        return bundleItem.type === 'chunk' ? bundleItem.code : bundleItem.source;
++                    }
++                    const publicAsset = await readPublicAsset(htmlPath, url);
++                    if (!publicAsset) {
++                        if (ignoreMissingAsset)
++                            return null;
++                        throw new Error(`Asset ${url} not found in bundle/public directory.`);
++                    }
++                    return publicAsset;
+                 };
+                 const transformHTML = async function (regex, endOffset, htmlPath, html) {
+                     let match;
+                     const changes = [];
+                     let offset = 0;
+                     while ((match = regex.exec(html))) {
+-                        const [, url] = match;
++                        const [rawMatch, url] = match;
+                         const end = regex.lastIndex;
+-                        const integrity = await calculateIntegrity(htmlPath, url);
+-                        if (!integrity)
++                        if (SKIP_SRI_TAG_RE.test(rawMatch))
++                            continue;
++                        const source = await getAssetSource(htmlPath, url);
++                        if (!source)
+                             continue;
++                        const integrity = await calculateIntegrity(source);
+                         const insertPos = end - endOffset;
+                         changes.push({ integrity, insertPos });
+                     }
+@@ -85,7 +137,7 @@ function sri(options) {
+                         html = await transformHTML(EXTERNAL_SCRIPT_RE, 10, name, html);
+                         html = await transformHTML(EXTERNAL_CSS_RE, 1, name, html);
+                         html = await transformHTML(EXTERNAL_MODULE_RE, 1, name, html);
+-                        chunk.source = html;
++                        chunk.source = stripSkipSriAttributes(html);
+                     }
+                 }
+             };
+@@ -96,5 +148,6 @@ function sri(options) {
+         }
+     };
+ }
++exports.default = sri;
+ exports.sri = sri;
+ //# sourceMappingURL=index.js.map
+\ No newline at end of file
+diff --git a/dist/index.js.map b/dist/index.js.map
+index dd4a78dcd0b9aa3b14d0f4364b0234ef44f5dfee..81546df1bcd551b15b08d38ab0676d54b18e2179 100644
+--- a/dist/index.js.map
++++ b/dist/index.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"index.js","sourceRoot":"","sources":["../src/index.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"index.js","sourceRoot":"","sources":["../src/index.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
+diff --git a/package.json b/package.json
+index 6c89c5b905ca6147837a10ca11304b9274ebee00..153b8bfe22adfe3f7ba7d5032dbe94b2254827be 100644
+--- a/package.json
++++ b/package.json
+@@ -14,8 +14,10 @@
+   ],
+   "scripts": {
+     "build": "tsc -p tsconfig.json",
+-    "test": "node --test",
++    "test": "pnpm test:unit",
++    "test:unit": "vitest run",
+     "test:e2e": "playwright test",
++    "coverage": "vitest run --coverage",
+     "release": "semantic-release"
+   },
+   "keywords": [
+@@ -37,11 +39,18 @@
+     "@semantic-release/npm": "^12.0.2",
+     "@semantic-release/release-notes-generator": "^14.0.2",
+     "@types/node": "^24.7.0",
++    "@vitest/coverage-v8": "^1.6.0",
+     "semantic-release": "^24.2.9",
+     "typescript": "^5.3.2",
++    "vitest": "^1.6.0",
+     "vite": "^7.1.9"
+   },
+   "peerDependencies": {
+     "vite": "^2 || ^3 || ^4 || ^5 || ^6 || ^7"
++  },
++  "pnpm": {
++    "trustedDependencies": [
++      "esbuild"
++    ]
+   }
+ }
