@@ -85,7 +85,9 @@ export default defineConfig({
           },
         }),
       ],
-      include: [/\.(atom|rss|xml|xhtml|js|mjs|ts|html|json|css|eot|otf|ttf|svg|ico|bmp|dib|txt|text|log|md|conf|ini|cfg)$/],
+      include: [
+        /\.(atom|rss|xml|xhtml|js|mjs|ts|html|json|css|eot|otf|ttf|svg|ico|bmp|dib|txt|text|log|md|conf|ini|cfg)$/,
+      ],
       // src/templates/**/*.html are template files and should not be compressed
       exclude: [/^src\/templates\/.*\.html$/],
     }),
