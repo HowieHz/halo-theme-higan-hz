@@ -4,6 +4,7 @@ import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
 import utwm from "unplugin-tailwindcss-mangle/vite";
 import { defineConfig } from "vite";
+import { compression } from "vite-plugin-compression2";
 import { sri } from "vite-plugin-sri3";
 
 import pkg from "./package.json";
@@ -19,6 +20,11 @@ export default defineConfig({
       base: "/themes/howiehz-higan/",
     }),
     sri(),
+    compression({
+      algorithms: ["gzip", "brotliCompress"],
+      // src/templates/**/*.html are template files and should not be compressed
+      exclude: [/^src\/templates\/.*\.html$/],
+    }),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
   css: {

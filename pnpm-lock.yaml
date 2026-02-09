@@ -188,6 +188,9 @@ importers:
       vite:
         specifier: npm:rolldown-vite@^7.3.1
         version: rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)
+      vite-plugin-compression2:
+        specifier: ^2.4.0
+        version: 2.4.0(rollup@4.57.1)
       vite-plugin-sri3:
         specifier: ^1.1.0
         version: 1.1.0(patch_hash=cac2c8e9e12f7181a9f48835b6b50853e187d7e7604a3e9aba39ca295ca1a8b7)(rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0))
@@ -2255,7 +2258,7 @@ packages:
 
   glob@7.0.4:
     resolution: {integrity: sha512-3tbJl15hKbgLoSBcHv5WCCrrMnjdXsholv2YfBgX53Tx6IRkZIJdLDVROiFtl7WT70jbzFd8yxgwZlx1p0iQdg==}
-    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+    deprecated: Glob versions prior to v9 are no longer supported
 
   global-modules@2.0.0:
     resolution: {integrity: sha512-NGbfmJBp9x8IxyJSd1P+otYK8vonoJactOogrVfFRIAEY1ukil8RSKDz2Yo7wh1oihl51l/r6W4epkeKJHqL8A==}
@@ -3596,6 +3599,9 @@ packages:
     resolution: {integrity: sha512-g9ljZiwki/LfxmQADO3dEY1CbpmXT5Hm2fJ+QaGKwSXUylMybePR7/67YW7jOrrvjEgL1Fmz5kzyAjWVWLlucg==}
     engines: {node: '>=6'}
 
+  tar-mini@0.2.0:
+    resolution: {integrity: sha512-+qfUHz700DWnRutdUsxRRVZ38G1Qr27OetwaMYTdg8hcPxf46U0S1Zf76dQMWRBmusOt2ZCK5kbIaiLkoGO7WQ==}
+
   tinyexec@1.0.2:
     resolution: {integrity: sha512-W/KYk+NFhkmsYpuHq5JykngiOCnxeVL8v8dFnqxSD8qEEdRfXk1SDM6JzNqcERbcGYj9tMrDQBYV9cjgnunFIg==}
     engines: {node: '>=18'}
@@ -3706,6 +3712,9 @@ packages:
 
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
+
+  vite-plugin-compression2@2.4.0:
+    resolution: {integrity: sha512-8J4CBF1+dM1I06azba/eXJuJHinLF0Am7lUvRH8AZpu0otJoBaDEnxrIEr5iPZJSwH0AEglJGYCveh7pN52jCg==}
 
   vite-plugin-sri3@1.1.0:
     resolution: {integrity: sha512-YirrIphWhC1J4Nc9z8pjeQaUZD9mL4xvl4XKw1xr6rUJxIY6LJ0aFUOouCShFvsOQ5xk8usuK3SXxZyeaOFzFQ==}
@@ -7180,6 +7189,8 @@ snapshots:
 
   tapable@2.3.0: {}
 
+  tar-mini@0.2.0: {}
+
   tinyexec@1.0.2: {}
 
   tinyglobby@0.2.15:
@@ -7326,6 +7337,13 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
+
+  vite-plugin-compression2@2.4.0(rollup@4.57.1):
+    dependencies:
+      '@rollup/pluginutils': 5.3.0(rollup@4.57.1)
+      tar-mini: 0.2.0
+    transitivePeerDependencies:
+      - rollup
 
   vite-plugin-sri3@1.1.0(patch_hash=cac2c8e9e12f7181a9f48835b6b50853e187d7e7604a3e9aba39ca295ca1a8b7)(rolldown-vite@7.3.1(@types/node@25.2.2)(esbuild@0.27.2)(jiti@2.6.1)(less@4.5.1)(stylus@0.64.0)):
     dependencies:
