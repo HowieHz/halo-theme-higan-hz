@@ -62,8 +62,8 @@ export default function moveHtmlPlugin(opts: MoveHtmlOptions): Plugin {
       const movedDirs = new Set<string>();
 
       for (const rawName of Object.keys(bundle)) {
-        // Only care about .html files
-        if (!rawName.endsWith(".html")) continue;
+        // Only care about .html, .html.gz, .html.br, .html.zst files
+        if (!/(\.html)(\.gz|\.br|\.zst)?$/.test(rawName)) continue;
 
         // Normalize filename, '../' not allowed
         const name = normalize(rawName);

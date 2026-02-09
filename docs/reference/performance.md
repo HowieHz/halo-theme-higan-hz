@@ -534,7 +534,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### 平均每个页面
 
-::: details 主题资源（gzipped）
+::: details 主题资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.average?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -552,7 +552,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details 页面资源（gzipped）
+::: details 页面资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.average?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -572,7 +572,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### 首页
 
-::: details 主题资源（gzipped）
+::: details 主题资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.home?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -590,7 +590,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details 页面资源（gzipped）
+::: details 页面资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.home?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -610,7 +610,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### 文章归档
 
-::: details 主题资源（gzipped）
+::: details 主题资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.archives?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -628,7 +628,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details 页面资源（gzipped）
+::: details 页面资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.archives?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -648,7 +648,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### 文章详情
 
-::: details 主题资源（gzipped）
+::: details 主题资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.post?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -666,7 +666,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details 页面资源（gzipped）
+::: details 页面资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.post?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -686,7 +686,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### 标签集合
 
-::: details 主题资源（gzipped）
+::: details 主题资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.tags?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -704,7 +704,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details 页面资源（gzipped）
+::: details 页面资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.tags?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -724,7 +724,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### 标签详情
 
-::: details 主题资源（gzipped）
+::: details 主题资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.tagDetail?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -742,7 +742,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details 页面资源（gzipped）
+::: details 页面资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.tagDetail?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -762,7 +762,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### 分类集合
 
-::: details 主题资源（gzipped）
+::: details 主题资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.categories?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -780,7 +780,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details 页面资源（gzipped）
+::: details 页面资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.categories?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -800,7 +800,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### 分类详情
 
-::: details 主题资源（gzipped）
+::: details 主题资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.categoryDetail?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -818,7 +818,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details 页面资源（gzipped）
+::: details 页面资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.categoryDetail?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -838,7 +838,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### 作者详情
 
-::: details 主题资源（gzipped）
+::: details 主题资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.author?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -856,7 +856,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details 页面资源（gzipped）
+::: details 页面资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.author?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -876,7 +876,7 @@ const LineChart = defineClientComponent(async () => {
 
 ### 独立页面
 
-::: details 主题资源（gzipped）
+::: details 主题资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.about?.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
 
@@ -894,7 +894,7 @@ const LineChart = defineClientComponent(async () => {
 </div>
 :::
 
-::: details 页面资源（gzipped）
+::: details 页面资源（zipped）
 
 <ProgressBar :isLoading="chartLoadingStatus.about?.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
 

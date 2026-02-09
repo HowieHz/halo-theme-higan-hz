@@ -1,9 +1,11 @@
-import path from "path";
-import { fileURLToPath } from "url";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { constants } from "node:zlib";
 import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
 import utwm from "unplugin-tailwindcss-mangle/vite";
 import { defineConfig } from "vite";
+import { compression, defineAlgorithm } from "vite-plugin-compression2";
 import { sri } from "vite-plugin-sri3";
 
 import pkg from "./package.json";
@@ -19,6 +21,24 @@ export default defineConfig({
       base: "/themes/howiehz-higan/",
     }),
     sri(),
+    compression({
+      algorithms: [
+        defineAlgorithm("gzip", { level: 9 }),
+        defineAlgorithm("brotliCompress", {
+          params: {
+            [constants.BROTLI_PARAM_QUALITY]: 11,
+          },
+        }),
+        defineAlgorithm("zstandard", {
+          params: {
+            // The maximum compression level is 22, but memory consumption becomes very large and can cause build failures
+            [constants.ZSTD_c_compressionLevel]: 21,
+          },
+        }),
+      ],
+      // src/templates/**/*.html are template files and should not be compressed
+      exclude: [/^src\/templates\/.*\.html$/],
+    }),
     moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
   css: {
