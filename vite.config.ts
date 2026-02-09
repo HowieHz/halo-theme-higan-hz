@@ -1,11 +1,12 @@
-import path from "path";
-import { fileURLToPath } from "url";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { constants } from "node:zlib";
 import tailwindcss from "@tailwindcss/vite";
 import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
 import utwm from "unplugin-tailwindcss-mangle/vite";
 import { defineConfig } from "vite";
-import { compression } from "vite-plugin-compression2";
+import { compression, defineAlgorithm } from "vite-plugin-compression2";
 import { sri } from "vite-plugin-sri3";
 
 import pkg from "./package.json";
@@ -70,7 +71,14 @@ export default defineConfig({
     }),
     sri(),
     compression({
-      algorithms: ["gzip", "brotliCompress"],
+      algorithms: [
+        defineAlgorithm("gzip", { level: 9 }),
+        defineAlgorithm("brotliCompress", {
+          params: {
+            [constants.BROTLI_PARAM_QUALITY]: 11,
+          },
+        }),
+      ],
       // src/templates/**/*.html are template files and should not be compressed
       exclude: [/^src\/templates\/.*\.html$/],
     }),
