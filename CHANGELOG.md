@@ -119,7 +119,7 @@
 
 ## [1.54.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.53.1...v1.54.0) (2026-1-28)
 
-### ⚠破坏性修改
+### 💥破坏性变更
 
 - 更新后需重新设定 `总体样式 -> 自定义字体文件`，以修复无法显示已选选项的问题。
 
@@ -182,7 +182,7 @@
 
 ## [1.52.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.51.1...v1.52.0) (2026-1-15)
 
-### ⚠破坏性修改
+### 💥破坏性变更
 
 - Halo CMS 最低要求版本从 2.22.0 变更为 2.22.1
 
@@ -213,7 +213,7 @@
 
 ## [1.51.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.2...v1.51.0) (2026-1-3)
 
-### ⚠破坏性修改
+### 💥破坏性变更
 
 - 更新后需重新设定 `总体样式 -> 配色方案`，以修复无法显示已选选项的问题。
 - 更新后需重新设定 `总体样式 -> 自定义配色方案`，以适配新的主题变量设定。
@@ -261,7 +261,7 @@
 
 ## [1.50.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.2...v1.50.0) (2025-12-24)
 
-### ⚠破坏性修改
+### 💥破坏性变更
 
 - Halo CMS 版本要求变为 `2.22+`。
 - 自定义图标设置框将适配 Halo CMS 在 2.22 引入的 `iconify` 类型，您需要重新设置。
@@ -318,7 +318,7 @@
 
 ## [1.49.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.3...v1.49.0) (2025-11-29)
 
-### ⚠破坏性修改
+### 💥破坏性变更
 
 - 你需要使用新流程自定义图标，相关文档请见[教程：自定义图标](https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg)。如果你先前自定义了图标，需按照教程进行迁移。
 - “自定义分享按钮”下的配置项将会被重置，先前的配置不会被覆盖，你可通过在主题信息[“导出主题配置”](https://howiehz.top/halo-theme-higan-haozi/reference/faq#如何导出主题配置)获取。
