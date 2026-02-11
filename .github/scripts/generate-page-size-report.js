@@ -189,7 +189,7 @@ function generateMarkdownReport(results, metadata = {}) {
     markdown += `\n`;
   }
 
-  markdown += `Unit: KiB, Format: transfer size (zipped)/resource size\n\n`;
+  markdown += `Unit: KiB, Format: transfer size (compressed)/resource size\n\n`;
 
   // 定义资源类型的显示顺序和标签
   const typeOrder = ["document", "script", "stylesheet", "font", "image", "fetch", "other"];
@@ -234,7 +234,7 @@ function generateMarkdownReport(results, metadata = {}) {
 
   // 新增：主题资源表格
   markdown += `## Theme Resources\n\n`;
-  markdown += `Unit: KiB, Format: transfer size (zipped)/resource size\n\n`;
+  markdown += `Unit: KiB, Format: transfer size (compressed)/resource size\n\n`;
 
   // 生成主题资源表头
   markdown += `| Page |`;
