@@ -1,10 +1,8 @@
-import { constants } from "node:zlib";
 import { whyframe } from "@whyframe/core";
 import { whyframeVue } from "@whyframe/vue";
 import browserslist from "browserslist";
 import * as cheerio from "cheerio";
 import { browserslistToTargets } from "lightningcss";
-import { compression, defineAlgorithm } from "vite-plugin-compression2";
 import { defineConfig, type DefaultTheme } from "vitepress";
 import { chineseSearchOptimize, pagefindPlugin } from "vitepress-plugin-pagefind";
 
@@ -85,20 +83,6 @@ export default defineConfig({
             heading: "Total {{searchResult}} results",
           },
         },
-      }),
-
-      compression({
-        algorithms: [
-          defineAlgorithm("gzip", { level: 9 }),
-          defineAlgorithm("brotliCompress", {
-            params: {
-              [constants.BROTLI_PARAM_QUALITY]: 11,
-            },
-          }),
-        ],
-        include: [
-          /\.(atom|rss|xml|xhtml|js|mjs|ts|json|css|eot|otf|ttf|svg|ico|bmp|dib|txt|text|log|md|conf|ini|cfg)$/,
-        ],
       }),
     ],
     ssr: {
