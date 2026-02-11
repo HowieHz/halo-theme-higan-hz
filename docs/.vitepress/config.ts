@@ -122,10 +122,11 @@ export default defineConfig({
     // for SSR optimization and should not be modified by HTML transformations
     const vpStaticMarkers: { placeholder: string; original: string }[] = [];
     let processedCode = code;
+    let markerCounter = 0;
 
     // Replace VitePress markers with temporary placeholders that cheerio won't modify
     processedCode = processedCode.replace(/__VP_STATIC_(START|END)__/g, (match) => {
-      const placeholder = `__VP_MARKER_${vpStaticMarkers.length}__`;
+      const placeholder = `__VP_MARKER_${markerCounter++}__`;
       vpStaticMarkers.push({ placeholder, original: match });
       return placeholder;
     });
@@ -169,7 +170,7 @@ export default defineConfig({
 
     // Restore VitePress static markers after cheerio processing
     vpStaticMarkers.forEach(({ placeholder, original }) => {
-      processedCode = processedCode.replace(placeholder, original);
+      processedCode = processedCode.replaceAll(placeholder, original);
     });
 
     return processedCode;
