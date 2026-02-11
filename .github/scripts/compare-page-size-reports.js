@@ -78,7 +78,7 @@ function generateTable(title, data, typeOrder, typeLabels, isCollapsed = false) 
   let content = ``;
 
   // 表格标题和说明
-  content += `Unit: KiB, Format: transfer size (zipped)/resource size\n\n`;
+  content += `Unit: KiB, Format: transfer size (compressed)/resource size\n\n`;
 
   // 生成表头
   content += `| Page |`;

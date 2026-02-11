@@ -26,7 +26,7 @@ Based on simplicity and freshness, this theme adheres to the following core prin
 3. [High configurability](https://howiehz.top/halo-theme-higan-haozi/en/guide/theme-configuration)
 4. [Good compatibility](https://howiehz.top/halo-theme-higan-haozi/en/reference/browser-compatibility)
 5. [Plugin compatibility](https://howiehz.top/halo-theme-higan-haozi/en/guide/plugin-compatibility)
-6. [High performance](https://howiehz.top/halo-theme-higan-haozi/en/reference/performance) (theme resources ~80 KiB (zipped))
+6. [High performance](https://howiehz.top/halo-theme-higan-haozi/en/reference/performance) (theme resources ~80 KiB (compressed))
 
 ## Preview
 
