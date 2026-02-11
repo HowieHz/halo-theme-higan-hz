@@ -117,10 +117,23 @@ export default defineConfig({
   },
 
   async transformHtml(code, id) {
+    // Preserve VitePress static markers before cheerio processing
+    // These markers (__VP_STATIC_START__ and __VP_STATIC_END__) are used by VitePress
+    // for SSR optimization and should not be modified by HTML transformations
+    const vpStaticMarkers: { placeholder: string; original: string }[] = [];
+    let processedCode = code;
+
+    // Replace VitePress markers with temporary placeholders that cheerio won't modify
+    processedCode = processedCode.replace(/__VP_STATIC_(START|END)__/g, (match) => {
+      const placeholder = `__VP_MARKER_${vpStaticMarkers.length}__`;
+      vpStaticMarkers.push({ placeholder, original: match });
+      return placeholder;
+    });
+
     if (id.includes("frames/") || id.includes("frames\\")) {
       // code 是准备写入硬盘的 HTML 内容，可以在这里进行修改后返回
       // 用 cheerio 解析后删除相应标签
-      const $ = cheerio.load(code);
+      const $ = cheerio.load(processedCode);
       // script type="module" 不能移除，所以 <link rel="modulepreload"> 标签也不能移除，移除了反而减慢加载速度
 
       // 移除无用的 meta 标签和 ttile, 控制 HTML 大小
@@ -144,15 +157,22 @@ export default defineConfig({
       });
 
       // 移除多余的空行并返回修改后的 HTML
-      return $.html().replace(/^\s*[\r\n]/gm, "");
+      processedCode = $.html().replace(/^\s*[\r\n]/gm, "");
     } else {
       // 对非 frames 页面，在 body 开头插入 GTM 的 noscript 回退（便于不支持 JS 的环境统计）
-      const $ = cheerio.load(code);
+      const $ = cheerio.load(processedCode);
       $("body").prepend(
         `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T447LW69" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`,
       );
-      return $.html().replace(/^\s*[\r\n]/gm, "");
+      processedCode = $.html().replace(/^\s*[\r\n]/gm, "");
     }
+
+    // Restore VitePress static markers after cheerio processing
+    vpStaticMarkers.forEach(({ placeholder, original }) => {
+      processedCode = processedCode.replace(placeholder, original);
+    });
+
+    return processedCode;
   },
 
   async transformPageData(pageData) {
