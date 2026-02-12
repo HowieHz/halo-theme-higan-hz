@@ -228,9 +228,6 @@ importers:
       pagefind:
         specifier: ^1.4.0
         version: 1.4.0
-      vite-plugin-compression2:
-        specifier: ^2.4.0
-        version: 2.4.0(rollup@4.57.1)
       vitepress:
         specifier: 2.0.0-alpha.16
         version: 2.0.0-alpha.16(@types/node@25.2.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.6)(stylus@0.64.0)(typescript@5.9.3)
