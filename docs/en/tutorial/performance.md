@@ -35,10 +35,10 @@ Thanks to [nonzzz/vite-plugin-compression](https://github.com/nonzzz/vite-plugin
 ### Configuring the Server to Serve Pre-compressed Static Assets
 
 - When using Halo CMS directly, the server automatically serves `.br` files.
-- For Nginx server configuration, refer to: [Nginx Configuration](#nginx-configuration).
+- For nginx server configuration, refer to: [nginx Configuration](#nginx-configuration).
 - For Apache server configuration, refer to: [Apache Configuration](#apache-configuration).
 
-#### Nginx Configuration
+#### nginx Configuration
 
 ```nginx
 http {

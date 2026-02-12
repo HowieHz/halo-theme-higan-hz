@@ -21,7 +21,7 @@
     - `*.zst` — zstandard（压缩等级 21，已使用最大值减 1，以避免构建时内存不足）
   - 自动提供与服务器配置：
     - 直接使用 Halo CMS 时，服务器会自动提供 `.br` 文件。
-    - 使用 Nginx/Apache 等服务器时，请参考[配置文档](https://howiehz.top/halo-theme-higan-haozi/tutorial/performance)以启用预压缩文件的自动交付。
+    - 使用 nginx/Apache 等服务器时，请参考[配置文档](https://howiehz.top/halo-theme-higan-haozi/tutorial/performance)以启用预压缩文件的自动交付。
 
 ### 🛠️ 开发体验
 

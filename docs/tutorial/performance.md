@@ -29,10 +29,10 @@ outline: deep
 ### 配置服务器以自动提供预先压缩的静态资源
 
 - 直接使用 Halo CMS 时，服务器会自动提供 `.br` 文件。
-- 使用 Nginx 服务器请参考：[在 Nginx 上使用](#在-nginx-上使用)。
+- 使用 nginx 服务器请参考：[在 nginx 上使用](#在-nginx-上使用)。
 - 使用 Apache 服务器请参考：[在 Apache 上使用](#在-apache-上使用)。
 
-#### 在 Nginx 上使用
+#### 在 nginx 上使用
 
 ```nginx
 http {
