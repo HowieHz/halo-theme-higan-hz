@@ -265,7 +265,6 @@
       <!--/* 推荐文章 */-->
       <!--/* 根据文章的第一个类别，找相同类别的文章 */-->
       <!--/* 文章无分类则不进行推荐 */-->
-      <!--/* 改进点：进行检查让推荐列表不出现当前页面文章 */-->
       <th:block
         th:if="${theme.config?.post_styles?.is_post_recommended_articles_show
                  and !#lists.isEmpty(post.categories)}"
@@ -295,6 +294,7 @@
           <div class="recommendations mt-10">
             <h4 class="mb-2" th:text="#{fragment.post-nav.recommended}">推荐文章 标题填充位</h4>
             <th:block th:each="iterPost: ${targetPagePostList}">
+              <!--/* 进行检查让推荐列表不出现当前页面文章 */-->
               <div th:if="${post.metadata.name != iterPost.metadata.name}">
                 <span class="meta">
                   <time
@@ -318,6 +318,7 @@
               <th:block th:if="${itemsNeeded > 0}">
                 <th:block th:each="index : ${#numbers.sequence(0,itemsNeeded-1)}">
                   <th:block th:with="iterPost = ${firstPagePostList[index]}">
+                    <!--/* 进行检查让推荐列表不出现当前页面文章 */-->
                     <div th:if="${post.metadata.name != iterPost.metadata.name}">
                       <span class="meta">
                         <time
