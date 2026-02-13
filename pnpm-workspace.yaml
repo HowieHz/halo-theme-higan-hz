@@ -6,6 +6,3 @@ onlyBuiltDependencies:
   - esbuild
   - less
   - unrs-resolver
-
-patchedDependencies:
-  vite-plugin-sri3: patches/vite-plugin-sri3.patch
