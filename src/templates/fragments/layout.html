@@ -1383,6 +1383,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </th:block>
     <!--/* instant.page injection end */-->
     <!--/* Creative widgets start */-->
+    <!--/* Note: Homepage detection checks common URL patterns (/, /index, /index.html).
+             For non-standard deployments with context paths, consider using 'global' display mode. */-->
     <th:block
       th:if="${theme.config?.styles?.is_creative_widget_enable}"
       th:with="
@@ -1409,7 +1411,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
             class="creative-widget-img"
           />
         </div>
-        
+
         <!-- Right widget (shown for top-right or diagonal) -->
         <div
           th:if="${#strings.equals(position, 'top-right') or #strings.equals(position, 'diagonal')}"

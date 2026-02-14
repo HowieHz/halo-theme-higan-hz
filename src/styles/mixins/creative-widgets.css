@@ -4,6 +4,8 @@
   pointer-events: none;
   position: fixed;
   inset: 0;
+  /* High z-index to ensure widgets appear above content but below modals/overlays.
+     This matches typical overlay patterns in the theme. */
   z-index: 9999;
 }
 
