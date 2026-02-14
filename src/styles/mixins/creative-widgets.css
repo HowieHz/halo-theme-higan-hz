@@ -1,0 +1,91 @@
+/* Creative Widgets Styles */
+
+.creative-widgets {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.creative-widget {
+  position: absolute;
+  top: 0;
+  width: 80px;
+  height: auto;
+  pointer-events: none;
+}
+
+.creative-widget-left {
+  left: 20px;
+  transform-origin: top center;
+}
+
+.creative-widget-right {
+  right: 20px;
+  transform-origin: top center;
+}
+
+.creative-widget-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Swing animation */
+@keyframes widget-swing {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.creative-widget-swing {
+  animation: widget-swing 3s ease-in-out infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .creative-widget {
+    width: 60px;
+  }
+  
+  .creative-widget-left {
+    left: 10px;
+  }
+  
+  .creative-widget-right {
+    right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .creative-widget {
+    width: 50px;
+  }
+  
+  .creative-widget-left {
+    left: 5px;
+  }
+  
+  .creative-widget-right {
+    right: 5px;
+  }
+}
+
+/* Print styles - hide widgets when printing */
+@media print {
+  .creative-widgets {
+    display: none !important;
+  }
+}

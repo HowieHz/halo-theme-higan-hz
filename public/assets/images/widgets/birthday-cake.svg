@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" width="100" height="120">
+  <!-- String -->
+  <line x1="50" y1="0" x2="50" y2="10" stroke="#8B4513" stroke-width="2"/>
+  
+  <!-- Candle -->
+  <rect x="45" y="15" width="10" height="20" fill="#FF6B9D" stroke="#E55A8A" stroke-width="1"/>
+  <ellipse cx="50" cy="15" rx="5" ry="2" fill="#FF8FB3"/>
+  
+  <!-- Flame -->
+  <path d="M 50 10 Q 48 12, 50 15 Q 52 12, 50 10" fill="#FFA500"/>
+  <path d="M 50 11 Q 49 12, 50 14 Q 51 12, 50 11" fill="#FFD700"/>
+  
+  <!-- Top tier -->
+  <ellipse cx="50" cy="35" rx="25" ry="5" fill="#FF69B4"/>
+  <rect x="25" y="35" width="50" height="15" fill="#FF1493"/>
+  <ellipse cx="50" cy="50" rx="25" ry="5" fill="#C71585"/>
+  
+  <!-- Frosting decoration on top tier -->
+  <path d="M 25 40 Q 30 43, 35 40 Q 40 43, 45 40 Q 50 43, 55 40 Q 60 43, 65 40 Q 70 43, 75 40" 
+        fill="none" stroke="#FFF" stroke-width="2"/>
+  
+  <!-- Middle tier -->
+  <ellipse cx="50" cy="50" rx="32" ry="6" fill="#FF69B4"/>
+  <rect x="18" y="50" width="64" height="20" fill="#FF1493"/>
+  <ellipse cx="50" cy="70" rx="32" ry="6" fill="#C71585"/>
+  
+  <!-- Frosting decoration on middle tier -->
+  <path d="M 18 58 Q 24 62, 30 58 Q 36 62, 42 58 Q 48 62, 54 58 Q 60 62, 66 58 Q 72 62, 78 58 Q 82 62, 82 58" 
+        fill="none" stroke="#FFF" stroke-width="2"/>
+  
+  <!-- Bottom tier -->
+  <ellipse cx="50" cy="70" rx="38" ry="7" fill="#FF69B4"/>
+  <rect x="12" y="70" width="76" height="25" fill="#FF1493"/>
+  <ellipse cx="50" cy="95" rx="38" ry="7" fill="#C71585"/>
+  
+  <!-- Frosting decoration on bottom tier -->
+  <path d="M 12 80 Q 20 84, 28 80 Q 36 84, 44 80 Q 52 84, 60 80 Q 68 84, 76 80 Q 84 84, 88 80" 
+        fill="none" stroke="#FFF" stroke-width="2"/>
+  
+  <!-- Sprinkles -->
+  <g fill="#FFD700">
+    <rect x="30" y="38" width="2" height="4" transform="rotate(20 31 40)"/>
+    <rect x="45" y="42" width="2" height="4" transform="rotate(-15 46 44)"/>
+    <rect x="60" y="38" width="2" height="4" transform="rotate(30 61 40)"/>
+  </g>
+  <g fill="#00CED1">
+    <rect x="35" y="55" width="2" height="4" transform="rotate(-20 36 57)"/>
+    <rect x="55" y="58" width="2" height="4" transform="rotate(25 56 60)"/>
+    <rect x="68" y="55" width="2" height="4" transform="rotate(-30 69 57)"/>
+  </g>
+  <g fill="#FF6347">
+    <rect x="25" y="75" width="2" height="4" transform="rotate(15 26 77)"/>
+    <rect x="50" y="78" width="2" height="4" transform="rotate(-25 51 80)"/>
+    <rect x="70" y="73" width="2" height="4" transform="rotate(20 71 75)"/>
+  </g>
+  
+  <!-- Plate -->
+  <ellipse cx="50" cy="95" rx="42" ry="8" fill="#D3D3D3"/>
+  <ellipse cx="50" cy="94" rx="42" ry="6" fill="#E8E8E8"/>
+</svg>

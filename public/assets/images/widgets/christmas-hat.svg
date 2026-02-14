@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 110" width="100" height="110">
+  <!-- String -->
+  <line x1="50" y1="0" x2="50" y2="8" stroke="#8B0000" stroke-width="2"/>
+  
+  <!-- White pom-pom on top -->
+  <circle cx="50" cy="12" r="6" fill="#FFFFFF"/>
+  <circle cx="48" cy="10" r="2" fill="#F0F0F0"/>
+  <circle cx="52" cy="11" r="2" fill="#F0F0F0"/>
+  <circle cx="50" cy="14" r="2" fill="#F0F0F0"/>
+  
+  <!-- Main hat body - red triangle -->
+  <path d="M 50 15 L 20 75 L 80 75 Z" fill="#DC143C" stroke="#8B0000" stroke-width="2"/>
+  
+  <!-- Hat shading -->
+  <path d="M 50 15 L 80 75 L 20 75 Z" fill="#C41E3A" opacity="0.3"/>
+  
+  <!-- White trim at bottom -->
+  <ellipse cx="50" cy="75" rx="32" ry="6" fill="#FFFFFF"/>
+  <ellipse cx="50" cy="73" rx="32" ry="4" fill="#F5F5F5"/>
+  
+  <!-- Texture details on white trim -->
+  <path d="M 25 72 Q 27 75, 30 72 Q 33 75, 36 72 Q 39 75, 42 72" 
+        fill="none" stroke="#E0E0E0" stroke-width="1"/>
+  <path d="M 58 72 Q 61 75, 64 72 Q 67 75, 70 72 Q 73 75, 75 72" 
+        fill="none" stroke="#E0E0E0" stroke-width="1"/>
+  
+  <!-- Hat fold line -->
+  <line x1="35" y1="50" x2="65" y2="50" stroke="#8B0000" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Sparkle on hat -->
+  <g opacity="0.6">
+    <path d="M 60 40 L 61 42 L 63 42 L 61.5 43.5 L 62 45 L 60 44 L 58 45 L 58.5 43.5 L 57 42 L 59 42 Z" 
+          fill="#FFD700"/>
+  </g>
+</svg>

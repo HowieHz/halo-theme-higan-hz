@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140" width="100" height="140">
+  <!-- String -->
+  <line x1="50" y1="0" x2="50" y2="15" stroke="#8B4513" stroke-width="2"/>
+  
+  <!-- Top decoration -->
+  <circle cx="50" cy="15" r="3" fill="#FFD700"/>
+  
+  <!-- Lantern body -->
+  <ellipse cx="50" cy="60" rx="35" ry="40" fill="#E74C3C"/>
+  <ellipse cx="50" cy="60" rx="30" ry="35" fill="#C0392B"/>
+  
+  <!-- Lantern ribs -->
+  <line x1="50" y1="20" x2="50" y2="100" stroke="#8B0000" stroke-width="1" opacity="0.5"/>
+  <ellipse cx="50" cy="40" rx="30" ry="3" fill="none" stroke="#8B0000" stroke-width="1" opacity="0.3"/>
+  <ellipse cx="50" cy="60" rx="32" ry="3" fill="none" stroke="#8B0000" stroke-width="1" opacity="0.3"/>
+  <ellipse cx="50" cy="80" rx="30" ry="3" fill="none" stroke="#8B0000" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Chinese character 福 (fortune) -->
+  <text x="50" y="65" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#FFD700" text-anchor="middle">福</text>
+  
+  <!-- Bottom decoration -->
+  <circle cx="50" cy="100" r="3" fill="#FFD700"/>
+  
+  <!-- Tassels -->
+  <g opacity="0.8">
+    <line x1="40" y1="103" x2="38" y2="125" stroke="#FFD700" stroke-width="2"/>
+    <line x1="45" y1="103" x2="44" y2="130" stroke="#FFD700" stroke-width="2"/>
+    <line x1="50" y1="103" x2="50" y2="135" stroke="#FFD700" stroke-width="2"/>
+    <line x1="55" y1="103" x2="56" y2="130" stroke="#FFD700" stroke-width="2"/>
+    <line x1="60" y1="103" x2="62" y2="125" stroke="#FFD700" stroke-width="2"/>
+    
+    <!-- Tassel ends -->
+    <circle cx="38" cy="125" r="2" fill="#FFD700"/>
+    <circle cx="44" cy="130" r="2" fill="#FFD700"/>
+    <circle cx="50" cy="135" r="2" fill="#FFD700"/>
+    <circle cx="56" cy="130" r="2" fill="#FFD700"/>
+    <circle cx="62" cy="125" r="2" fill="#FFD700"/>
+  </g>
+</svg>

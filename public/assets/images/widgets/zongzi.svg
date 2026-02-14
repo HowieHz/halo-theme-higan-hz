@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" width="100" height="120">
+  <!-- String -->
+  <line x1="50" y1="0" x2="50" y2="20" stroke="#4A752C" stroke-width="2"/>
+  
+  <!-- Bamboo leaf wrapping -->
+  <g>
+    <!-- Main body - pyramid shape -->
+    <path d="M 50 25 L 25 60 L 25 85 L 50 100 L 75 85 L 75 60 Z" 
+          fill="#6B8E23" stroke="#4A5F1A" stroke-width="2"/>
+    
+    <!-- Leaf texture lines -->
+    <line x1="50" y1="25" x2="35" y2="60" stroke="#4A5F1A" stroke-width="1" opacity="0.6"/>
+    <line x1="50" y1="25" x2="50" y2="90" stroke="#4A5F1A" stroke-width="1" opacity="0.6"/>
+    <line x1="50" y1="25" x2="65" y2="60" stroke="#4A5F1A" stroke-width="1" opacity="0.6"/>
+    
+    <!-- Wrapped string -->
+    <ellipse cx="50" cy="45" rx="20" ry="2" fill="none" stroke="#8B4513" stroke-width="2"/>
+    <ellipse cx="50" cy="65" rx="20" ry="2" fill="none" stroke="#8B4513" stroke-width="2"/>
+    <ellipse cx="50" cy="85" rx="15" ry="2" fill="none" stroke="#8B4513" stroke-width="2"/>
+    
+    <!-- Shading for depth -->
+    <path d="M 50 25 L 75 60 L 75 85 L 50 100 Z" 
+          fill="#556B2F" opacity="0.5"/>
+  </g>
+  
+  <!-- Small leaf accent -->
+  <path d="M 48 18 Q 40 18, 38 25 Q 40 20, 48 22 Z" 
+        fill="#6B8E23" stroke="#4A5F1A" stroke-width="1"/>
+  <line x1="43" y1="21" x2="41" y2="24" stroke="#4A5F1A" stroke-width="0.5"/>
+</svg>

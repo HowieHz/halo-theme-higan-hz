@@ -465,6 +465,70 @@ spec:
           label: 选择缩小指针文件（CSS 声明为 zoom-out）
           help: 上传 .cur/.png/.svg 等格式光标文件，主题会优先使用这些文件替换缩小指针。描述：指示可被缩小。
           value: ""
+        - $formkit: switch
+          name: is_creative_widget_enable
+          label: 启用创意小挂件
+          value: false
+          help: 如启用此项，将在页面上显示节日装饰小挂件，为网站增添节日气氛。
+        - $formkit: select
+          name: creative_widget_display_range
+          if: "$is_creative_widget_enable === true"
+          label: 显示范围
+          value: "global"
+          options:
+            - label: "全局显示"
+              value: "global"
+            - label: "仅首页"
+              value: "homepage"
+          help: 选择小挂件在哪些页面显示。
+        - $formkit: select
+          name: creative_widget_position
+          if: "$is_creative_widget_enable === true"
+          label: 挂件位置
+          value: "top-left"
+          options:
+            - label: "左上角"
+              value: "top-left"
+            - label: "右上角"
+              value: "top-right"
+            - label: "对角（左上+右上）"
+              value: "diagonal"
+          help: 选择小挂件的显示位置。
+        - $formkit: select
+          name: creative_widget_pattern
+          if: "$is_creative_widget_enable === true"
+          label: 挂件图案
+          value: "lantern"
+          options:
+            - label: "灯笼"
+              value: "lantern"
+            - label: "粽子"
+              value: "zongzi"
+            - label: "圣诞帽"
+              value: "christmas-hat"
+            - label: "生日蛋糕"
+              value: "birthday-cake"
+          help: 选择小挂件的图案样式。
+        - $formkit: select
+          name: creative_widget_animation
+          if: "$is_creative_widget_enable === true"
+          label: 动画效果
+          value: "swing"
+          options:
+            - label: "静止"
+              value: "static"
+            - label: "晃动"
+              value: "swing"
+          help: 选择小挂件的动画效果。
+        - $formkit: number
+          name: creative_widget_opacity
+          if: "$is_creative_widget_enable === true"
+          label: 透明度
+          value: 0.85
+          min: 0
+          max: 1
+          step: 0.05
+          help: 设置小挂件的透明度（0-1之间，默认0.85）。
         - $formkit: select
           name: color_schema
           id: color_schema_init

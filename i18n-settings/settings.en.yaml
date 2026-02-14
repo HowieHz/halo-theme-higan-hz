@@ -465,6 +465,70 @@ spec:
           label: Select Zoom-Out Cursor File (CSS declared as zoom-out)
           help: "Upload .cur/.png/.svg cursor files. The theme will prioritize these files over the default zoom-out cursor. Description: Indicates zooming out."
           value: ""
+        - $formkit: switch
+          name: is_creative_widget_enable
+          label: Enable Creative Widgets
+          value: false
+          help: If enabled, decorative widgets will be displayed on the page to add festive atmosphere to your website.
+        - $formkit: select
+          name: creative_widget_display_range
+          if: "$is_creative_widget_enable === true"
+          label: Display Range
+          value: "global"
+          options:
+            - label: "Global"
+              value: "global"
+            - label: "Homepage Only"
+              value: "homepage"
+          help: Choose where the widgets will be displayed.
+        - $formkit: select
+          name: creative_widget_position
+          if: "$is_creative_widget_enable === true"
+          label: Widget Position
+          value: "top-left"
+          options:
+            - label: "Top Left"
+              value: "top-left"
+            - label: "Top Right"
+              value: "top-right"
+            - label: "Diagonal (Top Left + Top Right)"
+              value: "diagonal"
+          help: Choose the position of the widgets.
+        - $formkit: select
+          name: creative_widget_pattern
+          if: "$is_creative_widget_enable === true"
+          label: Widget Pattern
+          value: "lantern"
+          options:
+            - label: "Lantern"
+              value: "lantern"
+            - label: "Zongzi"
+              value: "zongzi"
+            - label: "Christmas Hat"
+              value: "christmas-hat"
+            - label: "Birthday Cake"
+              value: "birthday-cake"
+          help: Choose the pattern style of the widgets.
+        - $formkit: select
+          name: creative_widget_animation
+          if: "$is_creative_widget_enable === true"
+          label: Animation Effect
+          value: "swing"
+          options:
+            - label: "Static"
+              value: "static"
+            - label: "Swing"
+              value: "swing"
+          help: Choose the animation effect of the widgets.
+        - $formkit: number
+          name: creative_widget_opacity
+          if: "$is_creative_widget_enable === true"
+          label: Opacity
+          value: 0.85
+          min: 0
+          max: 1
+          step: 0.05
+          help: Set the opacity of the widgets (between 0 and 1, default 0.85).
         - $formkit: select
           name: color_schema
           id: color_schema_init

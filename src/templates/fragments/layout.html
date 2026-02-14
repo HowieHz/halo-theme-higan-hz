@@ -1382,5 +1382,49 @@ html[theme="theme-[(${colorSchema.id})]"] {
       ></script>
     </th:block>
     <!--/* instant.page injection end */-->
+    <!--/* Creative widgets start */-->
+    <th:block
+      th:if="${theme.config?.styles?.is_creative_widget_enable}"
+      th:with="
+        display_range = ${theme.config?.styles?.creative_widget_display_range},
+        position = ${theme.config?.styles?.creative_widget_position},
+        pattern = ${theme.config?.styles?.creative_widget_pattern},
+        animation = ${theme.config?.styles?.creative_widget_animation},
+        opacity = ${theme.config?.styles?.creative_widget_opacity},
+        is_homepage = ${#strings.equals(#request.requestURI, '/') or #strings.equals(#request.requestURI, '/index') or #strings.equals(#request.requestURI, '/index.html')},
+        should_show = ${#strings.equals(display_range, 'global') or (#strings.equals(display_range, 'homepage') and is_homepage)}
+      "
+    >
+      <div th:if="${should_show}" class="creative-widgets">
+        <!-- Left widget (shown for top-left or diagonal) -->
+        <div
+          th:if="${#strings.equals(position, 'top-left') or #strings.equals(position, 'diagonal')}"
+          class="creative-widget creative-widget-left"
+          th:classappend="${#strings.equals(animation, 'swing') ? 'creative-widget-swing' : ''}"
+          th:style="'opacity: ' + ${opacity} + ';'"
+        >
+          <img
+            th:src="@{'/assets/images/widgets/' + ${pattern} + '.svg'}"
+            th:alt="${pattern}"
+            class="creative-widget-img"
+          />
+        </div>
+        
+        <!-- Right widget (shown for top-right or diagonal) -->
+        <div
+          th:if="${#strings.equals(position, 'top-right') or #strings.equals(position, 'diagonal')}"
+          class="creative-widget creative-widget-right"
+          th:classappend="${#strings.equals(animation, 'swing') ? 'creative-widget-swing' : ''}"
+          th:style="'opacity: ' + ${opacity} + ';'"
+        >
+          <img
+            th:src="@{'/assets/images/widgets/' + ${pattern} + '.svg'}"
+            th:alt="${pattern}"
+            class="creative-widget-img"
+          />
+        </div>
+      </div>
+    </th:block>
+    <!--/* Creative widgets end */-->
   </body>
 </html>
