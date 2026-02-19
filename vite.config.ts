@@ -16,7 +16,6 @@ import headInject from "./plugins/vite-plugin-head-inject";
 import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
 import removeCopyrightComments from "./plugins/vite-plugin-remove-copyright-comments";
 import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments";
-import removeLegacyGuardJs from "./plugins/vite-plugin-remove-legacy-guard";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
 export default defineConfig({
@@ -48,10 +47,6 @@ export default defineConfig({
     }),
     removeCopyrightComments(),
     removeEmptyCssComments(),
-    removeLegacyGuardJs({
-      include: ["/src/templates/fragments/**/*.html", "/src/templates/components/**/*.html"],
-      base: "/themes/howiehz-higan/",
-    }),
     thymeleafMinify({
       base: "/themes/howiehz-higan/",
     }),
