@@ -65,7 +65,7 @@ jobs:
             This PR updates the oxlint configuration by running the migration tool.
             
             Generated automatically by the oxlint-migrate workflow.
-          branch: chore/oxlint-migrate-${{ github.run_number }}
+          branch: chore/oxlint-migrate
           delete-branch: true
           labels: dependencies
           add-paths: |
