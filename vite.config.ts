@@ -20,8 +20,10 @@ import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 export default defineConfig({
   base: "/themes/howiehz-higan/",
   plugins: [
+    // Tailwind CSS with Vite integration
     tailwindcss(),
-    utwm(), // obfuscate tailwindcss class
+    // Unplugin Tailwind CSS Mangle to obfuscate Tailwind CSS class names
+    utwm(),
     // Inject th:block tags at the start and end of <head> and <body> 
     // so Thymeleaf can correctly process the content within these tags
     headInject({
@@ -41,10 +43,13 @@ export default defineConfig({
     // remove /* empty css */ comments from generated JS files
     // https://github.com/vitejs/vite/issues/1794#issuecomment-769819851
     removeEmptyCssComments(), 
+    // Minify HTML while preserving Thymeleaf syntax
     thymeleafMinify({
       base: "/themes/howiehz-higan/",
     }),
+    // Generate Subresource Integrity (SRI) hashes for all output files
     sri(),
+    // Precompress output files using gzip, brotli, and zstandard algorithms
     compression({
       algorithms: [
         defineAlgorithm("gzip", { level: 9 }),
