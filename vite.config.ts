@@ -22,29 +22,25 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     utwm(), // obfuscate tailwindcss class
+    // Inject th:block tags at the start and end of <head> and <body> 
+    // so Thymeleaf can correctly process the content within these tags
     headInject({
-      // 在 <head> 标签前插入
       beforeHeadOpen: `<th:block th:fragment="headContent">\n  <!--/*-->\n  `,
-      // 在 <head> 标签后插入
       afterHeadOpen: `\n  <!--*/-->`,
-      // 在 </head> 标签前插入
       beforeHeadClose: `<!--/*-->\n  `,
-      // 在 </head> 标签后插入
       afterHeadClose: `\n  <!--*/-->\n  </th:block>`,
       exclude: ["/src/templates/fragments/layout.html"],
     }),
     bodyInject({
-      // 在 <body> 标签前插入
       beforeBodyOpen: `<th:block th:fragment="content">\n  <!--/*-->\n  `,
-      // 在 <body> 标签后插入
       afterBodyOpen: `\n  <!--*/-->`,
-      // 在 </body> 标签前插入
       beforeBodyClose: `<!--/*-->\n  `,
-      // 在 </body> 标签后插入
       afterBodyClose: `\n  <!--*/-->\n  </th:block>`,
       exclude: ["/src/templates/fragments/layout.html"],
     }),
-    removeEmptyCssComments(),
+    // remove /* empty css */ comments from generated JS files
+    // https://github.com/vitejs/vite/issues/1794#issuecomment-769819851
+    removeEmptyCssComments(), 
     thymeleafMinify({
       base: "/themes/howiehz-higan/",
     }),
@@ -85,9 +81,8 @@ export default defineConfig({
     assetsDir: "assets/dist/",
     emptyOutDir: true,
     modulePreload: {
-      // https://cn.vite.dev/config/build-options#build-modulepreload
-      // polyfill 是为不支持 link[rel="modulepreload"] 的旧浏览器加的。
-      // 仅在 src/templates/fragments/layout.html 手动注入 polyfill
+      // https://vite.dev/config/build-options#build-modulepreload
+      // Only manually injected in src/templates/fragments/layout.html
       polyfill: false,
     },
     cssMinify: "lightningcss",
