@@ -22,7 +22,7 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     utwm(), // obfuscate tailwindcss class
-    // Inject th:block tags at the start and end of <head> and <body> 
+    // Inject th:block tags at the start and end of <head> and <body>
     // so Thymeleaf can correctly process the content within these tags
     headInject({
       beforeHeadOpen: `<th:block th:fragment="headContent">\n  <!--/*-->\n  `,
@@ -40,7 +40,7 @@ export default defineConfig({
     }),
     // remove /* empty css */ comments from generated JS files
     // https://github.com/vitejs/vite/issues/1794#issuecomment-769819851
-    removeEmptyCssComments(), 
+    removeEmptyCssComments(),
     thymeleafMinify({
       base: "/themes/howiehz-higan/",
     }),
