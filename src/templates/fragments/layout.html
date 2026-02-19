@@ -712,6 +712,8 @@ html[theme="theme-[(${colorSchema.id})]"] {
       })();
     </script>
     <!--/* Auto Redirect to Browser Language Script End */-->
+    <!--/* browser polyfill for modulepreload start */-->
+    <!--/* https://github.com/vitejs/vite/blob/2436afef044d90f710fdfd714488a71efdd29092/packages/vite/src/node/plugins/modulePreloadPolyfill.ts#L39 */-->
     <script type="module">
       (function () {
         let e = document.createElement(`link`).relList;
@@ -746,6 +748,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
         }
       })();
     </script>
+    <!--/* browser polyfill for modulepreload end */-->
     <!--/* js/css injection start */-->
     <th:block th:replace="${head}" />
     <!--/* js/css injection end */-->
