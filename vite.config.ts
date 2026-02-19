@@ -93,9 +93,8 @@ export default defineConfig({
     emptyOutDir: true,
     modulePreload: {
       // https://cn.vite.dev/config/build-options#build-modulepreload
-      // 开启这个后会注入此 polyfill。
       // polyfill 是为不支持 link[rel="modulepreload"] 的旧浏览器加的。
-      // 只需要在通用模板 fragments/layout.html 注入一次即可。
+      // 仅在 src/templates/fragments/layout.html 手动注入 polyfill
       polyfill: false,
     },
     cssMinify: "lightningcss",
@@ -174,6 +173,7 @@ export default defineConfig({
         "components-theme-auto": path.resolve(__dirname, "src/templates/components/theme-auto/template.html"),
         "components-theme-auto-blue": path.resolve(__dirname, "src/templates/components/theme-auto-blue/template.html"),
         // fragments
+        "fragments-layout": path.resolve(__dirname, "src/templates/fragments/layout.html"),
         "fragments-category-tree": path.resolve(__dirname, "src/templates/fragments/category-tree.html"),
         "fragments-common": path.resolve(__dirname, "src/templates/fragments/common.html"),
         "fragments-page-like-post-style-footer-nav": path.resolve(
