@@ -34,6 +34,7 @@ export default defineConfig({
       beforeHeadClose: `<!--/*-->\n  `,
       // 在 </head> 标签后插入
       afterHeadClose: `\n  <!--*/-->\n  </th:block>`,
+      exclude: ["/src/templates/fragments/layout.html"],
     }),
     bodyInject({
       // 在 <body> 标签前插入
@@ -44,6 +45,7 @@ export default defineConfig({
       beforeBodyClose: `<!--/*-->\n  `,
       // 在 </body> 标签后插入
       afterBodyClose: `\n  <!--*/-->\n  </th:block>`,
+      exclude: ["/src/templates/fragments/layout.html"],
     }),
     replaceHtmlPlugin({
       rules: [
