@@ -14,62 +14,42 @@ import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
 import bodyInject from "./plugins/vite-plugin-body-inject";
 import headInject from "./plugins/vite-plugin-head-inject";
 import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
-import removeCopyrightComments from "./plugins/vite-plugin-remove-copyright-comments";
 import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments";
-import removeLegacyGuardJs from "./plugins/vite-plugin-remove-legacy-guard";
-import replaceHtmlPlugin from "./plugins/vite-plugin-replace-html";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
 export default defineConfig({
   base: "/themes/howiehz-higan/",
   plugins: [
+    // Tailwind CSS with Vite integration
     tailwindcss(),
-    utwm(), // obfuscate tailwindcss class
+    // Unplugin Tailwind CSS Mangle to obfuscate Tailwind CSS class names
+    utwm(),
+    // Inject th:block tags at the start and end of <head> and <body>
+    // so Thymeleaf can correctly process the content within these tags
     headInject({
-      // 在 <head> 标签前插入
       beforeHeadOpen: `<th:block th:fragment="headContent">\n  <!--/*-->\n  `,
-      // 在 <head> 标签后插入
       afterHeadOpen: `\n  <!--*/-->`,
-      // 在 </head> 标签前插入
       beforeHeadClose: `<!--/*-->\n  `,
-      // 在 </head> 标签后插入
       afterHeadClose: `\n  <!--*/-->\n  </th:block>`,
+      exclude: ["/src/templates/fragments/layout.html"],
     }),
     bodyInject({
-      // 在 <body> 标签前插入
       beforeBodyOpen: `<th:block th:fragment="content">\n  <!--/*-->\n  `,
-      // 在 <body> 标签后插入
       afterBodyOpen: `\n  <!--*/-->`,
-      // 在 </body> 标签前插入
       beforeBodyClose: `<!--/*-->\n  `,
-      // 在 </body> 标签后插入
       afterBodyClose: `\n  <!--*/-->\n  </th:block>`,
+      exclude: ["/src/templates/fragments/layout.html"],
     }),
-    replaceHtmlPlugin({
-      rules: [
-        // 清理不需要的 legacy 代码片段
-        {
-          from: `<script type="module">import.meta.url;import("_").catch(()=>1);(async function*(){})().next();window.__vite_is_modern_browser=true</script>`,
-          to: "",
-          include: ["/src/templates/fragments/**/*.html", "/src/templates/components/**/*.html"],
-        },
-        {
-          from: `<script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>`,
-          to: "",
-          include: ["/src/templates/fragments/**/*.html", "/src/templates/components/**/*.html"],
-        },
-      ],
-    }),
-    removeCopyrightComments(),
+    // remove /* empty css */ comments from generated JS files
+    // https://github.com/vitejs/vite/issues/1794#issuecomment-769819851
     removeEmptyCssComments(),
-    removeLegacyGuardJs({
-      include: ["/src/templates/fragments/**/*.html", "/src/templates/components/**/*.html"],
-      base: "/themes/howiehz-higan/",
-    }),
+    // Minify HTML while preserving Thymeleaf syntax
     thymeleafMinify({
       base: "/themes/howiehz-higan/",
     }),
+    // Generate Subresource Integrity (SRI) hashes for all output files
     sri(),
+    // Precompress output files using gzip, brotli, and zstandard algorithms
     compression({
       algorithms: [
         defineAlgorithm("gzip", { level: 9 }),
@@ -106,10 +86,8 @@ export default defineConfig({
     assetsDir: "assets/dist/",
     emptyOutDir: true,
     modulePreload: {
-      // https://cn.vite.dev/config/build-options#build-modulepreload
-      // 开启这个后会注入此 polyfill。
-      // polyfill 是为不支持 link[rel="modulepreload"] 的旧浏览器加的。
-      // 只需要在通用模板 fragments/layout.html 注入一次即可。
+      // https://vite.dev/config/build-options#build-modulepreload
+      // Only manually injected in src/templates/fragments/layout.html
       polyfill: false,
     },
     cssMinify: "lightningcss",
@@ -188,6 +166,7 @@ export default defineConfig({
         "components-theme-auto": path.resolve(__dirname, "src/templates/components/theme-auto/template.html"),
         "components-theme-auto-blue": path.resolve(__dirname, "src/templates/components/theme-auto-blue/template.html"),
         // fragments
+        "fragments-layout": path.resolve(__dirname, "src/templates/fragments/layout.html"),
         "fragments-category-tree": path.resolve(__dirname, "src/templates/fragments/category-tree.html"),
         "fragments-common": path.resolve(__dirname, "src/templates/fragments/common.html"),
         "fragments-page-like-post-style-footer-nav": path.resolve(
