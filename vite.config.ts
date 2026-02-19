@@ -14,7 +14,6 @@ import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
 import bodyInject from "./plugins/vite-plugin-body-inject";
 import headInject from "./plugins/vite-plugin-head-inject";
 import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
-import removeCopyrightComments from "./plugins/vite-plugin-remove-copyright-comments";
 import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
@@ -45,7 +44,6 @@ export default defineConfig({
       afterBodyClose: `\n  <!--*/-->\n  </th:block>`,
       exclude: ["/src/templates/fragments/layout.html"],
     }),
-    removeCopyrightComments(),
     removeEmptyCssComments(),
     thymeleafMinify({
       base: "/themes/howiehz-higan/",
