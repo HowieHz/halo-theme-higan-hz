@@ -4,7 +4,6 @@ import "../styles/mixins/tailwind.css";
 // 使此文件成为模块
 export {};
 
-
 document.addEventListener("DOMContentLoaded", (): void => {
   // 二级菜单显示/切换功能
   const submenuToggles: NodeListOf<HTMLElement> = document.querySelectorAll(".submenu-toggle");
