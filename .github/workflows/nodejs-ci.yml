@@ -20,7 +20,7 @@ jobs:
           ref: ${{ github.head_ref || github.ref }}
           # why token is required
           # ref: https://github.com/stefanzweifel/git-auto-commit-action/tree/v5/?tab=readme-ov-file#commits-made-by-this-action-do-not-trigger-new-workflow-runs
-          token: ${{ secrets.PR_WORKFLOW_TOKEN }}
+          token: ${{ secrets.PR_WORKFLOW_TOKEN || github.token }}
 
       - name: Detect package manager in package.json
         id: detect-pm
