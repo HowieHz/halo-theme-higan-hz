@@ -9,5 +9,5 @@ Provides CSS variable definitions for the light theme component.
 Head Content (for including necessary scripts/styles)
 
 ```html
-<th:block th:insert="~{components/theme-light/template :: headContent}"></th:block>
+<th:block th:insert="~{components/theme-light/template :: head}"></th:block>
 ```

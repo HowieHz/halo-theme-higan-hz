@@ -1,10 +1,10 @@
 <head th:remove="tag">
   <script src="index.ts" type="module"></script>
   <!--/* 翻页组件应始终加载；即使页码超出范围，组件也仍需存在 */-->
-  <th:block th:insert="~{components/pagination/template :: headContent}"></th:block>
+  <th:block th:insert="~{components/pagination/template :: head}"></th:block>
   <th:block
     th:unless="${#lists.isEmpty(moments.items)}"
-    th:insert="~{components/moment-video-modal/template :: headContent}"
+    th:insert="~{components/moment-video-modal/template :: head}"
   ></th:block>
   <th:block
     th:if="${(!(#strings.equals(pageTemplateName, 'index')
@@ -256,7 +256,7 @@
                       alt="moment image"
                       loading="lazy"
                     />
-                    <th:block th:insert="~{components/moment-video-modal/template :: content(${media})}"></th:block>
+                    <th:block th:insert="~{components/moment-video-modal/template :: body(${media})}"></th:block>
                   </th:block>
                 </div>
               </div>
@@ -323,11 +323,11 @@
       </div>
       <th:block
         th:if="${#strings.equals(pageTemplateName, 'index')}"
-        th:insert="~{components/pagination/template :: content(posts = ${moments}, isListResult = true)}"
+        th:insert="~{components/pagination/template :: body(posts = ${moments}, isListResult = true)}"
       ></th:block>
       <th:block
         th:if="${#strings.equals(pageTemplateName, 'moments')}"
-        th:insert="~{components/pagination/template :: content(posts = ${moments})}"
+        th:insert="~{components/pagination/template :: body(posts = ${moments})}"
       ></th:block>
     </div>
     <script

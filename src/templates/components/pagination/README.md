@@ -10,7 +10,7 @@ It shows previous and next navigation buttons, optionally including page number 
 Head Content (for including necessary scripts/styles)
 
 ```html
-<th:block th:insert="~{components/pagination/template :: headContent}"></th:block>
+<th:block th:insert="~{components/pagination/template :: head}"></th:block>
 ```
 
 Content Insertion (for displaying pagination controls)
@@ -18,13 +18,13 @@ Content Insertion (for displaying pagination controls)
 For UrlContextListResult:
 
 ```html
-<th:block th:insert="~{components/pagination/template :: content(posts)}"></th:block>
+<th:block th:insert="~{components/pagination/template :: body(posts)}"></th:block>
 ```
 
 For ListResult:
 
 ```html
-<th:block th:insert="~{components/pagination/template :: content(posts = ${posts}, isListResult = true)}"></th:block>
+<th:block th:insert="~{components/pagination/template :: body(posts = ${posts}, isListResult = true)}"></th:block>
 ```
 
 ## Parameters

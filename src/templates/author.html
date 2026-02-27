@@ -3,13 +3,13 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${site.title},
-    head = ~{:: headContent},
-    content = ~{:: content},
+    head = ~{:: head},
+    content = ~{:: body},
     header = ~{components/header/template :: body},
     navbar = ~{}
   )}"
 >
-  <head>
+  <head th:remove="tag">
     <meta
       name="description"
       th:attr="content=${#strings.isEmpty(theme.config?.author_page_styles?.description) ? site?.seo?.description : theme.config?.author_page_styles?.description}"
@@ -24,7 +24,7 @@
     <script src="/src/scripts/pages/author.ts" type="module"></script>
     <th:block th:insert="~{components/list-post-simple/template :: head(showPagination = true)}"></th:block>
   </head>
-  <body>
+  <body th:remove="tag">
     <article class="author" itemscope itemtype="http://schema.org/BlogPosting">
       <section class="about">
         <div class="relative">

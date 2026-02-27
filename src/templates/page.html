@@ -3,14 +3,14 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${#annotations.getOrDefault(singlePage, 'higan.howiehz.top/page-title', singlePage.spec?.title)}, 
-    head = ~{:: headContent},
-    content = ~{:: content}, 
+    head = ~{:: head},
+    content = ~{:: body}, 
     header = ~{components/header/template :: body}, 
     navbar = ~{}, 
     language = ${#annotations.get(singlePage, 'higan.howiehz.top/page-language')}
   )}"
 >
-  <head>
+  <head th:remove="tag">
     <script src="/src/scripts/pages/page.ts" type="module"></script>
     <th:block
       th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show
@@ -18,7 +18,7 @@
       th:insert="~{components/halo-comment-widget/template :: head}"
     ></th:block>
   </head>
-  <body>
+  <body th:remove="tag">
     <style th:if="${theme.config?.custom_page_styles?.is_optimize_content_paragraph_spacing}">
       .content > p {
         min-height: 1.1em;

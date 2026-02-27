@@ -3,13 +3,13 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${title}, 
-    head = ~{:: headContent},
-    content = ~{:: content}, 
+    head = ~{:: head},
+    content = ~{:: body}, 
     header = ~{components/header/template :: body}, 
     navbar = ~{}
   )}"
 >
-  <head>
+  <head th:remove="tag">
     <link
       th:if="${pluginFinder.available('PluginFeed')}"
       rel="alternate"
@@ -20,7 +20,7 @@
     <script src="/src/scripts/pages/moments.ts" type="module"></script>
     <th:block th:insert="~{components/list-moment-summary/template :: head(moments=${moments})}"></th:block>
   </head>
-  <body>
+  <body th:remove="tag">
     <th:block
       th:insert="~{components/list-moment-summary/template :: body(moments = ${moments}, pageTemplateName = 'moments')}"
     ></th:block>

@@ -3,14 +3,14 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${#annotations.getOrDefault(tag, 'higan.howiehz.top/page-title', tag.spec?.displayName)}, 
-    head = ~{:: headContent},
-    content = ~{:: content}, 
+    head = ~{:: head},
+    content = ~{:: body}, 
     header = ~{components/header/template :: body}, 
     navbar = ~{}, 
     language=${#annotations.get(tag, 'higan.howiehz.top/page-language')} 
   )}"
 >
-  <head>
+  <head th:remove="tag">
     <!--/* remove after https://github.com/halo-dev/halo/issues/8054 */-->
     <meta name="description" th:attr="content=${site?.seo?.description}" />
     <link
@@ -23,7 +23,7 @@
     <script src="/src/scripts/pages/tag.ts" type="module"></script>
     <th:block th:insert="~{components/list-post-simple/template :: head(showPagination = true)}"></th:block>
   </head>
-  <body>
+  <body th:remove="tag">
     <div id="archive" class="content flex-auto">
       <h1
         th:with="tagColor = ${tag.spec?.color}"

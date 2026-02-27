@@ -10,13 +10,13 @@ It displays a video thumbnail with a play button overlay, and when clicked, open
 Head Content (for including necessary scripts/styles)
 
 ```html
-<th:block th:insert="~{components/moment-video-modal/template :: headContent}"></th:block>
+<th:block th:insert="~{components/moment-video-modal/template :: head}"></th:block>
 ```
 
 Content Insertion (for displaying the video modal)
 
 ```html
-<th:block th:insert="~{components/moment-video-modal/template :: content(media)}"></th:block>
+<th:block th:insert="~{components/moment-video-modal/template :: body(media)}"></th:block>
 ```
 
 ## Parameters

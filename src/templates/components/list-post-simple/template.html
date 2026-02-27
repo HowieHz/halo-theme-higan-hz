@@ -1,6 +1,6 @@
 <head th:remove="tag">
   <script src="index.ts" type="module"></script>
-  <th:block th:if="${showPagination ?: false}" th:insert="~{components/pagination/template :: headContent}"></th:block>
+  <th:block th:if="${showPagination ?: false}" th:insert="~{components/pagination/template :: head}"></th:block>
 </head>
 <body th:remove="tag">
   <!--/* content(posts, showPagination) */-->
@@ -64,7 +64,7 @@
     </ul>
     <th:block
       th:if="${showPagination ?: false}"
-      th:insert="~{components/pagination/template :: content(${posts})}"
+      th:insert="~{components/pagination/template :: body(${posts})}"
     ></th:block>
   </section>
 </body>

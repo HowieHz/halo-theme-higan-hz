@@ -3,22 +3,22 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = #{page.archives.page-title},
-    head = ~{:: headContent},
-    content = ~{:: content},
+    head = ~{:: head},
+    content = ~{:: body},
     header = ~{components/header/template :: body},
     navbar = ~{}
   )}"
 >
-  <head>
+  <head th:remove="tag">
     <meta
       name="description"
       th:attr="content=${#strings.isEmpty(theme.config?.archives_page_styles?.description) ? site?.seo?.description : theme.config?.archives_page_styles?.description}"
     />
     <script src="/src/scripts/pages/archives.ts" type="module"></script>
     <th:block th:insert="~{components/list-post-simple/template :: head}"></th:block>
-    <th:block th:insert="~{components/pagination/template :: headContent}"></th:block>
+    <th:block th:insert="~{components/pagination/template :: head}"></th:block>
   </head>
-  <body>
+  <body th:remove="tag">
     <div id="archive" class="content flex-auto">
       <div class="flex-1">
         <div
@@ -112,7 +112,7 @@
           </div>
         </div>
       </div>
-      <th:block th:insert="~{components/pagination/template :: content(${archives})}"></th:block>
+      <th:block th:insert="~{components/pagination/template :: body(${archives})}"></th:block>
     </div>
   </body>
 </th:block>

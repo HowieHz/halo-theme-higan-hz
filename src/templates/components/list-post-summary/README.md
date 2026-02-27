@@ -10,13 +10,13 @@ It also shows word count, estimated reading time, excerpt, and cover image.
 Head Content (for including necessary scripts/styles)
 
 ```html
-<th:block th:insert="~{components/list-post-summary/template :: headContent}"></th:block>
+<th:block th:insert="~{components/list-post-summary/template :: head}"></th:block>
 ```
 
 Content Insertion
 
 ```html
-<th:block th:insert="~{components/list-post-summary/template :: content(posts, pageTemplateName)}"></th:block>
+<th:block th:insert="~{components/list-post-summary/template :: body(posts, pageTemplateName)}"></th:block>
 ```
 
 ## Parameters

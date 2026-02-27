@@ -11,8 +11,6 @@ import { sri } from "vite-plugin-sri3";
 
 import pkg from "./package.json";
 import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
-import bodyInject from "./plugins/vite-plugin-body-inject";
-import headInject from "./plugins/vite-plugin-head-inject";
 import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
 import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
@@ -24,44 +22,6 @@ export default defineConfig({
     tailwindcss(),
     // Unplugin Tailwind CSS Mangle to obfuscate Tailwind CSS class names
     utwm(),
-    // Inject th:block tags at the start and end of <head> and <body>
-    // so Thymeleaf can correctly process the content within these tags
-    headInject({
-      beforeHeadOpen: `<th:block th:fragment="headContent">\n  <!--/*-->\n  `,
-      afterHeadOpen: `\n  <!--*/-->`,
-      beforeHeadClose: `<!--/*-->\n  `,
-      afterHeadClose: `\n  <!--*/-->\n  </th:block>`,
-      exclude: [
-        "/src/templates/fragments/layout.html",
-        "/src/templates/components/text-size-normal/template.html",
-        "/src/templates/components/color-scheme-auto/template.html",
-        "/src/templates/components/color-scheme-dark/template.html",
-        "/src/templates/components/color-scheme-light/template.html",
-        "/src/templates/components/halo-comment-widget/template.html",
-        "/src/templates/components/header/template.html",
-        "/src/templates/components/list-friends-summary/template.html",
-        "/src/templates/components/list-moment-summary/template.html",
-        "/src/templates/components/list-post-simple/template.html",
-      ],
-    }),
-    bodyInject({
-      beforeBodyOpen: `<th:block th:fragment="content">\n  <!--/*-->\n  `,
-      afterBodyOpen: `\n  <!--*/-->`,
-      beforeBodyClose: `<!--/*-->\n  `,
-      afterBodyClose: `\n  <!--*/-->\n  </th:block>`,
-      exclude: [
-        "/src/templates/fragments/layout.html",
-        "/src/templates/components/text-size-normal/template.html",
-        "/src/templates/components/color-scheme-auto/template.html",
-        "/src/templates/components/color-scheme-dark/template.html",
-        "/src/templates/components/color-scheme-light/template.html",
-        "/src/templates/components/halo-comment-widget/template.html",
-        "/src/templates/components/header/template.html",
-        "/src/templates/components/list-friends-summary/template.html",
-        "/src/templates/components/list-moment-summary/template.html",
-        "/src/templates/components/list-post-simple/template.html",
-      ],
-    }),
     // remove /* empty css */ comments from generated JS files
     // https://github.com/vitejs/vite/issues/1794#issuecomment-769819851
     removeEmptyCssComments(),

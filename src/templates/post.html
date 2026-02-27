@@ -3,14 +3,14 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${#annotations.getOrDefault(post, 'higan.howiehz.top/page-title', post.spec?.title)}, 
-    head = ~{:: headContent},
-    content = ~{:: content}, 
+    head = ~{:: head},
+    content = ~{:: body}, 
     header = ~{}, 
     navbar = ~{fragments/post-nav::navbar}, 
     language=${#annotations.get(post, 'higan.howiehz.top/page-language')}
   )}"
 >
-  <head>
+  <head th:remove="tag">
     <th:block th:if="${pluginFinder.available('PluginFeed')}">
       <th:block th:each="contributor : ${post?.contributors}">
         <link
@@ -55,7 +55,7 @@
       th:insert="~{components/halo-comment-widget/template :: head}"
     ></th:block>
   </head>
-  <body>
+  <body th:remove="tag">
     <!--/*/
     <style th:inline="css" th:if="${theme.config?.post_styles?.is_custom_toc_max_width}">
       #header-post #toc {

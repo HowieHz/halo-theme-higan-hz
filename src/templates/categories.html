@@ -3,20 +3,20 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = #{page.categories.page-title},
-    head = ~{:: headContent},
-    content = ~{:: content},
+    head = ~{:: head},
+    content = ~{:: body},
     header = ~{components/header/template :: body},
     navbar = ~{}
   )}"
 >
-  <head>
+  <head th:remove="tag">
     <meta
       name="description"
       th:attr="content=${#strings.isEmpty(theme.config?.categories_page_styles?.description) ? site?.seo?.description : theme.config?.categories_page_styles?.description}"
     />
     <script src="/src/scripts/main-with-header.ts" type="module"></script>
   </head>
-  <body>
+  <body th:remove="tag">
     <h1>
       <th:block th:text="#{page.categories.title}">标题替换位</th:block>
     </h1>

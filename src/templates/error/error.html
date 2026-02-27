@@ -3,16 +3,16 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{/fragments/layout :: html(
     title=${error.status},
-    head = ~{:: headContent},
-    content = ~{:: content},
+    head = ~{:: head},
+    content = ~{:: body},
     header = ~{components/header/template :: body},
     navbar = ~{}
   )}"
 >
-  <head>
+  <head th:remove="tag">
     <script src="/src/scripts/pages/error.ts" type="module"></script>
   </head>
-  <body>
+  <body th:remove="tag">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <div class="content" itemprop="articleBody">
         <h1>

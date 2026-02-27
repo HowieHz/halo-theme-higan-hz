@@ -1,7 +1,7 @@
 <head th:remove="tag">
   <script src="index.ts" type="module"></script>
   <!--/* 翻页组件应始终加载；即使页码超出范围，组件也仍需存在 */-->
-  <th:block th:insert="~{components/pagination/template :: headContent}"></th:block>
+  <th:block th:insert="~{components/pagination/template :: head}"></th:block>
 </head>
 <body th:remove="tag" th:fragment="body(friends, pageTemplateName)">
   <section class="friends-list-summary flex flex-auto flex-col">
@@ -128,11 +128,11 @@
     </div>
     <th:block
       th:if="${#strings.equals(pageTemplateName, 'index')}"
-      th:insert="~{components/pagination/template :: content(posts = ${friends}, isListResult = true)}"
+      th:insert="~{components/pagination/template :: body(posts = ${friends}, isListResult = true)}"
     ></th:block>
     <th:block
       th:if="${#strings.equals(pageTemplateName, 'friends')}"
-      th:insert="~{components/pagination/template :: content(posts = ${friends})}"
+      th:insert="~{components/pagination/template :: body(posts = ${friends})}"
     ></th:block>
   </section>
 </body>

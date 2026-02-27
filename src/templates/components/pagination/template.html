@@ -1,10 +1,7 @@
-<head>
+<head th:remove="tag">
   <script src="index.ts" type="module"></script>
 </head>
-<!--/*-->
-<body></body>
-<!--*/-->
-<th:block th:fragment="content(posts)">
+<body th:remove="tag" th:fragment="body(posts)">
   <div class="pager" th:unless="${isListResult}">
     <!--/* 适用于 UrlContextListResult */-->
     <a th:href="@{${posts.prevUrl}}" th:if="${posts.hasPrevious()}" th:aria-label="#{common.previousPage.aria-label}">
@@ -49,4 +46,4 @@
       <span class="iconify iconify-middle material-symbols--chevron-right"></span>
     </a>
   </div>
-</th:block>
+</body>

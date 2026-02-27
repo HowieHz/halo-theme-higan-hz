@@ -3,13 +3,13 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${title}, 
-    head = ~{:: headContent},
-    content = ~{:: content}, 
+    head = ~{:: head},
+    content = ~{:: body}, 
     header = ~{components/header/template :: body}, 
     navbar = ~{}
   )}"
 >
-  <head>
+  <head th:remove="tag">
     <link
       th:if="${pluginFinder.available('PluginFeed')}"
       rel="alternate"
@@ -19,14 +19,14 @@
     />
     <script src="/src/scripts/pages/moment.ts" type="module"></script>
     <th:block th:insert="~{components/list-moment-summary/template :: head}"></th:block>
-    <th:block th:insert="~{components/moment-video-modal/template :: headContent}"></th:block>
+    <th:block th:insert="~{components/moment-video-modal/template :: head}"></th:block>
     <th:block
       th:if="${theme.config?.moments_styles?.is_moment_comment_section_show
                and haloCommentEnabled}"
       th:insert="~{components/halo-comment-widget/template :: head}"
     ></th:block>
   </head>
-  <body>
+  <body th:remove="tag">
     <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
       <div class="content common-post-list" th:attr="x-data=|momentComment('${moment.metadata.name}')|">
         <div
@@ -236,7 +236,7 @@
                   alt="moment image"
                   loading="lazy"
                 />
-                <th:block th:insert="~{components/moment-video-modal/template :: content(${media})}"></th:block>
+                <th:block th:insert="~{components/moment-video-modal/template :: body(${media})}"></th:block>
               </th:block>
             </div>
           </div>

@@ -1,10 +1,7 @@
-<head>
+<head th:remove="tag">
   <script src="index.ts" type="module"></script>
 </head>
-<!--/*-->
-<body></body>
-<!--*/-->
-<th:block th:fragment="content(media)">
+<body th:remove="tag" th:fragment="body(media)">
   <div th:if="${#strings.equals(media.type, 'VIDEO')}" x-data="{openVideoModal:false}" class="aspect-h-1 aspect-w-1">
     <video preload="metadata" th:src="${media.url}" class="m-0 h-full object-cover"></video>
     <div
@@ -63,4 +60,4 @@
       </div>
     </template>
   </div>
-</th:block>
+</body>
