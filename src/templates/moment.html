@@ -18,7 +18,7 @@
       th:href="@{'/moments/rss.xml'}"
     />
     <script src="/src/scripts/pages/moment.ts" type="module"></script>
-    <th:block th:insert="~{components/list-moment-summary/template :: headContent}"></th:block>
+    <th:block th:insert="~{components/list-moment-summary/template :: head}"></th:block>
     <th:block th:insert="~{components/moment-video-modal/template :: headContent}"></th:block>
     <th:block
       th:if="${theme.config?.moments_styles?.is_moment_comment_section_show

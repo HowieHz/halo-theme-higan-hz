@@ -22,7 +22,7 @@
                and pluginFinder.available('PluginMoments')}"
     >
       <th:block
-        th:insert="~{components/list-moment-summary/template :: headContent(
+        th:insert="~{components/list-moment-summary/template :: head(
                        moments=${momentFinder.list(
                          posts.page,
                          theme.config?.index_styles?.moment_list_page_size
@@ -35,7 +35,7 @@
                and pluginFinder.available('plugin-friends')}"
     >
       <th:block
-        th:insert="~{components/list-friends-summary/template :: headContent(
+        th:insert="~{components/list-friends-summary/template :: head(
                        friends=${friendFinder.list({
                          page: posts.page,
                          size: theme.config?.index_styles?.friends_list_page_size
@@ -236,7 +236,7 @@
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'moment-list-summary'}">
       <th:block th:if="${pluginFinder.available('PluginMoments')}">
         <th:block
-          th:insert="~{components/list-moment-summary/template :: content(
+          th:insert="~{components/list-moment-summary/template :: body(
             moments = ${momentFinder.list(
               posts.page,
               theme.config?.index_styles?.moment_list_page_size)},
@@ -259,7 +259,7 @@
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'friends-list-summary'}">
       <th:block th:if="${pluginFinder.available('plugin-friends')}">
         <th:block
-          th:insert="~{components/list-friends-summary/template :: content(
+          th:insert="~{components/list-friends-summary/template :: body(
             friends = ${friendFinder.list({
               page: posts.page,
               size: theme.config?.index_styles?.friends_list_page_size})},

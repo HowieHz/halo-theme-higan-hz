@@ -18,11 +18,11 @@
       th:href="@{'/moments/rss.xml'}"
     />
     <script src="/src/scripts/pages/moments.ts" type="module"></script>
-    <th:block th:insert="~{components/list-moment-summary/template :: headContent(moments=${moments})}"></th:block>
+    <th:block th:insert="~{components/list-moment-summary/template :: head(moments=${moments})}"></th:block>
   </head>
   <body>
     <th:block
-      th:insert="~{components/list-moment-summary/template :: content(moments = ${moments}, pageTemplateName = 'moments')}"
+      th:insert="~{components/list-moment-summary/template :: body(moments = ${moments}, pageTemplateName = 'moments')}"
     ></th:block>
   </body>
 </th:block>

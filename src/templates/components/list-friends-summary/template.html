@@ -1,12 +1,9 @@
-<head>
+<head th:remove="tag">
   <script src="index.ts" type="module"></script>
   <!--/* 翻页组件应始终加载；即使页码超出范围，组件也仍需存在 */-->
   <th:block th:insert="~{components/pagination/template :: headContent}"></th:block>
 </head>
-<!--/*-->
-<body></body>
-<!--*/-->
-<th:block th:fragment="content(friends, pageTemplateName)">
+<body th:remove="tag" th:fragment="body(friends, pageTemplateName)">
   <section class="friends-list-summary flex flex-auto flex-col">
     <div class="flex flex-auto flex-col space-y-10">
       <th:block th:each="friend : ${friends.items}" th:with="spec = ${friend.spec}">
@@ -138,4 +135,4 @@
       th:insert="~{components/pagination/template :: content(posts = ${friends})}"
     ></th:block>
   </section>
-</th:block>
+</body>

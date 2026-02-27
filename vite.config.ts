@@ -39,6 +39,8 @@ export default defineConfig({
         "/src/templates/components/color-scheme-light/template.html",
         "/src/templates/components/halo-comment-widget/template.html",
         "/src/templates/components/header/template.html",
+        "/src/templates/components/list-friends-summary/template.html",
+        "/src/templates/components/list-moment-summary/template.html",
       ],
     }),
     bodyInject({
@@ -54,6 +56,8 @@ export default defineConfig({
         "/src/templates/components/color-scheme-light/template.html",
         "/src/templates/components/halo-comment-widget/template.html",
         "/src/templates/components/header/template.html",
+        "/src/templates/components/list-friends-summary/template.html",
+        "/src/templates/components/list-moment-summary/template.html",
       ],
     }),
     // remove /* empty css */ comments from generated JS files
