@@ -527,30 +527,18 @@ html[theme="theme-[(${colorSchema.id})]"] {
         th:if="${color_schema == 'auto-blue'}"
         th:insert="~{components/theme-auto-blue/template :: head}"
       ></th:block>
-      <th:block
-        th:if="${color_schema == 'auto'}"
-        th:insert="~{components/theme-auto/template :: head}"
-      ></th:block>
+      <th:block th:if="${color_schema == 'auto'}" th:insert="~{components/theme-auto/template :: head}"></th:block>
       <th:block
         th:if="${color_schema == 'dark-blue'}"
         th:insert="~{components/theme-dark-blue/template :: head}"
       ></th:block>
-      <th:block
-        th:if="${color_schema == 'dark'}"
-        th:insert="~{components/theme-dark/template :: head}"
-      ></th:block>
-      <th:block
-        th:if="${color_schema == 'gray'}"
-        th:insert="~{components/theme-gray/template :: head}"
-      ></th:block>
+      <th:block th:if="${color_schema == 'dark'}" th:insert="~{components/theme-dark/template :: head}"></th:block>
+      <th:block th:if="${color_schema == 'gray'}" th:insert="~{components/theme-gray/template :: head}"></th:block>
       <th:block
         th:if="${color_schema == 'light-blue'}"
         th:insert="~{components/theme-light-blue/template :: head}"
       ></th:block>
-      <th:block
-        th:if="${color_schema == 'light'}"
-        th:insert="~{components/theme-light/template :: head}"
-      ></th:block>
+      <th:block th:if="${color_schema == 'light'}" th:insert="~{components/theme-light/template :: head}"></th:block>
     </th:block>
     <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       <th:block
