@@ -5,7 +5,7 @@
     title = ${#strings.isEmpty(theme.config?.index_styles?.page_html_title) ? site.title : theme.config?.index_styles?.page_html_title}, 
     head = ~{:: headContent},
     content = ~{:: content}, 
-    header = ~{components/header/template :: content}, 
+    header = ~{components/header/template :: body}, 
     navbar = ~{}
   )}"
 >

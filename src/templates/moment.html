@@ -5,7 +5,7 @@
     title = ${title}, 
     head = ~{:: headContent},
     content = ~{:: content}, 
-    header = ~{components/header/template :: content}, 
+    header = ~{components/header/template :: body}, 
     navbar = ~{}
   )}"
 >
@@ -23,7 +23,7 @@
     <th:block
       th:if="${theme.config?.moments_styles?.is_moment_comment_section_show
                and haloCommentEnabled}"
-      th:insert="~{components/halo-comment-widget/template :: headContent}"
+      th:insert="~{components/halo-comment-widget/template :: head}"
     ></th:block>
   </head>
   <body>

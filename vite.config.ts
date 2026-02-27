@@ -37,6 +37,8 @@ export default defineConfig({
         "/src/templates/components/color-scheme-auto/template.html",
         "/src/templates/components/color-scheme-dark/template.html",
         "/src/templates/components/color-scheme-light/template.html",
+        "/src/templates/components/halo-comment-widget/template.html",
+        "/src/templates/components/header/template.html",
       ],
     }),
     bodyInject({
@@ -50,6 +52,8 @@ export default defineConfig({
         "/src/templates/components/color-scheme-auto/template.html",
         "/src/templates/components/color-scheme-dark/template.html",
         "/src/templates/components/color-scheme-light/template.html",
+        "/src/templates/components/halo-comment-widget/template.html",
+        "/src/templates/components/header/template.html",
       ],
     }),
     // remove /* empty css */ comments from generated JS files
