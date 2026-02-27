@@ -10,14 +10,14 @@ It provides a compact view suitable for archives, sidebars, or pages where space
 Head Content (for including necessary scripts/styles)
 
 ```html
-<th:block th:insert="~{components/list-post-simple/template :: headContent(showPagination)}"></th:block>
+<th:block th:insert="~{components/list-post-simple/template :: head(showPagination)}"></th:block>
 ```
 
 Content Insertion
 
 ```html
 <th:block
-  th:insert="~{components/list-post-simple/template :: content(posts, showPagination, pageTemplateName)}"
+  th:insert="~{components/list-post-simple/template :: body(posts, showPagination, pageTemplateName)}"
 ></th:block>
 ```
 

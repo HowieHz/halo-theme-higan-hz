@@ -3,16 +3,16 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = #{page.links.page-title}, 
-    head = ~{:: headContent},
-    content = ~{:: content}, 
-    header = ~{components/header/template :: content}, 
+    head = ~{:: head},
+    content = ~{:: body}, 
+    header = ~{components/header/template :: body}, 
     navbar = ~{}
   )}"
 >
-  <head>
+  <head th:remove="tag">
     <script src="/src/scripts/pages/links.ts" type="module"></script>
   </head>
-  <body>
+  <body th:remove="tag">
     <article id="links" class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <div class="content" th:unless="${theme.config?.links_page_styles?.is_head_first_style}">
         <th:block th:each="group : ${groups}" th:unless="${#lists.isEmpty(group.links)}">

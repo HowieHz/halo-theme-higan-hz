@@ -10,5 +10,5 @@ This component is useful for areas that must stay bright (such as documentation 
 Head Content (for including necessary styles)
 
 ```html
-<th:block th:insert="~{components/color-scheme-light/template :: headContent}"></th:block>
+<th:block th:insert="~{components/color-scheme-light/template :: head}"></th:block>
 ```

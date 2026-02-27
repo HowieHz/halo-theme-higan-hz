@@ -3,13 +3,13 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${site.title},
-    head = ~{:: headContent},
-    content = ~{:: content},
-    header = ~{components/header/template :: content},
+    head = ~{:: head},
+    content = ~{:: body},
+    header = ~{components/header/template :: body},
     navbar = ~{}
   )}"
 >
-  <head>
+  <head th:remove="tag">
     <meta
       name="description"
       th:attr="content=${#strings.isEmpty(theme.config?.author_page_styles?.description) ? site?.seo?.description : theme.config?.author_page_styles?.description}"
@@ -22,9 +22,9 @@
       th:href="@{'/feed/authors/' + ${author.metadata?.name} + '.xml'}"
     />
     <script src="/src/scripts/pages/author.ts" type="module"></script>
-    <th:block th:insert="~{components/list-post-simple/template :: headContent(showPagination = true)}"></th:block>
+    <th:block th:insert="~{components/list-post-simple/template :: head(showPagination = true)}"></th:block>
   </head>
-  <body>
+  <body th:remove="tag">
     <article class="author" itemscope itemtype="http://schema.org/BlogPosting">
       <section class="about">
         <div class="relative">
@@ -113,7 +113,7 @@
 
       <div class="mt-16 flex flex-auto flex-col sm:mt-20">
         <th:block
-          th:insert="~{components/list-post-simple/template :: content(posts = ${posts}, showPagination = true, pageTemplateName = 'author')}"
+          th:insert="~{components/list-post-simple/template :: body(posts = ${posts}, showPagination = true, pageTemplateName = 'author')}"
         ></th:block>
       </div>
     </article>

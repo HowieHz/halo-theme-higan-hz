@@ -3,26 +3,26 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${#strings.isEmpty(theme.config?.index_styles?.page_html_title) ? site.title : theme.config?.index_styles?.page_html_title}, 
-    head = ~{:: headContent},
-    content = ~{:: content}, 
-    header = ~{components/header/template :: content}, 
+    head = ~{:: head},
+    content = ~{:: body}, 
+    header = ~{components/header/template :: body}, 
     navbar = ~{}
   )}"
 >
-  <head>
+  <head th:remove="tag">
     <script src="/src/scripts/pages/index.ts" type="module"></script>
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'post-list-summary'}">
-      <th:block th:insert="~{components/list-post-summary/template :: headContent}"></th:block>
+      <th:block th:insert="~{components/list-post-summary/template :: head}"></th:block>
     </th:block>
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'simple-post-list'}">
-      <th:block th:insert="~{components/list-post-simple/template :: headContent(showPagination = true)}"></th:block>
+      <th:block th:insert="~{components/list-post-simple/template :: head(showPagination = true)}"></th:block>
     </th:block>
     <th:block
       th:if="${theme.config?.index_styles?.list_layout == 'moment-list-summary'
                and pluginFinder.available('PluginMoments')}"
     >
       <th:block
-        th:insert="~{components/list-moment-summary/template :: headContent(
+        th:insert="~{components/list-moment-summary/template :: head(
                        moments=${momentFinder.list(
                          posts.page,
                          theme.config?.index_styles?.moment_list_page_size
@@ -35,7 +35,7 @@
                and pluginFinder.available('plugin-friends')}"
     >
       <th:block
-        th:insert="~{components/list-friends-summary/template :: headContent(
+        th:insert="~{components/list-friends-summary/template :: head(
                        friends=${friendFinder.list({
                          page: posts.page,
                          size: theme.config?.index_styles?.friends_list_page_size
@@ -44,7 +44,7 @@
       ></th:block>
     </th:block>
   </head>
-  <body>
+  <body th:remove="tag">
     <section id="about">
       <th:block th:if="${theme.config?.index_styles?.hitokoto}">
         <script skip-sri th:src="${theme.config?.index_styles?.hitokoto_link}" defer></script>
@@ -222,7 +222,7 @@
         <a th:href="@{/archives}" th:text="#{page.index.postListTitle}">首页文章列表标题替换位</a>
       </h1>
       <th:block
-        th:insert="~{components/list-post-summary/template :: content(posts = ${posts}, pageTemplateName = 'index')}"
+        th:insert="~{components/list-post-summary/template :: body(posts = ${posts}, pageTemplateName = 'index')}"
       ></th:block>
     </th:block>
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'simple-post-list'}">
@@ -230,13 +230,13 @@
         <a th:href="@{/archives}" th:text="#{page.index.postListTitle}">首页文章列表标题替换位</a>
       </h1>
       <th:block
-        th:insert="~{components/list-post-simple/template :: content(posts = ${posts}, showPagination = true, pageTemplateName = 'index')}"
+        th:insert="~{components/list-post-simple/template :: body(posts = ${posts}, showPagination = true, pageTemplateName = 'index')}"
       ></th:block>
     </th:block>
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'moment-list-summary'}">
       <th:block th:if="${pluginFinder.available('PluginMoments')}">
         <th:block
-          th:insert="~{components/list-moment-summary/template :: content(
+          th:insert="~{components/list-moment-summary/template :: body(
             moments = ${momentFinder.list(
               posts.page,
               theme.config?.index_styles?.moment_list_page_size)},
@@ -259,7 +259,7 @@
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'friends-list-summary'}">
       <th:block th:if="${pluginFinder.available('plugin-friends')}">
         <th:block
-          th:insert="~{components/list-friends-summary/template :: content(
+          th:insert="~{components/list-friends-summary/template :: body(
             friends = ${friendFinder.list({
               page: posts.page,
               size: theme.config?.index_styles?.friends_list_page_size})},

@@ -1,10 +1,10 @@
-<head>
+<head th:remove="tag">
   <script src="index.ts" type="module"></script>
   <!--/* 翻页组件应始终加载；即使页码超出范围，组件也仍需存在 */-->
-  <th:block th:insert="~{components/pagination/template :: headContent}"></th:block>
+  <th:block th:insert="~{components/pagination/template :: head}"></th:block>
   <th:block
     th:unless="${#lists.isEmpty(moments.items)}"
-    th:insert="~{components/moment-video-modal/template :: headContent}"
+    th:insert="~{components/moment-video-modal/template :: head}"
   ></th:block>
   <th:block
     th:if="${(!(#strings.equals(pageTemplateName, 'index')
@@ -15,13 +15,10 @@
                   and theme.config?.moments_styles?.is_moment_comment_section_show)) 
              and haloCommentEnabled 
              and !#lists.isEmpty(moments.items)}"
-    th:insert="~{components/halo-comment-widget/template :: headContent}"
+    th:insert="~{components/halo-comment-widget/template :: head}"
   ></th:block>
 </head>
-<!--/*-->
-<body></body>
-<!--*/-->
-<th:block th:fragment="content(moments, pageTemplateName)">
+<body th:remove="tag" th:fragment="body(moments, pageTemplateName)">
   <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
     <div class="content flex-auto">
       <div class="common-post-list flex-auto">
@@ -259,7 +256,7 @@
                       alt="moment image"
                       loading="lazy"
                     />
-                    <th:block th:insert="~{components/moment-video-modal/template :: content(${media})}"></th:block>
+                    <th:block th:insert="~{components/moment-video-modal/template :: body(${media})}"></th:block>
                   </th:block>
                 </div>
               </div>
@@ -326,11 +323,11 @@
       </div>
       <th:block
         th:if="${#strings.equals(pageTemplateName, 'index')}"
-        th:insert="~{components/pagination/template :: content(posts = ${moments}, isListResult = true)}"
+        th:insert="~{components/pagination/template :: body(posts = ${moments}, isListResult = true)}"
       ></th:block>
       <th:block
         th:if="${#strings.equals(pageTemplateName, 'moments')}"
-        th:insert="~{components/pagination/template :: content(posts = ${moments})}"
+        th:insert="~{components/pagination/template :: body(posts = ${moments})}"
       ></th:block>
     </div>
     <script
@@ -387,4 +384,4 @@
       }
     </script>
   </article>
-</th:block>
+</body>

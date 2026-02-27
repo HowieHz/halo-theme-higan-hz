@@ -3,16 +3,16 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${title},
-    head = ~{:: headContent},
-    content = ~{:: content}, 
-    header = ~{components/header/template :: content}, 
+    head = ~{:: head},
+    content = ~{:: body}, 
+    header = ~{components/header/template :: body}, 
     navbar = ~{}
   )}"
 >
-  <head>
+  <head th:remove="tag">
     <script src="/src/scripts/pages/photos.ts" type="module"></script>
   </head>
-  <body>
+  <body th:remove="tag">
     <article class="photos post" itemscope itemtype="http://schema.org/BlogPosting">
       <script
         vite-ignore

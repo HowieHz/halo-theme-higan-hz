@@ -9,7 +9,7 @@ This component provides a widget for displaying comments on posts in the Halo th
 Head Content (for including necessary scripts/styles)
 
 ```html
-<th:block th:insert="~{components/halo-comment-widget/template :: headContent}"></th:block>
+<th:block th:insert="~{components/halo-comment-widget/template :: head}"></th:block>
 ```
 
 Content Insertion

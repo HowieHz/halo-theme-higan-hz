@@ -9,5 +9,5 @@ Provides CSS variable definitions for the dark theme component.
 Head Content (for including necessary scripts/styles)
 
 ```html
-<th:block th:insert="~{components/theme-dark/template :: headContent}"></th:block>
+<th:block th:insert="~{components/theme-dark/template :: head}"></th:block>
 ```

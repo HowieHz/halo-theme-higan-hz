@@ -12,7 +12,7 @@ Included as a fragment in layout templates:
 - Referenced in the layout file (example): [`fragments/layout :: html`](src/templates/fragments/layout.html) passes the header as a parameter:
 
   ```html
-  th:replace="~{fragments/layout :: html(..., header = ~{components/header/template :: content}, ...)}"
+  th:replace="~{fragments/layout :: html(..., header = ~{components/header/template :: body}, ...)}"
   ```
 
 - Ensure the imported TypeScript includes `src/templates/components/header/index.ts`

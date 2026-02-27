@@ -9,19 +9,19 @@ Related documentation: <https://docs.kunkunyu.com/docs/plugin-friends/finder-api
 Head Content (for including necessary scripts/styles)
 
 ```html
-<th:block th:insert="~{components/list-friends-summary/template :: headContent(friends)}"></th:block>
+<th:block th:insert="~{components/list-friends-summary/template :: head(friends)}"></th:block>
 ```
 
 or
 
 ```html
-<th:block th:insert="~{components/list-moment-summary/template :: headContent}"></th:block>
+<th:block th:insert="~{components/list-moment-summary/template :: head}"></th:block>
 ```
 
 Content Insertion
 
 ```html
-<th:block th:insert="~{components/list-friends-summary/template :: content(friends, pageTemplateName)}"></th:block>
+<th:block th:insert="~{components/list-friends-summary/template :: body(friends, pageTemplateName)}"></th:block>
 ```
 
 ## Parameters

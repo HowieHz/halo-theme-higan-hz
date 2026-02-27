@@ -1,8 +1,7 @@
 <!--/*-->
-<head></head>
-<body></body>
+<head th:remove="tag"></head>
 <!--*/-->
-<th:block xmlns:th="https://www.thymeleaf.org" th:fragment="content">
+<body th:remove="tag">
   <header id="header">
     <a th:href="@{/}">
       <th:block
@@ -68,5 +67,5 @@
       <th:block th:insert="~{fragments/common :: menu(showIcon=true)}"></th:block>
     </div>
   </header>
-</th:block>
+</body>
 <!--/* 使此模块的模板需引入文件 /utils/header.ts 以正确引入样式和脚本 */-->

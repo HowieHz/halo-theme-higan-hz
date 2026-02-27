@@ -9,5 +9,5 @@ Provides CSS variable definitions for the theme's "large" text-size variant.
 Head Content (for including necessary scripts/styles)
 
 ```html
-<th:block th:insert="~{components/text-size-large/template :: headContent}"></th:block>
+<th:block th:insert="~{components/text-size-large/template :: head}"></th:block>
 ```

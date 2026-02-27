@@ -9,5 +9,5 @@ Provides CSS variable definitions for the auto theme component.
 Head Content (for including necessary scripts/styles)
 
 ```html
-<th:block th:insert="~{components/theme-auto/template :: headContent}"></th:block>
+<th:block th:insert="~{components/theme-auto/template :: head}"></th:block>
 ```

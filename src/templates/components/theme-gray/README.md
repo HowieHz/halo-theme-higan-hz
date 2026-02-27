@@ -9,5 +9,5 @@ Provides CSS variable definitions for the gray theme component.
 Head Content (for including necessary scripts/styles)
 
 ```html
-<th:block th:insert="~{components/theme-gray/template :: headContent}"></th:block>
+<th:block th:insert="~{components/theme-gray/template :: head}"></th:block>
 ```

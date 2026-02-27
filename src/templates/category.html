@@ -3,14 +3,14 @@
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: html(
     title = ${#annotations.getOrDefault(category, 'higan.howiehz.top/page-title', category.spec?.displayName)}, 
-    head = ~{:: headContent},
-    content = ~{:: content}, 
-    header = ~{components/header/template :: content}, 
+    head = ~{:: head},
+    content = ~{:: body}, 
+    header = ~{components/header/template :: body}, 
     navbar = ~{}, 
     language=${#annotations.get(category, 'higan.howiehz.top/page-language')} 
   )}"
 >
-  <head>
+  <head th:remove="tag">
     <link
       th:if="${pluginFinder.available('PluginFeed')}"
       rel="alternate"
@@ -19,9 +19,9 @@
       th:href="@{'/feed/categories/' + ${category.spec?.slug} + '.xml'}"
     />
     <script src="/src/scripts/pages/category.ts" type="module"></script>
-    <th:block th:insert="~{components/list-post-simple/template :: headContent(showPagination = true)}"></th:block>
+    <th:block th:insert="~{components/list-post-simple/template :: head(showPagination = true)}"></th:block>
   </head>
-  <body>
+  <body th:remove="tag">
     <div id="archive" class="content flex-auto">
       <h1>
         <span th:text="#{page.category.title(${category.spec?.displayName})}">分类页标题替换位</span>
@@ -41,7 +41,7 @@
       </h1>
 
       <th:block
-        th:insert="~{components/list-post-simple/template :: content(posts = ${posts}, showPagination = true, pageTemplateName = 'category')}"
+        th:insert="~{components/list-post-simple/template :: body(posts = ${posts}, showPagination = true, pageTemplateName = 'category')}"
       ></th:block>
     </div>
   </body>

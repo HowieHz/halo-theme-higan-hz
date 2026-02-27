@@ -1,11 +1,8 @@
-<head>
+<head th:remove="tag">
   <script src="index.ts" type="module"></script>
-  <th:block th:insert="~{components/pagination/template :: headContent}"></th:block>
+  <th:block th:insert="~{components/pagination/template :: head}"></th:block>
 </head>
-<!--/*-->
-<body></body>
-<!--*/-->
-<th:block th:fragment="content(posts)">
+<body th:remove="tag" th:fragment="body(posts, pageTemplateName)">
   <section class="post-list-summary flex flex-auto flex-col">
     <div class="flex flex-auto flex-col space-y-10">
       <th:block th:each="post : ${posts}">
@@ -187,6 +184,6 @@
         </th:block>
       </th:block>
     </div>
-    <th:block th:insert="~{components/pagination/template :: content(${posts})}"></th:block>
+    <th:block th:insert="~{components/pagination/template :: body(${posts})}"></th:block>
   </section>
-</th:block>
+</body>
