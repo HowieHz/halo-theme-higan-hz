@@ -31,14 +31,26 @@ export default defineConfig({
       afterHeadOpen: `\n  <!--*/-->`,
       beforeHeadClose: `<!--/*-->\n  `,
       afterHeadClose: `\n  <!--*/-->\n  </th:block>`,
-      exclude: ["/src/templates/fragments/layout.html"],
+      exclude: [
+        "/src/templates/fragments/layout.html",
+        "/src/templates/components/text-size-normal/template.html",
+        "/src/templates/components/color-scheme-auto/template.html",
+        "/src/templates/components/color-scheme-dark/template.html",
+        "/src/templates/components/color-scheme-light/template.html",
+      ],
     }),
     bodyInject({
       beforeBodyOpen: `<th:block th:fragment="content">\n  <!--/*-->\n  `,
       afterBodyOpen: `\n  <!--*/-->`,
       beforeBodyClose: `<!--/*-->\n  `,
       afterBodyClose: `\n  <!--*/-->\n  </th:block>`,
-      exclude: ["/src/templates/fragments/layout.html"],
+      exclude: [
+        "/src/templates/fragments/layout.html",
+        "/src/templates/components/text-size-normal/template.html",
+        "/src/templates/components/color-scheme-auto/template.html",
+        "/src/templates/components/color-scheme-dark/template.html",
+        "/src/templates/components/color-scheme-light/template.html",
+      ],
     }),
     // remove /* empty css */ comments from generated JS files
     // https://github.com/vitejs/vite/issues/1794#issuecomment-769819851

@@ -406,15 +406,15 @@
           <!--/* Color Scheme Declarations Start */-->
           <th:block
             th:if="${colorSchema.type == 'dark'}"
-            th:insert="~{components/color-scheme-dark/template :: headContent}"
+            th:insert="~{components/color-scheme-dark/template :: head}"
           ></th:block>
           <th:block
             th:if="${colorSchema.type == 'light'}"
-            th:insert="~{components/color-scheme-light/template :: headContent}"
+            th:insert="~{components/color-scheme-light/template :: head}"
           ></th:block>
           <th:block
             th:if="${colorSchema.type == 'auto'}"
-            th:insert="~{components/color-scheme-auto/template :: headContent}"
+            th:insert="~{components/color-scheme-auto/template :: head}"
           ></th:block>
           <!--/* Color Scheme Declarations End */-->
           <!--/* Theme Color CSS Variables Declarations Start */-->
@@ -468,17 +468,17 @@ html[theme="theme-[(${colorSchema.id})]"] {
         th:if="${color_schema == 'light'
                  or color_schema == 'light-blue'
                  or color_schema == 'gray'}"
-        th:insert="~{components/color-scheme-light/template :: headContent}"
+        th:insert="~{components/color-scheme-light/template :: head}"
       ></th:block>
       <th:block
         th:if="${color_schema == 'dark'
                  or color_schema == 'dark-blue'}"
-        th:insert="~{components/color-scheme-dark/template :: headContent}"
+        th:insert="~{components/color-scheme-dark/template :: head}"
       ></th:block>
       <th:block
         th:if="${color_schema == 'auto'
                  or color_schema == 'auto-blue'}"
-        th:insert="~{components/color-scheme-auto/template :: headContent}"
+        th:insert="~{components/color-scheme-auto/template :: head}"
       ></th:block>
     </th:block>
     <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
@@ -495,7 +495,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
                  or theme_light == 'gray'
                  or theme_auto == 'gray'
                  or color_schema == 'gray'}"
-        th:insert="~{components/color-scheme-light/template :: headContent}"
+        th:insert="~{components/color-scheme-light/template :: head}"
       ></th:block>
       <th:block
         th:if="${theme_dark == 'dark'
@@ -506,7 +506,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
                  or theme_light == 'dark-blue'
                  or theme_auto == 'dark-blue'
                  or color_schema == 'dark-blue'}"
-        th:insert="~{components/color-scheme-dark/template :: headContent}"
+        th:insert="~{components/color-scheme-dark/template :: head}"
       ></th:block>
       <th:block
         th:if="${theme_dark == 'auto'
@@ -517,7 +517,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
                  or theme_light == 'auto-blue'
                  or theme_auto == 'auto-blue'
                  or color_schema == 'auto-blue'}"
-        th:insert="~{components/color-scheme-auto/template :: headContent}"
+        th:insert="~{components/color-scheme-auto/template :: head}"
       ></th:block>
     </th:block>
     <!--/* Preset Themes' Color Scheme Declarations end */-->
@@ -611,7 +611,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
     ></th:block>
     <th:block
       th:if="${theme.config?.styles?.text_size == 'normal'}"
-      th:insert="~{components/text-size-normal/template :: headContent}"
+      th:insert="~{components/text-size-normal/template :: head}"
     ></th:block>
     <th:block
       th:if="${theme.config?.styles?.text_size == 'large'}"

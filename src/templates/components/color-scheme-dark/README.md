@@ -10,5 +10,5 @@ Use this component when a section or page must stay in dark mode and you want to
 Head Content (for including necessary styles)
 
 ```html
-<th:block th:insert="~{components/color-scheme-dark/template :: headContent}"></th:block>
+<th:block th:insert="~{components/color-scheme-dark/template :: head}"></th:block>
 ```

@@ -10,13 +10,13 @@ It demonstrates the standard structure and documentation format for theme compon
 Head Content (for including necessary scripts/styles)
 
 ```html
-<th:block th:insert="~{components/example/template :: headContent}"></th:block>
+<th:block th:insert="~{components/example/template :: head}"></th:block>
 ```
 
 Content Insertion
 
 ```html
-<th:block th:insert="~{components/example/template :: content(parameter)}"></th:block>
+<th:block th:insert="~{components/example/template :: body(parameter)}"></th:block>
 ```
 
 ## Parameters

@@ -11,5 +11,5 @@ so the entire theme follows the system preference without forcing a fixed theme.
 Head Content (for including necessary styles)
 
 ```html
-<th:block th:insert="~{components/color-scheme-auto/template :: headContent}"></th:block>
+<th:block th:insert="~{components/color-scheme-auto/template :: head}"></th:block>
 ```
