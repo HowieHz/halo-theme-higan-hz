@@ -41,6 +41,7 @@ export default defineConfig({
         "/src/templates/components/header/template.html",
         "/src/templates/components/list-friends-summary/template.html",
         "/src/templates/components/list-moment-summary/template.html",
+        "/src/templates/components/list-post-simple/template.html",
       ],
     }),
     bodyInject({
@@ -58,6 +59,7 @@ export default defineConfig({
         "/src/templates/components/header/template.html",
         "/src/templates/components/list-friends-summary/template.html",
         "/src/templates/components/list-moment-summary/template.html",
+        "/src/templates/components/list-post-simple/template.html",
       ],
     }),
     // remove /* empty css */ comments from generated JS files

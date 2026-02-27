@@ -21,7 +21,7 @@
       th:href="@{'/feed/tags/' + ${tag.spec?.slug} + '.xml'}"
     />
     <script src="/src/scripts/pages/tag.ts" type="module"></script>
-    <th:block th:insert="~{components/list-post-simple/template :: headContent(showPagination = true)}"></th:block>
+    <th:block th:insert="~{components/list-post-simple/template :: head(showPagination = true)}"></th:block>
   </head>
   <body>
     <div id="archive" class="content flex-auto">
@@ -50,7 +50,7 @@
       </h1>
 
       <th:block
-        th:insert="~{components/list-post-simple/template :: content(posts = ${posts}, showPagination = true, pageTemplateName = 'tag')}"
+        th:insert="~{components/list-post-simple/template :: body(posts = ${posts}, showPagination = true, pageTemplateName = 'tag')}"
       ></th:block>
     </div>
   </body>

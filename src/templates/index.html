@@ -15,7 +15,7 @@
       <th:block th:insert="~{components/list-post-summary/template :: headContent}"></th:block>
     </th:block>
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'simple-post-list'}">
-      <th:block th:insert="~{components/list-post-simple/template :: headContent(showPagination = true)}"></th:block>
+      <th:block th:insert="~{components/list-post-simple/template :: head(showPagination = true)}"></th:block>
     </th:block>
     <th:block
       th:if="${theme.config?.index_styles?.list_layout == 'moment-list-summary'
@@ -230,7 +230,7 @@
         <a th:href="@{/archives}" th:text="#{page.index.postListTitle}">首页文章列表标题替换位</a>
       </h1>
       <th:block
-        th:insert="~{components/list-post-simple/template :: content(posts = ${posts}, showPagination = true, pageTemplateName = 'index')}"
+        th:insert="~{components/list-post-simple/template :: body(posts = ${posts}, showPagination = true, pageTemplateName = 'index')}"
       ></th:block>
     </th:block>
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'moment-list-summary'}">
