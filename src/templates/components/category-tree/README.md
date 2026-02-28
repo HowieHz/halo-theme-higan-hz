@@ -2,7 +2,7 @@
 
 ## Description
 
-用于渲染 List<[CategoryTreeVo](#categorytreevo)>。
+For rendering List<[CategoryTreeVo](#categorytreevo)>.
 
 ## Usage
 
