@@ -3,7 +3,7 @@
 <!--*/-->
 <body th:remove="tag" th:fragment="body(categories)">
   <ul th:unless="${#lists.isEmpty(categories)}" class="flex-auto">
-      <li th:replace="~{:: single(categories = ${categories})}"></li>
+    <li th:replace="~{:: single(categories = ${categories})}"></li>
   </ul>
 </body>
 
