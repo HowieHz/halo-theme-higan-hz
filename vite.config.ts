@@ -93,6 +93,7 @@ export default defineConfig({
         friends: path.resolve(__dirname, "src/templates/friends.html"),
         error: path.resolve(__dirname, "src/templates/error/error.html"),
         // components
+        "components-category-tree": path.resolve(__dirname, "src/templates/components/category-tree/template.html"),
         "components-moment-video-modal": path.resolve(
           __dirname,
           "src/templates/components/moment-video-modal/template.html",
@@ -149,7 +150,6 @@ export default defineConfig({
         "components-theme-auto-blue": path.resolve(__dirname, "src/templates/components/theme-auto-blue/template.html"),
         // fragments
         "fragments-layout": path.resolve(__dirname, "src/templates/fragments/layout.html"),
-        "fragments-category-tree": path.resolve(__dirname, "src/templates/fragments/category-tree.html"),
         "fragments-common": path.resolve(__dirname, "src/templates/fragments/common.html"),
         "fragments-page-like-post-style-footer-nav": path.resolve(
           __dirname,
