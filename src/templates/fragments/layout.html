@@ -1,4 +1,5 @@
 <html
+  xmlns:th="http://www.thymeleaf.org"
   th:with="color_schema = ${theme.config?.styles?.color_schema},
            theme_auto = ${theme.config?.styles?.theme_auto},
            theme_light = ${theme.config?.styles?.theme_light},
@@ -19,12 +20,9 @@
                             (${color_schema} == 'dark-blue' ? 'dark' :
                             (${color_schema} == 'gray' ? 'light' : 'auto'))))))),
            theme=${color_schema} != 'custom' ? ${color_schema} : 'theme-'+${custom_color_schema_init_id}"
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
   th:fragment="html"
 >
   <!--/* th:fragment="html (title, head, content, header, navbar, language)" */-->
-
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />

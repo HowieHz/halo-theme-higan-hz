@@ -2,7 +2,11 @@
 <head></head>
 <body></body>
 <!--*/-->
-<th:block th:fragment="menu(showIcon)">
+<th:block
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  th:fragment="menu(showIcon)"
+>
   <ul>
     <li class="icon" th:if="${showIcon}">
       <a href="#" onclick="event.preventDefault()" aria-expanded="false" role="button">
