@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- `*.zst` 预压缩文件构建参数修改：zstandard 算法压缩等级上调为 22。
+
 ## [1.57.3](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.2...v1.57.3) (2026-2-28)
 
 ### 🔧 优化改进

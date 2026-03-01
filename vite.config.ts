@@ -1,3 +1,4 @@
+import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { constants } from "node:zlib";
@@ -14,6 +15,50 @@ import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
 import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
 import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
+
+const memoryAwareConfig = (() => {
+  const totalMemGB = os.totalmem() / 1024 ** 3;
+  const freeMemGB = os.freemem() / 1024 ** 3;
+
+  console.log(`Total system memory: ${totalMemGB.toFixed(2)} GB`);
+  console.log(`Available memory: ${freeMemGB.toFixed(2)} GB`);
+
+  // Return different configurations based on available memory
+  if (freeMemGB < 4) {
+    console.log("Using low memory configuration (<4GB)");
+    return {
+      scheduler: {
+        limit: 1,
+      },
+    };
+  } else if (freeMemGB < 8) {
+    console.log("Using standard memory configuration (4-8GB)");
+    return {
+      scheduler: {
+        limit: 3,
+        isHighMemory: (algo: unknown) => {
+          if (algo === "zstandard") {
+            return true;
+          }
+          return false;
+        },
+      },
+    };
+  } else {
+    console.log("Using high memory configuration (>8GB)");
+    return {
+      scheduler: {
+        limit: 8,
+        isHighMemory: (algo: unknown) => {
+          if (algo === "zstandard") {
+            return true;
+          }
+          return false;
+        },
+      },
+    };
+  }
+})();
 
 export default defineConfig({
   base: "/themes/howiehz-higan/",
@@ -42,11 +87,11 @@ export default defineConfig({
         }),
         defineAlgorithm("zstandard", {
           params: {
-            // The maximum compression level is 22, but memory consumption becomes very large and can cause build failures
-            [constants.ZSTD_c_compressionLevel]: 21,
+            [constants.ZSTD_c_compressionLevel]: 22,
           },
         }),
       ],
+      scheduler: memoryAwareConfig.scheduler,
       include: [
         /\.(atom|rss|xml|xhtml|js|mjs|ts|html|json|css|eot|otf|ttf|svg|ico|bmp|dib|txt|text|log|md|conf|ini|cfg)$/,
       ],
