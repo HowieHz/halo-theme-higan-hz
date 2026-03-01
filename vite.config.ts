@@ -50,11 +50,7 @@ export default defineConfig({
       scheduler: {
         limit: 1,
         isHighMemory: (algo) => {
-          console.log(algo);
           if (algo === "zstandard") {
-            console.warn(
-              "Using zstandard compression, which may consume a lot of memory. Limiting to 1 concurrent compression task.",
-            );
             return true;
           }
           return false;

@@ -51,8 +51,67 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build project
-        run: pnpm build
+      - name: Build project (with memory diagnostics)
+        run: |
+          set -o pipefail
+          echo "=== Runtime ==="
+          node -v
+          pnpm -v
+          echo "CI=${CI}"
+          echo "=== Host Memory ==="
+          free -h || true
+          echo "=== Cgroup Memory Limit ==="
+          if [ -f /sys/fs/cgroup/memory.max ]; then
+            cat /sys/fs/cgroup/memory.max
+          fi
+          if [ -f /sys/fs/cgroup/memory/memory.limit_in_bytes ]; then
+            cat /sys/fs/cgroup/memory/memory.limit_in_bytes
+          fi
+          echo "=== Build Start ==="
+          /usr/bin/time -v env NODE_OPTIONS="--max-old-space-size=6144" pnpm build 2>&1 | tee build.log
+
+      - name: OOM diagnostics (on failure)
+        if: failure()
+        run: |
+          echo "=== OOM Diagnostics ==="
+          free -h || true
+          if [ -f /sys/fs/cgroup/memory.current ]; then
+            echo "cgroup memory.current:"
+            cat /sys/fs/cgroup/memory.current
+          fi
+          if [ -f /sys/fs/cgroup/memory.events ]; then
+            echo "cgroup memory.events:"
+            cat /sys/fs/cgroup/memory.events
+          fi
+          echo "dmesg OOM tail:"
+          dmesg -T | grep -Ei 'killed process|out of memory|oom' | tail -n 50 || true
+          if [ -f build.log ]; then
+            echo "--- build.log tail ---"
+            tail -n 200 build.log
+          fi
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+          if-no-files-found: ignore
+
+      - name: Write build memory summary
+        if: always()
+        run: |
+          echo "## Build Memory" >> $GITHUB_STEP_SUMMARY
+          if [ -f build.log ]; then
+            rss=$(grep -E "Maximum resident set size" build.log | tail -n 1 | sed -E 's/.*: *//')
+            if [ -n "$rss" ]; then
+              echo "- Max RSS (KB): ${rss}" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "- Max RSS: not found in build.log" >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "- build.log not found" >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: Copy Theme Files from Original to Temp
         run: |
