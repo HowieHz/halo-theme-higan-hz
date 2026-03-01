@@ -48,7 +48,7 @@ export default defineConfig({
       ],
       // Set rate limiter to avoid build memory exceeding 4GB
       scheduler: {
-        limit: 2,
+        limit: 1,
         isHighMemory: (algo) => {
           if (algo === "zstandard") {
             return true;
