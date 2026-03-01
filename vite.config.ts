@@ -42,11 +42,20 @@ export default defineConfig({
         }),
         defineAlgorithm("zstandard", {
           params: {
-            // The maximum compression level is 22, but memory consumption becomes very large and can cause build failures
-            [constants.ZSTD_c_compressionLevel]: 21,
+            [constants.ZSTD_c_compressionLevel]: 22,
           },
         }),
       ],
+      // Set rate limiter to avoid build memory exceeding 4GB
+      scheduler: {
+        limit: 4,
+        isHighMemory: (algo) => {
+          if (algo === "zstandard") {
+            return true;
+          }
+          return false;
+        }
+      },
       include: [
         /\.(atom|rss|xml|xhtml|js|mjs|ts|html|json|css|eot|otf|ttf|svg|ico|bmp|dib|txt|text|log|md|conf|ini|cfg)$/,
       ],
