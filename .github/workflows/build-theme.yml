@@ -12,22 +12,14 @@ jobs:
     name: Build and Upload Theme
     runs-on: ubuntu-latest
     steps:
-      # - name: Enable memory overcommit
-      #   run: |
-      #     echo 1 | sudo tee /proc/sys/vm/overcommit_memory
-      #     echo "Memory overcommit enabled"
-
       - name: Add swap space
         run: |
-          CURRENT_SWAP=$(free -g | awk '/^Swap:/ {print $2}')
-          if [ "$CURRENT_SWAP" -lt 6 ]; then
-            SWAP_FILE="/tmp/github-actions-swap-$$"
-            sudo fallocate -l 8G "$SWAP_FILE"
-            sudo chmod 600 "$SWAP_FILE"
-            sudo mkswap "$SWAP_FILE"
-            sudo swapon "$SWAP_FILE"
-            echo "Added 8GB swap at $SWAP_FILE"
-          fi
+          SWAP_FILE="/tmp/github-actions-swap-$$"
+          sudo fallocate -l 4G "$SWAP_FILE"
+          sudo chmod 600 "$SWAP_FILE"
+          sudo mkswap "$SWAP_FILE"
+          sudo swapon "$SWAP_FILE"
+          echo "Added 8GB swap at $SWAP_FILE"
           free -h
 
       - name: Make Build Directory
