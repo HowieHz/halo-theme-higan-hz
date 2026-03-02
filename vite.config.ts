@@ -40,11 +40,11 @@ export default defineConfig({
             [constants.BROTLI_PARAM_QUALITY]: 11,
           },
         }),
-        defineAlgorithm("zstandard", {
-          params: {
-            [constants.ZSTD_c_compressionLevel]: 22,
-          },
-        }),
+        // defineAlgorithm("zstandard", {
+        //   params: {
+        //     [constants.ZSTD_c_compressionLevel]: 22,
+        //   },
+        // }),
       ],
       scheduler: {
         limit: 1,
