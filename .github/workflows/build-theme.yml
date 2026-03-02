@@ -15,7 +15,7 @@ jobs:
       - name: Add swap space
         run: |
           SWAP_FILE="/tmp/github-actions-swap-$$"
-          MEMORY_LIMIT_GB=8
+          MEMORY_LIMIT_GB=12
           # Add swap space to help with memory issues during build
           sudo fallocate -l ${MEMORY_LIMIT_GB}G "$SWAP_FILE"
           sudo chmod 600 "$SWAP_FILE"
