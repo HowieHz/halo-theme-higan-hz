@@ -77,6 +77,17 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Add swap space
+        run: |
+          SWAP_FILE="/tmp/github-actions-swap-$$"
+          # Add 8GB swap space to help with memory issues during build
+          sudo fallocate -l 8G "$SWAP_FILE"
+          sudo chmod 600 "$SWAP_FILE"
+          sudo mkswap "$SWAP_FILE"
+          sudo swapon "$SWAP_FILE"
+          echo "Added 8GB swap at $SWAP_FILE"
+          free -h
+
       - name: Checkout ${{ inputs.ref_name }}
         uses: actions/checkout@v6
         with:
