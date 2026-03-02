@@ -12,6 +12,24 @@ jobs:
     name: Build and Upload Theme
     runs-on: ubuntu-latest
     steps:
+      - name: Enable memory overcommit
+        run: |
+          echo 1 | sudo tee /proc/sys/vm/overcommit_memory
+          echo "Memory overcommit enabled"
+
+      - name: Add swap space
+        run: |
+          sudo fallocate -l 8G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+          free -h
+
+      - name: Configure ulimits
+        run: |
+          ulimit -v unlimited
+          ulimit -d unlimited
+
       - name: Make Build Directory
         run: |
           pwd
