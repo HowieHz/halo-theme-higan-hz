@@ -51,6 +51,25 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Diagnose memory and swap configuration
+        run: |
+          echo "=== Memory Info ==="
+          free -h
+          echo ""
+          echo "=== Swap Info ==="
+          cat /proc/swaps || echo "No swap info available"
+          echo ""
+          echo "=== cgroup Memory Limits (v1) ==="
+          cat /sys/fs/cgroup/memory/memory.limit_in_bytes 2>/dev/null || echo "Not available"
+          cat /sys/fs/cgroup/memory/memory.memsw.limit_in_bytes 2>/dev/null || echo "Not available"
+          echo ""
+          echo "=== cgroup Memory Limits (v2) ==="
+          cat /sys/fs/cgroup/memory.max 2>/dev/null || echo "Not available"
+          cat /sys/fs/cgroup/memory.swap.max 2>/dev/null || echo "Not available"
+          echo ""
+          echo "=== Current Memory Usage ==="
+          cat /proc/meminfo | grep -E "^MemTotal|^MemFree|^MemAvailable|^SwapTotal|^SwapFree"
+
       - name: Build project
         run: pnpm build
 
