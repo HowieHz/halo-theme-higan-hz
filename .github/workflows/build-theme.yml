@@ -12,6 +12,18 @@ jobs:
     name: Build and Upload Theme
     runs-on: ubuntu-latest
     steps:
+      - name: Add swap space
+        run: |
+          SWAP_FILE="/tmp/github-actions-swap-$$"
+          MEMORY_LIMIT_GB=12
+          # Add swap space to help with memory issues during build
+          sudo fallocate -l ${MEMORY_LIMIT_GB}G "$SWAP_FILE"
+          sudo chmod 600 "$SWAP_FILE"
+          sudo mkswap "$SWAP_FILE"
+          sudo swapon "$SWAP_FILE"
+          echo "Added ${MEMORY_LIMIT_GB}GB swap at $SWAP_FILE"
+          free -h
+
       - name: Make Build Directory
         run: |
           pwd
@@ -50,6 +62,25 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Diagnose memory and swap configuration
+        run: |
+          echo "=== Memory Info ==="
+          free -h
+          echo ""
+          echo "=== Swap Info ==="
+          cat /proc/swaps || echo "No swap info available"
+          echo ""
+          echo "=== cgroup Memory Limits (v1) ==="
+          cat /sys/fs/cgroup/memory/memory.limit_in_bytes 2>/dev/null || echo "Not available"
+          cat /sys/fs/cgroup/memory/memory.memsw.limit_in_bytes 2>/dev/null || echo "Not available"
+          echo ""
+          echo "=== cgroup Memory Limits (v2) ==="
+          cat /sys/fs/cgroup/memory.max 2>/dev/null || echo "Not available"
+          cat /sys/fs/cgroup/memory.swap.max 2>/dev/null || echo "Not available"
+          echo ""
+          echo "=== Current Memory Usage ==="
+          cat /proc/meminfo | grep -E "^MemTotal|^MemFree|^MemAvailable|^SwapTotal|^SwapFree"
 
       - name: Build project
         run: pnpm build
