@@ -80,12 +80,13 @@ jobs:
       - name: Add swap space
         run: |
           SWAP_FILE="/tmp/github-actions-swap-$$"
-          # Add 8GB swap space to help with memory issues during build
-          sudo fallocate -l 8G "$SWAP_FILE"
+          MEMORY_LIMIT_GB=12
+          # Add swap space to help with memory issues during build
+          sudo fallocate -l ${MEMORY_LIMIT_GB}G "$SWAP_FILE"
           sudo chmod 600 "$SWAP_FILE"
           sudo mkswap "$SWAP_FILE"
           sudo swapon "$SWAP_FILE"
-          echo "Added 8GB swap at $SWAP_FILE"
+          echo "Added ${MEMORY_LIMIT_GB}GB swap at $SWAP_FILE"
           free -h
 
       - name: Checkout ${{ inputs.ref_name }}
