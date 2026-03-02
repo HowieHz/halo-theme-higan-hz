@@ -15,7 +15,8 @@ jobs:
       - name: Add swap space
         run: |
           SWAP_FILE="/tmp/github-actions-swap-$$"
-          sudo fallocate -l 4G "$SWAP_FILE"
+          # Add 8GB swap space to help with memory issues during build
+          sudo fallocate -l 8G "$SWAP_FILE"
           sudo chmod 600 "$SWAP_FILE"
           sudo mkswap "$SWAP_FILE"
           sudo swapon "$SWAP_FILE"
