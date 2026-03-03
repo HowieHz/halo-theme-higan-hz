@@ -94,8 +94,8 @@ importers:
         specifier: ^8.56.1
         version: 8.56.1(eslint@9.39.3(jiti@2.6.1))(typescript@5.9.3)
       '@typescript/native-preview':
-        specifier: 7.0.0-dev.20260301.1
-        version: 7.0.0-dev.20260301.1
+        specifier: 7.0.0-dev.20260302.1
+        version: 7.0.0-dev.20260302.1
       autocorrect-node:
         specifier: ^2.14.0
         version: 2.14.0
@@ -201,7 +201,7 @@ importers:
     devDependencies:
       '@nolebase/vitepress-plugin-highlight-targeted-heading':
         specifier: ^2.18.2
-        version: 2.18.2(vitepress@2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.6)(stylus@0.64.0)(typescript@5.9.3))
+        version: 2.18.2(vitepress@2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.8)(stylus@0.64.0)(typescript@5.9.3))
       '@whyframe/core':
         specifier: ^0.1.14
         version: 0.1.14(vite@7.3.1(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0))
@@ -222,10 +222,10 @@ importers:
         version: 1.4.0
       vitepress:
         specifier: 2.0.0-alpha.16
-        version: 2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.6)(stylus@0.64.0)(typescript@5.9.3)
+        version: 2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.8)(stylus@0.64.0)(typescript@5.9.3)
       vitepress-plugin-pagefind:
         specifier: ^0.4.18
-        version: 0.4.18(pagefind@1.4.0)(vitepress@2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.6)(stylus@0.64.0)(typescript@5.9.3))(vue@3.5.29(typescript@5.9.3))
+        version: 0.4.18(pagefind@1.4.0)(vitepress@2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.8)(stylus@0.64.0)(typescript@5.9.3))(vue@3.5.29(typescript@5.9.3))
       vue:
         specifier: ^3.5.29
         version: 3.5.29(typescript@5.9.3)
@@ -1395,43 +1395,43 @@ packages:
     resolution: {integrity: sha512-KiROIzYdEV85YygXw6BI/Dx4fnBlFQu6Mq4QE4MOH9fFnhohw6wX/OAvDY2/C+ut0I3RSPKenvZJIVYqJNkhEw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260301.1':
-    resolution: {integrity: sha512-z8Efrjf04XjwX3QsLJARUMNl0/Bhe2z3iBbLI1hPAvqvkRK9C6T0Fywup3rEqBpUXCWsVjOyCxJjmuDA/9vZ5g==}
+  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260302.1':
+    resolution: {integrity: sha512-bSSHf2/3/pUa1FHdHkoD2SbACh4G8GQElQmkHksf42L30rgED+thloZPyQEvaIXE44IsfFDEvsa6reF/pob5Aw==}
     cpu: [arm64]
     os: [darwin]
 
-  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260301.1':
-    resolution: {integrity: sha512-qKySo/Tsya2zO3kIecrvP3WfEzS2GYy0qJwPmQ+LTqgONnuQJDohjyC3461cTKYBYL/kvkqfBrUGmjrg9fMyEA==}
+  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260302.1':
+    resolution: {integrity: sha512-CfBxf/qEFgoe1zZ8U/DfgP2izrDEnERXj2uuX5Mi2m6NIdS6yo9fv+TiQS7UDINIOcRaN17NMUmIRrj8RLz3TA==}
     cpu: [x64]
     os: [darwin]
 
-  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260301.1':
-    resolution: {integrity: sha512-VNSRYpHbqnsJ18nO0buY85ZGloPoEi0W3rys93UzyZQGdxxqCKK5NxI+FV1siHNedFY2GRLr/7h1gZ8fcdeMvQ==}
+  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260302.1':
+    resolution: {integrity: sha512-Ojecn2PD9Pgs3UUkxzKNwesFmKiCrRHHc6DFlE7Tpsf53tLEOkVTS8SdYOxoPvbM+ee9lQ+WDWyHsOHfbUXFuQ==}
     cpu: [arm64]
     os: [linux]
 
-  '@typescript/native-preview-linux-arm@7.0.0-dev.20260301.1':
-    resolution: {integrity: sha512-os9ohNd3XSO3+jKgMo3Ac1L6vzqg2GY9gcBsjp6Z5NrnZtnbq6e+uHkqavsE73NP1VIAsjIwZThjw4zY9GY7bg==}
+  '@typescript/native-preview-linux-arm@7.0.0-dev.20260302.1':
+    resolution: {integrity: sha512-TWdwsqactujpdAuu/pepoXg7DK2TQ6Q3kYeqLlTic+0d61jece12yqk4hlmXXzQrc5D2ht9Qr3ny4BHyBvKlZw==}
     cpu: [arm]
     os: [linux]
 
-  '@typescript/native-preview-linux-x64@7.0.0-dev.20260301.1':
-    resolution: {integrity: sha512-w2iRqNEjvJbzqOYuRckpRBOJpJio2lOFTei7INQ0QED/TOO3XqJvAkyOzDrIgCO9YGWjDUIbuXZ/+4fldGIs3Q==}
+  '@typescript/native-preview-linux-x64@7.0.0-dev.20260302.1':
+    resolution: {integrity: sha512-f+8wzy/4xcDMgAdkJy722BL0pau8O0S4+HUR2CyFJy7HbDIGbbl/Zm5ZAq2xjMGEdq83+klp+7y/JuDIb0herA==}
     cpu: [x64]
     os: [linux]
 
-  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260301.1':
-    resolution: {integrity: sha512-w6uu75HQek25Agu5+CcpzPS9PN3NTEyHSNMp9oypR8dj7zPRsudM8M4vhFTMDVCZ/lX/mWXkgG8dHmI+myWWvw==}
+  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260302.1':
+    resolution: {integrity: sha512-yN+UMH41G2UgXn5ER0FzgVQPQ6YLfpSoSaWV38l+hIkgKQSv7TsF778Svgh0dd5OpFKoeQ1aPOMalugxI3FnWw==}
     cpu: [arm64]
     os: [win32]
 
-  '@typescript/native-preview-win32-x64@7.0.0-dev.20260301.1':
-    resolution: {integrity: sha512-r2T4W5oYhOHAOVE0U/L1aFCsNDhv0BIRtyk9pL3eqGPLoYH4vtR96/CIpsVt04JDuh0fxOBHcbVjWaZdeZaTCQ==}
+  '@typescript/native-preview-win32-x64@7.0.0-dev.20260302.1':
+    resolution: {integrity: sha512-Ni9nVkZRt3MofSUSilF51w1tkxlPegz3+zJLDPZZdc0IIaENTP37gfVkngio4tdsjIjsPFieJOkogej/wYT1AA==}
     cpu: [x64]
     os: [win32]
 
-  '@typescript/native-preview@7.0.0-dev.20260301.1':
-    resolution: {integrity: sha512-hmQSkgiIDAzdjyk4P8/dU8lLch1sR8spamGZ/ypPkz3rmraiLaeDj6rqlrgyZNOcSpk0R3kXw3y5qJ9121gjNQ==}
+  '@typescript/native-preview@7.0.0-dev.20260302.1':
+    resolution: {integrity: sha512-KR2mM+hGSF9CcYRFLe/8jAFuRr0Ao3vJDnfGtEoSSpgfw0kCZTMv8fyBc5Vicrg/ByZSwGhZf7Q8HDc5lPYLGg==}
     hasBin: true
 
   '@ungap/structured-clone@1.3.0':
@@ -3203,6 +3203,10 @@ packages:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
+  postcss@8.5.8:
+    resolution: {integrity: sha512-OW/rX8O/jXnm82Ey1k44pObPtdblfiuWnrd8X7GJ7emImCOstunGbXUpp7HdBrFQX6rJzn3sPT397Wp5aCwCHg==}
+    engines: {node: ^10 || ^12 || >=14}
+
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
@@ -4388,10 +4392,10 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.1
 
-  '@nolebase/vitepress-plugin-highlight-targeted-heading@2.18.2(vitepress@2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.6)(stylus@0.64.0)(typescript@5.9.3))':
+  '@nolebase/vitepress-plugin-highlight-targeted-heading@2.18.2(vitepress@2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.8)(stylus@0.64.0)(typescript@5.9.3))':
     dependencies:
       less: 4.5.1
-      vitepress: 2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.6)(stylus@0.64.0)(typescript@5.9.3)
+      vitepress: 2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.8)(stylus@0.64.0)(typescript@5.9.3)
 
   '@oxc-project/runtime@0.101.0': {}
 
@@ -4915,36 +4919,36 @@ snapshots:
       '@typescript-eslint/types': 8.56.1
       eslint-visitor-keys: 5.0.1
 
-  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260301.1':
+  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260302.1':
     optional: true
 
-  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260301.1':
+  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260302.1':
     optional: true
 
-  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260301.1':
+  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260302.1':
     optional: true
 
-  '@typescript/native-preview-linux-arm@7.0.0-dev.20260301.1':
+  '@typescript/native-preview-linux-arm@7.0.0-dev.20260302.1':
     optional: true
 
-  '@typescript/native-preview-linux-x64@7.0.0-dev.20260301.1':
+  '@typescript/native-preview-linux-x64@7.0.0-dev.20260302.1':
     optional: true
 
-  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260301.1':
+  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260302.1':
     optional: true
 
-  '@typescript/native-preview-win32-x64@7.0.0-dev.20260301.1':
+  '@typescript/native-preview-win32-x64@7.0.0-dev.20260302.1':
     optional: true
 
-  '@typescript/native-preview@7.0.0-dev.20260301.1':
+  '@typescript/native-preview@7.0.0-dev.20260302.1':
     optionalDependencies:
-      '@typescript/native-preview-darwin-arm64': 7.0.0-dev.20260301.1
-      '@typescript/native-preview-darwin-x64': 7.0.0-dev.20260301.1
-      '@typescript/native-preview-linux-arm': 7.0.0-dev.20260301.1
-      '@typescript/native-preview-linux-arm64': 7.0.0-dev.20260301.1
-      '@typescript/native-preview-linux-x64': 7.0.0-dev.20260301.1
-      '@typescript/native-preview-win32-arm64': 7.0.0-dev.20260301.1
-      '@typescript/native-preview-win32-x64': 7.0.0-dev.20260301.1
+      '@typescript/native-preview-darwin-arm64': 7.0.0-dev.20260302.1
+      '@typescript/native-preview-darwin-x64': 7.0.0-dev.20260302.1
+      '@typescript/native-preview-linux-arm': 7.0.0-dev.20260302.1
+      '@typescript/native-preview-linux-arm64': 7.0.0-dev.20260302.1
+      '@typescript/native-preview-linux-x64': 7.0.0-dev.20260302.1
+      '@typescript/native-preview-win32-arm64': 7.0.0-dev.20260302.1
+      '@typescript/native-preview-win32-x64': 7.0.0-dev.20260302.1
 
   '@ungap/structured-clone@1.3.0': {}
 
@@ -6753,12 +6757,12 @@ snapshots:
     dependencies:
       htmlparser2: 8.0.2
       js-tokens: 9.0.1
-      postcss: 8.5.6
-      postcss-safe-parser: 6.0.0(postcss@8.5.6)
+      postcss: 8.5.8
+      postcss-safe-parser: 6.0.0(postcss@8.5.8)
 
-  postcss-safe-parser@6.0.0(postcss@8.5.6):
+  postcss-safe-parser@6.0.0(postcss@8.5.8):
     dependencies:
-      postcss: 8.5.6
+      postcss: 8.5.8
 
   postcss-safe-parser@7.0.1(postcss@8.5.6):
     dependencies:
@@ -6776,6 +6780,12 @@ snapshots:
   postcss-value-parser@4.2.0: {}
 
   postcss@8.5.6:
+    dependencies:
+      nanoid: 3.3.11
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
+
+  postcss@8.5.8:
     dependencies:
       nanoid: 3.3.11
       picocolors: 1.1.1
@@ -7442,18 +7452,18 @@ snapshots:
       lightningcss: 1.31.1
       stylus: 0.64.0
 
-  vitepress-plugin-pagefind@0.4.18(pagefind@1.4.0)(vitepress@2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.6)(stylus@0.64.0)(typescript@5.9.3))(vue@3.5.29(typescript@5.9.3)):
+  vitepress-plugin-pagefind@0.4.18(pagefind@1.4.0)(vitepress@2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.8)(stylus@0.64.0)(typescript@5.9.3))(vue@3.5.29(typescript@5.9.3)):
     dependencies:
       '@sugarat/theme-shared': 0.0.7
       '@vueuse/core': 14.2.1(vue@3.5.29(typescript@5.9.3))
       javascript-stringify: 2.1.0
       pagefind: 1.4.0
-      vitepress: 2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.6)(stylus@0.64.0)(typescript@5.9.3)
+      vitepress: 2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.8)(stylus@0.64.0)(typescript@5.9.3)
       vue-command-palette: 0.1.4
     transitivePeerDependencies:
       - vue
 
-  vitepress@2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.6)(stylus@0.64.0)(typescript@5.9.3):
+  vitepress@2.0.0-alpha.16(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(postcss@8.5.8)(stylus@0.64.0)(typescript@5.9.3):
     dependencies:
       '@docsearch/css': 4.5.4
       '@docsearch/js': 4.5.4
@@ -7475,7 +7485,7 @@ snapshots:
       vite: 7.3.1(@types/node@25.3.3)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.31.1)(stylus@0.64.0)
       vue: 3.5.29(typescript@5.9.3)
     optionalDependencies:
-      postcss: 8.5.6
+      postcss: 8.5.8
     transitivePeerDependencies:
       - '@types/node'
       - async-validator
