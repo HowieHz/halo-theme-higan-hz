@@ -57,7 +57,7 @@ jobs:
         run: pnpm lint
       
       - name: Format
-        run: pnpm format
+        run: pnpm fmt
 
       - name: Write Lint summary
         if: success()

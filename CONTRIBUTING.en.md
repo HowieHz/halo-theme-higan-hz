@@ -45,7 +45,7 @@ pnpm install
 During development, run the following command in the project root directory to render modifications in real-time:
 
 ```bash
-pnpm dev
+pnpm watch
 ```
 
 This will output uncompressed style files in the `tmp/` directory, making it easier to trace issues.
@@ -65,7 +65,7 @@ pnpm lint
 Before committing, you can run the following command to format the code:
 
 ```bash
-pnpm format
+pnpm fmt
 ```
 
 ##### Building the Theme
@@ -104,7 +104,7 @@ This project runs a set of quality checks on each PR via CI (GitHub Actions):
       - TypeScript files
   - Note: All checks enable auto-fixing, and changes will be automatically committed if any are made.
 
-- Formatting (`pnpm format`):
+- Formatting (`pnpm fmt`):
   - `stylus-supremacy`: Stylus formatting
     - Scope:
       - Stylus files
@@ -133,7 +133,7 @@ This project runs a set of quality checks on each PR via CI (GitHub Actions):
 During development, run the following command in the project root directory to start a server for real-time rendering of modifications:
 
 ```bash
-pnpm docs:dev
+pnpm docs:watch
 ```
 
 The following command builds the final output in the `docs/.vitepress/dist` directory:
