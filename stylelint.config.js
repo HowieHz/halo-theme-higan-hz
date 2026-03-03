@@ -7,6 +7,10 @@ export default {
     "stylelint-config-recommended-vue",
   ],
   plugins: ["stylelint-order"],
+  overrides: [
+    // 对 HTML 文件禁用 no-invalid-position-declaration 规则，因为自 postcss 8.5.7 开始，又产生了类似 https://github.com/stylelint/stylelint/issues/8695 的问题
+    { files: ["**/*.html"], rules: { "no-invalid-position-declaration": null } },
+  ],
   rules: {
     // 嵌套选择器规则
     "selector-nested-pattern": "^&|&$",
