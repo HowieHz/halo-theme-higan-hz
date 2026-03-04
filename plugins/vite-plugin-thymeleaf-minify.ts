@@ -1,7 +1,7 @@
-import type { Plugin } from "vite";
-
 import { promises as fs } from "node:fs";
 import { dirname, resolve } from "node:path";
+
+import type { Plugin } from "vite";
 
 /**
  * Plugin options interface

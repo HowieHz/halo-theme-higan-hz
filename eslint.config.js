@@ -1,3 +1,6 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
 import { includeIgnoreFile } from "@eslint/compat";
 import js from "@eslint/js";
 import tsParser from "@typescript-eslint/parser";
@@ -6,8 +9,6 @@ import oxlint from "eslint-plugin-oxlint";
 import pluginVue from "eslint-plugin-vue";
 import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import tseslint from "typescript-eslint";
 import vueParser from "vue-eslint-parser";
 

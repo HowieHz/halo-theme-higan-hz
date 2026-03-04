@@ -2,7 +2,7 @@ name: Oxlint Migration
 
 on:
   schedule:
-    - cron: '0 16 * * *'
+    - cron: "0 16 * * *"
   workflow_dispatch:
 
 jobs:
@@ -42,7 +42,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -59,11 +59,11 @@ jobs:
           # - Contents: Read and Write (create branches and commits)
           # - Pull requests: Read and Write (create PRs)
           # - Workflows: Read and Write (allow PRs to trigger workflows)
-          commit-message: 'chore: update oxlint configuration'
-          title: 'chore: update oxlint configuration'
+          commit-message: "chore: update oxlint configuration"
+          title: "chore: update oxlint configuration"
           body: |
             This PR updates the oxlint configuration by running the migration tool.
-            
+
             Generated automatically by the oxlint-migrate workflow.
           branch: chore/oxlint-migrate
           delete-branch: true

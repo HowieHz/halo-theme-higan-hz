@@ -18,7 +18,7 @@ jobs:
       pr_head_sha: ${{ steps.pr.outputs.head_sha }}
       pr_head_ref: ${{ steps.pr.outputs.head_ref }}
       comment_id: ${{ github.event.comment.id }}
-    
+
     steps:
       - name: Add reaction to comment
         uses: actions/github-script@v7
@@ -30,7 +30,7 @@ jobs:
               comment_id: context.payload.comment.id,
               content: 'eyes'
             });
-      
+
       - name: Check if commenter has write access
         id: check
         uses: actions/github-script@v7
@@ -60,7 +60,7 @@ jobs:
             } catch (error) {
               core.setFailed(`Permission check failed: ${error.message}`);
             }
-      
+
       - name: Get PR details
         if: steps.check.outputs.should_run == 'true'
         id: pr
@@ -72,11 +72,11 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.issue.number
             });
-            
+
             core.setOutput('number', pr.number);
             core.setOutput('head_sha', pr.head.sha);
             core.setOutput('head_ref', pr.head.ref);
-            
+
             console.log(`PR #${pr.number}`);
             console.log(`Head SHA: ${pr.head.sha}`);
             console.log(`Head Ref: ${pr.head.ref}`);
@@ -90,7 +90,7 @@ jobs:
     outputs:
       release_tag: ${{ steps.release.outputs.tag }}
       release_sha: ${{ steps.release.outputs.sha }}
-    
+
     steps:
       - name: Get latest release
         id: release
@@ -137,7 +137,7 @@ jobs:
           - ref_name: latest-release
             ref: ${{ needs.get-latest-release.outputs.release_sha }}
       fail-fast: false
-    
+
     uses: ./.github/workflows/reusable-audit.yml
     with:
       theme_ref: ${{ matrix.ref }}
@@ -153,30 +153,29 @@ jobs:
       needs.check-trigger.outputs.should_run == 'true' &&
       needs.audit.result == 'success'
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout
         uses: actions/checkout@v6
         with:
           ref: ${{ needs.check-trigger.outputs.pr_head_sha }}
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
-      
+
       - name: Download current reports
         uses: actions/download-artifact@v7
         with:
           name: page-size-reports-current
           path: ./reports-current
-      
+
       - name: Download latest-release reports
         uses: actions/download-artifact@v7
         with:
           name: page-size-reports-latest-release
           path: ./reports-latest-release
-      
+
       - name: Generate comparison report
         run: |
           node .github/scripts/compare-page-size-reports.js
@@ -184,33 +183,33 @@ jobs:
           CURRENT_REPORT: ./reports-current/page-size-report.json
           BASE_REPORT: ./reports-latest-release/page-size-report.json
           OUTPUT_FILE: ./comparison-report.md
-      
+
       - name: Add header to report
         run: |
           RELEASE_TAG="${{ needs.get-latest-release.outputs.release_tag }}"
           PR_SHA="${{ needs.check-trigger.outputs.pr_head_sha }}"
-          
+
           cat > ./final-report.md << EOF
           # 📊 Performance Comparison Report
-          
+
           **Comparison:** Current PR version vs Latest Release version (\`${RELEASE_TAG}\`)
-          
+
           - **Current PR**: [\`${PR_SHA:0:7}\`](https://github.com/${{ github.repository }}/commit/${PR_SHA})
           - **Latest Release**: [\`${RELEASE_TAG}\`](https://github.com/${{ github.repository }}/releases/tag/${RELEASE_TAG})
-          
+
           ---
-          
+
           EOF
-          
+
           cat ./comparison-report.md >> ./final-report.md
-      
+
       - name: Add success reaction and comment on PR
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
             const report = fs.readFileSync('./final-report.md', 'utf8');
-            
+
             // Add success reaction
             await github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
@@ -218,7 +217,7 @@ jobs:
               comment_id: ${{ needs.check-trigger.outputs.comment_id }},
               content: '+1'
             });
-            
+
             // Post comment
             try {
               await github.rest.issues.createComment({
@@ -249,7 +248,7 @@ jobs:
               comment_id: ${{ needs.check-trigger.outputs.comment_id }},
               content: '-1'
             });
-            
+
             // Post failure notification
             await github.rest.issues.createComment({
               owner: context.repo.owner,
@@ -257,7 +256,7 @@ jobs:
               issue_number: ${{ needs.check-trigger.outputs.pr_number }},
               body: '❌ Report generation failed. See the [workflow run logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.'
             });
-  
+
   # Handle failure cases
   handle-failure:
     name: Handle Failure
@@ -267,7 +266,6 @@ jobs:
       needs.check-trigger.outputs.should_run == 'true' &&
       needs.audit.result == 'failure'
     runs-on: ubuntu-latest
-    
     steps:
       - name: Add failure reaction and comment
         uses: actions/github-script@v7
@@ -280,7 +278,7 @@ jobs:
               comment_id: ${{ needs.check-trigger.outputs.comment_id }},
               content: '-1'
             });
-            
+
             // Post failure notification
             await github.rest.issues.createComment({
               owner: context.repo.owner,

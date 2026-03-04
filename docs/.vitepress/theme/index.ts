@@ -6,6 +6,7 @@ import { h } from "vue";
 
 import FrameDefaultLayout from "../components/FrameDefaultLayout.vue";
 import FramePostLayout from "../components/FramePostLayout.vue";
+
 import "@nolebase/vitepress-plugin-highlight-targeted-heading/client/style.css";
 
 export default {

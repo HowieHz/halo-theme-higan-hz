@@ -1,20 +1,5 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "sortImports": {
-    "groups": [
-      "type-import",
-      ["value-builtin", "value-external"],
-      "type-internal",
-      "value-internal",
-      ["type-parent", "type-sibling", "type-index"],
-      ["value-parent", "value-sibling", "value-index"],
-      "unknown"
-    ]
-  },
-  "sortTailwindcss": {
-    "stylesheet": "./src/styles/mixins/tailwind.css"
-  },
-  "sortPackageJson": true,
   "ignorePatterns": ["public/assets/**"],
   "overrides": [
     {
@@ -23,5 +8,12 @@
         "trailingComma": "none"
       }
     }
-  ]
+  ],
+  "sortImports": {},
+  "sortPackageJson": {
+    "sortScripts": true
+  },
+  "sortTailwindcss": {
+    "stylesheet": "./src/styles/mixins/tailwind.css"
+  }
 }
