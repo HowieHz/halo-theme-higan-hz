@@ -43,7 +43,7 @@
     "lint:type-check": "tsgo --noEmit",
     "fmt": "pnpm run \"/^fmt:/\"",
     "fmt:stylus": "stylus-supremacy format **/*.styl --options .vscode/settings.json -r",
-    "fmt:oxfmt": "oxfmt \"**/*.{json,jsonc,yaml,md,css,js,ts,vue,html}\"",
+    "fmt:oxfmt": "oxfmt \"**/*.{json,jsonc,yaml,md,css,js,ts,vue,html}\" \".github/**/*.{yml,js,json}\"",
     "migrate:oxlint": "pnpm dlx @oxlint/migrate --type-aware --with-nursery && pnpm run fmt",
     "prepare": "husky && tw-patch install",
     "docs:watch": "pnpm --filter \"docs\" docs:watch",
