@@ -45,7 +45,7 @@ pnpm install
 During development, run the following command in the project root directory to render modifications in real-time:
 
 ```bash
-pnpm watch
+pnpm dev
 ```
 
 This will output uncompressed style files in the `tmp/` directory, making it easier to trace issues.
@@ -133,7 +133,7 @@ This project runs a set of quality checks on each PR via CI (GitHub Actions):
 During development, run the following command in the project root directory to start a server for real-time rendering of modifications:
 
 ```bash
-pnpm docs:watch
+pnpm docs:dev
 ```
 
 The following command builds the final output in the `docs/.vitepress/dist` directory:

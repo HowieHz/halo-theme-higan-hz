@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "docs:build": "vitepress build",
-    "docs:preview": "pnpm run docs:build && vitepress preview",
-    "docs:watch": "vitepress dev"
+    "docs:dev": "vitepress dev",
+    "docs:preview": "pnpm run docs:build && vitepress preview"
   },
   "dependencies": {
     "chart.js": "^4.5.1",
