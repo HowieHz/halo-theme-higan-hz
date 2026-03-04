@@ -33,7 +33,7 @@
     "build": "pnpm run lint:type-check && tw-patch extract && vite build",
     "docs:build": "pnpm --filter \"docs\" docs:build",
     "docs:preview": "pnpm --filter \"docs\" docs:preview",
-    "docs:watch": "pnpm --filter \"docs\" docs:watch",
+    "docs:dev": "pnpm --filter \"docs\" docs:dev",
     "fmt": "pnpm run \"/^fmt:/\"",
     "fmt:oxfmt": "oxfmt \"**/*.{json,jsonc,yaml,md,css,js,ts,vue,html}\" \".github/**/*.{yml,js,json}\"",
     "fmt:stylus": "stylus-supremacy format **/*.styl --options .vscode/settings.json -r",
@@ -46,9 +46,9 @@
     "migrate:oxlint": "pnpm dlx @oxlint/migrate --type-aware --with-nursery && pnpm run fmt",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky && tw-patch install",
-    "watch": "pnpm run \"/^watch:/\"",
-    "watch:stylus": "stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --watch",
-    "watch:vite": "vite build --watch"
+    "dev": "pnpm run \"/^dev:/\"",
+    "dev:stylus": "stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --watch",
+    "dev:vite": "vite build --watch"
   },
   "dependencies": {
     "alpinejs": "^3.15.8"
@@ -122,5 +122,5 @@
     "Firefox >= 114",
     "Safari >= 16.4"
   ],
-  "packageManager": "pnpm@10.29.2"
+  "packageManager": "pnpm@10.30.3"
 }
