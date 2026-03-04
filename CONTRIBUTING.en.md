@@ -108,7 +108,7 @@ This project runs a set of quality checks on each PR via CI (GitHub Actions):
   - `stylus-supremacy`: Stylus formatting
     - Scope:
       - Stylus files
-  - `prettier`: Formatting
+  - `oxfmt`: Formatting
     - Scope:
       - JSON files
       - JSONC files

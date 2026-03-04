@@ -1,5 +1,4 @@
 import "./styles.css";
-
 import { hideElement, isVisible, setupAnimation } from "../index";
 
 /**

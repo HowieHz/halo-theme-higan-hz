@@ -1,9 +1,9 @@
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import { constants } from "node:zlib";
 import tailwindcss from "@tailwindcss/vite";
 import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { constants } from "node:zlib";
 import utwm from "unplugin-tailwindcss-mangle/vite";
 import { defineConfig } from "vite";
 import { compression, defineAlgorithm } from "vite-plugin-compression2";

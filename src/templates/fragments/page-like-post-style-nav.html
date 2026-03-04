@@ -6,7 +6,7 @@
   <div id="header-post" class="fixed top-8 right-0 z-50 float-right hidden sm:block">
     <!--/* only show on tablet start, display when the page is not at the top */-->
     <a id="top-icon-tablet" class="hidden lg:hidden!" href="#" role="button" data-scroll-to-top
-      ><span class="iconify iconify-large material-symbols--keyboard-arrow-up"></span
+      ><span class="iconify-large iconify material-symbols--keyboard-arrow-up"></span
     ></a>
     <a
       id="toc-icon-tablet"
@@ -17,7 +17,7 @@
       aria-expanded="false"
       aria-controls="toc-overlay-tablet"
       th:aria-label="#{fragment.post-nav.toc-icon.aria-label}"
-      ><span class="iconify iconify-large ic--baseline-toc"></span
+      ><span class="iconify-large iconify ic--baseline-toc"></span
     ></a>
     <!--/* only show on tablet end */-->
     <span id="menu" class="mr-8">
@@ -35,7 +35,7 @@
           aria-expanded="true"
           aria-controls="nav actions toc"
         >
-          <span class="iconify iconify-middle material-symbols--menu -translate-y-px"></span>
+          <span class="iconify-middle iconify -translate-y-px material-symbols--menu"></span>
         </a>
       </div>
       <span id="actions" class="float-right mt-8 mr-8 hidden text-right lg:block">
@@ -48,7 +48,7 @@
               role="button"
               data-toggle-target="#i-home"
             >
-              <span class="iconify iconify-large mdi--home-circle"></span>
+              <span class="iconify-large iconify mdi--home-circle"></span>
             </a>
           </li>
           <!--/* only show to top button on desktop */-->
@@ -61,7 +61,7 @@
               role="button"
               data-toggle-target="#i-top"
             >
-              <span class="iconify iconify-large material-symbols--keyboard-arrow-up"></span>
+              <span class="iconify-large iconify material-symbols--keyboard-arrow-up"></span>
             </a>
           </li>
           <!--/* only show toc button on tablet */-->
@@ -77,7 +77,7 @@
               role="button"
               data-toggle-target="#i-toc"
             >
-              <span class="iconify iconify-large ic--baseline-toc"></span>
+              <span class="iconify-large iconify ic--baseline-toc"></span>
             </a>
           </li>
           <li th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}">
@@ -92,7 +92,7 @@
               aria-controls="share-list"
               data-toggle-target="#i-share"
             >
-              <span class="iconify iconify-middle mdi--share-variant-outline"></span>
+              <span class="iconify-middle iconify mdi--share-variant-outline"></span>
             </a>
           </li>
         </ul>
@@ -129,7 +129,7 @@
           onclick="event.preventDefault()"
           th:aria-label="#{fragment.post-nav.close-toc.aria-label}"
         >
-          <span class="iconify iconify-large ic--baseline-close"></span>
+          <span class="iconify-large iconify ic--baseline-close"></span>
         </a>
       </div>
       <div id="toc-tablet"></div>

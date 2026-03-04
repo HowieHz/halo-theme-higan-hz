@@ -42,16 +42,16 @@
           <div th:each="archive : ${archives}">
             <h2 class="v-cursor-pointer">
               <span th:text="${archive.year}"></span>
-              <span class="iconify iconify-large mdi--chevron-right"></span>
-              <span class="iconify iconify-large mdi--chevron-down" style="display: none"></span>
+              <span class="iconify-large iconify mdi--chevron-right"></span>
+              <span class="iconify-large iconify mdi--chevron-down" style="display: none"></span>
             </h2>
             <ul class="m-0 flex-auto p-0" style="display: none">
               <th:block th:each="month : ${archive.months}">
                 <div class="month-container ml-7 flex">
                   <h3 class="v-cursor-pointer -mt-2 flex-none no-underline">
                     <span th:text="${month.month}" class="underline"></span>
-                    <span class="iconify iconify-large mdi--chevron-right"></span>
-                    <span class="iconify iconify-large mdi--chevron-down" style="display: none"></span>
+                    <span class="iconify-large iconify mdi--chevron-right"></span>
+                    <span class="iconify-large iconify mdi--chevron-down" style="display: none"></span>
                   </h3>
                   <ul class="common-post-list flex-auto" style="display: none">
                     <li class="post-item" th:each="post : ${month.posts}">

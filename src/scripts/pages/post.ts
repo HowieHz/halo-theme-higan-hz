@@ -2,7 +2,6 @@ import "../main";
 import "../../styles/pages/post.css";
 import "../../styles/mixins/article.css";
 import "../../styles/mixins/article-metadata.css";
-
 import { isVisible, scrollToTop, show, toggle } from "../utils/animations";
 import { fadeIn } from "../utils/animations/fade-in";
 import { fadeOut } from "../utils/animations/fade-out";

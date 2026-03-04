@@ -108,7 +108,7 @@ pnpm build
   - `stylus-supremacy`: Stylus 格式化
     - 范围：
       - Stylus 文件
-  - `prettier`: 格式化
+  - `oxfmt`: 格式化
     - 范围：
       - JSON 文件
       - JSONC 文件

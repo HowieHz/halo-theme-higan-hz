@@ -1,5 +1,4 @@
 import "./styles.css";
-
 import { isVisible } from "../../../scripts/utils/animations";
 import { fadeIn } from "../../../scripts/utils/animations/fade-in";
 import { fadeOut } from "../../../scripts/utils/animations/fade-out";
