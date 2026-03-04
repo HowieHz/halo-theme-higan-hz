@@ -64,8 +64,8 @@ importers:
         specifier: ^1.2.72
         version: 1.2.72
       '@iconify-json/tabler':
-        specifier: ^1.2.28
-        version: 1.2.28
+        specifier: ^1.2.29
+        version: 1.2.29
       '@iconify-json/typcn':
         specifier: ^1.2.2
         version: 1.2.2
@@ -608,8 +608,8 @@ packages:
   '@iconify-json/simple-icons@1.2.72':
     resolution: {integrity: sha512-wkcixntHvaCoqPqerGrNFcHQ3Yx1ux4ZkhscCDK0DEHpP62XCH+cxq1HTsRjbUiQl/M9K8bj03HF6Wgn5iE2rQ==}
 
-  '@iconify-json/tabler@1.2.28':
-    resolution: {integrity: sha512-HKF7K9Ba67GdB2b2tYWF1DS2Ydpxmo1Fsda7bQRwKUPYOiYM99F7rgJp6BN7TFQiRmCaxilfro6FQeCMSjuV1g==}
+  '@iconify-json/tabler@1.2.29':
+    resolution: {integrity: sha512-PgozNurmUn6zFc8jV091sUZ8kMjLBJTUBXYpnQtZ6mhHmVW+ML6LZoHDw+TZM274IYMu0/85ikExPg+5a9cl3A==}
 
   '@iconify-json/typcn@1.2.2':
     resolution: {integrity: sha512-I7ckhJgsuvzO1JPgEIsbcjvANVoCs3046w7IcdVpMpz7rJPp2r8+PajvpQ84vHYkCTti297NmOTuTARTiaabTw==}
@@ -4318,7 +4318,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/tabler@1.2.28':
+  '@iconify-json/tabler@1.2.29':
     dependencies:
       '@iconify/types': 2.0.0
 
