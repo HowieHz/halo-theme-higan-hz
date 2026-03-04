@@ -15,5 +15,13 @@
     "stylesheet": "./src/styles/mixins/tailwind.css"
   },
   "sortPackageJson": true,
-  "ignorePatterns": ["public/assets/**"]
+  "ignorePatterns": ["public/assets/**"],
+  "overrides": [
+    {
+      "files": ["**/*.jsonc"],
+      "options": {
+        "trailingComma": "none"
+      }
+    }
+  ]
 }
