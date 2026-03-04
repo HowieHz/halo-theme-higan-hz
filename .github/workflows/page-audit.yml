@@ -35,14 +35,20 @@ jobs:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
         with:
-          node-version: 24
-      - uses: actions/download-artifact@v7
+          node-version: lts/*
+
+      - name: Download Lighthouse Raw Data
+        uses: actions/download-artifact@v7
         with:
           name: lighthouse-raw-data-current
           path: ./lighthouse-reports-current
+
       - name: Check Lighthouse Scores
         run: node .github/scripts/check-lighthouse-scores.js
         env:
@@ -64,7 +70,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: lts/*
       
       - name: Download current reports
         uses: actions/download-artifact@v7

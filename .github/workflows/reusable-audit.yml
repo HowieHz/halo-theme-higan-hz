@@ -131,7 +131,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: lts/*
           cache: pnpm
 
       - name: Setup Java
@@ -164,7 +164,7 @@ jobs:
             echo "📦 [Theme] Start build"
 
             step_start=$(date +%s%3N); echo "STEP_START:pnpm-install:${step_start}" >> ~/logs/theme.timing
-            pnpm install
+            pnpm install --frozen-lockfile
             step_end=$(date +%s%3N); echo "STEP_END:pnpm-install:${step_end}" >> ~/logs/theme.timing
 
             step_start=$(date +%s%3N); echo "STEP_START:pnpm-build:${step_start}" >> ~/logs/theme.timing
