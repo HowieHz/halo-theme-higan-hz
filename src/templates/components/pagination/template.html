@@ -5,7 +5,7 @@
   <div class="pager" th:unless="${isListResult}">
     <!--/* 适用于 UrlContextListResult */-->
     <a th:href="@{${posts.prevUrl}}" th:if="${posts.hasPrevious()}" th:aria-label="#{common.previousPage.aria-label}">
-      <span class="iconify iconify-middle material-symbols--chevron-left"></span>
+      <span class="iconify-middle iconify material-symbols--chevron-left"></span>
     </a>
     <span
       class="page-number"
@@ -16,7 +16,7 @@
       >Page 1 of 1 填充位</span
     >
     <a th:href="@{${posts.nextUrl}}" th:if="${posts.hasNext()}" th:aria-label="#{common.nextPage.aria-label}">
-      <span class="iconify iconify-middle material-symbols--chevron-right"></span>
+      <span class="iconify-middle iconify material-symbols--chevron-right"></span>
     </a>
   </div>
   <div
@@ -32,7 +32,7 @@
       th:if="${posts.hasPrevious()}"
       th:aria-label="#{common.previousPage.aria-label}"
     >
-      <span class="iconify iconify-middle material-symbols--chevron-left"></span>
+      <span class="iconify-middle iconify material-symbols--chevron-left"></span>
     </a>
     <span
       class="page-number"
@@ -43,7 +43,7 @@
       >Page 1 of 1 填充位</span
     >
     <a th:href="@{'/page/' + ${nextPage}}" th:if="${posts.hasNext()}" th:aria-label="#{common.nextPage.aria-label}">
-      <span class="iconify iconify-middle material-symbols--chevron-right"></span>
+      <span class="iconify-middle iconify material-symbols--chevron-right"></span>
     </a>
   </div>
 </body>

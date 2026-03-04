@@ -10,7 +10,7 @@
   <ul>
     <li class="icon" th:if="${showIcon}">
       <a href="#" onclick="event.preventDefault()" aria-expanded="false" role="button">
-        <span class="iconify iconify-huge material-symbols--menu"></span>
+        <span class="iconify-huge iconify material-symbols--menu"></span>
       </a>
     </li>
 
@@ -151,7 +151,7 @@
         th:aria-label="#{fragment.menu.submenu-toggle.aria-label}"
         type="button"
       >
-        <span class="iconify iconify-large-middle material-symbols--keyboard-arrow-down mr-1"></span></button
+        <span class="iconify-large-middle mr-1 iconify material-symbols--keyboard-arrow-down"></span></button
       ><a
         class="submenu-link"
         th:href="@{${item?.status?.href}}"
@@ -288,7 +288,7 @@
   <span
     id="theme-toggle-button-icon"
     style="display: none"
-    class="icon iconify iconify-large -translate-x-px -translate-y-px"
+    class="icon iconify-large iconify -translate-x-px -translate-y-px"
   ></span>
   <style>
     #theme-toggle-button {

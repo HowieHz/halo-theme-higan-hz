@@ -129,71 +129,71 @@
             th:attr="aria-label=${item?.type['aria-label']}"
           >
             <span
-              class="iconify iconify-middle heroicons-outline--rss"
+              class="iconify-middle iconify heroicons-outline--rss"
               th:if="${#strings.equals(item?.type['type'], 'rss')}"
             ></span>
             <span
-              class="iconify iconify-middle simple-icons--bilibili"
+              class="iconify-middle iconify simple-icons--bilibili"
               th:if="${#strings.equals(item?.type['type'], 'bilibili')}"
             ></span>
             <span
-              class="iconify iconify-middle ant-design--dribbble-circle-filled"
+              class="iconify-middle iconify ant-design--dribbble-circle-filled"
               th:if="${#strings.equals(item?.type['type'], 'dribbble')}"
             ></span>
             <span
-              class="iconify iconify-middle ic--outline-email"
+              class="iconify-middle iconify ic--outline-email"
               th:if="${#strings.equals(item?.type['type'], 'email')}"
             ></span>
             <span
-              class="iconify iconify-middle ic--baseline-facebook"
+              class="iconify-middle iconify ic--baseline-facebook"
               th:if="${#strings.equals(item?.type['type'], 'facebook')}"
             ></span>
             <span
-              class="iconify iconify-middle mdi--github"
+              class="iconify-middle iconify mdi--github"
               th:if="${#strings.equals(item?.type['type'], 'github')}"
             ></span>
             <span
-              class="iconify iconify-middle ant-design--instagram-filled"
+              class="iconify-middle iconify ant-design--instagram-filled"
               th:if="${#strings.equals(item?.type['type'], 'instagram')}"
             ></span>
             <span
-              class="iconify iconify-middle ant-design--qq-circle-filled"
+              class="iconify-middle iconify ant-design--qq-circle-filled"
               th:if="${#strings.equals(item?.type['type'], 'qq')}"
             ></span>
             <span
-              class="iconify iconify-middle ant-design--reddit-circle-filled"
+              class="iconify-middle iconify ant-design--reddit-circle-filled"
               th:if="${#strings.equals(item?.type['type'], 'reddit')}"
             ></span>
             <span
-              class="iconify iconify-middle mdi--stack-overflow"
+              class="iconify-middle iconify mdi--stack-overflow"
               th:if="${#strings.equals(item?.type['type'], 'stack_overflow')}"
             ></span>
             <span
-              class="iconify iconify-middle ic--baseline-telegram"
+              class="iconify-middle iconify ic--baseline-telegram"
               th:if="${#strings.equals(item?.type['type'], 'telegram')}"
             ></span>
             <span
-              class="iconify iconify-middle ant-design--twitter-circle-filled"
+              class="iconify-middle iconify ant-design--twitter-circle-filled"
               th:if="${#strings.equals(item?.type['type'], 'x')}"
             ></span>
             <span
-              class="iconify iconify-middle ant-design--youtube-filled"
+              class="iconify-middle iconify ant-design--youtube-filled"
               th:if="${#strings.equals(item?.type['type'], 'youtube')}"
             ></span>
             <span
-              class="iconify iconify-middle ri--douban-line"
+              class="iconify-middle iconify ri--douban-line"
               th:if="${#strings.equals(item?.type['type'], 'douban')}"
             ></span>
             <span
-              class="iconify iconify-middle simple-icons--neteasecloudmusic"
+              class="iconify-middle iconify simple-icons--neteasecloudmusic"
               th:if="${#strings.equals(item?.type['type'], 'neteasecloudmusic')}"
             ></span>
             <span
-              class="iconify iconify-middle ant-design--weibo-circle-filled"
+              class="iconify-middle iconify ant-design--weibo-circle-filled"
               th:if="${#strings.equals(item?.type['type'], 'weibo')}"
             ></span>
             <span
-              class="iconify iconify-middle ant-design--zhihu-circle-filled"
+              class="iconify-middle iconify ant-design--zhihu-circle-filled"
               th:if="${#strings.equals(item?.type['type'], 'zhihu')}"
             ></span>
           </a>
@@ -210,7 +210,7 @@
               target="_blank"
               th:attr="aria-label=${custom_sns_item?.aria_label}"
             >
-              <span class="iconify iconify-middle" th:style="|--svg:url('${custom_sns_item?.icon.value}')|"></span>
+              <span class="iconify-middle iconify" th:style="|--svg:url('${custom_sns_item?.icon.value}')|"></span>
             </a>
           </th:block>
         </th:block>

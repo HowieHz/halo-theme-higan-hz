@@ -1,5 +1,4 @@
 import "./main.css";
-
 import { NolebaseHighlightTargetedHeading } from "@nolebase/vitepress-plugin-highlight-targeted-heading/client";
 import { useRoute, type Theme } from "vitepress";
 import DefaultTheme from "vitepress/theme";
@@ -7,7 +6,6 @@ import { h } from "vue";
 
 import FrameDefaultLayout from "../components/FrameDefaultLayout.vue";
 import FramePostLayout from "../components/FramePostLayout.vue";
-
 import "@nolebase/vitepress-plugin-highlight-targeted-heading/client/style.css";
 
 export default {
