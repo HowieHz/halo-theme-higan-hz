@@ -2,14 +2,14 @@ name: Node.js Format and Lint Check
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    types: [ opened, synchronize, reopened ]
+    types: [opened, synchronize, reopened]
 jobs:
   check:
     name: Node.js Format and Lint Check
     runs-on: ubuntu-latest
-    
+
     permissions:
       contents: write
 
@@ -48,14 +48,14 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Lint
         run: pnpm lint
-      
+
       - name: Format
         run: pnpm fmt
 
@@ -72,7 +72,7 @@ jobs:
         with:
           commit_message: |
             style: auto-format and fixes
-      
+
       - name: "Run if changes have been detected"
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
         run: echo "Changes!"

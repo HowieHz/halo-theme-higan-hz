@@ -75,7 +75,7 @@ jobs:
     if: ${{ inputs.run_lighthouse_ci == true || needs.precheck.outputs.screenshots_needed == 'true' }}
     name: Page Audit (${{ inputs.ref_name }})
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Add swap space
         run: |
@@ -145,15 +145,15 @@ jobs:
         shell: bash
         run: |
           set -e
-          
+
           # Record environment information
           JAVA_VERSION=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}')
           echo "JAVA_VERSION=${JAVA_VERSION}" >> $GITHUB_ENV
           HALO_VERSION="${{ inputs.halo_version }}"
           echo "HALO_VERSION=${HALO_VERSION}" >> $GITHUB_ENV
-          
+
           mkdir -p ~/logs
-          
+
           # ============ Task 1: Theme build ============
           (
             set -e
@@ -191,7 +191,7 @@ jobs:
             echo "✅ [Theme] Complete"
           ) > ~/logs/theme.log 2>&1 &
           THEME_PID=$!
-          
+
           # ============ Task 2: Halo setup ============
           (
             set -e
@@ -279,29 +279,29 @@ jobs:
             echo "✅ [Halo] Complete"
           ) > ~/logs/halo.log 2>&1 &
           HALO_PID=$!
-          
+
           # ============ Wait and check results ============
           echo "⏳ Waiting for parallel tasks..."
-          
+
           wait $THEME_PID
           THEME_CODE=$?
           wait $HALO_PID
           HALO_CODE=$?
-          
+
           if [ $THEME_CODE -ne 0 ]; then
             echo "❌ Theme build failed"
             cat ~/logs/theme.log
             exit 1
           fi
-          
+
           if [ $HALO_CODE -ne 0 ]; then
             echo "❌ Halo setup failed"
             cat ~/logs/halo.log
             exit 1
           fi
-          
+
           echo "🎉 All parallel tasks succeeded!"
-          
+
           # Output timing stats for the first parallel group
           echo ""
           echo "⏱️  Timing for first parallel group (Build & Setup):"
@@ -336,12 +336,12 @@ jobs:
       - name: Install and activate theme
         run: |
           THEME_ZIP_PATH="${HOME}/builds/target/howiehz-higan-cn.zip"
-          
+
           if [ ! -f "$THEME_ZIP_PATH" ]; then
             echo "❌ Theme file not found: $THEME_ZIP_PATH"
             exit 1
           fi
-          
+
           echo "Installing theme..."
           response=$(curl -v -X POST \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/install \
@@ -349,40 +349,40 @@ jobs:
             -F "file=@${THEME_ZIP_PATH}" \
             -w "\nHTTP_CODE:%{http_code}" \
             2>&1)
-          
+
           http_code=$(echo "$response" | grep "HTTP_CODE:" | cut -d: -f2)
-          
+
           if [ -z "$http_code" ] || ([ "$http_code" != "200" ] && [ "$http_code" != "201" ]); then
             echo "❌ Theme installation failed (HTTP $http_code)"
             echo "$response"
             exit 1
           fi
-          
+
           echo "✓ Theme installed"
-          
+
           curl -X PUT \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/activation \
             -u admin:admin \
             -s > /dev/null
-          
+
           echo "✓ Theme activated"
-          
+
           curl -X PUT \
             http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/invalidate-cache \
             -u admin:admin \
             -s > /dev/null
-          
+
           echo "✓ Cache cleared"
 
       - name: Disable Halo plugins
         shell: bash
         run: |
           set -e
-          
+
           echo "Disable plugins: PluginCommentWidget, PluginSearchWidget, shiki, editor-hyperlink-card"
-          
+
           PIDS=()
-          
+
           for plugin in PluginCommentWidget PluginSearchWidget shiki editor-hyperlink-card; do
             (
               echo "🔧 Disabling ${plugin}"
@@ -398,13 +398,13 @@ jobs:
             ) &
             PIDS+=($!)
           done
-          
+
           echo "⏳ Waiting for plugin disable tasks..."
-          
+
           for pid in "${PIDS[@]}"; do
             wait $pid || echo "⚠️ background job $pid exited with status $?"
           done
-          
+
           echo "🎉 Plugins disabled"
 
       - name: Update site basic config favicon
@@ -628,7 +628,7 @@ jobs:
           fi
 
           echo "🎉 Both LHCI and Playwright tasks succeeded"
-          
+
           # Only output timing for the second parallel group
           echo ""
           echo "⏱️  Timing for second parallel group (LHCI & Playwright):"
@@ -772,7 +772,7 @@ jobs:
 
           task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/playwright.timing
           echo "✅ [Playwright] Complete"
-      
+
       - name: Upload screenshots (${{ inputs.ref_name }})
         if: ${{ (failure() && inputs.ref_name != 'base' && inputs.upload_screenshots_artifact) || inputs.upload_screenshots_artifact }}
         uses: actions/upload-artifact@v4
@@ -781,7 +781,7 @@ jobs:
           path: ./screenshots/
           include-hidden-files: true
           if-no-files-found: warn
-        
+
       - name: Upload Lighthouse raw data (${{ inputs.ref_name }})
         if: ${{ (failure() && inputs.run_lighthouse_ci) || inputs.upload_lighthouse_artifact == true }}
         uses: actions/upload-artifact@v4
@@ -810,13 +810,13 @@ jobs:
             echo "⚠️  Warning: .lighthouseci directory not found"
             exit 1
           fi
-          
+
           json_count=$(find ./.lighthouseci -name "lhr-*.json" | wc -l)
           if [ "$json_count" -eq 0 ]; then
             echo "⚠️  Warning: No Lighthouse result files found"
             exit 1
           fi
-          
+
           echo "Found $json_count Lighthouse result files"
           node .github/scripts/generate-page-size-report.js
 

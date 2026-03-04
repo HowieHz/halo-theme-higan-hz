@@ -2,10 +2,9 @@ name: Page Audit
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    types: [ opened, synchronize, reopened ]
-    
+    types: [opened, synchronize, reopened]
 
 jobs:
   audit-current:
@@ -28,7 +27,7 @@ jobs:
       theme_ref: ${{ github.event.pull_request.base.sha }}
       ref_name: base
       run_lighthouse_ci: true
-  
+
   lighthouse-gate:
     name: Lighthouse Quality Gate
     needs: [audit-current]
@@ -59,19 +58,19 @@ jobs:
     needs: [audit-current, audit-base]
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    permissions:  # use permissions because use of pr-comments
+    permissions: # use permissions because use of pr-comments
       contents: read
       pull-requests: write
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
-      
+
       - name: Download current reports
         uses: actions/download-artifact@v7
         with:
@@ -83,13 +82,13 @@ jobs:
         with:
           name: lighthouse-raw-data-current
           path: ./lighthouse-reports-current
-      
+
       - name: Download base reports
         uses: actions/download-artifact@v7
         with:
           name: page-size-reports-base
           path: ./reports-base
-      
+
       - name: Generate comparison report
         run: |
           node .github/scripts/compare-page-size-reports.js
@@ -104,7 +103,7 @@ jobs:
         env:
           MANIFEST: ./lighthouse-reports-current/manifest.json
           OUTPUT_FILE: ./lighthouse-scores.md
-      
+
       - name: Comment comparison and Lighthouse scores on PR
         uses: actions/github-script@v7
         continue-on-error: true
