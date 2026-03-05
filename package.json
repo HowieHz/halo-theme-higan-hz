@@ -42,10 +42,10 @@
     "fmt:stylus": "stylus-supremacy format **/*.styl --options .vscode/settings.json -r",
     "lint": "pnpm run \"/^lint:/\"",
     "lint:autocorrect": "autocorrect --fix",
-    "lint:eslint": "oxlint --type-aware --fix && eslint --fix",
     "lint:md": "markdownlint --fix \"**/*.md\" --ignore-path .gitignore",
+    "lint:oxlint+eslint": "oxlint --type-aware --fix && eslint --fix",
     "lint:style": "stylelint --fix \"**/*.{css,html,vue}\" \"docs/.vitepress/**/*.{css,vue}\" --ignore-path .gitignore",
-    "lint:type-check": "tsgo --noEmit",
+    "lint:ts-type-check": "tsgo --noEmit",
     "migrate:oxlint": "pnpm dlx @oxlint/migrate --type-aware --with-nursery && pnpm run fmt",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky && tw-patch install"
