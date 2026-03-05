@@ -30,7 +30,7 @@
   },
   "type": "module",
   "scripts": {
-    "build": "pnpm run lint:type-check && tw-patch extract && vite build",
+    "build": "pnpm run lint:ts-type-check && tw-patch extract && vite build",
     "dev": "pnpm run \"/^dev:/\"",
     "dev:stylus": "stylus ./src/styles/mixins/colors/theme.styl --out ./tmp/styles/ --watch",
     "dev:vite": "vite build --watch",
