@@ -43,7 +43,7 @@ jobs:
           node-version: lts/*
 
       - name: Download Lighthouse Raw Data
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: lighthouse-raw-data-current
           path: ./lighthouse-reports-current
@@ -72,19 +72,19 @@ jobs:
           node-version: lts/*
 
       - name: Download current reports
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: page-size-reports-current
           path: ./reports-current
 
       - name: Download Lighthouse raw data (current)
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: lighthouse-raw-data-current
           path: ./lighthouse-reports-current
 
       - name: Download base reports
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: page-size-reports-base
           path: ./reports-base

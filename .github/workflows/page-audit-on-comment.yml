@@ -165,13 +165,13 @@ jobs:
           node-version: lts/*
 
       - name: Download current reports
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: page-size-reports-current
           path: ./reports-current
 
       - name: Download latest-release reports
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: page-size-reports-latest-release
           path: ./reports-latest-release

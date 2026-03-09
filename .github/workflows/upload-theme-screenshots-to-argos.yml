@@ -28,7 +28,7 @@ jobs:
 
       - name: Download screenshots
         id: dl-screenshots
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           pattern: screenshots-*
           merge-multiple: true
