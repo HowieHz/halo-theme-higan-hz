@@ -2,11 +2,18 @@
 
 <!-- markdownlint-disable MD024 -->
 
+All notable changes to this project will be documented in this file.  
+本项目的所有显著变更将记录在本文件中。
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).  
+该格式基于[保持变更日志](https://keepachangelog.com/en/1.1.0)，本项目遵循[语义版本管理](https://semver.org/spec/v2.0.0.html)。
+
 ## [Unreleased]
 
 - `*.zst` 预压缩文件构建参数修改：zstandard 算法压缩等级上调为 22。
 
-## [1.57.3](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.2...v1.57.3) (2026-2-28)
+## [1.57.3] - 2026-02-28
 
 ### 🔧 优化改进
 
@@ -17,13 +24,13 @@
 - 更新开发依赖。
 - 优化构建流程。
 
-## [1.57.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.1...v1.57.2) (2026-2-13)
+## [1.57.2] - 2026-02-13
 
 ### 🔧 优化改进
 
 - 优化主题 SEO，部分页面的顶部站点名不再是一级标题。
 
-## [1.57.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.0...v1.57.1) (2026-2-10)
+## [1.57.1] - 2026-02-10
 
 ### 🔧 优化改进
 
@@ -46,7 +53,7 @@
 
 - 更新开发依赖。
 
-## [1.57.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.56.2...v1.57.0) (2026-2-5)
+## [1.57.0] - 2026-02-05
 
 ### 🚀 新功能
 
@@ -54,19 +61,19 @@
   - 图库页新增支持在启用瀑布流布局时显示分组标题，每个分组将拥有独立的瀑布流实例。
   - `图库页样式 -> 显示分组标题` 配置项现在在启用瀑布流布局时也可用。
 
-## [1.56.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.56.1...v1.56.2) (2026-2-4)
+## [1.56.2]- 2026-02-04
 
 ### 🐛 错误修复
 
 - 修复启用“全局 -> 多语言功能前缀匹配模式”且根菜单存在非自定义链接类型时会触发内部错误的问题。
 
-## [1.56.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.56.0...v1.56.1) (2026-2-4)
+## [1.56.1] - 2026-02-04
 
 ### 🐛 错误修复
 
 - 修复模板中未闭合的引号。
 
-## [1.56.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.55.1...v1.56.0) (2026-2-4)
+## [1.56.0] - 2026-02-04
 
 ### 🚀 新功能
 
@@ -110,14 +117,14 @@
 - 更新开发依赖。
 - 手动格式化模板内 `th:if`、`th:unless`、`th:with` 的字符串值。
 
-## [1.55.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.55.0...v1.55.1) (2026-2-3)
+## [1.55.1] - 2026-02-03
 
 ### 🐛 错误修复
 
 - 修复瞬间页（`/moments`）翻页组件链接不正确的问题。
 - 修复启用`全局 -> 仅允许使用指定域名访问`且`域名白名单列表`为空时，页面会无限跳转的问题。
 
-## [1.55.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.54.0...v1.55.0) (2026-2-3)
+## [1.55.0]- 2026-02-03
 
 ### 🚀 新功能
 
@@ -136,7 +143,7 @@
 
 - 优化英文文档翻译质量。
 
-## [1.54.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.53.1...v1.54.0) (2026-1-28)
+## [1.54.0]- 2026-01-28
 
 ### 💥破坏性变更
 
@@ -155,7 +162,7 @@
 
 - 更新开发依赖。
 
-## [1.53.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.53.0...v1.53.1) (2026-1-28)
+## [1.53.1]- 2026-01-28
 
 ### 🐛 错误修复
 
@@ -172,13 +179,13 @@
 
 - 更新开发依赖。
 
-## [1.53.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.52.1...v1.53.0) (2026-1-17)
+## [1.53.0] - 2026-01-17
 
 ### 🚀 新功能
 
 - 支持自定义鼠标指针。
 
-## [1.52.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.52.0...v1.52.1) (2026-1-16)
+## [1.52.1] - 2026-01-16
 
 ### 🚀 新功能
 
@@ -199,7 +206,7 @@
 
 - 更新开发依赖。
 
-## [1.52.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.51.1...v1.52.0) (2026-1-15)
+## [1.52.0] - 2026-01-15
 
 ### 💥破坏性变更
 
@@ -224,7 +231,7 @@
 
 - 更新开发依赖。
 
-## [1.51.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.0...v1.51.1) (2026-1-4)
+## [1.51.1] - 2026-01-04
 
 ### 🐛 错误修复
 
@@ -261,13 +268,13 @@
 - 组件化页面 `color-scheme` 设定，按需加载，减少页面体积。
 - 优化瞬间页标签样式。
 
-## [1.50.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.1...v1.50.2) (2026-1-1)
+## [1.50.2] - 2026-01-01
 
 ### 🚀 新功能
 
 - 支持 Vditor 编辑器插件的 `[toc]` 内联目录。
 
-## [1.50.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.0...v1.50.1) (2025-12-28)
+## [1.50.1] - 2025-12-28
 
 ### 🔧 优化改进
 
@@ -278,7 +285,7 @@
 
 - 更新开发依赖。
 
-## [1.50.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.2...v1.50.0) (2025-12-24)
+## [1.50.0] - 2025-12-24
 
 ### 💥破坏性变更
 
@@ -307,7 +314,7 @@
 - 将 PostCSS 替换成 Lightning CSS，构建速度提高了一倍。
   - 将基础样式加入 `@layer base` 层级，避免覆盖 Tailwind CSS 样式。（之前 Tailwind CSS 添加的样式有 `:not(#\#)` ，Lightning CSS 最小化时删去了 `:not(#\#)` 凸显了这个问题）
 
-## [1.49.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.1...v1.49.2) (2025-12-13)
+## [1.49.2] - 2025-12-13
 
 ### 🐛 错误修复
 
@@ -317,7 +324,7 @@
 
 - 更新开发依赖。
 
-## [1.49.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.0...v1.49.1) (2025-12-06)
+## [1.49.1] - 2025-12-06
 
 ### 🐛 错误修复
 
@@ -335,7 +342,7 @@
 - 组件化部分模板。
 - 更新开发依赖。
 
-## [1.49.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.3...v1.49.0) (2025-11-29)
+## [1.49.0] - 2025-11-29
 
 ### 💥破坏性变更
 
@@ -357,7 +364,7 @@
 - 升级 Tailwind CSS 从 v3 至 v4
 - 迁移图标系统从 `vite-plugin-purge-icons` 至 `@iconify/tailwind4`
 
-## [1.48.3](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.2...v1.48.3) (2025-11-26)
+## [1.48.3] - 2025-11-26
 
 ### 🐛 错误修复
 
@@ -373,7 +380,7 @@
 - 组件化部分模板。
 - 更新开发依赖。
 
-## [1.48.2](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.1...v1.48.2) (2025-11-25)
+## [1.48.2] - 2025-11-25
 
 ### 🐛 错误修复
 
@@ -400,7 +407,7 @@
 
 - 更新开发依赖
 
-## [1.48.1](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.0...v1.48.1) (2025-11-23)
+## [1.48.1] - 2025-11-23
 
 ### 🚀 新功能
 
@@ -428,7 +435,7 @@
 
 - 更新开发依赖
 
-## [1.48.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.47.0...v1.48.0) (2025-11-22)
+## [1.48.0] - 2025-11-22
 
 ### 🚀 新功能
 
@@ -443,7 +450,7 @@
 
 - 更新开发依赖
 
-## [1.47.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.46.0...v1.47.0) (2025-11-20)
+## [1.47.0] - 2025-11-20
 
 ### 🚀 新功能
 
@@ -458,7 +465,7 @@
 
 - 更新开发依赖
 
-## [1.46.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.45.4...v1.46.0) (2025-11-17)
+## [1.46.0] - 2025-11-17
 
 ### 🚀 新功能
 
@@ -477,12 +484,8 @@
 
 - 更新开发依赖，移除无用依赖
 
-## [1.45.4](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.45.3...v1.45.4) (2025-11-07)
+## [1.45.4] - 2025-11-07
 
 ### 🐛 错误修复
 
 - 修复启用“标签集合页样式——标签排序方式”时标签颜色无法正常显示的问题。
-
-<!-- ### Features -->
-
-<!-- ### BREAKING CHANGES -->
