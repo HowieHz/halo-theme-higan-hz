@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - `*.zst` 预压缩文件构建参数修改：zstandard 算法压缩等级上调为 22。
+- 优化亮色主题配色，增加部分配色与背景的对比度。
 
 ## [1.57.3] - 2026-02-28
 

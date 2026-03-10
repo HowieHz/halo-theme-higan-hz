@@ -24,7 +24,8 @@ onMounted(async () => {
 
 <style src="./default.css" scoped></style>
 <!-- 导入主题样式 -->
-<style src="../../../src/styles/mixins/colors/theme.styl" scoped></style>
+<style src="../../../src/templates/components/theme-dark/styles.styl" scoped></style>
+<style src="../../../src/templates/components/theme-light/styles.styl" scoped></style>
 <style src="../../../src/styles/main.css" scoped></style>
 <style src="../../../src/templates/components/text-size-normal/styles.css" scoped></style>
 <!-- 导入 post 页样式 -->
