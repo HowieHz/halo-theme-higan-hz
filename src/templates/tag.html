@@ -13,7 +13,10 @@
   <head th:remove="tag">
     <!--/* remove after https://github.com/halo-dev/halo/issues/8054 */-->
     <meta name="description" th:attr="content=${site?.seo?.description}" />
-    <link rel="canonical" th:href="${siteUrl} + @{{prefix}/{slug}(prefix = ${site.routes.tagsUri}, slug = ${tag.spec?.slug})}" />
+    <link
+      rel="canonical"
+      th:href="${siteUrl} + @{{prefix}/{slug}(prefix = ${site.routes.tagsUri}, slug = ${tag.spec?.slug})}"
+    />
     <link
       th:if="${pluginFinder.available('PluginFeed')}"
       rel="alternate"
