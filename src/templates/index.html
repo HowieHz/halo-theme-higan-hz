@@ -10,6 +10,7 @@
   )}"
 >
   <head th:remove="tag">
+    <link rel="canonical" th:href="${siteUrl}" />
     <script src="/src/scripts/pages/index.ts" type="module"></script>
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'post-list-summary'}">
       <th:block th:insert="~{components/list-post-summary/template :: head}"></th:block>
@@ -218,7 +219,7 @@
     </p>
 
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'post-list-summary'}">
-      <h1 class="h1" th:if="${theme.config?.index_styles?.is_show_index_post_list_title}">
+      <h1 th:if="${theme.config?.index_styles?.is_show_index_post_list_title}">
         <a th:href="@{/archives}" th:text="#{page.index.postListTitle}">首页文章列表标题替换位</a>
       </h1>
       <th:block
@@ -226,7 +227,7 @@
       ></th:block>
     </th:block>
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'simple-post-list'}">
-      <h1 class="h1" th:if="${theme.config?.index_styles?.is_show_index_post_list_title}">
+      <h1 th:if="${theme.config?.index_styles?.is_show_index_post_list_title}">
         <a th:href="@{/archives}" th:text="#{page.index.postListTitle}">首页文章列表标题替换位</a>
       </h1>
       <th:block

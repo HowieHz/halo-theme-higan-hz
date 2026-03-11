@@ -11,6 +11,7 @@
   )}"
 >
   <head th:remove="tag">
+    <link rel="canonical" th:href="${siteUrl} + @{${post.status.permalink}}" />
     <th:block th:if="${pluginFinder.available('PluginFeed')}">
       <th:block th:each="contributor : ${post?.contributors}">
         <link

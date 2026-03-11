@@ -9,7 +9,10 @@
            custom_theme_auto_id = ${theme.config?.styles?.custom_theme_auto_id},
            custom_theme_light_id = ${theme.config?.styles?.custom_theme_light_id},
            custom_theme_dark_id = ${theme.config?.styles?.custom_theme_dark_id},
-           page_language=${language ?: ('' + param.lang != '' ? '' + param.lang : (theme.config?.global?.default_page_language ?: 'zh'))}"
+           page_language=${language ?: ('' + param.lang != '' ? '' + param.lang : (theme.config?.global?.default_page_language ?: 'zh'))},
+           siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1) == '/'
+                       ? #strings.substring(site.url, 0, #strings.length(site.url) - 1)
+                       : site.url}"
   th:lang="${page_language}"
   th:attr="data-color-scheme=${color_schema} == 'custom' ? null :
                             (${color_schema} == 'auto' ? 'auto' :

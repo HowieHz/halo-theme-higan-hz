@@ -10,6 +10,7 @@
   )}"
 >
   <head th:remove="tag">
+    <link rel="canonical" th:href="${siteUrl} + @{/moments}" />
     <link
       th:if="${pluginFinder.available('PluginFeed')}"
       rel="alternate"
