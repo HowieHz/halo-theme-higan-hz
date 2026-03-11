@@ -10,6 +10,7 @@
   )}"
 >
   <head th:remove="tag">
+    <link rel="canonical" th:href="${siteUrl}" />
     <script src="/src/scripts/pages/index.ts" type="module"></script>
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'post-list-summary'}">
       <th:block th:insert="~{components/list-post-summary/template :: head}"></th:block>

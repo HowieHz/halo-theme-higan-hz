@@ -18,6 +18,7 @@
       th:title="'Posts - Category: ' + ${category.spec?.displayName}"
       th:href="@{'/feed/categories/' + ${category.spec?.slug} + '.xml'}"
     />
+    <link rel="canonical" th:href="${siteUrl} + @{{prefix}/{slug}(prefix = ${site.routes.categoriesUri}, slug = ${category.spec?.slug})}" />
     <script src="/src/scripts/pages/category.ts" type="module"></script>
     <th:block th:insert="~{components/list-post-simple/template :: head(showPagination = true)}"></th:block>
   </head>

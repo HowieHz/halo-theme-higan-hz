@@ -10,6 +10,7 @@
   )}"
 >
   <head th:remove="tag">
+    <link rel="canonical" th:href="${siteUrl} + @{/friends}" />
     <script src="/src/scripts/pages/friends.ts" type="module"></script>
     <th:block th:insert="~{components/list-friends-summary/template :: head(friends = ${friends})}"></th:block>
   </head>
