@@ -65,11 +65,11 @@ Higan Haozi 是一款响应式、简洁清爽的个人网站主题，适用于 [
 
 ## 贡献指南
 
-见 [CONTRIBUTING](./CONTRIBUTING.md)
+见[贡献指南](https://howiehz.top/halo-theme-higan-haozi/maintenance/contributing)
 
 ## 更新日志
 
-见 [CHANGELOG](./CHANGELOG.md)
+见[更新日志](https://howiehz.top/halo-theme-higan-haozi/maintenance/changelog)
 
 ## 项目状态
 

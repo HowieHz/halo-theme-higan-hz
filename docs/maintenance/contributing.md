@@ -1,10 +1,8 @@
 # 贡献指南
 
-**简体中文** | [English](./CONTRIBUTING.en.md)
-
 ## 项目结构
 
-- [模板文件与访问路径映射](https://howiehz.top/halo-theme-higan-haozi/reference/template-map)
+- [模板文件与访问路径映射](../reference/template-map.md)
 
 ## 版本适用说明
 
@@ -147,16 +145,6 @@ pnpm docs:build
 ```bash
 pnpm docs:preview
 ```
-
-<!-- #### 目前所用的图标库
-
-[vite-plugin-purge-icons](https://github.com/antfu/purge-icons/blob/main/packages/vite-plugin-purge-icons/README.md) -->
-
-<!-- #### 打包主题
-
-```bash
-pnpm release
-``` -->
 
 ### 其他指令
 

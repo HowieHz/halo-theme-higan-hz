@@ -1,10 +1,8 @@
 # Contribution Guide
 
-[简体中文](./CONTRIBUTING.md) | **English**
-
 ## Project Structure
 
-- [Template Files and Access Path Mapping](https://howiehz.top/halo-theme-higan-haozi/en/reference/template-map)
+- [Template Files and Access Path Mapping](../reference/template-map.md)
 
 ## Version Compatibility
 
@@ -147,16 +145,6 @@ Use the following command to start a server for previewing the final output:
 ```bash
 pnpm docs:preview
 ```
-
-<!-- #### Icon Libraries Used
-
-[vite-plugin-purge-icons](https://github.com/antfu/purge-icons/blob/main/packages/vite-plugin-purge-icons/README.md) -->
-
-<!-- #### Packaging the Theme
-
-```bash
-pnpm release
-``` -->
 
 ### Other Commands
 

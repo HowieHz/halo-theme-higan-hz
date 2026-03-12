@@ -2,63 +2,75 @@
 
 <!-- markdownlint-disable MD024 -->
 
-All notable changes to this project will be documented in this file.  
+<!--
+🚀 新功能
+🐛 错误修复
+🔧 代码重构
+📄 文档
+🛠️ 杂项维护
+💥 破坏性变更
+-->
+
 本项目的所有显著变更将记录在本文件中。
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).  
-该格式基于[保持变更日志](https://keepachangelog.com/en/1.1.0)，本项目遵循[语义版本管理](https://semver.org/spec/v2.0.0.html)。
+该格式基于[保持变更日志](https://keepachangelog.com/en/1.1.0)，
+本项目遵循[语义版本管理](https://semver.org/spec/v2.0.0.html)。
 
 ## [Unreleased]
 
+### 📄 文档
+
+- 更改更新日志和贡献指南位置。
+
 ## [1.57.5] - 2026-03-12
 
-### 🔧 优化改进
+### 🐛 错误修复
 
 - 参考 [nonzzz/vite-plugin-compression#93](https://github.com/nonzzz/vite-plugin-compression/issues/93)，为符合 RFC 9659 规范，以防止在 Chrome（v123+）和 Firefox（v126+）中报错，调整 `*.zst` 预压缩文件的 zstandard 算法压缩等级至 19。
 
 ## [1.57.4] - 2026-03-12
 
-### 🔧 优化改进
+### 🚀 新功能
+
+- 为页面添加 `<link rel="canonical">` 标签，优化 SEO 表现。
+
+### 🔧 代码重构
 
 - 调整 `*.zst` 预压缩文件的 zstandard 算法压缩等级至 22。
-- 优化亮色主题配色，提升部分配色与背景的对比度。
-- 为页面添加 `<link rel="canonical">` 标签，优化 SEO 表现。
 
 ### 🐛 错误修复
 
+- 优化亮色主题配色，提升部分配色与背景的对比度。
 - 修复首页和朋友圈页标题颜色渲染错误的问题。
 - 修复首页多元列表中文章项二级标题样式显示错误的问题。
 - 修复文章内链接标题样式渲染错误的问题。
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖。
 
 ## [1.57.3] - 2026-02-28
 
-### 🔧 优化改进
+### 🔧 代码重构
 
 - 重构组件实现。
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖。
 - 优化构建流程。
 
 ## [1.57.2] - 2026-02-13
 
-### 🔧 优化改进
+### 🔧 代码重构
 
 - 优化主题 SEO，部分页面的顶部站点名不再是一级标题。
 
 ## [1.57.1] - 2026-02-10
 
-### 🔧 优化改进
+### 🚀 新功能
 
 - 为主题资源添加 SRI 信息以提高安全性。
-- 调整 instant.page 脚本注入位置，优化加载速度。
-- 修订[安全防护文档](https://howiehz.top/halo-theme-higan-haozi/tutorial/security)。
 - 主题的静态资源已提供预压缩版本：
   - 文件类型：
     - `.js`：`.js.gz`、`.js.br`、`.js.zst`
@@ -71,7 +83,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - 直接使用 Halo CMS 时，服务器会自动提供 `.br` 文件。
     - 使用 nginx/Apache 等服务器时，请参考[配置文档](https://howiehz.top/halo-theme-higan-haozi/tutorial/performance)以启用预压缩文件的自动交付。
 
-### 🛠️ 开发体验
+### 🔧 代码重构
+
+- 调整 instant.page 脚本注入位置，优化加载速度。
+
+### 📄 文档
+
+- 修订[安全防护文档](https://howiehz.top/halo-theme-higan-haozi/tutorial/security)。
+
+### 🛠️ 杂项维护
 
 - 更新开发依赖。
 
@@ -134,7 +154,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 修复错误页在主错误标题可用时仍展示备用标题的问题。
 - 修复内置主题 `浅色 - 灰粉` 文件名拼写错误的问题。
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖。
 - 手动格式化模板内 `th:if`、`th:unless`、`th:with` 的字符串值。
@@ -161,7 +181,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 修复 `首页样式 -> 主页列表布局` 选择“瞬间列表”时，在页数大于 1 时无法加载页面的问题。
 
-### 🔧 优化改进
+### 🔧 代码重构
 
 - 优化英文文档翻译质量。
 
@@ -175,12 +195,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 重构自定义字体相关配置，允许进行更详细的设定。
 
-## 🔧 优化改进
+### 🔧 代码重构
 
 - 默认 Meslo 字体补充相关声明：添加粗体版本、斜体版本、粗斜体版本。
 - 优化自定义字体相关渲染逻辑。
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖。
 
@@ -190,14 +210,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 修复在 WebKit 内核的浏览器上，页脚内容和文章页顶部菜单出现异常换行的问题。
 
-### 🔧 优化改进
+### 🔧 代码重构
 
 - 优化自定义鼠标指针声明。
 - 更新 Meslo 字体版本从 1.2 到 1.2.1，并且重新压缩各格式，以优化字体体积。
 - 优化后备字体声明。
 - 移除无用的 `vite-ignore` 声明，优化构建产物体积。
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖。
 
@@ -220,11 +240,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 修复“链接页样式 - 链接描述行数上限”和“首页样式 - 多元列表文章摘要行数上限”默认值无法正常生效的问题。
 
-### 🔧 优化改进
+### 📄 文档
 
 - 补充多语言文档。
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖。
 
@@ -244,12 +264,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 修复链接页下，链接描述文本较长且无法自动换行，最终导致溢出屏幕的问题。
 - 修复“首页样式 - 多元列表文章摘要行数上限”无法正常工作的问题。
 
-### 🔧 优化改进
+### 🔧 代码重构
 
 - 将需要插件支持的相关配置项分页移到最后，并在开头加上提示信息。
 - 将配置项出现的 checkbox 控件更新为 switch 控件。（勾选框变开关样式）
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖。
 
@@ -279,7 +299,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 修复文档预览样式错误的问题。
 - 修复瞬间详情页评论区展开/收起按钮点击无反应的问题。
 
-### 🔧 优化改进
+### 🔧 代码重构
 
 - 移除评论组件 v2 支持，减小包体积。
 - 简化主题 CSS 变量数。
@@ -298,12 +318,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.50.1] - 2025-12-28
 
-### 🔧 优化改进
+### 🔧 代码重构
 
 - 优化包体积。
+
+### 📄 文档
+
 - 优化文档，新增[浏览器兼容性](https://howiehz.top/halo-theme-higan-haozi/reference/browser-compatibility)页面。
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖。
 
@@ -322,7 +345,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 添加配置项“归档页样式 -> 页面描述”。
 - 支持 `figcaption`（图片、视频、音频描述文本）样式。
 
-### 🔧 优化改进
+### 🔧 代码重构
 
 - 将原本的重复设置项（可重复一组输入。可增加组，移除组，交换任意组顺序），更新为 Halo CMS 2.22 最新样式。
 
@@ -330,7 +353,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 修复错误页无法正常显示的问题。
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖。
 - 将 PostCSS 替换成 Lightning CSS，构建速度提高了一倍。
@@ -342,7 +365,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 修复`强制页脚、页码在页面底部`配置项失效的问题。
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖。
 
@@ -352,13 +375,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 修复当文章页开启点赞按钮，关闭评论区时，页脚内容会与点赞按钮重叠的问题。
 - 修复当无文章发布，随机文章功能会使页面崩溃的问题。
-
-### 🔧 优化改进
-
 - 移除意外被设置的边框颜色
+
+### 🔧 代码重构
+
 - 优化图标显示样式
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 重构构建流程。
 - 组件化部分模板。
@@ -377,12 +400,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - “自定义分享按钮 -> 分享按钮设置”中名称为`Native`项，链接应为`@URL`，如您之前安装过本主题，可使用此默认值填充。
 - 修复桌面端文章页分享菜单有概率无法唤出的问题。
 - 修复英文版配置项主题包中文章元数据“Show in Post List”的类型错误。
-
-### 🔧 优化改进
-
-- 增强在“自定义分享按钮 -> 分享按钮设置”中名称为“Native”（浏览器原生分享）的链接设置功能。
-- 优化部分代码，不再挂载到 window 全局变量上，优化页面体积。
 - 修复 SVG 图标未成功内联到 CSS 的问题，运行时无需再从 iconify 服务器拉取图标信息。
+
+### 🔧 代码重构
+
+- 增强在"自定义分享按钮 -> 分享按钮设置"中名称为"Native"（浏览器原生分享）的链接设置功能。
+- 优化部分代码，不再挂载到 window 全局变量上，优化页面体积。
 - 升级 Tailwind CSS 从 v3 至 v4
 - 迁移图标系统从 `vite-plugin-purge-icons` 至 `@iconify/tailwind4`
 
@@ -392,11 +415,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 修复在瞬间页中，作者名的悬停样式未按预期渲染的问题。
 
-### 🔧 优化改进
+### 🔧 代码重构
 
 - 进一步分包优化，移除冗余样式。
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 重构构建流程。
 - 组件化部分模板。
@@ -410,7 +433,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 修复在瞬间页中，瞬间列表出现多余样式的问题。
 - 修复在瞬间页中，交互栏按钮的悬停样式未按预期渲染的问题。
 
-### 🔧 优化改进
+### 🔧 代码重构
 
 - 进一步分包优化，移除冗余样式。
 - 经过上述优化：
@@ -425,7 +448,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - 📉 Gzipped 下降：-0.088 KiB (-0.03%)
     - 📉 原始大小下降：2.460 KiB (0.25%)
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖
 
@@ -436,7 +459,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 新文档：[性能参考](https://howiehz.top/halo-theme-higan-haozi/reference/performance)
   - 展示了主题从 v1.0.0 到最新版的资源体积变化。
 
-### 🔧 优化改进
+### 🔧 代码重构
 
 - 为默认 LOGO 添加 Avif/WebP 格式，原本的 PNG 格式作为回退。
 - 使用 [KonghaYao/cn-font-split](https://github.com/KonghaYao/cn-font-split) 对默认字体进行分割。
@@ -453,7 +476,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - 📉 Gzipped 下降：301.251 KiB (46.88%)
     - 📉 原始大小下降：292.789 KiB (22.65%)
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖
 
@@ -464,11 +487,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 添加“页面元数据 -> 自定义模板 -> [文章页样式](http://howiehz.top/halo-theme-higan-haozi/guide/metadata-configuration#%E6%96%87%E7%AB%A0%E9%A1%B5%E6%A0%B7%E5%BC%8F)”
   - 替代原有的“自定义页面样式 -> 启用类文章页样式”
 
-### 🔧 优化改进
+### 🔧 代码重构
 
 - 优化自定义页面样式体积。脚本和样式表均 [-15%](https://github.com/HowieHz/halo-theme-higan-hz/pull/327#issuecomment-3566640583) 的体积。
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖
 
@@ -483,7 +506,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - 未登录时，菜单显示 `登录`，点击后跳转 `/login` 页面。
     - 已登录时，菜单显示用户名，点击后跳转 `/uc` 页面。
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖
 
@@ -497,12 +520,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - [主题配置项文档](https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration)
   - [元数据配置项文档](https://howiehz.top/halo-theme-higan-haozi/guide/metadata-configuration)
 
-### 🔧 优化改进
+### 🔧 代码重构
 
 - 将部分样式从公用包分离，减小页面体积。
 - 优化主题配置项说明。
 
-### 🛠️ 开发体验
+### 🛠️ 杂项维护
 
 - 更新开发依赖，移除无用依赖
 

@@ -298,7 +298,7 @@ function nav(): DefaultTheme.NavItem[] {
         {
           text: "配置与扩展",
           items: [
-            { text: "安装与升级", link: "/guide/getting-started/" },
+            { text: "安装与升级", link: "/guide/installation-and-upgrade" },
             { text: "主题配置项", link: "/guide/theme-configuration" },
             { text: "元数据配置项", link: "/guide/metadata-configuration" },
             { text: "插件兼容性", link: "/guide/plugin-compatibility" },
@@ -328,12 +328,8 @@ function nav(): DefaultTheme.NavItem[] {
     {
       text: pkg.version,
       items: [
-        {
-          text: `发布说明 v${pkg.version}`,
-          link: `https://github.com/HowieHz/halo-theme-higan-hz/releases/tag/v${pkg.version}`,
-        },
-        { text: `更新日志`, link: "https://github.com/HowieHz/halo-theme-higan-hz/blob/main/CHANGELOG.md" },
-        { text: "贡献指南", link: "https://github.com/HowieHz/halo-theme-higan-hz/blob/main/CONTRIBUTING.md" },
+        { text: `更新日志`, link: "/maintenance/changelog" },
+        { text: "贡献指南", link: "/maintenance/contributing" },
       ],
     },
   ];
@@ -377,6 +373,12 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: "性能参考", link: "/reference/performance" },
         { text: "浏览器兼容性", link: "/reference/browser-compatibility" },
         { text: "模板文件与访问路径映射", link: "/reference/template-map" },
+      ],
+    },
+    {
+      items: [
+        { text: `更新日志`, link: "/maintenance/changelog" },
+        { text: "贡献指南", link: "/maintenance/contributing" },
       ],
     },
   ];

@@ -65,11 +65,11 @@ Additionally, thanks to all the friends who supported this project through donat
 
 ## Contribution Guide
 
-See [CONTRIBUTING](./CONTRIBUTING.en.md)
+See [Contributing](https://howiehz.top/halo-theme-higan-haozi/en/maintenance/contributing)
 
 ## Changelog
 
-See [CHANGELOG](./CHANGELOG.md)
+See [Changelog](https://howiehz.top/halo-theme-higan-haozi/en/maintenance/changelog)
 
 ## Project Status
 
