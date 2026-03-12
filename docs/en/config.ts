@@ -77,7 +77,7 @@ function nav(): DefaultTheme.NavItem[] {
         {
           text: "Configuration & Extensions",
           items: [
-            { text: "Installation & Upgrade", link: "/en/guide/getting-started/" },
+            { text: "Installation & Upgrade", link: "/en/guide/installation-and-upgrade" },
             { text: "Theme Configuration", link: "/en/guide/theme-configuration" },
             { text: "Metadata Configuration", link: "/en/guide/metadata-configuration" },
             { text: "Plugin Compatibility", link: "/en/guide/plugin-compatibility" },
@@ -107,12 +107,8 @@ function nav(): DefaultTheme.NavItem[] {
     {
       text: pkg.version,
       items: [
-        {
-          text: `Release Notes v${pkg.version}`,
-          link: `https://github.com/HowieHz/halo-theme-higan-hz/releases/tag/v${pkg.version}`,
-        },
-        { text: `Changelog`, link: "https://github.com/HowieHz/halo-theme-higan-hz/blob/main/CHANGELOG.md" },
-        { text: "Contributing", link: "https://github.com/HowieHz/halo-theme-higan-hz/blob/main/CONTRIBUTING.md" },
+        { text: `Changelog`, link: "/en/maintenance/changelog" },
+        { text: "Contributing", link: "/en/maintenance/contributing" },
       ],
     },
   ];
@@ -156,6 +152,12 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: "Performance Reference", link: "/en/reference/performance" },
         { text: "Browser Compatibility", link: "/en/reference/browser-compatibility" },
         { text: "Template Map", link: "/en/reference/template-map" },
+      ],
+    },
+    {
+      items: [
+        { text: `Changelog`, link: "/maintenance/changelog" },
+        { text: "Contributing", link: "/maintenance/contributing" },
       ],
     },
   ];
