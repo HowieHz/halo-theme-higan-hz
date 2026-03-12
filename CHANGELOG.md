@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.57.5] - 2026-03-12
+
+### 🔧 优化改进
+
+- 参考 [nonzzz/vite-plugin-compression#93](https://github.com/nonzzz/vite-plugin-compression/issues/93)，为符合 RFC 9659 规范，以防止在 Chrome（v123+）和 Firefox（v126+）中报错，调整 `*.zst` 预压缩文件的 zstandard 算法压缩等级至 19。
+
 ## [1.57.4] - 2026-03-12
 
 ### 🔧 优化改进
