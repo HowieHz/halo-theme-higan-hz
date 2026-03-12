@@ -1,0 +1,157 @@
+name: Release Theme
+
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+concurrency:
+  group: release-theme-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    name: Prepare Stable Release
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'release')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      release_version: ${{ steps.meta.outputs.release_version }}
+      release_tag: ${{ steps.meta.outputs.release_tag }}
+      previous_version: ${{ steps.meta.outputs.previous_version }}
+      release_date: ${{ steps.meta.outputs.release_date }}
+      release_commit_sha: ${{ steps.push.outputs.release_commit_sha }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: main
+          token: ${{ secrets.PR_WORKFLOW_TOKEN || github.token }}
+
+      - name: Resolve release metadata
+        id: meta
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if ! [[ "$PR_TITLE" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Merged release PR title must be a semantic version, got: $PR_TITLE" >&2
+            exit 1
+          fi
+
+          PREVIOUS_TAG=$(git tag --list 'v*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)
+          if [ -z "$PREVIOUS_TAG" ]; then
+            echo "No stable release tag found" >&2
+            exit 1
+          fi
+
+          if git rev-parse "v$PR_TITLE" >/dev/null 2>&1; then
+            echo "Target release tag already exists: v$PR_TITLE" >&2
+            exit 1
+          fi
+
+          if [ "$(printf '%s\n%s\n' "${PREVIOUS_TAG#v}" "$PR_TITLE" | sort -V | tail -n 1)" != "$PR_TITLE" ] || [ "${PREVIOUS_TAG#v}" = "$PR_TITLE" ]; then
+            echo "Target release version must be greater than previous stable version ${PREVIOUS_TAG#v}" >&2
+            exit 1
+          fi
+
+          RELEASE_DATE=$(TZ=Asia/Shanghai date +%F)
+          echo "release_version=$PR_TITLE" >> "$GITHUB_OUTPUT"
+          echo "release_tag=v$PR_TITLE" >> "$GITHUB_OUTPUT"
+          echo "previous_version=${PREVIOUS_TAG#v}" >> "$GITHUB_OUTPUT"
+          echo "release_date=$RELEASE_DATE" >> "$GITHUB_OUTPUT"
+
+      - name: Update version files
+        run: node .github/scripts/update-theme-version.js "${{ steps.meta.outputs.release_version }}"
+
+      - name: Promote changelog entry
+        run: node .github/scripts/prepare-changelog-release.js "${{ steps.meta.outputs.release_version }}" "${{ steps.meta.outputs.previous_version }}" "${{ steps.meta.outputs.release_date }}"
+
+      - name: Commit release changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json theme.yaml i18n-settings/theme.en.yaml docs/maintenance/changelog.md docs/en/maintenance/changelog.md
+          git commit -m "chore(release): ${{ steps.meta.outputs.release_version }}"
+
+      - name: Push release commit
+        id: push
+        run: |
+          git push origin HEAD:main
+          echo "release_commit_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: Build Release Assets
+    needs: prepare
+    uses: ./.github/workflows/reusable-build-theme.yml
+    with:
+      theme_ref: ${{ needs.prepare.outputs.release_commit_sha }}
+      artifact_name: release-theme-artifact
+
+  github-release:
+    name: Create GitHub Release
+    needs: [prepare, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.prepare.outputs.release_commit_sha }}
+
+      - name: Download release assets
+        uses: actions/download-artifact@v8
+        with:
+          name: release-theme-artifact
+          path: dist/theme-packages
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ needs.prepare.outputs.release_tag }}
+          RELEASE_VERSION: ${{ needs.prepare.outputs.release_version }}
+          RELEASE_SHA: ${{ needs.prepare.outputs.release_commit_sha }}
+        run: |
+          assets=()
+          if [ -f dist/theme-packages/howiehz-higan-cn.zip ]; then
+            assets+=(dist/theme-packages/howiehz-higan-cn.zip)
+          fi
+          while IFS= read -r asset; do
+            if [ "$asset" != "dist/theme-packages/howiehz-higan-cn.zip" ]; then
+              assets+=("$asset")
+            fi
+          done < <(find dist/theme-packages -maxdepth 1 -type f | sort)
+          gh release create "$RELEASE_TAG" "${assets[@]}" \
+            --title "$RELEASE_VERSION" \
+            --notes-file .github/templates/release-note-template.md \
+            --target "$RELEASE_SHA"
+
+  app-store-release:
+    name: Sync Release to Halo App Store
+    needs: [prepare, github-release]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.prepare.outputs.release_commit_sha }}
+
+      - name: Download release assets
+        uses: actions/download-artifact@v8
+        with:
+          name: release-theme-artifact
+          path: dist/theme-packages
+
+      - name: Sync to Halo App Store
+        env:
+          ASSETS_DIR: dist/theme-packages
+          GITHUB_RELEASE_TAG: ${{ needs.prepare.outputs.release_tag }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HALO_BACKEND_BASEURL: https://www.halo.run
+          HALO_PAT: ${{ secrets.HALO_PAT }}
+        run: node .github/scripts/sync-release-to-app-store.js

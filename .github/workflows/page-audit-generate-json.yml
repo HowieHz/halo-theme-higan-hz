@@ -235,4 +235,5 @@ jobs:
           delete-branch: true
           labels: |
             deploy-docs
+            need deploy documentation
           add-paths: .github/page_size_audit_results/*.json

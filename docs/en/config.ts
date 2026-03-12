@@ -109,6 +109,7 @@ function nav(): DefaultTheme.NavItem[] {
       items: [
         { text: `Changelog`, link: "/en/maintenance/changelog" },
         { text: "Contributing", link: "/en/maintenance/contributing" },
+        { text: "Releases", link: "/en/maintenance/releases" },
       ],
     },
   ];
@@ -156,8 +157,9 @@ function sidebar(): DefaultTheme.SidebarItem[] {
     },
     {
       items: [
-        { text: `Changelog`, link: "/maintenance/changelog" },
-        { text: "Contributing", link: "/maintenance/contributing" },
+        { text: `Changelog`, link: "/en/maintenance/changelog" },
+        { text: "Contributing", link: "/en/maintenance/contributing" },
+        { text: "Releases", link: "/en/maintenance/releases" },
       ],
     },
   ];

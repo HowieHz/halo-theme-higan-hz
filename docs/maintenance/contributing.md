@@ -126,6 +126,12 @@ pnpm build
 - 页面视觉差异检查（Visual Regression）：
   - 通过 Playwright 在桌面、平板、手机三种设备视图（Viewport）下，使用 Chromium, Firefox, WebKit 内核对关键页面截图。最后使用 Argos CI 与基线版本进行比较。（为节省额度，现仅上传 Chromium 生成的截图进行比较）
 
+- 发版约束检查（`release-guard.yml`）：
+  - 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 是否仍然保留 `## [Unreleased]`。
+  - 检查 PR 中是否手动修改了 `package.json` 的 `version`。
+  - 检查 PR 中是否手动修改了 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 的 `version`。
+  - 如果 PR 带有 `release` 标签，则检查 PR 标题是否为合法语义化版本号。
+
 ### 编写文档
 
 开发时在项目根目录运行以下指令可启动服务器，用以实时渲染修改。
@@ -153,3 +159,40 @@ pnpm docs:preview
 ```bash
 pnpm -r outdated
 ```
+
+## 发布流程
+
+### 发布前检查清单
+
+准备发布前，请先确认以下事项：
+
+1. 计划合并到本次版本的分支或 PR 都已完成合并。
+2. `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 的 `## [Unreleased]` 下已经补充完整本次版本说明，并且 `## [Unreleased]` 标题没有被删除。
+3. 不要在 PR 中手动修改版本号字段：`package.json` 的 `version`、`theme.yaml` 的 `version`、`i18n-settings/theme.*.yaml` 的 `version`。
+4. 发布前人工确认 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 中的 `requires` 仍符合目标 Halo CMS 版本要求。
+
+### 正式版发布方法
+
+正式版通过带标签的 PR 自动发布：
+
+1. 创建用于正式发布的 PR（或在现有汇总 PR 上发布）。
+2. 为 PR 添加 `release` 标签，并将 PR 标题改为目标语义化版本号（例如 `1.57.6`）。
+3. 等待 `release-guard.yml` 检查通过，并确认摘要中提示的上一个正式版版本号无误。
+4. 合并 PR 到 `main`。
+
+PR 合并后，机器人会自动完成以下动作：
+
+1. 将中英文更新日志 `## [Unreleased]` 内容提升为本次正式版条目，并保留 `## [Unreleased]` 标题。
+2. 同步更新 `package.json`、`theme.yaml`、`i18n-settings/theme.*.yaml` 的 `version`，并推送机器人提交到 `main`。
+3. 执行主题构建，产出多个 `howiehz-higan-*.zip`。
+4. 创建 GitHub Release，并上传全部 `howiehz-higan-*.zip` 到 GitHub Release 与 Halo 应用市场（`howiehz-higan-cn.zip` 优先上传）。
+5. 由 release 事件触发 `page-audit-generate-json.yml`，自动创建体积测量结果 PR；该 PR 会带上 `deploy-docs` 标签，合并后自动部署文档站。
+
+### 测试版发布方法
+
+测试版不需要手动改版本号，也不需要手动创建分支。
+
+1. 工作流 `nightly-theme-prerelease.yml` 会在北京时间每天 0 点自动运行。
+2. 如果 `main` 在前一个自然日有新提交，则自动生成测试版。
+3. 测试版版本号规则为“当前版本的修订号 + 1，再加上 `-alpha.yyyyMMddHHmmssSSS`”。
+4. 工作流仅在运行环境内创建本地临时分支，完成版本号改写、构建产物、创建 GitHub Pre-release，并同步到 Halo 应用市场；该分支不会推送到远端。

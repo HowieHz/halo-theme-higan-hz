@@ -1,0 +1,96 @@
+name: Release Guard
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, edited, labeled, unlabeled]
+
+jobs:
+  guard:
+    name: Check Release Constraints
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Check changelog and version constraints
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const { execFileSync } = require('node:child_process');
+
+          const baseSha = process.env.BASE_SHA;
+          const localizedThemeFiles = fs
+            .readdirSync(path.join(process.cwd(), 'i18n-settings'))
+            .filter((fileName) => /^theme\..+\.ya?ml$/u.test(fileName))
+            .map((fileName) => path.posix.join('i18n-settings', fileName));
+
+          const readFromGit = (ref, filePath) => execFileSync('git', ['show', `${ref}:${filePath}`], { encoding: 'utf8' });
+          const readVersionFromPackageJson = (content) => JSON.parse(content).version;
+          const readVersionFromThemeYaml = (content) => {
+            const match = content.match(/^\s*version:\s*([^\r\n]+)$/mu);
+            if (!match) {
+              throw new Error(`Missing version field`);
+            }
+            return match[1].trim();
+          };
+
+          const currentPackageVersion = readVersionFromPackageJson(fs.readFileSync('package.json', 'utf8'));
+          const basePackageVersion = readVersionFromPackageJson(readFromGit(baseSha, 'package.json'));
+          if (currentPackageVersion !== basePackageVersion) {
+            throw new Error(`package.json version must not be changed in PRs: ${basePackageVersion} -> ${currentPackageVersion}`);
+          }
+
+          for (const filePath of ['theme.yaml', ...localizedThemeFiles]) {
+            const currentVersion = readVersionFromThemeYaml(fs.readFileSync(filePath, 'utf8'));
+            const baseVersion = readVersionFromThemeYaml(readFromGit(baseSha, filePath));
+            if (currentVersion !== baseVersion) {
+              throw new Error(`${filePath} version must not be changed in PRs: ${baseVersion} -> ${currentVersion}`);
+            }
+          }
+
+          for (const changelogPath of ['docs/maintenance/changelog.md', 'docs/en/maintenance/changelog.md']) {
+            const changelog = fs.readFileSync(changelogPath, 'utf8');
+            if (!changelog.includes('## [Unreleased]')) {
+              throw new Error(`${changelogPath} must keep the ## [Unreleased] section`);
+            }
+          }
+          NODE
+
+      - name: Validate release PR title
+        if: contains(github.event.pull_request.labels.*.name, 'release')
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if ! [[ "$PR_TITLE" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Release PR title must be a semantic version like 1.2.3, got: $PR_TITLE" >&2
+            exit 1
+          fi
+
+      - name: Write summary
+        if: contains(github.event.pull_request.labels.*.name, 'release')
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const { data: releases } = await github.rest.repos.listReleases({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100,
+            });
+
+            const latestStable = releases.find((release) => !release.prerelease);
+            const summary = [
+              '## Release PR',
+              '',
+              `- Previous stable release: ${latestStable?.tag_name || 'none'}`,
+              `- Requested release version: ${context.payload.pull_request.title}`,
+            ].join('\n');
+
+            require('node:fs').appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${summary}\n`);

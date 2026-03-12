@@ -328,8 +328,9 @@ function nav(): DefaultTheme.NavItem[] {
     {
       text: pkg.version,
       items: [
-        { text: `更新日志`, link: "/maintenance/changelog" },
+        { text: "更新日志", link: "/maintenance/changelog" },
         { text: "贡献指南", link: "/maintenance/contributing" },
+        { text: "发布策略", link: "/maintenance/releases" },
       ],
     },
   ];
@@ -377,8 +378,9 @@ function sidebar(): DefaultTheme.SidebarItem[] {
     },
     {
       items: [
-        { text: `更新日志`, link: "/maintenance/changelog" },
+        { text: "更新日志", link: "/maintenance/changelog" },
         { text: "贡献指南", link: "/maintenance/contributing" },
+        { text: "发布策略", link: "/maintenance/releases" },
       ],
     },
   ];
