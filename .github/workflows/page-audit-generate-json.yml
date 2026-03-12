@@ -1,4 +1,4 @@
-name: "Page Audit: Generate JSON"
+name: Page Audit (Generate JSON)
 
 on:
   workflow_dispatch:
@@ -182,11 +182,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: lts/*
-          cache: "pnpm"
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Download all reports
         uses: actions/download-artifact@v8
@@ -211,6 +208,12 @@ jobs:
               fi
             fi
           done
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Format
+        run: pnpm fmt
 
       - name: Create PR with data files
         if: github.event_name == 'release' || (github.event_name == 'repository_dispatch' && github.event.action == 'stable_release_published' && github.event.client_payload.create_pr == true) || github.event.inputs.create_pr == 'true'
