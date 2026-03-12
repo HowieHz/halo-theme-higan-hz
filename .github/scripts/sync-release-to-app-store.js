@@ -25,12 +25,14 @@ const listAssets = () => {
   const assets = fs
     .readdirSync(ASSETS_DIR)
     .filter((fileName) => fs.statSync(path.join(ASSETS_DIR, fileName)).isFile())
+    // Halo App Store 的展示顺序与上传顺序相反，因此 cn.zip 排最后上传，以确保在商店中排在最前面。
+    // （GitHub Release 侧则相反：cn.zip 排在 assets 列表首位。）
     .sort((left, right) => {
       if (left === "howiehz-higan-cn.zip") {
-        return -1;
+        return 1;
       }
       if (right === "howiehz-higan-cn.zip") {
-        return 1;
+        return -1;
       }
       return left.localeCompare(right, "en");
     });
