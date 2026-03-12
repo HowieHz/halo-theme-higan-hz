@@ -27,7 +27,7 @@ jobs:
       - name: Make Build Directory
         run: |
           pwd
-          mkdir -p ~/builds/tmp ~/builds/target
+          mkdir -p ~/builds/tmp-src ~/builds/target
 
       - name: Checkout
         uses: actions/checkout@v6
@@ -63,74 +63,50 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Diagnose memory and swap configuration
-        run: |
-          echo "=== Memory Info ==="
-          free -h
-          echo ""
-          echo "=== Swap Info ==="
-          cat /proc/swaps || echo "No swap info available"
-          echo ""
-          echo "=== cgroup Memory Limits (v1) ==="
-          cat /sys/fs/cgroup/memory/memory.limit_in_bytes 2>/dev/null || echo "Not available"
-          cat /sys/fs/cgroup/memory/memory.memsw.limit_in_bytes 2>/dev/null || echo "Not available"
-          echo ""
-          echo "=== cgroup Memory Limits (v2) ==="
-          cat /sys/fs/cgroup/memory.max 2>/dev/null || echo "Not available"
-          cat /sys/fs/cgroup/memory.swap.max 2>/dev/null || echo "Not available"
-          echo ""
-          echo "=== Current Memory Usage ==="
-          cat /proc/meminfo | grep -E "^MemTotal|^MemFree|^MemAvailable|^SwapTotal|^SwapFree"
-
       - name: Build project
         run: pnpm build
 
-      - name: Copy Theme Files from Original to Temp
+      - name: Prepare minimal package source from include-list
         run: |
-          pwd
-          cp -r . ~/builds/tmp
+          set -euo pipefail
+          ROOT_DIR="$GITHUB_WORKSPACE"
+          SRC_DIR="$HOME/builds/tmp-src"
 
-      - name: Keep only included files
+          rm -rf "$SRC_DIR"
+          mkdir -p "$SRC_DIR"
+
+          cd "$ROOT_DIR"
+          grep -Ev '^\s*(#|$)' .github/include-list.txt | while IFS= read -r path; do
+            cp -r --parents "$path" "$SRC_DIR"
+          done
+
+      - name: Build theme archives (CN/EN)
         run: |
-          pwd
-          cd ~/builds/tmp
-          pwd
-          mkdir ~/builds/tmp-included
-          cat ~/work/halo-theme-higan-hz/halo-theme-higan-hz/.github/include-list.txt | xargs -I {} cp -r --parents {} ~/builds/tmp-included
-          rm -rf ~/builds/tmp
-          mv ~/builds/tmp-included ~/builds/tmp
+          set -euo pipefail
+          ROOT_DIR="$GITHUB_WORKSPACE"
+          SRC_DIR="$HOME/builds/tmp-src"
+          TARGET_DIR="$HOME/builds/target"
 
-      - name: Zip Theme in Chinese
-        run: |
-          pwd
-          cd ~/builds/tmp
-          pwd
+          package_theme() {
+            local output_name="$1"
+            local settings_file="$2"
+            local annotation_file="$3"
+            local theme_file="$4"
+            local work_dir
 
-          zip -9 -r howiehz-higan-cn.zip .
+            work_dir=$(mktemp -d)
+            cp -a "$SRC_DIR/." "$work_dir/"
+            cp "$ROOT_DIR/$settings_file" "$work_dir/settings.yaml"
+            cp "$ROOT_DIR/$annotation_file" "$work_dir/annotation-settings.yaml"
+            cp "$ROOT_DIR/$theme_file" "$work_dir/theme.yaml"
 
-          rm settings.yaml annotation-settings.yaml theme.yaml
-          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/settings.yaml settings.yaml
-          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/annotation-settings.yaml annotation-settings.yaml
-          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/theme.yaml theme.yaml
-          zip -9 -r howiehz-higan-cn.zip settings.yaml annotation-settings.yaml theme.yaml
+            (cd "$work_dir" && zip -9 -r "$output_name" .)
+            mv "$work_dir/$output_name" "$TARGET_DIR/"
+            rm -rf "$work_dir"
+          }
 
-          mv howiehz-higan-cn.zip ~/builds/target
-
-      - name: Zip Theme in English
-        run: |
-          pwd
-          cd ~/builds/tmp
-          pwd
-
-          zip -9 -r howiehz-higan-en.zip .
-
-          rm settings.yaml annotation-settings.yaml theme.yaml
-          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/i18n-settings/settings.en.yaml settings.yaml
-          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/i18n-settings/annotation-settings.en.yaml annotation-settings.yaml
-          mv ~/work/halo-theme-higan-hz/halo-theme-higan-hz/i18n-settings/theme.en.yaml theme.yaml
-          zip -9 -r howiehz-higan-en.zip settings.yaml annotation-settings.yaml theme.yaml
-
-          mv howiehz-higan-en.zip ~/builds/target
+          package_theme "howiehz-higan-cn.zip" "settings.yaml" "annotation-settings.yaml" "theme.yaml"
+          package_theme "howiehz-higan-en.zip" "i18n-settings/settings.en.yaml" "i18n-settings/annotation-settings.en.yaml" "i18n-settings/theme.en.yaml"
 
       - name: Upload Theme Build Target
         uses: actions/upload-artifact@v7
