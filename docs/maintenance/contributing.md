@@ -168,16 +168,17 @@ pnpm -r outdated
 
 1. 计划合并到本次版本的分支或 PR 都已完成合并。
 2. `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 的 `## [Unreleased]` 下已经补充完整本次版本说明，并且 `## [Unreleased]` 标题没有被删除。
-3. 不要在 PR 中手动修改版本号字段：`package.json` 的 `version`、`theme.yaml` 的 `version`、`i18n-settings/theme.*.yaml` 的 `version`。
-4. 发布前人工确认 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 中的 `requires` 仍符合目标 Halo CMS 版本要求。
+3. 非发布 PR 不要手动修改版本号字段：`package.json` 的 `version`、`theme.yaml` 的 `version`、`i18n-settings/theme.*.yaml` 的 `version`。
+4. 发布 PR（带 `release` 标签）仅允许手动修改 `theme.yaml` 的 `version`，该值将作为正式版目标版本号。
+5. 发布前人工确认 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 中的 `requires` 仍符合目标 Halo CMS 版本要求。
 
 ### 正式版发布方法
 
 正式版通过带标签的 PR 自动发布：
 
 1. 创建用于正式发布的 PR（或在现有汇总 PR 上发布）。
-2. 为 PR 添加 `release` 标签，并将 PR 标题改为目标语义化版本号（例如 `1.57.6`）。
-3. 等待 `release-guard.yml` 检查通过，并确认摘要中提示的上一个正式版版本号无误。
+2. 为 PR 添加 `release` 标签，并将 `theme.yaml` 的 `version` 改为目标语义化版本号（例如 `1.57.6`）。
+3. 等待 `release-guard.yml` 检查通过，并确认摘要中的目标版本号（来自 `theme.yaml`）与上一个正式版版本号无误。
 4. 合并 PR 到 `main`。
 
 PR 合并后，机器人会自动完成以下动作：

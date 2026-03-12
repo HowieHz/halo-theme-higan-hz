@@ -168,16 +168,17 @@ Before releasing, confirm all of the following:
 
 1. Every branch or PR intended for the release has already been merged.
 2. The entries under `## [Unreleased]` in both `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` are complete, and the `## [Unreleased]` heading has not been removed.
-3. Do not manually change version fields in a PR: `package.json` `version`, `theme.yaml` `version`, or `i18n-settings/theme.*.yaml` `version`.
-4. Manually verify that the `requires` field in `theme.yaml` and `i18n-settings/theme.*.yaml` still matches the target Halo CMS compatibility range.
+3. In non-release PRs, do not manually change version fields: `package.json` `version`, `theme.yaml` `version`, or `i18n-settings/theme.*.yaml` `version`.
+4. In release PRs (with the `release` label), only `theme.yaml` `version` should be changed manually; that value is used as the target stable version.
+5. Manually verify that the `requires` field in `theme.yaml` and `i18n-settings/theme.*.yaml` still matches the target Halo CMS compatibility range.
 
 ### Stable Release Procedure
 
 Stable releases are published automatically from a labeled PR:
 
 1. Create a PR for the release (or use an existing aggregation PR).
-2. Add the `release` label and set the PR title to the target semantic version, such as `1.57.6`.
-3. Wait for `release-guard.yml` to pass and confirm the previously released stable version shown in the workflow summary.
+2. Add the `release` label and change `theme.yaml` `version` to the target semantic version, such as `1.57.6`.
+3. Wait for `release-guard.yml` to pass and confirm both the target version (from `theme.yaml`) and the previous stable version shown in the workflow summary.
 4. Merge the PR into `main`.
 
 After the PR is merged, the bot automatically:
