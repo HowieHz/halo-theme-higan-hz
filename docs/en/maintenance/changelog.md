@@ -25,7 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🛠️ Miscellaneous Chores
 
-- Refactored release workflow.
+- Refactored the release workflow.
+- Added artifact attestation (Sigstore provenance) to both stable and nightly prerelease workflows for verifiable zip artifact provenance.
 
 ## [1.57.5] - 2026-03-12
 
