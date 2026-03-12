@@ -179,6 +179,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
+          cache: 'pnpm'
 
       - name: Download all reports
         uses: actions/download-artifact@v8
@@ -235,5 +236,4 @@ jobs:
           delete-branch: true
           labels: |
             deploy-docs
-            need deploy documentation
           add-paths: .github/page_size_audit_results/*.json

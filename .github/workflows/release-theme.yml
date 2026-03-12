@@ -152,7 +152,24 @@ jobs:
           name: release-theme-artifact
           path: dist/theme-packages
 
-      - name: Setup pnpm
+      - name: Detect package manager in package.json
+        id: detect-pm
+        run: |
+          pm=""
+          if [ -f package.json ]; then
+            # If packageManager value starts with pnpm@, extract the full pnpm@... token
+            if grep -Eq '"packageManager"[[:space:]]*:[[:space:]]*"[[:space:]]*pnpm@' package.json; then
+              pm=$(sed -n 's/.*"packageManager"[[:space:]]*:[[:space:]]*"[[:space:]]*\(pnpm@[^"]*\)".*/\1/p' package.json || true)
+            fi
+          fi
+          echo "pm=${pm}" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm (normal, when packageManager declares pnpm)
+        if: ${{ steps.detect-pm.outputs.pm != '' && contains(steps.detect-pm.outputs.pm, 'pnpm') }}
+        uses: pnpm/action-setup@v4
+
+      - name: Setup pnpm (fallback when packageManager missing)
+        if: ${{ steps.detect-pm.outputs.pm == '' }}
         uses: pnpm/action-setup@v4
         with:
           version: 10
@@ -161,7 +178,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          cache: pnpm
+          cache: 'pnpm'
 
       - name: Install js-yaml
         run: pnpm add -w -D js-yaml
