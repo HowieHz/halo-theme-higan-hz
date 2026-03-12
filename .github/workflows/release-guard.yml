@@ -54,6 +54,15 @@ jobs:
             return String(value).trim();
           };
 
+          const parseVersion = (v) => v.split('.').map(Number);
+          const isGreaterThan = (a, b) => {
+            const [aMajor, aMinor, aPatch] = parseVersion(a);
+            const [bMajor, bMinor, bPatch] = parseVersion(b);
+            if (aMajor !== bMajor) return aMajor > bMajor;
+            if (aMinor !== bMinor) return aMinor > bMinor;
+            return aPatch > bPatch;
+          };
+
           const currentPackageVersion = readVersionFromPackageJson(fs.readFileSync('package.json', 'utf8'));
           const basePackageVersion = readVersionFromPackageJson(readFromGit(baseSha, 'package.json'));
           if (isReleasePr) {
@@ -62,6 +71,9 @@ jobs:
             }
             if (!/^\d+\.\d+\.\d+$/u.test(currentPackageVersion)) {
               throw new Error(`package.json version in release PR must be semantic version (x.y.z), got: ${currentPackageVersion}`);
+            }
+            if (!isGreaterThan(currentPackageVersion, basePackageVersion)) {
+              throw new Error(`release PR version must be greater than base version: ${basePackageVersion} -> ${currentPackageVersion}`);
             }
           } else if (currentPackageVersion !== basePackageVersion) {
             throw new Error(`package.json version must not be changed in non-release PRs: ${basePackageVersion} -> ${currentPackageVersion}`);
