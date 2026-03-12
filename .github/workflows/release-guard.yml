@@ -80,7 +80,6 @@ jobs:
           }
           NODE
 
-
       - name: Write summary
         if: contains(github.event.pull_request.labels.*.name, 'release')
         uses: actions/github-script@v8
