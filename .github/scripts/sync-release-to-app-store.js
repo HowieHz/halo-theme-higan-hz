@@ -2,6 +2,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
+import yaml from "js-yaml";
 
 const {
   ASSETS_DIR,
@@ -49,18 +50,19 @@ const readThemeManifest = (assetPath) => {
     encoding: "utf8",
   });
 
-  const versionMatch = yamlContent.match(/^\s*version:\s*([^\r\n]+)$/mu);
-  const requiresMatch = yamlContent.match(/^\s*requires:\s*"?([^\r\n"]+)"?$/mu);
-  const appIdMatch = yamlContent.match(/^\s*store\.halo\.run\/app-id:\s*([^\r\n]+)$/mu);
+  const manifest = yaml.load(yamlContent);
+  const version = manifest?.spec?.version;
+  const requires = manifest?.spec?.requires;
+  const appId = manifest?.metadata?.annotations?.["store.halo.run/app-id"];
 
-  if (!versionMatch || !requiresMatch) {
+  if (!version || !requires) {
     throw new Error(`Unable to read version or requires from ${assetPath}`);
   }
 
   return {
-    version: versionMatch[1].trim(),
-    requires: requiresMatch[1].trim(),
-    appId: HALO_APP_ID || appIdMatch?.[1]?.trim(),
+    version: String(version).trim(),
+    requires: String(requires).trim(),
+    appId: HALO_APP_ID || (appId ? String(appId).trim() : undefined),
   };
 };
 

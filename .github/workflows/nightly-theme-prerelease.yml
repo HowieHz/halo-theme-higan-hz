@@ -84,6 +84,10 @@ jobs:
         if: steps.changes.outputs.should_release == 'true'
         run: pnpm install --frozen-lockfile
 
+      - name: Install js-yaml
+        if: steps.changes.outputs.should_release == 'true'
+        run: pnpm add -w -D js-yaml
+
       - name: Prepare prerelease version
         if: steps.changes.outputs.should_release == 'true'
         id: version
