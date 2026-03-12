@@ -209,6 +209,12 @@ jobs:
             fi
           done
 
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Format
+        run: pnpm fmt
+
       - name: Create PR with data files
         if: github.event_name == 'release' || (github.event_name == 'repository_dispatch' && github.event.action == 'stable_release_published' && github.event.client_payload.create_pr == true) || github.event.inputs.create_pr == 'true'
         uses: peter-evans/create-pull-request@v8
