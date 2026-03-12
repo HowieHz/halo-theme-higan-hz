@@ -18,6 +18,8 @@ on:
         type: boolean
   release:
     types: [published]
+  repository_dispatch:
+    types: [stable_release_published]
 
 jobs:
   # Step 1: Get versions to test
@@ -40,11 +42,16 @@ jobs:
           script: |
             let startVersion, endVersion;
 
-              if ('${{ github.event_name }}' === 'release') {
+            if ('${{ github.event_name }}' === 'release') {
               const releaseVersion = '${{ github.event.release.tag_name }}';
               startVersion = releaseVersion;
               endVersion = releaseVersion;
               console.log(`Release triggered: testing version ${releaseVersion}`);
+            } else if ('${{ github.event_name }}' === 'repository_dispatch') {
+              const releaseVersion = '${{ github.event.client_payload.release_tag }}';
+              startVersion = releaseVersion;
+              endVersion = releaseVersion;
+              console.log(`Repository dispatch triggered: testing version ${releaseVersion}`);
             } else {
               startVersion = '${{ github.event.inputs.start_version }}' || 'v1.0.0';
               endVersion = '${{ github.event.inputs.end_version }}' || '';
@@ -189,7 +196,7 @@ jobs:
           path: ./all-reports
 
       - name: Copy reports to page_size_audit_results
-        if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
+        if: github.event_name == 'release' || (github.event_name == 'repository_dispatch' && github.event.action == 'stable_release_published' && github.event.client_payload.create_pr == true) || github.event.inputs.create_pr == 'true'
         run: |
           mkdir -p .github/page_size_audit_results
           # Actual case: JSON files are placed directly under ./all-reports
@@ -206,7 +213,7 @@ jobs:
           done
 
       - name: Create PR with data files
-        if: github.event.inputs.create_pr == 'true' || github.event_name == 'release'
+        if: github.event_name == 'release' || (github.event_name == 'repository_dispatch' && github.event.action == 'stable_release_published' && github.event.client_payload.create_pr == true) || github.event.inputs.create_pr == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.PR_WORKFLOW_TOKEN }}
@@ -216,14 +223,14 @@ jobs:
           # - Contents: Read and Write (create branches and commits)
           # - Pull requests: Read and Write (create PRs)
           # - Workflows: Read and Write (allow PRs to trigger workflows)
-          commit-message: "chore: update page size audit results for ${{ github.event.inputs.start_version || github.event.release.tag_name }} to ${{ github.event.inputs.end_version || github.event.release.tag_name || 'latest' }}"
+          commit-message: "chore: update page size audit results for ${{ github.event.inputs.start_version || github.event.client_payload.release_tag || github.event.release.tag_name }} to ${{ github.event.inputs.end_version || github.event.client_payload.release_tag || github.event.release.tag_name || 'latest' }}"
           title: "chore: Update Page Size Audit Results"
           body: |
             ## Page Size Audit Results Update
 
             This PR adds/updates page size audit results for versions:
-            - **Start Version:** ${{ github.event.inputs.start_version || github.event.release.tag_name }}
-            - **End Version:** ${{ github.event.inputs.end_version || github.event.release.tag_name || 'latest' }}
+            - **Start Version:** ${{ github.event.inputs.start_version || github.event.client_payload.release_tag || github.event.release.tag_name }}
+            - **End Version:** ${{ github.event.inputs.end_version || github.event.client_payload.release_tag || github.event.release.tag_name || 'latest' }}
 
             The following JSON data files have been updated in `.github/page_size_audit_results/`:
             - Multiple version result files

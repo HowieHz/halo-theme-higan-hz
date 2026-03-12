@@ -135,6 +135,25 @@ jobs:
             --notes-file .github/templates/release-note-template.md \
             --target "$RELEASE_SHA"
 
+      - name: Dispatch stable release follow-up workflows
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ needs.prepare.outputs.release_tag }}
+          RELEASE_VERSION: ${{ needs.prepare.outputs.release_version }}
+          RELEASE_SHA: ${{ needs.prepare.outputs.release_commit_sha }}
+        run: |
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/${GITHUB_REPOSITORY}/dispatches" \
+            -f event_type='stable_release_published' \
+            -F client_payload[release_tag]="$RELEASE_TAG" \
+            -F client_payload[release_version]="$RELEASE_VERSION" \
+            -F client_payload[release_sha]="$RELEASE_SHA" \
+            -F client_payload[target_branch]='main' \
+            -F client_payload[deploy_docs]=true \
+            -F client_payload[create_pr]=true
+
   app-store-release:
     name: Sync Release to Halo App Store
     needs: [prepare, github-release]
