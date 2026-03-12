@@ -43,7 +43,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install js-yaml
         run: pnpm add -w -D js-yaml
