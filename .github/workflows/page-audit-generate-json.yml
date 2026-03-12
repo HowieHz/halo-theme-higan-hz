@@ -234,6 +234,5 @@ jobs:
           branch: perf/page-size-audit-${{ github.run_number }}
           delete-branch: true
           labels: |
-            performance
-            need deploy documentation
+            deploy-docs
           add-paths: .github/page_size_audit_results/*.json
