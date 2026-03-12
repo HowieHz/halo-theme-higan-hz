@@ -1,0 +1,150 @@
+name: Nightly Theme Prerelease
+
+on:
+  schedule:
+    - cron: "0 16 * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Force create a nightly prerelease even if main had no commits yesterday
+        required: true
+        type: boolean
+        default: false
+
+concurrency:
+  group: nightly-theme-prerelease
+  cancel-in-progress: false
+
+jobs:
+  prerelease:
+    name: Build and Publish Nightly Prerelease
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Check main branch changes since yesterday
+        id: changes
+        env:
+          FORCE: ${{ github.event.inputs.force || 'false' }}
+        run: |
+          WINDOW_START=$(TZ=Asia/Shanghai date -d 'yesterday 00:00:00' '+%Y-%m-%d %H:%M:%S %z')
+          WINDOW_END=$(TZ=Asia/Shanghai date -d 'today 00:00:00' '+%Y-%m-%d %H:%M:%S %z')
+          COMMIT_COUNT=$(git rev-list --count --since="$WINDOW_START" --until="$WINDOW_END" HEAD)
+          echo "commit_count=$COMMIT_COUNT" >> "$GITHUB_OUTPUT"
+          if [ "$FORCE" = "true" ] || [ "$COMMIT_COUNT" -gt 0 ]; then
+            echo "should_release=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_release=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Stop when no nightly release is needed
+        if: steps.changes.outputs.should_release != 'true'
+        run: |
+          echo "No commits on main during the previous Asia/Shanghai day window; skipping nightly prerelease."
+          exit 0
+
+      - name: Detect package manager in package.json
+        if: steps.changes.outputs.should_release == 'true'
+        id: detect-pm
+        run: |
+          pm=""
+          if [ -f package.json ]; then
+            if grep -Eq '"packageManager"[[:space:]]*:[[:space:]]*"[[:space:]]*pnpm@' package.json; then
+              pm=$(sed -n 's/.*"packageManager"[[:space:]]*:[[:space:]]*"[[:space:]]*\(pnpm@[^"]*\)".*/\1/p' package.json || true)
+            fi
+          fi
+          echo "pm=${pm}" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm (normal, when packageManager declares pnpm)
+        if: steps.changes.outputs.should_release == 'true' && steps.detect-pm.outputs.pm != '' && contains(steps.detect-pm.outputs.pm, 'pnpm')
+        uses: pnpm/action-setup@v4
+
+      - name: Setup pnpm (fallback when packageManager missing)
+        if: steps.changes.outputs.should_release == 'true' && steps.detect-pm.outputs.pm == ''
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install Node.js
+        if: steps.changes.outputs.should_release == 'true'
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      - name: Install dependencies
+        if: steps.changes.outputs.should_release == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Prepare prerelease version
+        if: steps.changes.outputs.should_release == 'true'
+        id: version
+        run: |
+          CURRENT_VERSION=$(node -p "JSON.parse(require('node:fs').readFileSync('package.json', 'utf8')).version")
+          BASE_VERSION=${CURRENT_VERSION%%-*}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$BASE_VERSION"
+          NEXT_PATCH=$((PATCH + 1))
+          TIMESTAMP=$(TZ=Asia/Shanghai date +%Y%m%d%H%M%S%3N)
+          PRERELEASE_VERSION="$MAJOR.$MINOR.$NEXT_PATCH-alpha.$TIMESTAMP"
+          PRERELEASE_TAG="v$PRERELEASE_VERSION"
+          if git rev-parse "$PRERELEASE_TAG" >/dev/null 2>&1; then
+            echo "Prerelease tag already exists: $PRERELEASE_TAG" >&2
+            exit 1
+          fi
+          echo "prerelease_version=$PRERELEASE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "prerelease_tag=$PRERELEASE_TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Create local release branch
+        if: steps.changes.outputs.should_release == 'true'
+        run: git switch -c "nightly-release-${{ steps.version.outputs.prerelease_version }}"
+
+      - name: Update prerelease version fields
+        if: steps.changes.outputs.should_release == 'true'
+        run: node .github/scripts/update-theme-version.js "${{ steps.version.outputs.prerelease_version }}"
+
+      - name: Build project
+        if: steps.changes.outputs.should_release == 'true'
+        run: pnpm build
+
+      - name: Package theme assets
+        if: steps.changes.outputs.should_release == 'true'
+        run: bash .github/scripts/build-theme-packages.sh .github/include-list.txt dist/theme-packages
+
+      - name: Create prerelease
+        if: steps.changes.outputs.should_release == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PRERELEASE_TAG: ${{ steps.version.outputs.prerelease_tag }}
+          PRERELEASE_VERSION: ${{ steps.version.outputs.prerelease_version }}
+        run: |
+          assets=()
+          if [ -f dist/theme-packages/howiehz-higan-cn.zip ]; then
+            assets+=(dist/theme-packages/howiehz-higan-cn.zip)
+          fi
+          while IFS= read -r asset; do
+            if [ "$asset" != "dist/theme-packages/howiehz-higan-cn.zip" ]; then
+              assets+=("$asset")
+            fi
+          done < <(find dist/theme-packages -maxdepth 1 -type f | sort)
+          gh release create "$PRERELEASE_TAG" "${assets[@]}" \
+            --title "$PRERELEASE_VERSION" \
+            --notes-file .github/templates/release-note-template.md \
+            --prerelease \
+            --target "$GITHUB_SHA"
+
+      - name: Sync prerelease to Halo App Store
+        if: steps.changes.outputs.should_release == 'true'
+        env:
+          ASSETS_DIR: dist/theme-packages
+          GITHUB_RELEASE_TAG: ${{ steps.version.outputs.prerelease_tag }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HALO_BACKEND_BASEURL: https://www.halo.run
+          HALO_PAT: ${{ secrets.HALO_PAT }}
+        run: node .github/scripts/sync-release-to-app-store.js

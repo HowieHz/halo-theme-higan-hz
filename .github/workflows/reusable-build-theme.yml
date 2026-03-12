@@ -79,60 +79,9 @@ jobs:
       - name: Build project
         run: pnpm build
 
-      - name: Prepare minimal package source from include-list
-        shell: bash
-        run: |
-          set -euo pipefail
-          ROOT_DIR="$GITHUB_WORKSPACE"
-          SRC_DIR="$HOME/builds/tmp-src"
-          INCLUDE_LIST="$ROOT_DIR/${{ inputs.include_list_path }}"
-
-          if [ ! -f "$INCLUDE_LIST" ]; then
-            echo "Include list not found: $INCLUDE_LIST"
-            exit 1
-          fi
-
-          rm -rf "$SRC_DIR"
-          mkdir -p "$SRC_DIR"
-
-          cd "$ROOT_DIR"
-          grep -Ev '^[[:space:]]*(#|$)' "$INCLUDE_LIST" | while IFS= read -r path; do
-            if [ -e "$path" ]; then
-              cp -r --parents "$path" "$SRC_DIR"
-            else
-              echo "Missing path from include-list: $path"
-              exit 1
-            fi
-          done
-
       - name: Build theme archives (CN and EN)
         shell: bash
-        run: |
-          set -euo pipefail
-          ROOT_DIR="$GITHUB_WORKSPACE"
-          SRC_DIR="$HOME/builds/tmp-src"
-          TARGET_DIR="$HOME/builds/target"
-
-          package_theme() {
-            local output_name="$1"
-            local settings_file="$2"
-            local annotation_file="$3"
-            local theme_file="$4"
-            local work_dir
-
-            work_dir=$(mktemp -d)
-            cp -a "$SRC_DIR/." "$work_dir/"
-            cp "$ROOT_DIR/$settings_file" "$work_dir/settings.yaml"
-            cp "$ROOT_DIR/$annotation_file" "$work_dir/annotation-settings.yaml"
-            cp "$ROOT_DIR/$theme_file" "$work_dir/theme.yaml"
-
-            (cd "$work_dir" && zip -9 -r "$output_name" .)
-            mv "$work_dir/$output_name" "$TARGET_DIR/"
-            rm -rf "$work_dir"
-          }
-
-          package_theme "howiehz-higan-cn.zip" "settings.yaml" "annotation-settings.yaml" "theme.yaml"
-          package_theme "howiehz-higan-en.zip" "i18n-settings/settings.en.yaml" "i18n-settings/annotation-settings.en.yaml" "i18n-settings/theme.en.yaml"
+        run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$HOME/builds/target"
 
       - name: Upload Theme Build Target
         uses: actions/upload-artifact@v7

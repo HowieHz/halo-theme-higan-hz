@@ -21,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 📄 Documentation
 
 - Relocated changelog and contribution guidelines.
+- Created release process documentation.
+
+### 🛠️ Miscellaneous Chores
+
+- Refactored release workflow.
 
 ## [1.57.5] - 2026-03-12
 

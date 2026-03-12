@@ -70,7 +70,7 @@ jobs:
     needs: build
     if: |
       (github.event_name == 'release' && github.event.action == 'published' && github.event.release.target_commitish == 'main') ||
-      (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'deploy-docs')) ||
+      (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && (contains(github.event.pull_request.labels.*.name, 'deploy-docs') || contains(github.event.pull_request.labels.*.name, 'need deploy documentation'))) ||
       (github.event_name == 'workflow_dispatch' && inputs.deploy == true)
     runs-on: ubuntu-latest
     steps:
