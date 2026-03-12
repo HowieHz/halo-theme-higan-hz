@@ -126,11 +126,11 @@ This project runs a set of quality checks on each PR via CI (GitHub Actions):
 - Visual Regression Testing:
   - Uses Playwright to take screenshots of key pages on desktop, tablet, and mobile devices (viewports) with Chromium, Firefox, and WebKit engines. Finally, Argos CI compares the screenshots with the baseline version (currently, only Chromium-generated screenshots are uploaded for comparison to save resources).
 
-- Release guard checks (`release-guard.yml`):
-  - Verifies that `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` still keep `## [Unreleased]`.
-  - Verifies that non-release PRs do not manually change the `version` field in `package.json`.
-  - Verifies that release PRs (with the `release` label) do manually change `package.json` `version`, and that it is a valid semantic version.
-  - Verifies that PRs do not manually change `spec.version` in `theme.yaml` and `i18n-settings/theme.*.yaml`.
+- Release Guard Checks:
+  - Verifies that `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` still keep `## [Unreleased]` (fails if missing).
+  - Verifies that non-release PRs do not manually change the `version` field in `package.json` (fails if changed).
+  - Verifies that release PRs (with the `release` label) do manually change the `version` field in `package.json` (fails if unchanged), that it is a valid semantic version matching `/^\d+\.\d+\.\d+$/` (fails if it does not match), and that the new version is strictly greater than the `version` field in `package.json` on the target branch (fails if not incremented).
+  - Verifies that PRs do not manually change `spec.version` in `theme.yaml` and `i18n-settings/theme.*.yaml` (fails if changed).
 
 ### Writing Documentation
 

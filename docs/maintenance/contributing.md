@@ -126,11 +126,11 @@ pnpm build
 - 页面视觉差异检查（Visual Regression）：
   - 通过 Playwright 在桌面、平板、手机三种设备视图（Viewport）下，使用 Chromium, Firefox, WebKit 内核对关键页面截图。最后使用 Argos CI 与基线版本进行比较。（为节省额度，现仅上传 Chromium 生成的截图进行比较）
 
-- 发版约束检查（`release-guard.yml`）：
-  - 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 是否仍然保留 `## [Unreleased]`。
-  - 检查非发布 PR 中是否手动修改了 `package.json` 的 `version`。
-  - 检查发布 PR（带 `release` 标签）是否手动修改了 `package.json` 的 `version`，且为合法语义化版本号。
-  - 检查 PR 中是否手动修改了 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 的 `spec.version`。
+- 发版约束检查：
+  - 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 是否仍然保留 `## [Unreleased]`（如未保留则不通过检查）。
+  - 检查非发布 PR 中是否手动修改了 `package.json` 的 `version`（如有修改则不通过检查）。
+  - 检查发布 PR（带 `release` 标签）是否手动修改了 `package.json` 的 `version`（如未修改则不通过检查），且为合法语义化版本号（如不符合 `/^\d+\.\d+\.\d+$/` 则不通过检查），且新版本号必须大于目标分支 `package.json` 的 `version` 字段的版本号（如未递增则不通过检查）。
+  - 检查 PR 中是否手动修改了 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 的 `spec.version`（如有修改则不通过检查）。
 
 ### 编写文档
 
