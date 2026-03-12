@@ -109,6 +109,7 @@ jobs:
           name: release-theme-artifact
           path: dist/theme-packages
       - name: Attest build provenance
+        id: attest
         uses: actions/attest@v4
         with:
           subject-path: dist/theme-packages/*.zip
@@ -119,6 +120,7 @@ jobs:
           RELEASE_TAG: ${{ needs.prepare.outputs.release_tag }}
           RELEASE_VERSION: ${{ needs.prepare.outputs.release_version }}
           RELEASE_SHA: ${{ needs.prepare.outputs.release_commit_sha }}
+          ATTESTATION_BUNDLE_PATH: ${{ steps.attest.outputs.bundle-path }}
         run: |
           assets=()
           if [ -f dist/theme-packages/howiehz-higan-cn.zip ]; then
@@ -129,6 +131,9 @@ jobs:
               assets+=("$asset")
             fi
           done < <(find dist/theme-packages -maxdepth 1 -type f | sort)
+          if [ -n "$ATTESTATION_BUNDLE_PATH" ] && [ -f "$ATTESTATION_BUNDLE_PATH" ]; then
+            assets+=("$ATTESTATION_BUNDLE_PATH")
+          fi
           gh release create "$RELEASE_TAG" "${assets[@]}" \
             --title "$RELEASE_VERSION" \
             --notes-file .github/templates/release-note-template.md \
