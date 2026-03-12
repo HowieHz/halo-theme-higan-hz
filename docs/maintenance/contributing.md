@@ -168,9 +168,8 @@ pnpm -r outdated
 
 1. 计划合并到本次版本的分支或 PR 都已完成合并。
 2. `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 的 `## [Unreleased]` 下已经补充完整本次版本说明，并且 `## [Unreleased]` 标题没有被删除。
-3. 非发布 PR 不要手动修改版本号字段：`package.json` 的 `version`、`theme.yaml` 的 `spec.version`、`i18n-settings/theme.*.yaml` 的 `spec.version`。
-4. 发布 PR（带 `release` 标签）仅允许手动修改 `package.json` 的 `version`，该值将作为正式版目标版本号。
-5. 发布前人工确认 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 中的 `requires` 仍符合目标 Halo CMS 版本要求。
+3. 发布 PR（带 `release` 标签）仅允许手动修改 `package.json` 的 `version`，该值将作为正式版目标版本号。
+4. 发布前人工确认 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 中的 `requires` 仍符合目标 Halo CMS 版本要求。
 
 ### 正式版发布方法
 
