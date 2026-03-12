@@ -26,6 +26,7 @@
 ### 🛠️ 杂项维护
 
 - 重构发布流程。
+- 为正式版与每日预发布流程接入 artifact attestation（Sigstore provenance），对发布 zip 产物生成可验证来源证明。
 
 ## [1.57.5] - 2026-03-12
 

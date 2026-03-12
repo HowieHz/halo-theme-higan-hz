@@ -94,7 +94,9 @@ jobs:
     needs: [prepare, build]
     runs-on: ubuntu-latest
     permissions:
+      id-token: write
       contents: write
+      attestations: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -106,6 +108,10 @@ jobs:
         with:
           name: release-theme-artifact
           path: dist/theme-packages
+      - name: Attest build provenance
+        uses: actions/attest@v4
+        with:
+          subject-path: dist/theme-packages/*.zip
 
       - name: Create release
         env:
