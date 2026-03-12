@@ -279,7 +279,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed incorrect pin icon color in the home page post list.
 
-## [1.51.0](https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.2...v1.51.0) - 2026-01-03
+## [1.51.0] - 2026-01-03
 
 ### 💥 BREAKING CHANGES
 
