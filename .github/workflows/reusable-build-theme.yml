@@ -1,0 +1,141 @@
+name: Reusable Build Theme
+
+on:
+  workflow_call:
+    inputs:
+      theme_ref:
+        required: false
+        type: string
+        default: refs/heads/main
+        description: "Git ref/sha to checkout for building"
+      artifact_name:
+        required: false
+        type: string
+        default: theme-artifact
+        description: "Name of uploaded artifact"
+      include_list_path:
+        required: false
+        type: string
+        default: .github/include-list.txt
+        description: "Path of include list file in repository"
+
+jobs:
+  build:
+    name: Build and Upload Theme
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add swap space
+        run: |
+          SWAP_FILE="/tmp/github-actions-swap-$$"
+          MEMORY_LIMIT_GB=12
+          # Add swap space to help with memory issues during build
+          sudo fallocate -l ${MEMORY_LIMIT_GB}G "$SWAP_FILE"
+          sudo chmod 600 "$SWAP_FILE"
+          sudo mkswap "$SWAP_FILE"
+          sudo swapon "$SWAP_FILE"
+          echo "Added ${MEMORY_LIMIT_GB}GB swap at $SWAP_FILE"
+          free -h
+
+      - name: Make Build Directory
+        run: |
+          mkdir -p ~/builds/tmp-src ~/builds/target
+
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.theme_ref }}
+
+      - name: Detect package manager in package.json
+        id: detect-pm
+        run: |
+          pm=""
+          if [ -f package.json ]; then
+            # If packageManager value starts with pnpm@, extract the full pnpm@... token
+            if grep -Eq '"packageManager"[[:space:]]*:[[:space:]]*"[[:space:]]*pnpm@' package.json; then
+              pm=$(sed -n 's/.*"packageManager"[[:space:]]*:[[:space:]]*"[[:space:]]*\(pnpm@[^"]*\)".*/\1/p' package.json || true)
+            fi
+          fi
+          echo "pm=${pm}" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm (normal, when packageManager declares pnpm)
+        if: ${{ steps.detect-pm.outputs.pm != '' && contains(steps.detect-pm.outputs.pm, 'pnpm') }}
+        uses: pnpm/action-setup@v4
+
+      - name: Setup pnpm (fallback when packageManager missing)
+        if: ${{ steps.detect-pm.outputs.pm == '' }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build project
+        run: pnpm build
+
+      - name: Prepare minimal package source from include-list
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT_DIR="$GITHUB_WORKSPACE"
+          SRC_DIR="$HOME/builds/tmp-src"
+          INCLUDE_LIST="$ROOT_DIR/${{ inputs.include_list_path }}"
+
+          if [ ! -f "$INCLUDE_LIST" ]; then
+            echo "Include list not found: $INCLUDE_LIST"
+            exit 1
+          fi
+
+          rm -rf "$SRC_DIR"
+          mkdir -p "$SRC_DIR"
+
+          cd "$ROOT_DIR"
+          grep -Ev '^[[:space:]]*(#|$)' "$INCLUDE_LIST" | while IFS= read -r path; do
+            if [ -e "$path" ]; then
+              cp -r --parents "$path" "$SRC_DIR"
+            else
+              echo "Missing path from include-list: $path"
+              exit 1
+            fi
+          done
+
+      - name: Build theme archives (CN and EN)
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT_DIR="$GITHUB_WORKSPACE"
+          SRC_DIR="$HOME/builds/tmp-src"
+          TARGET_DIR="$HOME/builds/target"
+
+          package_theme() {
+            local output_name="$1"
+            local settings_file="$2"
+            local annotation_file="$3"
+            local theme_file="$4"
+            local work_dir
+
+            work_dir=$(mktemp -d)
+            cp -a "$SRC_DIR/." "$work_dir/"
+            cp "$ROOT_DIR/$settings_file" "$work_dir/settings.yaml"
+            cp "$ROOT_DIR/$annotation_file" "$work_dir/annotation-settings.yaml"
+            cp "$ROOT_DIR/$theme_file" "$work_dir/theme.yaml"
+
+            (cd "$work_dir" && zip -9 -r "$output_name" .)
+            mv "$work_dir/$output_name" "$TARGET_DIR/"
+            rm -rf "$work_dir"
+          }
+
+          package_theme "howiehz-higan-cn.zip" "settings.yaml" "annotation-settings.yaml" "theme.yaml"
+          package_theme "howiehz-higan-en.zip" "i18n-settings/settings.en.yaml" "i18n-settings/annotation-settings.en.yaml" "i18n-settings/theme.en.yaml"
+
+      - name: Upload Theme Build Target
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: ~/builds/target/*
