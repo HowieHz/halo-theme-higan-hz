@@ -128,9 +128,9 @@ pnpm build
 
 - 发版约束检查（`release-guard.yml`）：
   - 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 是否仍然保留 `## [Unreleased]`。
-  - 检查 PR 中是否手动修改了 `package.json` 的 `version`。
-  - 检查 PR 中是否手动修改了 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 的 `version`。
-  - 如果 PR 带有 `release` 标签，则检查 PR 标题是否为合法语义化版本号。
+  - 检查非发布 PR 中是否手动修改了 `package.json` 的 `version`。
+  - 检查发布 PR（带 `release` 标签）是否手动修改了 `package.json` 的 `version`，且为合法语义化版本号。
+  - 检查 PR 中是否手动修改了 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 的 `spec.version`。
 
 ### 编写文档
 
@@ -168,8 +168,8 @@ pnpm -r outdated
 
 1. 计划合并到本次版本的分支或 PR 都已完成合并。
 2. `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 的 `## [Unreleased]` 下已经补充完整本次版本说明，并且 `## [Unreleased]` 标题没有被删除。
-3. 非发布 PR 不要手动修改版本号字段：`package.json` 的 `version`、`theme.yaml` 的 `version`、`i18n-settings/theme.*.yaml` 的 `version`。
-4. 发布 PR（带 `release` 标签）仅允许手动修改 `theme.yaml` 的 `version`，该值将作为正式版目标版本号。
+3. 非发布 PR 不要手动修改版本号字段：`package.json` 的 `version`、`theme.yaml` 的 `spec.version`、`i18n-settings/theme.*.yaml` 的 `spec.version`。
+4. 发布 PR（带 `release` 标签）仅允许手动修改 `package.json` 的 `version`，该值将作为正式版目标版本号。
 5. 发布前人工确认 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 中的 `requires` 仍符合目标 Halo CMS 版本要求。
 
 ### 正式版发布方法
@@ -177,14 +177,14 @@ pnpm -r outdated
 正式版通过带标签的 PR 自动发布：
 
 1. 创建用于正式发布的 PR（或在现有汇总 PR 上发布）。
-2. 为 PR 添加 `release` 标签，并将 `theme.yaml` 的 `version` 改为目标语义化版本号（例如 `1.57.6`）。
-3. 等待 `release-guard.yml` 检查通过，并确认摘要中的目标版本号（来自 `theme.yaml`）与上一个正式版版本号无误。
+2. 为 PR 添加 `release` 标签，并将 `package.json` 的 `version` 改为目标语义化版本号（例如 `1.57.6`）。
+3. 等待 `release-guard.yml` 检查通过，并确认摘要中的目标版本号（来自 `package.json`）与上一个正式版版本号无误。
 4. 合并 PR 到 `main`。
 
 PR 合并后，机器人会自动完成以下动作：
 
 1. 将中英文更新日志 `## [Unreleased]` 内容提升为本次正式版条目，并保留 `## [Unreleased]` 标题。
-2. 同步更新 `package.json`、`theme.yaml`、`i18n-settings/theme.*.yaml` 的 `version`，并推送机器人提交到 `main`。
+2. 同步更新 `package.json` 的 `version`、`theme.yaml` 的 `spec.version`、`i18n-settings/theme.*.yaml` 的 `spec.version`，并推送机器人提交到 `main`。
 3. 执行主题构建，产出多个 `howiehz-higan-*.zip`。
 4. 创建 GitHub Release，并上传全部 `howiehz-higan-*.zip` 到 GitHub Release 与 Halo 应用市场（`howiehz-higan-cn.zip` 优先上传）。
 5. 由 release 事件触发 `page-audit-generate-json.yml`，自动创建体积测量结果 PR；该 PR 会带上 `deploy-docs` 标签，合并后自动部署文档站。

@@ -33,10 +33,10 @@ jobs:
       - name: Resolve release metadata
         id: meta
         run: |
-          RELEASE_VERSION=$(node -e "const fs=require('node:fs'); const m=fs.readFileSync('theme.yaml','utf8').match(/^\\s*version:\\s*([^\\r\\n]+)$/m); if(!m){console.error('Missing version field in theme.yaml'); process.exit(1);} process.stdout.write(m[1].trim());")
+          RELEASE_VERSION=$(node -e "const fs=require('node:fs'); const pkg=JSON.parse(fs.readFileSync('package.json','utf8')); if(!pkg.version){console.error('Missing version field in package.json'); process.exit(1);} process.stdout.write(String(pkg.version).trim());")
 
           if ! [[ "$RELEASE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Release version in theme.yaml must be semantic version (x.y.z), got: $RELEASE_VERSION" >&2
+            echo "Release version in package.json must be semantic version (x.y.z), got: $RELEASE_VERSION" >&2
             exit 1
           fi
 
@@ -151,6 +151,12 @@ jobs:
         with:
           name: release-theme-artifact
           path: dist/theme-packages
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Install js-yaml
+        run: pnpm add -w -D js-yaml
 
       - name: Sync to Halo App Store
         env:

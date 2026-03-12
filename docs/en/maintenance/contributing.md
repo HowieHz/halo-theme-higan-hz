@@ -128,9 +128,9 @@ This project runs a set of quality checks on each PR via CI (GitHub Actions):
 
 - Release guard checks (`release-guard.yml`):
   - Verifies that `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` still keep `## [Unreleased]`.
-  - Verifies that PRs do not manually change the `version` field in `package.json`.
-  - Verifies that PRs do not manually change the `version` field in `theme.yaml` and `i18n-settings/theme.*.yaml`.
-  - If a PR carries the `release` label, verifies that the PR title is a valid semantic version.
+  - Verifies that non-release PRs do not manually change the `version` field in `package.json`.
+  - Verifies that release PRs (with the `release` label) do manually change `package.json` `version`, and that it is a valid semantic version.
+  - Verifies that PRs do not manually change `spec.version` in `theme.yaml` and `i18n-settings/theme.*.yaml`.
 
 ### Writing Documentation
 
@@ -168,8 +168,8 @@ Before releasing, confirm all of the following:
 
 1. Every branch or PR intended for the release has already been merged.
 2. The entries under `## [Unreleased]` in both `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` are complete, and the `## [Unreleased]` heading has not been removed.
-3. In non-release PRs, do not manually change version fields: `package.json` `version`, `theme.yaml` `version`, or `i18n-settings/theme.*.yaml` `version`.
-4. In release PRs (with the `release` label), only `theme.yaml` `version` should be changed manually; that value is used as the target stable version.
+3. In non-release PRs, do not manually change version fields: `package.json` `version`, `theme.yaml` `spec.version`, or `i18n-settings/theme.*.yaml` `spec.version`.
+4. In release PRs (with the `release` label), only `package.json` `version` should be changed manually; that value is used as the target stable version.
 5. Manually verify that the `requires` field in `theme.yaml` and `i18n-settings/theme.*.yaml` still matches the target Halo CMS compatibility range.
 
 ### Stable Release Procedure
@@ -177,14 +177,14 @@ Before releasing, confirm all of the following:
 Stable releases are published automatically from a labeled PR:
 
 1. Create a PR for the release (or use an existing aggregation PR).
-2. Add the `release` label and change `theme.yaml` `version` to the target semantic version, such as `1.57.6`.
-3. Wait for `release-guard.yml` to pass and confirm both the target version (from `theme.yaml`) and the previous stable version shown in the workflow summary.
+2. Add the `release` label and change `package.json` `version` to the target semantic version, such as `1.57.6`.
+3. Wait for `release-guard.yml` to pass and confirm both the target version (from `package.json`) and the previous stable version shown in the workflow summary.
 4. Merge the PR into `main`.
 
 After the PR is merged, the bot automatically:
 
 1. Promotes content from `## [Unreleased]` into a new released section in both changelog files while keeping `## [Unreleased]`.
-2. Updates `version` fields in `package.json`, `theme.yaml`, and `i18n-settings/theme.*.yaml`, then pushes the bot commit to `main`.
+2. Updates `package.json` `version`, `theme.yaml` `spec.version`, and `i18n-settings/theme.*.yaml` `spec.version`, then pushes the bot commit to `main`.
 3. Builds the theme and produces multiple `howiehz-higan-*.zip` packages.
 4. Creates the GitHub Release and uploads all `howiehz-higan-*.zip` packages to both GitHub Release and the Halo App Store (`howiehz-higan-cn.zip` first).
 5. Lets the published release trigger `page-audit-generate-json.yml` to create the page-size audit PR; that PR carries the `deploy-docs` label and deploys docs automatically after merge.

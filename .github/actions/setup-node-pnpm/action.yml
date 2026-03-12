@@ -1,0 +1,42 @@
+name: Setup Node.js and pnpm
+description: Detect packageManager, setup pnpm, then setup Node.js with pnpm cache
+inputs:
+  node-version:
+    description: Node.js version for setup-node
+    required: false
+    default: lts/*
+  pnpm-version:
+    description: Fallback pnpm version when packageManager is missing
+    required: false
+    default: "10"
+runs:
+  using: composite
+  steps:
+    - name: Detect package manager in package.json
+      id: detect-pm
+      shell: bash
+      run: |
+        pm=""
+        if [ -f package.json ]; then
+          # If packageManager value starts with pnpm@, extract the full pnpm@... token
+          if grep -Eq '"packageManager"[[:space:]]*:[[:space:]]*"[[:space:]]*pnpm@' package.json; then
+            pm=$(sed -n 's/.*"packageManager"[[:space:]]*:[[:space:]]*"[[:space:]]*\(pnpm@[^"]*\)".*/\1/p' package.json || true)
+          fi
+        fi
+        echo "pm=${pm}" >> "$GITHUB_OUTPUT"
+
+    - name: Setup pnpm (normal, when packageManager declares pnpm)
+      if: ${{ steps.detect-pm.outputs.pm != '' && contains(steps.detect-pm.outputs.pm, 'pnpm') }}
+      uses: pnpm/action-setup@v4
+
+    - name: Setup pnpm (fallback when packageManager missing)
+      if: ${{ steps.detect-pm.outputs.pm == '' }}
+      uses: pnpm/action-setup@v4
+      with:
+        version: ${{ inputs.pnpm-version }}
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: "pnpm"
