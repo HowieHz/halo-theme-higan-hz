@@ -266,7 +266,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
         const topDistance = getTopDistance();
 
         // 顶部菜单按钮、顶部菜单、回到顶部按钮、TOC 按钮 根据页面滚动距离 显示/隐藏
-        if (window.matchMedia("(min-width: 640px) and (max-width: 1024px)").matches) {
+        if (window.matchMedia("(min-width: 640px) and (not (min-width: 1024px))").matches) {
           if (topDistance < 50) {
             fadeIn(menuIcon, ANIMATION_DURATION);
             fadeOut(topIcon, ANIMATION_DURATION);

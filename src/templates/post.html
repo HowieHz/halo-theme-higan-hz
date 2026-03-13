@@ -397,7 +397,7 @@
         // 但是目录按钮在手机端是正常的，为了保证性能，不做特殊处理 */-->
         if (isMobile()) {
           initTOC("article > .content", "#toc-footer");
-        } else if (window.matchMedia("(min-width: 640px) and (max-width: 1024px)").matches) {
+        } else if (window.matchMedia("(min-width: 640px) and (not (min-width: 1024px))").matches) {
           initTOC("article > .content", "#toc-tablet");
         } else {
           initTOC("article > .content", "#toc");

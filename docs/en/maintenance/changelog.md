@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 📄 Documentation
+
+- Added a new "Responsive Breakpoints" reference page to standardize mobile, tablet, and desktop breakpoint ranges, with both modern and compatibility syntax examples.
+
 ## [1.58.0] - 2026-03-13
 
 ### 🚀 Features
