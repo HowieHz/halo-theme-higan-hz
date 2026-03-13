@@ -11,7 +11,7 @@
   )}"
 >
   <head th:remove="tag">
-    <link rel="canonical" th:href="${siteUrl} + @{${singlePage.status.permalink}}" />
+    <link rel="canonical" th:if="${theme.config?.custom_page_styles?.is_enable_canonical_link}" th:href="${siteUrl} + @{${singlePage.status.permalink}}" />
     <script src="/src/scripts/pages/page.ts" type="module"></script>
     <th:block
       th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show

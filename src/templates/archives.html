@@ -14,7 +14,7 @@
       name="description"
       th:attr="content=${#strings.isEmpty(theme.config?.archives_page_styles?.description) ? site?.seo?.description : theme.config?.archives_page_styles?.description}"
     />
-    <link rel="canonical" th:href="${siteUrl} + @{{prefix}(prefix = ${site.routes.archivesUri})}" />
+    <link rel="canonical" th:if="${theme.config?.archives_page_styles?.is_enable_canonical_link}" th:href="${siteUrl} + @{{prefix}(prefix = ${site.routes.archivesUri})}" />
     <script src="/src/scripts/pages/archives.ts" type="module"></script>
     <th:block th:insert="~{components/list-post-simple/template :: head}"></th:block>
     <th:block th:insert="~{components/pagination/template :: head}"></th:block>

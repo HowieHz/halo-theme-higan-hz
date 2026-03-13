@@ -1050,6 +1050,10 @@ spec:
           help: "如置空则取值自“Halo 设置 - 基本设置 - 站点标题”"
           value: ""
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: 输出 canonical 标签
+          value: true
+        - $formkit: switch
           name: hitokoto
           label: 一言（hitokoto）
           value: false
@@ -1306,6 +1310,10 @@ spec:
       label: 文章页样式
       formSchema:
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: 输出 canonical 标签
+          value: true
+        - $formkit: switch
           name: is_optimize_content_paragraph_spacing
           label: 优化文章段落空行显示
           value: false
@@ -1448,6 +1456,10 @@ spec:
           value: ""
           help: 设置页面的 meta description；为空时回退到站点 SEO 描述
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: 输出 canonical 标签
+          value: true
+        - $formkit: switch
           name: is_show_the_number_of_articles_per_category
           label: 显示每个分类下的文章数量
           value: true
@@ -1469,6 +1481,10 @@ spec:
       label: 分类详情页样式
       formSchema:
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: 输出 canonical 标签
+          value: true
+        - $formkit: switch
           name: is_show_rss_button
           label: 分类 RSS 订阅按钮
           value: false
@@ -1489,6 +1505,10 @@ spec:
           label: 页面描述
           value: ""
           help: 设置页面的 meta description；为空时回退到站点 SEO 描述
+        - $formkit: switch
+          name: is_enable_canonical_link
+          label: 输出 canonical 标签
+          value: true
         - $formkit: switch
           name: is_show_the_number_of_posts_per_tag
           label: 显示每个标签下的文章数量
@@ -1523,6 +1543,10 @@ spec:
       label: 标签详情页样式
       formSchema:
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: 输出 canonical 标签
+          value: true
+        - $formkit: switch
           name: is_show_rss_button
           label: 显示标签 RSS 订阅按钮
           value: false
@@ -1544,6 +1568,10 @@ spec:
           value: ""
           help: 设置页面的 meta description；为空时回退到站点 SEO 描述
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: 输出 canonical 标签
+          value: true
+        - $formkit: switch
           name: is_show_rss_button
           label: 显示作者 RSS 订阅按钮
           value: false
@@ -1561,6 +1589,10 @@ spec:
           value: ""
           help: 设置页面的 meta description；为空时回退到站点 SEO 描述
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: 输出 canonical 标签
+          value: true
+        - $formkit: switch
           name: is_show_post_pubdate_in_post_list
           label: 文章列表显示文章发布时间
           value: true
@@ -1577,6 +1609,10 @@ spec:
     - group: custom_page_styles
       label: 自定义页面样式
       formSchema:
+        - $formkit: switch
+          name: is_enable_canonical_link
+          label: 输出 canonical 标签
+          value: true
         - $formkit: switch
           name: is_optimize_content_paragraph_spacing
           label: 优化段落空行显示
@@ -1893,6 +1929,10 @@ spec:
             - $el: span
               children: 启用后方可使用。
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: 输出 canonical 标签
+          value: true
+        - $formkit: switch
           name: is_head_first_style
           label: 头像优先样式
           value: false
@@ -1922,6 +1962,10 @@ spec:
               children: 图库管理插件
             - $el: span
               children: 启用后方可使用。
+        - $formkit: switch
+          name: is_enable_canonical_link
+          label: 输出 canonical 标签
+          value: true
         - $formkit: text
           name: img_border_radius
           label: 图片圆角宽度
@@ -1999,6 +2043,10 @@ spec:
             - $el: span
               children: 启用后方可使用。
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: 输出 canonical 标签
+          value: true
+        - $formkit: switch
           name: is_show_post_pubdate
           label: 帖文发布时间
           value: true
@@ -2035,6 +2083,10 @@ spec:
               children: 朋友圈插件
             - $el: span
               children: 启用后方可使用。
+        - $formkit: switch
+          name: is_enable_canonical_link
+          label: 输出 canonical 标签
+          value: true
         - $formkit: switch
           name: is_show_friend_pubdate
           label: 显示发布日期
