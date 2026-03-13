@@ -180,9 +180,9 @@ PR 合并后，机器人会自动执行以下动作：
 
 1. 工作流 `nightly-theme-prerelease.yml` 会在北京时间每天 0 点自动运行。
 2. 仅当同时满足以下条件时才会自动生成测试版：
-    - 有提交位于“前一个自然日（Asia/Shanghai）”时间窗口内。
-    - 有提交位于“上一个正式版 Tag（`vX.Y.Z`）之后”的提交范围内。
-    - 会排除提交信息以 `chore: Update Page Size Audit Results` 开头的自动提交。
+   - 有提交位于“前一个自然日（Asia/Shanghai）”时间窗口内。
+   - 有提交位于“上一个正式版 Tag（`vX.Y.Z`）之后”的提交范围内。
+   - 会排除提交信息以 `chore: Update Page Size Audit Results` 开头的自动提交。
 3. 测试版版本号规则为“当前版本的修订号 + 1，再加上 `-alpha.yyyyMMddHHmmssSSS`”。
 4. 工作流仅在运行环境内创建本地临时分支，完成版本号改写、构建产物、创建 GitHub Pre-release，并同步到 Halo 应用市场；该分支不会推送到远端。
 
