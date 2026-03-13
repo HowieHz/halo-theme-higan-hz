@@ -17,7 +17,7 @@ async function readReport(path) {
     const content = await readFile(path, "utf-8");
     return JSON.parse(content);
   } catch (error) {
-    throw new Error(`无法读取报告文件 ${path}: ${error.message}`);
+    throw new Error(`无法读取报告文件 ${path}: ${error.message}`, { cause: error });
   }
 }
 
