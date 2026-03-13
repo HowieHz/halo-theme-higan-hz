@@ -3081,6 +3081,39 @@ If left empty, the value will be taken from Halo CMS backend (<QuickJumpConfig t
 
 :::
 
+### Homepage canonical link tag
+
+::: info 🎯 Purpose
+
+Controls whether to output a `<link rel="canonical">` tag in the homepage `<head>`.
+
+:::
+::: info 📂 Configuration Location
+
+Homepage Style -> Output canonical link tag
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Output%20canonical%20link%20tag" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.index_styles?.is_enable_canonical_link`
+
+:::
+
 ### Hitokoto (One Quote)
 
 ::: info 🎯 Purpose
@@ -4557,6 +4590,39 @@ When enabled, you can configure
 
 Application Range: [`/archives/{slug}`](/reference/template-map#:~:text=/archives/%7Bslug%7D).
 
+### Post page canonical link tag
+
+::: info 🎯 Purpose
+
+Controls whether to output a `<link rel="canonical">` tag in the post page `<head>`.
+
+:::
+::: info 📂 Configuration Location
+
+Post Page Style -> Output canonical link tag
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Output%20canonical%20link%20tag" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.post_styles?.is_enable_canonical_link`
+
+:::
+
 ### Optimize Post Paragraph Spacing Display
 
 ::: info 🎯 Purpose
@@ -5217,6 +5283,39 @@ If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig 
 
 :::
 
+### Category collection page canonical link tag
+
+::: info 🎯 Purpose
+
+Controls whether to output a `<link rel="canonical">` tag in the category collection page `<head>`.
+
+:::
+::: info 📂 Configuration Location
+
+Category Page Style -> Output canonical link tag
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Output%20canonical%20link%20tag" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.categories_page_styles?.is_enable_canonical_link`
+
+:::
+
 ### Display Number of Posts Per Category
 
 ::: info 🎯 Purpose
@@ -5298,6 +5397,39 @@ Boolean
 ## Category Detail Page Style
 
 Application Range: [`/categories/{slug}`](/reference/template-map#:~:text=/categories/%7Bslug%7D).
+
+### Category details page canonical link tag
+
+::: info 🎯 Purpose
+
+Controls whether to output a `<link rel="canonical">` tag in the category details page `<head>`.
+
+:::
+::: info 📂 Configuration Location
+
+Category details page style -> Output canonical link tag
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Output%20canonical%20link%20tag" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.category_page_styles?.is_enable_canonical_link`
+
+:::
 
 ### Show Category RSS Subscription Button
 
@@ -5445,6 +5577,39 @@ If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig 
 
 :::
 
+### Tag collection page canonical link tag
+
+::: info 🎯 Purpose
+
+Controls whether to output a `<link rel="canonical">` tag in the tag collection page `<head>`.
+
+:::
+::: info 📂 Configuration Location
+
+Tag Collection Page Style -> Output canonical link tag
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Output%20canonical%20link%20tag" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.tags_page_styles?.is_enable_canonical_link`
+
+:::
+
 ### Display Number of Posts Per Tag
 
 ::: info 🎯 Purpose
@@ -5533,6 +5698,39 @@ Default (internal value `default`)
 ## Tag Detail Page Style
 
 Application Range: [`/tags/{slug}`](/reference/template-map#:~:text=/tags/%7Bslug%7D).
+
+### Tag details page canonical link tag
+
+::: info 🎯 Purpose
+
+Controls whether to output a `<link rel="canonical">` tag in the tag details page `<head>`.
+
+:::
+::: info 📂 Configuration Location
+
+Tag details page style -> Output canonical link tag
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Output%20canonical%20link%20tag" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.tag_page_styles?.is_enable_canonical_link`
+
+:::
 
 ### Show Tag RSS Subscription Button
 
@@ -5680,6 +5878,39 @@ If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig 
 
 :::
 
+### Author details page canonical link tag
+
+::: info 🎯 Purpose
+
+Controls whether to output a `<link rel="canonical">` tag in the author details page `<head>`.
+
+:::
+::: info 📂 Configuration Location
+
+Author details page style -> Output canonical link tag
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=Output%20canonical%20link%20tag" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.author_page_styles?.is_enable_canonical_link`
+
+:::
+
 ### Show Author RSS Subscription Button
 
 ::: info 🎯 Purpose
@@ -5793,6 +6024,39 @@ If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig 
 
 :::
 
+### Archives page canonical link tag
+
+::: info 🎯 Purpose
+
+Controls whether to output a `<link rel="canonical">` tag in the archives page `<head>`.
+
+:::
+::: info 📂 Configuration Location
+
+Archives page style -> Output canonical link tag
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=Output%20canonical%20link%20tag" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.archives_page_styles?.is_enable_canonical_link`
+
+:::
+
 ### Display Post Publish Date in Archives Page Post List
 
 ::: info 🎯 Purpose
@@ -5871,6 +6135,39 @@ When enabled, you can configure
 ## Custom Page Style
 
 Application Range: [`/{slug}`](/reference/template-map#:~:text=/%7Bslug%7D).
+
+### Custom page canonical link tag
+
+::: info 🎯 Purpose
+
+Controls whether to output a `<link rel="canonical">` tag in the custom page `<head>`.
+
+:::
+::: info 📂 Configuration Location
+
+Custom page style -> Output canonical link tag
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Output%20canonical%20link%20tag" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.custom_page_styles?.is_enable_canonical_link`
+
+:::
 
 ### Optimize Paragraph Spacing Display
 
@@ -6280,6 +6577,39 @@ Includes multiple preset share buttons: E-mail, QRCode, Native, Facebook, X, Lin
 
 Requires the [Links Management Plugin](/guide/plugin-compatibility#links-page) to be enabled.
 
+### Links page canonical link tag
+
+::: info 🎯 Purpose
+
+Controls whether to output a `<link rel="canonical">` tag in the links page `<head>`.
+
+:::
+::: info 📂 Configuration Location
+
+Links page style -> Output canonical link tag
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/links_page_styles#:~:text=Output%20canonical%20link%20tag" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.links_page_styles?.is_enable_canonical_link`
+
+:::
+
 ### Avatar-First Style
 
 ::: info 🎯 Purpose
@@ -6367,6 +6697,39 @@ Range 1-5
 ## Photo Gallery Page Style
 
 Requires the [Gallery Management Plugin](/guide/plugin-compatibility#gallery-page) to be enabled.
+
+### Photo gallery page canonical link tag
+
+::: info 🎯 Purpose
+
+Controls whether to output a `<link rel="canonical">` tag in the photo gallery page `<head>`.
+
+:::
+::: info 📂 Configuration Location
+
+Gallery page style -> Output canonical link tag
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Output%20canonical%20link%20tag" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.photos_styles?.is_enable_canonical_link`
+
+:::
 
 ### Image Border Radius
 
@@ -6538,6 +6901,39 @@ When enabled, you can configure
 ## Moments Page Style
 
 Requires the [Moments Management Plugin](/guide/plugin-compatibility#moments-page) to be enabled.
+
+### Moments page canonical link tag
+
+::: info 🎯 Purpose
+
+Controls whether to output a `<link rel="canonical">` tag in the moments page `<head>`.
+
+:::
+::: info 📂 Configuration Location
+
+Moments page style -> Output canonical link tag
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Output%20canonical%20link%20tag" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.moments_styles?.is_enable_canonical_link`
+
+:::
 
 ### Show Post Publication Date
 
@@ -6717,6 +7113,39 @@ Boolean
 ## Friends Page Style
 
 Requires the [Friends Plugin](/en/guide/plugin-compatibility#moments-feed-subscription) to be enabled for use.
+
+### Friends circle page canonical link tag
+
+::: info 🎯 Purpose
+
+Controls whether to output a `<link rel="canonical">` tag in the friends circle page `<head>`.
+
+:::
+::: info 📂 Configuration Location
+
+Friends circle page style -> Output canonical link tag
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Output%20canonical%20link%20tag" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.friends_page_styles?.is_enable_canonical_link`
+
+:::
 
 ### Show Publish Date
 
