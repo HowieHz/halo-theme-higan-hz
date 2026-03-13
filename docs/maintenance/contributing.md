@@ -195,3 +195,27 @@ PR 合并后，机器人会自动执行以下动作：
 ### 特殊评论
 
 - `/audit`: 触发页面审计，与上一个正式版进行页面资源体积差异检查，并输出报告。
+## 如何添加带配置项的新功能
+
+### 修改表单文件
+
+请同步修改以下配置表单文件：
+
+- 简体中文：`settings.yaml`
+- 英文：`i18n-settings/settings.en.yaml`
+
+### 同步配置项文档
+
+请同步更新以下配置项文档：
+
+- 简体中文：`docs/guide/theme-configuration.md`
+- 英文：`docs/en/guide/theme-configuration.md`
+
+编写时请参考文档开头的格式示例，且配置项顺序需与表单文件中的配置项顺序保持一致。
+
+### 修订更新日志
+
+请在以下更新日志中记录本次修改：
+
+- 简体中文：`docs/maintenance/changelog.md`
+- 英文：`docs/en/maintenance/changelog.md`

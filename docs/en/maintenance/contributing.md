@@ -194,3 +194,28 @@ The following conventions are used to mark or trigger PR automation workflows.
 ### Special Comments
 
 - `/audit`: Triggers a page audit comparing the current branch against the latest stable release and generates a report.
+
+## How to Add a New Feature with Config Options
+
+### Update Form Files
+
+Please update the following configuration form files in sync:
+
+- Simplified Chinese: `settings.yaml`
+- English: `i18n-settings/settings.en.yaml`
+
+### Update Config Documentation
+
+Please update the following configuration documentation in sync:
+
+- Simplified Chinese: `docs/guide/theme-configuration.md`
+- English: `docs/en/guide/theme-configuration.md`
+
+When writing docs, follow the format example at the beginning of the document, and keep the option order consistent with the order in the form files.
+
+### Update Changelog
+
+Record your changes in the following changelog files:
+
+- Simplified Chinese: `docs/maintenance/changelog.md`
+- English: `docs/en/maintenance/changelog.md`

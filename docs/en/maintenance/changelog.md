@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🔧 Code Refactoring
+
+- Consolidated heading and paragraph margin styles, and added paragraph controls to reduce page render size.
+
 ### 📄 Documentation
 
 - Revised the contributing guide.
