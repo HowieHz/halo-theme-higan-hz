@@ -10,7 +10,11 @@
   )}"
 >
   <head th:remove="tag">
-    <link rel="canonical" th:href="${siteUrl} + @{/links}" />
+    <link
+      rel="canonical"
+      th:if="${theme.config?.links_page_styles?.is_enable_canonical_link}"
+      th:href="${siteUrl} + @{/links}"
+    />
     <script src="/src/scripts/pages/links.ts" type="module"></script>
   </head>
   <body th:remove="tag">

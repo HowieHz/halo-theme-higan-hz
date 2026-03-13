@@ -10,7 +10,11 @@
   )}"
 >
   <head th:remove="tag">
-    <link rel="canonical" th:href="${siteUrl} + @{/moments/{slug}(slug = ${moment.metadata.name})}" />
+    <link
+      rel="canonical"
+      th:if="${theme.config?.moments_styles?.is_enable_canonical_link}"
+      th:href="${siteUrl} + @{/moments/{slug}(slug = ${moment.metadata.name})}"
+    />
     <link
       th:if="${pluginFinder.available('PluginFeed')}"
       rel="alternate"

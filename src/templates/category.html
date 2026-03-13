@@ -20,6 +20,7 @@
     />
     <link
       rel="canonical"
+      th:if="${theme.config?.category_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{{prefix}/{slug}(prefix = ${site.routes.categoriesUri}, slug = ${category.spec?.slug})}"
     />
     <script src="/src/scripts/pages/category.ts" type="module"></script>

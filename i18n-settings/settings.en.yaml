@@ -1050,6 +1050,10 @@ spec:
           help: "The title of the page, which will be displayed in the browser title bar."
           value: ""
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: Output canonical link tag
+          value: true
+        - $formkit: switch
           name: hitokoto
           label: Hitokoto
           value: false
@@ -1306,6 +1310,10 @@ spec:
       label: Post page style
       formSchema:
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: Output canonical link tag
+          value: true
+        - $formkit: switch
           name: is_optimize_content_paragraph_spacing
           label: Optimize article paragraph spacing display
           value: false
@@ -1448,6 +1456,10 @@ spec:
           value: ""
           help: Used as the meta description; falls back to site SEO description when empty
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: Output canonical link tag
+          value: true
+        - $formkit: switch
           name: is_show_the_number_of_articles_per_category
           label: Display the number of articles per category
           value: true
@@ -1469,6 +1481,10 @@ spec:
       label: Category details page style
       formSchema:
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: Output canonical link tag
+          value: true
+        - $formkit: switch
           name: is_show_rss_button
           label: Show RSS subscription button
           value: false
@@ -1489,6 +1505,10 @@ spec:
           label: Page description (meta description)
           value: ""
           help: Used as the meta description; falls back to site SEO description when empty
+        - $formkit: switch
+          name: is_enable_canonical_link
+          label: Output canonical link tag
+          value: true
         - $formkit: switch
           name: is_show_the_number_of_posts_per_tag
           label: Display the number of posts per tag
@@ -1523,6 +1543,10 @@ spec:
       label: Tag details page style
       formSchema:
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: Output canonical link tag
+          value: true
+        - $formkit: switch
           name: is_show_rss_button
           label: Show RSS subscription button
           value: false
@@ -1544,6 +1568,10 @@ spec:
           value: ""
           help: Used as the meta description; falls back to site SEO description when empty
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: Output canonical link tag
+          value: true
+        - $formkit: switch
           name: is_show_rss_button
           label: Show RSS subscription button
           value: false
@@ -1561,6 +1589,10 @@ spec:
           value: ""
           help: Used as the meta description; falls back to site SEO description when empty
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: Output canonical link tag
+          value: true
+        - $formkit: switch
           name: is_show_post_pubdate_in_post_list
           label: Display post publish date in post list
           value: true
@@ -1577,6 +1609,10 @@ spec:
     - group: custom_page_styles
       label: Custom page style
       formSchema:
+        - $formkit: switch
+          name: is_enable_canonical_link
+          label: Output canonical link tag
+          value: true
         - $formkit: switch
           name: is_optimize_content_paragraph_spacing
           label: Optimize article paragraph spacing display
@@ -1893,6 +1929,10 @@ spec:
             - $el: span
               children: to be enabled for use.
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: Output canonical link tag
+          value: true
+        - $formkit: switch
           name: is_head_first_style
           label: Avatar-First Style
           value: false
@@ -1922,6 +1962,10 @@ spec:
               children: Photo Gallery Management Plugin
             - $el: span
               children: to be enabled for use.
+        - $formkit: switch
+          name: is_enable_canonical_link
+          label: Output canonical link tag
+          value: true
         - $formkit: text
           name: img_border_radius
           label: Image border radius
@@ -1999,6 +2043,10 @@ spec:
             - $el: span
               children: to be enabled for use.
         - $formkit: switch
+          name: is_enable_canonical_link
+          label: Output canonical link tag
+          value: true
+        - $formkit: switch
           name: is_show_post_pubdate
           label: Show post publication date
           value: true
@@ -2035,6 +2083,10 @@ spec:
               children: Friends Plugin
             - $el: span
               children: to be enabled for use.
+        - $formkit: switch
+          name: is_enable_canonical_link
+          label: Output canonical link tag
+          value: true
         - $formkit: switch
           name: is_show_friend_pubdate
           label: Show publish date

@@ -14,7 +14,11 @@
       name="description"
       th:attr="content=${#strings.isEmpty(theme.config?.tags_page_styles?.description) ? site?.seo?.description : theme.config?.tags_page_styles?.description}"
     />
-    <link rel="canonical" th:href="${siteUrl} + @{{prefix}(prefix = ${site.routes.tagsUri})}" />
+    <link
+      rel="canonical"
+      th:if="${theme.config?.tags_page_styles?.is_enable_canonical_link}"
+      th:href="${siteUrl} + @{{prefix}(prefix = ${site.routes.tagsUri})}"
+    />
     <script src="/src/scripts/pages/tags.ts" type="module"></script>
   </head>
   <body th:remove="tag">

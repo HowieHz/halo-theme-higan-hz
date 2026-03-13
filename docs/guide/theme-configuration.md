@@ -3075,6 +3075,39 @@ HTML 代码也是可以的：
 
 :::
 
+### 首页 canonical 标签
+
+::: info 🎯 用途
+
+控制是否在首页 `<head>` 中输出 `<link rel="canonical">` 标签。
+
+:::
+::: info 📂 配置项位置
+
+首页样式 -> 输出 canonical 标签
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=输出%20canonical%20标签" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.index_styles?.is_enable_canonical_link`
+
+:::
+
 ### 一言（hitokoto）
 
 ::: info 🎯 用途
@@ -4552,6 +4585,39 @@ HTML 代码也是可以的：
 
 应用范围：[`/archives/{slug}`](/reference/template-map#:~:text=/archives/%7Bslug%7D)。
 
+### 文章页 canonical 标签
+
+::: info 🎯 用途
+
+控制是否在文章页 `<head>` 中输出 `<link rel="canonical">` 标签。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 输出 canonical 标签
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=输出%20canonical%20标签" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_enable_canonical_link`
+
+:::
+
 ### 优化文章段落空行显示
 
 ::: info 🎯 用途
@@ -5212,6 +5278,39 @@ HTML 代码也是可以的：
 
 :::
 
+### 分类集合页 canonical 标签
+
+::: info 🎯 用途
+
+控制是否在分类集合页 `<head>` 中输出 `<link rel="canonical">` 标签。
+
+:::
+::: info 📂 配置项位置
+
+分类集合页样式 -> 输出 canonical 标签
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=输出%20canonical%20标签" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.categories_page_styles?.is_enable_canonical_link`
+
+:::
+
 ### 显示每个分类下的文章数量
 
 ::: info 🎯 用途
@@ -5293,6 +5392,39 @@ HTML 代码也是可以的：
 ## 分类详情页样式
 
 应用范围：[`/categories/{slug}`](/reference/template-map#:~:text=/categories/%7Bslug%7D)。
+
+### 分类详情页 canonical 标签
+
+::: info 🎯 用途
+
+控制是否在分类详情页 `<head>` 中输出 `<link rel="canonical">` 标签。
+
+:::
+::: info 📂 配置项位置
+
+分类详情页样式 -> 输出 canonical 标签
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=输出%20canonical%20标签" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.category_page_styles?.is_enable_canonical_link`
+
+:::
 
 ### 显示分类 RSS 订阅按钮
 
@@ -5402,6 +5534,39 @@ HTML 代码也是可以的：
 
 应用范围：[`/tags`](/reference/template-map#:~:text=/tags)。
 
+### 标签详情页 canonical 标签
+
+::: info 🎯 用途
+
+控制是否在标签详情页 `<head>` 中输出 `<link rel="canonical">` 标签。
+
+:::
+::: info 📂 配置项位置
+
+标签详情页样式 -> 输出 canonical 标签
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=输出%20canonical%20标签" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.tag_page_styles?.is_enable_canonical_link`
+
+:::
+
 ### 显示标签 RSS 订阅按钮
 
 ::: info 🎯 用途
@@ -5475,6 +5640,39 @@ HTML 代码也是可以的：
 ::: info ℹ️ 补充信息
 
 设置为空将回退到站点描述（快速跳转：<QuickJumpConfig to="/console/settings?tab=seo#:~:text=站点描述" />）
+
+:::
+
+### 标签集合页 canonical 标签
+
+::: info 🎯 用途
+
+控制是否在标签集合页 `<head>` 中输出 `<link rel="canonical">` 标签。
+
+:::
+::: info 📂 配置项位置
+
+标签集合页样式 -> 输出 canonical 标签
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=输出%20canonical%20标签" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.tags_page_styles?.is_enable_canonical_link`
 
 :::
 
@@ -5675,6 +5873,39 @@ HTML 代码也是可以的：
 
 :::
 
+### 作者详情页 canonical 标签
+
+::: info 🎯 用途
+
+控制是否在作者详情页 `<head>` 中输出 `<link rel="canonical">` 标签。
+
+:::
+::: info 📂 配置项位置
+
+作者详情页样式 -> 输出 canonical 标签
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=输出%20canonical%20标签" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.author_page_styles?.is_enable_canonical_link`
+
+:::
+
 ### 显示作者 RSS 订阅按钮
 
 ::: info 🎯 用途
@@ -5788,6 +6019,39 @@ HTML 代码也是可以的：
 
 :::
 
+### 归档页 canonical 标签
+
+::: info 🎯 用途
+
+控制是否在归档页 `<head>` 中输出 `<link rel="canonical">` 标签。
+
+:::
+::: info 📂 配置项位置
+
+归档页样式 -> 输出 canonical 标签
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=输出%20canonical%20标签" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.archives_page_styles?.is_enable_canonical_link`
+
+:::
+
 ### 归档页文章列表显示文章发布时间
 
 ::: info 🎯 用途
@@ -5866,6 +6130,39 @@ HTML 代码也是可以的：
 ## 自定义页面样式
 
 应用范围：[`/{slug}`](/reference/template-map#:~:text=/%7Bslug%7D)。
+
+### 自定义页面 canonical 标签
+
+::: info 🎯 用途
+
+控制是否在自定义页面 `<head>` 中输出 `<link rel="canonical">` 标签。
+
+:::
+::: info 📂 配置项位置
+
+自定义页面样式 -> 输出 canonical 标签
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=输出%20canonical%20标签" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.custom_page_styles?.is_enable_canonical_link`
+
+:::
 
 ### 优化段落空行显示
 
@@ -6275,6 +6572,39 @@ HTML 代码也是可以的：
 
 需[链接管理插件](/guide/plugin-compatibility#链接页)启用后方可使用。
 
+### 链接页 canonical 标签
+
+::: info 🎯 用途
+
+控制是否在链接页 `<head>` 中输出 `<link rel="canonical">` 标签。
+
+:::
+::: info 📂 配置项位置
+
+链接页样式 -> 输出 canonical 标签
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/links_page_styles#:~:text=输出%20canonical%20标签" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.links_page_styles?.is_enable_canonical_link`
+
+:::
+
 ### 头像优先样式
 
 ::: info 🎯 用途
@@ -6362,6 +6692,39 @@ HTML 代码也是可以的：
 ## 图库页样式
 
 需[图库管理插件](/guide/plugin-compatibility#图库页)启用后方可使用。
+
+### 图库页 canonical 标签
+
+::: info 🎯 用途
+
+控制是否在图库页 `<head>` 中输出 `<link rel="canonical">` 标签。
+
+:::
+::: info 📂 配置项位置
+
+图库页样式 -> 输出 canonical 标签
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=输出%20canonical%20标签" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.photos_styles?.is_enable_canonical_link`
+
+:::
 
 ### 图片圆角宽度
 
@@ -6533,6 +6896,39 @@ HTML 代码也是可以的：
 ## 瞬间页样式
 
 需[瞬间管理插件](/guide/plugin-compatibility#瞬间页)启用后方可使用。
+
+### 瞬间页 canonical 标签
+
+::: info 🎯 用途
+
+控制是否在瞬间页 `<head>` 中输出 `<link rel="canonical">` 标签。
+
+:::
+::: info 📂 配置项位置
+
+瞬间页样式 -> 输出 canonical 标签
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=输出%20canonical%20标签" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.moments_styles?.is_enable_canonical_link`
+
+:::
 
 ### 帖文发布时间
 
@@ -6712,6 +7108,39 @@ HTML 代码也是可以的：
 ## 朋友圈页面样式
 
 需[朋友圈插件](/guide/plugin-compatibility#朋友圈-订阅聚合)启用后方可使用。
+
+### 朋友圈页面 canonical 标签
+
+::: info 🎯 用途
+
+控制是否在朋友圈页面 `<head>` 中输出 `<link rel="canonical">` 标签。
+
+:::
+::: info 📂 配置项位置
+
+朋友圈页面样式 -> 输出 canonical 标签
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=输出%20canonical%20标签" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.friends_page_styles?.is_enable_canonical_link`
+
+:::
 
 ### 显示发布日期
 
