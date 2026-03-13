@@ -40,11 +40,9 @@ export function initTOC(contentSelector: string, tocSelector: string, headingSel
   originalHeadings.forEach((h) => {
     if (h.id) {
       const baseId = h.id;
-      let id = baseId;
       const usedCount = usedIds.get(baseId) ?? 0; // Check how many times this id has been used
       if (usedCount) {
-        id = `${baseId}-${usedCount}`;
-        h.id = id;
+        h.id = `${baseId}-${usedCount}`;
       }
       usedIds.set(baseId, usedCount + 1);
     }

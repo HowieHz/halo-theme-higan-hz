@@ -790,12 +790,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
           rawContent = item.getAttribute("data-content");
         }
 
-        let content = null;
-        if (theme === null) {
-          content = rawContent;
-        } else {
-          content = `%%{init: { "theme": "${theme}" } }%%\n${rawContent}`;
-        }
+        let content = theme === null ? rawContent : `%%{init: { "theme": "${theme}" } }%%\n${rawContent}`;
 
         return mermaid
           .render(`${theme}-${id}`, content)

@@ -135,12 +135,7 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
 
       for (const [scriptSrc, htmlPaths] of removedScripts.entries()) {
         // Remove base path prefix
-        let relativePath = scriptSrc;
-        if (scriptSrc.startsWith(base)) {
-          relativePath = scriptSrc.slice(base.length);
-        } else {
-          relativePath = scriptSrc.replace(/^\//, "");
-        }
+        const relativePath = scriptSrc.startsWith(base) ? scriptSrc.slice(base.length) : scriptSrc.replace(/^\//, "");
 
         // Build full path
         const filePath = resolve(outDir, relativePath);
