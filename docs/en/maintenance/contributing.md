@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Contribution Guide
 
 ## Project Structure
@@ -6,17 +10,17 @@
 
 ## Version Compatibility
 
-The current main branch is compatible with Halo 2.x versions.
+The `main` branch currently targets Halo 2.x.
 
 ## Development Guide
 
-First, ensure your editor supports EditorConfig, which guarantees consistent code formatting across the project.
+Before you start, make sure your editor supports [EditorConfig](https://editorconfig.org/#pre-installed) so formatting stays consistent across the project.
 
 ### Setting Up the Development Environment
 
 #### Install pnpm
 
-Make sure to [install Node.js](https://nodejs.org/en/download/package-manager) first, then run the following command to install pnpm:
+First, [install Node.js](https://nodejs.org/en/download/package-manager), then run:
 
 ```bash
 npm install -g pnpm
@@ -32,7 +36,7 @@ git clone https://github.com/HowieHz/halo-theme-higan-hz && cd halo-theme-higan-
 
 #### Install Project Dependencies
 
-Run the following command in the project root directory to install dependencies:
+In the project root, install dependencies:
 
 ```bash
 pnpm install
@@ -40,35 +44,55 @@ pnpm install
 
 ### Developing the Theme
 
-During development, run the following command in the project root directory to render modifications in real-time:
+To run the theme in development mode with live updates, execute:
 
 ```bash
 pnpm dev
 ```
 
-This will output uncompressed style files in the `tmp/` directory, making it easier to trace issues.
+Uncompressed style files are generated in `tmp/`, which makes debugging easier.
 
-#### After Development
+### Writing Documentation
 
-##### Linting
+For documentation development with live preview, run:
 
-After development, run the following command to check for issues (ensure there are no errors):
+```bash
+pnpm docs:dev
+```
+
+Build production docs to `docs/.vitepress/dist` with:
+
+```bash
+pnpm docs:build
+```
+
+Preview the production build with:
+
+```bash
+pnpm docs:preview
+```
+
+### After Development
+
+#### Linting
+
+Run the following command and make sure there are no errors:
 
 ```bash
 pnpm lint
 ```
 
-##### Formatting Code
+#### Formatting Code
 
-Before committing, you can run the following command to format the code:
+Before committing, format the code with:
 
 ```bash
 pnpm fmt
 ```
 
-##### Building the Theme
+#### Building the Theme
 
-You can run the following command to build the theme:
+Build the theme with:
 
 ```bash
 pnpm build
@@ -76,89 +100,50 @@ pnpm build
 
 ### CI Checks
 
-This project runs a set of quality checks on each PR via CI (GitHub Actions):
+For every PR, CI (GitHub Actions) runs the following quality checks:
 
-- Linters (`pnpm lint`):
-  - `oxlint` + `eslint`: Code style and type-aware checks
-    - Scope:
-      - JavaScript files
-      - TypeScript files
-      - HTML files (only inline `script` blocks)
-      - Vue files (including inline `script` blocks)
-  - `stylelint`: Stylesheet checks
-    - Scope:
-      - CSS files
-      - HTML files (only inline `style` blocks)
-      - Vue files (only inline `style` blocks)
-    - Note: Stylelint is special; `**/*.{css,html,vue}` does not include folders starting with `.` by default, so additional path matching is required.
-  - `markdownlint`: Documentation style checks
-    - Scope:
-      - Markdown files
-  - `autocorrect`: Automatic text correction
-    - Scope:
-      - [Supported file formats](https://github.com/huacnlee/autocorrect/tree/main/autocorrect/grammar)
-  - `tsgo --noEmit`: TypeScript type checks
-    - Scope:
-      - TypeScript files
-  - Note: All checks enable auto-fixing, and changes will be automatically committed if any are made.
+#### CI Linting Steps
 
-- Formatting (`pnpm fmt`):
-  - `stylus-supremacy`: Stylus formatting
-    - Scope:
-      - Stylus files
-  - `oxfmt`: Formatting
-    - Scope:
-      - JSON files
-      - JSONC files
-      - YAML files
-      - Markdown files
-      - CSS files
-      - JavaScript files
-      - TypeScript files
-      - Vue files
-      - HTML files
-  - Note: Changes made during formatting will be automatically committed.
+CI automatically runs `pnpm lint`, including the following checks:
 
-- Lighthouse CI:
-  - Checks page scores and outputs reports (must achieve full scores).
-  - Compares page resource size differences with the baseline version and outputs reports.
+- `oxlint` + `eslint`: Code style and type-aware checks
+  - **Scope**: JavaScript files, TypeScript files, HTML files (inline `script` blocks only), and Vue files (including inline `script` blocks)
+- `stylelint`: Stylesheet checks
+  - **Scope**: CSS files, HTML files (inline `style` blocks only), and Vue files (inline `style` blocks only)
+  - _Note_: By default, `**/*.{css,html,vue}` does not match dot-prefixed directories, so additional path globs are required.
+- `markdownlint`: Documentation style checks
+  - **Scope**: Markdown files
+- `autocorrect`: Automated text corrections
+  - **Scope**: [Supported file formats](https://github.com/huacnlee/autocorrect/tree/main/autocorrect/grammar)
+- `tsgo --noEmit`: TypeScript type checks
+  - **Scope**: TypeScript files
 
-- Visual Regression Testing:
-  - Uses Playwright to take screenshots of key pages on desktop, tablet, and mobile devices (viewports) with Chromium, Firefox, and WebKit engines. Finally, Argos CI compares the screenshots with the baseline version (currently, only Chromium-generated screenshots are uploaded for comparison to save resources).
+> All lint steps run with auto-fix enabled. If fixes are applied, the changes are committed automatically.
 
-- Release Guard Checks:
-  - Verifies that `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` still keep `## [Unreleased]` (fails if missing).
-  - Verifies that non-release PRs do not manually change the `version` field in `package.json` (fails if changed).
-  - Verifies that release PRs (with the `release` label) do manually change the `version` field in `package.json` (fails if unchanged), that it is a valid semantic version matching `/^\d+\.\d+\.\d+$/` (fails if it does not match), and that the new version is strictly greater than the `version` field in `package.json` on the target branch (fails if not incremented).
-  - Verifies that PRs do not manually change `spec.version` in `theme.yaml` and `i18n-settings/theme.*.yaml` (fails if changed).
+#### CI Formatting Steps
 
-### Writing Documentation
+CI automatically runs `pnpm fmt`, including the following formatting steps:
 
-During development, run the following command in the project root directory to start a server for real-time rendering of modifications:
+- `stylus-supremacy`: Stylus formatting (Stylus files)
+- `oxfmt`: Formatting for JSON, JSONC, YAML, Markdown, CSS, JavaScript, TypeScript, Vue, and HTML files
 
-```bash
-pnpm docs:dev
-```
+> Changes produced by formatting will be automatically committed.
 
-The following command builds the final output in the `docs/.vitepress/dist` directory:
+#### Lighthouse CI
 
-```bash
-pnpm docs:build
-```
+- Checks Lighthouse scores and outputs reports (all scores must be full marks).
+- Compares page resource-size differences against the baseline version and outputs reports.
 
-Use the following command to start a server for previewing the final output:
+#### Visual Regression Testing
 
-```bash
-pnpm docs:preview
-```
+Playwright captures screenshots of key pages across desktop, tablet, and mobile viewports using Chromium, Firefox, and WebKit. Argos CI then compares those screenshots against the baseline version. To save CI quota, only Chromium screenshots are currently uploaded.
 
-### Other Commands
+#### Release Guard Checks
 
-Check if project dependencies are outdated:
-
-```bash
-pnpm -r outdated
-```
+- Verifies that `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` still contain `## [Unreleased]` (fails if missing).
+- Ensures non-release PRs do not manually modify the `version` field in `package.json` (fails if changed).
+- Ensures release PRs (with the `release` label) update the `version` field in `package.json` (fails if unchanged), use a valid semantic version matching `/^\d+\.\d+\.\d+$/` (fails if invalid), and set a version greater than the target branch's current `package.json` version (fails if not incremented).
+- Prevents manual changes to `spec.version` in `theme.yaml` and `i18n-settings/theme.*.yaml` in PRs (fails if changed).
 
 ## Release Flow
 
@@ -168,7 +153,7 @@ Before releasing, confirm all of the following:
 
 1. Every branch or PR intended for the release has already been merged.
 2. The entries under `## [Unreleased]` in both `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` are complete, and the `## [Unreleased]` heading has not been removed.
-3. In release PRs (with the `release` label), only `package.json` `version` should be changed manually; that value is used as the target stable version.
+3. In release PRs (with the `release` label), only `package.json` `version` should be changed manually. That value becomes the target stable version.
 4. Manually verify that the `requires` field in `theme.yaml` and `i18n-settings/theme.*.yaml` still matches the target Halo CMS compatibility range.
 
 ### Stable Release Procedure
@@ -180,22 +165,35 @@ Stable releases are published automatically from a labeled PR:
 3. Wait for `release-guard.yml` to pass and confirm both the target version (from `package.json`) and the previous stable version shown in the workflow summary.
 4. Merge the PR into `main`.
 
-After the PR is merged, the bot automatically:
+After merge, the bot automatically:
 
-1. Promotes content from `## [Unreleased]` into a new released section in both changelog files while keeping `## [Unreleased]`.
+1. Promotes content under `## [Unreleased]` into a new release section in both changelog files while keeping `## [Unreleased]`.
 2. Updates `package.json` `version`, `theme.yaml` `spec.version`, and `i18n-settings/theme.*.yaml` `spec.version`, then pushes the bot commit to `main`.
 3. Builds the theme and produces multiple `howiehz-higan-*.zip` packages.
 4. Creates the GitHub Release and uploads all `howiehz-higan-*.zip` packages to both GitHub Release and the Halo App Store (`howiehz-higan-cn.zip` first).
-5. Lets the published release trigger `page-audit-generate-json.yml` to create the page-size audit PR; that PR carries the `deploy-docs` label and deploys docs automatically after merge.
+5. Uses the published release to trigger `page-audit-generate-json.yml`, which creates the page-size audit PR. That PR includes the `deploy-docs` label and deploys docs automatically after merge.
 
 ### Nightly Prerelease Procedure
 
 Nightly prereleases do not require manual version changes or a manually pushed branch.
 
 1. `nightly-theme-prerelease.yml` runs automatically every day at 00:00 Asia/Shanghai.
-2. If `main` received commits during the previous natural day, it creates a nightly prerelease automatically.
+2. If `main` received commits during the previous calendar day, a nightly prerelease is created automatically.
 3. The prerelease version rule is “current patch version + 1”, then append `-alpha.yyyyMMddHHmmssSSS`.
-4. The workflow uses only a local temporary branch in the runner, then rewrites version fields, builds assets, creates a GitHub prerelease, and syncs to the Halo App Store without pushing that branch.
+4. The workflow creates a temporary local branch in the runner, updates version fields, builds assets, creates a GitHub prerelease, and syncs to the Halo App Store without pushing that branch.
+
+## Pull Request Conventions
+
+The following conventions are used to mark or trigger PR automation workflows.
+
+### Special Labels
+
+- `deploy-docs`: Automatically deploys the documentation site when merged.
+- `release`: Triggers the stable release creation process. See the [Release Flow](#release-flow) section for details.
+
+### Special Comments
+
+- `/audit`: Triggers a page audit comparing the current branch against the latest stable release and generates a report.
 
 ## How to Add a New Feature with Config Options
 

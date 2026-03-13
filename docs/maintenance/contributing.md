@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # 贡献指南
 
 ## 项目结构
@@ -6,17 +10,17 @@
 
 ## 版本适用说明
 
-当前 main 分支适用于 Halo 2.x 版本
+`main` 分支当前适用于 Halo 2.x。
 
 ## 开发指南
 
-首先请确保你的编辑器支持 EditorConfig，这保证了项目代码格式的统一。
+开始前请确保你的编辑器支持 [EditorConfig](https://editorconfig.org/#pre-installed)，以保证项目代码格式一致。
 
 ### 部署开发环境
 
 #### 安装 pnpm
 
-需要提前[安装 Node.js](https://nodejs.org/zh-cn/download/package-manager)，然后运行以下指令安装 pnpm
+请先[安装 Node.js](https://nodejs.org/zh-cn/download/package-manager)，再运行以下命令安装 pnpm。
 
 ```bash
 npm install -g pnpm
@@ -32,7 +36,7 @@ git clone https://github.com/HowieHz/halo-theme-higan-hz && cd halo-theme-higan-
 
 #### 安装项目依赖
 
-之后在项目根目录运行以下指令完成依赖的安装
+在项目根目录运行以下命令安装依赖。
 
 ```bash
 pnpm install
@@ -40,7 +44,7 @@ pnpm install
 
 ### 开发主题
 
-开发时在项目根目录运行以下指令可实时渲染修改。
+开发时，在项目根目录运行以下命令即可实时渲染修改。
 
 ```bash
 pnpm dev
@@ -48,27 +52,47 @@ pnpm dev
 
 此时会在 `tmp/` 目录输出未压缩的样式文件，便于追踪问题。
 
-#### 开发之后
+### 编写文档
 
-##### 求疵
+开发文档时，在项目根目录运行以下命令可启动服务并实时预览修改。
 
-开发完成后请运行以下的指令进行检查（请确保无 error）。
+```bash
+pnpm docs:dev
+```
+
+以下命令会将构建产物输出到 `docs/.vitepress/dist` 目录。
+
+```bash
+pnpm docs:build
+```
+
+使用以下命令可启动服务以预览构建产物。
+
+```bash
+pnpm docs:preview
+```
+
+### 开发完成后
+
+#### 求疵
+
+请运行以下命令进行检查（确保无错误）。
 
 ```bash
 pnpm lint
 ```
 
-##### 格式化代码
+#### 格式化代码
 
-提交前你可以运行以下的指令以格式化代码。
+提交前可运行以下命令进行格式化。
 
 ```bash
 pnpm fmt
 ```
 
-##### 构建主题
+#### 构建主题
 
-你可以运行以下的指令构建主题。
+可运行以下命令构建主题。
 
 ```bash
 pnpm build
@@ -76,89 +100,51 @@ pnpm build
 
 ### CI 检查
 
-本项目在 CI（GitHub Actions）对每个 PR 会运行一组质量检查：
+本项目会在 CI（GitHub Actions）中对每个 PR 执行以下质量检查：
 
-- Linters (`pnpm lint`)：
-  - `oxlint` + `eslint`: 代码风格与类型感知检查
-    - 范围：
-      - JavaScript 文件
-      - TypeScript 文件
-      - HTML 文件（仅内联 `script` 块）
-      - Vue 文件（包括内联 `script` 块）
-  - `stylelint`: 样式表检查
-    - 范围：
-      - CSS 文件
-      - HTML 文件（仅内联 `style` 块）
-      - Vue 文件（仅内联 `style` 块）
-    - 备注：Stylelint 比较特殊，`**/*.{css,html,vue}` 不会进入 `.` 开头的文件夹，所以需要写额外的路径匹配。
-  - `markdownlint`: 文档样式检查
-    - 范围：
-      - Markdown 文件
-  - `autocorrect`: 自动文案校正
-    - 范围：
-      - 其[支持的文件格式](https://github.com/huacnlee/autocorrect/tree/main/autocorrect/grammar)
-  - `tsgo --noEmit`: TypeScript 类型检查
-    - 范围：
-      - TypeScript 文件
-  - 注：均开启了自动修正，如有变更会自动提交。
+#### CI 求疵步骤
 
-- 格式化 (`pnpm fmt`)：
-  - `stylus-supremacy`: Stylus 格式化
-    - 范围：
-      - Stylus 文件
-  - `oxfmt`: 格式化
-    - 范围：
-      - JSON 文件
-      - JSONC 文件
-      - YAML 文件
-      - Markdown 文件
-      - CSS 文件
-      - JavaScript 文件
-      - TypeScript 文件
-      - Vue 文件
-      - HTML 文件
-  - 注：格式化后有变更会自动提交。
+CI 会自动运行 `pnpm lint`，包含以下检查：
 
-- Lighthouse CI：
-  - 检查页面评分，并输出报告。（需全部满分）
-  - 与基线版本进行页面资源体积差异检查，并输出报告。
+- `oxlint` + `eslint`：代码风格与类型感知检查
+  - **范围**：JavaScript 文件、TypeScript 文件、HTML 文件（仅内联 `script` 块）、Vue 文件（包括内联 `script` 块）
+- `stylelint`：样式表检查
+  - **范围**：CSS 文件、HTML 文件（仅内联 `style` 块）、Vue 文件（仅内联 `style` 块）
+  - _备注_：`**/*.{css,html,vue}` 不会进入以 `.` 开头的文件夹，所以需要额外路径匹配。
+- `markdownlint`：文档样式检查
+  - **范围**：Markdown 文件
+- `autocorrect`：自动文案校正
+  - **范围**：其[支持的文件格式](https://github.com/huacnlee/autocorrect/tree/main/autocorrect/grammar)
+- `tsgo --noEmit`：TypeScript 类型检查
+  - **范围**：TypeScript 文件
 
-- 页面视觉差异检查（Visual Regression）：
-  - 通过 Playwright 在桌面、平板、手机三种设备视图（Viewport）下，使用 Chromium, Firefox, WebKit 内核对关键页面截图。最后使用 Argos CI 与基线版本进行比较。（为节省额度，现仅上传 Chromium 生成的截图进行比较）
+> 所有求疵步骤都开启了自动修正，若有变更会自动提交。
 
-- 发版约束检查：
-  - 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 是否仍然保留 `## [Unreleased]`（如未保留则不通过检查）。
-  - 检查非发布 PR 中是否手动修改了 `package.json` 的 `version`（如有修改则不通过检查）。
-  - 检查发布 PR（带 `release` 标签）是否手动修改了 `package.json` 的 `version`（如未修改则不通过检查），且为合法语义化版本号（如不符合 `/^\d+\.\d+\.\d+$/` 则不通过检查），且新版本号必须大于目标分支 `package.json` 的 `version` 字段的版本号（如未递增则不通过检查）。
-  - 检查 PR 中是否手动修改了 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 的 `spec.version`（如有修改则不通过检查）。
+#### CI 格式化步骤
 
-### 编写文档
+CI 会自动运行 `pnpm fmt`，包含以下格式化步骤：
 
-开发时在项目根目录运行以下指令可启动服务器，用以实时渲染修改。
+- `stylus-supremacy`：Stylus 格式化（Stylus 文件）
+- `oxfmt`：格式化 JSON、JSONC、YAML、Markdown、CSS、JavaScript、TypeScript、Vue 和 HTML 文件
 
-```bash
-pnpm docs:dev
-```
+> 格式化产生的变更会自动提交。
 
-以下指令将在 `docs/.vitepress/dist` 目录构建成品。
+#### 页面审计
 
-```bash
-pnpm docs:build
-```
+- 使用 Lighthouse CI 检查页面评分并输出报告（需全部满分）。
+- 与基线版本进行页面资源体积差异检查并输出报告。
 
-使用以下指令可启用服务器，用于预览成品。
+#### 页面视觉差异检查（Visual Regression）
 
-```bash
-pnpm docs:preview
-```
+通过 Playwright 在桌面、平板、手机三种设备视图（Viewport）下，使用 Chromium、Firefox、WebKit 内核对关键页面截图。最后使用 Argos CI 与基线版本进行比较。
+为节省额度，当前仅上传 Chromium 生成的截图用于比较。
 
-### 其他指令
+#### 发版约束检查
 
-检查项目依赖是否过时
-
-```bash
-pnpm -r outdated
-```
+- 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 是否仍然保留 `## [Unreleased]`（如未保留则不通过检查）。
+- 检查非发布 PR 中是否手动修改了 `package.json` 的 `version`（如有修改则不通过检查）。
+- 检查发布 PR（带 `release` 标签）是否手动修改了 `package.json` 的 `version`（如未修改则不通过检查），且为合法语义化版本号（如不符合 `/^\d+\.\d+\.\d+$/` 则不通过检查），且新版本号必须大于目标分支 `package.json` 的 `version` 字段的版本号（如未递增则不通过检查）。
+- 检查 PR 中是否手动修改了 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 的 `spec.version`（如有修改则不通过检查）。
 
 ## 发布流程
 
@@ -180,7 +166,7 @@ pnpm -r outdated
 3. 等待 `release-guard.yml` 检查通过，并确认摘要中的目标版本号（来自 `package.json`）与上一个正式版版本号无误。
 4. 合并 PR 到 `main`。
 
-PR 合并后，机器人会自动完成以下动作：
+PR 合并后，机器人会自动执行以下动作：
 
 1. 将中英文更新日志 `## [Unreleased]` 内容提升为本次正式版条目，并保留 `## [Unreleased]` 标题。
 2. 同步更新 `package.json` 的 `version`、`theme.yaml` 的 `spec.version`、`i18n-settings/theme.*.yaml` 的 `spec.version`，并推送机器人提交到 `main`。
@@ -193,9 +179,22 @@ PR 合并后，机器人会自动完成以下动作：
 测试版不需要手动改版本号，也不需要手动创建分支。
 
 1. 工作流 `nightly-theme-prerelease.yml` 会在北京时间每天 0 点自动运行。
-2. 如果 `main` 在前一个自然日有新提交，则自动生成测试版。
+2. 如果 `main` 在前一个自然日有新提交，则会自动生成测试版。
 3. 测试版版本号规则为“当前版本的修订号 + 1，再加上 `-alpha.yyyyMMddHHmmssSSS`”。
 4. 工作流仅在运行环境内创建本地临时分支，完成版本号改写、构建产物、创建 GitHub Pre-release，并同步到 Halo 应用市场；该分支不会推送到远端。
+
+## Pull Request 约定
+
+以下约定用于标记或触发 PR 的自动化流程。
+
+### 特殊标签
+
+- `deploy-docs`: 合并后自动部署文档站。
+- `release`: 触发正式版创建流程。详情参考[发布流程](#发布流程)。
+
+### 特殊评论
+
+- `/audit`: 触发页面审计，与上一个正式版进行页面资源体积差异检查，并输出报告。
 
 ## 如何添加带配置项的新功能
 
