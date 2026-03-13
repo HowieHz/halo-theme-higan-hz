@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Contribution Guide
 
 ## Project Structure
@@ -48,9 +52,29 @@ pnpm dev
 
 Uncompressed style files are generated in `tmp/`, which makes debugging easier.
 
-#### After Development
+### Writing Documentation
 
-##### Linting
+For documentation development with live preview, run:
+
+```bash
+pnpm docs:dev
+```
+
+Build production docs to `docs/.vitepress/dist` with:
+
+```bash
+pnpm docs:build
+```
+
+Preview the production build with:
+
+```bash
+pnpm docs:preview
+```
+
+### After Development
+
+#### Linting
 
 Run the following command and make sure there are no errors:
 
@@ -58,7 +82,7 @@ Run the following command and make sure there are no errors:
 pnpm lint
 ```
 
-##### Formatting Code
+#### Formatting Code
 
 Before committing, format the code with:
 
@@ -66,7 +90,7 @@ Before committing, format the code with:
 pnpm fmt
 ```
 
-##### Building the Theme
+#### Building the Theme
 
 Build the theme with:
 
@@ -121,34 +145,6 @@ Playwright captures screenshots of key pages across desktop, tablet, and mobile 
 - Ensures release PRs (with the `release` label) update the `version` field in `package.json` (fails if unchanged), use a valid semantic version matching `/^\d+\.\d+\.\d+$/` (fails if invalid), and set a version greater than the target branch's current `package.json` version (fails if not incremented).
 - Prevents manual changes to `spec.version` in `theme.yaml` and `i18n-settings/theme.*.yaml` in PRs (fails if changed).
 
-### Writing Documentation
-
-For documentation development with live preview, run:
-
-```bash
-pnpm docs:dev
-```
-
-Build production docs to `docs/.vitepress/dist` with:
-
-```bash
-pnpm docs:build
-```
-
-Preview the production build with:
-
-```bash
-pnpm docs:preview
-```
-
-### Other Commands
-
-Check whether dependencies are out of date:
-
-```bash
-pnpm -r outdated
-```
-
 ## Release Flow
 
 ### Pre-release Checklist
@@ -186,11 +182,15 @@ Nightly prereleases do not require manual version changes or a manually pushed b
 3. The prerelease version rule is “current patch version + 1”, then append `-alpha.yyyyMMddHHmmssSSS`.
 4. The workflow creates a temporary local branch in the runner, updates version fields, builds assets, creates a GitHub prerelease, and syncs to the Halo App Store without pushing that branch.
 
-## Pull Request Special Labels
+## Pull Request Conventions
+
+The following conventions are used to mark or trigger PR automation workflows.
+
+### Special Labels
 
 - `deploy-docs`: Automatically deploys the documentation site when merged.
 - `release`: Triggers the stable release creation process. See the [Release Flow](#release-flow) section for details.
 
-## Pull Request Special Comments
+### Special Comments
 
 - `/audit`: Triggers a page audit comparing the current branch against the latest stable release and generates a report.
