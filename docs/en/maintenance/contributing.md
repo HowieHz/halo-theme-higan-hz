@@ -10,7 +10,7 @@ The current main branch is compatible with Halo 2.x versions.
 
 ## Development Guide
 
-First, ensure your editor supports EditorConfig, which guarantees consistent code formatting across the project.
+First, ensure your editor supports [EditorConfig](https://editorconfig.org/#pre-installed), which guarantees consistent code formatting across the project.
 
 ### Setting Up the Development Environment
 

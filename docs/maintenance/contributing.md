@@ -10,7 +10,7 @@
 
 ## 开发指南
 
-首先请确保你的编辑器支持 EditorConfig，这保证了项目代码格式的统一。
+首先请确保你的编辑器支持 [EditorConfig](https://editorconfig.org/#pre-installed)，这保证了项目代码格式的统一。
 
 ### 部署开发环境
 
