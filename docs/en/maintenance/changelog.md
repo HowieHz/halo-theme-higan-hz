@@ -21,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 📄 Documentation
 
 - Added a new "Responsive Breakpoints" reference page to standardize mobile, tablet, and desktop breakpoint ranges, with both modern and compatibility syntax examples.
+- Updated the contribution guide with nightly prerelease commit-count rules (time window, stable-tag boundary, and excluded automated commits).
+
+### 🛠️ Miscellaneous Chores
+
+- Refined nightly prerelease trigger checks to count only commits within the previous Asia/Shanghai day window and after the latest stable tag, while excluding commits prefixed with `chore: Update Page Size Audit Results`.
 
 ## [1.58.0] - 2026-03-13
 
