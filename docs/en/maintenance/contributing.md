@@ -196,3 +196,28 @@ Nightly prereleases do not require manual version changes or a manually pushed b
 2. If `main` received commits during the previous natural day, it creates a nightly prerelease automatically.
 3. The prerelease version rule is “current patch version + 1”, then append `-alpha.yyyyMMddHHmmssSSS`.
 4. The workflow uses only a local temporary branch in the runner, then rewrites version fields, builds assets, creates a GitHub prerelease, and syncs to the Halo App Store without pushing that branch.
+
+## How to Add a New Feature with Config Options
+
+### Update Form Files
+
+Please update the following configuration form files in sync:
+
+- Simplified Chinese: `settings.yaml`
+- English: `i18n-settings/settings.en.yaml`
+
+### Update Config Documentation
+
+Please update the following configuration documentation in sync:
+
+- Simplified Chinese: `docs/guide/theme-configuration.md`
+- English: `docs/en/guide/theme-configuration.md`
+
+When writing docs, follow the format example at the beginning of the document, and keep the option order consistent with the order in the form files.
+
+### Update Changelog
+
+Record your changes in the following changelog files:
+
+- Simplified Chinese: `docs/maintenance/changelog.md`
+- English: `docs/en/maintenance/changelog.md`
