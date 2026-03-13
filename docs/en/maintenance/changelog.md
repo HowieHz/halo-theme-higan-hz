@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.58.0] - 2026-03-13
+
 ### 🚀 Features
 
 - Added a canonical link output toggle switch (enabled by default) for all pages containing a `<link rel="canonical">` tag (homepage, post, archives, category collection, category details, tag collection, tag details, author details, custom pages, links, photo gallery, moments, friends circle).
