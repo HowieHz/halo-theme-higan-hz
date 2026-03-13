@@ -178,7 +178,10 @@ After merge, the bot automatically:
 Nightly prereleases do not require manual version changes or a manually pushed branch.
 
 1. `nightly-theme-prerelease.yml` runs automatically every day at 00:00 Asia/Shanghai.
-2. If `main` received commits during the previous calendar day, a nightly prerelease is created automatically.
+2. A nightly prerelease is created only when all of the following are true:
+  - There are commits within the previous calendar-day window in Asia/Shanghai.
+  - There are commits after the latest stable tag (`vX.Y.Z`).
+  - Commits whose subject starts with `chore: Update Page Size Audit Results` are excluded.
 3. The prerelease version rule is “current patch version + 1”, then append `-alpha.yyyyMMddHHmmssSSS`.
 4. The workflow creates a temporary local branch in the runner, updates version fields, builds assets, creates a GitHub prerelease, and syncs to the Halo App Store without pushing that branch.
 
