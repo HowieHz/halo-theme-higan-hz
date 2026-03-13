@@ -14,7 +14,11 @@
       name="description"
       th:attr="content=${#strings.isEmpty(theme.config?.categories_page_styles?.description) ? site?.seo?.description : theme.config?.categories_page_styles?.description}"
     />
-    <link rel="canonical" th:if="${theme.config?.categories_page_styles?.is_enable_canonical_link}" th:href="${siteUrl} + @{{prefix}(prefix = ${site.routes.categoriesUri})}" />
+    <link
+      rel="canonical"
+      th:if="${theme.config?.categories_page_styles?.is_enable_canonical_link}"
+      th:href="${siteUrl} + @{{prefix}(prefix = ${site.routes.categoriesUri})}"
+    />
     <script src="/src/scripts/main-with-header.ts" type="module"></script>
   </head>
   <body th:remove="tag">

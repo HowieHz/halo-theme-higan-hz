@@ -11,7 +11,11 @@
   )}"
 >
   <head th:remove="tag">
-    <link rel="canonical" th:if="${theme.config?.post_styles?.is_enable_canonical_link}" th:href="${siteUrl} + @{${post.status.permalink}}" />
+    <link
+      rel="canonical"
+      th:if="${theme.config?.post_styles?.is_enable_canonical_link}"
+      th:href="${siteUrl} + @{${post.status.permalink}}"
+    />
     <th:block th:if="${pluginFinder.available('PluginFeed')}">
       <th:block th:each="contributor : ${post?.contributors}">
         <link
