@@ -202,12 +202,14 @@ PR 合并后，机器人会自动完成以下动作：
 ### 修改表单文件
 
 请同步修改以下配置表单文件：
+
 - 简体中文：`settings.yaml`
 - 英文：`i18n-settings/settings.en.yaml`
 
 ### 同步配置项文档
 
 请同步更新以下配置项文档：
+
 - 简体中文：`docs/guide/theme-configuration.md`
 - 英文：`docs/en/guide/theme-configuration.md`
 
@@ -216,5 +218,6 @@ PR 合并后，机器人会自动完成以下动作：
 ### 修订更新日志
 
 请在以下更新日志中记录本次修改：
+
 - 简体中文：`docs/maintenance/changelog.md`
 - 英文：`docs/en/maintenance/changelog.md`
