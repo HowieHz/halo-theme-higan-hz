@@ -43,7 +43,7 @@ jobs:
           else
             COMMIT_RANGE="HEAD"
           fi
-          EXCLUDED_SUBJECT_PREFIX='chore: Update Page Size Audit Results'
+          EXCLUDED_SUBJECT_PREFIX='docs:'
           COMMIT_COUNT=$(git log "$COMMIT_RANGE" --since="$WINDOW_START" --until="$WINDOW_END" --format='%s' \
             | awk -v prefix="$EXCLUDED_SUBJECT_PREFIX" 'index($0, prefix) != 1' \
             | grep -c . || true)

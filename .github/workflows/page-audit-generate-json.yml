@@ -226,8 +226,8 @@ jobs:
           # - Contents: Read and Write (create branches and commits)
           # - Pull requests: Read and Write (create PRs)
           # - Workflows: Read and Write (allow PRs to trigger workflows)
-          commit-message: "chore: update page size audit results for ${{ github.event.inputs.start_version || github.event.client_payload.release_tag || github.event.release.tag_name }} to ${{ github.event.inputs.end_version || github.event.client_payload.release_tag || github.event.release.tag_name || 'latest' }}"
-          title: "chore: Update Page Size Audit Results"
+          commit-message: "docs: update page size audit results for ${{ github.event.inputs.start_version || github.event.client_payload.release_tag || github.event.release.tag_name }} to ${{ github.event.inputs.end_version || github.event.client_payload.release_tag || github.event.release.tag_name || 'latest' }}"
+          title: "docs: Update Page Size Audit Results"
           body: |
             ## Page Size Audit Results Update
 
