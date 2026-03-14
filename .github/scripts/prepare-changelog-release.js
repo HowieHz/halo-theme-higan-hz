@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { syncChangelogCompareLinks } from "./update-changelog-links.js";
 
 const releaseVersion = process.argv[2];
 const previousVersion = process.argv[3];
@@ -42,4 +43,5 @@ for (const filePath of changelogFiles) {
   const newReleaseBlock = `${unreleasedHeading}\n\n## [${releaseVersion}] - ${releaseDate}\n\n${unreleasedBody}\n\n`;
   const updatedContent = `${content.slice(0, unreleasedIndex)}${newReleaseBlock}${content.slice(nextHeadingIndex + 1)}`;
   fs.writeFileSync(filePath, updatedContent);
+  syncChangelogCompareLinks(filePath);
 }

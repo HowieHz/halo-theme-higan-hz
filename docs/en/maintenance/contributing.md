@@ -141,6 +141,7 @@ Playwright captures screenshots of key pages across desktop, tablet, and mobile 
 #### Release Guard Checks
 
 - Verifies that `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` still contain `## [Unreleased]` (fails if missing).
+- Verifies that changelog compare-link definitions at the end of `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` are complete and match release headings (fails if missing or mismatched).
 - Ensures non-release PRs do not manually modify the `version` field in `package.json` (fails if changed).
 - Ensures release PRs (with the `release` label) update the `version` field in `package.json` (fails if unchanged), use a valid semantic version matching `/^\d+\.\d+\.\d+$/` (fails if invalid), and set a version greater than the target branch's current `package.json` version (fails if not incremented).
 - Prevents manual changes to `spec.version` in `theme.yaml` and `i18n-settings/theme.*.yaml` in PRs (fails if changed).
@@ -152,7 +153,7 @@ Playwright captures screenshots of key pages across desktop, tablet, and mobile 
 Before releasing, confirm all of the following:
 
 1. Every branch or PR intended for the release has already been merged.
-2. The entries under `## [Unreleased]` in both `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` are complete, and the `## [Unreleased]` heading has not been removed.
+2. The entries under `## [Unreleased]` in both `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` are complete, the `## [Unreleased]` heading has not been removed, and compare-link definitions at the end are retained (the release workflow will rebuild this section automatically).
 3. In release PRs (with the `release` label), only `package.json` `version` should be changed manually. That value becomes the target stable version.
 4. Manually verify that the `requires` field in `theme.yaml` and `i18n-settings/theme.*.yaml` still matches the target Halo CMS compatibility range.
 
@@ -167,11 +168,12 @@ Stable releases are published automatically from a labeled PR:
 
 After merge, the bot automatically:
 
-1. Promotes content under `## [Unreleased]` into a new release section in both changelog files while keeping `## [Unreleased]`.
-2. Updates `package.json` `version`, `theme.yaml` `spec.version`, and `i18n-settings/theme.*.yaml` `spec.version`, then pushes the bot commit to `main`.
-3. Builds the theme and produces multiple `howiehz-higan-*.zip` packages.
-4. Creates the GitHub Release and uploads all `howiehz-higan-*.zip` packages to both GitHub Release and the Halo App Store (`howiehz-higan-cn.zip` first).
-5. Uses the published release to trigger `page-audit-generate-json.yml`, which creates the page-size audit PR. That PR includes the `deploy-docs` label and deploys docs automatically after merge.
+1. Promotes content under `## [Unreleased]` into a new release section in both changelog files, creates the new stable-release heading, and keeps `## [Unreleased]`.
+2. Rebuilds compare-link definitions at the end of both changelog files (`[Unreleased]` and version links).
+3. Updates `package.json` `version`, `theme.yaml` `spec.version`, and `i18n-settings/theme.*.yaml` `spec.version`, then pushes the bot commit to `main`.
+4. Builds the theme and produces multiple `howiehz-higan-*.zip` packages.
+5. Creates the GitHub Release and uploads all `howiehz-higan-*.zip` packages to both GitHub Release and the Halo App Store (`howiehz-higan-cn.zip` first).
+6. Uses the published release to trigger `page-audit-generate-json.yml`, which creates the page-size audit PR. That PR includes the `deploy-docs` label and deploys docs automatically after merge.
 
 ### Nightly Prerelease Procedure
 
