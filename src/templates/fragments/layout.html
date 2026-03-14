@@ -14,15 +14,15 @@
                        ? #strings.substring(site.url, 0, #strings.length(site.url) - 1)
                        : site.url}"
   th:lang="${page_language}"
-  th:attr="data-color-scheme=${color_schema} == 'custom' ? null :
-                            (${color_schema} == 'auto' ? 'auto' :
-                            (${color_schema} == 'light' ? 'light' :
-                            (${color_schema} == 'dark' ? 'dark' :
-                            (${color_schema} == 'auto-blue' ? 'auto' :
-                            (${color_schema} == 'light-blue' ? 'light' :
-                            (${color_schema} == 'dark-blue' ? 'dark' :
-                            (${color_schema} == 'gray' ? 'light' : 'auto'))))))),
-           theme=${color_schema} != 'custom' ? ${color_schema} : 'theme-'+${custom_color_schema_init_id}"
+  th:attr="data-color-scheme = ${color_schema} == 'custom' ? 'auto' :
+                               (${color_schema} == 'auto' ? 'auto' :
+                               (${color_schema} == 'light' ? 'light' :
+                               (${color_schema} == 'dark' ? 'dark' :
+                               (${color_schema} == 'auto-blue' ? 'auto' :
+                               (${color_schema} == 'light-blue' ? 'light' :
+                               (${color_schema} == 'dark-blue' ? 'dark' :
+                               (${color_schema} == 'gray' ? 'light' : 'auto'))))))),
+           theme = ${color_schema} != 'custom' ? ${color_schema} : 'theme-'+${custom_color_schema_init_id}"
   th:fragment="html"
 >
   <!--/* th:fragment="html (title, head, content, header, navbar, language)" */-->
@@ -33,8 +33,24 @@
       http-equiv="Content-Security-Policy"
       content="upgrade-insecure-requests"
     />
-    <meta name="color-scheme" content="light dark" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta th:if="${color_schema} == 'custom'" name="theme-color" content="transparent" />
+    <meta
+      th:if="${color_schema} == 'auto'
+               or ${color_schema} == 'light'
+               or ${color_schema} == 'auto-blue'
+               or ${color_schema} == 'light-blue'
+               or ${color_schema} == 'gray'"
+      name="theme-color"
+      content="#fafafa"
+    />
+    <meta
+      th:if="${color_schema} == 'dark'
+               or ${color_schema} == 'dark-blue'"
+      name="theme-color"
+      content="#212326"
+    />
+    <meta name="color-scheme" content="light dark" />
     <title th:text="${#strings.defaultString(title, site.title)}"></title>
     <!--/* RSS link declaration start */-->
     <th:block th:if="${pluginFinder.available('PluginFeed')}">
@@ -1025,6 +1041,34 @@ html[theme="theme-[(${colorSchema.id})]"] {
       });
     </script>
     <!--/* Color Scheme Toggle Button Script End */-->
+    <!--/* CSS Variable to Meta Theme-Color Observer Start */-->
+    <script type="module">
+      function updateThemeColor() {
+        const meta =
+          document.querySelector('meta[name="theme-color"]') ??
+          (() => {
+            const m = document.createElement("meta");
+            m.name = "theme-color";
+            document.head.appendChild(m);
+            return m;
+          })();
+
+        const color = getComputedStyle(document.documentElement).getPropertyValue("--color-base-100").trim();
+
+        if (color) meta.setAttribute("content", color);
+      }
+
+      // <!--/* Initialization */-->
+      updateThemeColor();
+
+      // <!--/* Observe changes to the 'theme' attribute on the html element */-->
+      const observer = new MutationObserver(updateThemeColor);
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["theme"],
+      });
+    </script>
+    <!--/* CSS Variable to Meta Theme-Color Observer End */-->
   </head>
 
   <body class="transition-colors duration-300" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
@@ -1113,19 +1157,15 @@ html[theme="theme-[(${colorSchema.id})]"] {
       });
     </script>
     <!--/*
-  本主题的样式切换说明：
-  用哪套样式看 HTML 标签内的 theme 属性值：auto，dark，light，gray
+      本主题的样式切换说明：
+      用哪套样式看 HTML 标签内的 theme 属性值
 
-  本主题标识明暗模式说明：
-
-  1. 用于给 css 样式读取，放在 HTML 标签内的 data-color-scheme 属性值：auto，dark，light
-  当前用于：决定官方评论组件样式
-  文档：https://www.halo.run/store/apps/app-YXyaD
-  
-  2. main.css 样式中还写了一个 color-scheme，由标签内的 data-color-scheme 决定，默认是 normal，亮色是 only light，暗色是 only dark
-  应用于 :root 加上 only 效果是关闭由 Chrome 的自动深色主题引起的颜色覆盖。上游应用于 body 标签，本主题应用于 HTML 标签（实际是应用在有 data-color-scheme 属性的地方，本主题仅有 HTML 标签有这个属性）
-  https://developer.mozilla.org/zh-CN/docs/Web/CSS/color-scheme
-*/-->
+      本主题标识明暗模式说明：
+      1. 放在 HTML 标签内的 data-color-scheme 属性值，用于匹配 css 样式，可选值：auto，dark，light
+      2. main.css 样式中还写了一个 color-scheme，由标签内的 data-color-scheme 决定，默认是 normal，亮色是 only light，暗色是 only dark
+      应用于 :root 加上 only 效果是关闭由 Chrome 的自动深色主题引起的颜色覆盖。上游应用于 body 标签，本主题应用于 HTML 标签（实际是应用在有 data-color-scheme 属性的地方，本主题仅有 HTML 标签有这个属性）
+      https://developer.mozilla.org/zh-CN/docs/Web/CSS/color-scheme
+    */-->
     <!--/*/
     <style th:inline="css" th:if="${theme.config?.styles?.is_max_width_settings}">
       .max-width {

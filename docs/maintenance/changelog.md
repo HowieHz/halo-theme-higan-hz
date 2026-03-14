@@ -21,6 +21,10 @@
 
 ## [Unreleased]
 
+### 🚀 新功能
+
+- 支持 `<meta name="theme-color" />`，根据当前主题样式自动输出并更新浏览器地址栏主题色。
+
 ### 🗑️ 移除
 
 - 移除模板中的 `<meta http-equiv="X-UA-Compatible">` 标签。
