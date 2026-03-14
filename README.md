@@ -21,7 +21,7 @@ Higan Haozi 是一款响应式、简洁清爽的个人网站主题，适用于 [
 
 在简洁清爽的基础上，本主题秉持以下核心理念：
 
-1. 响应式设计（适配不同屏幕尺寸）
+1. [响应式设计](https://howiehz.top/halo-theme-higan-haozi/reference/responsive-breakpoints)
 2. [多语言支持](https://howiehz.top/halo-theme-higan-haozi/tutorial/i18n)
 3. [强可配置性](https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration)
 4. [兼容性良好](https://howiehz.top/halo-theme-higan-haozi/reference/browser-compatibility)
