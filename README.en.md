@@ -21,7 +21,7 @@ You can also visit the [demo site](https://howiehz.top/?lang=en) to experience i
 
 Based on simplicity and freshness, this theme adheres to the following core principles:
 
-1. Responsive design (adaptable to different screen sizes)
+1. [Responsive design](https://howiehz.top/halo-theme-higan-haozi/en/reference/responsive-breakpoints)
 2. [Multi-language support](https://howiehz.top/halo-theme-higan-haozi/en/tutorial/i18n)
 3. [High configurability](https://howiehz.top/halo-theme-higan-haozi/en/guide/theme-configuration)
 4. [Good compatibility](https://howiehz.top/halo-theme-higan-haozi/en/reference/browser-compatibility)
