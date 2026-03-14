@@ -3,12 +3,15 @@
 <!-- markdownlint-disable MD024 -->
 
 <!--
+💥 破坏性变更
 🚀 新功能
-🐛 错误修复
 🔧 代码重构
+⚠️ 弃用
+🗑️ 移除
+🐛 错误修复
+🔒 安全
 📄 文档
 🛠️ 杂项维护
-💥 破坏性变更
 -->
 
 本项目的所有显著变更将记录在本文件中。
@@ -17,6 +20,10 @@
 本项目遵循[语义版本管理](https://semver.org/spec/v2.0.0.html)。
 
 ## [Unreleased]
+
+### 🗑️ 移除
+
+- 移除模板中的 `<meta http-equiv="X-UA-Compatible">` 标签。
 
 ### 📄 文档
 
@@ -27,7 +34,6 @@
 
 - 调整 nightly 预发布触发检查：仅统计前一个自然日（Asia/Shanghai）且位于上一个正式版 Tag 之后的提交，并排除以 `docs:` 开头的自动提交。
 - 将页面体积审计结果 PR 的提交前缀由 `chore:` 改为 `docs:`。
-- 移除模板中的 `<meta http-equiv="X-UA-Compatible">` 标签。
 
 ## [1.58.0] - 2026-03-13
 

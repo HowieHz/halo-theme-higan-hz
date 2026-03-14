@@ -3,12 +3,15 @@
 <!-- markdownlint-disable MD024 -->
 
 <!--
+💥 BREAKING CHANGES
 🚀 Features
-🐛 Bug Fixes
 🔧 Code Refactoring
+⚠️ Deprecated
+🗑️ Removed
+🐛 Bug Fixes
+🔒 Security
 📄 Documentation
 🛠️ Miscellaneous Chores
-💥 BREAKING CHANGES
 -->
 
 All notable changes to this project will be documented in this file.
@@ -17,6 +20,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### 🗑️ Removed
+
+- Removed the `<meta http-equiv="X-UA-Compatible">` tag from the layout template.
 
 ### 📄 Documentation
 
@@ -27,7 +34,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Refined nightly prerelease trigger checks to count only commits within the previous Asia/Shanghai day window and after the latest stable tag, while excluding commits whose subject starts with `docs:`.
 - Changed the commit prefix for page size audit result PRs from `chore:` to `docs:`.
-- Removed the `<meta http-equiv="X-UA-Compatible">` tag from the layout template.
 
 ## [1.58.0] - 2026-03-13
 
