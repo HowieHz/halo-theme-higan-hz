@@ -1045,8 +1045,9 @@ html[theme="theme-[(${colorSchema.id})]"] {
     <script type="module">
       function updateThemeColor() {
         const color = getComputedStyle(document.documentElement).getPropertyValue("--color-base-100");
-        if (color) {
-          document.querySelector('meta[name="theme-color"]')?.setAttribute("content", color);
+        const themeColorMetaTag = document.querySelector('meta[name="theme-color"]');
+        if (color && themeColorMetaTag) {
+          themeColorMetaTag.setAttribute("content", color);
         }
       }
 
