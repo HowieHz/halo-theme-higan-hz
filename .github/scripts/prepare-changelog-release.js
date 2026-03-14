@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+
 import { syncChangelogCompareLinks } from "./update-changelog-links.js";
 
 const releaseVersion = process.argv[2];

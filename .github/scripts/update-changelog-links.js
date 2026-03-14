@@ -28,9 +28,7 @@ function buildCompareLinks(versions) {
     return [];
   }
 
-  const links = [
-    `[Unreleased]: https://github.com/${REPO_OWNER}/${REPO_NAME}/compare/v${versions[0]}...HEAD`,
-  ];
+  const links = [`[Unreleased]: https://github.com/${REPO_OWNER}/${REPO_NAME}/compare/v${versions[0]}...HEAD`];
 
   for (let i = 0; i < versions.length - 1; i += 1) {
     const currentVersion = versions[i];
@@ -71,7 +69,10 @@ function stripTrailingCompareLinks(content) {
     index -= 1;
   }
 
-  return lines.slice(0, index + 1).join("\n").trimEnd();
+  return lines
+    .slice(0, index + 1)
+    .join("\n")
+    .trimEnd();
 }
 
 export function syncChangelogCompareLinks(filePath) {
