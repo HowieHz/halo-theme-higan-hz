@@ -1044,7 +1044,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
     <!--/* CSS Variable to Meta Theme-Color Observer Start */-->
     <script type="module">
       function updateThemeColor() {
-        const color = getComputedStyle(document.documentElement).getPropertyValue("--color-base-100").trim();
+        const color = getComputedStyle(document.documentElement).getPropertyValue("--color-base-100");
         if (color) {
           document.querySelector('meta[name="theme-color"]')?.setAttribute("content", color);
         }
