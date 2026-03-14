@@ -34,21 +34,21 @@
       content="upgrade-insecure-requests"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta th:if="${color_schema} == 'custom'" name="theme-color" content="transparent" />
     <meta
-      th:if="${color_schema} == 'auto'
-               or ${color_schema} == 'light'
-               or ${color_schema} == 'auto-blue'
-               or ${color_schema} == 'light-blue'
-               or ${color_schema} == 'gray'"
       name="theme-color"
-      content="#fafafa"
-    />
-    <meta
-      th:if="${color_schema} == 'dark'
-               or ${color_schema} == 'dark-blue'"
-      name="theme-color"
-      content="#212326"
+      content="transparent"
+      th:content="${color_schema == 'custom'
+                    ? 'transparent'
+                    : (color_schema == 'auto'
+                       or color_schema == 'light'
+                       or color_schema == 'auto-blue'
+                       or color_schema == 'light-blue'
+                       or color_schema == 'gray') 
+                      ? '#fafafa'
+                      : (color_schema == 'dark'
+                         or color_schema == 'dark-blue')
+                        ? '#212326'
+                        : 'transparent'}"
     />
     <meta name="color-scheme" content="light dark" />
     <title th:text="${#strings.defaultString(title, site.title)}"></title>
