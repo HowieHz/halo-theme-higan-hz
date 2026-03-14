@@ -44,6 +44,6 @@ outline: deep
 
 ### 其他插件适配
 
-| 文件位置                                                   | 介绍                 | 依赖插件                                                                                                                           |
-| ---------------------------------------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `src\styles\mixins\colors\mixins\comment-widget-vars.styl` | 官方评论组件样式适配 | [plugin-comment-widget](https://github.com/halo-dev/plugin-comment-widget?tab=readme-ov-file#%E4%B8%BB%E9%A2%98%E9%80%82%E9%85%8D) |
+| 文件位置                                               | 介绍                 | 依赖插件                                                                                                                           |
+| ------------------------------------------------------ | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `src/styles/mixins/colors/mixins/comment-widget-vars/` | 官方评论组件样式适配 | [plugin-comment-widget](https://github.com/halo-dev/plugin-comment-widget?tab=readme-ov-file#%E4%B8%BB%E9%A2%98%E9%80%82%E9%85%8D) |
