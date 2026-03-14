@@ -1,14 +1,17 @@
-﻿# Changelog
+# Changelog
 
 <!-- markdownlint-disable MD024 -->
 
 <!--
+💥 BREAKING CHANGES
 🚀 Features
-🐛 Bug Fixes
 🔧 Code Refactoring
+⚠️ Deprecated
+🗑️ Removed
+🐛 Bug Fixes
+🔒 Security
 📄 Documentation
 🛠️ Miscellaneous Chores
-💥 BREAKING CHANGES
 -->
 
 All notable changes to this project will be documented in this file.
@@ -17,6 +20,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### 🗑️ Removed
+
+- Removed the `<meta http-equiv="X-UA-Compatible">` tag from the layout template.
 
 ### 📄 Documentation
 
@@ -27,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Refined nightly prerelease trigger checks to count only commits within the previous Asia/Shanghai day window and after the latest stable tag, while excluding commits whose subject starts with `docs:`.
 - Changed the commit prefix for page size audit result PRs from `chore:` to `docs:`.
+- Added automatic regeneration and CI validation for changelog compare-link definitions (`[Unreleased]` and version links) at the end of both changelog files.
 
 ## [1.58.0] - 2026-03-13
 
@@ -566,3 +574,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🐛 Bug Fixes
 
 - Fixed tag color rendering issues when `Tags Page Style -> Tag Sort Order` was enabled.
+
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.0...HEAD
+[1.58.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.6...v1.58.0
+[1.57.6]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.5...v1.57.6
+[1.57.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.4...v1.57.5
+[1.57.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.3...v1.57.4
+[1.57.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.2...v1.57.3
+[1.57.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.1...v1.57.2
+[1.57.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.0...v1.57.1
+[1.57.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.56.2...v1.57.0
+[1.56.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.56.1...v1.56.2
+[1.56.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.56.0...v1.56.1
+[1.56.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.55.1...v1.56.0
+[1.55.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.55.0...v1.55.1
+[1.55.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.54.0...v1.55.0
+[1.54.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.53.1...v1.54.0
+[1.53.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.53.0...v1.53.1
+[1.53.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.52.1...v1.53.0
+[1.52.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.52.0...v1.52.1
+[1.52.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.51.1...v1.52.0
+[1.51.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.51.0...v1.51.1
+[1.51.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.2...v1.51.0
+[1.50.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.1...v1.50.2
+[1.50.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.50.0...v1.50.1
+[1.50.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.2...v1.50.0
+[1.49.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.1...v1.49.2
+[1.49.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.49.0...v1.49.1
+[1.49.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.3...v1.49.0
+[1.48.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.2...v1.48.3
+[1.48.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.1...v1.48.2
+[1.48.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.48.0...v1.48.1
+[1.48.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.47.0...v1.48.0
+[1.47.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.46.0...v1.47.0
+[1.46.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.45.4...v1.46.0
+[1.45.4]: https://github.com/HowieHz/halo-theme-higan-hz/releases/tag/v1.45.4

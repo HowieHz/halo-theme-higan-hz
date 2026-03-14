@@ -63,6 +63,44 @@ jobs:
             return aPatch > bPatch;
           };
 
+          const changelogVersionHeadingRegex = /^## \[(\d+\.\d+\.\d+)\]\s*-\s*/gmu;
+          const changelogLinkDefRegex = /^\[(Unreleased|unreleased|\d+\.\d+\.\d+)\]:\s*(https:\/\/github\.com\/HowieHz\/halo-theme-higan-hz\/(?:compare\/\S+|releases\/tag\/\S+))\s*$/gmu;
+          const requiredRepoBase = 'https://github.com/HowieHz/halo-theme-higan-hz';
+
+          const validateChangelogLinkDefinitions = (changelog, changelogPath) => {
+            const versions = [...changelog.matchAll(changelogVersionHeadingRegex)].map((match) => match[1]);
+            if (versions.length === 0) {
+              throw new Error(`${changelogPath} must contain at least one release heading like ## [x.y.z] - yyyy-mm-dd`);
+            }
+
+            const links = new Map();
+            for (const match of changelog.matchAll(changelogLinkDefRegex)) {
+              const rawKey = match[1];
+              const key = rawKey.toLowerCase() === 'unreleased' ? 'Unreleased' : rawKey;
+              links.set(key, match[2]);
+            }
+
+            const expectedUnreleasedLink = `${requiredRepoBase}/compare/v${versions[0]}...HEAD`;
+            if (links.get('Unreleased') !== expectedUnreleasedLink) {
+              throw new Error(`${changelogPath} must contain [Unreleased]: ${expectedUnreleasedLink}`);
+            }
+
+            for (let index = 0; index < versions.length - 1; index += 1) {
+              const current = versions[index];
+              const previous = versions[index + 1];
+              const expectedLink = `${requiredRepoBase}/compare/v${previous}...v${current}`;
+              if (links.get(current) !== expectedLink) {
+                throw new Error(`${changelogPath} must contain [${current}]: ${expectedLink}`);
+              }
+            }
+
+            const oldest = versions[versions.length - 1];
+            const expectedOldestLink = `${requiredRepoBase}/releases/tag/v${oldest}`;
+            if (links.get(oldest) !== expectedOldestLink) {
+              throw new Error(`${changelogPath} must contain [${oldest}]: ${expectedOldestLink}`);
+            }
+          };
+
           const currentPackageVersion = readVersionFromPackageJson(fs.readFileSync('package.json', 'utf8'));
           const basePackageVersion = readVersionFromPackageJson(readFromGit(baseSha, 'package.json'));
           if (isReleasePr) {
@@ -99,6 +137,7 @@ jobs:
             if (!changelog.includes('## [Unreleased]')) {
               throw new Error(`${changelogPath} must keep the ## [Unreleased] section`);
             }
+            validateChangelogLinkDefinitions(changelog, changelogPath);
           }
           NODE
 
