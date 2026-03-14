@@ -25,7 +25,8 @@
 
 ### 🛠️ 杂项维护
 
-- 调整 nightly 预发布触发检查：仅统计前一个自然日（Asia/Shanghai）且位于上一个正式版 Tag 之后的提交，并排除 `chore: Update Page Size Audit Results` 自动提交。
+- 调整 nightly 预发布触发检查：仅统计前一个自然日（Asia/Shanghai）且位于上一个正式版 Tag 之后的提交，并排除以 `docs:` 开头的自动提交。
+- 将页面体积审计结果 PR 的提交前缀由 `chore:` 改为 `docs:`。
 
 ## [1.58.0] - 2026-03-13
 
