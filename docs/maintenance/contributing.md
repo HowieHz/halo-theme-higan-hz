@@ -124,8 +124,7 @@ CI 会自动运行 `pnpm lint`，包含以下检查：
 
 CI 会自动运行 `pnpm fmt`，包含以下格式化步骤：
 
-- `stylus-supremacy`：Stylus 格式化（Stylus 文件）
-- `oxfmt`：格式化 JSON、JSONC、YAML、Markdown、CSS、JavaScript、TypeScript、Vue 和 HTML 文件
+- `oxfmt`：格式化 JSON、JSONC、YAML、Markdown、CSS、JavaScript、TypeScript、HTML、Vue 和 Less 文件
 
 > 格式化产生的变更会自动提交。
 

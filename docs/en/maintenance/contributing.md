@@ -124,8 +124,7 @@ CI automatically runs `pnpm lint`, including the following checks:
 
 CI automatically runs `pnpm fmt`, including the following formatting steps:
 
-- `stylus-supremacy`: Stylus formatting (Stylus files)
-- `oxfmt`: Formatting for JSON, JSONC, YAML, Markdown, CSS, JavaScript, TypeScript, Vue, and HTML files
+- `oxfmt`: Formatting for JSON, JSONC, YAML, Markdown, CSS, JavaScript, TypeScript, HTML, Vue and Less files
 
 > Changes produced by formatting will be automatically committed.
 
