@@ -11,6 +11,7 @@
 >
   <head th:remove="tag">
     <script src="/page-components/error/index.ts" type="module"></script>
+    <th:block th:insert="~{components/header/template :: head}"></th:block>
   </head>
   <body th:remove="tag">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">

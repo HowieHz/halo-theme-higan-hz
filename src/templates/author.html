@@ -27,6 +27,7 @@
       th:href="${siteUrl} + @{/authors/{slug}(slug = ${author.metadata?.name})}"
     />
     <script src="/page-components/author/index.ts" type="module"></script>
+    <th:block th:insert="~{components/header/template :: head}"></th:block>
     <th:block th:insert="~{components/list-post-simple/template :: head(showPagination = true)}"></th:block>
   </head>
   <body th:remove="tag">

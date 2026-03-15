@@ -1,2 +1,2 @@
-import "../utils/main-with-header";
+import "../utils/main";
 import "../utils/article.css";

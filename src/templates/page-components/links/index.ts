@@ -1,3 +1,3 @@
-import "../utils/main-with-header";
+import "../utils/main";
 import "./styles.css";
 import "../utils/article.css";

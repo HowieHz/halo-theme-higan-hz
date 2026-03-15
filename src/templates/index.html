@@ -12,6 +12,7 @@
   <head th:remove="tag">
     <link rel="canonical" th:if="${theme.config?.index_styles?.is_enable_canonical_link}" th:href="${siteUrl}" />
     <script src="/page-components/index/index.ts" type="module"></script>
+    <th:block th:insert="~{components/header/template :: head}"></th:block>
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'post-list-summary'}">
       <th:block th:insert="~{components/list-post-summary/template :: head}"></th:block>
     </th:block>

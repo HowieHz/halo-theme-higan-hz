@@ -17,6 +17,7 @@
       th:href="${siteUrl} + @{${singlePage.status.permalink}}"
     />
     <script src="/page-components/page/index.ts" type="module"></script>
+    <th:block th:insert="~{components/header/template :: head}"></th:block>
     <th:block
       th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show
                and haloCommentEnabled}"

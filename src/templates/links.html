@@ -16,6 +16,7 @@
       th:href="${siteUrl} + @{/links}"
     />
     <script src="/page-components/links/index.ts" type="module"></script>
+    <th:block th:insert="~{components/header/template :: head}"></th:block>
   </head>
   <body th:remove="tag">
     <article id="links" class="post" itemscope itemtype="http://schema.org/BlogPosting">
