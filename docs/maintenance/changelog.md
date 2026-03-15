@@ -25,6 +25,10 @@
 
 - 支持 `<meta name="theme-color" />`，根据当前主题样式自动输出并更新浏览器地址栏主题色。
 
+### 🔧 代码重构
+
+- 将 `scripts` 和 `styles` 目录移动到 `templates` 下，并同步更新相关资源引用路径。
+
 ### 🗑️ 移除
 
 - 移除模板中的 `<meta http-equiv="X-UA-Compatible">` 标签。

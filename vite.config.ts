@@ -12,11 +12,11 @@ import { sri } from "vite-plugin-sri3";
 
 import pkg from "./package.json";
 import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
-import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
 import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
 export default defineConfig({
+  root: path.resolve(__dirname, "src/templates/"),
   base: "/themes/howiehz-higan/",
   plugins: [
     // Tailwind CSS with Vite integration
@@ -59,10 +59,9 @@ export default defineConfig({
       include: [
         /\.(atom|rss|xml|xhtml|js|mjs|ts|html|json|css|eot|otf|ttf|svg|ico|bmp|dib|txt|text|log|md|conf|ini|cfg)$/,
       ],
-      // src/templates/**/*.html are template files and should not be compressed
-      exclude: [/^src\/templates\/.*\.html$/],
+      // Root *.html, error/**/*.html, fragments/**/*.html and */ components/**/*.html are template files and should not be compressed
+      exclude: [/^[^/]*\.html$/, /^error\/.*\.html$/, /^fragments\/.*\.html$/, /^components\/.*\.html$/],
     }),
-    moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
   css: {
     transformer: "lightningcss",
