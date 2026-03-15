@@ -26,9 +26,9 @@ onMounted(async () => {
 <!-- 导入主题样式 -->
 <style src="../../../src/templates/components/theme-dark/styles.less" scoped></style>
 <style src="../../../src/templates/components/theme-light/styles.less" scoped></style>
-<style src="../../../src/templates/styles/main.css" scoped></style>
+<style src="../../../src/templates/page-components/utils/main.css" scoped></style>
 <style src="../../../src/templates/components/text-size-normal/styles.css" scoped></style>
 <!-- 导入 post 页样式 -->
-<style src="../../../src/templates/styles/pages/post.css" scoped></style>
-<style src="../../../src/templates/styles/mixins/article.css" scoped></style>
-<style src="../../../src/templates/styles/mixins/article-metadata.css" scoped></style>
+<style src="../../../src/templates/page-components/post/styles.css" scoped></style>
+<style src="../../../src/templates/page-components/utils/article.css" scoped></style>
+<style src="../../../src/templates/page-components/utils/article-metadata.css" scoped></style>

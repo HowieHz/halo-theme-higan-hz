@@ -53,7 +53,7 @@
         </th:block>
       </th:block>
     </th:block>
-    <script src="/scripts/pages/post.ts" type="module"></script>
+    <script src="/page-components/post/index.ts" type="module"></script>
     <th:block
       th:if="${theme.config?.post_styles?.is_post_comment_section_show
                and haloCommentEnabled}"
@@ -388,8 +388,8 @@
       <div th:replace="~{components/footer-nav-post/template :: footerNav}"></div>
     </th:block>
     <script type="module">
-      import { isMobile } from "/scripts/utils/device.ts";
-      import { initTOC } from "/scripts/utils/toc.ts";
+      import { isMobile } from "/page-components/utils/device.ts";
+      import { initTOC } from "/page-components/utils/toc.ts";
 
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/* generate toc

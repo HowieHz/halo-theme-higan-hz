@@ -1,0 +1,502 @@
+@import "./scrollbar.css";
+@import "./iconify.css";
+@import "./font.css";
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-base-100);
+    color: var(--color-base-content);
+    flex: 1;
+    font-size: var(--text);
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 400;
+    height: 100%;
+    line-height: 1.725;
+    margin: 0;
+    text-rendering: optimizelegibility;
+
+    & h1,
+    & .h1 {
+      color: var(--color-primary);
+      display: block;
+      font-size: var(--text-h1);
+      font-style: normal;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      margin-block: 3rem 1rem;
+    }
+
+    & h2,
+    & .h2 {
+      color: var(--color-base-content);
+      display: block;
+      font-size: var(--text-h2);
+      font-weight: bold;
+      letter-spacing: normal;
+      margin-block: 2rem 0.5rem;
+      position: relative;
+      text-transform: none;
+    }
+
+    & h3,
+    & .h3 {
+      color: var(--color-base-content);
+      font-size: var(--text-h3);
+      font-weight: bold;
+    }
+
+    & h4,
+    & .h4,
+    & h5,
+    & .h5,
+    & h6,
+    & .h6 {
+      color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+      display: inline;
+      font-size: var(--text-h4);
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    & h3,
+    & .h3,
+    & h4,
+    & .h4,
+    & h5,
+    & .h5,
+    & h6,
+    & .h6 {
+      margin-block: 0.9rem 0.5rem;
+    }
+
+    & h1,
+    & .h1,
+    & h2,
+    & .h2,
+    & h3,
+    & .h3,
+    & h4,
+    & .h4,
+    & h5,
+    & .h5,
+    & h6,
+    & .h6 {
+      & a {
+        background: none;
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+          background-image: linear-gradient(
+            transparent,
+            transparent 0.375rem,
+            var(--color-accent) 0.375rem,
+            var(--color-accent)
+          );
+          background-position: bottom;
+          background-repeat: repeat-x;
+          background-size: 100% 0.375rem;
+        }
+      }
+    }
+
+    & hr {
+      border: 0.5px dashed color-mix(in oklab, var(--color-base-content) 80%, transparent);
+      margin: 1.25rem 0;
+      opacity: 50%;
+    }
+
+    & strong {
+      font-weight: bold;
+    }
+
+    & em,
+    & cite {
+      font-style: italic;
+    }
+
+    & sup,
+    & sub {
+      font-size: var(--text-xs);
+      line-height: 0;
+      position: relative;
+      vertical-align: baseline;
+    }
+
+    & sup {
+      top: -0.5rem;
+    }
+
+    & sub {
+      bottom: -0.2rem;
+    }
+
+    & small {
+      font-size: var(--text-sm);
+    }
+
+    & abbr {
+      /* 用户代理样式表在 abbr[title] 有 text-decoration: underline dotted; 
+    可用 text-decoration: none; 覆盖 */
+
+      &[title] {
+        border-bottom: 1px dotted;
+        cursor: help;
+
+        @media (hover: none), print {
+          /* 样式将应用于以下任一情况：
+     - 设备不支持悬停
+     - 打印模式 */
+          &::after {
+            content: "(" attr(title) ")";
+          }
+        }
+      }
+    }
+
+    & ol {
+      list-style: decimal;
+    }
+
+    & ul,
+    & ol,
+    & dl {
+      line-height: 1.725;
+
+      & ul,
+      & ol {
+        margin: 0;
+      }
+    }
+
+    & dt {
+      font-weight: bold;
+    }
+
+    & table {
+      border-collapse: collapse;
+      display: block;
+      font-size: var(--text-xs);
+      overflow: auto;
+      text-align: start;
+      width: 100%;
+
+      & th {
+        border-bottom: 0.1rem solid color-mix(in oklab, var(--color-base-content) 80%, transparent);
+        color: var(--color-base-content);
+        font-size: var(--text-th);
+        font-weight: bold;
+        padding: 0.5rem;
+      }
+
+      & td {
+        border-bottom: none;
+        font-size: var(--text-sm);
+        padding-block: 0;
+        padding-inline: 0.5rem;
+      }
+    }
+
+    & p {
+      text-align: start;
+    }
+
+    /* 自定义 hide, spolier 标签默认模糊 */
+    & hide,
+    & spoiler {
+      cursor: pointer;
+      filter: blur(0.3125rem);
+      transition: filter 0.2s;
+
+      /* 鼠标悬停时，元素被聚焦时，文本被选中时去除模糊 */
+      &:hover,
+      &:focus,
+      &::selection {
+        filter: none;
+      }
+
+      /* 黑色遮罩类型 */
+      &.black {
+        background-color: #000;
+        color: transparent;
+        filter: none;
+        transition: all 0.2s;
+
+        &:hover,
+        &:focus,
+        &::selection {
+          background-color: transparent;
+          color: inherit;
+        }
+      }
+    }
+  }
+
+  /* 最大宽度控制 最大宽度容器类 */
+  .max-width {
+    max-width: 100%;
+
+    @media (width >= 768px) {
+      max-width: 48rem;
+    }
+
+    @media (width >= 1024px) {
+      max-width: 56rem;
+    }
+
+    @media (width >= 1536px) {
+      max-width: 64rem;
+    }
+
+    @media (width >= 1920px) {
+      max-width: 60%;
+    }
+  }
+
+  /* .content 通用样式类 */
+  .content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    overflow-wrap: break-word;
+    position: relative;
+
+    & p {
+      hyphens: auto;
+    }
+
+    & code {
+      hyphens: manual;
+    }
+
+    & a:not(:is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) a) {
+      background-image: linear-gradient(
+        transparent,
+        transparent 0.3125rem,
+        var(--color-base-content) 0.3125rem,
+        var(--color-base-content)
+      );
+      background-position: bottom;
+      background-repeat: repeat-x;
+      background-size: 100% 0.375rem;
+      color: var(--color-base-content);
+      text-decoration: none;
+
+      &:hover {
+        background-image: linear-gradient(
+          transparent,
+          transparent 0.25rem,
+          var(--color-accent) 0.25rem,
+          var(--color-accent)
+        );
+      }
+
+      &.icon {
+        background: none;
+
+        &:hover {
+          color: var(--color-accent);
+        }
+      }
+    }
+  }
+
+  /* 疑似可去除 需进一步测试 */
+  a {
+    & img {
+      display: inherit !important;
+    }
+
+    &:has(img) {
+      background-image: none !important;
+    }
+  }
+
+  hr.divide {
+    border: 0 solid color-mix(in oklab, var(--color-base-content) 40%, transparent);
+    border-top-width: 1px;
+    height: 0;
+
+    /* 分割线上一个也是分割线或者是点赞按钮就隐藏 */
+    :is(hr.divide, a.upvote-button) + & {
+      display: none;
+    }
+  }
+
+  #footer {
+    align-items: center;
+    color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+    display: flex;
+    flex-flow: column wrap;
+    font-size: var(--text-xs);
+    gap: 1.25rem;
+    justify-content: center;
+    margin-block: 1.25rem;
+    text-align: center;
+    vertical-align: top;
+    width: 100%;
+
+    & .info,
+    & .copyright {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    & ul {
+      display: inline-table;
+      line-height: 1.25rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    & li {
+      border-color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+      border-right: 1px solid;
+      display: inline-block;
+      justify-content: center;
+      margin-right: 0.9375rem;
+      vertical-align: middle;
+
+      & a,
+      & span {
+        margin-right: 0.9375rem;
+      }
+
+      &:last-child {
+        border-right: 0;
+        margin-right: 0;
+
+        & a,
+        & span {
+          margin-right: 0;
+        }
+      }
+    }
+
+    & a {
+      background-image: none;
+      color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+      text-decoration: underline;
+
+      &:hover {
+        color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+      }
+    }
+
+    & .submenu-container {
+      & .submenu-toggle {
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+
+        &:hover {
+          color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+        }
+      }
+
+      & .submenu-link {
+        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+        margin-right: 0;
+
+        &:hover {
+          color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+        }
+      }
+    }
+
+    & .footer-left {
+      line-height: 1.25rem;
+      vertical-align: middle;
+    }
+
+    & .footer-bottom {
+      line-height: 1.25rem;
+      vertical-align: middle;
+    }
+  }
+
+  .color-time,
+  a.color-time {
+    color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+  }
+
+  code {
+    border: 1px dotted color-mix(in oklab, var(--color-base-content) 80%, transparent);
+    border-radius: 0.125rem;
+    padding-block: 0;
+    padding-inline: 0.3125rem;
+  }
+
+  pre {
+    font-size: var(--text-sm);
+    line-height: 1.375rem;
+    overflow-x: auto;
+    padding-block: 0.625rem 0;
+    padding-inline: 0.9375rem;
+
+    & code {
+      border: none;
+      display: block;
+      padding: 1em;
+    }
+  }
+
+  .min-h-100vh {
+    min-height: 100vh !important;
+  }
+
+  /* 多行文本截断类 因为 tailwindcss 混淆插件有 bug，所以自定义一套 */
+  .v-line-clamp-1 {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    overflow: hidden;
+  }
+
+  .v-line-clamp-2 {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .v-line-clamp-3 {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .v-line-clamp-4 {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
+  }
+
+  .v-line-clamp-5 {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    overflow: hidden;
+  }
+}

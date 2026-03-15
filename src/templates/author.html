@@ -26,7 +26,7 @@
       th:if="${theme.config?.author_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{/authors/{slug}(slug = ${author.metadata?.name})}"
     />
-    <script src="/scripts/pages/author.ts" type="module"></script>
+    <script src="/page-components/author/index.ts" type="module"></script>
     <th:block th:insert="~{components/list-post-simple/template :: head(showPagination = true)}"></th:block>
   </head>
   <body th:remove="tag">

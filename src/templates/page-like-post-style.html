@@ -16,7 +16,7 @@
       th:if="${theme.config?.custom_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{${singlePage.status.permalink}}"
     />
-    <script src="/scripts/pages/page_like_post_style.ts" type="module"></script>
+    <script src="/page-components/page-like-post-style/index.ts" type="module"></script>
     <th:block
       th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show
                and haloCommentEnabled}"
@@ -109,8 +109,8 @@
     </article>
     <div th:replace="~{components/footer-nav-page-like-post-style/template :: footerNav}"></div>
     <script type="module">
-      import { isMobile } from "/scripts/utils/device.ts";
-      import { initTOC } from "/scripts/utils/toc.ts";
+      import { isMobile } from "/page-components/utils/device.ts";
+      import { initTOC } from "/page-components/utils/toc.ts";
 
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/* generate toc
