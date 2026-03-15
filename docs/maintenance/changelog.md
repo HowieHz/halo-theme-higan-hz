@@ -21,6 +21,8 @@
 
 ## [Unreleased]
 
+## [1.58.1] - 2026-03-15
+
 ### 🚀 新功能
 
 - 支持 `<meta name="theme-color" />`，根据当前主题样式自动输出并更新浏览器地址栏主题色。
@@ -583,7 +585,8 @@
 
 - 修复启用“标签集合页样式——标签排序方式”时标签颜色无法正常显示的问题。
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.0...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.1...HEAD
+[1.58.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.0...v1.58.1
 [1.58.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.6...v1.58.0
 [1.57.6]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.5...v1.57.6
 [1.57.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.4...v1.57.5
