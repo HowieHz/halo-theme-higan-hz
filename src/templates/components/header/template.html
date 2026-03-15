@@ -1,6 +1,6 @@
-<!--/*-->
-<head th:remove="tag"></head>
-<!--*/-->
+<head th:remove="tag">
+  <script src="index.ts" type="module"></script>
+</head>
 <body th:remove="tag">
   <header id="header">
     <a th:href="@{/}">
@@ -68,4 +68,3 @@
     </div>
   </header>
 </body>
-<!--/* 使此模块的模板需引入文件 /utils/header.ts 以正确引入样式和脚本 */-->

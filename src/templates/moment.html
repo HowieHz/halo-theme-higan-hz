@@ -23,6 +23,7 @@
       th:href="@{'/moments/rss.xml'}"
     />
     <script src="/page-components/moment/index.ts" type="module"></script>
+    <th:block th:insert="~{components/header/template :: head}"></th:block>
     <th:block th:insert="~{components/list-moment-summary/template :: head}"></th:block>
     <th:block th:insert="~{components/moment-video-modal/template :: head}"></th:block>
     <th:block

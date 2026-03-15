@@ -16,6 +16,7 @@
       th:href="${siteUrl} + @{/friends}"
     />
     <script src="/page-components/friends/index.ts" type="module"></script>
+    <th:block th:insert="~{components/header/template :: head}"></th:block>
     <th:block th:insert="~{components/list-friends-summary/template :: head(friends = ${friends})}"></th:block>
   </head>
   <body th:remove="tag">
