@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": ["public/assets/**"],
+  "ignorePatterns": ["src/templates/public/assets/**"],
   "overrides": [
     {
       "files": ["**/*.jsonc"],

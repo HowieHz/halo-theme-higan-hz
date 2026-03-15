@@ -8,7 +8,7 @@
     "builtin": true
   },
   "ignorePatterns": [
-    "public/assets/lib/**/*",
+    "src/templates/public/assets/lib/**/*",
     "docs/.vitepress/dist",
     "docs/.vitepress/cache",
     "**/.oxlintrc.json.bak",
@@ -27,6 +27,7 @@
     ".tw-patch/",
     ".vite-inspect/",
     "templates/",
+    "templates_old/",
     "**/.vscode/",
     "!.vscode/extensions.json",
     "**/.idea/",
@@ -195,7 +196,7 @@
       }
     },
     {
-      "files": ["public/assets/qrcode.html"],
+      "files": ["src/templates/public/assets/qrcode.html"],
       "globals": {
         "QRious": "readonly"
       },
