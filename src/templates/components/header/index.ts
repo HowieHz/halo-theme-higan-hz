@@ -1,7 +1,7 @@
 import "./styles.css";
-import { isVisible } from "../../scripts/utils/animations";
-import { fadeIn } from "../../scripts/utils/animations/fade-in";
-import { fadeOut } from "../../scripts/utils/animations/fade-out";
+import { isVisible } from "../animations/base";
+import { fadeIn } from "../animations/fade-in";
+import { fadeOut } from "../animations/fade-out";
 
 document.addEventListener("DOMContentLoaded", (): void => {
   const mobileMenuIcon: HTMLElement | null = document.querySelector("#header > #nav > ul > .icon > a");

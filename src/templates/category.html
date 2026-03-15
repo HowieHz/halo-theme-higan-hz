@@ -1,7 +1,7 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(
+  th:replace="~{components/base-layout/template :: html(
     title = ${#annotations.getOrDefault(category, 'higan.howiehz.top/page-title', category.spec?.displayName)}, 
     head = ~{:: head},
     content = ~{:: body}, 
@@ -23,7 +23,7 @@
       th:if="${theme.config?.category_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{{prefix}/{slug}(prefix = ${site.routes.categoriesUri}, slug = ${category.spec?.slug})}"
     />
-    <script src="/scripts/pages/category.ts" type="module"></script>
+    <script src="/page-components/category/index.ts" type="module"></script>
     <th:block th:insert="~{components/list-post-simple/template :: head(showPagination = true)}"></th:block>
   </head>
   <body th:remove="tag">

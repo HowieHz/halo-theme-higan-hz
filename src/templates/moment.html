@@ -1,7 +1,7 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(
+  th:replace="~{components/base-layout/template :: html(
     title = ${title}, 
     head = ~{:: head},
     content = ~{:: body}, 
@@ -22,7 +22,7 @@
       title="Moments - All"
       th:href="@{'/moments/rss.xml'}"
     />
-    <script src="/scripts/pages/moment.ts" type="module"></script>
+    <script src="/page-components/moment/index.ts" type="module"></script>
     <th:block th:insert="~{components/list-moment-summary/template :: head}"></th:block>
     <th:block th:insert="~{components/moment-video-modal/template :: head}"></th:block>
     <th:block

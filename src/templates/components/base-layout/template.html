@@ -1,0 +1,1501 @@
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:with="color_schema = ${theme.config?.styles?.color_schema},
+           theme_auto = ${theme.config?.styles?.theme_auto},
+           theme_light = ${theme.config?.styles?.theme_light},
+           theme_dark = ${theme.config?.styles?.theme_dark},
+           custom_color_schema_config = ${theme.config?.styles?.custom_color_schema},
+           custom_color_schema_init_id = ${theme.config?.styles?.custom_color_schema_init_id},
+           custom_theme_auto_id = ${theme.config?.styles?.custom_theme_auto_id},
+           custom_theme_light_id = ${theme.config?.styles?.custom_theme_light_id},
+           custom_theme_dark_id = ${theme.config?.styles?.custom_theme_dark_id},
+           page_language=${language ?: ('' + param.lang != '' ? '' + param.lang : (theme.config?.global?.default_page_language ?: 'zh'))},
+           siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1) == '/'
+                       ? #strings.substring(site.url, 0, #strings.length(site.url) - 1)
+                       : site.url}"
+  th:lang="${page_language}"
+  th:attr="data-color-scheme = ${color_schema} == 'custom' ? 'auto' :
+                               (${color_schema} == 'auto' ? 'auto' :
+                               (${color_schema} == 'light' ? 'light' :
+                               (${color_schema} == 'dark' ? 'dark' :
+                               (${color_schema} == 'auto-blue' ? 'auto' :
+                               (${color_schema} == 'light-blue' ? 'light' :
+                               (${color_schema} == 'dark-blue' ? 'dark' :
+                               (${color_schema} == 'gray' ? 'light' : 'auto'))))))),
+           theme = ${color_schema} != 'custom' ? ${color_schema} : 'theme-'+${custom_color_schema_init_id}"
+  th:fragment="html"
+>
+  <!--/* th:fragment="html (title, head, content, header, navbar, language)" */-->
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      th:if="${theme.config?.global?.upgrade_insecure_requests}"
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--/* 
+      The <meta name="theme-color"> tag must not be self-closing;
+      otherwise, it will not work on Chrome for Android. 
+    */-->
+    <!--/*/
+    <meta
+      name="theme-color"
+      content="transparent"
+      th:content="${color_schema == 'custom'
+                    ? 'transparent'
+                    : (color_schema == 'auto'
+                       or color_schema == 'light'
+                       or color_schema == 'auto-blue'
+                       or color_schema == 'light-blue'
+                       or color_schema == 'gray') 
+                      ? '#fafafa'
+                      : (color_schema == 'dark'
+                         or color_schema == 'dark-blue')
+                        ? '#212326'
+                        : 'transparent'}"
+    >
+    /*/-->
+    <meta name="color-scheme" content="light dark" />
+    <title th:text="${#strings.defaultString(title, site.title)}"></title>
+    <!--/* RSS link declaration start */-->
+    <th:block th:if="${pluginFinder.available('PluginFeed')}">
+      <link rel="alternate" type="application/rss+xml" title="Posts - All" th:href="@{'/rss.xml'}" />
+      <th:block th:each="item : ${theme.config?.sns?.index_sns}">
+        <th:block th:if="${#strings.equals(item?.type['type'], 'rss')}" th:with="href = ${item?.input_value}">
+          <link
+            th:if="${href != '/rss.xml'}"
+            rel="alternate"
+            type="application/rss+xml"
+            title="RSS feed"
+            th:href="@{${href}}"
+          />
+        </th:block>
+      </th:block>
+    </th:block>
+    <!--/* RSS link declaration end */-->
+    <!--/* Custom Font Declarations start */-->
+    <th:block th:if="${theme.config?.styles?.is_custom_font_files_enable}">
+      <!--/* Custom Font Preload Declarations start */-->
+      <th:block
+        th:each="fontConfig : ${theme.config?.styles?.custom_font_configs}"
+        th:with="fontFile = ${fontConfig.font_file},
+                fontExt = ${fontFile.substring(fontFile.lastIndexOf('.') + 1)},
+                fontMime = ${fontExt == 'woff2'
+                             ? 'font/woff2'
+                             : (fontExt == 'woff'
+                                ? 'font/woff'
+                                : (fontExt == 'ttf'
+                                   ? 'font/ttf'
+                                   : (fontExt == 'otf'
+                                      ? 'font/otf'
+                                      : (fontExt == 'sfnt'
+                                         ? 'font/sfnt'
+                                         : (fontExt == 'eot'
+                                            ? 'application/vnd.ms-fontobject'
+                                            : ((fontExt == 'ttc'
+                                                or fontExt == 'otc')
+                                               ? 'font/collection'
+                                               : 'application/octet-stream'))))))}"
+      >
+        <link rel="preload" th:href="${fontFile}" as="font" th:type="${fontMime}" crossorigin />
+      </th:block>
+      <!--/* Custom Font Preload Declarations end */-->
+      <!--/* Custom Font @font-face Declarations start */-->
+      <!--/*/
+      <style th:inline="css">
+        /*[#
+          th:each="fontConfig : ${theme.config?.styles?.custom_font_configs}"
+          th:with="fontStyle = ${fontConfig.font_style},
+                   customFontStyle = ${fontConfig.custom_font_style},
+                   fontWeight = ${fontConfig.font_weight},
+                   customFontWeight = ${fontConfig.custom_font_weight},
+                   fontDisplay = ${fontConfig.font_display},
+                   fontUnicodeRange = ${fontConfig.font_unicode_range},
+                   fontFile = ${fontConfig.font_file},
+                   fontExt = ${fontFile.substring(fontFile.lastIndexOf('.') + 1)},
+                   fontFormat=${fontExt == 'woff2'
+                                ? 'woff2'
+                                : (fontExt == 'woff'
+                                   ? 'woff'
+                                   : (fontExt == 'ttf'
+                                      ? 'truetype'
+                                      : (fontExt == 'otf'
+                                         ? 'opentype'
+                                         : (fontExt == 'eot'
+                                            ? 'embedded-opentype'
+                                            : ((fontExt == 'ttc'
+                                                or fontExt == 'otc')
+                                               ? 'collection'
+                                               : fontExt)))))},
+                   fontName = ${theme.config?.styles?.custom_font_name}"
+        ]*/
+          /*[# th:if="${#strings.isEmpty(fontName)}"]*/
+            /*[# th:if="${#strings.isEmpty(fontUnicodeRange)}"]*/
+              @font-face {
+                font-display: [(${fontDisplay})];
+                font-family: "custom";
+                font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
+                font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
+                src: url("[(${fontFile})]") format("[(${fontFormat})]");
+              }
+            /*[/]*/
+            /*[# th:unless="${#strings.isEmpty(fontUnicodeRange)}"]*/
+              @font-face {
+                font-display: [(${fontDisplay})];
+                font-family: "custom";
+                font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
+                font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
+                src: url("[(${fontFile})]") format("[(${fontFormat})]");
+                unicode-range: [(${fontUnicodeRange})];
+              }
+            /*[/]*/
+          /*[/]*/
+          /*[# th:unless="${#strings.isEmpty(fontName)}"]*/
+            /*[# th:if="${#strings.isEmpty(fontUnicodeRange)}"]*/
+              @font-face {
+                font-display: [(${fontDisplay})];
+                font-family: "custom";
+                font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
+                font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
+                src: local("[(${fontName})]"), url("[(${fontFile})]") format("[(${fontFormat})]");
+              }
+            /*[/]*/
+            /*[# th:unless="${#strings.isEmpty(fontUnicodeRange)}"]*/
+              @font-face {
+                font-display: [(${fontDisplay})];
+                font-family: "custom";
+                font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
+                font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
+                src: local("[(${fontName})]"), url("[(${fontFile})]") format("[(${fontFormat})]");
+                unicode-range: [(${fontUnicodeRange})];
+              }
+            /*[/]*/
+          /*[/]*/
+        /*[/]*/
+      </style>
+      /*/-->
+      <!--/* Custom Font @font-face Declarations end */-->
+      <!--/* Custom Font font-family Declarations start */-->
+      <style>
+        :root {
+          --higan-font-family:
+            custom, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif,
+            "Apple Color Emoji", "Segoe UI Emoji" !important;
+        }
+
+        :root.webkit {
+          --higan-font-family: custom !important;
+        }
+      </style>
+      <!--/* Custom Font font-family Declarations end */-->
+    </th:block>
+    <!--/* Custom Font Declarations end */-->
+    <!--/* WebKit Detection start */-->
+    <script>
+      let ua = navigator.userAgent;
+      if (!/(apple)?webkit\/537\.36/i.test(ua) && /(apple)?webkit/i.test(ua)) {
+        document.documentElement.classList.add("webkit");
+      }
+    </script>
+    <!--/* WebKit Detection end */-->
+    <!--/* Custom Cursor Declarations start */-->
+    <th:block th:if="${theme.config?.styles?.is_custom_cursor_files_enable}" th:object="${theme.config?.styles}">
+      <!--/*/
+      <style th:inline="css">
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_default)}"]*/
+        :root,
+        label,
+        input::-webkit-inner-spin-button,
+        input[type="button" i],
+        input[type="submit" i],
+        input[type="reset" i],
+        input[type="file" i]::-webkit-file-upload-button,
+        button,
+        select {
+          cursor: url("[(*{custom_cursor_files_default})]"), default;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_move)}"]*/
+        .mozGrabber:-moz-native-anonymous {
+          cursor: url("[(*{custom_cursor_files_move})]"), move;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_not_allowed)}"]*/
+        :disabled,
+        [aria-disabled="true"] {
+          cursor: url("[(*{custom_cursor_files_not_allowed})]"), not-allowed;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_help)}"]*/
+        [title],
+        abbr,
+        acronym,
+        [role="tooltip"] {
+          cursor: url("[(*{custom_cursor_files_help})]"), help;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_ew_resize)}"]*/
+        input[type="range"],
+        [role="slider"] {
+          cursor: url("[(*{custom_cursor_files_ew_resize})]"), ew-resize;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_grab)}"]*/
+        [draggable="true"],
+        input[type="range"]::-webkit-slider-thumb {
+          cursor: url("[(*{custom_cursor_files_grab})]"), grab;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_grabbing)}"]*/
+        [draggable="true"]:active,
+        input[type="range"]::-webkit-slider-thumb:active {
+          cursor: url("[(*{custom_cursor_files_grabbing})]"), grabbing;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_cell)}"]*/
+        td,
+        th,
+        [role="grid"],
+        [role="gridcell"] {
+          cursor: url("[(*{custom_cursor_files_cell})]"), cell;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_wait)}"]*/
+        [aria-busy="true"] {
+          cursor: url("[(*{custom_cursor_files_wait})]"), wait;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_text)}"]*/
+        input:not([type]),
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="search"],
+        input[type="tel"],
+        input[type="url"],
+        input[type="number"],
+        [contenteditable="true"],
+        textarea,
+        code,
+        kbd,
+        samp,
+        var,
+        pre,
+        p,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        section,
+        aside,
+        main,
+        dd,
+        dt,
+        blockquote,
+        pre,
+        code,
+        td,
+        th,
+        label,
+        legend,
+        figcaption,
+        a p,
+        [role="textbox"],
+        [role="searchbox"] {
+          cursor: url("[(*{custom_cursor_files_text})]"), text;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_pointer)}"]*/
+        area,
+        a,
+        a:-webkit-any-link,
+        button,
+        select,
+        label,
+        input[type="button"],
+        input[type="submit"],
+        input[type="reset"],
+        input[type="file"],
+        input[type="checkbox"],
+        input[type="radio"],
+        input[type="color"],
+        input[type="date"],
+        input[type="datetime-local"],
+        input[type="time"],
+        input[type="month"],
+        input[type="week"],
+        input[type="range"],
+        input[type="image"],
+        video,
+        audio,
+        video::-webkit-media-controls,
+        audio::-webkit-media-controls,
+        img[onclick],
+        img[role="button"],
+        option,
+        summary,
+        li[onclick],
+        li[role="button"],
+        tr[onclick],
+        svg [onclick],
+        [role="button"],
+        [role="link"],
+        [role="menuitem"],
+        [role="menuitemcheckbox"],
+        [role="menuitemradio"],
+        [role="tab"],
+        [role="treeitem"],
+        [role="option"],
+        [role="switch"],
+        [role="checkbox"],
+        [role="radio"],
+        [role="combobox"],
+        *::-webkit-clear-button,
+        *::-webkit-scrollbar-thumb,
+        *::-webkit-file-upload-button,
+        *::-webkit-search-cancel-button,
+        *::-webkit-calendar-picker-indicator,
+        .v-cursor-pointer {
+          cursor: url("[(*{custom_cursor_files_pointer})]"), pointer;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_crosshair)}"]*/
+        canvas {
+          cursor: url("[(*{custom_cursor_files_crosshair})]"), crosshair;
+        }
+        /*[/]*/
+        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_vertical_text)}"]*/
+        [style*="writing-mode: vertical"] {
+          cursor: url("[(*{custom_cursor_files_vertical_text})]"), vertical-text;
+        }
+        /*[/]*/
+      </style>
+      /*/-->
+    </th:block>
+    <th:block th:unless="${theme.config?.styles?.is_custom_cursor_files_enable}">
+      <style>
+        .v-cursor-pointer {
+          cursor: pointer;
+        }
+      </style>
+    </th:block>
+    <!--/* Custom Cursor Declarations end */-->
+    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute start */-->
+    <script
+      th:if="${color_schema == 'custom'
+               or theme_dark == 'custom'
+               or theme_light == 'custom'
+               or theme_auto == 'custom'}"
+      th:inline="javascript"
+    >
+      const allCustomColorSchema = [
+        /*[# th:each="c : ${custom_color_schema_config}"]*/ /*[# th:if="${custom_color_schema_init_id == c.id
+                                                                          or custom_theme_auto_id == c.id
+                                                                          or custom_theme_light_id == c.id
+                                                                          or custom_theme_dark_id == c.id}"]*/
+        { id: /*[[${c.id}]]*/ "", type: /*[[${c.type}]]*/ "" },
+        /*[/]*/ /*[/]*/
+      ];
+    </script>
+    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute end */-->
+    <!--/* set data-color-scheme attribute for custom color schema start */-->
+    <script th:if="${color_schema == 'custom'}" th:inline="javascript">
+      const customColorSchema = allCustomColorSchema.find(
+        (schema) => schema.id === /*[[${custom_color_schema_init_id}]]*/ "1",
+      );
+      document.documentElement.setAttribute("data-color-scheme", customColorSchema ? customColorSchema.type : null);
+    </script>
+    <!--/* set data-color-scheme attribute for custom color schema end */-->
+    <!--/* Custom Theme Declarations start */-->
+    <th:block
+      th:if="${!#lists.isEmpty(custom_color_schema_config)
+               and (color_schema == 'custom'
+                    or theme_dark == 'custom'
+                    or theme_light == 'custom'
+                    or theme_auto == 'custom')}"
+    >
+      <th:block th:each="colorSchema : ${custom_color_schema_config}">
+        <th:block
+          th:if="${custom_color_schema_init_id == colorSchema.id or 
+                   custom_theme_auto_id == colorSchema.id or 
+                   custom_theme_light_id == colorSchema.id or 
+                   custom_theme_dark_id == colorSchema.id}"
+        >
+          <!--/* Color Scheme Declarations Start */-->
+          <th:block
+            th:if="${colorSchema.type == 'dark'}"
+            th:insert="~{components/color-scheme-dark/template :: head}"
+          ></th:block>
+          <th:block
+            th:if="${colorSchema.type == 'light'}"
+            th:insert="~{components/color-scheme-light/template :: head}"
+          ></th:block>
+          <th:block
+            th:if="${colorSchema.type == 'auto'}"
+            th:insert="~{components/color-scheme-auto/template :: head}"
+          ></th:block>
+          <!--/* Color Scheme Declarations End */-->
+          <!--/* Theme Color CSS Variables Declarations Start */-->
+          <th:block th:unless="${colorSchema.is_css_variable_mode}">
+            <!--/*/
+            <style th:inline="css">
+html[theme="theme-[(${colorSchema.id})]"] {
+--color-primary: [(${colorSchema.primary_color})];
+--color-primary-content: [(${colorSchema.primary_content_color})];
+--color-secondary: [(${colorSchema.secondary_color})];
+--color-secondary-content: [(${colorSchema.secondary_content_color})];
+--color-accent: [(${colorSchema.accent_color})];
+--color-accent-content: [(${colorSchema.accent_content_color})];
+--color-neutral: [(${colorSchema.neutral_color})];
+--color-neutral-content: [(${colorSchema.neutral_content_color})];
+--color-base-100: [(${colorSchema.base_100_color})];
+--color-base-200: [(${colorSchema.base_200_color})];
+--color-base-300: [(${colorSchema.base_300_color})];
+--color-base-content: [(${colorSchema.base_content_color})];
+}
+            </style>
+            /*/-->
+          </th:block>
+          <th:block th:if="${colorSchema.is_css_variable_mode}">
+            <th:block th:switch="${colorSchema.is_raw_css_output_mode}">
+              <th:block th:case="true">
+                <!--/*/
+                <style th:inline="css">
+[(${colorSchema.custom_css})]
+                </style>
+                /*/-->
+              </th:block>
+              <th:block th:case="false">
+                <!--/*/
+                <style th:inline="css">
+html[theme="theme-[(${colorSchema.id})]"] {
+[(${colorSchema.custom_css})]}
+                </style>
+                /*/-->
+              </th:block>
+            </th:block>
+          </th:block>
+          <!--/* Theme Color CSS Variables Declarations End */-->
+        </th:block>
+      </th:block>
+    </th:block>
+    <!--/* Custom Theme Declarations end */-->
+    <!--/* Preset Themes' Color Scheme Declarations start */-->
+    <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      <th:block
+        th:if="${color_schema == 'light'
+                 or color_schema == 'light-blue'
+                 or color_schema == 'gray'}"
+        th:insert="~{components/color-scheme-light/template :: head}"
+      ></th:block>
+      <th:block
+        th:if="${color_schema == 'dark'
+                 or color_schema == 'dark-blue'}"
+        th:insert="~{components/color-scheme-dark/template :: head}"
+      ></th:block>
+      <th:block
+        th:if="${color_schema == 'auto'
+                 or color_schema == 'auto-blue'}"
+        th:insert="~{components/color-scheme-auto/template :: head}"
+      ></th:block>
+    </th:block>
+    <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      <th:block
+        th:if="${theme_dark == 'light'
+                 or theme_light == 'light'
+                 or theme_auto == 'light'
+                 or color_schema == 'light'
+                 or theme_dark == 'light-blue'
+                 or theme_light == 'light-blue'
+                 or theme_auto == 'light-blue'
+                 or color_schema == 'light-blue'
+                 or theme_dark == 'gray'
+                 or theme_light == 'gray'
+                 or theme_auto == 'gray'
+                 or color_schema == 'gray'}"
+        th:insert="~{components/color-scheme-light/template :: head}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark == 'dark'
+                 or theme_light == 'dark'
+                 or theme_auto == 'dark'
+                 or color_schema == 'dark'
+                 or theme_dark == 'dark-blue'
+                 or theme_light == 'dark-blue'
+                 or theme_auto == 'dark-blue'
+                 or color_schema == 'dark-blue'}"
+        th:insert="~{components/color-scheme-dark/template :: head}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark == 'auto'
+                 or theme_light == 'auto'
+                 or theme_auto == 'auto'
+                 or color_schema == 'auto'
+                 or theme_dark == 'auto-blue'
+                 or theme_light == 'auto-blue'
+                 or theme_auto == 'auto-blue'
+                 or color_schema == 'auto-blue'}"
+        th:insert="~{components/color-scheme-auto/template :: head}"
+      ></th:block>
+    </th:block>
+    <!--/* Preset Themes' Color Scheme Declarations end */-->
+    <!--/* Preset Themes' Color CSS Variables Declarations start */-->
+    <th:block th:unless="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      <th:block
+        th:if="${color_schema == 'auto-blue'}"
+        th:insert="~{components/theme-auto-blue/template :: head}"
+      ></th:block>
+      <th:block th:if="${color_schema == 'auto'}" th:insert="~{components/theme-auto/template :: head}"></th:block>
+      <th:block
+        th:if="${color_schema == 'dark-blue'}"
+        th:insert="~{components/theme-dark-blue/template :: head}"
+      ></th:block>
+      <th:block th:if="${color_schema == 'dark'}" th:insert="~{components/theme-dark/template :: head}"></th:block>
+      <th:block th:if="${color_schema == 'gray'}" th:insert="~{components/theme-gray/template :: head}"></th:block>
+      <th:block
+        th:if="${color_schema == 'light-blue'}"
+        th:insert="~{components/theme-light-blue/template :: head}"
+      ></th:block>
+      <th:block th:if="${color_schema == 'light'}" th:insert="~{components/theme-light/template :: head}"></th:block>
+    </th:block>
+    <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      <th:block
+        th:if="${theme_dark == 'auto-blue'
+                 or theme_light == 'auto-blue'
+                 or theme_auto == 'auto-blue'
+                 or color_schema == 'auto-blue'}"
+        th:insert="~{components/theme-auto-blue/template :: head}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark == 'auto'
+                 or theme_light == 'auto'
+                 or theme_auto == 'auto'
+                 or color_schema == 'auto'}"
+        th:insert="~{components/theme-auto/template :: head}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark == 'dark-blue'
+                 or theme_light == 'dark-blue'
+                 or theme_auto == 'dark-blue'
+                 or color_schema == 'dark-blue'}"
+        th:insert="~{components/theme-dark-blue/template :: head}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark == 'dark'
+                 or theme_light == 'dark'
+                 or theme_auto == 'dark'
+                 or color_schema == 'dark'}"
+        th:insert="~{components/theme-dark/template :: head}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark == 'gray'
+                 or theme_light == 'gray'
+                 or theme_auto == 'gray'
+                 or color_schema == 'gray'}"
+        th:insert="~{components/theme-gray/template :: head}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark == 'light-blue'
+                 or theme_light == 'light-blue'
+                 or theme_auto == 'light-blue'
+                 or color_schema == 'light-blue'}"
+        th:insert="~{components/theme-light-blue/template :: head}"
+      ></th:block>
+      <th:block
+        th:if="${theme_dark == 'light'
+                 or theme_light == 'light'
+                 or theme_auto == 'light'
+                 or color_schema == 'light'}"
+        th:insert="~{components/theme-light/template :: head}"
+      ></th:block>
+    </th:block>
+    <!--/* Preset Themes' Color CSS Variables Declarations end */-->
+    <!--/* Preset Text Size CSS Variables Declarations start */-->
+    <th:block
+      th:if="${theme.config?.styles?.text_size == 'small'}"
+      th:insert="~{components/text-size-small/template :: head}"
+    ></th:block>
+    <th:block
+      th:if="${theme.config?.styles?.text_size == 'normal'}"
+      th:insert="~{components/text-size-normal/template :: head}"
+    ></th:block>
+    <th:block
+      th:if="${theme.config?.styles?.text_size == 'large'}"
+      th:insert="~{components/text-size-large/template :: head}"
+    ></th:block>
+    <!--/* Preset Text Size CSS VariablesDeclarations end */-->
+    <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script Start */-->
+    <script th:if="${theme.config?.global?.anti_mirror_site}" th:inline="javascript">
+      (function () {
+        // <!--/* 获取被编码后的目标链接 */-->
+        var encodedRedirectUrl = /*[[${theme.config?.global?.target_url}]]*/ "bG9jYWxob3N0";
+
+        // <!--/* 获取域名白名单 */-->
+        var rawDomainWhiteList = /*[[${theme.config?.global?.allow_site_whitelist}]]*/ [];
+        if (rawDomainWhiteList.length === 0) {
+          return;
+        }
+        var domainWhiteList = rawDomainWhiteList.map((item) => atob(item.realNode.input_domain));
+
+        // <!--/* 检查是否保留路径和查询参数，并且生成跳转后的目标链接 */-->
+        var is_keep_path_and_query = /*[[${theme.config?.global?.is_keep_path_and_query}]]*/ true;
+        if (is_keep_path_and_query) {
+          var targetRedirectUrl = atob(encodedRedirectUrl) + window.location.pathname + window.location.search;
+        } else {
+          var targetRedirectUrl = atob(encodedRedirectUrl);
+        }
+
+        // <!--/* 如果当前域名不在域名白名单中就跳转 */-->
+        if (!domainWhiteList.includes(document.location.hostname)) {
+          window.location.href = targetRedirectUrl;
+        }
+      })();
+    </script>
+    <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script End */-->
+    <!--/* Auto Redirect to Browser Language Script Start */-->
+    <script th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}" th:inline="javascript">
+      (function () {
+        // <!--/* 设计思路：
+        // 1. 如果 ${language} 已经传入，也就是已经在元数据强行指定了页面语言，则不跳转
+        // 2. 如果浏览器已有 lang 查询参数，也就是在用户层面强行指定了页面语言，则不跳转
+        // 3. 获取主题配置项默认语言
+        // 4. 获取浏览器语言
+        // 5. 获取主题配置项中的目标语言列表，以及前缀匹配模式开关
+        // 6. 如果浏览器语言匹配配置项中的目标语言列表，则跳转到带有浏览器语言参数的当前页面
+
+        // 如果 ${language} 已经传入，也就是已经指定了页面语言，则不跳转
+        // 这个 ${language} 是文章元数据/分类详情页元数据/标签详情页元数据的 language */-->
+        const languageParam = /*[[${language}]]*/ null;
+        if (languageParam) {
+          return;
+        }
+
+        // <!--/* 如果浏览器已有 lang 查询参数，则不跳转
+        // param.lang 是一个列表，例 []、['zh']、['zh,en']
+        // lang=zh -> ''+param.lang 为 'zh'
+        // lang=zh,en -> ''+param.lang 为 'zh,en'
+        // 用 (new URL(window.location.href)).searchParams.get("lang") 也差不多
+        // 但我选择尽量预渲染 */-->
+        const langParam = /*[[${''+param.lang}]]*/ "";
+        if (langParam) {
+          return;
+        }
+
+        // <!--/* 获取配置项默认语言 */-->
+        let defaultLang = /*[[${theme.config?.global?.default_page_language}]]*/ "zh";
+        if (!defaultLang) {
+          defaultLang = "zh";
+        }
+
+        // <!--/* 获取浏览器语言
+        // navigator.language 适用于现代浏览器
+        // navigator.userLanguage 为非标准属性适用于早期的 IE 浏览器（IE 11 及更早）
+        // */-->
+        const browserLang = navigator.language;
+
+        const originLangList = /*[(${theme.config?.global?.auto_redirect_target_language_list})]*/ [];
+        const targetLangs = originLangList.map((item) => item.v);
+        const prefixMode = /*[[${theme.config?.global?.is_i18n_prefix_match_mode}]]*/ true;
+
+        let matchedLang = prefixMode
+          ? targetLangs.find((lang) => browserLang.startsWith(lang))
+          : targetLangs.find((lang) => browserLang === lang);
+        // <!--/* 没有匹配的语言参数，不进行跳转 */-->
+        if (!matchedLang) {
+          return;
+        }
+
+        // <!--/* 准备跳转到带有浏览器语言参数的当前页面
+        // 如果 defaultLang 和  matchedLang 匹配说明默认页面语言就是目标语言，无需跳转 */-->
+        if ((prefixMode && defaultLang.startsWith(matchedLang)) || (!prefixMode && defaultLang === matchedLang)) {
+          return;
+        }
+
+        // <!--/* 进行跳转 */-->
+        const url = new URL(window.location);
+        url.searchParams.set("lang", matchedLang);
+        window.location.href = url;
+      })();
+    </script>
+    <!--/* Auto Redirect to Browser Language Script End */-->
+    <!--/* browser polyfill for modulepreload start
+    https://github.com/vitejs/vite/blob/2436afef044d90f710fdfd714488a71efdd29092/packages/vite/src/node/plugins/modulePreloadPolyfill.ts#L39 
+
+    The following polyfill function is meant to run in the browser and adapted from
+    https://github.com/guybedford/es-module-shims
+    MIT License
+    Copyright (C) 2018-2021 Guy Bedford
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    */-->
+    <script type="module">
+      (function () {
+        const relList = document.createElement("link").relList;
+        if (relList && relList.supports && relList.supports("modulepreload")) {
+          return;
+        }
+
+        for (const link of document.querySelectorAll('link[rel="modulepreload"]')) {
+          processPreload(link);
+        }
+
+        new MutationObserver((mutations) => {
+          for (const mutation of mutations) {
+            if (mutation.type !== "childList") {
+              continue;
+            }
+            for (const node of mutation.addedNodes) {
+              if (node.tagName === "LINK" && node.rel === "modulepreload") processPreload(node);
+            }
+          }
+        }).observe(document, { childList: true, subtree: true });
+
+        function getFetchOpts(link) {
+          const fetchOpts = {};
+          if (link.integrity) fetchOpts.integrity = link.integrity;
+          if (link.referrerPolicy) fetchOpts.referrerPolicy = link.referrerPolicy;
+          if (link.crossOrigin === "use-credentials") fetchOpts.credentials = "include";
+          else if (link.crossOrigin === "anonymous") fetchOpts.credentials = "omit";
+          else fetchOpts.credentials = "same-origin";
+          return fetchOpts;
+        }
+
+        function processPreload(link) {
+          if (link.ep)
+            // ep marker = processed
+            return;
+          link.ep = true;
+          const fetchOpts = getFetchOpts(link);
+          fetch(link.href, fetchOpts);
+        }
+      })();
+    </script>
+    <!--/* browser polyfill for modulepreload end */-->
+    <!--/* js/css injection start */-->
+    <th:block th:replace="${head}" />
+    <!--/* js/css injection end */-->
+    <!--/* Mermaid injection start */-->
+    <script vite-ignore type="module" th:inline="javascript" th:if="${theme.config?.global?.is_mermaid_enable}">
+      import mermaid from /*[[${theme.config?.global?.mermaid_script_url}]]*/ "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+
+      function genUUID() {
+        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+          (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16),
+        );
+      }
+      const config = /*[(${theme.config?.global?.mermaid_config})]*/ { startOnLoad: false };
+      mermaid.initialize(config);
+      const mermaidElements = document.querySelectorAll(
+        /*[[${theme.config?.global?.mermaid_selector}]]*/ ".content .mermaid",
+      );
+
+      function renderMermaid(item, id, theme) {
+        let rawContent = item.textContent;
+        // <!--/* 如果标签为 text-diagram  data-type 为 mermaid 读取 data-content 为 rawContent，适配文本绘图插件在默认编辑器的插入 */-->
+        if (item.tagName === "TEXT-DIAGRAM" && item.getAttribute("data-type") === "mermaid") {
+          rawContent = item.getAttribute("data-content");
+        }
+
+        let content = theme === null ? rawContent : `%%{init: { "theme": "${theme}" } }%%\n${rawContent}`;
+
+        return mermaid
+          .render(`${theme}-${id}`, content)
+          .then((mermaidData) => {
+            const div = document.createElement("div");
+            div.classList.add("rendered-mermaid", theme);
+            div.innerHTML = mermaidData.svg;
+            item.parentElement.insertBefore(div, item.nextSibling);
+            div.setAttribute("data-processed", "true");
+
+            // <!--/* 为每个 SVG 元素中的 id 添加前缀，为上游未解决的先解决 https://github.com/mermaid-js/mermaid/issues/5741 */-->
+            const svgElement = div.querySelector("svg");
+
+            function updateAttribute(refElement, attribute, originalId, newId) {
+              const value = refElement.getAttribute(attribute);
+              if (value && value.includes(`#${originalId}`)) {
+                refElement.setAttribute(attribute, value.replace(`#${originalId}`, `#${newId}`));
+              }
+            }
+
+            // <!--/* 更新 id */-->
+            svgElement.querySelectorAll("[id]").forEach((element) => {
+              const originalId = element.getAttribute("id");
+              const newId = `${theme}-${id}-${originalId}`;
+              element.setAttribute("id", newId);
+
+              // <!--/* 更新引用这些 id 的元素
+              // marker 标签被使用在很多属性上，用 marker 的属性有 marker-start, marker-mid, marker-end
+              // symbol 被 use 标签使用，xlink:href 已经被废弃，但是还有一些库在使用，现在用 href */-->
+              const elementsUsingId = svgElement.querySelectorAll(
+                `[marker-start*="#${originalId}"], [marker-mid*="#${originalId}"], [marker-end*="#${originalId}"], [href*="#${originalId}"]`,
+              );
+              const attributesToUpdate = ["marker-start", "marker-mid", "marker-end", "xlink:href", "href"];
+              elementsUsingId.forEach((refElement) => {
+                attributesToUpdate.forEach((attribute) => {
+                  updateAttribute(refElement, attribute, originalId, newId);
+                });
+              });
+            });
+
+            // <!--/* 隐藏原始 class="auto" 的元素 */-->
+            item.style.display = "none";
+          })
+          .catch((e) => {
+            const errorElement = document.querySelector(`#${theme}-${id}`);
+            item.innerHTML = `${errorElement.outerHTML}<br>
+<div style="text-align: left"><small>${e.message.replace(/\n/, "<br>")}</small></div>`;
+            errorElement.parentElement.remove();
+          });
+      }
+
+      mermaidElements.forEach(async (item) => {
+        const rawContent = item.textContent;
+
+        // <!--/* 如果已经处理过或者内容为空，就不再处理 */-->
+        if (item.getAttribute("data-processed") === "true" || rawContent.trim() === "") {
+          return;
+        }
+
+        const id = "mermaid" + genUUID(); // <!--/* 生成唯一 id */-->
+
+        // <!--/* 不是 auto 模式（class 没 auto），直接渲染 */-->
+        if (!item.classList.contains("auto")) {
+          // <!--/* 如果 class 有 dark 或者 light，就渲染对应主题，否则为 theme 设为 null */-->
+          if (item.classList.contains("dark")) {
+            renderMermaid(item, id, "dark");
+          } else if (item.classList.contains("light")) {
+            renderMermaid(item, id, "light");
+          } else {
+            renderMermaid(item, id, null);
+          }
+          item.setAttribute("data-processed", "true");
+          return;
+        }
+
+        // <!--/* auto 模式下，渲染两种主题 */-->
+        // <!--/* 渲染暗黑模式 */-->
+        renderMermaid(item, id, "dark");
+        // <!--/* 渲染明亮模式 */-->
+        renderMermaid(item, id, "light");
+
+        item.setAttribute("data-processed", "true");
+      });
+    </script>
+    <!--/* Mermaid injection end */-->
+    <!--/* Color Scheme Toggle Button Script Start */-->
+    <script th:inline="javascript" th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      var THEME_DARK = /*[[${theme_dark}]]*/ "dark";
+      var THEME_LIGHT = /*[[${theme_light}]]*/ "light";
+      var THEME_AUTO = /*[[${theme_auto}]]*/ "auto";
+      const is_save_color_scheme_settings_to_browser =
+        /*[[${theme.config?.styles?.is_save_color_scheme_settings_to_browser}]]*/ "true";
+
+      var themeColorSchemeMap = {
+        auto: "auto",
+        dark: "dark",
+        light: "light",
+        "auto-blue": "auto",
+        "dark-blue": "dark",
+        "light-blue": "light",
+        gray: "light",
+      };
+
+      if (THEME_DARK == "custom") {
+        let customColorSchema = allCustomColorSchema.find(
+          (schema) => schema.id === /*[[${custom_theme_dark_id}]]*/ "1",
+        );
+        if (customColorSchema) {
+          THEME_DARK = "theme-" + customColorSchema.id;
+          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        }
+      }
+      if (THEME_LIGHT == "custom") {
+        let customColorSchema = allCustomColorSchema.find(
+          (schema) => schema.id === /*[[${custom_theme_light_id}]]*/ "1",
+        );
+        if (customColorSchema) {
+          THEME_LIGHT = "theme-" + customColorSchema.id;
+          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        }
+      }
+      if (THEME_AUTO == "custom") {
+        let customColorSchema = allCustomColorSchema.find(
+          (schema) => schema.id === /*[[${custom_theme_auto_id}]]*/ "1",
+        );
+        if (customColorSchema) {
+          THEME_AUTO = "theme-" + customColorSchema.id;
+          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        }
+      }
+
+      function updateThemeIcon(theme) {
+        const themeIcon = document.getElementById("theme-toggle-button-icon");
+        if (!themeIcon) return;
+        themeIcon.style.removeProperty("display"); // <!--/* remove display: none */-->
+
+        Array.from(themeIcon.classList).forEach((c) => {
+          if (c.startsWith("ph--")) themeIcon.classList.remove(c);
+        });
+
+        if (theme === THEME_LIGHT) {
+          themeIcon.classList.add("ph--sun-bold");
+        } else if (theme === THEME_DARK) {
+          themeIcon.classList.add("ph--moon-bold");
+        } else {
+          themeIcon.classList.add("ph--circle-bold");
+        }
+      }
+
+      function updateTagAttribute(theme) {
+        document.documentElement.setAttribute("data-color-scheme", themeColorSchemeMap[theme]);
+        document.documentElement.setAttribute("theme", theme);
+      }
+
+      function applyThemeNoSave(theme) {
+        updateTagAttribute(theme);
+        updateThemeIcon(theme);
+      }
+
+      function applyTheme(theme) {
+        if (is_save_color_scheme_settings_to_browser === true && typeof Storage !== "undefined") {
+          localStorage.setItem("pref-theme", themeColorSchemeMap[theme]);
+        } else if (typeof Storage === "undefined") {
+          console.log("Sorry, your browser does not support web storage...");
+        }
+        applyThemeNoSave(theme);
+      }
+
+      function getPreferredTheme() {
+        const storedTheme = localStorage.getItem("pref-theme");
+        if (storedTheme) {
+          return storedTheme;
+        }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
+      }
+
+      (function () {
+        if (is_save_color_scheme_settings_to_browser !== true && typeof Storage !== "undefined") {
+          localStorage.removeItem("pref-theme");
+        }
+        const is_auto_switch_color_scheme_based_on_browser_settings =
+          /*[[${theme.config?.styles?.is_auto_switch_color_scheme_based_on_browser_settings}]]*/ "true";
+        if (!is_auto_switch_color_scheme_based_on_browser_settings) {
+          return;
+        }
+        switch (getPreferredTheme()) {
+          case "dark":
+            updateTagAttribute(THEME_DARK);
+            break;
+          case "light":
+            updateTagAttribute(THEME_LIGHT);
+            break;
+          case "auto":
+            updateTagAttribute(THEME_AUTO);
+            break;
+        }
+      })();
+
+      document.addEventListener("DOMContentLoaded", function () {
+        switch (getPreferredTheme()) {
+          case "dark":
+            updateThemeIcon(THEME_DARK);
+            break;
+          case "light":
+            updateThemeIcon(THEME_LIGHT);
+            break;
+          case "auto":
+            updateThemeIcon(THEME_AUTO);
+            break;
+        }
+      });
+
+      function toggleTheme(event) {
+        event.preventDefault(); // <!--/* 阻止默认行为，防止页面刷新 */-->
+        const currentTheme = document.documentElement.attributes["theme"].value;
+        let newTheme;
+        // <!--/* light -> dark -> auto -> light */-->
+        if (currentTheme === THEME_LIGHT) {
+          newTheme = THEME_DARK;
+        } else if (currentTheme === THEME_DARK) {
+          newTheme = THEME_AUTO;
+        } else {
+          newTheme = THEME_LIGHT;
+        }
+        applyTheme(newTheme);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("theme-toggle-button").addEventListener("click", toggleTheme);
+      });
+    </script>
+    <!--/* Color Scheme Toggle Button Script End */-->
+    <!--/* CSS Variable to Meta Theme-Color Observer Start */-->
+    <script type="module">
+      function updateThemeColor() {
+        const color = getComputedStyle(document.documentElement).getPropertyValue("--color-base-100");
+        const themeColorMetaTag = document.querySelector('meta[name="theme-color"]');
+        if (color && themeColorMetaTag) {
+          themeColorMetaTag.setAttribute("content", color);
+        }
+      }
+
+      // <!--/* Initialization */-->
+      updateThemeColor();
+
+      // <!--/* Observe changes to the 'theme' attribute on the html element */-->
+      const observer = new MutationObserver(updateThemeColor);
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["theme"],
+      });
+    </script>
+    <!--/* CSS Variable to Meta Theme-Color Observer End */-->
+  </head>
+
+  <body class="transition-colors duration-300" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
+    <script th:if="${theme.config?.global?.is_i18n_menu_show}">
+      document.addEventListener("DOMContentLoaded", function () {
+        // <!--/*
+        // 检查目标 li 标签是否具有 class="matched-menu"
+        // 如果开了 i18n 菜单，如果没有菜单成功匹配，这里就会显示默认菜单
+        // */-->
+        const targetElementList = document.querySelectorAll(".matched-menu");
+
+        if (targetElementList.length === 0) {
+          // <!--/* 找到所有 class="default-menu" 的元素 */-->
+          const defaultMenus = document.querySelectorAll(".default-menu");
+
+          // <!--/* 遍历这些元素，移除 style="display: none;" */-->
+          defaultMenus.forEach((menu) => {
+            if (menu.style.display === "none") {
+              menu.style.display = ""; // <!--/* 清空 display 样式 */-->
+            }
+          });
+        } else {
+          // <!--/* targetElementList.length !== 0 的情况下，移除所有 class="default-menu" 的元素 */-->
+          const defaultMenus = document.querySelectorAll(".default-menu");
+
+          defaultMenus.forEach((menu) => {
+            menu.remove();
+          });
+        }
+      });
+    </script>
+    <script th:if="${theme.config?.index_styles?.is_i18n_resume_show}">
+      document.addEventListener("DOMContentLoaded", function () {
+        // <!--/*
+        // 检查目标标签是否具有 class="matched-resume"
+        // 如果开了 i18n 公告栏，如果没有公告栏成功匹配，这里就会显示默认公告栏
+        // */-->
+        const targetElementList = document.querySelectorAll(".matched-resume");
+
+        if (targetElementList.length === 0) {
+          // <!--/* 找到所有 class="default-resume" 的元素 */-->
+          const defaultResumes = document.querySelectorAll(".default-resume");
+
+          // <!--/* 遍历这些元素，移除 style="display: none;" */-->
+          defaultResumes.forEach((resume) => {
+            if (resume.style.display === "none") {
+              resume.style.display = ""; // <!--/* 清空 display 样式 */-->
+            }
+          });
+        } else {
+          // <!--/* targetElementList.length !== 0 的情况下，移除所有 class="default-resume" 的元素 */-->
+          const defaultResumes = document.querySelectorAll(".default-resume");
+
+          defaultResumes.forEach((resume) => {
+            resume.remove();
+          });
+        }
+      });
+    </script>
+    <script th:if="${theme.config?.styles?.is_18n_footer_content_show}">
+      document.addEventListener("DOMContentLoaded", function () {
+        // <!--/*
+        // 检查目标标签是否具有 class="matched-footer-content"
+        // 如果开了 i18n 页面最底部内容，如果没有页面最底部内容成功匹配，这里就会显示默认页面最底部内容
+        // */-->
+        const targetElementList = document.querySelectorAll(".matched-footer-content");
+
+        if (targetElementList.length === 0) {
+          // <!--/* 找到所有 class="default-footer-content" 的元素 */-->
+          const defaultFooterContents = document.querySelectorAll(".default-footer-content");
+
+          // <!--/* 遍历这些元素，移除 style="display: none;" */-->
+          defaultFooterContents.forEach((footer_content) => {
+            if (footer_content.style.display === "none") {
+              footer_content.style.display = ""; // <!--/* 清空 display 样式 */-->
+            }
+          });
+        } else {
+          // <!--/* targetElementList.length !== 0 的情况下，移除所有 class="default-footer-content" 的元素 */-->
+          const defaultFooterContents = document.querySelectorAll(".default-footer-content");
+
+          defaultFooterContents.forEach((footer_content) => {
+            footer_content.remove();
+          });
+        }
+      });
+    </script>
+    <!--/*
+      本主题的样式切换说明：
+      用哪套样式看 HTML 标签内的 theme 属性值
+
+      本主题标识明暗模式说明：
+      1. 放在 HTML 标签内的 data-color-scheme 属性值，用于匹配 css 样式，可选值：auto，dark，light
+      2. main.css 样式中还写了一个 color-scheme，由标签内的 data-color-scheme 决定，默认是 normal，亮色是 only light，暗色是 only dark
+      应用于 :root 加上 only 效果是关闭由 Chrome 的自动深色主题引起的颜色覆盖。上游应用于 body 标签，本主题应用于 HTML 标签（实际是应用在有 data-color-scheme 属性的地方，本主题仅有 HTML 标签有这个属性）
+      https://developer.mozilla.org/zh-CN/docs/Web/CSS/color-scheme
+    */-->
+    <!--/*/
+    <style th:inline="css" th:if="${theme.config?.styles?.is_max_width_settings}">
+      .max-width {
+        max-width:
+      /*[(${theme.config?.styles?.max_width})]*/ 48rem;
+      }
+    </style>
+    /*/-->
+    <!--/* 缩小窗口时优先缩小 margin，触发下面样式表里面的取小函数肯定是 margin=0，此时 100vw 和 100% 应相等 */-->
+    <!--/*/
+    <style th:inline="css" th:if="${theme.config?.styles?.is_min_width_settings}">
+      :root {
+        --content-min-width:
+      /*[(${theme.config?.styles?.min_width})]*/ 48rem;
+      }
+
+      .min-width {
+        min-width: min(100%, var(--content-min-width));
+      }
+    </style>
+    /*/-->
+    <style th:if="${theme.config?.styles?.is_force_min_width_settings}">
+      .min-width {
+        min-width: var(--content-min-width) !important;
+      }
+    </style>
+    <!--/*/
+    <style th:inline="css" th:if="${theme.config?.styles?.is_content_width_style_settings}">
+      .content-width {
+        width:
+      /*[(${theme.config?.styles?.content_width_style})]*/ fit-content;
+      }
+    </style>
+    /*/-->
+    <style th:if="${theme.config?.styles?.is_h3_underline}">
+      body h3 {
+        text-decoration: underline;
+      }
+    </style>
+    <style th:if="${theme.config?.styles?.is_preserve_empty_lines_in_blockquote}">
+      article .content blockquote p {
+        margin: inherit;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      article .content blockquote p:first-child {
+        margin-top: 0;
+      }
+
+      article .content blockquote p:last-child {
+        margin-bottom: 0;
+      }
+    </style>
+    <style th:if="${theme.config?.styles?.is_show_the_quote_before_blockquote}">
+      article .content blockquote::before {
+        color: var(--color-secondary);
+        content: "\201C";
+        font-size: 2em;
+        line-height: 0.1em;
+        margin-right: 0.25em;
+        vertical-align: -0.4em;
+      }
+    </style>
+    <style th:if="${theme.config?.styles?.is_show_the_quote_after_blockquote}">
+      article .content blockquote::after {
+        color: var(--color-secondary);
+        content: "\201D";
+        float: right;
+        font-size: 2em;
+        line-height: 0.1em;
+        margin-left: 0.25em;
+        margin-top: 0.4em;
+        vertical-align: 0.4em;
+      }
+    </style>
+    <!--/*/
+    <style th:inline="css" th:if="${theme.config?.styles?.is_show_the_table_bottom_border}">
+      body tr:not(:first-child) {
+        border-bottom-width:
+      /*[(${theme.config?.styles?.table_bottom_border_width})]*/ 0.1rem;
+        border-bottom-style: dashed;
+        border-bottom-color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+      }
+    </style>
+    /*/-->
+    <!--/*/
+    <style
+      th:inline="css"
+      th:if="${(theme.config?.styles?.heading_margin_top_multiplier != 1 
+                and theme.config?.styles?.heading_margin_top_multiplier != '1')
+               or (theme.config?.styles?.heading_margin_bottom_multiplier != 1
+                   and theme.config?.styles?.heading_margin_bottom_multiplier != '1')
+               or (theme.config?.styles?.paragraph_margin_top_multiplier != 1 
+                   and theme.config?.styles?.paragraph_margin_top_multiplier != '1')
+               or (theme.config?.styles?.paragraph_margin_bottom_multiplier != 1
+                   and theme.config?.styles?.paragraph_margin_bottom_multiplier != '1')}"
+    >
+      /*[# th:if="${(theme.config?.styles?.heading_margin_top_multiplier != 1 
+                     and theme.config?.styles?.heading_margin_top_multiplier != '1')
+                    or (theme.config?.styles?.heading_margin_bottom_multiplier != 1
+                        and theme.config?.styles?.heading_margin_bottom_multiplier != '1')}"]*/
+      body h1,
+      body .h1 {
+        /*[# th:if="${theme.config?.styles?.heading_margin_top_multiplier != 1
+                      and theme.config?.styles?.heading_margin_top_multiplier != '1'}"]*/
+        margin-top: calc(3rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
+        /*[/]*/
+        /*[# th:if="${theme.config?.styles?.heading_margin_bottom_multiplier != 1
+                      and theme.config?.styles?.heading_margin_bottom_multiplier != '1'}"]*/
+        margin-bottom: calc(1rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
+        /*[/]*/
+      }
+
+      body h2,
+      body .h2 {
+        /*[# th:if="${theme.config?.styles?.heading_margin_top_multiplier != 1
+                      and theme.config?.styles?.heading_margin_top_multiplier != '1'}"]*/
+        margin-top: calc(2rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
+        /*[/]*/
+        /*[# th:if="${theme.config?.styles?.heading_margin_bottom_multiplier != 1
+                      and theme.config?.styles?.heading_margin_bottom_multiplier != '1'}"]*/
+        margin-bottom: calc(0.5rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
+        /*[/]*/
+      }
+
+      body h3,
+      body .h3,
+      body h4,
+      body .h4,
+      body h5,
+      body .h5,
+      body h6,
+      body .h6 {
+        /*[# th:if="${theme.config?.styles?.heading_margin_top_multiplier != 1
+                      and theme.config?.styles?.heading_margin_top_multiplier != '1'}"]*/
+        margin-top: calc(0.9rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
+        /*[/]*/
+        /*[# th:if="${theme.config?.styles?.heading_margin_bottom_multiplier != 1
+                      and theme.config?.styles?.heading_margin_bottom_multiplier != '1'}"]*/
+        margin-bottom: calc(0.5rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
+        /*[/]*/
+      }
+      /*[/]*/
+
+      /*[# th:if="${(theme.config?.styles?.paragraph_margin_top_multiplier != 1 
+                     and theme.config?.styles?.paragraph_margin_top_multiplier != '1')
+                    or (theme.config?.styles?.paragraph_margin_bottom_multiplier != 1
+                        and theme.config?.styles?.paragraph_margin_bottom_multiplier != '1')}"]*/
+      body p {
+        /*[# th:if="${theme.config?.styles?.paragraph_margin_top_multiplier != 1
+                      and theme.config?.styles?.paragraph_margin_top_multiplier != '1'}"]*/
+        margin-block-start: calc(1em * /*[(${theme.config?.styles?.paragraph_margin_top_multiplier ?: 1})]*/ 1);
+        /*[/]*/
+        /*[# th:if="${theme.config?.styles?.paragraph_margin_bottom_multiplier != 1
+                      and theme.config?.styles?.paragraph_margin_bottom_multiplier != '1'}"]*/
+        margin-block-end: calc(1em * /*[(${theme.config?.styles?.paragraph_margin_bottom_multiplier ?: 1})]*/ 1);
+        /*[/]*/
+      }
+      /*[/]*/
+    </style>
+    /*/-->
+    <div class="max-width min-width content-width mx-auto px-4 sm:px-8">
+      <th:block th:replace="${navbar}" />
+
+      <div
+        class="content index pt-16"
+        th:classappend="${theme.config?.styles?.is_footer_force_bottom} ? 'min-h-100vh' : '' "
+      >
+        <th:block th:replace="${header}" />
+
+        <th:block th:replace="${content}" />
+
+        <footer id="footer">
+          <div class="footer-left">
+            <halo:footer />
+            <div th:if="${theme.config?.styles?.is_footer_site_stats_show}">
+              <ul class="site-stats" th:with="stats = ${siteStatsFinder.getStats()}">
+                <li
+                  th:each="item : ${theme.config?.styles?.footer_site_stats}"
+                  th:if="${item?.type == 'visit'
+                           or item?.type == 'post'
+                           or item?.type == 'upvote'
+                           or item?.type == 'comment'
+                           or item?.type == 'category'
+                           or (item?.type == 'wordcount' 
+                               and pluginFinder.available('extra-api', '3.*'))}"
+                >
+                  <span
+                    class="iconify"
+                    th:style="|--svg:url('${item?.icon.value}')|"
+                    th:if="${item?.icon != null and item?.icon != ''}"
+                  ></span>
+                  <th:block th:if="not ${item?.i18n_text}">
+                    <span th:text="${stats.visit}" th:if="${item?.type == 'visit'}"></span>
+                    <span th:text="${stats.post}" th:if="${item?.type == 'post'}"></span>
+                    <span th:text="${stats.upvote}" th:if="${item?.type == 'upvote'}"></span>
+                    <span th:text="${stats.comment}" th:if="${item?.type == 'comment'}"></span>
+                    <span th:text="${stats.category}" th:if="${item?.type == 'category'}"></span>
+                    <span
+                      th:text="${extraApiStatsFinder.getPostWordCount()}"
+                      th:if="${item?.type == 'wordcount'}"
+                    ></span>
+                  </th:block>
+                  <th:block th:if="${item?.i18n_text}">
+                    <span th:text="#{common.siteTotalVisit(${stats.visit})}" th:if="${item?.type == 'visit'}"></span>
+                    <span th:text="#{common.siteTotalPost(${stats.post})}" th:if="${item?.type == 'post'}"></span>
+                    <span th:text="#{common.siteTotalUpvote(${stats.upvote})}" th:if="${item?.type == 'upvote'}"></span>
+                    <span
+                      th:text="#{common.siteTotalComment(${stats.comment})}"
+                      th:if="${item?.type == 'comment'}"
+                    ></span>
+                    <span
+                      th:text="#{common.siteTotalCategory(${stats.category})}"
+                      th:if="${item?.type == 'category'}"
+                    ></span>
+                    <span
+                      th:text="#{common.siteTotalWordcount(${extraApiStatsFinder.getPostWordCount()})}"
+                      th:if="${item?.type == 'wordcount'}"
+                    ></span>
+                  </th:block>
+                </li>
+              </ul>
+            </div>
+            <div
+              th:if="${theme.config?.styles?.is_footer_theme_info_show
+                       or theme.config?.styles?.is_footer_copyright_show}"
+            >
+              <br />
+              <span class="info" th:if="${theme.config?.styles?.is_footer_theme_info_show}">
+                Theme is
+                <a
+                  href="https://howiehz.top/halo-theme-higan-haozi/"
+                  rel="noopener"
+                  target="_blank"
+                  th:text="${theme.config?.styles?.footer_theme_info_theme_name}"
+                  >higan-hz</a
+                >
+                Powered by
+                <a
+                  href="https://halo.run"
+                  rel="noopener"
+                  target="_blank"
+                  th:text="${theme.config?.styles?.footer_theme_info_halo_version_name}"
+                  >Halo</a
+                >
+              </span>
+              <span class="copyright" th:if="${theme.config?.styles?.is_footer_copyright_show}">
+                ©
+                <span
+                  id="site_date"
+                  th:with="now = ${#temporals.createNow()}"
+                  th:text="${#temporals.format(now, 'yyyy')}"
+                ></span>
+                <span
+                  th:text="${#strings.defaultString(theme.config?.styles?.footer_copyright_custom_name, site?.title)}"
+                ></span>
+              </span>
+            </div>
+          </div>
+          <div class="footer-right" th:if="${theme.config?.styles?.is_footer_menu_show}">
+            <ul>
+              <th:block th:insert="~{components/common/template :: base-menu}"></th:block>
+            </ul>
+          </div>
+          <div class="footer-bottom" th:if="${theme.config?.styles?.is_footer_content_show}">
+            <p th:utext="${theme.config?.styles?.footer_content}"></p>
+          </div>
+          <th:block
+            th:if="${theme.config?.styles?.is_18n_footer_content_show}"
+            th:with="footerContentItems = ${theme.config?.styles?.i18n_footer_content}"
+          >
+            <th:block th:if="not ${theme.config?.global?.is_i18n_prefix_match_mode}">
+              <!--/* i18n 页面底部内容 全等匹配模式 */-->
+              <th:block th:each="footerContentItem : ${footerContentItems}">
+                <th:block th:if="${#strings.equals(footerContentItem.lang, param.lang)}">
+                  <div class="footer-bottom matched-footer-content">
+                    <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
+                  </div>
+                </th:block>
+              </th:block>
+            </th:block>
+
+            <th:block th:if="${theme.config?.global?.is_i18n_prefix_match_mode}">
+              <!--/* i18n 页面底部内容 前缀匹配模式 */-->
+              <th:block th:each="footerContentItem : ${footerContentItems}">
+                <th:block
+                  th:if="${param.lang != null
+                                   and footerContentItem.lang != null
+                                   and #strings.startsWith(param.lang, footerContentItem.lang)}"
+                >
+                  <div class="footer-bottom matched-footer-content">
+                    <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
+                  </div>
+                </th:block>
+              </th:block>
+            </th:block>
+
+            <!--/* i18n 页面底部内容 全等匹配模式 匹配默认页面底部内容 */-->
+            <th:block th:each="footerContentItem : ${footerContentItems}">
+              <th:block th:if="${#strings.equals(footerContentItem.lang, theme.config?.global?.default_page_language)}">
+                <div class="footer-bottom default-footer-content" style="display: none">
+                  <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
+                </div>
+              </th:block>
+            </th:block>
+          </th:block>
+        </footer>
+      </div>
+    </div>
+    <!--/* instant.page injection start */-->
+    <th:block th:if="${theme.config?.global?.is_instant_page_enable}">
+      <script
+        skip-sri
+        th:unless="${theme.config?.global?.is_custom_resource_locations}"
+        type="module"
+        crossorigin
+        th:src="@{/assets/lib/instantpage/5.2.0.js(v=${theme.spec.version})}"
+        integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"
+        defer
+      ></script>
+      <script
+        skip-sri
+        th:if="${theme.config?.global?.is_custom_resource_locations}"
+        type="module"
+        crossorigin
+        th:src="${theme.config?.global?.instantpage_resource_location}"
+        integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"
+        defer
+      ></script>
+    </th:block>
+    <!--/* instant.page injection end */-->
+  </body>
+</html>

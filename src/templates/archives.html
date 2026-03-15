@@ -1,7 +1,7 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(
+  th:replace="~{components/base-layout/template :: html(
     title = #{page.archives.page-title},
     head = ~{:: head},
     content = ~{:: body},
@@ -19,7 +19,7 @@
       th:if="${theme.config?.archives_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{{prefix}(prefix = ${site.routes.archivesUri})}"
     />
-    <script src="/scripts/pages/archives.ts" type="module"></script>
+    <script src="/page-components/archives/index.ts" type="module"></script>
     <th:block th:insert="~{components/list-post-simple/template :: head}"></th:block>
     <th:block th:insert="~{components/pagination/template :: head}"></th:block>
   </head>
@@ -80,9 +80,9 @@
               </th:block>
             </ul>
             <script type="module">
-              import { isVisible } from "/scripts/utils/animations";
-              import { slideDown } from "/scripts/utils/animations/slide-down";
-              import { slideUp } from "/scripts/utils/animations/slide-up";
+              import { isVisible } from "/components/animations/base";
+              import { slideDown } from "/components/animations/slide-down";
+              import { slideUp } from "/components/animations/slide-up";
 
               function toggleVisibility(element, duration_of_expand_collapse_animation) {
                 const caretRight = element.querySelector(".mdi--chevron-right");

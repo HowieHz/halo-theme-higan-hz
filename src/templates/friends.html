@@ -1,7 +1,7 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(
+  th:replace="~{components/base-layout/template :: html(
     title = #{page.friends.page-title}, 
     head = ~{:: head},
     content = ~{:: body}, 
@@ -15,7 +15,7 @@
       th:if="${theme.config?.friends_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{/friends}"
     />
-    <script src="/scripts/pages/friends.ts" type="module"></script>
+    <script src="/page-components/friends/index.ts" type="module"></script>
     <th:block th:insert="~{components/list-friends-summary/template :: head(friends = ${friends})}"></th:block>
   </head>
   <body th:remove="tag">

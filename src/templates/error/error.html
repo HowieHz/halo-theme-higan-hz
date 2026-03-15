@@ -1,7 +1,7 @@
 <!doctype html>
 <html
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{/fragments/layout :: html(
+  th:replace="~{/components/base-layout/template :: html(
     title=${error.status},
     head = ~{:: head},
     content = ~{:: body},
@@ -10,7 +10,7 @@
   )}"
 >
   <head th:remove="tag">
-    <script src="/scripts/pages/error.ts" type="module"></script>
+    <script src="/page-components/error/index.ts" type="module"></script>
   </head>
   <body th:remove="tag">
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
@@ -23,7 +23,7 @@
         <p th:unless="${#strings.isEmpty(error.detail)}" th:text="${error.detail}"></p>
         <th:block
           th:if="${theme.config?.error_page_styles?.is_auto_redirect}"
-          th:insert="~{fragments/common :: auto-redirect}"
+          th:insert="~{components/common/template :: auto-redirect}"
         ></th:block>
       </div>
     </article>

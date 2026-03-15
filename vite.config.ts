@@ -59,8 +59,8 @@ export default defineConfig({
       include: [
         /\.(atom|rss|xml|xhtml|js|mjs|ts|html|json|css|eot|otf|ttf|svg|ico|bmp|dib|txt|text|log|md|conf|ini|cfg)$/,
       ],
-      // Root *.html, error/**/*.html, fragments/**/*.html and */ components/**/*.html are template files and should not be compressed
-      exclude: [/^[^/]*\.html$/, /^error\/.*\.html$/, /^fragments\/.*\.html$/, /^components\/.*\.html$/],
+      // Root *.html, error/**/*.html and */ components/**/*.html are template files and should not be compressed
+      exclude: [/^[^/]*\.html$/, /^error\/.*\.html$/, /^components\/.*\.html$/],
     }),
   ],
   css: {
@@ -77,7 +77,7 @@ export default defineConfig({
     emptyOutDir: true,
     modulePreload: {
       // https://vite.dev/config/build-options#build-modulepreload
-      // Only manually injected in src/templates/fragments/layout.html
+      // Only manually injected in src/templates/components/base-layout/template.html
       polyfill: false,
     },
     cssMinify: "lightningcss",
@@ -156,19 +156,18 @@ export default defineConfig({
         "components-theme-gray": path.resolve(__dirname, "src/templates/components/theme-gray/template.html"),
         "components-theme-auto": path.resolve(__dirname, "src/templates/components/theme-auto/template.html"),
         "components-theme-auto-blue": path.resolve(__dirname, "src/templates/components/theme-auto-blue/template.html"),
-        // fragments
-        "fragments-layout": path.resolve(__dirname, "src/templates/fragments/layout.html"),
-        "fragments-common": path.resolve(__dirname, "src/templates/fragments/common.html"),
-        "fragments-page-like-post-style-footer-nav": path.resolve(
+        "components-common": path.resolve(__dirname, "src/templates/components/common/template.html"),
+        "components-base-layout": path.resolve(__dirname, "src/templates/components/base-layout/template.html"),
+        "components-footer-nav-page-like-post-style": path.resolve(
           __dirname,
-          "src/templates/fragments/page-like-post-style-footer-nav.html",
+          "src/templates/components/footer-nav-page-like-post-style/template.html",
         ),
-        "fragments-page-like-post-style-nav": path.resolve(
+        "components-nav-page-like-post-style": path.resolve(
           __dirname,
-          "src/templates/fragments/page-like-post-style-nav.html",
+          "src/templates/components/nav-page-like-post-style/template.html",
         ),
-        "fragments-post-footer-nav": path.resolve(__dirname, "src/templates/fragments/post-footer-nav.html"),
-        "fragments-post-nav": path.resolve(__dirname, "src/templates/fragments/post-nav.html"),
+        "components-footer-nav-post": path.resolve(__dirname, "src/templates/components/footer-nav-post/template.html"),
+        "components-nav-post": path.resolve(__dirname, "src/templates/components/nav-post/template.html"),
       },
       output: rollupOutput,
     },

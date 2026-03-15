@@ -1,0 +1,68 @@
+<!--/*-->
+<head></head>
+<body></body>
+<!--*/-->
+<th:block xmlns:th="https://www.thymeleaf.org" th:fragment="footerNav">
+  <div id="footer-post-container">
+    <div id="footer-post">
+      <div id="nav-footer" style="display: none">
+        <th:block th:insert="~{components/common/template :: menu(showIcon=false)}"></th:block>
+      </div>
+      <div id="toc-footer" style="display: none"></div>
+      <div id="share-footer" style="display: none" th:if="${theme.config?.post_styles?.is_show_share_footer}">
+        <th:block
+          th:insert="~{components/common/template :: share(originPermalink=${post.status.permalink},title=${post.spec?.title})}"
+        ></th:block>
+      </div>
+      <div id="actions-footer">
+        <a
+          id="menu"
+          class="icon"
+          href="#"
+          onclick="event.preventDefault()"
+          role="button"
+          aria-expanded="false"
+          aria-controls="nav-footer"
+        >
+          <span class="iconify ic--baseline-menu"></span>
+          [(#{fragment.footer-nav.menu})]</a
+        >
+        <a
+          id="toc"
+          class="icon"
+          href="#"
+          onclick="event.preventDefault()"
+          role="button"
+          aria-expanded="false"
+          aria-controls="toc-footer"
+        >
+          <span class="iconify ic--baseline-toc"></span>
+          [(#{fragment.footer-nav.toc})]</a
+        >
+        <a
+          id="share"
+          class="icon"
+          href="#"
+          onclick="event.preventDefault()"
+          role="button"
+          aria-expanded="false"
+          aria-controls="share-footer"
+          th:if="${theme.config?.post_styles?.is_show_share_footer}"
+        >
+          <span class="iconify ic--baseline-share"></span>
+          [(#{fragment.footer-nav.share})]</a
+        >
+        <a
+          id="top"
+          style="transform: scale(0); width: 0"
+          class="icon transition-transform duration-200 ease-in-out"
+          href="#"
+          role="button"
+          data-scroll-to-top
+        >
+          <span class="iconify ic--baseline-arrow-upward"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</th:block>

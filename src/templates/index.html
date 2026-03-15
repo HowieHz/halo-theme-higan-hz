@@ -1,7 +1,7 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(
+  th:replace="~{components/base-layout/template :: html(
     title = ${#strings.isEmpty(theme.config?.index_styles?.page_html_title) ? site.title : theme.config?.index_styles?.page_html_title}, 
     head = ~{:: head},
     content = ~{:: body}, 
@@ -11,7 +11,7 @@
 >
   <head th:remove="tag">
     <link rel="canonical" th:if="${theme.config?.index_styles?.is_enable_canonical_link}" th:href="${siteUrl}" />
-    <script src="/scripts/pages/index.ts" type="module"></script>
+    <script src="/page-components/index/index.ts" type="module"></script>
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'post-list-summary'}">
       <th:block th:insert="~{components/list-post-summary/template :: head}"></th:block>
     </th:block>

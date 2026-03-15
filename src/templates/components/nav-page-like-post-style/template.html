@@ -1,0 +1,139 @@
+<!--/*-->
+<head></head>
+<body></body>
+<!--*/-->
+<th:block xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
+  <div id="header-post" class="fixed top-8 right-0 z-50 float-right hidden sm:block">
+    <!--/* only show on tablet start, display when the page is not at the top */-->
+    <a id="top-icon-tablet" class="hidden lg:hidden!" href="#" role="button" data-scroll-to-top
+      ><span class="iconify-large iconify material-symbols--keyboard-arrow-up"></span
+    ></a>
+    <a
+      id="toc-icon-tablet"
+      class="hidden lg:hidden!"
+      href="#"
+      role="button"
+      onclick="event.preventDefault()"
+      aria-expanded="false"
+      aria-controls="toc-overlay-tablet"
+      th:aria-label="#{fragment.post-nav.toc-icon.aria-label}"
+      ><span class="iconify-large iconify ic--baseline-toc"></span
+    ></a>
+    <!--/* only show on tablet end */-->
+    <span id="menu" class="mr-8">
+      <div class="flex items-center justify-end">
+        <span id="nav" class="hidden lg:block">
+          <th:block th:insert="~{components/common/template :: menu(showIcon=false)}"></th:block>
+        </span>
+        <a
+          id="menu-icon"
+          href="#"
+          onclick="event.preventDefault()"
+          th:aria-label="#{fragment.post-nav.menu-icon.aria-label}"
+          class="active"
+          role="button"
+          aria-expanded="true"
+          aria-controls="nav actions toc"
+        >
+          <span class="iconify-middle iconify -translate-y-px material-symbols--menu"></span>
+        </a>
+      </div>
+      <span id="actions" class="float-right mt-8 mr-8 hidden text-right lg:block">
+        <ul class="float-right block">
+          <li>
+            <a
+              th:href="@{/}"
+              class="icon"
+              th:aria-label="#{fragment.post-nav.actions.home-icon.aria-label}"
+              role="button"
+              data-toggle-target="#i-home"
+            >
+              <span class="iconify-large iconify mdi--home-circle"></span>
+            </a>
+          </li>
+          <!--/* only show to top button on desktop */-->
+          <li class="hidden lg:inline-block">
+            <a
+              class="icon"
+              href="#"
+              data-scroll-to-top
+              th:aria-label="#{fragment.post-nav.actions.to-top-icon.aria-label}"
+              role="button"
+              data-toggle-target="#i-top"
+            >
+              <span class="iconify-large iconify material-symbols--keyboard-arrow-up"></span>
+            </a>
+          </li>
+          <!--/* only show toc button on tablet */-->
+          <li class="lg:hidden">
+            <a
+              class="icon"
+              href="#"
+              onclick="event.preventDefault()"
+              aria-expanded="false"
+              aria-controls="toc-overlay-tablet"
+              th:aria-label="#{fragment.post-nav.toc-icon.aria-label}"
+              id="action-toc-tablet-menu"
+              role="button"
+              data-toggle-target="#i-toc"
+            >
+              <span class="iconify-large iconify ic--baseline-toc"></span>
+            </a>
+          </li>
+          <li th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}">
+            <a
+              class="icon"
+              href="#"
+              id="action-share"
+              onclick="event.preventDefault()"
+              th:aria-label="#{fragment.post-nav.actions.share-icon.aria-label}"
+              role="button"
+              aria-expanded="false"
+              aria-controls="share-list"
+              data-toggle-target="#i-share"
+            >
+              <span class="iconify-middle iconify mdi--share-variant-outline"></span>
+            </a>
+          </li>
+        </ul>
+
+        <span id="i-top" class="info hidden">[(#{fragment.post-nav.toTop})]</span>
+        <span id="i-toc" class="info hidden">[(#{fragment.post-nav.toc})]</span>
+        <span id="i-share" class="info hidden" th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
+          >[(#{fragment.post-nav.sharePost})]</span
+        >
+        <span id="i-home" class="info hidden">[(#{fragment.post-nav.backToHome})]</span>
+      </span>
+      <br />
+      <div
+        id="share-list"
+        class="clear-both hidden pt-4 pr-8 text-right"
+        th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
+      >
+        <th:block
+          th:insert="~{components/common/template :: share(originPermalink = ${singlePage.status.permalink},
+                                                 title = ${singlePage.spec.title})}"
+        ></th:block>
+      </div>
+      <div id="toc" class="hidden lg:block"></div>
+    </span>
+  </div>
+  <div id="toc-overlay-tablet" class="hidden">
+    <div id="toc-overlay-backdrop"></div>
+    <div id="toc-overlay-content">
+      <div id="toc-overlay-header">
+        <span th:text="#{fragment.post-nav.toc}">目录</span>
+        <a
+          id="toc-overlay-close"
+          href="#"
+          role="button"
+          onclick="event.preventDefault()"
+          th:aria-label="#{fragment.post-nav.close-toc.aria-label}"
+        >
+          <span class="iconify-large iconify ic--baseline-close"></span>
+        </a>
+      </div>
+      <div id="toc-tablet"></div>
+    </div>
+  </div>
+</th:block>

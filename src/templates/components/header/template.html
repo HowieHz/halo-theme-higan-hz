@@ -59,12 +59,12 @@
       <div id="title">
         <span class="h1">
           <th:block th:text="${site?.title}">站点标题替换位</th:block
-          ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
+          ><th:block th:replace="~{components/common/template :: theme-toggle-button}"></th:block>
         </span>
       </div>
     </a>
     <div id="nav" th:if="${theme.config?.styles?.is_show_header_menu}">
-      <th:block th:insert="~{fragments/common :: menu(showIcon=true)}"></th:block>
+      <th:block th:insert="~{components/common/template :: menu(showIcon=true)}"></th:block>
     </div>
   </header>
 </body>

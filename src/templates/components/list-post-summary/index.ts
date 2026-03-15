@@ -1,3 +1,3 @@
 import "./styles.css";
 import "../list-post-simple/styles.css";
-import "/styles/mixins/article-metadata.css";
+import "../../page-components/utils/article-metadata.css";

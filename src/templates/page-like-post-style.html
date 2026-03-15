@@ -1,12 +1,12 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(
+  th:replace="~{components/base-layout/template :: html(
     title = ${#annotations.getOrDefault(singlePage, 'higan.howiehz.top/page-title', singlePage.spec?.title)}, 
     head = ~{:: head},
     content = ~{:: body}, 
     header = ~{}, 
-    navbar = ~{fragments/page-like-post-style-nav::navbar}, 
+    navbar = ~{components/nav-page-like-post-style/template :: navbar}, 
     language = ${#annotations.get(singlePage, 'higan.howiehz.top/page-language')}
   )}"
 >
@@ -16,7 +16,7 @@
       th:if="${theme.config?.custom_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{${singlePage.status.permalink}}"
     />
-    <script src="/scripts/pages/page_like_post_style.ts" type="module"></script>
+    <script src="/page-components/page-like-post-style/index.ts" type="module"></script>
     <th:block
       th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show
                and haloCommentEnabled}"
@@ -54,7 +54,7 @@
       <header>
         <h1>
           <th:block th:text="${singlePage.spec?.title}">标题替换位</th:block
-          ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
+          ><th:block th:replace="~{components/common/template :: theme-toggle-button}"></th:block>
         </h1>
         <div class="meta">
           <!--/* 预计阅读时长 
@@ -107,10 +107,10 @@
         <halo:comment group="content.halo.run" kind="SinglePage" th:name="${singlePage.metadata?.name}" />
       </div>
     </article>
-    <div th:replace="~{fragments/page-like-post-style-footer-nav :: footerNav}"></div>
+    <div th:replace="~{components/footer-nav-page-like-post-style/template :: footerNav}"></div>
     <script type="module">
-      import { isMobile } from "/scripts/utils/device.ts";
-      import { initTOC } from "/scripts/utils/toc.ts";
+      import { isMobile } from "/page-components/utils/device.ts";
+      import { initTOC } from "/page-components/utils/toc.ts";
 
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/* generate toc

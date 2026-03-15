@@ -1,7 +1,7 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(
+  th:replace="~{components/base-layout/template :: html(
     title = ${#annotations.getOrDefault(tag, 'higan.howiehz.top/page-title', tag.spec?.displayName)}, 
     head = ~{:: head},
     content = ~{:: body}, 
@@ -25,7 +25,7 @@
       th:title="'Posts - Tag: ' + ${tag.spec?.displayName}"
       th:href="@{'/feed/tags/' + ${tag.spec?.slug} + '.xml'}"
     />
-    <script src="/scripts/pages/tag.ts" type="module"></script>
+    <script src="/page-components/tag/index.ts" type="module"></script>
     <th:block th:insert="~{components/list-post-simple/template :: head(showPagination = true)}"></th:block>
   </head>
   <body th:remove="tag">
