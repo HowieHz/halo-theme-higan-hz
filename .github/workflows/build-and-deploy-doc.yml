@@ -18,6 +18,21 @@ on:
         type: boolean
         default: false
 
+concurrency:
+  # 动态组名：
+  # - 当事件会导致 deploy job 运行时 → 'production' 组（串行）
+  # - 其他情况 → 'build-only-<sha>' 组（每个提交唯一，可并发）
+  group: |
+    ${{
+      (
+        (github.event_name == 'release' && github.event.action == 'published' && github.event.release.target_commitish == 'main') ||
+        (github.event_name == 'repository_dispatch' && github.event.action == 'stable_release_published' && github.event.client_payload.target_branch == 'main' && github.event.client_payload.deploy_docs == true) ||
+        (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'deploy-docs')) ||
+        (github.event_name == 'workflow_dispatch' && inputs.deploy == true)
+      ) && 'production' || format('build-only-{0}', github.sha)
+    }}
+  cancel-in-progress: false # 等待当前组任务完成，不自动取消（唯一组不受影响）
+
 jobs:
   build:
     name: Build Documentation

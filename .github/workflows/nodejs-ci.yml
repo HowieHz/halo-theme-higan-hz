@@ -5,6 +5,21 @@ on:
     branches: [main]
   pull_request:
     types: [opened, synchronize, reopened]
+
+# 并发控制：
+# - push 到 main 分支：所有推送归入同一组 'format-lint-main'，新推送取消正在进行的旧运行，
+#   确保 main 分支的检查和自动格式化始终基于最新代码，避免多个并发运行相互干扰。
+# - pull_request：每个 PR 独立成组（组名包含 PR 编号），同一 PR 内新提交时取消旧运行，
+#   保证每个 PR 只保留最新的检查结果，节省资源。
+concurrency:
+  group: |
+    ${{
+      (github.event_name == 'push') && 'format-lint-main' ||
+      (github.event_name == 'pull_request') && format('format-lint-pr-{0}', github.event.pull_request.number) ||
+      'format-lint-other'
+    }}
+  cancel-in-progress: true
+
 jobs:
   check:
     name: Node.js Format and Lint Check
