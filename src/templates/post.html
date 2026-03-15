@@ -1,12 +1,12 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(
+  th:replace="~{components/base-layout/template :: html(
     title = ${#annotations.getOrDefault(post, 'higan.howiehz.top/page-title', post.spec?.title)}, 
     head = ~{:: head},
     content = ~{:: body}, 
     header = ~{}, 
-    navbar = ~{fragments/post-nav::navbar}, 
+    navbar = ~{components/nav-post/template :: navbar}, 
     language=${#annotations.get(post, 'higan.howiehz.top/page-language')}
   )}"
 >
@@ -89,7 +89,7 @@
           itemprop="name headline"
         >
           <th:block th:text="${post.spec?.title}">标题替换位</th:block
-          ><th:block th:replace="~{fragments/common :: theme-toggle-button}"></th:block>
+          ><th:block th:replace="~{components/common/template :: theme-toggle-button}"></th:block>
         </h1>
         <div class="meta">
           <!--/* 展示文章作者名 */-->
@@ -385,7 +385,7 @@
       </div>
     </article>
     <th:block th:if="${theme.config?.post_styles?.is_show_footer_nav}">
-      <div th:replace="~{fragments/post-footer-nav :: footerNav}"></div>
+      <div th:replace="~{components/footer-nav-post/template :: footerNav}"></div>
     </th:block>
     <script type="module">
       import { isMobile } from "/scripts/utils/device.ts";

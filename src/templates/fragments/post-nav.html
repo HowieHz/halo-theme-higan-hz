@@ -23,7 +23,7 @@
     <span id="menu" class="mr-8">
       <div class="flex items-center justify-end">
         <span id="nav" class="hidden lg:block">
-          <th:block th:insert="~{fragments/common :: menu(showIcon=false)}"></th:block>
+          <th:block th:insert="~{components/common/template :: menu(showIcon=false)}"></th:block>
         </span>
         <a
           id="menu-icon"
@@ -142,7 +142,7 @@
         th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
       >
         <th:block
-          th:insert="~{fragments/common :: share(originPermalink = ${post.status.permalink},
+          th:insert="~{components/common/template :: share(originPermalink = ${post.status.permalink},
                                                  title = ${post.spec?.title})}"
         ></th:block>
       </div>

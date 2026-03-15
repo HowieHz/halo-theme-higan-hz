@@ -1427,7 +1427,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
           </div>
           <div class="footer-right" th:if="${theme.config?.styles?.is_footer_menu_show}">
             <ul>
-              <th:block th:insert="~{fragments/common :: base-menu}"></th:block>
+              <th:block th:insert="~{components/common/template :: base-menu}"></th:block>
             </ul>
           </div>
           <div class="footer-bottom" th:if="${theme.config?.styles?.is_footer_content_show}">

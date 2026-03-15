@@ -1,7 +1,7 @@
 <!doctype html>
 <th:block
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: html(
+  th:replace="~{components/base-layout/template :: html(
     title = ${#annotations.getOrDefault(category, 'higan.howiehz.top/page-title', category.spec?.displayName)}, 
     head = ~{:: head},
     content = ~{:: body}, 
