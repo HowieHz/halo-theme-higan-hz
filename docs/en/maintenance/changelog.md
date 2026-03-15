@@ -25,6 +25,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added support for `<meta name="theme-color" />`, with automatic output and updates based on the active theme style.
 
+### 🔧 Code Refactoring
+
+- Moved the `scripts` and `styles` directories into `templates`, and updated related asset reference paths.
+
 ### 🗑️ Removed
 
 - Removed the `<meta http-equiv="X-UA-Compatible">` tag from the layout template.

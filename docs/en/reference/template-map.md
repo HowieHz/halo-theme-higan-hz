@@ -52,4 +52,4 @@ In the default access path column in the table, `{xxx}` represents variables (pl
 
 | File Location                                          | Description                              | Required Plugin                                                                                                                    |
 | ------------------------------------------------------ | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `src/styles/mixins/colors/mixins/comment-widget-vars/` | Official comment widget style adaptation | [plugin-comment-widget](https://github.com/halo-dev/plugin-comment-widget?tab=readme-ov-file#%E4%B8%BB%E9%A2%98%E9%80%82%E9%85%8D) |
+| `src/templates/components/halo-comment-widget/` | Official comment widget style adaptation | [plugin-comment-widget](https://github.com/halo-dev/plugin-comment-widget?tab=readme-ov-file#%E4%B8%BB%E9%A2%98%E9%80%82%E9%85%8D) |
