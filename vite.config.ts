@@ -60,12 +60,7 @@ export default defineConfig({
         /\.(atom|rss|xml|xhtml|js|mjs|ts|html|json|css|eot|otf|ttf|svg|ico|bmp|dib|txt|text|log|md|conf|ini|cfg)$/,
       ],
       // Root *.html, error/**/*.html, fragments/**/*.html and */ components/**/*.html are template files and should not be compressed
-      exclude: [
-        /^[^/]*\.html$/,
-        /^error\/.*\.html$/,
-        /^fragments\/.*\.html$/,
-        /^components\/.*\.html$/,
-      ],
+      exclude: [/^[^/]*\.html$/, /^error\/.*\.html$/, /^fragments\/.*\.html$/, /^components\/.*\.html$/],
     }),
   ],
   css: {
