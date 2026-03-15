@@ -16,8 +16,8 @@ import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comme
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
 export default defineConfig({
-  base: "/themes/howiehz-higan/",
   root: path.resolve(__dirname, "src/templates/"),
+  base: "/themes/howiehz-higan/",
   plugins: [
     // Tailwind CSS with Vite integration
     tailwindcss(),
