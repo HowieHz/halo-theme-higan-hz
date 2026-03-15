@@ -19,7 +19,7 @@
       th:if="${theme.config?.archives_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{{prefix}(prefix = ${site.routes.archivesUri})}"
     />
-    <script src="/src/scripts/pages/archives.ts" type="module"></script>
+    <script src="/scripts/pages/archives.ts" type="module"></script>
     <th:block th:insert="~{components/list-post-simple/template :: head}"></th:block>
     <th:block th:insert="~{components/pagination/template :: head}"></th:block>
   </head>
@@ -80,9 +80,9 @@
               </th:block>
             </ul>
             <script type="module">
-              import { isVisible } from "/src/scripts/utils/animations";
-              import { slideDown } from "/src/scripts/utils/animations/slide-down";
-              import { slideUp } from "/src/scripts/utils/animations/slide-up";
+              import { isVisible } from "/scripts/utils/animations";
+              import { slideDown } from "/scripts/utils/animations/slide-down";
+              import { slideUp } from "/scripts/utils/animations/slide-up";
 
               function toggleVisibility(element, duration_of_expand_collapse_animation) {
                 const caretRight = element.querySelector(".mdi--chevron-right");

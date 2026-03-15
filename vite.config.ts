@@ -12,12 +12,12 @@ import { sri } from "vite-plugin-sri3";
 
 import pkg from "./package.json";
 import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
-import moveHtmlPlugin from "./plugins/vite-plugin-move-html";
 import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
 export default defineConfig({
   base: "/themes/howiehz-higan/",
+  root: path.resolve(__dirname, "src/templates/"),
   plugins: [
     // Tailwind CSS with Vite integration
     tailwindcss(),
@@ -62,7 +62,6 @@ export default defineConfig({
       // src/templates/**/*.html are template files and should not be compressed
       exclude: [/^src\/templates\/.*\.html$/],
     }),
-    moveHtmlPlugin({ dest: "templates", flatten: 2 }),
   ],
   css: {
     transformer: "lightningcss",
