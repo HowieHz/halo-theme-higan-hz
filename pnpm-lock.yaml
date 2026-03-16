@@ -175,8 +175,8 @@ importers:
         specifier: ^2.5.2
         version: 2.5.2(rollup@4.57.1)
       vite-plugin-sri3:
-        specifier: ^1.3.0
-        version: 1.3.0(rolldown-vite@7.3.1(@types/node@25.5.0)(esbuild@0.27.3)(jiti@2.6.1)(less@4.6.4)(stylus@0.64.0))
+        specifier: ^2.0.0
+        version: 2.0.0(rolldown-vite@7.3.1(@types/node@25.5.0)(esbuild@0.27.3)(jiti@2.6.1)(less@4.6.4)(stylus@0.64.0))
       vue-eslint-parser:
         specifier: ^10.4.0
         version: 10.4.0(eslint@10.0.3(jiti@2.6.1))
@@ -3583,11 +3583,11 @@ packages:
   vite-plugin-compression2@2.5.2:
     resolution: {integrity: sha512-a1eAY2Ux5JrflaWStWUa7yoMnjhw3tx7y6vQIp20QZ9K57wcKxYT+DUJiAG4VSEvmFMjeo9a5R2phdBriOJ/1A==}
 
-  vite-plugin-sri3@1.3.0:
-    resolution: {integrity: sha512-wOdmXQhKQzwNOeUfsPoi7Zz3bh6KXkjup5t/n3bbOo8ITOIgrpwTi//8YwByTy8UeGTz6AHInVFQSoywka0dEQ==}
+  vite-plugin-sri3@2.0.0:
+    resolution: {integrity: sha512-bBeKFPbiIcipMhmeJYB1PSNqZLrvlfUdxX2Tqn7+V4XVLKlh5+TdwxPPfsS/gP1OH2gdfdui0nlxeaOjudbV8A==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      vite: ^2 || ^3 || ^4 || ^5 || ^6 || ^7
+      vite: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
 
   vite@7.3.1:
     resolution: {integrity: sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA==}
@@ -6982,7 +6982,7 @@ snapshots:
     transitivePeerDependencies:
       - rollup
 
-  vite-plugin-sri3@1.3.0(rolldown-vite@7.3.1(@types/node@25.5.0)(esbuild@0.27.3)(jiti@2.6.1)(less@4.6.4)(stylus@0.64.0)):
+  vite-plugin-sri3@2.0.0(rolldown-vite@7.3.1(@types/node@25.5.0)(esbuild@0.27.3)(jiti@2.6.1)(less@4.6.4)(stylus@0.64.0)):
     dependencies:
       vite: rolldown-vite@7.3.1(@types/node@25.5.0)(esbuild@0.27.3)(jiti@2.6.1)(less@4.6.4)(stylus@0.64.0)
 
