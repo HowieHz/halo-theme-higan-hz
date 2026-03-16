@@ -24,6 +24,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🔧 Code Refactoring
 
 - Improve accessibility text.
+- Wrap the main content of the page in a `<main>` element to improve accessibility.
+
+### 🛠️ Miscellaneous Chores
+
+- Updated development dependencies.
 
 ## [1.58.1] - 2026-03-15
 

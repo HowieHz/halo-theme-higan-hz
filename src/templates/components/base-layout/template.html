@@ -1336,7 +1336,9 @@ html[theme="theme-[(${colorSchema.id})]"] {
       >
         <th:block th:replace="${header}" />
 
-        <th:block th:replace="${content}" />
+        <main>
+          <th:block th:replace="${content}" />
+        </main>
 
         <footer id="footer">
           <div class="footer-left">
