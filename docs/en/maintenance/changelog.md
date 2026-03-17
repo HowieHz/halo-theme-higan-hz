@@ -29,6 +29,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed an issue where the selected type could not be displayed after saving social media settings (`console/theme/settings/sns`).
 
+## [1.58.2] - 2026-03-18
+
 ### 💥 Breaking Changes
 
 - Minimum required Halo version bumped to 2.23.1.
