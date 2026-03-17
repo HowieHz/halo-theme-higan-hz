@@ -6467,7 +6467,7 @@ Array (can repeatedly add multiple social profiles)
 :::
 ::: info ⭐ Default Value
 
-Empty array `[]`
+Empty
 
 :::
 ::: info 🧩 Template Variable
@@ -6557,7 +6557,7 @@ Array (can repeatedly add multiple share buttons)
 :::
 ::: info ⭐ Default Value
 
-All preset types are enabled by default: `native`, `email`, `qrcode`, `facebook`, `x`, `linkedin`, `pinterest`, `telegram`, `qq`, `weibo`, `wechat`, `qzone`, `douban`
+All preset types are enabled by default.
 
 :::
 ::: info 🧩 Template Variable

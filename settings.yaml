@@ -1669,6 +1669,7 @@ spec:
         - $formkit: array
           name: sns_list
           label: 首页社交资料展示
+          help: "你可以在这里设置你的信息，主题即可自动生成对应的链接。"
           value: []
           itemLabels:
             - type: text
@@ -1825,10 +1826,15 @@ spec:
             - type: "email"
             - type: "qrcode"
             - type: "facebook"
+            - type: "reddit"
             - type: "x"
             - type: "linkedin"
             - type: "pinterest"
             - type: "telegram"
+            - type: "whatsapp"
+            - type: "tumblr"
+            - type: "line"
+            - type: "hackernews"
             - type: "qq"
             - type: "weibo"
             - type: "wechat"
@@ -1853,6 +1859,8 @@ spec:
                   value: "qrcode"
                 - label: Facebook
                   value: "facebook"
+                - label: Reddit
+                  value: "reddit"
                 - label: X
                   value: "x"
                 - label: LinkedIn
@@ -1861,6 +1869,14 @@ spec:
                   value: "pinterest"
                 - label: Telegram
                   value: "telegram"
+                - label: WhatsApp
+                  value: "whatsapp"
+                - label: Tumblr
+                  value: "tumblr"
+                - label: LINE
+                  value: "line"
+                - label: Hacker News
+                  value: "hackernews"
                 - label: QQ
                   value: "qq"
                 - label: Weibo

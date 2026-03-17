@@ -6462,7 +6462,7 @@ HTML 代码也是可以的：
 :::
 ::: info ⭐ 默认值
 
-空数组 `[]`
+空
 
 :::
 ::: info 🧩 模板变量
@@ -6552,7 +6552,7 @@ HTML 代码也是可以的：
 :::
 ::: info ⭐ 默认值
 
-全部预设类型均默认启用：`native`、`email`、`qrcode`、`facebook`、`x`、`linkedin`、`pinterest`、`telegram`、`qq`、`weibo`、`wechat`、`qzone`、`douban`
+全部预设类型均默认启用。
 
 :::
 ::: info 🧩 模板变量

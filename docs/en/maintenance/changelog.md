@@ -26,6 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - In the social media settings (`console/theme/settings/sns`), the `index_sns` array has been renamed to `sns_list`, and its `type` field has been changed from an object type to a string type. **Existing configurations require the social media list to be re-configured.**
 - In the share button settings (`console/theme/settings/share`), the `button_config` array has been split into `share_list` (preset button list) and `custom_share` (custom buttons). **Existing configurations require the share button list to be re-configured.**
 
+### 🚀 Features
+
+- Added preset share buttons for Reddit, WhatsApp, Tumblr, LINE, and Hacker News.
+
 ### 🐛 Bug Fixes
 
 - Fixed an issue where the selected type could not be displayed after saving social media settings (`console/theme/settings/sns`).

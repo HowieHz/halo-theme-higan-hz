@@ -30,6 +30,9 @@ importers:
       '@iconify-json/entypo-social':
         specifier: ^1.2.3
         version: 1.2.3
+      '@iconify-json/fa':
+        specifier: ^1.2.2
+        version: 1.2.2
       '@iconify-json/fa-solid':
         specifier: ^1.2.2
         version: 1.2.2
@@ -579,6 +582,9 @@ packages:
 
   '@iconify-json/fa-solid@1.2.2':
     resolution: {integrity: sha512-V8TDk62dGswAwbWwoSTnaoiTVEfQyjLCq4/TPmI29evFb9GwPyU0OGX4+BdQMGsDDzk8ByR81RjR618FtELSaw==}
+
+  '@iconify-json/fa@1.2.2':
+    resolution: {integrity: sha512-Rw0L97uO3W0Gy2rq4cM/TH3QjzuPuRca1F2steumZ57zOeheGQdiqo50O6KHjm+WgImmV92IFPUTU6eiaJsrTw==}
 
   '@iconify-json/fluent@1.2.41':
     resolution: {integrity: sha512-UbUFCJm7gICJuiDVZdo259L05TxAKbECJ/NBax/+N5CejWXJ0q/y++HNWLdJBkSfsZVYH9KtFZgwox36PC0/Wg==}
@@ -3997,6 +4003,10 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-json/fa-solid@1.2.2':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/fa@1.2.2':
     dependencies:
       '@iconify/types': 2.0.0
 
