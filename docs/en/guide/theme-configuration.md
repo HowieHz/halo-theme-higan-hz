@@ -6573,7 +6573,7 @@ All preset types are enabled by default: `native`, `email`, `qrcode`, `facebook`
 
 :::
 
-### Custom Share Buttons
+### Custom Button Definitions
 
 ::: info 🎯 Purpose
 
