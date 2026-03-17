@@ -203,8 +203,12 @@
             th:aria-label="#{common.shareModal.share.aria-label('Native')}"
             th:href="|javascript:nativeShare('${permalink}');|"
           >
-            <span class="iconify" th:style="|--svg:url('${item?.icon.value}')|"  th:if="${item?.icon != null and item?.icon != ''}"></span>
-            <span class="iconify mdi--share-circle"                              th:if="${item?.icon == null or item?.icon == ''}"></span>
+            <span
+              class="iconify"
+              th:style="|--svg:url('${item?.icon.value}')|"
+              th:if="${item?.icon != null and item?.icon != ''}"
+            ></span>
+            <span class="iconify mdi--share-circle" th:if="${item?.icon == null or item?.icon == ''}"></span>
           </a>
         </li>
         <!--/* Preset: non-Native */-->
@@ -231,20 +235,60 @@
             th:href="${#strings.replace(#strings.replace(shareUrl, '@URL', permalink), '@TITLE', title)}"
           >
             <!--/* 自定义图标覆盖 */-->
-            <span class="iconify" th:style="|--svg:url('${item?.icon.value}')|"   th:if="${item?.icon != null and item?.icon != ''}"></span>
+            <span
+              class="iconify"
+              th:style="|--svg:url('${item?.icon.value}')|"
+              th:if="${item?.icon != null and item?.icon != ''}"
+            ></span>
             <!--/* 默认图标 */-->
-            <span class="iconify icomoon-free--mail4"                              th:if="${item?.type == 'email'    and (item?.icon == null or item?.icon == '')}"></span>
-            <span class="iconify pepicons-pencil--qr-code-circle-filled"           th:if="${item?.type == 'qrcode'   and (item?.icon == null or item?.icon == '')}"></span>
-            <span class="iconify ic--baseline-facebook"                            th:if="${item?.type == 'facebook' and (item?.icon == null or item?.icon == '')}"></span>
-            <span class="iconify mdi--twitter-circle"                              th:if="${item?.type == 'x'        and (item?.icon == null or item?.icon == '')}"></span>
-            <span class="iconify entypo-social--linkedin-with-circle"              th:if="${item?.type == 'linkedin' and (item?.icon == null or item?.icon == '')}"></span>
-            <span class="iconify mdi--pinterest"                                   th:if="${item?.type == 'pinterest'and (item?.icon == null or item?.icon == '')}"></span>
-            <span class="iconify uil--telegram"                                    th:if="${item?.type == 'telegram' and (item?.icon == null or item?.icon == '')}"></span>
-            <span class="iconify ant-design--qq-circle-filled"                     th:if="${item?.type == 'qq'       and (item?.icon == null or item?.icon == '')}"></span>
-            <span class="iconify ant-design--weibo-circle-filled"                  th:if="${item?.type == 'weibo'    and (item?.icon == null or item?.icon == '')}"></span>
-            <span class="iconify ant-design--wechat-filled"                        th:if="${item?.type == 'wechat'   and (item?.icon == null or item?.icon == '')}"></span>
-            <span class="iconify cib--qzone"                                       th:if="${item?.type == 'qzone'    and (item?.icon == null or item?.icon == '')}"></span>
-            <span class="iconify tabler--brand-douban"                             th:if="${item?.type == 'douban'   and (item?.icon == null or item?.icon == '')}"></span>
+            <span
+              class="iconify icomoon-free--mail4"
+              th:if="${item?.type == 'email'    and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify pepicons-pencil--qr-code-circle-filled"
+              th:if="${item?.type == 'qrcode'   and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify ic--baseline-facebook"
+              th:if="${item?.type == 'facebook' and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify mdi--twitter-circle"
+              th:if="${item?.type == 'x'        and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify entypo-social--linkedin-with-circle"
+              th:if="${item?.type == 'linkedin' and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify mdi--pinterest"
+              th:if="${item?.type == 'pinterest'and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify uil--telegram"
+              th:if="${item?.type == 'telegram' and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify ant-design--qq-circle-filled"
+              th:if="${item?.type == 'qq'       and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify ant-design--weibo-circle-filled"
+              th:if="${item?.type == 'weibo'    and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify ant-design--wechat-filled"
+              th:if="${item?.type == 'wechat'   and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify cib--qzone"
+              th:if="${item?.type == 'qzone'    and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify tabler--brand-douban"
+              th:if="${item?.type == 'douban'   and (item?.icon == null or item?.icon == '')}"
+            ></span>
           </a>
         </li>
         <!--/* Custom */-->
