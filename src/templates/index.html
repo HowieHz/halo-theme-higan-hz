@@ -124,24 +124,24 @@
         <th:block
           th:unless="${item?.type == 'text' or item?.type == 'custom_sns'}"
           th:with="snsUrl = ${
-            item?.type == 'rss' ? '' :
-            item?.type == 'bilibili' ? 'https://space.bilibili.com/' :
-            item?.type == 'dribbble' ? 'https://dribbble.com/' :
-            item?.type == 'email' ? 'mailto:' :
-            item?.type == 'facebook' ? 'https://www.facebook.com/' :
-            item?.type == 'github' ? 'https://github.com/' :
-            item?.type == 'instagram' ? 'https://www.instagram.com/' :
-            item?.type == 'qq' ? 'tencent://message/?Site=&Menu=yes&uin=' :
-            item?.type == 'reddit' ? 'https://www.reddit.com/user/' :
-            item?.type == 'stack_overflow' ? 'https://stackoverflow.com/users/' :
-            item?.type == 'telegram' ? 'https://t.me/' :
-            item?.type == 'x' ? 'https://x.com/' :
-            item?.type == 'youtube' ? 'https://www.youtube.com/channel/' :
-            item?.type == 'douban' ? 'https://www.douban.com/people/' :
-            item?.type == 'neteasecloudmusic' ? 'https://music.163.com/#/user/home?id=' :
-            item?.type == 'weibo' ? 'https://weibo.com/' :
-            item?.type == 'zhihu' ? 'https://www.zhihu.com/people/' :
-            ''},
+            item?.type == 'rss' ? '@VALUE' :
+            item?.type == 'bilibili' ? 'https://space.bilibili.com/@VALUE' :
+            item?.type == 'dribbble' ? 'https://dribbble.com/@VALUE' :
+            item?.type == 'email' ? 'mailto:@VALUE' :
+            item?.type == 'facebook' ? 'https://www.facebook.com/@VALUE' :
+            item?.type == 'github' ? 'https://github.com/@VALUE' :
+            item?.type == 'instagram' ? 'https://www.instagram.com/@VALUE' :
+            item?.type == 'qq' ? 'tencent://message/?Site=&Menu=yes&uin=@VALUE' :
+            item?.type == 'reddit' ? 'https://www.reddit.com/user/@VALUE' :
+            item?.type == 'stack_overflow' ? 'https://stackoverflow.com/users/@VALUE' :
+            item?.type == 'telegram' ? 'https://t.me/@VALUE' :
+            item?.type == 'x' ? 'https://x.com/@VALUE' :
+            item?.type == 'youtube' ? 'https://www.youtube.com/channel/@VALUE' :
+            item?.type == 'douban' ? 'https://www.douban.com/people/@VALUE' :
+            item?.type == 'neteasecloudmusic' ? 'https://music.163.com/#/user/home?id=@VALUE' :
+            item?.type == 'weibo' ? 'https://weibo.com/@VALUE' :
+            item?.type == 'zhihu' ? 'https://www.zhihu.com/people/@VALUE' :
+            '@VALUE'},
           snsAriaLabel = ${
             item?.type == 'rss' ? 'Find me on RSS' :
             item?.type == 'bilibili' ? 'Find me on BiliBili' :
@@ -164,7 +164,7 @@
         >
           <a
             class="icon"
-            th:href="@{${snsUrl}+${item?.input_value}}"
+            th:href="${#strings.replace(snsUrl, '@VALUE', item?.input_value)}"
             target="_blank"
             th:attr="aria-label=${snsAriaLabel}"
           >
