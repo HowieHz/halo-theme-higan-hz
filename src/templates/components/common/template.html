@@ -215,32 +215,32 @@
         <li
           th:if="${item?.type != 'native' and item?.type != 'custom_share'}"
           th:with="typeLabel = ${
-            item?.type == 'email'    ? 'E-mail' :
-            item?.type == 'qrcode'   ? 'QR Code' :
+            item?.type == 'email' ? 'E-mail' :
+            item?.type == 'qrcode' ? 'QR Code' :
             item?.type == 'facebook' ? 'Facebook' :
-            item?.type == 'x'        ? 'X' :
+            item?.type == 'x' ? 'X' :
             item?.type == 'linkedin' ? 'LinkedIn' :
-            item?.type == 'pinterest'? 'Pinterest' :
+            item?.type == 'pinterest' ? 'Pinterest' :
             item?.type == 'telegram' ? 'Telegram' :
-            item?.type == 'qq'       ? 'QQ' :
-            item?.type == 'weibo'    ? 'Weibo' :
-            item?.type == 'wechat'   ? 'WeChat' :
-            item?.type == 'qzone'    ? 'Qzone' :
-            item?.type == 'douban'   ? 'Douban' :
+            item?.type == 'qq' ? 'QQ' :
+            item?.type == 'weibo' ? 'Weibo' :
+            item?.type == 'wechat' ? 'WeChat' :
+            item?.type == 'qzone' ? 'Qzone' :
+            item?.type == 'douban' ? 'Douban' :
             item?.type},
           shareUrl = ${
-            item?.type == 'email'    ? 'mailto:?subject=@TITLE&body=Check out this article: @URL' :
-            item?.type == 'qrcode'   ? '/themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL' :
+            item?.type == 'email' ? 'mailto:?subject=@TITLE&body=Check out this article: @URL' :
+            item?.type == 'qrcode' ? '/themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL' :
             item?.type == 'facebook' ? 'https://facebook.com/sharer/sharer.php?u=@URL&title=@TITLE' :
-            item?.type == 'x'        ? 'https://x.com/share?url=@URL&title=@TITLE' :
+            item?.type == 'x' ? 'https://x.com/share?url=@URL&title=@TITLE' :
             item?.type == 'linkedin' ? 'https://www.linkedin.com/shareArticle?url=@URL&title=@TITLE' :
-            item?.type == 'pinterest'? 'https://pinterest.com/pin/create/bookmarklet/?url=@URL&title=@TITLE' :
+            item?.type == 'pinterest' ? 'https://pinterest.com/pin/create/bookmarklet/?url=@URL&title=@TITLE' :
             item?.type == 'telegram' ? 'https://telegram.me/share/url?url=@URL&text=@TITLE' :
-            item?.type == 'qq'       ? 'https://connect.qq.com/widget/shareqq/iframe_index.html?url=@URL&title=@TITLE' :
-            item?.type == 'weibo'    ? 'https://service.weibo.com/share/share.php?url=@URL&title=@TITLE' :
-            item?.type == 'wechat'   ? '/themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL' :
-            item?.type == 'qzone'    ? 'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=@URL&title=@TITLE' :
-            item?.type == 'douban'   ? 'https://www.douban.com/share/service?href=@URL&name=@TITLE' :
+            item?.type == 'qq' ? 'https://connect.qq.com/widget/shareqq/iframe_index.html?url=@URL&title=@TITLE' :
+            item?.type == 'weibo' ? 'https://service.weibo.com/share/share.php?url=@URL&title=@TITLE' :
+            item?.type == 'wechat' ? '/themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL' :
+            item?.type == 'qzone' ? 'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=@URL&title=@TITLE' :
+            item?.type == 'douban' ? 'https://www.douban.com/share/service?href=@URL&name=@TITLE' :
             '@URL'}"
         >
           <a
@@ -257,11 +257,11 @@
             <!--/* 默认图标 */-->
             <span
               class="iconify icomoon-free--mail4"
-              th:if="${item?.type == 'email'    and (item?.icon == null or item?.icon == '')}"
+              th:if="${item?.type == 'email' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
               class="iconify pepicons-pencil--qr-code-circle-filled"
-              th:if="${item?.type == 'qrcode'   and (item?.icon == null or item?.icon == '')}"
+              th:if="${item?.type == 'qrcode' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
               class="iconify ic--baseline-facebook"
@@ -269,7 +269,7 @@
             ></span>
             <span
               class="iconify mdi--twitter-circle"
-              th:if="${item?.type == 'x'        and (item?.icon == null or item?.icon == '')}"
+              th:if="${item?.type == 'x' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
               class="iconify entypo-social--linkedin-with-circle"
@@ -285,23 +285,23 @@
             ></span>
             <span
               class="iconify ant-design--qq-circle-filled"
-              th:if="${item?.type == 'qq'       and (item?.icon == null or item?.icon == '')}"
+              th:if="${item?.type == 'qq' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
               class="iconify ant-design--weibo-circle-filled"
-              th:if="${item?.type == 'weibo'    and (item?.icon == null or item?.icon == '')}"
+              th:if="${item?.type == 'weibo' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
               class="iconify ant-design--wechat-filled"
-              th:if="${item?.type == 'wechat'   and (item?.icon == null or item?.icon == '')}"
+              th:if="${item?.type == 'wechat' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
               class="iconify cib--qzone"
-              th:if="${item?.type == 'qzone'    and (item?.icon == null or item?.icon == '')}"
+              th:if="${item?.type == 'qzone' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
               class="iconify tabler--brand-douban"
-              th:if="${item?.type == 'douban'   and (item?.icon == null or item?.icon == '')}"
+              th:if="${item?.type == 'douban' and (item?.icon == null or item?.icon == '')}"
             ></span>
           </a>
         </li>
