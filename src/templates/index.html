@@ -188,10 +188,7 @@
               class="iconify-middle iconify ic--baseline-facebook"
               th:if="${#strings.equals(item?.type, 'facebook')}"
             ></span>
-            <span
-              class="iconify-middle iconify mdi--github"
-              th:if="${#strings.equals(item?.type, 'github')}"
-            ></span>
+            <span class="iconify-middle iconify mdi--github" th:if="${#strings.equals(item?.type, 'github')}"></span>
             <span
               class="iconify-middle iconify ant-design--instagram-filled"
               th:if="${#strings.equals(item?.type, 'instagram')}"

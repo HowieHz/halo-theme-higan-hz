@@ -29,7 +29,6 @@
 
 - 修复社交资料设置（`console/theme/settings/sns`）保存后无法显示已选类型的问题。
 
-
 ### 💥 破坏性变更
 
 - 最低 Halo 版本要求提升至 2.23.1。
@@ -612,7 +611,6 @@
 - 修复启用“标签集合页样式——标签排序方式”时标签颜色无法正常显示的问题。
 
 [Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.2...HEAD
-[1.58.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.1...v1.58.2
 [1.58.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.0...v1.58.1
 [1.58.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.6...v1.58.0
 [1.57.6]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.5...v1.57.6
