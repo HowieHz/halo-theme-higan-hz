@@ -6567,7 +6567,7 @@ All preset types are enabled by default: `native`, `email`, `qrcode`, `facebook`
 :::
 ::: info ℹ️ Additional Information
 
-- Links and icons for preset types are built into the theme, no manual input required
+- Links and icons for preset types are built into the theme, no manual input required; optionally fill in the icon field to override the default icon
 - When selecting "Custom Button", fill in the identifier defined in "Custom Share Buttons"
 - Can freely adjust order or remove unwanted buttons
 
@@ -6608,7 +6608,7 @@ Empty
 ::: info ℹ️ Additional Information
 
 - `@URL` and `@TITLE` are placeholders that will be replaced with the actual page address and title when used
-- Each custom button requires: identifier, name, link, icon (optional), `aria-label` (accessibility label)
+- Each custom button requires: identifier, name, link, icon (required), `aria-label` (accessibility label)
 - After defining, you must add it in the "Share Button List" above by selecting "Custom Button" and filling in the identifier
 
 :::

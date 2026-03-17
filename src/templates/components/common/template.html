@@ -203,7 +203,8 @@
             th:aria-label="#{common.shareModal.share.aria-label('Native')}"
             th:href="|javascript:nativeShare('${permalink}');|"
           >
-            <span class="iconify mdi--share-circle"></span>
+            <span class="iconify" th:style="|--svg:url('${item?.icon.value}')|"  th:if="${item?.icon != null and item?.icon != ''}"></span>
+            <span class="iconify mdi--share-circle"                              th:if="${item?.icon == null or item?.icon == ''}"></span>
           </a>
         </li>
         <!--/* Preset: non-Native */-->
@@ -258,7 +259,7 @@
                 th:aria-label="#{common.shareModal.share.aria-label(${custom_item?.aria_label})}"
                 th:href="${#strings.replace(#strings.replace(custom_item?.url, '@URL', permalink), '@TITLE', title)}"
               >
-                <span class="iconify" th:style="|--svg:url('${custom_item?.icon.value}')|" th:if="${custom_item?.icon != null and custom_item?.icon != ''}"></span>
+                <span class="iconify" th:style="|--svg:url('${custom_item?.icon.value}')|"></span>
               </a>
             </li>
           </th:block>

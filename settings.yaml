@@ -1917,6 +1917,7 @@ spec:
               label: 图标
               format: dataurl
               value: ""
+              validation: "required"
             - $formkit: text
               name: aria_label
               label: aria-label

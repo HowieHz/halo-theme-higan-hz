@@ -1918,6 +1918,7 @@ spec:
               label: Icon
               format: dataurl
               value: ""
+              validation: "required"
             - $formkit: text
               name: aria_label
               label: aria-label
