@@ -456,6 +456,53 @@ jobs:
             exit 1
           fi
 
+      - name: Set tag descriptions
+        shell: bash
+        run: |
+          set -e
+
+          # Ensure jq is available
+          if ! command -v jq >/dev/null 2>&1; then
+            echo "⚠️ jq is required but not installed. Installing jq..."
+            sudo apt-get update -y && sudo apt-get install -y jq || { echo "Failed to install jq"; exit 1; }
+          fi
+
+          set_tag_description() {
+            local slug="$1"
+            local description="$2"
+
+            echo "Finding tag with slug '${slug}'"
+            tags=$(curl -s -u admin:admin \
+              "http://localhost:8090/apis/content.halo.run/v1alpha1/tags?fieldSelector=spec.slug%3D${slug}")
+
+            tag_name=$(echo "$tags" | jq -r '.items[0].metadata.name // empty')
+            if [ -z "$tag_name" ]; then
+              echo "⚠️ Tag with slug '${slug}' not found, skipping"
+              return 0
+            fi
+            echo "Found tag: $tag_name"
+
+            tag=$(curl -s -u admin:admin \
+              "http://localhost:8090/apis/content.halo.run/v1alpha1/tags/${tag_name}")
+
+            updated=$(echo "$tag" | jq --arg desc "$description" '.spec.description = $desc')
+
+            http_code=$(curl -s -o /tmp/put.tag.out -w "%{http_code}" -u admin:admin -X PUT \
+              "http://localhost:8090/apis/content.halo.run/v1alpha1/tags/${tag_name}" \
+              -H "Content-Type: application/json" \
+              -d "$updated")
+
+            if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+              echo "✓ Tag '${slug}' description set (HTTP $http_code)"
+            else
+              echo "❌ Failed to update tag '${slug}' description (HTTP $http_code)"
+              echo "Response body:"; sed -n '1,200p' /tmp/put.tag.out || true
+              exit 1
+            fi
+          }
+
+          set_tag_description "halo" "halo"
+
       - name: Run Lighthouse CI and Playwright (parallel)
         if: ${{ inputs.run_lighthouse_ci == true && needs.precheck.outputs.screenshots_needed == 'true' }}
         shell: bash
