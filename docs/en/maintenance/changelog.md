@@ -21,10 +21,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 💥 Breaking Changes
+
+- Minimum required Halo version bumped to 2.23.1.
+
 ### 🔧 Code Refactoring
 
 - Improve accessibility text.
 - Wrap the main content of the page in a `<main>` element to improve accessibility.
+
+### 🗑️ Removed
+
+- Removed the `<meta name="description">` tag from the tag detail page to align with Halo 2.23.1's built-in SEO description output.
 
 ### 🛠️ Miscellaneous Chores
 
