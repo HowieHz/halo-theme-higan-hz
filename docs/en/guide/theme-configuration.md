@@ -6472,7 +6472,7 @@ Empty array `[]`
 :::
 ::: info 🧩 Template Variable
 
-`theme.config?.sns?.index_sns`
+`theme.config?.sns?.sns_list`
 
 :::
 ::: info ℹ️ Additional Information

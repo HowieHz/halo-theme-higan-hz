@@ -6467,7 +6467,7 @@ HTML 代码也是可以的：
 :::
 ::: info 🧩 模板变量
 
-`theme.config?.sns?.index_sns`
+`theme.config?.sns?.sns_list`
 
 :::
 ::: info ℹ️ 补充信息

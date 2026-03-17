@@ -59,18 +59,25 @@
     <meta name="color-scheme" content="light dark" />
     <title th:text="${#strings.defaultString(title, site.title)}"></title>
     <!--/* RSS link declaration start */-->
+    <!--/*
+      RSS <link> 输出逻辑：
+      1. 有 PluginFeed 插件 + sns 设置了 /rss.xml  → 仅输出 Posts-All，sns 不重复输出
+      2. 有 PluginFeed 插件 + sns 设置了其他地址   → 输出 Posts-All，同时输出 sns 的 RSS
+      3. 有 PluginFeed 插件 + 未设置 sns           → 仅输出 Posts-All
+      4. 无 PluginFeed 插件 + 设置了 sns           → 仅输出 sns 的 RSS（无论地址是什么）
+    */-->
     <th:block th:if="${pluginFinder.available('PluginFeed')}">
       <link rel="alternate" type="application/rss+xml" title="Posts - All" th:href="@{'/rss.xml'}" />
-      <th:block th:each="item : ${theme.config?.sns?.index_sns}">
-        <th:block th:if="${#strings.equals(item?.type['type'], 'rss')}" th:with="href = ${item?.input_value}">
-          <link
-            th:if="${href != '/rss.xml'}"
-            rel="alternate"
-            type="application/rss+xml"
-            title="RSS feed"
-            th:href="@{${href}}"
-          />
-        </th:block>
+    </th:block>
+    <th:block th:each="item : ${theme.config?.sns?.sns_list}">
+      <th:block th:if="${item?.type == 'rss'}" th:with="href = ${item?.input_value}">
+        <link
+          th:if="${href != '/rss.xml' or !pluginFinder.available('PluginFeed')}"
+          rel="alternate"
+          type="application/rss+xml"
+          title="RSS feed"
+          th:href="@{${href}}"
+        />
       </th:block>
     </th:block>
     <!--/* RSS link declaration end */-->

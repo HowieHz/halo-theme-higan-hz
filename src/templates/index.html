@@ -116,92 +116,97 @@
       </th:block>
     </section>
 
-    <p id="findMe" th:unless="${#arrays.isEmpty(theme.config?.sns?.index_sns)}">
+    <p id="findMe" th:unless="${#arrays.isEmpty(theme.config?.sns?.sns_list)}">
       <th:block th:text="#{page.index.findMeLeftText}" th:if="${theme.config?.index_styles?.is_show_find_me_left_text}">
         社交资料图标左侧文字替换位</th:block
       >
-      <th:block th:each="item : ${theme.config?.sns?.index_sns}">
+      <th:block th:each="item : ${theme.config?.sns?.sns_list}">
         <th:block
-          th:unless="${#strings.equals(item?.type['type'], 'text') or #strings.equals(item?.type['type'], 'custom_sns')}"
+          th:unless="${item?.type == 'text' or item?.type == 'custom_sns'}"
+          th:with="snsUrl = ${
+            item?.type == 'rss' ? '@VALUE' :
+            item?.type == 'bilibili' ? 'https://space.bilibili.com/@VALUE' :
+            item?.type == 'dribbble' ? 'https://dribbble.com/@VALUE' :
+            item?.type == 'email' ? 'mailto:@VALUE' :
+            item?.type == 'facebook' ? 'https://www.facebook.com/@VALUE' :
+            item?.type == 'github' ? 'https://github.com/@VALUE' :
+            item?.type == 'instagram' ? 'https://www.instagram.com/@VALUE' :
+            item?.type == 'qq' ? 'tencent://message/?Site=&Menu=yes&uin=@VALUE' :
+            item?.type == 'reddit' ? 'https://www.reddit.com/user/@VALUE' :
+            item?.type == 'stack_overflow' ? 'https://stackoverflow.com/users/@VALUE' :
+            item?.type == 'telegram' ? 'https://t.me/@VALUE' :
+            item?.type == 'x' ? 'https://x.com/@VALUE' :
+            item?.type == 'youtube' ? 'https://www.youtube.com/channel/@VALUE' :
+            item?.type == 'douban' ? 'https://www.douban.com/people/@VALUE' :
+            item?.type == 'neteasecloudmusic' ? 'https://music.163.com/#/user/home?id=@VALUE' :
+            item?.type == 'weibo' ? 'https://weibo.com/@VALUE' :
+            item?.type == 'zhihu' ? 'https://www.zhihu.com/people/@VALUE' :
+            '@VALUE'},
+          snsAriaLabel = ${
+            item?.type == 'rss' ? 'Find me on RSS' :
+            item?.type == 'bilibili' ? 'Find me on BiliBili' :
+            item?.type == 'dribbble' ? 'Find me on Dribbble' :
+            item?.type == 'email' ? 'Find me on Email' :
+            item?.type == 'facebook' ? 'Find me on Facebook' :
+            item?.type == 'github' ? 'Find me on GitHub' :
+            item?.type == 'instagram' ? 'Find me on Instagram' :
+            item?.type == 'qq' ? 'Find me on QQ' :
+            item?.type == 'reddit' ? 'Find me on Reddit' :
+            item?.type == 'stack_overflow' ? 'Find me on Stack Overflow' :
+            item?.type == 'telegram' ? 'Find me on Telegram' :
+            item?.type == 'x' ? 'Find me on X' :
+            item?.type == 'youtube' ? 'Find me on YouTube' :
+            item?.type == 'douban' ? 'Find me on Douban' :
+            item?.type == 'neteasecloudmusic' ? 'Find me on NetEase CloudMusic' :
+            item?.type == 'weibo' ? 'Find me on Weibo' :
+            item?.type == 'zhihu' ? 'Find me on Zhihu' :
+            ''}"
         >
           <a
             class="icon"
-            th:href="@{${item?.type['url']}+${item?.input_value}}"
+            th:href="${#strings.replace(snsUrl, '@VALUE', item?.input_value)}"
             target="_blank"
-            th:attr="aria-label=${item?.type['aria-label']}"
+            th:attr="aria-label=${snsAriaLabel}"
           >
-            <span
-              class="iconify-middle iconify heroicons-outline--rss"
-              th:if="${#strings.equals(item?.type['type'], 'rss')}"
-            ></span>
-            <span
-              class="iconify-middle iconify simple-icons--bilibili"
-              th:if="${#strings.equals(item?.type['type'], 'bilibili')}"
-            ></span>
+            <span class="iconify-middle iconify heroicons-outline--rss" th:if="${item?.type == 'rss'}"></span>
+            <span class="iconify-middle iconify simple-icons--bilibili" th:if="${item?.type == 'bilibili'}"></span>
             <span
               class="iconify-middle iconify ant-design--dribbble-circle-filled"
-              th:if="${#strings.equals(item?.type['type'], 'dribbble')}"
+              th:if="${item?.type == 'dribbble'}"
             ></span>
-            <span
-              class="iconify-middle iconify ic--outline-email"
-              th:if="${#strings.equals(item?.type['type'], 'email')}"
-            ></span>
-            <span
-              class="iconify-middle iconify ic--baseline-facebook"
-              th:if="${#strings.equals(item?.type['type'], 'facebook')}"
-            ></span>
-            <span
-              class="iconify-middle iconify mdi--github"
-              th:if="${#strings.equals(item?.type['type'], 'github')}"
-            ></span>
+            <span class="iconify-middle iconify ic--outline-email" th:if="${item?.type == 'email'}"></span>
+            <span class="iconify-middle iconify ic--baseline-facebook" th:if="${item?.type == 'facebook'}"></span>
+            <span class="iconify-middle iconify mdi--github" th:if="${item?.type == 'github'}"></span>
             <span
               class="iconify-middle iconify ant-design--instagram-filled"
-              th:if="${#strings.equals(item?.type['type'], 'instagram')}"
+              th:if="${item?.type == 'instagram'}"
             ></span>
-            <span
-              class="iconify-middle iconify ant-design--qq-circle-filled"
-              th:if="${#strings.equals(item?.type['type'], 'qq')}"
-            ></span>
+            <span class="iconify-middle iconify ant-design--qq-circle-filled" th:if="${item?.type == 'qq'}"></span>
             <span
               class="iconify-middle iconify ant-design--reddit-circle-filled"
-              th:if="${#strings.equals(item?.type['type'], 'reddit')}"
+              th:if="${item?.type == 'reddit'}"
             ></span>
-            <span
-              class="iconify-middle iconify mdi--stack-overflow"
-              th:if="${#strings.equals(item?.type['type'], 'stack_overflow')}"
-            ></span>
-            <span
-              class="iconify-middle iconify ic--baseline-telegram"
-              th:if="${#strings.equals(item?.type['type'], 'telegram')}"
-            ></span>
-            <span
-              class="iconify-middle iconify ant-design--twitter-circle-filled"
-              th:if="${#strings.equals(item?.type['type'], 'x')}"
-            ></span>
-            <span
-              class="iconify-middle iconify ant-design--youtube-filled"
-              th:if="${#strings.equals(item?.type['type'], 'youtube')}"
-            ></span>
-            <span
-              class="iconify-middle iconify ri--douban-line"
-              th:if="${#strings.equals(item?.type['type'], 'douban')}"
-            ></span>
+            <span class="iconify-middle iconify mdi--stack-overflow" th:if="${item?.type == 'stack_overflow'}"></span>
+            <span class="iconify-middle iconify ic--baseline-telegram" th:if="${item?.type == 'telegram'}"></span>
+            <span class="iconify-middle iconify ant-design--twitter-circle-filled" th:if="${item?.type == 'x'}"></span>
+            <span class="iconify-middle iconify ant-design--youtube-filled" th:if="${item?.type == 'youtube'}"></span>
+            <span class="iconify-middle iconify ri--douban-line" th:if="${item?.type == 'douban'}"></span>
             <span
               class="iconify-middle iconify simple-icons--neteasecloudmusic"
-              th:if="${#strings.equals(item?.type['type'], 'neteasecloudmusic')}"
+              th:if="${item?.type == 'neteasecloudmusic'}"
             ></span>
             <span
               class="iconify-middle iconify ant-design--weibo-circle-filled"
-              th:if="${#strings.equals(item?.type['type'], 'weibo')}"
+              th:if="${item?.type == 'weibo'}"
             ></span>
             <span
               class="iconify-middle iconify ant-design--zhihu-circle-filled"
-              th:if="${#strings.equals(item?.type['type'], 'zhihu')}"
+              th:if="${item?.type == 'zhihu'}"
             ></span>
           </a>
         </th:block>
-        <th:block th:if="${#strings.equals(item?.type['type'], 'text')}">[(${item?.input_value})]</th:block>
-        <th:block th:if="${#strings.equals(item?.type['type'], 'custom_sns')}">
+        <th:block th:if="${item?.type == 'text'}">[(${item?.input_value})]</th:block>
+        <th:block th:if="${item?.type == 'custom_sns'}">
           <th:block
             th:each="custom_sns_item : ${theme.config?.sns?.custom_sns}"
             th:if="${item?.input_value == custom_sns_item?.id}"

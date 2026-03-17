@@ -21,6 +21,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 💥 Breaking Changes
+
+- In the social media settings (`console/theme/settings/sns`), the `index_sns` array has been renamed to `sns_list`, and its `type` field has been changed from an object type to a string type. **Existing configurations require the social media list to be re-configured.**
+
+### 🐛 Bug Fixes
+
+- Fixed an issue where the selected type could not be displayed after saving social media settings (`console/theme/settings/sns`).
+- Fixed an issue where the RSS `<link>` tag was not output when the RSS plugin was not installed but an RSS link was configured in the social media settings.
+
 ## [1.58.2] - 2026-03-18
 
 ### 💥 Breaking Changes

@@ -1667,13 +1667,13 @@ spec:
       label: Social media settings/RSS
       formSchema:
         - $formkit: array
-          name: index_sns
+          name: sns_list
           label: Social media settings
           help: "You can set up your social media information here, and the theme will automatically generate the corresponding link."
           value: []
           itemLabels:
             - type: text
-              label: $value.type.type
+              label: $value.type
           children:
             - $formkit: select
               name: type
@@ -1681,113 +1681,104 @@ spec:
               label: Type
               validation: "required"
               placeholder: "Please select"
+              value: "custom_sns"
               help:
-                if: "$get(index_sns_type).value.type === 'custom_sns'"
+                if: "$get(index_sns_type).value === 'custom_sns'"
                 then: "Enter the id"
                 else:
-                  if: "$get(index_sns_type).value.type === 'text'"
+                  if: "$get(index_sns_type).value === 'text'"
                   then: "Enter any text"
                   else:
-                    if: "$get(index_sns_type).value.type === 'rss'"
+                    if: "$get(index_sns_type).value === 'rss'"
                     then: "Enter the feed address, e.g., /rss.xml"
                     else:
-                      if: "$get(index_sns_type).value.type === 'bilibili'"
+                      if: "$get(index_sns_type).value === 'bilibili'"
                       then: "Enter the UID only"
                       else:
-                        if: "$get(index_sns_type).value.type === 'dribbble'"
+                        if: "$get(index_sns_type).value === 'dribbble'"
                         then: "Enter the username only"
                         else:
-                          if: "$get(index_sns_type).value.type === 'email'"
+                          if: "$get(index_sns_type).value === 'email'"
                           then: "Enter the email address only"
                           else:
-                            if: "$get(index_sns_type).value.type === 'facebook'"
+                            if: "$get(index_sns_type).value === 'facebook'"
                             then: "Enter the username only"
                             else:
-                              if: "$get(index_sns_type).value.type === 'github'"
+                              if: "$get(index_sns_type).value === 'github'"
                               then: "Enter the username only"
                               else:
-                                if: "$get(index_sns_type).value.type === 'instagram'"
+                                if: "$get(index_sns_type).value === 'instagram'"
                                 then: "Enter the username only"
                                 else:
-                                  if: "$get(index_sns_type).value.type === 'qq'"
+                                  if: "$get(index_sns_type).value === 'qq'"
                                   then: "Enter the QQ number only"
                                   else:
-                                    if: "$get(index_sns_type).value.type === 'reddit'"
+                                    if: "$get(index_sns_type).value === 'reddit'"
                                     then: "Enter the ID only"
                                     else:
-                                      if: "$get(index_sns_type).value.type === 'stack_overflow'"
+                                      if: "$get(index_sns_type).value === 'stack_overflow'"
                                       then: "Enter the part of the personal homepage URL after users/"
                                       else:
-                                        if: "$get(index_sns_type).value.type === 'telegram'"
+                                        if: "$get(index_sns_type).value === 'telegram'"
                                         then: "Enter the ID only"
                                         else:
-                                          if: "$get(index_sns_type).value.type === 'x'"
+                                          if: "$get(index_sns_type).value === 'x'"
                                           then: "Enter the username only"
                                           else:
-                                            if: "$get(index_sns_type).value.type === 'youtube'"
+                                            if: "$get(index_sns_type).value === 'youtube'"
                                             then: "Enter the part of the channel URL after channel/"
                                             else:
-                                              if: "$get(index_sns_type).value.type === 'douban'"
+                                              if: "$get(index_sns_type).value === 'douban'"
                                               then: "Enter the part of the personal homepage URL after people/"
                                               else:
-                                                if: "$get(index_sns_type).value.type === 'neteasecloudmusic'"
+                                                if: "$get(index_sns_type).value === 'neteasecloudmusic'"
                                                 then: "Enter the part of the personal homepage URL after ?id="
                                                 else:
-                                                  if: "$get(index_sns_type).value.type === 'weibo'"
+                                                  if: "$get(index_sns_type).value === 'weibo'"
                                                   then: "Enter the ID only"
                                                   else:
-                                                    if: "$get(index_sns_type).value.type === 'zhihu'"
+                                                    if: "$get(index_sns_type).value === 'zhihu'"
                                                     then: "Enter the part of the personal homepage URL after people/"
                                                     else: ""
               options:
                 - label: Custom
-                  value: { type: "custom_sns", url: "", aria-label: "" }
+                  value: "custom_sns"
                 - label: Text
-                  value: { type: "text", url: "", aria-label: "" }
+                  value: "text"
                 - label: RSS
-                  value: { type: "rss", url: "", aria-label: "Find me on RSS" }
+                  value: "rss"
                 - label: BiliBili
-                  value: { type: "bilibili", url: "https://space.bilibili.com/", aria-label: "Find me on BiliBili" }
+                  value: "bilibili"
                 - label: Dribbble
-                  value: { type: "dribbble", url: "https://dribbble.com/", aria-label: "Find me on Dribbble" }
+                  value: "dribbble"
                 - label: Email
-                  value: { type: "email", url: "mailto:", aria-label: "Find me on Email" }
+                  value: "email"
                 - label: Facebook
-                  value: { type: "facebook", url: "https://www.facebook.com/", aria-label: "Find me on Facebook" }
+                  value: "facebook"
                 - label: GitHub
-                  value: { type: "github", url: "https://github.com/", aria-label: "Find me on GitHub" }
+                  value: "github"
                 - label: Instagram
-                  value: { type: "instagram", url: "https://www.instagram.com/", aria-label: "Find me on Instagram" }
+                  value: "instagram"
                 - label: QQ
-                  value: { type: "qq", url: "tencent://message/?Site=&Menu=yes&uin=", aria-label: "Find me on QQ" }
+                  value: "qq"
                 - label: Reddit
-                  value: { type: "reddit", url: "https://www.reddit.com/user/", aria-label: "Find me on Reddit" }
+                  value: "reddit"
                 - label: "Stack Overflow"
-                  value:
-                    {
-                      type: "stack_overflow",
-                      url: "https://stackoverflow.com/users/",
-                      aria-label: "Find me on Stack Overflow",
-                    }
+                  value: "stack_overflow"
                 - label: Telegram
-                  value: { type: "telegram", url: "https://t.me/", aria-label: "Find me on Telegram" }
+                  value: "telegram"
                 - label: X
-                  value: { type: "x", url: "https://x.com/", aria-label: "Find me on X" }
+                  value: "x"
                 - label: YouTube
-                  value: { type: "youtube", url: "https://www.youtube.com/channel/", aria-label: "Find me on YouTube" }
+                  value: "youtube"
                 - label: Douban
-                  value: { type: "douban", url: "https://www.douban.com/people/", aria-label: "Find me on douban" }
+                  value: "douban"
                 - label: NetEase CloudMusic
-                  value:
-                    {
-                      type: "neteasecloudmusic",
-                      url: "https://music.163.com/#/user/home?id=",
-                      aria-label: "Find me on NetEase CloudMusic",
-                    }
+                  value: "neteasecloudmusic"
                 - label: Weibo
-                  value: { type: "weibo", url: "https://weibo.com/", aria-label: "Find me on weibo" }
+                  value: "weibo"
                 - label: Zhihu
-                  value: { type: "zhihu", url: "https://www.zhihu.com/people/", aria-label: "Find me on zhihu" }
+                  value: "zhihu"
             - $formkit: text
               name: input_value
               label: Value
