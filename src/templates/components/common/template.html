@@ -195,84 +195,75 @@
           }
         }
       </script>
-      <li th:each="item : ${theme.config?.share?.button_config}">
-        <a
-          th:if="${item?.name != 'Native'}"
-          class="icon"
-          th:aria-label="#{common.shareModal.share.aria-label(${item?.aria_label})}"
-          th:href="${#strings.replace(#strings.replace(item?.url, '@URL', permalink), '@TITLE', title)}"
+      <th:block th:each="item : ${theme.config?.share?.share_list}">
+        <!--/* Preset: Native */-->
+        <li th:if="${item?.type == 'native'}">
+          <a
+            class="icon"
+            th:aria-label="#{common.shareModal.share.aria-label('Native')}"
+            th:href="|javascript:nativeShare('${permalink}');|"
+          >
+            <span class="iconify mdi--share-circle"></span>
+          </a>
+        </li>
+        <!--/* Preset: non-Native */-->
+        <li
+          th:if="${item?.type != 'native' and item?.type != 'custom_share'}"
+          th:with="shareUrl = ${
+            item?.type == 'email'    ? 'mailto:?subject=@TITLE&body=Check out this article: @URL' :
+            item?.type == 'qrcode'   ? '/themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL' :
+            item?.type == 'facebook' ? 'https://facebook.com/sharer/sharer.php?u=@URL&title=@TITLE' :
+            item?.type == 'x'        ? 'https://x.com/share?url=@URL&title=@TITLE' :
+            item?.type == 'linkedin' ? 'http://www.linkedin.com/shareArticle?url=@URL&title=@TITLE' :
+            item?.type == 'pinterest'? 'https://pinterest.com/pin/create/bookmarklet/?url=@URL&title=@TITLE' :
+            item?.type == 'telegram' ? 'https://telegram.me/share/url?url=@URL&text=@TITLE' :
+            item?.type == 'qq'       ? 'https://connect.qq.com/widget/shareqq/iframe_index.html?url=@URL&title=@TITLE' :
+            item?.type == 'weibo'    ? 'http://service.weibo.com/share/share.php?url=@URL&title=@TITLE' :
+            item?.type == 'wechat'   ? '/themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL' :
+            item?.type == 'qzone'    ? 'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=@URL&title=@TITLE' :
+            item?.type == 'douban'   ? 'https://www.douban.com/share/service?href=@URL&name=@TITLE' :
+            '@URL'}"
         >
-          <span
-            class="iconify"
-            th:style="|--svg:url('${item?.icon.value}')|"
-            th:if="${item?.icon != null} and ${item?.icon != ''}"
-          ></span
-          ><span
-            class="iconify icomoon-free--mail4"
-            th:if="${item?.name == 'E-mail' and (item?.icon == null or item?.icon == '')}"
-          ></span
-          ><span
-            class="iconify pepicons-pencil--qr-code-circle-filled"
-            th:if="${item?.name == 'QRCode' and (item?.icon == null or item?.icon == '')}"
-          ></span
-          ><span
-            class="iconify ic--baseline-facebook"
-            th:if="${item?.name == 'Facebook' and (item?.icon == null or item?.icon == '')}"
-          ></span
-          ><span
-            class="iconify mdi--twitter-circle"
-            th:if="${item?.name == 'X' and (item?.icon == null or item?.icon == '')}"
-          ></span
-          ><span
-            class="iconify entypo-social--linkedin-with-circle"
-            th:if="${item?.name == 'LinkedIn' and (item?.icon == null or item?.icon == '')}"
-          ></span
-          ><span
-            class="iconify mdi--pinterest"
-            th:if="${item?.name == 'Pinterest' and (item?.icon == null or item?.icon == '')}"
-          ></span
-          ><span
-            class="iconify uil--telegram"
-            th:if="${item?.name == 'Telegram' and (item?.icon == null or item?.icon == '')}"
-          ></span
-          ><span
-            class="iconify ant-design--qq-circle-filled"
-            th:if="${item?.name == 'QQ' and (item?.icon == null or item?.icon == '')}"
-          ></span
-          ><span
-            class="iconify ant-design--weibo-circle-filled"
-            th:if="${item?.name == 'Weibo' and (item?.icon == null or item?.icon == '')}"
-          ></span
-          ><span
-            class="iconify ant-design--wechat-filled"
-            th:if="${item?.name == 'WeChat' and (item?.icon == null or item?.icon == '')}"
-          ></span
-          ><span
-            class="iconify cib--qzone"
-            th:if="${item?.name == 'Qzone' and (item?.icon == null or item?.icon == '')}"
-          ></span
-          ><span
-            class="iconify tabler--brand-douban"
-            th:if="${item?.name == 'Douban' and (item?.icon == null or item?.icon == '')}"
-          ></span
-        ></a>
-        <a
-          th:if="${item?.name == 'Native'}"
-          class="icon"
-          th:aria-label="#{common.shareModal.share.aria-label(${item?.aria_label})}"
-          th:href="|javascript:nativeShare('${#strings.replace(item?.url, '@URL', permalink)}');|"
-        >
-          <span
-            class="iconify"
-            th:style="|--svg:url('${item?.icon.value}')|"
-            th:if="${item?.icon != null and item?.icon != ''}"
-          ></span
-          ><span
-            class="iconify mdi--share-circle"
-            th:if="${item?.name == 'Native' and (item?.icon == null or item?.icon == '')}"
-          ></span
-        ></a>
-      </li>
+          <a
+            class="icon"
+            th:aria-label="#{common.shareModal.share.aria-label(${item?.type})}"
+            th:href="${#strings.replace(#strings.replace(shareUrl, '@URL', permalink), '@TITLE', title)}"
+          >
+            <!--/* 自定义图标覆盖 */-->
+            <span class="iconify" th:style="|--svg:url('${item?.icon.value}')|"   th:if="${item?.icon != null and item?.icon != ''}"></span>
+            <!--/* 默认图标 */-->
+            <span class="iconify icomoon-free--mail4"                              th:if="${item?.type == 'email'    and (item?.icon == null or item?.icon == '')}"></span>
+            <span class="iconify pepicons-pencil--qr-code-circle-filled"           th:if="${item?.type == 'qrcode'   and (item?.icon == null or item?.icon == '')}"></span>
+            <span class="iconify ic--baseline-facebook"                            th:if="${item?.type == 'facebook' and (item?.icon == null or item?.icon == '')}"></span>
+            <span class="iconify mdi--twitter-circle"                              th:if="${item?.type == 'x'        and (item?.icon == null or item?.icon == '')}"></span>
+            <span class="iconify entypo-social--linkedin-with-circle"              th:if="${item?.type == 'linkedin' and (item?.icon == null or item?.icon == '')}"></span>
+            <span class="iconify mdi--pinterest"                                   th:if="${item?.type == 'pinterest'and (item?.icon == null or item?.icon == '')}"></span>
+            <span class="iconify uil--telegram"                                    th:if="${item?.type == 'telegram' and (item?.icon == null or item?.icon == '')}"></span>
+            <span class="iconify ant-design--qq-circle-filled"                     th:if="${item?.type == 'qq'       and (item?.icon == null or item?.icon == '')}"></span>
+            <span class="iconify ant-design--weibo-circle-filled"                  th:if="${item?.type == 'weibo'    and (item?.icon == null or item?.icon == '')}"></span>
+            <span class="iconify ant-design--wechat-filled"                        th:if="${item?.type == 'wechat'   and (item?.icon == null or item?.icon == '')}"></span>
+            <span class="iconify cib--qzone"                                       th:if="${item?.type == 'qzone'    and (item?.icon == null or item?.icon == '')}"></span>
+            <span class="iconify tabler--brand-douban"                             th:if="${item?.type == 'douban'   and (item?.icon == null or item?.icon == '')}"></span>
+          </a>
+        </li>
+        <!--/* Custom */-->
+        <th:block th:if="${item?.type == 'custom_share'}">
+          <th:block
+            th:each="custom_item : ${theme.config?.share?.custom_share}"
+            th:if="${item?.custom_id == custom_item?.id}"
+          >
+            <li>
+              <a
+                class="icon"
+                th:aria-label="#{common.shareModal.share.aria-label(${custom_item?.aria_label})}"
+                th:href="${#strings.replace(#strings.replace(custom_item?.url, '@URL', permalink), '@TITLE', title)}"
+              >
+                <span class="iconify" th:style="|--svg:url('${custom_item?.icon.value}')|" th:if="${custom_item?.icon != null and custom_item?.icon != ''}"></span>
+              </a>
+            </li>
+          </th:block>
+        </th:block>
+      </th:block>
     </ul>
   </th:block>
 </th:block>

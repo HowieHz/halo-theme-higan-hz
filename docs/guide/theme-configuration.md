@@ -6528,21 +6528,61 @@ HTML 代码也是可以的：
 
 ## 自定义分享按钮
 
-### 分享按钮设置
+### 分享按钮列表
 
 ::: info 🎯 用途
 
-配置文章页面的分享按钮列表，支持多种分享方式。
+配置文章页面的分享按钮显示与排列顺序，支持多种预设分享方式及自定义按钮。
 
 :::
 ::: info 📂 配置项位置
 
-自定义分享按钮 -> 分享按钮设置
+自定义分享按钮 -> 分享按钮列表
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/share#:~:text=分享按钮设置" />
+<QuickJumpConfig to="/console/theme/settings/share#:~:text=分享按钮列表" />
+
+:::
+::: info 🏷️ 类型
+
+数组（可重复添加多个分享按钮）
+
+:::
+::: info ⭐ 默认值
+
+全部预设类型均默认启用：`native`、`email`、`qrcode`、`facebook`、`x`、`linkedin`、`pinterest`、`telegram`、`qq`、`weibo`、`wechat`、`qzone`、`douban`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.share?.share_list`
+
+:::
+::: info ℹ️ 补充信息
+
+- 预设类型的链接和图标由主题内置，无需手动填写
+- 选择"自定义按钮"时，需填写在"自定义分享按钮"中定义的识别码
+- 可自由调整顺序或删除不需要的按钮
+
+:::
+
+### 自定义分享按钮
+
+::: info 🎯 用途
+
+定义自己的分享按钮，用于在上方列表中使用。
+
+:::
+::: info 📂 配置项位置
+
+自定义分享按钮 -> 自定义分享按钮
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/share#:~:text=自定义分享按钮" />
 
 :::
 ::: info 🏷️ 类型
@@ -6552,19 +6592,19 @@ HTML 代码也是可以的：
 :::
 ::: info ⭐ 默认值
 
-包含多个预设分享按钮：E-mail、QRCode、Native、Facebook、X、LinkedIn、Pinterest、Telegram、QQ、Weibo、WeChat、Qzone、Douban
+空
 
 :::
 ::: info 🧩 模板变量
 
-`theme.config?.share?.button_config`
+`theme.config?.share?.custom_share`
 
 :::
 ::: info ℹ️ 补充信息
 
 - `@URL` 和 `@TITLE` 是占位符，使用时会被替换为页面实际地址和标题
-- 每个分享按钮有四个可配置项：名称、链接、图标（设定后将覆盖默认图标）、`aria-label`（无障碍标签）
-- 可以自由调整顺序、删除或新增分享按钮
+- 每个自定义按钮需配置：识别码、名称、链接、图标（可选）、`aria-label`（无障碍标签）
+- 定义后需在上方"分享按钮列表"中选择"自定义按钮"并填写识别码才会显示
 
 :::
 

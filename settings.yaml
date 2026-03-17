@@ -1817,68 +1817,91 @@ spec:
       label: 自定义分享按钮
       formSchema:
         - $formkit: array
-          name: button_config
-          label: 分享按钮设置
-          help: "@URL 和 @TITLE 是占位符，使用中会被替换为页面实际地址和标题"
+          name: share_list
+          label: 分享按钮列表
+          help: "控制分享按钮的显示与排列顺序"
+          value:
+            - type: "native"
+            - type: "email"
+            - type: "qrcode"
+            - type: "facebook"
+            - type: "x"
+            - type: "linkedin"
+            - type: "pinterest"
+            - type: "telegram"
+            - type: "qq"
+            - type: "weibo"
+            - type: "wechat"
+            - type: "qzone"
+            - type: "douban"
+          itemLabels:
+            - type: text
+              label: $value.type
+          children:
+            - $formkit: select
+              name: type
+              id: share_list_type
+              label: 类型
+              value: "native"
+              validation: "required"
+              options:
+                - label: Native
+                  value: "native"
+                - label: E-mail
+                  value: "email"
+                - label: QRCode
+                  value: "qrcode"
+                - label: Facebook
+                  value: "facebook"
+                - label: X
+                  value: "x"
+                - label: LinkedIn
+                  value: "linkedin"
+                - label: Pinterest
+                  value: "pinterest"
+                - label: Telegram
+                  value: "telegram"
+                - label: QQ
+                  value: "qq"
+                - label: Weibo
+                  value: "weibo"
+                - label: WeChat
+                  value: "wechat"
+                - label: Qzone
+                  value: "qzone"
+                - label: Douban
+                  value: "douban"
+                - label: 自定义按钮
+                  value: "custom_share"
+            - $formkit: iconify
+              name: icon
+              label: 图标
+              format: dataurl
+              value: ""
+              help: "设置后覆盖默认图标"
+            - $formkit: text
+              name: custom_id
+              label: 识别码
+              if: "$get(share_list_type).value === 'custom_share'"
+              validation: "required"
+              help: "填写在下方定义的自定义按钮识别码"
+        - $formkit: array
+          name: custom_share
+          label: 自定义分享按钮
+          value: []
+          help: "@URL 和 @TITLE 是占位符，使用中会被替换为页面实际地址和标题。在此处定义完后，别忘记在上方列表中添加"
           itemLabels:
             - type: iconify
               label: $value.icon
             - type: text
-              label: $value.name
-          value:
-            - name: Native
-              url: "@URL"
-              icon: ""
-              aria_label: Native
-            - name: E-mail
-              url: "mailto:?subject=@TITLE&body=Check out this article: @URL"
-              icon: ""
-              aria_label: E-mail
-            - name: QRCode
-              url: /themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL
-              icon: ""
-              aria_label: QRCode
-            - name: Facebook
-              url: https://facebook.com/sharer/sharer.php?u=@URL&title=@TITLE
-              icon: ""
-              aria_label: Facebook
-            - name: X
-              url: https://x.com/share?url=@URL&title=@TITLE
-              icon: ""
-              aria_label: X
-            - name: LinkedIn
-              url: http://www.linkedin.com/shareArticle?url=@URL&title=@TITLE
-              icon: ""
-              aria_label: LinkedIn
-            - name: Pinterest
-              url: https://pinterest.com/pin/create/bookmarklet/?url=@URL&title=@TITLE
-              icon: ""
-              aria_label: Pinterest
-            - name: Telegram
-              url: https://telegram.me/share/url?url=@URL&text=@TITLE
-              icon: ""
-              aria_label: Telegram
-            - name: QQ
-              url: https://connect.qq.com/widget/shareqq/iframe_index.html?url=@URL&title=@TITLE
-              icon: ""
-              aria_label: QQ
-            - name: Weibo
-              url: http://service.weibo.com/share/share.php?url=@URL&title=@TITLE
-              icon: ""
-              aria_label: Weibo
-            - name: WeChat
-              url: /themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL
-              icon: ""
-              aria_label: WeChat
-            - name: Qzone
-              url: https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=@URL&title=@TITLE
-              icon: ""
-              aria_label: Qzone
-            - name: Douban
-              url: https://www.douban.com/share/service?href=@URL&name=@TITLE
-              icon: ""
-              aria_label: Douban
+              label: $value.id
           children:
+            - $formkit: text
+              name: id
+              label: 识别码
+              value: ""
+              validation: "required"
+              help: "任意字母、数字、下划线组合，如：myShare"
             - $formkit: text
               name: name
               label: 名称
@@ -1894,7 +1917,6 @@ spec:
               label: 图标
               format: dataurl
               value: ""
-              help: 设置后覆盖默认图标
             - $formkit: text
               name: aria_label
               label: aria-label
