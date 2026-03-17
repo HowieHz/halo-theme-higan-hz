@@ -1667,13 +1667,12 @@ spec:
       label: 社交资料/RSS
       formSchema:
         - $formkit: array
-          name: index_sns
+          name: sns_list
           label: 首页社交资料展示
-          help: 注：刷新页面后发现选择的“类型“消失了是正常情况，数据实际是保存着的
           value: []
           itemLabels:
             - type: text
-              label: $value.type.type
+              label: $value.type
           children:
             - $formkit: select
               name: type
@@ -1681,113 +1680,104 @@ spec:
               label: 类型
               validation: "required"
               placeholder: "请选择你要展示的社交资料"
+              value: "custom_sns"
               help:
-                if: "$get(index_sns_type).value.type === 'custom_sns'"
+                if: "$get(index_sns_type).value === 'custom_sns'"
                 then: "在此处填写在下方定义的识别码"
                 else:
-                  if: "$get(index_sns_type).value.type === 'text'"
+                  if: "$get(index_sns_type).value === 'text'"
                   then: "填入任意纯文本"
                   else:
-                    if: "$get(index_sns_type).value.type === 'rss'"
+                    if: "$get(index_sns_type).value === 'rss'"
                     then: "填入 feed 地址，示例：/rss.xml"
                     else:
-                      if: "$get(index_sns_type).value.type === 'bilibili'"
+                      if: "$get(index_sns_type).value === 'bilibili'"
                       then: "只需填入 uid"
                       else:
-                        if: "$get(index_sns_type).value.type === 'dribbble'"
+                        if: "$get(index_sns_type).value === 'dribbble'"
                         then: "只需填入用户名"
                         else:
-                          if: "$get(index_sns_type).value.type === 'email'"
+                          if: "$get(index_sns_type).value === 'email'"
                           then: "只需填入邮箱地址"
                           else:
-                            if: "$get(index_sns_type).value.type === 'facebook'"
+                            if: "$get(index_sns_type).value === 'facebook'"
                             then: "只需填入用户名"
                             else:
-                              if: "$get(index_sns_type).value.type === 'github'"
+                              if: "$get(index_sns_type).value === 'github'"
                               then: "只需填入用户名"
                               else:
-                                if: "$get(index_sns_type).value.type === 'instagram'"
+                                if: "$get(index_sns_type).value === 'instagram'"
                                 then: "只需填入用户名"
                                 else:
-                                  if: "$get(index_sns_type).value.type === 'qq'"
+                                  if: "$get(index_sns_type).value === 'qq'"
                                   then: "只需填入 QQ 号"
                                   else:
-                                    if: "$get(index_sns_type).value.type === 'reddit'"
+                                    if: "$get(index_sns_type).value === 'reddit'"
                                     then: "只需填入 ID"
                                     else:
-                                      if: "$get(index_sns_type).value.type === 'stack_overflow'"
+                                      if: "$get(index_sns_type).value === 'stack_overflow'"
                                       then: "只需填入个人主页网址在 users/ 后的部分"
                                       else:
-                                        if: "$get(index_sns_type).value.type === 'telegram'"
+                                        if: "$get(index_sns_type).value === 'telegram'"
                                         then: "只需填入 ID"
                                         else:
-                                          if: "$get(index_sns_type).value.type === 'x'"
+                                          if: "$get(index_sns_type).value === 'x'"
                                           then: "只需填入用户名"
                                           else:
-                                            if: "$get(index_sns_type).value.type === 'youtube'"
+                                            if: "$get(index_sns_type).value === 'youtube'"
                                             then: "只需填写频道网址在 channel/ 后的部分"
                                             else:
-                                              if: "$get(index_sns_type).value.type === 'douban'"
+                                              if: "$get(index_sns_type).value === 'douban'"
                                               then: "只需填写个人主页网址在 people/ 后的部分"
                                               else:
-                                                if: "$get(index_sns_type).value.type === 'neteasecloudmusic'"
+                                                if: "$get(index_sns_type).value === 'neteasecloudmusic'"
                                                 then: "只需填写个人主页网址在 ?id= 后的部分"
                                                 else:
-                                                  if: "$get(index_sns_type).value.type === 'weibo'"
+                                                  if: "$get(index_sns_type).value === 'weibo'"
                                                   then: "只需填入 ID"
                                                   else:
-                                                    if: "$get(index_sns_type).value.type === 'zhihu'"
+                                                    if: "$get(index_sns_type).value === 'zhihu'"
                                                     then: "只需填写个人主页网址在 people/ 后的部分"
                                                     else: ""
               options:
                 - label: 自定义资料
-                  value: { type: "custom_sns", url: "", aria-label: "" }
+                  value: "custom_sns"
                 - label: 纯文本
-                  value: { type: "text", url: "", aria-label: "" }
+                  value: "text"
                 - label: RSS
-                  value: { type: "rss", url: "", aria-label: "Find me on RSS" }
+                  value: "rss"
                 - label: BiliBili
-                  value: { type: "bilibili", url: "https://space.bilibili.com/", aria-label: "Find me on BiliBili" }
+                  value: "bilibili"
                 - label: Dribbble
-                  value: { type: "dribbble", url: "https://dribbble.com/", aria-label: "Find me on Dribbble" }
+                  value: "dribbble"
                 - label: Email
-                  value: { type: "email", url: "mailto:", aria-label: "Find me on Email" }
+                  value: "email"
                 - label: Facebook
-                  value: { type: "facebook", url: "https://www.facebook.com/", aria-label: "Find me on Facebook" }
+                  value: "facebook"
                 - label: GitHub
-                  value: { type: "github", url: "https://github.com/", aria-label: "Find me on GitHub" }
+                  value: "github"
                 - label: Instagram
-                  value: { type: "instagram", url: "https://www.instagram.com/", aria-label: "Find me on Instagram" }
+                  value: "instagram"
                 - label: QQ
-                  value: { type: "qq", url: "tencent://message/?Site=&Menu=yes&uin=", aria-label: "Find me on QQ" }
+                  value: "qq"
                 - label: Reddit
-                  value: { type: "reddit", url: "https://www.reddit.com/user/", aria-label: "Find me on Reddit" }
+                  value: "reddit"
                 - label: "Stack Overflow"
-                  value:
-                    {
-                      type: "stack_overflow",
-                      url: "https://stackoverflow.com/users/",
-                      aria-label: "Find me on Stack Overflow",
-                    }
+                  value: "stack_overflow"
                 - label: Telegram
-                  value: { type: "telegram", url: "https://t.me/", aria-label: "Find me on Telegram" }
+                  value: "telegram"
                 - label: X
-                  value: { type: "x", url: "https://x.com/", aria-label: "Find me on X" }
+                  value: "x"
                 - label: YouTube
-                  value: { type: "youtube", url: "https://www.youtube.com/channel/", aria-label: "Find me on YouTube" }
+                  value: "youtube"
                 - label: 豆瓣
-                  value: { type: "douban", url: "https://www.douban.com/people/", aria-label: "Find me on douban" }
+                  value: "douban"
                 - label: 网易云音乐
-                  value:
-                    {
-                      type: "neteasecloudmusic",
-                      url: "https://music.163.com/#/user/home?id=",
-                      aria-label: "Find me on NetEase CloudMusic",
-                    }
+                  value: "neteasecloudmusic"
                 - label: 微博
-                  value: { type: "weibo", url: "https://weibo.com/", aria-label: "Find me on weibo" }
+                  value: "weibo"
                 - label: 知乎
-                  value: { type: "zhihu", url: "https://www.zhihu.com/people/", aria-label: "Find me on zhihu" }
+                  value: "zhihu"
             - $formkit: text
               name: input_value
               label: 值
