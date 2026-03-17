@@ -37,23 +37,7 @@ jobs:
         run: |
           WINDOW_START=$(TZ=Asia/Shanghai date -d 'yesterday 00:00:00' '+%Y-%m-%d %H:%M:%S %z')
           WINDOW_END=$(TZ=Asia/Shanghai date -d 'today 00:00:00' '+%Y-%m-%d %H:%M:%S %z')
-          LATEST_STABLE=$(git tag --merged HEAD --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 || true)
-          LATEST_PRERELEASE=$(git tag --merged HEAD --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+-' | head -n 1 || true)
-          if [ -n "$LATEST_STABLE" ] && [ -n "$LATEST_PRERELEASE" ]; then
-            STABLE_CT=$(git log -1 --format='%ct' "$LATEST_STABLE")
-            PRERELEASE_CT=$(git log -1 --format='%ct' "$LATEST_PRERELEASE")
-            if [ "$STABLE_CT" -ge "$PRERELEASE_CT" ]; then
-              LAST_VERSION_TAG="$LATEST_STABLE"
-            else
-              LAST_VERSION_TAG="$LATEST_PRERELEASE"
-            fi
-          elif [ -n "$LATEST_STABLE" ]; then
-            LAST_VERSION_TAG="$LATEST_STABLE"
-          elif [ -n "$LATEST_PRERELEASE" ]; then
-            LAST_VERSION_TAG="$LATEST_PRERELEASE"
-          else
-            LAST_VERSION_TAG=""
-          fi
+          LAST_VERSION_TAG=$(git -c versionsort.suffix='-' tag --merged HEAD --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?$' | head -n 1 || true)
           if [ -n "$LAST_VERSION_TAG" ]; then
             COMMIT_RANGE="$LAST_VERSION_TAG..HEAD"
           else
