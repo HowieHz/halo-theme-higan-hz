@@ -37,9 +37,9 @@ jobs:
         run: |
           WINDOW_START=$(TZ=Asia/Shanghai date -d 'yesterday 00:00:00' '+%Y-%m-%d %H:%M:%S %z')
           WINDOW_END=$(TZ=Asia/Shanghai date -d 'today 00:00:00' '+%Y-%m-%d %H:%M:%S %z')
-          LAST_STABLE_TAG=$(git tag --merged HEAD --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 || true)
-          if [ -n "$LAST_STABLE_TAG" ]; then
-            COMMIT_RANGE="$LAST_STABLE_TAG..HEAD"
+          LAST_VERSION_TAG=$(git tag --merged HEAD --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?$' | head -n 1 || true)
+          if [ -n "$LAST_VERSION_TAG" ]; then
+            COMMIT_RANGE="$LAST_VERSION_TAG..HEAD"
           else
             COMMIT_RANGE="HEAD"
           fi
@@ -47,7 +47,7 @@ jobs:
           COMMIT_COUNT=$(git log "$COMMIT_RANGE" --since="$WINDOW_START" --until="$WINDOW_END" --format='%s' \
             | awk -v prefix="$EXCLUDED_SUBJECT_PREFIX" 'index($0, prefix) != 1' \
             | grep -c . || true)
-          echo "last_stable_tag=${LAST_STABLE_TAG:-none}" >> "$GITHUB_OUTPUT"
+          echo "last_version_tag=${LAST_VERSION_TAG:-none}" >> "$GITHUB_OUTPUT"
           echo "commit_range=$COMMIT_RANGE" >> "$GITHUB_OUTPUT"
           echo "commit_count=$COMMIT_COUNT" >> "$GITHUB_OUTPUT"
           if [ "$FORCE" = "true" ] || [ "$COMMIT_COUNT" -gt 0 ]; then
