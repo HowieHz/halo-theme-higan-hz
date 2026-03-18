@@ -23,8 +23,6 @@
                                (${color_schema} == 'dark-blue' ? 'dark' :
                                (${color_schema} == 'gray' ? 'light' : 'auto'))))))),
            theme = ${color_schema} != 'custom' ? ${color_schema} : 'theme-'+${custom_color_schema_init_id}"
-  th:data-mermaid-url="${theme.config?.global?.is_mermaid_enable} ? ${theme.config?.global?.mermaid_script_url}"
-  th:data-mermaid-selector="${theme.config?.global?.is_mermaid_enable} ? ${theme.config?.global?.mermaid_selector}"
   th:fragment="html"
 >
   <!--/* th:fragment="html (title, head, content, header, navbar, language)" */-->
@@ -799,8 +797,17 @@ html[theme="theme-[(${colorSchema.id})]"] {
     <th:block th:replace="${head}" />
     <!--/* js/css injection end */-->
     <!--/* Mermaid injection start */-->
-    <script th:inline="javascript" th:if="${theme.config?.global?.is_mermaid_enable}">
-      window.__mermaidConfig = /*[(${theme.config?.global?.mermaid_config})]*/ {};
+    <script
+      id="mermaid-runtime-config"
+      type="application/json"
+      th:if="${theme.config?.global?.is_mermaid_enable}"
+      th:inline="javascript"
+    >
+      {
+        "url": /*[[${theme.config?.global?.mermaid_script_url}]]*/ "",
+        "selector": /*[[${theme.config?.global?.mermaid_selector}]]*/ ".content .mermaid",
+        "config": /*[[${theme.config?.global?.mermaid_config}]]*/ "{startOnLoad: false}"
+      }
     </script>
     <th:block
       th:if="${theme.config?.global?.is_mermaid_enable}"

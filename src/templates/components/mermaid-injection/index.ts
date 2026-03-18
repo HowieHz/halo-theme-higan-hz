@@ -1,9 +1,18 @@
-import type { MermaidConfig, MermaidModule, MermaidRenderResult, MermaidTheme, ReferenceAttribute } from "./types";
+import type {
+  MermaidConfig,
+  MermaidModule,
+  MermaidRenderResult,
+  MermaidRuntimeConfig,
+  MermaidTheme,
+  ReferenceAttribute,
+} from "./types";
 
-declare global {
-  interface Window {
-    __mermaidConfig?: MermaidConfig;
-  }
+const MERMAID_CONFIG_HINT =
+  "Please provide a Mermaid config as a JS object literal string such as { startOnLoad: false }.";
+const MERMAID_LOG_PREFIX = "[Higan Haozi][mermaid-injection]";
+
+function isMermaidConfig(value: unknown): value is MermaidConfig {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 function genUUID(): string {
@@ -12,6 +21,51 @@ function genUUID(): string {
     const randomValue = crypto.getRandomValues(new Uint8Array(1))[0];
     return (digit ^ (randomValue & (15 >> (digit / 4)))).toString(16);
   });
+}
+
+function getMermaidRuntimeConfig(): MermaidRuntimeConfig | null {
+  const configElement = document.querySelector<HTMLScriptElement>("#mermaid-runtime-config");
+  const configText = configElement?.textContent?.trim();
+
+  if (!configText) {
+    return null;
+  }
+
+  const runtimeConfig = JSON.parse(configText) as {
+    url: string;
+    selector: string;
+    config?: string;
+  };
+  const trimmedConfig = runtimeConfig.config?.trim();
+
+  let parsedConfig: MermaidConfig | undefined;
+  if (trimmedConfig) {
+    try {
+      const objectLiteralConfig = Function(`"use strict"; return (${trimmedConfig});`)() as unknown;
+      if (isMermaidConfig(objectLiteralConfig)) {
+        parsedConfig = objectLiteralConfig;
+      } else {
+        console.error(`${MERMAID_LOG_PREFIX} Mermaid config must evaluate to an object. ${MERMAID_CONFIG_HINT}`, {
+          config: trimmedConfig,
+          parsedConfig: objectLiteralConfig,
+        });
+      }
+    } catch (objectLiteralError: unknown) {
+      console.error(
+        `${MERMAID_LOG_PREFIX} Failed to parse Mermaid config as a JS object literal string. ${MERMAID_CONFIG_HINT}`,
+        {
+          config: trimmedConfig,
+          objectLiteralError,
+        },
+      );
+    }
+  }
+
+  return {
+    url: runtimeConfig.url,
+    selector: runtimeConfig.selector,
+    config: parsedConfig,
+  };
 }
 
 function updateAttribute(refElement: Element, attribute: ReferenceAttribute, originalId: string, newId: string): void {
@@ -25,8 +79,8 @@ function renderMermaid(mermaid: MermaidModule, item: HTMLElement, id: string, th
   const fallbackContent = item.textContent ?? "";
   let rawContent = fallbackContent;
 
-  // 如果标签为 text-diagram 且 data-type 为 mermaid，
-  // 则读取 data-content 作为原始内容，适配文本绘图插件在默认编辑器中的插入。
+  // If the element is a text-diagram mermaid block, read from data-content
+  // to support content inserted by the default editor of the text-diagram plugin.
   if (item.tagName === "TEXT-DIAGRAM" && item.getAttribute("data-type") === "mermaid") {
     rawContent = item.getAttribute("data-content") ?? fallbackContent;
   }
@@ -53,15 +107,15 @@ function renderMermaid(mermaid: MermaidModule, item: HTMLElement, id: string, th
       parentElement.insertBefore(div, item.nextSibling);
       div.setAttribute("data-processed", "true");
 
-      // 为每个 SVG 元素中的 id 添加前缀，
-      // 先规避上游尚未解决的冲突问题：https://github.com/mermaid-js/mermaid/issues/5741
+      // Prefix ids inside each rendered SVG first to avoid collisions before
+      // upstream fully addresses the issue: https://github.com/mermaid-js/mermaid/issues/5741
       const svgElement = div.querySelector("svg");
       if (!svgElement) {
         item.style.display = "none";
         return;
       }
 
-      // 更新 id。
+      // Update ids and all attributes that reference them.
       svgElement.querySelectorAll("[id]").forEach((element) => {
         const originalId = element.getAttribute("id");
         if (!originalId) {
@@ -74,9 +128,10 @@ function renderMermaid(mermaid: MermaidModule, item: HTMLElement, id: string, th
         const elementsUsingId = svgElement.querySelectorAll(
           `[marker-start*="#${originalId}"], [marker-mid*="#${originalId}"], [marker-end*="#${originalId}"], [href*="#${originalId}"], [xlink\\:href*="#${originalId}"]`,
         );
-        // 更新引用这些 id 的元素。
-        // marker 常见引用属性有 marker-start、marker-mid、marker-end。
-        // symbol 可能被 use 引用；xlink:href 虽已废弃，但仍有一些库在使用，现在也要兼容 href。
+
+        // marker references commonly use marker-start, marker-mid, marker-end.
+        // symbol/use references may still rely on deprecated xlink:href, so
+        // both href and xlink:href need to stay in sync.
         const attributesToUpdate: ReferenceAttribute[] = [
           "marker-start",
           "marker-mid",
@@ -92,7 +147,7 @@ function renderMermaid(mermaid: MermaidModule, item: HTMLElement, id: string, th
         });
       });
 
-      // 隐藏原始元素。
+      // Hide the original source element after rendering succeeds.
       item.style.display = "none";
     })
     .catch((error: unknown) => {
@@ -107,31 +162,31 @@ function renderMermaid(mermaid: MermaidModule, item: HTMLElement, id: string, th
 }
 
 async function initMermaid(): Promise<void> {
-  const { mermaidUrl, mermaidSelector } = document.documentElement.dataset;
-  if (!mermaidUrl || !mermaidSelector) {
+  const runtimeConfig = getMermaidRuntimeConfig();
+  if (!runtimeConfig) {
     return;
   }
 
-  const { default: mermaid } = (await import(mermaidUrl)) as {
+  const { url, selector, config } = runtimeConfig;
+  const { default: mermaid } = (await import(url)) as {
     default: MermaidModule;
   };
 
-  mermaid.initialize(window.__mermaidConfig);
+  mermaid.initialize(config);
 
-  document.querySelectorAll<HTMLElement>(mermaidSelector).forEach((item) => {
+  document.querySelectorAll<HTMLElement>(selector).forEach((item) => {
     const rawContent = item.textContent ?? "";
 
-    // 如果已经处理过或者内容为空，就不再处理。
+    // Skip elements that are already processed or do not contain content.
     if (item.getAttribute("data-processed") === "true" || rawContent.trim() === "") {
       return;
     }
 
-    // 生成唯一 id。
+    // Generate a unique id for each render.
     const id = `mermaid${genUUID()}`;
 
-    // 不是 auto 模式（class 不含 auto），直接渲染。
+    // Non-auto mode renders only the requested theme variant.
     if (!item.classList.contains("auto")) {
-      // 如果 class 有 dark 或者 light，就渲染对应主题；否则 theme 设为 null。
       if (item.classList.contains("dark")) {
         void renderMermaid(mermaid, item, id, "dark");
       } else if (item.classList.contains("light")) {
@@ -144,10 +199,8 @@ async function initMermaid(): Promise<void> {
       return;
     }
 
-    // auto 模式下，渲染两种主题。
-    // 渲染暗黑模式。
+    // Auto mode renders both dark and light variants.
     void renderMermaid(mermaid, item, id, "dark");
-    // 渲染明亮模式。
     void renderMermaid(mermaid, item, id, "light");
 
     item.setAttribute("data-processed", "true");

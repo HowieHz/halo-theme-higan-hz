@@ -14,6 +14,12 @@ export type MermaidConfig = {
   [key: string]: MermaidConfigValue | undefined;
 };
 
+export type MermaidRuntimeConfig = {
+  url: string;
+  selector: string;
+  config?: MermaidConfig;
+};
+
 export type MermaidRenderResult = {
   svg: string;
   bindFunctions?: (element: Element) => void;
