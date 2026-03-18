@@ -409,8 +409,12 @@
         }
       });
     </script>
-    <script th:inline="javascript" th:if="${theme.config?.post_styles?.is_post_upvote_button_show}">
+    <script
+      th:if="${theme.config?.post_styles?.is_post_upvote_button_show}"
+      th:data-network-request-failed="#{common.error.networkRequestFailed}"
+    >
       const likes_localstorage_key = "higan.likes.post.ids";
+      const networkRequestFailedMessage = document.currentScript?.dataset.networkRequestFailed ?? "网络请求失败，请稍后再试";
       let likedPostNames = JSON.parse(localStorage.getItem(likes_localstorage_key) || "[]");
       likedPostNames.forEach((postName) => {
         activeUpvote(postName);
@@ -432,7 +436,7 @@
           activeUpvote(postName);
         };
         xhr.onerror = function () {
-          alert(/*[[#{common.error.networkRequestFailed}]]*/ "网络请求失败，请稍后再试");
+          alert(networkRequestFailedMessage);
         };
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.send(
