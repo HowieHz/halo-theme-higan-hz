@@ -797,18 +797,6 @@ html[theme="theme-[(${colorSchema.id})]"] {
     <th:block th:replace="${head}" />
     <!--/* js/css injection end */-->
     <!--/* Mermaid injection start */-->
-    <script
-      id="mermaid-runtime-config"
-      type="application/json"
-      th:if="${theme.config?.global?.is_mermaid_enable}"
-      th:inline="javascript"
-    >
-      {
-        "url": /*[[${theme.config?.global?.mermaid_script_url}]]*/ "",
-        "selector": /*[[${theme.config?.global?.mermaid_selector}]]*/ ".content .mermaid",
-        "config": /*[[${theme.config?.global?.mermaid_config}]]*/ "{startOnLoad: false}"
-      }
-    </script>
     <th:block
       th:if="${theme.config?.global?.is_mermaid_enable}"
       th:insert="~{components/mermaid-injection/template :: head}"

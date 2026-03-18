@@ -24,7 +24,7 @@ function genUUID(): string {
 }
 
 function getMermaidRuntimeConfig(): MermaidRuntimeConfig | null {
-  const configElement = document.querySelector<HTMLScriptElement>("#mermaid-runtime-config");
+  const configElement = document.querySelector<HTMLScriptElement>("#mermaid-config");
   const configText = configElement?.textContent?.trim();
 
   if (!configText) {
