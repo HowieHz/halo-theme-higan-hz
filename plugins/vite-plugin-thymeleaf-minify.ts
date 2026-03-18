@@ -112,10 +112,14 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
           }
         }
 
-        if (!hasHighRiskThymeleafSyntax(html)) {
+        const highRiskMarkers = getHighRiskThymeleafMarkers(html);
+
+        if (highRiskMarkers.length === 0) {
           html = minifyHtml.minify(Buffer.from(html), {}).toString();
         } else {
-          console.log(`[thymeleaf-minify] Skipped aggressive minify for ${ctx.path} due to high-risk Thymeleaf syntax.`);
+          console.log(
+            `[thymeleaf-minify] Skipped aggressive minify for ${ctx.path} due to high-risk Thymeleaf syntax: ${highRiskMarkers.join(", ")}`,
+          );
         }
 
         return html;
@@ -321,7 +325,7 @@ function removeNestedThymeleafComments(html: string): string {
   return result.join("");
 }
 
-function hasHighRiskThymeleafSyntax(html: string): boolean {
+function getHighRiskThymeleafMarkers(html: string): string[] {
   return [
     "th:inline",
     "/*[[",
@@ -332,5 +336,5 @@ function hasHighRiskThymeleafSyntax(html: string): boolean {
     "/*/-->",
     "[[",
     "[(",
-  ].some((marker) => html.includes(marker));
+  ].filter((marker) => html.includes(marker));
 }
