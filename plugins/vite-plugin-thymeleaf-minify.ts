@@ -1,6 +1,8 @@
+import { Buffer } from "node:buffer";
 import { promises as fs } from "node:fs";
 import { dirname, resolve } from "node:path";
 
+import minifyHtml from "@minify-html/node";
 import type { Plugin } from "vite";
 
 /**
@@ -108,6 +110,12 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
             }
             removedScripts.get(scriptSrc)?.add(ctx.path);
           }
+        }
+
+        if (!hasHighRiskThymeleafSyntax(html)) {
+          html = minifyHtml.minify(Buffer.from(html), {}).toString();
+        } else {
+          console.log(`[thymeleaf-minify] Skipped aggressive minify for ${ctx.path} due to high-risk Thymeleaf syntax.`);
         }
 
         return html;
@@ -311,4 +319,18 @@ function removeNestedThymeleafComments(html: string): string {
   }
 
   return result.join("");
+}
+
+function hasHighRiskThymeleafSyntax(html: string): boolean {
+  return [
+    "th:inline",
+    "/*[[",
+    "/*[(",
+    "/*[#",
+    "/*[/]",
+    "<!--/*/",
+    "/*/-->",
+    "[[",
+    "[(",
+  ].some((marker) => html.includes(marker));
 }
