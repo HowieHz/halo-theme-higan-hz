@@ -1382,17 +1382,9 @@ html[theme="theme-[(${colorSchema.id})]"] {
         </footer>
       </div>
     </div>
-    <!--/* instant.page injection start */-->
-    <th:block th:if="${theme.config?.global?.is_instant_page_enable}">
-      <script
-        skip-sri
-        type="module"
-        crossorigin
-        th:src="@{/assets/lib/instantpage/5.2.0.js(v=${theme.spec.version})}"
-        integrity="sha384-jnZyxPjiipYXnSU0ygqeac2q7CVYMbh84q0uHVRRxEtvFPiQYbXWUorga2aqZJ0z"
-        defer
-      ></script>
-    </th:block>
-    <!--/* instant.page injection end */-->
+    <th:block
+      th:if="${theme.config?.global?.is_instant_page_enable}"
+      th:insert="~{components/instantpage-injection/template :: head}"
+    ></th:block>
   </body>
 </html>
