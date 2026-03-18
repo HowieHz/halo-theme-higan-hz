@@ -1,0 +1,12 @@
+<!--/*-->
+<head th:remove="tag"></head>
+<!--*/-->
+<body th:remove="tag">
+  <!--/*/
+  <style th:inline="css">
+    .content > p:not(:has(img:only-child)) {
+      text-indent: /*[(${theme.config?.post_styles?.paragraph_first_line_indent_value})]*/ 2em;
+    }
+  </style>
+  /*/-->
+</body>

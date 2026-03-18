@@ -159,6 +159,14 @@ export default defineConfig((): UserConfig => {
             __dirname,
             "src/templates/components/text-size-large/template.html",
           ),
+          "components-toc-max-width-style": path.resolve(
+            __dirname,
+            "src/templates/components/toc-max-width-style/template.html",
+          ),
+          "components-paragraph-first-line-indent-style": path.resolve(
+            __dirname,
+            "src/templates/components/paragraph-first-line-indent-style/template.html",
+          ),
           "components-theme-dark": path.resolve(__dirname, "src/templates/components/theme-dark/template.html"),
           "components-theme-light": path.resolve(__dirname, "src/templates/components/theme-light/template.html"),
           "components-theme-dark-blue": path.resolve(
