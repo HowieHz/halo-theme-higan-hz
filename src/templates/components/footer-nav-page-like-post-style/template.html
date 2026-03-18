@@ -25,8 +25,8 @@
           aria-controls="nav-footer"
         >
           <span class="iconify ic--baseline-menu"></span>
-          [(#{fragment.footer-nav.menu})]</a
-        >
+          <span th:text="#{fragment.footer-nav.menu}"></span>
+        </a>
         <a
           id="toc"
           class="icon"
@@ -37,8 +37,8 @@
           aria-controls="toc-footer"
         >
           <span class="iconify ic--baseline-toc"></span>
-          [(#{fragment.footer-nav.toc})]</a
-        >
+          <span th:text="#{fragment.footer-nav.toc}"></span>
+        </a>
         <a
           id="share"
           class="icon"
@@ -50,8 +50,8 @@
           th:if="${theme.config?.post_styles?.is_show_share_footer}"
         >
           <span class="iconify ic--baseline-share"></span>
-          [(#{fragment.footer-nav.share})]</a
-        >
+          <span th:text="#{fragment.footer-nav.share}"></span>
+        </a>
         <a
           id="top"
           style="transform: scale(0); width: 0"
