@@ -1,11 +1,8 @@
-import type {
-  MermaidConfig,
-  MermaidModule,
-  MermaidRenderResult,
-  MermaidRuntimeConfig,
-  MermaidTheme,
-  ReferenceAttribute,
-} from "./types";
+import mermaid, { type MermaidConfig, type RenderResult } from "mermaid";
+
+type MermaidRenderThemeMode = "dark" | "light" | null;
+
+type ReferenceAttribute = "marker-start" | "marker-mid" | "marker-end" | "xlink:href" | "href";
 
 const MERMAID_CONFIG_HINT =
   "Please provide a Mermaid config as a JS object literal string such as { startOnLoad: false }.";
@@ -23,7 +20,7 @@ function genUUID(): string {
   });
 }
 
-function getMermaidRuntimeConfig(): MermaidRuntimeConfig | null {
+function getMermaidRuntimeConfig(): { selector: string; config?: MermaidConfig } | null {
   const configElement = document.querySelector<HTMLScriptElement>("#mermaid-config");
   const configText = configElement?.textContent?.trim();
 
@@ -32,7 +29,6 @@ function getMermaidRuntimeConfig(): MermaidRuntimeConfig | null {
   }
 
   const runtimeConfig = JSON.parse(configText) as {
-    url: string;
     selector: string;
     config?: string;
   };
@@ -62,7 +58,6 @@ function getMermaidRuntimeConfig(): MermaidRuntimeConfig | null {
   }
 
   return {
-    url: runtimeConfig.url,
     selector: runtimeConfig.selector,
     config: parsedConfig,
   };
@@ -75,7 +70,7 @@ function updateAttribute(refElement: Element, attribute: ReferenceAttribute, ori
   }
 }
 
-function renderMermaid(mermaid: MermaidModule, item: HTMLElement, id: string, theme: MermaidTheme): Promise<void> {
+function renderMermaid(item: HTMLElement, id: string, theme: MermaidRenderThemeMode): Promise<void> {
   const fallbackContent = item.textContent ?? "";
   let rawContent = fallbackContent;
 
@@ -90,7 +85,7 @@ function renderMermaid(mermaid: MermaidModule, item: HTMLElement, id: string, th
 
   return mermaid
     .render(renderId, content)
-    .then((mermaidData: MermaidRenderResult) => {
+    .then((mermaidData: RenderResult) => {
       const parentElement = item.parentElement;
       if (!parentElement) {
         return;
@@ -161,18 +156,15 @@ function renderMermaid(mermaid: MermaidModule, item: HTMLElement, id: string, th
     });
 }
 
-async function initMermaid(): Promise<void> {
+function initMermaid(): void {
   const runtimeConfig = getMermaidRuntimeConfig();
   if (!runtimeConfig) {
     return;
   }
 
-  const { url, selector, config } = runtimeConfig;
-  const { default: mermaid } = (await import(url)) as {
-    default: MermaidModule;
-  };
+  const { selector, config } = runtimeConfig;
 
-  mermaid.initialize(config);
+  mermaid.initialize(config ?? {});
 
   document.querySelectorAll<HTMLElement>(selector).forEach((item) => {
     const rawContent = item.textContent ?? "";
@@ -188,11 +180,11 @@ async function initMermaid(): Promise<void> {
     // Non-auto mode renders only the requested theme variant.
     if (!item.classList.contains("auto")) {
       if (item.classList.contains("dark")) {
-        void renderMermaid(mermaid, item, id, "dark");
+        void renderMermaid(item, id, "dark");
       } else if (item.classList.contains("light")) {
-        void renderMermaid(mermaid, item, id, "light");
+        void renderMermaid(item, id, "light");
       } else {
-        void renderMermaid(mermaid, item, id, null);
+        void renderMermaid(item, id, null);
       }
 
       item.setAttribute("data-processed", "true");
@@ -200,11 +192,11 @@ async function initMermaid(): Promise<void> {
     }
 
     // Auto mode renders both dark and light variants.
-    void renderMermaid(mermaid, item, id, "dark");
-    void renderMermaid(mermaid, item, id, "light");
+    void renderMermaid(item, id, "dark");
+    void renderMermaid(item, id, "light");
 
     item.setAttribute("data-processed", "true");
   });
 }
 
-void initMermaid();
+initMermaid();

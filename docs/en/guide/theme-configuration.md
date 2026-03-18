@@ -691,7 +691,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-After enabling this option, if you enable the "instant.page Support" or "Mermaid Support" options below, the corresponding resource location configuration items will be displayed.
+After enabling this option, if you enable the "instant.page Support" option below, the corresponding resource location configuration item will be displayed.
 
 :::
 
