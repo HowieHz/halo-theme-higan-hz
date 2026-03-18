@@ -685,7 +685,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-启用此项厚，如果启用下面的“instant.page 支持”、“Mermaid 支持”会显示对应的资源位置配置项。
+启用此项后，如果启用下面的“instant.page 支持”会显示对应的资源位置配置项。
 
 :::
 
