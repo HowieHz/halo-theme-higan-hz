@@ -45,15 +45,14 @@
           th:classappend="${styles?.avatar_grayout == true ? 'avatar-grayscale' : ''}"
           th:if="${theme.config?.styles?.is_show_header_icon}"
         ></div>
-        <style th:inline="css">
-          #logo {
-            background-image: url("[(${fallbackLogoPng})]");
-            background-image: image-set(
-              url("[(${logoUri})]") type("[(${imageType})]"),
-              url("[(${fallbackLogoWebp})]") type("image/webp")
-            );
-          }
-        </style>
+        <th:block
+          th:insert="~{components/header-logo-style/template :: body(
+            fallbackLogoPng=${fallbackLogoPng},
+            logoUri=${logoUri},
+            imageType=${imageType},
+            fallbackLogoWebp=${fallbackLogoWebp}
+          )}"
+        ></th:block>
       </th:block>
 
       <div id="title">

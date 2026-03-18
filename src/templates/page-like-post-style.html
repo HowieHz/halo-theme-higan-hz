@@ -41,7 +41,9 @@
     <!--/* 默认编辑器插入图片会有一个 display: inline-block，以及其他样式，因此需要排除避免产生以外缩进 */-->
     <th:block
       th:if="${theme.config?.custom_page_styles?.is_enable_paragraph_first_line_indent}"
-      th:insert="~{components/paragraph-first-line-indent-style/template :: body}"
+      th:insert="~{components/paragraph-first-line-indent-style/template :: body(
+        indentValue=${theme.config?.custom_page_styles?.paragraph_first_line_indent_value}
+      )}"
     ></th:block>
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>

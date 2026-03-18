@@ -130,6 +130,10 @@ export default defineConfig((): UserConfig => {
             __dirname,
             "src/templates/components/instantpage-injection/template.html",
           ),
+          "components-header-logo-style": path.resolve(
+            __dirname,
+            "src/templates/components/header-logo-style/template.html",
+          ),
           "components-header": path.resolve(__dirname, "src/templates/components/header/template.html"),
           "components-halo-comment-widget": path.resolve(
             __dirname,
