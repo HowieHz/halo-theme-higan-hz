@@ -130,6 +130,14 @@ export default defineConfig((): UserConfig => {
             __dirname,
             "src/templates/components/instantpage-injection/template.html",
           ),
+          "components-custom-font-face-style": path.resolve(
+            __dirname,
+            "src/templates/components/custom-font-face-style/template.html",
+          ),
+          "components-custom-cursor-style": path.resolve(
+            __dirname,
+            "src/templates/components/custom-cursor-style/template.html",
+          ),
           "components-header-logo-style": path.resolve(
             __dirname,
             "src/templates/components/header-logo-style/template.html",
@@ -170,6 +178,26 @@ export default defineConfig((): UserConfig => {
           "components-paragraph-first-line-indent-style": path.resolve(
             __dirname,
             "src/templates/components/paragraph-first-line-indent-style/template.html",
+          ),
+          "components-layout-max-width-style": path.resolve(
+            __dirname,
+            "src/templates/components/layout-max-width-style/template.html",
+          ),
+          "components-layout-min-width-style": path.resolve(
+            __dirname,
+            "src/templates/components/layout-min-width-style/template.html",
+          ),
+          "components-layout-content-width-style": path.resolve(
+            __dirname,
+            "src/templates/components/layout-content-width-style/template.html",
+          ),
+          "components-layout-table-bottom-border-style": path.resolve(
+            __dirname,
+            "src/templates/components/layout-table-bottom-border-style/template.html",
+          ),
+          "components-layout-heading-paragraph-margin-style": path.resolve(
+            __dirname,
+            "src/templates/components/layout-heading-paragraph-margin-style/template.html",
           ),
           "components-theme-dark": path.resolve(__dirname, "src/templates/components/theme-dark/template.html"),
           "components-theme-light": path.resolve(__dirname, "src/templates/components/theme-light/template.html"),
