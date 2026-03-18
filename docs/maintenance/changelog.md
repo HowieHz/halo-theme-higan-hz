@@ -24,6 +24,11 @@
 ### 💥 破坏性变更
 
 - 社交资料设置（`console/theme/settings/sns`）中，`index_sns` 数组重命名为 `sns_list`，同时 `type` 字段由对象类型改为字符串类型。**已有配置需重新设置社交资料列表。**
+- 分享按钮设置（`console/theme/settings/share`）中，`button_config` 数组拆分为 `share_list`（预设按钮列表）和 `custom_share`（自定义按钮）。**已有配置需重新设置分享按钮列表。**
+
+### 🚀 新功能
+
+- 分享按钮预设新增 Reddit、WhatsApp、Tumblr、LINE、Hacker News、Blogger、Gmail、Yahoo Mail 和 Skype。
 
 ### 🐛 错误修复
 

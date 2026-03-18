@@ -1818,68 +1818,118 @@ spec:
       label: Custom Share Buttons
       formSchema:
         - $formkit: array
-          name: button_config
-          label: Share Button Settings
-          help: "@URL and @TITLE are placeholders that will be replaced with the actual page URL and title."
+          name: share_list
+          label: Share Button List
+          help: "Controls the display and order of share buttons"
+          value:
+            - type: "native"
+            - type: "email"
+            - type: "qrcode"
+            - type: "facebook"
+            - type: "reddit"
+            - type: "x"
+            - type: "linkedin"
+            - type: "pinterest"
+            - type: "telegram"
+            - type: "whatsapp"
+            - type: "tumblr"
+            - type: "blogger"
+            - type: "gmail"
+            - type: "yahoomail"
+            - type: "skype"
+            - type: "line"
+            - type: "hackernews"
+            - type: "qq"
+            - type: "weibo"
+            - type: "wechat"
+            - type: "qzone"
+            - type: "douban"
+          itemLabels:
+            - type: text
+              label: $value.type
+          children:
+            - $formkit: select
+              name: type
+              id: share_list_type
+              label: Type
+              value: "native"
+              validation: "required"
+              options:
+                - label: Native
+                  value: "native"
+                - label: E-mail
+                  value: "email"
+                - label: QR Code
+                  value: "qrcode"
+                - label: Facebook
+                  value: "facebook"
+                - label: Reddit
+                  value: "reddit"
+                - label: X
+                  value: "x"
+                - label: LinkedIn
+                  value: "linkedin"
+                - label: Pinterest
+                  value: "pinterest"
+                - label: Telegram
+                  value: "telegram"
+                - label: WhatsApp
+                  value: "whatsapp"
+                - label: Tumblr
+                  value: "tumblr"
+                - label: Blogger
+                  value: "blogger"
+                - label: Gmail
+                  value: "gmail"
+                - label: Yahoo Mail
+                  value: "yahoomail"
+                - label: Skype
+                  value: "skype"
+                - label: LINE
+                  value: "line"
+                - label: Hacker News
+                  value: "hackernews"
+                - label: QQ
+                  value: "qq"
+                - label: Weibo
+                  value: "weibo"
+                - label: WeChat
+                  value: "wechat"
+                - label: Qzone
+                  value: "qzone"
+                - label: Douban
+                  value: "douban"
+                - label: Custom Button
+                  value: "custom_share"
+            - $formkit: iconify
+              name: icon
+              label: Icon
+              format: dataurl
+              value: ""
+              help: "Overrides the default icon when set"
+            - $formkit: text
+              name: custom_id
+              label: Identifier
+              if: "$get(share_list_type).value === 'custom_share'"
+              validation: "required"
+              help: "Enter the identifier of the custom button defined below"
+        - $formkit: array
+          name: custom_share
+          label: Custom Share Buttons
+          value: []
+          help: "@URL and @TITLE are placeholders that will be replaced with the actual page URL and title. After defining here, remember to add it in the list above."
           itemLabels:
             - type: iconify
               label: $value.icon
             - type: text
-              label: $value.name
-          value:
-            - name: Native
-              url: "@URL"
-              icon: ""
-              aria_label: Native
-            - name: E-mail
-              url: "mailto:?subject=@TITLE&body=Check out this article: @URL"
-              icon: ""
-              aria_label: E-mail
-            - name: QRCode
-              url: /themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL
-              icon: ""
-              aria_label: QRCode
-            - name: Facebook
-              url: https://facebook.com/sharer/sharer.php?u=@URL&title=@TITLE
-              icon: ""
-              aria_label: Facebook
-            - name: X
-              url: https://x.com/share?url=@URL&title=@TITLE
-              icon: ""
-              aria_label: X
-            - name: LinkedIn
-              url: http://www.linkedin.com/shareArticle?url=@URL&title=@TITLE
-              icon: ""
-              aria_label: LinkedIn
-            - name: Pinterest
-              url: https://pinterest.com/pin/create/bookmarklet/?url=@URL&title=@TITLE
-              icon: ""
-              aria_label: Pinterest
-            - name: Telegram
-              url: https://telegram.me/share/url?url=@URL&text=@TITLE
-              icon: ""
-              aria_label: Telegram
-            - name: QQ
-              url: https://connect.qq.com/widget/shareqq/iframe_index.html?url=@URL&title=@TITLE
-              icon: ""
-              aria_label: QQ
-            - name: Weibo
-              url: http://service.weibo.com/share/share.php?url=@URL&title=@TITLE
-              icon: ""
-              aria_label: Weibo
-            - name: WeChat
-              url: /themes/howiehz-higan/assets/qrcode.html?size=300&url=@URL
-              icon: ""
-              aria_label: WeChat
-            - name: Qzone
-              url: https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=@URL&title=@TITLE
-              icon: ""
-              aria_label: Qzone
-            - name: Douban
-              url: https://www.douban.com/share/service?href=@URL&name=@TITLE
-              icon: ""
-              aria_label: Douban
+              label: $value.id
           children:
+            - $formkit: text
+              name: id
+              label: Identifier
+              value: ""
+              validation: "required"
+              help: "Any combination of letters, numbers, and underscores, e.g.: myShare"
             - $formkit: text
               name: name
               label: Name
@@ -1895,7 +1945,7 @@ spec:
               label: Icon
               format: dataurl
               value: ""
-              help: Override the default icon after setting
+              validation: "required"
             - $formkit: text
               name: aria_label
               label: aria-label

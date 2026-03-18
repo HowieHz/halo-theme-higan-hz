@@ -6467,7 +6467,7 @@ Array (can repeatedly add multiple social profiles)
 :::
 ::: info ⭐ Default Value
 
-Empty array `[]`
+Empty
 
 :::
 ::: info 🧩 Template Variable
@@ -6533,16 +6533,56 @@ Each custom profile requires configuration:
 
 ## Custom Share Buttons
 
-### Share Button Settings
+### Share Button List
 
 ::: info 🎯 Purpose
 
-Configure the share button list for post pages, supports multiple sharing methods.
+Configure the display and order of share buttons on post pages, supporting multiple preset sharing methods and custom buttons.
 
 :::
 ::: info 📂 Configuration Item Location
 
-Custom Share Buttons -> Share Button Configuration
+Custom Share Buttons -> Share Button List
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/share#:~:text=Share%20Button%20List" />
+
+:::
+::: info 🏷️ Type
+
+Array (can repeatedly add multiple share buttons)
+
+:::
+::: info ⭐ Default Value
+
+All preset types are enabled by default.
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.share?.share_list`
+
+:::
+::: info ℹ️ Additional Information
+
+- Links and icons for preset types are built into the theme, no manual input required; optionally fill in the icon field to override the default icon
+- When selecting "Custom Button", fill in the identifier defined in "Custom Share Buttons"
+- Can freely adjust order or remove unwanted buttons
+
+:::
+
+### Custom Button Definitions
+
+::: info 🎯 Purpose
+
+Define custom share buttons for use in the list above.
+
+:::
+::: info 📂 Configuration Item Location
+
+Custom Share Buttons -> Custom Share Buttons
 
 :::
 ::: info ⚡ Quick Jump
@@ -6557,19 +6597,19 @@ Repeater
 :::
 ::: info ⭐ Default Value
 
-Includes multiple preset share buttons: E-mail, QRCode, Native, Facebook, X, LinkedIn, Pinterest, Telegram, QQ, Weibo, WeChat, Qzone, Douban
+Empty
 
 :::
 ::: info 🧩 Template Variable
 
-`theme.config?.share?.button_config`
+`theme.config?.share?.custom_share`
 
 :::
 ::: info ℹ️ Additional Information
 
 - `@URL` and `@TITLE` are placeholders that will be replaced with the actual page address and title when used
-- Each share button has four configurable items: name, link, Icon (setting will override the default icon), `aria-label` (accessibility label)
-- Can freely adjust order, delete or add share buttons
+- Each custom button requires: identifier, name, link, icon (required), `aria-label` (accessibility label)
+- After defining, you must add it in the "Share Button List" above by selecting "Custom Button" and filling in the identifier
 
 :::
 
