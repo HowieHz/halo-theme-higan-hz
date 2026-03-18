@@ -1833,6 +1833,10 @@ spec:
             - type: "telegram"
             - type: "whatsapp"
             - type: "tumblr"
+            - type: "blogger"
+            - type: "gmail"
+            - type: "yahoomail"
+            - type: "skype"
             - type: "line"
             - type: "hackernews"
             - type: "qq"
@@ -1873,6 +1877,14 @@ spec:
                   value: "whatsapp"
                 - label: Tumblr
                   value: "tumblr"
+                - label: Blogger
+                  value: "blogger"
+                - label: Gmail
+                  value: "gmail"
+                - label: Yahoo Mail
+                  value: "yahoomail"
+                - label: Skype
+                  value: "skype"
                 - label: LINE
                   value: "line"
                 - label: Hacker News

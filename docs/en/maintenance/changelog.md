@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Added preset share buttons for Reddit, WhatsApp, Tumblr, LINE, and Hacker News.
+- Added preset share buttons for Reddit, WhatsApp, Tumblr, LINE, Hacker News, Blogger, Gmail, Yahoo Mail and Skype.
 
 ### 🐛 Bug Fixes
 

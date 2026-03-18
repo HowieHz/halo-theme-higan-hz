@@ -28,7 +28,7 @@
 
 ### 🚀 新功能
 
-- 分享按钮预设新增 Reddit、WhatsApp、Tumblr、LINE 和 Hacker News。
+- 分享按钮预设新增 Reddit、WhatsApp、Tumblr、LINE、Hacker News、Blogger、Gmail、Yahoo Mail 和 Skype。
 
 ### 🐛 错误修复
 

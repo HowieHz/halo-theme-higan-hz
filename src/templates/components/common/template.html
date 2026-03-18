@@ -225,6 +225,10 @@
             item?.type == 'telegram' ? 'Telegram' :
             item?.type == 'whatsapp' ? 'WhatsApp' :
             item?.type == 'tumblr' ? 'Tumblr' :
+            item?.type == 'blogger' ? 'Blogger' :
+            item?.type == 'gmail' ? 'Gmail' :
+            item?.type == 'yahoomail' ? 'Yahoo Mail' :
+            item?.type == 'skype' ? 'Skype' :
             item?.type == 'line' ? 'LINE' :
             item?.type == 'hackernews' ? 'Hacker News' :
             item?.type == 'qq' ? 'QQ' :
@@ -244,6 +248,10 @@
             item?.type == 'telegram' ? 'https://telegram.me/share/url?url=@URL&text=@TITLE' :
             item?.type == 'whatsapp' ? 'https://api.whatsapp.com/send?text=@TITLE%20@URL' :
             item?.type == 'tumblr' ? 'https://www.tumblr.com/widgets/share/tool?canonicalUrl=@URL&title=@TITLE' :
+            item?.type == 'blogger' ? 'https://www.blogger.com/blog-this.g?u=@URL&n=@TITLE&t=Check out this article: @URL' :
+            item?.type == 'gmail' ? 'https://mail.google.com/mail/?view=cm&su=@TITLE&body=Check out this article: @URL' :
+            item?.type == 'yahoomail' ? 'https://compose.mail.yahoo.com/?subject=@TITLE&body=Check out this article: @URL' :
+            item?.type == 'skype' ? 'https://web.skype.com/share?url=@URL&text=@TITLE' :
             item?.type == 'line' ? 'https://social-plugins.line.me/lineit/share?url=@URL' :
             item?.type == 'hackernews' ? 'https://news.ycombinator.com/submitlink?u=@URL&t=@TITLE' :
             item?.type == 'qq' ? 'https://connect.qq.com/widget/shareqq/iframe_index.html?url=@URL&title=@TITLE' :
@@ -304,6 +312,22 @@
             <span
               class="iconify entypo-social--tumblr-with-circle"
               th:if="${item?.type == 'tumblr' and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify simple-icons--blogger"
+              th:if="${item?.type == 'blogger' and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify simple-icons--gmail"
+              th:if="${item?.type == 'gmail' and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify simple-icons--yahoo"
+              th:if="${item?.type == 'yahoomail' and (item?.icon == null or item?.icon == '')}"
+            ></span>
+            <span
+              class="iconify simple-icons--skype"
+              th:if="${item?.type == 'skype' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
               class="iconify simple-icons--line"
