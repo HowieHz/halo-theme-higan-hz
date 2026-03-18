@@ -408,7 +408,8 @@
       th:data-network-request-failed="#{common.error.networkRequestFailed}"
     >
       const likes_localstorage_key = "higan.likes.post.ids";
-      const networkRequestFailedMessage = document.currentScript?.dataset.networkRequestFailed ?? "网络请求失败，请稍后再试";
+      const networkRequestFailedMessage =
+        document.currentScript?.dataset.networkRequestFailed ?? "网络请求失败，请稍后再试";
       let likedPostNames = JSON.parse(localStorage.getItem(likes_localstorage_key) || "[]");
       likedPostNames.forEach((postName) => {
         activeUpvote(postName);
