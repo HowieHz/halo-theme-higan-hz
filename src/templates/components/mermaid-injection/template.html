@@ -1,0 +1,13 @@
+<head th:remove="tag">
+  <script id="mermaid-config" type="application/json" th:inline="javascript">
+    {
+      "url": /*[[${theme.config?.global?.mermaid_script_url}]]*/ "",
+      "selector": /*[[${theme.config?.global?.mermaid_selector}]]*/ ".content .mermaid",
+      "config": /*[[${theme.config?.global?.mermaid_config}]]*/ "{startOnLoad: false}"
+    }
+  </script>
+  <script src="index.ts" type="module"></script>
+</head>
+<!--/*-->
+<body th:remove="tag"></body>
+<!--*/-->

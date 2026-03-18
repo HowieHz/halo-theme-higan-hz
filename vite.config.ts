@@ -124,6 +124,10 @@ export default defineConfig((): UserConfig => {
             __dirname,
             "src/templates/components/list-moment-summary/template.html",
           ),
+          "components-mermaid-injection": path.resolve(
+            __dirname,
+            "src/templates/components/mermaid-injection/template.html",
+          ),
           "components-header": path.resolve(__dirname, "src/templates/components/header/template.html"),
           "components-halo-comment-widget": path.resolve(
             __dirname,
