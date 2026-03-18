@@ -1,0 +1,16 @@
+<!--/*-->
+<head th:remove="tag"></head>
+<!--*/-->
+<body th:remove="tag">
+  <!--/*/
+  <style th:inline="css">
+    :root {
+      --content-min-width: /*[(${theme.config?.styles?.min_width})]*/ 48rem;
+    }
+
+    .min-width {
+      min-width: min(100%, var(--content-min-width));
+    }
+  </style>
+  /*/-->
+</body>

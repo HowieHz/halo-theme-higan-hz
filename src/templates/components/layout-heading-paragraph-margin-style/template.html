@@ -1,0 +1,81 @@
+<!--/*-->
+<head th:remove="tag"></head>
+<!--*/-->
+<body th:remove="tag">
+  <!--/*/
+  <style
+    th:inline="css"
+    th:if="${(theme.config?.styles?.heading_margin_top_multiplier != 1
+              and theme.config?.styles?.heading_margin_top_multiplier != '1')
+             or (theme.config?.styles?.heading_margin_bottom_multiplier != 1
+                 and theme.config?.styles?.heading_margin_bottom_multiplier != '1')
+             or (theme.config?.styles?.paragraph_margin_top_multiplier != 1
+                 and theme.config?.styles?.paragraph_margin_top_multiplier != '1')
+             or (theme.config?.styles?.paragraph_margin_bottom_multiplier != 1
+                 and theme.config?.styles?.paragraph_margin_bottom_multiplier != '1')}"
+  >
+    /*[# th:if="${(theme.config?.styles?.heading_margin_top_multiplier != 1
+                   and theme.config?.styles?.heading_margin_top_multiplier != '1')
+                  or (theme.config?.styles?.heading_margin_bottom_multiplier != 1
+                      and theme.config?.styles?.heading_margin_bottom_multiplier != '1')}"]*/
+    body h1,
+    body .h1 {
+      /*[# th:if="${theme.config?.styles?.heading_margin_top_multiplier != 1
+                    and theme.config?.styles?.heading_margin_top_multiplier != '1'}"]*/
+      margin-top: calc(3rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
+      /*[/]*/
+      /*[# th:if="${theme.config?.styles?.heading_margin_bottom_multiplier != 1
+                    and theme.config?.styles?.heading_margin_bottom_multiplier != '1'}"]*/
+      margin-bottom: calc(1rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
+      /*[/]*/
+    }
+
+    body h2,
+    body .h2 {
+      /*[# th:if="${theme.config?.styles?.heading_margin_top_multiplier != 1
+                    and theme.config?.styles?.heading_margin_top_multiplier != '1'}"]*/
+      margin-top: calc(2rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
+      /*[/]*/
+      /*[# th:if="${theme.config?.styles?.heading_margin_bottom_multiplier != 1
+                    and theme.config?.styles?.heading_margin_bottom_multiplier != '1'}"]*/
+      margin-bottom: calc(0.5rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
+      /*[/]*/
+    }
+
+    body h3,
+    body .h3,
+    body h4,
+    body .h4,
+    body h5,
+    body .h5,
+    body h6,
+    body .h6 {
+      /*[# th:if="${theme.config?.styles?.heading_margin_top_multiplier != 1
+                    and theme.config?.styles?.heading_margin_top_multiplier != '1'}"]*/
+      margin-top: calc(0.9rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
+      /*[/]*/
+      /*[# th:if="${theme.config?.styles?.heading_margin_bottom_multiplier != 1
+                    and theme.config?.styles?.heading_margin_bottom_multiplier != '1'}"]*/
+      margin-bottom: calc(0.5rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
+      /*[/]*/
+    }
+    /*[/]*/
+
+    /*[# th:if="${(theme.config?.styles?.paragraph_margin_top_multiplier != 1
+                   and theme.config?.styles?.paragraph_margin_top_multiplier != '1')
+                  or (theme.config?.styles?.paragraph_margin_bottom_multiplier != 1
+                      and theme.config?.styles?.paragraph_margin_bottom_multiplier != '1')}"]*/
+    body p {
+      /*[# th:if="${theme.config?.styles?.paragraph_margin_top_multiplier != 1
+                    and theme.config?.styles?.paragraph_margin_top_multiplier != '1'}"]*/
+      margin-block-start: calc(1em * /*[(${theme.config?.styles?.paragraph_margin_top_multiplier ?: 1})]*/ 1);
+      /*[/]*/
+      /*[# th:if="${theme.config?.styles?.paragraph_margin_bottom_multiplier != 1
+                    and theme.config?.styles?.paragraph_margin_bottom_multiplier != '1'}"]*/
+      margin-block-end: calc(1em * /*[(${theme.config?.styles?.paragraph_margin_bottom_multiplier ?: 1})]*/ 1);
+      /*[/]*/
+    }
+    /*[/]*/
+  </style>
+  /*/-->
+</body>

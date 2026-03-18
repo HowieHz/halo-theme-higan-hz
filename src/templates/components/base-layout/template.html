@@ -1070,40 +1070,24 @@ html[theme="theme-[(${colorSchema.id})]"] {
       应用于 :root 加上 only 效果是关闭由 Chrome 的自动深色主题引起的颜色覆盖。上游应用于 body 标签，本主题应用于 HTML 标签（实际是应用在有 data-color-scheme 属性的地方，本主题仅有 HTML 标签有这个属性）
       https://developer.mozilla.org/zh-CN/docs/Web/CSS/color-scheme
     */-->
-    <!--/*/
-    <style th:inline="css" th:if="${theme.config?.styles?.is_max_width_settings}">
-      .max-width {
-        max-width:
-      /*[(${theme.config?.styles?.max_width})]*/ 48rem;
-      }
-    </style>
-    /*/-->
+    <th:block
+      th:if="${theme.config?.styles?.is_max_width_settings}"
+      th:insert="~{components/layout-max-width-style/template :: body}"
+    ></th:block>
     <!--/* 缩小窗口时优先缩小 margin，触发下面样式表里面的取小函数肯定是 margin=0，此时 100vw 和 100% 应相等 */-->
-    <!--/*/
-    <style th:inline="css" th:if="${theme.config?.styles?.is_min_width_settings}">
-      :root {
-        --content-min-width:
-      /*[(${theme.config?.styles?.min_width})]*/ 48rem;
-      }
-
-      .min-width {
-        min-width: min(100%, var(--content-min-width));
-      }
-    </style>
-    /*/-->
+    <th:block
+      th:if="${theme.config?.styles?.is_min_width_settings}"
+      th:insert="~{components/layout-min-width-style/template :: body}"
+    ></th:block>
     <style th:if="${theme.config?.styles?.is_force_min_width_settings}">
       .min-width {
         min-width: var(--content-min-width) !important;
       }
     </style>
-    <!--/*/
-    <style th:inline="css" th:if="${theme.config?.styles?.is_content_width_style_settings}">
-      .content-width {
-        width:
-      /*[(${theme.config?.styles?.content_width_style})]*/ fit-content;
-      }
-    </style>
-    /*/-->
+    <th:block
+      th:if="${theme.config?.styles?.is_content_width_style_settings}"
+      th:insert="~{components/layout-content-width-style/template :: body}"
+    ></th:block>
     <style th:if="${theme.config?.styles?.is_h3_underline}">
       body h3 {
         text-decoration: underline;
@@ -1146,92 +1130,11 @@ html[theme="theme-[(${colorSchema.id})]"] {
         vertical-align: 0.4em;
       }
     </style>
-    <!--/*/
-    <style th:inline="css" th:if="${theme.config?.styles?.is_show_the_table_bottom_border}">
-      body tr:not(:first-child) {
-        border-bottom-width:
-      /*[(${theme.config?.styles?.table_bottom_border_width})]*/ 0.1rem;
-        border-bottom-style: dashed;
-        border-bottom-color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
-      }
-    </style>
-    /*/-->
-    <!--/*/
-    <style
-      th:inline="css"
-      th:if="${(theme.config?.styles?.heading_margin_top_multiplier != 1 
-                and theme.config?.styles?.heading_margin_top_multiplier != '1')
-               or (theme.config?.styles?.heading_margin_bottom_multiplier != 1
-                   and theme.config?.styles?.heading_margin_bottom_multiplier != '1')
-               or (theme.config?.styles?.paragraph_margin_top_multiplier != 1 
-                   and theme.config?.styles?.paragraph_margin_top_multiplier != '1')
-               or (theme.config?.styles?.paragraph_margin_bottom_multiplier != 1
-                   and theme.config?.styles?.paragraph_margin_bottom_multiplier != '1')}"
-    >
-      /*[# th:if="${(theme.config?.styles?.heading_margin_top_multiplier != 1 
-                     and theme.config?.styles?.heading_margin_top_multiplier != '1')
-                    or (theme.config?.styles?.heading_margin_bottom_multiplier != 1
-                        and theme.config?.styles?.heading_margin_bottom_multiplier != '1')}"]*/
-      body h1,
-      body .h1 {
-        /*[# th:if="${theme.config?.styles?.heading_margin_top_multiplier != 1
-                      and theme.config?.styles?.heading_margin_top_multiplier != '1'}"]*/
-        margin-top: calc(3rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-        /*[# th:if="${theme.config?.styles?.heading_margin_bottom_multiplier != 1
-                      and theme.config?.styles?.heading_margin_bottom_multiplier != '1'}"]*/
-        margin-bottom: calc(1rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-      }
-
-      body h2,
-      body .h2 {
-        /*[# th:if="${theme.config?.styles?.heading_margin_top_multiplier != 1
-                      and theme.config?.styles?.heading_margin_top_multiplier != '1'}"]*/
-        margin-top: calc(2rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-        /*[# th:if="${theme.config?.styles?.heading_margin_bottom_multiplier != 1
-                      and theme.config?.styles?.heading_margin_bottom_multiplier != '1'}"]*/
-        margin-bottom: calc(0.5rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-      }
-
-      body h3,
-      body .h3,
-      body h4,
-      body .h4,
-      body h5,
-      body .h5,
-      body h6,
-      body .h6 {
-        /*[# th:if="${theme.config?.styles?.heading_margin_top_multiplier != 1
-                      and theme.config?.styles?.heading_margin_top_multiplier != '1'}"]*/
-        margin-top: calc(0.9rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-        /*[# th:if="${theme.config?.styles?.heading_margin_bottom_multiplier != 1
-                      and theme.config?.styles?.heading_margin_bottom_multiplier != '1'}"]*/
-        margin-bottom: calc(0.5rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-      }
-      /*[/]*/
-
-      /*[# th:if="${(theme.config?.styles?.paragraph_margin_top_multiplier != 1 
-                     and theme.config?.styles?.paragraph_margin_top_multiplier != '1')
-                    or (theme.config?.styles?.paragraph_margin_bottom_multiplier != 1
-                        and theme.config?.styles?.paragraph_margin_bottom_multiplier != '1')}"]*/
-      body p {
-        /*[# th:if="${theme.config?.styles?.paragraph_margin_top_multiplier != 1
-                      and theme.config?.styles?.paragraph_margin_top_multiplier != '1'}"]*/
-        margin-block-start: calc(1em * /*[(${theme.config?.styles?.paragraph_margin_top_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-        /*[# th:if="${theme.config?.styles?.paragraph_margin_bottom_multiplier != 1
-                      and theme.config?.styles?.paragraph_margin_bottom_multiplier != '1'}"]*/
-        margin-block-end: calc(1em * /*[(${theme.config?.styles?.paragraph_margin_bottom_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-      }
-      /*[/]*/
-    </style>
-    /*/-->
+    <th:block
+      th:if="${theme.config?.styles?.is_show_the_table_bottom_border}"
+      th:insert="~{components/layout-table-bottom-border-style/template :: body}"
+    ></th:block>
+    <th:block th:insert="~{components/layout-heading-paragraph-margin-style/template :: body}"></th:block>
     <div class="max-width min-width content-width mx-auto px-4 sm:px-8">
       <th:block th:replace="${navbar}" />
 
