@@ -1,10 +1,4 @@
-import type {
-  MermaidConfig,
-  MermaidModule,
-  MermaidRenderResult,
-  MermaidTheme,
-  ReferenceAttribute,
-} from "./types";
+import type { MermaidConfig, MermaidModule, MermaidRenderResult, MermaidTheme, ReferenceAttribute } from "./types";
 
 declare global {
   interface Window {
@@ -20,24 +14,14 @@ function genUUID(): string {
   });
 }
 
-function updateAttribute(
-  refElement: Element,
-  attribute: ReferenceAttribute,
-  originalId: string,
-  newId: string,
-): void {
+function updateAttribute(refElement: Element, attribute: ReferenceAttribute, originalId: string, newId: string): void {
   const value = refElement.getAttribute(attribute);
   if (value?.includes(`#${originalId}`)) {
     refElement.setAttribute(attribute, value.replace(`#${originalId}`, `#${newId}`));
   }
 }
 
-function renderMermaid(
-  mermaid: MermaidModule,
-  item: HTMLElement,
-  id: string,
-  theme: MermaidTheme,
-): Promise<void> {
+function renderMermaid(mermaid: MermaidModule, item: HTMLElement, id: string, theme: MermaidTheme): Promise<void> {
   const fallbackContent = item.textContent ?? "";
   let rawContent = fallbackContent;
 
