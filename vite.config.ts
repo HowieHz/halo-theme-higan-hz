@@ -188,17 +188,17 @@ export default defineConfig((): UserConfig => {
           ),
           "components-nav-post": path.resolve(__dirname, "src/templates/components/nav-post/template.html"),
         },
-        output: {
-          assetFileNames: () => {
-            return `assets/dist/[hash:7][extname]`;
-          },
-          // JS entry files
-          // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
-          entryFileNames: "assets/dist/[hash:7].js",
-          // Dynamic chunks
-          // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
-          chunkFileNames: "assets/dist/[hash:7].js",
-        },
+        // output: {
+        //   assetFileNames: () => {
+        //     return `assets/dist/[hash:7][extname]`;
+        //   },
+        //   // JS entry files
+        //   // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+        //   entryFileNames: "assets/dist/[hash:7].js",
+        //   // Dynamic chunks
+        //   // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+        //   chunkFileNames: "assets/dist/[hash:7].js",
+        // },
       },
     },
   };
