@@ -193,7 +193,7 @@ export default defineConfig((): UserConfig => {
         },
         output: {
           assetFileNames: () => {
-            return `assets/[hash:7][extname]`;
+            return `assets/${pkg.version}[hash:7][extname]`;
           },
           // JS entry files
           // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
