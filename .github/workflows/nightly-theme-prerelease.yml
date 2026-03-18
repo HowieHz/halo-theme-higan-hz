@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       force:
-        description: Force create a nightly prerelease even if main had no commits yesterday
+        description: Force creation of a prerelease version even if nightly prerelease conditions are not met
         required: true
         type: boolean
         default: false
