@@ -205,7 +205,7 @@
             ></span>
           </a>
         </th:block>
-        <th:block th:if="${item?.type == 'text'}">[(${item?.input_value})]</th:block>
+        <th:block th:if="${item?.type == 'text'}"><span th:text="${item?.input_value}"></span></th:block>
         <th:block th:if="${item?.type == 'custom_sns'}">
           <th:block
             th:each="custom_sns_item : ${theme.config?.sns?.custom_sns}"
@@ -254,7 +254,8 @@
       <th:block th:unless="${pluginFinder.available('PluginMoments')}">
         <p th:text="#{page.index.momentsPluginNotAvailable}">插件未启用提示替换位</p>
         <p>
-          [[#{page.index.momentsPluginNotAvailableDescription}]]<a
+          <span th:text="#{page.index.momentsPluginNotAvailableDescription}"></span>
+          <a
             th:text="#{page.index.momentsPluginDocsLinkText}"
             th:href="#{page.index.momentsPluginDocsLink}"
             rel="noopener"
@@ -277,7 +278,8 @@
       <th:block th:unless="${pluginFinder.available('plugin-friends')}">
         <p th:text="#{page.index.friendsPluginNotAvailable}">插件未启用提示替换位</p>
         <p>
-          [[#{page.index.friendsPluginNotAvailableDescription}]]<a
+          <span th:text="#{page.index.friendsPluginNotAvailableDescription}"></span>
+          <a
             th:text="#{page.index.friendsPluginDocsLinkText}"
             th:href="#{page.index.friendsPluginDocsLink}"
             rel="noopener"
