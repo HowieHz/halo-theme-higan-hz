@@ -176,6 +176,7 @@ export default defineConfig((): UserConfig => {
             "src/templates/components/theme-auto-blue/template.html",
           ),
           "components-common": path.resolve(__dirname, "src/templates/components/common/template.html"),
+          "components-share": path.resolve(__dirname, "src/templates/components/share/template.html"),
           "components-base-layout": path.resolve(__dirname, "src/templates/components/base-layout/template.html"),
           "components-footer-nav-page-like-post-style": path.resolve(
             __dirname,

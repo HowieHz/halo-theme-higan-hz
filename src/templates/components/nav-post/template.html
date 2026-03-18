@@ -145,7 +145,7 @@
         style="display: none"
       >
         <th:block
-          th:insert="~{components/common/template :: share(originPermalink = ${post.status.permalink},
+          th:insert="~{components/share/template :: body(originPermalink = ${post.status.permalink},
                                                  title = ${post.spec?.title})}"
         ></th:block>
       </div>

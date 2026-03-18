@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🔧 Code Refactoring
 
 - Refactored Mermaid injection from an inline Thymeleaf `<script>` into a standalone TypeScript module.
+- Use [minify-html](https://www.npmjs.com/package/@minify-html/node) to optimize template size.
 
 ### 🐛 Bug Fixes
 

@@ -11,7 +11,7 @@
       <div id="toc-footer" style="display: none"></div>
       <div id="share-footer" style="display: none" th:if="${theme.config?.post_styles?.is_show_share_footer}">
         <th:block
-          th:insert="~{components/common/template :: share(originPermalink=${singlePage.status.permalink},title=${singlePage.spec.title})}"
+          th:insert="~{components/share/template :: body(originPermalink=${singlePage.status.permalink},title=${singlePage.spec.title})}"
         ></th:block>
       </div>
       <div id="actions-footer">
