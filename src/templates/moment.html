@@ -289,7 +289,8 @@
       </div>
       <script th:data-network-request-failed="#{common.error.networkRequestFailed}">
         const likes_localstorage_key = "higan.likes.moment.ids";
-        const networkRequestFailedMessage = document.currentScript?.dataset.networkRequestFailed ?? "网络请求失败，请稍后再试";
+        const networkRequestFailedMessage =
+          document.currentScript?.dataset.networkRequestFailed ?? "网络请求失败，请稍后再试";
         let likedMomentNames = JSON.parse(localStorage.getItem(likes_localstorage_key) || "[]");
         likedMomentNames.forEach((momentName) => {
           activeUpvote(momentName);

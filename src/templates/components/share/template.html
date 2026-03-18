@@ -1,30 +1,21 @@
-<!--/*-->
-<head th:remove="tag"></head>
-<!--*/-->
+<head th:remove="tag" th:fragment="head">
+  <script src="index.ts" type="module"></script>
+</head>
 <body th:remove="tag" th:fragment="body(originPermalink, title)">
   <th:block
     th:with="permalink = ${siteUrl} + ${originPermalink},
              title = ${title}"
   >
     <ul>
-      <script th:data-title="${title}">
-        function nativeShare(link) {
-          const postTitle = document.currentScript?.dataset.title ?? "";
-          const shareData = { title: postTitle, url: link };
-          if (navigator.canShare?.(shareData)) {
-            navigator.share(shareData);
-          } else {
-            console.error("Sharing not supported");
-          }
-        }
-      </script>
       <th:block th:each="item : ${theme.config?.share?.share_list}">
         <!--/* Preset: Native */-->
         <li th:if="${item?.type == 'native'}">
           <a
             class="icon"
             th:aria-label="#{common.shareModal.share.aria-label('Native')}"
-            th:href="|javascript:nativeShare('${permalink}');|"
+            th:data-native-share-title="${title}"
+            th:data-native-share-link="${permalink}"
+            href="javascript:void(0);"
           >
             <span
               class="iconify"
