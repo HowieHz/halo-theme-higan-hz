@@ -11,7 +11,6 @@ import { compression, defineAlgorithm } from "vite-plugin-compression2";
 import { sri } from "vite-plugin-sri3";
 
 import pkg from "./package.json";
-import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
 import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
@@ -189,7 +188,17 @@ export default defineConfig((): UserConfig => {
           ),
           "components-nav-post": path.resolve(__dirname, "src/templates/components/nav-post/template.html"),
         },
-        output: rollupOutput,
+        output: {
+          assetFileNames: () => {
+            return `assets/dist/[hash:7][extname]`;
+          },
+          // JS entry files
+          // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+          entryFileNames: "assets/dist/[hash:7].js",
+          // Dynamic chunks
+          // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+          chunkFileNames: "assets/dist/[hash:7].js",
+        },
       },
     },
   };

@@ -25,7 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - In the social media settings (`console/theme/settings/sns`), the `index_sns` array has been renamed to `sns_list`, and its `type` field has been changed from an object type to a string type. **Existing configurations require the social media list to be re-configured.**
 - In the share button settings (`console/theme/settings/share`), the `button_config` array has been split into `share_list` (preset button list) and `custom_share` (custom buttons). **Existing configurations require the share button list to be re-configured.**
-- Mermaid support removes the `Mermaid Resource Location` setting and now uses the theme-bundled dependency. **Existing values for this setting no longer take effect.**
+- The global settings remove the `Custom Resource Location Address` and `instant.page Resource Location` options, and instant.page now uses the theme-bundled resource. **Existing values for these two settings no longer take effect.**
+- Mermaid support removes the `Mermaid Resource Location` setting, and Mermaid now uses the theme-bundled resource. **Existing values for this setting no longer take effect.**
 
 ### 🚀 Features
 

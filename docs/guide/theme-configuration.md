@@ -651,44 +651,6 @@ const QuickJumpConfig = (props) => {
 
 :::
 
-### 自定义资源位置地址
-
-::: info 🎯 用途
-
-指定资源将使用自定义的资源位置地址，而不是主题默认的地址。
-
-:::
-::: info 📂 配置项位置
-
-全局 -> 自定义资源位置地址
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=自定义资源位置地址" />
-
-:::
-::: info 🏷️ 类型
-
-布尔值
-
-:::
-::: info ⭐ 默认值
-
-`false`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.global?.is_custom_resource_locations`
-
-:::
-::: info ℹ️ 补充信息
-
-启用此项后，如果启用下面的“instant.page 支持”会显示对应的资源位置配置项。
-
-:::
-
 ### instant.page 支持
 
 ::: info 🎯 用途
