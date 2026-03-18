@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed an issue where the selected type could not be displayed after saving social media settings (`console/theme/settings/sns`).
 - Fixed an issue where the RSS `<link>` tag was not output when the RSS plugin was not installed but an RSS link was configured in the social media settings.
-- Fixed an issue in Mermaid injection where `xlink:href` references were not updated synchronously.   
+- Fixed an issue in Mermaid injection where `xlink:href` references were not updated synchronously.
 
 ## [1.58.2] - 2026-03-18
 
