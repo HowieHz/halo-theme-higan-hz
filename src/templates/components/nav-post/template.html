@@ -124,22 +124,25 @@
           </li>
         </ul>
 
-        <span id="i-prev" class="info hidden">[(#{fragment.post-nav.prev})]</span>
-        <span id="i-next" class="info hidden">[(#{fragment.post-nav.next})]</span>
+        <span id="i-prev" class="info hidden" th:text="#{fragment.post-nav.prev}"></span>
+        <span id="i-next" class="info hidden" th:text="#{fragment.post-nav.next}"></span>
 
-        <span id="i-top" class="info hidden">[(#{fragment.post-nav.toTop})]</span>
-        <span id="i-toc" class="info hidden">[(#{fragment.post-nav.toc})]</span>
-        <span id="i-share" class="info hidden" th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
-          >[(#{fragment.post-nav.sharePost})]</span
-        >
-        <span id="i-home" class="info hidden">[(#{fragment.post-nav.backToHome})]</span>
+        <span id="i-top" class="info hidden" th:text="#{fragment.post-nav.toTop}"></span>
+        <span id="i-toc" class="info hidden" th:text="#{fragment.post-nav.toc}"></span>
+        <span
+          th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
+          id="i-share"
+          class="info hidden"
+          th:text="#{fragment.post-nav.sharePost}"
+        ></span>
+        <span id="i-home" class="info hidden" th:text="#{fragment.post-nav.backToHome}"></span>
       </span>
       <br />
       <div
+        th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
         id="share-list"
         class="clear-both pt-4 pr-8 text-right"
         style="display: none"
-        th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
       >
         <th:block
           th:insert="~{components/common/template :: share(originPermalink = ${post.status.permalink},

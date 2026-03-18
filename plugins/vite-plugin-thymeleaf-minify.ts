@@ -1,9 +1,12 @@
 import { Buffer } from "node:buffer";
 import { promises as fs } from "node:fs";
 import { dirname, resolve } from "node:path";
+import { styleText } from "node:util";
 
 import minifyHtml from "@minify-html/node";
 import type { Plugin } from "vite";
+
+const LOG_PREFIX = styleText("cyan", "[thymeleaf-minify]");
 
 /**
  * Plugin options interface
@@ -112,13 +115,13 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
           }
         }
 
-        const highRiskMarkers = getHighRiskThymeleafMarkers(html);
+        const minifySensitiveMarkers = getMinifySensitiveThymeleafMarkers(html);
 
-        if (highRiskMarkers.length === 0) {
+        if (minifySensitiveMarkers.length === 0) {
           html = minifyHtml.minify(Buffer.from(html), {}).toString();
         } else {
           console.log(
-            `[thymeleaf-minify] Skipped aggressive minify for ${ctx.path} due to high-risk Thymeleaf syntax: ${highRiskMarkers.join(", ")}`,
+            `${LOG_PREFIX} ${styleText("yellow", "skip")} ${ctx.path}: ${styleText("dim", "minify-sensitive syntax unsafe for aggressive minify")} (${styleText("magenta", minifySensitiveMarkers.join(", "))})`,
           );
         }
 
@@ -129,7 +132,7 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
     // Check and remove orphaned JS files after bundle is written
     async writeBundle(bundleOptions) {
       if (removedScripts.size === 0) {
-        console.log("\n[thymeleaf-minify] No scripts were removed, skipping orphan check.");
+        console.log(`\n${LOG_PREFIX} ${styleText("dim", "No scripts were removed, skipping orphan check.")}`);
         return;
       }
 
@@ -178,7 +181,7 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
           // If not referenced anywhere, delete the JS file
           if (!isReferencedElsewhere) {
             await fs.unlink(filePath);
-            console.log(`✓ Deleted orphaned script: ${filePath}`);
+            console.log(`${LOG_PREFIX} ${styleText("green", "delete")} orphaned script: ${filePath}`);
             deletedCount++;
           } else {
             keptCount++;
@@ -187,9 +190,9 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
         } catch (err) {
           // File doesn't exist or can't be accessed, mark as processed
           if ((err as NodeJS.ErrnoException).code === "ENOENT") {
-            console.log(`ℹ File not found (already removed or doesn't exist): ${relativePath}`);
+            console.log(`${LOG_PREFIX} ${styleText("yellow", "skip")} file not found: ${relativePath}`);
           } else {
-            console.error(`✗ Error processing ${relativePath}: ${err}`);
+            console.error(`${LOG_PREFIX} ${styleText("red", "error")} processing ${relativePath}: ${err}`);
           }
           processedScripts.add(scriptSrc);
         }
@@ -201,7 +204,9 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
       }
 
       if (deletedCount > 0 || keptCount > 0) {
-        console.log(`Thymeleaf minify cleanup: deleted ${deletedCount} orphaned, kept ${keptCount} referenced`);
+        console.log(
+          `${LOG_PREFIX} ${styleText("green", "cleanup")} deleted ${deletedCount} orphaned, kept ${keptCount} referenced`,
+        );
       }
     },
   };
@@ -325,16 +330,8 @@ function removeNestedThymeleafComments(html: string): string {
   return result.join("");
 }
 
-function getHighRiskThymeleafMarkers(html: string): string[] {
-  return [
-    "th:inline",
-    "/*[[",
-    "/*[(",
-    "/*[#",
-    "/*[/]",
-    "<!--/*/",
-    "/*/-->",
-    "[[",
-    "[(",
-  ].filter((marker) => html.includes(marker));
+function getMinifySensitiveThymeleafMarkers(html: string): string[] {
+  return ["th:inline", "/*[[", "/*[(", "/*[#", "/*[/]", "<!--/*/", "/*/-->", "[[", "[("].filter((marker) =>
+    html.includes(marker),
+  );
 }
