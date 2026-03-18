@@ -88,7 +88,7 @@ function renderMermaid(
         element.setAttribute("id", newId);
 
         const elementsUsingId = svgElement.querySelectorAll(
-          `[marker-start*="#${originalId}"], [marker-mid*="#${originalId}"], [marker-end*="#${originalId}"], [href*="#${originalId}"]`,
+          `[marker-start*="#${originalId}"], [marker-mid*="#${originalId}"], [marker-end*="#${originalId}"], [href*="#${originalId}"], [xlink\\:href*="#${originalId}"]`,
         );
         // 更新引用这些 id 的元素。
         // marker 常见引用属性有 marker-start、marker-mid、marker-end。
@@ -97,8 +97,8 @@ function renderMermaid(
           "marker-start",
           "marker-mid",
           "marker-end",
-          "xlink:href",
           "href",
+          "xlink:href",
         ];
 
         elementsUsingId.forEach((refElement) => {
