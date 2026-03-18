@@ -30,10 +30,15 @@
 
 - 分享按钮预设新增 Reddit、WhatsApp、Tumblr、LINE、Hacker News、Blogger、Gmail、Yahoo Mail 和 Skype。
 
+### 🔧 代码重构
+
+- Mermaid 注入从内联 Thymeleaf `<script>` 重构为独立 TypeScript 模块。
+
 ### 🐛 错误修复
 
 - 修复社交资料设置（`console/theme/settings/sns`）保存后无法显示已选类型的问题。
 - 修复未安装 RSS 插件时，社交资料中设置的 RSS 链接无法输出 `<link>` 标签的问题。
+- 修复了在 Mermaid 注入中 `xlink:href` 引用未同步更新的问题。
 
 ## [1.58.2] - 2026-03-18
 
