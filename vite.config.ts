@@ -11,7 +11,6 @@ import { compression, defineAlgorithm } from "vite-plugin-compression2";
 import { sri } from "vite-plugin-sri3";
 
 import pkg from "./package.json";
-import { rollupOutput } from "./plugins/vite-config-build-rollupOptions-output";
 import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
@@ -74,7 +73,6 @@ export default defineConfig((): UserConfig => {
     build: {
       target: ["chrome111", "edge111", "firefox114", "safari16.4"],
       outDir: fileURLToPath(new URL("./templates/", import.meta.url)),
-      assetsDir: "assets/dist/",
       emptyOutDir: true,
       modulePreload: {
         // https://vite.dev/config/build-options#build-modulepreload
@@ -127,6 +125,10 @@ export default defineConfig((): UserConfig => {
           "components-mermaid-injection": path.resolve(
             __dirname,
             "src/templates/components/mermaid-injection/template.html",
+          ),
+          "components-instantpage-injection": path.resolve(
+            __dirname,
+            "src/templates/components/instantpage-injection/template.html",
           ),
           "components-header": path.resolve(__dirname, "src/templates/components/header/template.html"),
           "components-halo-comment-widget": path.resolve(
@@ -189,7 +191,17 @@ export default defineConfig((): UserConfig => {
           ),
           "components-nav-post": path.resolve(__dirname, "src/templates/components/nav-post/template.html"),
         },
-        output: rollupOutput,
+        output: {
+          assetFileNames: () => {
+            return `assets/${pkg.version}[hash:7][extname]`;
+          },
+          // JS entry files
+          // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+          entryFileNames: `assets/${pkg.version}[hash:7].js`,
+          // Dynamic chunks
+          // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+          chunkFileNames: `assets/${pkg.version}[hash:7].js`,
+        },
       },
     },
   };

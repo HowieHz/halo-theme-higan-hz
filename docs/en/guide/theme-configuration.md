@@ -657,44 +657,6 @@ Assuming the user accesses the link `http://localhost/a/b?a=1`, and the [Target 
 
 :::
 
-### Custom Resource Location Address
-
-::: info 🎯 Purpose
-
-Specify that resources will use custom resource location addresses instead of the theme's default addresses.
-
-:::
-::: info 📂 Configuration Item Location
-
-Global -> Custom Resource Location Address
-
-:::
-::: info ⚡ Quick Jump
-
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Custom%20Resource%20Location%20Address" />
-
-:::
-::: info 🏷️ Type
-
-Boolean
-
-:::
-::: info ⭐ Default Value
-
-`false`
-
-:::
-::: info 🧩 Template Variable
-
-`theme.config?.global?.is_custom_resource_locations`
-
-:::
-::: info ℹ️ Additional Information
-
-After enabling this option, if you enable the "instant.page Support" option below, the corresponding resource location configuration item will be displayed.
-
-:::
-
 ### instant.page Support
 
 ::: info 🎯 Purpose
