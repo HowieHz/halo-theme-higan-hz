@@ -62,6 +62,7 @@ styles (e.g. accent color) would not be applied until after the full page has lo
 producing a visible flash.
 
 Placing `inlineInit` just before `</body>` ensures that:
+
 1. All upvote trigger elements are already present in the DOM at execution time.
 2. localStorage is read and button styles are applied synchronously, before the first paint
    of that part of the page reaches the user.
