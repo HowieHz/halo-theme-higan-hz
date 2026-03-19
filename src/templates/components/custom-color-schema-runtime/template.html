@@ -18,19 +18,6 @@
     ];
   </script>
   <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute end */-->
-  <!--/* set data-color-scheme attribute for custom color schema start */-->
-  <script
-    th:if="${color_schema == 'custom'}"
-    th:data-custom-color-schema-init-id="${custom_color_schema_init_id}"
-    th:inline="javascript"
-  >
-    document.documentElement.setAttribute(
-      "data-color-scheme",
-      allCustomColorSchema.find((schema) => schema.id === document.currentScript?.dataset.customColorSchemaInitId)
-        ?.type ?? "",
-    );
-  </script>
-  <!--/* set data-color-scheme attribute for custom color schema end */-->
 </head>
 <!--/*-->
 <body th:remove="tag"></body>

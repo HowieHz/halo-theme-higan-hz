@@ -143,8 +143,7 @@
       th:insert="~{components/custom-cursor-style/template :: body}"
     ></th:block>
     <!--/* Custom Cursor Declarations end */-->
-    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute,
-           set data-color-scheme attribute for custom color schema start */-->
+    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute */-->
     <th:block
       th:if="${color_schema == 'custom'
                or theme_dark == 'custom'
@@ -152,8 +151,16 @@
                or theme_auto == 'custom'}"
       th:insert="~{components/custom-color-schema-runtime/template :: head}"
     ></th:block>
-    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute,
-           set data-color-scheme attribute for custom color schema end */-->
+    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute */-->
+    <!--/* set data-color-scheme attribute for custom color schema start */-->
+    <script th:if="${color_schema == 'custom'}" th:data-custom-color-schema-init-id="${custom_color_schema_init_id}">
+      document.documentElement.setAttribute(
+        "data-color-scheme",
+        allCustomColorSchema.find((schema) => schema.id === document.currentScript?.dataset.customColorSchemaInitId)
+          ?.type ?? "",
+      );
+    </script>
+    <!--/* set data-color-scheme attribute for custom color schema end */-->
     <!--/* Custom Theme Declarations start */-->
     <th:block
       th:if="${!#lists.isEmpty(custom_color_schema_config)
@@ -375,8 +382,24 @@
     </script>
     <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script End */-->
     <!--/* Auto Redirect to Browser Language Script Start */-->
-    <script th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}" th:inline="javascript">
+    <script
+      th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}"
+      th:with="page_language_override=${language},
+               requested_language_param=${'' + param.lang},
+               default_page_language=${theme.config?.global?.default_page_language},
+               auto_redirect_target_languages=${#lists.isEmpty(theme.config?.global?.auto_redirect_target_language_list)
+                                                ? null
+                                                : #strings.listJoin(theme.config?.global?.auto_redirect_target_language_list.![v], ',')},
+               is_prefix_match_mode=${theme.config?.global?.is_i18n_prefix_match_mode}"
+      th:data-page-language-override="${page_language_override}"
+      th:data-requested-language-param="${requested_language_param}"
+      th:data-default-page-language="${default_page_language}"
+      th:data-auto-redirect-target-languages="${auto_redirect_target_languages}"
+      th:data-prefix-match-mode="${is_prefix_match_mode}"
+    >
       (function () {
+        const currentScript = document.currentScript;
+
         // <!--/* 设计思路：
         // 1. 如果 ${language} 已经传入，也就是已经在元数据强行指定了页面语言，则不跳转
         // 2. 如果浏览器已有 lang 查询参数，也就是在用户层面强行指定了页面语言，则不跳转
@@ -385,10 +408,15 @@
         // 5. 获取主题配置项中的目标语言列表，以及前缀匹配模式开关
         // 6. 如果浏览器语言匹配配置项中的目标语言列表，则跳转到带有浏览器语言参数的当前页面
 
+        // 核心理念（优先级）是：
+        // 1. 用户浏览器查询参数的强制指定
+        // 2. 站长在页面元数据的强制指定
+        // 3. 根据浏览器语言识别自动跳转（用户浏览器语言刚好在站长配置的允许跳转列表里，那就跳）。
+
         // 如果 ${language} 已经传入，也就是已经指定了页面语言，则不跳转
         // 这个 ${language} 是文章元数据/分类详情页元数据/标签详情页元数据的 language */-->
-        const languageParam = /*[[${language}]]*/ null;
-        if (languageParam) {
+        const pageLanguageOverride = currentScript?.dataset.pageLanguageOverride;
+        if (pageLanguageOverride) {
           return;
         }
 
@@ -397,16 +425,16 @@
         // lang=zh -> ''+param.lang 为 'zh'
         // lang=zh,en -> ''+param.lang 为 'zh,en'
         // 用 (new URL(window.location.href)).searchParams.get("lang") 也差不多
-        // 但我选择尽量预渲染 */-->
-        const langParam = /*[[${''+param.lang}]]*/ "";
-        if (langParam) {
+        // 但我选择尽量预渲染，所以 ${'' + param.lang} */-->
+        const requestedLanguageParam = currentScript?.dataset.requestedLanguageParam;
+        if (requestedLanguageParam) {
           return;
         }
 
         // <!--/* 获取配置项默认语言 */-->
-        let defaultLang = /*[[${theme.config?.global?.default_page_language}]]*/ "zh";
-        if (!defaultLang) {
-          defaultLang = "zh";
+        let defaultPageLanguage = currentScript?.dataset.defaultPageLanguage;
+        if (!defaultPageLanguage) {
+          defaultPageLanguage = "zh";
         }
 
         // <!--/* 获取浏览器语言
@@ -415,13 +443,17 @@
         // */-->
         const browserLang = navigator.language;
 
-        const originLangList = /*[(${theme.config?.global?.auto_redirect_target_language_list})]*/ [];
-        const targetLangs = originLangList.map((item) => item.v);
-        const prefixMode = /*[[${theme.config?.global?.is_i18n_prefix_match_mode}]]*/ true;
+        const autoRedirectTargetLanguages = currentScript?.dataset.autoRedirectTargetLanguages
+          ?.split(",")
+          .filter(Boolean);
+        if (!autoRedirectTargetLanguages?.length) {
+          return;
+        }
+        const prefixMode = currentScript?.dataset.prefixMatchMode === "true";
 
-        let matchedLang = prefixMode
-          ? targetLangs.find((lang) => browserLang.startsWith(lang))
-          : targetLangs.find((lang) => browserLang === lang);
+        const matchedLang = prefixMode
+          ? autoRedirectTargetLanguages.find((lang) => browserLang.startsWith(lang))
+          : autoRedirectTargetLanguages.find((lang) => browserLang === lang);
         // <!--/* 没有匹配的语言参数，不进行跳转 */-->
         if (!matchedLang) {
           return;
@@ -429,7 +461,10 @@
 
         // <!--/* 准备跳转到带有浏览器语言参数的当前页面
         // 如果 defaultLang 和  matchedLang 匹配说明默认页面语言就是目标语言，无需跳转 */-->
-        if ((prefixMode && defaultLang.startsWith(matchedLang)) || (!prefixMode && defaultLang === matchedLang)) {
+        if (
+          (prefixMode && defaultPageLanguage.startsWith(matchedLang)) ||
+          (!prefixMode && defaultPageLanguage === matchedLang)
+        ) {
           return;
         }
 
