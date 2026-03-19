@@ -118,7 +118,10 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
         const minifySensitiveMarkers = getMinifySensitiveThymeleafMarkers(html);
 
         if (minifySensitiveMarkers.length === 0) {
-          html = minifyHtml.minify(Buffer.from(html), {}).toString();
+          // Must preserve the keep_html_and_head_opening_tags setting to prevent duplicate plugin content injection
+          html = minifyHtml
+            .minify(Buffer.from(html), { keep_closing_tags: true, keep_html_and_head_opening_tags: true })
+            .toString();
         } else {
           console.log(
             `${LOG_PREFIX} ${styleText("yellow", "skip")} ${ctx.path}: ${styleText("dim", "minify-sensitive syntax unsafe for aggressive minify")} (${styleText("magenta", minifySensitiveMarkers.join(", "))})`,
