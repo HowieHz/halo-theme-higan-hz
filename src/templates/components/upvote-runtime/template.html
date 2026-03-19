@@ -17,3 +17,41 @@
     type="application/json"
   ></script>
 </body>
+<th:block th:fragment="inlineInit">
+  <script>
+    (function () {
+      document.querySelectorAll("script[data-upvote-runtime]").forEach(function (configElement) {
+        const dataset = configElement.dataset;
+        const storageKey = dataset.storageKey;
+        const nameAttribute = dataset.nameAttribute;
+        const triggerSelector = dataset.triggerSelector;
+
+        if (!storageKey || !nameAttribute || !triggerSelector) {
+          return;
+        }
+
+        try {
+          const likedNames = JSON.parse(localStorage.getItem(storageKey) || "[]");
+          if (!Array.isArray(likedNames)) {
+            return;
+          }
+
+          likedNames.forEach(function (targetName) {
+            if (typeof targetName !== "string" || targetName.trim() === "") {
+              return;
+            }
+
+            document.querySelectorAll(triggerSelector).forEach(function (triggerElement) {
+              if (triggerElement.getAttribute(nameAttribute) !== targetName) {
+                return;
+              }
+
+              triggerElement.style.color = "var(--color-accent)";
+              triggerElement.style.fontWeight = "500";
+            });
+          });
+        } catch {}
+      });
+    })();
+  </script>
+</th:block>

@@ -147,12 +147,6 @@ const runtimeStates = getRuntimeConfigs().map((config) => ({
   pendingNames: new Set<string>(),
 }));
 
-runtimeStates.forEach((runtimeState) => {
-  runtimeState.likedNames.forEach((likedName) => {
-    updateActiveButtons(runtimeState.config, likedName);
-  });
-});
-
 document.addEventListener("click", async (event: Event): Promise<void> => {
   const target = event.target instanceof Element ? event.target : null;
   if (!target) {

@@ -13,7 +13,7 @@ Head Content
 <th:block th:insert="~{components/upvote-runtime/template :: head}"></th:block>
 ```
 
-Body Content
+Config Content
 
 ```html
 <th:block
@@ -29,6 +29,12 @@ Body Content
 ></th:block>
 ```
 
+Tail Content
+
+```html
+<th:block th:insert="~{components/upvote-runtime/template :: inlineInit}"></th:block>
+```
+
 ## Parameters
 
 - `storageKey`: The localStorage key used to persist liked item ids.
@@ -38,3 +44,9 @@ Body Content
 - `triggerSelector`: The selector used to match clickable upvote elements.
 - `countSelector`: The selector used to match upvote count elements.
 - `networkRequestFailedMsg`: The localized alert message shown when the network request fails.
+
+## Notes
+
+- Insert `head` once to load the module runtime.
+- Insert `body(...)` where the page provides upvote runtime config.
+- Insert `inlineInit` before `</body>` to restore liked button styles earlier and reduce FOUC.

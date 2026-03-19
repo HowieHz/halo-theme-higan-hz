@@ -420,5 +420,9 @@
         }
       });
     </script>
+    <th:block
+      th:if="${theme.config?.post_styles?.is_post_upvote_button_show}"
+      th:insert="~{components/upvote-runtime/template :: inlineInit}"
+    ></th:block>
   </body>
 </th:block>

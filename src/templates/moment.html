@@ -300,5 +300,9 @@
         </div>
       </div>
     </article>
+    <th:block
+      th:if="${theme.config?.moments_styles?.is_moment_upvote_button_show}"
+      th:insert="~{components/upvote-runtime/template :: inlineInit}"
+    ></th:block>
   </body>
 </th:block>
