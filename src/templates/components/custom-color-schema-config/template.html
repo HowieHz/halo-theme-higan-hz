@@ -1,10 +1,6 @@
 <head th:remove="tag">
   <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute start */-->
   <script
-    th:if="${color_schema == 'custom'
-               or theme_dark == 'custom'
-               or theme_light == 'custom'
-               or theme_auto == 'custom'}"
     id="custom-color-config"
     th:inline="javascript"
   >
