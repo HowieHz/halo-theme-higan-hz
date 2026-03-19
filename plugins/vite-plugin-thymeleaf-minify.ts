@@ -119,6 +119,8 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
 
         if (minifySensitiveMarkers.length === 0) {
           // Must preserve the keep_html_and_head_opening_tags setting to prevent duplicate plugin content injection
+          // No need to enable minify_css, it will be processed anyway
+          // Enable minify_js to handle inline blocks skipped by vite
           html = minifyHtml
             .minify(Buffer.from(html), {
               keep_closing_tags: true,
