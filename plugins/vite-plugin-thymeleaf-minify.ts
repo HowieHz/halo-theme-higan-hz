@@ -46,8 +46,19 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
     base = "/",
   } = options;
 
-  // Track script tags that were removed from HTML during transformation
-  const removedScripts = new Map<string, Set<string>>(); // scriptSrc -> Set of HTML file paths
+  // Track script references that disappear after Thymeleaf prototype-only
+  // comments are stripped during HTML transformation.
+  //
+  // This plugin performs orphan script cleanup in two phases:
+  // 1. In transformIndexHtml, compare script references before and after
+  //    Thymeleaf prototype-only comments are removed, and record the scripts
+  //    that disappear during that step.
+  // 2. In writeBundle, check whether the built assets for those removed
+  //    scripts are still referenced by any remaining HTML files. If not, treat
+  //    them as orphaned and delete them.
+  //
+  // If no scripts are removed in phase 1, the orphan-check phase is skipped.
+  const removedScripts = new Map<string, Set<string>>(); // scriptSrc -> HTML paths that removed it
 
   return {
     name: "vite-plugin-thymeleaf-minify",
@@ -57,55 +68,58 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
     transformIndexHtml: {
       order: "post", // Execute after all transformations
       handler(html, ctx) {
-        // First, find all script tags in the original HTML (checking both src and data-src)
+        // Collect script references from the original HTML before any
+        // Thymeleaf-specific cleanup runs. Check both src and data-src because
+        // Vite's legacy output may use either form.
         const originalScripts = new Set<string>();
 
-        // Extract all script src and data-src attributes
+        // Extract all script src and data-src attributes.
         const scriptRegex = /<script\s[^>]*>/g;
         let match;
         while ((match = scriptRegex.exec(html)) !== null) {
           const scriptTag = match[0];
 
-          // Check for src attribute
+          // Check for src attribute.
           const srcMatch = /\ssrc="([^"]+)"/.exec(scriptTag);
           if (srcMatch) {
             originalScripts.add(srcMatch[1]);
           }
 
-          // Check for data-src attribute
+          // Check for data-src attribute.
           const dataSrcMatch = /\sdata-src="([^"]+)"/.exec(scriptTag);
           if (dataSrcMatch) {
             originalScripts.add(dataSrcMatch[1]);
           }
         }
 
-        // Remove Thymeleaf prototype comments (supports multiple prefix formats)
-        // But preserve parser-level comments <!--/*/ ... /*/-->
+        // Remove Thymeleaf prototype-only comments while preserving parser-level
+        // comments such as <!--/*/ ... /*/-->.
         html = removeNestedThymeleafComments(html);
 
-        // Remove consecutive empty lines
+        // Remove consecutive empty lines after comment stripping.
         html = html.replace(/\n\s*\n/g, "\n");
 
-        // Now, find which script tags remain after transformation
+        // Collect the script references that remain after transformation.
         const remainingScripts = new Set<string>();
-        scriptRegex.lastIndex = 0; // Reset regex
+        scriptRegex.lastIndex = 0; // Reset regex state before reusing it.
         while ((match = scriptRegex.exec(html)) !== null) {
           const scriptTag = match[0];
 
-          // Check for src attribute
+          // Check for src attribute.
           const srcMatch = /\ssrc="([^"]+)"/.exec(scriptTag);
           if (srcMatch) {
             remainingScripts.add(srcMatch[1]);
           }
 
-          // Check for data-src attribute
+          // Check for data-src attribute.
           const dataSrcMatch = /\sdata-src="([^"]+)"/.exec(scriptTag);
           if (dataSrcMatch) {
             remainingScripts.add(dataSrcMatch[1]);
           }
         }
 
-        // Track scripts that were removed
+        // Record any script references that disappeared because the associated
+        // Thymeleaf prototype-only block was removed.
         for (const scriptSrc of originalScripts) {
           if (!remainingScripts.has(scriptSrc)) {
             if (!removedScripts.has(scriptSrc)) {
@@ -138,43 +152,44 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
       },
     },
 
-    // Check and remove orphaned JS files after bundle is written
+    // After bundling finishes, delete any generated script files that became
+    // orphaned when their last HTML reference was removed during phase 1.
     async writeBundle(bundleOptions) {
       if (removedScripts.size === 0) {
         console.log(`\n${LOG_PREFIX} ${styleText("dim", "No scripts were removed, skipping orphan check.")}`);
         return;
       }
 
-      // Get output directory
+      // Resolve the output directory.
       const outDir = bundleOptions.dir
         ? resolve(bundleOptions.dir)
         : bundleOptions.file
           ? dirname(resolve(bundleOptions.file))
           : process.cwd();
 
-      // Track scripts that were successfully processed
+      // Track scripts that were successfully processed in this cleanup phase.
       const processedScripts = new Set<string>();
       let deletedCount = 0;
       let keptCount = 0;
 
       for (const [scriptSrc, htmlPaths] of removedScripts.entries()) {
-        // Remove base path prefix
+        // Remove the configured base path prefix to get the output-relative
+        // script path.
         const relativePath = scriptSrc.startsWith(base) ? scriptSrc.slice(base.length) : scriptSrc.replace(/^\//, "");
 
-        // Build full path
+        // Build the absolute output path for the generated asset.
         const filePath = resolve(outDir, relativePath);
 
         try {
-          // Check if the file exists
+          // Skip missing files gracefully.
           await fs.access(filePath);
 
-          // Check if this script is referenced by any other HTML files
-          // by checking if it exists in the final bundle output
+          // Check whether any final HTML file still references this script.
           const allHtmlFiles = await findHtmlFiles(outDir);
           let isReferencedElsewhere = false;
 
           for (const htmlFile of allHtmlFiles) {
-            // Skip the HTML files that removed this script
+            // Skip HTML files that originally removed this script during phase 1.
             const htmlRelativePath = htmlFile.replace(outDir, "").replace(/\\/g, "/").replace(/^\//, "");
             if (Array.from(htmlPaths).some((p) => p.includes(htmlRelativePath))) {
               continue;
@@ -187,7 +202,8 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
             }
           }
 
-          // If not referenced anywhere, delete the JS file
+          // If the script is no longer referenced anywhere, delete the built
+          // asset as an orphan.
           if (!isReferencedElsewhere) {
             await fs.unlink(filePath);
             console.log(`${LOG_PREFIX} ${styleText("green", "delete")} orphaned script: ${filePath}`);
@@ -197,7 +213,8 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
           }
           processedScripts.add(scriptSrc);
         } catch (err) {
-          // File doesn't exist or can't be accessed, mark as processed
+          // Missing files or unreadable files should not block cleanup of other
+          // entries.
           if ((err as NodeJS.ErrnoException).code === "ENOENT") {
             console.log(`${LOG_PREFIX} ${styleText("yellow", "skip")} file not found: ${relativePath}`);
           } else {
@@ -207,7 +224,7 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
         }
       }
 
-      // Remove all processed scripts from the checking list
+      // Remove processed entries from the tracking map.
       for (const scriptSrc of processedScripts) {
         removedScripts.delete(scriptSrc);
       }
@@ -222,7 +239,7 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
 }
 
 /**
- * Recursively find all HTML files in a directory
+ * Recursively find all HTML files inside a directory.
  */
 async function findHtmlFiles(dir: string): Promise<string[]> {
   const results: string[] = [];
@@ -241,19 +258,21 @@ async function findHtmlFiles(dir: string): Promise<string[]> {
       }
     }
   } catch {
-    // Ignore errors (e.g., permission denied)
+    // Ignore directory read errors such as permission issues.
   }
 
   return results;
 }
 
 /**
- * Remove nested Thymeleaf prototype comments using a stack-based algorithm
+ * Remove nested Thymeleaf prototype-only comments using a stack-based
+ * algorithm.
+ *
  * Supported formats:
  * - <!--/* ... *\/--> (no prefix)
  * - //<!--/* ... *\/--> (JS comment prefix, no space)
  * - // <!--/* ... *\/--> (JS comment prefix, with space)
- * Preserves parser-level comments: <!--/*\/ ... /*\/-->
+ * Parser-level comments such as <!--/*\/ ... /*\/--> are preserved.
  */
 function removeNestedThymeleafComments(html: string): string {
   const result: string[] = [];
@@ -262,14 +281,14 @@ function removeNestedThymeleafComments(html: string): string {
 
   const START_MARKER = "<!--/*";
   const END_MARKER = "*/-->";
-  const EXCLUDE_START = "<!--/*/"; // Parser-level comment start
-  const EXCLUDE_END = "/*/-->"; // Parser-level comment end
-  const PREFIXES = ["// ", "//"]; // Possible prefixes (in descending order of length)
+  const EXCLUDE_START = "<!--/*/"; // Parser-level comment start.
+  const EXCLUDE_END = "/*/-->"; // Parser-level comment end.
+  const PREFIXES = ["// ", "//"]; // Possible prefixes, longest first.
 
   while (i < html.length) {
     let matched = false;
 
-    // 1. Check for parser-level comment start (supports all prefixes)
+    // 1. Check for parser-level comment start, including supported prefixes.
     for (const prefix of PREFIXES) {
       const fullExcludeStart = prefix + EXCLUDE_START;
       if (html.slice(i, i + fullExcludeStart.length) === fullExcludeStart) {
@@ -283,7 +302,7 @@ function removeNestedThymeleafComments(html: string): string {
     }
     if (matched) continue;
 
-    // Parser-level comment start without prefix
+    // Parser-level comment start without prefix.
     if (html.slice(i, i + EXCLUDE_START.length) === EXCLUDE_START) {
       if (depth === 0) {
         result.push(EXCLUDE_START);
@@ -292,7 +311,7 @@ function removeNestedThymeleafComments(html: string): string {
       continue;
     }
 
-    // 2. Check for parser-level comment end
+    // 2. Check for parser-level comment end.
     if (html.slice(i, i + EXCLUDE_END.length) === EXCLUDE_END) {
       if (depth === 0) {
         result.push(EXCLUDE_END);
@@ -301,7 +320,7 @@ function removeNestedThymeleafComments(html: string): string {
       continue;
     }
 
-    // 3. Check for prototype comment start (supports all prefixes)
+    // 3. Check for prototype-only comment start, including supported prefixes.
     for (const prefix of PREFIXES) {
       const fullStartMarker = prefix + START_MARKER;
       if (html.slice(i, i + fullStartMarker.length) === fullStartMarker) {
@@ -313,14 +332,14 @@ function removeNestedThymeleafComments(html: string): string {
     }
     if (matched) continue;
 
-    // Prototype comment start without prefix
+    // Prototype-only comment start without prefix.
     if (html.slice(i, i + START_MARKER.length) === START_MARKER) {
       depth++;
       i += START_MARKER.length;
       continue;
     }
 
-    // 4. Check for prototype comment end
+    // 4. Check for prototype-only comment end.
     if (html.slice(i, i + END_MARKER.length) === END_MARKER) {
       if (depth > 0) {
         depth--;
@@ -329,7 +348,7 @@ function removeNestedThymeleafComments(html: string): string {
       continue;
     }
 
-    // 5. If not inside a comment, preserve the character
+    // 5. If not inside a removable comment, preserve the character.
     if (depth === 0) {
       result.push(html[i]);
     }
