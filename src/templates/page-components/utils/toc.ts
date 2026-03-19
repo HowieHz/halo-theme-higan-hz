@@ -7,15 +7,16 @@
  * @param headingSelector - A string of heading selectors (e.g., "h1, h2, h3") to select within the contentSelector element for inclusion in the TOC.
  */
 export function initTOC(contentSelector: string, tocSelector: string, headingSelector = "h1, h2, h3, h4"): void {
+  const logPrefix = "[Higan Haozi][toc]";
   const contentRootDom = document.querySelector<HTMLElement>(contentSelector);
   const tocRootDom = document.querySelector<HTMLElement>(tocSelector);
 
   if (!contentRootDom) {
-    console.warn(`Element not found for selector: ${contentSelector}`);
+    console.warn(`${logPrefix} Element not found for selector: ${contentSelector}`);
     return;
   }
   if (!tocRootDom) {
-    console.warn(`Element not found for TOC selector: ${tocSelector}`);
+    console.warn(`${logPrefix} Element not found for TOC selector: ${tocSelector}`);
     return;
   }
 

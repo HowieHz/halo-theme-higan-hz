@@ -621,7 +621,7 @@
           if (is_save_color_scheme_settings_to_browser === true && typeof Storage !== "undefined") {
             localStorage.setItem("pref-theme", themeColorSchemeMap[theme]);
           } else if (typeof Storage === "undefined") {
-            console.log("Sorry, your browser does not support web storage...");
+            console.log("[Higan Haozi][base-layout] Sorry, your browser does not support web storage...");
           }
           applyThemeNoSave(theme);
         }

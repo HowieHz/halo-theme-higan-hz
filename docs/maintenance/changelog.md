@@ -36,6 +36,7 @@
 
 - Mermaid 注入从内联 Thymeleaf `<script>` 重构为独立 TypeScript 模块。
 - 使用 [minify-html](https://www.npmjs.com/package/@minify-html/node) 优化模板体积。
+- 优化日志输出。
 
 ### 🐛 错误修复
 
