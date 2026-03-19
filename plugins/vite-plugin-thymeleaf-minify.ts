@@ -146,6 +146,17 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
         // output may contain spaces or other characters that require quoting.
         // Tracking: https://github.com/wilsonzlin/minify-html/issues/274#issuecomment-4092947391
         //
+        // // - always behave like a fully standards-compliant HTML parser, so preserving tag
+        // // - boundaries avoids unnecessary integration errors.
+        // //
+        // // keep_html_and_head_opening_tags: true
+        // // - Prevent duplicate plugin content injection.
+        // //
+        // // minify_css: false
+        // // - Not needed here because CSS is already processed elsewhere.
+        // //
+        // // minify_js: true
+        // // - Enable handling for inline blocks skipped by Vite.
         // if (minifySensitiveMarkers.length === 0) {
         //   html = minifyHtml
         //     .minify(Buffer.from(html), {
