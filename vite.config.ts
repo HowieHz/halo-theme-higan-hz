@@ -138,9 +138,9 @@ export default defineConfig((): UserConfig => {
             __dirname,
             "src/templates/components/custom-color-schema-style/template.html",
           ),
-          "components-custom-color-scheme-init": path.resolve(
+          "components-custom-color-schema-runtime": path.resolve(
             __dirname,
-            "src/templates/components/custom-color-scheme-init/template.html",
+            "src/templates/components/custom-color-schema-runtime/template.html",
           ),
           "components-custom-cursor-style": path.resolve(
             __dirname,
