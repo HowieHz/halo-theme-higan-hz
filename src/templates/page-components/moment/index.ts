@@ -1,1 +1,1 @@
-import "../utils/main";
+import "../shared/main";

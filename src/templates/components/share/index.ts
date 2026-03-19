@@ -16,6 +16,8 @@ document.addEventListener("click", (event: Event): void => {
   if (navigator.canShare?.(shareData)) {
     void navigator.share(shareData);
   } else {
-    console.error(`[Higan Haozi][share] This browser does not support the Web Share API or cannot share the provided data.`);
+    console.error(
+      `[Higan Haozi][share] This browser does not support the Web Share API or cannot share the provided data.`,
+    );
   }
 });

@@ -1,2 +1,2 @@
-import "../utils/main";
+import "../shared/main";
 import "./styles.css";
