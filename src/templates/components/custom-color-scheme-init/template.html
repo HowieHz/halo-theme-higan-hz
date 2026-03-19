@@ -24,11 +24,11 @@
     th:data-custom-color-schema-init-id="${custom_color_schema_init_id}"
     th:inline="javascript"
   >
-    const customColorSchemaInitId = document.currentScript?.dataset.customColorSchemaInitId ?? "";
-    const customColorSchema = allCustomColorSchema.find(
-      (schema) => schema.id === customColorSchemaInitId,
+    document.documentElement.setAttribute(
+      "data-color-scheme",
+      allCustomColorSchema.find((schema) => schema.id === document.currentScript?.dataset.customColorSchemaInitId)
+        ?.type ?? "",
     );
-    document.documentElement.setAttribute("data-color-scheme", customColorSchema ? customColorSchema.type : null);
   </script>
   <!--/* set data-color-scheme attribute for custom color schema end */-->
 </head>
