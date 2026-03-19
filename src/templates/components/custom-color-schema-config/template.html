@@ -1,9 +1,6 @@
 <head th:remove="tag">
   <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute start */-->
-  <script
-    id="custom-color-config"
-    th:inline="javascript"
-  >
+  <script id="custom-color-config" th:inline="javascript">
     const allCustomColorSchema = [
       /*[# th:each="c : ${custom_color_schema_config}"]*/ /*[# th:if="${custom_color_schema_init_id == c.id
                                                                         or custom_theme_auto_id == c.id

@@ -131,10 +131,11 @@
     <!--/* Custom Font Declarations end */-->
     <!--/* WebKit Detection start */-->
     <script>
-      let ua = navigator.userAgent;
-      if (!/(apple)?webkit\/537\.36/i.test(ua) && /(apple)?webkit/i.test(ua)) {
-        document.documentElement.classList.add("webkit");
-      }
+      (function (userAgent) {
+        if (!/(apple)?webkit\/537\.36/i.test(userAgent) && /(apple)?webkit/i.test(userAgent)) {
+          document.documentElement.classList.add("webkit");
+        }
+      })(navigator.userAgent);
     </script>
     <!--/* WebKit Detection end */-->
     <!--/* Custom Cursor Declarations start */-->
@@ -154,11 +155,18 @@
     <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute */-->
     <!--/* set data-color-scheme attribute for custom color schema start */-->
     <script th:if="${color_schema == 'custom'}" th:data-custom-color-schema-init-id="${custom_color_schema_init_id}">
-      document.documentElement.setAttribute(
-        "data-color-scheme",
-        allCustomColorSchema.find((schema) => schema.id === document.currentScript?.dataset.customColorSchemaInitId)
-          ?.type ?? "",
-      );
+      ((configText) => {
+        document.documentElement.setAttribute(
+          "data-color-scheme",
+          (
+            configText
+              ? Function(
+                  `"use strict"; ${configText}; return typeof allCustomColorSchema !== "undefined" ? allCustomColorSchema : [];`,
+                )()
+              : []
+          ).find((schema) => schema.id === document.currentScript?.dataset.customColorSchemaInitId)?.type ?? "",
+        );
+      })(document.querySelector("#custom-color-config")?.textContent?.trim());
     </script>
     <!--/* set data-color-scheme attribute for custom color schema end */-->
     <!--/* Custom Theme Declarations start */-->
