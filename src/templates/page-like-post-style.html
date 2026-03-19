@@ -99,7 +99,7 @@
         th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show
                  and haloCommentEnabled}"
       >
-        <halo:comment group="content.halo.run" kind="SinglePage" th:name="${singlePage.metadata?.name}" />
+        <halo:comment group="content.halo.run" kind="SinglePage" th:name="${singlePage.metadata?.name}"></halo:comment>
       </div>
     </article>
     <div th:replace="~{components/footer-nav-page-like-post-style/template :: footerNav}"></div>

@@ -382,7 +382,7 @@
       <hr th:if="${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show}" class="divide mt-10 mb-0" />
 
       <div th:if="${theme.config?.post_styles?.is_post_comment_section_show and haloCommentEnabled}" class="mt-5">
-        <halo:comment group="content.halo.run" kind="Post" th:name="${post.metadata?.name}" />
+        <halo:comment group="content.halo.run" kind="Post" th:name="${post.metadata?.name}"></halo:comment>
       </div>
     </article>
     <th:block th:if="${theme.config?.post_styles?.is_show_footer_nav}">

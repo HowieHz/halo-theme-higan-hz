@@ -281,7 +281,7 @@
                 <span th:text="${moment.stats.approvedComment}"></span>
               </a>
               <div class="moment-comment" x-show="current === name">
-                <halo:comment group="moment.halo.run" kind="Moment" th:name="${moment.metadata?.name}" />
+                <halo:comment group="moment.halo.run" kind="Moment" th:name="${moment.metadata?.name}"></halo:comment>
               </div>
             </th:block>
           </div>

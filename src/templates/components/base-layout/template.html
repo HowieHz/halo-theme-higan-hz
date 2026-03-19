@@ -523,7 +523,7 @@
     </script>
     <!--/* browser polyfill for modulepreload end */-->
     <!--/* js/css injection start */-->
-    <th:block th:replace="${head}" />
+    <th:block th:replace="${head}"></th:block>
     <!--/* js/css injection end */-->
     <!--/* Mermaid injection start */-->
     <th:block
@@ -875,21 +875,22 @@
     ></th:block>
     <th:block th:insert="~{components/layout-heading-paragraph-margin-style/template :: body}"></th:block>
     <div class="max-width min-width content-width mx-auto px-4 sm:px-8">
-      <th:block th:replace="${navbar}" />
+      <th:block th:replace="${navbar}"></th:block>
 
       <div
         class="content index pt-16"
         th:classappend="${theme.config?.styles?.is_footer_force_bottom} ? 'min-h-100vh' : '' "
       >
-        <th:block th:replace="${header}" />
+        <th:block th:replace="${header}"></th:block>
 
         <main>
-          <th:block th:replace="${content}" />
+          <th:block th:replace="${content}"></th:block>
         </main>
 
         <footer id="footer">
           <div class="footer-left">
-            <halo:footer />
+            <!--/* 这里不能使用自闭合标签，否则在经过 html minify 处理后会变成 <halo:footer> ，无法正常注入 */-->
+            <halo:footer></halo:footer>
             <div th:if="${theme.config?.styles?.is_footer_site_stats_show}">
               <ul class="site-stats" th:with="stats = ${siteStatsFinder.getStats()}">
                 <li
