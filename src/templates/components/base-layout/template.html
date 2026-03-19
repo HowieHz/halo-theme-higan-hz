@@ -359,9 +359,7 @@
                                   : #strings.listJoin(theme.config?.global?.allow_site_whitelist.![input_domain], ' ')}"
       th:data-keep-path-and-query="${theme.config?.global?.is_keep_path_and_query}"
     >
-      (function () {
-        const currentScript = document.currentScript;
-
+      (function (currentScript) {
         // <!--/* 获取被编码后的目标链接 */-->
         const encodedRedirectUrl = currentScript?.dataset.targetUrl?.trim();
         if (!encodedRedirectUrl) {
@@ -385,7 +383,7 @@
         if (!domainWhiteList.includes(document.location.hostname)) {
           window.location.href = targetRedirectUrl;
         }
-      })();
+      })(document.currentScript);
     </script>
     <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script End */-->
     <!--/* Auto Redirect to Browser Language Script Start */-->
@@ -404,9 +402,7 @@
       th:data-auto-redirect-target-languages="${auto_redirect_target_languages}"
       th:data-prefix-match-mode="${is_prefix_match_mode}"
     >
-      (function () {
-        const currentScript = document.currentScript;
-
+      (function (currentScript) {
         // <!--/* 设计思路：
         // 1. 如果 ${language} 已经传入，也就是已经在元数据强行指定了页面语言，则不跳转
         // 2. 如果浏览器已有 lang 查询参数，也就是在用户层面强行指定了页面语言，则不跳转
@@ -479,7 +475,7 @@
         const url = new URL(window.location);
         url.searchParams.set("lang", matchedLang);
         window.location.href = url;
-      })();
+      })(document.currentScript);
     </script>
     <!--/* Auto Redirect to Browser Language Script End */-->
     <!--/* browser polyfill for modulepreload start
@@ -566,161 +562,162 @@
       th:data-custom-theme-light-id="${custom_theme_light_id}"
       th:data-custom-theme-auto-id="${custom_theme_auto_id}"
     >
-      const currentScript = document.currentScript;
-      const customColorSchemeConfigElement = document.querySelector("#custom-color-config");
-      const allCustomColorSchema = customColorSchemeConfigElement?.textContent?.trim()
-        ? Function(
-            `"use strict"; ${customColorSchemeConfigElement.textContent}; return typeof allCustomColorSchema !== "undefined" ? allCustomColorSchema : [];`,
-          )()
-        : [];
+      (function (currentScript) {
+        const customColorSchemeConfigElement = document.querySelector("#custom-color-config");
+        const allCustomColorSchema = customColorSchemeConfigElement?.textContent?.trim()
+          ? Function(
+              `"use strict"; ${customColorSchemeConfigElement.textContent}; return typeof allCustomColorSchema !== "undefined" ? allCustomColorSchema : [];`,
+            )()
+          : [];
 
-      var THEME_DARK = currentScript?.dataset.themeDark;
-      var THEME_LIGHT = currentScript?.dataset.themeLight;
-      var THEME_AUTO = currentScript?.dataset.themeAuto;
-      const is_save_color_scheme_settings_to_browser =
-        currentScript?.dataset.saveColorSchemeSettingsToBrowser === "true";
+        var THEME_DARK = currentScript?.dataset.themeDark;
+        var THEME_LIGHT = currentScript?.dataset.themeLight;
+        var THEME_AUTO = currentScript?.dataset.themeAuto;
+        const is_save_color_scheme_settings_to_browser =
+          currentScript?.dataset.saveColorSchemeSettingsToBrowser === "true";
 
-      // <!--/* Map each concrete theme name to its corresponding data-color-scheme value. */-->
-      var themeColorSchemeMap = {
-        auto: "auto",
-        dark: "dark",
-        light: "light",
-        "auto-blue": "auto",
-        "dark-blue": "dark",
-        "light-blue": "light",
-        gray: "light",
-      };
+        // <!--/* Map each concrete theme name to its corresponding data-color-scheme value. */-->
+        var themeColorSchemeMap = {
+          auto: "auto",
+          dark: "dark",
+          light: "light",
+          "auto-blue": "auto",
+          "dark-blue": "dark",
+          "light-blue": "light",
+          gray: "light",
+        };
 
-      if (THEME_DARK == "custom") {
-        let customColorSchema = allCustomColorSchema.find(
-          (schema) => schema.id === currentScript?.dataset.customThemeDarkId,
-        );
-        if (customColorSchema) {
-          THEME_DARK = "theme-" + customColorSchema.id;
-          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        if (THEME_DARK == "custom") {
+          let customColorSchema = allCustomColorSchema.find(
+            (schema) => schema.id === currentScript?.dataset.customThemeDarkId,
+          );
+          if (customColorSchema) {
+            THEME_DARK = "theme-" + customColorSchema.id;
+            themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+          }
         }
-      }
-      if (THEME_LIGHT == "custom") {
-        let customColorSchema = allCustomColorSchema.find(
-          (schema) => schema.id === currentScript?.dataset.customThemeLightId,
-        );
-        if (customColorSchema) {
-          THEME_LIGHT = "theme-" + customColorSchema.id;
-          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        if (THEME_LIGHT == "custom") {
+          let customColorSchema = allCustomColorSchema.find(
+            (schema) => schema.id === currentScript?.dataset.customThemeLightId,
+          );
+          if (customColorSchema) {
+            THEME_LIGHT = "theme-" + customColorSchema.id;
+            themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+          }
         }
-      }
-      if (THEME_AUTO == "custom") {
-        let customColorSchema = allCustomColorSchema.find(
-          (schema) => schema.id === currentScript?.dataset.customThemeAutoId,
-        );
-        if (customColorSchema) {
-          THEME_AUTO = "theme-" + customColorSchema.id;
-          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        if (THEME_AUTO == "custom") {
+          let customColorSchema = allCustomColorSchema.find(
+            (schema) => schema.id === currentScript?.dataset.customThemeAutoId,
+          );
+          if (customColorSchema) {
+            THEME_AUTO = "theme-" + customColorSchema.id;
+            themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+          }
         }
-      }
 
-      function updateThemeIcon(theme) {
-        const themeIcon = document.getElementById("theme-toggle-button-icon");
-        if (!themeIcon) return;
-        themeIcon.style.removeProperty("display"); // <!--/* remove display: none */-->
+        function updateThemeIcon(theme) {
+          const themeIcon = document.getElementById("theme-toggle-button-icon");
+          if (!themeIcon) return;
+          themeIcon.style.removeProperty("display"); // <!--/* remove display: none */-->
 
-        Array.from(themeIcon.classList).forEach((c) => {
-          if (c.startsWith("ph--")) themeIcon.classList.remove(c);
+          Array.from(themeIcon.classList).forEach((c) => {
+            if (c.startsWith("ph--")) themeIcon.classList.remove(c);
+          });
+
+          if (theme === THEME_LIGHT) {
+            themeIcon.classList.add("ph--sun-bold");
+          } else if (theme === THEME_DARK) {
+            themeIcon.classList.add("ph--moon-bold");
+          } else {
+            themeIcon.classList.add("ph--circle-bold");
+          }
+        }
+
+        function updateTagAttribute(theme) {
+          document.documentElement.setAttribute("data-color-scheme", themeColorSchemeMap[theme]);
+          document.documentElement.setAttribute("theme", theme);
+        }
+
+        function applyThemeNoSave(theme) {
+          updateTagAttribute(theme);
+          updateThemeIcon(theme);
+        }
+
+        function applyTheme(theme) {
+          if (is_save_color_scheme_settings_to_browser === true && typeof Storage !== "undefined") {
+            localStorage.setItem("pref-theme", themeColorSchemeMap[theme]);
+          } else if (typeof Storage === "undefined") {
+            console.log("Sorry, your browser does not support web storage...");
+          }
+          applyThemeNoSave(theme);
+        }
+
+        function getPreferredTheme() {
+          const storedTheme = localStorage.getItem("pref-theme");
+          if (storedTheme) {
+            return storedTheme;
+          }
+          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            return "dark";
+          }
+          return "light";
+        }
+
+        (function () {
+          if (is_save_color_scheme_settings_to_browser !== true && typeof Storage !== "undefined") {
+            localStorage.removeItem("pref-theme");
+          }
+          const is_auto_switch_color_scheme_based_on_browser_settings =
+            currentScript?.dataset.autoSwitchColorSchemeBasedOnBrowserSettings === "true";
+          if (!is_auto_switch_color_scheme_based_on_browser_settings) {
+            return;
+          }
+          switch (getPreferredTheme()) {
+            case "dark":
+              updateTagAttribute(THEME_DARK);
+              break;
+            case "light":
+              updateTagAttribute(THEME_LIGHT);
+              break;
+            case "auto":
+              updateTagAttribute(THEME_AUTO);
+              break;
+          }
+        })();
+
+        document.addEventListener("DOMContentLoaded", function () {
+          switch (getPreferredTheme()) {
+            case "dark":
+              updateThemeIcon(THEME_DARK);
+              break;
+            case "light":
+              updateThemeIcon(THEME_LIGHT);
+              break;
+            case "auto":
+              updateThemeIcon(THEME_AUTO);
+              break;
+          }
         });
 
-        if (theme === THEME_LIGHT) {
-          themeIcon.classList.add("ph--sun-bold");
-        } else if (theme === THEME_DARK) {
-          themeIcon.classList.add("ph--moon-bold");
-        } else {
-          themeIcon.classList.add("ph--circle-bold");
+        function toggleTheme(event) {
+          event.preventDefault(); // <!--/* 阻止默认行为，防止页面刷新 */-->
+          const currentTheme = document.documentElement.attributes["theme"].value;
+          let newTheme;
+          // <!--/* light -> dark -> auto -> light */-->
+          if (currentTheme === THEME_LIGHT) {
+            newTheme = THEME_DARK;
+          } else if (currentTheme === THEME_DARK) {
+            newTheme = THEME_AUTO;
+          } else {
+            newTheme = THEME_LIGHT;
+          }
+          applyTheme(newTheme);
         }
-      }
 
-      function updateTagAttribute(theme) {
-        document.documentElement.setAttribute("data-color-scheme", themeColorSchemeMap[theme]);
-        document.documentElement.setAttribute("theme", theme);
-      }
-
-      function applyThemeNoSave(theme) {
-        updateTagAttribute(theme);
-        updateThemeIcon(theme);
-      }
-
-      function applyTheme(theme) {
-        if (is_save_color_scheme_settings_to_browser === true && typeof Storage !== "undefined") {
-          localStorage.setItem("pref-theme", themeColorSchemeMap[theme]);
-        } else if (typeof Storage === "undefined") {
-          console.log("Sorry, your browser does not support web storage...");
-        }
-        applyThemeNoSave(theme);
-      }
-
-      function getPreferredTheme() {
-        const storedTheme = localStorage.getItem("pref-theme");
-        if (storedTheme) {
-          return storedTheme;
-        }
-        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-          return "dark";
-        }
-        return "light";
-      }
-
-      (function () {
-        if (is_save_color_scheme_settings_to_browser !== true && typeof Storage !== "undefined") {
-          localStorage.removeItem("pref-theme");
-        }
-        const is_auto_switch_color_scheme_based_on_browser_settings =
-          currentScript?.dataset.autoSwitchColorSchemeBasedOnBrowserSettings === "true";
-        if (!is_auto_switch_color_scheme_based_on_browser_settings) {
-          return;
-        }
-        switch (getPreferredTheme()) {
-          case "dark":
-            updateTagAttribute(THEME_DARK);
-            break;
-          case "light":
-            updateTagAttribute(THEME_LIGHT);
-            break;
-          case "auto":
-            updateTagAttribute(THEME_AUTO);
-            break;
-        }
-      })();
-
-      document.addEventListener("DOMContentLoaded", function () {
-        switch (getPreferredTheme()) {
-          case "dark":
-            updateThemeIcon(THEME_DARK);
-            break;
-          case "light":
-            updateThemeIcon(THEME_LIGHT);
-            break;
-          case "auto":
-            updateThemeIcon(THEME_AUTO);
-            break;
-        }
-      });
-
-      function toggleTheme(event) {
-        event.preventDefault(); // <!--/* 阻止默认行为，防止页面刷新 */-->
-        const currentTheme = document.documentElement.attributes["theme"].value;
-        let newTheme;
-        // <!--/* light -> dark -> auto -> light */-->
-        if (currentTheme === THEME_LIGHT) {
-          newTheme = THEME_DARK;
-        } else if (currentTheme === THEME_DARK) {
-          newTheme = THEME_AUTO;
-        } else {
-          newTheme = THEME_LIGHT;
-        }
-        applyTheme(newTheme);
-      }
-
-      document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("theme-toggle-button").addEventListener("click", toggleTheme);
-      });
+        document.addEventListener("DOMContentLoaded", function () {
+          document.getElementById("theme-toggle-button").addEventListener("click", toggleTheme);
+        });
+      })(document.currentScript);
     </script>
     <!--/* Color Scheme Toggle Button Script End */-->
     <!--/* CSS Variable to Meta Theme-Color Observer Start */-->
