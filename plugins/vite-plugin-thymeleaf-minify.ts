@@ -1,9 +1,9 @@
-import { Buffer } from "node:buffer";
+// import { Buffer } from "node:buffer";
 import { promises as fs } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { styleText } from "node:util";
 
-import minifyHtml from "@minify-html/node";
+// import minifyHtml from "@minify-html/node";
 import type { Plugin } from "vite";
 
 const LOG_PREFIX = styleText("cyan", "[thymeleaf-minify]");
@@ -133,34 +133,28 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
           }
         }
 
-        const minifySensitiveMarkers = getMinifySensitiveThymeleafMarkers(html);
+        // const minifySensitiveMarkers = getMinifySensitiveThymeleafMarkers(html);
 
-        if (minifySensitiveMarkers.length === 0) {
-          // keep_closing_tags: true
-          // - It is unclear whether other plugins and the Halo CMS parser
-          // - always behave like a fully standards-compliant HTML parser, so preserving tag
-          // - boundaries avoids unnecessary integration errors.
-          //
-          // keep_html_and_head_opening_tags: true
-          // - Prevent duplicate plugin content injection.
-          //
-          // minify_css: false
-          // - Not needed here because CSS is already processed elsewhere.
-          //
-          // minify_js: true
-          // - Enable handling for inline blocks skipped by Vite.
-          html = minifyHtml
-            .minify(Buffer.from(html), {
-              keep_closing_tags: true,
-              keep_html_and_head_opening_tags: true,
-              minify_js: true,
-            })
-            .toString();
-        } else {
-          console.log(
-            `${LOG_PREFIX} ${styleText("yellow", "skip")} ${ctx.path}: ${styleText("dim", "minify-sensitive syntax unsafe for aggressive minify")} (${styleText("magenta", minifySensitiveMarkers.join(", "))})`,
-          );
-        }
+        // if (minifySensitiveMarkers.length > 0) {
+        //   console.log(
+        //     `${LOG_PREFIX} ${styleText("yellow", "skip")} ${ctx.path}: ${styleText("dim", "minify-sensitive syntax unsafe for aggressive minify")} (${styleText("magenta", minifySensitiveMarkers.join(", "))})`,
+        //   );
+        // }
+
+        // Temporarily disable minify-html for all Thymeleaf templates.
+        // Reason: attribute unquoting can break th:* expressions whose runtime
+        // output may contain spaces or other characters that require quoting.
+        // Tracking: https://github.com/wilsonzlin/minify-html/issues/274#issuecomment-4092947391
+        //
+        // if (minifySensitiveMarkers.length === 0) {
+        //   html = minifyHtml
+        //     .minify(Buffer.from(html), {
+        //       keep_closing_tags: true,
+        //       keep_html_and_head_opening_tags: true,
+        //       minify_js: true,
+        //     })
+        //     .toString();
+        // }
 
         return html;
       },
@@ -372,11 +366,11 @@ function removeNestedThymeleafComments(html: string): string {
   return result.join("");
 }
 
-function getMinifySensitiveThymeleafMarkers(html: string): string[] {
-  return ["th:inline", "/*[[", "/*[(", "/*[#", "/*[/]", "<!--/*/", "/*/-->", "[[", "[("].filter((marker) =>
-    html.includes(marker),
-  );
-}
+// function getMinifySensitiveThymeleafMarkers(html: string): string[] {
+//   return ["th:inline", "/*[[", "/*[(", "/*[#", "/*[/]", "<!--/*/", "/*/-->", "[[", "[("].filter((marker) =>
+//     html.includes(marker),
+//   );
+// }
 
 function removeInlineEslintDisableNextLineComments(html: string): string {
   return html.replace(/\/\*\s*eslint-disable-next-line\b[\s\S]*?\*\//g, "");
