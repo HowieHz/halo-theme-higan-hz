@@ -654,15 +654,12 @@
           return "light";
         }
 
-        (function () {
-          if (is_save_color_scheme_settings_to_browser !== true && typeof Storage !== "undefined") {
-            localStorage.removeItem("pref-theme");
-          }
-          const is_auto_switch_color_scheme_based_on_browser_settings =
-            dataset?.autoSwitchColorSchemeBasedOnBrowserSettings === "true";
-          if (!is_auto_switch_color_scheme_based_on_browser_settings) {
-            return;
-          }
+        if (is_save_color_scheme_settings_to_browser !== true && typeof Storage !== "undefined") {
+          localStorage.removeItem("pref-theme");
+        }
+        const is_auto_switch_color_scheme_based_on_browser_settings =
+          dataset?.autoSwitchColorSchemeBasedOnBrowserSettings === "true";
+        if (is_auto_switch_color_scheme_based_on_browser_settings) {
           switch (getPreferredTheme()) {
             case "dark":
               updateTagAttribute(THEME_DARK);
@@ -674,7 +671,7 @@
               updateTagAttribute(THEME_AUTO);
               break;
           }
-        })();
+        }
 
         document.addEventListener("DOMContentLoaded", function () {
           switch (getPreferredTheme()) {
