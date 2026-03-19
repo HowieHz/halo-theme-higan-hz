@@ -146,11 +146,12 @@
     <!--/* set data-color-scheme attribute for custom color schema start */-->
     <script th:if="${color_schema == 'custom'}" th:data-custom-color-schema-init-id="${custom_color_schema_init_id}">
       (function (dataset) {
-        document.documentElement.setAttribute(
-          "data-color-scheme",
-          /* eslint-disable-next-line no-undef -- Defined earlier by components/custom-color-schema-config/template.html. */
-          allCustomColorSchema.find((schema) => schema.id === dataset?.customColorSchemaInitId)?.type ?? "",
-        );
+        /* eslint-disable-next-line no-undef -- Defined earlier by components/custom-color-schema-config/template.html. */
+        const matchedSchema = allCustomColorSchema.find((schema) => schema.id === dataset?.customColorSchemaInitId);
+        if (!matchedSchema?.type) {
+          return;
+        }
+        document.documentElement.setAttribute("data-color-scheme", matchedSchema.type);
       })(document.currentScript?.dataset);
     </script>
     <!--/* set data-color-scheme attribute for custom color schema end */-->
