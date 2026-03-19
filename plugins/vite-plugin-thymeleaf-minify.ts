@@ -132,9 +132,19 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
         const minifySensitiveMarkers = getMinifySensitiveThymeleafMarkers(html);
 
         if (minifySensitiveMarkers.length === 0) {
-          // Must preserve the keep_html_and_head_opening_tags setting to prevent duplicate plugin content injection
-          // No need to enable minify_css, it will be processed anyway
-          // Enable minify_js to handle inline blocks skipped by vite
+          // keep_closing_tags: true
+          // - It is unclear whether other plugins and the Halo CMS parser
+          // - always behave like a fully standards-compliant HTML parser, so preserving tag
+          // - boundaries avoids unnecessary integration errors.
+          // 
+          // keep_html_and_head_opening_tags: true
+          // - Prevent duplicate plugin content injection.
+          // 
+          // minify_css: false
+          // - Not needed here because CSS is already processed elsewhere.
+          // 
+          // minify_js: true
+          // - Enable handling for inline blocks skipped by Vite.
           html = minifyHtml
             .minify(Buffer.from(html), {
               keep_closing_tags: true,
