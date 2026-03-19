@@ -78,7 +78,11 @@
           <a
             class="icon"
             th:aria-label="#{common.shareModal.share.aria-label(${typeLabel})}"
-            th:href="${#strings.replace(#strings.replace(shareUrl, '@URL', permalink), '@TITLE', title)}"
+            th:href="${#strings.replace(#strings.replace(shareUrl,
+                                                         '@URL',
+                                                         #uris.escapeQueryParam(permalink)),
+                                        '@TITLE',
+                                        #uris.escapeQueryParam(title))}"
           >
             <!--/* 自定义图标覆盖 */-->
             <span
@@ -183,7 +187,11 @@
               <a
                 class="icon"
                 th:aria-label="#{common.shareModal.share.aria-label(${custom_item?.aria_label})}"
-                th:href="${#strings.replace(#strings.replace(custom_item?.url, '@URL', permalink), '@TITLE', title)}"
+                th:href="${#strings.replace(#strings.replace(custom_item?.url,
+                                                             '@URL',
+                                                             #uris.escapeQueryParam(permalink)),
+                                            '@TITLE',
+                                            #uris.escapeQueryParam(title))}"
               >
                 <span class="iconify" th:style="|--svg:url('${custom_item?.icon.value}')|"></span>
               </a>
