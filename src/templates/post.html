@@ -55,6 +55,10 @@
     </th:block>
     <script src="/page-components/post/index.ts" type="module"></script>
     <th:block
+      th:if="${theme.config?.post_styles?.is_post_upvote_button_show}"
+      th:insert="~{components/upvote-runtime/template :: head}"
+    ></th:block>
+    <th:block
       th:if="${theme.config?.post_styles?.is_show_post_nav_share_button
                or theme.config?.post_styles?.is_show_share_footer}"
       th:insert="~{components/share/template :: head}"
@@ -245,7 +249,7 @@
         是 article 里最后一个元素会设置为 mb-0（也就是 last:mb-0） */-->
         <a
           class="upvote-button mt-2 mb-0"
-          th:href="|javascript:handleLike('${post.metadata.name}')|"
+          href="#"
           th:data-post-name="${post.metadata.name}"
           th:style="'display: flex;
             background-image: none;
@@ -266,6 +270,15 @@
             th:text="${post.stats.upvote}"
           ></span>
         </a>
+        <th:block
+          th:insert="~{components/upvote-runtime/template :: body(storageKey='higan.likes.post.ids',
+                                                                  group='content.halo.run',
+                                                                  plural='posts',
+                                                                  nameAttribute='data-post-name',
+                                                                  triggerSelector='a.upvote-button[data-post-name]',
+                                                                  countSelector='span[data-post-name]',
+                                                                  networkRequestFailedMsg=#{common.error.networkRequestFailed})}"
+        ></th:block>
       </th:block>
 
       <!--/* 推荐文章 */-->
@@ -404,51 +417,6 @@
           initTOC("article > .content", "#toc");
         }
       });
-    </script>
-    <script
-      th:if="${theme.config?.post_styles?.is_post_upvote_button_show}"
-      th:data-network-request-failed="#{common.error.networkRequestFailed}"
-    >
-      const likes_localstorage_key = "higan.likes.post.ids";
-      let likedPostNames = JSON.parse(localStorage.getItem(likes_localstorage_key) || "[]");
-      likedPostNames.forEach((postName) => {
-        activeUpvote(postName);
-      });
-      function handleLike(postName) {
-        if (likedPostNames.includes(postName)) {
-          return;
-        }
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "/apis/api.halo.run/v1alpha1/trackers/upvote");
-        xhr.onload = () => {
-          likedPostNames = [...likedPostNames, postName];
-          localStorage.setItem(likes_localstorage_key, JSON.stringify(likedPostNames));
-          const likesNode = document.querySelector('span[data-post-name="' + postName + '"]');
-          if (likesNode) {
-            const likes = parseInt(likesNode.innerText);
-            likesNode.innerText = likes + 1;
-          }
-          activeUpvote(postName);
-        };
-        xhr.onerror = function () {
-          alert(document.currentScript?.dataset.networkRequestFailed);
-        };
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.send(
-          JSON.stringify({
-            group: "content.halo.run",
-            plural: "posts",
-            name: postName,
-          }),
-        );
-      }
-      function activeUpvote(postName) {
-        const dom = document.querySelector("a.upvote-button[data-post-name='" + postName + "']");
-        if (dom) {
-          dom.style.color = "var(--color-accent)";
-          dom.style.fontWeight = "500";
-        }
-      }
     </script>
   </body>
 </th:block>

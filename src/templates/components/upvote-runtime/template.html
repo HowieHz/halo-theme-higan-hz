@@ -1,0 +1,19 @@
+<head th:remove="tag" th:fragment="head">
+  <script src="index.ts" type="module"></script>
+</head>
+<body
+  th:remove="tag"
+  th:fragment="body(storageKey, group, plural, nameAttribute, triggerSelector, countSelector, networkRequestFailedMsg)"
+>
+  <script
+    data-upvote-runtime
+    th:data-count-selector="${countSelector}"
+    th:data-group="${group}"
+    th:data-name-attribute="${nameAttribute}"
+    th:data-network-request-failed-msg="${networkRequestFailedMsg}"
+    th:data-plural="${plural}"
+    th:data-storage-key="${storageKey}"
+    th:data-trigger-selector="${triggerSelector}"
+    type="application/json"
+  ></script>
+</body>

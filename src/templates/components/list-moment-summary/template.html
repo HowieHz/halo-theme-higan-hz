@@ -17,6 +17,15 @@
              and !#lists.isEmpty(moments.items)}"
     th:insert="~{components/halo-comment-widget/template :: head}"
   ></th:block>
+  <th:block
+    th:if="${!(#strings.equals(pageTemplateName, 'index')
+                       or #strings.equals(pageTemplateName, 'moments'))
+                     or (#strings.equals(pageTemplateName, 'index')
+                         and theme.config?.index_styles?.is_moment_upvote_button_show)
+                     or (#strings.equals(pageTemplateName, 'moments')
+                         and theme.config?.moments_styles?.is_moment_upvote_button_show)}"
+    th:insert="~{components/upvote-runtime/template :: head}"
+  ></th:block>
 </head>
 <body th:remove="tag" th:fragment="body(moments, pageTemplateName)">
   <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
@@ -280,10 +289,7 @@
                            or (#strings.equals(pageTemplateName, 'moments')
                                and theme.config?.moments_styles?.is_moment_upvote_button_show)}"
                 >
-                  <a
-                    th:href="|javascript:handleLike('${moment.metadata.name}')|"
-                    th:data-moment-name="${moment.metadata.name}"
-                  >
+                  <a href="#" th:data-moment-name="${moment.metadata.name}">
                     <span
                       class="iconify"
                       style="
@@ -334,58 +340,22 @@
         th:insert="~{components/pagination/template :: body(posts = ${moments})}"
       ></th:block>
     </div>
-    <script
+    <th:block
       th:if="${!(#strings.equals(pageTemplateName, 'index')
                  or #strings.equals(pageTemplateName, 'moments'))
                or (#strings.equals(pageTemplateName, 'index')
                    and theme.config?.index_styles?.is_moment_upvote_button_show)
                or (#strings.equals(pageTemplateName, 'moments')
                    and theme.config?.moments_styles?.is_moment_upvote_button_show)}"
-      th:data-network-request-failed="#{common.error.networkRequestFailed}"
-    >
-      const likes_localstorage_key = "higan.likes.moment.ids";
-      let likedMomentNames = JSON.parse(localStorage.getItem(likes_localstorage_key) || "[]");
-      likedMomentNames.forEach((momentName) => {
-        activeUpvote(momentName);
-      });
-      function liked(momentName) {
-        return likedMomentNames.includes(momentName);
-      }
-      function handleLike(momentName) {
-        if (liked(momentName)) {
-          return;
-        }
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "/apis/api.halo.run/v1alpha1/trackers/upvote");
-        xhr.onload = () => {
-          likedMomentNames = [...likedMomentNames, momentName];
-          localStorage.setItem(likes_localstorage_key, JSON.stringify(likedMomentNames));
-          const likesNode = document.querySelector('span[data-moment-name="' + momentName + '"]');
-          if (likesNode) {
-            const likes = parseInt(likesNode.innerText);
-            likesNode.innerText = likes + 1;
-          }
-          activeUpvote(momentName);
-        };
-        xhr.onerror = function () {
-          alert(document.currentScript?.dataset.networkRequestFailed);
-        };
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.send(
-          JSON.stringify({
-            group: "moment.halo.run",
-            plural: "moments",
-            name: momentName,
-          }),
-        );
-      }
-      function activeUpvote(momentName) {
-        const dom = document.querySelector(".moment .operation a[data-moment-name='" + momentName + "']");
-        if (dom) {
-          dom.style.color = "var(--color-accent)";
-          dom.style.fontWeight = "500";
-        }
-      }
-    </script>
+      th:insert="~{components/upvote-runtime/template :: body(
+        storageKey='higan.likes.moment.ids',
+        group='moment.halo.run',
+        plural='moments',
+        nameAttribute='data-moment-name',
+        triggerSelector='.moment .operation a[data-moment-name]',
+        countSelector='span[data-moment-name]',
+        networkRequestFailedMsg=#{common.error.networkRequestFailed}
+      )}"
+    ></th:block>
   </article>
 </body>
