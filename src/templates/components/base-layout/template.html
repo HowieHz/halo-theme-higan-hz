@@ -155,7 +155,7 @@
     <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute */-->
     <!--/* set data-color-scheme attribute for custom color schema start */-->
     <script th:if="${color_schema == 'custom'}" th:data-custom-color-schema-init-id="${custom_color_schema_init_id}">
-      ((configText) => {
+      (function (configText, dataset) {
         document.documentElement.setAttribute(
           "data-color-scheme",
           (configText
@@ -163,9 +163,9 @@
                 `"use strict"; ${configText}; return typeof allCustomColorSchema !== "undefined" ? allCustomColorSchema : [];`,
               )()
             : []
-          ).find((schema) => schema.id === document.currentScript?.dataset.customColorSchemaInitId)?.type ?? "",
+          ).find((schema) => schema.id === dataset?.customColorSchemaInitId)?.type ?? "",
         );
-      })(document.querySelector("#custom-color-config")?.textContent?.trim());
+      })(document.querySelector("#custom-color-config")?.textContent?.trim(), document.currentScript?.dataset);
     </script>
     <!--/* set data-color-scheme attribute for custom color schema end */-->
     <!--/* Custom Theme Declarations start */-->
@@ -359,22 +359,22 @@
                                   : #strings.listJoin(theme.config?.global?.allow_site_whitelist.![input_domain], ' ')}"
       th:data-keep-path-and-query="${theme.config?.global?.is_keep_path_and_query}"
     >
-      (function (currentScript) {
+      (function (dataset) {
         // <!--/* 获取被编码后的目标链接 */-->
-        const encodedRedirectUrl = currentScript?.dataset.targetUrl?.trim();
+        const encodedRedirectUrl = dataset?.targetUrl?.trim();
         if (!encodedRedirectUrl) {
           return;
         }
 
         // <!--/* 获取域名白名单 */-->
-        const rawDomainWhiteList = currentScript?.dataset.domainWhitelist?.trim();
+        const rawDomainWhiteList = dataset?.domainWhitelist?.trim();
         if (!rawDomainWhiteList) {
           return;
         }
         const domainWhiteList = rawDomainWhiteList.split(" ").map((item) => atob(item));
 
         // <!--/* 检查是否保留路径和查询参数，并且生成跳转后的目标链接 */-->
-        const isKeepPathAndQuery = currentScript?.dataset.keepPathAndQuery === "true";
+        const isKeepPathAndQuery = dataset?.keepPathAndQuery === "true";
         const targetRedirectUrl = isKeepPathAndQuery
           ? atob(encodedRedirectUrl) + window.location.pathname + window.location.search
           : atob(encodedRedirectUrl);
@@ -383,7 +383,7 @@
         if (!domainWhiteList.includes(document.location.hostname)) {
           window.location.href = targetRedirectUrl;
         }
-      })(document.currentScript);
+      })(document.currentScript?.dataset);
     </script>
     <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script End */-->
     <!--/* Auto Redirect to Browser Language Script Start */-->
@@ -402,7 +402,7 @@
       th:data-auto-redirect-target-languages="${auto_redirect_target_languages}"
       th:data-prefix-match-mode="${is_prefix_match_mode}"
     >
-      (function (currentScript) {
+      (function (dataset) {
         // <!--/* 设计思路：
         // 1. 如果 ${language} 已经传入，也就是已经在元数据强行指定了页面语言，则不跳转
         // 2. 如果浏览器已有 lang 查询参数，也就是在用户层面强行指定了页面语言，则不跳转
@@ -418,7 +418,7 @@
 
         // 如果 ${language} 已经传入，也就是已经指定了页面语言，则不跳转
         // 这个 ${language} 是文章元数据/分类详情页元数据/标签详情页元数据的 language */-->
-        const pageLanguageOverride = currentScript?.dataset.pageLanguageOverride;
+        const pageLanguageOverride = dataset?.pageLanguageOverride;
         if (pageLanguageOverride) {
           return;
         }
@@ -429,13 +429,13 @@
         // lang=zh,en -> ''+param.lang 为 'zh,en'
         // 用 (new URL(window.location.href)).searchParams.get("lang") 也差不多
         // 但我选择尽量预渲染，所以 ${'' + param.lang} */-->
-        const requestedLanguageParam = currentScript?.dataset.requestedLanguageParam;
+        const requestedLanguageParam = dataset?.requestedLanguageParam;
         if (requestedLanguageParam) {
           return;
         }
 
         // <!--/* 获取配置项默认语言 */-->
-        let defaultPageLanguage = currentScript?.dataset.defaultPageLanguage;
+        let defaultPageLanguage = dataset?.defaultPageLanguage;
         if (!defaultPageLanguage) {
           defaultPageLanguage = "zh";
         }
@@ -446,13 +446,11 @@
         // */-->
         const browserLang = navigator.language;
 
-        const autoRedirectTargetLanguages = currentScript?.dataset.autoRedirectTargetLanguages
-          ?.split(",")
-          .filter(Boolean);
+        const autoRedirectTargetLanguages = dataset?.autoRedirectTargetLanguages?.split(",").filter(Boolean);
         if (!autoRedirectTargetLanguages?.length) {
           return;
         }
-        const prefixMode = currentScript?.dataset.prefixMatchMode === "true";
+        const prefixMode = dataset?.prefixMatchMode === "true";
 
         const matchedLang = prefixMode
           ? autoRedirectTargetLanguages.find((lang) => browserLang.startsWith(lang))
@@ -475,7 +473,7 @@
         const url = new URL(window.location);
         url.searchParams.set("lang", matchedLang);
         window.location.href = url;
-      })(document.currentScript);
+      })(document.currentScript?.dataset);
     </script>
     <!--/* Auto Redirect to Browser Language Script End */-->
     <!--/* browser polyfill for modulepreload start
@@ -562,7 +560,7 @@
       th:data-custom-theme-light-id="${custom_theme_light_id}"
       th:data-custom-theme-auto-id="${custom_theme_auto_id}"
     >
-      (function (currentScript) {
+      (function (dataset) {
         const customColorSchemeConfigElement = document.querySelector("#custom-color-config");
         const allCustomColorSchema = customColorSchemeConfigElement?.textContent?.trim()
           ? Function(
@@ -570,11 +568,10 @@
             )()
           : [];
 
-        var THEME_DARK = currentScript?.dataset.themeDark;
-        var THEME_LIGHT = currentScript?.dataset.themeLight;
-        var THEME_AUTO = currentScript?.dataset.themeAuto;
-        const is_save_color_scheme_settings_to_browser =
-          currentScript?.dataset.saveColorSchemeSettingsToBrowser === "true";
+        var THEME_DARK = dataset?.themeDark;
+        var THEME_LIGHT = dataset?.themeLight;
+        var THEME_AUTO = dataset?.themeAuto;
+        const is_save_color_scheme_settings_to_browser = dataset?.saveColorSchemeSettingsToBrowser === "true";
 
         // <!--/* Map each concrete theme name to its corresponding data-color-scheme value. */-->
         var themeColorSchemeMap = {
@@ -588,27 +585,21 @@
         };
 
         if (THEME_DARK == "custom") {
-          let customColorSchema = allCustomColorSchema.find(
-            (schema) => schema.id === currentScript?.dataset.customThemeDarkId,
-          );
+          let customColorSchema = allCustomColorSchema.find((schema) => schema.id === dataset?.customThemeDarkId);
           if (customColorSchema) {
             THEME_DARK = "theme-" + customColorSchema.id;
             themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
           }
         }
         if (THEME_LIGHT == "custom") {
-          let customColorSchema = allCustomColorSchema.find(
-            (schema) => schema.id === currentScript?.dataset.customThemeLightId,
-          );
+          let customColorSchema = allCustomColorSchema.find((schema) => schema.id === dataset?.customThemeLightId);
           if (customColorSchema) {
             THEME_LIGHT = "theme-" + customColorSchema.id;
             themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
           }
         }
         if (THEME_AUTO == "custom") {
-          let customColorSchema = allCustomColorSchema.find(
-            (schema) => schema.id === currentScript?.dataset.customThemeAutoId,
-          );
+          let customColorSchema = allCustomColorSchema.find((schema) => schema.id === dataset?.customThemeAutoId);
           if (customColorSchema) {
             THEME_AUTO = "theme-" + customColorSchema.id;
             themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
@@ -668,7 +659,7 @@
             localStorage.removeItem("pref-theme");
           }
           const is_auto_switch_color_scheme_based_on_browser_settings =
-            currentScript?.dataset.autoSwitchColorSchemeBasedOnBrowserSettings === "true";
+            dataset?.autoSwitchColorSchemeBasedOnBrowserSettings === "true";
           if (!is_auto_switch_color_scheme_based_on_browser_settings) {
             return;
           }
@@ -717,7 +708,7 @@
         document.addEventListener("DOMContentLoaded", function () {
           document.getElementById("theme-toggle-button").addEventListener("click", toggleTheme);
         });
-      })(document.currentScript);
+      })(document.currentScript?.dataset);
     </script>
     <!--/* Color Scheme Toggle Button Script End */-->
     <!--/* CSS Variable to Meta Theme-Color Observer Start */-->
