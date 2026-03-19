@@ -143,32 +143,17 @@
       th:insert="~{components/custom-cursor-style/template :: body}"
     ></th:block>
     <!--/* Custom Cursor Declarations end */-->
-    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute start */-->
-    <script
+    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute,
+           set data-color-scheme attribute for custom color schema start */-->
+    <th:block
       th:if="${color_schema == 'custom'
                or theme_dark == 'custom'
                or theme_light == 'custom'
                or theme_auto == 'custom'}"
-      th:inline="javascript"
-    >
-      const allCustomColorSchema = [
-        /*[# th:each="c : ${custom_color_schema_config}"]*/ /*[# th:if="${custom_color_schema_init_id == c.id
-                                                                          or custom_theme_auto_id == c.id
-                                                                          or custom_theme_light_id == c.id
-                                                                          or custom_theme_dark_id == c.id}"]*/
-        { id: /*[[${c.id}]]*/ "", type: /*[[${c.type}]]*/ "" },
-        /*[/]*/ /*[/]*/
-      ];
-    </script>
-    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute end */-->
-    <!--/* set data-color-scheme attribute for custom color schema start */-->
-    <script th:if="${color_schema == 'custom'}" th:inline="javascript">
-      const customColorSchema = allCustomColorSchema.find(
-        (schema) => schema.id === /*[[${custom_color_schema_init_id}]]*/ "1",
-      );
-      document.documentElement.setAttribute("data-color-scheme", customColorSchema ? customColorSchema.type : null);
-    </script>
-    <!--/* set data-color-scheme attribute for custom color schema end */-->
+      th:insert="~{components/custom-color-scheme-init/template :: head}"
+    ></th:block>
+    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute,
+           set data-color-scheme attribute for custom color schema end */-->
     <!--/* Custom Theme Declarations start */-->
     <th:block
       th:if="${!#lists.isEmpty(custom_color_schema_config)
@@ -521,6 +506,13 @@
     <!--/* Mermaid injection end */-->
     <!--/* Color Scheme Toggle Button Script Start */-->
     <script th:inline="javascript" th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
+      const customColorSchemeConfigElement = document.querySelector("#custom-color-config");
+      const allCustomColorSchema = customColorSchemeConfigElement?.textContent?.trim()
+        ? Function(
+            `"use strict"; ${customColorSchemeConfigElement.textContent}; return typeof allCustomColorSchema !== "undefined" ? allCustomColorSchema : [];`,
+          )()
+        : [];
+
       var THEME_DARK = /*[[${theme_dark}]]*/ "dark";
       var THEME_LIGHT = /*[[${theme_light}]]*/ "light";
       var THEME_AUTO = /*[[${theme_auto}]]*/ "auto";

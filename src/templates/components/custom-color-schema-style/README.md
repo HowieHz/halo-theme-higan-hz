@@ -9,7 +9,5 @@ This component outputs the inline custom color schema style block for a single c
 Body Content
 
 ```html
-<th:block
-  th:insert="~{components/custom-color-schema-style/template :: body(colorSchema=${colorSchema})}"
-></th:block>
+<th:block th:insert="~{components/custom-color-schema-style/template :: body(colorSchema=${colorSchema})}"></th:block>
 ```

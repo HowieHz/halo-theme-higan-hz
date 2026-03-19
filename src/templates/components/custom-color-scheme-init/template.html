@@ -1,0 +1,32 @@
+<head th:remove="tag">
+  <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute start */-->
+  <script
+    th:if="${color_schema == 'custom'
+               or theme_dark == 'custom'
+               or theme_light == 'custom'
+               or theme_auto == 'custom'}"
+    id="custom-color-config"
+    th:inline="javascript"
+  >
+    const allCustomColorSchema = [
+      /*[# th:each="c : ${custom_color_schema_config}"]*/ /*[# th:if="${custom_color_schema_init_id == c.id
+                                                                        or custom_theme_auto_id == c.id
+                                                                        or custom_theme_light_id == c.id
+                                                                        or custom_theme_dark_id == c.id}"]*/
+      { id: /*[[${c.id}]]*/ "", type: /*[[${c.type}]]*/ "" },
+      /*[/]*/ /*[/]*/
+    ];
+  </script>
+  <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute end */-->
+  <!--/* set data-color-scheme attribute for custom color schema start */-->
+  <script th:if="${color_schema == 'custom'}" th:inline="javascript">
+    const customColorSchema = allCustomColorSchema.find(
+      (schema) => schema.id === /*[[${custom_color_schema_init_id}]]*/ "1",
+    );
+    document.documentElement.setAttribute("data-color-scheme", customColorSchema ? customColorSchema.type : null);
+  </script>
+  <!--/* set data-color-scheme attribute for custom color schema end */-->
+</head>
+<!--/*-->
+<body th:remove="tag"></body>
+<!--*/-->

@@ -138,6 +138,10 @@ export default defineConfig((): UserConfig => {
             __dirname,
             "src/templates/components/custom-color-schema-style/template.html",
           ),
+          "components-custom-color-scheme-init": path.resolve(
+            __dirname,
+            "src/templates/components/custom-color-scheme-init/template.html",
+          ),
           "components-custom-cursor-style": path.resolve(
             __dirname,
             "src/templates/components/custom-cursor-style/template.html",
