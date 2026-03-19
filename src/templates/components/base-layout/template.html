@@ -38,24 +38,7 @@
       The <meta name="theme-color"> tag must not be self-closing;
       otherwise, it will not work on Chrome for Android. 
     */-->
-    <!--/*/
-    <meta
-      name="theme-color"
-      content="transparent"
-      th:content="${color_schema == 'custom'
-                    ? 'transparent'
-                    : (color_schema == 'auto'
-                       or color_schema == 'light'
-                       or color_schema == 'auto-blue'
-                       or color_schema == 'light-blue'
-                       or color_schema == 'gray') 
-                      ? '#fafafa'
-                      : (color_schema == 'dark'
-                         or color_schema == 'dark-blue')
-                        ? '#212326'
-                        : 'transparent'}"
-    >
-    /*/-->
+    <th:block th:insert="~{components/meta-theme-color/template :: head}"></th:block>
     <meta name="color-scheme" content="light dark" />
     <title th:text="${#strings.defaultString(title, site.title)}"></title>
     <!--/* RSS link declaration start */-->

@@ -207,6 +207,10 @@ export default defineConfig((): UserConfig => {
             __dirname,
             "src/templates/components/layout-heading-paragraph-margin-style/template.html",
           ),
+          "components-meta-theme-color": path.resolve(
+            __dirname,
+            "src/templates/components/meta-theme-color/template.html",
+          ),
           "components-theme-dark": path.resolve(__dirname, "src/templates/components/theme-dark/template.html"),
           "components-theme-light": path.resolve(__dirname, "src/templates/components/theme-light/template.html"),
           "components-theme-dark-blue": path.resolve(

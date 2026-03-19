@@ -106,7 +106,6 @@
             this.$el.style.height = `${maxHeight}px`;
           }
           checkAndLoadMoreImages() {
-            var { nextImageIndex, totalImages } = this;
             if (window.scrollY + window.innerHeight + 200 >= this.getMaxHeight()) {
               // <!--/* 读取到的高度其实还可以 +300 提前多加载点。如果这里不设置提前量，出现长一点的图片很容易旁边都是空的 */-->
               if (this.nextImageIndex < this.totalImages) {
@@ -182,9 +181,9 @@
         th:unless="${theme.config?.photos_styles?.is_enable_masonry_layout}"
       >
         const photos = document.querySelectorAll(".photo-groups img");
-        var nextImageIndex = 0; // <!--/* 存储下一个需要加载的图片的 index */-->
-        var totalImages = photos.length; // <!--/* 存储一共有多少张图片 */-->
-        var totalheight = 0; // <!--/* 最后一张图片下边缘的位置 */-->
+        let nextImageIndex = 0; // <!--/* 存储下一个需要加载的图片的 index */-->
+        const totalImages = photos.length; // <!--/* 存储一共有多少张图片 */-->
+        let totalheight = 0; // <!--/* 最后一张图片下边缘的位置 */-->
 
         photos.forEach((img) => {
           const placeAndAnimate = () => {
