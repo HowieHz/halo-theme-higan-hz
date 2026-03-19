@@ -271,13 +271,15 @@
           ></span>
         </a>
         <th:block
-          th:insert="~{components/upvote-runtime/template :: body(storageKey='higan.likes.post.ids',
-                                                                  group='content.halo.run',
-                                                                  plural='posts',
-                                                                  nameAttribute='data-post-name',
-                                                                  triggerSelector='a.upvote-button[data-post-name]',
-                                                                  countSelector='span[data-post-name]',
-                                                                  networkRequestFailedMsg=#{common.error.networkRequestFailed})}"
+          th:insert="~{components/upvote-runtime/template :: body(
+            storageKey='higan.likes.post.ids',
+            group='content.halo.run',
+            plural='posts',
+            nameAttribute='data-post-name',
+            triggerSelector='a.upvote-button[data-post-name]',
+            countSelector='span[data-post-name]',
+            networkRequestFailedMsg=#{common.error.networkRequestFailed}
+          )}"
         ></th:block>
       </th:block>
 

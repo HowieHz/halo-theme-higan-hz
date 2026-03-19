@@ -19,13 +19,13 @@ interface UpvoteRuntimeState {
 function getRuntimeConfigs(): UpvoteRuntimeConfig[] {
   return Array.from(document.querySelectorAll<HTMLScriptElement>("script[data-upvote-runtime]"))
     .map((configElement) => {
-      const countSelector = configElement.dataset.countSelector?.trim() ?? "";
-      const group = configElement.dataset.group?.trim() ?? "";
-      const nameAttribute = configElement.dataset.nameAttribute?.trim() ?? "";
-      const networkRequestFailedMsg = configElement.dataset.networkRequestFailedMsg?.trim() ?? "";
-      const plural = configElement.dataset.plural?.trim() ?? "";
-      const storageKey = configElement.dataset.storageKey?.trim() ?? "";
-      const triggerSelector = configElement.dataset.triggerSelector?.trim() ?? "";
+      const countSelector = configElement.dataset.countSelector;
+      const group = configElement.dataset.group;
+      const nameAttribute = configElement.dataset.nameAttribute;
+      const networkRequestFailedMsg = configElement.dataset.networkRequestFailedMsg;
+      const plural = configElement.dataset.plural;
+      const storageKey = configElement.dataset.storageKey;
+      const triggerSelector = configElement.dataset.triggerSelector;
 
       if (
         !storageKey ||
