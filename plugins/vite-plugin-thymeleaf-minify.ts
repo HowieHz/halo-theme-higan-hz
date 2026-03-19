@@ -96,6 +96,10 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
         // comments such as <!--/*/ ... /*/-->.
         html = removeNestedThymeleafComments(html);
 
+        // Remove inline ESLint suppression comments that are only needed in
+        // source templates and should not appear in the final HTML output.
+        html = removeInlineEslintDisableNextLineComments(html);
+
         // Remove consecutive empty lines after comment stripping.
         html = html.replace(/\n\s*\n/g, "\n");
 
@@ -372,4 +376,8 @@ function getMinifySensitiveThymeleafMarkers(html: string): string[] {
   return ["th:inline", "/*[[", "/*[(", "/*[#", "/*[/]", "<!--/*/", "/*/-->", "[[", "[("].filter((marker) =>
     html.includes(marker),
   );
+}
+
+function removeInlineEslintDisableNextLineComments(html: string): string {
+  return html.replace(/\/\*\s*eslint-disable-next-line\b[\s\S]*?\*\//g, "");
 }
