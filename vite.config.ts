@@ -130,6 +130,26 @@ export default defineConfig((): UserConfig => {
             __dirname,
             "src/templates/components/instantpage-injection/template.html",
           ),
+          "components-custom-font-face-style": path.resolve(
+            __dirname,
+            "src/templates/components/custom-font-face-style/template.html",
+          ),
+          "components-custom-color-schema-style": path.resolve(
+            __dirname,
+            "src/templates/components/custom-color-schema-style/template.html",
+          ),
+          "components-custom-color-schema-config": path.resolve(
+            __dirname,
+            "src/templates/components/custom-color-schema-config/template.html",
+          ),
+          "components-custom-cursor-style": path.resolve(
+            __dirname,
+            "src/templates/components/custom-cursor-style/template.html",
+          ),
+          "components-header-logo-style": path.resolve(
+            __dirname,
+            "src/templates/components/header-logo-style/template.html",
+          ),
           "components-header": path.resolve(__dirname, "src/templates/components/header/template.html"),
           "components-halo-comment-widget": path.resolve(
             __dirname,
@@ -159,6 +179,39 @@ export default defineConfig((): UserConfig => {
             __dirname,
             "src/templates/components/text-size-large/template.html",
           ),
+          "components-toc-max-width-style": path.resolve(
+            __dirname,
+            "src/templates/components/toc-max-width-style/template.html",
+          ),
+          "components-upvote-runtime": path.resolve(__dirname, "src/templates/components/upvote-runtime/template.html"),
+          "components-paragraph-first-line-indent-style": path.resolve(
+            __dirname,
+            "src/templates/components/paragraph-first-line-indent-style/template.html",
+          ),
+          "components-layout-max-width-style": path.resolve(
+            __dirname,
+            "src/templates/components/layout-max-width-style/template.html",
+          ),
+          "components-layout-min-width-style": path.resolve(
+            __dirname,
+            "src/templates/components/layout-min-width-style/template.html",
+          ),
+          "components-layout-content-width-style": path.resolve(
+            __dirname,
+            "src/templates/components/layout-content-width-style/template.html",
+          ),
+          "components-layout-table-bottom-border-style": path.resolve(
+            __dirname,
+            "src/templates/components/layout-table-bottom-border-style/template.html",
+          ),
+          "components-layout-heading-paragraph-margin-style": path.resolve(
+            __dirname,
+            "src/templates/components/layout-heading-paragraph-margin-style/template.html",
+          ),
+          "components-meta-theme-color": path.resolve(
+            __dirname,
+            "src/templates/components/meta-theme-color/template.html",
+          ),
           "components-theme-dark": path.resolve(__dirname, "src/templates/components/theme-dark/template.html"),
           "components-theme-light": path.resolve(__dirname, "src/templates/components/theme-light/template.html"),
           "components-theme-dark-blue": path.resolve(
@@ -176,6 +229,7 @@ export default defineConfig((): UserConfig => {
             "src/templates/components/theme-auto-blue/template.html",
           ),
           "components-common": path.resolve(__dirname, "src/templates/components/common/template.html"),
+          "components-share": path.resolve(__dirname, "src/templates/components/share/template.html"),
           "components-base-layout": path.resolve(__dirname, "src/templates/components/base-layout/template.html"),
           "components-footer-nav-page-like-post-style": path.resolve(
             __dirname,

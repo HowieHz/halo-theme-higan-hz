@@ -18,38 +18,33 @@
     />
     <script src="/page-components/page-like-post-style/index.ts" type="module"></script>
     <th:block
+      th:if="${theme.config?.post_styles?.is_show_post_nav_share_button
+               or theme.config?.post_styles?.is_show_share_footer}"
+      th:insert="~{components/share/template :: head}"
+    ></th:block>
+    <th:block
       th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show
                and haloCommentEnabled}"
       th:insert="~{components/halo-comment-widget/template :: head}"
     ></th:block>
   </head>
   <body th:remove="tag">
-    <!--/*/
-    <style
-      th:inline="css"
+    <th:block
       th:if="${theme.config?.post_styles?.is_custom_toc_max_width}"
-    >
-      #header-post #toc {
-        max-width: /*[(${theme.config?.post_styles?.toc_max_width})]*/ 20em;
-      }
-    </style>
-    /*/-->
+      th:insert="~{components/toc-max-width-style/template :: body}"
+    ></th:block>
     <style th:if="${theme.config?.custom_page_styles?.is_optimize_content_paragraph_spacing}">
       .content > p {
         min-height: 1.1em;
       }
     </style>
     <!--/* 默认编辑器插入图片会有一个 display: inline-block，以及其他样式，因此需要排除避免产生以外缩进 */-->
-    <!--/*/
-    <style
-      th:inline="css"
+    <th:block
       th:if="${theme.config?.custom_page_styles?.is_enable_paragraph_first_line_indent}"
-    >
-      .content > p:not(:has(img:only-child)) {
-        text-indent: /*[(${theme.config?.custom_page_styles?.paragraph_first_line_indent_value})]*/ 2em;
-      }
-    </style>
-    /*/-->
+      th:insert="~{components/paragraph-first-line-indent-style/template :: body(
+        indentValue=${theme.config?.custom_page_styles?.paragraph_first_line_indent_value}
+      )}"
+    ></th:block>
     <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
         <h1>
@@ -104,7 +99,7 @@
         th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show
                  and haloCommentEnabled}"
       >
-        <halo:comment group="content.halo.run" kind="SinglePage" th:name="${singlePage.metadata?.name}" />
+        <halo:comment group="content.halo.run" kind="SinglePage" th:name="${singlePage.metadata?.name}"></halo:comment>
       </div>
     </article>
     <div th:replace="~{components/footer-nav-page-like-post-style/template :: footerNav}"></div>

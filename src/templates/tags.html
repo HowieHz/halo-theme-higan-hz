@@ -46,11 +46,18 @@
         </th:block>
       </th:block>
     </ul>
-    <script th:inline="javascript" th:if="${theme.config?.tags_page_styles?.tags_sort_order != 'default'}">
-      const tagsSortOrder = /*[[${theme.config?.tags_page_styles?.tags_sort_order}]]*/ "count_desc";
-      const isShowPostCount = /*[[${theme.config?.tags_page_styles?.is_show_the_number_of_posts_per_tag}]]*/ true;
-      const leftChar = /*[[${theme.config?.tags_page_styles?.characters_to_the_left_of_the_number_of_posts}]]*/ "(";
-      const rightChar = /*[[${theme.config?.tags_page_styles?.characters_to_the_right_of_the_number_of_posts}]]*/ ")";
+    <script
+      th:if="${theme.config?.tags_page_styles?.tags_sort_order != 'default'}"
+      th:data-tags-sort-order="${theme.config?.tags_page_styles?.tags_sort_order}"
+      th:data-is-show-post-count="${theme.config?.tags_page_styles?.is_show_the_number_of_posts_per_tag}"
+      th:data-left-char="${theme.config?.tags_page_styles?.characters_to_the_left_of_the_number_of_posts}"
+      th:data-right-char="${theme.config?.tags_page_styles?.characters_to_the_right_of_the_number_of_posts}"
+    >
+      const tagsConfigScript = document.currentScript;
+      const tagsSortOrder = tagsConfigScript?.dataset.tagsSortOrder ?? "count_desc";
+      const isShowPostCount = tagsConfigScript?.dataset.isShowPostCount === "true";
+      const leftChar = tagsConfigScript?.dataset.leftChar ?? "(";
+      const rightChar = tagsConfigScript?.dataset.rightChar ?? ")";
       fetch("/apis/api.content.halo.run/v1alpha1/tags?page=1&size=2147483647")
         // <!--/* 可以直接 &sort=status.postCount%2Cdesc 但考虑方便缓存，还是前端处理 */-->
         .then((response) => response.json())
@@ -78,7 +85,7 @@
             }) || []
           ).forEach((tag) => {
             const li = document.createElement("li");
-            const color = (tag.spec?.color || "").trim();
+            const color = tag.spec?.color || "";
             if (color && color.toLowerCase() !== "#ffffff") {
               li.style.setProperty("--tag-hash-color", color);
             }
@@ -95,7 +102,7 @@
           tagsList.appendChild(fragment);
         })
         .catch((error) => {
-          console.error("Error fetching tags:", error);
+          console.error("[Higan Haozi][tags] Error fetching tags:", error);
         });
     </script>
   </body>

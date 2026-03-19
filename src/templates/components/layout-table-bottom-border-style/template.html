@@ -1,0 +1,14 @@
+<!--/*-->
+<head th:remove="tag"></head>
+<!--*/-->
+<body th:remove="tag">
+  <!--/*/
+  <style th:inline="css">
+    body tr:not(:first-child) {
+      border-bottom-width: /*[(${theme.config?.styles?.table_bottom_border_width})]*/ 0.1rem;
+      border-bottom-style: dashed;
+      border-bottom-color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+    }
+  </style>
+  /*/-->
+</body>

@@ -38,24 +38,7 @@
       The <meta name="theme-color"> tag must not be self-closing;
       otherwise, it will not work on Chrome for Android. 
     */-->
-    <!--/*/
-    <meta
-      name="theme-color"
-      content="transparent"
-      th:content="${color_schema == 'custom'
-                    ? 'transparent'
-                    : (color_schema == 'auto'
-                       or color_schema == 'light'
-                       or color_schema == 'auto-blue'
-                       or color_schema == 'light-blue'
-                       or color_schema == 'gray') 
-                      ? '#fafafa'
-                      : (color_schema == 'dark'
-                         or color_schema == 'dark-blue')
-                        ? '#212326'
-                        : 'transparent'}"
-    >
-    /*/-->
+    <th:block th:insert="~{components/meta-theme-color/template :: head}"></th:block>
     <meta name="color-scheme" content="light dark" />
     <title th:text="${#strings.defaultString(title, site.title)}"></title>
     <!--/* RSS link declaration start */-->
@@ -109,79 +92,10 @@
       </th:block>
       <!--/* Custom Font Preload Declarations end */-->
       <!--/* Custom Font @font-face Declarations start */-->
-      <!--/*/
-      <style th:inline="css">
-        /*[#
-          th:each="fontConfig : ${theme.config?.styles?.custom_font_configs}"
-          th:with="fontStyle = ${fontConfig.font_style},
-                   customFontStyle = ${fontConfig.custom_font_style},
-                   fontWeight = ${fontConfig.font_weight},
-                   customFontWeight = ${fontConfig.custom_font_weight},
-                   fontDisplay = ${fontConfig.font_display},
-                   fontUnicodeRange = ${fontConfig.font_unicode_range},
-                   fontFile = ${fontConfig.font_file},
-                   fontExt = ${fontFile.substring(fontFile.lastIndexOf('.') + 1)},
-                   fontFormat=${fontExt == 'woff2'
-                                ? 'woff2'
-                                : (fontExt == 'woff'
-                                   ? 'woff'
-                                   : (fontExt == 'ttf'
-                                      ? 'truetype'
-                                      : (fontExt == 'otf'
-                                         ? 'opentype'
-                                         : (fontExt == 'eot'
-                                            ? 'embedded-opentype'
-                                            : ((fontExt == 'ttc'
-                                                or fontExt == 'otc')
-                                               ? 'collection'
-                                               : fontExt)))))},
-                   fontName = ${theme.config?.styles?.custom_font_name}"
-        ]*/
-          /*[# th:if="${#strings.isEmpty(fontName)}"]*/
-            /*[# th:if="${#strings.isEmpty(fontUnicodeRange)}"]*/
-              @font-face {
-                font-display: [(${fontDisplay})];
-                font-family: "custom";
-                font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
-                font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
-                src: url("[(${fontFile})]") format("[(${fontFormat})]");
-              }
-            /*[/]*/
-            /*[# th:unless="${#strings.isEmpty(fontUnicodeRange)}"]*/
-              @font-face {
-                font-display: [(${fontDisplay})];
-                font-family: "custom";
-                font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
-                font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
-                src: url("[(${fontFile})]") format("[(${fontFormat})]");
-                unicode-range: [(${fontUnicodeRange})];
-              }
-            /*[/]*/
-          /*[/]*/
-          /*[# th:unless="${#strings.isEmpty(fontName)}"]*/
-            /*[# th:if="${#strings.isEmpty(fontUnicodeRange)}"]*/
-              @font-face {
-                font-display: [(${fontDisplay})];
-                font-family: "custom";
-                font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
-                font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
-                src: local("[(${fontName})]"), url("[(${fontFile})]") format("[(${fontFormat})]");
-              }
-            /*[/]*/
-            /*[# th:unless="${#strings.isEmpty(fontUnicodeRange)}"]*/
-              @font-face {
-                font-display: [(${fontDisplay})];
-                font-family: "custom";
-                font-style: [(${fontStyle == 'custom' ? customFontStyle : fontStyle})];
-                font-weight: [(${fontWeight == 'custom' ? customFontWeight : fontWeight})];
-                src: local("[(${fontName})]"), url("[(${fontFile})]") format("[(${fontFormat})]");
-                unicode-range: [(${fontUnicodeRange})];
-              }
-            /*[/]*/
-          /*[/]*/
-        /*[/]*/
-      </style>
-      /*/-->
+      <th:block
+        th:if="${theme.config?.styles?.is_custom_font_files_enable}"
+        th:insert="~{components/custom-font-face-style/template :: body}"
+      ></th:block>
       <!--/* Custom Font @font-face Declarations end */-->
       <!--/* Custom Font font-family Declarations start */-->
       <style>
@@ -200,188 +114,18 @@
     <!--/* Custom Font Declarations end */-->
     <!--/* WebKit Detection start */-->
     <script>
-      let ua = navigator.userAgent;
-      if (!/(apple)?webkit\/537\.36/i.test(ua) && /(apple)?webkit/i.test(ua)) {
-        document.documentElement.classList.add("webkit");
-      }
+      (function (userAgent) {
+        if (!/(apple)?webkit\/537\.36/i.test(userAgent) && /(apple)?webkit/i.test(userAgent)) {
+          document.documentElement.classList.add("webkit");
+        }
+      })(navigator.userAgent);
     </script>
     <!--/* WebKit Detection end */-->
     <!--/* Custom Cursor Declarations start */-->
-    <th:block th:if="${theme.config?.styles?.is_custom_cursor_files_enable}" th:object="${theme.config?.styles}">
-      <!--/*/
-      <style th:inline="css">
-        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_default)}"]*/
-        :root,
-        label,
-        input::-webkit-inner-spin-button,
-        input[type="button" i],
-        input[type="submit" i],
-        input[type="reset" i],
-        input[type="file" i]::-webkit-file-upload-button,
-        button,
-        select {
-          cursor: url("[(*{custom_cursor_files_default})]"), default;
-        }
-        /*[/]*/
-        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_move)}"]*/
-        .mozGrabber:-moz-native-anonymous {
-          cursor: url("[(*{custom_cursor_files_move})]"), move;
-        }
-        /*[/]*/
-        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_not_allowed)}"]*/
-        :disabled,
-        [aria-disabled="true"] {
-          cursor: url("[(*{custom_cursor_files_not_allowed})]"), not-allowed;
-        }
-        /*[/]*/
-        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_help)}"]*/
-        [title],
-        abbr,
-        acronym,
-        [role="tooltip"] {
-          cursor: url("[(*{custom_cursor_files_help})]"), help;
-        }
-        /*[/]*/
-        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_ew_resize)}"]*/
-        input[type="range"],
-        [role="slider"] {
-          cursor: url("[(*{custom_cursor_files_ew_resize})]"), ew-resize;
-        }
-        /*[/]*/
-        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_grab)}"]*/
-        [draggable="true"],
-        input[type="range"]::-webkit-slider-thumb {
-          cursor: url("[(*{custom_cursor_files_grab})]"), grab;
-        }
-        /*[/]*/
-        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_grabbing)}"]*/
-        [draggable="true"]:active,
-        input[type="range"]::-webkit-slider-thumb:active {
-          cursor: url("[(*{custom_cursor_files_grabbing})]"), grabbing;
-        }
-        /*[/]*/
-        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_cell)}"]*/
-        td,
-        th,
-        [role="grid"],
-        [role="gridcell"] {
-          cursor: url("[(*{custom_cursor_files_cell})]"), cell;
-        }
-        /*[/]*/
-        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_wait)}"]*/
-        [aria-busy="true"] {
-          cursor: url("[(*{custom_cursor_files_wait})]"), wait;
-        }
-        /*[/]*/
-        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_text)}"]*/
-        input:not([type]),
-        input[type="text"],
-        input[type="password"],
-        input[type="email"],
-        input[type="search"],
-        input[type="tel"],
-        input[type="url"],
-        input[type="number"],
-        [contenteditable="true"],
-        textarea,
-        code,
-        kbd,
-        samp,
-        var,
-        pre,
-        p,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        section,
-        aside,
-        main,
-        dd,
-        dt,
-        blockquote,
-        pre,
-        code,
-        td,
-        th,
-        label,
-        legend,
-        figcaption,
-        a p,
-        [role="textbox"],
-        [role="searchbox"] {
-          cursor: url("[(*{custom_cursor_files_text})]"), text;
-        }
-        /*[/]*/
-        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_pointer)}"]*/
-        area,
-        a,
-        a:-webkit-any-link,
-        button,
-        select,
-        label,
-        input[type="button"],
-        input[type="submit"],
-        input[type="reset"],
-        input[type="file"],
-        input[type="checkbox"],
-        input[type="radio"],
-        input[type="color"],
-        input[type="date"],
-        input[type="datetime-local"],
-        input[type="time"],
-        input[type="month"],
-        input[type="week"],
-        input[type="range"],
-        input[type="image"],
-        video,
-        audio,
-        video::-webkit-media-controls,
-        audio::-webkit-media-controls,
-        img[onclick],
-        img[role="button"],
-        option,
-        summary,
-        li[onclick],
-        li[role="button"],
-        tr[onclick],
-        svg [onclick],
-        [role="button"],
-        [role="link"],
-        [role="menuitem"],
-        [role="menuitemcheckbox"],
-        [role="menuitemradio"],
-        [role="tab"],
-        [role="treeitem"],
-        [role="option"],
-        [role="switch"],
-        [role="checkbox"],
-        [role="radio"],
-        [role="combobox"],
-        *::-webkit-clear-button,
-        *::-webkit-scrollbar-thumb,
-        *::-webkit-file-upload-button,
-        *::-webkit-search-cancel-button,
-        *::-webkit-calendar-picker-indicator,
-        .v-cursor-pointer {
-          cursor: url("[(*{custom_cursor_files_pointer})]"), pointer;
-        }
-        /*[/]*/
-        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_crosshair)}"]*/
-        canvas {
-          cursor: url("[(*{custom_cursor_files_crosshair})]"), crosshair;
-        }
-        /*[/]*/
-        /*[# th:unless="*{#strings.isEmpty(custom_cursor_files_vertical_text)}"]*/
-        [style*="writing-mode: vertical"] {
-          cursor: url("[(*{custom_cursor_files_vertical_text})]"), vertical-text;
-        }
-        /*[/]*/
-      </style>
-      /*/-->
-    </th:block>
+    <th:block
+      th:if="${theme.config?.styles?.is_custom_cursor_files_enable}"
+      th:insert="~{components/custom-cursor-style/template :: body}"
+    ></th:block>
     <th:block th:unless="${theme.config?.styles?.is_custom_cursor_files_enable}">
       <style>
         .v-cursor-pointer {
@@ -390,30 +134,25 @@
       </style>
     </th:block>
     <!--/* Custom Cursor Declarations end */-->
-    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute start */-->
-    <script
+    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute */-->
+    <th:block
       th:if="${color_schema == 'custom'
                or theme_dark == 'custom'
                or theme_light == 'custom'
                or theme_auto == 'custom'}"
-      th:inline="javascript"
-    >
-      const allCustomColorSchema = [
-        /*[# th:each="c : ${custom_color_schema_config}"]*/ /*[# th:if="${custom_color_schema_init_id == c.id
-                                                                          or custom_theme_auto_id == c.id
-                                                                          or custom_theme_light_id == c.id
-                                                                          or custom_theme_dark_id == c.id}"]*/
-        { id: /*[[${c.id}]]*/ "", type: /*[[${c.type}]]*/ "" },
-        /*[/]*/ /*[/]*/
-      ];
-    </script>
-    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute end */-->
+      th:insert="~{components/custom-color-schema-config/template :: head}"
+    ></th:block>
+    <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute */-->
     <!--/* set data-color-scheme attribute for custom color schema start */-->
-    <script th:if="${color_schema == 'custom'}" th:inline="javascript">
-      const customColorSchema = allCustomColorSchema.find(
-        (schema) => schema.id === /*[[${custom_color_schema_init_id}]]*/ "1",
-      );
-      document.documentElement.setAttribute("data-color-scheme", customColorSchema ? customColorSchema.type : null);
+    <script th:if="${color_schema == 'custom'}" th:data-custom-color-schema-init-id="${custom_color_schema_init_id}">
+      (function (dataset) {
+        /* eslint-disable-next-line no-undef -- Defined earlier by components/custom-color-schema-config/template.html. */
+        const matchedSchema = allCustomColorSchema.find((schema) => schema.id === dataset?.customColorSchemaInitId);
+        if (!matchedSchema?.type) {
+          return;
+        }
+        document.documentElement.setAttribute("data-color-scheme", matchedSchema.type);
+      })(document.currentScript?.dataset);
     </script>
     <!--/* set data-color-scheme attribute for custom color schema end */-->
     <!--/* Custom Theme Declarations start */-->
@@ -446,45 +185,9 @@
           ></th:block>
           <!--/* Color Scheme Declarations End */-->
           <!--/* Theme Color CSS Variables Declarations Start */-->
-          <th:block th:unless="${colorSchema.is_css_variable_mode}">
-            <!--/*/
-            <style th:inline="css">
-html[theme="theme-[(${colorSchema.id})]"] {
---color-primary: [(${colorSchema.primary_color})];
---color-primary-content: [(${colorSchema.primary_content_color})];
---color-secondary: [(${colorSchema.secondary_color})];
---color-secondary-content: [(${colorSchema.secondary_content_color})];
---color-accent: [(${colorSchema.accent_color})];
---color-accent-content: [(${colorSchema.accent_content_color})];
---color-neutral: [(${colorSchema.neutral_color})];
---color-neutral-content: [(${colorSchema.neutral_content_color})];
---color-base-100: [(${colorSchema.base_100_color})];
---color-base-200: [(${colorSchema.base_200_color})];
---color-base-300: [(${colorSchema.base_300_color})];
---color-base-content: [(${colorSchema.base_content_color})];
-}
-            </style>
-            /*/-->
-          </th:block>
-          <th:block th:if="${colorSchema.is_css_variable_mode}">
-            <th:block th:switch="${colorSchema.is_raw_css_output_mode}">
-              <th:block th:case="true">
-                <!--/*/
-                <style th:inline="css">
-[(${colorSchema.custom_css})]
-                </style>
-                /*/-->
-              </th:block>
-              <th:block th:case="false">
-                <!--/*/
-                <style th:inline="css">
-html[theme="theme-[(${colorSchema.id})]"] {
-[(${colorSchema.custom_css})]}
-                </style>
-                /*/-->
-              </th:block>
-            </th:block>
-          </th:block>
+          <th:block
+            th:insert="~{components/custom-color-schema-style/template :: body(colorSchema=${colorSchema})}"
+          ></th:block>
           <!--/* Theme Color CSS Variables Declarations End */-->
         </th:block>
       </th:block>
@@ -635,36 +338,58 @@ html[theme="theme-[(${colorSchema.id})]"] {
     ></th:block>
     <!--/* Preset Text Size CSS VariablesDeclarations end */-->
     <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script Start */-->
-    <script th:if="${theme.config?.global?.anti_mirror_site}" th:inline="javascript">
-      (function () {
+    <script
+      th:if="${theme.config?.global?.anti_mirror_site}"
+      th:data-target-url="${theme.config?.global?.target_url}"
+      th:data-domain-whitelist="${#lists.isEmpty(theme.config?.global?.allow_site_whitelist)
+                                  ? null
+                                  : #strings.listJoin(theme.config?.global?.allow_site_whitelist.![input_domain], ' ')}"
+      th:data-keep-path-and-query="${theme.config?.global?.is_keep_path_and_query}"
+    >
+      (function (dataset) {
         // <!--/* 获取被编码后的目标链接 */-->
-        var encodedRedirectUrl = /*[[${theme.config?.global?.target_url}]]*/ "bG9jYWxob3N0";
-
-        // <!--/* 获取域名白名单 */-->
-        var rawDomainWhiteList = /*[[${theme.config?.global?.allow_site_whitelist}]]*/ [];
-        if (rawDomainWhiteList.length === 0) {
+        const encodedRedirectUrl = dataset?.targetUrl?.trim();
+        if (!encodedRedirectUrl) {
           return;
         }
-        var domainWhiteList = rawDomainWhiteList.map((item) => atob(item.realNode.input_domain));
+
+        // <!--/* 获取域名白名单 */-->
+        const rawDomainWhiteList = dataset?.domainWhitelist?.trim();
+        if (!rawDomainWhiteList) {
+          return;
+        }
+        const domainWhiteList = rawDomainWhiteList.split(" ").map((item) => atob(item));
 
         // <!--/* 检查是否保留路径和查询参数，并且生成跳转后的目标链接 */-->
-        var is_keep_path_and_query = /*[[${theme.config?.global?.is_keep_path_and_query}]]*/ true;
-        if (is_keep_path_and_query) {
-          var targetRedirectUrl = atob(encodedRedirectUrl) + window.location.pathname + window.location.search;
-        } else {
-          var targetRedirectUrl = atob(encodedRedirectUrl);
-        }
+        const isKeepPathAndQuery = dataset?.keepPathAndQuery === "true";
+        const targetRedirectUrl = isKeepPathAndQuery
+          ? atob(encodedRedirectUrl) + window.location.pathname + window.location.search
+          : atob(encodedRedirectUrl);
 
         // <!--/* 如果当前域名不在域名白名单中就跳转 */-->
         if (!domainWhiteList.includes(document.location.hostname)) {
           window.location.href = targetRedirectUrl;
         }
-      })();
+      })(document.currentScript?.dataset);
     </script>
     <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script End */-->
     <!--/* Auto Redirect to Browser Language Script Start */-->
-    <script th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}" th:inline="javascript">
-      (function () {
+    <script
+      th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}"
+      th:with="page_language_override=${language},
+               requested_language_param=${'' + param.lang},
+               default_page_language=${theme.config?.global?.default_page_language},
+               auto_redirect_target_languages=${#lists.isEmpty(theme.config?.global?.auto_redirect_target_language_list)
+                                                ? null
+                                                : #strings.listJoin(theme.config?.global?.auto_redirect_target_language_list.![v], ',')},
+               is_prefix_match_mode=${theme.config?.global?.is_i18n_prefix_match_mode}"
+      th:data-page-language-override="${page_language_override}"
+      th:data-requested-language-param="${requested_language_param}"
+      th:data-default-page-language="${default_page_language}"
+      th:data-auto-redirect-target-languages="${auto_redirect_target_languages}"
+      th:data-prefix-match-mode="${is_prefix_match_mode}"
+    >
+      (function (dataset) {
         // <!--/* 设计思路：
         // 1. 如果 ${language} 已经传入，也就是已经在元数据强行指定了页面语言，则不跳转
         // 2. 如果浏览器已有 lang 查询参数，也就是在用户层面强行指定了页面语言，则不跳转
@@ -673,10 +398,15 @@ html[theme="theme-[(${colorSchema.id})]"] {
         // 5. 获取主题配置项中的目标语言列表，以及前缀匹配模式开关
         // 6. 如果浏览器语言匹配配置项中的目标语言列表，则跳转到带有浏览器语言参数的当前页面
 
+        // 核心理念（优先级）是：
+        // 1. 用户浏览器查询参数的强制指定
+        // 2. 站长在页面元数据的强制指定
+        // 3. 根据浏览器语言识别自动跳转（用户浏览器语言刚好在站长配置的允许跳转列表里，那就跳）。
+
         // 如果 ${language} 已经传入，也就是已经指定了页面语言，则不跳转
         // 这个 ${language} 是文章元数据/分类详情页元数据/标签详情页元数据的 language */-->
-        const languageParam = /*[[${language}]]*/ null;
-        if (languageParam) {
+        const pageLanguageOverride = dataset?.pageLanguageOverride;
+        if (pageLanguageOverride) {
           return;
         }
 
@@ -685,16 +415,16 @@ html[theme="theme-[(${colorSchema.id})]"] {
         // lang=zh -> ''+param.lang 为 'zh'
         // lang=zh,en -> ''+param.lang 为 'zh,en'
         // 用 (new URL(window.location.href)).searchParams.get("lang") 也差不多
-        // 但我选择尽量预渲染 */-->
-        const langParam = /*[[${''+param.lang}]]*/ "";
-        if (langParam) {
+        // 但我选择尽量预渲染，所以 ${'' + param.lang} */-->
+        const requestedLanguageParam = dataset?.requestedLanguageParam;
+        if (requestedLanguageParam) {
           return;
         }
 
         // <!--/* 获取配置项默认语言 */-->
-        let defaultLang = /*[[${theme.config?.global?.default_page_language}]]*/ "zh";
-        if (!defaultLang) {
-          defaultLang = "zh";
+        let defaultPageLanguage = dataset?.defaultPageLanguage;
+        if (!defaultPageLanguage) {
+          defaultPageLanguage = "zh";
         }
 
         // <!--/* 获取浏览器语言
@@ -703,13 +433,15 @@ html[theme="theme-[(${colorSchema.id})]"] {
         // */-->
         const browserLang = navigator.language;
 
-        const originLangList = /*[(${theme.config?.global?.auto_redirect_target_language_list})]*/ [];
-        const targetLangs = originLangList.map((item) => item.v);
-        const prefixMode = /*[[${theme.config?.global?.is_i18n_prefix_match_mode}]]*/ true;
+        const autoRedirectTargetLanguages = dataset?.autoRedirectTargetLanguages?.split(",").filter(Boolean);
+        if (!autoRedirectTargetLanguages?.length) {
+          return;
+        }
+        const prefixMode = dataset?.prefixMatchMode === "true";
 
-        let matchedLang = prefixMode
-          ? targetLangs.find((lang) => browserLang.startsWith(lang))
-          : targetLangs.find((lang) => browserLang === lang);
+        const matchedLang = prefixMode
+          ? autoRedirectTargetLanguages.find((lang) => browserLang.startsWith(lang))
+          : autoRedirectTargetLanguages.find((lang) => browserLang === lang);
         // <!--/* 没有匹配的语言参数，不进行跳转 */-->
         if (!matchedLang) {
           return;
@@ -717,7 +449,10 @@ html[theme="theme-[(${colorSchema.id})]"] {
 
         // <!--/* 准备跳转到带有浏览器语言参数的当前页面
         // 如果 defaultLang 和  matchedLang 匹配说明默认页面语言就是目标语言，无需跳转 */-->
-        if ((prefixMode && defaultLang.startsWith(matchedLang)) || (!prefixMode && defaultLang === matchedLang)) {
+        if (
+          (prefixMode && defaultPageLanguage.startsWith(matchedLang)) ||
+          (!prefixMode && defaultPageLanguage === matchedLang)
+        ) {
           return;
         }
 
@@ -725,7 +460,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
         const url = new URL(window.location);
         url.searchParams.set("lang", matchedLang);
         window.location.href = url;
-      })();
+      })(document.currentScript?.dataset);
     </script>
     <!--/* Auto Redirect to Browser Language Script End */-->
     <!--/* browser polyfill for modulepreload start
@@ -794,7 +529,7 @@ html[theme="theme-[(${colorSchema.id})]"] {
     </script>
     <!--/* browser polyfill for modulepreload end */-->
     <!--/* js/css injection start */-->
-    <th:block th:replace="${head}" />
+    <th:block th:replace="${head}"></th:block>
     <!--/* js/css injection end */-->
     <!--/* Mermaid injection start */-->
     <th:block
@@ -803,153 +538,161 @@ html[theme="theme-[(${colorSchema.id})]"] {
     ></th:block>
     <!--/* Mermaid injection end */-->
     <!--/* Color Scheme Toggle Button Script Start */-->
-    <script th:inline="javascript" th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
-      var THEME_DARK = /*[[${theme_dark}]]*/ "dark";
-      var THEME_LIGHT = /*[[${theme_light}]]*/ "light";
-      var THEME_AUTO = /*[[${theme_auto}]]*/ "auto";
-      const is_save_color_scheme_settings_to_browser =
-        /*[[${theme.config?.styles?.is_save_color_scheme_settings_to_browser}]]*/ "true";
+    <script
+      th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
+      th:data-theme-dark="${theme_dark}"
+      th:data-theme-light="${theme_light}"
+      th:data-theme-auto="${theme_auto}"
+      th:data-save-color-scheme-settings-to-browser="${theme.config?.styles?.is_save_color_scheme_settings_to_browser}"
+      th:data-auto-switch-color-scheme-based-on-browser-settings="${theme.config?.styles?.is_auto_switch_color_scheme_based_on_browser_settings}"
+      th:data-custom-theme-dark-id="${custom_theme_dark_id}"
+      th:data-custom-theme-light-id="${custom_theme_light_id}"
+      th:data-custom-theme-auto-id="${custom_theme_auto_id}"
+    >
+      (function (dataset) {
+        const customColorSchemeConfigElement = document.querySelector("#custom-color-config");
 
-      var themeColorSchemeMap = {
-        auto: "auto",
-        dark: "dark",
-        light: "light",
-        "auto-blue": "auto",
-        "dark-blue": "dark",
-        "light-blue": "light",
-        gray: "light",
-      };
+        let THEME_DARK = dataset?.themeDark;
+        let THEME_LIGHT = dataset?.themeLight;
+        let THEME_AUTO = dataset?.themeAuto;
+        const is_save_color_scheme_settings_to_browser = dataset?.saveColorSchemeSettingsToBrowser === "true";
 
-      if (THEME_DARK == "custom") {
-        let customColorSchema = allCustomColorSchema.find(
-          (schema) => schema.id === /*[[${custom_theme_dark_id}]]*/ "1",
-        );
-        if (customColorSchema) {
-          THEME_DARK = "theme-" + customColorSchema.id;
-          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        // <!--/* Map each concrete theme name to its corresponding data-color-scheme value. */-->
+        const themeColorSchemeMap = {
+          auto: "auto",
+          dark: "dark",
+          light: "light",
+          "auto-blue": "auto",
+          "dark-blue": "dark",
+          "light-blue": "light",
+          gray: "light",
+        };
+
+        if (THEME_DARK == "custom") {
+          /* eslint-disable-next-line no-undef -- Defined earlier by components/custom-color-schema-config/template.html. */
+          let customColorSchema = allCustomColorSchema.find((schema) => schema.id === dataset?.customThemeDarkId);
+          if (customColorSchema) {
+            THEME_DARK = "theme-" + customColorSchema.id;
+            themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+          }
         }
-      }
-      if (THEME_LIGHT == "custom") {
-        let customColorSchema = allCustomColorSchema.find(
-          (schema) => schema.id === /*[[${custom_theme_light_id}]]*/ "1",
-        );
-        if (customColorSchema) {
-          THEME_LIGHT = "theme-" + customColorSchema.id;
-          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        if (THEME_LIGHT == "custom") {
+          /* eslint-disable-next-line no-undef -- Defined earlier by components/custom-color-schema-config/template.html. */
+          let customColorSchema = allCustomColorSchema.find((schema) => schema.id === dataset?.customThemeLightId);
+          if (customColorSchema) {
+            THEME_LIGHT = "theme-" + customColorSchema.id;
+            themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+          }
         }
-      }
-      if (THEME_AUTO == "custom") {
-        let customColorSchema = allCustomColorSchema.find(
-          (schema) => schema.id === /*[[${custom_theme_auto_id}]]*/ "1",
-        );
-        if (customColorSchema) {
-          THEME_AUTO = "theme-" + customColorSchema.id;
-          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        if (THEME_AUTO == "custom") {
+          /* eslint-disable-next-line no-undef -- Defined earlier by components/custom-color-schema-config/template.html. */
+          let customColorSchema = allCustomColorSchema.find((schema) => schema.id === dataset?.customThemeAutoId);
+          if (customColorSchema) {
+            THEME_AUTO = "theme-" + customColorSchema.id;
+            themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+          }
         }
-      }
 
-      function updateThemeIcon(theme) {
-        const themeIcon = document.getElementById("theme-toggle-button-icon");
-        if (!themeIcon) return;
-        themeIcon.style.removeProperty("display"); // <!--/* remove display: none */-->
+        function updateThemeIcon(theme) {
+          const themeIcon = document.getElementById("theme-toggle-button-icon");
+          if (!themeIcon) return;
+          themeIcon.style.removeProperty("display"); // <!--/* remove display: none */-->
 
-        Array.from(themeIcon.classList).forEach((c) => {
-          if (c.startsWith("ph--")) themeIcon.classList.remove(c);
-        });
+          Array.from(themeIcon.classList).forEach((c) => {
+            if (c.startsWith("ph--")) themeIcon.classList.remove(c);
+          });
 
-        if (theme === THEME_LIGHT) {
-          themeIcon.classList.add("ph--sun-bold");
-        } else if (theme === THEME_DARK) {
-          themeIcon.classList.add("ph--moon-bold");
-        } else {
-          themeIcon.classList.add("ph--circle-bold");
+          if (theme === THEME_LIGHT) {
+            themeIcon.classList.add("ph--sun-bold");
+          } else if (theme === THEME_DARK) {
+            themeIcon.classList.add("ph--moon-bold");
+          } else {
+            themeIcon.classList.add("ph--circle-bold");
+          }
         }
-      }
 
-      function updateTagAttribute(theme) {
-        document.documentElement.setAttribute("data-color-scheme", themeColorSchemeMap[theme]);
-        document.documentElement.setAttribute("theme", theme);
-      }
-
-      function applyThemeNoSave(theme) {
-        updateTagAttribute(theme);
-        updateThemeIcon(theme);
-      }
-
-      function applyTheme(theme) {
-        if (is_save_color_scheme_settings_to_browser === true && typeof Storage !== "undefined") {
-          localStorage.setItem("pref-theme", themeColorSchemeMap[theme]);
-        } else if (typeof Storage === "undefined") {
-          console.log("Sorry, your browser does not support web storage...");
+        function updateTagAttribute(theme) {
+          document.documentElement.setAttribute("data-color-scheme", themeColorSchemeMap[theme]);
+          document.documentElement.setAttribute("theme", theme);
         }
-        applyThemeNoSave(theme);
-      }
 
-      function getPreferredTheme() {
-        const storedTheme = localStorage.getItem("pref-theme");
-        if (storedTheme) {
-          return storedTheme;
+        function applyThemeNoSave(theme) {
+          updateTagAttribute(theme);
+          updateThemeIcon(theme);
         }
-        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-          return "dark";
-        }
-        return "light";
-      }
 
-      (function () {
+        function applyTheme(theme) {
+          if (is_save_color_scheme_settings_to_browser === true && typeof Storage !== "undefined") {
+            localStorage.setItem("pref-theme", themeColorSchemeMap[theme]);
+          } else if (typeof Storage === "undefined") {
+            console.log("[Higan Haozi][base-layout] Sorry, your browser does not support web storage...");
+          }
+          applyThemeNoSave(theme);
+        }
+
+        function getPreferredTheme() {
+          const storedTheme = localStorage.getItem("pref-theme");
+          if (storedTheme) {
+            return storedTheme;
+          }
+          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            return "dark";
+          }
+          return "light";
+        }
+
         if (is_save_color_scheme_settings_to_browser !== true && typeof Storage !== "undefined") {
           localStorage.removeItem("pref-theme");
         }
         const is_auto_switch_color_scheme_based_on_browser_settings =
-          /*[[${theme.config?.styles?.is_auto_switch_color_scheme_based_on_browser_settings}]]*/ "true";
-        if (!is_auto_switch_color_scheme_based_on_browser_settings) {
-          return;
+          dataset?.autoSwitchColorSchemeBasedOnBrowserSettings === "true";
+        if (is_auto_switch_color_scheme_based_on_browser_settings) {
+          switch (getPreferredTheme()) {
+            case "dark":
+              updateTagAttribute(THEME_DARK);
+              break;
+            case "light":
+              updateTagAttribute(THEME_LIGHT);
+              break;
+            case "auto":
+              updateTagAttribute(THEME_AUTO);
+              break;
+          }
         }
-        switch (getPreferredTheme()) {
-          case "dark":
-            updateTagAttribute(THEME_DARK);
-            break;
-          case "light":
-            updateTagAttribute(THEME_LIGHT);
-            break;
-          case "auto":
-            updateTagAttribute(THEME_AUTO);
-            break;
-        }
-      })();
 
-      document.addEventListener("DOMContentLoaded", function () {
-        switch (getPreferredTheme()) {
-          case "dark":
-            updateThemeIcon(THEME_DARK);
-            break;
-          case "light":
-            updateThemeIcon(THEME_LIGHT);
-            break;
-          case "auto":
-            updateThemeIcon(THEME_AUTO);
-            break;
-        }
-      });
+        document.addEventListener("DOMContentLoaded", function () {
+          switch (getPreferredTheme()) {
+            case "dark":
+              updateThemeIcon(THEME_DARK);
+              break;
+            case "light":
+              updateThemeIcon(THEME_LIGHT);
+              break;
+            case "auto":
+              updateThemeIcon(THEME_AUTO);
+              break;
+          }
+        });
 
-      function toggleTheme(event) {
-        event.preventDefault(); // <!--/* 阻止默认行为，防止页面刷新 */-->
-        const currentTheme = document.documentElement.attributes["theme"].value;
-        let newTheme;
-        // <!--/* light -> dark -> auto -> light */-->
-        if (currentTheme === THEME_LIGHT) {
-          newTheme = THEME_DARK;
-        } else if (currentTheme === THEME_DARK) {
-          newTheme = THEME_AUTO;
-        } else {
-          newTheme = THEME_LIGHT;
+        function toggleTheme(event) {
+          event.preventDefault(); // <!--/* 阻止默认行为，防止页面刷新 */-->
+          const currentTheme = document.documentElement.attributes["theme"].value;
+          let newTheme;
+          // <!--/* light -> dark -> auto -> light */-->
+          if (currentTheme === THEME_LIGHT) {
+            newTheme = THEME_DARK;
+          } else if (currentTheme === THEME_DARK) {
+            newTheme = THEME_AUTO;
+          } else {
+            newTheme = THEME_LIGHT;
+          }
+          applyTheme(newTheme);
         }
-        applyTheme(newTheme);
-      }
 
-      document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("theme-toggle-button").addEventListener("click", toggleTheme);
-      });
+        document.addEventListener("DOMContentLoaded", function () {
+          document.getElementById("theme-toggle-button").addEventListener("click", toggleTheme);
+        });
+      })(document.currentScript?.dataset);
     </script>
     <!--/* Color Scheme Toggle Button Script End */-->
     <!--/* CSS Variable to Meta Theme-Color Observer Start */-->
@@ -1070,40 +813,24 @@ html[theme="theme-[(${colorSchema.id})]"] {
       应用于 :root 加上 only 效果是关闭由 Chrome 的自动深色主题引起的颜色覆盖。上游应用于 body 标签，本主题应用于 HTML 标签（实际是应用在有 data-color-scheme 属性的地方，本主题仅有 HTML 标签有这个属性）
       https://developer.mozilla.org/zh-CN/docs/Web/CSS/color-scheme
     */-->
-    <!--/*/
-    <style th:inline="css" th:if="${theme.config?.styles?.is_max_width_settings}">
-      .max-width {
-        max-width:
-      /*[(${theme.config?.styles?.max_width})]*/ 48rem;
-      }
-    </style>
-    /*/-->
+    <th:block
+      th:if="${theme.config?.styles?.is_max_width_settings}"
+      th:insert="~{components/layout-max-width-style/template :: body}"
+    ></th:block>
     <!--/* 缩小窗口时优先缩小 margin，触发下面样式表里面的取小函数肯定是 margin=0，此时 100vw 和 100% 应相等 */-->
-    <!--/*/
-    <style th:inline="css" th:if="${theme.config?.styles?.is_min_width_settings}">
-      :root {
-        --content-min-width:
-      /*[(${theme.config?.styles?.min_width})]*/ 48rem;
-      }
-
-      .min-width {
-        min-width: min(100%, var(--content-min-width));
-      }
-    </style>
-    /*/-->
+    <th:block
+      th:if="${theme.config?.styles?.is_min_width_settings}"
+      th:insert="~{components/layout-min-width-style/template :: body}"
+    ></th:block>
     <style th:if="${theme.config?.styles?.is_force_min_width_settings}">
       .min-width {
         min-width: var(--content-min-width) !important;
       }
     </style>
-    <!--/*/
-    <style th:inline="css" th:if="${theme.config?.styles?.is_content_width_style_settings}">
-      .content-width {
-        width:
-      /*[(${theme.config?.styles?.content_width_style})]*/ fit-content;
-      }
-    </style>
-    /*/-->
+    <th:block
+      th:if="${theme.config?.styles?.is_content_width_style_settings}"
+      th:insert="~{components/layout-content-width-style/template :: body}"
+    ></th:block>
     <style th:if="${theme.config?.styles?.is_h3_underline}">
       body h3 {
         text-decoration: underline;
@@ -1146,108 +873,28 @@ html[theme="theme-[(${colorSchema.id})]"] {
         vertical-align: 0.4em;
       }
     </style>
-    <!--/*/
-    <style th:inline="css" th:if="${theme.config?.styles?.is_show_the_table_bottom_border}">
-      body tr:not(:first-child) {
-        border-bottom-width:
-      /*[(${theme.config?.styles?.table_bottom_border_width})]*/ 0.1rem;
-        border-bottom-style: dashed;
-        border-bottom-color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
-      }
-    </style>
-    /*/-->
-    <!--/*/
-    <style
-      th:inline="css"
-      th:if="${(theme.config?.styles?.heading_margin_top_multiplier != 1 
-                and theme.config?.styles?.heading_margin_top_multiplier != '1')
-               or (theme.config?.styles?.heading_margin_bottom_multiplier != 1
-                   and theme.config?.styles?.heading_margin_bottom_multiplier != '1')
-               or (theme.config?.styles?.paragraph_margin_top_multiplier != 1 
-                   and theme.config?.styles?.paragraph_margin_top_multiplier != '1')
-               or (theme.config?.styles?.paragraph_margin_bottom_multiplier != 1
-                   and theme.config?.styles?.paragraph_margin_bottom_multiplier != '1')}"
-    >
-      /*[# th:if="${(theme.config?.styles?.heading_margin_top_multiplier != 1 
-                     and theme.config?.styles?.heading_margin_top_multiplier != '1')
-                    or (theme.config?.styles?.heading_margin_bottom_multiplier != 1
-                        and theme.config?.styles?.heading_margin_bottom_multiplier != '1')}"]*/
-      body h1,
-      body .h1 {
-        /*[# th:if="${theme.config?.styles?.heading_margin_top_multiplier != 1
-                      and theme.config?.styles?.heading_margin_top_multiplier != '1'}"]*/
-        margin-top: calc(3rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-        /*[# th:if="${theme.config?.styles?.heading_margin_bottom_multiplier != 1
-                      and theme.config?.styles?.heading_margin_bottom_multiplier != '1'}"]*/
-        margin-bottom: calc(1rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-      }
-
-      body h2,
-      body .h2 {
-        /*[# th:if="${theme.config?.styles?.heading_margin_top_multiplier != 1
-                      and theme.config?.styles?.heading_margin_top_multiplier != '1'}"]*/
-        margin-top: calc(2rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-        /*[# th:if="${theme.config?.styles?.heading_margin_bottom_multiplier != 1
-                      and theme.config?.styles?.heading_margin_bottom_multiplier != '1'}"]*/
-        margin-bottom: calc(0.5rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-      }
-
-      body h3,
-      body .h3,
-      body h4,
-      body .h4,
-      body h5,
-      body .h5,
-      body h6,
-      body .h6 {
-        /*[# th:if="${theme.config?.styles?.heading_margin_top_multiplier != 1
-                      and theme.config?.styles?.heading_margin_top_multiplier != '1'}"]*/
-        margin-top: calc(0.9rem * /*[(${theme.config?.styles?.heading_margin_top_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-        /*[# th:if="${theme.config?.styles?.heading_margin_bottom_multiplier != 1
-                      and theme.config?.styles?.heading_margin_bottom_multiplier != '1'}"]*/
-        margin-bottom: calc(0.5rem * /*[(${theme.config?.styles?.heading_margin_bottom_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-      }
-      /*[/]*/
-
-      /*[# th:if="${(theme.config?.styles?.paragraph_margin_top_multiplier != 1 
-                     and theme.config?.styles?.paragraph_margin_top_multiplier != '1')
-                    or (theme.config?.styles?.paragraph_margin_bottom_multiplier != 1
-                        and theme.config?.styles?.paragraph_margin_bottom_multiplier != '1')}"]*/
-      body p {
-        /*[# th:if="${theme.config?.styles?.paragraph_margin_top_multiplier != 1
-                      and theme.config?.styles?.paragraph_margin_top_multiplier != '1'}"]*/
-        margin-block-start: calc(1em * /*[(${theme.config?.styles?.paragraph_margin_top_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-        /*[# th:if="${theme.config?.styles?.paragraph_margin_bottom_multiplier != 1
-                      and theme.config?.styles?.paragraph_margin_bottom_multiplier != '1'}"]*/
-        margin-block-end: calc(1em * /*[(${theme.config?.styles?.paragraph_margin_bottom_multiplier ?: 1})]*/ 1);
-        /*[/]*/
-      }
-      /*[/]*/
-    </style>
-    /*/-->
+    <th:block
+      th:if="${theme.config?.styles?.is_show_the_table_bottom_border}"
+      th:insert="~{components/layout-table-bottom-border-style/template :: body}"
+    ></th:block>
+    <th:block th:insert="~{components/layout-heading-paragraph-margin-style/template :: body}"></th:block>
     <div class="max-width min-width content-width mx-auto px-4 sm:px-8">
-      <th:block th:replace="${navbar}" />
+      <th:block th:replace="${navbar}"></th:block>
 
       <div
         class="content index pt-16"
         th:classappend="${theme.config?.styles?.is_footer_force_bottom} ? 'min-h-100vh' : '' "
       >
-        <th:block th:replace="${header}" />
+        <th:block th:replace="${header}"></th:block>
 
         <main>
-          <th:block th:replace="${content}" />
+          <th:block th:replace="${content}"></th:block>
         </main>
 
         <footer id="footer">
           <div class="footer-left">
-            <halo:footer />
+            <!--/* 这里不能使用自闭合标签，否则在经过 html minify 处理后会变成 <halo:footer> ，无法正常注入 */-->
+            <halo:footer></halo:footer>
             <div th:if="${theme.config?.styles?.is_footer_site_stats_show}">
               <ul class="site-stats" th:with="stats = ${siteStatsFinder.getStats()}">
                 <li

@@ -20,7 +20,7 @@ importers:
     devDependencies:
       '@dreamsicle.io/stylelint-config-tailwindcss':
         specifier: ^1.2.2
-        version: 1.2.2(stylelint@17.4.0(typescript@5.9.3))
+        version: 1.2.2(stylelint@17.5.0(typescript@5.9.3))
       '@eslint/compat':
         specifier: ^2.0.3
         version: 2.0.3(eslint@10.0.3(jiti@2.6.1))
@@ -151,20 +151,20 @@ importers:
         specifier: ^0.17.0
         version: 0.17.0
       stylelint:
-        specifier: ^17.4.0
-        version: 17.4.0(typescript@5.9.3)
+        specifier: ^17.5.0
+        version: 17.5.0(typescript@5.9.3)
       stylelint-config-html:
         specifier: ^1.1.0
-        version: 1.1.0(postcss-html@1.8.1)(stylelint@17.4.0(typescript@5.9.3))
+        version: 1.1.0(postcss-html@1.8.1)(stylelint@17.5.0(typescript@5.9.3))
       stylelint-config-recommended-vue:
         specifier: ^1.6.1
-        version: 1.6.1(postcss-html@1.8.1)(stylelint@17.4.0(typescript@5.9.3))
+        version: 1.6.1(postcss-html@1.8.1)(stylelint@17.5.0(typescript@5.9.3))
       stylelint-config-standard:
         specifier: ^40.0.0
-        version: 40.0.0(stylelint@17.4.0(typescript@5.9.3))
+        version: 40.0.0(stylelint@17.5.0(typescript@5.9.3))
       stylelint-order:
         specifier: ^8.1.1
-        version: 8.1.1(stylelint@17.4.0(typescript@5.9.3))
+        version: 8.1.1(stylelint@17.5.0(typescript@5.9.3))
       tailwindcss:
         specifier: ^4.2.2
         version: 4.2.2
@@ -2439,8 +2439,8 @@ packages:
   encoding-sniffer@0.2.1:
     resolution: {integrity: sha512-5gvq20T6vfpekVtqrYQsSCFZ1wEg5+wW0/QaZMWkFr6BqD3NfKs0rLCx4rrVlSWJeZb5NBJgVLswK/w2MWU+Gw==}
 
-  enhanced-resolve@5.20.1:
-    resolution: {integrity: sha512-Qohcme7V1inbAfvjItgw0EaxVX5q2rdVEZHRBrEQdRZTssLDGsL8Lwrznl8oQ/6kuTJONLaDcGjkNP247XEhcA==}
+  enhanced-resolve@5.20.0:
+    resolution: {integrity: sha512-/ce7+jQ1PQ6rVXwe+jKEg5hW5ciicHwIQUagZkp6IufBoY3YDgdTTY1azVs0qoRgVmvsNB+rbjLJxDAeHHtwsQ==}
     engines: {node: '>=10.13.0'}
 
   entities@4.5.0:
@@ -3785,8 +3785,8 @@ packages:
     peerDependencies:
       stylelint: ^16.18.0 || ^17.0.0
 
-  stylelint@17.4.0:
-    resolution: {integrity: sha512-3kQ2/cHv3Zt8OBg+h2B8XCx9evEABQIrv4hh3uXahGz/ZEHrTR80zxBiK2NfXNaSoyBzxO1pjsz1Vhdzwn5XSw==}
+  stylelint@17.5.0:
+    resolution: {integrity: sha512-o/NS6zhsPZFmgUm5tXX4pVNg1XDOZSlucLdf2qow/lVn4JIyzZIQ5b3kad1ugqUj3GSIgr2u5lQw7X8rjqw33g==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -4261,9 +4261,9 @@ snapshots:
 
   '@docsearch/sidepanel-js@4.5.4': {}
 
-  '@dreamsicle.io/stylelint-config-tailwindcss@1.2.2(stylelint@17.4.0(typescript@5.9.3))':
+  '@dreamsicle.io/stylelint-config-tailwindcss@1.2.2(stylelint@17.5.0(typescript@5.9.3))':
     dependencies:
-      stylelint: 17.4.0(typescript@5.9.3)
+      stylelint: 17.5.0(typescript@5.9.3)
 
   '@emnapi/core@1.9.0':
     dependencies:
@@ -4958,7 +4958,7 @@ snapshots:
   '@tailwindcss/node@4.2.1':
     dependencies:
       '@jridgewell/remapping': 2.3.5
-      enhanced-resolve: 5.20.1
+      enhanced-resolve: 5.20.0
       jiti: 2.6.1
       lightningcss: 1.31.1
       magic-string: 0.30.21
@@ -4968,7 +4968,7 @@ snapshots:
   '@tailwindcss/node@4.2.2':
     dependencies:
       '@jridgewell/remapping': 2.3.5
-      enhanced-resolve: 5.20.1
+      enhanced-resolve: 5.20.0
       jiti: 2.6.1
       lightningcss: 1.32.0
       magic-string: 0.30.21
@@ -6063,7 +6063,7 @@ snapshots:
       iconv-lite: 0.6.3
       whatwg-encoding: 3.1.1
 
-  enhanced-resolve@5.20.1:
+  enhanced-resolve@5.20.0:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.3.0
@@ -7531,35 +7531,35 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  stylelint-config-html@1.1.0(postcss-html@1.8.1)(stylelint@17.4.0(typescript@5.9.3)):
+  stylelint-config-html@1.1.0(postcss-html@1.8.1)(stylelint@17.5.0(typescript@5.9.3)):
     dependencies:
       postcss-html: 1.8.1
-      stylelint: 17.4.0(typescript@5.9.3)
+      stylelint: 17.5.0(typescript@5.9.3)
 
-  stylelint-config-recommended-vue@1.6.1(postcss-html@1.8.1)(stylelint@17.4.0(typescript@5.9.3)):
+  stylelint-config-recommended-vue@1.6.1(postcss-html@1.8.1)(stylelint@17.5.0(typescript@5.9.3)):
     dependencies:
       postcss-html: 1.8.1
       semver: 7.7.4
-      stylelint: 17.4.0(typescript@5.9.3)
-      stylelint-config-html: 1.1.0(postcss-html@1.8.1)(stylelint@17.4.0(typescript@5.9.3))
-      stylelint-config-recommended: 18.0.0(stylelint@17.4.0(typescript@5.9.3))
+      stylelint: 17.5.0(typescript@5.9.3)
+      stylelint-config-html: 1.1.0(postcss-html@1.8.1)(stylelint@17.5.0(typescript@5.9.3))
+      stylelint-config-recommended: 18.0.0(stylelint@17.5.0(typescript@5.9.3))
 
-  stylelint-config-recommended@18.0.0(stylelint@17.4.0(typescript@5.9.3)):
+  stylelint-config-recommended@18.0.0(stylelint@17.5.0(typescript@5.9.3)):
     dependencies:
-      stylelint: 17.4.0(typescript@5.9.3)
+      stylelint: 17.5.0(typescript@5.9.3)
 
-  stylelint-config-standard@40.0.0(stylelint@17.4.0(typescript@5.9.3)):
+  stylelint-config-standard@40.0.0(stylelint@17.5.0(typescript@5.9.3)):
     dependencies:
-      stylelint: 17.4.0(typescript@5.9.3)
-      stylelint-config-recommended: 18.0.0(stylelint@17.4.0(typescript@5.9.3))
+      stylelint: 17.5.0(typescript@5.9.3)
+      stylelint-config-recommended: 18.0.0(stylelint@17.5.0(typescript@5.9.3))
 
-  stylelint-order@8.1.1(stylelint@17.4.0(typescript@5.9.3)):
+  stylelint-order@8.1.1(stylelint@17.5.0(typescript@5.9.3)):
     dependencies:
       postcss: 8.5.8
       postcss-sorting: 10.0.0(postcss@8.5.8)
-      stylelint: 17.4.0(typescript@5.9.3)
+      stylelint: 17.5.0(typescript@5.9.3)
 
-  stylelint@17.4.0(typescript@5.9.3):
+  stylelint@17.5.0(typescript@5.9.3):
     dependencies:
       '@csstools/css-calc': 3.1.1(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)

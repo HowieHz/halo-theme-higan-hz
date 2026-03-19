@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
 
       // 数据一致性校验：子菜单数量必须与 count 匹配
       if (count === 0 || hrefs.length !== count - 1 || targets.length !== count - 1 || labels.length !== count - 1) {
-        console.error("Submenu data is inconsistent");
+        console.error("[Higan Haozi][shared] Submenu data is inconsistent");
         return;
       }
 

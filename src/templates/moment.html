@@ -31,6 +31,10 @@
                and haloCommentEnabled}"
       th:insert="~{components/halo-comment-widget/template :: head}"
     ></th:block>
+    <th:block
+      th:if="${theme.config?.moments_styles?.is_moment_upvote_button_show}"
+      th:insert="~{components/upvote-runtime/template :: head}"
+    ></th:block>
   </head>
   <body th:remove="tag">
     <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
@@ -253,10 +257,7 @@
             class="operation"
           >
             <th:block th:if="${theme.config?.moments_styles?.is_moment_upvote_button_show}">
-              <a
-                th:href="|javascript:handleLike('${moment.metadata.name}')|"
-                th:data-moment-name="${moment.metadata.name}"
-              >
+              <a href="#" th:data-moment-name="${moment.metadata.name}">
                 <span
                   class="iconify"
                   style="
@@ -266,6 +267,17 @@
                 </span>
                 <span th:data-moment-name="${moment.metadata.name}" th:text="${moment.stats.upvote}"></span>
               </a>
+              <th:block
+                th:insert="~{components/upvote-runtime/template :: body(
+                  storageKey='higan.likes.moment.ids',
+                  group='moment.halo.run',
+                  plural='moments',
+                  nameAttribute='data-moment-name',
+                  triggerSelector='.moment .operation a[data-moment-name]',
+                  countSelector='span[data-moment-name]',
+                  networkRequestFailedMsg=#{common.error.networkRequestFailed}
+                )}"
+              ></th:block>
             </th:block>
             <th:block
               th:if="${theme.config?.moments_styles?.is_moment_comment_section_show
@@ -281,54 +293,16 @@
                 <span th:text="${moment.stats.approvedComment}"></span>
               </a>
               <div class="moment-comment" x-show="current === name">
-                <halo:comment group="moment.halo.run" kind="Moment" th:name="${moment.metadata?.name}" />
+                <halo:comment group="moment.halo.run" kind="Moment" th:name="${moment.metadata?.name}"></halo:comment>
               </div>
             </th:block>
           </div>
         </div>
       </div>
-      <script th:inline="javascript">
-        const likes_localstorage_key = "higan.likes.moment.ids";
-        let likedMomentNames = JSON.parse(localStorage.getItem(likes_localstorage_key) || "[]");
-        likedMomentNames.forEach((momentName) => {
-          activeUpvote(momentName);
-        });
-        function handleLike(momentName) {
-          if (likedMomentNames.includes(momentName)) {
-            return;
-          }
-          const xhr = new XMLHttpRequest();
-          xhr.open("POST", "/apis/api.halo.run/v1alpha1/trackers/upvote");
-          xhr.onload = () => {
-            likedMomentNames = [...likedMomentNames, momentName];
-            localStorage.setItem(likes_localstorage_key, JSON.stringify(likedMomentNames));
-            const likesNode = document.querySelector('span[data-moment-name="' + momentName + '"]');
-            if (likesNode) {
-              const likes = parseInt(likesNode.innerText);
-              likesNode.innerText = likes + 1;
-            }
-            activeUpvote(momentName);
-          };
-          xhr.onerror = function () {
-            alert(/*[[#{common.error.networkRequestFailed}]]*/ "网络请求失败，请稍后再试");
-          };
-          xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-          xhr.send(
-            JSON.stringify({
-              group: "moment.halo.run",
-              plural: "moments",
-              name: momentName,
-            }),
-          );
-        }
-        function activeUpvote(momentName) {
-          var dom = document.querySelector(".moment .operation a[data-moment-name='" + momentName + "']");
-          if (dom) {
-            dom.style.color = "var(--color-accent)";
-            dom.style.fontWeight = "500";
-          }
-        }
-      </script>
     </article>
+    <th:block
+      th:if="${theme.config?.moments_styles?.is_moment_upvote_button_show}"
+      th:insert="~{components/upvote-runtime/template :: inlineInit}"
+    ></th:block>
   </body>
 </th:block>

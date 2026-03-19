@@ -1,0 +1,44 @@
+<!--/*-->
+<head th:remove="tag"></head>
+<!--*/-->
+<body th:remove="tag" th:fragment="body(colorSchema)">
+  <th:block th:unless="${colorSchema.is_css_variable_mode}">
+    <!--/*/
+    <style th:inline="css">
+html[theme="theme-[(${colorSchema.id})]"] {
+--color-primary: [(${colorSchema.primary_color})];
+--color-primary-content: [(${colorSchema.primary_content_color})];
+--color-secondary: [(${colorSchema.secondary_color})];
+--color-secondary-content: [(${colorSchema.secondary_content_color})];
+--color-accent: [(${colorSchema.accent_color})];
+--color-accent-content: [(${colorSchema.accent_content_color})];
+--color-neutral: [(${colorSchema.neutral_color})];
+--color-neutral-content: [(${colorSchema.neutral_content_color})];
+--color-base-100: [(${colorSchema.base_100_color})];
+--color-base-200: [(${colorSchema.base_200_color})];
+--color-base-300: [(${colorSchema.base_300_color})];
+--color-base-content: [(${colorSchema.base_content_color})];
+}
+    </style>
+    /*/-->
+  </th:block>
+  <th:block th:if="${colorSchema.is_css_variable_mode}">
+    <th:block th:switch="${colorSchema.is_raw_css_output_mode}">
+      <th:block th:case="true">
+        <!--/*/
+        <style th:inline="css">
+[(${colorSchema.custom_css})]
+        </style>
+        /*/-->
+      </th:block>
+      <th:block th:case="false">
+        <!--/*/
+        <style th:inline="css">
+html[theme="theme-[(${colorSchema.id})]"] {
+[(${colorSchema.custom_css})]}
+        </style>
+        /*/-->
+      </th:block>
+    </th:block>
+  </th:block>
+</body>

@@ -21,11 +21,17 @@
   <body th:remove="tag">
     <article class="photos post" itemscope itemtype="http://schema.org/BlogPosting">
       <script
+        id="photos-masonry-script"
         vite-ignore
         type="module"
-        th:inline="javascript"
         th:if="${theme.config?.photos_styles?.is_enable_masonry_layout}"
+        th:data-max-masonry-columns="${theme.config?.photos_styles?.max_masonry_columns}"
+        th:data-min-masonry-columns="${theme.config?.photos_styles?.min_masonry_columns}"
+        th:data-min-img-width="${theme.config?.photos_styles?.min_img_width}"
+        th:data-masonry-gap="${theme.config?.photos_styles?.masonry_gap}"
       >
+        const masonryScript = document.querySelector("#photos-masonry-script");
+
         class Waterfall {
           constructor(options) {
             this.$el = options.$el || null; // <!--/* 父容器 */-->
@@ -106,7 +112,6 @@
             this.$el.style.height = `${maxHeight}px`;
           }
           checkAndLoadMoreImages() {
-            var { nextImageIndex, totalImages } = this;
             if (window.scrollY + window.innerHeight + 200 >= this.getMaxHeight()) {
               // <!--/* 读取到的高度其实还可以 +300 提前多加载点。如果这里不设置提前量，出现长一点的图片很容易旁边都是空的 */-->
               if (this.nextImageIndex < this.totalImages) {
@@ -121,9 +126,10 @@
         }
 
         window.onload = () => {
-          const MAX_MASONRY_COLUMNS = /*[(${theme.config?.photos_styles?.max_masonry_columns})]*/ 4;
-          const MIN_MASONRY_COLUMNS = /*[(${theme.config?.photos_styles?.min_masonry_columns})]*/ 1;
-          const MIN_IMG_WIDTH = /*[(${theme.config?.photos_styles?.min_img_width})]*/ 300;
+          const MAX_MASONRY_COLUMNS = Number(masonryScript?.dataset.maxMasonryColumns ?? 4);
+          const MIN_MASONRY_COLUMNS = Number(masonryScript?.dataset.minMasonryColumns ?? 1);
+          const MIN_IMG_WIDTH = Number(masonryScript?.dataset.minImgWidth ?? 300);
+          const masonryGap = Number(masonryScript?.dataset.masonryGap ?? 10);
 
           function calculateColumns() {
             const width = window.innerWidth;
@@ -138,7 +144,7 @@
             const waterfallInstance = new Waterfall({
               $el: $el,
               columns: calculateColumns(),
-              gap: /*[(${theme.config?.photos_styles?.masonry_gap})]*/ 10,
+              gap: masonryGap,
             });
             waterfallInstances.push(waterfallInstance);
           });
@@ -176,15 +182,18 @@
       </script>
 
       <script
+        id="photos-standard-script"
         vite-ignore
         type="module"
-        th:inline="javascript"
         th:unless="${theme.config?.photos_styles?.is_enable_masonry_layout}"
+        th:data-img-transition-duration-after-load="${theme.config?.photos_styles?.img_transition_duration_after_load}"
       >
+        const standardScript = document.querySelector("#photos-standard-script");
+        const imgTransitionDurationAfterLoad = Number(standardScript?.dataset.imgTransitionDurationAfterLoad ?? 0);
         const photos = document.querySelectorAll(".photo-groups img");
-        var nextImageIndex = 0; // <!--/* 存储下一个需要加载的图片的 index */-->
-        var totalImages = photos.length; // <!--/* 存储一共有多少张图片 */-->
-        var totalheight = 0; // <!--/* 最后一张图片下边缘的位置 */-->
+        let nextImageIndex = 0; // <!--/* 存储下一个需要加载的图片的 index */-->
+        const totalImages = photos.length; // <!--/* 存储一共有多少张图片 */-->
+        let totalheight = 0; // <!--/* 最后一张图片下边缘的位置 */-->
 
         photos.forEach((img) => {
           const placeAndAnimate = () => {
@@ -192,7 +201,7 @@
             checkAndLoadMoreImages();
             // <!--/* 加载动画 fade in */-->
             requestAnimationFrame(() => {
-              img.style.transition = "opacity [(${theme.config?.photos_styles?.img_transition_duration_after_load})]s";
+              img.style.transition = `opacity ${imgTransitionDurationAfterLoad}s`;
               img.style.opacity = 1;
             });
           };
@@ -239,7 +248,7 @@
               try {
                 eval(code.replace(/this/g, "element"));
               } catch (error) {
-                console.error("Error executing custom code:", error);
+                console.error("[Higan Haozi][photos] Error executing custom code:", error);
               }
             }
           };

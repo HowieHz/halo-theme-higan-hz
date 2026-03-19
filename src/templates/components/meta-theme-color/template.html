@@ -1,0 +1,23 @@
+<head th:remove="tag" th:fragment="head">
+  <!--/*/
+    <meta
+      name="theme-color"
+      content="transparent"
+      th:content="${color_schema == 'custom'
+                    ? 'transparent'
+                    : (color_schema == 'auto'
+                      or color_schema == 'light'
+                      or color_schema == 'auto-blue'
+                      or color_schema == 'light-blue'
+                      or color_schema == 'gray')
+                      ? '#fafafa'
+                      : (color_schema == 'dark'
+                        or color_schema == 'dark-blue')
+                        ? '#212326'
+                        : 'transparent'}"
+    >
+  /*/-->
+</head>
+<!--/*-->
+<body th:remove="tag"></body>
+<!--*/-->
