@@ -49,4 +49,19 @@ Tail Content
 
 - Insert `head` once to load the module runtime.
 - Insert `body(...)` where the page provides upvote runtime config.
-- Insert `inlineInit` before `</body>` to restore liked button styles earlier and reduce FOUC.
+- Insert `inlineInit` immediately before `</body>` to restore liked button styles and reduce FOUC.
+
+### Why `inlineInit` reduces FOUC
+
+`inlineInit` is a plain synchronous `<script>` (not a module). The browser executes it
+immediately as it parses that position in the document, before `DOMContentLoaded` fires.
+
+The module loaded by `head` is deferred by design: module scripts never block parsing and
+always run after the document is parsed. This means without `inlineInit`, liked-button
+styles (e.g. accent color) would not be applied until after the full page has loaded,
+producing a visible flash.
+
+Placing `inlineInit` just before `</body>` ensures that:
+1. All upvote trigger elements are already present in the DOM at execution time.
+2. localStorage is read and button styles are applied synchronously, before the first paint
+   of that part of the page reaches the user.

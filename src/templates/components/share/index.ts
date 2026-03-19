@@ -15,7 +15,13 @@ document.addEventListener("click", (event: Event): void => {
     url: nativeShareLink.dataset.nativeShareLink ?? "",
   };
 
-  if (navigator.canShare?.(shareData)) {
+  if (!navigator.share) {
+    console.warn(`${SHARE_LOG_PREFIX} Web Share API is not supported in this browser.`);
+  } else if (navigator.canShare && !navigator.canShare(shareData)) {
+    // canShare returning false means the data itself is invalid or unshareable,
+    // not that the API is missing. Report the rejected payload for easier debugging.
+    console.warn(`${SHARE_LOG_PREFIX} Cannot share the provided data.`, shareData);
+  } else {
     // Swallow user-initiated share cancellations; log only unexpected share failures.
     void navigator.share(shareData).catch((error: unknown) => {
       if (error instanceof DOMException && error.name === "AbortError") {
@@ -23,9 +29,5 @@ document.addEventListener("click", (event: Event): void => {
       }
       console.error(`${SHARE_LOG_PREFIX} Failed to share content:`, error);
     });
-  } else {
-    console.error(
-      `${SHARE_LOG_PREFIX} This browser does not support the Web Share API or cannot share the provided data.`,
-    );
   }
 });
