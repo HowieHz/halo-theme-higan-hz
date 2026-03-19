@@ -568,13 +568,13 @@
             )()
           : [];
 
-        var THEME_DARK = dataset?.themeDark;
-        var THEME_LIGHT = dataset?.themeLight;
-        var THEME_AUTO = dataset?.themeAuto;
+        let THEME_DARK = dataset?.themeDark;
+        let THEME_LIGHT = dataset?.themeLight;
+        let THEME_AUTO = dataset?.themeAuto;
         const is_save_color_scheme_settings_to_browser = dataset?.saveColorSchemeSettingsToBrowser === "true";
 
         // <!--/* Map each concrete theme name to its corresponding data-color-scheme value. */-->
-        var themeColorSchemeMap = {
+        const themeColorSchemeMap = {
           auto: "auto",
           dark: "dark",
           light: "light",
