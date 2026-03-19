@@ -85,7 +85,7 @@
             }) || []
           ).forEach((tag) => {
             const li = document.createElement("li");
-            const color = (tag.spec?.color || "").trim();
+            const color = tag.spec?.color || "";
             if (color && color.toLowerCase() !== "#ffffff") {
               li.style.setProperty("--tag-hash-color", color);
             }

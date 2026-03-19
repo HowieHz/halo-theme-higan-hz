@@ -89,7 +89,7 @@ function writeLikedNames(storageKey: string, likedNames: Set<string>): void {
 }
 
 function getTargetName(nameAttribute: string, element: Element): string | null {
-  const name = element.getAttribute(nameAttribute)?.trim();
+  const name = element.getAttribute(nameAttribute);
   return name ? name : null;
 }
 
