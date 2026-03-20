@@ -31,6 +31,8 @@
 ### 🚀 新功能
 
 - 分享按钮预设新增 Reddit、WhatsApp、Tumblr、LINE、Hacker News、Blogger、Gmail、Yahoo Mail 和 Skype。
+- 新增全局配置项 `启用性能监测面板`，可控制是否注入性能监测面板。
+- 页面底部内容配置扩展为“页面底部/侧边栏内容”，新增显示方式、悬浮透明度与平板和手机端行为配置。
 
 ### 🔧 代码重构
 

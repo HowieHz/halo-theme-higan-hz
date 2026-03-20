@@ -31,6 +31,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🚀 Features
 
 - Added preset share buttons for Reddit, WhatsApp, Tumblr, LINE, Hacker News, Blogger, Gmail, Yahoo Mail and Skype.
+- Added a global setting `Enable performance monitor panel` to control performance monitor panel injection.
+- Expanded bottom content settings into unified bottom/sidebar content settings with new options for display mode, floating opacity, and tablet and mobile behavior.
 
 ### 🔧 Code Refactoring
 
