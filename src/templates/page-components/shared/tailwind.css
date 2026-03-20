@@ -2,6 +2,7 @@
 
 @import "tailwindcss/theme.css" layer(theme) source("../../../../src");
 @import "tailwindcss/utilities.css" layer(utilities) source("../../../../src");
+@source not "../../../../src/templates/public";
 /* stylelint-disable custom-property-pattern */
 @theme {
   --text-*: initial;
