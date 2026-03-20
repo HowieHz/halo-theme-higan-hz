@@ -934,6 +934,13 @@ spec:
           label: 页面底部/侧边栏内容
           help: "开启后，可在“内容显示位置”中选择显示为页面底部内容（内联）或悬浮侧边栏（角落）。"
           value: false
+        - $formkit: code
+          name: footer_content
+          if: "$is_footer_content_show === true"
+          label: 页面底部/侧边栏内容
+          language: html
+          height: 150px
+          help: 支持 HTML 代码块
         - $formkit: switch
           name: is_18n_footer_content_show
           label: 多语言页面底部/侧边栏内容支持
@@ -959,12 +966,6 @@ spec:
               language: html
               height: 150px
               help: 支持 HTML 代码块
-        - $formkit: code
-          name: footer_content
-          if: "$is_footer_content_show === true"
-          label: 页面底部/侧边栏内容（支持 HTML 代码块）
-          language: html
-          height: 150px
         - $formkit: select
           name: footer_content_sidebar_position
           if: "$is_footer_content_show === true || $is_18n_footer_content_show === true"
@@ -994,7 +995,7 @@ spec:
         - $formkit: select
           name: footer_content_sidebar_narrow
           if: "($is_footer_content_show === true || $is_18n_footer_content_show === true) && $footer_content_sidebar_position !== 'inline'"
-          label: 平板/手机端行为
+          label: 平板和手机端行为
           help: "视口宽度小于 1024px（平板及手机）时的显示行为。"
           value: "hide"
           options:

@@ -937,9 +937,10 @@ spec:
         - $formkit: code
           name: footer_content
           if: "$is_footer_content_show === true"
-          label: Bottom/sidebar content (supports HTML block)
+          label: Bottom/sidebar content
           language: html
           height: 150px
+          help: support HTML code block
         - $formkit: switch
           name: is_18n_footer_content_show
           label: Multi-language bottom/sidebar content support
@@ -994,7 +995,7 @@ spec:
         - $formkit: select
           name: footer_content_sidebar_narrow
           if: "($is_footer_content_show === true || $is_18n_footer_content_show === true) && $footer_content_sidebar_position !== 'inline'"
-          label: Tablet/mobile behavior
+          label: Tablet and mobile behavior
           help: "Display behavior when viewport width is less than 1024px."
           value: "hide"
           options:
