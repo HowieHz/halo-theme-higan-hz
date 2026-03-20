@@ -2450,8 +2450,11 @@ Sets default content for page bottom/sidebar.
 
 :::
 ::: info 📂 Configuration Item Location
+
 <!-- markdownlint-disable MD051 -->
+
 ([General Styles -> Add content to page bottom/sidebar](#add-content-to-the-page-bottom-sidebar) enabled)
+
 <!-- markdownlint-enable MD051 -->
 
 General Styles -> Page bottom/sidebar content
@@ -2552,9 +2555,13 @@ Sets multi-language page bottom/sidebar content.
 
 :::
 ::: info 📂 Configuration Item Location
+
 <!-- markdownlint-disable MD051 -->
+
 ([General Styles -> Multi-language page bottom/sidebar content support](#multi-language-page-bottom-sidebar-content-support) enabled)
+
 <!-- markdownlint-enable MD051 -->
+
 General Styles -> Custom multi-language page bottom/sidebar content
 
 :::
@@ -2649,9 +2656,13 @@ Sets whether content is displayed at the page bottom (inline) or as a floating c
 
 :::
 ::: info 📂 Configuration Item Location
+
 <!-- markdownlint-disable MD051 -->
+
 ([General Styles -> Add content to page bottom/sidebar](#add-content-to-the-page-bottom-sidebar) or [General Styles -> Multi-language page bottom/sidebar content support](#multi-language-page-bottom-sidebar-content-support) enabled)
+
 <!-- markdownlint-enable MD051 -->
+
 General Styles -> Content display mode
 
 :::
@@ -2692,9 +2703,13 @@ Sets hover opacity of floating sidebar content.
 
 :::
 ::: info 📂 Configuration Item Location
+
 <!-- markdownlint-disable MD051 -->
+
 ([General Styles -> Add content to page bottom/sidebar](#add-content-to-the-page-bottom-sidebar) or [General Styles -> Multi-language page bottom/sidebar content support](#multi-language-page-bottom-sidebar-content-support) enabled, and [Page bottom/sidebar content display mode](#page-bottom-sidebar-content-display-mode) is not `Inline (page bottom)`)
+
 <!-- markdownlint-enable MD051 -->
+
 General Styles -> Sidebar hover opacity
 
 :::
@@ -2732,9 +2747,13 @@ Sets display behavior for floating sidebar content when viewport width is less t
 
 :::
 ::: info 📂 Configuration Item Location
+
 <!-- markdownlint-disable MD051 -->
+
 ([General Styles -> Add content to page bottom/sidebar](#add-content-to-the-page-bottom-sidebar) or [General Styles -> Multi-language page bottom/sidebar content support](#multi-language-page-bottom-sidebar-content-support) enabled, and [Page bottom/sidebar content display mode](#page-bottom-sidebar-content-display-mode) is not `Inline (page bottom)`)
+
 <!-- markdownlint-enable MD051 -->
+
 General Styles -> Tablet and mobile sidebar display behavior
 
 :::
