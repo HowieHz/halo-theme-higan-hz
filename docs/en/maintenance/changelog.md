@@ -25,8 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 💥 Breaking Changes
 
-- In the social media settings (`console/theme/settings/sns`), the `index_sns` array has been renamed to `sns_list`, and its `type` field has been changed from an object type to a string type. **Existing configurations require the social media list to be re-configured.**
-- In the share button settings (`console/theme/settings/share`), the `button_config` array has been split into `share_list` (preset button list) and `custom_share` (custom buttons). **Existing configurations require the share button list to be re-configured.**
+- In the social media settings (`/console/theme/settings/sns`), the `index_sns` array has been renamed to `sns_list`, and its `type` field has been changed from an object type to a string type. **Existing configurations require the social media list to be re-configured.**
+- In the share button settings (`/console/theme/settings/share`), the `button_config` array has been split into `share_list` (preset button list) and `custom_share` (custom buttons). **Existing configurations require the share button list to be re-configured.**
 - The global settings remove the `Custom Resource Location Address` and `instant.page Resource Location` options, and instant.page now uses the theme-bundled resource. **Existing values for these two settings no longer take effect.**
 - Mermaid support removes the `Mermaid Resource Location` setting, and Mermaid now uses the theme-bundled resource. **Existing values for this setting no longer take effect.**
 
@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added preset share buttons for Reddit, WhatsApp, Tumblr, LINE, Hacker News, Blogger, Gmail, Yahoo Mail and Skype.
 - Added a global setting `Enable performance monitor panel` to control performance monitor panel injection.
-- Expanded bottom content settings into [Add content to the page bottom/sidebar](https://howiehz.top/halo-theme-higan-haozi/en/guide/theme-configuration#add-content-to-the-page-bottom-sidebar), with new options for page bottom/sidebar content display mode, sidebar hover opacity, and tablet and mobile sidebar display behavior.
+- Expanded bottom content settings into [Add content to the page bottom/sidebar](/en/guide/theme-configuration#add-content-to-the-page-bottom-sidebar), with new options for page bottom/sidebar content display mode, sidebar hover opacity, and tablet and mobile sidebar display behavior.
 
 ### 🔧 Code Refactoring
 
@@ -43,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🐛 Bug Fixes
 
-- Fixed an issue where the selected type could not be displayed after saving social media settings (`console/theme/settings/sns`).
+- Fixed an issue where the selected type could not be displayed after saving social media settings (`/console/theme/settings/sns`).
 - Fixed an issue where the RSS `<link>` tag was not output when the RSS plugin was not installed but an RSS link was configured in the social media settings.
 - Fixed an issue in Mermaid injection where `xlink:href` references were not updated synchronously.
 - Fixed `Force Footer at Page Bottom` option not taking effect.
