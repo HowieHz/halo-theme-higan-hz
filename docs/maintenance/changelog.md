@@ -25,8 +25,8 @@
 
 ### 💥 破坏性变更
 
-- 社交资料设置（`console/theme/settings/sns`）中，`index_sns` 数组重命名为 `sns_list`，同时 `type` 字段由对象类型改为字符串类型。**已有配置需重新设置社交资料列表。**
-- 分享按钮设置（`console/theme/settings/share`）中，`button_config` 数组拆分为 `share_list`（预设按钮列表）和 `custom_share`（自定义按钮）。**已有配置需重新设置分享按钮列表。**
+- 社交资料设置（`/console/theme/settings/sns`）中，`index_sns` 数组重命名为 `sns_list`，同时 `type` 字段由对象类型改为字符串类型。**已有配置需重新设置社交资料列表。**
+- 分享按钮设置（`/console/theme/settings/share`）中，`button_config` 数组拆分为 `share_list`（预设按钮列表）和 `custom_share`（自定义按钮）。**已有配置需重新设置分享按钮列表。**
 - 全局设置移除 `自定义资源位置地址` 和 `instant.page 资源位置` 配置项，instant.page 改为使用主题内置资源。**已有配置中的这两项将不再生效。**
 - Mermaid 支持移除 `Mermaid 资源位置` 配置项，Mermaid 改为使用主题内置资源。**已有配置中的该项将不再生效。**
 
@@ -34,7 +34,7 @@
 
 - 分享按钮预设新增 Reddit、WhatsApp、Tumblr、LINE、Hacker News、Blogger、Gmail、Yahoo Mail 和 Skype。
 - 新增全局配置项 `启用性能监测面板`，可控制是否注入性能监测面板。
-- 页面底部内容配置扩展为[“页面底部/侧边栏内容”](https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration#%E6%B7%BB%E5%8A%A0%E5%86%85%E5%AE%B9%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%9C%80%E5%BA%95%E9%83%A8-%E4%BE%A7%E8%BE%B9%E6%A0%8F)，页面底部/侧边栏内容显示方式、侧边栏悬浮透明度与侧边栏平板和手机端行为配置。
+- 页面底部内容配置扩展为[“页面底部/侧边栏内容”](/guide/theme-configuration#%E6%B7%BB%E5%8A%A0%E5%86%85%E5%AE%B9%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%9C%80%E5%BA%95%E9%83%A8-%E4%BE%A7%E8%BE%B9%E6%A0%8F)，页面底部/侧边栏内容显示方式、侧边栏悬浮透明度与侧边栏平板和手机端行为配置。
 
 ### 🔧 代码重构
 
@@ -43,7 +43,7 @@
 
 ### 🐛 错误修复
 
-- 修复社交资料设置（`console/theme/settings/sns`）保存后无法显示已选类型的问题。
+- 修复社交资料设置（`/console/theme/settings/sns`）保存后无法显示已选类型的问题。
 - 修复未安装 RSS 插件时，社交资料中设置的 RSS 链接无法输出 `<link>` 标签的问题。
 - 修复了在 Mermaid 注入中 `xlink:href` 引用未同步更新的问题。
 - 修复`强制页脚在页面底部`配置项失效的问题。
