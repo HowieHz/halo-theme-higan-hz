@@ -34,7 +34,7 @@
 
 - 分享按钮预设新增 Reddit、WhatsApp、Tumblr、LINE、Hacker News、Blogger、Gmail、Yahoo Mail 和 Skype。
 - 新增全局配置项 `启用性能监测面板`，可控制是否注入性能监测面板。
-- 页面底部内容配置扩展为[“页面底部/侧边栏内容”](/guide/theme-configuration#%E6%B7%BB%E5%8A%A0%E5%86%85%E5%AE%B9%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%9C%80%E5%BA%95%E9%83%A8-%E4%BE%A7%E8%BE%B9%E6%A0%8F)，页面底部/侧边栏内容显示方式、侧边栏悬浮透明度与侧边栏平板和手机端行为配置。
+- `页面底部内容配置`已被扩展为[“页面底部/侧边栏内容”](/guide/theme-configuration#%E6%B7%BB%E5%8A%A0%E5%86%85%E5%AE%B9%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%9C%80%E5%BA%95%E9%83%A8-%E4%BE%A7%E8%BE%B9%E6%A0%8F)，以及新的子配置项：`页面底部/侧边栏内容显示方式`、`侧边栏悬浮透明度`、`平板和手机端侧边栏显示行为`。
 
 ### 🔧 代码重构
 
