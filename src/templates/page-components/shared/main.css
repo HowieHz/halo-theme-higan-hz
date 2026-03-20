@@ -521,7 +521,7 @@
   }
 
   .min-h-100vh {
-    min-height: 100vh !important;
+    min-height: 100vh;
   }
 
   /* 多行文本截断类 因为 tailwindcss 混淆插件有 bug，所以自定义一套 */
