@@ -79,6 +79,11 @@ spec:
           help: "If enabled, the theme will keep the path and query parameters of the current page when jumping to the target link."
           value: true
         - $formkit: switch
+          name: is_performance_monitor_enable
+          label: Enable performance monitor panel
+          value: false
+          help: "If enabled, the theme will inject the performance monitor panel script into the page."
+        - $formkit: switch
           name: is_instant_page_enable
           label: instant.page support
           value: false
@@ -926,24 +931,24 @@ spec:
           value: true
         - $formkit: switch
           name: is_footer_content_show
-          label: Footer content at the bottom
-          help: "If enabled, the theme will display the content at the bottom."
+          label: Bottom/sidebar content
+          help: "When enabled, this content can be shown either inline at the page bottom or as a floating sidebar, depending on display position."
           value: false
         - $formkit: code
           name: footer_content
           if: "$is_footer_content_show === true"
-          label: Footer content at the bottom (support HTML code block)
+          label: Bottom/sidebar content (supports HTML block)
           language: html
           height: 150px
         - $formkit: switch
           name: is_18n_footer_content_show
-          label: Multi-language footer content support
-          help: "Halo settings - Code injection - Footer content display position is above 'Theme Information', 'Copyright Information', and 'Footer Menu'.\nThe footer content filled in here is below the 'Footer Menu', at the very bottom of the page."
+          label: Multi-language bottom/sidebar content support
+          help: "When enabled, you can configure different bottom/sidebar content for each language."
           value: false
         - $formkit: array
           name: i18n_footer_content
           if: "$is_18n_footer_content_show === true"
-          label: Custom multi-language footer content
+          label: Custom multi-language bottom/sidebar content
           value: []
           itemLabels:
             - type: text
@@ -956,10 +961,47 @@ spec:
               validation: "required"
             - $formkit: code
               name: footer_content
-              label: Footer content at the bottom
+              label: Bottom/sidebar content
               language: html
               height: 150px
               help: support HTML code block
+        - $formkit: select
+          name: footer_content_sidebar_position
+          if: "$is_footer_content_show === true || $is_18n_footer_content_show === true"
+          label: Content display mode
+          help: "Choose 'Inline (page bottom)' to render at the page bottom, or select a corner to render as a floating sidebar."
+          value: "inline"
+          options:
+            - label: Inline (page bottom)
+              value: inline
+            - label: Bottom-left
+              value: bottom-left
+            - label: Bottom-right
+              value: bottom-right
+            - label: Top-left
+              value: top-left
+            - label: Top-right
+              value: top-right
+        - $formkit: number
+          name: footer_content_sidebar_opacity
+          if: "($is_footer_content_show === true || $is_18n_footer_content_show === true) && $footer_content_sidebar_position !== 'inline'"
+          label: Floating opacity
+          help: "Range: 0 (fully transparent) to 1 (fully opaque)."
+          value: "1"
+          min: 0
+          max: 1
+          step: 0.05
+        - $formkit: select
+          name: footer_content_sidebar_narrow
+          if: "($is_footer_content_show === true || $is_18n_footer_content_show === true) && $footer_content_sidebar_position !== 'inline'"
+          label: Tablet/mobile behavior
+          help: "Display behavior when viewport width is less than 1024px."
+          value: "hide"
+          options:
+            - label: Hide
+              value: hide
+            - label: Move to page bottom
+              value: bottom
         - $formkit: switch
           name: is_h3_underline
           label: Add underline to H3 headings

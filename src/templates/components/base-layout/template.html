@@ -34,6 +34,10 @@
       content="upgrade-insecure-requests"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <th:block
+      th:if="${theme.config?.global?.is_performance_monitor_enable}"
+      th:insert="~{components/performance-monitor/template :: head}"
+    ></th:block>
     <!--/* 
       The <meta name="theme-color"> tag must not be self-closing;
       otherwise, it will not work on Chrome for Android. 
@@ -779,7 +783,7 @@
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/*
         // 检查目标标签是否具有 class="matched-footer-content"
-        // 如果开了 i18n 页面最底部内容，如果没有页面最底部内容成功匹配，这里就会显示默认页面最底部内容
+        // 如果开启了 i18n 页面底部/侧边栏内容，且没有匹配项，则显示默认内容
         // */-->
         const targetElementList = document.querySelectorAll(".matched-footer-content");
 
@@ -878,157 +882,184 @@
       th:insert="~{components/layout-table-bottom-border-style/template :: body}"
     ></th:block>
     <th:block th:insert="~{components/layout-heading-paragraph-margin-style/template :: body}"></th:block>
-    <div class="max-width min-width content-width mx-auto px-4 sm:px-8">
-      <th:block th:replace="${navbar}"></th:block>
-
-      <div
-        class="content index pt-16"
-        th:classappend="${theme.config?.styles?.is_footer_force_bottom} ? 'min-h-100vh' : '' "
+    <!--/*
+      isSidebar       — 是否启用侧边栏模式（位置非空且非 inline）
+      isBottomSidebarContent — 是否开启"页面底部/侧边栏内容"
+    */-->
+    <th:block
+      th:with="isSidebar = ${theme.config?.styles?.footer_content_sidebar_position != null
+                             and theme.config?.styles?.footer_content_sidebar_position != 'inline'
+                             and theme.config?.styles?.footer_content_sidebar_position != ''},
+               isBottomSidebarContent = ${theme.config?.styles?.is_footer_content_show}"
+    >
+      <th:block
+        th:replace="~{components/footer-sidebar/template :: body(
+                    wrapped = ~{:: .max-width},
+                    isSidebar = ${isSidebar},
+                    isBottomSidebarContent = ${isBottomSidebarContent}
+                  )}"
       >
-        <th:block th:replace="${header}"></th:block>
+        <div class="max-width min-width content-width mx-auto px-4 sm:px-8">
+          <th:block th:replace="${navbar}"></th:block>
+          <div
+            class="content index pt-16"
+            th:classappend="${theme.config?.styles?.is_footer_force_bottom} ? 'min-h-100vh' : '' "
+          >
+            <th:block th:replace="${header}"></th:block>
 
-        <main>
-          <th:block th:replace="${content}"></th:block>
-        </main>
+            <main>
+              <th:block th:replace="${content}"></th:block>
+            </main>
 
-        <footer id="footer">
-          <div class="footer-left">
-            <!--/* 这里不能使用自闭合标签，否则在经过 html minify 处理后会变成 <halo:footer> ，无法正常注入 */-->
-            <halo:footer></halo:footer>
-            <div th:if="${theme.config?.styles?.is_footer_site_stats_show}">
-              <ul class="site-stats" th:with="stats = ${siteStatsFinder.getStats()}">
-                <li
-                  th:each="item : ${theme.config?.styles?.footer_site_stats}"
-                  th:if="${item?.type == 'visit'
+            <footer id="footer">
+              <div class="footer-left">
+                <!--/* 这里不能使用自闭合标签，否则在经过 html minify 处理后会变成 <halo:footer> ，无法正常注入 */-->
+                <halo:footer></halo:footer>
+                <div th:if="${theme.config?.styles?.is_footer_site_stats_show}">
+                  <ul class="site-stats" th:with="stats = ${siteStatsFinder.getStats()}">
+                    <li
+                      th:each="item : ${theme.config?.styles?.footer_site_stats}"
+                      th:if="${item?.type == 'visit'
                            or item?.type == 'post'
                            or item?.type == 'upvote'
                            or item?.type == 'comment'
                            or item?.type == 'category'
                            or (item?.type == 'wordcount' 
                                and pluginFinder.available('extra-api', '3.*'))}"
-                >
-                  <span
-                    class="iconify"
-                    th:style="|--svg:url('${item?.icon.value}')|"
-                    th:if="${item?.icon != null and item?.icon != ''}"
-                  ></span>
-                  <th:block th:if="not ${item?.i18n_text}">
-                    <span th:text="${stats.visit}" th:if="${item?.type == 'visit'}"></span>
-                    <span th:text="${stats.post}" th:if="${item?.type == 'post'}"></span>
-                    <span th:text="${stats.upvote}" th:if="${item?.type == 'upvote'}"></span>
-                    <span th:text="${stats.comment}" th:if="${item?.type == 'comment'}"></span>
-                    <span th:text="${stats.category}" th:if="${item?.type == 'category'}"></span>
-                    <span
-                      th:text="${extraApiStatsFinder.getPostWordCount()}"
-                      th:if="${item?.type == 'wordcount'}"
-                    ></span>
-                  </th:block>
-                  <th:block th:if="${item?.i18n_text}">
-                    <span th:text="#{common.siteTotalVisit(${stats.visit})}" th:if="${item?.type == 'visit'}"></span>
-                    <span th:text="#{common.siteTotalPost(${stats.post})}" th:if="${item?.type == 'post'}"></span>
-                    <span th:text="#{common.siteTotalUpvote(${stats.upvote})}" th:if="${item?.type == 'upvote'}"></span>
-                    <span
-                      th:text="#{common.siteTotalComment(${stats.comment})}"
-                      th:if="${item?.type == 'comment'}"
-                    ></span>
-                    <span
-                      th:text="#{common.siteTotalCategory(${stats.category})}"
-                      th:if="${item?.type == 'category'}"
-                    ></span>
-                    <span
-                      th:text="#{common.siteTotalWordcount(${extraApiStatsFinder.getPostWordCount()})}"
-                      th:if="${item?.type == 'wordcount'}"
-                    ></span>
-                  </th:block>
-                </li>
-              </ul>
-            </div>
-            <div
-              th:if="${theme.config?.styles?.is_footer_theme_info_show
+                    >
+                      <span
+                        class="iconify"
+                        th:style="|--svg:url('${item?.icon.value}')|"
+                        th:if="${item?.icon != null and item?.icon != ''}"
+                      ></span>
+                      <th:block th:if="not ${item?.i18n_text}">
+                        <span th:text="${stats.visit}" th:if="${item?.type == 'visit'}"></span>
+                        <span th:text="${stats.post}" th:if="${item?.type == 'post'}"></span>
+                        <span th:text="${stats.upvote}" th:if="${item?.type == 'upvote'}"></span>
+                        <span th:text="${stats.comment}" th:if="${item?.type == 'comment'}"></span>
+                        <span th:text="${stats.category}" th:if="${item?.type == 'category'}"></span>
+                        <span
+                          th:text="${extraApiStatsFinder.getPostWordCount()}"
+                          th:if="${item?.type == 'wordcount'}"
+                        ></span>
+                      </th:block>
+                      <th:block th:if="${item?.i18n_text}">
+                        <span
+                          th:text="#{common.siteTotalVisit(${stats.visit})}"
+                          th:if="${item?.type == 'visit'}"
+                        ></span>
+                        <span th:text="#{common.siteTotalPost(${stats.post})}" th:if="${item?.type == 'post'}"></span>
+                        <span
+                          th:text="#{common.siteTotalUpvote(${stats.upvote})}"
+                          th:if="${item?.type == 'upvote'}"
+                        ></span>
+                        <span
+                          th:text="#{common.siteTotalComment(${stats.comment})}"
+                          th:if="${item?.type == 'comment'}"
+                        ></span>
+                        <span
+                          th:text="#{common.siteTotalCategory(${stats.category})}"
+                          th:if="${item?.type == 'category'}"
+                        ></span>
+                        <span
+                          th:text="#{common.siteTotalWordcount(${extraApiStatsFinder.getPostWordCount()})}"
+                          th:if="${item?.type == 'wordcount'}"
+                        ></span>
+                      </th:block>
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  th:if="${theme.config?.styles?.is_footer_theme_info_show
                        or theme.config?.styles?.is_footer_copyright_show}"
-            >
-              <br />
-              <span class="info" th:if="${theme.config?.styles?.is_footer_theme_info_show}">
-                Theme is
-                <a
-                  href="https://howiehz.top/halo-theme-higan-haozi/"
-                  rel="noopener"
-                  target="_blank"
-                  th:text="${theme.config?.styles?.footer_theme_info_theme_name}"
-                  >higan-hz</a
                 >
-                Powered by
-                <a
-                  href="https://halo.run"
-                  rel="noopener"
-                  target="_blank"
-                  th:text="${theme.config?.styles?.footer_theme_info_halo_version_name}"
-                  >Halo</a
-                >
-              </span>
-              <span class="copyright" th:if="${theme.config?.styles?.is_footer_copyright_show}">
-                ©
-                <span
-                  id="site_date"
-                  th:with="now = ${#temporals.createNow()}"
-                  th:text="${#temporals.format(now, 'yyyy')}"
-                ></span>
-                <span
-                  th:text="${#strings.defaultString(theme.config?.styles?.footer_copyright_custom_name, site?.title)}"
-                ></span>
-              </span>
+                  <br />
+                  <span class="info" th:if="${theme.config?.styles?.is_footer_theme_info_show}">
+                    Theme is
+                    <a
+                      href="https://howiehz.top/halo-theme-higan-haozi/"
+                      rel="noopener"
+                      target="_blank"
+                      th:text="${theme.config?.styles?.footer_theme_info_theme_name}"
+                      >higan-hz</a
+                    >
+                    Powered by
+                    <a
+                      href="https://halo.run"
+                      rel="noopener"
+                      target="_blank"
+                      th:text="${theme.config?.styles?.footer_theme_info_halo_version_name}"
+                      >Halo</a
+                    >
+                  </span>
+                  <span class="copyright" th:if="${theme.config?.styles?.is_footer_copyright_show}">
+                    ©
+                    <span
+                      id="site_date"
+                      th:with="now = ${#temporals.createNow()}"
+                      th:text="${#temporals.format(now, 'yyyy')}"
+                    ></span>
+                    <span
+                      th:text="${#strings.defaultString(theme.config?.styles?.footer_copyright_custom_name, site?.title)}"
+                    ></span>
+                  </span>
+                </div>
+              </div>
+              <div class="footer-right" th:if="${theme.config?.styles?.is_footer_menu_show}">
+                <ul>
+                  <th:block th:insert="~{components/common/template :: base-menu}"></th:block>
+                </ul>
+              </div>
+            </footer>
+
+            <div class="footer-bottom" th:if="${not isSidebar and isBottomSidebarContent}">
+              <p th:utext="${theme.config?.styles?.footer_content}"></p>
             </div>
-          </div>
-          <div class="footer-right" th:if="${theme.config?.styles?.is_footer_menu_show}">
-            <ul>
-              <th:block th:insert="~{components/common/template :: base-menu}"></th:block>
-            </ul>
-          </div>
-          <div class="footer-bottom" th:if="${theme.config?.styles?.is_footer_content_show}">
-            <p th:utext="${theme.config?.styles?.footer_content}"></p>
-          </div>
-          <th:block
-            th:if="${theme.config?.styles?.is_18n_footer_content_show}"
-            th:with="footerContentItems = ${theme.config?.styles?.i18n_footer_content}"
-          >
-            <th:block th:if="not ${theme.config?.global?.is_i18n_prefix_match_mode}">
-              <!--/* i18n 页面底部内容 全等匹配模式 */-->
-              <th:block th:each="footerContentItem : ${footerContentItems}">
-                <th:block th:if="${#strings.equals(footerContentItem.lang, param.lang)}">
-                  <div class="footer-bottom matched-footer-content">
-                    <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
-                  </div>
+            <th:block
+              th:if="${theme.config?.styles?.is_18n_footer_content_show}"
+              th:with="footerContentItems = ${theme.config?.styles?.i18n_footer_content}"
+            >
+              <th:block th:if="not ${theme.config?.global?.is_i18n_prefix_match_mode}">
+                <!--/* i18n 页面底部内容 全等匹配模式 */-->
+                <th:block th:each="footerContentItem : ${footerContentItems}">
+                  <th:block th:if="${#strings.equals(footerContentItem.lang, param.lang)}">
+                    <div class="footer-bottom matched-footer-content">
+                      <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
+                    </div>
+                  </th:block>
                 </th:block>
               </th:block>
-            </th:block>
 
-            <th:block th:if="${theme.config?.global?.is_i18n_prefix_match_mode}">
-              <!--/* i18n 页面底部内容 前缀匹配模式 */-->
-              <th:block th:each="footerContentItem : ${footerContentItems}">
-                <th:block
-                  th:if="${param.lang != null
+              <th:block th:if="${theme.config?.global?.is_i18n_prefix_match_mode}">
+                <!--/* i18n 页面底部内容 前缀匹配模式 */-->
+                <th:block th:each="footerContentItem : ${footerContentItems}">
+                  <th:block
+                    th:if="${param.lang != null
                                    and footerContentItem.lang != null
                                    and #strings.startsWith(param.lang, footerContentItem.lang)}"
+                  >
+                    <div class="footer-bottom matched-footer-content">
+                      <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
+                    </div>
+                  </th:block>
+                </th:block>
+              </th:block>
+
+              <!--/* i18n 页面底部内容 全等匹配模式 匹配默认页面底部内容 */-->
+              <th:block th:each="footerContentItem : ${footerContentItems}">
+                <th:block
+                  th:if="${#strings.equals(footerContentItem.lang, theme.config?.global?.default_page_language)}"
                 >
-                  <div class="footer-bottom matched-footer-content">
+                  <div class="footer-bottom default-footer-content" style="display: none">
                     <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
                   </div>
                 </th:block>
               </th:block>
             </th:block>
-
-            <!--/* i18n 页面底部内容 全等匹配模式 匹配默认页面底部内容 */-->
-            <th:block th:each="footerContentItem : ${footerContentItems}">
-              <th:block th:if="${#strings.equals(footerContentItem.lang, theme.config?.global?.default_page_language)}">
-                <div class="footer-bottom default-footer-content" style="display: none">
-                  <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
-                </div>
-              </th:block>
-            </th:block>
-          </th:block>
-        </footer>
-      </div>
-    </div>
+          </div>
+        </div>
+      </th:block>
+    </th:block>
     <th:block
       th:if="${theme.config?.global?.is_instant_page_enable}"
       th:insert="~{components/instantpage-injection/template :: head}"
