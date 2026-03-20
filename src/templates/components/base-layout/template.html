@@ -890,7 +890,8 @@
       th:with="isSidebar = ${theme.config?.styles?.footer_content_sidebar_position != null
                              and theme.config?.styles?.footer_content_sidebar_position != 'inline'
                              and theme.config?.styles?.footer_content_sidebar_position != ''},
-               isBottomSidebarContent = ${theme.config?.styles?.is_footer_content_show}"
+               isBottomSidebarContent = ${theme.config?.styles?.is_footer_content_show
+                                          or theme.config?.styles?.is_18n_footer_content_show}"
     >
       <th:block
         th:replace="~{components/footer-sidebar/template :: body(
@@ -1012,50 +1013,14 @@
               </div>
             </footer>
 
-            <div class="footer-bottom" th:if="${not isSidebar and isBottomSidebarContent}">
-              <p th:utext="${theme.config?.styles?.footer_content}"></p>
-            </div>
             <th:block
-              th:if="${theme.config?.styles?.is_18n_footer_content_show}"
-              th:with="footerContentItems = ${theme.config?.styles?.i18n_footer_content}"
-            >
-              <th:block th:if="not ${theme.config?.global?.is_i18n_prefix_match_mode}">
-                <!--/* i18n 页面底部内容 全等匹配模式 */-->
-                <th:block th:each="footerContentItem : ${footerContentItems}">
-                  <th:block th:if="${#strings.equals(footerContentItem.lang, param.lang)}">
-                    <div class="footer-bottom matched-footer-content">
-                      <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
-                    </div>
-                  </th:block>
-                </th:block>
-              </th:block>
-
-              <th:block th:if="${theme.config?.global?.is_i18n_prefix_match_mode}">
-                <!--/* i18n 页面底部内容 前缀匹配模式 */-->
-                <th:block th:each="footerContentItem : ${footerContentItems}">
-                  <th:block
-                    th:if="${param.lang != null
-                                   and footerContentItem.lang != null
-                                   and #strings.startsWith(param.lang, footerContentItem.lang)}"
-                  >
-                    <div class="footer-bottom matched-footer-content">
-                      <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
-                    </div>
-                  </th:block>
-                </th:block>
-              </th:block>
-
-              <!--/* i18n 页面底部内容 全等匹配模式 匹配默认页面底部内容 */-->
-              <th:block th:each="footerContentItem : ${footerContentItems}">
-                <th:block
-                  th:if="${#strings.equals(footerContentItem.lang, theme.config?.global?.default_page_language)}"
-                >
-                  <div class="footer-bottom default-footer-content" style="display: none">
-                    <p th:utext="${#strings.defaultString(footerContentItem.footer_content, '')}"></p>
-                  </div>
-                </th:block>
-              </th:block>
-            </th:block>
+              th:if="${not isSidebar and isBottomSidebarContent}"
+              th:replace="~{components/footer-bottom-content/template :: body(
+                            className = 'footer-bottom',
+                            classAppend = '',
+                            styleText = ''
+                          )}"
+            ></th:block>
           </div>
         </div>
       </th:block>

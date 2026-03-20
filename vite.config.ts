@@ -236,6 +236,10 @@ export default defineConfig((): UserConfig => {
           "components-share": path.resolve(__dirname, "src/templates/components/share/template.html"),
           "components-base-layout": path.resolve(__dirname, "src/templates/components/base-layout/template.html"),
           "components-footer-sidebar": path.resolve(__dirname, "src/templates/components/footer-sidebar/template.html"),
+          "components-footer-bottom-content": path.resolve(
+            __dirname,
+            "src/templates/components/footer-bottom-content/template.html",
+          ),
           "components-footer-nav-page-like-post-style": path.resolve(
             __dirname,
             "src/templates/components/footer-nav-page-like-post-style/template.html",

@@ -44,6 +44,11 @@ interface LongTaskPoint {
   start: number;
 }
 
+interface TimedNumberPoint {
+  time: number;
+  value: number;
+}
+
 interface MemoryInfoLike {
   jsHeapSizeLimit: number;
   totalJSHeapSize: number;
@@ -137,11 +142,23 @@ const TOP_DOCK_TRIGGER = 18;
 const TOP_DOCK_MARGIN = 8;
 const MAX_TOP_DOCK_WIDTH = 720;
 const NARROW_HEADER_THRESHOLD = 420;
+const COMPACT_ACTIONS_THRESHOLD = 360;
+const MINIMAL_ACTIONS_THRESHOLD = 320;
 const ANIMATION_MS = 180;
-const TOP_DOCK_ANIMATION_MS = 120;
+const TOP_DOCK_ANIMATION_MS = 170;
+const TOP_DOCK_MOVE_ANIMATION_MS = 136;
+const TOP_DOCK_SHAPE_ANIMATION_MS = 92;
+const TOP_DOCK_SHAPE_DELAY_MS = 20;
 const FPS_CAP = 60;
 const UPDATE_INTERVAL = 120;
+const RECENT_WINDOW_MS = 1000;
 const DPR = Math.max(1, window.devicePixelRatio || 1);
+const BUTTON_HIT_SIZE = 28;
+const RESIZE_HANDLE_HIT_SIZE = 22;
+const AXIS_LEFT_GUTTER = 0;
+const AXIS_RIGHT_GUTTER = 2;
+const AXIS_TOP_GUTTER = 0;
+const AXIS_BOTTOM_GUTTER = 14;
 
 const LOCALE_COPY: Record<LocaleName, LocaleCopy> = {
   "zh-CN": {
@@ -180,12 +197,12 @@ const LOCALE_COPY: Record<LocaleName, LocaleCopy> = {
     targetViewAdvanced: "更详情",
     helpContentHtml:
       '<div style="font-weight:700;margin-bottom:6px;">指标与功能说明</div>' +
-      '<div><b>平均帧率 (FPS)</b>：采样窗口内的平均帧率。</div>' +
-      '<div><b>平均帧耗时 / P95 / P99 / 1% Low</b>：衡量流畅度与卡顿尾部。</div>' +
-      '<div><b>长任务次数 (50ms+)</b>：主线程被长时间阻塞的次数。</div>' +
-      '<div><b>已用/总堆内存 + 堆内存增速</b>：观察内存压力与泄漏趋势。</div>' +
+      "<div><b>平均帧率 (FPS)</b>：采样窗口内的平均帧率。</div>" +
+      "<div><b>平均帧耗时 / P95 / P99 / 1% Low</b>：衡量流畅度与卡顿尾部。</div>" +
+      "<div><b>长任务次数 (50ms+)</b>：主线程被长时间阻塞的次数。</div>" +
+      "<div><b>已用/总堆内存 + 堆内存增速</b>：观察内存压力与泄漏趋势。</div>" +
       '<div style="margin-top:6px;"><b>按钮</b>：主题、语言、简洁/详情/更详情模式、最小化/还原、关闭。</div>' +
-      '<div><b>拖拽行为</b>：拖动标题移动面板，拖右下角调整图表大小。</div>',
+      "<div><b>拖拽行为</b>：拖动面板空白区域移动，拖右下角调整图表大小。</div>",
     titleMain: "性能监视器",
     titleMinimized: "性能监视器（已最小化）",
   },
@@ -225,12 +242,12 @@ const LOCALE_COPY: Record<LocaleName, LocaleCopy> = {
     targetViewAdvanced: "Advanced",
     helpContentHtml:
       '<div style="font-weight:700;margin-bottom:6px;">Metric & Feature Guide</div>' +
-      '<div><b>Average FPS</b>: Mean frame rate over the recent sampling window.</div>' +
-      '<div><b>Avg/P95/P99 Frame Time & 1% Low FPS</b>: Smoothness and tail-latency quality.</div>' +
-      '<div><b>Long Tasks (50ms+)</b>: Main-thread blocking events over 50ms.</div>' +
-      '<div><b>Used/Total JS Heap + Heap Growth</b>: Memory pressure and leak trend signals.</div>' +
+      "<div><b>Average FPS</b>: Mean frame rate over the recent sampling window.</div>" +
+      "<div><b>Avg/P95/P99 Frame Time & 1% Low FPS</b>: Smoothness and tail-latency quality.</div>" +
+      "<div><b>Long Tasks (50ms+)</b>: Main-thread blocking events over 50ms.</div>" +
+      "<div><b>Used/Total JS Heap + Heap Growth</b>: Memory pressure and leak trend signals.</div>" +
       '<div style="margin-top:6px;"><b>Buttons</b>: theme, language, concise/detailed/advanced mode, minimize/restore, close.</div>' +
-      '<div><b>Drag behavior</b>: drag header to move, drag bottom-right corner to resize charts.</div>',
+      "<div><b>Drag behavior</b>: drag blank panel area to move, drag bottom-right corner to resize charts.</div>",
     titleMain: "Performance Monitor",
     titleMinimized: "Performance Monitor (Minimized)",
   },
@@ -255,7 +272,7 @@ const THEMES: Record<ThemeName, ThemeVars> = {
     muted: "#8b949e",
     panelBg: "rgba(15,18,24,0.92)",
     resizeGrip: "linear-gradient(135deg, transparent 0 45%, rgba(255,255,255,0.18) 45% 55%, transparent 55% 100%)",
-    shadow: "0 8px 30px rgba(0,0,0,0.35)",
+    shadow: "0 1px 2px rgba(0,0,0,0.28)",
     text: "#e6edf3",
     warn: "#d29922",
   },
@@ -277,7 +294,7 @@ const THEMES: Record<ThemeName, ThemeVars> = {
     muted: "#59636e",
     panelBg: "rgba(255,255,255,0.94)",
     resizeGrip: "linear-gradient(135deg, transparent 0 45%, rgba(31,35,40,0.18) 45% 55%, transparent 55% 100%)",
-    shadow: "0 8px 30px rgba(31,35,40,0.16)",
+    shadow: "0 1px 2px rgba(31,35,40,0.08)",
     text: "#1f2328",
     warn: "#9a6700",
   },
@@ -394,7 +411,7 @@ function computeHeapGrowthMbPerMin(samples: Array<number | null>, times: number[
   const deltaMs = times[end] - times[start];
   if (!Number.isFinite(deltaMs) || deltaMs < 1000) return null;
   const deltaBytes = (samples[end] ?? 0) - (samples[start] ?? 0);
-  return (deltaBytes / 1048576) / (deltaMs / 60000);
+  return deltaBytes / 1048576 / (deltaMs / 60000);
 }
 
 function averageRecentNumbers(samples: number[], times: number[], windowMs: number, fallback: number): number {
@@ -481,9 +498,10 @@ function resizeTimeArray(values: number[], desired: number, now: number): number
 }
 
 function getDockWidth(): number {
-  const viewportLimit = Math.max(420, window.innerWidth - TOP_DOCK_MARGIN * 2);
+  const viewportLimit = Math.max(0, window.innerWidth - TOP_DOCK_MARGIN * 2);
   const maxDockWidth = Math.min(MAX_TOP_DOCK_WIDTH, viewportLimit);
-  return clamp(Math.round(window.innerWidth * 0.42), 420, maxDockWidth);
+  const minDockWidth = Math.min(420, maxDockWidth);
+  return clamp(Math.round(window.innerWidth * 0.42), minDockWidth, maxDockWidth);
 }
 
 function getCurrentPanelWidth(state: PanelState): number {
@@ -561,16 +579,20 @@ function createButton(label: string, titleText: string, minWidth: number): HTMLB
   button.textContent = label;
   button.title = titleText;
   button.setAttribute("aria-label", titleText);
+  button.setAttribute("data-perf-interactive", "true");
   button.style.cssText = [
-    "height:22px",
-    `min-width:${minWidth}px`,
+    `height:${BUTTON_HIT_SIZE}px`,
+    `min-width:${Math.max(minWidth, BUTTON_HIT_SIZE)}px`,
     "border:0",
-    "border-radius:6px",
+    "border-radius:8px",
     "cursor:pointer",
+    "touch-action:manipulation",
+    "position:relative",
+    "z-index:3",
     "outline:2px solid transparent",
     "outline-offset:2px",
     "font:12px/1 Consolas, Menlo, Monaco, monospace",
-    "padding:0 6px",
+    "padding:0 8px",
   ].join(";");
   return button;
 }
@@ -589,6 +611,15 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
   let sampleTimes = Array.from({ length: dims.graphWidth }, (_, index) => now - (dims.graphWidth - index) * 16.7);
   const frameTimes: number[] = [];
   let longTasks: LongTaskPoint[] = [];
+  let longTaskStartIndex = 0;
+  let fpsRecentPoints: TimedNumberPoint[] = [];
+  let fpsRecentMaxDeque: TimedNumberPoint[] = [];
+  let fpsRecentSum = 0;
+  let fpsRecentCount = 0;
+  let memRecentPoints: TimedNumberPoint[] = [];
+  let memRecentMaxDeque: TimedNumberPoint[] = [];
+  let memRecentSum = 0;
+  let memRecentCount = 0;
   let droppedFrames = 0;
   let lastTime = performance.now();
   let lastUpdate = lastTime;
@@ -657,9 +688,29 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
   summary.style.transition = `opacity ${transitionMs}ms ease`;
 
   const secondaryActions = document.createElement("div");
-  secondaryActions.style.cssText = ["display:flex", "align-items:center", "gap:6px", "flex-shrink:0"].join(";");
+  secondaryActions.style.cssText = [
+    "display:flex",
+    "align-items:center",
+    "gap:6px",
+    "flex-shrink:0",
+    "padding:2px",
+    "border-radius:10px",
+    "border:1px solid transparent",
+    "position:relative",
+    "z-index:4",
+  ].join(";");
   const primaryActions = document.createElement("div");
-  primaryActions.style.cssText = ["display:flex", "align-items:center", "gap:6px", "flex-shrink:0"].join(";");
+  primaryActions.style.cssText = [
+    "display:flex",
+    "align-items:center",
+    "gap:6px",
+    "flex-shrink:0",
+    "padding:2px",
+    "border-radius:10px",
+    "border:1px solid transparent",
+    "position:relative",
+    "z-index:4",
+  ].join(";");
 
   const themeButton = createButton("", localeCopy.actionThemeToggle, 46);
   const languageButton = createButton("", localeCopy.actionLanguageToggle, 68);
@@ -671,6 +722,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
   helpButton.setAttribute("aria-expanded", "false");
   const minimizeButton = createButton("-", localeCopy.actionMinimizeRestore, 22);
   const closeButton = createButton("x", localeCopy.actionClose, 22);
+  const controlButtons = [themeButton, languageButton, viewModeButton, helpButton, minimizeButton, closeButton];
   secondaryActions.append(themeButton, languageButton, viewModeButton, helpButton);
   primaryActions.append(minimizeButton, closeButton);
   header.append(title, summary, secondaryActions, primaryActions);
@@ -711,6 +763,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
   resizeHandle.title = localeCopy.actionResize;
   resizeHandle.setAttribute("role", "button");
   resizeHandle.setAttribute("aria-label", localeCopy.actionResize);
+  resizeHandle.setAttribute("data-perf-interactive", "true");
   resizeHandle.setAttribute(
     "aria-keyshortcuts",
     "ArrowLeft ArrowRight ArrowUp ArrowDown Shift+ArrowLeft Shift+ArrowRight Shift+ArrowUp Shift+ArrowDown",
@@ -720,10 +773,11 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     "position:absolute",
     "right:4px",
     "bottom:4px",
-    "width:14px",
-    "height:14px",
+    `width:${RESIZE_HANDLE_HIT_SIZE}px`,
+    `height:${RESIZE_HANDLE_HIT_SIZE}px`,
     "cursor:nwse-resize",
-    "border-radius:4px",
+    "border-radius:6px",
+    "z-index:3",
     "outline:2px solid transparent",
     "outline-offset:2px",
     "touch-action:none",
@@ -970,6 +1024,13 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     return localeCopy.targetViewAdvanced;
   }
 
+  function syncActionButtonText(): void {
+    themeButton.textContent = state.theme === "dark" ? localeCopy.targetThemeLight : localeCopy.targetThemeDark;
+    languageButton.textContent =
+      state.locale === "zh-CN" ? localeCopy.targetLanguageEnglish : localeCopy.targetLanguageZhHans;
+    viewModeButton.textContent = getViewModeTargetText(state.viewMode);
+  }
+
   function applyLocaleCopy(): void {
     localeCopy = LOCALE_COPY[state.locale];
     panel.lang = state.locale === "zh-CN" ? "zh-CN" : "en-US";
@@ -994,10 +1055,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     closeButton.setAttribute("aria-label", localeCopy.actionClose);
     helpPopover.innerHTML = localeCopy.helpContentHtml;
     lastSrStatusText = "";
-    themeButton.textContent = state.theme === "dark" ? localeCopy.targetThemeLight : localeCopy.targetThemeDark;
-    languageButton.textContent =
-      state.locale === "zh-CN" ? localeCopy.targetLanguageEnglish : localeCopy.targetLanguageZhHans;
-    viewModeButton.textContent = getViewModeTargetText(state.viewMode);
+    syncActionButtonText();
   }
 
   function applyViewModeStyles(): void {
@@ -1010,10 +1068,25 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
   }
 
   function withAnimation(enabled: boolean, mode: "auto" | "top" = "auto"): void {
-    const activeMs = mode === "top" || state.dockMode === "top" ? Math.min(transitionMs, TOP_DOCK_ANIMATION_MS) : transitionMs;
+    const isTopMotion = mode === "top" || state.dockMode === "top";
+    const activeMs = isTopMotion ? Math.min(transitionMs, TOP_DOCK_ANIMATION_MS) : transitionMs;
+    const moveMs = isTopMotion ? Math.min(activeMs, TOP_DOCK_MOVE_ANIMATION_MS) : activeMs;
+    const shapeMs = isTopMotion ? Math.min(activeMs, TOP_DOCK_SHAPE_ANIMATION_MS) : activeMs;
+    const shapeDelayMs = isTopMotion ? Math.min(TOP_DOCK_SHAPE_DELAY_MS, Math.max(0, moveMs - shapeMs)) : 0;
+    const moveEasing = isTopMotion ? "cubic-bezier(.2,.78,.24,1)" : "cubic-bezier(.2,.8,.2,1)";
+    const shapeEasing = isTopMotion ? "cubic-bezier(.24,.76,.2,1)" : "ease";
+
     panel.style.transition = enabled
-      ? `left ${activeMs}ms cubic-bezier(.2,.8,.2,1), top ${activeMs}ms cubic-bezier(.2,.8,.2,1), width ${activeMs}ms cubic-bezier(.2,.8,.2,1), height ${activeMs}ms cubic-bezier(.2,.8,.2,1), border-radius ${activeMs}ms ease, box-shadow ${activeMs}ms ease, opacity ${activeMs}ms ease`
+      ? `left ${moveMs}ms ${moveEasing}, top ${moveMs}ms ${moveEasing}, width ${moveMs}ms ${moveEasing}, height ${moveMs}ms ${moveEasing}, border-radius ${shapeMs}ms ${shapeEasing} ${shapeDelayMs}ms, box-shadow ${moveMs}ms ease, opacity ${moveMs}ms ease`
       : "none";
+
+    const contentMs = enabled ? (isTopMotion ? Math.min(transitionMs, 118) : transitionMs) : 0;
+    const contentTransition = contentMs
+      ? `opacity ${contentMs}ms ease, transform ${contentMs}ms ease, max-height ${contentMs}ms ease`
+      : "none";
+    body.style.transition = contentTransition;
+    title.style.transition = contentMs ? `opacity ${contentMs}ms ease` : "none";
+    summary.style.transition = contentMs ? `opacity ${contentMs}ms ease` : "none";
   }
 
   function stat(label: string, value: string, color?: string): string {
@@ -1034,16 +1107,24 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     height: number,
     startTime: number,
     endTime: number,
-  ): { plotBottom: number; plotHeight: number; plotTop: number } {
-    const topPadding = 14;
-    const axisLabelBand = 12;
-    const plotTop = Math.min(topPadding, Math.max(0, height - 8));
-    const plotBottom = Math.max(plotTop + 1, height - axisLabelBand - 1);
+  ): {
+    plotBottom: number;
+    plotHeight: number;
+    plotLeft: number;
+    plotRight: number;
+    plotTop: number;
+    plotWidth: number;
+  } {
+    const plotLeft = Math.min(AXIS_LEFT_GUTTER, Math.max(0, width - 2));
+    const plotRight = Math.max(plotLeft + 1, width - AXIS_RIGHT_GUTTER);
+    const plotWidth = Math.max(1, plotRight - plotLeft);
+    const plotTop = Math.min(AXIS_TOP_GUTTER, Math.max(0, height - AXIS_BOTTOM_GUTTER - 1));
+    const plotBottom = Math.max(plotTop + 1, height - AXIS_BOTTOM_GUTTER);
     const plotHeight = Math.max(1, plotBottom - plotTop);
     const visibleMs = Math.max(1, endTime - startTime);
     const majorTicksMs = [1000, 2000];
     const minorTicksMs = [500, 1500, 2500];
-    const xFromMs = (ms: number): number => width - (ms / visibleMs) * width;
+    const xFromMs = (ms: number): number => plotRight - (ms / visibleMs) * plotWidth;
 
     context.strokeStyle = themeVars.grid;
     context.lineWidth = 1;
@@ -1067,13 +1148,18 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     }
 
     context.beginPath();
-    context.moveTo(width - 1, plotTop);
-    context.lineTo(width - 1, plotBottom);
+    context.moveTo(plotLeft, plotTop);
+    context.lineTo(plotLeft, plotBottom);
     context.stroke();
 
     context.beginPath();
-    context.moveTo(0, plotBottom);
-    context.lineTo(width, plotBottom);
+    context.moveTo(plotRight, plotTop);
+    context.lineTo(plotRight, plotBottom);
+    context.stroke();
+
+    context.beginPath();
+    context.moveTo(plotLeft, plotBottom);
+    context.lineTo(plotRight, plotBottom);
     context.stroke();
 
     context.fillStyle = themeVars.muted;
@@ -1093,10 +1179,10 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
       context.fillText("-500ms", xFromMs(500), height - 1);
     }
     context.textAlign = "right";
-    context.fillText("0s", width - 2, height - 1);
+    context.fillText("0s", plotRight, height - 1);
     context.textAlign = "left";
 
-    return { plotBottom, plotHeight, plotTop };
+    return { plotBottom, plotHeight, plotLeft, plotRight, plotTop, plotWidth };
   }
 
   function updateScreenReaderStatus(
@@ -1133,10 +1219,130 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     lastSrStatusAt = nowTs;
   }
 
+  function pruneFpsRecent(cutoff: number): void {
+    while (fpsRecentPoints.length > 0 && fpsRecentPoints[0].time < cutoff) {
+      const removed = fpsRecentPoints.shift()!;
+      fpsRecentSum -= removed.value;
+      fpsRecentCount -= 1;
+      if (
+        fpsRecentMaxDeque.length > 0 &&
+        fpsRecentMaxDeque[0].time === removed.time &&
+        fpsRecentMaxDeque[0].value === removed.value
+      ) {
+        fpsRecentMaxDeque.shift();
+      }
+    }
+    if (fpsRecentCount <= 0) {
+      fpsRecentSum = 0;
+      fpsRecentCount = 0;
+      fpsRecentMaxDeque = [];
+    }
+  }
+
+  function pushFpsRecent(time: number, value: number): void {
+    const point = { time, value };
+    fpsRecentPoints.push(point);
+    fpsRecentSum += value;
+    fpsRecentCount += 1;
+    while (fpsRecentMaxDeque.length > 0 && fpsRecentMaxDeque[fpsRecentMaxDeque.length - 1].value <= value) {
+      fpsRecentMaxDeque.pop();
+    }
+    fpsRecentMaxDeque.push(point);
+    pruneFpsRecent(time - RECENT_WINDOW_MS);
+  }
+
+  function pruneMemRecent(cutoff: number): void {
+    while (memRecentPoints.length > 0 && memRecentPoints[0].time < cutoff) {
+      const removed = memRecentPoints.shift()!;
+      memRecentSum -= removed.value;
+      memRecentCount -= 1;
+      if (
+        memRecentMaxDeque.length > 0 &&
+        memRecentMaxDeque[0].time === removed.time &&
+        memRecentMaxDeque[0].value === removed.value
+      ) {
+        memRecentMaxDeque.shift();
+      }
+    }
+    if (memRecentCount <= 0) {
+      memRecentSum = 0;
+      memRecentCount = 0;
+      memRecentMaxDeque = [];
+    }
+  }
+
+  function pushMemRecent(time: number, value: number | null): void {
+    if (value === null || !Number.isFinite(value)) {
+      pruneMemRecent(time - RECENT_WINDOW_MS);
+      return;
+    }
+    const point = { time, value };
+    memRecentPoints.push(point);
+    memRecentSum += value;
+    memRecentCount += 1;
+    while (memRecentMaxDeque.length > 0 && memRecentMaxDeque[memRecentMaxDeque.length - 1].value <= value) {
+      memRecentMaxDeque.pop();
+    }
+    memRecentMaxDeque.push(point);
+    pruneMemRecent(time - RECENT_WINDOW_MS);
+  }
+
+  function rebuildRecentWindowCaches(): void {
+    fpsRecentPoints = [];
+    fpsRecentMaxDeque = [];
+    fpsRecentSum = 0;
+    fpsRecentCount = 0;
+    memRecentPoints = [];
+    memRecentMaxDeque = [];
+    memRecentSum = 0;
+    memRecentCount = 0;
+    if (sampleTimes.length === 0) return;
+
+    const endTime = sampleTimes[sampleTimes.length - 1];
+    const cutoff = endTime - RECENT_WINDOW_MS;
+    for (let i = 0; i < sampleTimes.length; i += 1) {
+      const time = sampleTimes[i];
+      if (!Number.isFinite(time) || time < cutoff) continue;
+      pushFpsRecent(time, fpsSamples[i]);
+      pushMemRecent(time, memSamples[i]);
+    }
+  }
+
+  function getRecentFpsAverage(fallback: number): number {
+    return fpsRecentCount > 0 ? fpsRecentSum / fpsRecentCount : fallback;
+  }
+
+  function getRecentFpsMax(fallback: number): number {
+    return fpsRecentMaxDeque.length > 0 ? fpsRecentMaxDeque[0].value : fallback;
+  }
+
+  function getRecentMemAverage(fallback: number): number {
+    return memRecentCount > 0 ? memRecentSum / memRecentCount : fallback;
+  }
+
+  function getRecentMemMax(fallback: number): number {
+    return memRecentMaxDeque.length > 0 ? memRecentMaxDeque[0].value : fallback;
+  }
+
+  function pruneLongTasks(cutoff: number): void {
+    while (longTaskStartIndex < longTasks.length && longTasks[longTaskStartIndex].start < cutoff) {
+      longTaskStartIndex += 1;
+    }
+    if (longTaskStartIndex > 0 && (longTaskStartIndex > 256 || longTaskStartIndex > longTasks.length / 2)) {
+      longTasks = longTasks.slice(longTaskStartIndex);
+      longTaskStartIndex = 0;
+    }
+  }
+
+  function getVisibleLongTaskCount(): number {
+    return Math.max(0, longTasks.length - longTaskStartIndex);
+  }
+
   function syncHistoryLength(desired: number, currentNow: number): void {
     fpsSamples = resizeArrayTail(fpsSamples, desired, FPS_CAP);
     memSamples = resizeArrayTail(memSamples, desired, null);
     sampleTimes = resizeTimeArray(sampleTimes, desired, currentNow);
+    rebuildRecentWindowCaches();
   }
 
   function clampFreePanelToViewport(): void {
@@ -1200,6 +1406,10 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     fpsCanvas.style.background = themeVars.canvasBg;
     memCanvas.style.background = themeVars.canvasBg;
     resizeHandle.style.background = themeVars.resizeGrip;
+    secondaryActions.style.background = themeVars.buttonBg;
+    secondaryActions.style.borderColor = themeVars.grid;
+    primaryActions.style.background = themeVars.buttonHoverBg;
+    primaryActions.style.borderColor = themeVars.grid;
     helpPopover.style.background = state.theme === "dark" ? "rgba(13,17,23,0.98)" : "rgba(255,255,255,0.98)";
     helpPopover.style.border = `1px solid ${themeVars.grid}`;
     helpPopover.style.boxShadow = themeVars.shadow;
@@ -1237,8 +1447,13 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     applyViewModeStyles();
     const isFreeMinimized = state.dockMode === "free" && state.minimized;
     if (isFreeMinimized) closeHelpPopover();
+    const currentPanelWidth = getCurrentPanelWidth(state);
     const isNarrowFreeHeader =
-      state.dockMode === "free" && !state.minimized && getCurrentPanelWidth(state) <= NARROW_HEADER_THRESHOLD;
+      state.dockMode === "free" && !state.minimized && currentPanelWidth <= NARROW_HEADER_THRESHOLD;
+    const isCompactFreeActions =
+      state.dockMode === "free" && !state.minimized && currentPanelWidth <= COMPACT_ACTIONS_THRESHOLD;
+    const isMinimalFreeActions =
+      state.dockMode === "free" && !state.minimized && currentPanelWidth <= MINIMAL_ACTIONS_THRESHOLD;
     panel.style.boxShadow = themeVars.shadow;
     panel.style.height = "";
     header.style.display = isNarrowFreeHeader ? "grid" : "flex";
@@ -1279,6 +1494,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     themeButton.style.display = "";
     languageButton.style.display = "";
     viewModeButton.style.display = "";
+    helpButton.style.display = "";
     secondaryActions.style.gap = "6px";
     primaryActions.style.gap = isFreeMinimized ? "4px" : "6px";
     primaryActions.style.marginLeft = isFreeMinimized || isNarrowFreeHeader ? "0" : "8px";
@@ -1286,7 +1502,17 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     primaryActions.style.display = "flex";
     closeButton.style.marginLeft = "4px";
 
+    if (isCompactFreeActions) {
+      languageButton.style.display = "none";
+      helpButton.style.display = "none";
+      secondaryActions.style.gap = "4px";
+    }
+    if (isMinimalFreeActions) {
+      themeButton.style.display = "none";
+    }
+
     if (state.dockMode === "top") {
+      closeHelpPopover();
       secondaryActions.style.display = "flex";
       primaryActions.style.display = "flex";
       primaryActions.style.marginLeft = "8px";
@@ -1295,6 +1521,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
       summary.style.minWidth = "0";
       languageButton.style.display = "none";
       viewModeButton.style.display = "none";
+      helpButton.style.display = "none";
       panel.style.borderRadius = "999px";
       header.style.marginBottom = "0";
       body.style.display = "";
@@ -1368,13 +1595,22 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     fpsContext2d.clearRect(0, 0, width, height);
     fpsContext2d.strokeStyle = themeVars.grid;
     fpsContext2d.lineWidth = 1;
-    const { plotBottom, plotHeight, plotTop } = drawTimeAxis(fpsContext2d, width, height, startTime, endTime);
+    const { plotBottom, plotHeight, plotLeft, plotRight, plotTop, plotWidth } = drawTimeAxis(
+      fpsContext2d,
+      width,
+      height,
+      startTime,
+      endTime,
+    );
+    const sampleCount = Math.max(1, fpsSamples.length);
+    const xFromIndex = (index: number): number =>
+      plotLeft + (sampleCount <= 1 ? 0 : (index / (sampleCount - 1)) * plotWidth);
 
     for (const fps of [0, fpsScaleMax * 0.5, fpsScaleMax]) {
       const y = plotBottom - (Math.min(fps, fpsScaleMax) / fpsScaleMax) * plotHeight;
       fpsContext2d.beginPath();
-      fpsContext2d.moveTo(0, y);
-      fpsContext2d.lineTo(width, y);
+      fpsContext2d.moveTo(plotLeft, y);
+      fpsContext2d.lineTo(plotRight, y);
       fpsContext2d.stroke();
       fpsContext2d.fillStyle = themeVars.muted;
       fpsContext2d.font = "10px Consolas, monospace";
@@ -1384,8 +1620,8 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     const targetFps = 60;
     const targetY = clamp(plotBottom - (targetFps / fpsScaleMax) * plotHeight, plotTop, plotBottom);
     fpsContext2d.beginPath();
-    fpsContext2d.moveTo(0, targetY);
-    fpsContext2d.lineTo(width, targetY);
+    fpsContext2d.moveTo(plotLeft, targetY);
+    fpsContext2d.lineTo(plotRight, targetY);
     fpsContext2d.strokeStyle = themeVars.grid;
     fpsContext2d.lineWidth = 1;
     fpsContext2d.stroke();
@@ -1396,7 +1632,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     if (endTime > startTime) {
       for (const task of longTasks) {
         if (task.start < startTime || task.start > endTime) continue;
-        const x = ((task.start - startTime) / (endTime - startTime)) * width;
+        const x = plotLeft + ((task.start - startTime) / (endTime - startTime)) * plotWidth;
         fpsContext2d.strokeStyle = themeVars.longTask;
         fpsContext2d.lineWidth = 1;
         fpsContext2d.beginPath();
@@ -1407,7 +1643,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
         if (task.duration >= 80) {
           fpsContext2d.fillStyle = themeVars.longTask;
           fpsContext2d.font = "10px Consolas, monospace";
-          fpsContext2d.fillText(`${Math.round(task.duration)}ms`, Math.min(width - 38, x + 2), 10);
+          fpsContext2d.fillText(`${Math.round(task.duration)}ms`, Math.min(plotRight - 38, x + 2), 10);
         }
       }
     }
@@ -1415,7 +1651,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     fpsContext2d.beginPath();
     fpsSamples.forEach((sample, index) => {
       const value = Math.max(0, Math.min(sample, fpsScaleMax));
-      const x = index;
+      const x = xFromIndex(index);
       const y = plotBottom - (value / fpsScaleMax) * plotHeight;
       if (index === 0) fpsContext2d.moveTo(x, y);
       else fpsContext2d.lineTo(x, y);
@@ -1424,8 +1660,8 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     fpsContext2d.strokeStyle = themeVars.fpsLine;
     fpsContext2d.lineWidth = 2;
     fpsContext2d.stroke();
-    fpsContext2d.lineTo(width, plotBottom);
-    fpsContext2d.lineTo(0, plotBottom);
+    fpsContext2d.lineTo(plotRight, plotBottom);
+    fpsContext2d.lineTo(plotLeft, plotBottom);
     fpsContext2d.closePath();
 
     const gradient = fpsContext2d.createLinearGradient(0, plotTop, 0, plotBottom);
@@ -1436,10 +1672,11 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
 
     fpsSamples.forEach((sample, index) => {
       if (sample >= 30) return;
-      const x = index;
+      const barWidth = Math.max(1, plotWidth / sampleCount);
+      const x = xFromIndex(index) - barWidth * 0.5;
       const y = plotBottom - (Math.max(0, Math.min(sample, fpsScaleMax)) / fpsScaleMax) * plotHeight;
       fpsContext2d.fillStyle = themeVars.lowFps;
-      fpsContext2d.fillRect(x, y, 1, plotBottom - y);
+      fpsContext2d.fillRect(x, y, barWidth, plotBottom - y);
     });
   }
   function drawMemGraph(memory: MemoryInfoLike | null): void {
@@ -1452,20 +1689,29 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     memContext2d.clearRect(0, 0, width, height);
     memContext2d.strokeStyle = themeVars.grid;
     memContext2d.lineWidth = 1;
-    const { plotBottom, plotHeight, plotTop } = drawTimeAxis(memContext2d, width, height, startTime, endTime);
+    const { plotBottom, plotHeight, plotLeft, plotRight, plotTop, plotWidth } = drawTimeAxis(
+      memContext2d,
+      width,
+      height,
+      startTime,
+      endTime,
+    );
+    const sampleCount = Math.max(1, memSamples.length);
+    const xFromIndex = (index: number): number =>
+      plotLeft + (sampleCount <= 1 ? 0 : (index / (sampleCount - 1)) * plotWidth);
 
     for (let index = 0; index < 3; index += 1) {
       const y = plotTop + (plotHeight / 2) * index;
       memContext2d.beginPath();
-      memContext2d.moveTo(0, y);
-      memContext2d.lineTo(width, y);
+      memContext2d.moveTo(plotLeft, y);
+      memContext2d.lineTo(plotRight, y);
       memContext2d.stroke();
     }
 
     if (!memory || !memory.jsHeapSizeLimit) {
       memContext2d.fillStyle = themeVars.muted;
       memContext2d.font = "11px Consolas, monospace";
-      memContext2d.fillText(localeCopy.memUnavailable, 8, plotTop + plotHeight / 2 + 4);
+      memContext2d.fillText(localeCopy.memUnavailable, plotLeft + 8, plotTop + plotHeight / 2 + 4);
       return;
     }
 
@@ -1486,7 +1732,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     memSamples.forEach((sample, index) => {
       if (sample === null) return;
       const ratio = Math.max(0, Math.min(sample / scaleMax, 1));
-      const x = index;
+      const x = xFromIndex(index);
       const y = plotBottom - ratio * plotHeight;
       if (index === 0 || memSamples[index - 1] === null) memContext2d.moveTo(x, y);
       else memContext2d.lineTo(x, y);
@@ -1495,8 +1741,8 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     memContext2d.strokeStyle = themeVars.memLine;
     memContext2d.lineWidth = 2;
     memContext2d.stroke();
-    memContext2d.lineTo(width, plotBottom);
-    memContext2d.lineTo(0, plotBottom);
+    memContext2d.lineTo(plotRight, plotBottom);
+    memContext2d.lineTo(plotLeft, plotBottom);
     memContext2d.closePath();
 
     const gradient = memContext2d.createLinearGradient(0, plotTop, 0, plotBottom);
@@ -1504,13 +1750,6 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     gradient.addColorStop(1, themeVars.memFillBottom);
     memContext2d.fillStyle = gradient;
     memContext2d.fill();
-
-    memContext2d.fillStyle = themeVars.muted;
-    memContext2d.font = "10px Consolas, monospace";
-    memContext2d.textBaseline = "top";
-    memContext2d.textAlign = "right";
-    memContext2d.fillText(`${localeCopy.memLimitLabel}: ${formatMBValue(scaleMax)}`, width - 6, 2);
-    memContext2d.textAlign = "left";
   }
 
   function render(delta: number, memory: MemoryInfoLike | null, drawCharts = true): void {
@@ -1523,14 +1762,13 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     const maxFps = Math.max(...fpsSamples).toFixed(1);
     const longTaskCount = longTasks.length;
     const fpsColor = avgFps >= 50 ? themeVars.good : avgFps >= 30 ? themeVars.warn : themeVars.bad;
-    const onePercentLowColor = onePercentLowFps >= 50 ? themeVars.good : onePercentLowFps >= 30 ? themeVars.warn : themeVars.bad;
+    const onePercentLowColor =
+      onePercentLowFps >= 50 ? themeVars.good : onePercentLowFps >= 30 ? themeVars.warn : themeVars.bad;
     const memUsed = memory ? formatMBValue(memory.usedJSHeapSize) : "N/A";
     const memTotal = memory ? formatMBValue(memory.totalJSHeapSize) : "N/A";
     const heapGrowthMbPerMin = computeHeapGrowthMbPerMin(memSamples, sampleTimes);
     const heapGrowthText =
-      heapGrowthMbPerMin === null
-        ? "N/A"
-        : `${heapGrowthMbPerMin >= 0 ? "+" : ""}${heapGrowthMbPerMin.toFixed(2)}`;
+      heapGrowthMbPerMin === null ? "N/A" : `${heapGrowthMbPerMin >= 0 ? "+" : ""}${heapGrowthMbPerMin.toFixed(2)}`;
     const memColor =
       memory && memory.jsHeapSizeLimit
         ? memory.usedJSHeapSize / memory.jsHeapSizeLimit > 0.8
@@ -1578,7 +1816,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
 
     if (state.dockMode === "top") {
       title.textContent = localeCopy.titleMain;
-      summary.textContent = `${avgFps.toFixed(1)} FPS | ${avgFrame.toFixed(2)} ms`;
+      summary.textContent = `${avgFps.toFixed(1)} FPS | P99 ${p99FrameMs.toFixed(2)} ms | ${localeCopy.summaryLongTasks} ${longTaskCount}`;
     } else if (state.minimized) {
       title.textContent = localeCopy.titleMinimized;
       summary.textContent = `${avgFps.toFixed(1)} FPS`;
@@ -1714,7 +1952,8 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
 
   function onPanelPointerDown(event: PointerEvent): void {
     const target = event.target instanceof Element ? event.target : null;
-    if (target?.closest("button")) return;
+    // Hit target priority: interactive controls (buttons/resize handle) > panel drag.
+    if (target?.closest("[data-perf-interactive='true']")) return;
     withAnimation(false);
 
     if (state.dockMode !== "free") {

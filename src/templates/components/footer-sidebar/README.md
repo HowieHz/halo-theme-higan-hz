@@ -27,4 +27,4 @@ The sidebar position, opacity, and narrow-screen behavior are all read directly 
 
 - `wrapped`: The main content fragment, typically `~{:: main}`.
 - `isSidebar`: Whether sidebar mode is active (position is set and not `inline`).
-- `isBottomSidebarContent`: Whether the bottom/sidebar content is enabled (`is_footer_content_show`).
+- `isBottomSidebarContent`: Whether bottom/sidebar content should render (`is_footer_content_show` or `is_18n_footer_content_show`).

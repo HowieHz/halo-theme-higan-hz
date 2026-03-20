@@ -19,23 +19,23 @@
       isRightSidebar  — 需要渲染右侧栏（top-right / bottom-right 且内容已开启）
   */-->
   <div th:if="${isSidebar and isBottomSidebarContent}" class="main-with-sidebar">
-    <div
+    <th:block
       th:if="${isLeftSidebar}"
-      class="footer-bottom footer-sidebar"
-      th:classappend="'footer-sidebar--' + ${sidebarPos} + ' footer-sidebar--narrow-' + ${sidebarNarrow}"
-      th:style="'--footer-sidebar-opacity:' + ${sidebarOpacity}"
-    >
-      <p th:utext="${theme.config?.styles?.footer_content}"></p>
-    </div>
+      th:replace="~{components/footer-bottom-content/template :: body(
+                    className = 'footer-bottom',
+                    classAppend = 'footer-sidebar footer-sidebar--' + ${sidebarPos} + ' footer-sidebar--narrow-' + ${sidebarNarrow},
+                    styleText = '--footer-sidebar-opacity:' + ${sidebarOpacity}
+                  )}"
+    ></th:block>
     <th:block th:replace="${wrapped}"></th:block>
-    <div
+    <th:block
       th:if="${isRightSidebar}"
-      class="footer-bottom footer-sidebar"
-      th:classappend="'footer-sidebar--' + ${sidebarPos} + ' footer-sidebar--narrow-' + ${sidebarNarrow}"
-      th:style="'--footer-sidebar-opacity:' + ${sidebarOpacity}"
-    >
-      <p th:utext="${theme.config?.styles?.footer_content}"></p>
-    </div>
+      th:replace="~{components/footer-bottom-content/template :: body(
+                    className = 'footer-bottom',
+                    classAppend = 'footer-sidebar footer-sidebar--' + ${sidebarPos} + ' footer-sidebar--narrow-' + ${sidebarNarrow},
+                    styleText = '--footer-sidebar-opacity:' + ${sidebarOpacity}
+                  )}"
+    ></th:block>
   </div>
   <th:block th:unless="${isSidebar and isBottomSidebarContent}">
     <th:block th:replace="${wrapped}"></th:block>
