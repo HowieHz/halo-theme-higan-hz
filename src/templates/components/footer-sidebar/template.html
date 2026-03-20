@@ -1,0 +1,46 @@
+<head th:remove="tag" th:fragment="head(isSidebar, isBottomSidebarContent)">
+  <th:block
+    th:if="${isSidebar and isBottomSidebarContent}"
+    th:insert="~{components/style-footer-sidebar/template :: head}"
+  ></th:block>
+</head>
+<body
+  th:remove="tag"
+  th:fragment="body(wrapped, isSidebar, isBottomSidebarContent)"
+  th:with="sidebarPos = ${theme.config?.styles?.footer_content_sidebar_position},
+           sidebarNarrow = ${theme.config?.styles?.footer_content_sidebar_narrow ?: 'hide'},
+           sidebarOpacity = ${theme.config?.styles?.footer_content_sidebar_opacity ?: '1'},
+           isLeftSidebar = ${sidebarPos == 'bottom-left' or sidebarPos == 'top-left'},
+           isRightSidebar = ${sidebarPos == 'bottom-right' or sidebarPos == 'top-right'}"
+>
+  <!--/*
+    footer-sidebar 悬浮侧边栏变量：
+      sidebarPos      — 配置的位置值：inline / bottom-left / bottom-right / top-left / top-right
+      sidebarNarrow   — 侧边栏平板/手机端（< 1024px）行为：hide 隐藏 / bottom 移至页面底部
+      sidebarOpacity  — 侧边栏悬浮透明度（0–1），鼠标悬停时自动恢复为 1
+      isLeftSidebar   — 需要渲染左侧栏（top-left / bottom-left 且内容已开启）
+      isRightSidebar  — 需要渲染右侧栏（top-right / bottom-right 且内容已开启）
+  */-->
+  <div th:if="${isSidebar and isBottomSidebarContent}" class="main-with-sidebar">
+    <th:block
+      th:if="${isLeftSidebar}"
+      th:insert="~{components/footer-bottom-content/template :: body(
+                   className = 'footer-bottom',
+                   classAppend = 'footer-sidebar footer-sidebar--' + ${sidebarPos} + ' footer-sidebar--narrow-' + ${sidebarNarrow},
+                   styleText = '--footer-sidebar-opacity:' + ${sidebarOpacity}
+                  )}"
+    ></th:block>
+    <th:block th:replace="${wrapped}"></th:block>
+    <th:block
+      th:if="${isRightSidebar}"
+      th:insert="~{components/footer-bottom-content/template :: body(
+                   className = 'footer-bottom',
+                   classAppend = 'footer-sidebar footer-sidebar--' + ${sidebarPos} + ' footer-sidebar--narrow-' + ${sidebarNarrow},
+                   styleText = '--footer-sidebar-opacity:' + ${sidebarOpacity}
+                  )}"
+    ></th:block>
+  </div>
+  <th:block th:unless="${isSidebar and isBottomSidebarContent}">
+    <th:block th:replace="${wrapped}"></th:block>
+  </th:block>
+</body>

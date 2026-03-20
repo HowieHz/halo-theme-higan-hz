@@ -79,6 +79,11 @@ spec:
           help: "例：假设当前页面为 localhost/a/b?a=1，目标链接为 https://p.com。关闭此项会跳转到 https://p.com，而开启此项会跳转到 https://p.com/a/b?a=1"
           value: true
         - $formkit: switch
+          name: is_performance_monitor_enable
+          label: 启用性能监测面板
+          value: false
+          help: 如启用此项，主题将在页面中插入性能监测面板脚本。
+        - $formkit: switch
           name: is_instant_page_enable
           label: instant.page 支持
           value: false
@@ -918,7 +923,7 @@ spec:
           help: "如果不填写，则使用站点标题作为署名"
         - $formkit: switch
           name: is_footer_force_bottom
-          label: 强制页脚、页码在页面底部
+          label: 强制页脚在页面底部
           value: true
         - $formkit: switch
           name: is_footer_menu_show
@@ -926,24 +931,25 @@ spec:
           value: true
         - $formkit: switch
           name: is_footer_content_show
-          label: 添加内容到页面最底部
-          help: "Halo 设置 - 代码注入 - 页脚 的内容显示位置在“主题信息”、“版权信息”、“底部菜单”之上。\n而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。"
+          label: 添加内容到页面最底部/侧边栏
+          help: "开启后，可在“内容显示位置”中选择显示为页面底部内容（内联）或悬浮侧边栏（角落）。"
           value: false
         - $formkit: code
           name: footer_content
           if: "$is_footer_content_show === true"
-          label: 页面最底部内容
+          label: 页面底部/侧边栏内容
           language: html
           height: 150px
+          help: 支持 HTML 代码块
         - $formkit: switch
           name: is_18n_footer_content_show
-          label: 多语言页面最底部内容支持
-          help: "Halo 设置 - 代码注入 - 页脚 的内容显示位置在“主题信息”、“版权信息”、“底部菜单”之上。\n而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。"
+          label: 多语言页面底部/侧边栏内容支持
+          help: "开启后，可为不同语言分别配置页面底部/侧边栏内容。"
           value: false
         - $formkit: array
           name: i18n_footer_content
           if: "$is_18n_footer_content_show === true"
-          label: 自定义多语言页面最底部内容
+          label: 自定义多语言页面底部/侧边栏内容
           value: []
           itemLabels:
             - type: text
@@ -956,10 +962,47 @@ spec:
               validation: "required"
             - $formkit: code
               name: footer_content
-              label: 页面最底部内容
+              label: 页面底部/侧边栏内容
               language: html
               height: 150px
               help: 支持 HTML 代码块
+        - $formkit: select
+          name: footer_content_sidebar_position
+          if: "$is_footer_content_show === true || $is_18n_footer_content_show === true"
+          label: 内容显示方式
+          help: "选择“内联（页面底部）”时显示在页面最底部；选择角落位置时显示为悬浮侧边栏。"
+          value: "inline"
+          options:
+            - label: 内联（页面底部）
+              value: inline
+            - label: 左下角
+              value: bottom-left
+            - label: 右下角
+              value: bottom-right
+            - label: 左上角
+              value: top-left
+            - label: 右上角
+              value: top-right
+        - $formkit: number
+          name: footer_content_sidebar_opacity
+          if: "($is_footer_content_show === true || $is_18n_footer_content_show === true) && $footer_content_sidebar_position !== 'inline'"
+          label: 侧边栏悬浮透明度
+          help: "取值范围 0（完全透明）到 1（完全不透明）"
+          value: "1"
+          min: 0
+          max: 1
+          step: 0.05
+        - $formkit: select
+          name: footer_content_sidebar_narrow
+          if: "($is_footer_content_show === true || $is_18n_footer_content_show === true) && $footer_content_sidebar_position !== 'inline'"
+          label: 平板和手机端侧边栏显示行为
+          help: "视口宽度小于 1024px（平板及手机）时的显示行为。"
+          value: "hide"
+          options:
+            - label: 隐藏
+              value: hide
+            - label: 移动到页面底部
+              value: bottom
         - $formkit: switch
           name: is_h3_underline
           label: 为三级标题添加下划线

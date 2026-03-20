@@ -31,6 +31,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🚀 Features
 
 - Added preset share buttons for Reddit, WhatsApp, Tumblr, LINE, Hacker News, Blogger, Gmail, Yahoo Mail and Skype.
+- Added a global setting `Enable performance monitor panel` to control performance monitor panel injection.
+- Expanded bottom content settings into [Add content to the page bottom/sidebar](https://howiehz.top/halo-theme-higan-haozi/en/guide/theme-configuration#add-content-to-the-page-bottom-sidebar), with new options for page bottom/sidebar content display mode, sidebar hover opacity, and tablet and mobile sidebar display behavior.
 
 ### 🔧 Code Refactoring
 
@@ -42,6 +44,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed an issue where the selected type could not be displayed after saving social media settings (`console/theme/settings/sns`).
 - Fixed an issue where the RSS `<link>` tag was not output when the RSS plugin was not installed but an RSS link was configured in the social media settings.
 - Fixed an issue in Mermaid injection where `xlink:href` references were not updated synchronously.
+- Fixed `Force Footer at Page Bottom` option not taking effect.
+
+### 📄 Documentation
+
+- Improve configuration option names.
+
+### 🛠️ Miscellaneous Chores
+
+- Updated development dependencies.
 
 ## [1.58.2] - 2026-03-18
 

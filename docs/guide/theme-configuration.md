@@ -1,4 +1,4 @@
----
+﻿---
 outline: deep
 ---
 
@@ -648,6 +648,44 @@ const QuickJumpConfig = (props) => {
 
 - 关闭此项会跳转到：`https://p.com`
 - 开启此项会跳转到：`https://p.com/a/b?a=1`
+
+:::
+
+### 启用性能监测面板
+
+::: info 🎯 用途
+
+控制是否在页面中注入性能监测面板脚本。
+
+:::
+::: info 📂 配置项位置
+
+全局 -> 启用性能监测面板
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=启用性能监测面板" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.global?.is_performance_monitor_enable`
+
+:::
+::: info ℹ️ 补充信息
+
+该面板默认关闭，仅在此项为 `true` 时注入。
 
 :::
 
@@ -2283,21 +2321,21 @@ Halo（内部值 `Halo`）
 
 :::
 
-### 强制页脚、页码在页面底部
+### 强制页脚在页面底部
 
 ::: info 🎯 用途
 
-控制是否强制页脚、页码在页面底部。
+控制是否强制页脚在页面底部
 
 :::
 ::: info 📂 配置项位置
 
-总体样式 -> 强制页脚、页码在页面底部
+总体样式 -> 强制页脚在页面底部
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=强制页脚、页码在页面底部" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=强制页脚在页面底部" />
 
 :::
 ::: info 🏷️ 类型
@@ -2349,21 +2387,21 @@ Halo（内部值 `Halo`）
 
 :::
 
-### 添加内容到页面最底部
+### 添加内容到页面最底部/侧边栏
 
 ::: info 🎯 用途
 
-控制添加内容到页面最底部。
+控制是否启用页面底部与侧边栏内容能力。
 
 :::
 ::: info 📂 配置项位置
 
-总体样式 -> 添加内容到页面最底部
+总体样式 -> 添加内容到页面最底部/侧边栏
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=添加内容到页面最底部" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=添加内容到页面最底部%2F侧边栏" />
 
 :::
 ::: info 🏷️ 类型
@@ -2383,18 +2421,22 @@ Halo（内部值 `Halo`）
 :::
 ::: info ℹ️ 补充信息
 
-在 Halo CMS 的后台（<QuickJumpConfig to="/console/settings?tab=codeInjection:~:text=页脚" label="快速跳转" />）设定的页脚内容，显示位置在“主题信息”、“版权信息”、“底部菜单”之上。  
-而此处填写页脚内容的在“底部菜单”之下，为页面的最底部。
+在 Halo CMS 后台（<QuickJumpConfig to="/console/settings?tab=codeInjection:~:text=页脚" label="快速跳转" />）设置的页脚内容，显示在“主题信息”“版权信息”“页面底部菜单”之上。  
+本配置组的内容显示在“页面底部菜单”之下，且支持切换为悬浮侧边栏显示。
 
 启用后可配置：
 
-- [页面最底部内容](#页面最底部内容)
-- [多语言页面最底部内容支持](#多语言页面最底部内容支持)
-  - [自定义多语言页面最底部内容](#自定义多语言页面最底部内容)
+<!-- markdownlint-disable MD051 -->
+
+- [页面底部/侧边栏内容](#页面底部-侧边栏内容)
+- [页面底部/侧边栏内容显示方式](#页面底部-侧边栏内容显示方式)
+- [侧边栏悬浮透明度](#侧边栏悬浮透明度)
+- [平板和手机端侧边栏显示行为](#平板和手机端侧边栏显示行为)
+<!-- markdownlint-enable MD051 -->
 
 :::
 
-#### 页面最底部内容
+#### 页面底部/侧边栏内容
 
 ::: info 🎯 用途
 
@@ -2403,14 +2445,18 @@ Halo（内部值 `Halo`）
 :::
 ::: info 📂 配置项位置
 
-（[首页样式 -> 页面最底部内容](#页面最底部内容)启用时显示）
+<!-- markdownlint-disable MD051 -->
 
-首页样式 -> 页面最底部内容
+（[总体样式 -> 添加内容到页面最底部/侧边栏](#添加内容到页面最底部-侧边栏) 启用时显示）
+
+<!-- markdownlint-enable MD051 -->
+
+总体样式 -> 页面底部/侧边栏内容
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=页面最底部内容" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=页面底部%2F侧边栏内容" />
 
 :::
 ::: info 🏷️ 类型
@@ -2447,23 +2493,21 @@ HTML 代码也是可以的：
 
 :::
 
-#### 多语言页面最底部内容支持
+### 多语言页面底部/侧边栏内容支持
 
 ::: info 🎯 用途
 
-控制是否启用多语言页面最底部内容支持。
+控制是否启用多语言页面底部与侧边栏内容支持。
 
 :::
 ::: info 📂 配置项位置
 
-（[首页样式 -> 页面最底部内容](#页面最底部内容)启用时显示）
-
-首页样式 -> 多语言页面最底部内容支持
+总体样式 -> 多语言页面底部/侧边栏内容支持
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=多语言页面最底部内容支持" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=多语言页面底部%2F侧边栏内容支持" />
 
 :::
 ::: info 🏷️ 类型
@@ -2483,27 +2527,41 @@ HTML 代码也是可以的：
 :::
 ::: info ℹ️ 补充信息
 
-启用后请参照[多语言页面最底部内容使用指南](/tutorial/i18n#多语言页面最底部内容使用指南)进行配置
+启用后请参照[多语言页面底部/侧边栏内容使用指南](/tutorial/i18n#多语言页面底部-侧边栏内容使用指南)进行配置。
+
+启用后可配置：
+
+<!-- markdownlint-disable MD051 -->
+
+- [自定义多语言页面底部/侧边栏内容](#自定义多语言页面底部-侧边栏内容)
+- [页面底部/侧边栏内容显示方式](#页面底部-侧边栏内容显示方式)
+- [侧边栏悬浮透明度](#侧边栏悬浮透明度)
+- [平板和手机端侧边栏显示行为](#平板和手机端侧边栏显示行为)
+<!-- markdownlint-enable MD051 -->
 
 :::
 
-#### 自定义多语言页面最底部内容
+#### 自定义多语言页面底部/侧边栏内容
 
 ::: info 🎯 用途
 
-设定多语言页面最底部内容内容。
+设置多语言页面底部与侧边栏内容。
 
 :::
 ::: info 📂 配置项位置
 
-（[首页样式 -> 页面最底部内容](#页面最底部内容)启用时显示）
+<!-- markdownlint-disable MD051 -->
 
-首页样式 -> 自定义多语言页面最底部内容
+（[总体样式 -> 多语言页面底部/侧边栏内容支持](#多语言页面底部-侧边栏内容支持) 启用时显示）
+
+<!-- markdownlint-enable MD051 -->
+
+总体样式 -> 自定义多语言页面底部/侧边栏内容
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=自定义多语言页面最底部内容" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=自定义多语言页面底部%2F侧边栏内容" />
 
 :::
 ::: info 🏷️ 类型
@@ -2546,7 +2604,7 @@ HTML 代码也是可以的：
 > :::
 > ::: tip 📂 配置项名
 >
-> 页面最底部内容
+> 页面底部/侧边栏内容
 >
 > :::
 > ::: info 🏷️ 类型
@@ -2581,6 +2639,141 @@ HTML 代码也是可以的：
 ::: info 🧩 模板变量
 
 `theme.config?.styles?.i18n_footer_content`
+
+:::
+
+### 页面底部/侧边栏内容显示方式
+
+::: info 🎯 用途
+
+设置内容显示在页面底部（内联）还是悬浮侧边栏（角落）。
+
+:::
+::: info 📂 配置项位置
+
+<!-- markdownlint-disable MD051 -->
+
+（[总体样式 -> 添加内容到页面最底部/侧边栏](#添加内容到页面最底部-侧边栏) 或 [总体样式 -> 多语言页面底部/侧边栏内容支持](#多语言页面底部-侧边栏内容支持) 启用时显示）
+
+<!-- markdownlint-enable MD051 -->
+
+总体样式 -> 内容显示方式
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=内容显示方式" />
+
+:::
+::: info 🏷️ 类型
+
+选项
+
+:::
+::: info ⭐ 默认值
+
+`内联（页面底部）`（内部值 `inline`）
+
+:::
+::: info 💡 其他选项
+
+- `左下角`（内部值 `bottom-left`）
+- `右下角`（内部值 `bottom-right`）
+- `左上角`（内部值 `top-left`）
+- `右上角`（内部值 `top-right`）
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.footer_content_sidebar_position`
+
+:::
+
+### 侧边栏悬浮透明度
+
+::: info 🎯 用途
+
+设置悬浮侧边栏内容的不透明度。
+
+:::
+::: info 📂 配置项位置
+
+<!-- markdownlint-disable MD051 -->
+
+（[总体样式 -> 添加内容到页面最底部/侧边栏](#添加内容到页面最底部-侧边栏) 或 [总体样式 -> 多语言页面底部/侧边栏内容支持](#多语言页面底部-侧边栏内容支持) 启用，且 [页面底部/侧边栏内容显示方式](#页面底部-侧边栏内容显示方式) 不为 `内联（页面底部）` 时显示）
+
+<!-- markdownlint-enable MD051 -->
+
+总体样式 -> 侧边栏悬浮透明度
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=侧边栏悬浮透明度" />
+
+:::
+::: info 🏷️ 类型
+
+浮点数
+
+:::
+::: info ⭐ 默认值
+
+`1`
+
+:::
+::: info 🔒 内部约束
+
+取值范围 `0` 到 `1`，步长 `0.05`。
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.footer_content_sidebar_opacity`
+
+:::
+
+### 平板和手机端侧边栏显示行为
+
+::: info 🎯 用途
+
+设置视口宽度小于 `1024px`（平板与手机）时，悬浮侧边栏内容的展示行为。
+
+:::
+::: info 📂 配置项位置
+
+<!-- markdownlint-disable MD051 -->
+
+（[总体样式 -> 添加内容到页面最底部/侧边栏](#添加内容到页面最底部-侧边栏) 或 [总体样式 -> 多语言页面底部/侧边栏内容支持](#多语言页面底部-侧边栏内容支持) 启用，且 [页面底部/侧边栏内容显示方式](#页面底部-侧边栏内容显示方式) 不为 `内联（页面底部）` 时显示）
+
+<!-- markdownlint-enable MD051 -->
+
+总体样式 -> 平板和手机端侧边栏显示行为
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=平板和手机端侧边栏显示行为" />
+
+:::
+::: info 🏷️ 类型
+
+选项
+
+:::
+::: info ⭐ 默认值
+
+`隐藏`（内部值 `hide`）
+
+:::
+::: info 💡 其他选项
+
+- `移动到页面底部`（内部值 `bottom`）
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.footer_content_sidebar_narrow`
 
 :::
 

@@ -31,6 +31,8 @@
 ### 🚀 新功能
 
 - 分享按钮预设新增 Reddit、WhatsApp、Tumblr、LINE、Hacker News、Blogger、Gmail、Yahoo Mail 和 Skype。
+- 新增全局配置项 `启用性能监测面板`，可控制是否注入性能监测面板。
+- 页面底部内容配置扩展为[“页面底部/侧边栏内容”](https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration#%E6%B7%BB%E5%8A%A0%E5%86%85%E5%AE%B9%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%9C%80%E5%BA%95%E9%83%A8-%E4%BE%A7%E8%BE%B9%E6%A0%8F)，页面底部/侧边栏内容显示方式、侧边栏悬浮透明度与侧边栏平板和手机端行为配置。
 
 ### 🔧 代码重构
 
@@ -42,6 +44,15 @@
 - 修复社交资料设置（`console/theme/settings/sns`）保存后无法显示已选类型的问题。
 - 修复未安装 RSS 插件时，社交资料中设置的 RSS 链接无法输出 `<link>` 标签的问题。
 - 修复了在 Mermaid 注入中 `xlink:href` 引用未同步更新的问题。
+- 修复`强制页脚在页面底部`配置项失效的问题。
+
+### 📄 文档
+
+- 优化配置项的名称。
+
+### 🛠️ 杂项维护
+
+- 更新开发依赖。
 
 ## [1.58.2] - 2026-03-18
 

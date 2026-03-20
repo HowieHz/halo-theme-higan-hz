@@ -167,6 +167,10 @@ export default defineConfig((): UserConfig => {
             __dirname,
             "src/templates/components/color-scheme-auto/template.html",
           ),
+          "components-style-footer-sidebar": path.resolve(
+            __dirname,
+            "src/templates/components/style-footer-sidebar/template.html",
+          ),
           "components-text-size-small": path.resolve(
             __dirname,
             "src/templates/components/text-size-small/template.html",
@@ -187,6 +191,10 @@ export default defineConfig((): UserConfig => {
           "components-paragraph-first-line-indent-style": path.resolve(
             __dirname,
             "src/templates/components/paragraph-first-line-indent-style/template.html",
+          ),
+          "components-performance-monitor": path.resolve(
+            __dirname,
+            "src/templates/components/performance-monitor/template.html",
           ),
           "components-layout-max-width-style": path.resolve(
             __dirname,
@@ -231,6 +239,11 @@ export default defineConfig((): UserConfig => {
           "components-common": path.resolve(__dirname, "src/templates/components/common/template.html"),
           "components-share": path.resolve(__dirname, "src/templates/components/share/template.html"),
           "components-base-layout": path.resolve(__dirname, "src/templates/components/base-layout/template.html"),
+          "components-footer-sidebar": path.resolve(__dirname, "src/templates/components/footer-sidebar/template.html"),
+          "components-footer-bottom-content": path.resolve(
+            __dirname,
+            "src/templates/components/footer-bottom-content/template.html",
+          ),
           "components-footer-nav-page-like-post-style": path.resolve(
             __dirname,
             "src/templates/components/footer-nav-page-like-post-style/template.html",
