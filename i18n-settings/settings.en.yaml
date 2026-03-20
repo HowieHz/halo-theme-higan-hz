@@ -923,7 +923,7 @@ spec:
           help: "If left blank, the site title will be used as the signature"
         - $formkit: switch
           name: is_footer_force_bottom
-          label: Footer, Page number force to the bottom
+          label: Force Footer at Page Bottom
           value: true
         - $formkit: switch
           name: is_footer_menu_show

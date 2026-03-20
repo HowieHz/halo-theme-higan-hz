@@ -2321,21 +2321,21 @@ Halo（内部值 `Halo`）
 
 :::
 
-### 强制页脚、页码在页面底部
+### 强制页脚在页面底部
 
 ::: info 🎯 用途
 
-控制是否强制页脚、页码在页面底部。
+控制是否强制页脚在页面底部
 
 :::
 ::: info 📂 配置项位置
 
-总体样式 -> 强制页脚、页码在页面底部
+总体样式 -> 强制页脚在页面底部
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=强制页脚、页码在页面底部" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=强制页脚在页面底部" />
 
 :::
 ::: info 🏷️ 类型

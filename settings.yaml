@@ -923,7 +923,7 @@ spec:
           help: "如果不填写，则使用站点标题作为署名"
         - $formkit: switch
           name: is_footer_force_bottom
-          label: 强制页脚、页码在页面底部
+          label: 强制页脚在页面底部
           value: true
         - $formkit: switch
           name: is_footer_menu_show

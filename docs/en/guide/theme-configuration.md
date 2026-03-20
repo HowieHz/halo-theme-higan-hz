@@ -2327,21 +2327,21 @@ Empty
 
 :::
 
-### Force Footer and Page Numbers at Page Bottom
+### Force Footer at Page Bottom
 
 ::: info 🎯 Purpose
 
-Controls whether to force the footer and page numbers to the bottom of the page.
+Controls whether to force the footer to the bottom of the page.
 
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> Force Footer and Page Numbers at Page Bottom
+General Styles -> Force Footer at Page Bottom
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Force%20Footer%20and%20Page%20Numbers%20at%20Page%20Bottom" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Force%20Footer%20at%20Page%20Bottom" />
 
 :::
 ::: info 🏷️ Type
