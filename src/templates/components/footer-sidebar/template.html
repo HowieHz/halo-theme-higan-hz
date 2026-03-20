@@ -1,6 +1,9 @@
-<!--/*-->
-<head th:remove="tag"></head>
-<!--*/-->
+<head th:remove="tag" th:fragment="head(isSidebar, isBottomSidebarContent)">
+  <th:block
+    th:if="${isSidebar and isBottomSidebarContent}"
+    th:insert="~{components/style-footer-sidebar/template :: head}"
+  ></th:block>
+</head>
 <body
   th:remove="tag"
   th:fragment="body(wrapped, isSidebar, isBottomSidebarContent)"

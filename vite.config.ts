@@ -167,6 +167,10 @@ export default defineConfig((): UserConfig => {
             __dirname,
             "src/templates/components/color-scheme-auto/template.html",
           ),
+          "components-style-footer-sidebar": path.resolve(
+            __dirname,
+            "src/templates/components/style-footer-sidebar/template.html",
+          ),
           "components-text-size-small": path.resolve(
             __dirname,
             "src/templates/components/text-size-small/template.html",
