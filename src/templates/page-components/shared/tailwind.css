@@ -4,6 +4,7 @@
 @import "tailwindcss/utilities.css" layer(utilities) source("../../../../src");
 @source not "../../../../src/templates/public";
 @source not "../../../../src/templates/components/example";
+@source not "../../../../src/templates/components/performance-monitor";
 /* stylelint-disable custom-property-pattern */
 @theme {
   --text-*: initial;
