@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added preset share buttons for Reddit, WhatsApp, Tumblr, LINE, Hacker News, Blogger, Gmail, Yahoo Mail and Skype.
 - Added a global setting `Enable performance monitor panel` to control performance monitor panel injection.
-- Expanded bottom content settings into unified bottom/sidebar content settings with new options for display mode, floating opacity, and tablet and mobile behavior.
+- Expanded bottom content settings into [Add content to the page bottom/sidebar](https://howiehz.top/halo-theme-higan-haozi/en/guide/theme-configuration#add-content-to-the-page-bottom-sidebar), with new options for page bottom/sidebar content display mode, sidebar hover opacity, and tablet and mobile sidebar display behavior.
 
 ### 🔧 Code Refactoring
 

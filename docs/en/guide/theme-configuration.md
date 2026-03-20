@@ -1,4 +1,4 @@
----
+﻿---
 outline: deep
 ---
 
@@ -654,6 +654,44 @@ Assuming the user accesses the link `http://localhost/a/b?a=1`, and the [Target 
 
 - With this option disabled, it will redirect to: `https://p.com`
 - With this option enabled, it will redirect to: `https://p.com/a/b?a=1`
+
+:::
+
+### Enable Performance Monitor Panel
+
+::: info 🎯 Purpose
+
+Controls whether to inject the performance monitor panel script into pages.
+
+:::
+::: info 📂 Configuration Item Location
+
+Global -> Enable Performance Monitor Panel
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Enable%20Performance%20Monitor%20Panel" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.global?.is_performance_monitor_enable`
+
+:::
+::: info ℹ️ Additional Information
+
+The panel is disabled by default and injected only when this option is `true`.
 
 :::
 
@@ -2355,21 +2393,21 @@ Boolean
 
 :::
 
-### Add Content to Bottom of Page
+### Add Content to the Page Bottom/Sidebar
 
 ::: info 🎯 Purpose
 
-Controls adding content to the very bottom of the page.
+Controls whether to enable content for page bottom/sidebar.
 
 :::
 ::: info 📂 Configuration Item Location
 
-General Styles -> Add Content to Bottom of Page
+General Styles -> Add content to page bottom/sidebar
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add%20Content%20to%20Bottom%20of%20Page" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add%20content%20to%20page%20bottom%2Fsidebar" />
 
 :::
 ::: info 🏷️ Type
@@ -2389,34 +2427,39 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-In Halo CMS backend (<QuickJumpConfig to="/console/settings?tab=codeInjection:~:text=Footer" label="Quick Jump" />), the footer content set there will be displayed above "Theme Information", "Copyright Information", and "Menu at Page Bottom".
-The footer content filled in here will be displayed below "Menu at Page Bottom", at the very bottom of the page.
+In Halo CMS backend (<QuickJumpConfig to="/console/settings?tab=codeInjection:~:text=Footer" label="Quick Jump" />), injected footer content is displayed above "Theme Information", "Copyright Information", and "Menu at Page Bottom".  
+This configuration group is rendered below "Menu at Page Bottom", and can be switched to a floating sidebar.
 
 When enabled, you can configure:
 
-- [Content at Bottom of Page](#content-at-bottom-of-page)
-- [Multi-language Support for Content at Bottom of Page](#multi-language-support-for-content-at-bottom-of-page)
-  - [Custom Multi-language Content at Bottom of Page](#custom-multi-language-content-at-bottom-of-page)
+<!-- markdownlint-disable MD051 -->
+
+- [Page bottom/sidebar content](#page-bottom-sidebar-content)
+- [Page bottom/sidebar content display mode](#page-bottom-sidebar-content-display-mode)
+- [Sidebar hover opacity](#sidebar-hover-opacity)
+- [Tablet and mobile sidebar display behavior](#tablet-and-mobile-sidebar-display-behavior)
+<!-- markdownlint-enable MD051 -->
 
 :::
 
-#### Content at Bottom of Page
+#### Page Bottom/Sidebar Content
 
 ::: info 🎯 Purpose
 
-Set the content for the very bottom of the page.
+Sets default content for page bottom/sidebar.
 
 :::
 ::: info 📂 Configuration Item Location
+<!-- markdownlint-disable MD051 -->
+([General Styles -> Add content to page bottom/sidebar](#add-content-to-the-page-bottom-sidebar) enabled)
+<!-- markdownlint-enable MD051 -->
 
-([Home Page Style -> Content at Bottom of Page](#content-at-bottom-of-page) When enabled, will display)
-
-Home Page Style -> Content at Bottom of Page
+General Styles -> Page bottom/sidebar content
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content%20at%20Bottom%20of%20Page" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Page%20bottom%2Fsidebar%20content" />
 
 :::
 ::: info 🏷️ Type
@@ -2453,23 +2496,21 @@ Valid HTML code.
 
 :::
 
-#### Multi-language Support for Content at Bottom of Page
+### Multi-language Page Bottom/Sidebar Content Support
 
 ::: info 🎯 Purpose
 
-Controls whether to enable multilingual support for page bottom content.
+Controls whether to enable multi-language page bottom/sidebar content support.
 
 :::
 ::: info 📂 Configuration Item Location
 
-([Home Page Style -> Content at Bottom of Page](#content-at-bottom-of-page) When enabled, will display)
-
-Home Page Style -> Multi-language Support for Content at Bottom of Page
+General Styles -> Multi-language page bottom/sidebar content support
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Multi-language%20Support%20for%20Content%20at%20Bottom%20of%20Page" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Multi-language%20page%20bottom%2Fsidebar%20content%20support" />
 
 :::
 ::: info 🏷️ Type
@@ -2489,27 +2530,37 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-After enabling, please refer to the [Multilingual Page Bottom Content Usage Guide](/tutorial/i18n#multilingual-page-bottom-content-usage-guide) for configuration
+After enabling, please refer to [Multilingual Page Bottom/Sidebar Content Usage Guide](/en/tutorial/i18n#multilingual-page-bottom-sidebar-content-usage-guide) for configuration.
+
+When enabled, you can configure:
+
+<!-- markdownlint-disable MD051 -->
+
+- [Custom multi-language page bottom/sidebar content](#custom-multi-language-page-bottom-sidebar-content)
+- [Page bottom/sidebar content display mode](#page-bottom-sidebar-content-display-mode)
+- [Sidebar hover opacity](#sidebar-hover-opacity)
+- [Tablet and mobile sidebar display behavior](#tablet-and-mobile-sidebar-display-behavior)
+<!-- markdownlint-enable MD051 -->
 
 :::
 
-#### Custom Multi-language Content at Bottom of Page
+#### Custom Multi-language Page Bottom/Sidebar Content
 
 ::: info 🎯 Purpose
 
-Set the multilingual page bottom content.
+Sets multi-language page bottom/sidebar content.
 
 :::
 ::: info 📂 Configuration Item Location
-
-([Home Page Style -> Content at Bottom of Page](#content-at-bottom-of-page) When enabled, will display)
-
-Home Page Style -> Custom Multi-language Content at Bottom of Page
+<!-- markdownlint-disable MD051 -->
+([General Styles -> Multi-language page bottom/sidebar content support](#multi-language-page-bottom-sidebar-content-support) enabled)
+<!-- markdownlint-enable MD051 -->
+General Styles -> Custom multi-language page bottom/sidebar content
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Custom%20Multi-language%20Content%20at%20Bottom%20of%20Page" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20multi-language%20page%20bottom%2Fsidebar%20content" />
 
 :::
 ::: info 🏷️ Type
@@ -2522,7 +2573,7 @@ Repeater
 >
 > ::: tip 📂 Configuration Item Name
 >
-> Language Code
+> Language code
 >
 > :::
 > ::: info 🏷️ Type
@@ -2537,7 +2588,7 @@ Repeater
 > :::
 > ::: info 💡 Example Values
 >
-> `zh`,`zh-CN`,`zh-Hans`,`en`,`en-US`
+> `zh`, `zh-CN`, `zh-Hans`, `en`, `en-US`
 >
 > :::
 > ::: info 🔒 Internal Constraints
@@ -2547,12 +2598,12 @@ Repeater
 > :::
 > ::: info ⚠️ External Constraints
 >
-> The set value must comply with [BCP 47](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang), otherwise it will be invalid.
+> The value must comply with [BCP 47](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang), otherwise it is invalid.
 >
 > :::
 > ::: tip 📂 Configuration Item Name
 >
-> Page Bottom Content
+> Page bottom/sidebar content
 >
 > :::
 > ::: info 🏷️ Type
@@ -2587,6 +2638,129 @@ Repeater
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.i18n_footer_content`
+
+:::
+
+### Page Bottom/Sidebar Content Display Mode
+
+::: info 🎯 Purpose
+
+Sets whether content is displayed at the page bottom (inline) or as a floating corner sidebar.
+
+:::
+::: info 📂 Configuration Item Location
+<!-- markdownlint-disable MD051 -->
+([General Styles -> Add content to page bottom/sidebar](#add-content-to-the-page-bottom-sidebar) or [General Styles -> Multi-language page bottom/sidebar content support](#multi-language-page-bottom-sidebar-content-support) enabled)
+<!-- markdownlint-enable MD051 -->
+General Styles -> Content display mode
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content%20display%20mode" />
+
+:::
+::: info 🏷️ Type
+
+Option
+
+:::
+::: info ⭐ Default Value
+
+`Inline (page bottom)` (internal value `inline`)
+
+:::
+::: info 💡 Other Options
+
+- `Bottom-left` (internal value `bottom-left`)
+- `Bottom-right` (internal value `bottom-right`)
+- `Top-left` (internal value `top-left`)
+- `Top-right` (internal value `top-right`)
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.styles?.footer_content_sidebar_position`
+
+:::
+
+### Sidebar Hover Opacity
+
+::: info 🎯 Purpose
+
+Sets hover opacity of floating sidebar content.
+
+:::
+::: info 📂 Configuration Item Location
+<!-- markdownlint-disable MD051 -->
+([General Styles -> Add content to page bottom/sidebar](#add-content-to-the-page-bottom-sidebar) or [General Styles -> Multi-language page bottom/sidebar content support](#multi-language-page-bottom-sidebar-content-support) enabled, and [Page bottom/sidebar content display mode](#page-bottom-sidebar-content-display-mode) is not `Inline (page bottom)`)
+<!-- markdownlint-enable MD051 -->
+General Styles -> Sidebar hover opacity
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Sidebar%20hover%20opacity" />
+
+:::
+::: info 🏷️ Type
+
+Float
+
+:::
+::: info ⭐ Default Value
+
+`1`
+
+:::
+::: info 🔒 Internal Constraints
+
+Range `0` to `1`, step `0.05`.
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.styles?.footer_content_sidebar_opacity`
+
+:::
+
+### Tablet and Mobile Sidebar Display Behavior
+
+::: info 🎯 Purpose
+
+Sets display behavior for floating sidebar content when viewport width is less than `1024px` (tablet and mobile).
+
+:::
+::: info 📂 Configuration Item Location
+<!-- markdownlint-disable MD051 -->
+([General Styles -> Add content to page bottom/sidebar](#add-content-to-the-page-bottom-sidebar) or [General Styles -> Multi-language page bottom/sidebar content support](#multi-language-page-bottom-sidebar-content-support) enabled, and [Page bottom/sidebar content display mode](#page-bottom-sidebar-content-display-mode) is not `Inline (page bottom)`)
+<!-- markdownlint-enable MD051 -->
+General Styles -> Tablet and mobile sidebar display behavior
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Tablet%20and%20mobile%20sidebar%20display%20behavior" />
+
+:::
+::: info 🏷️ Type
+
+Option
+
+:::
+::: info ⭐ Default Value
+
+`Hide` (internal value `hide`)
+
+:::
+::: info 💡 Other Options
+
+- `Move to page bottom` (internal value `bottom`)
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.styles?.footer_content_sidebar_narrow`
 
 :::
 
