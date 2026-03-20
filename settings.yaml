@@ -986,7 +986,7 @@ spec:
         - $formkit: number
           name: footer_content_sidebar_opacity
           if: "($is_footer_content_show === true || $is_18n_footer_content_show === true) && $footer_content_sidebar_position !== 'inline'"
-          label: 悬浮透明度
+          label: 侧边栏悬浮透明度
           help: "取值范围 0（完全透明）到 1（完全不透明）"
           value: "1"
           min: 0
@@ -995,7 +995,7 @@ spec:
         - $formkit: select
           name: footer_content_sidebar_narrow
           if: "($is_footer_content_show === true || $is_18n_footer_content_show === true) && $footer_content_sidebar_position !== 'inline'"
-          label: 平板和手机端行为
+          label: 平板和手机端侧边栏显示行为
           help: "视口宽度小于 1024px（平板及手机）时的显示行为。"
           value: "hide"
           options:
