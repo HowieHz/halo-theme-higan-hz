@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.59.0] - 2026-03-21
+
 ### 💥 Breaking Changes
 
 - In the social media settings (`console/theme/settings/sns`), the `index_sns` array has been renamed to `sns_list`, and its `type` field has been changed from an object type to a string type. **Existing configurations require the social media list to be re-configured.**
@@ -637,7 +639,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed tag color rendering issues when `Tags Page Style -> Tag Sort Order` was enabled.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.2...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.0...HEAD
+[1.59.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.2...v1.59.0
 [1.58.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.1...v1.58.2
 [1.58.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.0...v1.58.1
 [1.58.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.6...v1.58.0

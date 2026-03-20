@@ -21,6 +21,8 @@
 
 ## [Unreleased]
 
+## [1.59.0] - 2026-03-21
+
 ### 💥 破坏性变更
 
 - 社交资料设置（`console/theme/settings/sns`）中，`index_sns` 数组重命名为 `sns_list`，同时 `type` 字段由对象类型改为字符串类型。**已有配置需重新设置社交资料列表。**
@@ -637,7 +639,8 @@
 
 - 修复启用“标签集合页样式——标签排序方式”时标签颜色无法正常显示的问题。
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.2...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.0...HEAD
+[1.59.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.2...v1.59.0
 [1.58.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.1...v1.58.2
 [1.58.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.0...v1.58.1
 [1.58.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.57.6...v1.58.0
