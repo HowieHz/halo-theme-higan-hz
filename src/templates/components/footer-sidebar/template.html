@@ -7,8 +7,8 @@
   th:with="sidebarPos = ${theme.config?.styles?.footer_content_sidebar_position},
            sidebarNarrow = ${theme.config?.styles?.footer_content_sidebar_narrow ?: 'hide'},
            sidebarOpacity = ${theme.config?.styles?.footer_content_sidebar_opacity ?: '1'},
-           isLeftSidebar = ${isSidebar and isBottomSidebarContent and (sidebarPos == 'bottom-left' or sidebarPos == 'top-left')},
-           isRightSidebar = ${isSidebar and isBottomSidebarContent and (sidebarPos == 'bottom-right' or sidebarPos == 'top-right')}"
+           isLeftSidebar = ${sidebarPos == 'bottom-left' or sidebarPos == 'top-left'},
+           isRightSidebar = ${sidebarPos == 'bottom-right' or sidebarPos == 'top-right'}"
 >
   <!--/*
     footer-sidebar 悬浮侧边栏变量：

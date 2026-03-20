@@ -883,13 +883,11 @@
     ></th:block>
     <th:block th:insert="~{components/layout-heading-paragraph-margin-style/template :: body}"></th:block>
     <!--/*
-      isSidebar       — 是否启用侧边栏模式（位置非空且非 inline）
+      isSidebar       — 是否启用侧边栏模式（位置非 inline）
       isBottomSidebarContent — 是否开启"页面底部/侧边栏内容"
     */-->
     <th:block
-      th:with="isSidebar = ${theme.config?.styles?.footer_content_sidebar_position != null
-                             and theme.config?.styles?.footer_content_sidebar_position != 'inline'
-                             and theme.config?.styles?.footer_content_sidebar_position != ''},
+      th:with="isSidebar = ${theme.config?.styles?.footer_content_sidebar_position != 'inline'},
                isBottomSidebarContent = ${theme.config?.styles?.is_footer_content_show
                                           or theme.config?.styles?.is_18n_footer_content_show}"
     >
