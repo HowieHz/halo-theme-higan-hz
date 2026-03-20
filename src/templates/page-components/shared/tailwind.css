@@ -2,9 +2,11 @@
 
 @import "tailwindcss/theme.css" layer(theme) source("../../../../src");
 @import "tailwindcss/utilities.css" layer(utilities) source("../../../../src");
+/* stylelint-disable at-rule-prelude-no-invalid -- Tailwind @source not uses custom prelude syntax */
 @source not "../../../../src/templates/public";
 @source not "../../../../src/templates/components/example";
 @source not "../../../../src/templates/components/performance-monitor";
+/* stylelint-enable at-rule-prelude-no-invalid */
 /* stylelint-disable custom-property-pattern */
 @theme {
   --text-*: initial;
