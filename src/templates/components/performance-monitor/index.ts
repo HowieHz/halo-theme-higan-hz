@@ -34,6 +34,7 @@ interface ThemeVars {
   muted: string;
   panelBg: string;
   resizeGrip: string;
+  resizeGripHover: string;
   shadow: string;
   text: string;
   warn: string;
@@ -142,13 +143,15 @@ const TOP_DOCK_TRIGGER = 18;
 const TOP_DOCK_MARGIN = 8;
 const MAX_TOP_DOCK_WIDTH = 720;
 const NARROW_HEADER_THRESHOLD = 420;
-const COMPACT_ACTIONS_THRESHOLD = 360;
-const MINIMAL_ACTIONS_THRESHOLD = 320;
+const COMPACT_ACTIONS_THRESHOLD = 304;
+const MINIMAL_ACTIONS_THRESHOLD = 278;
 const ANIMATION_MS = 180;
 const TOP_DOCK_ANIMATION_MS = 170;
 const TOP_DOCK_MOVE_ANIMATION_MS = 136;
 const TOP_DOCK_SHAPE_ANIMATION_MS = 92;
 const TOP_DOCK_SHAPE_DELAY_MS = 20;
+const TOP_DOCK_PRE_SHRINK_MS = 74;
+const TOP_DOCK_PRE_SHRINK_SCALE = 0.93;
 const FPS_CAP = 60;
 const UPDATE_INTERVAL = 120;
 const RECENT_WINDOW_MS = 1000;
@@ -272,6 +275,7 @@ const THEMES: Record<ThemeName, ThemeVars> = {
     muted: "#8b949e",
     panelBg: "rgba(15,18,24,0.92)",
     resizeGrip: "linear-gradient(135deg, transparent 0 45%, rgba(255,255,255,0.18) 45% 55%, transparent 55% 100%)",
+    resizeGripHover: "linear-gradient(135deg, transparent 0 45%, rgba(255,255,255,0.38) 45% 55%, transparent 55% 100%)",
     shadow: "0 1px 2px rgba(0,0,0,0.28)",
     text: "#e6edf3",
     warn: "#d29922",
@@ -294,6 +298,7 @@ const THEMES: Record<ThemeName, ThemeVars> = {
     muted: "#59636e",
     panelBg: "rgba(255,255,255,0.94)",
     resizeGrip: "linear-gradient(135deg, transparent 0 45%, rgba(31,35,40,0.18) 45% 55%, transparent 55% 100%)",
+    resizeGripHover: "linear-gradient(135deg, transparent 0 45%, rgba(31,35,40,0.36) 45% 55%, transparent 55% 100%)",
     shadow: "0 1px 2px rgba(31,35,40,0.08)",
     text: "#1f2328",
     warn: "#9a6700",
@@ -412,76 +417,6 @@ function computeHeapGrowthMbPerMin(samples: Array<number | null>, times: number[
   if (!Number.isFinite(deltaMs) || deltaMs < 1000) return null;
   const deltaBytes = (samples[end] ?? 0) - (samples[start] ?? 0);
   return deltaBytes / 1048576 / (deltaMs / 60000);
-}
-
-function averageRecentNumbers(samples: number[], times: number[], windowMs: number, fallback: number): number {
-  if (samples.length === 0 || times.length === 0) return fallback;
-  const endTime = times[times.length - 1];
-  const cutoff = endTime - Math.max(1, windowMs);
-  let sum = 0;
-  let count = 0;
-  for (let i = samples.length - 1; i >= 0; i -= 1) {
-    if (times[i] < cutoff) break;
-    const value = samples[i];
-    if (!Number.isFinite(value)) continue;
-    sum += value;
-    count += 1;
-  }
-  return count > 0 ? sum / count : fallback;
-}
-
-function maxRecentNumbers(samples: number[], times: number[], windowMs: number, fallback: number): number {
-  if (samples.length === 0 || times.length === 0) return fallback;
-  const endTime = times[times.length - 1];
-  const cutoff = endTime - Math.max(1, windowMs);
-  let maxValue = Number.NEGATIVE_INFINITY;
-  for (let i = samples.length - 1; i >= 0; i -= 1) {
-    if (times[i] < cutoff) break;
-    const value = samples[i];
-    if (!Number.isFinite(value)) continue;
-    if (value > maxValue) maxValue = value;
-  }
-  return Number.isFinite(maxValue) ? maxValue : fallback;
-}
-
-function averageRecentNullableNumbers(
-  samples: Array<number | null>,
-  times: number[],
-  windowMs: number,
-  fallback: number,
-): number {
-  if (samples.length === 0 || times.length === 0) return fallback;
-  const endTime = times[times.length - 1];
-  const cutoff = endTime - Math.max(1, windowMs);
-  let sum = 0;
-  let count = 0;
-  for (let i = samples.length - 1; i >= 0; i -= 1) {
-    if (times[i] < cutoff) break;
-    const value = samples[i];
-    if (value === null || !Number.isFinite(value)) continue;
-    sum += value;
-    count += 1;
-  }
-  return count > 0 ? sum / count : fallback;
-}
-
-function maxRecentNullableNumbers(
-  samples: Array<number | null>,
-  times: number[],
-  windowMs: number,
-  fallback: number,
-): number {
-  if (samples.length === 0 || times.length === 0) return fallback;
-  const endTime = times[times.length - 1];
-  const cutoff = endTime - Math.max(1, windowMs);
-  let maxValue = Number.NEGATIVE_INFINITY;
-  for (let i = samples.length - 1; i >= 0; i -= 1) {
-    if (times[i] < cutoff) break;
-    const value = samples[i];
-    if (value === null || !Number.isFinite(value)) continue;
-    if (value > maxValue) maxValue = value;
-  }
-  return Number.isFinite(maxValue) ? maxValue : fallback;
 }
 
 function resizeArrayTail<T>(values: T[], desired: number, fillValue: T): T[] {
@@ -643,6 +578,9 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
   let helpPopoverHovering = false;
   let helpPopoverPinned = false;
   let helpPopoverHideTimer = 0;
+  let topDockPhaseTimer = 0;
+  let topDockPhaseActive = false;
+  let resizeHandleHovering = false;
   let lastSrStatusAt = 0;
   let lastSrStatusText = "";
 
@@ -781,6 +719,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     "outline:2px solid transparent",
     "outline-offset:2px",
     "touch-action:none",
+    `transition:background ${transitionMs}ms ease, outline-color ${transitionMs}ms ease, box-shadow ${transitionMs}ms ease`,
   ].join(";");
 
   const helpPopover = document.createElement("div");
@@ -1011,6 +950,47 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     button.style.color = themeVars.text;
   }
 
+  function syncResizeHandleVisualState(): void {
+    const focused = document.activeElement === resizeHandle;
+    resizeHandle.style.background = resizeHandleHovering || focused ? themeVars.resizeGripHover : themeVars.resizeGrip;
+    resizeHandle.style.outlineColor = focused ? themeVars.fpsLine : "transparent";
+    resizeHandle.style.boxShadow = "none";
+  }
+
+  function setupInteractiveStyleHandlers(): void {
+    controlButtons.forEach((button) => {
+      button.onmouseenter = () => {
+        button.style.background = themeVars.buttonHoverBg;
+      };
+      button.onmouseleave = () => {
+        button.style.background = themeVars.buttonBg;
+      };
+      button.onfocus = () => {
+        button.style.background = themeVars.buttonHoverBg;
+        button.style.outlineColor = themeVars.fpsLine;
+      };
+      button.onblur = () => {
+        button.style.background = themeVars.buttonBg;
+        button.style.outlineColor = "transparent";
+      };
+    });
+
+    resizeHandle.onmouseenter = () => {
+      resizeHandleHovering = true;
+      syncResizeHandleVisualState();
+    };
+    resizeHandle.onmouseleave = () => {
+      resizeHandleHovering = false;
+      syncResizeHandleVisualState();
+    };
+    resizeHandle.onfocus = () => {
+      syncResizeHandleVisualState();
+    };
+    resizeHandle.onblur = () => {
+      syncResizeHandleVisualState();
+    };
+  }
+
   function getNextViewMode(viewMode: ViewMode): ViewMode {
     if (viewMode === "concise") return "detailed";
     if (viewMode === "detailed") return "advanced";
@@ -1077,7 +1057,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     const shapeEasing = isTopMotion ? "cubic-bezier(.24,.76,.2,1)" : "ease";
 
     panel.style.transition = enabled
-      ? `left ${moveMs}ms ${moveEasing}, top ${moveMs}ms ${moveEasing}, width ${moveMs}ms ${moveEasing}, height ${moveMs}ms ${moveEasing}, border-radius ${shapeMs}ms ${shapeEasing} ${shapeDelayMs}ms, box-shadow ${moveMs}ms ease, opacity ${moveMs}ms ease`
+      ? `left ${moveMs}ms ${moveEasing}, top ${moveMs}ms ${moveEasing}, width ${moveMs}ms ${moveEasing}, height ${moveMs}ms ${moveEasing}, transform ${moveMs}ms ${moveEasing}, border-radius ${shapeMs}ms ${shapeEasing} ${shapeDelayMs}ms, box-shadow ${moveMs}ms ease, opacity ${moveMs}ms ease`
       : "none";
 
     const contentMs = enabled ? (isTopMotion ? Math.min(transitionMs, 118) : transitionMs) : 0;
@@ -1087,6 +1067,46 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     body.style.transition = contentTransition;
     title.style.transition = contentMs ? `opacity ${contentMs}ms ease` : "none";
     summary.style.transition = contentMs ? `opacity ${contentMs}ms ease` : "none";
+  }
+
+  function clearTopDockPhase(resetTransform: boolean): void {
+    if (topDockPhaseTimer) {
+      window.clearTimeout(topDockPhaseTimer);
+      topDockPhaseTimer = 0;
+    }
+    topDockPhaseActive = false;
+    if (resetTransform) panel.style.transform = "scale(1)";
+  }
+
+  function animateDockToTop(): void {
+    clearTopDockPhase(false);
+    if (transitionMs <= 0) {
+      withAnimation(true, "top");
+      panel.style.transform = "scale(1)";
+      dockToTop();
+      applyLayout();
+      render(lastDeltaValue, performance.memory ?? null);
+      saveState(state);
+      return;
+    }
+
+    topDockPhaseActive = true;
+    const shrinkMs = Math.min(transitionMs, TOP_DOCK_PRE_SHRINK_MS);
+    panel.style.transformOrigin = "center top";
+    panel.style.transition = `transform ${shrinkMs}ms cubic-bezier(.22,.86,.2,1), opacity ${shrinkMs}ms ease`;
+    panel.style.transform = `scale(${TOP_DOCK_PRE_SHRINK_SCALE})`;
+
+    topDockPhaseTimer = window.setTimeout(() => {
+      topDockPhaseTimer = 0;
+      topDockPhaseActive = false;
+      withAnimation(true, "top");
+      panel.style.transformOrigin = "center top";
+      panel.style.transform = "scale(1)";
+      dockToTop();
+      applyLayout();
+      render(lastDeltaValue, performance.memory ?? null);
+      saveState(state);
+    }, shrinkMs);
   }
 
   function stat(label: string, value: string, color?: string): string {
@@ -1383,9 +1403,10 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
 
   function finalizePositionAfterDrag(): void {
     if (state.top <= TOP_DOCK_TRIGGER) {
-      withAnimation(true, "top");
-      dockToTop();
+      animateDockToTop();
+      return;
     } else {
+      clearTopDockPhase(true);
       withAnimation(true);
       state.dockMode = "free";
       snapFreePanelToEdges();
@@ -1415,32 +1436,13 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     helpPopover.style.boxShadow = themeVars.shadow;
     helpPopover.style.color = themeVars.text;
 
-    [themeButton, languageButton, viewModeButton, helpButton, minimizeButton, closeButton].forEach((button) => {
+    controlButtons.forEach((button) => {
       setButtonTheme(button);
       button.style.outlineColor = "transparent";
-      button.onmouseenter = () => {
-        button.style.background = themeVars.buttonHoverBg;
-      };
-      button.onmouseleave = () => {
-        button.style.background = themeVars.buttonBg;
-      };
-      button.onfocus = () => {
-        button.style.background = themeVars.buttonHoverBg;
-        button.style.outlineColor = themeVars.fpsLine;
-      };
-      button.onblur = () => {
-        button.style.background = themeVars.buttonBg;
-        button.style.outlineColor = "transparent";
-      };
     });
     resizeHandle.style.outlineColor = "transparent";
-    resizeHandle.onfocus = () => {
-      resizeHandle.style.outlineColor = themeVars.fpsLine;
-    };
-    resizeHandle.onblur = () => {
-      resizeHandle.style.outlineColor = "transparent";
-    };
-    applyLocaleCopy();
+    syncResizeHandleVisualState();
+    syncActionButtonText();
   }
 
   function applyDockModeStyles(): void {
@@ -1588,8 +1590,8 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     const height = currentDims.fpsHeight;
     const startTime = sampleTimes[0];
     const endTime = sampleTimes[sampleTimes.length - 1];
-    const recentAvgFps = averageRecentNumbers(fpsSamples, sampleTimes, 1000, FPS_CAP);
-    const recentMaxFps = maxRecentNumbers(fpsSamples, sampleTimes, 1000, FPS_CAP);
+    const recentAvgFps = getRecentFpsAverage(FPS_CAP);
+    const recentMaxFps = getRecentFpsMax(FPS_CAP);
     const fpsScaleMax = Math.max(1, recentMaxFps * 1.1, recentAvgFps * 1.2);
 
     fpsContext2d.clearRect(0, 0, width, height);
@@ -1630,7 +1632,8 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     fpsContext2d.fillText("60", 4, Math.max(10, targetY - 2));
 
     if (endTime > startTime) {
-      for (const task of longTasks) {
+      for (let i = longTaskStartIndex; i < longTasks.length; i += 1) {
+        const task = longTasks[i];
         if (task.start < startTime || task.start > endTime) continue;
         const x = plotLeft + ((task.start - startTime) / (endTime - startTime)) * plotWidth;
         fpsContext2d.strokeStyle = themeVars.longTask;
@@ -1715,8 +1718,8 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
       return;
     }
 
-    const recentAvgMemUsed = averageRecentNullableNumbers(memSamples, sampleTimes, 1000, memory.usedJSHeapSize);
-    const recentMaxMemUsed = maxRecentNullableNumbers(memSamples, sampleTimes, 1000, memory.usedJSHeapSize);
+    const recentAvgMemUsed = getRecentMemAverage(memory.usedJSHeapSize);
+    const recentMaxMemUsed = getRecentMemMax(memory.usedJSHeapSize);
     const scaleMax = Math.max(1, recentMaxMemUsed * 1.1, recentAvgMemUsed * 1.2);
 
     memContext2d.fillStyle = themeVars.muted;
@@ -1760,7 +1763,8 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     const avgFps = avgFrame ? 1000 / avgFrame : 0;
     const minFps = Math.min(...fpsSamples).toFixed(1);
     const maxFps = Math.max(...fpsSamples).toFixed(1);
-    const longTaskCount = longTasks.length;
+    const longTaskCount = getVisibleLongTaskCount();
+    const shouldRenderStatsGrid = state.dockMode === "free" && !state.minimized;
     const fpsColor = avgFps >= 50 ? themeVars.good : avgFps >= 30 ? themeVars.warn : themeVars.bad;
     const onePercentLowColor =
       onePercentLowFps >= 50 ? themeVars.good : onePercentLowFps >= 30 ? themeVars.warn : themeVars.bad;
@@ -1777,41 +1781,43 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
         : themeVars.muted;
     memTitle.textContent = getMemTitleText(memory);
 
-    if (state.viewMode === "concise") {
-      stats.innerHTML =
-        stat(localeCopy.statAvgFps, avgFps.toFixed(1), fpsColor) +
-        stat(localeCopy.statAvgFrameMs, avgFrame.toFixed(2)) +
-        stat(localeCopy.statP95FrameMs, p95FrameMs.toFixed(2)) +
-        stat(localeCopy.statP99FrameMs, p99FrameMs.toFixed(2)) +
-        stat(localeCopy.statOnePercentLowFps, onePercentLowFps.toFixed(1), onePercentLowColor);
-    } else if (state.viewMode === "detailed") {
-      stats.innerHTML =
-        stat(localeCopy.statAvgFps, avgFps.toFixed(1), fpsColor) +
-        stat(localeCopy.statAvgFrameMs, avgFrame.toFixed(2)) +
-        stat(localeCopy.statFpsRange, `${minFps} / ${maxFps}`) +
-        stat(localeCopy.statDroppedFrames, String(droppedFrames), droppedFrames ? themeVars.bad : themeVars.good) +
-        stat(localeCopy.statP95FrameMs, p95FrameMs.toFixed(2)) +
-        stat(localeCopy.statP99FrameMs, p99FrameMs.toFixed(2)) +
-        stat(localeCopy.statOnePercentLowFps, onePercentLowFps.toFixed(1), onePercentLowColor) +
-        stat(localeCopy.statCurrentFrameMs, delta.toFixed(2));
-    } else {
-      stats.innerHTML =
-        stat(localeCopy.statAvgFps, avgFps.toFixed(1), fpsColor) +
-        stat(localeCopy.statAvgFrameMs, avgFrame.toFixed(2)) +
-        stat(localeCopy.statP95FrameMs, p95FrameMs.toFixed(2)) +
-        stat(localeCopy.statP99FrameMs, p99FrameMs.toFixed(2)) +
-        stat(localeCopy.statOnePercentLowFps, onePercentLowFps.toFixed(1), onePercentLowColor) +
-        stat(localeCopy.statFpsRange, `${minFps} / ${maxFps}`) +
-        stat(localeCopy.statDroppedFrames, String(droppedFrames), droppedFrames ? themeVars.bad : themeVars.good) +
-        stat(localeCopy.statCurrentFrameMs, delta.toFixed(2)) +
-        stat(localeCopy.statLongTasks, String(longTaskCount), longTaskCount ? themeVars.bad : themeVars.good) +
-        stat(localeCopy.statMemUsedMb, memUsed, memColor) +
-        stat(localeCopy.statMemTotalMb, memTotal) +
-        stat(
-          localeCopy.statHeapGrowthRateMbMin,
-          heapGrowthText,
-          heapGrowthMbPerMin === null ? undefined : heapGrowthMbPerMin > 0 ? themeVars.warn : themeVars.good,
-        );
+    if (shouldRenderStatsGrid) {
+      if (state.viewMode === "concise") {
+        stats.innerHTML =
+          stat(localeCopy.statAvgFps, avgFps.toFixed(1), fpsColor) +
+          stat(localeCopy.statAvgFrameMs, avgFrame.toFixed(2)) +
+          stat(localeCopy.statP95FrameMs, p95FrameMs.toFixed(2)) +
+          stat(localeCopy.statP99FrameMs, p99FrameMs.toFixed(2)) +
+          stat(localeCopy.statOnePercentLowFps, onePercentLowFps.toFixed(1), onePercentLowColor);
+      } else if (state.viewMode === "detailed") {
+        stats.innerHTML =
+          stat(localeCopy.statAvgFps, avgFps.toFixed(1), fpsColor) +
+          stat(localeCopy.statAvgFrameMs, avgFrame.toFixed(2)) +
+          stat(localeCopy.statFpsRange, `${minFps} / ${maxFps}`) +
+          stat(localeCopy.statDroppedFrames, String(droppedFrames), droppedFrames ? themeVars.bad : themeVars.good) +
+          stat(localeCopy.statP95FrameMs, p95FrameMs.toFixed(2)) +
+          stat(localeCopy.statP99FrameMs, p99FrameMs.toFixed(2)) +
+          stat(localeCopy.statOnePercentLowFps, onePercentLowFps.toFixed(1), onePercentLowColor) +
+          stat(localeCopy.statCurrentFrameMs, delta.toFixed(2));
+      } else {
+        stats.innerHTML =
+          stat(localeCopy.statAvgFps, avgFps.toFixed(1), fpsColor) +
+          stat(localeCopy.statAvgFrameMs, avgFrame.toFixed(2)) +
+          stat(localeCopy.statP95FrameMs, p95FrameMs.toFixed(2)) +
+          stat(localeCopy.statP99FrameMs, p99FrameMs.toFixed(2)) +
+          stat(localeCopy.statOnePercentLowFps, onePercentLowFps.toFixed(1), onePercentLowColor) +
+          stat(localeCopy.statFpsRange, `${minFps} / ${maxFps}`) +
+          stat(localeCopy.statDroppedFrames, String(droppedFrames), droppedFrames ? themeVars.bad : themeVars.good) +
+          stat(localeCopy.statCurrentFrameMs, delta.toFixed(2)) +
+          stat(localeCopy.statLongTasks, String(longTaskCount), longTaskCount ? themeVars.bad : themeVars.good) +
+          stat(localeCopy.statMemUsedMb, memUsed, memColor) +
+          stat(localeCopy.statMemTotalMb, memTotal) +
+          stat(
+            localeCopy.statHeapGrowthRateMbMin,
+            heapGrowthText,
+            heapGrowthMbPerMin === null ? undefined : heapGrowthMbPerMin > 0 ? themeVars.warn : themeVars.good,
+          );
+      }
     }
 
     if (state.dockMode === "top") {
@@ -1853,12 +1859,14 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     sampleTimes.shift();
     memSamples.push(memory ? memory.usedJSHeapSize : null);
     memSamples.shift();
+    pushFpsRecent(nowValue, fps);
+    pushMemRecent(nowValue, memory ? memory.usedJSHeapSize : null);
     frameTimes.push(delta);
     if (frameTimes.length > 120) frameTimes.shift();
     if (delta > (1000 / 50) * 1.5) droppedFrames += 1;
 
     const oldestVisibleTime = sampleTimes[0];
-    longTasks = longTasks.filter((task) => task.start >= oldestVisibleTime - 500);
+    pruneLongTasks(oldestVisibleTime - 500);
 
     // Draw charts every frame for smooth horizontal scrolling.
     if (shouldShowMonitorBody() && state.viewMode !== "concise") {
@@ -1925,7 +1933,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
       state.compactGraphHeight = clamp(currentFpsHeight, MIN_COMPACT_GRAPH_HEIGHT, MAX_TOTAL_GRAPH_HEIGHT);
     }
     state.viewMode = getNextViewMode(state.viewMode);
-    applyTheme();
+    syncActionButtonText();
     applyLayout();
     render(lastDeltaValue, performance.memory ?? null);
     saveState(state);
@@ -1933,7 +1941,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
 
   function toggleLanguage(): void {
     state.locale = state.locale === "zh-CN" ? "en-US" : "zh-CN";
-    applyTheme();
+    applyLocaleCopy();
     applyLayout();
     render(lastDeltaValue, performance.memory ?? null);
     saveState(state);
@@ -1951,6 +1959,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
   }
 
   function onPanelPointerDown(event: PointerEvent): void {
+    clearTopDockPhase(true);
     const target = event.target instanceof Element ? event.target : null;
     // Hit target priority: interactive controls (buttons/resize handle) > panel drag.
     if (target?.closest("[data-perf-interactive='true']")) return;
@@ -1985,6 +1994,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
 
   function onResizePointerDown(event: PointerEvent): void {
     if (state.minimized || state.dockMode !== "free") return;
+    clearTopDockPhase(true);
     withAnimation(false);
     const activeGraphHeight = getActiveGraphHeight();
     resizeState = {
@@ -2122,7 +2132,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
       } catch {}
       dragState = null;
       finalizePositionAfterDrag();
-      render(lastDeltaValue, performance.memory ?? null);
+      if (!topDockPhaseActive) render(lastDeltaValue, performance.memory ?? null);
     }
 
     if (resizeState && event.pointerId === resizeState.pointerId) {
@@ -2139,6 +2149,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
   }
 
   function onWindowResize(): void {
+    clearTopDockPhase(true);
     withAnimation(true, state.dockMode === "top" ? "top" : "auto");
     if (state.dockMode === "top") dockToTop();
     else clampFreePanelToViewport();
@@ -2166,6 +2177,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
     window.cancelAnimationFrame(rafId);
     observer?.disconnect();
     clearHelpPopoverHideTimer();
+    clearTopDockPhase(false);
     panel.removeEventListener("pointerdown", onPanelPointerDown);
     header.removeEventListener("dblclick", onHeaderDoubleClick);
     resizeHandle.removeEventListener("pointerdown", onResizePointerDown);
@@ -2216,6 +2228,8 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
   window.addEventListener("pointercancel", onPointerUp);
   window.addEventListener("resize", onWindowResize);
 
+  setupInteractiveStyleHandlers();
+  applyLocaleCopy();
   applyTheme();
   withAnimation(true, state.dockMode === "top" ? "top" : "auto");
   if (state.dockMode === "top") dockToTop();
@@ -2226,11 +2240,7 @@ export function initPerformanceMonitor(): PerformanceMonitorApi {
   const api: PerformanceMonitorApi = {
     destroy,
     dockTop: () => {
-      withAnimation(true, "top");
-      dockToTop();
-      applyLayout();
-      render(lastDeltaValue, performance.memory ?? null);
-      saveState(state);
+      animateDockToTop();
     },
     maximize: () => {
       if (state.dockMode !== "free") exitDockMode();
