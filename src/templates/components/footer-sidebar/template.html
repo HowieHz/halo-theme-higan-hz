@@ -21,19 +21,19 @@
   <div th:if="${isSidebar and isBottomSidebarContent}" class="main-with-sidebar">
     <th:block
       th:if="${isLeftSidebar}"
-      th:replace="~{components/footer-bottom-content/template :: body(
-                    className = 'footer-bottom',
-                    classAppend = 'footer-sidebar footer-sidebar--' + ${sidebarPos} + ' footer-sidebar--narrow-' + ${sidebarNarrow},
-                    styleText = '--footer-sidebar-opacity:' + ${sidebarOpacity}
+      th:insert="~{components/footer-bottom-content/template :: body(
+                   className = 'footer-bottom',
+                   classAppend = 'footer-sidebar footer-sidebar--' + ${sidebarPos} + ' footer-sidebar--narrow-' + ${sidebarNarrow},
+                   styleText = '--footer-sidebar-opacity:' + ${sidebarOpacity}
                   )}"
     ></th:block>
     <th:block th:replace="${wrapped}"></th:block>
     <th:block
       th:if="${isRightSidebar}"
-      th:replace="~{components/footer-bottom-content/template :: body(
-                    className = 'footer-bottom',
-                    classAppend = 'footer-sidebar footer-sidebar--' + ${sidebarPos} + ' footer-sidebar--narrow-' + ${sidebarNarrow},
-                    styleText = '--footer-sidebar-opacity:' + ${sidebarOpacity}
+      th:insert="~{components/footer-bottom-content/template :: body(
+                   className = 'footer-bottom',
+                   classAppend = 'footer-sidebar footer-sidebar--' + ${sidebarPos} + ' footer-sidebar--narrow-' + ${sidebarNarrow},
+                   styleText = '--footer-sidebar-opacity:' + ${sidebarOpacity}
                   )}"
     ></th:block>
   </div>

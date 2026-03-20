@@ -1013,10 +1013,10 @@
 
             <th:block
               th:if="${not isSidebar and isBottomSidebarContent}"
-              th:replace="~{components/footer-bottom-content/template :: body(
-                            className = 'footer-bottom',
-                            classAppend = '',
-                            styleText = ''
+              th:insert="~{components/footer-bottom-content/template :: body(
+                           className = 'footer-bottom',
+                           classAppend = '',
+                           styleText = ''
                           )}"
             ></th:block>
           </div>

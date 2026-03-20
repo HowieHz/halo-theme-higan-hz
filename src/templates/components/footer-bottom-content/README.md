@@ -14,10 +14,10 @@ It is designed to be reused by both inline footer-bottom and floating sidebar mo
 
 ```html
 <th:block
-  th:replace="~{components/footer-bottom-content/template :: body(
-                className = 'footer-bottom',
-                classAppend = '',
-                styleText = ''
+  th:insert="~{components/footer-bottom-content/template :: body(
+               className = 'footer-bottom',
+               classAppend = '',
+               styleText = ''
               )}"
 ></th:block>
 ```
