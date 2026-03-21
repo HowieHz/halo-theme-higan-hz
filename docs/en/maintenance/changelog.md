@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.59.1] - 2026-03-21
+
 ### 🚀 Features
 
 - Added rel="noopener noreferrer nofollow" to share links to improve security and control SEO link equity.
@@ -649,7 +651,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed tag color rendering issues when `Tags Page Style -> Tag Sort Order` was enabled.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.0...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.1...HEAD
+[1.59.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.0...v1.59.1
 [1.59.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.2...v1.59.0
 [1.58.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.1...v1.58.2
 [1.58.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.0...v1.58.1
