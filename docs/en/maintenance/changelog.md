@@ -3,15 +3,17 @@
 <!-- markdownlint-disable MD024 -->
 
 <!--
-💥 BREAKING CHANGES
-🚀 Features
-🔧 Code Refactoring
-⚠️ Deprecated
-🗑️ Removed
-🐛 Bug Fixes
-🔒 Security
-📄 Documentation
-🛠️ Miscellaneous Chores
+Level-3 heading order
+
+### 💥 BREAKING CHANGES
+### 🚀 Features
+### 🔧 Code Refactoring
+### ⚠️ Deprecated
+### 🗑️ Removed
+### 🐛 Bug Fixes
+### 🔒 Security
+### 📄 Documentation
+### 🛠️ Miscellaneous Chores
 -->
 
 All notable changes to this project will be documented in this file.
@@ -20,6 +22,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### 🚀 Features
+
+- Added rel="noopener noreferrer nofollow" to share links to improve security and control SEO link equity.
+
+### 🔧 Code Refactoring
+
+- Share links now open in a new tab (`target="_blank"`).
 
 ## [1.59.0] - 2026-03-21
 
