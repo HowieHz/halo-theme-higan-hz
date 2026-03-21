@@ -80,7 +80,7 @@ export default defineConfig((): UserConfig => {
         polyfill: false,
       },
       cssMinify: "lightningcss",
-      rollupOptions: {
+      rolldownOptions: {
         input: {
           // pages
           archives: path.resolve(__dirname, "src/templates/archives.html"),
