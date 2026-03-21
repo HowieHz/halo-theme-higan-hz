@@ -1,7 +1,6 @@
 import { whyframe } from "@whyframe/core";
 import { whyframeVue } from "@whyframe/vue";
 import browserslist from "browserslist";
-import * as cheerio from "cheerio";
 import { browserslistToTargets } from "lightningcss";
 import { defineConfig, type DefaultTheme } from "vitepress";
 import { chineseSearchOptimize, pagefindPlugin } from "vitepress-plugin-pagefind";
@@ -103,39 +102,45 @@ export default defineConfig({
   async transformHtml(code, id) {
     if (id.includes("frames/") || id.includes("frames\\")) {
       // code 是准备写入硬盘的 HTML 内容，可以在这里进行修改后返回
-      // 用 cheerio 解析后删除相应标签
-      const $ = cheerio.load(code);
       // script type="module" 不能移除，所以 <link rel="modulepreload"> 标签也不能移除，移除了反而减慢加载速度
 
-      // 移除无用的 meta 标签和 ttile, 控制 HTML 大小
-      $('head meta[name="viewport"], head meta[name="generator"], head meta[name="description"], head title').remove();
+      let result = code;
+
+      // 移除无用的 meta 标签和 title, 控制 HTML 大小
+      result = result.replace(/<meta\s[^>]*name="viewport"[^>]*\/?>/gi, "");
+      result = result.replace(/<meta\s[^>]*name="generator"[^>]*\/?>/gi, "");
+      result = result.replace(/<meta\s[^>]*name="description"[^>]*\/?>/gi, "");
+      result = result.replace(/<title>[^<]*<\/title>/gi, "");
 
       // 移除 <link rel="preload"> 标签，避免重复加载默认字体资源
-      $('head link[rel="preload"]').remove();
+      result = result.replace(/<link\s[^>]*rel="preload"[^>]*\/?>/gi, "");
       // 不能移除全部 <link rel="preload stylesheet"> 标签，会导致 iframe 内样式丢失
       // 可以移除，因为 vp-icons.css 用不到
-      $('head link[rel="preload stylesheet"][href="/halo-theme-higan-haozi/vp-icons.css"][as="style"]').remove();
+      result = result.replace(
+        /<link(?=[^>]*\brel="preload stylesheet")(?=[^>]*\bhref="\/halo-theme-higan-haozi\/vp-icons\.css")(?=[^>]*\bas="style")[^>]*\/?>/gi,
+        "",
+      );
 
       // 移除 script id="check-dark-mode" 和 script id="check-mac-os"
-      $("head script#check-dark-mode, head script#check-mac-os").remove();
+      result = result.replace(/<script\b[^>]*\bid="check-dark-mode"[^>]*>[\s\S]*?<\/script>/gi, "");
+      result = result.replace(/<script\b[^>]*\bid="check-mac-os"[^>]*>[\s\S]*?<\/script>/gi, "");
 
       // 移除 <script>import("/halo-theme-higan-haozi/pagefind/pagefind.js").then(i=>{window.__pagefind__=i,i.init()}).catch(()=>{});</script>
-      $("head script").each((_, elem) => {
-        const scriptContent = $(elem).html();
-        if (scriptContent && scriptContent.includes('import("/halo-theme-higan-haozi/pagefind/pagefind.js")')) {
-          $(elem).remove();
-        }
-      });
+      result = result.replace(
+        /<script[^>]*>[^<]*import\("\/halo-theme-higan-haozi\/pagefind\/pagefind\.js"\)[^<]*<\/script>/gi,
+        "",
+      );
 
       // 移除多余的空行并返回修改后的 HTML
-      return $.html().replace(/^\s*[\r\n]/gm, "");
+      return result.replace(/^\s*[\r\n]/gm, "");
     } else {
       // 对非 frames 页面，在 body 开头插入 GTM 的 noscript 回退（便于不支持 JS 的环境统计）
-      const $ = cheerio.load(code);
-      $("body").prepend(
-        `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T447LW69" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`,
-      );
-      return $.html().replace(/^\s*[\r\n]/gm, "");
+      return code
+        .replace(
+          /<body([^>]*)>/,
+          `<body$1><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T447LW69" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`,
+        )
+        .replace(/^\s*[\r\n]/gm, "");
     }
   },
 
