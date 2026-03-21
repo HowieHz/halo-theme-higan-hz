@@ -27,6 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix missing top margin in the footer and restore expected spacing.
 
+### 🛠️ Miscellaneous Chores
+
+- Upgrade build tool Vite to version 8.
+- Remove cheerio dependency from the documentation build process.
+
 ## [1.59.1] - 2026-03-21
 
 ### 🚀 Features
