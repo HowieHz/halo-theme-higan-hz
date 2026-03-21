@@ -1,7 +1,6 @@
 packages:
   - .
   - docs
-
 allowBuilds:
   esbuild: true
   unrs-resolver: true
