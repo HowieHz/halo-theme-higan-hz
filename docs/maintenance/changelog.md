@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.59.2] - 2026-03-22
+
 ### 🐛 错误修复
 
 - 修复页脚内容上边距消失问题，恢复预期间距。
@@ -660,7 +662,8 @@
 
 - 修复启用“标签集合页样式——标签排序方式”时标签颜色无法正常显示的问题。
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.2...HEAD
+[1.59.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.1...v1.59.2
 [1.59.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.0...v1.59.1
 [1.59.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.2...v1.59.0
 [1.58.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.1...v1.58.2
