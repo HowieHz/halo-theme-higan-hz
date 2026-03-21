@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fix missing top margin in the footer and restore expected spacing.
+
 ## [1.59.1] - 2026-03-21
 
 ### 🚀 Features
