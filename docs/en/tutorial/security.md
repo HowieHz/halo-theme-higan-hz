@@ -105,7 +105,7 @@ gh attestation verify howiehz-higan-en.zip ^
 
 ### Option 2: SLSA Provenance (L3)
 
-Requires [slsa-verifier](https://github.com/slsa-framework/slsa-verifier). Download `multiple.intoto.jsonl` and the `.zip` file from the Release page, place them in the same directory, then run:
+Requires [slsa-verifier](https://github.com/slsa-framework/slsa-verifier). Download `multiple.intoto.jsonl` and the `.zip` file from the [Releases page](https://github.com/HowieHz/halo-theme-higan-hz/releases), place them in the same directory, then run:
 
 ::: code-group
 
