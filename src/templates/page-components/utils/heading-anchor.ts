@@ -1,6 +1,6 @@
 /**
- * Inserts a clickable `#` anchor link before the text of each heading that has an id,
- * allowing users to copy a direct link to that heading.
+ * Inserts a clickable `#` anchor link into each heading. If a heading lacks an `id`,
+ * one is generated from its text content. Headings with empty text are skipped.
  *
  * @param contentSelector - CSS selector for the element containing the headings.
  * @param headingSelector - CSS selector for heading elements to process.
@@ -10,7 +10,15 @@ export function initHeadingAnchors(contentSelector: string, headingSelector = "h
   if (!contentRoot) return;
 
   contentRoot.querySelectorAll<HTMLElement>(headingSelector).forEach((heading) => {
-    if (!heading.id) return;
+    if (!heading.id) {
+      const text = heading.textContent?.trim() ?? "";
+      if (!text) return;
+      heading.id = text
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^\p{L}\p{N}-]/gu, "");
+      if (!heading.id) return;
+    }
     if (heading.querySelector(".heading-anchor")) return;
 
     const anchor = document.createElement("a");
