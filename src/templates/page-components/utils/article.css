@@ -34,16 +34,27 @@ article {
         opacity: 0;
         position: absolute;
         text-decoration: none;
-        transition: opacity 0.2s;
+        transition:
+          color 0.25s,
+          opacity 0.25s;
         user-select: none;
+
+        &::before {
+          content: var(--heading-anchor-symbol, "#");
+        }
       }
 
-      &:hover .heading-anchor {
+      &:hover .heading-anchor,
+      & .heading-anchor:focus {
         opacity: 1;
       }
     }
 
-& .caption,
+    & h2 .heading-anchor {
+      opacity: 1;
+    }
+
+    & .caption,
     & figcaption {
       color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       display: block;

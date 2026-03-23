@@ -498,4 +498,11 @@
     line-clamp: 5;
     overflow: hidden;
   }
+
+  /* 对中日韩文字使用严格换行规则，避免标点出现在行首或行尾。
+     要求祖先显式声明 lang 属性（排除浏览器启发式推断），使用 :where() 使优先级为 0。
+     参考：VitePress 同名规则 */
+  [lang]:where(:is(:lang(zh), :lang(ja), :lang(ko))) :is(h1, h2, h3, h4, h5, h6, p, li) {
+    line-break: strict;
+  }
 }
