@@ -1409,6 +1409,7 @@ spec:
           name: heading_anchor_svg
           label: 标题锚点图标
           value: ""
+          help: 配置后将覆盖上方的标题锚点符号设置。
         - $formkit: switch
           name: is_custom_toc_max_width
           label: 自定义侧边目录最大宽度

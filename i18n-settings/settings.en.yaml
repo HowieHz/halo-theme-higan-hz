@@ -1409,6 +1409,7 @@ spec:
           name: heading_anchor_svg
           label: Heading anchor icon
           value: ""
+          help: When set, overrides the heading anchor symbol setting above.
         - $formkit: switch
           name: is_custom_toc_max_width
           label: Custom sidebar table of contents maximum width
