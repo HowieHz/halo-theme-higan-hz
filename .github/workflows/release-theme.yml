@@ -89,9 +89,28 @@ jobs:
       theme_ref: ${{ needs.prepare.outputs.release_commit_sha }}
       artifact_name: release-theme-artifact
 
+  hash:
+    name: Generate artifact hashes
+    needs: build
+    runs-on: ubuntu-latest
+    outputs:
+      hashes: ${{ steps.hash.outputs.hashes }}
+    steps:
+      - name: Download release assets
+        uses: actions/download-artifact@v8
+        with:
+          name: release-theme-artifact
+          path: dist/theme-packages
+
+      - name: Generate hashes
+        id: hash
+        run: |
+          cd dist/theme-packages
+          echo "hashes=$(sha256sum *.zip | base64 -w0)" >> "$GITHUB_OUTPUT"
+
   github-release:
     name: Create GitHub Release
-    needs: [prepare, build]
+    needs: [prepare, hash]
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -108,6 +127,7 @@ jobs:
         with:
           name: release-theme-artifact
           path: dist/theme-packages
+
       - name: Attest build provenance
         id: attest
         uses: actions/attest@v4
@@ -153,6 +173,19 @@ jobs:
             -F client_payload[target_branch]='main' \
             -F client_payload[deploy_docs]=true \
             -F client_payload[create_pr]=true
+
+  provenance:
+    name: Generate SLSA L3 Provenance
+    needs: [prepare, hash, github-release]
+    permissions:
+      actions: read
+      id-token: write
+      contents: write
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.0.0
+    with:
+      base64-subjects: "${{ needs.hash.outputs.hashes }}"
+      upload-assets: true
+      upload-tag-name: "${{ needs.prepare.outputs.release_tag }}"
 
   app-store-release:
     name: Sync Release to Halo App Store

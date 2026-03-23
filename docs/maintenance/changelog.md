@@ -23,6 +23,10 @@
 
 ## [Unreleased]
 
+### 🛠️ 杂项维护
+
+- 发布流程新增 SLSA L3 溯源证明（`slsa-github-generator`），与原有 GitHub Attestation（L2）并行，Release 页面将附带 `.intoto.jsonl` 文件，可通过 `slsa-verifier` 独立验证构建来源。
+
 ## [1.59.2] - 2026-03-22
 
 ### 🐛 错误修复
