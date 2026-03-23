@@ -16,7 +16,6 @@ import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
 
 export default defineConfig((): UserConfig => {
   const isWatchMode = ["--watch", "-w"].some((arg) => process.argv.includes(arg));
-  const assetVersionPrefix = pkg.version.replace(/^1\./, "");
 
   const plugins = [
     // Tailwind CSS with Vite integration
@@ -269,14 +268,14 @@ export default defineConfig((): UserConfig => {
         },
         output: {
           assetFileNames: () => {
-            return `assets/${assetVersionPrefix}[hash:7][extname]`;
+            return `assets/${pkg.version}[hash:7][extname]`;
           },
           // JS entry files
           // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
-          entryFileNames: `assets/${assetVersionPrefix}[hash:7].js`,
+          entryFileNames: `assets/${pkg.version}[hash:7].js`,
           // Dynamic chunks
           // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
-          chunkFileNames: `assets/${assetVersionPrefix}[hash:7].js`,
+          chunkFileNames: `assets/${pkg.version}[hash:7].js`,
         },
       },
     },
