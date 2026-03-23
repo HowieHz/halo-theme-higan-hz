@@ -84,19 +84,49 @@ Every stable release generates two kinds of provenance attestations for all `.zi
 
 Requires [GitHub CLI](https://cli.github.com/).
 
+::: code-group
+
 ```bash
-gh attestation verify howiehz-higan-cn.zip \
+gh attestation verify howiehz-higan-en.zip \
   --repo HowieHz/halo-theme-higan-hz
 ```
+
+```powershell
+gh attestation verify howiehz-higan-en.zip `
+  --repo HowieHz/halo-theme-higan-hz
+```
+
+```cmd
+gh attestation verify howiehz-higan-en.zip ^
+  --repo HowieHz/halo-theme-higan-hz
+```
+
+:::
 
 ### Option 2: SLSA Provenance (L3)
 
 Requires [slsa-verifier](https://github.com/slsa-framework/slsa-verifier). Download `multiple.intoto.jsonl` and the `.zip` file from the Release page, place them in the same directory, then run:
 
+::: code-group
+
 ```bash
-slsa-verifier verify-artifact howiehz-higan-cn.zip \
+slsa-verifier verify-artifact howiehz-higan-en.zip \
   --provenance-path multiple.intoto.jsonl \
   --source-uri github.com/HowieHz/halo-theme-higan-hz
 ```
+
+```powershell
+slsa-verifier verify-artifact howiehz-higan-en.zip `
+  --provenance-path multiple.intoto.jsonl `
+  --source-uri github.com/HowieHz/halo-theme-higan-hz
+```
+
+```cmd
+slsa-verifier verify-artifact howiehz-higan-en.zip ^
+  --provenance-path multiple.intoto.jsonl ^
+  --source-uri github.com/HowieHz/halo-theme-higan-hz
+```
+
+:::
 
 Either option is sufficient. A successful verification confirms the file is intact and its origin is trusted.
