@@ -5160,6 +5160,44 @@ Leave empty to use the default `#`. Supports any string. This setting works by i
 
 :::
 
+### Heading Anchor Symbol Raw Output
+
+::: info 🎯 Purpose
+
+When enabled, the "Heading anchor symbol" value above is written directly as the CSS `--heading-anchor-symbol` variable value without quoting. Intended for users familiar with [CSS `content` property syntax](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/content#syntax).
+
+:::
+::: info 📂 Configuration Item Location
+
+Post Page Style -> Heading anchor symbol raw output
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Heading%20anchor%20symbol%20raw%20output" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.post_styles?.is_heading_anchor_symbol_raw`
+
+:::
+::: info ℹ️ Additional Information
+
+When disabled, the symbol value is automatically quoted as a CSS string (e.g. `"#"`). When enabled, the value is output as-is, allowing valid CSS `content` values such as `url("data:image/svg+xml,...")`.
+
+:::
+
 ### Heading Anchor SVG Icon
 
 ::: info 🎯 Purpose

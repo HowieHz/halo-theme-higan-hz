@@ -1399,6 +1399,11 @@ spec:
           value: ""
           placeholder: "默认值：#"
           help: "自定义文章页及独立页面标题锚点链接前显示的符号，置空则使用默认值 #。支持任意字符串，如 § ¶ 🔗。配置了下方 SVG 图标后此设置将被覆盖。"
+        - $formkit: switch
+          name: is_heading_anchor_symbol_raw
+          label: 标题锚点符号原始输出
+          value: false
+          help: "开启后，上方标题锚点符号的值将不加引号地直接设置为 CSS 变量的值，适合有 CSS content 属性语法基础的进阶用户使用。"
         - $formkit: textarea
           name: heading_anchor_svg
           label: 标题锚点 SVG 图标

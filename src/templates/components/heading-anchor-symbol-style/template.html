@@ -8,7 +8,12 @@
     th:unless="${#strings.isEmpty(theme.config?.post_styles?.heading_anchor_symbol)}"
   >
     :root {
+      /*[# th:unless="${theme.config?.post_styles?.is_heading_anchor_symbol_raw}"]*/
       --heading-anchor-symbol: "[(${theme.config?.post_styles?.heading_anchor_symbol})]";
+      /*[/]*/
+      /*[# th:if="${theme.config?.post_styles?.is_heading_anchor_symbol_raw}"]*/
+      --heading-anchor-symbol: [(${theme.config?.post_styles?.heading_anchor_symbol})];
+      /*[/]*/
     }
   </style>
   /*/-->

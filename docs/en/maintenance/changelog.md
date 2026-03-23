@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Heading anchor links are available on post and single page templates: hovering over or focusing a heading reveals a clickable `#` before it; clicking navigates to that heading's anchor and updates the address bar URL. h2 headings display the anchor permanently; all other levels show it on hover or focus. On mobile (screen width below 640px), the anchor appears to the right of the heading text instead.
 - Added "Heading anchor symbol" setting (Post Page Style -> Heading anchor symbol) to customize the symbol displayed before heading anchor links. Leave empty to use the default `#`. Implemented via the `--heading-anchor-symbol` CSS custom property.
+- Added "Heading anchor symbol raw output" setting (Post Page Style -> Heading anchor symbol raw output). When enabled, the anchor symbol value is written directly as the CSS variable value without quoting, intended for users familiar with CSS `content` property syntax.
 - Added "Heading anchor SVG icon" setting (Post Page Style -> Heading anchor SVG icon) to use a custom `<svg>` element as the heading anchor icon. When configured, it takes precedence over the anchor symbol setting. The icon color automatically follows the theme's primary color.
 
 ### 📄 Documentation
