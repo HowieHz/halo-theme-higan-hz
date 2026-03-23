@@ -50,12 +50,6 @@ article {
 
         & .heading-anchor-icon {
           align-items: center;
-
-          & svg {
-            fill: currentcolor;
-            height: 0.75em;
-            width: 0.75em;
-          }
         }
 
         /* 在小屏幕（手机端）上，heading-anchor 作为一个独立的元素显示在标题后面，方便用户点击 */
@@ -69,9 +63,28 @@ article {
         }
       }
 
-      &:hover .heading-anchor,
+      & svg {
+        color: var(--color-base-content);
+      }
+
+      /* 在标题上/锚点上悬停时显示锚点 */
+      &:hover .heading-anchor {
+        opacity: 100%;
+
+        /* 鼠标悬停在锚点图标上变色 */
+        & svg:hover {
+          color: var(--color-primary);
+        }
+      }
+
+      /* 使锚点在获得焦点时显示，提升键盘导航的可访问性 */
       & .heading-anchor:focus {
         opacity: 100%;
+
+        /* 当锚点获得焦点时，改变锚点图标的颜色以提供视觉反馈 */
+        & svg {
+          color: var(--color-primary);
+        }
       }
     }
 
