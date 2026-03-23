@@ -359,6 +359,8 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 ## Post Heading Style <Badge type="tip" text="Post Style" />
 
+Heading anchor links are available on post and single page templates: hovering over or focusing a heading reveals a clickable `#` before it; clicking navigates to that heading's anchor and updates the address bar URL. h2 headings display the anchor permanently; all other levels show it on hover or focus. On mobile (screen width below 640px), the anchor appears to the right of the heading text instead.
+
 ### Post Heading Style Markdown Syntax
 
 ```markdown

@@ -25,7 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Added heading anchor links to post and single page templates: hovering over or focusing a heading reveals a clickable `#` before it, which navigates to that heading's anchor and allows copying the link. h2 headings display the anchor permanently; all other levels show it on hover or focus only. On mobile (screen width below 640px), the anchor is shown inline after the heading text instead.
+- Heading anchor links are available on post and single page templates: hovering over or focusing a heading reveals a clickable `#` before it; clicking navigates to that heading's anchor and updates the address bar URL. h2 headings display the anchor permanently; all other levels show it on hover or focus. On mobile (screen width below 640px), the anchor appears to the right of the heading text instead.
+
+### 📄 Documentation
+
+- Added the [Verify Theme Package Integrity](/en/tutorial/security#verify-theme-package-integrity) section to the [Security Protection](/en/tutorial/security) docs.
 
 ### 🛠️ Miscellaneous Chores
 
