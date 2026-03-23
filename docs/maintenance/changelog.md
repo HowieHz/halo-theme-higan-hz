@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.60.0] - 2026-03-23
+
 ### 🚀 新功能
 
 - 文章页、独立页面标题具有锚点链接：鼠标悬停或聚焦标题时，前方出现可点击的 `#`，点击后跳转至对应标题锚点并更新地址栏 URL；二级标题默认常显，其余级别悬停或聚焦显示；在移动端（屏幕宽度小于 640px），锚点改为显示在标题文字右侧。
@@ -679,7 +681,8 @@
 
 - 修复启用“标签集合页样式——标签排序方式”时标签颜色无法正常显示的问题。
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.2...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.0...HEAD
+[1.60.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.2...v1.60.0
 [1.59.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.1...v1.59.2
 [1.59.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.0...v1.59.1
 [1.59.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.58.2...v1.59.0
