@@ -406,6 +406,7 @@
     <script type="module">
       import { isMobile } from "/page-components/utils/device.ts";
       import { initTOC } from "/page-components/utils/toc.ts";
+      import { initHeadingAnchors } from "/page-components/utils/heading-anchor.ts";
 
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/* generate toc
@@ -418,6 +419,7 @@
         } else {
           initTOC("article > .content", "#toc");
         }
+        initHeadingAnchors("article > .content");
       });
     </script>
     <th:block

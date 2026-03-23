@@ -18,20 +18,32 @@ article {
   }
 
   & .content {
+    & h1,
     & h2,
-    & .h2 {
-      &::before {
+    & h3,
+    & h4,
+    & h5,
+    & h6 {
+      position: relative;
+
+      & .heading-anchor {
+        background-image: none;
         color: var(--color-primary);
-        content: "#";
-        font-size: 1.2rem;
         font-weight: bold;
-        left: -1rem;
+        left: -1em;
+        opacity: 0;
         position: absolute;
-        top: -0.25rem;
+        text-decoration: none;
+        transition: opacity 0.2s;
+        user-select: none;
+      }
+
+      &:hover .heading-anchor {
+        opacity: 1;
       }
     }
 
-    & .caption,
+& .caption,
     & figcaption {
       color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       display: block;
