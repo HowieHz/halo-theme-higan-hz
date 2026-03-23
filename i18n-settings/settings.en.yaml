@@ -1404,12 +1404,13 @@ spec:
           label: Heading anchor symbol raw output
           value: false
           help: "When enabled, the heading anchor symbol value above is set directly as the CSS variable value without quoting. Intended for users familiar with CSS content property syntax."
-        - $formkit: textarea
+        - $formkit: code
           name: heading_anchor_svg
           label: Heading anchor SVG icon
           value: ""
-          rows: 5
           help: 'Paste a complete SVG tag (e.g. <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">...</svg>) to use as the heading anchor icon. When set, this takes precedence over the anchor symbol setting above. The icon color automatically follows the theme''s primary color.'
+          language: html
+          height: 150px
         - $formkit: switch
           name: is_custom_toc_max_width
           label: Custom sidebar table of contents maximum width

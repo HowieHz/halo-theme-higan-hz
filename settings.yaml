@@ -1404,12 +1404,13 @@ spec:
           label: 标题锚点符号原始输出
           value: false
           help: "开启后，上方标题锚点符号的值将不加引号地直接设置为 CSS 变量的值，适合有 CSS content 属性语法基础的进阶用户使用。"
-        - $formkit: textarea
+        - $formkit: code
           name: heading_anchor_svg
           label: 标题锚点 SVG 图标
           value: ""
-          rows: 5
           help: '输入完整的 SVG 标签（如 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">...</svg>）作为标题锚点图标，配置后将优先于上方的锚点符号设置。颜色自动跟随主题色。'
+          language: html
+          height: 150px
         - $formkit: switch
           name: is_custom_toc_max_width
           label: 自定义侧边目录最大宽度
