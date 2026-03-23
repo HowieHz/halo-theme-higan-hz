@@ -357,9 +357,13 @@ This is normal text <small>This is small text</small> This is normal text
 
 ```markdown
 ## 二级标题
+
 ### 三级标题
+
 #### 四级标题
+
 ##### 五级标题
+
 ###### 六级标题
 ```
 
@@ -378,9 +382,13 @@ This is normal text <small>This is small text</small> This is normal text
 <DefaultRender src="/halo-theme-higan-haozi/frames/post" height="300px">
 
 ## 二级标题
+
 ### 三级标题
+
 #### 四级标题
+
 ##### 五级标题
+
 ###### 六级标题
 
 </DefaultRender>

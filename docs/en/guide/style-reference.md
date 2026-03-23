@@ -363,9 +363,13 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 ```markdown
 ## 二级标题
+
 ### 三级标题
+
 #### 四级标题
+
 ##### 五级标题
+
 ###### 六级标题
 ```
 
@@ -384,9 +388,13 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 <DefaultRender src="/halo-theme-higan-haozi/frames/post" height="300px">
 
 ## 二级标题
+
 ### 三级标题
+
 #### 四级标题
+
 ##### 五级标题
+
 ###### 六级标题
 
 </DefaultRender>
