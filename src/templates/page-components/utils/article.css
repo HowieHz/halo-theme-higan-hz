@@ -61,30 +61,20 @@ article {
           position: static;
           right: unset;
         }
-      }
 
-      & svg {
-        color: var(--color-base-content);
-      }
-
-      /* 在标题上/锚点上悬停时显示锚点 */
-      &:hover .heading-anchor {
-        opacity: 100%;
-
-        /* 鼠标悬停在锚点图标上变色 */
-        & svg:hover {
-          color: var(--color-primary);
+        /* 在锚点上悬停时变色
+           使锚点在获得焦点时变色 */
+        &:hover,
+        &:focus {
+          color: color-mix(in oklab, var(--color-primary) 60%, transparent);
         }
       }
 
-      /* 使锚点在获得焦点时显示，提升键盘导航的可访问性 */
+      /* 在标题上/锚点上悬停时显示锚点
+         使锚点在获得焦点时显示，提升键盘导航的可访问性 */
+      &:hover .heading-anchor,
       & .heading-anchor:focus {
         opacity: 100%;
-
-        /* 当锚点获得焦点时，改变锚点图标的颜色以提供视觉反馈 */
-        & svg {
-          color: var(--color-primary);
-        }
       }
     }
 
