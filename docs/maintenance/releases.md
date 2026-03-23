@@ -22,9 +22,9 @@
 
 每次正式版发布时，CI 流程会为所有 `.zip` 产物生成两类溯源证明，证明文件由 GitHub Actions 构建环境签发，用于验证下载文件的真实来源。
 
-| 类型 | 文件 / 位置 | 验证工具 |
-| --- | --- | --- |
-| GitHub Attestation（L2） | 存储于 GitHub Attestation API | `gh attestation verify` |
-| SLSA Provenance（L3） | Release 附件 `multiple.intoto.jsonl` | `slsa-verifier` |
+| 类型                     | 文件 / 位置                          | 验证工具                |
+| ------------------------ | ------------------------------------ | ----------------------- |
+| GitHub Attestation（L2） | 存储于 GitHub Attestation API        | `gh attestation verify` |
+| SLSA Provenance（L3）    | Release 附件 `multiple.intoto.jsonl` | `slsa-verifier`         |
 
 验证方法请参阅[安全防护](/tutorial/security#验证主题包完整性)。
