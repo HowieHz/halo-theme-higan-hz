@@ -6,7 +6,7 @@
   <template
     id="heading-anchor-svg"
     th:if="${!#strings.isEmpty(theme.config?.post_styles?.heading_anchor_svg)}"
-    th:utext="${theme.config?.post_styles?.heading_anchor_svg}"
+    th:utext="${theme.config?.post_styles?.heading_anchor_svg?.value}"
   ></template>
   /*/-->
 </body>
