@@ -5156,7 +5156,83 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-Leave empty to use the default `#`. Supports any string. This setting works by injecting the `--heading-anchor-symbol` CSS custom property.
+Leave empty to use the default `#`. Supports any string. This setting works by injecting the `--heading-anchor-symbol` CSS custom property. This setting is overridden when a heading anchor icon is configured below.
+
+:::
+
+### Heading Anchor Symbol Raw Output
+
+::: info 🎯 Purpose
+
+When enabled, the "Heading anchor symbol" value above is written directly as the CSS `--heading-anchor-symbol` variable value without quoting. Intended for users familiar with [CSS `content` property syntax](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/content#syntax).
+
+:::
+::: info 📂 Configuration Item Location
+
+Post Page Style -> Heading anchor symbol raw output
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Heading%20anchor%20symbol%20raw%20output" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.post_styles?.is_heading_anchor_symbol_raw`
+
+:::
+::: info ℹ️ Additional Information
+
+When disabled, the symbol value is automatically quoted as a CSS string (e.g. `"#"`). When enabled, the value is output as-is, allowing valid CSS `content` values such as `url("data:image/svg+xml,...")`.
+
+:::
+
+### Heading Anchor Icon
+
+::: info 🎯 Purpose
+
+Use an icon from the Iconify icon library as the heading anchor in posts and single pages. Takes precedence over the "Heading anchor symbol" setting. The icon color automatically follows the theme's primary color.
+
+:::
+::: info 📂 Configuration Item Location
+
+Post Page Style -> Heading anchor icon
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Heading%20anchor%20icon" />
+
+:::
+::: info 🏷️ Type
+
+Icon
+
+:::
+::: info ⭐ Default Value
+
+Empty
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.post_styles?.heading_anchor_svg`
+
+:::
+::: info ℹ️ Additional Information
+
+Leave empty to fall back to the "Heading anchor symbol" setting.
 
 :::
 

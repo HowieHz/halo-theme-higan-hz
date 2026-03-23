@@ -1398,7 +1398,18 @@ spec:
           label: 标题锚点符号
           value: ""
           placeholder: "默认值：#"
-          help: "自定义文章页及独立页面标题锚点链接前显示的符号，置空则使用默认值 #。支持任意字符串，如 § ¶ 🔗"
+          help: "自定义文章页及独立页面标题锚点链接前显示的符号，置空则使用默认值 #。支持任意字符串，如 § ¶ 🔗。配置了下方标题锚点图标后此设置将被覆盖。"
+        - $formkit: switch
+          name: is_heading_anchor_symbol_raw
+          label: 标题锚点符号原始输出
+          value: false
+          help: "开启后，上方标题锚点符号的值将不加引号地直接设置为 CSS 变量的值，适合有 CSS content 属性语法基础的进阶用户使用。"
+        - $formkit: iconify
+          format: svg
+          name: heading_anchor_svg
+          label: 标题锚点图标
+          value: ""
+          help: 配置后将覆盖上方的标题锚点符号设置。
         - $formkit: switch
           name: is_custom_toc_max_width
           label: 自定义侧边目录最大宽度

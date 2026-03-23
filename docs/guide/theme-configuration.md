@@ -5151,7 +5151,83 @@ HTML 代码也是可以的：
 :::
 ::: info ℹ️ 补充信息
 
-置空则使用默认值 `#`。支持任意字符串。该配置项通过注入 `--heading-anchor-symbol` CSS 变量实现。
+置空则使用默认值 `#`。支持任意字符串。该配置项通过注入 `--heading-anchor-symbol` CSS 变量实现。配置了下方"标题锚点图标"后此设置将被覆盖。
+
+:::
+
+### 标题锚点符号原始输出
+
+::: info 🎯 用途
+
+开启后，上方"标题锚点符号"的值将不加引号地直接作为 CSS `--heading-anchor-symbol` 变量的值输出，供熟悉 [CSS `content` 属性语法](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/Properties/content#语法)的进阶用户使用。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 标题锚点符号原始输出
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=标题锚点符号原始输出" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_heading_anchor_symbol_raw`
+
+:::
+::: info ℹ️ 补充信息
+
+关闭时，符号值会被自动加上引号作为 CSS 字符串（如 `"#"`）；开启后值直接输出，例如可填入 `url("data:image/svg+xml,...")` 等合法的 CSS `content` 值。
+
+:::
+
+### 标题锚点图标
+
+::: info 🎯 用途
+
+使用 Iconify 图标库中的图标作为文章页及独立页面中的标题锚点，优先于"标题锚点符号"设置。图标颜色自动跟随主题色。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 标题锚点图标
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=标题锚点图标" />
+
+:::
+::: info 🏷️ 类型
+
+图标
+
+:::
+::: info ⭐ 默认值
+
+空
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.heading_anchor_svg`
+
+:::
+::: info ℹ️ 补充信息
+
+置空则回退到“标题锚点符号”设置。
 
 :::
 

@@ -1398,7 +1398,18 @@ spec:
           label: Heading anchor symbol
           value: ""
           placeholder: "Default: #"
-          help: "Customize the symbol displayed before heading anchor links on post and single pages. Leave empty to use the default #. Supports any string, e.g. § ¶ 🔗"
+          help: "Customize the symbol displayed before heading anchor links on post and single pages. Leave empty to use the default #. Supports any string, e.g. § ¶ 🔗. This setting is overridden when a heading anchor icon is configured below."
+        - $formkit: switch
+          name: is_heading_anchor_symbol_raw
+          label: Heading anchor symbol raw output
+          value: false
+          help: "When enabled, the heading anchor symbol value above is set directly as the CSS variable value without quoting. Intended for users familiar with CSS content property syntax."
+        - $formkit: iconify
+          format: svg
+          name: heading_anchor_svg
+          label: Heading anchor icon
+          value: ""
+          help: When set, overrides the heading anchor symbol setting above.
         - $formkit: switch
           name: is_custom_toc_max_width
           label: Custom sidebar table of contents maximum width
