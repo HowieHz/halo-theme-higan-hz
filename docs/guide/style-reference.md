@@ -351,25 +351,37 @@ This is normal text <small>This is small text</small> This is normal text
 
 </DefaultRender>
 
-## 文章二级标题样式 <Badge type="tip" text="文章样式" />
+## 文章标题样式 <Badge type="tip" text="文章样式" />
 
 ### Markdown 写法
 
 ```markdown
-## 在此处 h2 标题前应有一个 `#` 字符
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题
 ```
 
 ### HTML 标签写法
 
 ```html
-<h2>在此处 h2 标题前应有一个 <code>#</code> 字符</h2>
+<h2>二级标题</h2>
+<h3>三级标题</h3>
+<h4>四级标题</h4>
+<h5>五级标题</h5>
+<h6>六级标题</h6>
 ```
 
 ### 渲染效果
 
-<DefaultRender src="/halo-theme-higan-haozi/frames/post">
+<DefaultRender src="/halo-theme-higan-haozi/frames/post" height="300px">
 
-## 在此处 h2 标题前应有一个 `#` 字符
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题
 
 </DefaultRender>
 

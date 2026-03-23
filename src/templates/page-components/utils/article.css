@@ -30,7 +30,7 @@ article {
         background-image: none;
         color: var(--color-primary);
         font-weight: bold;
-        left: -1em;
+        left: -0.87em;
         opacity: 0;
         position: absolute;
         text-decoration: none;
@@ -41,6 +41,15 @@ article {
 
         &::before {
           content: var(--heading-anchor-symbol, "#");
+        }
+
+        /* 在小屏幕（手机端）上，heading-anchor 作为一个独立的元素显示在标题后面，方便用户点击 */
+        @media (width < 640px) {
+          /* 使 heading-anchor 成为一个独立的块级元素，避免继承 body h3 的 text-decoration 下划线 */
+          display: inline-block;
+          left: unset;
+          margin-inline-start: 0.25em;
+          position: static;
         }
       }
 

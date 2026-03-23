@@ -18,6 +18,6 @@ export function initHeadingAnchors(contentSelector: string, headingSelector = "h
     anchor.className = "heading-anchor";
     anchor.setAttribute("aria-label", `Permalink to "${heading.textContent?.trim() ?? ""}"`);
 
-    heading.prepend(anchor);
+    heading.append(anchor);
   });
 }

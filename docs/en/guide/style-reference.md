@@ -357,25 +357,37 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 </DefaultRender>
 
-## Post Second Level Heading Style <Badge type="tip" text="Post Style" />
+## Post Heading Style <Badge type="tip" text="Post Style" />
 
-### Post Second Level Heading Style Markdown Syntax
+### Post Heading Style Markdown Syntax
 
 ```markdown
-## 在此处 h2 标题前应有一个 `#` 字符
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题
 ```
 
-### There should be a `#` character before the h2 heading here HTML Tag Syntax
+### Post Heading Style HTML Tag Syntax
 
 ```html
-<h2>在此处 h2 标题前应有一个 <code>#</code> 字符</h2>
+<h2>二级标题</h2>
+<h3>三级标题</h3>
+<h4>四级标题</h4>
+<h5>五级标题</h5>
+<h6>六级标题</h6>
 ```
 
-### There should be a `#` character before the h2 heading here Rendering Effect
+### Post Heading Style Rendering Effect
 
-<DefaultRender src="/halo-theme-higan-haozi/frames/post">
+<DefaultRender src="/halo-theme-higan-haozi/frames/post" height="300px">
 
-## 在此处 h2 标题前应有一个 `#` 字符
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题
 
 </DefaultRender>
 
