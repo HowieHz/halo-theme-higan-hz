@@ -13,8 +13,8 @@ onMounted(async () => {
   trackColorScheme();
   // Mount the app to the ref
   createApp(el.value).then(() => {
-    extendStylesScope(el.value);
     initHeadingAnchors("article > .content");
+    extendStylesScope(el.value);
   });
 });
 </script>
