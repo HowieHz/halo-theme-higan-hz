@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 // Special api to mount the app
 import { createApp } from "whyframe:app";
 
+import { initHeadingAnchors } from "../../../src/templates/page-components/utils/heading-anchor";
 import { extendStylesScope, trackColorScheme } from "./utils";
 
 const el = ref();
@@ -13,6 +14,7 @@ onMounted(async () => {
   // Mount the app to the ref
   createApp(el.value).then(() => {
     extendStylesScope(el.value);
+    initHeadingAnchors("article > .content");
   });
 });
 </script>

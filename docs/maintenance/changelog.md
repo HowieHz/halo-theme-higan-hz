@@ -23,9 +23,14 @@
 
 ## [Unreleased]
 
+### 🚀 新功能
+
+- 文章页、独立页面标题新增锚点链接：鼠标悬停标题时，前方出现可点击的 `#`，点击即可跳转至该标题锚点并复制链接；h2 级标题默认常显，其余级别悬停显示。
+
 ### 🛠️ 杂项维护
 
 - 发布流程新增 SLSA L3 溯源证明（`slsa-github-generator`），与原有 GitHub Attestation（L2）并行，Release 页面将附带 `.intoto.jsonl` 文件，可通过 `slsa-verifier` 独立验证构建来源。
+- 中日韩文字新增严格换行规则（`line-break: strict`），避免标点出现在行首或行尾。
 
 ## [1.59.2] - 2026-03-22
 

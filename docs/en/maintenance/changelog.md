@@ -23,9 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🚀 Features
+
+- Added heading anchor links to post and single page templates: hovering over a heading reveals a clickable `#` before it, which navigates to that heading's anchor and allows copying the link. h2 headings display the anchor permanently; all other levels show it on hover only.
+
 ### 🛠️ Miscellaneous Chores
 
 - Added SLSA L3 provenance generation (`slsa-github-generator`) to the release pipeline alongside the existing GitHub Attestation (L2). Each release will now include a `.intoto.jsonl` file that can be independently verified with `slsa-verifier`.
+- Applied `line-break: strict` for CJK text to prevent punctuation from appearing at the start or end of a line.
 
 ## [1.59.2] - 2026-03-22
 
