@@ -1393,6 +1393,12 @@ spec:
           name: is_show_post_nav_share_button
           label: 桌面端菜单中的分享按钮
           value: true
+        - $formkit: text
+          name: heading_anchor_symbol
+          label: 标题锚点符号
+          value: ""
+          placeholder: "默认值：#"
+          help: "自定义文章页及独立页面标题锚点链接前显示的符号，置空则使用默认值 #。支持任意字符串，如 § ¶ 🔗"
         - $formkit: switch
           name: is_custom_toc_max_width
           label: 自定义侧边目录最大宽度

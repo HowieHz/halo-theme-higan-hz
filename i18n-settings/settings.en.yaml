@@ -1393,6 +1393,12 @@ spec:
           name: is_show_post_nav_share_button
           label: Share button in desktop menu
           value: true
+        - $formkit: text
+          name: heading_anchor_symbol
+          label: Heading anchor symbol
+          value: ""
+          placeholder: "Default: #"
+          help: "Customize the symbol displayed before heading anchor links on post and single pages. Leave empty to use the default #. Supports any string, e.g. § ¶ 🔗"
         - $formkit: switch
           name: is_custom_toc_max_width
           label: Custom sidebar table of contents maximum width

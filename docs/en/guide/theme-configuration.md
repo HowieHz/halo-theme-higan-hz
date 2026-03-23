@@ -5117,6 +5117,49 @@ Boolean
 
 :::
 
+### Heading Anchor Symbol
+
+::: info 🎯 Purpose
+
+Customize the symbol displayed before heading anchor links in posts and single pages, overriding the default `#`.
+
+:::
+::: info 📂 Configuration Item Location
+
+Post Page Style -> Heading anchor symbol
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Heading%20anchor%20symbol" />
+
+:::
+::: info 🏷️ Type
+
+String
+
+:::
+::: info ⭐ Default Value
+
+Empty
+
+:::
+::: info 💡 Example Values
+
+`#`, `§`, `¶`, `🔗`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.post_styles?.heading_anchor_symbol`
+
+:::
+::: info ℹ️ Additional Information
+
+Leave empty to use the default `#`. Supports any string. This setting works by injecting the `--heading-anchor-symbol` CSS custom property.
+
+:::
+
 ### Custom Sidebar Table of Contents Maximum Width
 
 ::: info 🎯 Purpose
