@@ -169,8 +169,8 @@ importers:
         specifier: ^4.2.2
         version: 4.2.2
       tailwindcss-patch:
-        specifier: ^8.7.3
-        version: 8.7.3(tailwindcss@4.2.2)
+        specifier: ^9.0.0
+        version: 9.0.0(tailwindcss@4.2.2)
       typescript-eslint:
         specifier: ^8.57.1
         version: 8.57.1(eslint@10.1.0(jiti@2.6.1))(typescript@5.9.3)
@@ -1401,9 +1401,6 @@ packages:
     resolution: {integrity: sha512-lVJX6qEgs/4DOcRTpo56tmKzVPtoWAaVbL4hfO7t7NVwl9AAXzQR6cihesW1BmNMPl+bK6dreu2sOKBP2Q9CIA==}
     peerDependencies:
       acorn: ^8.9.0
-
-  '@tailwindcss-mangle/config@6.1.3':
-    resolution: {integrity: sha512-e0wj/R582uyrqMLYDDyfl0BfysybOA1PiP0ChxQVch1JWxkLxM0SB7Nb6Cq0jiSYugX5hGfSV1UEqLhM0Q9PTQ==}
 
   '@tailwindcss-mangle/config@7.0.0':
     resolution: {integrity: sha512-84hj89cUXzmnAlWLe7gEfYDwptbMDVjjj1s1NWoGIZfucADayh/DI1pcxdcoLKRF8caKj21NglnGxrvo1wZTfw==}
@@ -3770,8 +3767,9 @@ packages:
     resolution: {integrity: sha512-p3PWbAJAkbO9Jabvr4C5l9X+Am1JmDoPHP9S2rbUNe/gT/I9BDTg4dJjd1Tg1RQ2AyZrslncYCQW9uqvb48irw==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
-  tailwindcss-patch@8.7.3:
-    resolution: {integrity: sha512-PvQu+wr/JS0y2mx0RzTKbMv+oGhmC/CowR8gN3/4tATK1Wo9MHm6ZMwlNDjbh1ltT7SCwjAEynqoSNYapnLIig==}
+  tailwindcss-patch@9.0.0:
+    resolution: {integrity: sha512-iU0ekFlO8J6C5IeZUb6VzybeTv6RDSg5aIYXl+C6zOQua837In0vAlii45CDzDLi9upA88b2Ek3RuQuoDSMxhA==}
+    engines: {node: '>=18.0.0'}
     hasBin: true
     peerDependencies:
       tailwindcss: '>=2.0.0'
@@ -4913,16 +4911,6 @@ snapshots:
   '@sveltejs/acorn-typescript@1.0.9(acorn@8.16.0)':
     dependencies:
       acorn: 8.16.0
-
-  '@tailwindcss-mangle/config@6.1.3':
-    dependencies:
-      '@tailwindcss-mangle/shared': 4.1.4
-      c12: 3.3.3
-      fs-extra: 11.3.4
-      is-css-request: 1.0.1
-      pathe: 2.0.3
-    transitivePeerDependencies:
-      - magicast
 
   '@tailwindcss-mangle/config@7.0.0':
     dependencies:
@@ -7502,13 +7490,13 @@ snapshots:
       jiti: 2.6.1
       lilconfig: 3.1.3
 
-  tailwindcss-patch@8.7.3(tailwindcss@4.2.2):
+  tailwindcss-patch@9.0.0(tailwindcss@4.2.2):
     dependencies:
       '@babel/generator': 7.29.1
       '@babel/parser': 7.29.2
       '@babel/traverse': 7.29.0
       '@babel/types': 7.29.0
-      '@tailwindcss-mangle/config': 6.1.3
+      '@tailwindcss-mangle/config': 7.0.0
       '@tailwindcss/node': 4.2.2
       cac: 6.7.14
       consola: 3.4.2
