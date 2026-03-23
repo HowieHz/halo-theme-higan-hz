@@ -387,15 +387,11 @@ For example, on touch devices, the above "HTML" will automatically display as "H
 
 <DefaultRender src="/halo-theme-higan-haozi/frames/post" height="300px">
 
-## 二级标题
-
-### 三级标题
-
-#### 四级标题
-
-##### 五级标题
-
-###### 六级标题
+<h2>二级标题</h2>
+<h3>三级标题</h3>
+<h4>四级标题</h4>
+<h5>五级标题</h5>
+<h6>六级标题</h6>
 
 </DefaultRender>
 
