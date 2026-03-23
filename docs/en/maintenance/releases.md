@@ -16,4 +16,15 @@ Current release artifacts:
 - `howiehz-higan-cn.zip`
 - `howiehz-higan-en.zip`
 
-For full release process details, see the “Release Flow” section in the [Contribution Guide](./contributing.md#release-flow).
+For full release process details, see the *Release Flow* section in the [Contribution Guide](./contributing.md#release-flow).
+
+## Build Provenance
+
+Every stable release generates two kinds of provenance attestations for all `.zip` artifacts, signed by the GitHub Actions build environment, so anyone can verify the origin of a downloaded file.
+
+| Type | Location | Verification tool |
+| --- | --- | --- |
+| GitHub Attestation (L2) | GitHub Attestation API | `gh attestation verify` |
+| SLSA Provenance (L3) | Release asset `multiple.intoto.jsonl` | `slsa-verifier` |
+
+See [Security Protection](/en/tutorial/security#verify-theme-package-integrity) for verification instructions.
