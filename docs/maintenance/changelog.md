@@ -35,6 +35,7 @@
 
 - 发布流程新增 SLSA L3 溯源证明（`slsa-github-generator`），与原有 GitHub Attestation（L2）并行，Release 页面将附带 `.intoto.jsonl` 文件，可通过 `slsa-verifier` 独立验证构建来源。
 - 中日韩文字新增严格换行规则（`line-break: strict`），避免标点出现在行首或行尾。
+- 更新开发依赖。
 
 ## [1.59.2] - 2026-03-22
 

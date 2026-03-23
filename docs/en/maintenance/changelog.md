@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added SLSA L3 provenance generation (`slsa-github-generator`) to the release pipeline alongside the existing GitHub Attestation (L2). Each release will now include a `.intoto.jsonl` file that can be independently verified with `slsa-verifier`.
 - Applied `line-break: strict` for CJK text to prevent punctuation from appearing at the start or end of a line.
+- Updated development dependencies.
 
 ## [1.59.2] - 2026-03-22
 
