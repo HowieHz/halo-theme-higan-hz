@@ -1,0 +1,15 @@
+<!--/*-->
+<head th:remove="tag"></head>
+<!--*/-->
+<body th:remove="tag">
+  <!--/*/
+  <style
+    th:inline="css"
+    th:unless="${#strings.isEmpty(theme.config?.post_styles?.heading_anchor_symbol)}"
+  >
+    :root {
+      --heading-anchor-symbol: "[(${theme.config?.post_styles?.heading_anchor_symbol})]";
+    }
+  </style>
+  /*/-->
+</body>

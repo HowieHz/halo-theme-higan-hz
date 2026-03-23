@@ -5112,6 +5112,49 @@ HTML 代码也是可以的：
 
 :::
 
+### 标题锚点符号
+
+::: info 🎯 用途
+
+自定义文章页及独立页面中标题锚点链接前显示的符号，覆盖默认的 `#`。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 标题锚点符号
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=标题锚点符号" />
+
+:::
+::: info 🏷️ 类型
+
+字符串
+
+:::
+::: info ⭐ 默认值
+
+空
+
+:::
+::: info 💡 示例值
+
+`#`、`§`、`¶`、`🔗`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.heading_anchor_symbol`
+
+:::
+::: info ℹ️ 补充信息
+
+置空则使用默认值 `#`。支持任意字符串。该配置项通过注入 `--heading-anchor-symbol` CSS 变量实现。
+
+:::
+
 ### 自定义侧边目录最大宽度
 
 ::: info 🎯 用途

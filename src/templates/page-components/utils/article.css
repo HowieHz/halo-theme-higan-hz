@@ -30,9 +30,10 @@ article {
         background-image: none;
         color: var(--color-primary);
         font-weight: bold;
-        left: -0.87em;
         opacity: 0%;
+        padding-inline-end: 0.26em;
         position: absolute;
+        right: 100%;
         text-decoration: none;
         transition:
           color 0.25s,
@@ -47,9 +48,10 @@ article {
         @media (width < 640px) {
           /* 使 heading-anchor 成为一个独立的块级元素，避免继承 body h3 的 text-decoration 下划线 */
           display: inline-block;
-          left: unset;
           margin-inline-start: 0.25em;
+          padding-inline-end: unset;
           position: static;
+          right: unset;
         }
       }
 
