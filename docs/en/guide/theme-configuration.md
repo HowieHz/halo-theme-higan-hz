@@ -5156,7 +5156,52 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-Leave empty to use the default `#`. Supports any string. This setting works by injecting the `--heading-anchor-symbol` CSS custom property.
+Leave empty to use the default `#`. Supports any string. This setting works by injecting the `--heading-anchor-symbol` CSS custom property. This setting is overridden when an SVG icon is configured below.
+
+:::
+
+### Heading Anchor SVG Icon
+
+::: info 🎯 Purpose
+
+Use a custom SVG icon as the heading anchor in posts and single pages. Takes precedence over the "Heading anchor symbol" setting. The icon color automatically follows the theme's primary color.
+
+:::
+::: info 📂 Configuration Item Location
+
+Post Page Style -> Heading anchor SVG icon
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Heading%20anchor%20SVG%20icon" />
+
+:::
+::: info 🏷️ Type
+
+String
+
+:::
+::: info ⭐ Default Value
+
+Empty
+
+:::
+::: info 💡 Example Values
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M7.775 3.275a.75.75 0 0 0 1.06 1.06l1.25-1.25a2 2 0 1 1 2.83 2.83l-2.5 2.5a2 2 0 0 1-2.83 0 .75.75 0 0 0-1.06 1.06 3.5 3.5 0 0 0 4.95 0l2.5-2.5a3.5 3.5 0 0 0-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 0 1 0-2.83l2.5-2.5a2 2 0 0 1 2.83 0 .75.75 0 0 0 1.06-1.06 3.5 3.5 0 0 0-4.95 0l-2.5 2.5a3.5 3.5 0 0 0 4.95 4.95l1.25-1.25a.75.75 0 0 0-1.06-1.06l-1.25 1.25a2 2 0 0 1-2.83 0z"/></svg>
+```
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.post_styles?.heading_anchor_svg`
+
+:::
+::: info ℹ️ Additional Information
+
+Paste a complete `<svg>` tag. Leave empty to fall back to the "Heading anchor symbol" setting.
 
 :::
 

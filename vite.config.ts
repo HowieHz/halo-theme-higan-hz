@@ -220,6 +220,10 @@ export default defineConfig((): UserConfig => {
             __dirname,
             "src/templates/components/heading-anchor-symbol-style/template.html",
           ),
+          "components-heading-anchor-svg": path.resolve(
+            __dirname,
+            "src/templates/components/heading-anchor-svg/template.html",
+          ),
           "components-meta-theme-color": path.resolve(
             __dirname,
             "src/templates/components/meta-theme-color/template.html",

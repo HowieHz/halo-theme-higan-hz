@@ -44,6 +44,20 @@ article {
           content: var(--heading-anchor-symbol, "#");
         }
 
+        &:has(.heading-anchor-icon)::before {
+          content: none;
+        }
+
+        & .heading-anchor-icon {
+          align-items: center;
+
+          & svg {
+            fill: currentColor;
+            height: 0.75em;
+            width: 0.75em;
+          }
+        }
+
         /* 在小屏幕（手机端）上，heading-anchor 作为一个独立的元素显示在标题后面，方便用户点击 */
         @media (width < 640px) {
           /* 使 heading-anchor 成为一个独立的块级元素，避免继承 body h3 的 text-decoration 下划线 */
