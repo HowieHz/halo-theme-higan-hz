@@ -1605,11 +1605,6 @@ spec:
     - group: author_page_styles
       label: Author details page style
       formSchema:
-        - $formkit: text
-          name: description
-          label: Page description (meta description)
-          value: ""
-          help: Used as the meta description; falls back to site SEO description when empty
         - $formkit: switch
           name: is_enable_canonical_link
           label: Output canonical link tag

@@ -12,7 +12,7 @@
   <head th:remove="tag">
     <meta
       name="description"
-      th:attr="content=${#strings.isEmpty(theme.config?.author_page_styles?.description) ? site?.seo?.description : theme.config?.author_page_styles?.description}"
+      th:attr="content=${#strings.isEmpty(author.spec.bio) ? site?.seo?.description : author.spec.bio}"
     />
     <link
       th:if="${pluginFinder.available('PluginFeed')}"
