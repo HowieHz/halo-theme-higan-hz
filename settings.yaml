@@ -1605,11 +1605,6 @@ spec:
     - group: author_page_styles
       label: 作者详情页样式
       formSchema:
-        - $formkit: text
-          name: description
-          label: 页面描述
-          value: ""
-          help: 设置页面的 meta description；为空时回退到站点 SEO 描述
         - $formkit: switch
           name: is_enable_canonical_link
           label: 输出 canonical 标签

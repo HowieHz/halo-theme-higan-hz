@@ -6114,44 +6114,6 @@ Boolean
 
 Application Range: [`/authors/{name}`](/reference/template-map#:~:text=/authors/%7Bname%7D).
 
-### Author Details Page Description
-
-::: info 🎯 Purpose
-
-Used to customize the HTML `<meta name="description">` content for this page, convenient for setting SEO descriptions.
-
-:::
-::: info 📂 Configuration Item Location
-
-Author Detail Page Style -> Page Description
-
-:::
-::: info ⚡ Quick Jump
-
-<QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=Page%20description%20(meta%20description)" />
-
-:::
-::: info 🏷️ Type
-
-String
-
-:::
-::: info ⭐ Default Value
-
-Empty
-
-:::
-::: info 🧩 Template Variable
-
-`theme.config?.author_page_styles?.description`
-
-:::
-::: info ℹ️ Additional Information
-
-If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site%20description" />)
-
-:::
-
 ### Author details page canonical link tag
 
 ::: info 🎯 Purpose
