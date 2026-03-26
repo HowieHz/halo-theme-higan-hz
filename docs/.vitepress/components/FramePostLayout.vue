@@ -8,7 +8,6 @@ import { extendStylesScope, trackColorScheme } from "./utils";
 
 const el = ref();
 
-
 onMounted(async () => {
   trackColorScheme();
   // Mount the app to the ref
