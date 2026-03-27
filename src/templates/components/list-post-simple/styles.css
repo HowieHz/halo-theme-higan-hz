@@ -21,6 +21,7 @@
     margin-left: 0;
 
     @media (width >= 640px) {
+      /* Makes the <li> box disappear so its children (.meta and .post-item-content) become direct grid items of the parent, enabling two-column alignment across rows */
       display: contents;
     }
 
