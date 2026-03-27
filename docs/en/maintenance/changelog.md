@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fix misaligned post title column in the simple post list caused by variable-width date digits in proportional fonts.
+
 ### 🗑️ Removed
 
 - Remove the "Author Detail Page Style -> Page Description" setting. The author detail page now uses the author description, falling back to the site description when the author description is empty.

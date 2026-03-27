@@ -7,25 +7,39 @@
   margin: 0;
   padding: 0;
 
+  @media (width >= 640px) {
+    display: grid;
+    gap: 0.3125rem 1rem;
+
+    /* .content has overflow-wrap: break-word; actually minmax is not needed, just 1fr is enough, but minmax is used here as a fallback in advance */
+    grid-template-columns: max-content minmax(0, 1fr);
+  }
+
   & .post-item {
     list-style-type: none;
     margin-bottom: 1rem;
     margin-left: 0;
 
     @media (width >= 640px) {
-      display: flex;
-      margin-bottom: 0.3125rem;
+      /* Makes the <li> box disappear so its children (.meta and .post-item-content) become direct grid items of the parent, enabling two-column alignment across rows */
+      display: contents;
     }
 
     & .meta {
       color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       display: block;
       font-size: var(--text);
-      margin-right: 1rem;
       white-space: nowrap;
 
       @media (width >= 640px) {
-        text-align: right;
+        grid-column: 1;
+      }
+    }
+
+    & .post-item-content {
+      @media (width >= 640px) {
+        grid-column: 2;
+        min-width: 0;
       }
     }
   }
