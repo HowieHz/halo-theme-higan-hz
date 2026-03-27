@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.60.1] - 2026-03-28
+
 ### 🐛 错误修复
 
 - 修复简洁文章列表中日期数字因字体不等宽导致文章标题列参差不齐的问题。
@@ -689,7 +691,8 @@
 
 - 修复启用“标签集合页样式——标签排序方式”时标签颜色无法正常显示的问题。
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.0...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.1...HEAD
+[1.60.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.0...v1.60.1
 [1.60.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.2...v1.60.0
 [1.59.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.1...v1.59.2
 [1.59.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.0...v1.59.1

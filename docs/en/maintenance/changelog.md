@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.60.1] - 2026-03-28
+
 ### 🐛 Bug Fixes
 
 - Fix misaligned post title column in the simple post list caused by variable-width date digits in proportional fonts.
@@ -689,7 +691,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed tag color rendering issues when `Tags Page Style -> Tag Sort Order` was enabled.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.0...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.1...HEAD
+[1.60.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.0...v1.60.1
 [1.60.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.2...v1.60.0
 [1.59.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.1...v1.59.2
 [1.59.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.0...v1.59.1
