@@ -8,11 +8,11 @@
   padding: 0;
 
   @media (width >= 640px) {
-    column-gap: 1rem;
     display: grid;
+    gap: 0.3125rem 1rem;
+
     /* .content has overflow-wrap: break-word; actually minmax is not needed, just 1fr is enough, but minmax is used here as a fallback in advance */
     grid-template-columns: max-content minmax(0, 1fr);
-    row-gap: 0.3125rem;
   }
 
   & .post-item {
