@@ -7,25 +7,37 @@
   margin: 0;
   padding: 0;
 
+  @media (width >= 640px) {
+    column-gap: 1rem;
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    row-gap: 0.3125rem;
+  }
+
   & .post-item {
     list-style-type: none;
     margin-bottom: 1rem;
     margin-left: 0;
 
     @media (width >= 640px) {
-      display: flex;
-      margin-bottom: 0.3125rem;
+      display: contents;
     }
 
     & .meta {
       color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       display: block;
       font-size: var(--text);
-      margin-right: 1rem;
       white-space: nowrap;
 
       @media (width >= 640px) {
-        text-align: right;
+        grid-column: 1;
+      }
+    }
+
+    & .content {
+      @media (width >= 640px) {
+        grid-column: 2;
+        min-width: 0;
       }
     }
   }
