@@ -9,3 +9,87 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+      time: "04:30"
+      timezone: "Asia/Shanghai"
+    groups:
+      runtime-deps:
+        dependency-type: "production"
+        patterns:
+          - "alpinejs"
+          - "instant.page"
+          - "mermaid"
+          - "chart.js"
+          - "vue-chartjs"
+        update-types:
+          - "minor"
+          - "patch"
+      docs-stack:
+        dependency-type: "development"
+        patterns:
+          - "vitepress"
+          - "vitepress-plugin-*"
+          - "pagefind"
+          - "@nolebase/*"
+          - "@whyframe/*"
+          - "vue"
+        update-types:
+          - "minor"
+          - "patch"
+      tooling:
+        dependency-type: "development"
+        patterns:
+          - "eslint"
+          - "eslint-*"
+          - "@eslint/*"
+          - "@typescript-eslint/*"
+          - "typescript-eslint"
+          - "oxlint"
+          - "oxlint-*"
+          - "oxfmt"
+          - "stylelint"
+          - "stylelint-*"
+          - "markdownlint-cli"
+          - "autocorrect-node"
+          - "vue-eslint-parser"
+          - "vite"
+          - "vite-plugin-*"
+          - "tailwindcss"
+          - "tailwindcss-*"
+          - "@tailwindcss/*"
+          - "unplugin-tailwindcss-mangle"
+          - "@iconify/*"
+          - "@iconify-json/*"
+          - "less"
+          - "lightningcss"
+          - "browserslist"
+          - "@types/*"
+        update-types:
+          - "minor"
+          - "patch"
+      misc-dev:
+        dependency-type: "development"
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      misc-prod:
+        dependency-type: "production"
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+  # This group only updates third-party GitHub Actions referenced in .github/workflows.
+  # Dependabot does not automatically update dependencies used inside local composite actions
+  # such as .github/actions/setup-node-pnpm/action.yml.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "04:30"
+      timezone: "Asia/Shanghai"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
