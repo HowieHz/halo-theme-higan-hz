@@ -27,11 +27,11 @@ runs:
 
     - name: Setup pnpm (normal, when packageManager declares pnpm)
       if: ${{ steps.detect-pm.outputs.pm != '' && contains(steps.detect-pm.outputs.pm, 'pnpm') }}
-      uses: pnpm/action-setup@v4
+      uses: pnpm/action-setup@v5
 
     - name: Setup pnpm (fallback when packageManager missing)
       if: ${{ steps.detect-pm.outputs.pm == '' }}
-      uses: pnpm/action-setup@v4
+      uses: pnpm/action-setup@v5
       with:
         version: ${{ inputs.pnpm-version }}
 
