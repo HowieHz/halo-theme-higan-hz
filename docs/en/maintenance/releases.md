@@ -1,5 +1,13 @@
 # Releases
 
+## Versioning
+
+This project uses semantic versioning in the format `MAJOR.MINOR.PATCH`.
+
+- `MAJOR`: incremented when the Halo CMS major version changes.
+- `MINOR`: incremented when configuration updates are introduced.
+- `PATCH`: incremented when changes do not update configuration files.
+
 ## Release Types
 
 This theme ships two kinds of releases: stable releases and nightly prereleases. Both are published to GitHub Releases and the Halo App Store, and both upload all generated theme packages.
