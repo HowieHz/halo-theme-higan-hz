@@ -82,7 +82,8 @@ updates:
           - "patch"
   # This group only updates third-party GitHub Actions referenced in .github/workflows.
   # Dependabot does not automatically update dependencies used inside local composite actions
-  # such as .github/actions/setup-node-pnpm/action.yml.
+  # such as .github/actions/**/action.yml.
+  # Those files are updated separately by .github/workflows/update-local-action-uses.yml.
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

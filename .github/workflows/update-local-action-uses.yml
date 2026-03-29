@@ -1,0 +1,49 @@
+name: Update Local Action Uses
+
+on:
+  schedule:
+    # 20:30 UTC = 04:30 Asia/Shanghai on the next day.
+    - cron: "30 20 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: update-local-action-uses
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 25
+
+      - name: Update action references
+        id: update-uses
+        env:
+          GITHUB_TOKEN: ${{ secrets.PR_WORKFLOW_TOKEN || github.token }}
+        run: node .github/scripts/update-local-action-uses.js
+
+      - name: Create Pull Request
+        if: ${{ steps.update-uses.outputs.changed == 'true' }}
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.PR_WORKFLOW_TOKEN || github.token }}
+          # A PAT is still preferred here so the created PR can trigger other workflows.
+          commit-message: "chore: update local action references"
+          title: "chore: update local action references"
+          body: |
+            This PR updates third-party GitHub Action references used by `.github/actions/**/action.yml`.
+
+            Generated automatically by the `update-local-action-uses` workflow because Dependabot does not update `uses:` entries inside local composite actions.
+          branch: chore/update-local-action-uses
+          delete-branch: true
+          labels: dependencies

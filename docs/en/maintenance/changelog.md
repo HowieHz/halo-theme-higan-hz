@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🛠️ Miscellaneous Chores
+
+- Updated dependencies.
+
 ## [1.60.1] - 2026-03-28
 
 ### 🐛 Bug Fixes
