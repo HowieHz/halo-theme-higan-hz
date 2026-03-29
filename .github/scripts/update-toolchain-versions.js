@@ -165,7 +165,9 @@ const updateSetupAction = async (nodeMajor, pnpmVersion) => {
   }
 
   if (pnpmMatch[1] !== pnpmVersion) {
-    nextContent = nextContent.replace(pnpmAnchor, (match) => match.replace(`default: "${pnpmMatch[1]}"`, `default: "${pnpmVersion}"`));
+    nextContent = nextContent.replace(pnpmAnchor, (match) =>
+      match.replace(`default: "${pnpmMatch[1]}"`, `default: "${pnpmVersion}"`),
+    );
     updates.push(`inputs.pnpm-version.default -> ${pnpmVersion}`);
   }
 
