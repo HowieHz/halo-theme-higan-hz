@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const packageJsonPath = "package.json";
+const pnpmWorkspacePath = "pnpm-workspace.yaml";
 const setupActionPath = path.join(".github", "actions", "setup-node-pnpm", "action.yml");
 const updateLocalActionUsesWorkflowPath = path.join(".github", "workflows", "update-local-action-uses.yml");
 const updateToolchainVersionsWorkflowPath = path.join(".github", "workflows", "update-toolchain-versions.yml");
@@ -140,6 +141,42 @@ const updatePackageJson = async (nodeMajor, pnpmVersion) => {
   return updatedFields;
 };
 
+const updatePnpmWorkspace = async (nodeMajor) => {
+  const { content } = await readFileWithLineEnding(pnpmWorkspacePath);
+  const updates = [];
+  let nextContent = content;
+  const nextNodeVersion = `${nodeMajor}.0.0`;
+  const nodeVersionPattern = /^(\s*nodeVersion:\s*)(\S+)(\s*)$/mu;
+  const engineStrictPattern = /^(\s*engineStrict:\s*)(true|false)(\s*)$/mu;
+
+  const nodeVersionMatch = nextContent.match(nodeVersionPattern);
+  if (!nodeVersionMatch) {
+    throw new Error(`Could not find nodeVersion in ${pnpmWorkspacePath}`);
+  }
+
+  if (nodeVersionMatch[2] !== nextNodeVersion) {
+    nextContent = nextContent.replace(nodeVersionPattern, `$1${nextNodeVersion}$3`);
+    updates.push(`nodeVersion -> ${nextNodeVersion}`);
+  }
+
+  const engineStrictMatch = nextContent.match(engineStrictPattern);
+  if (!engineStrictMatch) {
+    throw new Error(`Could not find engineStrict in ${pnpmWorkspacePath}`);
+  }
+
+  if (engineStrictMatch[2] !== "true") {
+    nextContent = nextContent.replace(engineStrictPattern, "$1true$3");
+    updates.push("engineStrict -> true");
+  }
+
+  if (updates.length === 0) {
+    return [];
+  }
+
+  await maybeWriteFile(pnpmWorkspacePath, nextContent);
+  return updates;
+};
+
 const updateSetupAction = async (nodeMajor, pnpmVersion) => {
   const { content } = await readFileWithLineEnding(setupActionPath);
   const updates = [];
@@ -207,6 +244,10 @@ const updateGroups = [
   {
     filePath: packageJsonPath,
     updates: await updatePackageJson(nodeMajor, pnpmVersion),
+  },
+  {
+    filePath: pnpmWorkspacePath,
+    updates: await updatePnpmWorkspace(nodeMajor),
   },
   {
     filePath: setupActionPath,
