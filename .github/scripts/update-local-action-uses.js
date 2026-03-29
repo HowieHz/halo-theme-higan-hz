@@ -27,8 +27,13 @@ const collectActionYamlFiles = async (directoryPath) => {
 
 const githubToken = process.env.GITHUB_TOKEN ?? "";
 const githubRepository = process.env.GITHUB_REPOSITORY ?? "local-action-updater";
-const usesPattern = /^(\s*-?\s*uses:\s*)([A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+)@([^\s#]+)(\s*(#.*)?)$/u;
+const usesPattern =
+  /^(\s*-?\s*uses:\s*)([A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+(?:\/[A-Za-z0-9_./-]+)?)@([^\s#]+)(\s*(#.*)?)$/u;
+const commitRefPattern = /^[0-9a-f]{7,40}$/iu;
+const releaseTagUrlPattern = /\/releases\/tag\/([^/\s#]+)$/u;
 const versionCache = new Map();
+const repoMetadataCache = new Map();
+const tagCommitCache = new Map();
 const githubHeaders = {
   Accept: "application/vnd.github+json",
   "User-Agent": githubRepository,
@@ -64,6 +69,38 @@ const parseStableSemVer = (tag) => {
   };
 };
 
+const extractRepositoryName = (usesTarget) => usesTarget.split("/").slice(0, 2).join("/");
+
+const isCommitRef = (ref) => commitRefPattern.test(ref);
+
+const extractSemVerTagFromComment = (comment) => {
+  if (!comment.includes("#")) {
+    return null;
+  }
+
+  const releaseTagUrlMatch = comment.match(releaseTagUrlPattern);
+
+  if (releaseTagUrlMatch && /^v?\d+(?:\.\d+\.\d+)?$/u.test(releaseTagUrlMatch[1])) {
+    return releaseTagUrlMatch[1];
+  }
+
+  const inlineTagMatch = comment.match(/#\s*(v?\d+(?:\.\d+\.\d+)?)\b/u);
+  return inlineTagMatch ? inlineTagMatch[1] : null;
+};
+
+const replaceCommentTag = (comment, currentTag, nextTag) => {
+  if (!comment || currentTag === nextTag) {
+    return comment;
+  }
+
+  return comment
+    .replace(`/releases/tag/${currentTag}`, `/releases/tag/${nextTag}`)
+    .replace(
+      new RegExp(`(^|#\\s*)${currentTag.replace(/\./gu, "\\.")}(?=\\b)`, "u"),
+      (_, prefix) => `${prefix}${nextTag}`,
+    );
+};
+
 const compareSemVer = (left, right) => {
   if (left.major !== right.major) {
     return left.major - right.major;
@@ -88,6 +125,26 @@ const resolveTargetRef = (currentRef, latestVersion) => {
   }
 
   return null;
+};
+
+const fetchRepositoryMetadata = async (repository) => {
+  const cached = repoMetadataCache.get(repository);
+
+  if (cached) {
+    return cached;
+  }
+
+  const response = await fetch(`https://api.github.com/repos/${repository}`, {
+    headers: githubHeaders,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch repository metadata for ${repository}: ${response.status} ${response.statusText}`);
+  }
+
+  const metadata = await response.json();
+  repoMetadataCache.set(repository, metadata);
+  return metadata;
 };
 
 const fetchLatestStableVersion = async (repository) => {
@@ -119,6 +176,85 @@ const fetchLatestStableVersion = async (repository) => {
   return latestVersion;
 };
 
+const fetchCommitShaForTag = async (repository, tag) => {
+  const cacheKey = `${repository}@${tag}`;
+  const cached = tagCommitCache.get(cacheKey);
+
+  if (cached) {
+    return cached;
+  }
+
+  const response = await fetch(`https://api.github.com/repos/${repository}/git/ref/tags/${encodeURIComponent(tag)}`, {
+    headers: githubHeaders,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch tag ref for ${repository}@${tag}: ${response.status} ${response.statusText}`);
+  }
+
+  const refData = await response.json();
+  let commitSha = refData.object.sha;
+
+  if (refData.object.type === "tag") {
+    const annotatedTagResponse = await fetch(`https://api.github.com/repos/${repository}/git/tags/${commitSha}`, {
+      headers: githubHeaders,
+    });
+
+    if (!annotatedTagResponse.ok) {
+      throw new Error(
+        `Failed to resolve annotated tag for ${repository}@${tag}: ${annotatedTagResponse.status} ${annotatedTagResponse.statusText}`,
+      );
+    }
+
+    const annotatedTag = await annotatedTagResponse.json();
+    commitSha = annotatedTag.object.sha;
+  }
+
+  tagCommitCache.set(cacheKey, commitSha);
+  return commitSha;
+};
+
+const fetchDefaultBranchHeadSha = async (repository) => {
+  const metadata = await fetchRepositoryMetadata(repository);
+  const response = await fetch(`https://api.github.com/repos/${repository}/commits/${metadata.default_branch}`, {
+    headers: githubHeaders,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch default branch HEAD for ${repository}: ${response.status} ${response.statusText}`);
+  }
+
+  const commit = await response.json();
+  return commit.sha;
+};
+
+const buildCommitRefUpdate = async (repository, currentRef, suffix) => {
+  const commentTag = extractSemVerTagFromComment(suffix);
+
+  if (!commentTag) {
+    const targetRef = await fetchDefaultBranchHeadSha(repository);
+    return {
+      nextRef: targetRef,
+      nextSuffix: suffix,
+      summary: `${currentRef} -> ${targetRef.slice(0, 12)}`,
+    };
+  }
+
+  const latestVersion = await fetchLatestStableVersion(repository);
+  const targetTag = resolveTargetRef(commentTag, latestVersion);
+
+  if (!targetTag) {
+    return null;
+  }
+
+  const targetRef = await fetchCommitShaForTag(repository, targetTag);
+  return {
+    nextRef: targetRef,
+    nextSuffix: replaceCommentTag(suffix, commentTag, targetTag),
+    summary: `${currentRef.slice(0, 12)} -> ${targetRef.slice(0, 12)} (${commentTag} -> ${targetTag})`,
+  };
+};
+
 const updateFile = async (filePath) => {
   const absolutePath = path.resolve(process.cwd(), filePath);
   const originalContent = await fs.readFile(absolutePath, "utf8");
@@ -133,15 +269,34 @@ const updateFile = async (filePath) => {
       continue;
     }
 
-    const [, prefix, repository, currentRef, suffix = ""] = match;
-    const targetVersion = resolveTargetRef(currentRef, await fetchLatestStableVersion(repository));
+    const [, prefix, usesTarget, currentRef, suffix = ""] = match;
+    const repository = extractRepositoryName(usesTarget);
+    let update = null;
 
-    if (!targetVersion || targetVersion === currentRef) {
+    if (isCommitRef(currentRef)) {
+      update = await buildCommitRefUpdate(repository, currentRef, suffix);
+    } else {
+      const targetVersion = resolveTargetRef(currentRef, await fetchLatestStableVersion(repository));
+
+      if (targetVersion) {
+        update = {
+          nextRef: targetVersion,
+          nextSuffix: replaceCommentTag(suffix, currentRef, targetVersion),
+          summary: `${currentRef} -> ${targetVersion}`,
+        };
+      }
+    }
+
+    if (!update) {
       continue;
     }
 
-    lines[index] = `${prefix}${repository}@${targetVersion}${suffix}`;
-    updates.push(`${repository}: ${currentRef} -> ${targetVersion}`);
+    if (update.nextRef === currentRef && update.nextSuffix === suffix) {
+      continue;
+    }
+
+    lines[index] = `${prefix}${usesTarget}@${update.nextRef}${update.nextSuffix}`;
+    updates.push(`${usesTarget}: ${update.summary}`);
   }
 
   if (updates.length === 0) {
