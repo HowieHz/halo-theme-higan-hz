@@ -115,20 +115,9 @@
     "Firefox >= 114",
     "Safari >= 16.4"
   ],
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": ">= 10.33.0",
-      "onFail": "warn"
-    },
-    "runtime": {
-      "name": "node",
-      "version": ">= 25",
-      "onFail": "error"
-    }
-  },
   "engines": {
-    "node": ">= 25"
+    "node": ">=25",
+    "pnpm": "^10.33.0"
   },
   "packageManager": "pnpm@10.33.0"
 }

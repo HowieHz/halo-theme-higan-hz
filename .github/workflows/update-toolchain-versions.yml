@@ -40,7 +40,6 @@ jobs:
           body: |
             This PR updates the repository toolchain versions tracked in:
             - `package.json`
-            - `pnpm-workspace.yaml`
             - `.github/actions/setup-node-pnpm/action.yml`
             - workflows that still bootstrap Node.js directly
 

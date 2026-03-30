@@ -2,10 +2,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const packageJsonPath = "package.json";
-const pnpmWorkspacePath = "pnpm-workspace.yaml";
 const setupActionPath = path.join(".github", "actions", "setup-node-pnpm", "action.yml");
-const updateLocalActionUsesWorkflowPath = path.join(".github", "workflows", "update-local-action-uses.yml");
-const updateToolchainVersionsWorkflowPath = path.join(".github", "workflows", "update-toolchain-versions.yml");
+const workflowsDirPath = path.join(".github", "workflows");
 const dryRun = process.argv.includes("--dry-run");
 
 const appendGitHubOutput = async (name, value) => {
@@ -108,23 +106,18 @@ const updatePackageJson = async (nodeMajor, pnpmVersion) => {
   const packageJson = JSON.parse(content);
   const updatedFields = [];
 
-  const nextNodeRange = `>= ${nodeMajor}`;
-  const nextPnpmRange = `>= ${pnpmVersion}`;
+  const nextNodeRange = `>=${nodeMajor}`;
+  const nextPnpmRange = `^${pnpmVersion}`;
   const nextPackageManager = `pnpm@${pnpmVersion}`;
-
-  if (packageJson.devEngines?.packageManager?.version !== nextPnpmRange) {
-    packageJson.devEngines.packageManager.version = nextPnpmRange;
-    updatedFields.push(`devEngines.packageManager.version -> ${nextPnpmRange}`);
-  }
-
-  if (packageJson.devEngines?.runtime?.version !== nextNodeRange) {
-    packageJson.devEngines.runtime.version = nextNodeRange;
-    updatedFields.push(`devEngines.runtime.version -> ${nextNodeRange}`);
-  }
 
   if (packageJson.engines?.node !== nextNodeRange) {
     packageJson.engines.node = nextNodeRange;
     updatedFields.push(`engines.node -> ${nextNodeRange}`);
+  }
+
+  if (packageJson.engines?.pnpm !== nextPnpmRange) {
+    packageJson.engines.pnpm = nextPnpmRange;
+    updatedFields.push(`engines.pnpm -> ${nextPnpmRange}`);
   }
 
   if (packageJson.packageManager !== nextPackageManager) {
@@ -139,42 +132,6 @@ const updatePackageJson = async (nodeMajor, pnpmVersion) => {
   const nextContent = `${JSON.stringify(packageJson, null, 2)}${lineEnding}`;
   await maybeWriteFile(packageJsonPath, nextContent.replace(/\n/gu, lineEnding));
   return updatedFields;
-};
-
-const updatePnpmWorkspace = async (nodeMajor) => {
-  const { content } = await readFileWithLineEnding(pnpmWorkspacePath);
-  const updates = [];
-  let nextContent = content;
-  const nextNodeVersion = `${nodeMajor}.0.0`;
-  const nodeVersionPattern = /^(\s*nodeVersion:\s*)(\S+)(\s*)$/mu;
-  const engineStrictPattern = /^(\s*engineStrict:\s*)(true|false)(\s*)$/mu;
-
-  const nodeVersionMatch = nextContent.match(nodeVersionPattern);
-  if (!nodeVersionMatch) {
-    throw new Error(`Could not find nodeVersion in ${pnpmWorkspacePath}`);
-  }
-
-  if (nodeVersionMatch[2] !== nextNodeVersion) {
-    nextContent = nextContent.replace(nodeVersionPattern, `$1${nextNodeVersion}$3`);
-    updates.push(`nodeVersion -> ${nextNodeVersion}`);
-  }
-
-  const engineStrictMatch = nextContent.match(engineStrictPattern);
-  if (!engineStrictMatch) {
-    throw new Error(`Could not find engineStrict in ${pnpmWorkspacePath}`);
-  }
-
-  if (engineStrictMatch[2] !== "true") {
-    nextContent = nextContent.replace(engineStrictPattern, "$1true$3");
-    updates.push("engineStrict -> true");
-  }
-
-  if (updates.length === 0) {
-    return [];
-  }
-
-  await maybeWriteFile(pnpmWorkspacePath, nextContent);
-  return updates;
 };
 
 const updateSetupAction = async (nodeMajor, pnpmVersion) => {
@@ -218,11 +175,17 @@ const updateSetupAction = async (nodeMajor, pnpmVersion) => {
 
 const updateWorkflowNodeVersion = async (filePath, nodeMajor) => {
   const { content } = await readFileWithLineEnding(filePath);
+  const setupNodePattern = /^\s*uses:\s*actions\/setup-node@/mu;
   const pattern = /^(\s*node-version:\s*)(\d+)(\s*)$/mu;
+
+  if (!setupNodePattern.test(content)) {
+    return [];
+  }
+
   const match = content.match(pattern);
 
   if (!match) {
-    throw new Error(`Could not find node-version in ${filePath}`);
+    return [];
   }
 
   if (Number(match[2]) === nodeMajor) {
@@ -234,11 +197,32 @@ const updateWorkflowNodeVersion = async (filePath, nodeMajor) => {
   return [`node-version -> ${nodeMajor}`];
 };
 
+const updateWorkflowNodeVersions = async (nodeMajor) => {
+  const entries = await fs.readdir(path.resolve(process.cwd(), workflowsDirPath), { withFileTypes: true });
+  const workflowFiles = entries
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".yml"))
+    .map((entry) => path.join(workflowsDirPath, entry.name));
+
+  const updateGroups = [];
+
+  for (const filePath of workflowFiles) {
+    const updates = await updateWorkflowNodeVersion(filePath, nodeMajor);
+
+    if (updates.length > 0) {
+      updateGroups.push({ filePath, updates });
+    }
+  }
+
+  return updateGroups;
+};
+
 const nodeMajor = await fetchLatestNodeMajor();
 const pnpmVersion = await fetchLatestPnpmVersion();
 
 console.log(`Resolved latest Node.js major: ${nodeMajor}`);
 console.log(`Resolved latest pnpm version: ${pnpmVersion}`);
+
+const workflowUpdateGroups = await updateWorkflowNodeVersions(nodeMajor);
 
 const updateGroups = [
   {
@@ -246,21 +230,10 @@ const updateGroups = [
     updates: await updatePackageJson(nodeMajor, pnpmVersion),
   },
   {
-    filePath: pnpmWorkspacePath,
-    updates: await updatePnpmWorkspace(nodeMajor),
-  },
-  {
     filePath: setupActionPath,
     updates: await updateSetupAction(nodeMajor, pnpmVersion),
   },
-  {
-    filePath: updateLocalActionUsesWorkflowPath,
-    updates: await updateWorkflowNodeVersion(updateLocalActionUsesWorkflowPath, nodeMajor),
-  },
-  {
-    filePath: updateToolchainVersionsWorkflowPath,
-    updates: await updateWorkflowNodeVersion(updateToolchainVersionsWorkflowPath, nodeMajor),
-  },
+  ...workflowUpdateGroups,
 ].filter(({ updates }) => updates.length > 0);
 
 if (updateGroups.length === 0) {
