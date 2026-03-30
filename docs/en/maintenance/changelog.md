@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.61.0] - 2026-03-30
+
 ### 🚀 Features
 
 - Added the ["Inline code style preset"](/en/guide/theme-configuration#inline-code-style-preset) setting (Post Page Style -> Inline code style preset) for choosing the inline code style used in posts and single pages. It currently provides three presets: default dotted border, soft background highlight, and theme pill. It does not affect multi-line code blocks.
@@ -700,7 +702,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed tag color rendering issues when `Tags Page Style -> Tag Sort Order` was enabled.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.61.0...HEAD
+[1.61.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.1...v1.61.0
 [1.60.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.0...v1.60.1
 [1.60.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.2...v1.60.0
 [1.59.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.1...v1.59.2

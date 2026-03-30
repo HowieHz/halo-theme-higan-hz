@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.61.0] - 2026-03-30
+
 ### 🚀 新功能
 
 - 新增[“行内代码样式预设”](/guide/theme-configuration#行内代码样式预设)配置项（文章页样式 -> 行内代码样式预设），用于为文章页与独立页面内容中的行内代码选择样式方案。当前提供默认虚线边框、柔和底色高亮、主题色胶囊三套预设，且不会影响多行代码块。
@@ -700,7 +702,8 @@
 
 - 修复启用“标签集合页样式——标签排序方式”时标签颜色无法正常显示的问题。
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.61.0...HEAD
+[1.61.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.1...v1.61.0
 [1.60.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.0...v1.60.1
 [1.60.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.2...v1.60.0
 [1.59.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.1...v1.59.2
