@@ -248,7 +248,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `*.zst` - zstandard (level 21, max - 1 to avoid OOM during builds)
   - Automatic delivery and server setup:
     - On native Halo CMS deployment, `.br` files are served automatically.
-    - On nginx/Apache and other servers, see the [performance guide](https://howiehz.top/halo-theme-higan-haozi/en/tutorial/performance) to enable automatic precompressed asset delivery.
+    - On nginx/Apache and other servers, see the [performance guide](/en/tutorial/performance) to enable automatic precompressed asset delivery.
 
 ### 🔧 Code Refactoring
 
@@ -256,7 +256,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 📄 Documentation
 
-- Updated the [Security Practices](https://howiehz.top/halo-theme-higan-haozi/en/tutorial/security) docs.
+- Updated the [Security Practices](/en/tutorial/security) docs.
 
 ### 🛠️ Miscellaneous Chores
 
@@ -338,8 +338,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🚀 Features
 
 - Added compatibility with the [Friends](https://github.com/chengzhongxue/plugin-friends-new) plugin ([Marketplace page](https://www.halo.run/store/apps/app-yISsV)).
-  - Docs: [Friends plugin intro](https://howiehz.top/halo-theme-higan-haozi/en/guide/plugin-compatibility#moments-feed-subscription)
-  - Added related options: [Friends page style options](https://howiehz.top/halo-theme-higan-haozi/en/guide/theme-configuration#friends-page-style)
+  - Docs: [Friends plugin intro](/en/guide/plugin-compatibility#moments-feed-subscription)
+  - Added related options: [Friends page style options](/en/guide/theme-configuration#friends-page-style)
 - Added publish date display controls for home page post lists.
   - Simple post list: added `Show Publish Date` (default: enabled).
   - Rich post list: added `Show Publish Date` (default: enabled).
@@ -457,7 +457,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added support for custom theme colors using new Halo CMS 2.22 controls.
   - Even without frontend knowledge, you can now customize theme colors easily.
-  - See: [Tutorial: Custom Theme](https://howiehz.top/halo-theme-higan-haozi/en/tutorial/custom-theme)
+  - See: [Tutorial: Custom Theme](/en/tutorial/custom-theme)
 
 ### 🔧 Code Refactoring
 
@@ -491,7 +491,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 📄 Documentation
 
-- Improved docs and added a new [Browser Compatibility](https://howiehz.top/halo-theme-higan-haozi/en/reference/browser-compatibility) page.
+- Improved docs and added a new [Browser Compatibility](/en/reference/browser-compatibility) page.
 
 ### 🛠️ Miscellaneous Chores
 
@@ -558,8 +558,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 💥 Breaking Changes
 
-- You must migrate custom icons using the new process. See [Tutorial: Custom Icons](https://howiehz.top/halo-theme-higan-haozi/en/tutorial/custom-svg). If you previously customized icons, please follow that migration guide.
-- Options under `Custom Share Buttons` will be reset. Existing values are not overwritten in source data; you can recover them from [Export Theme Config](https://howiehz.top/halo-theme-higan-haozi/en/reference/faq#how-to-export-theme-configuration).
+- You must migrate custom icons using the new process. See `Tutorial: Custom Icons (Deleted)`. If you previously customized icons, please follow that migration guide.
+- Options under `Custom Share Buttons` will be reset. Existing values are not overwritten in source data; you can recover them from [Export Theme Config](/en/reference/faq#how-to-export-theme-configuration).
 
 ### 🔧 Code Refactoring
 
@@ -623,7 +623,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Added a new doc: [Performance Reference](https://howiehz.top/halo-theme-higan-haozi/en/reference/performance).
+- Added a new doc: [Performance Reference](/en/reference/performance).
   - Shows resource size changes from v1.0.0 to the latest version.
 
 ### 🔧 Code Refactoring
@@ -681,7 +681,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Launched the new docs site: [Higan Haozi](/en/guide/what-is-higan-haozi).
+- Launched the new docs site: [Higan Haozi](/en/).
   - [Writing reference docs: base styles, extended styles, and usage](/en/guide/style-reference)
   - [Plugin compatibility docs](/en/guide/plugin-compatibility)
   - [Theme configuration docs](/en/guide/theme-configuration)

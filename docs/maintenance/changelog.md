@@ -248,7 +248,7 @@
     - `*.zst` — zstandard（压缩等级 21，已使用最大值减 1，以避免构建时内存不足）
   - 自动提供与服务器配置：
     - 直接使用 Halo CMS 时，服务器会自动提供 `.br` 文件。
-    - 使用 nginx/Apache 等服务器时，请参考[配置文档](https://howiehz.top/halo-theme-higan-haozi/tutorial/performance)以启用预压缩文件的自动交付。
+    - 使用 nginx/Apache 等服务器时，请参考[配置文档](/tutorial/performance)以启用预压缩文件的自动交付。
 
 ### 🔧 代码重构
 
@@ -256,7 +256,7 @@
 
 ### 📄 文档
 
-- 修订[安全防护文档](https://howiehz.top/halo-theme-higan-haozi/tutorial/security)。
+- 修订[安全防护文档](/tutorial/security)。
 
 ### 🛠️ 杂项维护
 
@@ -338,8 +338,8 @@
 ### 🚀 新功能
 
 - 适配[朋友圈](https://github.com/chengzhongxue/plugin-friends-new)（[应用市场页面](https://www.halo.run/store/apps/app-yISsV)）插件。
-  - 介绍文档：[朋友圈插件介绍](https://howiehz.top/halo-theme-higan-haozi/guide/plugin-compatibility#朋友圈-订阅聚合)
-  - 新增相关配置项：[朋友圈页面样式配置项](https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration#朋友圈页面样式)
+  - 介绍文档：[朋友圈插件介绍](/guide/plugin-compatibility#朋友圈-订阅聚合)
+  - 新增相关配置项：[朋友圈页面样式配置项](/guide/theme-configuration#朋友圈页面样式)
 - 新增首页文章列表发布日期显示控制功能。
   - 简洁文章列表：新增`简洁列表显示发布日期`配置项，允许控制是否显示文章发布日期（默认为开启）。
   - 多元文章列表：新增`多元列表显示发布日期`配置项，允许控制是否显示文章发布日期（默认为开启）。
@@ -457,7 +457,7 @@
 
 - 支持使用 Halo CMS 2.22 新引入的控件来自定义主题配色。
   - 即使你没有任何前端知识，现在也能简单地自定义主题配色了！
-  - 详情请阅读：[教程：自定义配色方案](https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-theme)
+  - 详情请阅读：[教程：自定义配色方案](/tutorial/custom-theme)
 
 ### 🔧 代码重构
 
@@ -491,7 +491,7 @@
 
 ### 📄 文档
 
-- 优化文档，新增[浏览器兼容性](https://howiehz.top/halo-theme-higan-haozi/reference/browser-compatibility)页面。
+- 优化文档，新增[浏览器兼容性](/reference/browser-compatibility)页面。
 
 ### 🛠️ 杂项维护
 
@@ -558,8 +558,8 @@
 
 ### 💥 破坏性变更
 
-- 你需要使用新流程自定义图标，相关文档请见[教程：自定义图标](https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg)。如果你先前自定义了图标，需按照教程进行迁移。
-- “自定义分享按钮”下的配置项将会被重置，先前的配置不会被覆盖，你可通过在主题信息[“导出主题配置”](https://howiehz.top/halo-theme-higan-haozi/reference/faq#如何导出主题配置)获取。
+- 你需要使用新流程自定义图标，相关文档请见`教程：自定义图标（已删除）`。如果你先前自定义了图标，需按照教程进行迁移。
+- “自定义分享按钮”下的配置项将会被重置，先前的配置不会被覆盖，你可通过在主题信息[“导出主题配置”](/reference/faq#如何导出主题配置)获取。
 
 ### 🔧 代码重构
 
@@ -623,7 +623,7 @@
 
 ### 🚀 新功能
 
-- 新文档：[性能参考](https://howiehz.top/halo-theme-higan-haozi/reference/performance)
+- 新文档：[性能参考](/reference/performance)
   - 展示了主题从 v1.0.0 到最新版的资源体积变化。
 
 ### 🔧 代码重构
@@ -681,11 +681,11 @@
 
 ### 🚀 新功能
 
-- 新文档站已上线，欢迎体验：[Higan Haozi](https://howiehz.top/halo-theme-higan-haozi)
-  - [写作参考文档：基本样式、扩展样式及其写法](https://howiehz.top/halo-theme-higan-haozi/guide/style-reference)
-  - [插件兼容性文档](https://howiehz.top/halo-theme-higan-haozi/guide/plugin-compatibility)
-  - [主题配置项文档](https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration)
-  - [元数据配置项文档](https://howiehz.top/halo-theme-higan-haozi/guide/metadata-configuration)
+- 新文档站已上线，欢迎体验：[Higan Haozi](/)
+  - [写作参考文档：基本样式、扩展样式及其写法](/guide/style-reference)
+  - [插件兼容性文档](/guide/plugin-compatibility)
+  - [主题配置项文档](/guide/theme-configuration)
+  - [元数据配置项文档](/guide/metadata-configuration)
 
 ### 🔧 代码重构
 
