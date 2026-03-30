@@ -36,13 +36,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.60.1] - 2026-03-28
 
-### 🐛 Bug Fixes
-
-- Fix misaligned post title column in the simple post list caused by variable-width date digits in proportional fonts.
-
 ### 🗑️ Removed
 
 - Remove the "Author Detail Page Style -> Page Description" setting. The author detail page now uses the author description, falling back to the site description when the author description is empty.
+
+### 🐛 Bug Fixes
+
+- Fix misaligned post title column in the simple post list caused by variable-width date digits in proportional fonts.
 
 ## [1.60.0] - 2026-03-23
 
@@ -373,16 +373,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.53.1] - 2026-01-28
 
-### 🐛 Bug Fixes
-
-- Fixed unexpected line breaks in footer content and the top menu on post pages in WebKit-based browsers.
-
 ### 🔧 Code Refactoring
 
 - Optimized custom cursor declarations.
 - Upgraded Meslo font from 1.2 to 1.2.1 and recompressed all formats to reduce font size.
 - Optimized fallback font declarations.
 - Removed unnecessary `vite-ignore` declarations to reduce build output size.
+
+### 🐛 Bug Fixes
+
+- Fixed unexpected line breaks in footer content and the top menu on post pages in WebKit-based browsers.
 
 ### 🛠️ Miscellaneous Chores
 
@@ -426,15 +426,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `Links Page Style - Avatar-First Layout`, a three-column grid layout emphasizing avatar display.
   - Added sub-option `Links Page Style - Link Description Line Clamp`.
 
-### 🐛 Bug Fixes
-
-- Fixed text overflow on the Links page when link descriptions were long and could not wrap.
-- Fixed `Home Page Style - Rich List Excerpt Line Clamp` not working as expected.
-
 ### 🔧 Code Refactoring
 
 - Moved pages containing plugin-dependent options to the end and added a notice at the top.
 - Replaced checkbox controls with switch controls in configuration pages.
+
+### 🐛 Bug Fixes
+
+- Fixed text overflow on the Links page when link descriptions were long and could not wrap.
+- Fixed `Home Page Style - Rich List Excerpt Line Clamp` not working as expected.
 
 ### 🛠️ Miscellaneous Chores
 
@@ -459,13 +459,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Even without frontend knowledge, you can now customize theme colors easily.
   - See: [Tutorial: Custom Theme](https://howiehz.top/halo-theme-higan-haozi/en/tutorial/custom-theme)
 
-### 🐛 Bug Fixes
-
-- Fixed `Global Style -> Color Scheme` not showing the selected option after saving.
-- Fixed unexpected centering of link-page image descriptions.
-- Fixed incorrect style rendering in docs preview.
-- Fixed non-responsive expand/collapse button in the Moments detail page comment section.
-
 ### 🔧 Code Refactoring
 
 - Removed v2 comment component support to reduce bundle size.
@@ -476,6 +469,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Modularized comment component styles and loaded them on demand to reduce page size.
 - Modularized `color-scheme` handling and loaded it on demand to reduce page size.
 - Optimized tag styles on the Moments page.
+
+### 🐛 Bug Fixes
+
+- Fixed `Global Style -> Color Scheme` not showing the selected option after saving.
+- Fixed unexpected centering of link-page image descriptions.
+- Fixed incorrect style rendering in docs preview.
+- Fixed non-responsive expand/collapse button in the Moments detail page comment section.
 
 ## [1.50.2] - 2026-01-01
 
@@ -538,15 +538,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.49.1] - 2025-12-06
 
+### 🔧 Code Refactoring
+
+- Improved icon display styles.
+
 ### 🐛 Bug Fixes
 
 - Fixed footer content overlapping with the like button when likes were enabled and comments were disabled on post pages.
 - Fixed page crashes caused by the random-article feature when no posts were published.
 - Removed an accidentally applied border color.
-
-### 🔧 Code Refactoring
-
-- Improved icon display styles.
 
 ### 🛠️ Miscellaneous Chores
 
@@ -561,6 +561,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - You must migrate custom icons using the new process. See [Tutorial: Custom Icons](https://howiehz.top/halo-theme-higan-haozi/en/tutorial/custom-svg). If you previously customized icons, please follow that migration guide.
 - Options under `Custom Share Buttons` will be reset. Existing values are not overwritten in source data; you can recover them from [Export Theme Config](https://howiehz.top/halo-theme-higan-haozi/en/reference/faq#how-to-export-theme-configuration).
 
+### 🔧 Code Refactoring
+
+- Improved link behavior for the `Native` (browser-native share) item in `Custom Share Buttons -> Share Button Settings`.
+- Optimized code to avoid attaching unnecessary data to the global `window` object, reducing page size.
+- Upgraded Tailwind CSS from v3 to v4.
+- Migrated the icon system from `vite-plugin-purge-icons` to `@iconify/tailwind4`.
+
 ### 🐛 Bug Fixes
 
 - Fixed save failures caused by missing defaults in some `Custom Share Buttons -> Share Button Settings` items.
@@ -569,22 +576,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed an incorrect type for `Show in Post List` in the English settings package.
 - Fixed SVG icons not being inlined into CSS; runtime icon fetching from iconify servers is no longer required.
 
-### 🔧 Code Refactoring
-
-- Improved link behavior for the `Native` (browser-native share) item in `Custom Share Buttons -> Share Button Settings`.
-- Optimized code to avoid attaching unnecessary data to the global `window` object, reducing page size.
-- Upgraded Tailwind CSS from v3 to v4.
-- Migrated the icon system from `vite-plugin-purge-icons` to `@iconify/tailwind4`.
-
 ## [1.48.3] - 2025-11-26
-
-### 🐛 Bug Fixes
-
-- Fixed incorrect hover style rendering for author names on the Moments page.
 
 ### 🔧 Code Refactoring
 
 - Further optimized code splitting and removed redundant styles.
+
+### 🐛 Bug Fixes
+
+- Fixed incorrect hover style rendering for author names on the Moments page.
 
 ### 🛠️ Miscellaneous Chores
 
@@ -593,12 +593,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated development dependencies.
 
 ## [1.48.2] - 2025-11-25
-
-### 🐛 Bug Fixes
-
-- Fixed pages using the simple post list layout not rendering as expected.
-- Fixed redundant styles appearing in the Moments page list.
-- Fixed incorrect hover style rendering for action-bar buttons on the Moments page.
 
 ### 🔧 Code Refactoring
 
@@ -614,6 +608,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - 1.48.2 average size: 341.500 KiB (gzipped) / 997.325 KiB (raw)
     - 📉 Gzipped delta: -0.088 KiB (-0.03%)
     - 📉 Raw size delta: 2.460 KiB (0.25%)
+
+### 🐛 Bug Fixes
+
+- Fixed pages using the simple post list layout not rendering as expected.
+- Fixed redundant styles appearing in the Moments page list.
+- Fixed incorrect hover style rendering for action-bar buttons on the Moments page.
 
 ### 🛠️ Miscellaneous Chores
 
