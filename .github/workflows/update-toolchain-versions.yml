@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 25
 
-      - name: Update Node.js and pnpm versions
+      - name: Update toolchain versions
         id: update-toolchain
         run: node .github/scripts/update-toolchain-versions.js
 
@@ -40,8 +40,8 @@ jobs:
           body: |
             This PR updates the repository toolchain versions tracked in:
             - `package.json`
-            - `.github/actions/setup-node-pnpm/action.yml`
-            - workflows that still bootstrap Node.js directly
+            - `.github/actions/**/action.yml`
+            - workflows that bootstrap Node.js directly
 
             Resolved by automation:
             - Node.js major: `${{ steps.update-toolchain.outputs.node_major }}`

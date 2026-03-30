@@ -2,8 +2,10 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const packageJsonPath = "package.json";
-const setupActionPath = path.join(".github", "actions", "setup-node-pnpm", "action.yml");
-const workflowsDirPath = path.join(".github", "workflows");
+const githubDirPath = ".github";
+const workflowsDirPath = path.join(githubDirPath, "workflows");
+const actionsDirPath = path.join(githubDirPath, "actions");
+const setupActionPath = path.join(actionsDirPath, "setup-node-pnpm", "action.yml");
 const dryRun = process.argv.includes("--dry-run");
 
 const appendGitHubOutput = async (name, value) => {
@@ -36,6 +38,8 @@ const compareSemVer = (left, right) =>
   compareNumbers(left.major, right.major) ||
   compareNumbers(left.minor, right.minor) ||
   compareNumbers(left.patch, right.patch);
+
+const stripUtf8Bom = (content) => content.replace(/^\uFEFF/u, "");
 
 const fetchLatestNodeMajor = async () => {
   const response = await fetch("https://nodejs.org/dist/index.json", {
@@ -85,7 +89,7 @@ const fetchLatestPnpmVersion = async () => {
 };
 
 const readFileWithLineEnding = async (filePath) => {
-  const content = await fs.readFile(path.resolve(process.cwd(), filePath), "utf8");
+  const content = stripUtf8Bom(await fs.readFile(path.resolve(process.cwd(), filePath), "utf8"));
 
   return {
     content,
@@ -98,13 +102,34 @@ const maybeWriteFile = async (filePath, nextContent) => {
     return;
   }
 
-  await fs.writeFile(path.resolve(process.cwd(), filePath), nextContent);
+  await fs.writeFile(path.resolve(process.cwd(), filePath), nextContent, "utf8");
+};
+
+const collectFilesByName = async (directoryPath, fileName) => {
+  const entries = await fs.readdir(path.resolve(process.cwd(), directoryPath), { withFileTypes: true });
+  const filePaths = [];
+
+  for (const entry of entries) {
+    const relativePath = path.join(directoryPath, entry.name);
+
+    if (entry.isDirectory()) {
+      filePaths.push(...(await collectFilesByName(relativePath, fileName)));
+      continue;
+    }
+
+    if (entry.isFile() && entry.name === fileName) {
+      filePaths.push(relativePath);
+    }
+  }
+
+  return filePaths.sort((left, right) => left.localeCompare(right));
 };
 
 const updatePackageJson = async (nodeMajor, pnpmVersion) => {
   const { content, lineEnding } = await readFileWithLineEnding(packageJsonPath);
   const packageJson = JSON.parse(content);
   const updatedFields = [];
+  packageJson.engines ??= {};
 
   const nextNodeRange = `>=${nodeMajor}`;
   const nextPnpmRange = `^${pnpmVersion}`;
@@ -134,79 +159,72 @@ const updatePackageJson = async (nodeMajor, pnpmVersion) => {
   return updatedFields;
 };
 
-const updateSetupAction = async (nodeMajor, pnpmVersion) => {
-  const { content } = await readFileWithLineEnding(setupActionPath);
+const replaceNodeVersionValue = (content, nodeMajor) => {
+  const nodeVersionPattern = /^(\s*node-version:\s*)(["']?)(?:lts\/\*|\d+)\2(\s*(?:#.*)?)$/gmu;
+  let changed = false;
+
+  const nextContent = content.replace(nodeVersionPattern, (_, prefix, quote, suffix) => {
+    changed = true;
+    const wrappedValue = `${quote}${nodeMajor}${quote}`;
+    return `${prefix}${wrappedValue}${suffix}`;
+  });
+
+  return {
+    changed,
+    nextContent,
+  };
+};
+
+const updateToolchainFile = async (filePath, nodeMajor, pnpmVersion) => {
+  const { content, lineEnding } = await readFileWithLineEnding(filePath);
   const updates = [];
   let nextContent = content;
 
-  const nodeAnchor = /node-version:\s*\n(?:\s+.*\n)*?\s+default:\s*"(.*?)"/u;
-  const nodeMatch = nextContent.match(nodeAnchor);
-  if (!nodeMatch) {
-    throw new Error(`Could not find node-version default in ${setupActionPath}`);
+  if (content.includes("actions/setup-node@")) {
+    const { changed, nextContent: replacedContent } = replaceNodeVersionValue(nextContent, nodeMajor);
+
+    if (changed && replacedContent !== nextContent) {
+      nextContent = replacedContent;
+      updates.push(`node-version -> ${nodeMajor}`);
+    }
   }
 
-  if (nodeMatch[1] !== String(nodeMajor)) {
-    nextContent = nextContent.replace(nodeAnchor, (match) =>
-      match.replace(`default: "${nodeMatch[1]}"`, `default: "${nodeMajor}"`),
-    );
-    updates.push(`inputs.node-version.default -> ${nodeMajor}`);
-  }
+  if (filePath === setupActionPath) {
+    const pnpmAnchor = /pnpm-version:\s*\n(?:\s+.*\n)*?\s+default:\s*"(.*?)"/u;
+    const pnpmMatch = nextContent.match(pnpmAnchor);
+    if (!pnpmMatch) {
+      throw new Error(`Could not find pnpm-version default in ${setupActionPath}`);
+    }
 
-  const pnpmAnchor = /pnpm-version:\s*\n(?:\s+.*\n)*?\s+default:\s*"(.*?)"/u;
-  const pnpmMatch = nextContent.match(pnpmAnchor);
-  if (!pnpmMatch) {
-    throw new Error(`Could not find pnpm-version default in ${setupActionPath}`);
-  }
-
-  if (pnpmMatch[1] !== pnpmVersion) {
-    nextContent = nextContent.replace(pnpmAnchor, (match) =>
-      match.replace(`default: "${pnpmMatch[1]}"`, `default: "${pnpmVersion}"`),
-    );
-    updates.push(`inputs.pnpm-version.default -> ${pnpmVersion}`);
+    if (pnpmMatch[1] !== pnpmVersion) {
+      nextContent = nextContent.replace(pnpmAnchor, (match) =>
+        match.replace(`default: "${pnpmMatch[1]}"`, `default: "${pnpmVersion}"`),
+      );
+      updates.push(`inputs.pnpm-version.default -> ${pnpmVersion}`);
+    }
   }
 
   if (updates.length === 0) {
     return [];
   }
 
-  await maybeWriteFile(setupActionPath, nextContent);
+  await maybeWriteFile(filePath, nextContent.replace(/\n/gu, lineEnding));
   return updates;
 };
 
-const updateWorkflowNodeVersion = async (filePath, nodeMajor) => {
-  const { content } = await readFileWithLineEnding(filePath);
-  const setupNodePattern = /^\s*uses:\s*actions\/setup-node@/mu;
-  const pattern = /^(\s*node-version:\s*)(\d+)(\s*)$/mu;
-
-  if (!setupNodePattern.test(content)) {
-    return [];
-  }
-
-  const match = content.match(pattern);
-
-  if (!match) {
-    return [];
-  }
-
-  if (Number(match[2]) === nodeMajor) {
-    return [];
-  }
-
-  const nextContent = content.replace(pattern, `$1${nodeMajor}$3`);
-  await maybeWriteFile(filePath, nextContent);
-  return [`node-version -> ${nodeMajor}`];
-};
-
-const updateWorkflowNodeVersions = async (nodeMajor) => {
-  const entries = await fs.readdir(path.resolve(process.cwd(), workflowsDirPath), { withFileTypes: true });
-  const workflowFiles = entries
+const updateToolchainFiles = async (nodeMajor, pnpmVersion) => {
+  const workflowEntries = await fs.readdir(path.resolve(process.cwd(), workflowsDirPath), { withFileTypes: true });
+  const workflowFiles = workflowEntries
     .filter((entry) => entry.isFile() && entry.name.endsWith(".yml"))
-    .map((entry) => path.join(workflowsDirPath, entry.name));
+    .map((entry) => path.join(workflowsDirPath, entry.name))
+    .sort((left, right) => left.localeCompare(right));
+  const actionFiles = await collectFilesByName(actionsDirPath, "action.yml");
+  const targetFiles = [...actionFiles, ...workflowFiles];
 
   const updateGroups = [];
 
-  for (const filePath of workflowFiles) {
-    const updates = await updateWorkflowNodeVersion(filePath, nodeMajor);
+  for (const filePath of targetFiles) {
+    const updates = await updateToolchainFile(filePath, nodeMajor, pnpmVersion);
 
     if (updates.length > 0) {
       updateGroups.push({ filePath, updates });
@@ -222,18 +240,14 @@ const pnpmVersion = await fetchLatestPnpmVersion();
 console.log(`Resolved latest Node.js major: ${nodeMajor}`);
 console.log(`Resolved latest pnpm version: ${pnpmVersion}`);
 
-const workflowUpdateGroups = await updateWorkflowNodeVersions(nodeMajor);
+const toolchainFileUpdateGroups = await updateToolchainFiles(nodeMajor, pnpmVersion);
 
 const updateGroups = [
   {
     filePath: packageJsonPath,
     updates: await updatePackageJson(nodeMajor, pnpmVersion),
   },
-  {
-    filePath: setupActionPath,
-    updates: await updateSetupAction(nodeMajor, pnpmVersion),
-  },
-  ...workflowUpdateGroups,
+  ...toolchainFileUpdateGroups,
 ].filter(({ updates }) => updates.length > 0);
 
 if (updateGroups.length === 0) {
