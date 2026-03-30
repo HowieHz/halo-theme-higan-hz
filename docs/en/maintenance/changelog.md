@@ -27,11 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Added the ["Inline code style preset"](/en/guide/theme-configuration#inline-code-style-preset) setting (Post Page Style -> Inline code style preset) for choosing the inline code style used in posts and single pages. It currently provides three presets: default dotted border, soft background highlight, and theme pill. It does not affect multi-line code blocks.
+- Added the ["Inline code style preset"](/en/guide/theme-configuration#inline-code-style-preset) setting (Post Page Style -> Inline code style preset) for inline code in posts and single pages. Includes three presets: dotted border, soft highlight, and theme pill. Multi-line code blocks are unchanged.
 
 ### 🛠️ Miscellaneous Chores
 
-- Narrow Tailwind CSS scan sources by excluding components and documentation paths that do not need scanning, preventing accidentally included unused styles and reducing the final stylesheet size.
+- Reduced Tailwind CSS scan sources by excluding unnecessary component and docs paths to avoid unused styles.
 - Updated dependencies.
 
 ## [1.60.1] - 2026-03-28
