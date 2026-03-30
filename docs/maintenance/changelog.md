@@ -36,13 +36,13 @@
 
 ## [1.60.1] - 2026-03-28
 
-### 🐛 错误修复
-
-- 修复简洁文章列表中日期数字因字体不等宽导致文章标题列参差不齐的问题。
-
 ### 🗑️ 移除
 
 - 移除“作者详情页样式 -> 页面描述”配置项。作者详情页的页面描述现采用作者描述，作者描述为空时回退至站点描述。
+
+### 🐛 错误修复
+
+- 修复简洁文章列表中日期数字因字体不等宽导致文章标题列参差不齐的问题。
 
 ## [1.60.0] - 2026-03-23
 
@@ -248,7 +248,7 @@
     - `*.zst` — zstandard（压缩等级 21，已使用最大值减 1，以避免构建时内存不足）
   - 自动提供与服务器配置：
     - 直接使用 Halo CMS 时，服务器会自动提供 `.br` 文件。
-    - 使用 nginx/Apache 等服务器时，请参考[配置文档](https://howiehz.top/halo-theme-higan-haozi/tutorial/performance)以启用预压缩文件的自动交付。
+    - 使用 nginx/Apache 等服务器时，请参考[配置文档](/tutorial/performance)以启用预压缩文件的自动交付。
 
 ### 🔧 代码重构
 
@@ -256,7 +256,7 @@
 
 ### 📄 文档
 
-- 修订[安全防护文档](https://howiehz.top/halo-theme-higan-haozi/tutorial/security)。
+- 修订[安全防护文档](/tutorial/security)。
 
 ### 🛠️ 杂项维护
 
@@ -270,7 +270,7 @@
   - 图库页新增支持在启用瀑布流布局时显示分组标题，每个分组将拥有独立的瀑布流实例。
   - `图库页样式 -> 显示分组标题` 配置项现在在启用瀑布流布局时也可用。
 
-## [1.56.2]- 2026-02-04
+## [1.56.2] - 2026-02-04
 
 ### 🐛 错误修复
 
@@ -333,13 +333,13 @@
 - 修复瞬间页（`/moments`）翻页组件链接不正确的问题。
 - 修复启用`全局 -> 仅允许使用指定域名访问`且`域名白名单列表`为空时，页面会无限跳转的问题。
 
-## [1.55.0]- 2026-02-03
+## [1.55.0] - 2026-02-03
 
 ### 🚀 新功能
 
 - 适配[朋友圈](https://github.com/chengzhongxue/plugin-friends-new)（[应用市场页面](https://www.halo.run/store/apps/app-yISsV)）插件。
-  - 介绍文档：[朋友圈插件介绍](https://howiehz.top/halo-theme-higan-haozi/guide/plugin-compatibility#朋友圈-订阅聚合)
-  - 新增相关配置项：[朋友圈页面样式配置项](https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration#朋友圈页面样式)
+  - 介绍文档：[朋友圈插件介绍](/guide/plugin-compatibility#朋友圈-订阅聚合)
+  - 新增相关配置项：[朋友圈页面样式配置项](/guide/theme-configuration#朋友圈页面样式)
 - 新增首页文章列表发布日期显示控制功能。
   - 简洁文章列表：新增`简洁列表显示发布日期`配置项，允许控制是否显示文章发布日期（默认为开启）。
   - 多元文章列表：新增`多元列表显示发布日期`配置项，允许控制是否显示文章发布日期（默认为开启）。
@@ -348,11 +348,11 @@
 
 - 修复 `首页样式 -> 主页列表布局` 选择“瞬间列表”时，在页数大于 1 时无法加载页面的问题。
 
-### 🔧 代码重构
+### 📄 文档
 
 - 优化英文文档翻译质量。
 
-## [1.54.0]- 2026-01-28
+## [1.54.0] - 2026-01-28
 
 ### 💥 破坏性变更
 
@@ -371,11 +371,7 @@
 
 - 更新开发依赖。
 
-## [1.53.1]- 2026-01-28
-
-### 🐛 错误修复
-
-- 修复在 WebKit 内核的浏览器上，页脚内容和文章页顶部菜单出现异常换行的问题。
+## [1.53.1] - 2026-01-28
 
 ### 🔧 代码重构
 
@@ -383,6 +379,10 @@
 - 更新 Meslo 字体版本从 1.2 到 1.2.1，并且重新压缩各格式，以优化字体体积。
 - 优化后备字体声明。
 - 移除无用的 `vite-ignore` 声明，优化构建产物体积。
+
+### 🐛 错误修复
+
+- 修复在 WebKit 内核的浏览器上，页脚内容和文章页顶部菜单出现异常换行的问题。
 
 ### 🛠️ 杂项维护
 
@@ -426,15 +426,15 @@
 - 新增“链接页样式 - 头像优先样式”布局选项，支持三列网格展示，强调头像显示。
   - 新增子配置“链接页样式 - 链接描述行数上限”
 
+### 🔧 代码重构
+
+- 将需要插件支持的相关配置项分页移到最后，并在开头加上提示信息。
+- 将配置项出现的 `Checkbox` 控件更新为 `Switch` 控件。（勾选框变开关样式）
+
 ### 🐛 错误修复
 
 - 修复链接页下，链接描述文本较长且无法自动换行，最终导致溢出屏幕的问题。
 - 修复“首页样式 - 多元列表文章摘要行数上限”无法正常工作的问题。
-
-### 🔧 代码重构
-
-- 将需要插件支持的相关配置项分页移到最后，并在开头加上提示信息。
-- 将配置项出现的 checkbox 控件更新为 switch 控件。（勾选框变开关样式）
 
 ### 🛠️ 杂项维护
 
@@ -457,14 +457,7 @@
 
 - 支持使用 Halo CMS 2.22 新引入的控件来自定义主题配色。
   - 即使你没有任何前端知识，现在也能简单地自定义主题配色了！
-  - 详情请阅读：[教程：自定义配色方案](https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-theme)
-
-### 🐛 错误修复
-
-- 修复 `总体样式 -> 配色方案` 保存后无法显示已选选项的问题。
-- 修复链接页图片描述意外居中的问题。
-- 修复文档预览样式错误的问题。
-- 修复瞬间详情页评论区展开/收起按钮点击无反应的问题。
+  - 详情请阅读：[教程：自定义配色方案](/tutorial/custom-theme)
 
 ### 🔧 代码重构
 
@@ -476,6 +469,13 @@
 - 组件化评论组件样式支持，按需加载，减少页面体积。
 - 组件化页面 `color-scheme` 设定，按需加载，减少页面体积。
 - 优化瞬间页标签样式。
+
+### 🐛 错误修复
+
+- 修复 `总体样式 -> 配色方案` 保存后无法显示已选选项的问题。
+- 修复链接页图片描述意外居中的问题。
+- 修复文档预览样式错误的问题。
+- 修复瞬间详情页评论区展开/收起按钮点击无反应的问题。
 
 ## [1.50.2] - 2026-01-01
 
@@ -491,7 +491,7 @@
 
 ### 📄 文档
 
-- 优化文档，新增[浏览器兼容性](https://howiehz.top/halo-theme-higan-haozi/reference/browser-compatibility)页面。
+- 优化文档，新增[浏览器兼容性](/reference/browser-compatibility)页面。
 
 ### 🛠️ 杂项维护
 
@@ -538,15 +538,15 @@
 
 ## [1.49.1] - 2025-12-06
 
+### 🔧 代码重构
+
+- 优化图标显示样式
+
 ### 🐛 错误修复
 
 - 修复当文章页开启点赞按钮，关闭评论区时，页脚内容会与点赞按钮重叠的问题。
 - 修复当无文章发布，随机文章功能会使页面崩溃的问题。
 - 移除意外被设置的边框颜色
-
-### 🔧 代码重构
-
-- 优化图标显示样式
 
 ### 🛠️ 杂项维护
 
@@ -558,16 +558,8 @@
 
 ### 💥 破坏性变更
 
-- 你需要使用新流程自定义图标，相关文档请见[教程：自定义图标](https://howiehz.top/halo-theme-higan-haozi/tutorial/custom-svg)。如果你先前自定义了图标，需按照教程进行迁移。
-- “自定义分享按钮”下的配置项将会被重置，先前的配置不会被覆盖，你可通过在主题信息[“导出主题配置”](https://howiehz.top/halo-theme-higan-haozi/reference/faq#如何导出主题配置)获取。
-
-### 🐛 错误修复
-
-- 修复在“自定义分享按钮 -> 分享按钮设置”中部分默认值空缺导致无法保存的问题。
-  - “自定义分享按钮 -> 分享按钮设置”中名称为`Native`项，链接应为`@URL`，如您之前安装过本主题，可使用此默认值填充。
-- 修复桌面端文章页分享菜单有概率无法唤出的问题。
-- 修复英文版配置项主题包中文章元数据“Show in Post List”的类型错误。
-- 修复 SVG 图标未成功内联到 CSS 的问题，运行时无需再从 iconify 服务器拉取图标信息。
+- 你需要使用新流程自定义图标，相关文档请见`教程：自定义图标（已删除）`。如果你先前自定义了图标，需按照教程进行迁移。
+- “自定义分享按钮”下的配置项将会被重置，先前的配置不会被覆盖，你可通过在主题信息[“导出主题配置”](/reference/faq#如何导出主题配置)获取。
 
 ### 🔧 代码重构
 
@@ -576,15 +568,23 @@
 - 升级 Tailwind CSS 从 v3 至 v4
 - 迁移图标系统从 `vite-plugin-purge-icons` 至 `@iconify/tailwind4`
 
-## [1.48.3] - 2025-11-26
-
 ### 🐛 错误修复
 
-- 修复在瞬间页中，作者名的悬停样式未按预期渲染的问题。
+- 修复在“自定义分享按钮 -> 分享按钮设置”中部分默认值空缺导致无法保存的问题。
+  - “自定义分享按钮 -> 分享按钮设置”中名称为`Native`项，链接应为`@URL`，如您之前安装过本主题，可使用此默认值填充。
+- 修复桌面端文章页分享菜单有概率无法唤出的问题。
+- 修复英文版配置项主题包中文章元数据“Show in Post List”的类型错误。
+- 修复 SVG 图标未成功内联到 CSS 的问题，运行时无需再从 Iconify 服务器拉取图标信息。
+
+## [1.48.3] - 2025-11-26
 
 ### 🔧 代码重构
 
 - 进一步分包优化，移除冗余样式。
+
+### 🐛 错误修复
+
+- 修复在瞬间页中，作者名的悬停样式未按预期渲染的问题。
 
 ### 🛠️ 杂项维护
 
@@ -593,12 +593,6 @@
 - 更新开发依赖。
 
 ## [1.48.2] - 2025-11-25
-
-### 🐛 错误修复
-
-- 修复使用简洁文章列表的页面，无法按预期渲染的问题。
-- 修复在瞬间页中，瞬间列表出现多余样式的问题。
-- 修复在瞬间页中，交互栏按钮的悬停样式未按预期渲染的问题。
 
 ### 🔧 代码重构
 
@@ -615,6 +609,12 @@
     - 📉 Gzipped 下降：-0.088 KiB (-0.03%)
     - 📉 原始大小下降：2.460 KiB (0.25%)
 
+### 🐛 错误修复
+
+- 修复使用简洁文章列表的页面，无法按预期渲染的问题。
+- 修复在瞬间页中，瞬间列表出现多余样式的问题。
+- 修复在瞬间页中，交互栏按钮的悬停样式未按预期渲染的问题。
+
 ### 🛠️ 杂项维护
 
 - 更新开发依赖
@@ -623,12 +623,12 @@
 
 ### 🚀 新功能
 
-- 新文档：[性能参考](https://howiehz.top/halo-theme-higan-haozi/reference/performance)
+- 新文档：[性能参考](/reference/performance)
   - 展示了主题从 v1.0.0 到最新版的资源体积变化。
 
 ### 🔧 代码重构
 
-- 为默认 LOGO 添加 Avif/WebP 格式，原本的 PNG 格式作为回退。
+- 为默认 Logo 添加 AVIF/WebP 格式，原本的 PNG 格式作为回退。
 - 使用 [KonghaYao/cn-font-split](https://github.com/KonghaYao/cn-font-split) 对默认字体进行分割。
 - 修订构建流程，移除模板中的 `// <!--/* 到 */-->` 注释、`<!--/* 到 */-->` 注释、空行。优化分发体积和输出体积。
 - 经过上述优化：
@@ -681,11 +681,11 @@
 
 ### 🚀 新功能
 
-- 新文档站已上线，欢迎体验：[Higan Haozi](https://howiehz.top/halo-theme-higan-haozi)
-  - [写作参考文档：基本样式、扩展样式及其写法](https://howiehz.top/halo-theme-higan-haozi/guide/style-reference)
-  - [插件兼容性文档](https://howiehz.top/halo-theme-higan-haozi/guide/plugin-compatibility)
-  - [主题配置项文档](https://howiehz.top/halo-theme-higan-haozi/guide/theme-configuration)
-  - [元数据配置项文档](https://howiehz.top/halo-theme-higan-haozi/guide/metadata-configuration)
+- 新文档站已上线，欢迎体验：[Higan Haozi](/)
+  - [写作参考文档：基本样式、扩展样式及其写法](/guide/style-reference)
+  - [插件兼容性文档](/guide/plugin-compatibility)
+  - [主题配置项文档](/guide/theme-configuration)
+  - [元数据配置项文档](/guide/metadata-configuration)
 
 ### 🔧 代码重构
 
@@ -701,6 +701,1027 @@
 ### 🐛 错误修复
 
 - 修复启用“标签集合页样式——标签排序方式”时标签颜色无法正常显示的问题。
+
+## [1.45.3] - 2025-11-07
+
+### 🚀 新功能
+
+- 标签列表、标签详情页、首页多元文章列表和文章顶部标签区中的标签现在都会按配置呈现标签色。
+
+## [1.45.2] - 2025-11-06
+
+### 🔧 代码重构
+
+- 适配 [API 拓展包 v3](https://www.halo.run/store/apps/app-di1jh8gd)
+
+## [1.45.1] - 2025-11-05
+
+### 🚀 新功能
+
+- i18n 固定文字添加西班牙语
+
+### 🔧 代码重构
+
+- 优化“全局 - 仅允许使用指定域名访问”的性能。此功能使用场景：防止站点被恶意镜像后的流量流失。
+
+## [1.45.0] - 2025-10-20
+
+### 🚀 新功能
+
+- 文章元数据添加“显示在文章列表中”配置项，可指定是否显示在文章列表（包括主页，标签详情页，分类详情页，作者详情页，归档页）中。
+
+## [1.44.0] - 2025-10-02
+
+### 🚀 新功能
+
+- 允许在文章页显示字数统计
+- 允许在单页显示字数统计、阅读时间估计
+- 允许在瞬间页显示字数统计、阅读时间估计
+  - 以上新增功能已适配 API 扩展包 v2 轻量版。
+    - 启用插件后，字数统计和阅读时间估计将自动使用更准确的计算方法。
+
+## [1.43.1] - 2025-10-01
+
+### 🚀 新功能
+
+- 适配 API 扩展包 v2 轻量版。
+  - 启用插件后，单文章字数统计将自动使用更准确的计算方法。
+  - “总体样式 - 页面底部站点统计信息”支持显示“总字数”统计。
+
+## [1.43.0] - 2025-09-21
+
+### 🚀 新功能
+
+- 适配 API 扩展插件：[plugin-extra-api](https://github.com/HowieHz/halo-plugin-extra-api)
+  - 启用插件后，单文章字数统计将自动使用更准确的计算方法。
+  - “总体样式 - 页面底部站点统计信息”支持显示“总字数”统计。
+
+## [1.42.14] - 2025-09-13
+
+### 🚀 新功能
+
+- 当启用 RSS 插件/首页联系方式包含 RSS 时，在各个页面注入 `link` 标签声明 RSS 链接。
+
+## [1.42.13] - 2025-09-05
+
+### 🔧 代码重构
+
+- 重构生成代码，优化主题文件体积及最终渲染体积，更节约网络流量。
+
+### 🐛 错误修复
+
+- 修复部分配置项不能正常加载的问题。
+
+## [1.42.12] - 2025-08-27
+
+### 🐛 错误修复
+
+- 修复部分页面顶部菜单按钮无法正常使用的问题。
+- 修复 404/5xx 页面无法正常访问的问题。
+- 屏蔽文章页出现的“已删除用户”，以解决 [halo-dev/halo#7710](https://github.com/halo-dev/halo/issues/7710)。
+
+## [1.42.11] - 2025-08-27
+
+### 🐛 错误修复
+
+- 修复部分格式自定义字体无法正常加载的问题。详见 [#268](https://github.com/HowieHz/halo-theme-higan-hz/pull/268)。
+
+## [1.42.10] - 2025-08-26
+
+### 🚀 新功能
+
+- 优化移动端文章页目录样式和自动滚动功能。详见 [#265](https://github.com/HowieHz/halo-theme-higan-hz/pull/265)。
+
+## [1.42.9] - 2025-08-25
+
+### 🐛 错误修复
+
+- 修复移动端文章目录在目录项过多时无法正常显示的问题，确保自动高亮与自动滚动功能正常工作。详见 [#261](https://github.com/HowieHz/halo-theme-higan-hz/pull/261)。
+- 修复桌面端文章目录无法自动滚动的问题。详见 [#262](https://github.com/HowieHz/halo-theme-higan-hz/pull/262)。
+
+## [1.42.8] - 2025-08-24
+
+### 🚀 新功能
+
+- 支持官方评论区组件 v3 新样式
+
+## [1.42.7] - 2025-08-05
+
+### 🚀 新功能
+
+- 添加自定义标签 `hide`/`spoiler` 用以隐藏敏感内容
+  - 内容默认呈现模糊状态，提供隐私保护
+    - 支持添加 class="black" 成为黑块样式变种
+  - 当鼠标悬停、聚焦或选中时自动显示清晰内容
+  - 采用平滑过渡效果改善用户体验
+  - 适用于剧透内容、答案提示或需要谨慎查看的信息
+
+### 🔧 代码重构
+
+- 重构构建结构及模板生成模式，以取代废弃的 `th:include` 标签，以及优化共用样式大小
+- 重构电脑端目录控制相关代码，增强样式一致性
+
+### 🐛 错误修复
+
+- 修复电脑端菜单会在目录条目较长时挤到左侧的问题。
+  - 重构相关代码以提升样式稳定性
+- 修复缩写样式无法在移动端上预览。
+
+## [1.42.6] - 2025-08-03
+
+### 🚀 新功能
+
+- 添加自定义标签 `hide` 用以隐藏敏感内容
+  - 内容默认呈现模糊状态，提供隐私保护
+  - 当鼠标悬停、聚焦或选中时自动显示清晰内容
+  - 采用平滑过渡效果改善用户体验
+  - 适用于剧透内容、答案提示或需要谨慎查看的信息
+
+### 🐛 错误修复
+
+- 修复 head 标签意外提前结束的问题
+
+## [1.42.5] - 2025-08-02
+
+### 🐛 错误修复
+
+- 修复单页面模板按钮失效（[#249](https://github.com/HowieHz/halo-theme-higan-hz/pull/249)）。
+
+## [1.42.4] - 2025-07-30
+
+### 🔧 代码重构
+
+- 将加载第三方字体时 `@font-face` 的 `font-display` 属性由 `block` 修改为 `swap`，以提升字体加载时的渲染体验，避免文本阻塞。
+
+## [1.42.3] - 2025-07-29
+
+### 🔧 代码重构
+
+- 重写了目录（TOC）生成功能，完全移除了外部依赖，大幅减小了体积、提升了构建性能和运行性能。
+  - 文章页 post.js 240.13 kB│gzipped: 76.70 kB -> 4.48 kB(-98.13%)│gzipped: 1.62 kB(-97.89%)
+- 优化目录高亮：重写滚动事件，优化性能避免卡顿。
+
+### 🐛 错误修复
+
+- 修复移动端文章页目录不显示四级标题的问题。
+- 修复目录（TOC）生成器可能会生成重复 ID 的问题。
+
+## [1.42.2] - 2025-07-29
+
+### 🔧 代码重构
+
+- 重写了目录（TOC）生成功能，完全移除了外部依赖，大幅减小了体积、提升了构建性能和运行性能。
+- 优化目录高亮：重写滚动事件，优化性能避免卡顿。
+
+### 🐛 错误修复
+
+- 修复移动端文章页目录不显示四级标题的问题。
+
+## [1.42.1] - 2025-07-27
+
+### 🔧 代码重构
+
+- 加入 JavaScript 兼容件，保证主题能向下兼容
+- 移除无用依赖
+- 修订自动构建脚本
+- 将项目配置文件统一从 CommonJS 迁移至 ES Modules
+
+### 🐛 错误修复
+
+- “瞬间”页下内容超链接样式错误
+
+## [1.42.0] - 2025-07-21
+
+### 🚀 新功能
+
+- 支持自定义字体文件：
+  - 启用后可上传 `.woff` / `.woff2` / `.ttf` 等格式字体，主题会优先使用这些文件替换默认字体。
+  - 可填写字体名称（字体全名/ PostScript 名），如 `‘My Custom Font Regular’` 或 `‘MyCustomFont-Regular’`，以便优先加载本地已安装版本。
+
+### 🔧 代码重构
+
+- 默认字体首选 `woff2`（153KB），不支持则自动降级到 `woff`（223KB），最终回退到 `ttf`（488KB）。
+- 全面重构编译流程，按页面拆分样式和脚本，提升资源复用率，节省流量并加速加载。
+- 预加载关键资源，显著缩短首屏等待时间。
+- 资源体积大幅下降：
+  - 测试首页：从 1.1 MiB 缩减至 304 KB（约减少 72%）
+  - 测试文章页：从 2.2 MiB 缩减至 1.6 MiB（约减少 27%）
+
+## [1.41.2] - 2025-07-15
+
+### 🐛 错误修复
+
+- 修复了文章页段首缩进配置项意外影响图片的问题 [#231](https://github.com/HowieHz/halo-theme-higan-hz/issues/231) @HowieHz in [#234](https://github.com/HowieHz/halo-theme-higan-hz/pull/234)
+
+## [1.41.1] - 2025-07-10
+
+### 🐛 错误修复
+
+- 修复了文章页段首缩进配置项意外影响列表的问题 [#231](https://github.com/HowieHz/halo-theme-higan-hz/issues/231) @HowieHz in [#232](https://github.com/HowieHz/halo-theme-higan-hz/pull/232)
+
+## [1.41.0] - 2025-07-01
+
+### 🚀 新功能
+
+- 适配多语言相关功能到 2.20.19+ 版本（[#229](https://github.com/HowieHz/halo-theme-higan-hz/pull/229)）。
+- 新增根据浏览器语言自动跳转
+
+### 🔧 代码重构
+
+- 优化多语言相关功能配置项，减少冗余配置
+
+## [1.40.1] - 2025-06-30
+
+### 🔧 代码重构
+
+- 进行了代码重构，**彻底移除**了 jQuery 依赖（[#227](https://github.com/HowieHz/halo-theme-higan-hz/pull/227)）。
+
+## [1.40.0] - 2025-06-27
+
+### 🚀 新功能
+
+- **页脚版权信息自定义署名**：现在支持在页脚版权信息中使用自定义署名，而不再仅限于站点标题。用户可以在"页面样式"设置中配置"版权信息自定义署名"，如果不填写则默认使用站点标题。
+- **段落首行缩进配置**：新增段落首行缩进的开关配置，用户可以选择是否启用段落首行缩进。
+- **文章段落空行优化配置**：新增段落高度优化相关配置选项，添加段落最小高度以优化文章空行显示。
+
+### 🔧 代码重构
+
+- **代码重构**：
+  - 将主要 JavaScript 代码迁移到 TypeScript，提升代码质量和类型安全
+  - 减少对 jQuery 的依赖，使用原生 JavaScript 替换部分 jQuery 功能
+
+- 移除了 `idle.js` 文件，精简代码结构
+- 优化目录生成功能（TOC）
+  - 为空的 `inputHTML` 在生成目录时添加警告提示
+  - 移除了 `@ts-expect-error` 注释，改善类型安全
+  - 添加了详细的代码注释，提升代码可维护性
+
+### 🐛 错误修复
+
+- **目录功能修复**：修复了 h1 标题无法在文章目录（TOC）中正常显示的问题
+
+## [1.39.0] - 2025-06-25
+
+### 🚀 新功能
+
+- 允许移除三级标题（h3）的下划线样式。
+
+## [1.38.0] - 2025-06-02
+
+### 🚀 新功能
+
+- 分类/标签/作者详情页提供 RSS 支持（[#215](https://github.com/HowieHz/halo-theme-higan-hz/pull/215)）
+  - “标签详情页样式”、“分类详情页样式”、“作者详情页样式”均已添加“允许显示该页面 RSS 订阅按钮”配置项
+- 标签聚合页支持按规则排序/设定文章数是否可见（[#217](https://github.com/HowieHz/halo-theme-higan-hz/pull/217)）
+  - “标签集合页样式”添加配置项用于设定是否显示每个标签下的文章数量
+    - 允许设置在“文章数量”左侧的字符
+    - 允许设置在“文章数量”右侧的字符
+  - “标签集合页样式”添加配置项用于设定标签排序方式：
+    - 默认排序
+    - 按文章数量从多到少
+    - 按文章数量从少到多
+    - 按名称升序
+    - 按名称降序
+
+### 🛠️ 杂项维护
+
+- 更新依赖（[#216](https://github.com/HowieHz/halo-theme-higan-hz/pull/216)）
+
+## [1.37.0] - 2025-05-17
+
+### 🚀 新功能
+
+- 为主页的多元文章列表，其中的分类元数据适配面包屑
+- 进一步适配官方评论区插件样式
+
+### 🔧 代码重构
+
+- 修订自定义样式配置
+- 修订配色方案
+
+### 🛠️ 杂项维护
+
+- 优化样式文件
+
+## [1.36.0] - 2025-05-14
+
+### 🚀 新功能
+
+- 主页列表可选择为瞬间列表。
+  - 允许设定显示条数
+  - 允许选择是否显示条目作者头像和昵称
+
+### 🐛 错误修复
+
+- 瞬间页点赞按钮悬停样式不正确
+
+## [1.35.0] - 2025-04-20
+
+### 🚀 新功能
+
+- 允许关闭文章阅读量
+- 完善文章分类面包屑显示
+
+### 🔧 代码重构
+
+- 优化脚本文件体积
+- 重构样式文件：优化体积，提高兼容性，去除无用样式
+
+## [1.34.1] - 2025-04-14
+
+### 📄 文档
+
+- 添加项目模板说明文档
+
+### 🛠️ 杂项维护
+
+- 优化样式文件
+- 优化项目工具链配置
+- 优化打包体积
+
+## [1.34.0] - 2025-04-09
+
+### 🚀 新功能
+
+- 自定义页面允许启用类文章页样式
+
+## [1.33.0] - 2025-04-09
+
+### 🚀 新功能
+
+- 允许自定义侧边目录最大宽度
+
+## [1.32.1] - 2025-04-07
+
+### 🔧 代码重构
+
+- 优化模板渲染性能和渲染样式
+
+### 🐛 错误修复
+
+- 隐藏无推荐时的相邻导航旁空白占位
+- 避免推荐列表出现当前文章
+
+## [1.32.0] - 2025-04-06
+
+### 🚀 新功能
+
+- 文章末可显示推荐文章和相邻文章导航
+
+### 🔧 代码重构
+
+- 使菜单中随机文章相关描述更加准确，并微调配置位置
+
+## [1.31.0] - 2025-03-30
+
+### 🚀 新功能
+
+- 支持随机文章跳转
+
+## [1.30.0] - 2025-03-16
+
+### 🚀 新功能
+
+- 允许设置表格底部表格线宽度
+- 支持自定义资源位置
+- 支持标题 margin 倍率设置
+- 支持段落 margin 倍率设置
+
+### 🐛 错误修复
+
+- 修复窄宽度下页脚信息的意外换行
+
+## [1.29.1] - 2025-02-14
+
+### 🐛 错误修复
+
+- 修复表格每行底部的表格线可能显示不正常的问题
+
+### 📄 文档
+
+- 更新赞助列表（感谢大家的支持❤）
+
+## [1.29.0] - 2025-02-12
+
+### 🚀 新功能
+
+- 支持保留表格每行底部的表格线
+
+### 📄 文档
+
+- 更新赞助列表
+
+## [1.28.0] - 2025-02-10
+
+### 🚀 新功能
+
+- 支持自定义随机句子和 hitokoto 链接
+
+### 🛠️ 杂项维护
+
+- 削减无用组件
+- 更新项目依赖
+
+## [1.27.0] - 2025-01-25
+
+### 🚀 新功能
+
+- 支持自定义页脚主题信息
+
+### 🛠️ 杂项维护
+
+- 支持调整其中的主题名
+- 支持调整其中的 Halo 版本名
+- 更新库版本
+- `unplugin-fonts` 1.1.1 -> 1.3.1
+- `vite` 3.2.11 -> 6.0.11
+- 在 3G 网络环境下，DOMContentLoaded 和加载时间减少了 0.02 秒。
+
+## [1.26.0] - 2025-01-20
+
+### 🚀 新功能
+
+- 多元列表支持显示文章封面（[#152](https://github.com/HowieHz/halo-theme-higan-hz/issues/152)）
+
+## [1.25.0] - 2025-01-17
+
+### 🚀 新功能
+
+- 允许按照发布年份和月份折叠归档页文章列表（[#149](https://github.com/HowieHz/halo-theme-higan-hz/pull/149)）
+
+## [1.24.0] - 2025-01-14
+
+### 🚀 新功能
+
+- 允许在标签详情页和分类详情页显示文章阅读量（[#147](https://github.com/HowieHz/halo-theme-higan-hz/pull/147)）
+
+## [1.23.0] - 2025-01-14
+
+### 🚀 新功能
+
+- 允许简洁列表显示文章阅读量（[#145](https://github.com/HowieHz/halo-theme-higan-hz/pull/145)）
+
+### 🔧 代码重构
+
+- 优化多元列表元素显示颜色
+
+## [1.22.0] - 2025-01-13
+
+### 🚀 新功能
+
+- 多元列表允许限制概要行数（[#137](https://github.com/HowieHz/halo-theme-higan-hz/pull/137)）
+- 允许首页多元列表和文章页显示预计阅读时间（[#140](https://github.com/HowieHz/halo-theme-higan-hz/pull/140)）
+- 支持自定义配色（[#141](https://github.com/HowieHz/halo-theme-higan-hz/pull/141)）
+- 公告栏支持多语言（[#142](https://github.com/HowieHz/halo-theme-higan-hz/pull/142)）
+- 支持多语言页面最底部内容（[#143](https://github.com/HowieHz/halo-theme-higan-hz/pull/143)）
+
+### 🐛 错误修复
+
+- 修复 [#135](https://github.com/HowieHz/halo-theme-higan-hz/issues/135)（[#136](https://github.com/HowieHz/halo-theme-higan-hz/pull/136)）
+
+## [1.21.0] - 2025-01-10
+
+### 🚀 新功能
+
+- 允许禁用分享菜单（[#123](https://github.com/HowieHz/halo-theme-higan-hz/pull/123)）
+- 支持显示文章发布时间和更新时间（[#124](https://github.com/HowieHz/halo-theme-higan-hz/pull/124)）
+- 明暗切换按钮功能增强（[#125](https://github.com/HowieHz/halo-theme-higan-hz/pull/125)）
+  - 新配置项：是否根据浏览器设置自动切换配色
+  - 新配置项：是否保存配色设置到浏览器中
+- 首页多元列表允许更高程度自定义（[#126](https://github.com/HowieHz/halo-theme-higan-hz/pull/126)）
+  - 允许显示文章分类
+  - 允许显示文章标签
+  - 允许显示文章阅读量
+  - 允许隐藏文章摘要
+- 允许在站点底部显示站点统计信息（[#127](https://github.com/HowieHz/halo-theme-higan-hz/pull/127)）
+  - 支持自由调整顺序、数量
+  - 支持选择图标/文字
+- 允许启用错误页自动重定向和倒计时（[#128](https://github.com/HowieHz/halo-theme-higan-hz/pull/128)）
+- 分享菜单现支持 WeChat/QR Code（二维码生成）和调用浏览器分享页面（[#129](https://github.com/HowieHz/halo-theme-higan-hz/pull/129)）
+- 可保留引用块中的空行（[#130](https://github.com/HowieHz/halo-theme-higan-hz/pull/130)）
+- 滚动条颜色匹配明暗主题（[#132](https://github.com/HowieHz/halo-theme-higan-hz/pull/132)）
+- 可在文章底部添加点赞按钮（[#133](https://github.com/HowieHz/halo-theme-higan-hz/pull/133)）
+  - 允许设置图标大小
+  - 允许设置是否展示获赞数
+  - 允许设置位置（靠左，居中，靠右）
+
+## [1.20.0] - 2025-01-09
+
+### 🚀 新功能
+
+- 适配 [相册管理插件 plugin-photos](https://halo.run/store/apps/app-BmQJW) 插件
+
+|                                        **桌面端**                                        |                                        **移动端**                                         |
+| :--------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| ![相册管理插件适配 - 瀑布流样式 - 桌面展示](/plugin-photos-waterfall-layout-desktop.png) | ![相册管理插件适配 - 瀑布流样式 - 移动端展示](/plugin-photos-waterfall-layout-mobile.png) |
+
+- 允许设置图片圆角宽度
+- 允许设置图片渐入动画时间
+- 允许关闭分组标题
+- 允许启用瀑布流布局
+  - 允许设置瀑布流最大最小列数
+  - 允许设置瀑布流最小图片宽度
+  - 允许设置瀑布流间隔宽度
+- 进阶配置（此处的配置项需要前端知识）
+  - 自定义图片 onmouseover 属性
+  - 自定义图片 onmouseout 属性
+
+- 建议结合 [图片灯箱插件](https://www.halo.run/store/apps/app-OoggD) 使用
+
+- 图片灯箱插件相关设置：
+
+| 路径匹配     | 匹配区域           |
+| ------------ | ------------------ |
+| `/photos`    | `article .content` |
+| `/photos/**` | `article .content` |
+
+## [1.19.0] - 2025-01-04
+
+### 🚀 新功能
+
+- 增强分享菜单
+
+### 🐛 错误修复
+
+- 使分享按钮指向的链接为正确的链接
+
+### 🛠️ 杂项维护
+
+- 此处分享按钮应用于文章页/自定义页面在桌面模式下/移动端模式下的分享按钮
+
+## [1.18.0] - 2025-01-03
+
+### 🚀 新功能
+
+- 新蓝色主题色主题添加
+- 支持自定义浅色/深色模式切换按钮各模式对应主题
+
+### 🐛 错误修复
+
+- 将“引用块后添加引号”默认设置设定为与原主题一致
+
+### 🛠️ 杂项维护
+
+- 优化主题切换按钮逻辑
+
+## [1.17.0] - 2025-01-01
+
+### 🚀 新功能
+
+- 允许在引用块后添加引号
+- 允许关闭引用块前的引号
+
+### 🔧 代码重构
+
+- 使用 autocorrect 格式化文本
+
+### 🛠️ 杂项维护
+
+- 合并上游修改 chore: add annotations app-id
+- 合并上游修改 chore: remove thumbnail for site logo
+
+## [1.16.1] - 2024-12-13
+
+### 🐛 错误修复
+
+- 修复 Mermaid 渲染的 SVG ID 冲突的问题（相关上游 Issue [mermaid-js/mermaid#5741](https://github.com/mermaid-js/mermaid/issues/5741)）
+
+### 📄 文档
+
+- 从自述文件中分离出贡献指南
+
+## [1.16.0] - 2024-12-11
+
+### 🚀 新功能
+
+- 内置的 Mermaid 支持（自动明暗切换，详情请看文档）
+  - 比现有 (2024.12.11) 插件支持相对更完善
+- 支持设置仅浅色模式\深色模式显示的内容
+
+## [1.15.1] - 2024-12-09
+
+### 🚀 新功能
+
+- 为移动端底部导航栏回到顶端按钮增添动画
+
+### 🛠️ 杂项维护
+
+- 优化代码效率
+- 优化页面体积
+- 删除无用代码
+
+## [1.15.0] - 2024-12-08
+
+### 🚀 新功能
+
+- 允许关闭文章页移动端模式下，底部导航栏
+- 为非文章页移动端模式下，顶部导航栏的出现和消失添加了动画
+- 为文章页移动端模式下，底部导航栏（包括子菜单）的出现和消失添加了动画
+- 为文章页桌面端模式下，顶部导航栏（包括子菜单）的出现和消失添加了动画
+- 为文章页平板端模式下，顶部导航栏（包括子菜单）和回到顶部按钮出现和消失添加了动画
+
+### 🔧 代码重构
+
+- 减少无用的 DOM 层级
+- 将部分按钮的超链接从 `#` 改为 `javascript:void(0);`
+
+### 🐛 错误修复
+
+- 修复在文章页平板端模式下，回到顶部按钮未正常显示的问题
+- 修复在文章页平板端模式下，菜单不能随菜单按钮一起隐藏的问题
+- 修复在文章页桌面端模式下，隐藏的顶部导航栏依然会遮挡页面按钮的问题 _[#89](https://github.com/HowieHz/halo-theme-higan-hz/issues/89)_
+
+## [1.14.0] - 2024-12-07
+
+### 🚀 新功能
+
+- 允许关闭页眉头像
+- 允许关闭页眉菜单
+- 允许关闭页底页码/仅有一页时隐藏页码
+
+### 🔧 代码重构
+
+- 微调设置项说明
+
+## [1.13.1] - 2024-12-06
+
+### 🚀 新功能
+
+- 明暗切换时的动画
+
+### 🔧 代码重构
+
+- 明暗切换按钮往左上各微调一像素
+
+## [1.13.0] - 2024-12-06
+
+### 🚀 新功能
+
+- 允许关闭首页三处固定文字
+
+## [1.12.3] - 2024-12-06
+
+### 🔧 代码重构
+
+- 减少 instant.page JS 被拦截的概率
+
+### 🐛 错误修复
+
+- 修复读取时切换主题闪屏
+
+## [1.12.2] - 2024-11-26
+
+### 🚀 新功能
+
+- 增加“全局-instant.page 支持”，自动加载 instant.page 脚本，以提升页面加载速度。
+
+### 🔧 代码重构
+
+- 优化脚本加载，优化页面加载速度
+
+## [1.12.1] - 2024-11-23
+
+### 🚀 新功能
+
+- 支持后台设置页面 i18n
+- 基于 GitHub Actions 自动构建不同语言包的主题
+
+### 🔧 代码重构
+
+- 优化主题打包体积：3900KB -> 679KB(cn version) / 677KB(en version)
+
+### 🛠️ 杂项维护
+
+- 更新项目依赖，内置 JS 库
+
+## [1.12.0] - 2024-11-21
+
+### 🚀 新功能
+
+- 可在大标题旁添加明暗模式切换按钮（切换顺序 light -> dark -> auto -> light）（[#13](https://github.com/HowieHz/halo-theme-higan-hz/issues/13)）
+- 点击图标后，将存储当前状态到本地（localStorage）
+- 社交资料支持完全自定义（图标、链接、无障碍标签）（[#83](https://github.com/HowieHz/halo-theme-higan-hz/issues/83)）
+- 允许设定是否强制页脚在页面最底部（[#78](https://github.com/HowieHz/halo-theme-higan-hz/issues/78)）
+
+## [1.11.0] - 2024-11-19
+
+### 🚀 新功能
+
+- 支持在首页社交图标中插入纯文本
+
+### 🔧 代码重构
+
+- 将 `RSS` 设置并入 `社交资料/RSS`
+
+## [1.10.2] - 2024-11-19
+
+### 🚀 新功能
+
+- i18n 支持 zh_TW
+
+### 🔧 代码重构
+
+- 修改语言文件结构
+
+## [1.10.1] - 2024-11-18
+
+### 🐛 错误修复
+
+- 修复主页报错无法加载的问题
+
+## [1.10.0] - 2024-11-18
+
+### 🚀 新功能
+
+- 添加“默认页面语言”，允许指定站点默认的页面语言（HTML lang 属性）（如配置值为空，则设置为 "zh"）
+- 允许为文章页面、分类页面、标签页面和单页页面自定义“页面标题”“页面语言”配置项。
+- 适配 i18n。
+  - 添加多语言菜单
+  - 添加 zh 和 en 的语言文件，可修改全部固定文件
+
+### ⚠️ 弃用
+
+- 为支持 i18n，以下配置项已弃用：
+  - “首页 - 社交资料图标左侧文字”
+  - “首页 - 首页文章列表标题”
+  - "首页 - 跳转文章链接所用提示文字"
+
+## [1.9.0] - 2024-10-16
+
+### 🚀 新功能
+
+- 对于内容区域宽度给予更大的配置自由度
+- 可自定义内容区域最大宽度
+- 可自定义内容区域最小宽度
+- 允许强制应用内容区域最小宽度
+- 可自定义内容区域宽度属性
+
+## [1.8.1] - 2024-10-10
+
+### 🚀 新功能
+
+- 添加“仅允许使用指定域名访问“功能
+- 可防止站点被恶意镜像后的流量流失，并在访问域名不在白名单中时跳转到指定域名。
+
+### 🐛 错误修复
+
+- 修复“仅允许使用指定域名访问”的子项未能正确隐藏的问题
+
+## [1.8.0] - 2024-10-10
+
+### 🚀 新功能
+
+- 添加“仅允许使用指定域名访问“功能
+- 可防止站点被恶意镜像后的流量流失，并在访问域名不在白名单中时跳转到指定域名。
+
+## [1.7.0] - 2024-09-02
+
+### 🚀 新功能
+
+- 同步上游 [halo-theme-higan@v2.9.0](https://github.com/guqing/halo-theme-higan/releases/tag/v2.9.0)
+- 适配上游缩略图响应式能力改进。
+
+## [1.6.1] - 2024-08-27
+
+### 🐛 错误修复
+
+- 修复页面最小高度被错误设置的问题，导致底部页脚不能被置于页面最底端（[#60](https://github.com/HowieHz/halo-theme-higan-hz/issues/60)）
+
+## [1.6.0] - 2024-08-07
+
+### 🚀 新功能
+
+- 新增配置项（总体样式 - 添加内容到页脚最底部）允许用户添加内容到页脚最底部
+
+### 📄 文档
+
+- 补充新配置项说明。
+
+### 🛠️ 杂项维护
+
+- 修正自述文件中的错误描述
+
+## [1.5.0] - 2024-07-20
+
+### 🚀 新功能
+
+- 添加”分类集合页样式页“（/categories 相关配置）
+- （分类集合页样式页）允许选择是否显示每个分类下的文章数量
+- （分类集合页样式页）允许设置在“文章数量”左侧的字符，当前版本默认值为”(“
+- （分类集合页样式页）允许设置在“文章数量”右侧的字符，当前版本默认值为”)“
+- （分类集合页样式页）允许选择是否显示多层分类
+
+### 🛠️ 杂项维护
+
+- 修订项目文档
+
+## [1.4.0] - 2024-07-11
+
+### 🛠️ 杂项维护
+
+- 修订项目文档
+
+## [1.3.0] - 2024-06-19
+
+### 🚀 新功能
+
+- 允许关闭全部文章评论区（[#48](https://github.com/HowieHz/halo-theme-higan-hz/issues/48)）
+- 允许移除文章末分隔线
+- 允许关闭瞬间页点赞按钮（[#48](https://github.com/HowieHz/halo-theme-higan-hz/issues/48)）
+- 允许关闭瞬间页评论区（[#48](https://github.com/HowieHz/halo-theme-higan-hz/issues/48)）
+- 允许关闭自定义页面下的评论区（[#48](https://github.com/HowieHz/halo-theme-higan-hz/issues/48)）
+- 允许启用自定义页面中正文内容与评论区间的分隔线
+
+### 🔧 代码重构
+
+- “RSS-首页 RSS 展示”配置项修改为“RSS-首页 RSS 展示”
+
+### 🛠️ 杂项维护
+
+- 修订项目文档
+- 优化项目结构
+- 更新项目依赖库
+
+## [1.2.1] - 2024-06-12
+
+### 🐛 错误修复
+
+- 使用 `PostCSS` + `Tailwind CSS` + `daisyUI` 重构，修复上游标注在标签的 class 内但没有正常引入的样式，以及没有正常工作的样式。
+
+### 🛠️ 杂项维护
+
+- 清除无用样式，减小最终文件体积
+
+## [1.2.0] - 2024-06-11
+
+### 🚀 新功能
+
+- 允许修改主页上的固定文本（[#29](https://github.com/HowieHz/halo-theme-higan-hz/issues/29)）
+- 允许自定义文章页面标题（添加文章元数据项以实现此项）f33fc41c852718af8548c1dd7fb0ccaee9a44ffc
+- 允许设定主页 HTML 标题，而不是取值于`Halo设置-基本设置-站点标题`（[#50](https://github.com/HowieHz/halo-theme-higan-hz/issues/50)）
+
+### 🔧 代码重构
+
+- moment 模板特殊类型数据兼容上游
+
+### 🐛 错误修复
+
+- 移除导航栏文字前出现的空白 (Thanks to @THYUU @L33Z22L11 ) [upstream#113](https://github.com/guqing/halo-theme-higan/issues/113)
+
+### 🛠️ 杂项维护
+
+- 移除废弃的 halo:comment 标签属性
+- 修复 VS Code 检查出的问题
+- 更新 pnpm-lock.yaml 版本 `lockfileVersion: '6.0'` -> `lockfileVersion: '9.0'`
+- 修改 package.json 中的错误标识 `"license": "GPL-3.0"` -> `"license": "MIT"`
+- 删除无用文件，减小打包体积
+- 修改 README.md 中样式不统一的标题 (Thanks to @KazariEX)
+
+- 修复文章大纲不能正常定位的问题 (Authored by @HowieHz ) [upstream#69](https://github.com/guqing/halo-theme-higan/issues/69)
+
+## [1.1.4] - 2024-05-12
+
+### 💥 破坏性变更
+
+- 更新到此版本需要清空并重新填写 `社交资料` 配置。
+
+### 🔧 代码重构
+
+- 优化社交资料填写指南
+
+### 🛠️ 杂项维护
+
+- v1.1.3.1 重命名为 v1.1.4
+
+## [1.1.3] - 2024-05-12
+
+### 🚀 新功能
+
+- 允许用户自由选择是否开关文章列表置顶图标，以及选择图标位置
+- 允许关闭页面底部主题信息
+- 允许关闭页面底部版权信息
+- 允许关闭页面底部菜单
+- 可指定是否由用户指定页面最大宽度（[#35](https://github.com/HowieHz/halo-theme-higan-hz/issues/35)）
+
+### 🔧 代码重构
+
+- 优化首页社交媒体展示图标选择
+- 优化设置标签名
+- 优化社交资料填写指南
+
+### 🛠️ 杂项维护
+
+- 将原主题信息指向当前分支
+
+## [1.1.2] - 2024-05-12
+
+### 💥 破坏性变更
+
+- 此版本包含较大配置文件更新，升级前建议备份现有配置输入值。
+
+### 🚀 新功能
+
+- 允许用户自定义 RSS 图标指向的链接 bb4d6946a36579ae4ca7fcdea4c0d4df4d5cfd80
+- 将选项分类到多栏目下，而不是集中在一个`样式`栏下 bb4d6946a36579ae4ca7fcdea4c0d4df4d5cfd80
+- 首页的联系方式展示允许用户自定义数量和顺序 bb4d6946a36579ae4ca7fcdea4c0d4df4d5cfd80
+- 允许用户在友链页面介绍位置使用 HTML 代码 8f7379353257168ab77cd39ac8e5e41c1713bcbb
+- 增加更多的社交平台支持（[#6](https://github.com/HowieHz/halo-theme-higan-hz/issues/6)）
+
+### 🐛 错误修复
+
+- 修复首页宽度较短时多元列表出现长单词会导致样式错乱的问题 [#16](https://github.com/HowieHz/halo-theme-higan-hz/issues/16)
+- 修复在分类归档页和标签归档页中每项文章左侧显示创建时间而非发布时间的问题 [#12](https://github.com/HowieHz/halo-theme-higan-hz/issues/12)
+- 修复 `package.json` 中的脚本在 Linux 和 macOS 环境下不能运行的问题
+- 使用 Thymeleaf 自然模板写法修正内嵌 JS 代码，以便正确格式化文件 bb4d6946a36579ae4ca7fcdea4c0d4df4d5cfd80
+- 当首页社交资料展示为空时隐藏 `与我联系` 字样 [#33](https://github.com/HowieHz/halo-theme-higan-hz/issues/33)
+- 修复错误的大纲定位样式 [#11](https://github.com/HowieHz/halo-theme-higan-hz/issues/11)
+
+### 🛠️ 杂项维护
+
+- 使用 Thymeleaf 自然模板写法修正内嵌 JS 代码，以便正确格式化文件
+- 为主题配置文件添加 `issues` 字段并去除无用的字段
+
+- 调整代码块与评论组件之间的间距。
+- 改进评论输入框背景色的一致性。
+- 优化宽屏下内容区域尺寸。
+- 补充许可证声明。
+- 修复归档页间距不一致问题。
+- 改进页脚版权文本换行表现。
+- 修复长行内代码块间距过大问题。
+- 为分页补充 `aria-label`。
+
+## [1.1.1] - 2024-04-06
+
+### 🚀 新功能
+
+- 文章顶部分享栏新增分享方式：QQ 空间
+
+### 🔧 代码重构
+
+- 修改分享栏 Twitter 的链接为 X
+
+### 🐛 错误修复
+
+- 修复行内代码渲染问题 [#24](https://github.com/HowieHz/halo-theme-higan-hz/issues/24)
+
+### 🛠️ 杂项维护
+
+- 项目样式优化，减少冗余文件
+- 补齐缺漏的标签以及没有闭合的 `img` 标签
+- Lint Code
+
+## [1.1.0] - 2024-04-05
+
+### 🚀 新功能
+
+- 允许同时开启开启一言和个人简介 [#14](https://github.com/HowieHz/halo-theme-higan-hz/issues/14)
+
+### 🔧 代码重构
+
+- `样式-个人简介`输入框高度修改：`100px` -> `150px`
+
+### 🛠️ 杂项维护
+
+- 将 `templates\\fragments\\layout.html` 的 Thymeleaf 内联 CSS 修改为自然模板，避免在格式化的时候破坏格式
+- 润色设置选项，润色文档
+
+## [1.0.1] - 2024-04-05
+
+### 💥 破坏性变更
+
+- `样式-配色方案`对应的配置值有变化。版本升级后需要选择和原来不同的`配色方案`，进行一次`保存`来刷新配置值才能正常使用，之后再选择所需的`配色方案`
+
+### 🐛 错误修复
+
+- 修复样式加载延迟导致渲染闪烁（[#18](https://github.com/HowieHz/halo-theme-higan-hz/issues/18)）
+
+## [1.0.0] - 2024-04-05
+
+### 🚀 新功能
+
+- 添加了使用多元列表模式时，置顶文章在首页列表的标识（图标与简洁列表模式一致）
+- `样式-配色方案` 添加“跟随系统”选项
+- `样式` 添加 `内容区域最大宽度` 配置项，默认值与原主题一致为 `48rem`
+
+### 🔧 代码重构
+
+- 页面底部的 `Theme is higan Powered by Halo © 2024 sitename` 进行了分行避免在小屏上排版错乱 [guqing/halo-theme-higan#87](https://github.com/guqing/halo-theme-higan/issues/87)
+- 对于主页上的一些固定文字进行了修改 [guqing/halo-theme-higan#86](https://github.com/guqing/halo-theme-higan/issues/86)
+  - `Writing` -> `近期发布`
+  - `Read article` -> `阅读全文`
+  - `Find me on` -> `与我联系`
+- 补充了部分缺失的 aria-label 属性 [guqing/halo-theme-higan#83](https://github.com/guqing/halo-theme-higan/issues/83)
+- `样式-配色方案`对应的配置名修改：`暗黑` -> `暗色`, `白色` -> `亮色`, `亮色` -> `灰粉`
+
+### 📄 文档
+
+- 该主题基于 [halo-theme-higan](https://github.com/guqing/halo-theme-higan) `v2.8.0` 进行定制化修改。
+
+### 🛠️ 杂项维护
+
+- 修改 HTML 标签 `lang` 属性值，`lang='en'` 改为 `lang='zh'`
+- 重构样式切换方式
+- 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
 [Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.61.0...HEAD
 [1.61.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.1...v1.61.0
@@ -743,4 +1764,90 @@
 [1.48.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.47.0...v1.48.0
 [1.47.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.46.0...v1.47.0
 [1.46.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.45.4...v1.46.0
-[1.45.4]: https://github.com/HowieHz/halo-theme-higan-hz/releases/tag/v1.45.4
+[1.45.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.45.3...v1.45.4
+[1.45.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.45.2...v1.45.3
+[1.45.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.45.1...v1.45.2
+[1.45.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.45.0...v1.45.1
+[1.45.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.44.0...v1.45.0
+[1.44.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.43.1...v1.44.0
+[1.43.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.43.0...v1.43.1
+[1.43.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.14...v1.43.0
+[1.42.14]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.13...v1.42.14
+[1.42.13]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.12...v1.42.13
+[1.42.12]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.11...v1.42.12
+[1.42.11]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.10...v1.42.11
+[1.42.10]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.9...v1.42.10
+[1.42.9]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.8...v1.42.9
+[1.42.8]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.7...v1.42.8
+[1.42.7]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.6...v1.42.7
+[1.42.6]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.5...v1.42.6
+[1.42.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.4...v1.42.5
+[1.42.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.3...v1.42.4
+[1.42.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.2...v1.42.3
+[1.42.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.1...v1.42.2
+[1.42.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.42.0...v1.42.1
+[1.42.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.41.2...v1.42.0
+[1.41.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.41.1...v1.41.2
+[1.41.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.41.0...v1.41.1
+[1.41.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.40.1...v1.41.0
+[1.40.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.40.0...v1.40.1
+[1.40.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.39.0...v1.40.0
+[1.39.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.38.0...v1.39.0
+[1.38.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.37.0...v1.38.0
+[1.37.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.36.0...v1.37.0
+[1.36.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.35.0...v1.36.0
+[1.35.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.34.1...v1.35.0
+[1.34.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.34.0...v1.34.1
+[1.34.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.33.0...v1.34.0
+[1.33.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.32.1...v1.33.0
+[1.32.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.32.0...v1.32.1
+[1.32.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.31.0...v1.32.0
+[1.31.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.30.0...v1.31.0
+[1.30.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.29.1...v1.30.0
+[1.29.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.29.0...v1.29.1
+[1.29.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.28.0...v1.29.0
+[1.28.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.27.0...v1.28.0
+[1.27.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.26.0...v1.27.0
+[1.26.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.25.0...v1.26.0
+[1.25.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.24.0...v1.25.0
+[1.24.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.23.0...v1.24.0
+[1.23.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.22.0...v1.23.0
+[1.22.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.21.0...v1.22.0
+[1.21.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.20.0...v1.21.0
+[1.20.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.19.0...v1.20.0
+[1.19.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.18.0...v1.19.0
+[1.18.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.17.0...v1.18.0
+[1.17.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.16.1...v1.17.0
+[1.16.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.16.0...v1.16.1
+[1.16.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.15.1...v1.16.0
+[1.15.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.15.0...v1.15.1
+[1.15.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.14.0...v1.15.0
+[1.14.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.13.1...v1.14.0
+[1.13.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.13.0...v1.13.1
+[1.13.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.12.3...v1.13.0
+[1.12.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.12.2...v1.12.3
+[1.12.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.12.1...v1.12.2
+[1.12.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.12.0...v1.12.1
+[1.12.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.11.0...v1.12.0
+[1.11.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.10.2...v1.11.0
+[1.10.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.10.1...v1.10.2
+[1.10.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.10.0...v1.10.1
+[1.10.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.9.0...v1.10.0
+[1.9.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.8.1...v1.9.0
+[1.8.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.8.0...v1.8.1
+[1.8.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.7.0...v1.8.0
+[1.7.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.6.1...v1.7.0
+[1.6.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.6.0...v1.6.1
+[1.6.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.5.0...v1.6.0
+[1.5.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.4.0...v1.5.0
+[1.4.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.3.0...v1.4.0
+[1.3.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.2.1...v1.3.0
+[1.2.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.2.0...v1.2.1
+[1.2.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.1.4...v1.2.0
+[1.1.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.1.3...v1.1.4
+[1.1.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.1.2...v1.1.3
+[1.1.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.1.1...v1.1.2
+[1.1.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.1.0...v1.1.1
+[1.1.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.0.1...v1.1.0
+[1.0.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/HowieHz/halo-theme-higan-hz/releases/tag/v1.0.0
