@@ -3,8 +3,7 @@ import path from "node:path";
 
 const packageJsonPath = "package.json";
 const setupActionPath = path.join(".github", "actions", "setup-node-pnpm", "action.yml");
-const updateLocalActionUsesWorkflowPath = path.join(".github", "workflows", "update-local-action-uses.yml");
-const updateToolchainVersionsWorkflowPath = path.join(".github", "workflows", "update-toolchain-versions.yml");
+const workflowsDirPath = path.join(".github", "workflows");
 const dryRun = process.argv.includes("--dry-run");
 
 const appendGitHubOutput = async (name, value) => {
@@ -176,11 +175,17 @@ const updateSetupAction = async (nodeMajor, pnpmVersion) => {
 
 const updateWorkflowNodeVersion = async (filePath, nodeMajor) => {
   const { content } = await readFileWithLineEnding(filePath);
+  const setupNodePattern = /^\s*uses:\s*actions\/setup-node@/mu;
   const pattern = /^(\s*node-version:\s*)(\d+)(\s*)$/mu;
+
+  if (!setupNodePattern.test(content)) {
+    return [];
+  }
+
   const match = content.match(pattern);
 
   if (!match) {
-    throw new Error(`Could not find node-version in ${filePath}`);
+    return [];
   }
 
   if (Number(match[2]) === nodeMajor) {
@@ -192,11 +197,32 @@ const updateWorkflowNodeVersion = async (filePath, nodeMajor) => {
   return [`node-version -> ${nodeMajor}`];
 };
 
+const updateWorkflowNodeVersions = async (nodeMajor) => {
+  const entries = await fs.readdir(path.resolve(process.cwd(), workflowsDirPath), { withFileTypes: true });
+  const workflowFiles = entries
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".yml"))
+    .map((entry) => path.join(workflowsDirPath, entry.name));
+
+  const updateGroups = [];
+
+  for (const filePath of workflowFiles) {
+    const updates = await updateWorkflowNodeVersion(filePath, nodeMajor);
+
+    if (updates.length > 0) {
+      updateGroups.push({ filePath, updates });
+    }
+  }
+
+  return updateGroups;
+};
+
 const nodeMajor = await fetchLatestNodeMajor();
 const pnpmVersion = await fetchLatestPnpmVersion();
 
 console.log(`Resolved latest Node.js major: ${nodeMajor}`);
 console.log(`Resolved latest pnpm version: ${pnpmVersion}`);
+
+const workflowUpdateGroups = await updateWorkflowNodeVersions(nodeMajor);
 
 const updateGroups = [
   {
@@ -207,14 +233,7 @@ const updateGroups = [
     filePath: setupActionPath,
     updates: await updateSetupAction(nodeMajor, pnpmVersion),
   },
-  {
-    filePath: updateLocalActionUsesWorkflowPath,
-    updates: await updateWorkflowNodeVersion(updateLocalActionUsesWorkflowPath, nodeMajor),
-  },
-  {
-    filePath: updateToolchainVersionsWorkflowPath,
-    updates: await updateWorkflowNodeVersion(updateToolchainVersionsWorkflowPath, nodeMajor),
-  },
+  ...workflowUpdateGroups,
 ].filter(({ updates }) => updates.length > 0);
 
 if (updateGroups.length === 0) {
