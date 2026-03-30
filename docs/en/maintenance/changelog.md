@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🚀 Features
+
+- Added the ["Inline code style preset"](/en/guide/theme-configuration#inline-code-style-preset) setting (Post Page Style -> Inline code style preset) for choosing the inline code style used in posts and single pages. It currently provides three presets: default dotted border, soft background highlight, and theme pill. It does not affect multi-line code blocks.
+
 ### 🛠️ Miscellaneous Chores
 
 - Updated dependencies.
