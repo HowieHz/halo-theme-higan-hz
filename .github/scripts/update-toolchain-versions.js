@@ -108,7 +108,7 @@ const updatePackageJson = async (nodeMajor, pnpmVersion) => {
   const updatedFields = [];
 
   const nextNodeRange = `>=${nodeMajor}`;
-  const nextPnpmRange = `>=${pnpmVersion}`;
+  const nextPnpmRange = `^${pnpmVersion}`;
   const nextPackageManager = `pnpm@${pnpmVersion}`;
 
   if (packageJson.engines?.node !== nextNodeRange) {

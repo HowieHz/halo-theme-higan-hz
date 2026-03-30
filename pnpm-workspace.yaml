@@ -1,7 +1,7 @@
 packages:
   - .
   - docs
-engineStrict: true  # engines.node will be strictly enforced when installing dependencies
 allowBuilds:
   esbuild: true
   unrs-resolver: true
+engineStrict: true # engines.node will be strictly enforced when installing dependencies
