@@ -1422,6 +1422,18 @@ spec:
           value: 20rem
           placeholder: "默认值：20rem"
           help: "控制文章右侧边栏目录的最大宽度。允许全部 CSS 长度单位，如：20rem, 300px, 30vw。"
+        - $formkit: select
+          name: inline_code_style_preset
+          label: 行内代码样式预设
+          value: "default"
+          options:
+            - label: "默认：虚线边框"
+              value: "default"
+            - label: "预设：柔和底色"
+              value: "soft-fill"
+            - label: "预设：主题胶囊"
+              value: "pill"
+          help: 选择文章页与独立页面内容中行内代码的样式预设。默认保持当前虚线边框风格，其他预设会覆盖为不同的高亮方案，但不会影响多行代码块。
         - $formkit: switch
           name: is_dividing_line_at_the_end_of_post_show
           label: 文章末尾的的分隔线

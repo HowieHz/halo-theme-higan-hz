@@ -187,6 +187,10 @@ export default defineConfig((): UserConfig => {
             __dirname,
             "src/templates/components/toc-max-width-style/template.html",
           ),
+          "components-inline-code-style": path.resolve(
+            __dirname,
+            "src/templates/components/inline-code-style/template.html",
+          ),
           "components-upvote-runtime": path.resolve(__dirname, "src/templates/components/upvote-runtime/template.html"),
           "components-paragraph-first-line-indent-style": path.resolve(
             __dirname,

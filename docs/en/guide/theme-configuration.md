@@ -5281,6 +5281,58 @@ When enabled, you can configure
 
 :::
 
+### Inline Code Style Preset
+
+::: info 🎯 Purpose
+
+Selects the inline code style preset used inside
+
+- posts
+- single pages
+
+content.
+
+:::
+::: info 📂 Configuration Item Location
+
+Post Page Style -> Inline code style preset
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Inline%20code%20style%20preset" />
+
+:::
+::: info 🏷️ Type
+
+String
+
+:::
+::: info ⭐ Default Value
+
+`default`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.post_styles?.inline_code_style_preset`
+
+:::
+::: info ℹ️ Additional Information
+
+Available presets:
+
+- `default`
+  - Default dotted border style
+- `soft-fill`
+  - Soft background highlight style
+- `pill`
+  - Theme-tinted pill style
+
+This setting works by injecting a style component that only targets inline code inside `article .content`, without affecting multi-line code blocks.
+
+:::
+
 ### Enable Dividing Line at End of Post
 
 ::: info 🎯 Purpose

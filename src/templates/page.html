@@ -25,6 +25,7 @@
     ></th:block>
   </head>
   <body th:remove="tag">
+    <th:block th:insert="~{components/inline-code-style/template :: body}"></th:block>
     <style th:if="${theme.config?.custom_page_styles?.is_optimize_content_paragraph_spacing}">
       .content > p {
         min-height: 1.1em;
