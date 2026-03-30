@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🛠️ Miscellaneous Chores
 
+- Narrow Tailwind CSS scan sources by excluding components and documentation paths that do not need scanning, preventing accidentally included unused styles and reducing the final stylesheet size.
 - Updated dependencies.
 
 ## [1.60.1] - 2026-03-28
