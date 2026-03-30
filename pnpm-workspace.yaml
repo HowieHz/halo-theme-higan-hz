@@ -1,8 +1,7 @@
 packages:
   - .
   - docs
-nodeVersion: 25.0.0
-engineStrict: true
+engineStrict: true  # engines.node will be strictly enforced when installing dependencies
 allowBuilds:
   esbuild: true
   unrs-resolver: true
