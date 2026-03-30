@@ -1209,9 +1209,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added support for the [plugin-photos photo management plugin](https://www.halo.run/store/apps/app-BmQJW).
 
-| **Desktop** | **Mobile** |
-| :---: | :---: |
-| ![BEFC9E98360B43EDF103C42E1ED66F5C](https://github.com/user-attachments/assets/ecf41f06-b2c1-41d4-b0a1-e187031a92e7) | ![Screenshot 2025-01-09 015045](https://github.com/user-attachments/assets/6a46b65c-bbdf-4654-91cc-465e5802f690) |
+|                                          **Desktop**                                           |                                          **Mobile**                                          |
+| :--------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| ![plugin-photos waterfall layout desktop preview](/plugin-photos-waterfall-layout-desktop.png) | ![plugin-photos waterfall layout mobile preview](/plugin-photos-waterfall-layout-mobile.png) |
 
 - Added an option to set image border radius.
 - Added an option to set image fade-in animation duration.
@@ -1226,9 +1226,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Recommended for use with the [Photo Lightbox plugin](https://www.halo.run/store/apps/app-OoggD).
 - Photo Lightbox plugin settings:
 
-| Path match | Target area |
-| --- | --- |
-| `/photos` | `article .content` |
+| Path match   | Target area        |
+| ------------ | ------------------ |
+| `/photos`    | `article .content` |
 | `/photos/**` | `article .content` |
 
 ## [1.19.0] - 2025-01-04
