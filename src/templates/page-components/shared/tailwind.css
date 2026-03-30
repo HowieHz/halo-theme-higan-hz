@@ -4,8 +4,48 @@
 @import "tailwindcss/utilities.css" layer(utilities) source("../../../../src");
 /* stylelint-disable at-rule-prelude-no-invalid -- Tailwind @source not uses custom prelude syntax */
 @source not "../../../../src/templates/public";
+@source not "../../../../src/templates/components/animations";
+@source not "../../../../src/templates/components/color-scheme-auto";
+@source not "../../../../src/templates/components/color-scheme-dark";
+@source not "../../../../src/templates/components/color-scheme-light";
+@source not "../../../../src/templates/components/custom-color-schema-config";
+@source not "../../../../src/templates/components/custom-color-schema-style";
+@source not "../../../../src/templates/components/custom-cursor-style";
+@source not "../../../../src/templates/components/custom-font-face-style";
 @source not "../../../../src/templates/components/example";
+@source not "../../../../src/templates/components/fonts";
+@source not "../../../../src/templates/components/footer-bottom-content";
+@source not "../../../../src/templates/components/footer-sidebar";
+@source not "../../../../src/templates/components/halo-comment-widget";
+@source not "../../../../src/templates/components/header";
+@source not "../../../../src/templates/components/header-logo-style";
+@source not "../../../../src/templates/components/heading-anchor-svg";
+@source not "../../../../src/templates/components/heading-anchor-symbol-style";
+@source not "../../../../src/templates/components/inline-code-style";
+@source not "../../../../src/templates/components/instantpage-injection";
+@source not "../../../../src/templates/components/layout-content-width-style";
+@source not "../../../../src/templates/components/layout-heading-paragraph-margin-style";
+@source not "../../../../src/templates/components/layout-max-width-style";
+@source not "../../../../src/templates/components/layout-min-width-style";
+@source not "../../../../src/templates/components/layout-table-bottom-border-style";
+@source not "../../../../src/templates/components/mermaid-injection";
+@source not "../../../../src/templates/components/meta-theme-color";
+@source not "../../../../src/templates/components/paragraph-first-line-indent-style";
 @source not "../../../../src/templates/components/performance-monitor";
+@source not "../../../../src/templates/components/style-footer-sidebar";
+@source not "../../../../src/templates/components/text-size-large";
+@source not "../../../../src/templates/components/text-size-normal";
+@source not "../../../../src/templates/components/text-size-small";
+@source not "../../../../src/templates/components/theme-auto";
+@source not "../../../../src/templates/components/theme-auto-blue";
+@source not "../../../../src/templates/components/theme-dark";
+@source not "../../../../src/templates/components/theme-dark-blue";
+@source not "../../../../src/templates/components/theme-gray";
+@source not "../../../../src/templates/components/theme-light";
+@source not "../../../../src/templates/components/theme-light-blue";
+@source not "../../../../src/templates/components/themes";
+@source not "../../../../src/templates/components/toc-max-width-style";
+@source not "../../../../src/templates/components/upvote-runtime";
 /* stylelint-enable at-rule-prelude-no-invalid */
 /* stylelint-disable custom-property-pattern */
 @theme {
