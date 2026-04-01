@@ -129,6 +129,10 @@ export async function mountHaloPageFrame(path: string, width: number, height: nu
   });
 }
 
-export async function applyViewport(width: number, height: number, viewport: (width: number, height: number) => Promise<void>) {
+export async function applyViewport(
+  width: number,
+  height: number,
+  viewport: (width: number, height: number) => Promise<void>,
+) {
   await viewport(width + screenshotPadding.horizontal * 2, height + screenshotPadding.vertical * 2);
 }
