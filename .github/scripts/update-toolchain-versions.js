@@ -7,6 +7,8 @@ const workflowsDirPath = path.join(githubDirPath, "workflows");
 const actionsDirPath = path.join(githubDirPath, "actions");
 const setupActionPath = path.join(actionsDirPath, "setup-node-pnpm", "action.yml");
 const dryRun = process.argv.includes("--dry-run");
+const releaseDelayMs = 24 * 60 * 60 * 1000;
+const eligibleReleaseCutoff = new Date(Date.now() - releaseDelayMs);
 
 const appendGitHubOutput = async (name, value) => {
   const outputPath = process.env.GITHUB_OUTPUT;
@@ -19,6 +21,15 @@ const appendGitHubOutput = async (name, value) => {
 };
 
 const compareNumbers = (left, right) => left - right;
+const isDateOlderThanCutoff = (value) => {
+  const parsed = new Date(value);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return false;
+  }
+
+  return parsed.getTime() <= eligibleReleaseCutoff.getTime();
+};
 
 const parseSemVer = (version) => {
   const match = /^v?(\d+)\.(\d+)\.(\d+)$/u.exec(version);
@@ -55,19 +66,20 @@ const fetchLatestNodeMajor = async () => {
 
   const releases = await response.json();
   const stableVersions = releases
+    .filter((release) => isDateOlderThanCutoff(`${release.date}T00:00:00.000Z`))
     .map((release) => parseSemVer(release.version))
     .filter(Boolean)
     .sort((left, right) => compareSemVer(right, left));
 
   if (stableVersions.length === 0) {
-    throw new Error("No stable Node.js versions found in release index");
+    throw new Error("No eligible Node.js versions found in release index after applying release delay");
   }
 
   return stableVersions[0].major;
 };
 
 const fetchLatestPnpmVersion = async () => {
-  const response = await fetch("https://registry.npmjs.org/pnpm/latest", {
+  const response = await fetch("https://registry.npmjs.org/pnpm", {
     headers: {
       Accept: "application/json",
       "User-Agent": "halo-theme-higan-hz-toolchain-updater",
@@ -75,17 +87,27 @@ const fetchLatestPnpmVersion = async () => {
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch pnpm latest metadata: ${response.status} ${response.statusText}`);
+    throw new Error(`Failed to fetch pnpm metadata: ${response.status} ${response.statusText}`);
   }
 
   const metadata = await response.json();
-  const version = typeof metadata.version === "string" ? metadata.version.trim() : "";
+  const versions = Object.entries(metadata.time ?? {})
+    .map(([version, publishedAt]) => ({
+      version,
+      publishedAt,
+      parsedVersion: parseSemVer(version),
+    }))
+    .filter(({ version }) => version !== "created")
+    .filter(({ version }) => version !== "modified")
+    .filter(({ publishedAt, parsedVersion }) => typeof publishedAt === "string" && Boolean(parsedVersion))
+    .filter(({ publishedAt }) => isDateOlderThanCutoff(publishedAt))
+    .sort((left, right) => compareSemVer(right.parsedVersion, left.parsedVersion));
 
-  if (!parseSemVer(version)) {
-    throw new Error(`Invalid pnpm latest version: ${version || "<empty>"}`);
+  if (versions.length === 0) {
+    throw new Error("No eligible pnpm versions found after applying release delay");
   }
 
-  return version;
+  return versions[0].version;
 };
 
 const readFileWithLineEnding = async (filePath) => {
