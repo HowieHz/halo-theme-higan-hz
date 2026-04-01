@@ -85,8 +85,8 @@ jobs:
             console.log(`Head SHA: ${pr.head.sha}`);
             console.log(`Head Ref: ${pr.head.ref}`);
 
-  visual-check:
-    name: Visual Regression
+  visual-check-argos:
+    name: Visual Regression (Argos)
     needs: check-trigger
     if: needs.check-trigger.outputs.should_run == 'true'
     uses: ./.github/workflows/reusable-audit.yml
@@ -97,13 +97,25 @@ jobs:
       upload_screenshots_artifact: true
       playwright_browsers: chromium
 
+  visual-check-vitest:
+    name: Visual Regression (Vitest)
+    needs: check-trigger
+    if: needs.check-trigger.outputs.should_run == 'true'
+    uses: ./.github/workflows/reusable-vitest-visual.yml
+    with:
+      theme_ref: ${{ needs.check-trigger.outputs.pr_head_sha }}
+      ref_name: current
+      upload_artifact: true
+      playwright_browsers: chromium
+
   comment-success:
     name: Comment Success
-    needs: [check-trigger, visual-check]
+    needs: [check-trigger, visual-check-argos, visual-check-vitest]
     if: |
       always() &&
       needs.check-trigger.outputs.should_run == 'true' &&
-      needs.visual-check.result == 'success'
+      needs.visual-check-argos.result == 'success' &&
+      needs.visual-check-vitest.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Add success reaction and comment on PR
@@ -116,11 +128,13 @@ jobs:
             const body = [
               '# 📸 Visual Regression Report',
               '',
-              `Screenshot generation finished for commit [\`${shortSha}\`](https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${prSha}).`,
+              `Visual regression finished for commit [\`${shortSha}\`](https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${prSha}).`,
               '',
-              '- The screenshots artifact is attached to the workflow run as `screenshots-current`.',
+              '- Argos screenshots artifact: `screenshots-current`.',
+              '- Vitest visual artifact: `vitest-visual-current`.',
               `- Workflow run: ${runUrl}`,
-              '- If `ARGOS_TOKEN` is configured, the follow-up `Upload Theme Screenshots to Argos` workflow will upload the screenshots to Argos.'
+              '- If `ARGOS_TOKEN` is configured, the follow-up `Upload Theme Screenshots to Argos` workflow will upload the Argos screenshots artifact.',
+              '- Vitest failures include reference, actual, and diff images in the uploaded artifact.'
             ].join('\n');
 
             await github.rest.reactions.createForIssueComment({
@@ -141,7 +155,7 @@ jobs:
             } catch (error) {
               if (error.status === 403) {
                 console.log('⚠️ Cannot post comment (insufficient permissions).');
-                console.log('📸 The screenshots have been generated and uploaded as an artifact; they can be viewed from the workflow run.');
+                console.log('📸 Both Argos and Vitest visual artifacts can be viewed from the workflow run.');
               } else {
                 throw error;
               }
@@ -168,11 +182,14 @@ jobs:
 
   handle-failure:
     name: Handle Failure
-    needs: [check-trigger, visual-check]
+    needs: [check-trigger, visual-check-argos, visual-check-vitest]
     if: |
       always() &&
       needs.check-trigger.outputs.should_run == 'true' &&
-      needs.visual-check.result == 'failure'
+      (
+        needs.visual-check-argos.result == 'failure' ||
+        needs.visual-check-vitest.result == 'failure'
+      )
     runs-on: ubuntu-latest
     steps:
       - name: Add failure reaction and comment

@@ -1,0 +1,331 @@
+name: Reusable Vitest Visual Regression
+
+on:
+  workflow_call:
+    inputs:
+      halo_version:
+        required: false
+        type: string
+        default: "2.23.1"
+      theme_ref:
+        required: false
+        type: string
+        default: "refs/heads/main"
+      ref_name:
+        required: true
+        type: string
+      playwright_browsers:
+        required: false
+        type: string
+        default: "chromium"
+      upload_artifact:
+        required: false
+        type: boolean
+        default: true
+      update_screenshots:
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  visual:
+    name: Vitest Visual Regression (${{ inputs.ref_name }})
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Add swap space
+        run: |
+          SWAP_FILE="/tmp/github-actions-swap-$$"
+          MEMORY_LIMIT_GB=16
+          sudo fallocate -l ${MEMORY_LIMIT_GB}G "$SWAP_FILE"
+          sudo chmod 600 "$SWAP_FILE"
+          sudo mkswap "$SWAP_FILE"
+          sudo swapon "$SWAP_FILE"
+          echo "Added ${MEMORY_LIMIT_GB}GB swap at $SWAP_FILE"
+          free -h
+
+      - name: Checkout ${{ inputs.ref_name }}
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
+        with:
+          ref: ${{ inputs.theme_ref }}
+          fetch-depth: 0
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Setup Java
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # https://github.com/actions/setup-java/releases/tag/v5.2.0
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Parallel build theme and setup Halo
+        shell: bash
+        run: |
+          set -e
+
+          HALO_VERSION="${{ inputs.halo_version }}"
+          mkdir -p ~/logs
+
+          (
+            set -e
+            pnpm install --frozen-lockfile
+            pnpm build
+
+            mkdir -p ~/builds/tmp ~/builds/target ~/builds/tmp-included
+            cp -r . ~/builds/tmp
+            cd ~/builds/tmp
+
+            if [ -f "${{ github.workspace }}/.github/include-list.txt" ]; then
+              sed '/^\s*#/d;/^\s*$/d' "${{ github.workspace }}/.github/include-list.txt" \
+                | xargs -r -I {} sh -c 'if [ -e "{}" ]; then cp -r --parents "{}" ~/builds/tmp-included/; fi'
+            fi
+
+            cd ~/builds/tmp-included
+            zip -9 -r howiehz-higan-cn.zip .
+            mv howiehz-higan-cn.zip ~/builds/target/
+          ) > ~/logs/theme.log 2>&1 &
+          THEME_PID=$!
+
+          (
+            set -e
+
+            if ! wget -q "https://github.com/halo-dev/halo/releases/download/v${HALO_VERSION}/halo-${HALO_VERSION}.jar" -O ~/halo.jar; then
+              wget -q "https://dl.halo.run/release/halo-${HALO_VERSION}.jar" -O ~/halo.jar
+            fi
+
+            mkdir -p ~/.halo2
+            cat > ~/.halo2/application.yaml << 'EOF'
+          server:
+            port: 8090
+          spring:
+            r2dbc:
+              url: r2dbc:h2:file:///${user.home}/.halo2/db/halo?MODE=MySQL&DB_CLOSE_ON_EXIT=FALSE
+              username: admin
+              password: admin
+            sql:
+              init:
+                mode: always
+                platform: h2
+            thymeleaf:
+              cache: true
+          halo:
+            security:
+              basic-auth:
+                disabled: false
+            work-dir: ${user.home}/.halo2
+            external-url: http://localhost:8090
+          EOF
+
+            nohup java -jar ~/halo.jar \
+              --spring.config.additional-location=optional:file:${HOME}/.halo2/ \
+              -Dfile.encoding=UTF-8 > ~/logs/halo-startup.log 2>&1 &
+
+            for i in {1..60}; do
+              if curl -sf http://localhost:8090/actuator/health/readiness >/dev/null 2>&1; then
+                break
+              fi
+              [ $i -eq 60 ] && { cat ~/logs/halo-startup.log; exit 1; }
+              sleep 1
+            done
+
+            response=$(curl -c /tmp/cookies.txt -s http://localhost:8090/system/setup)
+            csrf_token=$(echo "$response" | grep '_csrf' | sed -n 's/.*value="\([^\"]*\)".*/\1/p')
+
+            curl -b /tmp/cookies.txt -X POST \
+              http://localhost:8090/system/setup \
+              -H "Content-Type: application/x-www-form-urlencoded" \
+              -d "_csrf=${csrf_token}" \
+              -d "language=zh-CN" \
+              -d "externalUrl=http://localhost:8090" \
+              -d "siteTitle=0" \
+              -d "username=admin" \
+              -d "email=admin@example.com" \
+              -d "password=admin" \
+              -d "confirmPassword=admin" \
+              -L -s > /dev/null
+          ) > ~/logs/halo.log 2>&1 &
+          HALO_PID=$!
+
+          wait $THEME_PID
+          THEME_CODE=$?
+          wait $HALO_PID
+          HALO_CODE=$?
+
+          if [ $THEME_CODE -ne 0 ]; then
+            cat ~/logs/theme.log
+            exit 1
+          fi
+
+          if [ $HALO_CODE -ne 0 ]; then
+            cat ~/logs/halo.log
+            exit 1
+          fi
+
+      - name: Install and activate theme
+        shell: bash
+        run: |
+          set -e
+          THEME_ZIP_PATH="${HOME}/builds/target/howiehz-higan-cn.zip"
+
+          curl -v -X POST \
+            http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/install \
+            -u admin:admin \
+            -F "file=@${THEME_ZIP_PATH}" >/tmp/theme-install.log 2>&1 || {
+              cat /tmp/theme-install.log
+              exit 1
+            }
+
+          curl -X PUT \
+            http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/activation \
+            -u admin:admin \
+            -s > /dev/null
+
+          curl -X PUT \
+            http://localhost:8090/apis/api.console.halo.run/v1alpha1/themes/howiehz-higan/invalidate-cache \
+            -u admin:admin \
+            -s > /dev/null
+
+      - name: Disable Halo plugins
+        shell: bash
+        run: |
+          set -e
+
+          for plugin in PluginCommentWidget PluginSearchWidget shiki editor-hyperlink-card; do
+            curl -sX PUT \
+              "http://localhost:8090/apis/api.console.halo.run/v1alpha1/plugins/${plugin}/plugin-state" \
+              -u admin:admin \
+              -H "Content-Type: application/json" \
+              -d '{"async":false,"enabled":false}' > /dev/null || true
+          done
+
+      - name: Update site basic config favicon
+        shell: bash
+        run: |
+          set -e
+          if ! command -v jq >/dev/null 2>&1; then
+            sudo apt-get update -y
+            sudo apt-get install -y jq
+          fi
+
+          cfg=$(curl -s -u admin:admin http://localhost:8090/apis/console.api.halo.run/v1alpha1/systemconfigs/basic)
+          updated=$(echo "$cfg" | jq '.favicon = "/themes/howiehz-higan/assets/images/logo.avif"')
+          curl -s -u admin:admin -X PUT \
+            http://localhost:8090/apis/console.api.halo.run/v1alpha1/systemconfigs/basic \
+            -H "Content-Type: application/json" \
+            -d "$updated" > /dev/null
+
+      - name: Update site SEO description
+        shell: bash
+        run: |
+          set -e
+          if ! command -v jq >/dev/null 2>&1; then
+            sudo apt-get update -y
+            sudo apt-get install -y jq
+          fi
+
+          cfg=$(curl -s -u admin:admin http://localhost:8090/apis/console.api.halo.run/v1alpha1/systemconfigs/seo)
+          updated=$(echo "$cfg" | jq '.description = "1"')
+          curl -s -u admin:admin -X PUT \
+            http://localhost:8090/apis/console.api.halo.run/v1alpha1/systemconfigs/seo \
+            -H "Content-Type: application/json" \
+            -d "$updated" > /dev/null
+
+      - name: Set tag descriptions
+        shell: bash
+        run: |
+          set -e
+          if ! command -v jq >/dev/null 2>&1; then
+            sudo apt-get update -y
+            sudo apt-get install -y jq
+          fi
+
+          tags=$(curl -s -u admin:admin "http://localhost:8090/apis/content.halo.run/v1alpha1/tags?fieldSelector=spec.slug%3Dhalo")
+          tag_name=$(echo "$tags" | jq -r '.items[0].metadata.name // empty')
+          tag=$(curl -s -u admin:admin "http://localhost:8090/apis/content.halo.run/v1alpha1/tags/${tag_name}")
+          updated=$(echo "$tag" | jq '.spec.description = "halo"')
+          curl -s -u admin:admin -X PUT \
+            "http://localhost:8090/apis/content.halo.run/v1alpha1/tags/${tag_name}" \
+            -H "Content-Type: application/json" \
+            -d "$updated" > /dev/null
+
+      - name: Install Playwright browsers
+        shell: bash
+        run: |
+          set -e
+          PLAYWRIGHT_BROWSERS="${{ inputs.playwright_browsers }}"
+
+          if [ -n "$PLAYWRIGHT_BROWSERS" ]; then
+            BROWSERS=$(echo "$PLAYWRIGHT_BROWSERS" | tr ',' ' ')
+            pnpm exec playwright install --with-deps $BROWSERS
+          else
+            pnpm exec playwright install --with-deps chromium
+          fi
+
+      - name: Run Vitest visual regression
+        env:
+          HALO_VISUAL_BASE_URL: http://localhost:8090
+        run: ${{ inputs.update_screenshots && 'pnpm test:visual:update' || 'pnpm test:visual' }}
+
+      - name: Upload Vitest visual artifacts
+        if: ${{ always() && inputs.upload_artifact }}
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # https://github.com/actions/upload-artifact/releases/tag/v7.0.0
+        with:
+          name: vitest-visual-${{ inputs.ref_name }}
+          path: |
+            tests/visual/__screenshots__/
+            .vitest-attachments/
+          include-hidden-files: true
+          if-no-files-found: warn
+
+      - name: Configure Git
+        if: ${{ success() && inputs.update_screenshots }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Check screenshot changes
+        id: changes
+        if: ${{ success() && inputs.update_screenshots }}
+        shell: bash
+        run: |
+          set -e
+          CHANGED_FILES=$(git status --porcelain -- tests/visual/__screenshots__ | awk '{print $2}')
+
+          if [ "${CHANGED_FILES:+x}" ]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "changed_files<<EOF" >> $GITHUB_OUTPUT
+            echo "$CHANGED_FILES" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            echo "changed_count=$(echo "$CHANGED_FILES" | wc -l)" >> $GITHUB_OUTPUT
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit screenshot updates
+        if: ${{ success() && inputs.update_screenshots && steps.changes.outputs.changes == 'true' }}
+        run: |
+          git add tests/visual/__screenshots__
+          git commit -m "test: update visual regression screenshots
+
+          Co-authored-by: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>"
+
+      - name: Push screenshot updates
+        if: ${{ success() && inputs.update_screenshots && steps.changes.outputs.changes == 'true' }}
+        run: git push origin HEAD:${{ github.ref_name }}
+
+      - name: Write update summary
+        if: ${{ success() && inputs.update_screenshots }}
+        shell: bash
+        run: |
+          if [[ "${{ steps.changes.outputs.changes }}" == "true" ]]; then
+            echo "### 📸 Visual Regression Screenshots Updated" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Updated **${{ steps.changes.outputs.changed_count }}** screenshot(s) on \`${{ github.ref_name }}\`." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "${{ steps.changes.outputs.changed_files }}" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ℹ️ No Screenshot Updates Required" >> $GITHUB_STEP_SUMMARY
+          fi

@@ -148,9 +148,21 @@ The check runs against the latest commit in the PR and compares page resource si
 
 #### Visual Regression Testing
 
-To run the visual regression check for the current PR, add a `/visual` comment to the PR conversation (only users with `write`, `maintain`, or `admin` access can trigger it).  
-Playwright captures screenshots of key pages across desktop, tablet, and mobile viewports using Chromium, Firefox, and WebKit, then compares them against the baseline version with Argos CI.  
-The current automation generates and uploads only Chromium screenshots for comparison.
+To run the visual regression check for the current PR, add a `/visual` comment to the PR conversation (only users with `write`, `maintain`, or `admin` access can trigger it).
+
+The current automation runs two visual checks in parallel:
+
+1. Legacy path: Playwright captures key pages across desktop, tablet, and mobile viewports using Chromium, Firefox, and WebKit, and continues uploading Chromium screenshots to Argos when `ARGOS_TOKEN` is configured.
+2. Vitest path: `pnpm test:visual` runs Vitest Browser Mode with the Playwright provider, compares the same key pages against committed baselines, and emits reference / actual / diff artifacts.
+
+When you intentionally change the UI and need to refresh Vitest baselines, run the `Update Visual Regression Screenshots` workflow manually from GitHub Actions. It only runs on non-default branches and commits changes under `tests/visual/__screenshots__/` back to the current branch.
+
+You can also run the Vitest visual checks locally with:
+
+```bash
+pnpm test:visual
+pnpm test:visual:update
+```
 
 ## Release Flow
 
@@ -205,7 +217,7 @@ The following conventions are used to mark or trigger PR automation workflows.
 ### Special Comments
 
 - `/audit`: Triggers the page resource size diff check, compares the current PR with the latest stable release, and generates a report. Only users with `write`, `maintain`, or `admin` access can trigger it.
-- `/visual`: Triggers the visual regression check, generates screenshots for the latest PR commit, and uploads them to Argos when `ARGOS_TOKEN` is configured. Only users with `write`, `maintain`, or `admin` access can trigger it.
+- `/visual`: Triggers the visual regression check and runs both the Argos screenshot path and the Vitest baseline-comparison path in parallel. Only users with `write`, `maintain`, or `admin` access can trigger it.
 
 ## How to Add a New Feature with Config Options
 
