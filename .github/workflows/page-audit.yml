@@ -1,4 +1,4 @@
-name: Page Audit (Audit on main/Audit and Comment on PR)
+name: Page Resource Size Diff Check
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   audit-current:
-    name: Audit Current Version
+    name: Check Current Version
     uses: ./.github/workflows/reusable-audit.yml
     with:
       theme_ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
@@ -17,7 +17,7 @@ jobs:
       upload_lighthouse_artifact: true
 
   audit-base:
-    name: Audit Base Version
+    name: Check Base Version
     # Run when the workflow is triggered by a pull request event.
     # Use presence of `github.event.pull_request` so this works for both
     # `pull_request` and `pull_request_target` triggers.
@@ -52,7 +52,7 @@ jobs:
           MANIFEST: ./lighthouse-reports-current/manifest.json
 
   compare-and-comment:
-    name: Compare Page Size and Comment Report
+    name: Compare Page Resource Sizes and Comment Report
     needs: [audit-current, audit-base]
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest

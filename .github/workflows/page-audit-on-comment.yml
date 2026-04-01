@@ -1,4 +1,4 @@
-name: Page Audit (Issue Comment Triggered)
+name: Page Resource Size Diff Check (Issue Comment Triggered)
 
 on:
   issue_comment:
@@ -129,9 +129,9 @@ jobs:
               }
             }
 
-  # Performance test
+  # Page resource size diff check
   audit:
-    name: Lighthouse Page Audit (${{ matrix.ref_name }})
+    name: Page Resource Size Diff Check (${{ matrix.ref_name }})
     needs: [check-trigger, get-latest-release]
     if: needs.check-trigger.outputs.should_run == 'true'
     strategy:
@@ -193,9 +193,9 @@ jobs:
           PR_SHA="${{ needs.check-trigger.outputs.pr_head_sha }}"
 
           cat > ./final-report.md << EOF
-          # 📊 Performance Comparison Report
+          # 📊 Page Resource Size Diff Report
 
-          **Comparison:** Current PR version vs Latest Release version (\`${RELEASE_TAG}\`)
+          **Comparison:** Current PR version vs latest stable release (\`${RELEASE_TAG}\`)
 
           - **Current PR**: [\`${PR_SHA:0:7}\`](https://github.com/${{ github.repository }}/commit/${PR_SHA})
           - **Latest Release**: [\`${RELEASE_TAG}\`](https://github.com/${{ github.repository }}/releases/tag/${RELEASE_TAG})
@@ -229,7 +229,7 @@ jobs:
                 issue_number: ${{ needs.check-trigger.outputs.pr_number }},
                 body: report
               });
-              console.log('✓ Performance comparison report posted successfully');
+              console.log('✓ Page resource size diff report posted successfully');
             } catch (error) {
               if (error.status === 403) {
                 console.log('⚠️ Cannot post comment (insufficient permissions).');
@@ -287,5 +287,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ needs.check-trigger.outputs.pr_number }},
-              body: '❌ Performance tests failed. See the [workflow run logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.'
+              body: '❌ Page resource size diff check failed. See the [workflow run logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.'
             });
