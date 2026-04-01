@@ -227,7 +227,10 @@ const logLatestReleaseStatus = (toolName, latestVersion, publishedAt, eligible, 
 
 const resolveToolchainTargets = async () => {
   const trackedVersions = await readTrackedToolchainVersions();
-  const [latestNodeRelease, latestPnpmRelease] = await Promise.all([fetchLatestNodeRelease(), fetchLatestPnpmRelease()]);
+  const [latestNodeRelease, latestPnpmRelease] = await Promise.all([
+    fetchLatestNodeRelease(),
+    fetchLatestPnpmRelease(),
+  ]);
   const releaseCutoffTimestamp = Date.now() - releaseDelayMs;
   const nodeEligible = hasReachedReleaseDelay(latestNodeRelease.publishedAt, releaseCutoffTimestamp);
   const pnpmEligible = hasReachedReleaseDelay(latestPnpmRelease.publishedAt, releaseCutoffTimestamp);
