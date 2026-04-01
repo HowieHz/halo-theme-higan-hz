@@ -220,7 +220,9 @@ const fetchLatestStableRelease = async (repository) => {
   }
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch latest release metadata for ${repository}: ${response.status} ${response.statusText}`);
+    throw new Error(
+      `Failed to fetch latest release metadata for ${repository}: ${response.status} ${response.statusText}`,
+    );
   }
 
   const release = await response.json();
