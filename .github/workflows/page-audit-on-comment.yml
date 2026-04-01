@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: Add reaction to comment
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
         with:
           script: |
             await github.rest.reactions.createForIssueComment({
@@ -38,7 +38,7 @@ jobs:
 
       - name: Check if commenter has write access
         id: check
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
         with:
           script: |
             try {
@@ -69,7 +69,7 @@ jobs:
       - name: Get PR details
         if: steps.check.outputs.should_run == 'true'
         id: pr
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
         with:
           script: |
             const { data: pr } = await github.rest.pulls.get({
@@ -99,7 +99,7 @@ jobs:
     steps:
       - name: Get latest release
         id: release
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
         with:
           script: |
             try {
@@ -160,7 +160,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
         with:
           ref: ${{ needs.check-trigger.outputs.pr_head_sha }}
 
@@ -168,13 +168,13 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
 
       - name: Download current reports
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # https://github.com/actions/download-artifact/releases/tag/v8.0.1
         with:
           name: page-size-reports-current
           path: ./reports-current
 
       - name: Download latest-release reports
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # https://github.com/actions/download-artifact/releases/tag/v8.0.1
         with:
           name: page-size-reports-latest-release
           path: ./reports-latest-release
@@ -207,7 +207,7 @@ jobs:
           cat ./comparison-report.md >> ./final-report.md
 
       - name: Add success reaction and comment on PR
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
         with:
           script: |
             const fs = require('fs');
@@ -241,7 +241,7 @@ jobs:
 
       - name: Add failure reaction and comment on failure
         if: failure()
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
         with:
           script: |
             // Add failure reaction
@@ -271,7 +271,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Add failure reaction and comment
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
         with:
           script: |
             // Add failure reaction

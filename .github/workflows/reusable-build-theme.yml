@@ -41,7 +41,7 @@ jobs:
           mkdir -p ~/builds/tmp-src ~/builds/target
 
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
         with:
           ref: ${{ inputs.theme_ref }}
 
@@ -59,7 +59,7 @@ jobs:
         run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$HOME/builds/target"
 
       - name: Upload Theme Build Target
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # https://github.com/actions/upload-artifact/releases/tag/v7.0.0
         with:
           name: ${{ inputs.artifact_name }}
           path: ~/builds/target/*
