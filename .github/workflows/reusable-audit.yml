@@ -73,7 +73,7 @@ jobs:
   audit:
     needs: precheck
     if: ${{ inputs.run_lighthouse_ci == true || needs.precheck.outputs.screenshots_needed == 'true' }}
-    name: Page Audit (${{ inputs.ref_name }})
+    name: ${{ inputs.run_lighthouse_ci && format('Page Resource Size Diff Check ({0})', inputs.ref_name) || format('Visual Regression ({0})', inputs.ref_name) }}
     runs-on: ubuntu-latest
 
     steps:

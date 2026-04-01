@@ -100,7 +100,7 @@ pnpm build
 
 ### CI 检查
 
-本项目会在 CI（GitHub Actions）中对每个 PR 执行以下质量检查：
+本项目会在 CI（GitHub Actions）中对 PR 执行以下检查，其中部分检查为按需手动触发：
 
 #### CI 求疵步骤
 
@@ -133,11 +133,6 @@ CI 会自动运行 `pnpm fmt`，包含以下格式化步骤：
 - 使用 Lighthouse CI 检查页面评分并输出报告（需全部满分）。
 - 与基线版本进行页面资源体积差异检查并输出报告。
 
-#### 页面视觉差异检查（Visual Regression）
-
-通过 Playwright 在桌面、平板、手机三种设备视图（Viewport）下，使用 Chromium、Firefox、WebKit 内核对关键页面截图。最后使用 Argos CI 与基线版本进行比较。
-为节省额度，当前仅上传 Chromium 生成的截图用于比较。
-
 #### 发版约束检查
 
 - 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 是否仍然保留 `## [Unreleased]`（如未保留则不通过检查）。
@@ -145,6 +140,17 @@ CI 会自动运行 `pnpm fmt`，包含以下格式化步骤：
 - 检查非发布 PR 中是否手动修改了 `package.json` 的 `version`（如有修改则不通过检查）。
 - 检查发布 PR（带 `release` 标签）是否手动修改了 `package.json` 的 `version`（如未修改则不通过检查），且为合法语义化版本号（如不符合 `/^\d+\.\d+\.\d+$/` 则不通过检查），且新版本号必须大于目标分支 `package.json` 的 `version` 字段的版本号（如未递增则不通过检查）。
 - 检查 PR 中是否手动修改了 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 的 `spec.version`（如有修改则不通过检查）。
+
+#### 页面资源体积差异检查
+
+如需对当前 PR 手动执行页面资源体积差异检查，请在 PR 评论中输入 `/audit`（仅项目具有 `write`、`maintain` 或 `admin` 权限的用户可触发）。  
+该检查会基于 PR 的最新提交运行，并与上一个正式版进行页面资源体积差异比较。
+
+#### 页面视觉差异检查（Visual Regression）
+
+如需对当前 PR 手动执行页面视觉差异检查，请在 PR 评论中输入 `/visual`（仅项目具有 `write`、`maintain` 或 `admin` 权限的用户可触发）。  
+通过 Playwright 在桌面、平板、手机三种设备视图（Viewport）下，使用 Chromium、Firefox、WebKit 内核对关键页面截图，并使用 Argos CI 与基线版本进行比较。  
+当前自动化流程仅生成并上传 Chromium 截图用于比较。
 
 ## 发布流程
 
@@ -198,7 +204,8 @@ PR 合并后，机器人会自动执行以下动作：
 
 ### 特殊评论
 
-- `/audit`: 触发页面审计，与上一个正式版进行页面资源体积差异检查，并输出报告。
+- `/audit`: 触发页面资源体积差异检查，与上一个正式版进行比较并输出报告。仅项目具有 `write`、`maintain` 或 `admin` 权限的用户可触发。
+- `/visual`: 触发页面视觉差异检查，生成当前 PR 最新提交的截图产物，并在配置了 `ARGOS_TOKEN` 时继续上传到 Argos。仅项目具有 `write`、`maintain` 或 `admin` 权限的用户可触发。
 
 ## 如何添加带配置项的新功能
 

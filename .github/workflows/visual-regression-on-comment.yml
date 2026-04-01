@@ -1,0 +1,194 @@
+name: Visual Regression (Issue Comment Triggered)
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+
+jobs:
+  check-trigger:
+    name: Check Trigger Conditions
+    if: |
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, '/visual')
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+      pr_number: ${{ steps.pr.outputs.number }}
+      pr_head_sha: ${{ steps.pr.outputs.head_sha }}
+      pr_head_ref: ${{ steps.pr.outputs.head_ref }}
+      comment_id: ${{ github.event.comment.id }}
+
+    steps:
+      - name: Add reaction to comment
+        uses: actions/github-script@v8
+        with:
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: 'eyes'
+            });
+
+      - name: Check if commenter has write access
+        id: check
+        uses: actions/github-script@v8
+        with:
+          script: |
+            try {
+              const { data: permission } = await github.rest.repos.getCollaboratorPermissionLevel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                username: context.payload.comment.user.login
+              });
+
+              const hasWriteAccess = ['admin', 'maintain', 'write'].includes(permission.permission);
+
+              if (!hasWriteAccess) {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  body: '❌ You do not have permission to trigger this workflow. Only users with write, maintain, or admin access can use the `/visual` command.'
+                });
+                core.setOutput('should_run', 'false');
+                return;
+              }
+
+              core.setOutput('should_run', 'true');
+            } catch (error) {
+              core.setFailed(`Permission check failed: ${error.message}`);
+            }
+
+      - name: Get PR details
+        if: steps.check.outputs.should_run == 'true'
+        id: pr
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+
+            core.setOutput('number', pr.number);
+            core.setOutput('head_sha', pr.head.sha);
+            core.setOutput('head_ref', pr.head.ref);
+
+            console.log(`PR #${pr.number}`);
+            console.log(`Head SHA: ${pr.head.sha}`);
+            console.log(`Head Ref: ${pr.head.ref}`);
+
+  visual-check:
+    name: Visual Regression
+    needs: check-trigger
+    if: needs.check-trigger.outputs.should_run == 'true'
+    uses: ./.github/workflows/reusable-audit.yml
+    with:
+      theme_ref: ${{ needs.check-trigger.outputs.pr_head_sha }}
+      ref_name: current
+      run_lighthouse_ci: false
+      upload_screenshots_artifact: true
+      playwright_browsers: chromium
+
+  comment-success:
+    name: Comment Success
+    needs: [check-trigger, visual-check]
+    if: |
+      always() &&
+      needs.check-trigger.outputs.should_run == 'true' &&
+      needs.visual-check.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add success reaction and comment on PR
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const prSha = '${{ needs.check-trigger.outputs.pr_head_sha }}';
+            const shortSha = prSha.slice(0, 7);
+            const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              '# 📸 Visual Regression Report',
+              '',
+              `Screenshot generation finished for commit [\`${shortSha}\`](https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${prSha}).`,
+              '',
+              '- The screenshots artifact is attached to the workflow run as `screenshots-current`.',
+              `- Workflow run: ${runUrl}`,
+              '- If `ARGOS_TOKEN` is configured, the follow-up `Upload Theme Screenshots to Argos` workflow will upload the screenshots to Argos.'
+            ].join('\n');
+
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ needs.check-trigger.outputs.comment_id }},
+              content: '+1'
+            });
+
+            try {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ needs.check-trigger.outputs.pr_number }},
+                body
+              });
+              console.log('✓ Visual regression report posted successfully');
+            } catch (error) {
+              if (error.status === 403) {
+                console.log('⚠️ Cannot post comment (insufficient permissions).');
+                console.log('📸 The screenshots have been generated and uploaded as an artifact; they can be viewed from the workflow run.');
+              } else {
+                throw error;
+              }
+            }
+
+      - name: Add failure reaction and comment on failure
+        if: failure()
+        uses: actions/github-script@v8
+        with:
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ needs.check-trigger.outputs.comment_id }},
+              content: '-1'
+            });
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ needs.check-trigger.outputs.pr_number }},
+              body: '❌ Visual regression report generation failed. See the [workflow run logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.'
+            });
+
+  handle-failure:
+    name: Handle Failure
+    needs: [check-trigger, visual-check]
+    if: |
+      always() &&
+      needs.check-trigger.outputs.should_run == 'true' &&
+      needs.visual-check.result == 'failure'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add failure reaction and comment
+        uses: actions/github-script@v8
+        with:
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ needs.check-trigger.outputs.comment_id }},
+              content: '-1'
+            });
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ needs.check-trigger.outputs.pr_number }},
+              body: '❌ Visual regression checks failed. See the [workflow run logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.'
+            });

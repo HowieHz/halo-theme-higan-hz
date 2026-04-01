@@ -3,8 +3,6 @@ name: Generate Theme Screenshots
 on:
   push:
     branches: [main]
-  pull_request:
-    types: [opened, synchronize, reopened]
   schedule:
     - cron: "0 0 * * *" # Refresh baseline version screenshot dates
 
@@ -16,6 +14,6 @@ jobs:
     with:
       upload_screenshots_artifact: true
       playwright_browsers: chromium
-      theme_ref: ${{ github.event.pull_request.head.sha }}
+      theme_ref: ${{ github.sha }}
       ref_name: current
     # No ARGOS_TOKEN is passed here to keep PR runs untrusted
