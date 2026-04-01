@@ -2,7 +2,7 @@ name: Upload Theme Screenshots to Argos
 
 on:
   workflow_run:
-    workflows: ["Generate Theme Screenshots"]
+    workflows: ["Generate Theme Screenshots", "Visual Regression (Issue Comment Triggered)"]
     types: [completed]
 
 jobs:

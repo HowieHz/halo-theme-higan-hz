@@ -1,4 +1,4 @@
-name: Page Audit (Issue Comment Triggered)
+name: Visual Regression (Issue Comment Triggered)
 
 on:
   issue_comment:
@@ -10,12 +10,11 @@ permissions:
   pull-requests: read
 
 jobs:
-  # Check comment permissions and trigger conditions
   check-trigger:
     name: Check Trigger Conditions
     if: |
       github.event.issue.pull_request &&
-      contains(github.event.comment.body, '/audit')
+      contains(github.event.comment.body, '/visual')
     runs-on: ubuntu-latest
     outputs:
       should_run: ${{ steps.check.outputs.should_run }}
@@ -47,20 +46,20 @@ jobs:
                 repo: context.repo.repo,
                 username: context.payload.comment.user.login
               });
-              
+
               const hasWriteAccess = ['admin', 'maintain', 'write'].includes(permission.permission);
-              
+
               if (!hasWriteAccess) {
                 await github.rest.issues.createComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: context.issue.number,
-                  body: '❌ You do not have permission to trigger this workflow. Only users with write, maintain, or admin access can use the `/audit` command.'
+                  body: '❌ You do not have permission to trigger this workflow. Only users with write, maintain, or admin access can use the `/visual` command.'
                 });
                 core.setOutput('should_run', 'false');
                 return;
               }
-              
+
               core.setOutput('should_run', 'true');
             } catch (error) {
               core.setFailed(`Permission check failed: ${error.message}`);
@@ -86,134 +85,44 @@ jobs:
             console.log(`Head SHA: ${pr.head.sha}`);
             console.log(`Head Ref: ${pr.head.ref}`);
 
-  # Get latest release version
-  get-latest-release:
-    name: Get Latest Release
+  visual-check:
+    name: Visual Regression
     needs: check-trigger
     if: needs.check-trigger.outputs.should_run == 'true'
-    runs-on: ubuntu-latest
-    outputs:
-      release_tag: ${{ steps.release.outputs.tag }}
-      release_sha: ${{ steps.release.outputs.sha }}
-
-    steps:
-      - name: Get latest release
-        id: release
-        uses: actions/github-script@v8
-        with:
-          script: |
-            try {
-              const { data: release } = await github.rest.repos.getLatestRelease({
-                owner: context.repo.owner,
-                repo: context.repo.repo
-              });
-              
-              core.setOutput('tag', release.tag_name);
-              
-              // Get the commit SHA for the release tag
-              const { data: tag } = await github.rest.git.getRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: `tags/${release.tag_name}`
-              });
-              
-              core.setOutput('sha', tag.object.sha);
-              
-              console.log(`Latest Release: ${release.tag_name}`);
-              console.log(`Release SHA: ${tag.object.sha}`);
-            } catch (error) {
-              if (error.status === 404) {
-                core.setFailed('No release found. Ensure the repository has at least one release.');
-              } else {
-                core.setFailed(`Failed to get latest release: ${error.message}`);
-              }
-            }
-
-  # Performance test
-  audit:
-    name: Lighthouse Page Audit (${{ matrix.ref_name }})
-    needs: [check-trigger, get-latest-release]
-    if: needs.check-trigger.outputs.should_run == 'true'
-    strategy:
-      matrix:
-        include:
-          - ref_name: current
-            ref: ${{ needs.check-trigger.outputs.pr_head_sha }}
-          - ref_name: latest-release
-            ref: ${{ needs.get-latest-release.outputs.release_sha }}
-      fail-fast: false
-
     uses: ./.github/workflows/reusable-audit.yml
     with:
-      theme_ref: ${{ matrix.ref }}
-      ref_name: ${{ matrix.ref_name }}
-      run_lighthouse_ci: true
+      theme_ref: ${{ needs.check-trigger.outputs.pr_head_sha }}
+      ref_name: current
+      run_lighthouse_ci: false
+      upload_screenshots_artifact: true
+      playwright_browsers: chromium
 
-  # Compare and comment
-  compare-and-comment:
-    name: Compare and Comment
-    needs: [check-trigger, get-latest-release, audit]
+  comment-success:
+    name: Comment Success
+    needs: [check-trigger, visual-check]
     if: |
       always() &&
       needs.check-trigger.outputs.should_run == 'true' &&
-      needs.audit.result == 'success'
+      needs.visual-check.result == 'success'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-        with:
-          ref: ${{ needs.check-trigger.outputs.pr_head_sha }}
-
-      - name: Setup Node.js and pnpm
-        uses: ./.github/actions/setup-node-pnpm
-
-      - name: Download current reports
-        uses: actions/download-artifact@v8
-        with:
-          name: page-size-reports-current
-          path: ./reports-current
-
-      - name: Download latest-release reports
-        uses: actions/download-artifact@v8
-        with:
-          name: page-size-reports-latest-release
-          path: ./reports-latest-release
-
-      - name: Generate comparison report
-        run: |
-          node .github/scripts/compare-page-size-reports.js
-        env:
-          CURRENT_REPORT: ./reports-current/page-size-report.json
-          BASE_REPORT: ./reports-latest-release/page-size-report.json
-          OUTPUT_FILE: ./comparison-report.md
-
-      - name: Add header to report
-        run: |
-          RELEASE_TAG="${{ needs.get-latest-release.outputs.release_tag }}"
-          PR_SHA="${{ needs.check-trigger.outputs.pr_head_sha }}"
-
-          cat > ./final-report.md << EOF
-          # 📊 Performance Comparison Report
-
-          **Comparison:** Current PR version vs Latest Release version (\`${RELEASE_TAG}\`)
-
-          - **Current PR**: [\`${PR_SHA:0:7}\`](https://github.com/${{ github.repository }}/commit/${PR_SHA})
-          - **Latest Release**: [\`${RELEASE_TAG}\`](https://github.com/${{ github.repository }}/releases/tag/${RELEASE_TAG})
-
-          ---
-
-          EOF
-
-          cat ./comparison-report.md >> ./final-report.md
-
       - name: Add success reaction and comment on PR
         uses: actions/github-script@v8
         with:
           script: |
-            const fs = require('fs');
-            const report = fs.readFileSync('./final-report.md', 'utf8');
+            const prSha = '${{ needs.check-trigger.outputs.pr_head_sha }}';
+            const shortSha = prSha.slice(0, 7);
+            const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              '# 📸 Visual Regression Report',
+              '',
+              `Screenshot generation finished for commit [\`${shortSha}\`](https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${prSha}).`,
+              '',
+              '- The screenshots artifact is attached to the workflow run as `screenshots-current`.',
+              `- Workflow run: ${runUrl}`,
+              '- If `ARGOS_TOKEN` is configured, the follow-up `Upload Theme Screenshots to Argos` workflow will upload the screenshots to Argos.'
+            ].join('\n');
 
-            // Add success reaction
             await github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -221,19 +130,18 @@ jobs:
               content: '+1'
             });
 
-            // Post comment
             try {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: ${{ needs.check-trigger.outputs.pr_number }},
-                body: report
+                body
               });
-              console.log('✓ Performance comparison report posted successfully');
+              console.log('✓ Visual regression report posted successfully');
             } catch (error) {
               if (error.status === 403) {
                 console.log('⚠️ Cannot post comment (insufficient permissions).');
-                console.log('📊 The report has been generated and uploaded as an artifact; it can be viewed manually.');
+                console.log('📸 The screenshots have been generated and uploaded as an artifact; they can be viewed from the workflow run.');
               } else {
                 throw error;
               }
@@ -244,7 +152,6 @@ jobs:
         uses: actions/github-script@v8
         with:
           script: |
-            // Add failure reaction
             await github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -252,29 +159,26 @@ jobs:
               content: '-1'
             });
 
-            // Post failure notification
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ needs.check-trigger.outputs.pr_number }},
-              body: '❌ Report generation failed. See the [workflow run logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.'
+              body: '❌ Visual regression report generation failed. See the [workflow run logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.'
             });
 
-  # Handle failure cases
   handle-failure:
     name: Handle Failure
-    needs: [check-trigger, audit]
+    needs: [check-trigger, visual-check]
     if: |
       always() &&
       needs.check-trigger.outputs.should_run == 'true' &&
-      needs.audit.result == 'failure'
+      needs.visual-check.result == 'failure'
     runs-on: ubuntu-latest
     steps:
       - name: Add failure reaction and comment
         uses: actions/github-script@v8
         with:
           script: |
-            // Add failure reaction
             await github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -282,10 +186,9 @@ jobs:
               content: '-1'
             });
 
-            // Post failure notification
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ needs.check-trigger.outputs.pr_number }},
-              body: '❌ Performance tests failed. See the [workflow run logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.'
+              body: '❌ Visual regression checks failed. See the [workflow run logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.'
             });

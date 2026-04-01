@@ -100,7 +100,7 @@ pnpm build
 
 ### CI Checks
 
-For every PR, CI (GitHub Actions) runs the following quality checks:
+CI (GitHub Actions) runs the following checks for PRs. Some checks are triggered manually when needed.
 
 #### CI Linting Steps
 
@@ -133,10 +133,6 @@ CI automatically runs `pnpm fmt`, including the following formatting steps:
 - Checks Lighthouse scores and outputs reports (all scores must be full marks).
 - Compares page resource-size differences against the baseline version and outputs reports.
 
-#### Visual Regression Testing
-
-Playwright captures screenshots of key pages across desktop, tablet, and mobile viewports using Chromium, Firefox, and WebKit. Argos CI then compares those screenshots against the baseline version. To save CI quota, only Chromium screenshots are currently uploaded.
-
 #### Release Guard Checks
 
 - Verifies that `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` still contain `## [Unreleased]` (fails if missing).
@@ -144,6 +140,17 @@ Playwright captures screenshots of key pages across desktop, tablet, and mobile 
 - Ensures non-release PRs do not manually modify the `version` field in `package.json` (fails if changed).
 - Ensures release PRs (with the `release` label) update the `version` field in `package.json` (fails if unchanged), use a valid semantic version matching `/^\d+\.\d+\.\d+$/` (fails if invalid), and set a version greater than the target branch's current `package.json` version (fails if not incremented).
 - Prevents manual changes to `spec.version` in `theme.yaml` and `i18n-settings/theme.*.yaml` in PRs (fails if changed).
+
+#### Page Resource Size Diff Check
+
+To run the page resource size diff check for the current PR, add a `/audit` comment to the PR conversation (only users with `write`, `maintain`, or `admin` access can trigger it).  
+The check runs against the latest commit in the PR and compares page resource sizes with the latest stable release.
+
+#### Visual Regression Testing
+
+To run the visual regression check for the current PR, add a `/visual` comment to the PR conversation (only users with `write`, `maintain`, or `admin` access can trigger it).  
+Playwright captures screenshots of key pages across desktop, tablet, and mobile viewports using Chromium, Firefox, and WebKit, then compares them against the baseline version with Argos CI.  
+The current automation generates and uploads only Chromium screenshots for comparison.
 
 ## Release Flow
 
@@ -197,7 +204,8 @@ The following conventions are used to mark or trigger PR automation workflows.
 
 ### Special Comments
 
-- `/audit`: Triggers a page audit comparing the current branch against the latest stable release and generates a report.
+- `/audit`: Triggers the page resource size diff check, compares the current PR with the latest stable release, and generates a report. Only users with `write`, `maintain`, or `admin` access can trigger it.
+- `/visual`: Triggers the visual regression check, generates screenshots for the latest PR commit, and uploads them to Argos when `ARGOS_TOKEN` is configured. Only users with `write`, `maintain`, or `admin` access can trigger it.
 
 ## How to Add a New Feature with Config Options
 
