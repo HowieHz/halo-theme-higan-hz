@@ -3,6 +3,8 @@ import path from "node:path";
 
 const defaultActionRoot = path.join(".github", "actions");
 const targetFilesFromArgs = process.argv.slice(2);
+const releaseDelayMs = 24 * 60 * 60 * 1000;
+const releaseCutoffTimestamp = Date.now() - releaseDelayMs;
 
 const collectActionYamlFiles = async (directoryPath) => {
   const absoluteDirectoryPath = path.resolve(process.cwd(), directoryPath);
@@ -32,6 +34,7 @@ const usesPattern =
 const commitRefPattern = /^[0-9a-f]{7,40}$/iu;
 const releaseTagUrlPattern = /\/releases\/tag\/([^/\s#]+)$/u;
 const versionCache = new Map();
+const latestReleaseCache = new Map();
 const repoMetadataCache = new Map();
 const tagCommitCache = new Map();
 const githubHeaders = {
@@ -51,7 +54,17 @@ const appendGitHubOutput = (name, value) => {
     return;
   }
 
-  return fs.appendFile(outputPath, `${name}=${value}\n`);
+  return fs.appendFile(outputPath, `${name}=${value}\n`, "utf8");
+};
+
+const hasReachedReleaseDelay = (value) => {
+  const timestamp = Date.parse(value);
+
+  if (Number.isNaN(timestamp)) {
+    throw new Error(`Invalid release timestamp: ${value || "<empty>"}`);
+  }
+
+  return timestamp <= releaseCutoffTimestamp;
 };
 
 const parseStableSemVer = (tag) => {
@@ -176,6 +189,80 @@ const fetchLatestStableVersion = async (repository) => {
   return latestVersion;
 };
 
+// Only advance semver-tagged action references after the current latest release
+// itself has aged for at least 24 hours. If v6.3.0 is the newest tag but was
+// published 12 hours ago, we intentionally keep the current ref instead of
+// moving to v6.2.0 or v6.3.0.
+const fetchLatestStableRelease = async (repository) => {
+  const cached = latestReleaseCache.get(repository);
+
+  if (cached) {
+    return cached;
+  }
+
+  const latestVersion = await fetchLatestStableVersion(repository);
+  const response = await fetch(`https://api.github.com/repos/${repository}/releases/tags/${encodeURIComponent(latestVersion.tag)}`, {
+    headers: githubHeaders,
+  });
+
+  if (response.status === 404) {
+    const result = {
+      eligible: false,
+      latestVersion,
+      publishedAt: null,
+      skipReason: "missing_release",
+    };
+    latestReleaseCache.set(repository, result);
+    logLatestReleaseStatus(
+      repository,
+      result.latestVersion,
+      result.publishedAt,
+      result.eligible,
+      result.skipReason,
+    );
+    return result;
+  }
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch release metadata for ${repository}@${latestVersion.tag}: ${response.status} ${response.statusText}`);
+  }
+
+  const release = await response.json();
+  const publishedAt = typeof release.published_at === "string" ? release.published_at : "";
+
+  if (publishedAt === "") {
+    throw new Error(`Missing published_at for ${repository}@${latestVersion.tag}`);
+  }
+
+  const result = {
+    eligible: hasReachedReleaseDelay(publishedAt),
+    latestVersion,
+    publishedAt,
+    skipReason: null,
+  };
+  latestReleaseCache.set(repository, result);
+  logLatestReleaseStatus(repository, result.latestVersion, result.publishedAt, result.eligible, result.skipReason);
+  return result;
+};
+
+const logLatestReleaseStatus = (repository, latestVersion, publishedAt, eligible, skipReason) => {
+  if (eligible) {
+    console.log(`Resolved ${repository} latest release ${latestVersion.tag} published at ${publishedAt}`);
+    return;
+  }
+
+  if (skipReason === "missing_release") {
+    console.log(
+      `Skipped ${repository} because latest semver tag ${latestVersion.tag} does not have a GitHub release, so a strict 24-hour cooldown cannot be verified`,
+    );
+    return;
+  }
+
+  console.log(
+    `Skipped ${repository} because latest release ${latestVersion.tag} was published at ${publishedAt} and has not reached the 24-hour cooldown`,
+  );
+};
+
 const fetchCommitShaForTag = async (repository, tag) => {
   const cacheKey = `${repository}@${tag}`;
   const cached = tagCommitCache.get(cacheKey);
@@ -232,6 +319,8 @@ const buildCommitRefUpdate = async (repository, currentRef, suffix) => {
   const commentTag = extractSemVerTagFromComment(suffix);
 
   if (!commentTag) {
+    // A raw commit pin without a semver tag comment tracks the default branch
+    // head by design, so there is no release timestamp available for cooldown.
     const targetRef = await fetchDefaultBranchHeadSha(repository);
     return {
       nextRef: targetRef,
@@ -240,10 +329,10 @@ const buildCommitRefUpdate = async (repository, currentRef, suffix) => {
     };
   }
 
-  const latestVersion = await fetchLatestStableVersion(repository);
-  const targetTag = resolveTargetRef(commentTag, latestVersion);
+  const latestRelease = await fetchLatestStableRelease(repository);
+  const targetTag = resolveTargetRef(commentTag, latestRelease.latestVersion);
 
-  if (!targetTag) {
+  if (!targetTag || !latestRelease.eligible) {
     return null;
   }
 
@@ -276,9 +365,10 @@ const updateFile = async (filePath) => {
     if (isCommitRef(currentRef)) {
       update = await buildCommitRefUpdate(repository, currentRef, suffix);
     } else {
-      const targetVersion = resolveTargetRef(currentRef, await fetchLatestStableVersion(repository));
+      const latestRelease = await fetchLatestStableRelease(repository);
+      const targetVersion = resolveTargetRef(currentRef, latestRelease.latestVersion);
 
-      if (targetVersion) {
+      if (targetVersion && latestRelease.eligible) {
         update = {
           nextRef: targetVersion,
           nextSuffix: replaceCommentTag(suffix, currentRef, targetVersion),
