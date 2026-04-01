@@ -42,7 +42,9 @@
     "lint:ts-type-check": "tsgo --noEmit",
     "migrate:oxlint": "pnpm dlx @oxlint/migrate --type-aware --with-nursery && pnpm run fmt",
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky && tw-patch install"
+    "prepare": "husky && tw-patch install",
+    "test:visual": "vitest --config vitest.visual.config.ts run",
+    "test:visual:update": "vitest --config vitest.visual.config.ts run --update"
   },
   "dependencies": {
     "alpinejs": "^3.15.9",
@@ -73,6 +75,7 @@
     "@iconify-json/uil": "^1.2.3",
     "@iconify/tailwind4": "^1.2.3",
     "@tailwindcss/vite": "^4.2.2",
+    "@vitest/browser-playwright": "^4.1.2",
     "@types/alpinejs": "^3.13.11",
     "@types/node": "^25.5.0",
     "@types/picomatch": "^4.0.2",
@@ -94,6 +97,7 @@
     "oxfmt": "^0.42.0",
     "oxlint": "^1.57.0",
     "oxlint-tsgolint": "^0.18.1",
+    "playwright": "^1.59.0",
     "stylelint": "^17.6.0",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recommended-vue": "^1.6.1",
@@ -106,6 +110,7 @@
     "vite": "^8.0.3",
     "vite-plugin-compression2": "^2.5.3",
     "vite-plugin-sri3": "^2.0.0",
+    "vitest": "^4.1.2",
     "vue-eslint-parser": "^10.4.0"
   },
   "browserslist": [

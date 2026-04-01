@@ -148,9 +148,21 @@ CI 会自动运行 `pnpm fmt`，包含以下格式化步骤：
 
 #### 页面视觉差异检查（Visual Regression）
 
-如需对当前 PR 手动执行页面视觉差异检查，请在 PR 评论中输入 `/visual`（仅项目具有 `write`、`maintain` 或 `admin` 权限的用户可触发）。  
-通过 Playwright 在桌面、平板、手机三种设备视图（Viewport）下，使用 Chromium、Firefox、WebKit 内核对关键页面截图，并使用 Argos CI 与基线版本进行比较。  
-当前自动化流程仅生成并上传 Chromium 截图用于比较。
+如需对当前 PR 手动执行页面视觉差异检查，请在 PR 评论中输入 `/visual`（仅项目具有 `write`、`maintain` 或 `admin` 权限的用户可触发）。
+
+当前自动化流程会并行执行两套视觉检查：
+
+1. 旧链路：通过 Playwright 在桌面、平板、手机三种设备视图（Viewport）下，使用 Chromium、Firefox、WebKit 内核对关键页面截图，并在配置了 `ARGOS_TOKEN` 时继续上传 Chromium 截图到 Argos。
+2. 新链路：通过 `pnpm test:visual` 运行 Vitest Browser Mode + Playwright provider，对同一批关键页面执行本地基线截图对比，并输出 reference / actual / diff 产物。
+
+如需有意更新 Vitest 的基线截图，请在 GitHub Actions 中手动运行 `Update Visual Regression Screenshots` 工作流。该工作流仅允许在非默认分支上运行，并会把 `tests/visual/__screenshots__/` 的变更提交回当前分支。
+
+本地也可以使用以下命令手动执行或更新 Vitest 视觉检查：
+
+```bash
+pnpm test:visual
+pnpm test:visual:update
+```
 
 ## 发布流程
 
@@ -205,7 +217,7 @@ PR 合并后，机器人会自动执行以下动作：
 ### 特殊评论
 
 - `/audit`: 触发页面资源体积差异检查，与上一个正式版进行比较并输出报告。仅项目具有 `write`、`maintain` 或 `admin` 权限的用户可触发。
-- `/visual`: 触发页面视觉差异检查，生成当前 PR 最新提交的截图产物，并在配置了 `ARGOS_TOKEN` 时继续上传到 Argos。仅项目具有 `write`、`maintain` 或 `admin` 权限的用户可触发。
+- `/visual`: 触发页面视觉差异检查，并行执行 Argos 截图链路与 Vitest 基线对比链路。仅项目具有 `write`、`maintain` 或 `admin` 权限的用户可触发。
 
 ## 如何添加带配置项的新功能
 
