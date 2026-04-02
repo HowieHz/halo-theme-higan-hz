@@ -25,7 +25,7 @@
 
 ### 🔧 代码重构
 
-- 将[“行内代码样式预设”](/guide/theme-configuration#行内代码样式预设)从“文章页样式”调整为“总体样式”，并改为在布局层的 `body` 中统一注入对应样式组件；非默认预设通过 `@layer base` 下的 `:not(pre) > code` 覆盖基础 `code` 样式。
+- 将[“行内代码样式预设”](/guide/theme-configuration#行内代码样式预设)从“文章页样式”调整为“总体样式”，并改为在布局层的 `head` 中统一注入对应样式组件；非默认预设通过 `@layer base` 下的 `:not(pre) > code` 覆盖基础 `code` 样式。
 
 ### 📄 文档
 

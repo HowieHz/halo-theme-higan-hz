@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🔧 Code Refactoring
 
-- Moved the ["Inline code style preset"](/en/guide/theme-configuration#inline-code-style-preset) setting from "Post Page Style" to "Overall Styles" and now injects its style component from the layout `body`. Non-default presets override the base `code` style through `:not(pre) > code` inside `@layer base`.
+- Moved the ["Inline code style preset"](/en/guide/theme-configuration#inline-code-style-preset) setting from "Post Page Style" to "Overall Styles" and now injects its style component from the layout `head`. Non-default presets override the base `code` style through `:not(pre) > code` inside `@layer base`.
 
 ### 📄 Documentation
 

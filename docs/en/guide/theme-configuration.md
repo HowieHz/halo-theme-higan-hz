@@ -1449,7 +1449,7 @@ Available presets:
 - `pill`
   - Theme-tinted pill style
 
-This setting works by injecting a style component from `body` into `@layer base`, using the `:not(pre) > code` selector to override the base `code` style without affecting multi-line code blocks.
+This setting works by injecting a style component from `head` into `@layer base`, using the `:not(pre) > code` selector to override the base `code` style without affecting multi-line code blocks.
 
 The `default` preset keeps the dotted border from the global base `code` style, while other presets only override inline code presentation.
 

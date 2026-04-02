@@ -13,8 +13,8 @@ It only affects inline code and does not change `pre code` multi-line code block
 
 ## Usage
 
-Body Content
+Head Content
 
 ```html
-<th:block th:insert="~{components/inline-code-style/template :: body}"></th:block>
+<th:block th:insert="~{components/inline-code-style/template :: head}"></th:block>
 ```

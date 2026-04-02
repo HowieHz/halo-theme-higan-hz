@@ -1443,7 +1443,7 @@ const QuickJumpConfig = (props) => {
 - `pill`
   - 主题色胶囊风格
 
-该配置项通过在布局层 `body` 中注入一个作用于 `@layer base` 的样式组件实现，使用选择器 `:not(pre) > code` 覆盖基础 `code` 样式，而不影响多行代码块。
+该配置项通过在布局层 `head` 中注入一个作用于 `@layer base` 的样式组件实现，使用选择器 `:not(pre) > code` 覆盖基础 `code` 样式，而不影响多行代码块。
 
 `default` 预设保持全局基础 `code` 样式中的虚线边框效果，其他预设仅覆盖行内代码的表现形式。
 
