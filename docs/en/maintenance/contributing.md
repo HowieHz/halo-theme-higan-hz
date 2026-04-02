@@ -186,19 +186,19 @@ After merge, the bot automatically:
 
 ### Nightly Pre-release Procedure
 
-Nightly Pre-releases do not require manual version changes or a manually pushed branch.
+Nightly pre-releases do not require manual version changes or a manually pushed branch.
 
 1. `nightly-theme-prerelease.yml` runs automatically every day at 00:00 Asia/Shanghai.
-2. A Nightly Pre-release is created only when all of the following are true:
+2. A Nightly pre-release is created only when all of the following are true:
    - There are commits within the previous calendar-day window in Asia/Shanghai.
    - There are commits after the latest stable or pre-release tag.
    - Commits whose subject starts with `docs:` are excluded.
-3. The Nightly Pre-release version rule is “current patch version + 1”, then append `-alpha.yyyyMMddHHmmssSSS`.
+3. The Nightly pre-release version rule is “current patch version + 1”, then append `-alpha.yyyyMMddHHmmssSSS`.
 4. The workflow creates a temporary local branch in the runner, updates version fields, and builds assets without pushing that branch.
-5. Before publishing the GitHub Pre-release or syncing the Halo App Store, the workflow verifies attestation for every nightly `.zip` artifact.
-6. After verification passes, the scheduled nightly run creates only the GitHub Pre-release and does not sync to the Halo App Store by default.
+5. Before publishing the GitHub pre-release or syncing the Halo App Store, the workflow verifies attestation for every nightly `.zip` artifact.
+6. After verification passes, the scheduled nightly run creates only the GitHub pre-release and does not sync to the Halo App Store by default.
 
-To create a Nightly Pre-release manually, use `workflow_dispatch` and set the `sync_to_halo_store` input to control Halo App Store sync after verification passes; this input defaults to `false`.
+To create a Nightly pre-release manually, use `workflow_dispatch` and set the `sync_to_halo_store` input to control Halo App Store sync after verification passes; this input defaults to `false`.
 
 ## Pull Request Conventions
 

@@ -10,10 +10,10 @@ This project uses semantic versioning in the format `MAJOR.MINOR.PATCH`.
 
 ## Release Types
 
-This theme ships two kinds of releases: stable releases and Nightly Pre-releases. Both first verify build-artifact attestations before publishing all generated theme packages; stable releases also sync to the Halo App Store, while Nightly Pre-releases sync depending on how they are triggered.
+This theme ships two kinds of releases: stable releases and Nightly pre-releases. Both first verify build-artifact attestations before publishing all generated theme packages; stable releases also sync to the Halo App Store, while Nightly pre-releases sync depending on how they are triggered.
 
 - Stable release: triggered automatically after merging a PR labeled `release`, where `package.json` carries the target semantic version.
-- Nightly Pre-release: triggered automatically at 00:00 Asia/Shanghai when the `main` branch had commits during the previous day. Scheduled runs publish only to GitHub Releases and do not sync to the Halo App Store by default. Manual runs can control Halo App Store sync through the `sync_to_halo_store` input, which defaults to `false`.
+- Nightly pre-release: triggered automatically at 00:00 Asia/Shanghai when the `main` branch had commits during the previous day. Scheduled runs publish only to GitHub Releases and do not sync to the Halo App Store by default. Manual runs can control Halo App Store sync through the `sync_to_halo_store` input, which defaults to `false`.
 
 ## Build Artifacts
 
@@ -28,7 +28,7 @@ For full release process details, see the _Release Flow_ section in the [Contrib
 
 ## Build Provenance
 
-Every stable release and Nightly Pre-release generates GitHub Artifact Attestations for all `.zip` artifacts, signed by the GitHub Actions build environment so anyone can verify the origin of a downloaded file.
+Every stable release and Nightly pre-release generates GitHub Artifact Attestations for all `.zip` artifacts, signed by the GitHub Actions build environment so anyone can verify the origin of a downloaded file.
 
 The build pipeline follows GitHub's recommended reusable-workflow pattern: build, artifact upload, and attestation issuance all happen inside the reusable build workflow. This corresponds to GitHub's SLSA v1 Build Level 3 path.
 
