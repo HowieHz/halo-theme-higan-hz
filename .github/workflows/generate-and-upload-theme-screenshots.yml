@@ -10,7 +10,7 @@ jobs:
   generate:
     name: Generate Theme Screenshots
     # Call the reusable audit workflow to run only screenshot generation and upload artifact
-    uses: ./.github/workflows/reusable-site-audit.yml
+    uses: ./.github/workflows/reusable-site-checks.yml
     with:
       upload_screenshots_artifact: true
       playwright_browsers: chromium

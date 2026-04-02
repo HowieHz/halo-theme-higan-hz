@@ -2,13 +2,13 @@ name: Upload Visual Regression Screenshots to Argos
 
 on:
   workflow_run:
-    workflows: ["Visual Regression (Issue Comment Triggered)"]
+    workflows: ["Run Visual Regression on Comment"]
     types: [completed]
 
 jobs:
   upload:
-    name: Download screenshots and upload to Argos
-    # Only run when the generator workflow completed successfully
+    name: Upload Visual Regression Screenshots to Argos
+    # Only run when the source workflow completed successfully
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:

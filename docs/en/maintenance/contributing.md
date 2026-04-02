@@ -169,7 +169,7 @@ Stable releases are published automatically from a labeled PR:
 
 1. Create a PR for the release (or use an existing aggregation PR).
 2. Add the `release` label and change `package.json` `version` to the target semantic version, such as `1.57.6`.
-3. Wait for `release-guard.yml` to pass and confirm both the target version (from `package.json`) and the previous stable version shown in the workflow summary.
+3. Wait for `check-release-guard.yml` to pass and confirm both the target version (from `package.json`) and the previous stable version shown in the workflow summary.
 4. Merge the PR into `main`.
 
 After merge, the bot automatically:
@@ -182,13 +182,13 @@ After merge, the bot automatically:
 6. After verification passes, two publishing actions run in parallel:
    - Create the GitHub Release and keep `howiehz-higan-cn.zip` first in the release asset list.
    - Sync to the Halo App Store and keep `howiehz-higan-cn.zip` first in the release asset list so Halo CMS prefers the Simplified Chinese package during update installs.
-7. After the GitHub Release is published, dispatches the follow-up event that triggers `sync-page-audit-results.yml`, which creates the page-size audit PR. That PR includes the `deploy-docs` label and deploys docs automatically after merge.
+7. After the GitHub Release is published, dispatches the follow-up event that triggers `generate-page-size-audit-json.yml`, which creates the page-size audit PR. That PR includes the `deploy-docs` label and deploys docs automatically after merge.
 
 ### Nightly Pre-release Procedure
 
 Nightly pre-releases do not require manual version changes or a manually pushed branch.
 
-1. `nightly-theme-prerelease.yml` runs automatically every day at 00:00 Asia/Shanghai.
+1. `release-nightly-theme-prerelease.yml` runs automatically every day at 00:00 Asia/Shanghai.
 2. A Nightly pre-release is created only when all of the following are true:
    - There are commits within the previous calendar-day window in Asia/Shanghai.
    - There are commits after the latest stable or pre-release tag.

@@ -59,7 +59,7 @@ Higan Haozi 是一款响应式、简洁清爽的个人网站主题，适用于 [
 
 ## Lighthouse
 
-[![Lighthouse CI](https://img.shields.io/github/actions/workflow/status/HowieHz/halo-theme-higan-hz/page-audit.yml?branch=main&label=Lighthouse%20CI)](https://github.com/HowieHz/halo-theme-higan-hz/actions/workflows/page-audit.yml?query=branch%3Amain)
+[![Lighthouse CI](https://img.shields.io/github/actions/workflow/status/HowieHz/halo-theme-higan-hz/run-page-size-audit.yml?branch=main&label=Lighthouse%20CI)](https://github.com/HowieHz/halo-theme-higan-hz/actions/workflows/run-page-size-audit.yml?query=branch%3Amain)
 
 ![Lighthouse](./docs/public/lighthouse-score.svg)
 

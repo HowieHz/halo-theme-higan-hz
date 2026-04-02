@@ -1,4 +1,4 @@
-name: Node.js Format and Lint Check
+name: Lint and Format Code
 
 on:
   push:
@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
   check:
-    name: Node.js Format and Lint Check
+    name: Lint and Format Code
     runs-on: ubuntu-latest
 
     permissions:

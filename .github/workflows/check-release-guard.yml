@@ -1,4 +1,4 @@
-name: Release Guard
+name: Check Release Guard
 
 on:
   pull_request:
@@ -170,7 +170,7 @@ jobs:
             const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             const body = [
               marker,
-              '## Release Guard',
+              '## Check Release Guard',
               '',
               `- Previous stable release: ${latestStable?.tag_name || 'none'}`,
               `- Requested release version (from package.json): ${releaseVersion}`,
