@@ -35,6 +35,16 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           path: ./screenshots
 
+      - name: Download Argos context
+        id: dl-argos-context
+        continue-on-error: true
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # https://github.com/actions/download-artifact/releases/tag/v8.0.1
+        with:
+          name: argos-context
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+          path: ./argos-context
+
       - name: Resolve Argos git context
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
         env:
@@ -44,6 +54,7 @@ jobs:
           script: |
             const envFile = process.env.GITHUB_ENV;
             const fs = require('node:fs');
+            const path = require('node:path');
             const workflowRun = context.payload.workflow_run;
             const fallback = {
               branch: process.env.WORKFLOW_RUN_HEAD_BRANCH,
@@ -55,6 +66,19 @@ jobs:
                 fs.appendFileSync(envFile, `${key}=${value}\n`);
               }
             };
+
+            const contextPath = path.join(process.cwd(), 'argos-context', 'argos-context.json');
+            if (fs.existsSync(contextPath)) {
+              const artifactContext = JSON.parse(fs.readFileSync(contextPath, 'utf8'));
+              append('ARGOS_BRANCH', artifactContext.head_ref);
+              append('ARGOS_COMMIT', artifactContext.head_sha);
+              append('ARGOS_PR_NUMBER', String(artifactContext.pr_number || ''));
+              append('ARGOS_PR_HEAD_COMMIT', artifactContext.head_sha);
+              append('ARGOS_PR_BASE_BRANCH', artifactContext.base_ref);
+              append('ARGOS_REFERENCE_BRANCH', artifactContext.base_ref);
+              core.info(`Resolved Argos context from artifact: ${artifactContext.head_ref} @ ${artifactContext.head_sha}`);
+              return;
+            }
 
             const pullRequest = workflowRun.pull_requests && workflowRun.pull_requests[0];
             if (!pullRequest || !pullRequest.number) {
@@ -98,11 +122,20 @@ jobs:
           echo "Uploading screenshots to Argos"
           echo "Argos branch: ${ARGOS_BRANCH:-unknown}"
           echo "Argos commit: ${ARGOS_COMMIT:-unknown}"
+          echo "Argos reference branch: ${ARGOS_REFERENCE_BRANCH:-unknown}"
           # Ensure we capture the exit status of the upload pipeline instead of exiting
           # immediately due to the runner's default `set -e` behavior.
           set -o pipefail
           set +e
-          pnpm dlx @argos-ci/cli upload --token "$ARGOS_TOKEN" ./screenshots/ 2>&1 | tee argos-upload.log
+          cmd=(pnpm dlx @argos-ci/cli upload --token "$ARGOS_TOKEN")
+          if [ -n "${ARGOS_BRANCH:-}" ]; then
+            cmd+=(--branch "$ARGOS_BRANCH")
+          fi
+          if [ -n "${ARGOS_COMMIT:-}" ]; then
+            cmd+=(--commit "$ARGOS_COMMIT")
+          fi
+          cmd+=(./screenshots/)
+          "${cmd[@]}" 2>&1 | tee argos-upload.log
           status=${PIPESTATUS[0]}
           set -e
           if [ "$status" -ne 0 ]; then

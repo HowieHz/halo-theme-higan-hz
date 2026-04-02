@@ -20,6 +20,8 @@ jobs:
       should_run: ${{ steps.check.outputs.should_run }}
       pr_number: ${{ steps.pr.outputs.number }}
       pr_head_sha: ${{ steps.pr.outputs.head_sha }}
+      pr_head_ref: ${{ steps.pr.outputs.head_ref }}
+      pr_base_ref: ${{ steps.pr.outputs.base_ref }}
       comment_id: ${{ github.event.comment.id }}
       eyes_reaction_id: ${{ steps.add-reaction.outputs.reaction_id }}
 
@@ -81,9 +83,32 @@ jobs:
 
             core.setOutput('number', pr.number);
             core.setOutput('head_sha', pr.head.sha);
+            core.setOutput('head_ref', pr.head.ref);
+            core.setOutput('base_ref', pr.base.ref);
 
             console.log(`PR #${pr.number}`);
+            console.log(`Head ref: ${pr.head.ref}`);
             console.log(`Head SHA: ${pr.head.sha}`);
+
+      - name: Write Argos context
+        if: steps.check.outputs.should_run == 'true'
+        run: |
+          cat > argos-context.json <<'EOF'
+          {
+            "pr_number": "${{ steps.pr.outputs.number }}",
+            "head_ref": "${{ steps.pr.outputs.head_ref }}",
+            "head_sha": "${{ steps.pr.outputs.head_sha }}",
+            "base_ref": "${{ steps.pr.outputs.base_ref }}"
+          }
+          EOF
+
+      - name: Upload Argos context
+        if: steps.check.outputs.should_run == 'true'
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # https://github.com/actions/upload-artifact/releases/tag/v7.0.0
+        with:
+          name: argos-context
+          path: argos-context.json
+          if-no-files-found: error
 
   visual-check:
     name: Visual Regression
