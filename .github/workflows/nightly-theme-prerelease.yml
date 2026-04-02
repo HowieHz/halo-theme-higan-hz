@@ -183,6 +183,7 @@ jobs:
     uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@4d014fae4dbd39eb09e8d40348b73db095e6ba9a # https://github.com/slsa-framework/slsa-github-generator/releases/tag/v2.1.0
     with:
       base64-subjects: "${{ needs.prerelease.outputs.hashes }}"
+      provenance-name: "multiple.intoto.jsonl"
       upload-assets: true
       upload-tag-name: "${{ needs.prerelease.outputs.prerelease_tag }}"
 
