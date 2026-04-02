@@ -1,4 +1,4 @@
-name: Page Resource Size Diff Check
+name: Run Page Size Audit
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     name: Check Current Version
     permissions:
       contents: read
-    uses: ./.github/workflows/reusable-site-audit.yml
+    uses: ./.github/workflows/reusable-site-checks.yml
     with:
       theme_ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
       ref_name: current
@@ -26,7 +26,7 @@ jobs:
     if: github.event.pull_request != null
     permissions:
       contents: read
-    uses: ./.github/workflows/reusable-site-audit.yml
+    uses: ./.github/workflows/reusable-site-checks.yml
     with:
       theme_ref: ${{ github.event.pull_request.base.sha }}
       ref_name: base

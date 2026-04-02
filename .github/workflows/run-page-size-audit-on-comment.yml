@@ -1,4 +1,4 @@
-name: Page Resource Size Diff Check (Issue Comment Triggered)
+name: Run Page Size Audit on Comment
 
 on:
   issue_comment:
@@ -134,7 +134,7 @@ jobs:
 
   # Page resource size diff check
   audit:
-    name: Page Resource Size Diff Check (${{ matrix.ref_name }})
+    name: Run Page Size Audit (${{ matrix.ref_name }})
     needs: [check-trigger, get-latest-release]
     if: needs.check-trigger.outputs.should_run == 'true'
     permissions:
@@ -148,7 +148,7 @@ jobs:
             ref: ${{ needs.get-latest-release.outputs.release_sha }}
       fail-fast: false
 
-    uses: ./.github/workflows/reusable-site-audit.yml
+    uses: ./.github/workflows/reusable-site-checks.yml
     with:
       theme_ref: ${{ matrix.ref }}
       ref_name: ${{ matrix.ref_name }}

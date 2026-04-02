@@ -1,4 +1,4 @@
-name: Visual Regression (Issue Comment Triggered)
+name: Run Visual Regression on Comment
 
 on:
   issue_comment:
@@ -116,7 +116,7 @@ jobs:
     if: needs.check-trigger.outputs.should_run == 'true'
     permissions:
       contents: read
-    uses: ./.github/workflows/reusable-site-audit.yml
+    uses: ./.github/workflows/reusable-site-checks.yml
     with:
       theme_ref: ${{ needs.check-trigger.outputs.pr_head_sha }}
       ref_name: current

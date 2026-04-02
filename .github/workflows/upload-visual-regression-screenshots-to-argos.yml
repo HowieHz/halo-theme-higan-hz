@@ -1,20 +1,19 @@
-name: Upload Theme Screenshots to Argos
+name: Upload Visual Regression Screenshots to Argos
 
 on:
   workflow_run:
-    workflows: ["Generate Theme Screenshots", "Visual Regression (Issue Comment Triggered)"]
+    workflows: ["Run Visual Regression on Comment"]
     types: [completed]
 
 jobs:
   upload:
-    name: Download screenshots and upload to Argos
-    # Only run when the generator workflow completed successfully
+    name: Upload Visual Regression Screenshots to Argos
+    # Only run when the source workflow completed successfully
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       actions: read
       contents: read
-      pull-requests: read
 
     steps:
       - name: Checkout
@@ -80,27 +79,9 @@ jobs:
               return;
             }
 
-            const pullRequest = workflowRun.pull_requests && workflowRun.pull_requests[0];
-            if (!pullRequest || !pullRequest.number) {
-              core.info(`No associated pull request found; using workflow_run branch ${fallback.branch}.`);
-              append('ARGOS_BRANCH', fallback.branch);
-              append('ARGOS_COMMIT', fallback.commit);
-              return;
-            }
-
-            const { data: pr } = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pullRequest.number,
-            });
-
-            append('ARGOS_BRANCH', pr.head.ref);
-            append('ARGOS_COMMIT', pr.head.sha);
-            append('ARGOS_PR_NUMBER', String(pr.number));
-            append('ARGOS_PR_HEAD_COMMIT', pr.head.sha);
-            append('ARGOS_PR_BASE_BRANCH', pr.base.ref);
-            append('ARGOS_REFERENCE_BRANCH', pr.base.ref);
-            core.info(`Resolved PR #${pr.number}: ${pr.head.ref} @ ${pr.head.sha}`);
+            core.info(`No Argos context artifact found; using workflow_run branch ${fallback.branch}.`);
+            append('ARGOS_BRANCH', fallback.branch);
+            append('ARGOS_COMMIT', fallback.commit);
 
       - name: Ensure screenshots present
         run: |

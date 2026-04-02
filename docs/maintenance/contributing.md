@@ -169,7 +169,7 @@ CI 会自动运行 `pnpm fmt`，包含以下格式化步骤：
 
 1. 创建用于正式发布的 PR（或在现有汇总 PR 上发布）。
 2. 为 PR 添加 `release` 标签，并将 `package.json` 的 `version` 改为目标语义化版本号（例如 `1.57.6`）。
-3. 等待 `release-guard.yml` 检查通过，并确认摘要中的目标版本号（来自 `package.json`）与上一个正式版版本号无误。
+3. 等待 `check-release-guard.yml` 检查通过，并确认摘要中的目标版本号（来自 `package.json`）与上一个正式版版本号无误。
 4. 合并 PR 到 `main`。
 
 PR 合并后，机器人会自动执行以下动作：
@@ -182,13 +182,13 @@ PR 合并后，机器人会自动执行以下动作：
 6. 验证通过后，并行执行两项发布操作：
    - 创建 GitHub Release，并让 `howiehz-higan-cn.zip` 在发布附件列表中位于第一。
    - 同步到 Halo 应用市场，并让 `howiehz-higan-cn.zip` 在发布附件列表中位于第一，以便 Halo CMS 在更新安装时优先使用简体中文配置版本。
-7. GitHub Release 发布成功后，再派发后续事件触发 `sync-page-audit-results.yml`，自动创建体积测量结果 PR；该 PR 会带上 `deploy-docs` 标签，合并后自动部署文档站。
+7. GitHub Release 发布成功后，再派发后续事件触发 `generate-page-size-audit-json.yml`，自动创建体积测量结果 PR；该 PR 会带上 `deploy-docs` 标签，合并后自动部署文档站。
 
 ### 测试版发布方法
 
 测试版不需要手动改版本号，也不需要手动创建分支。
 
-1. 工作流 `nightly-theme-prerelease.yml` 会在北京时间每天 0 点自动运行。
+1. 工作流 `release-nightly-theme-prerelease.yml` 会在北京时间每天 0 点自动运行。
 2. 仅当同时满足以下条件时才会自动生成测试版：
    - 有提交位于“前一个自然日（Asia/Shanghai）”时间窗口内。
    - 有提交位于“上一个正式版/测试版 Tag 之后”的提交范围内。
