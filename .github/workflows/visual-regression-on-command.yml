@@ -92,7 +92,7 @@ jobs:
     name: Visual Regression
     needs: check-trigger
     if: needs.check-trigger.outputs.should_run == 'true'
-    uses: ./.github/workflows/reusable-audit.yml
+    uses: ./.github/workflows/reusable-site-audit.yml
     with:
       theme_ref: ${{ needs.check-trigger.outputs.pr_head_sha }}
       ref_name: current

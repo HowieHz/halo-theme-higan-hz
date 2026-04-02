@@ -179,7 +179,7 @@ PR 合并后，机器人会自动执行以下动作：
 3. 同步更新 `package.json` 的 `version`、`theme.yaml` 的 `spec.version`、`i18n-settings/theme.*.yaml` 的 `spec.version`，并推送机器人提交到 `main`。
 4. 执行主题构建，产出多个 `howiehz-higan-*.zip`。
 5. 创建 GitHub Release，并上传全部 `howiehz-higan-*.zip` 到 GitHub Release 与 Halo 应用市场（`howiehz-higan-cn.zip` 优先上传）。
-6. 由 release 事件触发 `page-audit-generate-json.yml`，自动创建体积测量结果 PR；该 PR 会带上 `deploy-docs` 标签，合并后自动部署文档站。
+6. 由 release 事件触发 `sync-page-audit-results.yml`，自动创建体积测量结果 PR；该 PR 会带上 `deploy-docs` 标签，合并后自动部署文档站。
 
 ### 测试版发布方法
 

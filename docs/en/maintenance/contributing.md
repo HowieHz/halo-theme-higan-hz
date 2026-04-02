@@ -179,7 +179,7 @@ After merge, the bot automatically:
 3. Updates `package.json` `version`, `theme.yaml` `spec.version`, and `i18n-settings/theme.*.yaml` `spec.version`, then pushes the bot commit to `main`.
 4. Builds the theme and produces multiple `howiehz-higan-*.zip` packages.
 5. Creates the GitHub Release and uploads all `howiehz-higan-*.zip` packages to both GitHub Release and the Halo App Store (`howiehz-higan-cn.zip` first).
-6. Uses the published release to trigger `page-audit-generate-json.yml`, which creates the page-size audit PR. That PR includes the `deploy-docs` label and deploys docs automatically after merge.
+6. Uses the published release to trigger `sync-page-audit-results.yml`, which creates the page-size audit PR. That PR includes the `deploy-docs` label and deploys docs automatically after merge.
 
 ### Nightly Prerelease Procedure
 
