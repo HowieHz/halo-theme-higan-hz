@@ -9,6 +9,8 @@ on:
 jobs:
   audit-current:
     name: Check Current Version
+    permissions:
+      contents: read
     uses: ./.github/workflows/reusable-site-audit.yml
     with:
       theme_ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
@@ -22,6 +24,8 @@ jobs:
     # Use presence of `github.event.pull_request` so this works for both
     # `pull_request` and `pull_request_target` triggers.
     if: github.event.pull_request != null
+    permissions:
+      contents: read
     uses: ./.github/workflows/reusable-site-audit.yml
     with:
       theme_ref: ${{ github.event.pull_request.base.sha }}
@@ -33,9 +37,13 @@ jobs:
     needs: [audit-current]
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
 
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
@@ -63,6 +71,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
 
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm

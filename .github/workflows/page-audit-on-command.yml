@@ -137,6 +137,8 @@ jobs:
     name: Page Resource Size Diff Check (${{ matrix.ref_name }})
     needs: [check-trigger, get-latest-release]
     if: needs.check-trigger.outputs.should_run == 'true'
+    permissions:
+      contents: read
     strategy:
       matrix:
         include:
@@ -161,11 +163,15 @@ jobs:
       needs.check-trigger.outputs.should_run == 'true' &&
       needs.audit.result == 'success'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
         with:
-          ref: ${{ needs.check-trigger.outputs.pr_head_sha }}
+          ref: ${{ github.event.repository.default_branch }}
 
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
@@ -272,6 +278,9 @@ jobs:
       needs.check-trigger.outputs.should_run == 'true' &&
       needs.audit.result == 'failure'
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
       - name: Add failure reaction and comment
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
@@ -300,6 +309,8 @@ jobs:
       always() &&
       needs.check-trigger.outputs.eyes_reaction_id != ''
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
       - name: Remove eyes reaction
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
