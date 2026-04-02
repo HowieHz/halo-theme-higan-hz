@@ -181,7 +181,7 @@ jobs:
       actions: read
       id-token: write
       contents: write
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@f701310a334f5d712a8869541c8e19ecb4eefc24 # https://github.com/slsa-framework/slsa-github-generator/releases/tag/v2.1.0
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@4d014fae4dbd39eb09e8d40348b73db095e6ba9a # https://github.com/slsa-framework/slsa-github-generator/releases/tag/v2.1.0
     with:
       base64-subjects: "${{ needs.hash.outputs.hashes }}"
       upload-assets: true
