@@ -39,6 +39,7 @@
 ### 🛠️ 杂项维护
 
 - 移除基于 `slsa-github-generator` 的额外 SLSA provenance 发布流程，改为在复用构建工作流内统一完成构建产物上传与 GitHub Artifact Attestation 签发。
+- 为正式版与测试版发布流程新增发布后 attestation smoke check，自动使用 `--signer-workflow` 校验产物确实由指定的复用构建工作流签名。
 
 ## [1.61.0] - 2026-03-30
 

@@ -130,6 +130,46 @@ jobs:
             --notes-file .github/templates/release-note-template.md \
             --target "$RELEASE_SHA"
 
+  verify-attestations:
+    name: Verify Stable Release Attestations
+    needs: [prepare, build, github-release]
+    runs-on: ubuntu-latest
+    # This smoke check verifies that release artifacts were signed by the expected reusable workflow.
+    permissions:
+      contents: read
+    steps:
+      - name: Download Stable Release Assets
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # https://github.com/actions/download-artifact/releases/tag/v8.0.1
+        with:
+          name: release-theme-artifact
+          path: dist/theme-packages
+
+      - name: Verify Reusable Workflow Attestations
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SIGNER_WORKFLOW: ${{ github.repository }}/.github/workflows/reusable-build-theme.yml
+        run: |
+          shopt -s nullglob
+          artifacts=(dist/theme-packages/*.zip)
+          if [ "${#artifacts[@]}" -eq 0 ]; then
+            echo "No stable release artifacts found for attestation verification." >&2
+            exit 1
+          fi
+
+          for artifact in "${artifacts[@]}"; do
+            gh attestation verify "$artifact" \
+              --repo "${GITHUB_REPOSITORY}" \
+              --signer-workflow "${SIGNER_WORKFLOW}"
+          done
+
+  dispatch-follow-up:
+    name: Dispatch Stable Release Follow-Up Events
+    needs: [prepare, github-release, verify-attestations]
+    runs-on: ubuntu-latest
+    # Follow-up workflows run only after release publication and attestation verification succeed.
+    permissions:
+      contents: write
+    steps:
       - name: Dispatch Stable Release Follow-Up Workflows
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -151,7 +191,7 @@ jobs:
 
   app-store-release:
     name: Sync Stable Release to Halo App Store
-    needs: [prepare, build, github-release]
+    needs: [prepare, build, github-release, verify-attestations]
     runs-on: ubuntu-latest
     # App Store sync only downloads published assets and reads repository content.
     permissions:

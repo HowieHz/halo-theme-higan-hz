@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🛠️ Miscellaneous Chores
 
 - Removed the extra `slsa-github-generator`-based provenance release flow and now performs artifact upload and GitHub Artifact Attestation issuance inside the reusable build workflow.
+- Added a post-release attestation smoke check for both stable and nightly releases, automatically verifying with `--signer-workflow` that artifacts were signed by the expected reusable build workflow.
 
 ## [1.61.0] - 2026-03-30
 
