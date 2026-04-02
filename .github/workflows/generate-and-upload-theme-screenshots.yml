@@ -1,0 +1,83 @@
+name: Generate and Upload Theme Screenshots
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 0 * * *" # Refresh baseline version screenshot dates
+
+jobs:
+  generate:
+    name: Generate Theme Screenshots
+    # Call the reusable audit workflow to run only screenshot generation and upload artifact
+    uses: ./.github/workflows/reusable-site-audit.yml
+    with:
+      upload_screenshots_artifact: true
+      playwright_browsers: chromium
+      theme_ref: ${{ github.sha }}
+      ref_name: current
+
+  upload-to-argos:
+    name: Upload Generated Screenshots to Argos
+    needs: generate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Download screenshots
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # https://github.com/actions/download-artifact/releases/tag/v8.0.1
+        with:
+          name: screenshots-current
+          path: ./screenshots
+
+      - name: Ensure screenshots present
+        run: |
+          if [ ! -d screenshots ] || [ -z "$(ls -A screenshots 2>/dev/null)" ]; then
+            echo "No screenshots were generated for commit ${{ github.sha }}."
+            exit 1
+          fi
+
+      - name: Upload to Argos
+        env:
+          ARGOS_BRANCH: ${{ github.ref_name }}
+          ARGOS_COMMIT: ${{ github.sha }}
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+        run: |
+          if [ -z "$ARGOS_TOKEN" ]; then
+            echo "ARGOS_TOKEN not set; skipping upload to Argos"
+            echo "### Argos upload skipped: ARGOS_TOKEN not set" >> $GITHUB_STEP_SUMMARY
+            exit 0
+          fi
+
+          echo "Uploading screenshots to Argos"
+          echo "Argos branch: ${ARGOS_BRANCH:-unknown}"
+          echo "Argos commit: ${ARGOS_COMMIT:-unknown}"
+
+          set -o pipefail
+          set +e
+          cmd=(pnpm dlx @argos-ci/cli upload --token "$ARGOS_TOKEN")
+          cmd+=(./screenshots/)
+          "${cmd[@]}" 2>&1 | tee argos-upload.log
+          status=${PIPESTATUS[0]}
+          set -e
+
+          if [ "$status" -ne 0 ]; then
+            echo "Argos upload failed with exit code $status"
+            tail -n 200 argos-upload.log || true
+            echo "### Argos upload failed (exit code $status)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            tail -n 200 argos-upload.log >> $GITHUB_STEP_SUMMARY || true
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          fi
+
+          exit 0
