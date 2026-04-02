@@ -28,11 +28,12 @@ For full release process details, see the _Release Flow_ section in the [Contrib
 
 ## Build Provenance
 
-Every stable release generates two kinds of provenance attestations for all `.zip` artifacts, signed by the GitHub Actions build environment, so anyone can verify the origin of a downloaded file.
+Every stable release and nightly prerelease generates GitHub Artifact Attestations for all `.zip` artifacts, signed by the GitHub Actions build environment so anyone can verify the origin of a downloaded file.
 
-| Type                    | Location                              | Verification tool       |
-| ----------------------- | ------------------------------------- | ----------------------- |
-| GitHub Attestation (L2) | GitHub Attestation API                | `gh attestation verify` |
-| SLSA Provenance (L3)    | Release asset `multiple.intoto.jsonl` | `slsa-verifier`         |
+The build pipeline follows GitHub's recommended reusable-workflow pattern: build, artifact upload, and attestation issuance all happen inside the reusable build workflow. This corresponds to GitHub's SLSA v1 Build Level 3 path.
+
+| Type                                                     | Location               | Verification tool       |
+| -------------------------------------------------------- | ---------------------- | ----------------------- |
+| GitHub Artifact Attestation (GitHub-recommended L3 path) | GitHub Attestation API | `gh attestation verify` |
 
 See [Security Protection](/en/tutorial/security#verify-theme-package-integrity) for verification instructions.

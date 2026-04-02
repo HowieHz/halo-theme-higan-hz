@@ -2,14 +2,14 @@
 
 ## Description
 
-This component applies the selected global inline code style preset to `:not(pre) > code`.
+This component applies the selected global inline code style preset to inline code.
 
 Currently supported presets:
 
 - `soft-fill`: soft background highlight
 - `pill`: theme-tinted rounded pill
 
-It only affects inline code and does not change `pre code` multi-line code blocks. The `default` preset keeps the global base `code` style and emits no extra CSS. Non-default presets override the base `code` style from `@layer base`.
+It only affects inline code and does not change multi-line code blocks. The `default` preset keeps the current base style and emits no extra CSS. Non-default presets provide alternative inline-code highlight styles.
 
 ## Usage
 

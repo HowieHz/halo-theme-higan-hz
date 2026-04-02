@@ -11,9 +11,10 @@ concurrency:
 
 jobs:
   prepare:
-    name: Prepare Stable Release
+    name: Prepare Stable Release Metadata
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'release')
     runs-on: ubuntu-latest
+    # This job updates release files and pushes the release commit back to the repository.
     permissions:
       contents: write
     outputs:
@@ -23,14 +24,14 @@ jobs:
       release_date: ${{ steps.meta.outputs.release_date }}
       release_commit_sha: ${{ steps.push.outputs.release_commit_sha }}
     steps:
-      - name: Checkout
+      - name: Checkout Source
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
         with:
           fetch-depth: 0
           ref: main
           token: ${{ secrets.PR_WORKFLOW_TOKEN || github.token }}
 
-      - name: Resolve release metadata
+      - name: Resolve Stable Release Metadata
         id: meta
         run: |
           RELEASE_VERSION=$(node -e "const fs=require('node:fs'); const pkg=JSON.parse(fs.readFileSync('package.json','utf8')); if(!pkg.version){console.error('Missing version field in package.json'); process.exit(1);} process.stdout.write(String(pkg.version).trim());")
@@ -62,79 +63,53 @@ jobs:
           echo "previous_version=${PREVIOUS_TAG#v}" >> "$GITHUB_OUTPUT"
           echo "release_date=$RELEASE_DATE" >> "$GITHUB_OUTPUT"
 
-      - name: Update version files
+      - name: Update Theme Version Files
         run: node .github/scripts/update-theme-version.js "${{ steps.meta.outputs.release_version }}"
 
-      - name: Promote changelog entry
+      - name: Promote Changelog Entry
         run: node .github/scripts/prepare-changelog-release.js "${{ steps.meta.outputs.release_version }}" "${{ steps.meta.outputs.previous_version }}" "${{ steps.meta.outputs.release_date }}"
 
-      - name: Commit release changes
+      - name: Commit Release Metadata
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add package.json theme.yaml i18n-settings/theme.en.yaml docs/maintenance/changelog.md docs/en/maintenance/changelog.md
           git commit -m "chore(release): ${{ steps.meta.outputs.release_version }}"
 
-      - name: Push release commit
+      - name: Push Release Commit
         id: push
         run: |
           git push origin HEAD:main
           echo "release_commit_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
   build:
-    name: Build Release Assets
+    name: Build Stable Release Assets
     needs: prepare
+    # Build and attestation permissions stay with the reusable build workflow caller.
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
     uses: ./.github/workflows/reusable-build-theme.yml
     with:
       theme_ref: ${{ needs.prepare.outputs.release_commit_sha }}
       artifact_name: release-theme-artifact
 
-  hash:
-    name: Generate artifact hashes
-    needs: build
-    runs-on: ubuntu-latest
-    outputs:
-      hashes: ${{ steps.hash.outputs.hashes }}
-    steps:
-      - name: Download release assets
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # https://github.com/actions/download-artifact/releases/tag/v8.0.1
-        with:
-          name: release-theme-artifact
-          path: dist/theme-packages
-
-      - name: Generate hashes
-        id: hash
-        run: |
-          cd dist/theme-packages
-          echo "hashes=$(sha256sum *.zip | base64 -w0)" >> "$GITHUB_OUTPUT"
-
   github-release:
-    name: Create GitHub Release
-    needs: [prepare, hash]
+    name: Publish Stable Release
+    needs: [prepare, build]
     runs-on: ubuntu-latest
+    # Release publication needs repository write access, but no attestation privileges.
     permissions:
-      id-token: write
       contents: write
-      attestations: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
-        with:
-          ref: ${{ needs.prepare.outputs.release_commit_sha }}
-
-      - name: Download release assets
+      - name: Download Stable Release Assets
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # https://github.com/actions/download-artifact/releases/tag/v8.0.1
         with:
           name: release-theme-artifact
           path: dist/theme-packages
 
-      - name: Attest build provenance
-        id: attest
-        uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26 # https://github.com/actions/attest/releases/tag/v4.1.0
-        with:
-          subject-path: dist/theme-packages/*.zip
-
-      - name: Create release
+      - name: Publish GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ needs.prepare.outputs.release_tag }}
@@ -155,7 +130,7 @@ jobs:
             --notes-file .github/templates/release-note-template.md \
             --target "$RELEASE_SHA"
 
-      - name: Dispatch stable release follow-up workflows
+      - name: Dispatch Stable Release Follow-Up Workflows
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ needs.prepare.outputs.release_tag }}
@@ -174,45 +149,32 @@ jobs:
             -F client_payload[deploy_docs]=true \
             -F client_payload[create_pr]=true
 
-  provenance:
-    name: Generate SLSA L3 Provenance
-    needs: [prepare, hash, github-release]
-    permissions:
-      actions: read
-      id-token: write
-      contents: write
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@4d014fae4dbd39eb09e8d40348b73db095e6ba9a # https://github.com/slsa-framework/slsa-github-generator/releases/tag/v2.1.0
-    with:
-      base64-subjects: "${{ needs.hash.outputs.hashes }}"
-      provenance-name: "multiple.intoto.jsonl"
-      upload-assets: true
-      upload-tag-name: "${{ needs.prepare.outputs.release_tag }}"
-
   app-store-release:
-    name: Sync Release to Halo App Store
-    needs: [prepare, github-release]
+    name: Sync Stable Release to Halo App Store
+    needs: [prepare, build, github-release]
     runs-on: ubuntu-latest
+    # App Store sync only downloads published assets and reads repository content.
     permissions:
       contents: read
     steps:
-      - name: Checkout
+      - name: Checkout Source
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
         with:
           ref: ${{ needs.prepare.outputs.release_commit_sha }}
 
-      - name: Download release assets
+      - name: Download Stable Release Assets
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # https://github.com/actions/download-artifact/releases/tag/v8.0.1
         with:
           name: release-theme-artifact
           path: dist/theme-packages
 
-      - name: Setup Node.js and pnpm
+      - name: Set Up Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
 
-      - name: Install js-yaml
+      - name: Install Release Utility Dependency
         run: pnpm add -w -D js-yaml
 
-      - name: Sync to Halo App Store
+      - name: Run Halo App Store Sync
         env:
           ASSETS_DIR: dist/theme-packages
           GITHUB_RELEASE_TAG: ${{ needs.prepare.outputs.release_tag }}

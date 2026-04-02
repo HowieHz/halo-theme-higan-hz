@@ -23,13 +23,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🚀 Features
+
+- Added the ["Dark content text style preset"](/en/guide/theme-configuration#dark-content-text-style-preset) setting (Overall Styles -> Dark content text style preset). The `soft-gray` preset makes body text feel softer in dark mode and reduces the bright, heavy look of pure white text.
+
 ### 🔧 Code Refactoring
 
-- Moved the ["Inline code style preset"](/en/guide/theme-configuration#inline-code-style-preset) setting from "Post Page Style" to "Overall Styles" and now injects its style component from the layout `head`. Non-default presets override the base `code` style through `:not(pre) > code` inside `@layer base`.
+- Moved the ["Inline code style preset"](/en/guide/theme-configuration#inline-code-style-preset) setting from "Post Page Style" to "Overall Styles" so it is managed as a global style option.
 
 ### 📄 Documentation
 
-- Updated the "Inline code style preset" docs to reflect the new setting location, template variable, and layout-level injection approach.
+- Updated the "Inline code style preset" and "Dark content text style preset" docs with clearer descriptions of their locations, scope, and visible effects.
+- Updated the release and security docs to describe GitHub's reusable-workflow + artifact attestation flow (the SLSA v1 Build Level 3 path) and removed the `multiple.intoto.jsonl` / `slsa-verifier` instructions.
+
+### 🛠️ Miscellaneous Chores
+
+- Removed the extra `slsa-github-generator`-based provenance release flow and now performs artifact upload and GitHub Artifact Attestation issuance inside the reusable build workflow.
 
 ## [1.61.0] - 2026-03-30
 

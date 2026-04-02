@@ -1449,9 +1449,56 @@ Available presets:
 - `pill`
   - Theme-tinted pill style
 
-This setting works by injecting a style component from `head` into `@layer base`, using the `:not(pre) > code` selector to override the base `code` style without affecting multi-line code blocks.
+This setting controls the global visual style of inline code without affecting multi-line code blocks.
 
-The `default` preset keeps the dotted border from the global base `code` style, while other presets only override inline code presentation.
+The `default` preset keeps the current dotted-border look, while other presets provide alternative highlight styles for inline code.
+
+:::
+
+### Dark Content Text Style Preset
+
+::: info 🎯 Purpose
+
+Selects the text style preset used for dark-mode content text.
+
+:::
+::: info 📂 Configuration Item Location
+
+Overall Styles -> Dark content text style preset
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Dark%20content%20text%20style%20preset" />
+
+:::
+::: info 🏷️ Type
+
+String
+
+:::
+::: info ⭐ Default Value
+
+`default`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.styles?.dark_content_text_style_preset`
+
+:::
+::: info ℹ️ Additional Information
+
+Available presets:
+
+- `default`
+  - Leaves content text unchanged
+- `soft-gray`
+  - Makes body text feel softer in dark mode
+
+This setting applies in dark mode. If the site follows the system color scheme, it also applies automatically when the system switches to dark appearance.
+
+It currently adjusts only regular body text inside article content to make reading feel softer, without affecting headings, blockquotes, links, or code blocks.
 
 :::
 

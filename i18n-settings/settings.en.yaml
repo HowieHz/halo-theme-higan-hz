@@ -745,6 +745,16 @@ spec:
             - label: "Preset: Theme Pill"
               value: "pill"
           help: Select the global inline code style preset. The default keeps the dotted border from the base `code` style, while other presets replace it with alternative highlight styles without affecting multi-line code blocks.
+        - $formkit: select
+          name: dark_content_text_style_preset
+          label: Dark content text style preset
+          value: "default"
+          options:
+            - label: "Default: No Adjustment"
+              value: "default"
+            - label: "Preset: Soft Gray"
+              value: "soft-gray"
+          help: Select the text style preset used for dark-mode content text. The default leaves it unchanged; other presets make content text feel softer in dark mode to reduce the bright, heavy look of pure white text.
         - $formkit: switch
           name: is_max_width_settings
           label: Custom content area maximum width
