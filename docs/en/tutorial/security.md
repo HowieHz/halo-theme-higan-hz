@@ -86,23 +86,28 @@ The release pipeline follows GitHub's recommended reusable-workflow pattern, whe
 
 Requires [GitHub CLI](https://cli.github.com/).
 
+For stricter verification aligned with GitHub's recommended SLSA v1 Build Level 3 path, specify the reusable signing workflow `reusable-build-theme.yml`:
+
 ::: code-group
 
 ```bash
 gh attestation verify howiehz-higan-en.zip \
-  --repo HowieHz/halo-theme-higan-hz
+  --repo HowieHz/halo-theme-higan-hz \
+  --signer-workflow HowieHz/halo-theme-higan-hz/.github/workflows/reusable-build-theme.yml
 ```
 
 ```powershell
 gh attestation verify howiehz-higan-en.zip `
-  --repo HowieHz/halo-theme-higan-hz
+  --repo HowieHz/halo-theme-higan-hz `
+  --signer-workflow HowieHz/halo-theme-higan-hz/.github/workflows/reusable-build-theme.yml
 ```
 
 ```cmd
 gh attestation verify howiehz-higan-en.zip ^
-  --repo HowieHz/halo-theme-higan-hz
+  --repo HowieHz/halo-theme-higan-hz ^
+  --signer-workflow HowieHz/halo-theme-higan-hz/.github/workflows/reusable-build-theme.yml
 ```
 
 :::
 
-A successful verification confirms the file is intact and its origin is trusted.
+A successful verification confirms the file is intact and its origin is trusted. If you also specify `--signer-workflow`, it confirms that the artifact was signed by the expected reusable build workflow.

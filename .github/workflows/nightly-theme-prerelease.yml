@@ -22,8 +22,9 @@ concurrency:
 
 jobs:
   prerelease:
-    name: Prepare Nightly Prerelease
+    name: Prepare Nightly Release Metadata
     runs-on: ubuntu-latest
+    # This job only reads repository state and computes release metadata.
     permissions:
       contents: read
     outputs:
@@ -32,13 +33,13 @@ jobs:
       prerelease_version: ${{ steps.version.outputs.prerelease_version }}
       prerelease_tag: ${{ steps.version.outputs.prerelease_tag }}
     steps:
-      - name: Checkout
+      - name: Checkout Source
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
         with:
           fetch-depth: 0
           ref: main
 
-      - name: Resolve app store sync policy
+      - name: Resolve App Store Sync Policy
         id: sync-policy
         env:
           EVENT_NAME: ${{ github.event_name }}
@@ -50,7 +51,7 @@ jobs:
           fi
           echo "should_sync_app_store=$SHOULD_SYNC_APP_STORE" >> "$GITHUB_OUTPUT"
 
-      - name: Check main branch changes since yesterday
+      - name: Evaluate Nightly Release Eligibility
         id: changes
         env:
           FORCE: ${{ github.event.inputs.force || 'false' }}
@@ -76,13 +77,13 @@ jobs:
             echo "should_release=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Stop when no nightly release is needed
+      - name: Skip When No Nightly Release Is Required
         if: steps.changes.outputs.should_release != 'true'
         run: |
           echo "No commits on main during the previous Asia/Shanghai day window; skipping nightly prerelease."
           exit 0
 
-      - name: Prepare prerelease version
+      - name: Generate Nightly Prerelease Version
         if: steps.changes.outputs.should_release == 'true'
         id: version
         run: |
@@ -101,9 +102,10 @@ jobs:
           echo "prerelease_tag=$PRERELEASE_TAG" >> "$GITHUB_OUTPUT"
 
   build:
-    name: Build Nightly Assets
+    name: Build Nightly Release Assets
     needs: prerelease
     if: needs.prerelease.outputs.should_release == 'true'
+    # Build and attestation permissions stay with the reusable build workflow caller.
     permissions:
       contents: read
       id-token: write
@@ -115,20 +117,21 @@ jobs:
       artifact_name: nightly-theme-artifact
 
   github-release:
-    name: Create Nightly Prerelease
+    name: Publish Nightly Prerelease
     needs: [prerelease, build]
     if: needs.prerelease.outputs.should_release == 'true'
     runs-on: ubuntu-latest
+    # Release publication needs repository write access, but no attestation privileges.
     permissions:
       contents: write
     steps:
-      - name: Download theme packages
+      - name: Download Nightly Release Assets
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # https://github.com/actions/download-artifact/releases/tag/v8.0.1
         with:
           name: nightly-theme-artifact
           path: dist/theme-packages
 
-      - name: Create prerelease
+      - name: Publish GitHub Prerelease
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PRERELEASE_TAG: ${{ needs.prerelease.outputs.prerelease_tag }}
@@ -150,31 +153,32 @@ jobs:
             --target "$GITHUB_SHA"
 
   app-store-sync:
-    name: Sync Prerelease to Halo App Store
+    name: Sync Nightly Prerelease to Halo App Store
     needs: [prerelease, build, github-release]
     if: needs.prerelease.outputs.should_release == 'true' && needs.prerelease.outputs.should_sync_app_store == 'true'
     runs-on: ubuntu-latest
+    # App Store sync only downloads published assets and reads repository content.
     permissions:
       contents: read
     steps:
-      - name: Checkout
+      - name: Checkout Source
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
         with:
           ref: main
 
-      - name: Download theme packages
+      - name: Download Nightly Release Assets
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # https://github.com/actions/download-artifact/releases/tag/v8.0.1
         with:
           name: nightly-theme-artifact
           path: dist/theme-packages
 
-      - name: Setup Node.js and pnpm
+      - name: Set Up Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
 
-      - name: Install js-yaml
+      - name: Install Release Utility Dependency
         run: pnpm add -w -D js-yaml
 
-      - name: Sync prerelease to Halo App Store
+      - name: Run Halo App Store Sync
         env:
           ASSETS_DIR: dist/theme-packages
           GITHUB_RELEASE_TAG: ${{ needs.prerelease.outputs.prerelease_tag }}

@@ -26,14 +26,15 @@ on:
 
 jobs:
   build:
-    name: Build and Upload Theme
+    name: Build, Upload, and Attest Theme Assets
     runs-on: ubuntu-latest
+    # This reusable workflow is the only place that needs attestation privileges.
     permissions:
       contents: read
       id-token: write
       attestations: write
     steps:
-      - name: Add swap space
+      - name: Configure Build Swap Space
         run: |
           SWAP_FILE="/tmp/github-actions-swap-$$"
           MEMORY_LIMIT_GB=12
@@ -45,39 +46,39 @@ jobs:
           echo "Added ${MEMORY_LIMIT_GB}GB swap at $SWAP_FILE"
           free -h
 
-      - name: Make Build Directory
+      - name: Prepare Build Directories
         run: |
           mkdir -p dist/theme-packages
 
-      - name: Checkout
+      - name: Checkout Source
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
         with:
           ref: ${{ inputs.theme_ref }}
 
-      - name: Setup Node.js and pnpm
+      - name: Set Up Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
 
-      - name: Install dependencies
+      - name: Install Workspace Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Override theme version
+      - name: Apply Theme Version Override
         if: inputs.version_override != ''
         run: node .github/scripts/update-theme-version.js "${{ inputs.version_override }}"
 
-      - name: Build project
+      - name: Build Theme Project
         run: pnpm build
 
-      - name: Build theme archives (CN and EN)
+      - name: Package Theme Archives
         shell: bash
         run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$GITHUB_WORKSPACE/dist/theme-packages"
 
-      - name: Upload Theme Build Target
+      - name: Upload Build Artifacts
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # https://github.com/actions/upload-artifact/releases/tag/v7.0.0
         with:
           name: ${{ inputs.artifact_name }}
           path: dist/theme-packages/*
 
-      - name: Attest build provenance
+      - name: Generate Build Attestations
         uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26 # https://github.com/actions/attest/releases/tag/v4.1.0
         with:
           subject-path: dist/theme-packages/*.zip
