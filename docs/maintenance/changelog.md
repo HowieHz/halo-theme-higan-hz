@@ -23,13 +23,22 @@
 
 ## [Unreleased]
 
+### 🚀 新功能
+
+- 新增[“深色正文样式预设”](/guide/theme-configuration#深色正文样式预设)配置项（总体样式 -> 深色正文样式预设），提供 `soft-gray` 预设，可让深色模式下的正文文字观感更柔和，减轻纯白文字带来的偏亮、偏粗观感。
+
 ### 🔧 代码重构
 
-- 将[“行内代码样式预设”](/guide/theme-configuration#行内代码样式预设)从“文章页样式”调整为“总体样式”，并改为在布局层的 `head` 中统一注入对应样式组件；非默认预设通过 `@layer base` 下的 `:not(pre) > code` 覆盖基础 `code` 样式。
+- 将[“行内代码样式预设”](/guide/theme-configuration#行内代码样式预设)从“文章页样式”调整为“总体样式”，统一作为全局样式配置项管理。
 
 ### 📄 文档
 
-- 更新“行内代码样式预设”文档，说明新的配置位置、模板变量与布局层注入方式。
+- 更新“行内代码样式预设”与“深色正文样式预设”文档，补充配置位置、适用范围与效果说明。
+- 更新发布与安全文档，改为说明 GitHub 推荐的 reusable workflow + artifact attestation（SLSA v1 Build Level 3 路线），并移除对 `multiple.intoto.jsonl` / `slsa-verifier` 的说明。
+
+### 🛠️ 杂项维护
+
+- 移除基于 `slsa-github-generator` 的额外 SLSA provenance 发布流程，改为在复用构建工作流内统一完成构建产物上传与 GitHub Artifact Attestation 签发。
 
 ## [1.61.0] - 2026-03-30
 

@@ -28,11 +28,12 @@
 
 ## 构建溯源
 
-每次正式版发布时，CI 流程会为所有 `.zip` 产物生成两类溯源证明，证明文件由 GitHub Actions 构建环境签发，用于验证下载文件的真实来源。
+每次正式版与测试版发布时，CI 流程会为所有 `.zip` 产物生成 GitHub Artifact Attestation，由 GitHub Actions 构建环境签发，用于验证下载文件的真实来源。
 
-| 类型                     | 文件 / 位置                          | 验证工具                |
-| ------------------------ | ------------------------------------ | ----------------------- |
-| GitHub Attestation（L2） | 存储于 GitHub Attestation API        | `gh attestation verify` |
-| SLSA Provenance（L3）    | Release 附件 `multiple.intoto.jsonl` | `slsa-verifier`         |
+当前构建流程采用 GitHub 推荐的 reusable workflow 模式：构建、产物上传与 attestation 签发均在复用构建工作流内部完成，对应 GitHub 文档中的 SLSA v1 Build Level 3 路线。
+
+| 类型                                               | 文件 / 位置            | 验证工具                |
+| -------------------------------------------------- | ---------------------- | ----------------------- |
+| GitHub Artifact Attestation（GitHub 推荐 L3 路线） | GitHub Attestation API | `gh attestation verify` |
 
 验证方法请参阅[安全防护](/tutorial/security#验证主题包完整性)。

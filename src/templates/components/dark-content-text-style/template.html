@@ -1,0 +1,28 @@
+<head th:remove="tag">
+  <!--/*/
+  <style
+    th:inline="css"
+    th:with="darkContentTextStyle = ${theme.config?.styles?.dark_content_text_style_preset}"
+    th:if="${!#strings.equals(darkContentTextStyle, 'default')}"
+  >
+    @layer base {
+      html[data-color-scheme="dark"] article .content > :is(p, ul, ol, dl, table) {
+        /*[# th:if="${#strings.equals(darkContentTextStyle, 'soft-gray')}"]*/
+        color: color-mix(in oklab, var(--color-base-content) 85%, var(--color-base-100));
+        /*[/]*/
+      }
+
+      @media (prefers-color-scheme: dark) {
+        html[data-color-scheme="auto"] article .content > :is(p, ul, ol, dl, table) {
+          /*[# th:if="${#strings.equals(darkContentTextStyle, 'soft-gray')}"]*/
+          color: color-mix(in oklab, var(--color-base-content) 85%, var(--color-base-100));
+          /*[/]*/
+        }
+      }
+    }
+  </style>
+  /*/-->
+</head>
+<!--/*-->
+<body th:remove="tag"></body>
+<!--*/-->

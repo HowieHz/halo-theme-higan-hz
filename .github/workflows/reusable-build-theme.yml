@@ -8,6 +8,11 @@ on:
         type: string
         default: refs/heads/main
         description: "Git ref/sha to checkout for building"
+      version_override:
+        required: false
+        type: string
+        default: ""
+        description: "Optional theme version override applied before build"
       artifact_name:
         required: false
         type: string
@@ -23,6 +28,10 @@ jobs:
   build:
     name: Build and Upload Theme
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
     steps:
       - name: Add swap space
         run: |
@@ -38,7 +47,7 @@ jobs:
 
       - name: Make Build Directory
         run: |
-          mkdir -p ~/builds/tmp-src ~/builds/target
+          mkdir -p dist/theme-packages
 
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
@@ -51,15 +60,24 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Override theme version
+        if: inputs.version_override != ''
+        run: node .github/scripts/update-theme-version.js "${{ inputs.version_override }}"
+
       - name: Build project
         run: pnpm build
 
       - name: Build theme archives (CN and EN)
         shell: bash
-        run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$HOME/builds/target"
+        run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$GITHUB_WORKSPACE/dist/theme-packages"
 
       - name: Upload Theme Build Target
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # https://github.com/actions/upload-artifact/releases/tag/v7.0.0
         with:
           name: ${{ inputs.artifact_name }}
-          path: ~/builds/target/*
+          path: dist/theme-packages/*
+
+      - name: Attest build provenance
+        uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26 # https://github.com/actions/attest/releases/tag/v4.1.0
+        with:
+          subject-path: dist/theme-packages/*.zip

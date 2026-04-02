@@ -78,9 +78,11 @@ You can generate SRI metadata using online tools (for example, [srihash.org](htt
 
 ## Verify Theme Package Integrity
 
-Every stable release generates two kinds of provenance attestations for all `.zip` artifacts, allowing anyone to confirm that a downloaded file was built by this repository's CI pipeline and has not been tampered with in transit.
+Every stable release and nightly prerelease generates GitHub Artifact Attestations for all `.zip` artifacts, allowing anyone to confirm that a downloaded file was built by this repository's GitHub Actions pipeline and has not been tampered with in transit.
 
-### Option 1: GitHub Attestation (L2)
+The release pipeline follows GitHub's recommended reusable-workflow pattern, where build, artifact upload, and attestation issuance all happen inside the reusable build workflow. This corresponds to GitHub's SLSA v1 Build Level 3 path.
+
+### Verification: GitHub Attestation
 
 Requires [GitHub CLI](https://cli.github.com/).
 
@@ -103,30 +105,4 @@ gh attestation verify howiehz-higan-en.zip ^
 
 :::
 
-### Option 2: SLSA Provenance (L3)
-
-Requires [slsa-verifier](https://github.com/slsa-framework/slsa-verifier). Download `multiple.intoto.jsonl` and the `.zip` file from the [Releases page](https://github.com/HowieHz/halo-theme-higan-hz/releases), place them in the same directory, then run:
-
-::: code-group
-
-```bash
-slsa-verifier verify-artifact howiehz-higan-en.zip \
-  --provenance-path multiple.intoto.jsonl \
-  --source-uri github.com/HowieHz/halo-theme-higan-hz
-```
-
-```powershell
-slsa-verifier verify-artifact howiehz-higan-en.zip `
-  --provenance-path multiple.intoto.jsonl `
-  --source-uri github.com/HowieHz/halo-theme-higan-hz
-```
-
-```cmd
-slsa-verifier verify-artifact howiehz-higan-en.zip ^
-  --provenance-path multiple.intoto.jsonl ^
-  --source-uri github.com/HowieHz/halo-theme-higan-hz
-```
-
-:::
-
-Either option is sufficient. A successful verification confirms the file is intact and its origin is trusted.
+A successful verification confirms the file is intact and its origin is trusted.
