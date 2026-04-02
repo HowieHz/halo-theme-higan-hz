@@ -20,7 +20,6 @@ jobs:
       should_run: ${{ steps.check.outputs.should_run }}
       pr_number: ${{ steps.pr.outputs.number }}
       pr_head_sha: ${{ steps.pr.outputs.head_sha }}
-      pr_head_ref: ${{ steps.pr.outputs.head_ref }}
       comment_id: ${{ github.event.comment.id }}
       eyes_reaction_id: ${{ steps.add-reaction.outputs.reaction_id }}
 
@@ -82,16 +81,16 @@ jobs:
 
             core.setOutput('number', pr.number);
             core.setOutput('head_sha', pr.head.sha);
-            core.setOutput('head_ref', pr.head.ref);
 
             console.log(`PR #${pr.number}`);
             console.log(`Head SHA: ${pr.head.sha}`);
-            console.log(`Head Ref: ${pr.head.ref}`);
 
   visual-check:
     name: Visual Regression
     needs: check-trigger
     if: needs.check-trigger.outputs.should_run == 'true'
+    permissions:
+      contents: read
     uses: ./.github/workflows/reusable-site-audit.yml
     with:
       theme_ref: ${{ needs.check-trigger.outputs.pr_head_sha }}
