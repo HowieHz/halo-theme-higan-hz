@@ -23,18 +23,21 @@ jobs:
       pr_head_sha: ${{ steps.pr.outputs.head_sha }}
       pr_head_ref: ${{ steps.pr.outputs.head_ref }}
       comment_id: ${{ github.event.comment.id }}
+      eyes_reaction_id: ${{ steps.add-reaction.outputs.reaction_id }}
 
     steps:
       - name: Add reaction to comment
+        id: add-reaction
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
         with:
           script: |
-            await github.rest.reactions.createForIssueComment({
+            const reaction = await github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: context.payload.comment.id,
               content: 'eyes'
             });
+            core.setOutput('reaction_id', reaction.data.id);
 
       - name: Check if commenter has write access
         id: check
@@ -143,7 +146,7 @@ jobs:
             ref: ${{ needs.get-latest-release.outputs.release_sha }}
       fail-fast: false
 
-    uses: ./.github/workflows/reusable-audit.yml
+    uses: ./.github/workflows/reusable-site-audit.yml
     with:
       theme_ref: ${{ matrix.ref }}
       ref_name: ${{ matrix.ref_name }}
@@ -289,3 +292,31 @@ jobs:
               issue_number: ${{ needs.check-trigger.outputs.pr_number }},
               body: '❌ Page resource size diff check failed. See the [workflow run logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.'
             });
+
+  cleanup-reaction:
+    name: Remove In-Progress Reaction
+    needs: [check-trigger, get-latest-release, audit, compare-and-comment, handle-failure]
+    if: |
+      always() &&
+      needs.check-trigger.outputs.eyes_reaction_id != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove eyes reaction
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
+        with:
+          script: |
+            try {
+              await github.rest.reactions.deleteForIssueComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: ${{ needs.check-trigger.outputs.comment_id }},
+                reaction_id: ${{ needs.check-trigger.outputs.eyes_reaction_id }}
+              });
+              console.log('✓ Removed eyes reaction');
+            } catch (error) {
+              if (error.status === 404) {
+                console.log('ℹ️ Eyes reaction already removed');
+              } else {
+                throw error;
+              }
+            }

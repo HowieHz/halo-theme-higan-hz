@@ -19,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
         with:
-          ref: main
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm

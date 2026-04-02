@@ -10,6 +10,11 @@ on:
         required: true
         type: boolean
         default: false
+      sync_to_halo_store:
+        description: Sync the created nightly prerelease to Halo App Store
+        required: true
+        type: boolean
+        default: false
 
 concurrency:
   group: nightly-theme-prerelease
@@ -25,6 +30,7 @@ jobs:
       attestations: write
     outputs:
       should_release: ${{ steps.changes.outputs.should_release }}
+      should_sync_app_store: ${{ steps.sync-policy.outputs.should_sync_app_store }}
       prerelease_tag: ${{ steps.version.outputs.prerelease_tag }}
       hashes: ${{ steps.hash.outputs.hashes }}
     steps:
@@ -33,6 +39,18 @@ jobs:
         with:
           fetch-depth: 0
           ref: main
+
+      - name: Resolve app store sync policy
+        id: sync-policy
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          SYNC_TO_HALO_STORE: ${{ github.event.inputs.sync_to_halo_store || 'false' }}
+        run: |
+          SHOULD_SYNC_APP_STORE=false
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "$SYNC_TO_HALO_STORE" = "true" ]; then
+            SHOULD_SYNC_APP_STORE=true
+          fi
+          echo "should_sync_app_store=$SHOULD_SYNC_APP_STORE" >> "$GITHUB_OUTPUT"
 
       - name: Check main branch changes since yesterday
         id: changes
@@ -171,7 +189,7 @@ jobs:
   app-store-sync:
     name: Sync Prerelease to Halo App Store
     needs: prerelease
-    if: needs.prerelease.outputs.should_release == 'true'
+    if: needs.prerelease.outputs.should_release == 'true' && needs.prerelease.outputs.should_sync_app_store == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read

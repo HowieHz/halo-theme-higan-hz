@@ -163,7 +163,7 @@ jobs:
       fail-fast: false # Even if a version fails, continue testing other versions
 
     # Call the reusable workflow at the job level (not as a step).
-    uses: ./.github/workflows/reusable-audit.yml
+    uses: ./.github/workflows/reusable-site-audit.yml
     with:
       theme_ref: ${{ matrix.version }}
       ref_name: ${{ matrix.version }}

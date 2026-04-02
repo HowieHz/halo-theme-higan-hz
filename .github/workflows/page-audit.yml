@@ -9,7 +9,7 @@ on:
 jobs:
   audit-current:
     name: Check Current Version
-    uses: ./.github/workflows/reusable-audit.yml
+    uses: ./.github/workflows/reusable-site-audit.yml
     with:
       theme_ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
       ref_name: current
@@ -22,7 +22,7 @@ jobs:
     # Use presence of `github.event.pull_request` so this works for both
     # `pull_request` and `pull_request_target` triggers.
     if: github.event.pull_request != null
-    uses: ./.github/workflows/reusable-audit.yml
+    uses: ./.github/workflows/reusable-site-audit.yml
     with:
       theme_ref: ${{ github.event.pull_request.base.sha }}
       ref_name: base

@@ -591,10 +591,17 @@ jobs:
 
             echo "📦 [Playwright] Install Playwright"
             step_start=$(date +%s%3N); echo "STEP_START:check-playwright:${step_start}" >> ~/logs/playwright.timing
-            if ! pnpm exec -- playwright --version >/dev/null 2>&1; then
-              pnpm add -w -D playwright @argos-ci/playwright || echo "⚠️  Playwright install failed, continuing"
+            MISSING_PACKAGES=()
+            if ! node --input-type=module -e "await import('playwright')" >/dev/null 2>&1; then
+              MISSING_PACKAGES+=("playwright")
+            fi
+            if ! node --input-type=module -e "await import('@argos-ci/playwright')" >/dev/null 2>&1; then
+              MISSING_PACKAGES+=("@argos-ci/playwright")
+            fi
+            if [ ${#MISSING_PACKAGES[@]} -gt 0 ]; then
+              pnpm add -w -D "${MISSING_PACKAGES[@]}" || echo "⚠️  Playwright install failed, continuing"
             else
-              echo "✓ playwright already available via pnpm exec"
+              echo "✓ playwright and @argos-ci/playwright already available"
             fi
             step_end=$(date +%s%3N); echo "STEP_END:check-playwright:${step_end}" >> ~/logs/playwright.timing
 
@@ -763,10 +770,17 @@ jobs:
 
           echo "📦 [Playwright] Install Playwright and Argos"
           step_start=$(date +%s%3N); echo "STEP_START:check-playwright:${step_start}" >> ~/logs/playwright.timing
-          if ! pnpm exec -- playwright --version >/dev/null 2>&1; then
-            pnpm add -w -D playwright @argos-ci/playwright || echo "⚠️  Playwright install failed, continuing"
+          MISSING_PACKAGES=()
+          if ! node --input-type=module -e "await import('playwright')" >/dev/null 2>&1; then
+            MISSING_PACKAGES+=("playwright")
+          fi
+          if ! node --input-type=module -e "await import('@argos-ci/playwright')" >/dev/null 2>&1; then
+            MISSING_PACKAGES+=("@argos-ci/playwright")
+          fi
+          if [ ${#MISSING_PACKAGES[@]} -gt 0 ]; then
+            pnpm add -w -D "${MISSING_PACKAGES[@]}" || echo "⚠️  Playwright install failed, continuing"
           else
-            echo "✓ playwright already available via pnpm exec"
+            echo "✓ playwright and @argos-ci/playwright already available"
           fi
           step_end=$(date +%s%3N); echo "STEP_END:check-playwright:${step_end}" >> ~/logs/playwright.timing
 
