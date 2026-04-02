@@ -184,21 +184,21 @@ After merge, the bot automatically:
    - Sync to the Halo App Store and keep `howiehz-higan-cn.zip` first in the release asset list so Halo CMS prefers the Simplified Chinese package during update installs.
 7. After the GitHub Release is published, dispatches the follow-up event that triggers `sync-page-audit-results.yml`, which creates the page-size audit PR. That PR includes the `deploy-docs` label and deploys docs automatically after merge.
 
-### Nightly Prerelease Procedure
+### Nightly Pre-release Procedure
 
-Nightly prereleases do not require manual version changes or a manually pushed branch.
+Nightly Pre-releases do not require manual version changes or a manually pushed branch.
 
 1. `nightly-theme-prerelease.yml` runs automatically every day at 00:00 Asia/Shanghai.
-2. A nightly prerelease is created only when all of the following are true:
+2. A Nightly Pre-release is created only when all of the following are true:
    - There are commits within the previous calendar-day window in Asia/Shanghai.
    - There are commits after the latest stable or pre-release tag.
    - Commits whose subject starts with `docs:` are excluded.
-3. The prerelease version rule is “current patch version + 1”, then append `-alpha.yyyyMMddHHmmssSSS`.
+3. The Nightly Pre-release version rule is “current patch version + 1”, then append `-alpha.yyyyMMddHHmmssSSS`.
 4. The workflow creates a temporary local branch in the runner, updates version fields, and builds assets without pushing that branch.
-5. Before publishing the GitHub prerelease or syncing the Halo App Store, the workflow verifies attestation for every nightly `.zip` artifact.
-6. After verification passes, the scheduled nightly run creates only the GitHub prerelease and does not sync to the Halo App Store by default.
+5. Before publishing the GitHub Pre-release or syncing the Halo App Store, the workflow verifies attestation for every nightly `.zip` artifact.
+6. After verification passes, the scheduled nightly run creates only the GitHub Pre-release and does not sync to the Halo App Store by default.
 
-To create a nightly prerelease manually, use `workflow_dispatch` and set the `sync_to_halo_store` input to control Halo App Store sync after verification passes; this input defaults to `false`.
+To create a Nightly Pre-release manually, use `workflow_dispatch` and set the `sync_to_halo_store` input to control Halo App Store sync after verification passes; this input defaults to `false`.
 
 ## Pull Request Conventions
 

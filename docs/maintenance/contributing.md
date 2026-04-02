@@ -195,10 +195,10 @@ PR 合并后，机器人会自动执行以下动作：
    - 会排除提交信息以 `docs:` 开头的自动提交。
 3. 测试版版本号规则为“当前版本的修订号 + 1，再加上 `-alpha.yyyyMMddHHmmssSSS`”。
 4. 工作流仅在运行环境内创建本地临时分支，完成版本号改写与构建产物；该分支不会推送到远端。
-5. 在发布 GitHub Pre-release 或同步 Halo 应用市场之前，工作流会先校验全部 nightly `.zip` 的 artifact attestation。
-6. 每日定时触发的 nightly 在验证通过后仅创建 GitHub Pre-release，默认不同步到 Halo 应用市场。
+5. 在发布 GitHub Pre-release 或同步 Halo 应用市场之前，工作流会先校验全部 nightly `.zip` 产物的 GitHub Artifact Attestation。
+6. 每日定时触发的测试版在验证通过后仅创建 GitHub Pre-release，默认不同步到 Halo 应用市场。
 
-如需手动创建 nightly，可通过 `workflow_dispatch` 触发，并使用 `sync_to_halo_store` 开关控制是否在验证通过后同步到 Halo 应用市场；该开关默认值为 `false`。
+如需手动创建测试版，可通过 `workflow_dispatch` 触发，并使用 `sync_to_halo_store` 开关控制是否在验证通过后同步到 Halo 应用市场；该开关默认值为 `false`。
 
 ## Pull Request 约定
 
