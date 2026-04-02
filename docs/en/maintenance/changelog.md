@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 📄 Documentation
+
+- Updated the release docs to clarify that attestation verification now runs before publishing and that GitHub Release publication and Halo App Store sync proceed in parallel after verification passes.
+
 ## [1.62.1] - 2026-04-02
 
 ### 🐛 Bug Fixes

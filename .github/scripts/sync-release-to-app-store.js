@@ -13,6 +13,9 @@ const {
   HALO_APP_ID,
   HALO_BACKEND_BASEURL = "https://www.halo.run",
   HALO_PAT,
+  RELEASE_NAME,
+  RELEASE_NOTES_FILE,
+  RELEASE_PRERELEASE,
 } = process.env;
 
 if (!ASSETS_DIR || !GITHUB_RELEASE_TAG || !GITHUB_REPOSITORY || !GITHUB_TOKEN || !HALO_PAT) {
@@ -125,6 +128,18 @@ const renderMarkdown = async (markdown) => {
   return response.text();
 };
 
+const resolveReleaseMetadata = async () => {
+  if (RELEASE_NAME && RELEASE_NOTES_FILE && RELEASE_PRERELEASE) {
+    return {
+      name: RELEASE_NAME,
+      body: fs.readFileSync(RELEASE_NOTES_FILE, "utf8"),
+      prerelease: RELEASE_PRERELEASE === "true",
+    };
+  }
+
+  return githubRequest(`/releases/tags/${GITHUB_RELEASE_TAG}`);
+};
+
 const uploadAssets = async (releaseName, assets) => {
   for (const asset of assets) {
     const assetPath = path.join(ASSETS_DIR, asset);
@@ -147,7 +162,7 @@ const main = async () => {
     throw new Error("Halo app id is missing. Set HALO_APP_ID or store.halo.run/app-id in theme.yaml.");
   }
 
-  const release = await githubRequest(`/releases/tags/${GITHUB_RELEASE_TAG}`);
+  const release = await resolveReleaseMetadata();
   const markdown = `${release.body || ""}`;
   const html = await renderMarkdown(markdown);
 

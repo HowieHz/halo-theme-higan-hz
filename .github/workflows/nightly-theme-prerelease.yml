@@ -118,7 +118,7 @@ jobs:
 
   github-release:
     name: Publish Nightly Prerelease
-    needs: [prerelease, build]
+    needs: [prerelease, build, verify-attestations]
     if: needs.prerelease.outputs.should_release == 'true'
     runs-on: ubuntu-latest
     # Release publication needs repository write access, but no attestation privileges.
@@ -159,10 +159,10 @@ jobs:
 
   verify-attestations:
     name: Verify Nightly Release Attestations
-    needs: [prerelease, build, github-release]
+    needs: [prerelease, build]
     if: needs.prerelease.outputs.should_release == 'true'
     runs-on: ubuntu-latest
-    # This smoke check verifies that release artifacts were signed by the expected reusable workflow.
+    # This release gate verifies that build artifacts were signed by the expected reusable workflow.
     permissions:
       contents: read
     steps:
@@ -184,15 +184,23 @@ jobs:
             exit 1
           fi
 
+          pids=()
           for artifact in "${artifacts[@]}"; do
-            gh attestation verify "$artifact" \
-              --repo "${GITHUB_REPOSITORY}" \
-              --signer-workflow "${SIGNER_WORKFLOW}"
+            (
+              gh attestation verify "$artifact" \
+                --repo "${GITHUB_REPOSITORY}" \
+                --signer-workflow "${SIGNER_WORKFLOW}"
+            ) &
+            pids+=("$!")
+          done
+
+          for pid in "${pids[@]}"; do
+            wait "$pid"
           done
 
   app-store-sync:
     name: Sync Nightly Prerelease to Halo App Store
-    needs: [prerelease, build, github-release, verify-attestations]
+    needs: [prerelease, build, verify-attestations]
     if: needs.prerelease.outputs.should_release == 'true' && needs.prerelease.outputs.should_sync_app_store == 'true'
     runs-on: ubuntu-latest
     # App Store sync only downloads published assets and reads repository content.
@@ -224,4 +232,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HALO_BACKEND_BASEURL: https://www.halo.run
           HALO_PAT: ${{ secrets.HALO_PAT }}
+          RELEASE_NAME: ${{ needs.prerelease.outputs.prerelease_version }}
+          RELEASE_NOTES_FILE: .github/templates/release-note-template.md
+          RELEASE_PRERELEASE: "true"
         run: node .github/scripts/sync-release-to-app-store.js
