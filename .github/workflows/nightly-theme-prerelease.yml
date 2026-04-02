@@ -14,7 +14,7 @@ on:
         description: Sync the created nightly prerelease to Halo App Store
         required: true
         type: boolean
-        default: true
+        default: false
 
 concurrency:
   group: nightly-theme-prerelease
@@ -44,7 +44,7 @@ jobs:
         id: sync-policy
         env:
           EVENT_NAME: ${{ github.event_name }}
-          SYNC_TO_HALO_STORE: ${{ github.event.inputs.sync_to_halo_store || 'true' }}
+          SYNC_TO_HALO_STORE: ${{ github.event.inputs.sync_to_halo_store || 'false' }}
         run: |
           SHOULD_SYNC_APP_STORE=false
           if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "$SYNC_TO_HALO_STORE" = "true" ]; then

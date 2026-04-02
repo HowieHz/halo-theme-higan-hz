@@ -10,10 +10,10 @@ This project uses semantic versioning in the format `MAJOR.MINOR.PATCH`.
 
 ## Release Types
 
-This theme ships two kinds of releases: stable releases and nightly prereleases. Both are published to GitHub Releases and the Halo App Store, and both upload all generated theme packages.
+This theme ships two kinds of releases: stable releases and nightly prereleases. Both publish all generated theme packages to GitHub Releases; stable releases also sync to the Halo App Store, while nightly prereleases sync depending on how they are triggered.
 
 - Stable release: triggered automatically after merging a PR labeled `release`, where `theme.yaml` carries the target semantic version.
-- Nightly prerelease: triggered automatically at 00:00 Asia/Shanghai when the `main` branch had commits during the previous day.
+- Nightly prerelease: triggered automatically at 00:00 Asia/Shanghai when the `main` branch had commits during the previous day. Scheduled runs publish only to GitHub Releases and do not sync to the Halo App Store by default. Manual runs can control Halo App Store sync through the `sync_to_halo_store` input, which defaults to `false`.
 
 ## Build Artifacts
 

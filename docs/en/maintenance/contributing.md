@@ -191,7 +191,9 @@ Nightly prereleases do not require manual version changes or a manually pushed b
    - There are commits after the latest stable or pre-release tag.
    - Commits whose subject starts with `docs:` are excluded.
 3. The prerelease version rule is “current patch version + 1”, then append `-alpha.yyyyMMddHHmmssSSS`.
-4. The workflow creates a temporary local branch in the runner, updates version fields, builds assets, creates a GitHub prerelease, and syncs to the Halo App Store without pushing that branch.
+4. The workflow creates a temporary local branch in the runner, updates version fields, builds assets, and creates a GitHub prerelease without pushing that branch.
+5. The scheduled nightly run creates only the GitHub prerelease and does not sync to the Halo App Store by default.
+6. To create a nightly prerelease manually, use `workflow_dispatch` and set the `sync_to_halo_store` input to control Halo App Store sync; this input defaults to `false`.
 
 ## Pull Request Conventions
 
