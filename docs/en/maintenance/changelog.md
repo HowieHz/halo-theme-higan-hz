@@ -23,6 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🔧 Code Refactoring
+
+- Moved the ["Inline code style preset"](/en/guide/theme-configuration#inline-code-style-preset) setting from "Post Page Style" to "Overall Styles" and now injects its style component from the layout `body`. Non-default presets override the base `code` style through `:not(pre) > code` inside `@layer base`.
+
+### 📄 Documentation
+
+- Updated the "Inline code style preset" docs to reflect the new setting location, template variable, and layout-level injection approach.
+
 ## [1.61.0] - 2026-03-30
 
 ### 🚀 Features

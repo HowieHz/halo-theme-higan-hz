@@ -1406,6 +1406,55 @@ Option
 
 :::
 
+### Inline Code Style Preset
+
+::: info 🎯 Purpose
+
+Selects the global inline code style preset.
+
+:::
+::: info 📂 Configuration Item Location
+
+Overall Styles -> Inline code style preset
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Inline%20code%20style%20preset" />
+
+:::
+::: info 🏷️ Type
+
+String
+
+:::
+::: info ⭐ Default Value
+
+`default`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.styles?.inline_code_style_preset`
+
+:::
+::: info ℹ️ Additional Information
+
+Available presets:
+
+- `default`
+  - Default dotted border style
+- `soft-fill`
+  - Soft background highlight style
+- `pill`
+  - Theme-tinted pill style
+
+This setting works by injecting a style component from `body` into `@layer base`, using the `:not(pre) > code` selector to override the base `code` style without affecting multi-line code blocks.
+
+The `default` preset keeps the dotted border from the global base `code` style, while other presets only override inline code presentation.
+
+:::
+
 ### Custom Content Area Maximum Width
 
 ::: info 🎯 Purpose
@@ -5278,58 +5327,6 @@ When enabled, you can configure
   - Type: String
   - Default Value:`20rem`
   - External constraints: CSS length units. Such as: 20rem, 300px, 30vw.
-
-:::
-
-### Inline Code Style Preset
-
-::: info 🎯 Purpose
-
-Selects the inline code style preset used inside
-
-- posts
-- single pages
-
-content.
-
-:::
-::: info 📂 Configuration Item Location
-
-Post Page Style -> Inline code style preset
-
-:::
-::: info ⚡ Quick Jump
-
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Inline%20code%20style%20preset" />
-
-:::
-::: info 🏷️ Type
-
-String
-
-:::
-::: info ⭐ Default Value
-
-`default`
-
-:::
-::: info 🧩 Template Variable
-
-`theme.config?.post_styles?.inline_code_style_preset`
-
-:::
-::: info ℹ️ Additional Information
-
-Available presets:
-
-- `default`
-  - Default dotted border style
-- `soft-fill`
-  - Soft background highlight style
-- `pill`
-  - Theme-tinted pill style
-
-This setting works by injecting a style component that only targets inline code inside `article .content`, without affecting multi-line code blocks.
 
 :::
 

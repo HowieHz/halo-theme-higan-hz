@@ -735,6 +735,9 @@
   </head>
 
   <body class="transition-colors duration-300" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
+    <!--/* Inline Code Style start */-->
+    <th:block th:insert="~{components/inline-code-style/template :: body}"></th:block>
+    <!--/* Inline Code Style end */-->
     <script th:if="${theme.config?.global?.is_i18n_menu_show}">
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/*

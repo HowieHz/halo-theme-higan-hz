@@ -733,6 +733,18 @@ spec:
               value: "normal"
             - label: "Large"
               value: "large"
+        - $formkit: select
+          name: inline_code_style_preset
+          label: Inline code style preset
+          value: "default"
+          options:
+            - label: "Default: Dotted Border"
+              value: "default"
+            - label: "Preset: Soft Fill"
+              value: "soft-fill"
+            - label: "Preset: Theme Pill"
+              value: "pill"
+          help: Select the global inline code style preset. The default keeps the dotted border from the base `code` style, while other presets replace it with alternative highlight styles without affecting multi-line code blocks.
         - $formkit: switch
           name: is_max_width_settings
           label: Custom content area maximum width
@@ -1422,18 +1434,6 @@ spec:
           value: 20rem
           placeholder: "Default: 20rem"
           help: "Controls the maximum width of the table of contents sidebar on article pages. All CSS length units are allowed, such as: 20rem, 300px, 30vw."
-        - $formkit: select
-          name: inline_code_style_preset
-          label: Inline code style preset
-          value: "default"
-          options:
-            - label: "Default: Dotted Border"
-              value: "default"
-            - label: "Preset: Soft Fill"
-              value: "soft-fill"
-            - label: "Preset: Theme Pill"
-              value: "pill"
-          help: Select the inline code style preset used in post and single page content. The default keeps the existing dotted border style, while other presets replace it with alternative highlight styles without affecting multi-line code blocks.
         - $formkit: switch
           name: is_dividing_line_at_the_end_of_post_show
           label: Enable dividing line at the end of the post
