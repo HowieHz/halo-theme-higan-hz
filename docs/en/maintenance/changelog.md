@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.62.0] - 2026-04-02
+
 ### 🚀 Features
 
 - Added the ["Dark content text style preset"](/en/guide/theme-configuration#dark-content-text-style-preset) setting (Overall Styles -> Dark content text style preset). The `soft-gray` preset makes body text feel softer in dark mode and reduces the bright, heavy look of pure white text.
@@ -1732,7 +1734,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.61.0...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.0...HEAD
+[1.62.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.61.0...v1.62.0
 [1.61.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.1...v1.61.0
 [1.60.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.0...v1.60.1
 [1.60.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.59.2...v1.60.0
