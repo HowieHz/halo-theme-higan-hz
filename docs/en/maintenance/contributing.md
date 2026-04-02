@@ -178,8 +178,9 @@ After merge, the bot automatically:
 2. Rebuilds compare-link definitions at the end of both changelog files (`[Unreleased]` and version links).
 3. Updates `package.json` `version`, `theme.yaml` `spec.version`, and `i18n-settings/theme.*.yaml` `spec.version`, then pushes the bot commit to `main`.
 4. Builds the theme and produces multiple `howiehz-higan-*.zip` packages.
-5. Creates the GitHub Release and uploads all `howiehz-higan-*.zip` packages to both GitHub Release and the Halo App Store (`howiehz-higan-cn.zip` first).
-6. Uses the published release to trigger `sync-page-audit-results.yml`, which creates the page-size audit PR. That PR includes the `deploy-docs` label and deploys docs automatically after merge.
+5. Runs `gh attestation verify` to confirm every `howiehz-higan-*.zip` package was signed by the expected reusable build workflow; publishing continues only after this gate passes.
+6. In parallel, creates the GitHub Release and syncs all `howiehz-higan-*.zip` packages to the Halo App Store (`howiehz-higan-cn.zip` first).
+7. After the GitHub Release is published, dispatches the follow-up event that triggers `sync-page-audit-results.yml`, which creates the page-size audit PR. That PR includes the `deploy-docs` label and deploys docs automatically after merge.
 
 ### Nightly Prerelease Procedure
 
@@ -191,9 +192,10 @@ Nightly prereleases do not require manual version changes or a manually pushed b
    - There are commits after the latest stable or pre-release tag.
    - Commits whose subject starts with `docs:` are excluded.
 3. The prerelease version rule is “current patch version + 1”, then append `-alpha.yyyyMMddHHmmssSSS`.
-4. The workflow creates a temporary local branch in the runner, updates version fields, builds assets, and creates a GitHub prerelease without pushing that branch.
-5. The scheduled nightly run creates only the GitHub prerelease and does not sync to the Halo App Store by default.
-6. To create a nightly prerelease manually, use `workflow_dispatch` and set the `sync_to_halo_store` input to control Halo App Store sync; this input defaults to `false`.
+4. The workflow creates a temporary local branch in the runner, updates version fields, and builds assets without pushing that branch.
+5. Before publishing the GitHub prerelease or syncing the Halo App Store, the workflow verifies attestation for every nightly `.zip` artifact as a release gate.
+6. After the gate passes, the scheduled nightly run creates only the GitHub prerelease and does not sync to the Halo App Store by default.
+7. To create a nightly prerelease manually, use `workflow_dispatch` and set the `sync_to_halo_store` input to control Halo App Store sync after the gate passes; this input defaults to `false`.
 
 ## Pull Request Conventions
 
