@@ -128,12 +128,6 @@ jobs:
           set -o pipefail
           set +e
           cmd=(pnpm dlx @argos-ci/cli upload --token "$ARGOS_TOKEN")
-          if [ -n "${ARGOS_BRANCH:-}" ]; then
-            cmd+=(--branch "$ARGOS_BRANCH")
-          fi
-          if [ -n "${ARGOS_COMMIT:-}" ]; then
-            cmd+=(--commit "$ARGOS_COMMIT")
-          fi
           cmd+=(./screenshots/)
           "${cmd[@]}" 2>&1 | tee argos-upload.log
           status=${PIPESTATUS[0]}
