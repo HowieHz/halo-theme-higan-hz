@@ -1400,6 +1400,55 @@ const QuickJumpConfig = (props) => {
 
 :::
 
+### 行内代码样式预设
+
+::: info 🎯 用途
+
+用于选择全局行内代码样式预设。
+
+:::
+::: info 📂 配置项位置
+
+总体样式 -> 行内代码样式预设
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=行内代码样式预设" />
+
+:::
+::: info 🏷️ 类型
+
+字符串
+
+:::
+::: info ⭐ 默认值
+
+`default`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.styles?.inline_code_style_preset`
+
+:::
+::: info ℹ️ 补充信息
+
+可选预设：
+
+- `default`
+  - 默认虚线边框风格
+- `soft-fill`
+  - 柔和底色高亮风格
+- `pill`
+  - 主题色胶囊风格
+
+该配置项通过在布局层 `head` 中注入一个作用于 `@layer base` 的样式组件实现，使用选择器 `:not(pre) > code` 覆盖基础 `code` 样式，而不影响多行代码块。
+
+`default` 预设保持全局基础 `code` 样式中的虚线边框效果，其他预设仅覆盖行内代码的表现形式。
+
+:::
+
 ### 自定义内容区域最大宽度
 
 ::: info 🎯 用途
@@ -5273,58 +5322,6 @@ HTML 代码也是可以的：
   - 类型：字符串
   - 默认值：`20rem`
   - 外部约束：CSS 长度单位。如：20rem, 300px, 30vw。
-
-:::
-
-### 行内代码样式预设
-
-::: info 🎯 用途
-
-用于选择
-
-- 文章页
-- 独立页面
-
-内容中的行内代码样式预设。
-
-:::
-::: info 📂 配置项位置
-
-文章页样式 -> 行内代码样式预设
-
-:::
-::: info ⚡ 快速跳转
-
-<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=行内代码样式预设" />
-
-:::
-::: info 🏷️ 类型
-
-字符串
-
-:::
-::: info ⭐ 默认值
-
-`default`
-
-:::
-::: info 🧩 模板变量
-
-`theme.config?.post_styles?.inline_code_style_preset`
-
-:::
-::: info ℹ️ 补充信息
-
-可选预设：
-
-- `default`
-  - 默认虚线边框风格
-- `soft-fill`
-  - 柔和底色高亮风格
-- `pill`
-  - 主题色胶囊风格
-
-该配置项通过注入一个仅作用于 `article .content` 中行内代码的样式组件实现，不影响多行代码块。
 
 :::
 

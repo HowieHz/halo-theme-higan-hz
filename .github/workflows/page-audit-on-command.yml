@@ -309,8 +309,6 @@ jobs:
       always() &&
       needs.check-trigger.outputs.eyes_reaction_id != ''
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
     steps:
       - name: Remove eyes reaction
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8

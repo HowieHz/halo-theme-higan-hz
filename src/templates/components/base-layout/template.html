@@ -353,6 +353,9 @@
       th:insert="~{components/text-size-large/template :: head}"
     ></th:block>
     <!--/* Preset Text Size CSS VariablesDeclarations end */-->
+    <!--/* Inline Code Style start */-->
+    <th:block th:insert="~{components/inline-code-style/template :: head}"></th:block>
+    <!--/* Inline Code Style end */-->
     <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script Start */-->
     <script
       th:if="${theme.config?.global?.anti_mirror_site}"

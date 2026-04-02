@@ -33,7 +33,6 @@
       th:if="${theme.config?.post_styles?.is_custom_toc_max_width}"
       th:insert="~{components/toc-max-width-style/template :: body}"
     ></th:block>
-    <th:block th:insert="~{components/inline-code-style/template :: body}"></th:block>
     <style th:if="${theme.config?.custom_page_styles?.is_optimize_content_paragraph_spacing}">
       .content > p {
         min-height: 1.1em;
