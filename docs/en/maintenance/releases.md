@@ -17,7 +17,7 @@ This theme ships two kinds of releases: stable releases and nightly prereleases.
 
 ## Build Artifacts
 
-The release pipeline builds multiple installable theme archives. It always uploads `howiehz-higan-cn.zip` first so Halo CMS installs the Simplified Chinese package by default during updates.
+The release pipeline builds multiple installable theme archives and keeps `howiehz-higan-cn.zip` first in the release asset list so Halo CMS prefers the Simplified Chinese package during update installs.
 
 Current release artifacts:
 
@@ -32,7 +32,7 @@ Every stable release and nightly prerelease generates GitHub Artifact Attestatio
 
 The build pipeline follows GitHub's recommended reusable-workflow pattern: build, artifact upload, and attestation issuance all happen inside the reusable build workflow. This corresponds to GitHub's SLSA v1 Build Level 3 path.
 
-In both the stable and nightly workflows, `gh attestation verify` runs as a release gate before publishing any `.zip` artifacts; once the gate passes, GitHub Release publication and Halo App Store sync (when enabled) proceed in parallel.
+In both the stable and nightly workflows, `gh attestation verify` checks all `.zip` artifacts first to confirm they were generated and signed by the designated reusable GitHub Actions build workflow. Publishing starts only after verification passes, ensuring the released theme packages have verifiable provenance and have not been tampered with.
 
 | Type                                                     | Location               | Verification tool       |
 | -------------------------------------------------------- | ---------------------- | ----------------------- |

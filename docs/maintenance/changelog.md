@@ -25,7 +25,7 @@
 
 ### 📄 文档
 
-- 更新发布文档，说明 attestation 校验已前置为发布门禁，且 GitHub Release 与 Halo 应用市场同步会在门禁通过后并行执行。
+- 更新发布文档，说明 attestation 校验已前置为发布前验证，且 GitHub Release 与 Halo 应用市场同步会在验证通过后并行执行。
 
 ## [1.62.1] - 2026-04-02
 
