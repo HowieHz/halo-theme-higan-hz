@@ -738,11 +738,11 @@ spec:
           label: Inline code style preset
           value: "default"
           options:
-            - label: "Default: Dotted Border"
+            - label: "Dotted Border"
               value: "default"
-            - label: "Preset: Soft Fill"
+            - label: "Soft Fill"
               value: "soft-fill"
-            - label: "Preset: Theme Pill"
+            - label: "Theme Pill"
               value: "pill"
           help: Select the global inline code style preset. The default keeps the dotted border from the base `code` style, while other presets replace it with alternative highlight styles without affecting multi-line code blocks.
         - $formkit: select
@@ -754,7 +754,7 @@ spec:
               value: "default"
             - label: "Preset: Soft Gray"
               value: "soft-gray"
-          help: Select the text style preset used for dark-mode content text. The default leaves it unchanged; other presets make content text feel softer in dark mode to reduce the bright, heavy look of pure white text.
+          help: Select the text style preset used for dark-mode content text. The default leaves it unchanged; other presets make body text feel softer in dark mode while making the contrast between darker text/headings and body text more pronounced, reducing the bright, heavy look of pure white text.
         - $formkit: switch
           name: is_max_width_settings
           label: Custom content area maximum width

@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🚀 Features
+
+- Optimized the `soft-gray` preset under ["Dark content text style preset"](/en/guide/theme-configuration#dark-content-text-style-preset) so dark-mode body text feels softer while the contrast between darker text/headings and body text is more pronounced.
+
 ### 📄 Documentation
 
 - Updated the release docs to clarify that attestation verification now runs before publishing and that GitHub Release publication and Halo App Store sync proceed in parallel after verification passes.
