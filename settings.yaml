@@ -71,7 +71,7 @@ spec:
           if: "$anti_mirror_site === true"
           label: "目标链接"
           help: "Base64 编码后的目标链接。检测到当前页面域名不在白名单中，就会跳转到目标链接（编码前的内容包括完整域名。请在输入框仅输入编码后的内容！）\n示例：编码前 https://howiehz.top\n编码后 aHR0cHM6Ly9ob3dpZWh6LnRvcA=="
-          value: "bG9jYWxob3N0"
+          value: ""
         - $formkit: switch
           name: is_keep_path_and_query
           if: "$anti_mirror_site === true"
