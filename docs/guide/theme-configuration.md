@@ -587,7 +587,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⭐ 默认值
 
-`bG9jYWxob3N0`
+空
 
 :::
 ::: info 💡 示例值

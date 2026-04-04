@@ -593,7 +593,7 @@ String
 :::
 ::: info ⭐ Default Value
 
-`bG9jYWxob3N0`
+Empty
 
 :::
 ::: info 💡 Example Values

@@ -71,7 +71,7 @@ spec:
           if: "$anti_mirror_site === true"
           label: Target link (base64 encoded)
           help: "When the domain name of the current page is not in the whitelist, the theme will jump to the target link."
-          value: "bG9jYWxob3N0"
+          value: ""
         - $formkit: switch
           name: is_keep_path_and_query
           if: "$anti_mirror_site === true"
