@@ -18,6 +18,13 @@ body {
 }
 
 /* Correctly inherit font instead of using user agent stylesheet */
-tt, code, kbd, samp, pre, xmp, plaintext, listing {
+tt,
+code,
+kbd,
+samp,
+pre,
+xmp,
+plaintext,
+listing {
   font-family: inherit;
 }
