@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.63.0] - 2026-04-04
+
 ### 💥 Breaking Changes
 
 - The default value of ["Dark content text style"](/en/guide/theme-configuration#dark-content-text-style) has changed from `No Adjustment` to `Soft Gray`. If you have not manually changed this setting, dark-mode body text will look different after upgrading.
@@ -1754,7 +1756,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.0...HEAD
+[1.63.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.1...v1.63.0
 [1.62.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.0...v1.62.1
 [1.62.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.61.0...v1.62.0
 [1.61.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.1...v1.61.0

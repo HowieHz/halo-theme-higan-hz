@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.63.0] - 2026-04-04
+
 ### 💥 破坏性变更
 
 - [“深色正文样式”](/guide/theme-configuration#深色正文样式)的默认值由 `不调整` 改为 `轻柔灰`。升级后如未手动修改该配置，深色模式下的正文显示效果会与此前不同。
@@ -1763,7 +1765,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.0...HEAD
+[1.63.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.1...v1.63.0
 [1.62.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.0...v1.62.1
 [1.62.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.61.0...v1.62.0
 [1.61.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.60.1...v1.61.0
