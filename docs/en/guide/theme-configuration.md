@@ -1406,21 +1406,21 @@ Option
 
 :::
 
-### Inline Code Style Preset
+### Inline Code Style
 
 ::: info 🎯 Purpose
 
-Selects the global inline code style preset.
+Selects the global inline code style.
 
 :::
 ::: info 📂 Configuration Item Location
 
-Overall Styles -> Inline code style preset
+Overall Styles -> Inline code style
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Inline%20code%20style%20preset" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Inline%20code%20style" />
 
 :::
 ::: info 🏷️ Type
@@ -1455,21 +1455,21 @@ The `default` preset keeps the current dotted-border look, while other presets p
 
 :::
 
-### Dark Content Text Style Preset
+### Dark Content Text Style
 
 ::: info 🎯 Purpose
 
-Selects the text style preset used for dark-mode content text.
+Selects the text style used for dark-mode content text.
 
 :::
 ::: info 📂 Configuration Item Location
 
-Overall Styles -> Dark content text style preset
+Overall Styles -> Dark content text style
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Dark%20content%20text%20style%20preset" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=Dark%20content%20text%20style" />
 
 :::
 ::: info 🏷️ Type
@@ -1494,11 +1494,11 @@ Available presets:
 - `default`
   - Leaves content text unchanged
 - `soft-gray`
-  - Makes body text feel softer in dark mode
+  - Makes body text feel softer in dark mode while making the contrast between darker text/headings and body text more pronounced
 
 This setting applies in dark mode. If the site follows the system color scheme, it also applies automatically when the system switches to dark appearance.
 
-It currently adjusts only regular body text inside article content to make reading feel softer, without affecting headings, blockquotes, links, or code blocks.
+It currently adjusts only regular body text inside article content to improve reading comfort without affecting links, code blocks, or other content styles.
 
 :::
 

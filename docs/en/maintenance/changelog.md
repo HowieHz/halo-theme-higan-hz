@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Optimized the `soft-gray` preset under ["Dark content text style preset"](/en/guide/theme-configuration#dark-content-text-style-preset) so dark-mode body text feels softer while the contrast between darker text/headings and body text is more pronounced.
+- Optimized the `soft-gray` option under ["Dark content text style"](/en/guide/theme-configuration#dark-content-text-style) so dark-mode body text feels softer while the contrast between darker text/headings and body text is more pronounced.
 
 ### 📄 Documentation
 
@@ -41,15 +41,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Added the ["Dark content text style preset"](/en/guide/theme-configuration#dark-content-text-style-preset) setting (Overall Styles -> Dark content text style preset). The `soft-gray` preset makes body text feel softer in dark mode and reduces the bright, heavy look of pure white text.
+- Added the ["Dark content text style"](/en/guide/theme-configuration#dark-content-text-style) setting (Overall Styles -> Dark content text style). The `soft-gray` option makes body text feel softer in dark mode and reduces the bright, heavy look of pure white text.
 
 ### 🔧 Code Refactoring
 
-- Moved the ["Inline code style preset"](/en/guide/theme-configuration#inline-code-style-preset) setting from "Post Page Style" to "Overall Styles" so it is managed as a global style option.
+- Moved the ["Inline code style"](/en/guide/theme-configuration#inline-code-style) setting from "Post Page Style" to "Overall Styles" so it is managed as a global style option.
 
 ### 📄 Documentation
 
-- Updated the "Inline code style preset" and "Dark content text style preset" docs with clearer descriptions of their locations, scope, and visible effects.
+- Updated the "Inline code style" and "Dark content text style" docs with clearer descriptions of their locations, scope, and visible effects.
 - Updated the release and security docs to describe GitHub's reusable-workflow + artifact attestation flow (the SLSA v1 Build Level 3 path) and removed the `multiple.intoto.jsonl` / `slsa-verifier` instructions.
 
 ### 🛠️ Miscellaneous Chores
@@ -61,7 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Added the ["Inline code style preset"](/en/guide/theme-configuration#inline-code-style-preset) setting (Post Page Style -> Inline code style preset) for inline code in posts and single pages. Includes three presets: dotted border, soft highlight, and theme pill. Multi-line code blocks are unchanged.
+- Added the ["Inline code style"](/en/guide/theme-configuration#inline-code-style) setting (Post Page Style -> Inline code style) for inline code in posts and single pages. Includes three options: dotted border, soft highlight, and theme pill. Multi-line code blocks are unchanged.
 
 ### 🛠️ Miscellaneous Chores
 

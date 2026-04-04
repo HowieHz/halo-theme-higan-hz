@@ -1400,21 +1400,21 @@ const QuickJumpConfig = (props) => {
 
 :::
 
-### 行内代码样式预设
+### 行内代码样式
 
 ::: info 🎯 用途
 
-用于选择全局行内代码样式预设。
+用于选择全局行内代码样式。
 
 :::
 ::: info 📂 配置项位置
 
-总体样式 -> 行内代码样式预设
+总体样式 -> 行内代码样式
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=行内代码样式预设" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=行内代码样式" />
 
 :::
 ::: info 🏷️ 类型
@@ -1449,7 +1449,7 @@ const QuickJumpConfig = (props) => {
 
 :::
 
-### 深色正文样式预设
+### 深色正文样式
 
 ::: info 🎯 用途
 
@@ -1458,12 +1458,12 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 📂 配置项位置
 
-总体样式 -> 深色正文样式预设
+总体样式 -> 深色正文样式
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/styles#:~:text=深色正文样式预设" />
+<QuickJumpConfig to="/console/theme/settings/styles#:~:text=深色正文样式" />
 
 :::
 ::: info 🏷️ 类型
@@ -1488,11 +1488,11 @@ const QuickJumpConfig = (props) => {
 - `default`
   - 默认不调整
 - `soft-gray`
-  - 让深色模式下的正文文字观感更柔和
+  - 让深色模式下的正文文字观感更柔和，并让深色字体/标题与正文字体的对比更明显
 
 该配置项会在深色模式下生效；当站点使用跟随系统配色时，也会在系统切换到深色外观时自动生效。
 
-当前仅调整文章正文中的常规文本显示效果，可让阅读观感更柔和，不影响标题、引用、链接和代码块等元素。
+当前该预设主要用于优化文章内容中的常规正文文本观感，可让阅读观感更柔和，同时强化深色字体/标题与正文之间的层次对比；不影响链接、代码块等其他内容样式。
 
 :::
 
