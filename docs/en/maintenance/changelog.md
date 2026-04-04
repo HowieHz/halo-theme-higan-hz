@@ -23,9 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### 🐛 Bug Fixes
+### 🚀 Features
 
-- Fixed an issue where links containing inline `code` still showed the bottom background underline, and now inline `code` inside those links also follows the hover highlight color.
+- Optimized link styling for links containing inline code snippets: the bottom background underline is now hidden in both default and hover states, and the highlight behavior is changed to update the text color on hover.
 
 ## [1.63.1] - 2026-04-04
 
