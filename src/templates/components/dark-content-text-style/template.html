@@ -2,20 +2,26 @@
   <!--/*/
   <style
     th:inline="css"
-    th:with="darkContentTextStyle = ${theme.config?.styles?.dark_content_text_style_preset}"
-    th:if="${!#strings.equals(darkContentTextStyle, 'default')}"
+    th:with="darkContentTextStyle = ${theme.config?.styles?.dark_content_text_style}"
+    th:if="${darkContentTextStyle != 'no-adjustment'}"
   >
     @layer base {
       html[data-color-scheme="dark"] article .content > :is(p, ul, ol, dl, table) {
-        /*[# th:if="${#strings.equals(darkContentTextStyle, 'soft-gray')}"]*/
+        /*[# th:if="${darkContentTextStyle == 'soft-gray'}"]*/
         color: color-mix(in oklab, var(--color-base-content) 85%, var(--color-base-100));
+        strong, b {
+          color: var(--color-base-content);
+        }
         /*[/]*/
       }
 
       @media (prefers-color-scheme: dark) {
         html[data-color-scheme="auto"] article .content > :is(p, ul, ol, dl, table) {
-          /*[# th:if="${#strings.equals(darkContentTextStyle, 'soft-gray')}"]*/
+          /*[# th:if="${darkContentTextStyle == 'soft-gray'}"]*/
           color: color-mix(in oklab, var(--color-base-content) 85%, var(--color-base-100));
+          strong, b {
+            color: var(--color-base-content);
+          }
           /*[/]*/
         }
       }

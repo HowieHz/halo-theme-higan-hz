@@ -734,27 +734,27 @@ spec:
             - label: "Large"
               value: "large"
         - $formkit: select
-          name: inline_code_style_preset
-          label: Inline code style preset
-          value: "default"
+          name: inline_code_style
+          label: Inline code style
+          value: "dotted-border"
           options:
-            - label: "Default: Dotted Border"
-              value: "default"
-            - label: "Preset: Soft Fill"
+            - label: "Dotted Border"
+              value: "dotted-border"
+            - label: "Soft Fill"
               value: "soft-fill"
-            - label: "Preset: Theme Pill"
+            - label: "Theme Pill"
               value: "pill"
-          help: Select the global inline code style preset. The default keeps the dotted border from the base `code` style, while other presets replace it with alternative highlight styles without affecting multi-line code blocks.
+          help: Select the global inline code style. The default keeps the dotted border from the base `code` style, while other options replace it with alternative highlight styles without affecting multi-line code blocks.
         - $formkit: select
-          name: dark_content_text_style_preset
-          label: Dark content text style preset
-          value: "default"
+          name: dark_content_text_style
+          label: Dark content text style
+          value: "soft-gray"
           options:
-            - label: "Default: No Adjustment"
-              value: "default"
-            - label: "Preset: Soft Gray"
+            - label: "No Adjustment"
+              value: "no-adjustment"
+            - label: "Soft Gray"
               value: "soft-gray"
-          help: Select the text style preset used for dark-mode content text. The default leaves it unchanged; other presets make content text feel softer in dark mode to reduce the bright, heavy look of pure white text.
+          help: Select the text style used for dark-mode content text. `Soft Gray` makes body text feel softer in dark mode while making the contrast between darker text/headings and body text more pronounced, reducing the bright, heavy look of pure white text.
         - $formkit: switch
           name: is_max_width_settings
           label: Custom content area maximum width
