@@ -23,6 +23,11 @@
 
 ## [Unreleased]
 
+### 🐛 错误修复
+
+- 修复 `tt`、`code`、`kbd`、`samp`、`pre`、`xmp`、`plaintext`、`listing` 元素字体未跟随页面主字体的问题。
+- 将[“目标链接”](/guide/theme-configuration#目标链接)的默认值改为空，避免在“仅允许使用指定域名访问”配置期间将访客跳转到 localhost。
+
 ## [1.63.0] - 2026-04-04
 
 ### 💥 破坏性变更

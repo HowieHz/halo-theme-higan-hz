@@ -23,6 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fixed an issue where `tt`, `code`, `kbd`, `samp`, `pre`, `xmp`, `plaintext`, and `listing` did not follow the page’s primary font.
+- Changed the default value of ["Target Link"](/en/guide/theme-configuration#target-link) to empty to avoid redirecting visitors to localhost during configuration of "Restrict Access to Allowed Domains."
+
 ## [1.63.0] - 2026-04-04
 
 ### 💥 Breaking Changes
