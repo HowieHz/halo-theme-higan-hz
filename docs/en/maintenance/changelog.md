@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.63.2] - 2026-04-04
+
 ### 🚀 Features
 
 - Optimized link styling for links containing inline code snippets: the bottom background underline is now hidden in both default and hover states, and the highlight behavior is changed to update the text color on hover.
@@ -1767,7 +1769,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.2...HEAD
+[1.63.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.1...v1.63.2
 [1.63.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.0...v1.63.1
 [1.63.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.1...v1.63.0
 [1.62.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.0...v1.62.1

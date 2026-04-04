@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.63.2] - 2026-04-04
+
 ### 🚀 新功能
 
 - 优化包含行内代码块的链接样式：默认与悬停状态下均不再显示底部背景下划线，并将高亮样式调整为悬停时改变字体颜色。
@@ -1776,7 +1778,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.2...HEAD
+[1.63.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.1...v1.63.2
 [1.63.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.0...v1.63.1
 [1.63.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.1...v1.63.0
 [1.62.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.0...v1.62.1
