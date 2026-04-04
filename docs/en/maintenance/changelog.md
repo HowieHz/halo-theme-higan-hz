@@ -23,6 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 💥 Breaking Changes
+
+- The default value of ["Dark content text style"](/en/guide/theme-configuration#dark-content-text-style) has changed from `No Adjustment` to `Soft Gray`. If you have not manually changed this setting, dark-mode body text will look different after upgrading.
+- The internal field name of ["Dark content text style"](/en/guide/theme-configuration#dark-content-text-style) has changed from `dark_content_text_style_preset` to `dark_content_text_style`; reconfiguration is required after upgrading.
+- The internal field name of ["Inline code style"](/en/guide/theme-configuration#inline-code-style) has changed from `inline_code_style_preset` to `inline_code_style`; reconfiguration is required after upgrading.
+
 ### 🚀 Features
 
 - Optimized the `soft-gray` option under ["Dark content text style"](/en/guide/theme-configuration#dark-content-text-style) so dark-mode body text feels softer while the contrast between darker text/headings and body text is more pronounced.

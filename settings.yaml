@@ -734,27 +734,27 @@ spec:
             - label: "大字体"
               value: "large"
         - $formkit: select
-          name: inline_code_style_preset
+          name: inline_code_style
           label: 行内代码样式
-          value: "default"
+          value: "dotted-border"
           options:
             - label: "虚线边框"
-              value: "default"
+              value: "dotted-border"
             - label: "柔和底色"
               value: "soft-fill"
             - label: "主题胶囊"
               value: "pill"
           help: 选择全局行内代码样式。默认保持基础 `code` 样式中的虚线边框风格，其他选项会覆盖为不同的高亮方案，但不会影响多行代码块。
         - $formkit: select
-          name: dark_content_text_style_preset
+          name: dark_content_text_style
           label: 深色正文样式
-          value: "default"
+          value: "soft-gray"
           options:
             - label: "不调整"
-              value: "default"
+              value: "no-adjustment"
             - label: "轻柔灰"
               value: "soft-gray"
-          help: 选择深色模式下正文文本的样式。默认不调整；其他选项会让正文文字在深色模式下更柔和一些，并让深色字体/标题与正文字体的对比更明显，减轻纯白文字带来的偏亮、偏粗观感。
+          help: 选择深色模式下正文文本的样式。`轻柔灰` 会让正文文字在深色模式下更柔和一些，并让深色字体/标题与正文字体的对比更明显，减轻纯白文字带来的偏亮、偏粗观感。
         - $formkit: switch
           name: is_max_width_settings
           label: 自定义内容区域最大宽度

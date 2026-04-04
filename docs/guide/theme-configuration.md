@@ -1424,19 +1424,19 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⭐ 默认值
 
-`default`
+`dotted-border`
 
 :::
 ::: info 🧩 模板变量
 
-`theme.config?.styles?.inline_code_style_preset`
+`theme.config?.styles?.inline_code_style`
 
 :::
 ::: info ℹ️ 补充信息
 
 可选预设：
 
-- `default`
+- `dotted-border`
   - 默认虚线边框风格
 - `soft-fill`
   - 柔和底色高亮风格
@@ -1445,7 +1445,7 @@ const QuickJumpConfig = (props) => {
 
 该配置项用于调整全站行内代码的显示风格，不影响多行代码块。
 
-`default` 预设保持当前的虚线边框效果，其他预设会为行内代码提供不同的高亮风格。
+`dotted-border` 预设保持当前的虚线边框效果，其他预设会为行内代码提供不同的高亮风格。
 
 :::
 
@@ -1478,21 +1478,21 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 🧩 模板变量
 
-`theme.config?.styles?.dark_content_text_style_preset`
+`theme.config?.styles?.dark_content_text_style`
 
 :::
 ::: info ℹ️ 补充信息
 
-可选预设：
+可选选项：
 
-- `default`
-  - 默认不调整
+- `no-adjustment`
+  - 不调整
 - `soft-gray`
   - 让深色模式下的正文文字观感更柔和，并让深色字体/标题与正文字体的对比更明显
 
 该配置项会在深色模式下生效；当站点使用跟随系统配色时，也会在系统切换到深色外观时自动生效。
 
-当前该预设主要用于优化文章内容中的常规正文文本观感，可让阅读观感更柔和，同时强化深色字体/标题与正文之间的层次对比；不影响链接、代码块等其他内容样式。
+当前该选项主要用于优化文章内容中的常规正文文本观感，可让阅读观感更柔和，同时强化深色字体/标题与正文之间的层次对比。
 
 :::
 

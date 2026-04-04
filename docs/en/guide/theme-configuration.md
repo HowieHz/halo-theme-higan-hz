@@ -1430,19 +1430,19 @@ String
 :::
 ::: info ⭐ Default Value
 
-`default`
+`dotted-border`
 
 :::
 ::: info 🧩 Template Variable
 
-`theme.config?.styles?.inline_code_style_preset`
+`theme.config?.styles?.inline_code_style`
 
 :::
 ::: info ℹ️ Additional Information
 
 Available presets:
 
-- `default`
+- `dotted-border`
   - Default dotted border style
 - `soft-fill`
   - Soft background highlight style
@@ -1451,7 +1451,7 @@ Available presets:
 
 This setting controls the global visual style of inline code without affecting multi-line code blocks.
 
-The `default` preset keeps the current dotted-border look, while other presets provide alternative highlight styles for inline code.
+The `dotted-border` preset keeps the current dotted-border look, while other presets provide alternative highlight styles for inline code.
 
 :::
 
@@ -1484,21 +1484,21 @@ String
 :::
 ::: info 🧩 Template Variable
 
-`theme.config?.styles?.dark_content_text_style_preset`
+`theme.config?.styles?.dark_content_text_style`
 
 :::
 ::: info ℹ️ Additional Information
 
-Available presets:
+Available options:
 
-- `default`
-  - Leaves content text unchanged
+- `no-adjustment`
+  - No adjustment
 - `soft-gray`
   - Makes body text feel softer in dark mode while making the contrast between darker text/headings and body text more pronounced
 
 This setting applies in dark mode. If the site follows the system color scheme, it also applies automatically when the system switches to dark appearance.
 
-It currently adjusts only regular body text inside article content to improve reading comfort without affecting links, code blocks, or other content styles.
+It mainly adjusts regular body text inside article content to improve reading comfort while strengthening the visual contrast between darker text/headings and body text.
 
 :::
 

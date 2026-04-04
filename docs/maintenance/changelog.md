@@ -23,6 +23,12 @@
 
 ## [Unreleased]
 
+### 💥 破坏性变更
+
+- [“深色正文样式”](/guide/theme-configuration#深色正文样式)的默认值由 `不调整` 改为 `轻柔灰`。升级后如未手动修改该配置，深色模式下的正文显示效果会与此前不同。
+- [“深色正文样式”](/guide/theme-configuration#深色正文样式)配置项的内部字段名由 `dark_content_text_style_preset` 改为 `dark_content_text_style`，升级后需重新配置。
+- [“行内代码样式”](/guide/theme-configuration#行内代码样式)配置项的内部字段名由 `inline_code_style_preset` 改为 `inline_code_style`，升级后需重新配置。
+
 ### 🚀 新功能
 
 - 优化[“深色正文样式”](/guide/theme-configuration#深色正文样式)中的 `轻柔灰` 选项，不仅让深色模式下的正文字体观感更柔和，也让深色字体/标题与正文字体的对比更明显。

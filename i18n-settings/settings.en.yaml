@@ -734,27 +734,27 @@ spec:
             - label: "Large"
               value: "large"
         - $formkit: select
-          name: inline_code_style_preset
+          name: inline_code_style
           label: Inline code style
-          value: "default"
+          value: "dotted-border"
           options:
             - label: "Dotted Border"
-              value: "default"
+              value: "dotted-border"
             - label: "Soft Fill"
               value: "soft-fill"
             - label: "Theme Pill"
               value: "pill"
           help: Select the global inline code style. The default keeps the dotted border from the base `code` style, while other options replace it with alternative highlight styles without affecting multi-line code blocks.
         - $formkit: select
-          name: dark_content_text_style_preset
+          name: dark_content_text_style
           label: Dark content text style
-          value: "default"
+          value: "soft-gray"
           options:
             - label: "No Adjustment"
-              value: "default"
+              value: "no-adjustment"
             - label: "Soft Gray"
               value: "soft-gray"
-          help: Select the text style used for dark-mode content text. The default leaves it unchanged; other options make body text feel softer in dark mode while making the contrast between darker text/headings and body text more pronounced, reducing the bright, heavy look of pure white text.
+          help: Select the text style used for dark-mode content text. `Soft Gray` makes body text feel softer in dark mode while making the contrast between darker text/headings and body text more pronounced, reducing the bright, heavy look of pure white text.
         - $formkit: switch
           name: is_max_width_settings
           label: Custom content area maximum width
