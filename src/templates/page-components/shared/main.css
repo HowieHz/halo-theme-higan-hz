@@ -306,6 +306,19 @@
         );
       }
 
+      &:has(code) {
+        background-image: none;
+
+        &:hover {
+          background-image: none;
+          color: var(--color-accent);
+
+          & code {
+            color: var(--color-accent);
+          }
+        }
+      }
+
       &.icon {
         background: none;
 
