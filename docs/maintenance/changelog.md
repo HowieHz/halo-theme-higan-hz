@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.63.1] - 2026-04-04
+
 ### 🐛 错误修复
 
 - 修复 `tt`、`code`、`kbd`、`samp`、`pre`、`xmp`、`plaintext`、`listing` 元素字体未跟随页面主字体的问题。
@@ -1770,7 +1772,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.0...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.1...HEAD
+[1.63.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.0...v1.63.1
 [1.63.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.1...v1.63.0
 [1.62.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.0...v1.62.1
 [1.62.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.61.0...v1.62.0
