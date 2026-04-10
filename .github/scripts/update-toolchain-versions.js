@@ -1,11 +1,12 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const packageJsonPath = "package.json";
+const rootPackageJsonPath = "package.json";
 const githubDirPath = ".github";
 const workflowsDirPath = path.join(githubDirPath, "workflows");
 const actionsDirPath = path.join(githubDirPath, "actions");
 const setupActionPath = path.join(actionsDirPath, "setup-node-pnpm", "action.yml");
+const updateToolchainWorkflowPath = path.join(workflowsDirPath, "update-toolchain-versions.yml");
 const dryRun = process.argv.includes("--dry-run");
 const releaseDelayMs = 24 * 60 * 60 * 1000;
 const toolchainUpdaterUserAgent = "halo-theme-higan-hz-toolchain-updater";
@@ -112,7 +113,7 @@ const collectFilesByName = async (directoryPath, fileName) => {
 };
 
 const readTrackedToolchainVersions = async () => {
-  const { content } = await readFileWithLineEnding(packageJsonPath);
+  const { content } = await readFileWithLineEnding(rootPackageJsonPath);
   const packageJson = JSON.parse(content);
 
   return {
@@ -125,7 +126,7 @@ const readTrackedToolchainVersions = async () => {
 // for at least 24 hours. If 1.1.0 becomes latest 12 hours after 1.0.0, we keep
 // the repository on its current tracked version instead of updating to 1.0.0 or
 // 1.1.0. "Some older version is old enough" is intentionally not sufficient.
-const fetchLatestNodeRelease = async () => {
+const fetchLatestNodeLtsRelease = async () => {
   const indexResponse = await fetch("https://nodejs.org/dist/index.json", {
     headers: {
       Accept: "application/json",
@@ -139,12 +140,13 @@ const fetchLatestNodeRelease = async () => {
 
   const releases = await indexResponse.json();
   const latestVersion = releases
+    .filter((release) => typeof release.lts === "string" && release.lts.trim() !== "")
     .map((release) => parseSemVer(release.version))
     .filter(Boolean)
     .sort((left, right) => compareSemVer(right, left))[0];
 
   if (!latestVersion) {
-    throw new Error("No stable Node.js versions found in release index");
+    throw new Error("No LTS Node.js versions found in release index");
   }
 
   const latestTag = `v${latestVersion.major}.${latestVersion.minor}.${latestVersion.patch}`;
@@ -227,18 +229,18 @@ const logLatestReleaseStatus = (toolName, latestVersion, publishedAt, eligible, 
 
 const resolveToolchainTargets = async () => {
   const trackedVersions = await readTrackedToolchainVersions();
-  const [latestNodeRelease, latestPnpmRelease] = await Promise.all([
-    fetchLatestNodeRelease(),
+  const [latestNodeLtsRelease, latestPnpmRelease] = await Promise.all([
+    fetchLatestNodeLtsRelease(),
     fetchLatestPnpmRelease(),
   ]);
   const releaseCutoffTimestamp = Date.now() - releaseDelayMs;
-  const nodeEligible = hasReachedReleaseDelay(latestNodeRelease.publishedAt, releaseCutoffTimestamp);
+  const nodeEligible = hasReachedReleaseDelay(latestNodeLtsRelease.publishedAt, releaseCutoffTimestamp);
   const pnpmEligible = hasReachedReleaseDelay(latestPnpmRelease.publishedAt, releaseCutoffTimestamp);
 
   logLatestReleaseStatus(
-    "Node.js",
-    latestNodeRelease.version,
-    latestNodeRelease.publishedAt,
+    "Node.js LTS",
+    latestNodeLtsRelease.version,
+    latestNodeLtsRelease.publishedAt,
     nodeEligible,
     String(trackedVersions.nodeMajor),
   );
@@ -251,13 +253,13 @@ const resolveToolchainTargets = async () => {
   );
 
   return {
-    nodeMajor: nodeEligible ? latestNodeRelease.major : trackedVersions.nodeMajor,
+    nodeMajor: nodeEligible ? latestNodeLtsRelease.major : trackedVersions.nodeMajor,
     pnpmVersion: pnpmEligible ? latestPnpmRelease.version : trackedVersions.pnpmVersion,
   };
 };
 
 const updatePackageJson = async (nodeMajor, pnpmVersion) => {
-  const { content, lineEnding } = await readFileWithLineEnding(packageJsonPath);
+  const { content, lineEnding } = await readFileWithLineEnding(rootPackageJsonPath);
   const packageJson = JSON.parse(content);
   const updatedFields = [];
 
@@ -287,17 +289,17 @@ const updatePackageJson = async (nodeMajor, pnpmVersion) => {
   }
 
   const nextContent = `${JSON.stringify(packageJson, null, 2)}${lineEnding}`;
-  await maybeWriteFile(packageJsonPath, nextContent.replace(/\n/gu, lineEnding));
+  await maybeWriteFile(rootPackageJsonPath, nextContent.replace(/\n/gu, lineEnding));
   return updatedFields;
 };
 
-const replaceNodeVersionValue = (content, nodeMajor) => {
+const replaceNodeVersionValue = (content, nextNodeVersion) => {
   const nodeVersionPattern = /^(\s*node-version:\s*)(["']?)(?:lts\/\*|\d+)\2(\s*(?:#.*)?)$/gmu;
   let changed = false;
 
   const nextContent = content.replace(nodeVersionPattern, (_, prefix, quote, suffix) => {
     changed = true;
-    const wrappedValue = `${quote}${nodeMajor}${quote}`;
+    const wrappedValue = `${quote}${nextNodeVersion}${quote}`;
     return `${prefix}${wrappedValue}${suffix}`;
   });
 
@@ -307,32 +309,87 @@ const replaceNodeVersionValue = (content, nodeMajor) => {
   };
 };
 
+const replaceCompositeActionInputDefault = (content, lineEnding, inputName, nextValue) => {
+  const lines = content.split(/\r?\n/u);
+  let changed = false;
+  let insideTargetInput = false;
+  let foundDefault = false;
+
+  const nextLines = lines.map((line) => {
+    const inputHeaderMatch = /^ {2}([a-z0-9-]+):\s*$/iu.exec(line);
+
+    if (inputHeaderMatch) {
+      insideTargetInput = inputHeaderMatch[1] === inputName;
+      return line;
+    }
+
+    if (!insideTargetInput) {
+      return line;
+    }
+
+    const defaultMatch = /^(\s+default:\s*")([^"]*)(".*)$/u.exec(line);
+
+    if (!defaultMatch) {
+      return line;
+    }
+
+    foundDefault = true;
+
+    if (defaultMatch[2] === nextValue) {
+      return line;
+    }
+
+    changed = true;
+    return `${defaultMatch[1]}${nextValue}${defaultMatch[3]}`;
+  });
+
+  if (!foundDefault) {
+    throw new Error(`Could not find ${inputName} default in ${setupActionPath}`);
+  }
+
+  return {
+    changed,
+    nextContent: nextLines.join(lineEnding),
+  };
+};
+
 const updateToolchainFile = async (filePath, nodeMajor, pnpmVersion) => {
   const { content, lineEnding } = await readFileWithLineEnding(filePath);
   const updates = [];
   let nextContent = content;
 
   if (content.includes("actions/setup-node@")) {
-    const { changed, nextContent: replacedContent } = replaceNodeVersionValue(nextContent, nodeMajor);
+    const nextNodeVersion = filePath === updateToolchainWorkflowPath ? "lts/*" : String(nodeMajor);
+    const { changed, nextContent: replacedContent } = replaceNodeVersionValue(nextContent, nextNodeVersion);
 
     if (changed && replacedContent !== nextContent) {
       nextContent = replacedContent;
-      updates.push(`node-version -> ${nodeMajor}`);
+      updates.push(`node-version -> ${nextNodeVersion}`);
     }
   }
 
   if (filePath === setupActionPath) {
-    const pnpmAnchor = /pnpm-version:\s*\n(?:\s+.*\n)*?\s+default:\s*"(.*?)"/u;
-    const pnpmMatch = nextContent.match(pnpmAnchor);
+    const { changed: nodeDefaultChanged, nextContent: nodeDefaultContent } = replaceCompositeActionInputDefault(
+      nextContent,
+      lineEnding,
+      "node-version",
+      String(nodeMajor),
+    );
 
-    if (!pnpmMatch) {
-      throw new Error(`Could not find pnpm-version default in ${setupActionPath}`);
+    if (nodeDefaultChanged) {
+      nextContent = nodeDefaultContent;
+      updates.push(`inputs.node-version.default -> ${nodeMajor}`);
     }
 
-    if (pnpmMatch[1] !== pnpmVersion) {
-      nextContent = nextContent.replace(pnpmAnchor, (match) =>
-        match.replace(`default: "${pnpmMatch[1]}"`, `default: "${pnpmVersion}"`),
-      );
+    const { changed, nextContent: replacedContent } = replaceCompositeActionInputDefault(
+      nextContent,
+      lineEnding,
+      "pnpm-version",
+      pnpmVersion,
+    );
+
+    if (changed) {
+      nextContent = replacedContent;
       updates.push(`inputs.pnpm-version.default -> ${pnpmVersion}`);
     }
   }
@@ -375,7 +432,7 @@ const toolchainFileUpdateGroups = await updateToolchainFiles(nodeMajor, pnpmVers
 
 const updateGroups = [
   {
-    filePath: packageJsonPath,
+    filePath: rootPackageJsonPath,
     updates: await updatePackageJson(nodeMajor, pnpmVersion),
   },
   ...toolchainFileUpdateGroups,
