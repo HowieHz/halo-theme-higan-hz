@@ -303,75 +303,104 @@ function removeNestedThymeleafComments(html: string): string {
   const EXCLUDE_START = "<!--/*/"; // Parser-level comment start.
   const EXCLUDE_END = "/*/-->"; // Parser-level comment end.
   const PREFIXES = ["// ", "//"]; // Possible prefixes, longest first.
+  const scanner = {
+    consume(marker: string): boolean {
+      if (!html.startsWith(marker, i)) {
+        return false;
+      }
+
+      i += marker.length;
+      return true;
+    },
+    consumeWithPrefixes(marker: string): string | null {
+      for (const prefix of PREFIXES) {
+        const candidate = prefix + marker;
+        if (html.startsWith(candidate, i)) {
+          i += candidate.length;
+          return candidate;
+        }
+      }
+
+      return null;
+    },
+    appendIfVisible(text: string): void {
+      if (depth === 0) {
+        result.push(text);
+      }
+    },
+    incrementDepth(): void {
+      depth++;
+    },
+    enterPrototypeComment(marker: string): boolean {
+      if (!this.consume(marker)) {
+        return false;
+      }
+
+      this.incrementDepth();
+      return true;
+    },
+    enterPrototypeCommentWithPrefixes(marker: string): boolean {
+      if (this.consumeWithPrefixes(marker) === null) {
+        return false;
+      }
+
+      this.incrementDepth();
+      return true;
+    },
+    leavePrototypeComment(marker: string): boolean {
+      if (!this.consume(marker)) {
+        return false;
+      }
+
+      if (depth > 0) {
+        depth--;
+      }
+
+      return true;
+    },
+    appendCurrentChar(): void {
+      this.appendIfVisible(html[i]);
+      i++;
+    },
+  };
 
   while (i < html.length) {
-    let matched = false;
-
     // 1. Check for parser-level comment start, including supported prefixes.
-    for (const prefix of PREFIXES) {
-      const fullExcludeStart = prefix + EXCLUDE_START;
-      if (html.slice(i, i + fullExcludeStart.length) === fullExcludeStart) {
-        if (depth === 0) {
-          result.push(fullExcludeStart);
-        }
-        i += fullExcludeStart.length;
-        matched = true;
-        break;
-      }
+    const prefixedExcludeStart = scanner.consumeWithPrefixes(EXCLUDE_START);
+    if (prefixedExcludeStart) {
+      scanner.appendIfVisible(prefixedExcludeStart);
+      continue;
     }
-    if (matched) continue;
 
     // Parser-level comment start without prefix.
-    if (html.slice(i, i + EXCLUDE_START.length) === EXCLUDE_START) {
-      if (depth === 0) {
-        result.push(EXCLUDE_START);
-      }
-      i += EXCLUDE_START.length;
+    if (scanner.consume(EXCLUDE_START)) {
+      scanner.appendIfVisible(EXCLUDE_START);
       continue;
     }
 
     // 2. Check for parser-level comment end.
-    if (html.slice(i, i + EXCLUDE_END.length) === EXCLUDE_END) {
-      if (depth === 0) {
-        result.push(EXCLUDE_END);
-      }
-      i += EXCLUDE_END.length;
+    if (scanner.consume(EXCLUDE_END)) {
+      scanner.appendIfVisible(EXCLUDE_END);
       continue;
     }
 
     // 3. Check for prototype-only comment start, including supported prefixes.
-    for (const prefix of PREFIXES) {
-      const fullStartMarker = prefix + START_MARKER;
-      if (html.slice(i, i + fullStartMarker.length) === fullStartMarker) {
-        depth++;
-        i += fullStartMarker.length;
-        matched = true;
-        break;
-      }
+    if (scanner.enterPrototypeCommentWithPrefixes(START_MARKER)) {
+      continue;
     }
-    if (matched) continue;
 
     // Prototype-only comment start without prefix.
-    if (html.slice(i, i + START_MARKER.length) === START_MARKER) {
-      depth++;
-      i += START_MARKER.length;
+    if (scanner.enterPrototypeComment(START_MARKER)) {
       continue;
     }
 
     // 4. Check for prototype-only comment end.
-    if (html.slice(i, i + END_MARKER.length) === END_MARKER) {
-      if (depth > 0) {
-        depth--;
-      }
-      i += END_MARKER.length;
+    if (scanner.leavePrototypeComment(END_MARKER)) {
       continue;
     }
 
     // 5. If not inside a removable comment, preserve the character.
-    if (depth === 0) {
-      result.push(html[i]);
-    }
-    i++;
+    scanner.appendCurrentChar();
   }
 
   return result.join("");
