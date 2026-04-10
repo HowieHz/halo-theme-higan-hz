@@ -6,7 +6,6 @@ const githubDirPath = ".github";
 const workflowsDirPath = path.join(githubDirPath, "workflows");
 const actionsDirPath = path.join(githubDirPath, "actions");
 const setupActionPath = path.join(actionsDirPath, "setup-node-pnpm", "action.yml");
-const updateToolchainWorkflowPath = path.join(workflowsDirPath, "update-toolchain-versions.yml");
 const dryRun = process.argv.includes("--dry-run");
 const releaseDelayMs = 24 * 60 * 60 * 1000;
 const toolchainUpdaterUserAgent = "halo-theme-higan-hz-toolchain-updater";
@@ -359,7 +358,7 @@ const updateToolchainFile = async (filePath, nodeMajor, pnpmVersion) => {
   let nextContent = content;
 
   if (content.includes("actions/setup-node@")) {
-    const nextNodeVersion = filePath === updateToolchainWorkflowPath ? "lts/*" : String(nodeMajor);
+    const nextNodeVersion = String(nodeMajor);
     const { changed, nextContent: replacedContent } = replaceNodeVersionValue(nextContent, nextNodeVersion);
 
     if (changed && replacedContent !== nextContent) {
