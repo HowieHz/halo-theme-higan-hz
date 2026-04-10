@@ -4,7 +4,7 @@ inputs:
   node-version:
     description: Node.js version for setup-node
     required: false
-    default: "25"
+    default: "24"
   pnpm-version:
     description: Fallback pnpm version when packageManager is missing
     required: false
