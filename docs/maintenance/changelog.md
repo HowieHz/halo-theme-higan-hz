@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.63.3] - 2026-04-11
+
 ### 🚀 新功能
 
 - 适配[链接管理插件](/guide/plugin-compatibility#链接页)标题配置。
@@ -1787,7 +1789,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.2...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.3...HEAD
+[1.63.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.2...v1.63.3
 [1.63.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.1...v1.63.2
 [1.63.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.0...v1.63.1
 [1.63.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.1...v1.63.0

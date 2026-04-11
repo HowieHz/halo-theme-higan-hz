@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.63.3] - 2026-04-11
+
 ### 🚀 Features
 
 - Added support for the [Link plugin](/en/guide/plugin-compatibility#links-page) title setting.
@@ -1778,7 +1780,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.2...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.3...HEAD
+[1.63.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.2...v1.63.3
 [1.63.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.1...v1.63.2
 [1.63.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.0...v1.63.1
 [1.63.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.62.1...v1.63.0
