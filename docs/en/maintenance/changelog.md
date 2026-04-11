@@ -23,6 +23,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🚀 Features
+
+- Added support for the [Link plugin](/en/guide/plugin-compatibility#links-page) title setting.
+- On all pages except post detail pages, single pages, and the home page, the page title now appends `- Site Title` after the original title.
+
+### 🐛 Bug Fixes
+
+- Fixed an issue where the author page title was accidentally locked to the site title.
+
 ## [1.63.2] - 2026-04-04
 
 ### 🚀 Features
