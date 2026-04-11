@@ -2,11 +2,11 @@
 <th:block
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{components/base-layout/template :: html(
-    title = ${#annotations.getOrDefault(singlePage, 'higan.howiehz.top/page-title', singlePage.spec?.title)}, 
+    title = ${#annotations.getOrDefault(singlePage, 'higan.howiehz.top/page-title', singlePage.spec?.title)},
     head = ~{:: head},
-    content = ~{:: body}, 
-    header = ~{components/header/template :: body}, 
-    navbar = ~{}, 
+    content = ~{:: body},
+    header = ~{components/header/template :: body},
+    navbar = ~{},
     language = ${#annotations.get(singlePage, 'higan.howiehz.top/page-language')}
   )}"
 >

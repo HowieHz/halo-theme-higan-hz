@@ -2,12 +2,12 @@
 <th:block
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{components/base-layout/template :: html(
-    title = ${#annotations.getOrDefault(category, 'higan.howiehz.top/page-title', category.spec?.displayName)}, 
+    title = |${#annotations.getOrDefault(category, 'higan.howiehz.top/page-title', category.spec?.displayName)} - ${site.title}|,
     head = ~{:: head},
-    content = ~{:: body}, 
-    header = ~{components/header/template :: body}, 
-    navbar = ~{}, 
-    language=${#annotations.get(category, 'higan.howiehz.top/page-language')} 
+    content = ~{:: body},
+    header = ~{components/header/template :: body},
+    navbar = ~{},
+    language=${#annotations.get(category, 'higan.howiehz.top/page-language')}
   )}"
 >
   <head th:remove="tag">

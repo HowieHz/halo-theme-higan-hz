@@ -2,10 +2,10 @@
 <th:block
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{components/base-layout/template :: html(
-    title = ${#strings.isEmpty(theme.config?.index_styles?.page_html_title) ? site.title : theme.config?.index_styles?.page_html_title}, 
+    title = ${#strings.isEmpty(theme.config?.index_styles?.page_html_title) ? site.title : theme.config?.index_styles?.page_html_title},
     head = ~{:: head},
-    content = ~{:: body}, 
-    header = ~{components/header/template :: body}, 
+    content = ~{:: body},
+    header = ~{components/header/template :: body},
     navbar = ~{}
   )}"
 >

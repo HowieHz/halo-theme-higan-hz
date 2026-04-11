@@ -2,7 +2,7 @@
 <th:block
   xmlns:th="https://www.thymeleaf.org"
   th:replace="~{components/base-layout/template :: html(
-    title = ${title},
+    title = |${title} - ${site.title}|,
     head = ~{:: head},
     content = ~{:: body}, 
     header = ~{components/header/template :: body}, 
