@@ -13,16 +13,16 @@
   },
   "devDependencies": {
     "@nolebase/vitepress-plugin-highlight-targeted-heading": "^2.18.2",
-    "@whyframe/core": "^0.1.14",
-    "@whyframe/vue": "^0.1.9",
-    "browserslist": "^4.28.1",
+    "@whyframe/core": "^0.2.0",
+    "@whyframe/vue": "^0.2.0",
+    "browserslist": "^4.28.2",
     "less": "^4.6.4",
     "lightningcss": "^1.32.0",
-    "pagefind": "^1.4.0",
+    "pagefind": "^1.5.2",
     "vite": "npm:rolldown-vite@7.3.1",
     "vitepress": "2.0.0-alpha.17",
     "vitepress-plugin-pagefind": "^0.4.19",
-    "vue": "^3.5.31"
+    "vue": "^3.5.32"
   },
   "overrides": {
     "vite": "npm:rolldown-vite@7.3.1"
