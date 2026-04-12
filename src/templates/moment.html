@@ -24,21 +24,11 @@
     />
     <script src="/page-components/moment/index.ts" type="module"></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
-    <th:block th:insert="~{components/list-moment-summary/template :: head}"></th:block>
-    <th:block th:insert="~{components/moment-video-modal/template :: head}"></th:block>
-    <th:block
-      th:if="${theme.config?.moments_styles?.is_moment_comment_section_show
-               and haloCommentEnabled}"
-      th:insert="~{components/halo-comment-widget/template :: head}"
-    ></th:block>
-    <th:block
-      th:if="${theme.config?.moments_styles?.is_moment_upvote_button_show}"
-      th:insert="~{components/upvote-runtime/template :: head}"
-    ></th:block>
+    <th:block th:insert="~{components/list-moment-summary/template :: head(pageTemplateName = 'moment')}"></th:block>
   </head>
   <body th:remove="tag">
     <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
-      <div class="content common-post-list" th:attr="x-data=|momentComment('${moment.metadata.name}')|">
+      <div class="content moment-list" th:attr="x-data=|momentComment('${moment.metadata.name}')|">
         <div
           class="moment-header mt-5"
           th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type') == 'github-user-public-event'}"

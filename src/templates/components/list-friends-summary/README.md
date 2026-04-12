@@ -15,7 +15,7 @@ Head Content (for including necessary scripts/styles)
 or
 
 ```html
-<th:block th:insert="~{components/list-moment-summary/template :: head}"></th:block>
+<th:block th:insert="~{components/list-friends-summary/template :: head}"></th:block>
 ```
 
 Content Insertion

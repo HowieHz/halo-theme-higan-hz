@@ -12,7 +12,10 @@ video {
     }
   }
 
-  & .common-post-list {
+  & .moment-list {
+    margin: 0;
+    padding: 0;
+
     & li {
       list-style: none;
     }
