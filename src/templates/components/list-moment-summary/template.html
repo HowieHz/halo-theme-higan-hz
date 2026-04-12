@@ -1,8 +1,9 @@
 <head th:remove="tag">
   <script src="index.ts" type="module"></script>
-  <!--/* 翻页组件在列表页应始终加载；即使页码超出范围，组件也仍需存在 */-->
+  <!--/* 翻页组件在列表页应始终加载；即使页码超出范围，组件也仍需存在。
+         此处排除非列表页的 pageTemplateName */-->
   <th:block
-    th:if="${#strings.equals(pageTemplateName, 'index') or #strings.equals(pageTemplateName, 'moments')}"
+    th:unless="${#strings.equals(pageTemplateName, 'moment')}"
     th:insert="~{components/pagination/template :: head}"
   ></th:block>
   <th:block th:insert="~{components/moment-video-modal/template :: head}"></th:block>
