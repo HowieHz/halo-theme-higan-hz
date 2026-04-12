@@ -23,6 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fixed incorrect rendering in the Moments list and the moment detail page.
+- Fixed an issue where some styles were loaded repeatedly on the moment detail page.
+
 ## [1.63.3] - 2026-04-11
 
 ### 🚀 Features
