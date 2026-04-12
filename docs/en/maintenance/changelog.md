@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fixed an issue where the pagination script was loaded on the moment detail page.
+
 ## [1.63.4] - 2026-04-13
 
 ### 🐛 Bug Fixes
