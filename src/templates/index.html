@@ -23,9 +23,7 @@
       th:if="${theme.config?.index_styles?.list_layout == 'moment-list-summary'
                and pluginFinder.available('PluginMoments')}"
     >
-      <th:block
-        th:insert="~{components/list-moment-summary/template :: head(pageTemplateName = 'index')}"
-      ></th:block>
+      <th:block th:insert="~{components/list-moment-summary/template :: head(pageTemplateName = 'index')}"></th:block>
     </th:block>
     <th:block
       th:if="${theme.config?.index_styles?.list_layout == 'friends-list-summary'
