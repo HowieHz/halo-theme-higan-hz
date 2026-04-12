@@ -24,12 +24,7 @@
                and pluginFinder.available('PluginMoments')}"
     >
       <th:block
-        th:insert="~{components/list-moment-summary/template :: head(
-                       moments=${momentFinder.list(
-                         posts.page,
-                         theme.config?.index_styles?.moment_list_page_size
-                       )}
-                   )}"
+        th:insert="~{components/list-moment-summary/template :: head(pageTemplateName = 'index')}"
       ></th:block>
     </th:block>
     <th:block

@@ -24,7 +24,7 @@
     />
     <script src="/page-components/moments/index.ts" type="module"></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
-    <th:block th:insert="~{components/list-moment-summary/template :: head(moments=${moments})}"></th:block>
+    <th:block th:insert="~{components/list-moment-summary/template :: head(pageTemplateName = 'moments')}"></th:block>
   </head>
   <body th:remove="tag">
     <th:block
