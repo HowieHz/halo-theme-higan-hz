@@ -811,7 +811,7 @@ jobs:
 
       - name: Upload screenshots (${{ inputs.ref_name }})
         if: ${{ (failure() && inputs.ref_name != 'base' && inputs.upload_screenshots_artifact) || inputs.upload_screenshots_artifact }}
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # https://github.com/actions/upload-artifact/releases/tag/v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # https://github.com/actions/upload-artifact/releases/tag/v7.0.1
         with:
           name: screenshots-${{ inputs.ref_name }}
           path: ./screenshots/
@@ -820,7 +820,7 @@ jobs:
 
       - name: Upload Lighthouse raw data (${{ inputs.ref_name }})
         if: ${{ (failure() && inputs.run_lighthouse_ci) || inputs.upload_lighthouse_artifact == true }}
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # https://github.com/actions/upload-artifact/releases/tag/v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # https://github.com/actions/upload-artifact/releases/tag/v7.0.1
         with:
           name: lighthouse-raw-data-${{ inputs.ref_name }}
           path: ./.lighthouseci/
@@ -858,7 +858,7 @@ jobs:
 
       - name: Upload reports (${{ inputs.ref_name }})
         if: ${{ steps.generate_reports.outcome == 'success' && inputs.run_lighthouse_ci }}
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # https://github.com/actions/upload-artifact/releases/tag/v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # https://github.com/actions/upload-artifact/releases/tag/v7.0.1
         with:
           name: page-size-reports-${{ inputs.ref_name }}
           path: ${{ inputs.output_dir }}
@@ -872,7 +872,7 @@ jobs:
 
       - name: Upload logs
         if: always()
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # https://github.com/actions/upload-artifact/releases/tag/v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # https://github.com/actions/upload-artifact/releases/tag/v7.0.1
         with:
           name: logs-${{ inputs.ref_name }}
           path: ~/logs/

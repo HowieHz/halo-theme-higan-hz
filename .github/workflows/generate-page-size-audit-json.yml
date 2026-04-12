@@ -37,7 +37,7 @@ jobs:
 
       - name: Get version list
         id: get-versions
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # https://github.com/actions/github-script/releases/tag/v9.0.0
         with:
           script: |
             let startVersion, endVersion;
@@ -142,7 +142,7 @@ jobs:
             core.setOutput('versions', JSON.stringify(versionList));
 
       - name: Write versions summary
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # https://github.com/actions/github-script/releases/tag/v9.0.0
         with:
           script: |
             const fs = require('fs');
@@ -217,7 +217,7 @@ jobs:
 
       - name: Create PR with data files
         if: github.event_name == 'release' || (github.event_name == 'repository_dispatch' && github.event.action == 'stable_release_published' && github.event.client_payload.create_pr == true) || github.event.inputs.create_pr == 'true'
-        uses: peter-evans/create-pull-request@c0f553fe549906ede9cf27b5156039d195d2ece0 # https://github.com/peter-evans/create-pull-request/releases/tag/v8.1.0
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # https://github.com/peter-evans/create-pull-request/releases/tag/v8.1.1
         with:
           token: ${{ secrets.PR_WORKFLOW_TOKEN }}
           base: main # Use 'main' as the base branch; that's sufficient for the current update flow

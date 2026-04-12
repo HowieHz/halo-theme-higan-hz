@@ -73,7 +73,7 @@ jobs:
         run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$GITHUB_WORKSPACE/dist/theme-packages"
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # https://github.com/actions/upload-artifact/releases/tag/v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # https://github.com/actions/upload-artifact/releases/tag/v7.0.1
         with:
           name: ${{ inputs.artifact_name }}
           path: dist/theme-packages/*
