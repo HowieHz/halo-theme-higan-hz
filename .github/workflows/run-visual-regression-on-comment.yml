@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Add reaction to comment
         id: add-reaction
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # https://github.com/actions/github-script/releases/tag/v9.0.0
         with:
           script: |
             const reaction = await github.rest.reactions.createForIssueComment({
@@ -41,7 +41,7 @@ jobs:
 
       - name: Check if commenter has write access
         id: check
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # https://github.com/actions/github-script/releases/tag/v9.0.0
         with:
           script: |
             try {
@@ -72,7 +72,7 @@ jobs:
       - name: Get PR details
         if: steps.check.outputs.should_run == 'true'
         id: pr
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # https://github.com/actions/github-script/releases/tag/v9.0.0
         with:
           script: |
             const { data: pr } = await github.rest.pulls.get({
@@ -104,7 +104,7 @@ jobs:
 
       - name: Upload Argos context
         if: steps.check.outputs.should_run == 'true'
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # https://github.com/actions/upload-artifact/releases/tag/v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # https://github.com/actions/upload-artifact/releases/tag/v7.0.1
         with:
           name: argos-context
           path: argos-context.json
@@ -134,7 +134,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Add success reaction and comment on PR
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # https://github.com/actions/github-script/releases/tag/v9.0.0
         with:
           script: |
             const prSha = '${{ needs.check-trigger.outputs.pr_head_sha }}';
@@ -176,7 +176,7 @@ jobs:
 
       - name: Add failure reaction and comment on failure
         if: failure()
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # https://github.com/actions/github-script/releases/tag/v9.0.0
         with:
           script: |
             await github.rest.reactions.createForIssueComment({
@@ -203,7 +203,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Add failure reaction and comment
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # https://github.com/actions/github-script/releases/tag/v9.0.0
         with:
           script: |
             await github.rest.reactions.createForIssueComment({
@@ -229,7 +229,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Remove eyes reaction
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # https://github.com/actions/github-script/releases/tag/v9.0.0
         with:
           script: |
             try {
