@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.63.5] - 2026-04-13
+
 ### 🐛 Bug Fixes
 
 - Fixed an issue where the pagination script was loaded on the moment detail page.
@@ -1795,7 +1797,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.4...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.5...HEAD
+[1.63.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.4...v1.63.5
 [1.63.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.3...v1.63.4
 [1.63.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.2...v1.63.3
 [1.63.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.1...v1.63.2
