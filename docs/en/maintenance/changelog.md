@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fixed a layout shift (CLS) issue that could occur when the home page hitokoto content was injected asynchronously, and added a fade-in animation for its appearance.
+
 ## [1.63.5] - 2026-04-13
 
 ### 🐛 Bug Fixes
