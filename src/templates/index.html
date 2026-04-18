@@ -44,6 +44,28 @@
       <th:block th:if="${theme.config?.index_styles?.hitokoto}">
         <script skip-sri th:src="${theme.config?.index_styles?.hitokoto_link}" defer></script>
         <p class="hitokoto"></p>
+        <style>
+          .hitokoto:empty::before {
+            content: "\00a0";
+            visibility: hidden;
+          }
+
+          .hitokoto:not(:empty) {
+            animation: hitokoto-fade-in 0.45s ease-out;
+          }
+
+          @keyframes hitokoto-fade-in {
+            from {
+              opacity: 0%;
+              transform: translateY(0.25rem);
+            }
+
+            to {
+              opacity: 100%;
+              transform: translateY(0);
+            }
+          }
+        </style>
       </th:block>
       <th:block
         th:if="${theme.config?.index_styles?.is_random_sentence_show and !#lists.isEmpty(theme.config?.index_styles?.random_sentence_list)}"
