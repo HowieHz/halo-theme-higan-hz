@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.63.6] - 2026-04-18
+
 ### 🐛 错误修复
 
 - 修复首页一言（hitokoto）内容异步注入时可能触发布局偏移（CLS）的问题，并为其添加淡入显示动画。
@@ -1810,7 +1812,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.5...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.6...HEAD
+[1.63.6]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.5...v1.63.6
 [1.63.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.4...v1.63.5
 [1.63.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.3...v1.63.4
 [1.63.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.2...v1.63.3

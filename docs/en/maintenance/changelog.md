@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.63.6] - 2026-04-18
+
 ### 🐛 Bug Fixes
 
 - Fixed a layout shift (CLS) issue that could occur when the home page hitokoto content was injected asynchronously, and added a fade-in animation for its appearance.
@@ -1801,7 +1803,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.5...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.6...HEAD
+[1.63.6]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.5...v1.63.6
 [1.63.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.4...v1.63.5
 [1.63.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.3...v1.63.4
 [1.63.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.2...v1.63.3
