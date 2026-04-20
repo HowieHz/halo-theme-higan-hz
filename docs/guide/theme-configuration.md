@@ -3398,6 +3398,9 @@ HTML 代码也是可以的：
 - 一言（hitokoto）服务链接：
   - 默认值：`https://v1.hitokoto.cn/?encode=js`
   - 补充说明：相关信息可阅读其[文档](https://developer.hitokoto.cn/sentence/)获取
+- 一言（hitokoto）淡入显示动画：
+  - 默认值：`true`
+  - 补充说明：控制一言内容异步注入后是否播放淡入显示动画。
 
 :::
 

@@ -1112,6 +1112,11 @@ spec:
           value: https://v1.hitokoto.cn/?encode=js
           help: "Default: https://v1.hitokoto.cn/?encode=js, Doc: https://developer.hitokoto.cn/sentence/"
         - $formkit: switch
+          name: is_hitokoto_fade_in_animation_enable
+          if: "$hitokoto === true"
+          label: Hitokoto fade-in animation
+          value: true
+        - $formkit: switch
           name: is_random_sentence_show
           label: Custom random sentence display
           value: false
