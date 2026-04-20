@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🚀 Features
+
+- Added a setting to control whether the home page Hitokoto fade-in animation is enabled.
+
 ## [1.63.6] - 2026-04-18
 
 ### 🐛 Bug Fixes

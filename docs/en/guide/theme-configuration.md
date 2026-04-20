@@ -3404,6 +3404,9 @@ When enabled, you can configure
 - Hitokoto service link:
   - Default Value:`https://v1.hitokoto.cn/?encode=js`
   - Additional notes: Related information can be obtained by reading the [documentation](https://developer.hitokoto.cn/sentence/)
+- Hitokoto fade-in animation:
+  - Default Value: `true`
+  - Additional notes: Controls whether to play the fade-in animation after Hitokoto content is injected asynchronously.
 
 :::
 

@@ -1112,6 +1112,11 @@ spec:
           value: https://v1.hitokoto.cn/?encode=js
           help: "默认值：https://v1.hitokoto.cn/?encode=js、文档：https://developer.hitokoto.cn/sentence/"
         - $formkit: switch
+          name: is_hitokoto_fade_in_animation_enable
+          if: "$hitokoto === true"
+          label: 一言（hitokoto）淡入显示动画
+          value: true
+        - $formkit: switch
           name: is_random_sentence_show
           label: 自定义随机显示一句话
           value: false
