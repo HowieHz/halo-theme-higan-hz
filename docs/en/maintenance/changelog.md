@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.64.1] - 2026-04-25
+
 ### 💥 Breaking Changes
 
 - Minimum required Halo version bumped to 2.24.1.
@@ -1821,7 +1823,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.64.0...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.64.1...HEAD
+[1.64.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.64.0...v1.64.1
 [1.64.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.6...v1.64.0
 [1.63.6]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.5...v1.63.6
 [1.63.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.63.4...v1.63.5
