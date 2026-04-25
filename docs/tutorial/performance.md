@@ -34,6 +34,8 @@ outline: deep
 
 #### 在 nginx 上使用
 
+<!-- markdownlint-disable MD013 -->
+
 ```nginx
 http {
     # 启用 gzip_static 模块以提供预压缩的 .gz 文件
@@ -71,7 +73,11 @@ http {
 }
 ```
 
+<!-- markdownlint-enable MD013 -->
+
 #### 在 Apache 上使用
+
+<!-- markdownlint-disable MD013 -->
 
 ```apache
 # 启用 mod_deflate 以实现回退动态压缩
@@ -130,6 +136,8 @@ http {
     Header set Content-Encoding "zstd"
 </FilesMatch>
 ```
+
+<!-- markdownlint-enable MD013 -->
 
 ## 其他注意事项
 

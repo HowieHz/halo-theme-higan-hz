@@ -40,6 +40,8 @@ Thanks to [nonzzz/vite-plugin-compression](https://github.com/nonzzz/vite-plugin
 
 #### nginx Configuration
 
+<!-- markdownlint-disable MD013 -->
+
 ```nginx
 http {
     # Enable gzip_static module to serve pre-compressed .gz files
@@ -77,7 +79,11 @@ http {
 }
 ```
 
+<!-- markdownlint-enable MD013 -->
+
 #### Apache Configuration
+
+<!-- markdownlint-disable MD013 -->
 
 ```apache
 # Enable mod_deflate for fallback dynamic compression
@@ -136,6 +142,8 @@ http {
     Header set Content-Encoding "zstd"
 </FilesMatch>
 ```
+
+<!-- markdownlint-enable MD013 -->
 
 ## Important Notes
 
