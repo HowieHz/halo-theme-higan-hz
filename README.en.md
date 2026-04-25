@@ -4,7 +4,7 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/HowieHz/halo-theme-higan-hz/total)
 ![GitHub release (latest by date)](https://img.shields.io/github/downloads/HowieHz/halo-theme-higan-hz/latest/total)
 ![GitHub repo size](https://img.shields.io/github/repo-size/HowieHz/halo-theme-higan-hz)
-[![Halo Version](https://img.shields.io/badge/Halo-2.23.1+-brightgreen.svg)](https://halo.run)
+[![Halo Version](https://img.shields.io/badge/Halo-2.24.1+-brightgreen.svg)](https://halo.run)
 
 [简体中文](./README.md) | **English**
 
