@@ -64,7 +64,9 @@ jobs:
 
           set -o pipefail
           set +e
-          cmd=(pnpm dlx @argos-ci/cli upload --token "$ARGOS_TOKEN")
+          # Argos CLI pulls in sharp, whose postinstall is blocked by pnpm 10
+          # unless it is explicitly approved for dlx.
+          cmd=(pnpm --allow-build=sharp dlx @argos-ci/cli upload --token "$ARGOS_TOKEN")
           cmd+=(./screenshots/)
           "${cmd[@]}" 2>&1 | tee argos-upload.log
           status=${PIPESTATUS[0]}
