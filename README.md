@@ -75,7 +75,7 @@ Higan Haozi 是一款响应式、简洁清爽的个人网站主题，适用于 [
 
 ### Repobeats analytics
 
-![Alt](https://repobeats.axiom.co/api/embed/b02231ee758d8477f8fdb3b166fcf0488cbe7377.svg "Repobeats analytics image")
+![Repobeats analytics](https://repobeats.axiom.co/api/embed/b02231ee758d8477f8fdb3b166fcf0488cbe7377.svg "Repobeats analytics image")
 
 ### Star History
 

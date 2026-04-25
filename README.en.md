@@ -75,7 +75,7 @@ See [Changelog](https://howiehz.top/halo-theme-higan-haozi/en/maintenance/change
 
 ### Repobeats analytics
 
-![Alt](https://repobeats.axiom.co/api/embed/b02231ee758d8477f8fdb3b166fcf0488cbe7377.svg "Repobeats analytics image")
+![Repobeats analytics](https://repobeats.axiom.co/api/embed/b02231ee758d8477f8fdb3b166fcf0488cbe7377.svg "Repobeats analytics image")
 
 ### Star History
 
