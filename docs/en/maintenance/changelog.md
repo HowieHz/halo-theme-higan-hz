@@ -23,6 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 💥 Breaking Changes
+
+- Minimum required Halo version bumped to 2.24.1.
+
+### 🔧 Code Refactoring
+
+- Replaced the original template-only implementation of `Random post` under `Style -> Extra Menu Items` with the official Finder API implementation.
+
 ## [1.64.0] - 2026-04-21
 
 ### 🚀 Features

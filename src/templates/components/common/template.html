@@ -26,13 +26,11 @@
     <th:block th:each="item : ${theme.config?.styles?.extra_menu_items}">
       <!--/* random post button */-->
       <th:block th:if="${item?.type == 'random'}">
-        <th:block th:with="allPostList = ${postFinder.listAll()}">
-          <li th:unless="${#lists.isEmpty(allPostList)}">
+        <th:block th:with="posts = ${postFinder.random(1)}">
+          <li th:each="post : ${posts}">
             <a
               href="/"
-              th:with="randomIndex = ${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(allPostList))},
-                       postPermalink = ${allPostList[randomIndex].status.permalink}"
-              th:href="${postPermalink}"
+              th:href="${post.status.permalink}"
               th:aria-label="#{fragment.menu.random-button.aria-label}"
               th:text="#{fragment.menu.random}"
             ></a>
