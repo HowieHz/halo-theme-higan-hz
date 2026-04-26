@@ -74,20 +74,20 @@ pnpm docs:preview
 
 ### 开发完成后
 
-#### 求疵
-
-请运行以下命令进行检查（确保无错误）。
-
-```bash
-pnpm lint
-```
-
 #### 格式化代码
 
-提交前可运行以下命令进行格式化。
+提交前请先运行以下命令进行格式化。
 
 ```bash
 pnpm fmt
+```
+
+#### 求疵
+
+完成格式化后，请运行以下命令进行检查（确保无错误）。
+
+```bash
+pnpm lint
 ```
 
 #### 构建主题
@@ -102,9 +102,17 @@ pnpm build
 
 本项目会在 CI（GitHub Actions）中对 PR 执行以下检查，其中部分检查为按需手动触发：
 
+#### CI 格式化步骤
+
+CI 会先自动运行 `pnpm fmt`，包含以下格式化步骤：
+
+- `oxfmt`：格式化 JSON、JSONC、YAML、Markdown、CSS、JavaScript、TypeScript、HTML、Vue 和 Less 文件
+
+> 格式化产生的变更会自动提交。
+
 #### CI 求疵步骤
 
-CI 会自动运行 `pnpm lint`，包含以下检查：
+完成格式化后，CI 会自动运行 `pnpm lint`，包含以下检查：
 
 - `oxlint` + `eslint`：代码风格与类型感知检查
   - **范围**：JavaScript 文件、TypeScript 文件、HTML 文件（仅内联 `script` 块）、Vue 文件（包括内联 `script` 块）
@@ -119,14 +127,6 @@ CI 会自动运行 `pnpm lint`，包含以下检查：
   - **范围**：TypeScript 文件
 
 > 所有求疵步骤都开启了自动修正，若有变更会自动提交。
-
-#### CI 格式化步骤
-
-CI 会自动运行 `pnpm fmt`，包含以下格式化步骤：
-
-- `oxfmt`：格式化 JSON、JSONC、YAML、Markdown、CSS、JavaScript、TypeScript、HTML、Vue 和 Less 文件
-
-> 格式化产生的变更会自动提交。
 
 #### 页面审计
 

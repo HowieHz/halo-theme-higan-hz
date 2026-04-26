@@ -45,7 +45,6 @@ export function isVisible(input: HTMLElement | NodeListOf<HTMLElement> | null): 
   return checkSingle(input);
 }
 
-
 // 自定义 Toggle 函数实现
 // 用于显示/隐藏元素的工具函数集合
 // 使用示例：
@@ -110,7 +109,6 @@ export function showElement(element: HTMLElement): void {
     }
   }
 
-  
   // 处理特殊情况：当内联样式被清空后，元素仍然不可见
 
   // 原因：清空内联样式 (display = "") 后，元素会使用 CSS 规则中的 display 值

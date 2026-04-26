@@ -1,4 +1,4 @@
-name: Lint and Format Code
+name: Format and Lint Code
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 # 并发控制：
 # - push 到 main 分支：所有推送归入同一组 'format-lint-main'，新推送取消正在进行的旧运行，
-#   确保 main 分支的检查和自动格式化始终基于最新代码，避免多个并发运行相互干扰。
+#   确保 main 分支的自动格式化和检查始终基于最新代码，避免多个并发运行相互干扰。
 # - pull_request：每个 PR 独立成组（组名包含 PR 编号），同一 PR 内新提交时取消旧运行，
 #   保证每个 PR 只保留最新的检查结果，节省资源。
 concurrency:
@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
   check:
-    name: Lint and Format Code
+    name: Format and Lint Code
     runs-on: ubuntu-latest
 
     permissions:
@@ -43,25 +43,28 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: pnpm lint
-
       - name: Format
+        id: format
         run: pnpm fmt
 
-      - name: Write Lint summary
-        if: success()
+      - name: Lint
+        id: lint
+        run: pnpm lint
+
+      - name: Write Format and Lint Summary
+        if: always()
         run: |
-          echo "## Lint Results" >> $GITHUB_STEP_SUMMARY
+          echo "## Format and Lint Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- Lint: Passed" >> $GITHUB_STEP_SUMMARY
+          echo "- Format: ${{ steps.format.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Lint: ${{ steps.lint.outcome }}" >> $GITHUB_STEP_SUMMARY
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # https://github.com/stefanzweifel/git-auto-commit-action/releases/tag/v7.1.0
         id: auto-commit-action
         with:
           commit_message: |
-            style: auto-format and fixes
+            style: auto-format and lint fixes
 
       - name: "Run if changes have been detected"
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
