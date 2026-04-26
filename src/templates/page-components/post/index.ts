@@ -287,7 +287,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
     const shareFooter: HTMLElement | null = document.querySelector<HTMLElement>("#share-footer");
     const footerTopIcon: HTMLElement | null = document.querySelector<HTMLElement>("#actions-footer > #top");
 
-    /** 移动端 文章页 底部导航栏 页面滚动相关逻辑 向上滚动时显示移动端导航菜单， 向下滚动时再次隐藏 */
+    /** 移动端 文章页 底部导航栏 页面滚动相关逻辑 向上滚动时显示移动端导航菜单，向下滚动时再次隐藏 */
     if (footerNav) {
       window.addEventListener("scroll", (): void => {
         const topDistance = getTopDistance();
