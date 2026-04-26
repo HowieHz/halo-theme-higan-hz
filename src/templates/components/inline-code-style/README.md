@@ -10,7 +10,10 @@ Currently supported presets:
 - `soft-fill`: soft background highlight
 - `pill`: theme-tinted rounded pill
 
-It only affects inline code and does not change multi-line code blocks. The `dotted-border` preset keeps the current base style and emits no extra CSS. Other presets provide alternative inline-code highlight styles.
+It only affects inline code and does not change multi-line code blocks.
+The `dotted-border` preset keeps the current base style and emits no
+extra CSS. Other presets provide alternative inline-code highlight
+styles.
 
 ## Usage
 

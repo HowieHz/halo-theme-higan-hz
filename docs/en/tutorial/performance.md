@@ -152,4 +152,10 @@ This theme has been optimized with code splitting, reduced external dependencies
 1. Avoid referencing extremely slow resources: such as huge images or public CDN resources with poor accessibility.
 2. Deploy CDN when possible: Personal sites are limited by bandwidth and server performance. Using CDN for static resources can significantly improve loading speed.
 3. Use modern image formats: such as `WebP` and `AVIF`, which can reduce image size while maintaining equivalent image quality.
-4. Use modern font formats: When using custom fonts, prioritize the `woff2` format, which offers significant improvements in file size and loading performance compared to `woff` and `ttf`. This theme supports configurable font subsetting for optimal on-demand loading; consider using the [online font subsetter](https://chinese-font.netlify.app/zh-cn/online-split/) for preparation.
+4. Use modern font formats: When using custom fonts, prioritize
+   the `woff2` format, which offers significant improvements in
+   file size and loading performance compared to `woff` and `ttf`.
+   This theme supports configurable font subsetting for optimal
+   on-demand loading; consider using the
+   [online font subsetter](https://chinese-font.netlify.app/zh-cn/online-split/)
+   for preparation.

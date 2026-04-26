@@ -138,7 +138,11 @@ CI automatically runs `pnpm fmt`, including the following formatting steps:
 - Verifies that `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` still contain `## [Unreleased]` (fails if missing).
 - Verifies that changelog compare-link definitions at the end of `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` are complete and match release headings (fails if missing or mismatched).
 - Ensures non-release PRs do not manually modify the `version` field in `package.json` (fails if changed).
-- Ensures release PRs (with the `release` label) update the `version` field in `package.json` (fails if unchanged), use a valid semantic version matching `/^\d+\.\d+\.\d+$/` (fails if invalid), and set a version greater than the target branch's current `package.json` version (fails if not incremented).
+- Ensures release PRs (with the `release` label) update the `version`
+  field in `package.json` (fails if unchanged), use a valid semantic
+  version matching `/^\d+\.\d+\.\d+$/` (fails if invalid), and set a
+  version greater than the target branch's current `package.json`
+  version (fails if not incremented).
 - Prevents manual changes to `spec.version` in `theme.yaml` and `i18n-settings/theme.*.yaml` in PRs (fails if changed).
 
 #### Page Resource Size Diff Check
@@ -159,7 +163,12 @@ The current automation generates and uploads only Chromium screenshots for compa
 Before releasing, confirm all of the following:
 
 1. Every branch or PR intended for the release has already been merged.
-2. The entries under `## [Unreleased]` in both `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` are complete, the `## [Unreleased]` heading has not been removed, and compare-link definitions at the end are retained (the release workflow will rebuild this section automatically).
+2. The entries under `## [Unreleased]` in both
+   `docs/maintenance/changelog.md` and
+   `docs/en/maintenance/changelog.md` are complete, the
+   `## [Unreleased]` heading has not been removed, and
+   compare-link definitions at the end are retained
+   (the release workflow will rebuild this section automatically).
 3. In release PRs (with the `release` label), only `package.json` `version` should be changed manually. That value becomes the target stable version.
 4. Manually verify that the `requires` field in `theme.yaml` and `i18n-settings/theme.*.yaml` still matches the target Halo CMS compatibility range.
 
@@ -181,8 +190,15 @@ After merge, the bot automatically:
 5. Runs `gh attestation verify` to confirm every `howiehz-higan-*.zip` package was signed by the expected reusable build workflow; publishing continues only after verification passes.
 6. After verification passes, two publishing actions run in parallel:
    - Create the GitHub Release and keep `howiehz-higan-cn.zip` first in the release asset list.
-   - Sync to the Halo App Store by creating a draft release first, publishing it only after all build artifacts upload successfully, and keeping `howiehz-higan-cn.zip` first in the release asset list so Halo CMS prefers the Simplified Chinese package during update installs.
-7. After the GitHub Release is published, dispatches the follow-up event that triggers `generate-page-size-audit-json.yml`, which creates the page-size audit PR. That PR includes the `deploy-docs` label and deploys docs automatically after merge.
+   - Sync to the Halo App Store by creating a draft release first,
+     publishing it only after all build artifacts upload successfully,
+     and keeping `howiehz-higan-cn.zip` first in the release asset list
+     so Halo CMS prefers the Simplified Chinese package during
+     update installs.
+7. After the GitHub Release is published, dispatches the follow-up event
+   that triggers `generate-page-size-audit-json.yml`, which creates the
+   page-size audit PR. That PR includes the `deploy-docs` label and deploys
+   docs automatically after merge.
 
 ### Nightly Pre-release Procedure
 
@@ -198,7 +214,11 @@ Nightly pre-releases do not require manual version changes or a manually pushed 
 5. Before publishing the GitHub pre-release or syncing the Halo App Store, the workflow verifies attestation for every nightly `.zip` artifact.
 6. After verification passes, the scheduled nightly run creates only the GitHub pre-release and does not sync to the Halo App Store by default.
 
-To create a Nightly pre-release manually, use `workflow_dispatch` and set the `sync_to_halo_store` input to control Halo App Store sync after verification passes; when enabled, App Store sync creates a draft release first and publishes it only after all build artifacts upload successfully. This input defaults to `false`.
+To create a Nightly pre-release manually, use `workflow_dispatch`
+and set the `sync_to_halo_store` input to control Halo App Store sync
+after verification passes; when enabled, App Store sync creates a
+draft release first and publishes it only after all build artifacts
+upload successfully. This input defaults to `false`.
 
 ## Pull Request Conventions
 
@@ -211,8 +231,14 @@ The following conventions are used to mark or trigger PR automation workflows.
 
 ### Special Comments
 
-- `/audit`: Triggers the page resource size diff check, compares the current PR with the latest stable release, and generates a report. Only users with `write`, `maintain`, or `admin` access can trigger it.
-- `/visual`: Triggers the visual regression check, generates screenshots for the latest PR commit, and uploads them to Argos when `ARGOS_TOKEN` is configured. Only users with `write`, `maintain`, or `admin` access can trigger it.
+- `/audit`: Triggers the page resource size diff check, compares
+  the current PR with the latest stable release, and generates a
+  report. Only users with `write`, `maintain`, or `admin` access
+  can trigger it.
+- `/visual`: Triggers the visual regression check, generates
+  screenshots for the latest PR commit, and uploads them to Argos
+  when `ARGOS_TOKEN` is configured. Only users with `write`,
+  `maintain`, or `admin` access can trigger it.
 
 ## How to Add a New Feature with Config Options
 

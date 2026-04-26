@@ -213,27 +213,30 @@ const publishDraftRelease = async (appId, draftRelease, release, markdown, html)
     throw new Error("Draft release response is missing the release name or notes name.");
   }
 
-  return haloRequest(`/apis/uc.api.developer.store.halo.run/v1alpha1/releases/${releaseName}?applicationName=${appId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      release: {
-        ...draftRelease,
-        spec: {
-          ...draftRelease.spec,
-          draft: false,
-        },
-        status: {
-          ...(draftRelease.status ?? {}),
-          published: false,
-        },
+  return haloRequest(
+    `/apis/uc.api.developer.store.halo.run/v1alpha1/releases/${releaseName}?applicationName=${appId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
       },
-      notes: createReleaseNotesPayload(notesName, markdown, html),
-      makeLatest: !release.prerelease,
-    }),
-  });
+      body: JSON.stringify({
+        release: {
+          ...draftRelease,
+          spec: {
+            ...draftRelease.spec,
+            draft: false,
+          },
+          status: {
+            ...(draftRelease.status ?? {}),
+            published: false,
+          },
+        },
+        notes: createReleaseNotesPayload(notesName, markdown, html),
+        makeLatest: !release.prerelease,
+      }),
+    },
+  );
 };
 
 const main = async () => {
