@@ -106,11 +106,11 @@ export function showElement(element: HTMLElement): void {
   /**
    * 处理特殊情况：当内联样式被清空后，元素仍然不可见。
    *
-   * 原因：清空内联样式 (display = "") 后，元素会使用 CSS 规则中的 display 值。 如果 CSS 规则设置了 display: none，元素仍然不可见。
+   * 原因：清空内联样式 (display = "") 后，元素会使用 CSS 规则中的 display 值。如果 CSS 规则设置了 display: none，元素仍然不可见。
    *
-   * 解决方案：强制设置该 HTML 标签的浏览器默认 display 值来覆盖 CSS 规则。 例如：div → "block", span → "inline", table → "table"
+   * 解决方案：强制设置该 HTML 标签的浏览器默认 display 值来覆盖 CSS 规则。例如：div → "block", span → "inline", table → "table"
    *
-   * 示例场景： CSS: .my-div { display: none; } JS: element.style.display = ""; // 清空内联样式，但 CSS 规则仍生效 结果：元素仍然隐藏
+   * 示例场景：CSS: .my-div { display: none; } JS: element.style.display = ""; // 清空内联样式，但 CSS 规则仍生效 结果：元素仍然隐藏
    * 修复：element.style.display = "block"; // 覆盖 CSS 规则
    */
   if (element.style.display === "" && !isVisible(element)) {
