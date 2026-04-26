@@ -87,6 +87,20 @@ const parseStableSemVer = (tag) => {
   };
 };
 
+const compareStableSemVer = (left, right) =>
+  left.major - right.major || left.minor - right.minor || left.patch - right.patch;
+
+const isStableSemVerDowngrade = (currentTag, nextTag) => {
+  const currentVersion = parseStableSemVer(currentTag);
+  const nextVersion = parseStableSemVer(nextTag);
+
+  if (!currentVersion || !nextVersion) {
+    return false;
+  }
+
+  return compareStableSemVer(nextVersion, currentVersion) < 0;
+};
+
 const extractRepositoryName = (usesTarget) => usesTarget.split("/").slice(0, 2).join("/");
 
 const isCommitRef = (ref) => commitRefPattern.test(ref);
@@ -328,6 +342,13 @@ const buildCommitRefUpdate = async (repository, currentRef, suffix) => {
     return null;
   }
 
+  if (isStableSemVerDowngrade(commentTag, targetTag)) {
+    console.log(
+      `Skipped ${repository} because resolved tag ${targetTag} is older than the current pinned tag ${commentTag}`,
+    );
+    return null;
+  }
+
   const targetRef = await fetchCommitShaForTag(repository, targetTag);
   return {
     nextRef: targetRef,
@@ -363,6 +384,13 @@ const updateFile = async (filePath) => {
         : null;
 
       if (targetVersion && latestRelease.eligible) {
+        if (isStableSemVerDowngrade(currentRef, targetVersion)) {
+          console.log(
+            `Skipped ${repository} because resolved tag ${targetVersion} is older than the current pinned tag ${currentRef}`,
+          );
+          continue;
+        }
+
         update = {
           nextRef: targetVersion,
           nextSuffix: replaceCommentTag(suffix, currentRef, targetVersion),
