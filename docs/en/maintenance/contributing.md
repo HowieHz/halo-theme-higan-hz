@@ -74,20 +74,20 @@ pnpm docs:preview
 
 ### After Development
 
-#### Linting
-
-Run the following command and make sure there are no errors:
-
-```bash
-pnpm lint
-```
-
 #### Formatting Code
 
-Before committing, format the code with:
+Before committing, format the code first:
 
 ```bash
 pnpm fmt
+```
+
+#### Linting
+
+After formatting, run the following command and make sure there are no errors:
+
+```bash
+pnpm lint
 ```
 
 #### Building the Theme
@@ -102,9 +102,17 @@ pnpm build
 
 CI (GitHub Actions) runs the following checks for PRs. Some checks are triggered manually when needed.
 
+#### CI Formatting Steps
+
+CI first runs `pnpm fmt`, including the following formatting steps:
+
+- `oxfmt`: Formatting for JSON, JSONC, YAML, Markdown, CSS, JavaScript, TypeScript, HTML, Vue and Less files
+
+> Changes produced by formatting will be automatically committed.
+
 #### CI Linting Steps
 
-CI automatically runs `pnpm lint`, including the following checks:
+After formatting, CI automatically runs `pnpm lint`, including the following checks:
 
 - `oxlint` + `eslint`: Code style and type-aware checks
   - **Scope**: JavaScript files, TypeScript files, HTML files (inline `script` blocks only), and Vue files (including inline `script` blocks)
@@ -119,14 +127,6 @@ CI automatically runs `pnpm lint`, including the following checks:
   - **Scope**: TypeScript files
 
 > All lint steps run with auto-fix enabled. If fixes are applied, the changes are committed automatically.
-
-#### CI Formatting Steps
-
-CI automatically runs `pnpm fmt`, including the following formatting steps:
-
-- `oxfmt`: Formatting for JSON, JSONC, YAML, Markdown, CSS, JavaScript, TypeScript, HTML, Vue and Less files
-
-> Changes produced by formatting will be automatically committed.
 
 #### Lighthouse CI
 

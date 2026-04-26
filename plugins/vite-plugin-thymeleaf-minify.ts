@@ -8,9 +8,7 @@ import type { Plugin } from "vite";
 
 const LOG_PREFIX = styleText("cyan", "[thymeleaf-minify]");
 
-/**
- * Plugin options interface
- */
+/** Plugin options interface */
 interface ThymeleafMinifyOptions {
   /** Vite base path */
   base?: string;
@@ -20,22 +18,26 @@ interface ThymeleafMinifyOptions {
  * Vite plugin that removes Thymeleaf prototype-only comments from HTML files and cleans up orphaned script files.
  *
  * Behavior:
+ *
  * - Phase 1 (transformIndexHtml - order: "post"):
+ *
  *   - Tracks all script tags (checking both src and data-src attributes) before transformation.
- *   - Removes Thymeleaf prototype comments (<!--/* ... *\/-->) while preserving parser-level comments (<!--/*\/ ... /*\/-->).
+ *   - Removes Thymeleaf prototype comments (`<!--/* ... *\/-->`) while preserving parser-level comments (`<!--/*\/ ...
+ *     /*\/-->`).
  *   - Compares script tags before and after to identify scripts removed during comment removal.
  *   - Records which HTML files had which scripts removed.
- *
  * - Phase 2 (writeBundle):
+ *
  *   - For each script that was removed from HTML files, checks if the corresponding JS file is still referenced elsewhere.
  *   - Recursively scans all HTML files in the output directory.
  *   - If a JS file is no longer referenced by any HTML file, deletes it as an orphaned file.
  *   - Logs all actions for transparency.
  *
  * Supported script formats:
- * - <script type="module" crossorigin src="..."> (modern modules)
- * - <script nomodule crossorigin src="..."> (legacy scripts)
- * - <script nomodule crossorigin data-src="..."> (Vite legacy plugin format)
+ *
+ * - `<script type="module" crossorigin src="...">` (modern modules)
+ * - `<script nomodule crossorigin src="...">` (legacy scripts)
+ * - `<script nomodule crossorigin data-src="...">` (Vite legacy plugin format)
  *
  * @param options Plugin configuration options
  * @returns Vite plugin
@@ -257,9 +259,7 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
   };
 }
 
-/**
- * Recursively find all HTML files inside a directory.
- */
+/** Recursively find all HTML files inside a directory. */
 async function findHtmlFiles(dir: string): Promise<string[]> {
   const results: string[] = [];
 
@@ -284,14 +284,14 @@ async function findHtmlFiles(dir: string): Promise<string[]> {
 }
 
 /**
- * Remove nested Thymeleaf prototype-only comments using a stack-based
- * algorithm.
+ * Remove nested Thymeleaf prototype-only comments using a stack-based algorithm.
  *
  * Supported formats:
+ *
  * - <!--/* ... *\/--> (no prefix)
  * - //<!--/* ... *\/--> (JS comment prefix, no space)
- * - // <!--/* ... *\/--> (JS comment prefix, with space)
- * Parser-level comments such as <!--/*\/ ... /*\/--> are preserved.
+ * - // <!--/* ... *\/--> (JS comment prefix, with space) Parser-level comments such as <!--/*\/ ... /*\/--> are
+ *   preserved.
  */
 function removeNestedThymeleafComments(html: string): string {
   const result: string[] = [];

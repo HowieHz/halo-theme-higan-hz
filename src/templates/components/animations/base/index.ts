@@ -1,12 +1,11 @@
-/**
- * 滚动到页面顶部
- */
+/** 滚动到页面顶部 */
 export function scrollToTop(): void {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 /**
  * 检查元素是否可见
+ *
  * @param element - 要检查的元素
  * @returns 元素是否可见
  */
@@ -46,29 +45,28 @@ export function isVisible(input: HTMLElement | NodeListOf<HTMLElement> | null): 
   return checkSingle(input);
 }
 
-/**
- * 自定义 Toggle 函数实现
- * 用于显示/隐藏元素的工具函数集合
- * 使用示例：
- *
- * 基本用法
- * toggle('#myElement');                    // 切换显示/隐藏
- * toggle('#myElement', true);              // 强制显示
- * toggle('#myElement', false);             // 强制隐藏
- *
- * 显示/隐藏
- * show('#myElement');                      // 显示元素
- * hide('#myElement');                      // 隐藏元素
- *
- * 批量操作
- * toggle(document.querySelectorAll('.toggle-items'));
- */
+// 自定义 Toggle 函数实现
+// 用于显示/隐藏元素的工具函数集合
+// 使用示例：
+
+// 基本用法
+// toggle('#myElement');                    // 切换显示/隐藏
+// toggle('#myElement', true);              // 强制显示
+// toggle('#myElement', false);             // 强制隐藏
+
+// 显示/隐藏
+// show('#myElement');                      // 显示元素
+// hide('#myElement');                      // 隐藏元素
+
+// 批量操作
+// toggle(document.querySelectorAll('.toggle-items'));
 
 // 存储元素默认显示值的映射表
 const defaultDisplayMap: Record<string, string> = {};
 
 /**
  * 获取元素的默认 display 值
+ *
  * @param elem - 要检查的元素
  * @returns 默认的 display 值
  */
@@ -96,6 +94,7 @@ function getDefaultDisplay(elem: HTMLElement): string {
 
 /**
  * 显示元素的通用逻辑
+ *
  * @param element - 要显示的元素
  */
 export function showElement(element: HTMLElement): void {
@@ -110,21 +109,20 @@ export function showElement(element: HTMLElement): void {
     }
   }
 
-  /**
-   * 处理特殊情况：当内联样式被清空后，元素仍然不可见
-   *
-   * 原因：清空内联样式 (display = "") 后，元素会使用 CSS 规则中的 display 值
-   * 如果 CSS 规则设置了 display: none，元素仍然不可见
-   *
-   * 解决方案：强制设置该 HTML 标签的浏览器默认 display 值来覆盖 CSS 规则
-   * 例如：div → "block", span → "inline", table → "table"
-   *
-   * 示例场景：
-   * CSS: .my-div { display: none; }
-   * JS:  element.style.display = ""; // 清空内联样式，但 CSS 规则仍生效
-   * 结果：元素仍然隐藏
-   * 修复：element.style.display = "block"; // 覆盖 CSS 规则
-   */
+  // 处理特殊情况：当内联样式被清空后，元素仍然不可见
+
+  // 原因：清空内联样式 (display = "") 后，元素会使用 CSS 规则中的 display 值
+  // 如果 CSS 规则设置了 display: none，元素仍然不可见
+
+  // 解决方案：强制设置该 HTML 标签的浏览器默认 display 值来覆盖 CSS 规则
+  // 例如：div → "block", span → "inline", table → "table"
+
+  // 示例场景：
+  // CSS: .my-div { display: none; }
+  // JS:  element.style.display = ""; // 清空内联样式，但 CSS 规则仍生效
+  // 结果：元素仍然隐藏
+  // 修复：element.style.display = "block"; // 覆盖 CSS 规则
+
   if (element.style.display === "" && !isVisible(element)) {
     element.style.display = getDefaultDisplay(element);
   }
@@ -132,6 +130,7 @@ export function showElement(element: HTMLElement): void {
 
 /**
  * 隐藏元素的通用逻辑
+ *
  * @param element - 要隐藏的元素
  */
 export function hideElement(element: HTMLElement): void {
@@ -145,6 +144,7 @@ export function hideElement(element: HTMLElement): void {
 
 /**
  * CSS 动画的通用清理函数
+ *
  * @param element - 动画元素
  * @param className - 要移除的 CSS 类名
  * @param callback - 额外的清理回调
@@ -159,6 +159,7 @@ function cleanupAnimation(element: HTMLElement, className: string, callback?: ()
 
 /**
  * 设置 CSS 动画的通用函数
+ *
  * @param element - 动画元素
  * @param className - 要添加的 CSS 类名
  * @param duration - 动画持续时间
@@ -179,8 +180,9 @@ export function setupAnimation(
 
 /**
  * 批量显示/隐藏元素
+ *
  * @param elements - 要操作的元素
- * @param show - true 为显示，false 为隐藏
+ * @param show - True 为显示，false 为隐藏
  * @returns 返回元素
  */
 function showHide(elements: HTMLElement | NodeList | HTMLElement[], show: boolean): HTMLElement | NodeList {
@@ -215,6 +217,7 @@ function showHide(elements: HTMLElement | NodeList | HTMLElement[], show: boolea
 
 /**
  * 显示元素
+ *
  * @param selector - 元素或选择器
  * @returns 返回元素
  */
@@ -225,6 +228,7 @@ export function show(selector: string | HTMLElement | NodeList): HTMLElement | N
 
 /**
  * 隐藏元素
+ *
  * @param selector - 元素或选择器
  * @returns 返回元素
  */
@@ -235,6 +239,7 @@ export function hide(selector: string | HTMLElement | NodeList): HTMLElement | N
 
 /**
  * 切换元素显示/隐藏状态
+ *
  * @param selector - 元素或选择器
  * @param state - 可选的状态参数，true 为显示，false 为隐藏
  * @returns 返回元素

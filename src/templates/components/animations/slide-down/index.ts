@@ -2,7 +2,8 @@ import "./styles.css";
 import { isVisible, showElement } from "../base/index";
 
 /**
- * jQuery 风格的滑下动画函数 - 通过高度变化显示元素
+ * JQuery 风格的滑下动画函数 - 通过高度变化显示元素
+ *
  * @param element - 要执行动画的元素
  * @param duration - 动画持续时间（毫秒）
  */

@@ -1,10 +1,9 @@
 /**
- * Inserts a clickable `#` anchor link into each heading. If a heading lacks an `id`,
- * one is generated from its text content. Headings with empty text are skipped.
+ * Inserts a clickable `#` anchor link into each heading. If a heading lacks an `id`, one is generated from its text
+ * content. Headings with empty text are skipped.
  *
- * When a `#heading-anchor-svg` element exists in the DOM containing an SVG,
- * that SVG is cloned and injected into each anchor instead of relying on the CSS
- * `::before` symbol.
+ * When a `#heading-anchor-svg` element exists in the DOM containing an SVG, that SVG is cloned and injected into each
+ * anchor instead of relying on the CSS `::before` symbol.
  *
  * @param contentSelector - CSS selector for the element containing the headings.
  * @param headingSelector - CSS selector for heading elements to process.

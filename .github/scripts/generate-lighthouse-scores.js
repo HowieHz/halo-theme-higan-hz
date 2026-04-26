@@ -1,7 +1,5 @@
 #!/usr/bin/env node
-/**
- * 通过 page-size-report.json 提取 Lighthouse 分类分数并生成 Markdown 报告
- */
+/** 通过 page-size-report.json 提取 Lighthouse 分类分数并生成 Markdown 报告 */
 import { readFile, writeFile } from "fs/promises";
 
 const MANIFEST = process.env.MANIFEST || "./lighthouse-reports-current/manifest.json";
