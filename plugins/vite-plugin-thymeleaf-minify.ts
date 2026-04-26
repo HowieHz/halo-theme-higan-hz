@@ -22,8 +22,8 @@ interface ThymeleafMinifyOptions {
  * - Phase 1 (transformIndexHtml - order: "post"):
  *
  *   - Tracks all script tags (checking both src and data-src attributes) before transformation.
- *   - Removes Thymeleaf prototype comments (<!--/* ... *\/-->) while preserving parser-level comments (<!--/*\/ ...
- *     /*\/-->).
+ *   - Removes Thymeleaf prototype comments (`<!--/* ... *\/-->`) while preserving parser-level comments (`<!--/*\/ ...
+ *     /*\/-->`).
  *   - Compares script tags before and after to identify scripts removed during comment removal.
  *   - Records which HTML files had which scripts removed.
  * - Phase 2 (writeBundle):
@@ -35,7 +35,9 @@ interface ThymeleafMinifyOptions {
  *
  * Supported script formats:
  *
- * - <script type="module" crossorigin src="..."> (modern modules)
+ * - `<script type="module" crossorigin src="...">` (modern modules)
+ * - `<script nomodule crossorigin src="...">` (legacy scripts)
+ * - `<script nomodule crossorigin data-src="...">` (Vite legacy plugin format)
  *
  * @param options Plugin configuration options
  * @returns Vite plugin
