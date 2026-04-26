@@ -181,7 +181,7 @@ After merge, the bot automatically:
 5. Runs `gh attestation verify` to confirm every `howiehz-higan-*.zip` package was signed by the expected reusable build workflow; publishing continues only after verification passes.
 6. After verification passes, two publishing actions run in parallel:
    - Create the GitHub Release and keep `howiehz-higan-cn.zip` first in the release asset list.
-   - Sync to the Halo App Store and keep `howiehz-higan-cn.zip` first in the release asset list so Halo CMS prefers the Simplified Chinese package during update installs.
+   - Sync to the Halo App Store by creating a draft release first, publishing it only after all build artifacts upload successfully, and keeping `howiehz-higan-cn.zip` first in the release asset list so Halo CMS prefers the Simplified Chinese package during update installs.
 7. After the GitHub Release is published, dispatches the follow-up event that triggers `generate-page-size-audit-json.yml`, which creates the page-size audit PR. That PR includes the `deploy-docs` label and deploys docs automatically after merge.
 
 ### Nightly Pre-release Procedure
@@ -198,7 +198,7 @@ Nightly pre-releases do not require manual version changes or a manually pushed 
 5. Before publishing the GitHub pre-release or syncing the Halo App Store, the workflow verifies attestation for every nightly `.zip` artifact.
 6. After verification passes, the scheduled nightly run creates only the GitHub pre-release and does not sync to the Halo App Store by default.
 
-To create a Nightly pre-release manually, use `workflow_dispatch` and set the `sync_to_halo_store` input to control Halo App Store sync after verification passes; this input defaults to `false`.
+To create a Nightly pre-release manually, use `workflow_dispatch` and set the `sync_to_halo_store` input to control Halo App Store sync after verification passes; when enabled, App Store sync creates a draft release first and publishes it only after all build artifacts upload successfully. This input defaults to `false`.
 
 ## Pull Request Conventions
 
