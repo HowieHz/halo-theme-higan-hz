@@ -3,7 +3,7 @@ packages:
   - docs
 trustPolicy: no-downgrade
 trustPolicyExclude:
-  - 'semver@5.7.2'
+  - "semver@5.7.2"
 engineStrict: true # engines.node will be strictly enforced when installing dependencies
 allowBuilds:
   esbuild: true
