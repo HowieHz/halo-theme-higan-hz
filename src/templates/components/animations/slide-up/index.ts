@@ -2,7 +2,8 @@ import "./styles.css";
 import { hideElement, isVisible } from "../base/index";
 
 /**
- * jQuery 风格的滑上动画函数 - 通过高度变化隐藏元素
+ * JQuery 风格的滑上动画函数 - 通过高度变化隐藏元素
+ *
  * @param element - 要执行动画的元素
  * @param duration - 动画持续时间（毫秒）
  */

@@ -1,7 +1,4 @@
-/**
- * 比较两个页面体积报告并生成差异报告
- * 用于 PR 中比较当前版本与 base 版本的差异
- */
+/** 比较两个页面体积报告并生成差异报告 用于 PR 中比较当前版本与 base 版本的差异 */
 
 import { readFile, writeFile } from "fs/promises";
 
@@ -9,9 +6,7 @@ const CURRENT_REPORT = process.env.CURRENT_REPORT || "./reports-current/page-siz
 const BASE_REPORT = process.env.BASE_REPORT || "./reports-base/page-size-report.json";
 const OUTPUT_FILE = process.env.OUTPUT_FILE || "./comparison-report.md";
 
-/**
- * 读取 JSON 报告
- */
+/** 读取 JSON 报告 */
 async function readReport(path) {
   try {
     const content = await readFile(path, "utf-8");
@@ -23,6 +18,7 @@ async function readReport(path) {
 
 /**
  * 格式化大小变化
+ *
  * @param {number} change - 变化量（KB）
  * @param {number} baseValue - 基准值（KB）
  * @returns {string} 格式化的字符串，如 "+12.34(+5.67%)" 或 "-12.34(-5.67%)"
@@ -37,10 +33,11 @@ function formatChange(change, baseValue) {
 
 /**
  * 为变化添加颜色标记
- * @param {number} transferChange - transfer size 变化
- * @param {number} resourceChange - resource size 变化
- * @param {number} baseTransfer - base transfer size
- * @param {number} baseResource - base resource size
+ *
+ * @param {number} transferChange - Transfer size 变化
+ * @param {number} resourceChange - Resource size 变化
+ * @param {number} baseTransfer - Base transfer size
+ * @param {number} baseResource - Base resource size
  * @returns {string} 带颜色标记的字符串
  */
 function formatColoredChange(transferChange, resourceChange, baseTransfer, baseResource) {
@@ -71,9 +68,7 @@ function formatColoredChange(transferChange, resourceChange, baseTransfer, baseR
   return `${coloredTransfer}/${coloredResource}`;
 }
 
-/**
- * 生成表格的通用函数
- */
+/** 生成表格的通用函数 */
 function generateTable(title, data, typeOrder, typeLabels, isCollapsed = false) {
   let content = ``;
 
@@ -104,9 +99,7 @@ function generateTable(title, data, typeOrder, typeLabels, isCollapsed = false) 
   }
 }
 
-/**
- * 生成变化表格的通用函数
- */
+/** 生成变化表格的通用函数 */
 function generateChangesTable(
   title,
   changes,
@@ -151,9 +144,7 @@ function generateChangesTable(
   }
 }
 
-/**
- * 生成比较报告
- */
+/** 生成比较报告 */
 function generateComparisonReport(currentReport, baseReport) {
   let markdown = ``;
 
@@ -407,9 +398,7 @@ function generateComparisonReport(currentReport, baseReport) {
   return markdown;
 }
 
-/**
- * 主函数
- */
+/** 主函数 */
 async function main() {
   try {
     console.log("读取报告文件...");

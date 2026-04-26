@@ -21,9 +21,7 @@ document.addEventListener("click", (e: Event): void => {
   }
 });
 
-/**
- * 获取页面滚动距离（垂直方向）
- */
+/** 获取页面滚动距离（垂直方向） */
 function getTopDistance(): number {
   // const topDistance = window.pageYOffset || // 现代浏览器首选 scrollY 的别名 支持大部分现代浏览器（IE9+）
   // document.documentElement.scrollTop ||  // 标准模式兼容 包括老版本 IE
@@ -33,8 +31,8 @@ function getTopDistance(): number {
 }
 
 /**
- * Event delegation for toggle functionality on hover
- * Handle mouseover and mouseout events for elements with data-toggle-target attribute
+ * Event delegation for toggle functionality on hover Handle mouseover and mouseout events for elements with
+ * data-toggle-target attribute
  */
 document.addEventListener("mouseover", (e: Event): void => {
   const target = e.target as HTMLElement;
@@ -61,10 +59,7 @@ document.addEventListener("mouseout", (e: Event): void => {
 });
 
 document.addEventListener("DOMContentLoaded", (): void => {
-  /**
-   * 控制博客文章页面中菜单的不同版本
-   * 适用于桌面端、平板端和移动端
-   */
+  /** 控制博客文章页面中菜单的不同版本 适用于桌面端、平板端和移动端 */
   if (document.querySelector(".post")) {
     // 移动端 文章页 底部导航栏 按钮事件 绑定
     const footerMenuButton: HTMLElement | null = document.querySelector("#actions-footer > #menu");
@@ -292,11 +287,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
     const shareFooter: HTMLElement | null = document.querySelector<HTMLElement>("#share-footer");
     const footerTopIcon: HTMLElement | null = document.querySelector<HTMLElement>("#actions-footer > #top");
 
-    /**
-     * 移动端 文章页 底部导航栏 页面滚动相关逻辑
-     * 向上滚动时显示移动端导航菜单，
-     * 向下滚动时再次隐藏
-     */
+    /** 移动端 文章页 底部导航栏 页面滚动相关逻辑 向上滚动时显示移动端导航菜单， 向下滚动时再次隐藏 */
     if (footerNav) {
       window.addEventListener("scroll", (): void => {
         const topDistance = getTopDistance();

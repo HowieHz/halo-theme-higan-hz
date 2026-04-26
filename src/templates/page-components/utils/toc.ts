@@ -1,10 +1,12 @@
 /**
- * Generates a Table of Contents (TOC) from the headings within a specified HTML content element
- * and injects the generated TOC into a target DOM element.
+ * Generates a Table of Contents (TOC) from the headings within a specified HTML content element and injects the
+ * generated TOC into a target DOM element.
  *
- * @param contentSelector - CSS selector for the element containing the content from which headings will be retrieved to construct the TOC.
+ * @param contentSelector - CSS selector for the element containing the content from which headings will be retrieved to
+ *   construct the TOC.
  * @param tocSelector - CSS selector for the DOM element where the generated TOC should be displayed.
- * @param headingSelector - A string of heading selectors (e.g., "h1, h2, h3") to select within the contentSelector element for inclusion in the TOC.
+ * @param headingSelector - A string of heading selectors (e.g., "h1, h2, h3") to select within the contentSelector
+ *   element for inclusion in the TOC.
  */
 export function initTOC(contentSelector: string, tocSelector: string, headingSelector = "h1, h2, h3, h4"): void {
   const logPrefix = "[Higan Haozi][toc]";

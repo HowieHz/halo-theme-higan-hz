@@ -3,6 +3,7 @@ import { hideElement, isVisible, setupAnimation } from "../base/index";
 
 /**
  * 淡出动画函数 - 使用 CSS 动画，与 hide 逻辑保持一致
+ *
  * @param element - 要执行动画的元素，支持单个 HTMLElement 或 NodeListOf<HTMLElement>
  * @param duration - 动画持续时间（毫秒）
  */

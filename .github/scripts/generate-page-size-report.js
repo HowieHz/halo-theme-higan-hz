@@ -1,7 +1,4 @@
-/**
- * 生成页面体积评估报告
- * 解析 Lighthouse 结果并生成可读的报告
- */
+/** 生成页面体积评估报告 解析 Lighthouse 结果并生成可读的报告 */
 
 import { readFile, writeFile } from "fs/promises";
 import { resolve } from "path";
@@ -11,9 +8,7 @@ const OUTPUT_DIR = process.env.OUTPUT_DIR || "./reports";
 const OUTPUT_FILENAME = process.env.OUTPUT_FILENAME || "page-size-report";
 const JSON_ONLY = process.env.JSON_ONLY === "true";
 
-/**
- * 解析 Lighthouse 结果
- */
+/** 解析 Lighthouse 结果 */
 async function parseLighthouseResults() {
   const fs = (await import("fs")).promises;
   const path = (await import("path")).default;
@@ -156,9 +151,7 @@ async function parseLighthouseResults() {
   return results;
 }
 
-/**
- * 生成 Markdown 报告
- */
+/** 生成 Markdown 报告 */
 function generateMarkdownReport(results, metadata = {}) {
   let markdown = `# Page Size Audit Report\n\n`;
 
@@ -270,9 +263,7 @@ function generateMarkdownReport(results, metadata = {}) {
   return markdown;
 }
 
-/**
- * 生成 JSON 报告
- */
+/** 生成 JSON 报告 */
 function generateJsonReport(results, metadata) {
   return JSON.stringify(
     {
@@ -285,9 +276,7 @@ function generateJsonReport(results, metadata) {
   );
 }
 
-/**
- * 主函数
- */
+/** 主函数 */
 async function main() {
   try {
     console.log("解析 Lighthouse 结果...");

@@ -4,8 +4,9 @@ import { ref } from "vue";
 /* oxlint-disable eslint(no-undef) */
 /**
  * 组件属性定义：
- * @prop {String} src - 要渲染的 iframe 源地址，默认为 "/halo-theme-higan-haozi/frames/default.html"
- * @prop {String} height - iframe 的高度，默认为 "100px"
+ *
+ * @property {String} src - 要渲染的 iframe 源地址，默认为 "/halo-theme-higan-haozi/frames/default.html"
+ * @property {String} height - Iframe 的高度，默认为 "100px"
  */
 defineProps({
   src: {
