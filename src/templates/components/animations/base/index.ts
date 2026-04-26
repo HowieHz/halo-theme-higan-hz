@@ -110,7 +110,10 @@ export function showElement(element: HTMLElement): void {
    *
    * 解决方案：强制设置该 HTML 标签的浏览器默认 display 值来覆盖 CSS 规则。例如：div → "block", span → "inline", table → "table"
    *
-   * 示例场景：CSS: .my-div { display: none; } JS: element.style.display = ""; // 清空内联样式，但 CSS 规则仍生效 结果：元素仍然隐藏
+   * 示例场景：  
+   * CSS: .my-div { display: none; }  
+   * JS: element.style.display = ""; // 清空内联样式，但 CSS 规则仍生效  
+   * 结果：元素仍然隐藏  
    * 修复：element.style.display = "block"; // 覆盖 CSS 规则
    */
   if (element.style.display === "" && !isVisible(element)) {
