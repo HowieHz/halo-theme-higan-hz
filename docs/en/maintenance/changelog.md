@@ -81,7 +81,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Optimized link styling for links containing inline code snippets: the bottom background underline is now hidden in both default and hover states, and the highlight behavior is changed to update the text color on hover.
+- Optimized link styling for links containing inline code snippets:
+  the bottom background underline is now hidden in both default and
+  hover states, and the highlight behavior is changed to update the
+  text color on hover.
 
 ## [1.63.1] - 2026-04-04
 
@@ -94,13 +97,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 💥 Breaking Changes
 
-- The default value of ["Dark content text style"](/en/guide/theme-configuration#dark-content-text-style) has changed from `No Adjustment` to `Soft Gray`. If you have not manually changed this setting, dark-mode body text will look different after upgrading.
-- The internal field name of ["Dark content text style"](/en/guide/theme-configuration#dark-content-text-style) has changed from `dark_content_text_style_preset` to `dark_content_text_style`; reconfiguration is required after upgrading.
-- The internal field name of ["Inline code style"](/en/guide/theme-configuration#inline-code-style) has changed from `inline_code_style_preset` to `inline_code_style`; reconfiguration is required after upgrading.
+- The default value of
+  ["Dark content text style"](/en/guide/theme-configuration#dark-content-text-style)
+  has changed from `No Adjustment` to `Soft Gray`. If you have not
+  manually changed this setting, dark-mode body text will look
+  different after upgrading.
+- The internal field name of
+  ["Dark content text style"](/en/guide/theme-configuration#dark-content-text-style)
+  has changed from `dark_content_text_style_preset` to
+  `dark_content_text_style`; reconfiguration is required after
+  upgrading.
+- The internal field name of
+  ["Inline code style"](/en/guide/theme-configuration#inline-code-style)
+  has changed from `inline_code_style_preset` to `inline_code_style`;
+  reconfiguration is required after upgrading.
 
 ### 🚀 Features
 
-- Optimized the `soft-gray` option under ["Dark content text style"](/en/guide/theme-configuration#dark-content-text-style) so dark-mode body text feels softer while the contrast between darker text/headings and body text is more pronounced.
+- Optimized the `soft-gray` option under
+  ["Dark content text style"](/en/guide/theme-configuration#dark-content-text-style)
+  so dark-mode body text feels softer while the contrast between
+  darker text/headings and body text is more pronounced.
 
 ### 📄 Documentation
 
@@ -116,7 +133,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Added the ["Dark content text style"](/en/guide/theme-configuration#dark-content-text-style) setting (Overall Styles -> Dark content text style). The `soft-gray` option makes body text feel softer in dark mode and reduces the bright, heavy look of pure white text.
+- Added the
+  ["Dark content text style"](/en/guide/theme-configuration#dark-content-text-style)
+  setting (Overall Styles -> Dark content text style). The
+  `soft-gray` option makes body text feel softer in dark mode and
+  reduces the bright, heavy look of pure white text.
 
 ### 🔧 Code Refactoring
 
@@ -136,7 +157,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Added the ["Inline code style"](/en/guide/theme-configuration#inline-code-style) setting (Post Page Style -> Inline code style) for inline code in posts and single pages. Includes three options: dotted border, soft highlight, and theme pill. Multi-line code blocks are unchanged.
+- Added the
+  ["Inline code style"](/en/guide/theme-configuration#inline-code-style)
+  setting (Post Page Style -> Inline code style) for inline code in
+  posts and single pages. Includes three options: dotted border,
+  soft highlight, and theme pill. Multi-line code blocks are unchanged.
 
 ### 🛠️ Miscellaneous Chores
 
@@ -157,10 +182,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Heading anchor links are available on post and single page templates: hovering over or focusing a heading reveals a clickable `#` before it; clicking navigates to that heading's anchor and updates the address bar URL. h2 headings display the anchor permanently; all other levels show it on hover or focus. On mobile (screen width below 640px), the anchor appears to the right of the heading text instead.
-- Added ["Heading anchor symbol"](/en/guide/theme-configuration#heading-anchor-symbol) setting (Post Page Style -> Heading anchor symbol) to customize the symbol displayed before heading anchor links. Leave empty to use the default `#`. Implemented via the `--heading-anchor-symbol` CSS custom property.
-- Added ["Heading anchor symbol raw output"](/en/guide/theme-configuration#heading-anchor-symbol-raw-output) setting (Post Page Style -> Heading anchor symbol raw output). When enabled, the anchor symbol value is written directly as the CSS variable value without quoting, intended for users familiar with CSS `content` property syntax.
-- Added ["Heading anchor icon"](/en/guide/theme-configuration#heading-anchor-icon) setting (Post Page Style -> Heading anchor icon) to select an icon from the Iconify icon library as the heading anchor. When configured, it takes precedence over the anchor symbol setting. The icon color automatically follows the theme's primary color.
+- Heading anchor links are available on post and single page
+  templates: hovering over or focusing a heading reveals a clickable
+  `#` before it; clicking navigates to that heading's anchor and
+  updates the address bar URL. h2 headings display the anchor
+  permanently; all other levels show it on hover or focus. On mobile
+  (screen width below 640px), the anchor appears to the right of the
+  heading text instead.
+- Added
+  ["Heading anchor symbol"](/en/guide/theme-configuration#heading-anchor-symbol)
+  setting (Post Page Style -> Heading anchor symbol) to customize the
+  symbol displayed before heading anchor links. Leave empty to use the
+  default `#`. Implemented via the `--heading-anchor-symbol` CSS
+  custom property.
+- Added
+  ["Heading anchor symbol raw output"](/en/guide/theme-configuration#heading-anchor-symbol-raw-output)
+  setting (Post Page Style -> Heading anchor symbol raw output). When
+  enabled, the anchor symbol value is written directly as the CSS
+  variable value without quoting, intended for users familiar with CSS
+  `content` property syntax.
+- Added
+  ["Heading anchor icon"](/en/guide/theme-configuration#heading-anchor-icon)
+  setting (Post Page Style -> Heading anchor icon) to select an icon
+  from the Iconify icon library as the heading anchor. When
+  configured, it takes precedence over the anchor symbol setting. The
+  icon color automatically follows the theme's primary color.
 
 ### 📄 Documentation
 
@@ -168,7 +214,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🛠️ Miscellaneous Chores
 
-- Added SLSA L3 provenance generation (`slsa-github-generator`) to the release pipeline alongside the existing GitHub Attestation (L2). Each release will now include a `.intoto.jsonl` file that can be independently verified with `slsa-verifier`.
+- Added SLSA L3 provenance generation (`slsa-github-generator`) to
+  the release pipeline alongside the existing GitHub Attestation (L2).
+  Each release will now include a `.intoto.jsonl` file that can be
+  independently verified with `slsa-verifier`.
 - Applied `line-break: strict` for CJK text to prevent punctuation from appearing at the start or end of a line.
 - Updated development dependencies.
 
@@ -197,16 +246,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 💥 Breaking Changes
 
-- In the social media settings (`/console/theme/settings/sns`), the `index_sns` array has been renamed to `sns_list`, and its `type` field has been changed from an object type to a string type. **Existing configurations require the social media list to be re-configured.**
-- In the share button settings (`/console/theme/settings/share`), the `button_config` array has been split into `share_list` (preset button list) and `custom_share` (custom buttons). **Existing configurations require the share button list to be re-configured.**
-- The global settings remove the `Custom Resource Location Address` and `instant.page Resource Location` options, and instant.page now uses the theme-bundled resource. **Existing values for these two settings no longer take effect.**
+- In the social media settings (`/console/theme/settings/sns`), the
+  `index_sns` array has been renamed to `sns_list`, and its `type`
+  field has been changed from an object type to a string type.
+  **Existing configurations require the social media list to be
+  re-configured.**
+- In the share button settings (`/console/theme/settings/share`), the
+  `button_config` array has been split into `share_list` (preset
+  button list) and `custom_share` (custom buttons). **Existing
+  configurations require the share button list to be re-configured.**
+- The global settings remove the `Custom Resource Location Address`
+  and `instant.page Resource Location` options, and instant.page now
+  uses the theme-bundled resource. **Existing values for these two
+  settings no longer take effect.**
 - Mermaid support removes the `Mermaid Resource Location` setting, and Mermaid now uses the theme-bundled resource. **Existing values for this setting no longer take effect.**
 
 ### 🚀 Features
 
 - Added preset share buttons for Reddit, WhatsApp, Tumblr, LINE, Hacker News, Blogger, Gmail, Yahoo Mail and Skype.
 - Added a global setting `Enable performance monitor panel` to control performance monitor panel injection.
-- Expanded bottom content settings into [Add content to the page bottom/sidebar](/en/guide/theme-configuration#add-content-to-the-page-bottom-sidebar), with new options for page bottom/sidebar content display mode, sidebar hover opacity, and tablet and mobile sidebar display behavior.
+- Expanded bottom content settings into
+  [Add content to the page bottom/sidebar](/en/guide/theme-configuration#add-content-to-the-page-bottom-sidebar),
+  with new options for page bottom/sidebar content display mode,
+  sidebar hover opacity, and tablet and mobile sidebar display
+  behavior.
 
 ### 🔧 Code Refactoring
 
@@ -276,7 +339,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Added a canonical link output toggle switch (enabled by default) for all pages containing a `<link rel="canonical">` tag (homepage, post, archives, category collection, category details, tag collection, tag details, author details, custom pages, links, photo gallery, moments, friends circle).
+- Added a canonical link output toggle switch (enabled by default)
+  for all pages containing a `<link rel="canonical">` tag (homepage,
+  post, archives, category collection, category details, tag
+  collection, tag details, author details, custom pages, links,
+  photo gallery, moments, friends circle).
 
 ### 🔧 Code Refactoring
 
@@ -302,7 +369,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🐛 Bug Fixes
 
-- Ref: [nonzzz/vite-plugin-compression#93](https://github.com/nonzzz/vite-plugin-compression/issues/93). To comply with RFC 9659 and avoid runtime errors in Chrome (v123+) and Firefox (v126+), adjusted the zstandard compression level for `*.zst` precompressed assets to 19.
+- Ref:
+  [nonzzz/vite-plugin-compression#93](https://github.com/nonzzz/vite-plugin-compression/issues/93).
+  To comply with RFC 9659 and avoid runtime errors in Chrome (v123+)
+  and Firefox (v126+), adjusted the zstandard compression level for
+  `*.zst` precompressed assets to 19.
 
 ## [1.57.4] - 2026-03-12
 
@@ -1651,7 +1722,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🐛 Bug Fixes
 
-- Refactored styling with `PostCSS`, `Tailwind CSS`, and `daisyUI`, fixing upstream styles that were referenced in class attributes but not loaded correctly, as well as styles that were not working as intended.
+- Refactored styling with `PostCSS`, `Tailwind CSS`, and `daisyUI`,
+  fixing upstream styles that were referenced in class attributes but
+  not loaded correctly, as well as styles that were not working as
+  intended.
 
 ### 🛠️ Miscellaneous Chores
 
@@ -1792,7 +1866,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 💥 Breaking Changes
 
-- The configuration values for `Style - Color Scheme` changed. After upgrading, select a different color scheme and save once to refresh the stored value, then switch back to the scheme you actually want to use.
+- The configuration values for `Style - Color Scheme` changed. After
+  upgrading, select a different color scheme and save once to refresh
+  the stored value, then switch back to the scheme you actually want
+  to use.
 
 ### 🐛 Bug Fixes
 

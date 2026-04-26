@@ -140,6 +140,57 @@ const resolveReleaseMetadata = async () => {
   return githubRequest(`/releases/tags/${GITHUB_RELEASE_TAG}`);
 };
 
+const createReleaseNotesPayload = (notesName, markdown, html) => ({
+  apiVersion: "store.halo.run/v1alpha1",
+  html,
+  kind: "Content",
+  metadata: {
+    name: notesName,
+  },
+  rawType: "MARKDOWN",
+  raw: markdown,
+});
+
+const createDraftRelease = async (appId, release, manifest, markdown, html) =>
+  haloRequest(`/apis/uc.api.developer.store.halo.run/v1alpha1/releases?applicationName=${appId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      release: {
+        apiVersion: "store.halo.run/v1alpha1",
+        kind: "Release",
+        metadata: {
+          generateName: "app-release-",
+          name: "",
+        },
+        spec: {
+          applicationName: "",
+          displayName: release.name,
+          draft: true,
+          ownerName: "",
+          preRelease: release.prerelease,
+          requires: manifest.requires,
+          version: manifest.version,
+          notesName: "",
+        },
+      },
+      notes: {
+        apiVersion: "store.halo.run/v1alpha1",
+        html,
+        kind: "Content",
+        metadata: {
+          generateName: "app-release-notes-",
+          name: "",
+        },
+        rawType: "MARKDOWN",
+        raw: markdown,
+      },
+      makeLatest: false,
+    }),
+  });
+
 const uploadAssets = async (releaseName, assets) => {
   for (const asset of assets) {
     const assetPath = path.join(ASSETS_DIR, asset);
@@ -154,6 +205,40 @@ const uploadAssets = async (releaseName, assets) => {
   }
 };
 
+const publishDraftRelease = async (appId, draftRelease, release, markdown, html) => {
+  const releaseName = draftRelease?.metadata?.name;
+  const notesName = draftRelease?.spec?.notesName;
+
+  if (!releaseName || !notesName) {
+    throw new Error("Draft release response is missing the release name or notes name.");
+  }
+
+  return haloRequest(
+    `/apis/uc.api.developer.store.halo.run/v1alpha1/releases/${releaseName}?applicationName=${appId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        release: {
+          ...draftRelease,
+          spec: {
+            ...draftRelease.spec,
+            draft: false,
+          },
+          status: {
+            ...(draftRelease.status ?? {}),
+            published: false,
+          },
+        },
+        notes: createReleaseNotesPayload(notesName, markdown, html),
+        makeLatest: !release.prerelease,
+      }),
+    },
+  );
+};
+
 const main = async () => {
   const assets = listAssets();
   const manifest = readThemeManifest(path.join(ASSETS_DIR, assets[0]));
@@ -166,49 +251,15 @@ const main = async () => {
   const markdown = `${release.body || ""}`;
   const html = await renderMarkdown(markdown);
 
-  const appRelease = await haloRequest(
-    `/apis/uc.api.developer.store.halo.run/v1alpha1/releases?applicationName=${manifest.appId}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        release: {
-          apiVersion: "store.halo.run/v1alpha1",
-          kind: "Release",
-          metadata: {
-            generateName: "app-release-",
-            name: "",
-          },
-          spec: {
-            applicationName: "",
-            displayName: release.name,
-            draft: false,
-            ownerName: "",
-            preRelease: release.prerelease,
-            requires: manifest.requires,
-            version: manifest.version,
-            notesName: "",
-          },
-        },
-        notes: {
-          apiVersion: "store.halo.run/v1alpha1",
-          html,
-          kind: "Content",
-          metadata: {
-            generateName: "app-release-notes-",
-            name: "",
-          },
-          rawType: "MARKDOWN",
-          raw: markdown,
-        },
-        makeLatest: !release.prerelease,
-      }),
-    },
-  );
+  const draftRelease = await createDraftRelease(manifest.appId, release, manifest, markdown, html);
+  const draftReleaseName = draftRelease?.metadata?.name;
 
-  await uploadAssets(appRelease.metadata.name, assets);
+  if (!draftReleaseName) {
+    throw new Error("Draft release response is missing the release name.");
+  }
+
+  await uploadAssets(draftReleaseName, assets);
+  await publishDraftRelease(manifest.appId, draftRelease, release, markdown, html);
 };
 
 main().catch((error) => {

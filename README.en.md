@@ -37,7 +37,10 @@ This theme supports [custom color schemes](https://howiehz.top/halo-theme-higan-
 ## A Few Words
 
 If you think this theme is great, could you give it a free [Star⭐](https://github.com/HowieHz/halo-theme-higan-hz) to support this project?  
-You are also welcome to contribute via [Issues🐛](https://github.com/HowieHz/halo-theme-higan-hz/issues) or [Pull Requests🔀](https://github.com/HowieHz/halo-theme-higan-hz/pulls) to help iterate the project.  
+You are also welcome to contribute via
+[Issues🐛](https://github.com/HowieHz/halo-theme-higan-hz/issues)
+or [Pull Requests🔀](https://github.com/HowieHz/halo-theme-higan-hz/pulls)
+to help iterate the project.  
 Your support is my greatest motivation for continuous updates!
 
 If you are willing to support me, feel free to join the group and let me know that besides myself, there are many people using this theme 😀
@@ -46,7 +49,10 @@ If you are willing to support me, feel free to join the group and let me know th
 
 Feel free to develop based on this project. No matter how unique your needs are, if this theme doesn't meet them, you are welcome to raise an [Issue](https://github.com/HowieHz/halo-theme-higan-hz/issues/new).
 
-Initially, this project was just to meet some of my own needs. Unexpectedly, many friends are now using it and providing feedback and suggestions in various ways, helping me continuously optimize and improve. Sincere thanks for everyone's support and encouragement!  
+Initially, this project was just to meet some of my own needs. Unexpectedly,
+many friends are now using it and providing feedback and suggestions in
+various ways, helping me continuously optimize and improve. Sincere thanks
+for everyone's support and encouragement!  
 Additionally, thanks to all the friends who supported this project through donations. Here is the list of sponsors: [Sponsor List](#thanks-to-sponsors)
 
 ## Theme History

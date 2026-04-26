@@ -10,7 +10,10 @@ Currently supported values:
 
 - `soft-gray`: makes dark-mode body text feel softer and more comfortable to read
 
-The legacy `default` value is still treated like `no-adjustment` for backward compatibility. Non-default styles only affect dark mode and auto mode when the system prefers dark, and they keep headings, blockquotes, links, and code blocks unchanged.
+The legacy `default` value is still treated like `no-adjustment`
+for backward compatibility. Non-default styles only affect dark mode
+and auto mode when the system prefers dark, and they keep headings,
+blockquotes, links, and code blocks unchanged.
 
 ## Usage
 
