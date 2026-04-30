@@ -1102,19 +1102,19 @@ spec:
           label: Output canonical link tag
           value: true
         - $formkit: switch
-          name: hitokoto
-          label: Hitokoto
+          name: quote
+          label: Quote fetcher
           value: false
         - $formkit: text
-          name: hitokoto_link
-          if: "$hitokoto === true"
-          label: hitokoto link
-          value: https://v1.hitokoto.cn/?encode=js
-          help: "Default: https://v1.hitokoto.cn/?encode=js, Doc: https://developer.hitokoto.cn/sentence/"
+          name: quote_link
+          if: "$quote === true"
+          label: Quote fetcher link
+          value: https://v1.hitokoto.cn/?encode=text
+          help: "Default: https://v1.hitokoto.cn/?encode=text, The endpoint must return plain text, Default endpoint documentation: https://developer.hitokoto.cn/sentence/"
         - $formkit: switch
-          name: is_hitokoto_fade_in_animation_enable
-          if: "$hitokoto === true"
-          label: Hitokoto fade-in animation
+          name: is_quote_fade_in_animation_enable
+          if: "$quote === true"
+          label: Quote fetcher fade-in animation
           value: true
         - $formkit: switch
           name: is_random_sentence_show

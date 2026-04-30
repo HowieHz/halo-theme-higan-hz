@@ -23,6 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🔧 Code Refactoring
+
+- Switched the home page quote display implementation to fetch from a plain-text endpoint and updated the default link to `https://v1.hitokoto.cn/?encode=text`.
+
+### 📄 Documentation
+
+- Synchronized the Chinese and English documentation and settings form descriptions for the home page quote option, and renamed them consistently to `quote`.
+
 ## [1.64.1] - 2026-04-25
 
 ### 💥 Breaking Changes

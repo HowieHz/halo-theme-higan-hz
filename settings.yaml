@@ -1102,19 +1102,19 @@ spec:
           label: 输出 canonical 标签
           value: true
         - $formkit: switch
-          name: hitokoto
-          label: 一言（hitokoto）
+          name: quote
+          label: 一言（纯文本接口）
           value: false
         - $formkit: text
-          name: hitokoto_link
-          if: "$hitokoto === true"
-          label: 一言（hitokoto）服务链接
-          value: https://v1.hitokoto.cn/?encode=js
-          help: "默认值：https://v1.hitokoto.cn/?encode=js、文档：https://developer.hitokoto.cn/sentence/"
+          name: quote_link
+          if: "$quote === true"
+          label: 一言（纯文本接口）链接
+          value: https://v1.hitokoto.cn/?encode=text
+          help: "默认值：https://v1.hitokoto.cn/?encode=text、接口需返回纯文本、默认接口文档：https://developer.hitokoto.cn/sentence/"
         - $formkit: switch
-          name: is_hitokoto_fade_in_animation_enable
-          if: "$hitokoto === true"
-          label: 一言（hitokoto）淡入显示动画
+          name: is_quote_fade_in_animation_enable
+          if: "$quote === true"
+          label: 一言（纯文本接口）淡入显示动画
           value: true
         - $formkit: switch
           name: is_random_sentence_show
