@@ -41,21 +41,30 @@
   </head>
   <body th:remove="tag">
     <section id="about">
-      <th:block th:if="${theme.config?.index_styles?.hitokoto}">
-        <script skip-sri th:src="${theme.config?.index_styles?.hitokoto_link}" defer></script>
-        <p class="hitokoto"></p>
+      <th:block th:if="${theme.config?.index_styles?.quote}">
+        <p class="quote"></p>
+        <script type="module" id="quote-script" th:data-link="${theme.config?.index_styles?.quote_link}">
+          var t = document.querySelector(".quote");
+          try {
+            var e = document.getElementById("quote-script").dataset.link,
+              n = await fetch(e);
+            t.innerText = await n.text();
+          } catch {
+            t.innerText = "";
+          }
+        </script>
         <style>
-          .hitokoto:empty::before {
+          .quote:empty::before {
             content: "\00a0";
             visibility: hidden;
           }
         </style>
-        <style th:if="${theme.config?.index_styles?.is_hitokoto_fade_in_animation_enable}">
-          .hitokoto:not(:empty) {
-            animation: hitokoto-fade-in 0.45s ease-out;
+        <style th:if="${theme.config?.index_styles?.is_quote_fade_in_animation_enable}">
+          .quote:not(:empty) {
+            animation: quote-fade-in 0.45s ease-out;
           }
 
-          @keyframes hitokoto-fade-in {
+          @keyframes quote-fade-in {
             from {
               opacity: 0%;
               transform: translateY(0.25rem);
