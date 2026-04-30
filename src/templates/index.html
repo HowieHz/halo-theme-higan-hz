@@ -43,15 +43,17 @@
     <section id="about">
       <th:block th:if="${theme.config?.index_styles?.quote}">
         <p class="quote"></p>
-        <script type="module" id="quote-script" th:data-link="${theme.config?.index_styles?.quote_link}">
-          var t = document.querySelector(".quote");
-          try {
-            var e = document.getElementById("quote-script").dataset.link,
-              n = await fetch(e);
-            t.innerText = await n.text();
-          } catch {
-            t.innerText = "";
-          }
+        <script id="quote-script" th:data-link="${theme.config?.index_styles?.quote_link}">
+          !(async function () {
+            var t = document.querySelector(".quote");
+            try {
+              var e,
+                n = document.getElementById("quote-script").dataset.link;
+              n && ((e = await fetch(n)).ok ? (t.innerText = await e.text()) : (t.innerText = ":)"));
+            } catch {
+              t.innerText = ":)";
+            }
+          })();
         </script>
         <style>
           .quote:empty::before {
