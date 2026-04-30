@@ -23,6 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 💥 Breaking Changes
+
+- Renamed the home page quote-related settings from `hitokoto`, `hitokoto_link`,
+  and `is_hitokoto_fade_in_animation_enable` to `quote`, `quote_link`, and
+  `is_quote_fade_in_animation_enable`; existing configurations must be migrated
+  accordingly.
+
 ### 🔧 Code Refactoring
 
 - Switched the home page quote display implementation to fetch from a plain-text endpoint and updated the default link to `https://v1.hitokoto.cn/?encode=text`.

@@ -23,6 +23,10 @@
 
 ## [Unreleased]
 
+### 💥 破坏性变更
+
+- 首页一言相关配置项已由 `hitokoto`、`hitokoto_link`、`is_hitokoto_fade_in_animation_enable` 重命名为 `quote`、`quote_link`、`is_quote_fade_in_animation_enable`，现有配置需同步迁移。
+
 ### 🔧 代码重构
 
 - 将首页一言展示实现切换为纯文本接口拉取，并将默认链接更新为 `https://v1.hitokoto.cn/?encode=text`。
