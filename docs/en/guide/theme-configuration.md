@@ -3374,12 +3374,12 @@ Whether to display quote content fetched from a plain-text endpoint on the homep
 :::
 ::: info 📂 Configuration Item Location
 
-Home Page Style -> Quote Fetcher
+Home Page Style -> Quote fetcher
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Quote%20Fetcher" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Quote%20fetcher" />
 
 :::
 ::: info 🏷️ Type
