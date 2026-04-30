@@ -3359,7 +3359,7 @@ HTML 代码也是可以的：
 
 :::
 
-### 一言（纯文本接口）
+### 一言
 
 ::: info 🎯 用途
 
@@ -3368,12 +3368,12 @@ HTML 代码也是可以的：
 :::
 ::: info 📂 配置项位置
 
-首页样式 -> 一言（纯文本接口）
+首页样式 -> 一言
 
 :::
 ::: info ⚡ 快速跳转
 
-<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=一言（纯文本接口）" />
+<QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=一言" />
 
 :::
 ::: info 🏷️ 类型
@@ -3395,10 +3395,10 @@ HTML 代码也是可以的：
 
 启用后可以配置
 
-- 一言（纯文本接口）链接：
+- 一言链接：
   - 默认值：`https://v1.hitokoto.cn/?encode=text`
   - 补充说明：接口需要返回纯文本内容，默认接口相关信息可阅读其[文档](https://developer.hitokoto.cn/sentence/)获取
-- 一言（纯文本接口）淡入显示动画：
+- 一言淡入显示动画：
   - 默认值：`true`
   - 补充说明：控制一言内容异步获取后是否播放淡入显示动画。
 

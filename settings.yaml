@@ -1103,18 +1103,18 @@ spec:
           value: true
         - $formkit: switch
           name: quote
-          label: 一言（纯文本接口）
+          label: 一言
           value: false
         - $formkit: text
           name: quote_link
           if: "$quote === true"
-          label: 一言（纯文本接口）链接
+          label: 一言链接
           value: https://v1.hitokoto.cn/?encode=text
           help: "默认值：https://v1.hitokoto.cn/?encode=text、接口需返回纯文本、默认接口文档：https://developer.hitokoto.cn/sentence/"
         - $formkit: switch
           name: is_quote_fade_in_animation_enable
           if: "$quote === true"
-          label: 一言（纯文本接口）淡入显示动画
+          label: 一言淡入显示动画
           value: true
         - $formkit: switch
           name: is_random_sentence_show
