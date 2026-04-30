@@ -1110,7 +1110,7 @@ spec:
           if: "$quote === true"
           label: Quote fetcher link
           value: https://v1.hitokoto.cn/?encode=text
-          help: "Default: https://v1.hitokoto.cn/?encode=text, The endpoint must return plain text, Default endpoint documentation: https://developer.hitokoto.cn/sentence/"
+          help: "Default: https://v1.hitokoto.cn/?encode=text. The endpoint must return plain text and, for cross-origin browser fetch requests, support CORS; otherwise fetching will fail. Default endpoint documentation: https://developer.hitokoto.cn/sentence/"
         - $formkit: switch
           name: is_quote_fade_in_animation_enable
           if: "$quote === true"

@@ -1110,7 +1110,7 @@ spec:
           if: "$quote === true"
           label: 一言链接
           value: https://v1.hitokoto.cn/?encode=text
-          help: "默认值：https://v1.hitokoto.cn/?encode=text、接口需返回纯文本、默认接口文档：https://developer.hitokoto.cn/sentence/"
+          help: "默认值：https://v1.hitokoto.cn/?encode=text、接口需返回纯文本；由于该接口由浏览器客户端发起请求，若配置的地址不是同源地址，则目标接口必须支持跨域请求（CORS），否则将无法加载一言内容。默认接口文档：https://developer.hitokoto.cn/sentence/"
         - $formkit: switch
           name: is_quote_fade_in_animation_enable
           if: "$quote === true"

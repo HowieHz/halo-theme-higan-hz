@@ -3403,7 +3403,7 @@ When enabled, you can configure
 
 - Quote fetcher link:
   - Default Value: `https://v1.hitokoto.cn/?encode=text`
-  - Additional notes: The endpoint must return plain text. For default endpoint details, refer to the [documentation](https://developer.hitokoto.cn/sentence/)
+  - Additional notes: The endpoint must return plain text. Since this is fetched from the browser, any cross-origin endpoint must also support CORS; otherwise the request will fail even if it returns plain text. For default endpoint details, refer to the [documentation](https://developer.hitokoto.cn/sentence/)
 - Quote fetcher fade-in animation:
   - Default Value: `true`
   - Additional notes: Controls whether to play the fade-in animation after the quote content is fetched asynchronously.

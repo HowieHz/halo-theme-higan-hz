@@ -3397,7 +3397,7 @@ HTML 代码也是可以的：
 
 - 一言链接：
   - 默认值：`https://v1.hitokoto.cn/?encode=text`
-  - 补充说明：接口需要返回纯文本内容，默认接口相关信息可阅读其[文档](https://developer.hitokoto.cn/sentence/)获取
+  - 补充说明：接口需要返回纯文本内容；如果该接口由浏览器跨域获取，还需要允许 CORS，否则请求会失败。默认接口相关信息可阅读其[文档](https://developer.hitokoto.cn/sentence/)获取
 - 一言淡入显示动画：
   - 默认值：`true`
   - 补充说明：控制一言内容异步获取后是否播放淡入显示动画。
