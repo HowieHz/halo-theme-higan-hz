@@ -204,6 +204,7 @@ export default defineConfig((): UserConfig => {
             __dirname,
             "src/templates/components/performance-monitor/template.html",
           ),
+          "components-quote-fetcher": path.resolve(__dirname, "src/templates/components/quote-fetcher/template.html"),
           "components-layout-max-width-style": path.resolve(
             __dirname,
             "src/templates/components/layout-max-width-style/template.html",

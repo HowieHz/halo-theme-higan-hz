@@ -13,6 +13,9 @@
     <link rel="canonical" th:if="${theme.config?.index_styles?.is_enable_canonical_link}" th:href="${siteUrl}" />
     <script src="/page-components/index/index.ts" type="module"></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
+    <th:block th:if="${theme.config?.index_styles?.quote}">
+      <th:block th:insert="~{components/quote-fetcher/template :: head}"></th:block>
+    </th:block>
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'post-list-summary'}">
       <th:block th:insert="~{components/list-post-summary/template :: head}"></th:block>
     </th:block>
@@ -42,59 +45,7 @@
   <body th:remove="tag">
     <section id="about">
       <th:block th:if="${theme.config?.index_styles?.quote}">
-        <p id="quote" th:data-link="${theme.config?.index_styles?.quote_link}"></p>
-        <script type="module">
-          /* 
-          var t = document.getElementById("quote");
-          var e = t.dataset.link;
-
-          try {
-            if (e) {
-              var n = await fetch(e);
-              if (n.ok) {
-                t.innerText = await n.text();
-              } else {
-                t.innerText = ":)";
-              }
-            } else {
-              t.innerText = ":)";
-            }
-          } catch {
-            t.innerText = ":)";
-          }
-          */
-          var n,
-            t = document.getElementById("quote"),
-            e = t.dataset.link;
-          try {
-            e && (n = await fetch(e)).ok ? (t.innerText = await n.text()) : (t.innerText = ":)");
-          } catch {
-            t.innerText = ":)";
-          }
-        </script>
-        <style>
-          #quote:empty::before {
-            content: "\00a0";
-            visibility: hidden;
-          }
-        </style>
-        <style th:if="${theme.config?.index_styles?.is_quote_fade_in_animation_enable}">
-          #quote:not(:empty) {
-            animation: quote-fade-in 0.45s ease-out;
-          }
-
-          @keyframes quote-fade-in {
-            from {
-              opacity: 0%;
-              transform: translateY(0.25rem);
-            }
-
-            to {
-              opacity: 100%;
-              transform: translateY(0);
-            }
-          }
-        </style>
+        <th:block th:insert="~{components/quote-fetcher/template :: body}"></th:block>
       </th:block>
       <th:block
         th:if="${theme.config?.index_styles?.is_random_sentence_show and !#lists.isEmpty(theme.config?.index_styles?.random_sentence_list)}"
