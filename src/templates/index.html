@@ -42,27 +42,44 @@
   <body th:remove="tag">
     <section id="about">
       <th:block th:if="${theme.config?.index_styles?.quote}">
-        <p class="quote"></p>
-        <script id="quote-script" th:data-link="${theme.config?.index_styles?.quote_link}">
-          !(async function () {
-            var t = document.querySelector(".quote");
-            try {
-              var e,
-                n = document.getElementById("quote-script").dataset.link;
-              n && ((e = await fetch(n)).ok ? (t.innerText = await e.text()) : (t.innerText = ":)"));
-            } catch {
+        <p id="quote" th:data-link="${theme.config?.index_styles?.quote_link}"></p>
+        <script type="module">
+          /* 
+          var t = document.getElementById("quote");
+          var e = t.dataset.link;
+
+          try {
+            if (e) {
+              var n = await fetch(e);
+              if (n.ok) {
+                t.innerText = await n.text();
+              } else {
+                t.innerText = ":)";
+              }
+            } else {
               t.innerText = ":)";
             }
-          })();
+          } catch {
+            t.innerText = ":)";
+          }
+          */
+          var n,
+            t = document.getElementById("quote"),
+            e = t.dataset.link;
+          try {
+            e && (n = await fetch(e)).ok ? (t.innerText = await n.text()) : (t.innerText = ":)");
+          } catch {
+            t.innerText = ":)";
+          }
         </script>
         <style>
-          .quote:empty::before {
+          #quote:empty::before {
             content: "\00a0";
             visibility: hidden;
           }
         </style>
         <style th:if="${theme.config?.index_styles?.is_quote_fade_in_animation_enable}">
-          .quote:not(:empty) {
+          #quote:not(:empty) {
             animation: quote-fade-in 0.45s ease-out;
           }
 
