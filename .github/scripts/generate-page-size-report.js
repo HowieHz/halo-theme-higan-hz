@@ -269,7 +269,6 @@ function generateMarkdownReport(results, metadata = {}) {
 function generateJsonReport(results, metadata) {
   const auditFile = {
     metadata, // original field name: metadata
-    timestamp: new Date().toISOString(), // original field name: timestamp
     results, // original field name: results
   };
 

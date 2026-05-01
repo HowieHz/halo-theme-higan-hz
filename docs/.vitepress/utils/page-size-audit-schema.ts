@@ -1,48 +1,20 @@
 /**
  * Page size audit JSON compact schema helpers.
  *
- * Compact keys intentionally keep comments of the original field names nearby: - m: metadata - t: timestamp - r:
- * results - u: url - rs: resources - tr: themeResources - ts: transferSize - rs: resourceSize (inside resource stat
- * objects)
+ * Current protocol only: - m: metadata -> [haloVersion, javaVersion, themeVersion, lhciVersion, generatedAt] - r:
+ * results -> [[url, resources, themeResources], ...] - resources/themeResources -> flat number arrays ordered by:
+ * document, font, script, stylesheet, image, fetch, other, total each resource contributes [transferSize,
+ * resourceSize]
  */
 
 const topLevelCompactKeys = {
   metadata: "m",
-  timestamp: "t",
   results: "r",
 } as const;
 
-const metadataCompactKeys = {
-  haloVersion: "hv",
-  javaVersion: "jv",
-  themeVersion: "tv",
-  lhciVersion: "lv",
-  generatedAt: "ga",
-} as const;
+const resourceTypeEntries = ["document", "font", "script", "stylesheet", "image", "fetch", "other", "total"] as const;
 
-const resultCompactKeys = {
-  url: "u",
-  resources: "rs",
-  themeResources: "tr",
-} as const;
-
-const resourceStatCompactKeys = {
-  transferSize: "ts",
-  resourceSize: "rs",
-} as const;
-
-const resourceTypeEntries = [
-  ["document", "d"],
-  ["font", "f"],
-  ["script", "s"],
-  ["stylesheet", "ss"],
-  ["image", "i"],
-  ["fetch", "fc"],
-  ["other", "o"],
-  ["total", "tot"],
-] as const;
-
-export type ResourceType = (typeof resourceTypeEntries)[number][0];
+export type ResourceType = (typeof resourceTypeEntries)[number];
 
 export interface AuditResourceStat {
   transferSize: number;
@@ -94,21 +66,29 @@ function createEmptyResourceGroup(): AuditResourceGroup {
   };
 }
 
-function decodeResourceStat(raw: unknown): AuditResourceStat {
-  const value = asObject(raw);
+function decodeMetadata(raw: unknown): AuditFile["metadata"] {
+  const value = Array.isArray(raw) ? raw : [];
 
   return {
-    transferSize: asFiniteNumber(value[resourceStatCompactKeys.transferSize] ?? value.transferSize),
-    resourceSize: asFiniteNumber(value[resourceStatCompactKeys.resourceSize] ?? value.resourceSize),
+    haloVersion: asString(value[0]),
+    javaVersion: asString(value[1]),
+    themeVersion: asString(value[2]),
+    lhciVersion: asString(value[3]),
+    generatedAt: asString(value[4]),
   };
 }
 
 function decodeResourceGroup(raw: unknown): AuditResourceGroup {
-  const value = asObject(raw);
+  const value = Array.isArray(raw) ? raw : [];
   const group = createEmptyResourceGroup();
+  let index = 0;
 
-  for (const [longKey, shortKey] of resourceTypeEntries) {
-    group[longKey] = decodeResourceStat(value[shortKey] ?? value[longKey]);
+  for (const resourceType of resourceTypeEntries) {
+    group[resourceType] = {
+      transferSize: asFiniteNumber(value[index]),
+      resourceSize: asFiniteNumber(value[index + 1]),
+    };
+    index += 2;
   }
 
   return group;
@@ -116,28 +96,20 @@ function decodeResourceGroup(raw: unknown): AuditResourceGroup {
 
 export function decodeAuditFile(raw: unknown): AuditFile {
   const value = asObject(raw);
-  const metadataValue = asObject(value[topLevelCompactKeys.metadata] ?? value.metadata);
-  const rawResults = value[topLevelCompactKeys.results] ?? value.results;
+  const metadata = decodeMetadata(value[topLevelCompactKeys.metadata]);
+  const rawResults = value[topLevelCompactKeys.results];
   const results = Array.isArray(rawResults) ? rawResults : [];
 
   return {
-    metadata: {
-      haloVersion: asString(metadataValue[metadataCompactKeys.haloVersion] ?? metadataValue.haloVersion),
-      javaVersion: asString(metadataValue[metadataCompactKeys.javaVersion] ?? metadataValue.javaVersion),
-      themeVersion: asString(metadataValue[metadataCompactKeys.themeVersion] ?? metadataValue.themeVersion),
-      lhciVersion: asString(metadataValue[metadataCompactKeys.lhciVersion] ?? metadataValue.lhciVersion),
-      generatedAt: asString(metadataValue[metadataCompactKeys.generatedAt] ?? metadataValue.generatedAt),
-    },
-    timestamp: asString(value[topLevelCompactKeys.timestamp] ?? value.timestamp),
+    metadata,
+    timestamp: "",
     results: results.map((result) => {
-      const resultValue = asObject(result);
+      const item = Array.isArray(result) ? result : [];
 
       return {
-        url: asString(resultValue[resultCompactKeys.url] ?? resultValue.url, "/"),
-        resources: decodeResourceGroup(resultValue[resultCompactKeys.resources] ?? resultValue.resources),
-        themeResources: decodeResourceGroup(
-          resultValue[resultCompactKeys.themeResources] ?? resultValue.themeResources,
-        ),
+        url: asString(item[0], "/"),
+        resources: decodeResourceGroup(item[1]),
+        themeResources: decodeResourceGroup(item[2]),
       };
     }),
   };
