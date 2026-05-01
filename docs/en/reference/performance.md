@@ -31,20 +31,6 @@ const pageUrls = {
   about: '/about'
 }
 
-// Page display names
-const pageNames = {
-  average: 'Average Per Page',
-  home: 'Home',
-  archives: 'Archives',
-  post: 'Post Detail',
-  tags: 'Tags Collection',
-  tagDetail: 'Tag Detail',
-  categories: 'Categories Collection',
-  categoryDetail: 'Category Detail',
-  author: 'Author Detail',
-  about: 'Single Page'
-}
-
 // Resource type configuration
 const resourceTypes = ['document', 'font', 'script', 'stylesheet', 'image', 'fetch', 'other', 'total']
 

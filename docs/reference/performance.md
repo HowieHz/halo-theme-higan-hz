@@ -25,20 +25,6 @@ const pageUrls = {
   about: '/about'
 }
 
-// 页面中文名称
-const pageNames = {
-  average: '平均每个页面',
-  home: '首页',
-  archives: '文章归档',
-  post: '文章详情',
-  tags: '标签集合',
-  tagDetail: '标签详情',
-  categories: '分类集合',
-  categoryDetail: '分类详情',
-  author: '作者详情',
-  about: '独立页面'
-}
-
 // 资源类型配置
 const resourceTypes = ['document', 'font', 'script', 'stylesheet', 'image', 'fetch', 'other', 'total']
 

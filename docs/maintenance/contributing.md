@@ -125,6 +125,8 @@ CI 会先自动运行 `pnpm fmt`，包含以下格式化步骤：
   - **范围**：其[支持的文件格式](https://github.com/huacnlee/autocorrect/tree/main/autocorrect/grammar)
 - `tsgo -b`：TypeScript 类型检查
   - **范围**：TypeScript 文件
+- `vue-tsc -b docs/tsconfig.browser.json`：文档站 Vue / Markdown 类型检查
+  - **范围**：`docs` 下的 Vue 组件、VitePress Markdown 页面
 
 > 所有求疵步骤都开启了自动修正，若有变更会自动提交。
 
