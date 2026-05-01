@@ -64,6 +64,7 @@ type IndexedAuditEntry = {
 }
 
 type DatasetKind = 'themeGzipped' | 'themeRaw' | 'resourcesGzipped' | 'resourcesRaw'
+const datasetKinds = ['themeGzipped', 'themeRaw', 'resourcesGzipped', 'resourcesRaw'] as const satisfies readonly DatasetKind[]
 type NumericSeries = Record<ResourceType, Array<number | null>>
 type PageDatasets = Record<DatasetKind, NumericSeries>
 type DatasetCollection = Record<PageKey, PageDatasets>
@@ -483,20 +484,16 @@ onMounted(async () => {
         }))
       })
       const updateChartData = (pageKey: PageKey, pageData: PageDatasets) => {
-        chartDatasets.value[pageKey] = {
-          themeGzipped: createChartSeries(pageData.themeGzipped),
-          themeRaw: createChartSeries(pageData.themeRaw),
-          resourcesGzipped: createChartSeries(pageData.resourcesGzipped),
-          resourcesRaw: createChartSeries(pageData.resourcesRaw)
+        const pageCharts = {} as ChartPageData
+
+        for (const kind of datasetKinds) {
+          pageCharts[kind] = createChartSeries(pageData[kind])
+          chartLoadingStatus.value[pageKey][kind] = false
+          processedCount++
+          loadingProgress.value = Math.round((processedCount / totalCharts) * 100)
         }
-        chartLoadingStatus.value[pageKey] = {
-          themeGzipped: false,
-          themeRaw: false,
-          resourcesGzipped: false,
-          resourcesRaw: false
-        }
-        processedCount += 4
-        loadingProgress.value = Math.round((processedCount / totalCharts) * 100)
+
+        chartDatasets.value[pageKey] = pageCharts
       }
 
       for (const { key } of pageEntries) {
