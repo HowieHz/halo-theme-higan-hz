@@ -12,6 +12,7 @@ This documentation is AI-generated. You can help improve it by submitting an [Is
 
 :::
 
+<!-- markdownlint-disable MD011 -->
 <script setup lang="ts">
 import { ref, onMounted, computed, watch, h, defineComponent } from 'vue'
 import { defineClientComponent, useData } from 'vitepress'
@@ -570,6 +571,7 @@ const LineChart = defineClientComponent(async () => {
   return Line
 })
 </script>
+<!-- markdownlint-enable MD011 -->
 
 ## Lighthouse
 

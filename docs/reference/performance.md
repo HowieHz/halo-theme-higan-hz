@@ -6,6 +6,7 @@ outline: deep
 
 # 性能参考
 
+<!-- markdownlint-disable MD011 -->
 <script setup lang="ts">
 import { ref, onMounted, computed, watch, h, defineComponent } from 'vue'
 import { defineClientComponent, useData } from 'vitepress'
@@ -564,6 +565,7 @@ const LineChart = defineClientComponent(async () => {
   return Line
 })
 </script>
+<!-- markdownlint-enable MD011 -->
 
 ## Lighthouse
 
