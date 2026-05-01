@@ -66,6 +66,10 @@ type LoadedAuditEntry = {
   version: string
   data: AuditFile
 }
+type IndexedAuditEntry = {
+  version: string
+  resultsByUrl: Map<string, AuditPageResult>
+}
 
 type NumericSeries = Record<ResourceType, Array<number | null>>
 type PageDatasets = {
@@ -417,15 +421,19 @@ onMounted(async () => {
       return aPatch - bPatch
     })
 
-    const versions = allData.map(({ version }) => version)
+    const indexedData: IndexedAuditEntry[] = allData.map(({ version, data }) => ({
+      version,
+      resultsByUrl: new Map(data.results.map((result) => [result.url, result]))
+    }))
+    const versions = indexedData.map(({ version }) => version)
 
     // Create datasets for each page type
     const datasets = createDatasetCollection()
 
     // Process each specific page
     for (const { key, url } of pageEntries) {
-      allData.forEach(({ data }) => {
-        const pageData = data.results.find((pageResult) => pageResult.url === url)
+      indexedData.forEach(({ resultsByUrl }) => {
+        const pageData = resultsByUrl.get(url)
         if (pageData) {
           for (const type of resourceTypes) {
             datasets[key].themeGzipped[type].push(pageData.themeResources[type].transferSize / 1024)
