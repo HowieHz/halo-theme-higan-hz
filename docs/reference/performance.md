@@ -422,6 +422,10 @@ onMounted(async () => {
     }
 
     // 计算平均值
+    const hasCompleteDatasetValues = (
+      values: Record<DatasetKind, number | null>
+    ): values is Record<DatasetKind, number> => datasetKinds.every((kind) => values[kind] !== null)
+
     for (let i = 0; i < versions.length; i++) {
       for (const type of resourceTypes) {
         const sums = {
@@ -440,12 +444,9 @@ onMounted(async () => {
             resourcesRaw: datasets[key].resourcesRaw[type][i]
           } satisfies Record<DatasetKind, number | null>
 
-          if (datasetKinds.every((kind) => values[kind] !== null)) {
+          if (hasCompleteDatasetValues(values)) {
             for (const kind of datasetKinds) {
-              const value = values[kind]
-              if (value !== null) {
-                sums[kind] += value
-              }
+              sums[kind] += values[kind]
             }
             count++
           }
