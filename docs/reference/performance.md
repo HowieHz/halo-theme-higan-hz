@@ -53,9 +53,6 @@ type AuditFile = {
   timestamp: string
   results: AuditPageResult[]
 }
-type AuditModule = {
-  default: AuditFile
-}
 type LoadedAuditEntry = {
   version: string
   data: AuditFile
@@ -65,45 +62,30 @@ type IndexedAuditEntry = {
   resultsByUrl: Map<string, AuditPageResult>
 }
 
+type DatasetKind = 'themeGzipped' | 'themeRaw' | 'resourcesGzipped' | 'resourcesRaw'
 type NumericSeries = Record<ResourceType, Array<number | null>>
-type PageDatasets = {
-  themeGzipped: NumericSeries
-  themeRaw: NumericSeries
-  resourcesGzipped: NumericSeries
-  resourcesRaw: NumericSeries
-}
+type PageDatasets = Record<DatasetKind, NumericSeries>
 type DatasetCollection = Record<PageKey, PageDatasets>
 
-type ChartDatasetItem = {
-  label: string
-  data: Array<number | null>
-  borderColor: string
-  backgroundColor: string
-  tension: number
-  borderWidth: number
-}
 type ChartSeries = {
   labels: string[]
-  datasets: ChartDatasetItem[]
+  datasets: Array<{
+    label: string
+    data: Array<number | null>
+    borderColor: string
+    backgroundColor: string
+    tension: number
+    borderWidth: number
+  }>
 }
-type ChartPageData = {
-  themeGzipped: ChartSeries
-  themeRaw: ChartSeries
-  resourcesGzipped: ChartSeries
-  resourcesRaw: ChartSeries
-}
+type ChartPageData = Record<DatasetKind, ChartSeries>
 type ChartDatasetCollection = Partial<Record<PageKey, ChartPageData>>
 
 type RawDatasetsState = {
   datasets: DatasetCollection
   versions: string[]
 }
-type ChartLoadingFlags = {
-  themeGzipped: boolean
-  themeRaw: boolean
-  resourcesGzipped: boolean
-  resourcesRaw: boolean
-}
+type ChartLoadingFlags = Record<DatasetKind, boolean>
 type ChartLoadingState = Record<PageKey, ChartLoadingFlags>
 
 function createEmptyNumericSeries(): NumericSeries {
@@ -368,7 +350,7 @@ onMounted(async () => {
     loadingStage.value = 'dataLoading'
 
     // 动态导入所有 JSON 文件
-    const jsonFiles = import.meta.glob<AuditModule>('../../.github/page_size_audit_results/*.json')
+    const jsonFiles = import.meta.glob<{ default: AuditFile }>('../../.github/page_size_audit_results/*.json')
 
     const allData: LoadedAuditEntry[] = []
     const paths = Object.keys(jsonFiles)
