@@ -12,6 +12,7 @@
   "include": [
     ".vitepress/theme/**/*.ts",
     ".vitepress/components/**/*.ts",
+    ".vitepress/utils/**/*.ts",
     ".vitepress/types/browser/*.d.ts",
     "**/*.vue",
     "**/*.md",

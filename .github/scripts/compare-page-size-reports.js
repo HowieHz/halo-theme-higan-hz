@@ -2,6 +2,8 @@
 
 import { readFile, writeFile } from "fs/promises";
 
+import { decodeAuditFile } from "./page-size-audit-schema.js";
+
 const CURRENT_REPORT = process.env.CURRENT_REPORT || "./reports-current/page-size-report.json";
 const BASE_REPORT = process.env.BASE_REPORT || "./reports-base/page-size-report.json";
 const OUTPUT_FILE = process.env.OUTPUT_FILE || "./comparison-report.md";
@@ -10,7 +12,7 @@ const OUTPUT_FILE = process.env.OUTPUT_FILE || "./comparison-report.md";
 async function readReport(path) {
   try {
     const content = await readFile(path, "utf-8");
-    return JSON.parse(content);
+    return decodeAuditFile(JSON.parse(content));
   } catch (error) {
     throw new Error(`无法读取报告文件 ${path}: ${error.message}`, { cause: error });
   }

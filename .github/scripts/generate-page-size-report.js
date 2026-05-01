@@ -3,6 +3,8 @@
 import { readFile, writeFile } from "fs/promises";
 import { resolve } from "path";
 
+import { encodeAuditFile } from "./page-size-audit-schema.js";
+
 const LIGHTHOUSE_RESULTS_DIR = process.env.LIGHTHOUSE_RESULTS_DIR || ".lighthouseci";
 const OUTPUT_DIR = process.env.OUTPUT_DIR || "./reports";
 const OUTPUT_FILENAME = process.env.OUTPUT_FILENAME || "page-size-report";
@@ -265,15 +267,13 @@ function generateMarkdownReport(results, metadata = {}) {
 
 /** 生成 JSON 报告 */
 function generateJsonReport(results, metadata) {
-  return JSON.stringify(
-    {
-      metadata,
-      timestamp: new Date().toISOString(),
-      results,
-    },
-    null,
-    2,
-  );
+  const auditFile = {
+    metadata, // original field name: metadata
+    timestamp: new Date().toISOString(), // original field name: timestamp
+    results, // original field name: results
+  };
+
+  return JSON.stringify(encodeAuditFile(auditFile), null, 2);
 }
 
 /** 主函数 */
@@ -294,7 +294,7 @@ async function main() {
     // 生成 JSON 报告
     console.log("生成 JSON 报告...");
     const jsonReport = generateJsonReport(results, metadata);
-    await writeFile(resolve(OUTPUT_DIR, `${OUTPUT_FILENAME}.json`), jsonReport);
+    await writeFile(resolve(OUTPUT_DIR, `${OUTPUT_FILENAME}.json`), `${jsonReport}\n`);
 
     console.log("\n✓ 报告生成完成！");
     console.log(`  - JSON: ${resolve(OUTPUT_DIR, `${OUTPUT_FILENAME}.json`)}`);

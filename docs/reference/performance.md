@@ -10,6 +10,7 @@ outline: deep
 <script setup lang="ts">
 import { ref, onMounted, computed, watch, h, defineComponent } from 'vue'
 import { defineClientComponent, useData } from 'vitepress'
+import { decodeAuditFile, type AuditFile, type AuditPageResult, type ResourceType } from '../.vitepress/utils/page-size-audit-schema'
 
 const { isDark } = useData()
 
@@ -28,32 +29,9 @@ const pageEntries = [
 
 // 资源类型配置
 const resourceTypes = ['document', 'font', 'script', 'stylesheet', 'image', 'fetch', 'other', 'total'] as const
-type ResourceType = (typeof resourceTypes)[number]
 type ContentPage = (typeof pageEntries)[number]
 type ContentPageKey = ContentPage['key']
 type PageKey = ContentPageKey | 'average'
-
-type AuditResourceStat = {
-  transferSize: number
-  resourceSize: number
-}
-type AuditResourceGroup = Record<ResourceType, AuditResourceStat>
-type AuditPageResult = {
-  url: string
-  resources: AuditResourceGroup
-  themeResources: AuditResourceGroup
-}
-type AuditFile = {
-  metadata: {
-    haloVersion: string
-    javaVersion: string
-    themeVersion: string
-    lhciVersion: string
-    generatedAt: string
-  }
-  timestamp: string
-  results: AuditPageResult[]
-}
 type LoadedAuditEntry = {
   version: string
   data: AuditFile
@@ -137,7 +115,6 @@ function createChartLoadingState(isLoading = false): ChartLoadingState {
 
   return state
 }
-
 // 响应式颜色配置（适配明暗主题）
 const resourceColors = computed<Record<ResourceType, string>>(() => isDark.value ? {
   // 暗色主题：使用更亮的颜色以提高对比度
@@ -347,7 +324,7 @@ onMounted(async () => {
     loadingStage.value = 'dataLoading'
 
     // 动态导入所有 JSON 文件
-    const jsonFiles = import.meta.glob<{ default: AuditFile }>('../../.github/page_size_audit_results/*.json')
+    const jsonFiles = import.meta.glob<{ default: unknown }>('../../.github/page_size_audit_results/*.json')
 
     const paths = Object.keys(jsonFiles)
     const totalFiles = paths.length
@@ -366,7 +343,7 @@ onMounted(async () => {
       if (version && module.default) {
         return {
           version,
-          data: module.default
+          data: decodeAuditFile(module.default) // compact schema fields are decoded back to original names here
         }
       }
       return null
@@ -392,7 +369,7 @@ onMounted(async () => {
 
     const indexedData: IndexedAuditEntry[] = allData.map(({ version, data }) => ({
       version,
-      resultsByUrl: new Map(data.results.map((result) => [result.url, result]))
+      resultsByUrl: new Map<string, AuditPageResult>(data.results.map((result: AuditPageResult) => [result.url, result]))
     }))
     const versions = indexedData.map(({ version }) => version)
 
