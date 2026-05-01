@@ -1,22 +1,33 @@
 /**
- * Page size audit JSON compact schema helpers.
+ * Page size audit JSON extreme compact schema helpers.
  *
- * Current protocol only: - m: metadata -> [haloVersion, javaVersion, themeVersion, lhciVersion, generatedAt] - r:
- * results -> [[url, resources, themeResources], ...] - resources/themeResources -> flat number arrays ordered by:
- * document, font, script, stylesheet, image, fetch, other, total each resource contributes [transferSize,
- * resourceSize]
+ * Protocol only: - root[0]: metadata -> [haloVersion, javaVersion, themeVersion, lhciVersion, generatedAt] - root[1]:
+ * flat numbers -> 9 pages * 2 groups * 8 resource types * 2 stats = 288 numbers
+ *
+ * Fixed page order: /, /archives, /archives/hello-halo, /tags, /tags/halo, /categories, /categories/default,
+ * /authors/admin, /about
+ *
+ * Group order: resources, themeResources
+ *
+ * Resource type order: document, font, script, stylesheet, image, fetch, other, total
+ *
+ * Stat order: transferSize, resourceSize
  */
 
-const topLevelCompactKeys = {
-  metadata: "m",
-  results: "r",
-};
+const pageUrls = [
+  "/",
+  "/archives",
+  "/archives/hello-halo",
+  "/tags",
+  "/tags/halo",
+  "/categories",
+  "/categories/default",
+  "/authors/admin",
+  "/about",
+];
 
+const groupKeys = ["resources", "themeResources"];
 const resourceTypeEntries = ["document", "font", "script", "stylesheet", "image", "fetch", "other", "total"];
-
-function asObject(value) {
-  return value && typeof value === "object" ? value : {};
-}
 
 function asString(value, fallback = "") {
   return typeof value === "string" ? value : fallback;
@@ -51,71 +62,70 @@ function decodeMetadata(raw) {
   };
 }
 
-function decodeResourceGroup(raw) {
-  const value = Array.isArray(raw) ? raw : [];
-  const group = createEmptyResourceGroup();
+function decodeFlatNumbers(raw) {
+  const values = Array.isArray(raw) ? raw : [];
   let index = 0;
 
-  for (const resourceType of resourceTypeEntries) {
-    group[resourceType] = {
-      transferSize: asFiniteNumber(value[index]),
-      resourceSize: asFiniteNumber(value[index + 1]),
+  return pageUrls.map((url) => {
+    const pageResult = {
+      url,
+      resources: createEmptyResourceGroup(),
+      themeResources: createEmptyResourceGroup(),
     };
-    index += 2;
-  }
 
-  return group;
+    for (const groupKey of groupKeys) {
+      for (const resourceType of resourceTypeEntries) {
+        pageResult[groupKey][resourceType] = {
+          transferSize: asFiniteNumber(values[index]),
+          resourceSize: asFiniteNumber(values[index + 1]),
+        };
+        index += 2;
+      }
+    }
+
+    return pageResult;
+  });
 }
 
-function encodeResourceGroup(group) {
-  const encoded = [];
+function encodeFlatNumbers(results) {
+  const byUrl = new Map((Array.isArray(results) ? results : []).map((result) => [result?.url, result]));
+  const values = [];
 
-  for (const resourceType of resourceTypeEntries) {
-    encoded.push(asFiniteNumber(group?.[resourceType]?.transferSize));
-    encoded.push(asFiniteNumber(group?.[resourceType]?.resourceSize));
+  for (const url of pageUrls) {
+    const pageResult = byUrl.get(url);
+
+    for (const groupKey of groupKeys) {
+      for (const resourceType of resourceTypeEntries) {
+        values.push(asFiniteNumber(pageResult?.[groupKey]?.[resourceType]?.transferSize));
+        values.push(asFiniteNumber(pageResult?.[groupKey]?.[resourceType]?.resourceSize));
+      }
+    }
   }
 
-  return encoded;
+  return values;
 }
 
 export function decodeAuditFile(raw) {
-  const value = asObject(raw);
-  const metadata = decodeMetadata(value[topLevelCompactKeys.metadata]);
-  const rawResults = value[topLevelCompactKeys.results];
-  const results = Array.isArray(rawResults) ? rawResults : [];
+  const root = Array.isArray(raw) ? raw : [];
 
   return {
-    metadata,
+    metadata: decodeMetadata(root[0]),
     timestamp: "",
-    results: results.map((result) => {
-      const item = Array.isArray(result) ? result : [];
-
-      return {
-        url: asString(item[0], "/"),
-        resources: decodeResourceGroup(item[1]),
-        themeResources: decodeResourceGroup(item[2]),
-      };
-    }),
+    results: decodeFlatNumbers(root[1]),
   };
 }
 
 export function encodeAuditFile(auditFile) {
-  const metadata = asObject(auditFile?.metadata);
-  const rawResults = auditFile?.results;
-  const results = Array.isArray(rawResults) ? rawResults : [];
+  const metadata = auditFile?.metadata ?? {};
 
-  return {
-    [topLevelCompactKeys.metadata]: [
+  return [
+    [
       asString(metadata.haloVersion),
       asString(metadata.javaVersion),
       asString(metadata.themeVersion),
       asString(metadata.lhciVersion),
       asString(metadata.generatedAt),
     ],
-    [topLevelCompactKeys.results]: results.map((result) => [
-      asString(result?.url, "/"),
-      encodeResourceGroup(result?.resources),
-      encodeResourceGroup(result?.themeResources),
-    ]),
-  };
+    encodeFlatNumbers(auditFile?.results),
+  ];
 }

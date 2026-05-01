@@ -1,17 +1,32 @@
 /**
- * Page size audit JSON compact schema helpers.
+ * Page size audit JSON extreme compact schema helpers.
  *
- * Current protocol only: - m: metadata -> [haloVersion, javaVersion, themeVersion, lhciVersion, generatedAt] - r:
- * results -> [[url, resources, themeResources], ...] - resources/themeResources -> flat number arrays ordered by:
- * document, font, script, stylesheet, image, fetch, other, total each resource contributes [transferSize,
- * resourceSize]
+ * Protocol only: - root[0]: metadata -> [haloVersion, javaVersion, themeVersion, lhciVersion, generatedAt] - root[1]:
+ * flat numbers -> 9 pages * 2 groups * 8 resource types * 2 stats = 288 numbers
+ *
+ * Fixed page order: /, /archives, /archives/hello-halo, /tags, /tags/halo, /categories, /categories/default,
+ * /authors/admin, /about
+ *
+ * Group order: resources, themeResources
+ *
+ * Resource type order: document, font, script, stylesheet, image, fetch, other, total
+ *
+ * Stat order: transferSize, resourceSize
  */
 
-const topLevelCompactKeys = {
-  metadata: "m",
-  results: "r",
-} as const;
+const pageUrls = [
+  "/",
+  "/archives",
+  "/archives/hello-halo",
+  "/tags",
+  "/tags/halo",
+  "/categories",
+  "/categories/default",
+  "/authors/admin",
+  "/about",
+] as const;
 
+const groupKeys = ["resources", "themeResources"] as const;
 const resourceTypeEntries = ["document", "font", "script", "stylesheet", "image", "fetch", "other", "total"] as const;
 
 export type ResourceType = (typeof resourceTypeEntries)[number];
@@ -39,10 +54,6 @@ export interface AuditFile {
   };
   timestamp: string;
   results: AuditPageResult[];
-}
-
-function asObject(value: unknown): Record<string, unknown> {
-  return value && typeof value === "object" ? (value as Record<string, unknown>) : {};
 }
 
 function asString(value: unknown, fallback = ""): string {
@@ -78,39 +89,37 @@ function decodeMetadata(raw: unknown): AuditFile["metadata"] {
   };
 }
 
-function decodeResourceGroup(raw: unknown): AuditResourceGroup {
-  const value = Array.isArray(raw) ? raw : [];
-  const group = createEmptyResourceGroup();
+function decodeFlatNumbers(raw: unknown): AuditPageResult[] {
+  const values = Array.isArray(raw) ? raw : [];
   let index = 0;
 
-  for (const resourceType of resourceTypeEntries) {
-    group[resourceType] = {
-      transferSize: asFiniteNumber(value[index]),
-      resourceSize: asFiniteNumber(value[index + 1]),
+  return pageUrls.map((url) => {
+    const pageResult: AuditPageResult = {
+      url,
+      resources: createEmptyResourceGroup(),
+      themeResources: createEmptyResourceGroup(),
     };
-    index += 2;
-  }
 
-  return group;
+    for (const groupKey of groupKeys) {
+      for (const resourceType of resourceTypeEntries) {
+        pageResult[groupKey][resourceType] = {
+          transferSize: asFiniteNumber(values[index]),
+          resourceSize: asFiniteNumber(values[index + 1]),
+        };
+        index += 2;
+      }
+    }
+
+    return pageResult;
+  });
 }
 
 export function decodeAuditFile(raw: unknown): AuditFile {
-  const value = asObject(raw);
-  const metadata = decodeMetadata(value[topLevelCompactKeys.metadata]);
-  const rawResults = value[topLevelCompactKeys.results];
-  const results = Array.isArray(rawResults) ? rawResults : [];
+  const root = Array.isArray(raw) ? raw : [];
 
   return {
-    metadata,
+    metadata: decodeMetadata(root[0]),
     timestamp: "",
-    results: results.map((result) => {
-      const item = Array.isArray(result) ? result : [];
-
-      return {
-        url: asString(item[0], "/"),
-        resources: decodeResourceGroup(item[1]),
-        themeResources: decodeResourceGroup(item[2]),
-      };
-    }),
+    results: decodeFlatNumbers(root[1]),
   };
 }
