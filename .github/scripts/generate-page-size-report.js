@@ -10,6 +10,18 @@ const OUTPUT_DIR = process.env.OUTPUT_DIR || "./reports";
 const OUTPUT_FILENAME = process.env.OUTPUT_FILENAME || "page-size-report";
 const JSON_ONLY = process.env.JSON_ONLY === "true";
 
+function normalizeThemeVersion(value) {
+  if (typeof value !== "string") return value;
+  if (/^[0-9a-f]{40}$/i.test(value)) return value;
+  return value.replace(/^v/, "");
+}
+
+function formatThemeVersionForDisplay(value) {
+  if (typeof value !== "string" || value.length === 0) return value;
+  if (/^[0-9a-f]{40}$/i.test(value)) return value;
+  return value.startsWith("v") ? value : `v${value}`;
+}
+
 /** 解析 Lighthouse 结果 */
 async function parseLighthouseResults() {
   const fs = (await import("fs")).promises;
@@ -173,7 +185,7 @@ function generateMarkdownReport(results, metadata = {}) {
       if (metadata.themeVersion.match(/^[0-9a-f]{40}$/i)) {
         markdown += `- Theme Version: [\`${metadata.themeVersion.substring(0, 7)}\`](https://github.com/HowieHz/halo-theme-higan-hz/commit/${metadata.themeVersion})\n`;
       } else {
-        markdown += `- Theme Version: ${metadata.themeVersion}\n`;
+        markdown += `- Theme Version: ${formatThemeVersionForDisplay(metadata.themeVersion)}\n`;
       }
     }
     if (metadata.lhciVersion) markdown += `- Lighthouse CI Version: ${metadata.lhciVersion}\n`;
@@ -285,7 +297,7 @@ async function main() {
     const metadata = {
       haloVersion: process.env.HALO_VERSION || null,
       javaVersion: process.env.JAVA_VERSION || null,
-      themeVersion: process.env.THEME_VERSION || process.env.GITHUB_SHA || null,
+      themeVersion: normalizeThemeVersion(process.env.THEME_VERSION || process.env.GITHUB_SHA || null),
       lhciVersion: process.env.LIGHTHOUSE_CI_VERSION || null,
       generatedAt: new Date().toISOString(),
     };
