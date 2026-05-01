@@ -401,7 +401,7 @@ onMounted(async () => {
 
     // 处理每个具体页面
     for (const { key, url } of pageEntries) {
-      indexedData.forEach(({ resultsByUrl }) => {
+      for (const { resultsByUrl } of indexedData) {
         const pageData = resultsByUrl.get(url)
         if (pageData) {
           for (const type of resourceTypes) {
@@ -418,7 +418,7 @@ onMounted(async () => {
             datasets[key].resourcesRaw[type].push(null)
           }
         }
-      })
+      }
     }
 
     // 计算平均值
@@ -447,10 +447,16 @@ onMounted(async () => {
           }
         }
 
-        datasets.average.themeGzipped[type].push(count > 0 ? themeGzippedSum / count : null)
-        datasets.average.themeRaw[type].push(count > 0 ? themeRawSum / count : null)
-        datasets.average.resourcesGzipped[type].push(count > 0 ? resourcesGzippedSum / count : null)
-        datasets.average.resourcesRaw[type].push(count > 0 ? resourcesRawSum / count : null)
+        const averageValues = {
+          themeGzipped: count > 0 ? themeGzippedSum / count : null,
+          themeRaw: count > 0 ? themeRawSum / count : null,
+          resourcesGzipped: count > 0 ? resourcesGzippedSum / count : null,
+          resourcesRaw: count > 0 ? resourcesRawSum / count : null
+        } satisfies Record<DatasetKind, number | null>
+
+        for (const kind of datasetKinds) {
+          datasets.average[kind][type].push(averageValues[kind])
+        }
       }
     }
 
