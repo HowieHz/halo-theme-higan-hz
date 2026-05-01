@@ -430,38 +430,35 @@ onMounted(async () => {
     // Calculate averages
     for (let i = 0; i < versions.length; i++) {
       for (const type of resourceTypes) {
-        let themeGzippedSum = 0, themeRawSum = 0, resourcesGzippedSum = 0, resourcesRawSum = 0
+        const sums = {
+          themeGzipped: 0,
+          themeRaw: 0,
+          resourcesGzipped: 0,
+          resourcesRaw: 0
+        } satisfies Record<DatasetKind, number>
         let count = 0
 
         for (const { key } of pageEntries) {
-          const themeGzippedValue = datasets[key].themeGzipped[type][i]
-          const themeRawValue = datasets[key].themeRaw[type][i]
-          const resourcesGzippedValue = datasets[key].resourcesGzipped[type][i]
-          const resourcesRawValue = datasets[key].resourcesRaw[type][i]
+          const values = {
+            themeGzipped: datasets[key].themeGzipped[type][i],
+            themeRaw: datasets[key].themeRaw[type][i],
+            resourcesGzipped: datasets[key].resourcesGzipped[type][i],
+            resourcesRaw: datasets[key].resourcesRaw[type][i]
+          } satisfies Record<DatasetKind, number | null>
 
-          if (
-            themeGzippedValue !== null
-            && themeRawValue !== null
-            && resourcesGzippedValue !== null
-            && resourcesRawValue !== null
-          ) {
-            themeGzippedSum += themeGzippedValue
-            themeRawSum += themeRawValue
-            resourcesGzippedSum += resourcesGzippedValue
-            resourcesRawSum += resourcesRawValue
+          if (datasetKinds.every((kind) => values[kind] !== null)) {
+            for (const kind of datasetKinds) {
+              const value = values[kind]
+              if (value !== null) {
+                sums[kind] += value
+              }
+            }
             count++
           }
         }
 
-        const averageValues = {
-          themeGzipped: count > 0 ? themeGzippedSum / count : null,
-          themeRaw: count > 0 ? themeRawSum / count : null,
-          resourcesGzipped: count > 0 ? resourcesGzippedSum / count : null,
-          resourcesRaw: count > 0 ? resourcesRawSum / count : null
-        } satisfies Record<DatasetKind, number | null>
-
         for (const kind of datasetKinds) {
-          datasets.average[kind][type].push(averageValues[kind])
+          datasets.average[kind][type].push(count > 0 ? sums[kind] / count : null)
         }
       }
     }
