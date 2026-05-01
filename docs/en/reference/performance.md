@@ -185,11 +185,6 @@ const rawDatasets = ref<RawDatasetsState | null>(null) // Store raw data for the
 const loadingProgress = ref(0)
 const isLoading = ref(false)
 const loadingStage = ref('')
-const stageProgress = ref({
-  dataLoading: 0,
-  dataProcessing: 0,
-  chartCreation: 0
-})
 
 // Loading status for each chart
 const chartLoadingStatus = ref<ChartLoadingState>(createChartLoadingState())
@@ -348,7 +343,7 @@ onMounted(async () => {
   console.time('📊 Chart Initialization Total Time')
   isLoading.value = true
   loadingProgress.value = 0
-  
+
   // Initialize all chart loading status to true
   chartLoadingStatus.value = createChartLoadingState(true)
   
@@ -359,7 +354,6 @@ onMounted(async () => {
     // Dynamically import all JSON files
     const jsonFiles = import.meta.glob<{ default: AuditFile }>('../../.github/page_size_audit_results/*.json')
 
-    const allData: LoadedAuditEntry[] = []
     const paths = Object.keys(jsonFiles)
     const totalFiles = paths.length
     let completedCount = 0
@@ -372,7 +366,6 @@ onMounted(async () => {
       // Update progress (using atomic operation for accuracy)
       completedCount++
       const progress = Math.round((completedCount / totalFiles) * 100)
-      stageProgress.value.dataLoading = progress
       loadingProgress.value = progress
 
       if (version && module.default) {
@@ -384,9 +377,7 @@ onMounted(async () => {
       return null
     })
 
-    const results = (await Promise.all(loadPromises)).filter((item): item is LoadedAuditEntry => item !== null)
-    allData.push(...results)
-    stageProgress.value.dataLoading = 100
+    const allData = (await Promise.all(loadPromises)).filter((item): item is LoadedAuditEntry => item !== null)
 
     console.timeEnd('  1️⃣ Data Loading')
 
@@ -468,7 +459,6 @@ onMounted(async () => {
       }
     }
 
-    stageProgress.value.dataProcessing = 100
     loadingProgress.value = 100
     console.timeEnd('  2️⃣ Data Sorting and Processing')
 
@@ -523,7 +513,6 @@ onMounted(async () => {
 
     // Initial chart data creation
     createChartDatasets()
-    stageProgress.value.chartCreation = 100
     loadingProgress.value = 100
     console.timeEnd('  3️⃣ Chart Data Creation')
 

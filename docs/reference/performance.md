@@ -179,11 +179,6 @@ const rawDatasets = ref<RawDatasetsState | null>(null) // 存储原始数据用�
 const loadingProgress = ref(0)
 const isLoading = ref(false)
 const loadingStage = ref('')
-const stageProgress = ref({
-  dataLoading: 0,
-  dataProcessing: 0,
-  chartCreation: 0
-})
 
 // 每个图表的加载状态
 const chartLoadingStatus = ref<ChartLoadingState>(createChartLoadingState())
@@ -198,7 +193,7 @@ const ProgressBar = defineComponent({
   setup(props) {
     // @ts-expect-error TS6133: vue-tsc false positive in VitePress Markdown; stage labels are used by the render function below.
     const stageNames = {
-      dataLoading: '数据加载',
+      dataLoading: '加载数据',
       dataProcessing: '数据排序与处理',
       chartCreation: '图表数据创建'
     }
@@ -342,7 +337,7 @@ onMounted(async () => {
   console.time('📊 图表初始化总耗时')
   isLoading.value = true
   loadingProgress.value = 0
-  
+
   // 初始化所有图表的加载状态为 true
   chartLoadingStatus.value = createChartLoadingState(true)
   
@@ -353,7 +348,6 @@ onMounted(async () => {
     // 动态导入所有 JSON 文件
     const jsonFiles = import.meta.glob<{ default: AuditFile }>('../../.github/page_size_audit_results/*.json')
 
-    const allData: LoadedAuditEntry[] = []
     const paths = Object.keys(jsonFiles)
     const totalFiles = paths.length
     let completedCount = 0
@@ -366,7 +360,6 @@ onMounted(async () => {
       // 更新进度（使用原子操作确保准确）
       completedCount++
       const progress = Math.round((completedCount / totalFiles) * 100)
-      stageProgress.value.dataLoading = progress
       loadingProgress.value = progress
 
       if (version && module.default) {
@@ -378,9 +371,7 @@ onMounted(async () => {
       return null
     })
 
-    const results = (await Promise.all(loadPromises)).filter((item): item is LoadedAuditEntry => item !== null)
-    allData.push(...results)
-    stageProgress.value.dataLoading = 100
+    const allData = (await Promise.all(loadPromises)).filter((item): item is LoadedAuditEntry => item !== null)
 
     console.timeEnd('  1️⃣ 数据加载')
 
@@ -462,7 +453,6 @@ onMounted(async () => {
       }
     }
 
-    stageProgress.value.dataProcessing = 100
     loadingProgress.value = 100
     console.timeEnd('  2️⃣ 数据排序与处理')
 
@@ -517,7 +507,6 @@ onMounted(async () => {
 
     // 初始创建图表数据
     createChartDatasets()
-    stageProgress.value.chartCreation = 100
     loadingProgress.value = 100
     console.timeEnd('  3️⃣ 图表数据创建')
 
