@@ -5,7 +5,7 @@ import { browserslistToTargets } from "lightningcss";
 import { defineConfig, type DefaultTheme } from "vitepress";
 import { chineseSearchOptimize, pagefindPlugin } from "vitepress-plugin-pagefind";
 
-import pkg from "../../package.json";
+import pkg from "../../package.json" with { type: "json" };
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({

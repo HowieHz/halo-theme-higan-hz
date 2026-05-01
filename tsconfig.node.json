@@ -1,0 +1,9 @@
+{
+  "$schema": "https://www.schemastore.org/tsconfig",
+  "extends": "./tsconfig/tsconfig.node.json",
+  "compilerOptions": {
+    "declarationDir": "./node_modules/.tmp/types/root/node",
+    "isolatedDeclarations": false
+  },
+  "include": ["vite.config.ts", "plugins/**/*.ts"]
+}

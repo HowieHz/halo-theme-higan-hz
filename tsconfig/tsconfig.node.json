@@ -1,0 +1,13 @@
+{
+  "$schema": "https://www.schemastore.org/tsconfig",
+  "extends": "./tsconfig.base.json",
+  // module, moduleResolution, target, lib
+  // ref https://www.npmjs.com/package/@tsconfig/node24
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "node16",
+    "target": "es2024",
+    "lib": ["es2024", "ESNext.Array", "ESNext.Collection", "ESNext.Error", "ESNext.Iterator", "ESNext.Promise"],
+    "types": ["node"]
+  }
+}

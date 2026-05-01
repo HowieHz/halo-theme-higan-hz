@@ -1,0 +1,21 @@
+{
+  "$schema": "https://www.schemastore.org/tsconfig",
+  "extends": "../tsconfig/tsconfig.browser.json",
+  "compilerOptions": {
+    "declarationDir": "../node_modules/.tmp/types/docs/browser",
+    "isolatedDeclarations": false
+  },
+  "vueCompilerOptions": {
+    "extensions": [".vue"],
+    "vitePressExtensions": [".md"]
+  },
+  "include": [
+    ".vitepress/theme/**/*.ts",
+    ".vitepress/components/**/*.ts",
+    ".vitepress/types/browser/*.d.ts",
+    "**/*.vue",
+    "**/*.md",
+    ".vitepress/**/*.vue"
+  ],
+  "exclude": ["**/README.md"]
+}

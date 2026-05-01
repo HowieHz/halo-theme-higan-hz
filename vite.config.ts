@@ -10,9 +10,9 @@ import { defineConfig, type UserConfig } from "vite";
 import { compression, defineAlgorithm } from "vite-plugin-compression2";
 import { sri } from "vite-plugin-sri3";
 
-import pkg from "./package.json";
-import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments";
-import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify";
+import pkg from "./package.json" with { type: "json" };
+import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments.ts";
+import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify.ts";
 
 export default defineConfig((): UserConfig => {
   const isWatchMode = ["--watch", "-w"].some((arg) => process.argv.includes(arg));

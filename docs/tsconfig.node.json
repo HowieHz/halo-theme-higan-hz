@@ -1,0 +1,9 @@
+{
+  "$schema": "https://www.schemastore.org/tsconfig",
+  "extends": "../tsconfig/tsconfig.node.json",
+  "compilerOptions": {
+    "declarationDir": "../node_modules/.tmp/types/docs/node",
+    "isolatedDeclarations": false
+  },
+  "include": [".vitepress/config.ts", ".vitepress/types/node/*.d.ts", "en/config.ts"]
+}

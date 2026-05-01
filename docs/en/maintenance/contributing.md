@@ -123,7 +123,7 @@ After formatting, CI automatically runs `pnpm lint`, including the following che
   - **Scope**: Markdown files
 - `autocorrect`: Automated text corrections
   - **Scope**: [Supported file formats](https://github.com/huacnlee/autocorrect/tree/main/autocorrect/grammar)
-- `tsgo --noEmit`: TypeScript type checks
+- `tsgo -b`: TypeScript type checks
   - **Scope**: TypeScript files
 
 > All lint steps run with auto-fix enabled. If fixes are applied, the changes are committed automatically.
