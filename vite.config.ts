@@ -14,29 +14,40 @@ import pkg from "./package.json" with { type: "json" };
 import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments.ts";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify.ts";
 
+const BUILD_PROFILES = ["default", "tiny"] as const;
+type BuildProfile = (typeof BUILD_PROFILES)[number];
+const BUILD_PRECOMPRESS_PROFILES = ["br-only", "full", "none"] as const;
+type BuildPrecompressProfile = (typeof BUILD_PRECOMPRESS_PROFILES)[number];
+
+function pickEnvValue<T extends string>(value: string | undefined, allowedValues: readonly T[], fallback: T): T {
+  return allowedValues.includes(value as T) ? (value as T) : fallback;
+}
+
 export default defineConfig((): UserConfig => {
-  const isWatchMode = ["--watch", "-w"].some((arg) => process.argv.includes(arg));
-  const buildProfile = process.env.HALO_THEME_BUILD_PROFILE ?? "default";
-  const precompressProfile = process.env.HALO_THEME_PRECOMPRESS_PROFILE ?? "br-only";
-  const shouldPrecompress = !isWatchMode && precompressProfile !== "none";
-  const createBrotliAlgorithm = () =>
+  const buildProfile = pickEnvValue<BuildProfile>(process.env.BUILD_PROFILE, BUILD_PROFILES, "default");
+  const precompressProfile = pickEnvValue<BuildPrecompressProfile>(
+    process.env.BUILD_PRECOMPRESS_PROFILE,
+    BUILD_PRECOMPRESS_PROFILES,
+    "br-only",
+  );
+  const shouldPrecompress = precompressProfile !== "none";
+  const precompressAlgorithms = [
     defineAlgorithm("brotliCompress", {
       params: {
         [constants.BROTLI_PARAM_QUALITY]: 11,
       },
-    });
-  const precompressAlgorithms =
-    precompressProfile === "full"
+    }),
+    ...(precompressProfile === "full"
       ? [
           defineAlgorithm("gzip", { level: 9 }),
-          createBrotliAlgorithm(),
           defineAlgorithm("zstandard", {
             params: {
               [constants.ZSTD_c_compressionLevel]: 19,
             },
           }),
         ]
-      : [createBrotliAlgorithm()];
+      : []),
+  ];
   const tinyTemplateEntryOverrides =
     buildProfile === "tiny"
       ? {
@@ -76,7 +87,7 @@ export default defineConfig((): UserConfig => {
   if (shouldPrecompress) {
     plugins.push(
       // Default packages keep only .br.
-      // Full packages opt in via HALO_THEME_PRECOMPRESS_PROFILE=full.
+      // Full packages opt in via BUILD_PRECOMPRESS_PROFILE=full.
       compression({
         algorithms: precompressAlgorithms,
         include: [
