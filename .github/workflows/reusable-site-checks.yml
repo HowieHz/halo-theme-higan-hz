@@ -125,7 +125,10 @@ jobs:
           # Record environment information
           JAVA_VERSION=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}')
           echo "JAVA_VERSION=${JAVA_VERSION}" >> $GITHUB_ENV
-          HALO_VERSION="${{ inputs.halo_version }}"
+          # workflow_dispatch callers may pass an empty string explicitly; treat that
+          # the same as "not provided" so this reusable workflow still honors its
+          # documented default Halo version.
+          HALO_VERSION="${{ inputs.halo_version || '2.24.1' }}"
           echo "HALO_VERSION=${HALO_VERSION}" >> $GITHUB_ENV
 
           mkdir -p ~/logs

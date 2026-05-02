@@ -11,6 +11,10 @@ on:
         description: "Ending version (e.g.: v1.57.5; leave empty to use latest)"
         required: false
         default: ""
+      halo_version:
+        description: "Halo version override (e.g.: 2.23.1; leave empty to use the reusable workflow default)"
+        required: false
+        default: ""
       create_pr:
         description: "Create a PR to submit the data files?"
         required: true
@@ -167,6 +171,7 @@ jobs:
     with:
       theme_ref: ${{ matrix.version }}
       ref_name: ${{ matrix.version }}
+      halo_version: ${{ github.event.inputs.halo_version }}
       output_dir: ".github/page_size_audit_results"
       output_filename: ${{ matrix.version }}
       json_only: true
