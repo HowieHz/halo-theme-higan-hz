@@ -83,6 +83,7 @@ jobs:
           cp -a "$GITHUB_WORKSPACE/templates/." "$TINY_TEMPLATES_DIR/"
           find "$TINY_TEMPLATES_DIR" -type f \( -name '*.br' -o -name '*.gz' -o -name '*.zst' \) -delete
           find "$TINY_TEMPLATES_DIR" -type f \( -name '*.woff' -o -name '*.woff.*' -o -name '*.ttf' -o -name '*.ttf.*' \) -delete
+          rm -f "$TINY_TEMPLATES_DIR/assets/images/logo.png" "$TINY_TEMPLATES_DIR/assets/images/logo.webp"
           echo "path=$TINY_TEMPLATES_DIR" >> "$GITHUB_OUTPUT"
 
       - name: Pack Tiny

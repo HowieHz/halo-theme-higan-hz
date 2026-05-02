@@ -42,7 +42,8 @@ Current release artifacts:
 Package roles:
 
 - `howiehz-higan-zh-hans.zip` / `howiehz-higan-en.zip`: default packages with `.br` only, for direct Halo CMS v2.24+ delivery.
-- `*-tiny.zip`: tiny packages that keep only the default `.woff2` fonts and omit precompressed assets, for smaller installs when you only target modern browsers with `woff2` support.
+- `*-tiny.zip`: tiny packages that keep only the default `.woff2` fonts and `.avif` default logo, and omit precompressed assets,
+  for smaller installs when you only target modern browsers with `woff2` and `avif` support.
 - `*-full-precompressed.zip`: full precompressed packages with `.gz` / `.br` / `.zst`, for reverse proxies, CDNs, or self-managed static servers.
 
 For full release process details, see the _Release Flow_ section in the [Contribution Guide](./contributing.md#release-flow).

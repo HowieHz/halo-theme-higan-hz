@@ -31,7 +31,7 @@
 其中：
 
 - `howiehz-higan-zh-hans.zip` / `howiehz-higan-en.zip`：默认安装包，仅包含 `.br`，适合 Halo CMS v2.24+ 直连。
-- `*-tiny.zip`：轻量安装包，仅保留默认 `.woff2` 字体，且不包含预压缩文件，适合仅面向已支持 `woff2` 的现代浏览器时进一步缩小体积。
+- `*-tiny.zip`：轻量安装包，仅保留默认 `.woff2` 字体与 `.avif` 默认 logo，且不包含预压缩文件，适合仅面向已支持 `woff2` 与 `avif` 的现代浏览器时进一步缩小体积。
 - `*-full-precompressed.zip`：完整预压缩包，包含 `.gz` / `.br` / `.zst`，适合反向代理、CDN 或自管静态资源服务器。
 
 完整发布流程请参阅[贡献指南](./contributing.md#发布流程)中的“发布流程”章节。
