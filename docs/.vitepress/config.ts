@@ -1,4 +1,4 @@
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 
 import { footnote } from "@mdit/plugin-footnote";
 import { whyframe } from "@whyframe/core";
@@ -15,9 +15,7 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        "@higan-font-styles": fileURLToPath(
-          new URL("../../src/templates/components/fonts/styles.css", import.meta.url),
-        ),
+        "@higan-font-styles": resolve(import.meta.dirname, "../../src/templates/components/fonts/styles.css"),
       },
     },
     plugins: [

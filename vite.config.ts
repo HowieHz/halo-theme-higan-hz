@@ -1,5 +1,4 @@
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 import { constants } from "node:zlib";
 
 import tailwindcss from "@tailwindcss/vite";
@@ -82,12 +81,12 @@ export default defineConfig((): UserConfig => {
   }
 
   return {
-    root: path.resolve(__dirname, "src/templates/"),
+    root: resolve(import.meta.dirname, "src/templates/"),
     base: "/themes/howiehz-higan/",
     resolve: {
       alias: {
-        "@higan-font-styles": path.resolve(
-          __dirname,
+        "@higan-font-styles": resolve(
+          import.meta.dirname,
           buildProfile === "tiny"
             ? "src/templates/components/fonts/styles.tiny.css"
             : "src/templates/components/fonts/styles.css",
@@ -104,7 +103,7 @@ export default defineConfig((): UserConfig => {
     },
     build: {
       target: ["chrome111", "edge111", "firefox114", "safari16.4"],
-      outDir: fileURLToPath(new URL("./templates/", import.meta.url)),
+      outDir: resolve(import.meta.dirname, "templates"),
       emptyOutDir: true,
       modulePreload: {
         // https://vite.dev/config/build-options#build-modulepreload
@@ -115,205 +114,217 @@ export default defineConfig((): UserConfig => {
       rolldownOptions: {
         input: {
           // pages
-          archives: path.resolve(__dirname, "src/templates/archives.html"),
-          author: path.resolve(__dirname, "src/templates/author.html"),
-          categories: path.resolve(__dirname, "src/templates/categories.html"),
-          category: path.resolve(__dirname, "src/templates/category.html"),
-          index: path.resolve(__dirname, "src/templates/index.html"),
-          links: path.resolve(__dirname, "src/templates/links.html"),
-          moment: path.resolve(__dirname, "src/templates/moment.html"),
-          moments: path.resolve(__dirname, "src/templates/moments.html"),
-          page: path.resolve(__dirname, "src/templates/page.html"),
-          "page-like-post-style": path.resolve(__dirname, "src/templates/page-like-post-style.html"),
-          photos: path.resolve(__dirname, "src/templates/photos.html"),
-          post: path.resolve(__dirname, "src/templates/post.html"),
-          tag: path.resolve(__dirname, "src/templates/tag.html"),
-          tags: path.resolve(__dirname, "src/templates/tags.html"),
-          friends: path.resolve(__dirname, "src/templates/friends.html"),
-          error: path.resolve(__dirname, "src/templates/error/error.html"),
+          archives: resolve(import.meta.dirname, "src/templates/archives.html"),
+          author: resolve(import.meta.dirname, "src/templates/author.html"),
+          categories: resolve(import.meta.dirname, "src/templates/categories.html"),
+          category: resolve(import.meta.dirname, "src/templates/category.html"),
+          index: resolve(import.meta.dirname, "src/templates/index.html"),
+          links: resolve(import.meta.dirname, "src/templates/links.html"),
+          moment: resolve(import.meta.dirname, "src/templates/moment.html"),
+          moments: resolve(import.meta.dirname, "src/templates/moments.html"),
+          page: resolve(import.meta.dirname, "src/templates/page.html"),
+          "page-like-post-style": resolve(import.meta.dirname, "src/templates/page-like-post-style.html"),
+          photos: resolve(import.meta.dirname, "src/templates/photos.html"),
+          post: resolve(import.meta.dirname, "src/templates/post.html"),
+          tag: resolve(import.meta.dirname, "src/templates/tag.html"),
+          tags: resolve(import.meta.dirname, "src/templates/tags.html"),
+          friends: resolve(import.meta.dirname, "src/templates/friends.html"),
+          error: resolve(import.meta.dirname, "src/templates/error/error.html"),
           // components
-          "components-category-tree": path.resolve(__dirname, "src/templates/components/category-tree/template.html"),
-          "components-moment-video-modal": path.resolve(
-            __dirname,
+          "components-category-tree": resolve(
+            import.meta.dirname,
+            "src/templates/components/category-tree/template.html",
+          ),
+          "components-moment-video-modal": resolve(
+            import.meta.dirname,
             "src/templates/components/moment-video-modal/template.html",
           ),
-          "components-pagination": path.resolve(__dirname, "src/templates/components/pagination/template.html"),
-          "components-list-post-simple": path.resolve(
-            __dirname,
+          "components-pagination": resolve(import.meta.dirname, "src/templates/components/pagination/template.html"),
+          "components-list-post-simple": resolve(
+            import.meta.dirname,
             "src/templates/components/list-post-simple/template.html",
           ),
-          "components-list-post-summary": path.resolve(
-            __dirname,
+          "components-list-post-summary": resolve(
+            import.meta.dirname,
             "src/templates/components/list-post-summary/template.html",
           ),
-          "components-list-friends-summary": path.resolve(
-            __dirname,
+          "components-list-friends-summary": resolve(
+            import.meta.dirname,
             "src/templates/components/list-friends-summary/template.html",
           ),
-          "components-list-moment-summary": path.resolve(
-            __dirname,
+          "components-list-moment-summary": resolve(
+            import.meta.dirname,
             "src/templates/components/list-moment-summary/template.html",
           ),
-          "components-mermaid-injection": path.resolve(
-            __dirname,
+          "components-mermaid-injection": resolve(
+            import.meta.dirname,
             "src/templates/components/mermaid-injection/template.html",
           ),
-          "components-instantpage-injection": path.resolve(
-            __dirname,
+          "components-instantpage-injection": resolve(
+            import.meta.dirname,
             "src/templates/components/instantpage-injection/template.html",
           ),
-          "components-custom-font-face-style": path.resolve(
-            __dirname,
+          "components-custom-font-face-style": resolve(
+            import.meta.dirname,
             "src/templates/components/custom-font-face-style/template.html",
           ),
-          "components-custom-color-schema-style": path.resolve(
-            __dirname,
+          "components-custom-color-schema-style": resolve(
+            import.meta.dirname,
             "src/templates/components/custom-color-schema-style/template.html",
           ),
-          "components-custom-color-schema-config": path.resolve(
-            __dirname,
+          "components-custom-color-schema-config": resolve(
+            import.meta.dirname,
             "src/templates/components/custom-color-schema-config/template.html",
           ),
-          "components-custom-cursor-style": path.resolve(
-            __dirname,
+          "components-custom-cursor-style": resolve(
+            import.meta.dirname,
             "src/templates/components/custom-cursor-style/template.html",
           ),
-          "components-header-logo-style": path.resolve(
-            __dirname,
+          "components-header-logo-style": resolve(
+            import.meta.dirname,
             "src/templates/components/header-logo-style/template.html",
           ),
-          "components-header": path.resolve(__dirname, "src/templates/components/header/template.html"),
-          "components-halo-comment-widget": path.resolve(
-            __dirname,
+          "components-header": resolve(import.meta.dirname, "src/templates/components/header/template.html"),
+          "components-halo-comment-widget": resolve(
+            import.meta.dirname,
             "src/templates/components/halo-comment-widget/template.html",
           ),
-          "components-color-scheme-light": path.resolve(
-            __dirname,
+          "components-color-scheme-light": resolve(
+            import.meta.dirname,
             "src/templates/components/color-scheme-light/template.html",
           ),
-          "components-color-scheme-dark": path.resolve(
-            __dirname,
+          "components-color-scheme-dark": resolve(
+            import.meta.dirname,
             "src/templates/components/color-scheme-dark/template.html",
           ),
-          "components-color-scheme-auto": path.resolve(
-            __dirname,
+          "components-color-scheme-auto": resolve(
+            import.meta.dirname,
             "src/templates/components/color-scheme-auto/template.html",
           ),
-          "components-style-footer-sidebar": path.resolve(
-            __dirname,
+          "components-style-footer-sidebar": resolve(
+            import.meta.dirname,
             "src/templates/components/style-footer-sidebar/template.html",
           ),
-          "components-text-size-small": path.resolve(
-            __dirname,
+          "components-text-size-small": resolve(
+            import.meta.dirname,
             "src/templates/components/text-size-small/template.html",
           ),
-          "components-text-size-normal": path.resolve(
-            __dirname,
+          "components-text-size-normal": resolve(
+            import.meta.dirname,
             "src/templates/components/text-size-normal/template.html",
           ),
-          "components-text-size-large": path.resolve(
-            __dirname,
+          "components-text-size-large": resolve(
+            import.meta.dirname,
             "src/templates/components/text-size-large/template.html",
           ),
-          "components-toc-max-width-style": path.resolve(
-            __dirname,
+          "components-toc-max-width-style": resolve(
+            import.meta.dirname,
             "src/templates/components/toc-max-width-style/template.html",
           ),
-          "components-inline-code-style": path.resolve(
-            __dirname,
+          "components-inline-code-style": resolve(
+            import.meta.dirname,
             "src/templates/components/inline-code-style/template.html",
           ),
-          "components-dark-content-text-style": path.resolve(
-            __dirname,
+          "components-dark-content-text-style": resolve(
+            import.meta.dirname,
             "src/templates/components/dark-content-text-style/template.html",
           ),
-          "components-upvote-runtime": path.resolve(__dirname, "src/templates/components/upvote-runtime/template.html"),
-          "components-paragraph-first-line-indent-style": path.resolve(
-            __dirname,
+          "components-upvote-runtime": resolve(
+            import.meta.dirname,
+            "src/templates/components/upvote-runtime/template.html",
+          ),
+          "components-paragraph-first-line-indent-style": resolve(
+            import.meta.dirname,
             "src/templates/components/paragraph-first-line-indent-style/template.html",
           ),
-          "components-performance-monitor": path.resolve(
-            __dirname,
+          "components-performance-monitor": resolve(
+            import.meta.dirname,
             "src/templates/components/performance-monitor/template.html",
           ),
-          "components-quote-fetcher": path.resolve(__dirname, "src/templates/components/quote-fetcher/template.html"),
-          "components-layout-max-width-style": path.resolve(
-            __dirname,
+          "components-quote-fetcher": resolve(
+            import.meta.dirname,
+            "src/templates/components/quote-fetcher/template.html",
+          ),
+          "components-layout-max-width-style": resolve(
+            import.meta.dirname,
             "src/templates/components/layout-max-width-style/template.html",
           ),
-          "components-layout-min-width-style": path.resolve(
-            __dirname,
+          "components-layout-min-width-style": resolve(
+            import.meta.dirname,
             "src/templates/components/layout-min-width-style/template.html",
           ),
-          "components-layout-content-width-style": path.resolve(
-            __dirname,
+          "components-layout-content-width-style": resolve(
+            import.meta.dirname,
             "src/templates/components/layout-content-width-style/template.html",
           ),
-          "components-layout-table-bottom-border-style": path.resolve(
-            __dirname,
+          "components-layout-table-bottom-border-style": resolve(
+            import.meta.dirname,
             "src/templates/components/layout-table-bottom-border-style/template.html",
           ),
-          "components-layout-heading-paragraph-margin-style": path.resolve(
-            __dirname,
+          "components-layout-heading-paragraph-margin-style": resolve(
+            import.meta.dirname,
             "src/templates/components/layout-heading-paragraph-margin-style/template.html",
           ),
-          "components-heading-anchor-symbol-style": path.resolve(
-            __dirname,
+          "components-heading-anchor-symbol-style": resolve(
+            import.meta.dirname,
             "src/templates/components/heading-anchor-symbol-style/template.html",
           ),
-          "components-heading-anchor-svg": path.resolve(
-            __dirname,
+          "components-heading-anchor-svg": resolve(
+            import.meta.dirname,
             "src/templates/components/heading-anchor-svg/template.html",
           ),
-          "components-meta-theme-color": path.resolve(
-            __dirname,
+          "components-meta-theme-color": resolve(
+            import.meta.dirname,
             "src/templates/components/meta-theme-color/template.html",
           ),
-          "components-theme-dark": path.resolve(__dirname, "src/templates/components/theme-dark/template.html"),
-          "components-theme-light": path.resolve(__dirname, "src/templates/components/theme-light/template.html"),
-          "components-theme-dark-blue": path.resolve(
-            __dirname,
+          "components-theme-dark": resolve(import.meta.dirname, "src/templates/components/theme-dark/template.html"),
+          "components-theme-light": resolve(import.meta.dirname, "src/templates/components/theme-light/template.html"),
+          "components-theme-dark-blue": resolve(
+            import.meta.dirname,
             "src/templates/components/theme-dark-blue/template.html",
           ),
-          "components-theme-light-blue": path.resolve(
-            __dirname,
+          "components-theme-light-blue": resolve(
+            import.meta.dirname,
             "src/templates/components/theme-light-blue/template.html",
           ),
-          "components-theme-gray": path.resolve(__dirname, "src/templates/components/theme-gray/template.html"),
-          "components-theme-auto": path.resolve(__dirname, "src/templates/components/theme-auto/template.html"),
-          "components-theme-auto-blue": path.resolve(
-            __dirname,
+          "components-theme-gray": resolve(import.meta.dirname, "src/templates/components/theme-gray/template.html"),
+          "components-theme-auto": resolve(import.meta.dirname, "src/templates/components/theme-auto/template.html"),
+          "components-theme-auto-blue": resolve(
+            import.meta.dirname,
             "src/templates/components/theme-auto-blue/template.html",
           ),
-          "components-common": path.resolve(__dirname, "src/templates/components/common/template.html"),
-          "components-share": path.resolve(__dirname, "src/templates/components/share/template.html"),
-          "components-base-layout": path.resolve(__dirname, "src/templates/components/base-layout/template.html"),
-          "components-footer-sidebar": path.resolve(__dirname, "src/templates/components/footer-sidebar/template.html"),
-          "components-footer-bottom-content": path.resolve(
-            __dirname,
+          "components-common": resolve(import.meta.dirname, "src/templates/components/common/template.html"),
+          "components-share": resolve(import.meta.dirname, "src/templates/components/share/template.html"),
+          "components-base-layout": resolve(import.meta.dirname, "src/templates/components/base-layout/template.html"),
+          "components-footer-sidebar": resolve(
+            import.meta.dirname,
+            "src/templates/components/footer-sidebar/template.html",
+          ),
+          "components-footer-bottom-content": resolve(
+            import.meta.dirname,
             "src/templates/components/footer-bottom-content/template.html",
           ),
-          "components-footer-nav-page-like-post-style": path.resolve(
-            __dirname,
+          "components-footer-nav-page-like-post-style": resolve(
+            import.meta.dirname,
             "src/templates/components/footer-nav-page-like-post-style/template.html",
           ),
-          "components-nav-page-like-post-style": path.resolve(
-            __dirname,
+          "components-nav-page-like-post-style": resolve(
+            import.meta.dirname,
             "src/templates/components/nav-page-like-post-style/template.html",
           ),
-          "components-footer-nav-post": path.resolve(
-            __dirname,
+          "components-footer-nav-post": resolve(
+            import.meta.dirname,
             "src/templates/components/footer-nav-post/template.html",
           ),
-          "components-nav-post": path.resolve(__dirname, "src/templates/components/nav-post/template.html"),
+          "components-nav-post": resolve(import.meta.dirname, "src/templates/components/nav-post/template.html"),
           ...(buildProfile === "tiny"
             ? {
-                "components-mermaid-injection": path.resolve(
-                  __dirname,
+                "components-mermaid-injection": resolve(
+                  import.meta.dirname,
                   "src/templates/components/mermaid-injection/template.tiny.html",
                 ),
-                "components-instantpage-injection": path.resolve(
-                  __dirname,
+                "components-instantpage-injection": resolve(
+                  import.meta.dirname,
                   "src/templates/components/instantpage-injection/template.tiny.html",
                 ),
               }
