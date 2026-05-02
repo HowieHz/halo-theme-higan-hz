@@ -51,26 +51,6 @@ export default defineConfig((): UserConfig => {
               ]
             : []),
         ];
-  const tinyTemplateEntryOverrides =
-    buildProfile === "tiny"
-      ? {
-          "components-mermaid-injection": path.resolve(
-            __dirname,
-            "src/templates/components/mermaid-injection/template.tiny.html",
-          ),
-          "components-instantpage-injection": path.resolve(
-            __dirname,
-            "src/templates/components/instantpage-injection/template.tiny.html",
-          ),
-        }
-      : {};
-  const fontStylesPath = path.resolve(
-    __dirname,
-    buildProfile === "tiny"
-      ? "src/templates/components/fonts/styles.tiny.css"
-      : "src/templates/components/fonts/styles.css",
-  );
-
   const plugins = [
     // Tailwind CSS with Vite integration
     tailwindcss(),
@@ -106,7 +86,12 @@ export default defineConfig((): UserConfig => {
     base: "/themes/howiehz-higan/",
     resolve: {
       alias: {
-        "@higan-font-styles": fontStylesPath,
+        "@higan-font-styles": path.resolve(
+          __dirname,
+          buildProfile === "tiny"
+            ? "src/templates/components/fonts/styles.tiny.css"
+            : "src/templates/components/fonts/styles.css",
+        ),
       },
     },
     plugins,
@@ -321,7 +306,18 @@ export default defineConfig((): UserConfig => {
             "src/templates/components/footer-nav-post/template.html",
           ),
           "components-nav-post": path.resolve(__dirname, "src/templates/components/nav-post/template.html"),
-          ...tinyTemplateEntryOverrides,
+          ...(buildProfile === "tiny"
+            ? {
+                "components-mermaid-injection": path.resolve(
+                  __dirname,
+                  "src/templates/components/mermaid-injection/template.tiny.html",
+                ),
+                "components-instantpage-injection": path.resolve(
+                  __dirname,
+                  "src/templates/components/instantpage-injection/template.tiny.html",
+                ),
+              }
+            : {}),
         },
         output: {
           assetFileNames: () => {
