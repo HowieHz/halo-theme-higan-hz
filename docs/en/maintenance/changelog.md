@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 💥 Breaking Changes
 
 - Changed the precompression release strategy: default packages now keep only `.br`; use the new full precompressed packages when you need `.gz`, `.br`, and `.zst`.
+- Renamed the Simplified Chinese package names from `howiehz-higan-cn*` to `howiehz-higan-zh-hans*`.
 
 ## [1.65.2] - 2026-05-02
 

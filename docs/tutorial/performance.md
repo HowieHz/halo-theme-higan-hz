@@ -31,10 +31,13 @@ outline: deep
 
 说明：
 
-- 依据 [RFC 9659 第 3 节](https://www.rfc-editor.org/rfc/rfc9659.html#section-3) 与 [第 5.1 节](https://www.rfc-editor.org/rfc/rfc9659.html#section-5.1)，HTTP `zstd` 的 `Window_Size` 上限为 8 MB，因此这里使用压缩等级 19。
+- HTTP `zstd` 的 `Window_Size` 上限为 8 MB，因此这里使用压缩等级 19。相关说明见 [RFC 9659 第 3 节][rfc9659-section-3] 与 [RFC 9659 第 5.1 节][rfc9659-section-5-1]。
 - Halo CMS 2.24+ 在同时存在 `.br` 与 `.gz` 时会优先返回 `.gz`，所以默认安装包只保留 `.br`。
 - 当前 Halo CMS 一旦以某种预压缩文件提供过资源（例如 `.br`），就会一直沿用该方式直到重启。若之后删除了该文件，不会自动切换到其他方式，可能直接返回 `500 Internal Server Error`。如果你在不同安装包之间切换后遇到这类错误，请重启 Halo CMS。
 - Halo CMS 不会自动提供 `.zst`，如需使用 `.gz` / `.zst`，请使用完整预压缩包并通过反向代理或自管静态资源服务器提供。
+
+[rfc9659-section-3]: https://www.rfc-editor.org/rfc/rfc9659.html#section-3
+[rfc9659-section-5-1]: https://www.rfc-editor.org/rfc/rfc9659.html#section-5.1
 
 感谢 [nonzzz/vite-plugin-compression](https://github.com/nonzzz/vite-plugin-compression) 创建的插件。
 

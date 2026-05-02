@@ -1,5 +1,5 @@
 {
-  "version": "1.65.2",
+  "version": "1.66.0",
   "private": true,
   "keywords": [
     "halo",
@@ -27,7 +27,6 @@
   "type": "module",
   "scripts": {
     "build": "pnpm run build:default",
-    "prebuild:default": "pnpm run lint:type-check:tsgo && tw-patch extract",
     "build:default": "vite build",
     "build:full": "HALO_THEME_PRECOMPRESS_PROFILE=full pnpm run build:default",
     "dev": "pnpm run '/^dev:/'",
@@ -45,6 +44,7 @@
     "lint:type-check:docs:vue-tsc": "vue-tsc -b docs/tsconfig.browser.json",
     "lint:type-check:tsgo": "tsgo -b",
     "migrate:oxlint": "pnpm dlx @oxlint/migrate --type-aware --with-nursery && pnpm oxfmt -- --write .oxlintrc.json",
+    "prebuild:default": "pnpm run lint:type-check:tsgo && tw-patch extract",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky && tw-patch install"
   },
