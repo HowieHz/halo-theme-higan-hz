@@ -30,24 +30,27 @@ export default defineConfig((): UserConfig => {
     BUILD_PRECOMPRESS_PROFILES,
     "br-only",
   );
-  const shouldPrecompress = precompressProfile !== "none";
-  const precompressAlgorithms = [
-    defineAlgorithm("brotliCompress", {
-      params: {
-        [constants.BROTLI_PARAM_QUALITY]: 11,
-      },
-    }),
-    ...(precompressProfile === "full"
-      ? [
-          defineAlgorithm("gzip", { level: 9 }),
-          defineAlgorithm("zstandard", {
+
+  const precompressAlgorithms =
+    precompressProfile === "none"
+      ? []
+      : [
+          defineAlgorithm("brotliCompress", {
             params: {
-              [constants.ZSTD_c_compressionLevel]: 19,
+              [constants.BROTLI_PARAM_QUALITY]: 11,
             },
           }),
-        ]
-      : []),
-  ];
+          ...(precompressProfile === "full"
+            ? [
+                defineAlgorithm("gzip", { level: 9 }),
+                defineAlgorithm("zstandard", {
+                  params: {
+                    [constants.ZSTD_c_compressionLevel]: 19,
+                  },
+                }),
+              ]
+            : []),
+        ];
   const tinyTemplateEntryOverrides =
     buildProfile === "tiny"
       ? {
@@ -84,10 +87,9 @@ export default defineConfig((): UserConfig => {
     sri(),
   ];
 
-  if (shouldPrecompress) {
+  if (precompressAlgorithms.length > 0) {
     plugins.push(
-      // Default packages keep only .br.
-      // Full packages opt in via BUILD_PRECOMPRESS_PROFILE=full.
+      // precompress assets using specified algorithms for optimal delivery
       compression({
         algorithms: precompressAlgorithms,
         include: [
