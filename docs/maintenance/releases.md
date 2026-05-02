@@ -17,12 +17,19 @@
 
 ## 构建产物
 
-发布流程会基于当前构建规则生成多个主题安装包，并确保 `howiehz-higan-cn.zip` 在发布附件列表中位于第一，以便 Halo CMS 在更新安装时优先使用简体中文配置版本。
+发布流程会基于当前构建规则生成多个主题安装包，并确保 `howiehz-higan-zh-hans.zip` 在发布附件列表中位于第一，以便 Halo CMS 在更新安装时优先使用简体中文配置版本。
 
 当前发布产物包括：
 
-- `howiehz-higan-cn.zip`
+- `howiehz-higan-zh-hans.zip`
+- `howiehz-higan-zh-hans-full-precompressed.zip`
 - `howiehz-higan-en.zip`
+- `howiehz-higan-en-full-precompressed.zip`
+
+其中：
+
+- `howiehz-higan-zh-hans.zip` / `howiehz-higan-en.zip`：默认安装包，仅包含 `.br`，适合 Halo CMS 2.24+ 直连。
+- `howiehz-higan-zh-hans-full-precompressed.zip` / `howiehz-higan-en-full-precompressed.zip`：完整预压缩包，包含 `.gz` / `.br` / `.zst`，适合反向代理、CDN 或自管静态资源服务器。
 
 完整发布流程请参阅[贡献指南](./contributing.md#发布流程)中的“发布流程”章节。
 

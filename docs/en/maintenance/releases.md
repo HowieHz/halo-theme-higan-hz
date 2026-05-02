@@ -28,12 +28,19 @@ incomplete assets in the store.
 
 ## Build Artifacts
 
-The release pipeline builds multiple installable theme archives and keeps `howiehz-higan-cn.zip` first in the release asset list so Halo CMS prefers the Simplified Chinese package during update installs.
+The release pipeline builds multiple installable theme archives and keeps `howiehz-higan-zh-hans.zip` first in the release asset list so Halo CMS prefers the Simplified Chinese package during update installs.
 
 Current release artifacts:
 
-- `howiehz-higan-cn.zip`
+- `howiehz-higan-zh-hans.zip`
+- `howiehz-higan-zh-hans-full-precompressed.zip`
 - `howiehz-higan-en.zip`
+- `howiehz-higan-en-full-precompressed.zip`
+
+Package roles:
+
+- `howiehz-higan-zh-hans.zip` / `howiehz-higan-en.zip`: default packages with `.br` only, for direct Halo CMS 2.24+ delivery.
+- `howiehz-higan-zh-hans-full-precompressed.zip` / `howiehz-higan-en-full-precompressed.zip`: full precompressed packages with `.gz` / `.br` / `.zst`, for reverse proxies, CDNs, or self-managed static servers.
 
 For full release process details, see the _Release Flow_ section in the [Contribution Guide](./contributing.md#release-flow).
 

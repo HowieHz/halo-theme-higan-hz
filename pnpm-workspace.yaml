@@ -8,3 +8,4 @@ engineStrict: true # engines.node will be strictly enforced when installing depe
 allowBuilds:
   esbuild: true
   unrs-resolver: true
+shellEmulator: true

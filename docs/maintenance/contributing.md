@@ -182,8 +182,8 @@ PR 合并后，机器人会自动执行以下动作：
 4. 执行主题构建，产出多个 `howiehz-higan-*.zip`。
 5. 执行 `gh attestation verify`，校验全部 `howiehz-higan-*.zip` 均由指定的复用构建工作流签名；只有校验通过后才继续发布。
 6. 验证通过后，并行执行两项发布操作：
-   - 创建 GitHub Release，并让 `howiehz-higan-cn.zip` 在发布附件列表中位于第一。
-   - 同步到 Halo 应用市场：先创建草稿版本，成功上传全部构建产物后再发布，并让 `howiehz-higan-cn.zip` 在发布附件列表中位于第一，以便 Halo CMS 在更新安装时优先使用简体中文配置版本。
+   - 创建 GitHub Release，并让 `howiehz-higan-zh-hans.zip` 在发布附件列表中位于第一。
+   - 同步到 Halo 应用市场：先创建草稿版本，成功上传全部构建产物后再发布，并让 `howiehz-higan-zh-hans.zip` 在发布附件列表中位于第一，以便 Halo CMS 在更新安装时优先使用简体中文配置版本。
 7. GitHub Release 发布成功后，再派发后续事件触发 `generate-page-size-audit-json.yml`，自动创建体积测量结果 PR；该 PR 会带上 `deploy-docs` 标签，合并后自动部署文档站。
 
 ### 测试版发布方法

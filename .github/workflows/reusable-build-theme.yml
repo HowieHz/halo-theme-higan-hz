@@ -26,7 +26,7 @@ on:
 
 jobs:
   build:
-    name: Build, Upload, and Attest Theme Assets
+    name: Build Theme Packages
     runs-on: ubuntu-latest
     # This reusable workflow is the only place that needs attestation privileges.
     permissions:
@@ -34,7 +34,7 @@ jobs:
       id-token: write
       attestations: write
     steps:
-      - name: Configure Build Swap Space
+      - name: Set Up Swap
         run: |
           SWAP_FILE="/tmp/github-actions-swap-$$"
           MEMORY_LIMIT_GB=12
@@ -46,39 +46,47 @@ jobs:
           echo "Added ${MEMORY_LIMIT_GB}GB swap at $SWAP_FILE"
           free -h
 
-      - name: Prepare Build Directories
+      - name: Prepare Dist
         run: |
+          rm -rf dist/theme-packages
           mkdir -p dist/theme-packages
 
-      - name: Checkout Source
+      - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
         with:
           ref: ${{ inputs.theme_ref }}
 
-      - name: Set Up Node.js and pnpm
+      - name: Set Up Node
         uses: ./.github/actions/setup-node-pnpm
 
-      - name: Install Workspace Dependencies
+      - name: Install Deps
         run: pnpm install --frozen-lockfile
 
-      - name: Apply Theme Version Override
+      - name: Set Version
         if: inputs.version_override != ''
         run: node .github/scripts/update-theme-version.js "${{ inputs.version_override }}"
 
-      - name: Build Theme Project
+      - name: Build Default
         run: pnpm build
 
-      - name: Package Theme Archives
+      - name: Pack Default
         shell: bash
-        run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$GITHUB_WORKSPACE/dist/theme-packages"
+        run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$GITHUB_WORKSPACE/dist/theme-packages" "$GITHUB_WORKSPACE/templates"
 
-      - name: Upload Build Artifacts
+      - name: Build Full
+        run: pnpm build:full
+
+      - name: Pack Full
+        shell: bash
+        run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$GITHUB_WORKSPACE/dist/theme-packages" "$GITHUB_WORKSPACE/templates" "-full-precompressed"
+
+      - name: Upload Artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # https://github.com/actions/upload-artifact/releases/tag/v7.0.1
         with:
           name: ${{ inputs.artifact_name }}
           path: dist/theme-packages/*
 
-      - name: Generate Build Attestations
+      - name: Attest Artifacts
         uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26 # https://github.com/actions/attest/releases/tag/v4.1.0
         with:
           subject-path: dist/theme-packages/*.zip

@@ -162,8 +162,8 @@ jobs:
               echo "⚠️ .github/include-list.txt not found; skipping include-list copy"
             fi
             cd ~/builds/tmp-included
-            zip -9 -r howiehz-higan-cn.zip .
-            mv howiehz-higan-cn.zip ~/builds/target/
+            zip -9 -r howiehz-higan-zh-hans.zip .
+            mv howiehz-higan-zh-hans.zip ~/builds/target/
             step_end=$(date +%s%3N); echo "STEP_END:pack-files:${step_end}" >> ~/logs/theme.timing
 
             task_end=$(date +%s%3N); echo "TASK_END:${task_end}" >> ~/logs/theme.timing
@@ -314,7 +314,7 @@ jobs:
       # ========== Phase 3: Subsequent steps (serial) ==========
       - name: Install and activate theme
         run: |
-          THEME_ZIP_PATH="${HOME}/builds/target/howiehz-higan-cn.zip"
+          THEME_ZIP_PATH="${HOME}/builds/target/howiehz-higan-zh-hans.zip"
 
           if [ ! -f "$THEME_ZIP_PATH" ]; then
             echo "❌ Theme file not found: $THEME_ZIP_PATH"

@@ -35,7 +35,7 @@ outline: deep
 
 ::: warning
 
-由于 Halo 应用市场限制，默认更新为第一构建产物，如果您使用的主题包并非 `howiehz-higan-cn.zip`（即简体中文配置文件版本），请前往[市场](https://www.halo.run/store/apps/app-homxf/releases)选择所需版本手动安装。
+由于 Halo 应用市场限制，默认更新为第一构建产物，如果您使用的主题包并非 `howiehz-higan-zh-hans.zip`（即简体中文配置文件版本），请前往[市场](https://www.halo.run/store/apps/app-homxf/releases)选择所需版本手动安装。
 
 :::
 
@@ -45,5 +45,5 @@ outline: deep
 
 ## 文件分发说明
 
-- `howiehz-higan-cn.zip` 为简体中文配置文件版本。
+- `howiehz-higan-zh-hans.zip` 为简体中文配置文件版本。
 - `howiehz-higan-en.zip` 为英文配置文件版本。

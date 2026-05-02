@@ -162,14 +162,17 @@ jobs:
           RELEASE_SHA: ${{ needs.prepare.outputs.release_commit_sha }}
         run: |
           assets=()
-          if [ -f dist/theme-packages/howiehz-higan-cn.zip ]; then
-            assets+=(dist/theme-packages/howiehz-higan-cn.zip)
-          fi
-          while IFS= read -r asset; do
-            if [ "$asset" != "dist/theme-packages/howiehz-higan-cn.zip" ]; then
+          preferred_assets=(
+            dist/theme-packages/howiehz-higan-zh-hans.zip
+            dist/theme-packages/howiehz-higan-zh-hans-full-precompressed.zip
+            dist/theme-packages/howiehz-higan-en.zip
+            dist/theme-packages/howiehz-higan-en-full-precompressed.zip
+          )
+          for asset in "${preferred_assets[@]}"; do
+            if [ -f "$asset" ]; then
               assets+=("$asset")
             fi
-          done < <(find dist/theme-packages -maxdepth 1 -type f | sort)
+          done
           gh release create "$RELEASE_TAG" "${assets[@]}" \
             --title "$RELEASE_VERSION" \
             --notes-file .github/templates/release-note-template.md \

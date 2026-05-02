@@ -191,10 +191,10 @@ After merge, the bot automatically:
 4. Builds the theme and produces multiple `howiehz-higan-*.zip` packages.
 5. Runs `gh attestation verify` to confirm every `howiehz-higan-*.zip` package was signed by the expected reusable build workflow; publishing continues only after verification passes.
 6. After verification passes, two publishing actions run in parallel:
-   - Create the GitHub Release and keep `howiehz-higan-cn.zip` first in the release asset list.
+   - Create the GitHub Release and keep `howiehz-higan-zh-hans.zip` first in the release asset list.
    - Sync to the Halo App Store by creating a draft release first,
      publishing it only after all build artifacts upload successfully,
-     and keeping `howiehz-higan-cn.zip` first in the release asset list
+     and keeping `howiehz-higan-zh-hans.zip` first in the release asset list
      so Halo CMS prefers the Simplified Chinese package during
      update installs.
 7. After the GitHub Release is published, dispatches the follow-up event

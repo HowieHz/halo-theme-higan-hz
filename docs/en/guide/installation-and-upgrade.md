@@ -43,7 +43,7 @@ When a new version is released on the [Halo App Market](https://www.halo.run/sto
 
 ::: warning
 
-Due to Halo App Market limitations, the default update is the first build artifact. If the theme package you are using is not `howiehz-higan-cn.zip` (i.e., the Simplified Chinese configuration file version), please go to the [market](https://www.halo.run/store/apps/app-homxf/releases) to manually select and install the desired version.
+Due to Halo App Market limitations, the default update is the first build artifact. If the theme package you are using is not `howiehz-higan-zh-hans.zip` (i.e., the Simplified Chinese configuration file version), please go to the [market](https://www.halo.run/store/apps/app-homxf/releases) to manually select and install the desired version.
 
 :::
 
@@ -53,5 +53,5 @@ Repeat the steps in [How to Download and Install the Theme](#how-to-download-and
 
 ## File Distribution Instructions
 
-- `howiehz-higan-cn.zip` is the Simplified Chinese configuration file version.
+- `howiehz-higan-zh-hans.zip` is the Simplified Chinese configuration file version.
 - `howiehz-higan-en.zip` is the English configuration file version.

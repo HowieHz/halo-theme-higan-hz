@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 💥 Breaking Changes
+
+- Changed the precompression release strategy: default packages now keep only `.br`; use the new full precompressed packages when you need `.gz`, `.br`, and `.zst`.
+
 ## [1.65.2] - 2026-05-02
 
 ### 🐛 Bug Fixes
@@ -449,8 +453,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added SRI metadata for theme assets to improve security.
 - Added precompressed static assets for the theme:
   - File types:
-    - `.js`: `.js.gz`, `.js.br`, `.js.zst`
-    - `.css`: `.css.gz`, `.css.br`, `.css.zst`
+    - The current build output mainly ships precompressed `.js`, `.css`, `.ttf`, and `.ico` files, for example `.js` maps to `.js.gz`, `.js.br`, and `.js.zst`
   - Algorithms and compression levels:
     - `*.gz` - gzip (level 9, max)
     - `*.br` - brotli (level 11, max)

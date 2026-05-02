@@ -16,6 +16,25 @@ import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify.ts";
 
 export default defineConfig((): UserConfig => {
   const isWatchMode = ["--watch", "-w"].some((arg) => process.argv.includes(arg));
+  const precompressProfile = process.env.HALO_THEME_PRECOMPRESS_PROFILE ?? "br-only";
+  const isFullPrecompressProfile = precompressProfile === "full";
+  const createBrotliAlgorithm = () =>
+    defineAlgorithm("brotliCompress", {
+      params: {
+        [constants.BROTLI_PARAM_QUALITY]: 11,
+      },
+    });
+  const precompressAlgorithms = isFullPrecompressProfile
+    ? [
+        defineAlgorithm("gzip", { level: 9 }),
+        createBrotliAlgorithm(),
+        defineAlgorithm("zstandard", {
+          params: {
+            [constants.ZSTD_c_compressionLevel]: 19,
+          },
+        }),
+      ]
+    : [createBrotliAlgorithm()];
 
   const plugins = [
     // Tailwind CSS with Vite integration
@@ -35,26 +54,15 @@ export default defineConfig((): UserConfig => {
 
   if (!isWatchMode) {
     plugins.push(
-      // Precompress output files using gzip, brotli, and zstandard algorithms
+      // Default packages keep only .br.
+      // Full packages opt in via HALO_THEME_PRECOMPRESS_PROFILE=full.
       compression({
-        algorithms: [
-          defineAlgorithm("gzip", { level: 9 }),
-          defineAlgorithm("brotliCompress", {
-            params: {
-              [constants.BROTLI_PARAM_QUALITY]: 11,
-            },
-          }),
-          defineAlgorithm("zstandard", {
-            params: {
-              [constants.ZSTD_c_compressionLevel]: 19,
-            },
-          }),
-        ],
+        algorithms: precompressAlgorithms,
         include: [
-          /\.(atom|rss|xml|xhtml|js|mjs|ts|html|json|css|eot|otf|ttf|svg|ico|bmp|dib|txt|text|log|md|conf|ini|cfg)$/,
+          /\.(atom|rss|xml|xhtml|js|mjs|ts|json|css|eot|otf|ttf|svg|ico|bmp|dib|txt|text|log|md|conf|ini|cfg)$/,
         ],
         // Root *.html, error/**/*.html and */ components/**/*.html are template files and should not be compressed
-        exclude: [/^[^/]*\.html$/, /^error\/.*\.html$/, /^components\/.*\.html$/],
+        // exclude: [/^[^/]*\.html$/, /^error\/.*\.html$/, /^components\/.*\.html$/],
       }),
     );
   }

@@ -20,25 +20,38 @@ Contributions to this tutorial are always welcome.
 
 ## Using Pre-compressed Assets
 
-Pre-compressed versions of the theme's static resources are provided to conserve server memory and bandwidth.
+The release packages come in two variants:
 
-- Pre-compressed file types:
-  - `.js`: `.js.gz`, `.js.br`, `.js.zst`
-  - `.css`: `.css.gz`, `.css.br`, `.css.zst`
-- Corresponding algorithms and compression levels:
-  - `.*.gz` — gzip (compression level 9, maximum)
-  - `.*.br` — brotli (compression level 11, maximum)
-  - `.*.zst` — zstandard (compression level 21, set to maximum minus 1 to avoid out-of-memory errors during build)
+- Default install packages:
+  - File names: `howiehz-higan-zh-hans.zip`, `howiehz-higan-en.zip`
+  - Includes: `.br` precompressed files actually present in the current build output, mainly `.js`, `.css`, `.ttf`, and `.ico`. For example, `.js` maps to `.js.br`
+  - Best for: direct Halo CMS 2.24+ delivery
+- Full precompressed packages:
+  - File names: `howiehz-higan-zh-hans-full-precompressed.zip`, `howiehz-higan-en-full-precompressed.zip`
+  - Includes: `.gz` / `.br` / `.zst` precompressed files actually present in the current build output, mainly `.js`, `.css`, `.ttf`, and `.ico`. For example, `.js` maps to `.js.gz`, `.js.br`, and `.js.zst`
+  - Best for: nginx, Apache, CDNs, object storage, or other self-managed static servers
+- Compression levels:
+  - `*.gz` — gzip (compression level 9, maximum)
+  - `*.br` — brotli (compression level 11, maximum)
+  - `*.zst` — zstandard (compression level 19)
+
+Notes:
+
+- Per [RFC 9659 Section 3](https://www.rfc-editor.org/rfc/rfc9659.html#section-3) and [Section 5.1](https://www.rfc-editor.org/rfc/rfc9659.html#section-5.1), HTTP `zstd` caps `Window_Size` at 8 MB, so this documentation uses compression level 19 here.
+- Halo CMS 2.24+ prefers `.gz` over `.br` when both are present, so the default packages keep only `.br`.
+- Current Halo CMS behavior keeps using the same precompressed variant after it has served one once, such as `.br`, until restart. If that file is later removed, Halo CMS does not switch to another variant automatically and may return `500 Internal Server Error` instead. If you hit this after switching package variants, restart Halo CMS.
+- Halo CMS does not automatically serve `.zst`, so use the full precompressed packages only behind a reverse proxy or another self-managed static server.
 
 Thanks to [nonzzz/vite-plugin-compression](https://github.com/nonzzz/vite-plugin-compression) for creating this plugin.
 
 ### Configuring the Server to Serve Pre-compressed Static Assets
 
-- When using Halo CMS directly, the server automatically serves `.br` files.
-- For nginx server configuration, refer to: [nginx Configuration](#nginx-configuration).
-- For Apache server configuration, refer to: [Apache Configuration](#apache-configuration).
+- When using Halo CMS directly, use the default packages.
+- When using the full precompressed packages behind nginx / Apache / a CDN, you can use precompressed files according to client support.
+- For nginx server configuration, refer to: [nginx Configuration](#nginx-full-precompressed).
+- For Apache server configuration, refer to: [Apache Configuration](#apache-full-precompressed).
 
-#### nginx Configuration
+#### nginx Configuration (Full Precompressed Install Packages) {#nginx-full-precompressed}
 
 <!-- markdownlint-disable MD013 -->
 
@@ -47,7 +60,7 @@ http {
     # Enable gzip_static module to serve pre-compressed .gz files
     gzip_static on;
 
-    # Fallback to dynamic compression if static file not found
+    # Fall back to dynamic gzip compression if static file not found
     gzip on;
     gzip_types application/atom+xml application/javascript application/json application/vnd.api+json application/rss+xml application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml;
 
@@ -55,7 +68,7 @@ http {
     # Requires ngx_brotli module: https://github.com/google/ngx_brotli
     brotli_static on;
 
-    # Fallback to dynamic compression if static file not found
+    # Fall back to dynamic Brotli compression if static file not found
     brotli on;
     brotli_types application/atom+xml application/javascript application/json application/vnd.api+json application/rss+xml application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml;
 
@@ -63,7 +76,7 @@ http {
     # Requires zstd-nginx-module module: https://github.com/tokers/zstd-nginx-module
     zstd_static on;
 
-    # Fallback to dynamic compression if static file not found
+    # Fall back to dynamic zstd compression if static file not found
     zstd on;
     zstd_types application/atom+xml application/javascript application/json application/vnd.api+json application/rss+xml application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml;
 
@@ -81,7 +94,7 @@ http {
 
 <!-- markdownlint-enable MD013 -->
 
-#### Apache Configuration
+#### Apache Configuration (Full Precompressed Install Packages) {#apache-full-precompressed}
 
 <!-- markdownlint-disable MD013 -->
 
@@ -117,18 +130,8 @@ http {
     Header set Content-Encoding "gzip"
 </FilesMatch>
 
-<FilesMatch "\.css\.gz$">
-    Header set Content-Type "text/css"
-    Header set Content-Encoding "gzip"
-</FilesMatch>
-
 <FilesMatch "\.js\.br$">
     Header set Content-Type "application/javascript"
-    Header set Content-Encoding "br"
-</FilesMatch>
-
-<FilesMatch "\.css\.br$">
-    Header set Content-Type "text/css"
     Header set Content-Encoding "br"
 </FilesMatch>
 
@@ -137,8 +140,48 @@ http {
     Header set Content-Encoding "zstd"
 </FilesMatch>
 
+<FilesMatch "\.css\.gz$">
+    Header set Content-Type "text/css"
+    Header set Content-Encoding "gzip"
+</FilesMatch>
+
+<FilesMatch "\.css\.br$">
+    Header set Content-Type "text/css"
+    Header set Content-Encoding "br"
+</FilesMatch>
+
 <FilesMatch "\.css\.zst$">
     Header set Content-Type "text/css"
+    Header set Content-Encoding "zstd"
+</FilesMatch>
+
+<FilesMatch "\.ttf\.gz$">
+    Header set Content-Type "font/ttf"
+    Header set Content-Encoding "gzip"
+</FilesMatch>
+
+<FilesMatch "\.ttf\.br$">
+    Header set Content-Type "font/ttf"
+    Header set Content-Encoding "br"
+</FilesMatch>
+
+<FilesMatch "\.ttf\.zst$">
+    Header set Content-Type "font/ttf"
+    Header set Content-Encoding "zstd"
+</FilesMatch>
+
+<FilesMatch "\.ico\.gz$">
+    Header set Content-Type "image/x-icon"
+    Header set Content-Encoding "gzip"
+</FilesMatch>
+
+<FilesMatch "\.ico\.br$">
+    Header set Content-Type "image/x-icon"
+    Header set Content-Encoding "br"
+</FilesMatch>
+
+<FilesMatch "\.ico\.zst$">
+    Header set Content-Type "image/x-icon"
     Header set Content-Encoding "zstd"
 </FilesMatch>
 ```
