@@ -42,7 +42,7 @@
               >
                 <picture>
                   <source
-                    th:with="defaultAvifAvatar = ${#theme.assets('/images/logo.avif')},
+                    th:with="defaultAvifAvatar = '/themes/howiehz-higan/assets/images/logo.avif',
                              avatarUri = ${#strings.defaultString(moment.owner?.avatar, defaultAvifAvatar)},
                              ext = ${avatarUri.substring(avatarUri.lastIndexOf('.') + 1).toLowerCase()},
                              imageType = ${ext == 'avif'
@@ -77,14 +77,14 @@
                     th:type="${imageType}"
                   />
                   <source
-                    th:with="defaultWebpAvatar = ${#theme.assets('/images/logo.webp')}"
+                    th:with="defaultWebpAvatar = '/themes/howiehz-higan/assets/images/logo.webp'"
                     th:srcset="|${thumbnail.gen(defaultWebpAvatar, 's')} 400w|"
                     sizes="400px"
                     type="image/webp"
                   />
                   <img
                     class="avatar-user avatar"
-                    th:with="defaultPngAvatar = ${#theme.assets('/images/logo.png')}"
+                    th:with="defaultPngAvatar = '/themes/howiehz-higan/assets/images/logo.png'"
                     th:src="${defaultPngAvatar}"
                     size="400px"
                     width="32"
@@ -116,7 +116,7 @@
               >
                 <picture>
                   <source
-                    th:with="defaultAvifAvatar = ${#theme.assets('/images/logo.avif')},
+                    th:with="defaultAvifAvatar = '/themes/howiehz-higan/assets/images/logo.avif',
                             avatarUri = ${#strings.defaultString(moment.owner?.avatar, defaultAvifAvatar)},
                             ext = ${avatarUri.substring(avatarUri.lastIndexOf('.') + 1).toLowerCase()},
                             imageType = ${ext == 'avif'
@@ -151,14 +151,14 @@
                     th:type="${imageType}"
                   />
                   <source
-                    th:with="defaultWebpAvatar = ${#theme.assets('/images/logo.webp')}"
+                    th:with="defaultWebpAvatar = '/themes/howiehz-higan/assets/images/logo.webp'"
                     th:srcset="|${thumbnail.gen(defaultWebpAvatar, 's')} 400w|"
                     sizes="400px"
                     type="image/webp"
                   />
                   <img
                     class="avatar-user avatar"
-                    th:with="defaultPngAvatar = ${#theme.assets('/images/logo.png')}"
+                    th:with="defaultPngAvatar = '/themes/howiehz-higan/assets/images/logo.png'"
                     th:src="${defaultPngAvatar}"
                     size="400px"
                     width="32"
