@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fixed an issue where the back-to-top icon on the post detail page was missing an accessible name (`aria-label`).
+
 ## [1.65.0] - 2026-05-01
 
 ### 💥 Breaking Changes
