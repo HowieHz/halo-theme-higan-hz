@@ -402,8 +402,14 @@ jobs:
           echo "Current config:"
           echo "$cfg" | jq .
 
-          # Set favicon field
-          updated=$(echo "$cfg" | jq '.favicon = "/themes/howiehz-higan/assets/images/logo.avif"')
+          theme_version=$(node -p "JSON.parse(require('node:fs').readFileSync('package.json', 'utf8')).version")
+          favicon_url="/themes/howiehz-higan/assets/images/logo.avif?v=$theme_version"
+          echo "Using favicon URL: $favicon_url"
+
+          # Keep a version query here so the system favicon URL is treated as the
+          # same asset as #theme.assets('/images/logo.avif'); without it, Halo may
+          # see them as different URLs and load the favicon twice.
+          updated=$(echo "$cfg" | jq --arg favicon "$favicon_url" '.favicon = $favicon')
 
           echo "Updating basic config with new favicon"
           http_code=$(curl -s -o /tmp/put.out -w "%{http_code}" -u admin:admin -X PUT \
