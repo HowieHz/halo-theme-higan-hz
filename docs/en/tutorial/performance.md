@@ -39,7 +39,8 @@ Notes:
 
 - HTTP `zstd` caps `Window_Size` at 8 MB, so this documentation uses compression level 19 here. See [RFC 9659 Section 3][rfc9659-section-3] and [RFC 9659 Section 5.1][rfc9659-section-5-1].
 - Halo CMS 2.24+ prefers `.gz` over `.br` when both are present, so the default packages keep only `.br`.
-- Current Halo CMS behavior keeps using the same precompressed variant after it has served one once, such as `.br`, until restart. If that file is later removed, Halo CMS does not switch to another variant automatically and may return `500 Internal Server Error` instead. If you hit this after switching package variants, restart Halo CMS.
+- Current Halo CMS behavior keeps using the same precompressed variant after it has served one once, such as `.br`, until restart. If that file is later removed,
+  Halo CMS does not switch to another variant automatically and may return `500 Internal Server Error` instead. If you hit this after switching package variants, restart Halo CMS.
 - Halo CMS does not automatically serve `.zst`, so use the full precompressed packages only behind a reverse proxy or another self-managed static server.
 
 [rfc9659-section-3]: https://www.rfc-editor.org/rfc/rfc9659.html#section-3
