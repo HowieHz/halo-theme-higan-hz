@@ -191,13 +191,15 @@ jobs:
           # reusable-audit uploads artifacts named `page-size-reports-${{ ref_name }}`
           pattern: page-size-reports-*
           path: ./all-reports
+          # Merge matching artifacts into one directory so downstream steps can consume them directly.
+          merge-multiple: true
 
       - name: Copy reports to page_size_audit_results
         if: github.event_name == 'release' || (github.event_name == 'repository_dispatch' && github.event.action == 'stable_release_published' && github.event.client_payload.create_pr == true) || github.event.inputs.create_pr == 'true'
         run: |
           mkdir -p .github/page_size_audit_results
-          # Actual case: JSON files are placed directly under ./all-reports
-          for file in ./all-reports/*.json; do
+          # Recurse defensively in case artifact layout changes and JSON files land in nested directories.
+          find ./all-reports -type f -name '*.json' | while read -r file; do
             if [ -f "$file" ]; then
               filename=$(basename "$file")
               if echo "$filename" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+\.json$'; then
