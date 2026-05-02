@@ -96,14 +96,15 @@ jobs:
 
       - name: Copy latest .github scripts
         run: |
-          # Fetch latest .github scripts (from the branch that triggered the workflow)
+          # Fetch the latest workflow helpers from the branch that triggered the workflow.
+          # Keep the scope narrow so generated report data under .github/ is not pulled into the workspace.
           # For PRs: use head_ref (source branch); otherwise use main
           BRANCH_NAME="${{ github.head_ref || 'main' }}"
           echo "Workflow branch: $BRANCH_NAME"
 
           git fetch origin "$BRANCH_NAME"
-          git checkout "origin/$BRANCH_NAME" -- .github/
-          echo "✓ Copied .github/ from $BRANCH_NAME"
+          git checkout "origin/$BRANCH_NAME" -- .github/actions/ .github/scripts/ .github/include-list.txt
+          echo "✓ Copied workflow helpers from $BRANCH_NAME"
 
           # ========== Phase 1: Prepare environment (serial, quick) ==========
       - name: Setup Node.js and pnpm
@@ -867,7 +868,7 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # https://github.com/actions/upload-artifact/releases/tag/v7.0.1
         with:
           name: page-size-reports-${{ inputs.ref_name }}
-          path: ${{ inputs.output_dir }}
+          path: ${{ inputs.output_dir }}/${{ inputs.output_filename }}.json
 
       - name: Stop Halo
         if: always()
