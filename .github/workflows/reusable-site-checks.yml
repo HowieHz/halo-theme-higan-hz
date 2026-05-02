@@ -403,7 +403,19 @@ jobs:
           echo "Current config:"
           echo "$cfg" | jq .
 
-          theme_version=$(node -p "JSON.parse(require('node:fs').readFileSync('package.json', 'utf8')).version")
+          # Read the theme package version from theme.yaml so the system favicon URL
+          # uses the same cache-busting version source as #theme.assets('/images/logo.avif').
+          # If this diverges from the theme asset version, Halo may emit two logo URLs
+          # with different query strings and the browser will fetch both.
+          theme_version=$(awk '
+            /^spec:/ { in_spec=1; next }
+            in_spec && /^[^[:space:]]/ { in_spec=0 }
+            in_spec && $1 == "version:" { print $2; exit }
+          ' theme.yaml)
+          if [ -z "$theme_version" ]; then
+            echo "❌ Failed to read spec.version from theme.yaml"
+            exit 1
+          fi
           favicon_url="/themes/howiehz-higan/assets/images/logo.avif?v=$theme_version"
           echo "Using favicon URL: $favicon_url"
 
