@@ -16,25 +16,40 @@ import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify.ts";
 
 export default defineConfig((): UserConfig => {
   const isWatchMode = ["--watch", "-w"].some((arg) => process.argv.includes(arg));
+  const buildProfile = process.env.HALO_THEME_BUILD_PROFILE ?? "default";
   const precompressProfile = process.env.HALO_THEME_PRECOMPRESS_PROFILE ?? "br-only";
-  const isFullPrecompressProfile = precompressProfile === "full";
+  const shouldPrecompress = !isWatchMode && precompressProfile !== "none";
   const createBrotliAlgorithm = () =>
     defineAlgorithm("brotliCompress", {
       params: {
         [constants.BROTLI_PARAM_QUALITY]: 11,
       },
     });
-  const precompressAlgorithms = isFullPrecompressProfile
-    ? [
-        defineAlgorithm("gzip", { level: 9 }),
-        createBrotliAlgorithm(),
-        defineAlgorithm("zstandard", {
-          params: {
-            [constants.ZSTD_c_compressionLevel]: 19,
-          },
-        }),
-      ]
-    : [createBrotliAlgorithm()];
+  const precompressAlgorithms =
+    precompressProfile === "full"
+      ? [
+          defineAlgorithm("gzip", { level: 9 }),
+          createBrotliAlgorithm(),
+          defineAlgorithm("zstandard", {
+            params: {
+              [constants.ZSTD_c_compressionLevel]: 19,
+            },
+          }),
+        ]
+      : [createBrotliAlgorithm()];
+  const tinyTemplateEntryOverrides =
+    buildProfile === "tiny"
+      ? {
+          "components-mermaid-injection": path.resolve(
+            __dirname,
+            "src/templates/components/mermaid-injection/template.tiny.html",
+          ),
+          "components-instantpage-injection": path.resolve(
+            __dirname,
+            "src/templates/components/instantpage-injection/template.tiny.html",
+          ),
+        }
+      : {};
 
   const plugins = [
     // Tailwind CSS with Vite integration
@@ -52,7 +67,7 @@ export default defineConfig((): UserConfig => {
     sri(),
   ];
 
-  if (!isWatchMode) {
+  if (shouldPrecompress) {
     plugins.push(
       // Default packages keep only .br.
       // Full packages opt in via HALO_THEME_PRECOMPRESS_PROFILE=full.
@@ -282,6 +297,7 @@ export default defineConfig((): UserConfig => {
             "src/templates/components/footer-nav-post/template.html",
           ),
           "components-nav-post": path.resolve(__dirname, "src/templates/components/nav-post/template.html"),
+          ...tinyTemplateEntryOverrides,
         },
         output: {
           assetFileNames: () => {

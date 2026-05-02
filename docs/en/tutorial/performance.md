@@ -29,8 +29,9 @@ The release packages come in three variants:
 - Tiny install packages:
   - File names: `howiehz-higan-zh-hans-tiny.zip`, `howiehz-higan-en-tiny.zip`
   - Includes: no precompressed assets, removes the default `.woff` /
-    `.ttf` fonts, and replaces the default logo asset with a 1x1
-    placeholder image
+    `.ttf` fonts, replaces the default logo asset with a 1x1
+    placeholder image, and excludes Mermaid / instant.page runtime
+    injection
   - Best for: smaller installs
 - Full precompressed packages:
   - File names: `howiehz-higan-zh-hans-full-precompressed.zip`, `howiehz-higan-en-full-precompressed.zip`

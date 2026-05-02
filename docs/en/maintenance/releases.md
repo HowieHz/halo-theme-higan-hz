@@ -43,8 +43,9 @@ Package roles:
 
 - `howiehz-higan-zh-hans.zip` / `howiehz-higan-en.zip`: default packages with `.br` only, for direct Halo CMS v2.24+ delivery.
 - `*-tiny.zip`: tiny packages that keep only the default `.woff2` fonts,
-  replace the default logo asset with a 1x1 placeholder image,
-  and omit precompressed assets for smaller installs.
+  replace the default logo asset with a 1x1 placeholder image, omit
+  precompressed assets, and exclude Mermaid / instant.page runtime
+  injection for smaller installs.
 - `*-full-precompressed.zip`: full precompressed packages with `.gz` / `.br` / `.zst`, for reverse proxies, CDNs, or self-managed static servers.
 
 For full release process details, see the _Release Flow_ section in the [Contribution Guide](./contributing.md#release-flow).

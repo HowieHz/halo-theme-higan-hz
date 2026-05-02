@@ -29,6 +29,7 @@
     "build": "pnpm run build:default",
     "build:default": "vite build",
     "build:full": "HALO_THEME_PRECOMPRESS_PROFILE=full pnpm run build:default",
+    "build:tiny": "HALO_THEME_BUILD_PROFILE=tiny HALO_THEME_PRECOMPRESS_PROFILE=none pnpm run build:default",
     "dev": "pnpm run '/^dev:/'",
     "dev:vite": "vite build --watch",
     "docs:build": "pnpm --filter docs docs:build",
