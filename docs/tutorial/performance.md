@@ -22,8 +22,8 @@ outline: deep
   - 适用：Halo CMS v2.24+ 直连[^default-package-direct]
 - 轻量安装包：
   - 文件名：`howiehz-higan-zh-hans-tiny.zip`、`howiehz-higan-en-tiny.zip`
-  - 包含：不包含预压缩文件，并移除默认字体中的 `.woff` / `.ttf` 与默认 logo 中的 `.png` / `.webp`，仅保留 `.woff2` 与 `.avif`
-  - 适用：仅面向已支持 `woff2` 与 `avif` 的现代浏览器，且希望进一步减小安装包体积
+  - 包含：不包含预压缩文件，并移除默认字体中的 `.woff` / `.ttf`；默认 logo 资源将替换为 1x1 占位图
+  - 适用：希望进一步减小安装包体积
 - 完整预压缩包：
   - 文件名：`howiehz-higan-zh-hans-full-precompressed.zip`、`howiehz-higan-en-full-precompressed.zip`
   - 包含：当前实际构建产物中的 `.gz` / `.br` / `.zst` 预压缩文件，主要是 `.js`、`.css`、`.ttf`、`.ico`。例如 `.js` 对应 `.js.gz`、`.js.br`、`.js.zst`

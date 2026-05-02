@@ -28,11 +28,10 @@ The release packages come in three variants:
   - Best for: direct Halo CMS v2.24+ delivery[^default-package-direct]
 - Tiny install packages:
   - File names: `howiehz-higan-zh-hans-tiny.zip`, `howiehz-higan-en-tiny.zip`
-  - Includes: no precompressed assets, and removes the default `.woff` /
-    `.ttf` fonts and `.png` / `.webp` logo variants so only `.woff2` and
-    `.avif` remain
-  - Best for: smaller installs when you only target modern browsers with
-    `woff2` and `avif` support
+  - Includes: no precompressed assets, removes the default `.woff` /
+    `.ttf` fonts, and replaces the default logo asset with a 1x1
+    placeholder image
+  - Best for: smaller installs
 - Full precompressed packages:
   - File names: `howiehz-higan-zh-hans-full-precompressed.zip`, `howiehz-higan-en-full-precompressed.zip`
   - Includes: `.gz` / `.br` / `.zst` precompressed files actually present in the current build output, mainly `.js`, `.css`, `.ttf`, and `.ico`. For example, `.js` maps to `.js.gz`, `.js.br`, and `.js.zst`

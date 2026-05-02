@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Added `*-tiny.zip` release packages that keep only the default `.woff2` fonts and `.avif` default logo, and omit precompressed assets to further reduce install size.
+- Added `*-tiny.zip` release packages that keep only the default `.woff2` fonts, replace the default logo asset with a 1x1 placeholder image, and omit precompressed assets to further reduce install size.
 
 ## [1.66.0] - 2026-05-03
 
