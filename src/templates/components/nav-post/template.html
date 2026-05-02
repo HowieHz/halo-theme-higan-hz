@@ -5,7 +5,13 @@
 <th:block xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
   <div id="header-post" class="fixed top-8 right-0 z-50 float-right hidden sm:block">
     <!--/* only show on tablet start, display when the page is not at the top */-->
-    <a id="top-icon-tablet" class="hidden lg:hidden!" href="#" role="button" data-scroll-to-top
+    <a
+      id="top-icon-tablet"
+      class="hidden lg:hidden!"
+      href="#"
+      role="button"
+      data-scroll-to-top
+      th:aria-label="#{fragment.post-nav.actions.to-top-icon.aria-label}"
       ><span class="iconify-large iconify material-symbols--keyboard-arrow-up"></span
     ></a>
     <a
