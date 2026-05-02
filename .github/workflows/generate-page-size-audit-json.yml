@@ -15,6 +15,11 @@ on:
         description: "Halo version override (e.g.: 2.23.1; leave empty to use the reusable workflow default)"
         required: false
         default: ""
+      upload_lighthouse_artifact:
+        description: "Upload raw Lighthouse .lighthouseci data for debugging?"
+        required: true
+        default: false
+        type: boolean
       create_pr:
         description: "Create a PR to submit the data files?"
         required: true
@@ -176,6 +181,7 @@ jobs:
       output_filename: ${{ matrix.version }}
       json_only: true
       run_lighthouse_ci: true
+      upload_lighthouse_artifact: ${{ github.event.inputs.upload_lighthouse_artifact == 'true' }}
 
   # Step 3: Collect all reports and create a PR
   collect-and-pr:
