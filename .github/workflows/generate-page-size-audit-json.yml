@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       start_version:
-        description: "Starting version (1.45.0 / v1.45.0 / latest; default: 1.0.0)"
+        description: "Starting version (1.45.0 / v1.45.0 / latest)"
         required: false
         default: "1.0.0"
       end_version:
-        description: "Ending version (1.57.5 / v1.57.5 / latest; default: latest)"
+        description: "Ending version (1.57.5 / v1.57.5 / latest)"
         required: false
-        default: ""
+        default: "latest"
       halo_version:
-        description: "Halo version (2.23.1 / v2.23.1; default: 2.24.1)"
+        description: "Halo version (2.23.1 / v2.23.1)"
         required: false
         default: "2.24.1"
       upload_lighthouse_artifact:
@@ -73,10 +73,15 @@ jobs:
               endVersion = releaseVersion;
               console.log(`Repository dispatch triggered: testing version ${releaseVersion}`);
             } else {
-              startVersion = normalizeVersion('${{ github.event.inputs.start_version }}', true) || 'v1.0.0';
+              startVersion = normalizeVersion('${{ github.event.inputs.start_version }}', true);
               endVersion = normalizeVersion('${{ github.event.inputs.end_version }}', true);
             }
             core.setOutput('halo_version', normalizeHaloVersion('${{ github.event.inputs.halo_version }}'));
+
+            if (startVersion === '' || endVersion === '') {
+              core.setFailed('start_version and end_version cannot be empty.');
+              return;
+            }
 
             // Fetch all releases (with pagination)
             console.log('Fetching all releases...');
