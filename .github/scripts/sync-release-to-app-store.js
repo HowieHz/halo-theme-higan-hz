@@ -38,8 +38,8 @@ const listAssets = () => {
   const assets = fs
     .readdirSync(ASSETS_DIR)
     .filter((fileName) => fs.statSync(path.join(ASSETS_DIR, fileName)).isFile())
-    // Halo App Store 的展示顺序与上传顺序相反，因此排最后上传，会在商店排在最前面。
-    // GitHub Release 侧为先上传的排在前面，因此排在前面上传，会在 GitHub Release 侧排在最前面。
+    // Halo App Store 与 GitHub Release 当前都是后上传的排在前面。
+    // 这里倒序上传，最终展示顺序就会与 releaseAssetOrder 一致。
     .sort((left, right) => {
       return releaseAssetOrder.indexOf(right) - releaseAssetOrder.indexOf(left);
     });
