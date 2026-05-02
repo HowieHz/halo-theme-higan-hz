@@ -42,7 +42,7 @@ Current release artifacts:
 Package roles:
 
 - `howiehz-higan-zh-hans.zip` / `howiehz-higan-en.zip`: default packages with `.br` only, for direct Halo CMS v2.24+ delivery.
-- `*-tiny.zip`: tiny packages that keep only the default `.woff2` fonts,
+- `*-tiny.zip`: tiny packages that remove the default font assets,
   replace the default logo asset with a 1x1 placeholder image, omit
   precompressed assets, and exclude Mermaid / instant.page runtime
   injection for smaller installs.

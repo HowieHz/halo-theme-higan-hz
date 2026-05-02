@@ -1,6 +1,6 @@
 @import "./scrollbar.css";
 @import "./iconify.css";
-@import "../../components/fonts/styles.css";
+@import "@higan-font-styles";
 
 @layer base {
   *,

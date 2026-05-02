@@ -50,6 +50,12 @@ export default defineConfig((): UserConfig => {
           ),
         }
       : {};
+  const fontStylesPath = path.resolve(
+    __dirname,
+    buildProfile === "tiny"
+      ? "src/templates/components/fonts/styles.tiny.css"
+      : "src/templates/components/fonts/styles.css",
+  );
 
   const plugins = [
     // Tailwind CSS with Vite integration
@@ -85,6 +91,11 @@ export default defineConfig((): UserConfig => {
   return {
     root: path.resolve(__dirname, "src/templates/"),
     base: "/themes/howiehz-higan/",
+    resolve: {
+      alias: {
+        "@higan-font-styles": fontStylesPath,
+      },
+    },
     plugins,
     css: {
       transformer: "lightningcss",

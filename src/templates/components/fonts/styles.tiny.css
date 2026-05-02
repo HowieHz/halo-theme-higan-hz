@@ -1,0 +1,21 @@
+:root {
+  --higan-font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji";
+}
+
+body {
+  font-family: var(--higan-font-family);
+}
+
+/* Correctly inherit font instead of using user agent stylesheet */
+tt,
+code,
+kbd,
+samp,
+pre,
+xmp,
+plaintext,
+listing {
+  font-family: inherit;
+}

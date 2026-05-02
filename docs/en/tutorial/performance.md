@@ -28,8 +28,8 @@ The release packages come in three variants:
   - Best for: direct Halo CMS v2.24+ delivery[^default-package-direct]
 - Tiny install packages:
   - File names: `howiehz-higan-zh-hans-tiny.zip`, `howiehz-higan-en-tiny.zip`
-  - Includes: no precompressed assets, removes the default `.woff` /
-    `.ttf` fonts, replaces the default logo asset with a 1x1
+  - Includes: no precompressed assets, removes the default font
+    assets, replaces the default logo asset with a 1x1
     placeholder image, and excludes Mermaid / instant.page runtime
     injection
   - Best for: smaller installs

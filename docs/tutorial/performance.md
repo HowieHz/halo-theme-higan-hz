@@ -22,7 +22,7 @@ outline: deep
   - 适用：Halo CMS v2.24+ 直连[^default-package-direct]
 - 轻量安装包：
   - 文件名：`howiehz-higan-zh-hans-tiny.zip`、`howiehz-higan-en-tiny.zip`
-  - 包含：不包含预压缩文件，并移除默认字体中的 `.woff` / `.ttf`；默认 logo 资源将替换为 1x1 占位图；不注入 Mermaid / instant.page 运行时
+  - 包含：不包含预压缩文件，并移除默认字体资源；默认 logo 资源将替换为 1x1 占位图；不注入 Mermaid / instant.page 运行时
   - 适用：希望进一步减小安装包体积
 - 完整预压缩包：
   - 文件名：`howiehz-higan-zh-hans-full-precompressed.zip`、`howiehz-higan-en-full-precompressed.zip`

@@ -25,8 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Added `*-tiny.zip` release packages that keep only the default
-  `.woff2` fonts, replace the default logo asset with a 1x1
+- Added `*-tiny.zip` release packages that remove the default
+  font assets, replace the default logo asset with a 1x1
   placeholder image, omit precompressed assets, and exclude Mermaid /
   instant.page runtime injection to further reduce install size.
 
