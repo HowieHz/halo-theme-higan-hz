@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🚀 Features
+
+- Added `*-tiny.zip` release packages that keep only the default `.woff2` fonts and omit precompressed assets to further reduce install size.
+
 ## [1.66.0] - 2026-05-03
 
 ### 💥 Breaking Changes

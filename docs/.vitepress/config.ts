@@ -1,3 +1,4 @@
+import { footnote } from "@mdit/plugin-footnote";
 import { whyframe } from "@whyframe/core";
 import { whyframeVue } from "@whyframe/vue";
 import browserslist from "browserslist";
@@ -238,6 +239,9 @@ export default defineConfig({
   },
 
   markdown: {
+    config(md) {
+      md.use(footnote);
+    },
     container: {
       tipLabel: "提示",
       warningLabel: "警告",

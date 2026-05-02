@@ -20,38 +20,43 @@ Contributions to this tutorial are always welcome.
 
 ## Using Pre-compressed Assets
 
-The release packages come in two variants:
+The release packages come in three variants:
 
 - Default install packages:
   - File names: `howiehz-higan-zh-hans.zip`, `howiehz-higan-en.zip`
   - Includes: `.br` precompressed files actually present in the current build output, mainly `.js`, `.css`, `.ttf`, and `.ico`. For example, `.js` maps to `.js.br`
-  - Best for: direct Halo CMS 2.24+ delivery
+  - Best for: direct Halo CMS v2.24+ delivery[^default-package-direct]
+- Tiny install packages:
+  - File names: `howiehz-higan-zh-hans-tiny.zip`, `howiehz-higan-en-tiny.zip`
+  - Includes: no precompressed assets, and removes the default `.woff` /
+    `.ttf` fonts so only `.woff2` remains
+  - Best for: smaller installs when you only target modern browsers with `woff2` support
 - Full precompressed packages:
   - File names: `howiehz-higan-zh-hans-full-precompressed.zip`, `howiehz-higan-en-full-precompressed.zip`
   - Includes: `.gz` / `.br` / `.zst` precompressed files actually present in the current build output, mainly `.js`, `.css`, `.ttf`, and `.ico`. For example, `.js` maps to `.js.gz`, `.js.br`, and `.js.zst`
-  - Best for: nginx, Apache, CDNs, object storage, or other self-managed static servers
+  - Best for: reverse proxies, CDNs, object storage, or other self-managed static asset services
 - Compression levels:
   - `*.gz` — gzip (compression level 9, maximum)
   - `*.br` — brotli (compression level 11, maximum)
-  - `*.zst` — zstandard (compression level 19)
+  - `*.zst` — zstandard (compression level 19, maximum[^zstd-compression-level])
 
 Notes:
 
-- HTTP `zstd` caps `Window_Size` at 8 MB, so this documentation uses compression level 19 here. See [RFC 9659 Section 3][rfc9659-section-3] and [RFC 9659 Section 5.1][rfc9659-section-5-1].
-- Halo CMS 2.24+ prefers `.gz` over `.br` when both are present, so the default packages keep only `.br`.
 - Current Halo CMS behavior keeps using the same precompressed variant after it has served one once, such as `.br`, until restart. If that file is later removed,
   Halo CMS does not switch to another variant automatically and may return `500 Internal Server Error` instead. If you hit this after switching package variants, restart Halo CMS.
-- Halo CMS does not automatically serve `.zst`, so use the full precompressed packages only behind a reverse proxy or another self-managed static server.
 
-[rfc9659-section-3]: https://www.rfc-editor.org/rfc/rfc9659.html#section-3
-[rfc9659-section-5-1]: https://www.rfc-editor.org/rfc/rfc9659.html#section-5.1
+[^zstd-compression-level]: HTTP `zstd` caps `Window_Size` at 8 MB, so the highest usable compression level is 19. See [RFC 9659 Section 3](https://www.rfc-editor.org/rfc/rfc9659.html#section-3) and [RFC 9659 Section 5.1](https://www.rfc-editor.org/rfc/rfc9659.html#section-5.1).
+
+[^default-package-direct]: Halo CMS v2.24+ prefers `.gz` over `.br` when both are present[^spring-precompressed-selection], so the default packages keep only `.br` to prefer the smaller precompressed asset when serving directly from Halo CMS.
+
+[^spring-precompressed-selection]: Since Spring Framework v7.0.7 / v6.2.18, precompressed resource selection has changed from the built-in default order `.br` -> `.gz` to `Accept-Encoding` order. As a result, when `.br` and `.gz` both exist, common browser requests usually hit `.gz` first. Related issue: <https://github.com/spring-projects/spring-framework/issues/36507>
 
 Thanks to [nonzzz/vite-plugin-compression](https://github.com/nonzzz/vite-plugin-compression) for creating this plugin.
 
 ### Configuring the Server to Serve Pre-compressed Static Assets
 
-- When using Halo CMS directly, use the default packages.
-- When using the full precompressed packages behind nginx / Apache / a CDN, you can use precompressed files according to client support.
+When using the full precompressed packages behind reverse proxies, CDNs, object storage, or other self-managed static asset services, you can use precompressed files according to client support.
+
 - For nginx server configuration, refer to: [nginx Configuration](#nginx-full-precompressed).
 - For Apache server configuration, refer to: [Apache Configuration](#apache-full-precompressed).
 
@@ -85,13 +90,7 @@ http {
     zstd_types application/atom+xml application/javascript application/json application/vnd.api+json application/rss+xml application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml;
 
     server {
-        listen 80;
-        server_name example.com;
-        root /var/www/html;
-
-        location / {
-            try_files $uri $uri/ /index.html;
-        }
+        # ...
     }
 }
 ```

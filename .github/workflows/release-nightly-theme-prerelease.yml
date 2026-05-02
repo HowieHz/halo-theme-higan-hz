@@ -145,8 +145,10 @@ jobs:
           assets=()
           preferred_assets=(
             dist/theme-packages/howiehz-higan-zh-hans.zip
+            dist/theme-packages/howiehz-higan-zh-hans-tiny.zip
             dist/theme-packages/howiehz-higan-zh-hans-full-precompressed.zip
             dist/theme-packages/howiehz-higan-en.zip
+            dist/theme-packages/howiehz-higan-en-tiny.zip
             dist/theme-packages/howiehz-higan-en-full-precompressed.zip
           )
           for asset in "${preferred_assets[@]}"; do

@@ -27,8 +27,10 @@ const repoApiBase = `https://api.github.com/repos/${GITHUB_REPOSITORY}`;
 const haloApiBase = HALO_BACKEND_BASEURL.replace(/\/$/u, "");
 const releaseAssetOrder = [
   "howiehz-higan-zh-hans.zip",
+  "howiehz-higan-zh-hans-tiny.zip",
   "howiehz-higan-zh-hans-full-precompressed.zip",
   "howiehz-higan-en.zip",
+  "howiehz-higan-en-tiny.zip",
   "howiehz-higan-en-full-precompressed.zip",
 ];
 

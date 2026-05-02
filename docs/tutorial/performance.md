@@ -14,37 +14,41 @@ outline: deep
 
 ## 使用预先压缩的资源文件
 
-主题发布包分为两类：
+主题发布包分为三类：
 
 - 默认安装包：
   - 文件名：`howiehz-higan-zh-hans.zip`、`howiehz-higan-en.zip`
   - 包含：当前实际构建产物中的 `.br` 预压缩文件，主要是 `.js`、`.css`、`.ttf`、`.ico`。例如 `.js` 对应 `.js.br`
-  - 适用：Halo CMS 2.24+ 直连
+  - 适用：Halo CMS v2.24+ 直连[^default-package-direct]
+- 轻量安装包：
+  - 文件名：`howiehz-higan-zh-hans-tiny.zip`、`howiehz-higan-en-tiny.zip`
+  - 包含：不包含预压缩文件，并移除默认字体中的 `.woff` / `.ttf`，仅保留 `.woff2`
+  - 适用：仅面向已支持 `woff2` 的现代浏览器，且希望进一步减小安装包体积
 - 完整预压缩包：
   - 文件名：`howiehz-higan-zh-hans-full-precompressed.zip`、`howiehz-higan-en-full-precompressed.zip`
   - 包含：当前实际构建产物中的 `.gz` / `.br` / `.zst` 预压缩文件，主要是 `.js`、`.css`、`.ttf`、`.ico`。例如 `.js` 对应 `.js.gz`、`.js.br`、`.js.zst`
-  - 适用：nginx、Apache、CDN、对象存储或其他自管静态资源服务器
+  - 适用：反向代理、CDN、对象存储或其他自管静态资源服务
 - 压缩等级：
   - `*.gz` — gzip（压缩等级 9，最高）
   - `*.br` — brotli（压缩等级 11，最高）
-  - `*.zst` — zstandard（压缩等级 19）
+  - `*.zst` — zstandard（压缩等级 19，最高[^zstd-compression-level]）
 
 说明：
 
-- HTTP `zstd` 的 `Window_Size` 上限为 8 MB，因此这里使用压缩等级 19。相关说明见 [RFC 9659 第 3 节][rfc9659-section-3] 与 [RFC 9659 第 5.1 节][rfc9659-section-5-1]。
-- Halo CMS 2.24+ 在同时存在 `.br` 与 `.gz` 时会优先返回 `.gz`，所以默认安装包只保留 `.br`。
 - 当前 Halo CMS 一旦以某种预压缩文件提供过资源（例如 `.br`），就会一直沿用该方式直到重启。若之后删除了该文件，不会自动切换到其他方式，可能直接返回 `500 Internal Server Error`。如果你在不同安装包之间切换后遇到这类错误，请重启 Halo CMS。
-- Halo CMS 不会自动提供 `.zst`，如需使用 `.gz` / `.zst`，请使用完整预压缩包并通过反向代理或自管静态资源服务器提供。
 
-[rfc9659-section-3]: https://www.rfc-editor.org/rfc/rfc9659.html#section-3
-[rfc9659-section-5-1]: https://www.rfc-editor.org/rfc/rfc9659.html#section-5.1
+[^zstd-compression-level]: HTTP `zstd` 的 `Window_Size` 上限为 8 MB，因此最高可用压缩等级为 19。相关说明见 [RFC 9659 第 3 节](https://www.rfc-editor.org/rfc/rfc9659.html#section-3) 与 [RFC 9659 第 5.1 节](https://www.rfc-editor.org/rfc/rfc9659.html#section-5.1)。
+
+[^default-package-direct]: Halo CMS v2.24+ 在同时存在 `.br` 与 `.gz` 时会优先返回 `.gz`[^spring-precompressed-selection]，所以默认安装包只保留 `.br`，以便于直连 Halo CMS 时优先使用体积更小的预压缩文件。
+
+[^spring-precompressed-selection]: 自 Spring Framework v7.0.7 / v6.2.18 起，预压缩资源选择从按内置默认顺序 `.br` -> `.gz`，改为按 `Accept-Encoding` 顺序处理。因此当 `.br` 与 `.gz` 同时存在时，常见浏览器请求通常会优先命中 `.gz`。相关 Issue: <https://github.com/spring-projects/spring-framework/issues/36507>
 
 感谢 [nonzzz/vite-plugin-compression](https://github.com/nonzzz/vite-plugin-compression) 创建的插件。
 
 ### 配置服务器以自动提供预先压缩的静态资源
 
-- 直接使用 Halo CMS 时，建议使用默认安装包。
-- 使用完整预压缩包并搭配 nginx / Apache / CDN 时，可按客户端支持情况使用预压缩文件。
+使用完整预压缩包并搭配反向代理、CDN、对象存储或其他自管静态资源服务时，可按客户端支持情况使用预压缩文件。
+
 - 使用 nginx 服务器请参考：[在 nginx 上使用](#nginx-full-precompressed)。
 - 使用 Apache 服务器请参考：[在 Apache 上使用](#apache-full-precompressed)。
 
@@ -78,13 +82,7 @@ http {
     zstd_types application/atom+xml application/javascript application/json application/vnd.api+json application/rss+xml application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype application/x-font-ttf application/x-javascript application/xhtml+xml application/xml font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml;
 
     server {
-        listen 80;
-        server_name example.com;
-        root /var/www/html;
-
-        location / {
-            try_files $uri $uri/ /index.html;
-        }
+        # ...
     }
 }
 ```

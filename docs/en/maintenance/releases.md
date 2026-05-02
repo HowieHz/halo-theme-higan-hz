@@ -33,13 +33,16 @@ The release pipeline builds multiple installable theme archives and keeps `howie
 Current release artifacts:
 
 - `howiehz-higan-zh-hans.zip`
+- `howiehz-higan-zh-hans-tiny.zip`
 - `howiehz-higan-zh-hans-full-precompressed.zip`
 - `howiehz-higan-en.zip`
+- `howiehz-higan-en-tiny.zip`
 - `howiehz-higan-en-full-precompressed.zip`
 
 Package roles:
 
-- `howiehz-higan-zh-hans.zip` / `howiehz-higan-en.zip`: default packages with `.br` only, for direct Halo CMS 2.24+ delivery.
+- `howiehz-higan-zh-hans.zip` / `howiehz-higan-en.zip`: default packages with `.br` only, for direct Halo CMS v2.24+ delivery.
+- `*-tiny.zip`: tiny packages that keep only the default `.woff2` fonts and omit precompressed assets, for smaller installs when you only target modern browsers with `woff2` support.
 - `*-full-precompressed.zip`: full precompressed packages with `.gz` / `.br` / `.zst`, for reverse proxies, CDNs, or self-managed static servers.
 
 For full release process details, see the _Release Flow_ section in the [Contribution Guide](./contributing.md#release-flow).

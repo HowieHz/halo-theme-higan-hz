@@ -2,6 +2,8 @@
 Please refer to [Changelog](https://howiehz.top/halo-theme-higan-haozi/en/maintenance/changelog) ([view on GitHub](https://github.com/HowieHz/halo-theme-higan-hz/blob/main/docs/en/maintenance/changelog.md)) for details.
 
 > `howiehz-higan-zh-hans.zip` 为简体中文默认安装包，仅包含 `.br`。
+> `howiehz-higan-zh-hans-tiny.zip` 为简体中文轻量安装包，仅保留 `.woff2` 默认字体，且不包含预压缩文件。
 > `howiehz-higan-zh-hans-full-precompressed.zip` 为简体中文完整预压缩包，包含 `.gz` / `.br` / `.zst`。
 > `howiehz-higan-en.zip` is the English default package with `.br` only.
+> `howiehz-higan-en-tiny.zip` is the English tiny package that keeps only the default `.woff2` fonts and ships without precompressed assets.
 > `howiehz-higan-en-full-precompressed.zip` is the English full precompressed package with `.gz` / `.br` / `.zst`.

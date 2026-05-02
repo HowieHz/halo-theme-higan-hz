@@ -73,6 +73,22 @@ jobs:
         shell: bash
         run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$GITHUB_WORKSPACE/dist/theme-packages" "$GITHUB_WORKSPACE/templates"
 
+      - name: Prepare Tiny Templates
+        id: tiny-templates
+        shell: bash
+        run: |
+          TINY_TEMPLATES_DIR="$RUNNER_TEMP/templates-tiny"
+          rm -rf "$TINY_TEMPLATES_DIR"
+          mkdir -p "$TINY_TEMPLATES_DIR"
+          cp -a "$GITHUB_WORKSPACE/templates/." "$TINY_TEMPLATES_DIR/"
+          find "$TINY_TEMPLATES_DIR" -type f \( -name '*.br' -o -name '*.gz' -o -name '*.zst' \) -delete
+          find "$TINY_TEMPLATES_DIR" -type f \( -name '*.woff' -o -name '*.woff.*' -o -name '*.ttf' -o -name '*.ttf.*' \) -delete
+          echo "path=$TINY_TEMPLATES_DIR" >> "$GITHUB_OUTPUT"
+
+      - name: Pack Tiny
+        shell: bash
+        run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$GITHUB_WORKSPACE/dist/theme-packages" "${{ steps.tiny-templates.outputs.path }}" "-tiny"
+
       - name: Build Full
         run: pnpm build:full
 
