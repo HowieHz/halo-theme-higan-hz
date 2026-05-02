@@ -5,6 +5,8 @@ import process from "node:process";
 
 import yaml from "js-yaml";
 
+import { assertKnownAssets, sortByDisplayOrder } from "./release-asset-order.js";
+
 const {
   ASSETS_DIR,
   GITHUB_RELEASE_TAG,
@@ -25,30 +27,18 @@ if (!ASSETS_DIR || !GITHUB_RELEASE_TAG || !GITHUB_REPOSITORY || !GITHUB_TOKEN ||
 
 const repoApiBase = `https://api.github.com/repos/${GITHUB_REPOSITORY}`;
 const haloApiBase = HALO_BACKEND_BASEURL.replace(/\/$/u, "");
-const releaseAssetOrder = [
-  "howiehz-higan-zh-hans.zip",
-  "howiehz-higan-zh-hans-tiny.zip",
-  "howiehz-higan-zh-hans-full-precompressed.zip",
-  "howiehz-higan-en.zip",
-  "howiehz-higan-en-tiny.zip",
-  "howiehz-higan-en-full-precompressed.zip",
-];
 
 const listAssets = () => {
-  const assets = fs
-    .readdirSync(ASSETS_DIR)
-    .filter((fileName) => fs.statSync(path.join(ASSETS_DIR, fileName)).isFile())
-    // Halo App Store 与 GitHub Release 当前都是后上传的排在前面。
-    // 这里倒序上传，最终展示顺序就会与 releaseAssetOrder 一致。
-    .sort((left, right) => {
-      return releaseAssetOrder.indexOf(right) - releaseAssetOrder.indexOf(left);
-    });
+  const assets = fs.readdirSync(ASSETS_DIR).filter((fileName) => fs.statSync(path.join(ASSETS_DIR, fileName)).isFile());
 
   if (assets.length === 0) {
     throw new Error(`Assets directory is empty: ${ASSETS_DIR}`);
   }
 
-  return assets;
+  assertKnownAssets(assets);
+  // Halo App Store 与 GitHub Release 当前都是后上传的排在前面。
+  // 这里倒序上传，最终展示顺序就会与 DISPLAY_ORDER 一致。
+  return sortByDisplayOrder(assets).reverse();
 };
 
 const readThemeManifest = (assetPath) => {

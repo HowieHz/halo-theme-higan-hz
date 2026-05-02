@@ -142,22 +142,11 @@ jobs:
           PRERELEASE_TAG: ${{ needs.prerelease.outputs.prerelease_tag }}
           PRERELEASE_VERSION: ${{ needs.prerelease.outputs.prerelease_version }}
         run: |
-          assets=()
-          preferred_assets=(
-            dist/theme-packages/howiehz-higan-en-full-precompressed.zip
-            dist/theme-packages/howiehz-higan-en-tiny.zip
-            dist/theme-packages/howiehz-higan-en.zip
-            dist/theme-packages/howiehz-higan-zh-hans-full-precompressed.zip
-            dist/theme-packages/howiehz-higan-zh-hans-tiny.zip
-            dist/theme-packages/howiehz-higan-zh-hans.zip
+          mapfile -t assets < <(
+            node --input-type=module -e "import fs from 'node:fs'; import path from 'node:path'; import { sortByDisplayOrder } from './.github/scripts/release-asset-order.js'; const baseDir = 'dist/theme-packages'; const fileNames = fs.readdirSync(baseDir).filter((fileName) => fs.statSync(path.join(baseDir, fileName)).isFile()); for (const fileName of sortByDisplayOrder(fileNames).reverse()) console.log(path.join(baseDir, fileName));"
           )
           # GitHub Releases currently display newly uploaded assets first,
           # so upload in reverse order to keep the page order user-facing KISS.
-          for asset in "${preferred_assets[@]}"; do
-            if [ -f "$asset" ]; then
-              assets+=("$asset")
-            fi
-          done
           gh release create "$PRERELEASE_TAG" "${assets[@]}" \
             --title "$PRERELEASE_VERSION" \
             --notes-file .github/templates/release-note-template.md \
