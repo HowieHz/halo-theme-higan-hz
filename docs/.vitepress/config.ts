@@ -1,3 +1,5 @@
+import { fileURLToPath } from "node:url";
+
 import { footnote } from "@mdit/plugin-footnote";
 import { whyframe } from "@whyframe/core";
 import { whyframeVue } from "@whyframe/vue";
@@ -11,6 +13,13 @@ import pkg from "../../package.json" with { type: "json" };
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   vite: {
+    resolve: {
+      alias: {
+        "@higan-font-styles": fileURLToPath(
+          new URL("../../src/templates/components/fonts/styles.css", import.meta.url),
+        ),
+      },
+    },
     plugins: [
       // Initialize whyframe core plugin
       whyframe({
