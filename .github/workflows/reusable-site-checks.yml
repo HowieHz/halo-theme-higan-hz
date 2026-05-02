@@ -20,6 +20,7 @@ on:
         required: false
         type: string
         default: "2.24.1"
+        description: "Halo version (2.24.1 / v2.24.1)"
       theme_ref:
         required: false
         type: string
@@ -125,10 +126,8 @@ jobs:
           # Record environment information
           JAVA_VERSION=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}')
           echo "JAVA_VERSION=${JAVA_VERSION}" >> $GITHUB_ENV
-          # workflow_dispatch callers may pass an empty string explicitly; treat that
-          # the same as "not provided" so this reusable workflow still honors its
-          # documented default Halo version.
-          HALO_VERSION="${{ inputs.halo_version || '2.24.1' }}"
+          HALO_VERSION="${{ inputs.halo_version }}"
+          HALO_VERSION="${HALO_VERSION#v}"
           echo "HALO_VERSION=${HALO_VERSION}" >> $GITHUB_ENV
 
           mkdir -p ~/logs

@@ -4,17 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       start_version:
-        description: "Starting version (e.g.: v1.45.0; leave empty to use v1.0.0)"
+        description: "Starting version (1.45.0 / v1.45.0 / latest; default: 1.0.0)"
         required: false
-        default: "v1.0.0"
+        default: "1.0.0"
       end_version:
-        description: "Ending version (e.g.: v1.57.5; leave empty to use latest)"
+        description: "Ending version (1.57.5 / v1.57.5 / latest; default: latest)"
         required: false
         default: ""
       halo_version:
-        description: "Halo version override (e.g.: 2.23.1; leave empty to use the reusable workflow default)"
+        description: "Halo version (2.23.1 / v2.23.1; default: 2.24.1)"
         required: false
-        default: ""
+        default: "2.24.1"
       upload_lighthouse_artifact:
         description: "Upload raw Lighthouse .lighthouseci data for debugging?"
         required: true
@@ -23,7 +23,7 @@ on:
       create_pr:
         description: "Create a PR to submit the data files?"
         required: true
-        default: true
+        default: false
         type: boolean
   release:
     types: [published]
@@ -39,6 +39,9 @@ jobs:
     if: github.event_name != 'release' || github.event.release.prerelease != true
     outputs:
       versions: ${{ steps.get-versions.outputs.versions }}
+      summary_start_version: ${{ steps.get-versions.outputs.summary_start_version }}
+      summary_end_version: ${{ steps.get-versions.outputs.summary_end_version }}
+      halo_version: ${{ steps.get-versions.outputs.halo_version }}
 
     steps:
       - name: Checkout
@@ -50,6 +53,14 @@ jobs:
         with:
           script: |
             let startVersion, endVersion;
+            const normalizeVersion = (value, allowLatest = false) => {
+              const raw = String(value ?? '').trim();
+              if (raw === '') return '';
+              if (allowLatest && raw.toLowerCase() === 'latest') return 'latest';
+              return `v${raw.replace(/^v/, '')}`;
+            };
+            const normalizeHaloVersion = (value) => String(value ?? '').trim().replace(/^v/, '') || '2.24.1';
+            const formatVersion = (value) => String(value ?? '').replace(/^v/, '');
 
             if ('${{ github.event_name }}' === 'release') {
               const releaseVersion = '${{ github.event.release.tag_name }}';
@@ -62,9 +73,10 @@ jobs:
               endVersion = releaseVersion;
               console.log(`Repository dispatch triggered: testing version ${releaseVersion}`);
             } else {
-              startVersion = '${{ github.event.inputs.start_version }}' || 'v1.0.0';
-              endVersion = '${{ github.event.inputs.end_version }}' || '';
+              startVersion = normalizeVersion('${{ github.event.inputs.start_version }}', true) || 'v1.0.0';
+              endVersion = normalizeVersion('${{ github.event.inputs.end_version }}', true);
             }
+            core.setOutput('halo_version', normalizeHaloVersion('${{ github.event.inputs.halo_version }}'));
 
             // Fetch all releases (with pagination)
             console.log('Fetching all releases...');
@@ -130,15 +142,17 @@ jobs:
             });
 
             // Find the version range
-            const startIndex = stableReleases.findIndex(r => r.tag_name === startVersion);
-            const endIndex = endVersion ? stableReleases.findIndex(r => r.tag_name === endVersion) : stableReleases.length - 1;
+            const resolvedStartVersion = startVersion === 'latest' ? stableReleases.at(-1)?.tag_name ?? '' : startVersion;
+            const resolvedEndVersion = endVersion === 'latest' || endVersion === '' ? stableReleases.at(-1)?.tag_name ?? '' : endVersion;
+            const startIndex = stableReleases.findIndex(r => r.tag_name === resolvedStartVersion);
+            const endIndex = stableReleases.findIndex(r => r.tag_name === resolvedEndVersion);
 
             if (startIndex === -1) {
-              core.setFailed(`Cannot find start version: ${startVersion}. Available stable versions: ${stableReleases.slice(0, 10).map(r => r.tag_name).join(', ')}...`);
+              core.setFailed(`Cannot find start version: ${resolvedStartVersion || startVersion}. Available stable versions: ${stableReleases.slice(0, 10).map(r => r.tag_name).join(', ')}...`);
               return;
             }
-            if (endVersion && endIndex === -1) {
-              core.setFailed(`Cannot find end version: ${endVersion}`);
+            if (endIndex === -1) {
+              core.setFailed(`Cannot find end version: ${resolvedEndVersion || endVersion}`);
               return;
             }
 
@@ -149,6 +163,8 @@ jobs:
 
             console.log(`Found ${versionList.length} versions:`, versionList);
             core.setOutput('versions', JSON.stringify(versionList));
+            core.setOutput('summary_start_version', formatVersion(versionList[0] || ''));
+            core.setOutput('summary_end_version', formatVersion(versionList[versionList.length - 1] || ''));
 
       - name: Write versions summary
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # https://github.com/actions/github-script/releases/tag/v9.0.0
@@ -157,8 +173,8 @@ jobs:
             const fs = require('fs');
             const versions = JSON.parse('${{ steps.get-versions.outputs.versions }}' || '[]');
             const count = Array.isArray(versions) ? versions.length : 0;
-            const first = versions && versions.length ? versions[0] : '';
-            const last = versions && versions.length ? versions[versions.length-1] : '';
+            const first = '${{ steps.get-versions.outputs.summary_start_version }}';
+            const last = '${{ steps.get-versions.outputs.summary_end_version }}';
             const out = `## Page Resource Size Diff Versions\n\n- Versions found: ${count}\n- Range: ${first} → ${last}\n`;
             fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, out);
 
@@ -176,7 +192,7 @@ jobs:
     with:
       theme_ref: ${{ matrix.version }}
       ref_name: ${{ matrix.version }}
-      halo_version: ${{ github.event.inputs.halo_version }}
+      halo_version: ${{ needs.get-versions.outputs.halo_version }}
       output_dir: ".github/page_size_audit_results"
       output_filename: ${{ matrix.version }}
       json_only: true
@@ -239,14 +255,14 @@ jobs:
           # - Contents: Read and Write (create branches and commits)
           # - Pull requests: Read and Write (create PRs)
           # - Workflows: Read and Write (allow PRs to trigger workflows)
-          commit-message: "docs: update page resource size diff results for ${{ github.event.inputs.start_version || github.event.client_payload.release_tag || github.event.release.tag_name }} to ${{ github.event.inputs.end_version || github.event.client_payload.release_tag || github.event.release.tag_name || 'latest' }}"
+          commit-message: "docs: update page resource size diff results for ${{ needs.get-versions.outputs.summary_start_version }} to ${{ needs.get-versions.outputs.summary_end_version }}"
           title: "docs: Update Page Resource Size Diff Results"
           body: |
             ## Page Resource Size Diff Results Update
 
             This PR adds or updates page resource size diff results for versions:
-            - **Start Version:** ${{ github.event.inputs.start_version || github.event.client_payload.release_tag || github.event.release.tag_name }}
-            - **End Version:** ${{ github.event.inputs.end_version || github.event.client_payload.release_tag || github.event.release.tag_name || 'latest' }}
+            - **Start Version:** ${{ needs.get-versions.outputs.summary_start_version }}
+            - **End Version:** ${{ needs.get-versions.outputs.summary_end_version }}
 
             The following JSON data files have been updated in `.github/page_size_audit_results/`:
             - Multiple version result files
