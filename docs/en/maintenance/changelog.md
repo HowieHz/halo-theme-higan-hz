@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fixed an issue where `logo.avif` could be fetched twice when the default theme `logo` and the site `favicon` used different asset URLs.
+
 ## [1.65.1] - 2026-05-02
 
 ### 🐛 Bug Fixes
