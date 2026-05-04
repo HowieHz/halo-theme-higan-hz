@@ -9,7 +9,9 @@ Related documentation: <https://docs.kunkunyu.com/docs/plugin-friends/finder-api
 Head Content (for including necessary scripts/styles)
 
 ```html
-<th:block th:insert="~{components/list-friends-summary/template :: head(friends)}"></th:block>
+<th:block
+  th:insert="~{components/list-friends-summary/template :: head(friends = ${friends})}"
+></th:block>
 ```
 
 or
