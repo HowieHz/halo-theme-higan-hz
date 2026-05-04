@@ -1,12 +1,12 @@
-import "@templates/_runtime/global/main";
+import "@runtime/global/main";
 import "./styles.css";
-import "@templates/_runtime/styles/article.css";
-import "@templates/_runtime/styles/article-metadata.css";
-import { isVisible, scrollToTop, show, toggle } from "@templates/_runtime/scripts/animations/base";
-import { fadeIn } from "@templates/_runtime/scripts/animations/fade-in";
-import { fadeOut } from "@templates/_runtime/scripts/animations/fade-out";
-import { slideDown } from "@templates/_runtime/scripts/animations/slide-down";
-import { slideUp } from "@templates/_runtime/scripts/animations/slide-up";
+import "@runtime/styles/article.css";
+import "@runtime/styles/article-metadata.css";
+import { isVisible, scrollToTop, show, toggle } from "@runtime/scripts/animations/base";
+import { fadeIn } from "@runtime/scripts/animations/fade-in";
+import { fadeOut } from "@runtime/scripts/animations/fade-out";
+import { slideDown } from "@runtime/scripts/animations/slide-down";
+import { slideUp } from "@runtime/scripts/animations/slide-up";
 
 // Animation durations in milliseconds
 const ANIMATION_DURATION = 200;

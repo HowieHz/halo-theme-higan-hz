@@ -1,3 +1,3 @@
-import "@templates/_runtime/global/main";
+import "@runtime/global/main";
 import "./styles.css";
-import "@templates/_runtime/styles/article.css";
+import "@runtime/styles/article.css";

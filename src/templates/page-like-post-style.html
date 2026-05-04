@@ -106,9 +106,9 @@
     </article>
     <div th:replace="~{components/footer-nav-page-like-post-style/template :: footerNav}"></div>
     <script type="module">
-      import { isMobile } from "@templates/_runtime/scripts/device.ts";
-      import { initTOC } from "@templates/_runtime/scripts/toc.ts";
-      import { initHeadingAnchors } from "@templates/_runtime/scripts/heading-anchor.ts";
+      import { isMobile } from "@runtime/scripts/device.ts";
+      import { initTOC } from "@runtime/scripts/toc.ts";
+      import { initHeadingAnchors } from "@runtime/scripts/heading-anchor.ts";
 
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/* generate toc

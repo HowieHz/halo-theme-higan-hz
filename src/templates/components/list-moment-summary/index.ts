@@ -1,5 +1,5 @@
 import "./styles.css";
-import "@templates/_runtime/styles/article.css";
+import "@runtime/styles/article.css";
 import Alpine from "alpinejs";
 
 import momentComment from "./alpine-data/moment-comment";

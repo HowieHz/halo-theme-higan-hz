@@ -1,2 +1,2 @@
-import "@templates/_runtime/global/main";
-import "@templates/_runtime/styles/id-archive.css";
+import "@runtime/global/main";
+import "@runtime/styles/id-archive.css";

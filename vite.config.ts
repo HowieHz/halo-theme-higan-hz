@@ -85,7 +85,7 @@ export default defineConfig((): UserConfig => {
     base: "/themes/howiehz-higan/",
     resolve: {
       alias: {
-        "@templates": resolve(import.meta.dirname, "src/templates"),
+        "@runtime": resolve(import.meta.dirname, "src/templates/_runtime/"),
         "$higan-font-family": resolve(
           import.meta.dirname,
           buildProfile === "tiny"

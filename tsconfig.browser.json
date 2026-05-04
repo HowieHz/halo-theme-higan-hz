@@ -5,7 +5,7 @@
     "declarationDir": "./node_modules/.tmp/types/root/browser",
     "isolatedDeclarations": false,
     "paths": {
-      "@templates/*": ["./src/templates/*"]
+      "@runtime/*": ["./src/templates/_runtime/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts"]

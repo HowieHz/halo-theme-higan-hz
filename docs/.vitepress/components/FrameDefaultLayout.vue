@@ -24,5 +24,5 @@ onMounted(async () => {
 <!-- 导入主题样式 -->
 <style src="@templates/components/theme-dark/styles.less" scoped></style>
 <style src="@templates/components/theme-light/styles.less" scoped></style>
-<style src="@templates/_runtime/global/global-styles/styles.css" scoped></style>
+<style src="@runtime/global/global-styles/styles.css" scoped></style>
 <style src="@templates/components/text-size-normal/styles.css" scoped></style>
