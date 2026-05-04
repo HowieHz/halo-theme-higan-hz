@@ -3,10 +3,8 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities) source("../../../../../src");
 /* stylelint-disable at-rule-prelude-no-invalid -- Tailwind @source not uses custom prelude syntax */
-@source not "../../../public/";
-@source not "../../../_runtime/scripts/animations";
-@source not "../../../_runtime/global/fonts";
-@source not "../../../_runtime/styles";
+@source not "../../../public";
+@source not "../../../_runtime";
 @source not "../../../components/color-scheme-auto";
 @source not "../../../components/color-scheme-dark";
 @source not "../../../components/color-scheme-light";
