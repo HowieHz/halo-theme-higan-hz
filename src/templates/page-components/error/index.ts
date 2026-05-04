@@ -1,2 +1,2 @@
-import "@templates/global/main";
-import "@templates/css-components/article.css";
+import "@templates/_runtime/global/main";
+import "@templates/_runtime/styles/article.css";

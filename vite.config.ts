@@ -89,8 +89,8 @@ export default defineConfig((): UserConfig => {
         "$higan-font-family": resolve(
           import.meta.dirname,
           buildProfile === "tiny"
-            ? "src/templates/global/fonts/font-family.tiny.css"
-            : "src/templates/global/fonts/font-family.css",
+            ? "src/templates/_runtime/global/fonts/font-family.tiny.css"
+            : "src/templates/_runtime/global/fonts/font-family.css",
         ),
       },
     },

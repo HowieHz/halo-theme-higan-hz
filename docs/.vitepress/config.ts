@@ -16,7 +16,7 @@ export default defineConfig({
     resolve: {
       alias: {
         "@templates": resolve(import.meta.dirname, "../../src/templates"),
-        "$higan-font-family": resolve(import.meta.dirname, "../../src/templates/global/fonts/font-family.css"),
+        "$higan-font-family": resolve(import.meta.dirname, "../../src/templates/_runtime/global/fonts/font-family.css"),
       },
     },
     plugins: [

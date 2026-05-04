@@ -1,7 +1,7 @@
 import "./styles.css";
-import { isVisible } from "../../ts-components/animations/base";
-import { fadeIn } from "../../ts-components/animations/fade-in";
-import { fadeOut } from "../../ts-components/animations/fade-out";
+import { isVisible } from "../../_runtime/scripts/animations/base";
+import { fadeIn } from "../../_runtime/scripts/animations/fade-in";
+import { fadeOut } from "../../_runtime/scripts/animations/fade-out";
 
 document.addEventListener("DOMContentLoaded", (): void => {
   const mobileMenuIcon: HTMLElement | null = document.querySelector("#header > #nav > ul > .icon > a");

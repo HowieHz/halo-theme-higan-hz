@@ -1,10 +1,10 @@
 @layer theme, base, utilities;
 
 @import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/utilities.css" layer(utilities) source("../../../../src");
+@import "tailwindcss/utilities.css" layer(utilities) source("../../../../../src");
 /* stylelint-disable at-rule-prelude-no-invalid -- Tailwind @source not uses custom prelude syntax */
-@source not "@templates/public";
-@source not "@templates/ts-components/animations";
+@source not "../../../public/";
+@source not "@templates/_runtime/scripts/animations";
 @source not "@templates/components/color-scheme-auto";
 @source not "@templates/components/color-scheme-dark";
 @source not "@templates/components/color-scheme-light";
@@ -14,7 +14,7 @@
 @source not "@templates/components/custom-font-face-style";
 @source not "@templates/components/dark-content-text-style";
 @source not "@templates/components/example";
-@source not "@templates/global/fonts";
+@source not "@templates/_runtime/global/fonts";
 @source not "@templates/components/footer-bottom-content";
 @source not "@templates/components/footer-sidebar";
 @source not "@templates/components/halo-comment-widget";
