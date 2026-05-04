@@ -1,56 +1,6 @@
 @layer theme, base, utilities;
 
 @import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/utilities.css" layer(utilities) source("../../../../../src");
-/* stylelint-disable at-rule-prelude-no-invalid -- Tailwind @source not uses custom prelude syntax */
-@source not "../../../public";
-@source not "../../../_runtime";
-@source not "../../../../README.md";
-@source not "../../../components/color-scheme-auto";
-@source not "../../../components/color-scheme-dark";
-@source not "../../../components/color-scheme-light";
-@source not "../../../components/custom-color-schema-config";
-@source not "../../../components/custom-color-schema-style";
-@source not "../../../components/custom-cursor-style";
-@source not "../../../components/custom-font-face-style";
-@source not "../../../components/dark-content-text-style";
-@source not "../../../components/example";
-@source not "../../../components/footer-bottom-content";
-@source not "../../../components/footer-sidebar";
-@source not "../../../components/halo-comment-widget";
-@source not "../../../components/header";
-@source not "../../../components/header-logo-style";
-@source not "../../../components/heading-anchor-svg";
-@source not "../../../components/heading-anchor-symbol-style";
-@source not "../../../components/inline-code-style";
-@source not "../../../components/instantpage-injection";
-@source not "../../../components/layout-content-width-style";
-@source not "../../../components/layout-heading-paragraph-margin-style";
-@source not "../../../components/layout-max-width-style";
-@source not "../../../components/layout-min-width-style";
-@source not "../../../components/layout-table-bottom-border-style";
-@source not "../../../components/mermaid-injection";
-@source not "../../../components/meta-theme-color";
-@source not "../../../components/paragraph-first-line-indent-style";
-@source not "../../../components/performance-monitor";
-@source not "../../../components/quote-fetcher";
-@source not "../../../components/style-footer-sidebar";
-@source not "../../../components/text-size-large";
-@source not "../../../components/text-size-normal";
-@source not "../../../components/text-size-small";
-@source not "../../../components/theme-auto";
-@source not "../../../components/theme-auto-blue";
-@source not "../../../components/theme-dark";
-@source not "../../../components/theme-dark-blue";
-@source not "../../../components/theme-gray";
-@source not "../../../components/theme-light";
-@source not "../../../components/theme-light-blue";
-@source not "../../../components/toc-max-width-style";
-@source not "../../../components/upvote-runtime";
-@source not "../../../components/text-size-large";
-@source not "../../../components/text-size-normal";
-@source not "../../../components/text-size-small";
-/* stylelint-enable at-rule-prelude-no-invalid */
 /* stylelint-disable custom-property-pattern */
 @theme {
   --text-*: initial;
