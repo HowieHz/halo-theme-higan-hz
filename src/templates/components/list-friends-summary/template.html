@@ -9,7 +9,7 @@
       <th:block th:each="friend : ${friends.items}" th:with="spec = ${friend.spec}">
         <div class="grid grid-cols-1 md:grid-cols-4 md:items-baseline">
           <div class="group relative flex flex-col md:col-span-3">
-            <h2 class="color-text static m-0 text-base font-semibold tracking-tight">
+            <h2 class="color-text text-base static m-0 font-semibold tracking-tight">
               <div
                 class="friend-card-hover absolute -inset-x-4 -inset-y-2 z-0 opacity-0 sm:-inset-x-6 sm:rounded-2xl"
               ></div>
@@ -25,7 +25,7 @@
                            and theme.config?.index_styles?.is_show_friend_pubdate)
                        or (#strings.equals(pageTemplateName, 'friends')
                            and theme.config?.friends_page_styles?.is_show_friend_pubdate)}"
-              class="color-base-content-80 relative z-10 order-first mb-3 flex items-center pl-3.5 text-sm md:hidden"
+              class="color-base-content-80 text-sm relative z-10 order-first mb-3 flex items-center pl-3.5 md:hidden"
               th:datetime="${#temporals.format(spec.pubDate, 'yyyy-MM-dd')}"
             >
               <span class="absolute inset-y-0 left-0 flex items-center" aria-hidden="true">
@@ -40,7 +40,7 @@
                            and theme.config?.index_styles?.is_show_friend_author)
                        or (#strings.equals(pageTemplateName, 'friends')
                            and theme.config?.friends_page_styles?.is_show_friend_author)}"
-              class="friend-author color-time relative z-20 mt-0.5 mb-0 flex items-center text-sm"
+              class="friend-author color-time text-sm relative z-20 mt-0.5 mb-0 flex items-center"
             >
               <a
                 th:if="${!(#strings.equals(pageTemplateName, 'index')
@@ -90,7 +90,7 @@
                                         : '3')}"
             >
               <p
-                class="color-base-content-80 relative z-10 mt-2 mb-0 p-0 text-sm"
+                class="color-base-content-80 text-sm relative z-10 mt-2 mb-0 p-0"
                 th:text="${spec.description}"
                 th:classappend="|${max_lines == '1' ? 'v-line-clamp-1' : ''} ${max_lines == '2' ? 'v-line-clamp-2' : ''} ${max_lines == '3' ? 'v-line-clamp-3' : ''} ${max_lines == '4' ? 'v-line-clamp-4' : ''} ${max_lines == '5' ? 'v-line-clamp-5' : ''}|"
               >
@@ -105,7 +105,7 @@
                        or (#strings.equals(pageTemplateName, 'friends')
                            and theme.config?.friends_page_styles?.is_show_friend_permalink_text)}"
               aria-hidden="true"
-              class="color-primary relative z-10 mt-4 flex items-center text-sm font-medium"
+              class="color-primary text-sm relative z-10 mt-4 flex items-center font-medium"
               th:text="#{page.friends.postListPermalinkText}"
             >
               阅读全文
@@ -118,7 +118,7 @@
                          and theme.config?.index_styles?.is_show_friend_pubdate)
                      or (#strings.equals(pageTemplateName, 'friends')
                          and theme.config?.friends_page_styles?.is_show_friend_pubdate)}"
-            class="color-base-content-80 relative z-10 order-first mt-1 mb-3 hidden items-center text-sm md:flex"
+            class="color-base-content-80 text-sm relative z-10 order-first mt-1 mb-3 hidden items-center md:flex"
             th:datetime="${#temporals.format(spec.pubDate, 'yyyy-MM-dd')}"
             th:text="${#temporals.format(spec.pubDate, 'MMMM dd yyyy')}"
           >
