@@ -1,11 +1,10 @@
-<!--/*-->
-<head></head>
-<body></body>
-<!--*/-->
-<th:block
-  xmlns:th="https://www.thymeleaf.org"
-  th:fragment="navbar"
->
+<head th:remove="tag">
+  <script
+    src="index.ts"
+    type="module"
+  ></script>
+</head>
+<body th:remove="tag">
   <div
     id="header-post"
     class="fixed top-8 right-0 z-50 float-right hidden sm:block"
@@ -214,4 +213,4 @@
       <div id="toc-tablet"></div>
     </div>
   </div>
-</th:block>
+</body>

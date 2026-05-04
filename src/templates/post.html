@@ -6,7 +6,7 @@
     head = ~{:: head},
     content = ~{:: body}, 
     header = ~{}, 
-    navbar = ~{components/nav-post/template :: navbar}, 
+    navbar = ~{components/nav-post/template :: body}, 
     language=${#annotations.get(post, 'higan.howiehz.top/page-language')}
   )}"
 >
@@ -57,6 +57,7 @@
       src="@runtime/pages/post/index.ts"
       type="module"
     ></script>
+    <th:block th:insert="~{components/nav-post/template :: head}"></th:block>
     <th:block
       th:if="${theme.config?.post_styles?.is_post_upvote_button_show}"
       th:insert="~{components/upvote-runtime/template :: head}"

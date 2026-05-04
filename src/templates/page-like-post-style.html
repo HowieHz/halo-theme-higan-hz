@@ -6,7 +6,7 @@
     head = ~{:: head},
     content = ~{:: body}, 
     header = ~{}, 
-    navbar = ~{components/nav-page-like-post-style/template :: navbar}, 
+    navbar = ~{components/nav-page-like-post-style/template :: body}, 
     language = ${#annotations.get(singlePage, 'higan.howiehz.top/page-language')}
   )}"
 >
@@ -20,6 +20,7 @@
       src="@runtime/pages/page-like-post-style/index.ts"
       type="module"
     ></script>
+    <th:block th:insert="~{components/nav-page-like-post-style/template :: head}"></th:block>
     <th:block
       th:if="${theme.config?.post_styles?.is_show_post_nav_share_button
                or theme.config?.post_styles?.is_show_share_footer}"
