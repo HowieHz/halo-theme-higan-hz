@@ -16,6 +16,58 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const gitignorePath = path.resolve(__dirname, ".gitignore");
 
+const browserTsFiles = [
+  "src/templates/**/*.{js,ts}",
+  "docs/.vitepress/theme/**/*.ts",
+  "docs/.vitepress/components/**/*.ts",
+  "docs/.vitepress/utils/**/*.ts",
+];
+
+const vueFiles = ["docs/.vitepress/components/**/*.vue", "docs/.vitepress/theme/**/*.vue"];
+
+const nodeFiles = [
+  "docs/.vitepress/config.ts",
+  "docs/en/config.ts",
+  "vite.config.ts",
+  "plugins/**/*.ts",
+  "eslint.config.js",
+  "stylelint.config.js",
+  ".github/scripts/**/*.{js,ts}",
+];
+
+const browserLanguageOptions = {
+  ecmaVersion: "latest",
+  sourceType: "module",
+  globals: {
+    ...globals.browser,
+  },
+};
+
+const nodeLanguageOptions = {
+  ecmaVersion: 2024,
+  sourceType: "module",
+  globals: {
+    ...globals.node,
+  },
+};
+
+const vueLanguageOptions = {
+  ...browserLanguageOptions,
+  parser: vueParser,
+  parserOptions: {
+    parser: {
+      // Script parser for `<script>`
+      js: "espree",
+      // Script parser for `<script lang="ts">`
+      ts: tsParser,
+      // Script parser for vue directives (e.g. `v-if=` or `:attribute=`)
+      // and vue interpolations (e.g. `{{variable}}`).
+      // If not specified, the parser determined by `<script lang ="...">` is used.
+      "<template>": "espree",
+    },
+  },
+};
+
 export default defineConfig(
   globalIgnores(["src/templates/public/assets/lib/**/*"]),
   includeIgnoreFile(gitignorePath),
@@ -24,20 +76,9 @@ export default defineConfig(
   tseslint.configs.strict,
   tseslint.configs.stylistic,
   {
-    files: [
-      "src/templates/**/*.{js,ts}",
-      "docs/.vitepress/theme/**/*.ts",
-      "docs/.vitepress/components/**/*.ts",
-      "docs/.vitepress/utils/**/*.ts",
-    ],
-
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-      globals: {
-        ...globals.browser,
-      },
-    },
+    // Browser-side TS/JS covered by tsconfig.browser.json and docs/tsconfig.browser.json.
+    files: browserTsFiles,
+    languageOptions: browserLanguageOptions,
   },
   {
     files: ["src/templates/**/*.html"],
@@ -61,47 +102,14 @@ export default defineConfig(
     },
   },
   {
-    files: ["docs/.vitepress/components/**/*.vue", "docs/.vitepress/theme/**/*.vue"],
-
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-      globals: {
-        ...globals.browser,
-      },
-      parser: vueParser,
-      parserOptions: {
-        parser: {
-          // Script parser for `<script>`
-          js: "espree",
-          // Script parser for `<script lang="ts">`
-          ts: tsParser,
-          // Script parser for vue directives (e.g. `v-if=` or `:attribute=`)
-          // and vue interpolations (e.g. `{{variable}}`).
-          // If not specified, the parser determined by `<script lang ="...">` is used.
-          "<template>": "espree",
-        },
-      },
-    },
+    // Browser-side Vue SFCs covered by docs/tsconfig.browser.json.
+    files: vueFiles,
+    languageOptions: vueLanguageOptions,
   },
   {
-    files: [
-      "docs/.vitepress/config.ts",
-      "docs/en/config.ts",
-      "vite.config.ts",
-      "plugins/**/*.ts",
-      "eslint.config.js",
-      "stylelint.config.js",
-      ".github/scripts/**/*.{js,ts}",
-    ],
-
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-      globals: {
-        ...globals.node,
-      },
-    },
+    // Node-side config/build/tooling covered by tsconfig.node.json and docs/tsconfig.node.json.
+    files: nodeFiles,
+    languageOptions: nodeLanguageOptions,
   },
   ...oxlint.buildFromOxlintConfigFile("./.oxlintrc.json"),
 );
