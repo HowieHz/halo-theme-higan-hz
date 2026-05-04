@@ -1,3 +1,8 @@
+@reference "../../_runtime/global/tailwindcss/styles.css";
+@import "tailwindcss/utilities.css" layer(utilities) source(".");
+@source not "./README.md";
+@source not "./index.ts";
+
 /* 文章列表样式 */
 .color-accent {
   color: var(--color-accent);
