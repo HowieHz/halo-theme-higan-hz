@@ -20,8 +20,15 @@ onMounted(async () => {
 </script>
 
 <template>
-  <article id="article-tag" class="post">
-    <div id="vp-app" ref="el" class="content loading" />
+  <article
+    id="article-tag"
+    class="post"
+  >
+    <div
+      id="vp-app"
+      ref="el"
+      class="content loading"
+    />
   </article>
 </template>
 

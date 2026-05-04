@@ -17,7 +17,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="vp-app" ref="el" class="content loading" />
+  <div
+    id="vp-app"
+    ref="el"
+    class="content loading"
+  />
 </template>
 
 <style src="./default.css" scoped></style>

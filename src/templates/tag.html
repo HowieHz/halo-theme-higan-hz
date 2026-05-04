@@ -23,12 +23,18 @@
       th:title="'Posts - Tag: ' + ${tag.spec?.displayName}"
       th:href="@{'/feed/tags/' + ${tag.spec?.slug} + '.xml'}"
     />
-    <script src="@runtime/pages/tag/index.ts" type="module"></script>
+    <script
+      src="@runtime/pages/tag/index.ts"
+      type="module"
+    ></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
     <th:block th:insert="~{components/list-post-simple/template :: head(showPagination = true)}"></th:block>
   </head>
   <body th:remove="tag">
-    <div id="archive" class="content flex-auto">
+    <div
+      id="archive"
+      class="content flex-auto"
+    >
       <h1
         th:with="tagColor = ${tag.spec?.color}"
         th:style="${tagColor != null

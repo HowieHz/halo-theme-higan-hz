@@ -2,8 +2,14 @@
 <head></head>
 <body></body>
 <!--*/-->
-<th:block xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
-  <div id="header-post" class="fixed top-8 right-0 z-50 float-right hidden sm:block">
+<th:block
+  xmlns:th="https://www.thymeleaf.org"
+  th:fragment="navbar"
+>
+  <div
+    id="header-post"
+    class="fixed top-8 right-0 z-50 float-right hidden sm:block"
+  >
     <!--/* only show on tablet start, display when the page is not at the top */-->
     <a
       id="top-icon-tablet"
@@ -26,9 +32,15 @@
       ><span class="iconify-large iconify ic--baseline-toc"></span
     ></a>
     <!--/* only show on tablet end */-->
-    <span id="menu" class="mr-8">
+    <span
+      id="menu"
+      class="mr-8"
+    >
       <div class="flex items-center justify-end">
-        <span id="nav" class="hidden lg:block">
+        <span
+          id="nav"
+          class="hidden lg:block"
+        >
           <th:block th:insert="~{components/common/template :: menu(showIcon=false)}"></th:block>
         </span>
         <a
@@ -130,18 +142,38 @@
           </li>
         </ul>
 
-        <span id="i-prev" class="info hidden" th:text="#{fragment.post-nav.prev}"></span>
-        <span id="i-next" class="info hidden" th:text="#{fragment.post-nav.next}"></span>
+        <span
+          id="i-prev"
+          class="info hidden"
+          th:text="#{fragment.post-nav.prev}"
+        ></span>
+        <span
+          id="i-next"
+          class="info hidden"
+          th:text="#{fragment.post-nav.next}"
+        ></span>
 
-        <span id="i-top" class="info hidden" th:text="#{fragment.post-nav.toTop}"></span>
-        <span id="i-toc" class="info hidden" th:text="#{fragment.post-nav.toc}"></span>
+        <span
+          id="i-top"
+          class="info hidden"
+          th:text="#{fragment.post-nav.toTop}"
+        ></span>
+        <span
+          id="i-toc"
+          class="info hidden"
+          th:text="#{fragment.post-nav.toc}"
+        ></span>
         <span
           th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
           id="i-share"
           class="info hidden"
           th:text="#{fragment.post-nav.sharePost}"
         ></span>
-        <span id="i-home" class="info hidden" th:text="#{fragment.post-nav.backToHome}"></span>
+        <span
+          id="i-home"
+          class="info hidden"
+          th:text="#{fragment.post-nav.backToHome}"
+        ></span>
       </span>
       <br />
       <div
@@ -155,10 +187,16 @@
                                                          title = ${post.spec?.title})}"
         ></th:block>
       </div>
-      <div id="toc" class="hidden lg:block"></div>
+      <div
+        id="toc"
+        class="hidden lg:block"
+      ></div>
     </span>
   </div>
-  <div id="toc-overlay-tablet" class="hidden">
+  <div
+    id="toc-overlay-tablet"
+    class="hidden"
+  >
     <div id="toc-overlay-backdrop"></div>
     <div id="toc-overlay-content">
       <div id="toc-overlay-header">

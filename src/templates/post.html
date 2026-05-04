@@ -53,7 +53,10 @@
         </th:block>
       </th:block>
     </th:block>
-    <script src="@runtime/pages/post/index.ts" type="module"></script>
+    <script
+      src="@runtime/pages/post/index.ts"
+      type="module"
+    ></script>
     <th:block
       th:if="${theme.config?.post_styles?.is_post_upvote_button_show}"
       th:insert="~{components/upvote-runtime/template :: head}"
@@ -88,7 +91,11 @@
     ></th:block>
     <th:block th:insert="~{components/heading-anchor-symbol-style/template :: body}"></th:block>
     <th:block th:insert="~{components/heading-anchor-svg/template :: body}"></th:block>
-    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <article
+      class="post"
+      itemscope
+      itemtype="http://schema.org/BlogPosting"
+    >
       <header>
         <h1
           class="my-0 text-[1.5em] leading-tight"
@@ -116,7 +123,10 @@
             </a>
           </span>
 
-          <div class="post-publish-time inline" th:if="${theme.config?.post_styles?.is_show_post_publish_time}">
+          <div
+            class="post-publish-time inline"
+            th:if="${theme.config?.post_styles?.is_show_post_publish_time}"
+          >
             <span
               th:text="#{page.post.published-on}"
               th:if="${theme.config?.post_styles?.is_show_post_publish_time_left_text}"
@@ -128,7 +138,10 @@
               >文章发布时间替换位</time
             >
           </div>
-          <div class="post-update-time block sm:inline" th:if="${theme.config?.post_styles?.is_show_post_updated_time}">
+          <div
+            class="post-update-time block sm:inline"
+            th:if="${theme.config?.post_styles?.is_show_post_updated_time}"
+          >
             <span
               th:text="#{page.post.updated-on}"
               th:if="${theme.config?.post_styles?.is_show_post_updated_time_left_text}"
@@ -145,12 +158,18 @@
           <span class="meta-separator hidden before:content-['|'] last:hidden sm:inline"></span>
 
           <!--/* 使用 sm:inlne 而不是 sm:inline-block 是希望能在很多“分类面包屑”的情况下自动换行 */-->
-          <div class="article-category block sm:inline" th:unless="${#lists.isEmpty(post.categories)}">
+          <div
+            class="article-category block sm:inline"
+            th:unless="${#lists.isEmpty(post.categories)}"
+          >
             <th:block th:each="categoryLeafNode, categoryLeafNodeIterStat : ${post.categories}">
               <!--/* inline-block 使一个“分类面包屑”不会被分到两行 */-->
               <span class="categoryBreadcrumbs inline-block">
                 <!--/* 分类图标和第一个“分类面包屑”保持在一行。 */-->
-                <span th:if="${categoryLeafNodeIterStat.first}" class="iconify fa-solid--archive"></span>
+                <span
+                  th:if="${categoryLeafNodeIterStat.first}"
+                  class="iconify fa-solid--archive"
+                ></span>
                 <th:block
                   th:each="category, iterStat : ${categoryFinder.getBreadcrumbs(categoryLeafNode.metadata?.name)}"
                 >
@@ -175,12 +194,18 @@
           </div>
 
           <!--/* 使用 sm:inlne 而不是 sm:inline-block 是希望能在很多标签项的情况下自动换行 */-->
-          <div class="article-tag block sm:inline" th:unless="${#lists.isEmpty(post.tags)}">
+          <div
+            class="article-tag block sm:inline"
+            th:unless="${#lists.isEmpty(post.tags)}"
+          >
             <th:block th:each="tag, iterStat : ${post.tags}">
               <!--/* inline-block 保证一个标签项的内容保持在一行。 */-->
               <span class="inline-block">
                 <!--/* 标签图标和第一个标签项保持在一行。 */-->
-                <span th:if="${iterStat.first}" class="iconify fa-solid--tag"></span>
+                <span
+                  th:if="${iterStat.first}"
+                  class="iconify fa-solid--tag"
+                ></span>
                 <a
                   class="tag-link"
                   th:with="tagColor = ${tag.spec?.color}"
@@ -237,12 +262,22 @@
             th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
           >
             <span class="iconify fluent--text-edit-style-character-a-32-regular"></span>
-            <span class="word-count" th:text="${wordCount}">文章字数替换位</span>
+            <span
+              class="word-count"
+              th:text="${wordCount}"
+              >文章字数替换位</span
+            >
           </span>
         </div>
       </header>
 
-      <div class="content flex-auto" itemprop="articleBody" th:utext="${post.content?.content}">文章内容填充处</div>
+      <div
+        class="content flex-auto"
+        itemprop="articleBody"
+        th:utext="${post.content?.content}"
+      >
+        文章内容填充处
+      </div>
       <th:block th:if="${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show}">
         <hr class="divide mt-10 mb-0" />
       </th:block>
@@ -315,7 +350,12 @@
                    targetPagePostList = ${targetPagePostFinderResult.items}"
         >
           <div class="recommendations mt-10">
-            <h4 class="mb-2" th:text="#{fragment.post-nav.recommended}">推荐文章 标题填充位</h4>
+            <h4
+              class="mb-2"
+              th:text="#{fragment.post-nav.recommended}"
+            >
+              推荐文章 标题填充位
+            </h4>
             <th:block th:each="iterPost: ${targetPagePostList}">
               <!--/* 进行检查让推荐列表不出现当前页面文章 */-->
               <div th:if="${post.metadata.name != iterPost.metadata.name}">
@@ -328,7 +368,11 @@
                     >文章发布时间替换位</time
                   >
                 </span>
-                <a class="post-title" th:href="@{${iterPost.status?.permalink}}" th:text="${iterPost.spec?.title}"></a>
+                <a
+                  class="post-title"
+                  th:href="@{${iterPost.status?.permalink}}"
+                  th:text="${iterPost.spec?.title}"
+                ></a>
               </div>
             </th:block>
             <!--/* 如果是最后一页，而且不是第一页（如果是最后一页也是第一页，说明本来就不够）。
@@ -396,10 +440,20 @@
       </th:block>
 
       <!--/* 上一个也是分隔线或者点赞按钮，这个 hr 就会隐藏，这个隐藏逻辑是 CSS 样式做的工作 */-->
-      <hr th:if="${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show}" class="divide mt-10 mb-0" />
+      <hr
+        th:if="${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show}"
+        class="divide mt-10 mb-0"
+      />
 
-      <div th:if="${theme.config?.post_styles?.is_post_comment_section_show and haloCommentEnabled}" class="mt-5">
-        <halo:comment group="content.halo.run" kind="Post" th:name="${post.metadata?.name}"></halo:comment>
+      <div
+        th:if="${theme.config?.post_styles?.is_post_comment_section_show and haloCommentEnabled}"
+        class="mt-5"
+      >
+        <halo:comment
+          group="content.halo.run"
+          kind="Post"
+          th:name="${post.metadata?.name}"
+        ></halo:comment>
       </div>
     </article>
     <th:block th:if="${theme.config?.post_styles?.is_show_footer_nav}">

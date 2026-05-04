@@ -1,7 +1,10 @@
 <!--/*-->
 <head th:remove="tag"></head>
 <!--*/-->
-<body th:remove="tag" th:fragment="body(colorSchema)">
+<body
+  th:remove="tag"
+  th:fragment="body(colorSchema)"
+>
   <th:block th:unless="${colorSchema.is_css_variable_mode}">
     <!--/*/
     <style th:inline="css">

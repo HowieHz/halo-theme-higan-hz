@@ -1,8 +1,20 @@
-<head th:remove="tag" th:fragment="head">
-  <script src="index.ts" type="module"></script>
+<head
+  th:remove="tag"
+  th:fragment="head"
+>
+  <script
+    src="index.ts"
+    type="module"
+  ></script>
 </head>
-<body th:remove="tag" th:fragment="body">
-  <p id="quote" th:data-link="${theme.config?.index_styles?.quote_link}"></p>
+<body
+  th:remove="tag"
+  th:fragment="body"
+>
+  <p
+    id="quote"
+    th:data-link="${theme.config?.index_styles?.quote_link}"
+  ></p>
   <style>
     #quote:empty::before {
       content: "\00a0";

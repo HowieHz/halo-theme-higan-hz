@@ -22,13 +22,23 @@
       title="Moments - All"
       th:href="@{'/moments/rss.xml'}"
     />
-    <script src="@runtime/pages/moment/index.ts" type="module"></script>
+    <script
+      src="@runtime/pages/moment/index.ts"
+      type="module"
+    ></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
     <th:block th:insert="~{components/list-moment-summary/template :: head(pageTemplateName = 'moment')}"></th:block>
   </head>
   <body th:remove="tag">
-    <article class="moment" itemscope itemtype="http://schema.org/BlogPosting">
-      <div class="content moment-list" th:attr="x-data=|momentComment('${moment.metadata.name}')|">
+    <article
+      class="moment"
+      itemscope
+      itemtype="http://schema.org/BlogPosting"
+    >
+      <div
+        class="content moment-list"
+        th:attr="x-data=|momentComment('${moment.metadata.name}')|"
+      >
         <div
           class="moment-header mt-5"
           th:if="${moment.metadata?.labels?.get('higan.howiehz.top/type') == 'github-user-public-event'}"
@@ -214,14 +224,24 @@
               th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
             >
               <span class="iconify fluent--text-edit-style-character-a-32-regular"></span>
-              <span class="word-count" th:text="${wordCount}">帖文字数替换位</span>
+              <span
+                class="word-count"
+                th:text="${wordCount}"
+                >帖文字数替换位</span
+              >
             </span>
           </div>
         </div>
         <div class="moment-body">
           <div class="moment-content-box">
-            <div class="moment-content" th:utext="${moment.spec.content?.html}"></div>
-            <div class="medium" th:with="medium = ${moment.spec.content?.medium}">
+            <div
+              class="moment-content"
+              th:utext="${moment.spec.content?.html}"
+            ></div>
+            <div
+              class="medium"
+              th:with="medium = ${moment.spec.content?.medium}"
+            >
               <th:block th:each="media : ${medium}">
                 <img
                   th:if="${#strings.equals(media.type, 'PHOTO')}"
@@ -247,7 +267,10 @@
             class="operation"
           >
             <th:block th:if="${theme.config?.moments_styles?.is_moment_upvote_button_show}">
-              <a href="#" th:data-moment-name="${moment.metadata.name}">
+              <a
+                href="#"
+                th:data-moment-name="${moment.metadata.name}"
+              >
                 <span
                   class="iconify"
                   style="
@@ -255,7 +278,10 @@
                   "
                 >
                 </span>
-                <span th:data-moment-name="${moment.metadata.name}" th:text="${moment.stats.upvote}"></span>
+                <span
+                  th:data-moment-name="${moment.metadata.name}"
+                  th:text="${moment.stats.upvote}"
+                ></span>
               </a>
               <th:block
                 th:insert="~{components/upvote-runtime/template :: body(
@@ -273,7 +299,10 @@
               th:if="${theme.config?.moments_styles?.is_moment_comment_section_show
                        and haloCommentEnabled}"
             >
-              <a @click="setCurrent(name)" class="v-cursor-pointer ml-1">
+              <a
+                @click="setCurrent(name)"
+                class="v-cursor-pointer ml-1"
+              >
                 <span
                   class="iconify"
                   style="
@@ -282,8 +311,15 @@
                 ></span>
                 <span th:text="${moment.stats.approvedComment}"></span>
               </a>
-              <div class="moment-comment" x-show="current === name">
-                <halo:comment group="moment.halo.run" kind="Moment" th:name="${moment.metadata?.name}"></halo:comment>
+              <div
+                class="moment-comment"
+                x-show="current === name"
+              >
+                <halo:comment
+                  group="moment.halo.run"
+                  kind="Moment"
+                  th:name="${moment.metadata?.name}"
+                ></halo:comment>
               </div>
             </th:block>
           </div>

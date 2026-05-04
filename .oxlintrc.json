@@ -9,27 +9,76 @@
   },
   "ignorePatterns": [
     "src/templates/public/assets/lib/**/*",
-    "docs/.vitepress/dist",
-    "docs/.vitepress/cache",
     "**/.oxlintrc.json.bak",
+    "templates/",
+    "tmp/",
+    ".tw-patch/",
+    ".vite-inspect/",
     "**/logs",
     "**/*.log",
     "**/npm-debug.log*",
     "**/yarn-debug.log*",
     "**/yarn-error.log*",
-    "**/pnpm-debug.log*",
     "**/lerna-debug.log*",
-    "**/node_modules",
-    "node_modules/",
-    "**/dist-ssr",
     "**/*.local",
-    "tmp/",
-    ".tw-patch/",
-    ".vite-inspect/",
-    "templates/",
-    "**/.vscode/",
+    "**/report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json",
+    "**/pids",
+    "**/*.pid",
+    "**/*.seed",
+    "**/*.pid.lock",
+    "**/lib-cov",
+    "**/coverage",
+    "**/*.lcov",
+    "**/.nyc_output",
+    "**/.grunt",
+    "**/bower_components",
+    "**/.lock-wscript",
+    "build/Release",
+    "**/node_modules/",
+    "**/jspm_packages/",
+    "**/web_modules/",
+    "**/*.tsbuildinfo",
+    "**/.npm",
+    "**/.eslintcache",
+    "**/.stylelintcache",
+    "**/.node_repl_history",
+    "**/*.tgz",
+    "**/.yarn-integrity",
+    "**/.env",
+    "**/.env.*",
+    "!**/.env.example",
+    "**/.cache",
+    "**/.parcel-cache",
+    "**/.next",
+    "**/out",
+    "**/.nuxt",
+    "**/dist",
+    "**/.cache/",
+    ".vuepress/dist",
+    "**/.temp",
+    "**/.svelte-kit/",
+    "**/.vitepress/dist",
+    "**/.vitepress/cache",
+    "**/.docusaurus",
+    "**/.serverless/",
+    "**/.fusebox/",
+    "**/.dynamodb/",
+    "**/.firebase/",
+    "**/.tern-port",
+    "**/.vscode-test",
+    "**/.pnp.*",
+    ".yarn/*",
+    "!.yarn/patches",
+    "!.yarn/plugins",
+    "!.yarn/releases",
+    "!.yarn/sdks",
+    "!.yarn/versions",
+    "**/vite.config.js.timestamp-*",
+    "**/vite.config.ts.timestamp-*",
+    ".vscode/*",
     "!.vscode/extensions.json",
-    "**/.idea/",
+    "!.vscode/settings.json",
+    "**/.idea",
     "**/.DS_Store",
     "**/*.suo",
     "**/*.ntvs*",
@@ -183,14 +232,19 @@
       }
     },
     {
-      "files": ["**/*.js", "**/*.ts"],
+      "files": [
+        "src/templates/**/*.{js,ts}",
+        "docs/.vitepress/theme/**/*.ts",
+        "docs/.vitepress/components/**/*.ts",
+        "docs/.vitepress/utils/**/*.ts"
+      ],
       "env": {
         "es2026": true,
         "browser": true
       }
     },
     {
-      "files": ["**/*.html"],
+      "files": ["src/templates/**/*.html"],
       "env": {
         "browser": true
       }
@@ -205,15 +259,24 @@
       }
     },
     {
-      "files": ["**/*.vue"],
+      "files": ["docs/.vitepress/components/**/*.vue", "docs/.vitepress/theme/**/*.vue"],
       "env": {
         "es2026": true,
         "browser": true
       }
     },
     {
-      "files": ["scripts/**/*.js", ".github/scripts/**/*.js"],
+      "files": [
+        "docs/.vitepress/config.ts",
+        "docs/en/config.ts",
+        "vite.config.ts",
+        "plugins/**/*.ts",
+        "eslint.config.js",
+        "stylelint.config.js",
+        ".github/scripts/**/*.{js,ts}"
+      ],
       "env": {
+        "es2026": true,
         "node": true
       }
     }

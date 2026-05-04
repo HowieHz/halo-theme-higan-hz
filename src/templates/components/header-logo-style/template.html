@@ -1,7 +1,10 @@
 <!--/*-->
 <head th:remove="tag"></head>
 <!--*/-->
-<body th:remove="tag" th:fragment="body(fallbackLogoPng, logoUri, imageType, fallbackLogoWebp)">
+<body
+  th:remove="tag"
+  th:fragment="body(fallbackLogoPng, logoUri, imageType, fallbackLogoWebp)"
+>
   <style th:inline="css">
     #logo {
       background-image: url("[(${fallbackLogoPng})]");

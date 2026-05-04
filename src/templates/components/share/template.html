@@ -1,7 +1,16 @@
-<head th:remove="tag" th:fragment="head">
-  <script src="index.ts" type="module"></script>
+<head
+  th:remove="tag"
+  th:fragment="head"
+>
+  <script
+    src="index.ts"
+    type="module"
+  ></script>
 </head>
-<body th:remove="tag" th:fragment="body(originPermalink, title)">
+<body
+  th:remove="tag"
+  th:fragment="body(originPermalink, title)"
+>
   <th:block
     th:with="permalink = ${siteUrl} + ${originPermalink},
              title = ${title}"
@@ -22,7 +31,10 @@
               th:style="|--svg:url('${item?.icon.value}')|"
               th:if="${item?.icon != null and item?.icon != ''}"
             ></span>
-            <span class="iconify mdi--share-circle" th:if="${item?.icon == null or item?.icon == ''}"></span>
+            <span
+              class="iconify mdi--share-circle"
+              th:if="${item?.icon == null or item?.icon == ''}"
+            ></span>
           </a>
         </li>
         <!--/* Preset: non-Native */-->
@@ -197,7 +209,10 @@
                                             '@TITLE',
                                             #uris.escapeQueryParam(title))}"
               >
-                <span class="iconify" th:style="|--svg:url('${custom_item?.icon.value}')|"></span>
+                <span
+                  class="iconify"
+                  th:style="|--svg:url('${custom_item?.icon.value}')|"
+                ></span>
               </a>
             </li>
           </th:block>

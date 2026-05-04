@@ -16,7 +16,10 @@
       th:if="${theme.config?.custom_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{${singlePage.status.permalink}}"
     />
-    <script src="@runtime/pages/page/index.ts" type="module"></script>
+    <script
+      src="@runtime/pages/page/index.ts"
+      type="module"
+    ></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
     <th:block
       th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show
@@ -39,7 +42,11 @@
     ></th:block>
     <th:block th:insert="~{components/heading-anchor-symbol-style/template :: body}"></th:block>
     <th:block th:insert="~{components/heading-anchor-svg/template :: body}"></th:block>
-    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <article
+      class="post"
+      itemscope
+      itemtype="http://schema.org/BlogPosting"
+    >
       <header>
         <h1>
           <th:block th:text="${singlePage.spec?.title}">标题替换位</th:block>
@@ -75,12 +82,20 @@
             th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
           >
             <span class="iconify fluent--text-edit-style-character-a-32-regular"></span>
-            <span class="word-count" th:text="${wordCount}">文章字数替换位</span>
+            <span
+              class="word-count"
+              th:text="${wordCount}"
+              >文章字数替换位</span
+            >
           </span>
         </div>
       </header>
 
-      <div class="content flex-auto" itemprop="articleBody" th:utext="${singlePage.content?.content}">
+      <div
+        class="content flex-auto"
+        itemprop="articleBody"
+        th:utext="${singlePage.content?.content}"
+      >
         singlePage formatted content
       </div>
       <hr
@@ -92,7 +107,11 @@
         th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show
                  and haloCommentEnabled}"
       >
-        <halo:comment group="content.halo.run" kind="SinglePage" th:name="${singlePage.metadata?.name}"></halo:comment>
+        <halo:comment
+          group="content.halo.run"
+          kind="SinglePage"
+          th:name="${singlePage.metadata?.name}"
+        ></halo:comment>
       </div>
     </article>
   </body>

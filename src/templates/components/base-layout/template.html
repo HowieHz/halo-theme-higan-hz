@@ -36,7 +36,10 @@
       http-equiv="Content-Security-Policy"
       content="upgrade-insecure-requests"
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
     <th:block
       th:if="${theme.config?.global?.is_performance_monitor_enable}"
       th:insert="~{components/performance-monitor/template :: head}"
@@ -46,7 +49,10 @@
       otherwise, it will not work on Chrome for Android. 
     */-->
     <th:block th:insert="~{components/meta-theme-color/template :: head}"></th:block>
-    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="color-scheme"
+      content="light dark"
+    />
     <title th:text="${#strings.defaultString(title, site.title)}"></title>
     <!--/* RSS link declaration start */-->
     <!--/*
@@ -57,10 +63,18 @@
       4. 无 PluginFeed 插件 + 设置了 sns           → 仅输出 sns 的 RSS（无论地址是什么）
     */-->
     <th:block th:if="${pluginFinder.available('PluginFeed')}">
-      <link rel="alternate" type="application/rss+xml" title="Posts - All" th:href="@{'/rss.xml'}" />
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title="Posts - All"
+        th:href="@{'/rss.xml'}"
+      />
     </th:block>
     <th:block th:each="item : ${theme.config?.sns?.sns_list}">
-      <th:block th:if="${item?.type == 'rss'}" th:with="href = ${item?.input_value}">
+      <th:block
+        th:if="${item?.type == 'rss'}"
+        th:with="href = ${item?.input_value}"
+      >
         <link
           th:if="${href != '/rss.xml' or !pluginFinder.available('PluginFeed')}"
           rel="alternate"
@@ -95,7 +109,13 @@
                                                ? 'font/collection'
                                                : 'application/octet-stream'))))))}"
       >
-        <link rel="preload" th:href="${fontFile}" as="font" th:type="${fontMime}" crossorigin />
+        <link
+          rel="preload"
+          th:href="${fontFile}"
+          as="font"
+          th:type="${fontMime}"
+          crossorigin
+        />
       </th:block>
       <!--/* Custom Font Preload Declarations end */-->
       <!--/* Custom Font @font-face Declarations start */-->
@@ -160,7 +180,10 @@
     ></th:block>
     <!--/* Generate the allCustomColorSchema array to set the data-color-scheme attribute */-->
     <!--/* set data-color-scheme attribute for custom color schema start */-->
-    <script th:if="${color_schema == 'custom'}" th:data-custom-color-schema-init-id="${custom_color_schema_init_id}">
+    <script
+      th:if="${color_schema == 'custom'}"
+      th:data-custom-color-schema-init-id="${custom_color_schema_init_id}"
+    >
       (function (dataset) {
         /* eslint-disable-next-line no-undef -- Defined earlier by components/custom-color-schema-config/template.html. */
         const matchedSchema = allCustomColorSchema.find((schema) => schema.id === dataset?.customColorSchemaInitId);
@@ -274,18 +297,30 @@
         th:if="${color_schema == 'auto-blue'}"
         th:insert="~{components/theme-auto-blue/template :: head}"
       ></th:block>
-      <th:block th:if="${color_schema == 'auto'}" th:insert="~{components/theme-auto/template :: head}"></th:block>
+      <th:block
+        th:if="${color_schema == 'auto'}"
+        th:insert="~{components/theme-auto/template :: head}"
+      ></th:block>
       <th:block
         th:if="${color_schema == 'dark-blue'}"
         th:insert="~{components/theme-dark-blue/template :: head}"
       ></th:block>
-      <th:block th:if="${color_schema == 'dark'}" th:insert="~{components/theme-dark/template :: head}"></th:block>
-      <th:block th:if="${color_schema == 'gray'}" th:insert="~{components/theme-gray/template :: head}"></th:block>
+      <th:block
+        th:if="${color_schema == 'dark'}"
+        th:insert="~{components/theme-dark/template :: head}"
+      ></th:block>
+      <th:block
+        th:if="${color_schema == 'gray'}"
+        th:insert="~{components/theme-gray/template :: head}"
+      ></th:block>
       <th:block
         th:if="${color_schema == 'light-blue'}"
         th:insert="~{components/theme-light-blue/template :: head}"
       ></th:block>
-      <th:block th:if="${color_schema == 'light'}" th:insert="~{components/theme-light/template :: head}"></th:block>
+      <th:block
+        th:if="${color_schema == 'light'}"
+        th:insert="~{components/theme-light/template :: head}"
+      ></th:block>
     </th:block>
     <th:block th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}">
       <th:block
@@ -740,7 +775,10 @@
     <!--/* CSS Variable to Meta Theme-Color Observer End */-->
   </head>
 
-  <body class="transition-colors duration-300" th:classappend="|text-size-${theme.config?.styles?.text_size}|">
+  <body
+    class="transition-colors duration-300"
+    th:classappend="|text-size-${theme.config?.styles?.text_size}|"
+  >
     <script th:if="${theme.config?.global?.is_i18n_menu_show}">
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/*
@@ -923,12 +961,18 @@
             <th:block th:replace="${content}"></th:block>
           </main>
 
-          <footer id="footer" class="mt-auto mb-5 pt-5">
+          <footer
+            id="footer"
+            class="mt-auto mb-5 pt-5"
+          >
             <div class="footer-left">
               <!--/* 这里不能使用自闭合标签，否则在经过 html minify 处理后会变成 <halo:footer> ，无法正常注入 */-->
               <halo:footer></halo:footer>
               <div th:if="${theme.config?.styles?.is_footer_site_stats_show}">
-                <ul class="site-stats" th:with="stats = ${siteStatsFinder.getStats()}">
+                <ul
+                  class="site-stats"
+                  th:with="stats = ${siteStatsFinder.getStats()}"
+                >
                   <li
                     th:each="item : ${theme.config?.styles?.footer_site_stats}"
                     th:if="${item?.type == 'visit'
@@ -945,19 +989,40 @@
                       th:if="${item?.icon != null and item?.icon != ''}"
                     ></span>
                     <th:block th:if="not ${item?.i18n_text}">
-                      <span th:text="${stats.visit}" th:if="${item?.type == 'visit'}"></span>
-                      <span th:text="${stats.post}" th:if="${item?.type == 'post'}"></span>
-                      <span th:text="${stats.upvote}" th:if="${item?.type == 'upvote'}"></span>
-                      <span th:text="${stats.comment}" th:if="${item?.type == 'comment'}"></span>
-                      <span th:text="${stats.category}" th:if="${item?.type == 'category'}"></span>
+                      <span
+                        th:text="${stats.visit}"
+                        th:if="${item?.type == 'visit'}"
+                      ></span>
+                      <span
+                        th:text="${stats.post}"
+                        th:if="${item?.type == 'post'}"
+                      ></span>
+                      <span
+                        th:text="${stats.upvote}"
+                        th:if="${item?.type == 'upvote'}"
+                      ></span>
+                      <span
+                        th:text="${stats.comment}"
+                        th:if="${item?.type == 'comment'}"
+                      ></span>
+                      <span
+                        th:text="${stats.category}"
+                        th:if="${item?.type == 'category'}"
+                      ></span>
                       <span
                         th:text="${extraApiStatsFinder.getPostWordCount()}"
                         th:if="${item?.type == 'wordcount'}"
                       ></span>
                     </th:block>
                     <th:block th:if="${item?.i18n_text}">
-                      <span th:text="#{common.siteTotalVisit(${stats.visit})}" th:if="${item?.type == 'visit'}"></span>
-                      <span th:text="#{common.siteTotalPost(${stats.post})}" th:if="${item?.type == 'post'}"></span>
+                      <span
+                        th:text="#{common.siteTotalVisit(${stats.visit})}"
+                        th:if="${item?.type == 'visit'}"
+                      ></span>
+                      <span
+                        th:text="#{common.siteTotalPost(${stats.post})}"
+                        th:if="${item?.type == 'post'}"
+                      ></span>
                       <span
                         th:text="#{common.siteTotalUpvote(${stats.upvote})}"
                         th:if="${item?.type == 'upvote'}"
@@ -983,7 +1048,10 @@
                        or theme.config?.styles?.is_footer_copyright_show}"
               >
                 <br />
-                <span class="info" th:if="${theme.config?.styles?.is_footer_theme_info_show}">
+                <span
+                  class="info"
+                  th:if="${theme.config?.styles?.is_footer_theme_info_show}"
+                >
                   Theme is
                   <a
                     href="https://howiehz.top/halo-theme-higan-haozi/"
@@ -1001,7 +1069,10 @@
                     >Halo</a
                   >
                 </span>
-                <span class="copyright" th:if="${theme.config?.styles?.is_footer_copyright_show}">
+                <span
+                  class="copyright"
+                  th:if="${theme.config?.styles?.is_footer_copyright_show}"
+                >
                   ©
                   <span
                     id="site_date"
@@ -1014,7 +1085,10 @@
                 </span>
               </div>
             </div>
-            <div class="footer-right" th:if="${theme.config?.styles?.is_footer_menu_show}">
+            <div
+              class="footer-right"
+              th:if="${theme.config?.styles?.is_footer_menu_show}"
+            >
               <ul>
                 <th:block th:insert="~{components/common/template :: base-menu}"></th:block>
               </ul>

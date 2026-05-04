@@ -25,7 +25,12 @@ const loading = ref(true);
 
 <template>
   <div :class="[$style.frame, { [$style.loading]: loading }]">
-    <iframe data-why :src="src" :style="{ height }" @load="loading = false">
+    <iframe
+      data-why
+      :src="src"
+      :style="{ height }"
+      @load="loading = false"
+    >
       <slot />
     </iframe>
   </div>

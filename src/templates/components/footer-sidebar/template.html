@@ -1,4 +1,7 @@
-<head th:remove="tag" th:fragment="head(isSidebar, isBottomSidebarContent)">
+<head
+  th:remove="tag"
+  th:fragment="head(isSidebar, isBottomSidebarContent)"
+>
   <th:block
     th:if="${isSidebar and isBottomSidebarContent}"
     th:insert="~{components/style-footer-sidebar/template :: head}"
@@ -21,7 +24,10 @@
       isLeftSidebar   — 需要渲染左侧栏（top-left / bottom-left 且内容已开启）
       isRightSidebar  — 需要渲染右侧栏（top-right / bottom-right 且内容已开启）
   */-->
-  <div th:if="${isSidebar and isBottomSidebarContent}" class="main-with-sidebar">
+  <div
+    th:if="${isSidebar and isBottomSidebarContent}"
+    class="main-with-sidebar"
+  >
     <th:block
       th:if="${isLeftSidebar}"
       th:insert="~{components/footer-bottom-content/template :: body(

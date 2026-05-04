@@ -19,7 +19,10 @@
       th:if="${theme.config?.categories_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{{prefix}(prefix = ${site.routes.categoriesUri})}"
     />
-    <script src="@runtime/pages/categories/index.ts" type="module"></script>
+    <script
+      src="@runtime/pages/categories/index.ts"
+      type="module"
+    ></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
   </head>
   <body th:remove="tag">

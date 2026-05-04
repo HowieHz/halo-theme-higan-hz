@@ -1,10 +1,23 @@
 <head th:remove="tag">
-  <script src="index.ts" type="module"></script>
+  <script
+    src="index.ts"
+    type="module"
+  ></script>
 </head>
-<body th:remove="tag" th:fragment="body(posts)">
-  <div class="pager" th:unless="${isListResult}">
+<body
+  th:remove="tag"
+  th:fragment="body(posts)"
+>
+  <div
+    class="pager"
+    th:unless="${isListResult}"
+  >
     <!--/* 适用于 UrlContextListResult */-->
-    <a th:href="@{${posts.prevUrl}}" th:if="${posts.hasPrevious()}" th:aria-label="#{common.previousPage.aria-label}">
+    <a
+      th:href="@{${posts.prevUrl}}"
+      th:if="${posts.hasPrevious()}"
+      th:aria-label="#{common.previousPage.aria-label}"
+    >
       <span class="iconify-middle iconify material-symbols--chevron-left"></span>
     </a>
     <span
@@ -15,7 +28,11 @@
                and theme.config?.styles?.is_show_page_number}"
       >Page 1 of 1 填充位</span
     >
-    <a th:href="@{${posts.nextUrl}}" th:if="${posts.hasNext()}" th:aria-label="#{common.nextPage.aria-label}">
+    <a
+      th:href="@{${posts.nextUrl}}"
+      th:if="${posts.hasNext()}"
+      th:aria-label="#{common.nextPage.aria-label}"
+    >
       <span class="iconify-middle iconify material-symbols--chevron-right"></span>
     </a>
   </div>
@@ -42,7 +59,11 @@
                and theme.config?.styles?.is_show_page_number}"
       >Page 1 of 1 填充位</span
     >
-    <a th:href="@{'/page/' + ${nextPage}}" th:if="${posts.hasNext()}" th:aria-label="#{common.nextPage.aria-label}">
+    <a
+      th:href="@{'/page/' + ${nextPage}}"
+      th:if="${posts.hasNext()}"
+      th:aria-label="#{common.nextPage.aria-label}"
+    >
       <span class="iconify-middle iconify material-symbols--chevron-right"></span>
     </a>
   </div>

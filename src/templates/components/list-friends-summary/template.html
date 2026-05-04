@@ -1,21 +1,38 @@
 <head th:remove="tag">
-  <script src="index.ts" type="module"></script>
+  <script
+    src="index.ts"
+    type="module"
+  ></script>
   <!--/* 翻页组件应始终加载；即使页码超出范围，组件也仍需存在 */-->
   <th:block th:insert="~{components/pagination/template :: head}"></th:block>
 </head>
-<body th:remove="tag" th:fragment="body(friends, pageTemplateName)">
+<body
+  th:remove="tag"
+  th:fragment="body(friends, pageTemplateName)"
+>
   <section class="friends-list-summary flex flex-auto flex-col">
     <div class="flex flex-auto flex-col space-y-10">
-      <th:block th:each="friend : ${friends.items}" th:with="spec = ${friend.spec}">
+      <th:block
+        th:each="friend : ${friends.items}"
+        th:with="spec = ${friend.spec}"
+      >
         <div class="grid grid-cols-1 md:grid-cols-4 md:items-baseline">
           <div class="group relative flex flex-col md:col-span-3">
             <h2 class="color-text static m-0 text-base font-semibold tracking-tight">
               <div
                 class="friend-card-hover absolute -inset-x-4 -inset-y-2 z-0 opacity-0 sm:-inset-x-6 sm:rounded-2xl"
               ></div>
-              <a th:href="@{${spec.postLink}}" target="_blank" rel="noopener">
+              <a
+                th:href="@{${spec.postLink}}"
+                target="_blank"
+                rel="noopener"
+              >
                 <span class="absolute -inset-x-4 -inset-y-2 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                <span class="relative z-10" th:text="${spec.title}">文章标题替换位</span>
+                <span
+                  class="relative z-10"
+                  th:text="${spec.title}"
+                  >文章标题替换位</span
+                >
               </a>
             </h2>
             <time
@@ -28,7 +45,10 @@
               class="color-base-content-80 relative z-10 order-first mb-3 flex items-center pl-3.5 text-sm md:hidden"
               th:datetime="${#temporals.format(spec.pubDate, 'yyyy-MM-dd')}"
             >
-              <span class="absolute inset-y-0 left-0 flex items-center" aria-hidden="true">
+              <span
+                class="absolute inset-y-0 left-0 flex items-center"
+                aria-hidden="true"
+              >
                 <span class="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span>
               </span>
               <th:block th:text="${#temporals.format(spec.pubDate, 'MMMM dd yyyy')}"></th:block>

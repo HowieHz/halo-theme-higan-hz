@@ -1,7 +1,10 @@
 <!--/*-->
 <head th:remove="tag"></head>
 <!--*/-->
-<body th:remove="tag" th:fragment="body(indentValue)">
+<body
+  th:remove="tag"
+  th:fragment="body(indentValue)"
+>
   <!--/*/
   <style th:inline="css">
     .content > p:not(:has(img:only-child)) {

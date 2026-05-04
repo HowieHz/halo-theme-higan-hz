@@ -15,11 +15,18 @@
       th:if="${theme.config?.photos_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{/photos}"
     />
-    <script src="@runtime/pages/photos/index.ts" type="module"></script>
+    <script
+      src="@runtime/pages/photos/index.ts"
+      type="module"
+    ></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
   </head>
   <body th:remove="tag">
-    <article class="photos post" itemscope itemtype="http://schema.org/BlogPosting">
+    <article
+      class="photos post"
+      itemscope
+      itemtype="http://schema.org/BlogPosting"
+    >
       <script
         id="photos-masonry-script"
         vite-ignore
@@ -331,7 +338,10 @@
           th:each="group : ${groups}"
           th:unless="${theme.config?.photos_styles?.is_enable_masonry_layout}"
         >
-          <h2 th:text="${group.spec.displayName}" th:if="${theme.config?.photos_styles?.is_show_photo_group_name}"></h2>
+          <h2
+            th:text="${group.spec.displayName}"
+            th:if="${theme.config?.photos_styles?.is_show_photo_group_name}"
+          ></h2>
           <ul class="photo-list">
             <th:block th:each="photo : ${group.photos}">
               <li class="photo-image">

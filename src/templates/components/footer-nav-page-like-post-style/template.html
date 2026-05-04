@@ -2,14 +2,27 @@
 <head th:remove="tag"></head>
 <body th:remove="tag"></body>
 <!--*/-->
-<th:block xmlns:th="https://www.thymeleaf.org" th:fragment="footerNav">
+<th:block
+  xmlns:th="https://www.thymeleaf.org"
+  th:fragment="footerNav"
+>
   <div id="footer-post-container">
     <div id="footer-post">
-      <div id="nav-footer" style="display: none">
+      <div
+        id="nav-footer"
+        style="display: none"
+      >
         <th:block th:insert="~{components/common/template :: menu(showIcon=false)}"></th:block>
       </div>
-      <div id="toc-footer" style="display: none"></div>
-      <div id="share-footer" style="display: none" th:if="${theme.config?.post_styles?.is_show_share_footer}">
+      <div
+        id="toc-footer"
+        style="display: none"
+      ></div>
+      <div
+        id="share-footer"
+        style="display: none"
+        th:if="${theme.config?.post_styles?.is_show_share_footer}"
+      >
         <th:block
           th:insert="~{components/share/template :: body(originPermalink=${singlePage.status.permalink},title=${singlePage.spec.title})}"
         ></th:block>

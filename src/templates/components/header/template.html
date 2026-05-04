@@ -1,5 +1,8 @@
 <head th:remove="tag">
-  <script src="index.ts" type="module"></script>
+  <script
+    src="index.ts"
+    type="module"
+  ></script>
 </head>
 <body th:remove="tag">
   <header id="header">
@@ -62,7 +65,10 @@
         </span>
       </div>
     </a>
-    <div id="nav" th:if="${theme.config?.styles?.is_show_header_menu}">
+    <div
+      id="nav"
+      th:if="${theme.config?.styles?.is_show_header_menu}"
+    >
       <th:block th:insert="~{components/common/template :: menu(showIcon=true)}"></th:block>
     </div>
   </header>

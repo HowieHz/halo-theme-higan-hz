@@ -26,12 +26,19 @@
       th:if="${theme.config?.author_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{/authors/{slug}(slug = ${author.metadata?.name})}"
     />
-    <script src="@runtime/pages/author/index.ts" type="module"></script>
+    <script
+      src="@runtime/pages/author/index.ts"
+      type="module"
+    ></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
     <th:block th:insert="~{components/list-post-simple/template :: head(showPagination = true)}"></th:block>
   </head>
   <body th:remove="tag">
-    <article class="author" itemscope itemtype="http://schema.org/BlogPosting">
+    <article
+      class="author"
+      itemscope
+      itemtype="http://schema.org/BlogPosting"
+    >
       <section class="about">
         <div class="relative">
           <div
@@ -110,7 +117,10 @@
                     ></a>
                   </th:block>
                 </p>
-                <p class="profile-bio" th:text="${author.spec.bio}"></p>
+                <p
+                  class="profile-bio"
+                  th:text="${author.spec.bio}"
+                ></p>
               </div>
             </div>
           </div>

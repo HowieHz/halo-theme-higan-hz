@@ -10,8 +10,15 @@
   )}"
 >
   <head th:remove="tag">
-    <link rel="canonical" th:if="${theme.config?.index_styles?.is_enable_canonical_link}" th:href="${siteUrl}" />
-    <script src="@runtime/pages/index/index.ts" type="module"></script>
+    <link
+      rel="canonical"
+      th:if="${theme.config?.index_styles?.is_enable_canonical_link}"
+      th:href="${siteUrl}"
+    />
+    <script
+      src="@runtime/pages/index/index.ts"
+      type="module"
+    ></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
     <th:block th:if="${theme.config?.index_styles?.quote}">
       <th:block th:insert="~{components/quote-fetcher/template :: head}"></th:block>
@@ -111,8 +118,14 @@
       </th:block>
     </section>
 
-    <p id="findMe" th:unless="${#arrays.isEmpty(theme.config?.sns?.sns_list)}">
-      <th:block th:text="#{page.index.findMeLeftText}" th:if="${theme.config?.index_styles?.is_show_find_me_left_text}">
+    <p
+      id="findMe"
+      th:unless="${#arrays.isEmpty(theme.config?.sns?.sns_list)}"
+    >
+      <th:block
+        th:text="#{page.index.findMeLeftText}"
+        th:if="${theme.config?.index_styles?.is_show_find_me_left_text}"
+      >
         社交资料图标左侧文字替换位</th:block
       >
       <th:block th:each="item : ${theme.config?.sns?.sns_list}">
@@ -163,29 +176,62 @@
             target="_blank"
             th:attr="aria-label=${snsAriaLabel}"
           >
-            <span class="iconify-middle iconify heroicons-outline--rss" th:if="${item?.type == 'rss'}"></span>
-            <span class="iconify-middle iconify simple-icons--bilibili" th:if="${item?.type == 'bilibili'}"></span>
+            <span
+              class="iconify-middle iconify heroicons-outline--rss"
+              th:if="${item?.type == 'rss'}"
+            ></span>
+            <span
+              class="iconify-middle iconify simple-icons--bilibili"
+              th:if="${item?.type == 'bilibili'}"
+            ></span>
             <span
               class="iconify-middle iconify ant-design--dribbble-circle-filled"
               th:if="${item?.type == 'dribbble'}"
             ></span>
-            <span class="iconify-middle iconify ic--outline-email" th:if="${item?.type == 'email'}"></span>
-            <span class="iconify-middle iconify ic--baseline-facebook" th:if="${item?.type == 'facebook'}"></span>
-            <span class="iconify-middle iconify mdi--github" th:if="${item?.type == 'github'}"></span>
+            <span
+              class="iconify-middle iconify ic--outline-email"
+              th:if="${item?.type == 'email'}"
+            ></span>
+            <span
+              class="iconify-middle iconify ic--baseline-facebook"
+              th:if="${item?.type == 'facebook'}"
+            ></span>
+            <span
+              class="iconify-middle iconify mdi--github"
+              th:if="${item?.type == 'github'}"
+            ></span>
             <span
               class="iconify-middle iconify ant-design--instagram-filled"
               th:if="${item?.type == 'instagram'}"
             ></span>
-            <span class="iconify-middle iconify ant-design--qq-circle-filled" th:if="${item?.type == 'qq'}"></span>
+            <span
+              class="iconify-middle iconify ant-design--qq-circle-filled"
+              th:if="${item?.type == 'qq'}"
+            ></span>
             <span
               class="iconify-middle iconify ant-design--reddit-circle-filled"
               th:if="${item?.type == 'reddit'}"
             ></span>
-            <span class="iconify-middle iconify mdi--stack-overflow" th:if="${item?.type == 'stack_overflow'}"></span>
-            <span class="iconify-middle iconify ic--baseline-telegram" th:if="${item?.type == 'telegram'}"></span>
-            <span class="iconify-middle iconify ant-design--twitter-circle-filled" th:if="${item?.type == 'x'}"></span>
-            <span class="iconify-middle iconify ant-design--youtube-filled" th:if="${item?.type == 'youtube'}"></span>
-            <span class="iconify-middle iconify ri--douban-line" th:if="${item?.type == 'douban'}"></span>
+            <span
+              class="iconify-middle iconify mdi--stack-overflow"
+              th:if="${item?.type == 'stack_overflow'}"
+            ></span>
+            <span
+              class="iconify-middle iconify ic--baseline-telegram"
+              th:if="${item?.type == 'telegram'}"
+            ></span>
+            <span
+              class="iconify-middle iconify ant-design--twitter-circle-filled"
+              th:if="${item?.type == 'x'}"
+            ></span>
+            <span
+              class="iconify-middle iconify ant-design--youtube-filled"
+              th:if="${item?.type == 'youtube'}"
+            ></span>
+            <span
+              class="iconify-middle iconify ri--douban-line"
+              th:if="${item?.type == 'douban'}"
+            ></span>
             <span
               class="iconify-middle iconify simple-icons--neteasecloudmusic"
               th:if="${item?.type == 'neteasecloudmusic'}"
@@ -212,7 +258,10 @@
               target="_blank"
               th:attr="aria-label=${custom_sns_item?.aria_label}"
             >
-              <span class="iconify-middle iconify" th:style="|--svg:url('${custom_sns_item?.icon.value}')|"></span>
+              <span
+                class="iconify-middle iconify"
+                th:style="|--svg:url('${custom_sns_item?.icon.value}')|"
+              ></span>
             </a>
           </th:block>
         </th:block>
@@ -221,7 +270,11 @@
 
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'post-list-summary'}">
       <h1 th:if="${theme.config?.index_styles?.is_show_index_post_list_title}">
-        <a th:href="@{/archives}" th:text="#{page.index.postListTitle}">首页文章列表标题替换位</a>
+        <a
+          th:href="@{/archives}"
+          th:text="#{page.index.postListTitle}"
+          >首页文章列表标题替换位</a
+        >
       </h1>
       <th:block
         th:insert="~{components/list-post-summary/template :: body(posts = ${posts}, pageTemplateName = 'index')}"
@@ -229,7 +282,11 @@
     </th:block>
     <th:block th:if="${theme.config?.index_styles?.list_layout == 'simple-post-list'}">
       <h1 th:if="${theme.config?.index_styles?.is_show_index_post_list_title}">
-        <a th:href="@{/archives}" th:text="#{page.index.postListTitle}">首页文章列表标题替换位</a>
+        <a
+          th:href="@{/archives}"
+          th:text="#{page.index.postListTitle}"
+          >首页文章列表标题替换位</a
+        >
       </h1>
       <th:block
         th:insert="~{components/list-post-simple/template :: body(posts = ${posts}, showPagination = true, pageTemplateName = 'index')}"

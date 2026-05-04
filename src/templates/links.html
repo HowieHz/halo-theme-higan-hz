@@ -15,17 +15,39 @@
       th:if="${theme.config?.links_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{/links}"
     />
-    <script src="@runtime/pages/links/index.ts" type="module"></script>
+    <script
+      src="@runtime/pages/links/index.ts"
+      type="module"
+    ></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
   </head>
   <body th:remove="tag">
-    <article id="links" class="post" itemscope itemtype="http://schema.org/BlogPosting">
-      <div class="content" th:unless="${theme.config?.links_page_styles?.is_head_first_style}">
-        <th:block th:each="group : ${groups}" th:unless="${#lists.isEmpty(group.links)}">
-          <h3 th:if="${#lists.size(groups) > 1}" th:text="${group.spec.displayName}"></h3>
+    <article
+      id="links"
+      class="post"
+      itemscope
+      itemtype="http://schema.org/BlogPosting"
+    >
+      <div
+        class="content"
+        th:unless="${theme.config?.links_page_styles?.is_head_first_style}"
+      >
+        <th:block
+          th:each="group : ${groups}"
+          th:unless="${#lists.isEmpty(group.links)}"
+        >
+          <h3
+            th:if="${#lists.size(groups) > 1}"
+            th:text="${group.spec.displayName}"
+          ></h3>
           <ul>
             <li th:each="link : ${group.links}">
-              <a class="fir-image-figure" rel="noopener" target="_blank" th:href="@{${link.spec.url}}">
+              <a
+                class="fir-image-figure"
+                rel="noopener"
+                target="_blank"
+                th:href="@{${link.spec.url}}"
+              >
                 <figure class="fir-imageover">
                   <img
                     loading="lazy"
@@ -35,8 +57,14 @@
                     th:aria-label="#{page.links.link-logo.aria-label}"
                   />
                   <figcaption>
-                    <div class="fig-author-figure-title" th:text="${link.spec.displayName}"></div>
-                    <div class="fig-author-figure-description" th:utext="${link.spec.description}"></div>
+                    <div
+                      class="fig-author-figure-title"
+                      th:text="${link.spec.displayName}"
+                    ></div>
+                    <div
+                      class="fig-author-figure-description"
+                      th:utext="${link.spec.description}"
+                    ></div>
                   </figcaption>
                 </figure>
               </a>
@@ -44,15 +72,29 @@
           </ul>
         </th:block>
       </div>
-      <div class="content head-first-style" th:if="${theme.config?.links_page_styles?.is_head_first_style}">
-        <th:block th:each="group : ${groups}" th:unless="${#lists.isEmpty(group.links)}">
-          <h3 th:if="${#lists.size(groups) > 1}" th:text="${group.spec.displayName}"></h3>
+      <div
+        class="content head-first-style"
+        th:if="${theme.config?.links_page_styles?.is_head_first_style}"
+      >
+        <th:block
+          th:each="group : ${groups}"
+          th:unless="${#lists.isEmpty(group.links)}"
+        >
+          <h3
+            th:if="${#lists.size(groups) > 1}"
+            th:text="${group.spec.displayName}"
+          ></h3>
           <ul class="links-grid">
             <li
               th:each="link : ${group.links}"
               th:with="max_lines = ${theme.config?.links_page_styles?.link_description_max_lines}"
             >
-              <a class="link-card" rel="noopener" target="_blank" th:href="@{${link.spec.url}}">
+              <a
+                class="link-card"
+                rel="noopener"
+                target="_blank"
+                th:href="@{${link.spec.url}}"
+              >
                 <img
                   loading="lazy"
                   class="link-avatar"
@@ -61,7 +103,10 @@
                   th:aria-label="#{page.links.link-logo.aria-label}"
                 />
                 <div class="link-info">
-                  <div class="link-title" th:text="${link.spec.displayName}"></div>
+                  <div
+                    class="link-title"
+                    th:text="${link.spec.displayName}"
+                  ></div>
                   <div
                     class="link-description"
                     th:utext="${link.spec.description}"

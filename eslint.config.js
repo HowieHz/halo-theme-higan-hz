@@ -29,7 +29,6 @@ export default defineConfig(
       "docs/.vitepress/theme/**/*.ts",
       "docs/.vitepress/components/**/*.ts",
       "docs/.vitepress/utils/**/*.ts",
-      "docs/.vitepress/**/*.vue",
     ],
 
     languageOptions: {
@@ -83,9 +82,6 @@ export default defineConfig(
           "<template>": "espree",
         },
       },
-    },
-    rules: {
-      "vue/max-attributes-per-line": "off",
     },
   },
   {

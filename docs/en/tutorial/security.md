@@ -68,10 +68,19 @@ SRI example:
 
 ```html
 <!-- JavaScript -->
-<script src="https://example.com/lib.min.js" integrity="sha384-BASE64_HASH_HERE" crossorigin></script>
+<script
+  src="https://example.com/lib.min.js"
+  integrity="sha384-BASE64_HASH_HERE"
+  crossorigin
+></script>
 
 <!-- CSS -->
-<link rel="stylesheet" href="https://example.com/style.min.css" integrity="sha384-BASE64_HASH_HERE" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://example.com/style.min.css"
+  integrity="sha384-BASE64_HASH_HERE"
+  crossorigin
+/>
 ```
 
 You can generate SRI metadata using online tools (for example, [srihash.org](https://srihash.org/)).

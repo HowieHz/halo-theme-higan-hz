@@ -1,14 +1,26 @@
 <!--/*-->
 <head th:remove="tag"></head>
 <!--*/-->
-<body th:remove="tag" th:fragment="body(categories)">
-  <ul th:unless="${#lists.isEmpty(categories)}" class="flex-auto">
+<body
+  th:remove="tag"
+  th:fragment="body(categories)"
+>
+  <ul
+    th:unless="${#lists.isEmpty(categories)}"
+    class="flex-auto"
+  >
     <li th:replace="~{:: single(categories = ${categories})}"></li>
   </ul>
 </body>
 
-<ul th:fragment="next(categories)" class="flex-auto">
-  <li th:fragment="single(categories)" th:each="category : ${categories}">
+<ul
+  th:fragment="next(categories)"
+  class="flex-auto"
+>
+  <li
+    th:fragment="single(categories)"
+    th:each="category : ${categories}"
+  >
     <a th:href="@{${category.status?.permalink}}">
       <th:block
         th:text="${category.spec?.displayName}

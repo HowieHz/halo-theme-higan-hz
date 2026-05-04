@@ -10,25 +10,47 @@
   )}"
 >
   <head th:remove="tag">
-    <script src="@runtime/pages/error/index.ts" type="module"></script>
+    <script
+      src="@runtime/pages/error/index.ts"
+      type="module"
+    ></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
   </head>
   <body th:remove="tag">
-    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-      <div class="content" itemprop="articleBody">
+    <article
+      class="post"
+      itemscope
+      itemtype="http://schema.org/BlogPosting"
+    >
+      <div
+        class="content"
+        itemprop="articleBody"
+      >
         <h1>
           <th:block th:text="${error.status}">标题替换位</th:block>
         </h1>
-        <p th:if="${#strings.isEmpty(error.title)}" th:text="#{common.error.internalServerError}"></p>
-        <p th:unless="${#strings.isEmpty(error.title)}" th:text="${error.title}"></p>
-        <p th:unless="${#strings.isEmpty(error.detail)}" th:text="${error.detail}"></p>
+        <p
+          th:if="${#strings.isEmpty(error.title)}"
+          th:text="#{common.error.internalServerError}"
+        ></p>
+        <p
+          th:unless="${#strings.isEmpty(error.title)}"
+          th:text="${error.title}"
+        ></p>
+        <p
+          th:unless="${#strings.isEmpty(error.detail)}"
+          th:text="${error.detail}"
+        ></p>
         <th:block
           th:if="${theme.config?.error_page_styles?.is_auto_redirect}"
           th:with="siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1) == '/'
                                ? #strings.substring(site.url, 0, #strings.length(site.url) - 1)
                                : site.url}"
         >
-          <p id="countdown" style="opacity: 0%; transition: opacity 1s"></p>
+          <p
+            id="countdown"
+            style="opacity: 0%; transition: opacity 1s"
+          ></p>
           <script
             th:data-site-url="${siteUrl}"
             th:data-target-url="${theme.config?.error_page_styles?.target_url}"

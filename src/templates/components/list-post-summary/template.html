@@ -1,8 +1,14 @@
 <head th:remove="tag">
-  <script src="index.ts" type="module"></script>
+  <script
+    src="index.ts"
+    type="module"
+  ></script>
   <th:block th:insert="~{components/pagination/template :: head}"></th:block>
 </head>
-<body th:remove="tag" th:fragment="body(posts, pageTemplateName)">
+<body
+  th:remove="tag"
+  th:fragment="body(posts, pageTemplateName)"
+>
   <section class="post-list-summary flex flex-auto flex-col">
     <div class="flex flex-auto flex-col space-y-10">
       <th:block th:each="post : ${posts}">
@@ -21,7 +27,11 @@
                 ></span>
                 <a th:href="@{${post.status?.permalink}}">
                   <span class="absolute -inset-x-4 -inset-y-2 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
-                  <span class="relative z-10" th:text="${post.spec?.title}">文章标题替换位</span>
+                  <span
+                    class="relative z-10"
+                    th:text="${post.spec?.title}"
+                    >文章标题替换位</span
+                  >
                 </a>
                 <span
                   class="iconify-middle color-accent relative z-10 iconify typcn--pin-outline"
@@ -37,7 +47,10 @@
                 class="color-base-content-80 relative z-10 order-first mb-3 flex items-center pl-3.5 text-sm md:hidden"
                 th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
               >
-                <span class="absolute inset-y-0 left-0 flex items-center" aria-hidden="true">
+                <span
+                  class="absolute inset-y-0 left-0 flex items-center"
+                  aria-hidden="true"
+                >
                   <span class="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span>
                 </span>
                 <th:block th:text="${#temporals.format(post.spec.publishTime, 'MMMM dd yyyy')}"></th:block>
@@ -52,7 +65,10 @@
                     <!--/* inline-block 使一个“分类面包屑”不会被分到两行 */-->
                     <span class="categoryBreadcrumbs inline-block">
                       <!--/* 分类图标和第一个“分类面包屑”保持在一行。 */-->
-                      <span th:if="${categoryLeafNodeIterStat.first}" class="iconify fa-solid--archive"></span>
+                      <span
+                        th:if="${categoryLeafNodeIterStat.first}"
+                        class="iconify fa-solid--archive"
+                      ></span>
                       <th:block
                         th:each="category, iterStat : ${categoryFinder.getBreadcrumbs(categoryLeafNode.metadata?.name)}"
                       >
@@ -133,7 +149,11 @@
                   th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
                 >
                   <span class="iconify fluent--text-edit-style-character-a-32-regular"></span>
-                  <span class="word-count" th:text="${wordCount}">文章字数替换位</span>
+                  <span
+                    class="word-count"
+                    th:text="${wordCount}"
+                    >文章字数替换位</span
+                  >
                 </span>
               </th:block>
               <th:block

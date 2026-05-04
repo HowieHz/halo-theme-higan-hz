@@ -22,7 +22,10 @@
       title="Moments - All"
       th:href="@{'/moments/rss.xml'}"
     />
-    <script src="@runtime/pages/moments/index.ts" type="module"></script>
+    <script
+      src="@runtime/pages/moments/index.ts"
+      type="module"
+    ></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
     <th:block th:insert="~{components/list-moment-summary/template :: head(pageTemplateName = 'moments')}"></th:block>
   </head>

@@ -8,7 +8,10 @@
   th:fragment="menu(showIcon)"
 >
   <ul>
-    <li class="icon" th:if="${showIcon}">
+    <li
+      class="icon"
+      th:if="${showIcon}"
+    >
       <a
         href="#"
         onclick="event.preventDefault()"
@@ -69,7 +72,10 @@
   </ul>
 </th:block>
 
-<th:block th:fragment="base-menu" th:with="menuItems = ${menuFinder.getPrimary().menuItems}">
+<th:block
+  th:fragment="base-menu"
+  th:with="menuItems = ${menuFinder.getPrimary().menuItems}"
+>
   <!--/* 普通菜单 start */-->
   <th:block th:unless="${theme.config?.global?.is_i18n_menu_show}">
     <th:block th:each="menuItem : ${menuItems}">
@@ -131,7 +137,10 @@
 </th:block>
 
 <th:block th:fragment="menu-item(item)">
-  <li class="matched-menu" th:classappend="${#lists.isEmpty(item?.children) ? '' : 'has-submenu'}">
+  <li
+    class="matched-menu"
+    th:classappend="${#lists.isEmpty(item?.children) ? '' : 'has-submenu'}"
+  >
     <th:block th:replace="~{:: menu-item-content(${item})}"></th:block>
   </li>
 </th:block>
