@@ -36,9 +36,7 @@ onMounted(async () => {
 <!-- 导入主题样式 -->
 <style src="@templates/components/theme-dark/styles.less" scoped></style>
 <style src="@templates/components/theme-light/styles.less" scoped></style>
-<style src="@runtime/global/base-styles/styles.css" scoped></style>
-<style src="@runtime/global/scrollbar/styles.css" scoped></style>
-<style src="@runtime/global/iconify/styles.css" scoped></style>
+<style src="@runtime/global/styles.css" scoped></style>
 <style src="@runtime/global/fonts/styles.css" scoped></style>
 <style src="@templates/components/text-size-normal/styles.css" scoped></style>
 <!-- 导入 post 页样式 -->

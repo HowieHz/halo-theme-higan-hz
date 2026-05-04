@@ -44,7 +44,7 @@
     "lint:type-check:docs:vue-tsc": "vue-tsc -b docs/tsconfig.browser.json",
     "lint:type-check:tsgo": "tsgo -b",
     "migrate:oxlint": "pnpm dlx @oxlint/migrate --type-aware --with-nursery && pnpm oxfmt -- --write .oxlintrc.json",
-    "prebuild:default": "pnpm run lint:type-check:tsgo && tw-patch extract",
+    "prebuild:default": "NODE_OPTIONS=--max_old_space_size=16384 pnpm run lint:type-check:tsgo && tw-patch extract",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky && tw-patch install",
     "watch": "pnpm run '/^watch:/'",

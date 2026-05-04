@@ -7,6 +7,7 @@ import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
 import { defineConfig, type DefaultTheme } from "vitepress";
 import { chineseSearchOptimize, pagefindPlugin } from "vitepress-plugin-pagefind";
+import tailwindcss from "@tailwindcss/vite";
 
 import pkg from "../../package.json" with { type: "json" };
 
@@ -21,6 +22,7 @@ export default defineConfig({
       },
     },
     plugins: [
+      tailwindcss(),
       // Initialize whyframe core plugin
       whyframe({
         components: [{ name: "DefaultRender" }],

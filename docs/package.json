@@ -14,12 +14,14 @@
   "devDependencies": {
     "@mdit/plugin-footnote": "^0.23.2",
     "@nolebase/vitepress-plugin-highlight-targeted-heading": "^2.18.2",
+    "@tailwindcss/vite": "^4.2.4",
     "@whyframe/core": "^0.2.0",
     "@whyframe/vue": "^0.2.0",
     "browserslist": "^4.28.2",
     "less": "^4.6.4",
     "lightningcss": "^1.32.0",
     "pagefind": "^1.5.2",
+    "tailwindcss": "^4.2.4",
     "vitepress": "2.0.0-alpha.17",
     "vitepress-plugin-pagefind": "^0.4.20",
     "vue": "^3.5.33"
