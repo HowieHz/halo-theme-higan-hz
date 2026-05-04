@@ -71,6 +71,10 @@
                and haloCommentEnabled}"
       th:insert="~{components/halo-comment-widget/template :: head}"
     ></th:block>
+    <th:block
+      th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
+      th:insert="~{components/theme-toggle-button/template :: head}"
+    ></th:block>
   </head>
   <body th:remove="tag">
     <th:block
@@ -103,7 +107,10 @@
           itemprop="name headline"
         >
           <th:block th:text="${post.spec?.title}">标题替换位</th:block
-          ><th:block th:replace="~{components/common/template :: theme-toggle-button}"></th:block>
+          ><th:block
+            th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
+            th:insert="~{components/theme-toggle-button/template :: body}"
+          ></th:block>
         </h1>
         <div class="meta">
           <!--/* 展示文章作者名 */-->

@@ -1,11 +1,11 @@
-<head>
+<head th:remove="tag">
   <script
     src="index.ts"
     type="module"
   ></script>
 </head>
 <!--/*-->
-<body></body>
+<body th:remove="tag"></body>
 <!--*/-->
 <th:block
   xmlns:th="http://www.thymeleaf.org"
@@ -169,7 +169,7 @@
         th:aria-label="#{fragment.menu.submenu-toggle.aria-label}"
         type="button"
       >
-        <span class="iconify-large-middle mr-1 iconify material-symbols--keyboard-arrow-down"></span></button
+        <span class="iconify-large-middle iconify material-symbols--keyboard-arrow-down mr-1"></span></button
       ><a
         class="submenu-link"
         th:href="@{${item?.status?.href}}"
@@ -189,26 +189,3 @@
     </span>
   </th:block>
 </th:block>
-
-<button
-  th:fragment="theme-toggle-button"
-  th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
-  id="theme-toggle-button"
-  accesskey="t"
-  title="(Alt + T)"
-  type="button"
-  class="border-0 bg-transparent align-middle"
->
-  <span
-    id="theme-toggle-button-icon"
-    style="display: none"
-    class="icon iconify-large iconify -translate-x-px -translate-y-px"
-  ></span>
-  <style>
-    #theme-toggle-button {
-      & .icon:hover {
-        color: var(--color-accent);
-      }
-    }
-  </style>
-</button>

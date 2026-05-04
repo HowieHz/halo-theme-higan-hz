@@ -325,7 +325,11 @@ export default defineConfig((): UserConfig => {
             import.meta.dirname,
             "src/templates/components/theme-auto-blue/template.html",
           ),
-          "components-common": resolve(import.meta.dirname, "src/templates/components/common/template.html"),
+          "components-menu": resolve(import.meta.dirname, "src/templates/components/menu/template.html"),
+          "components-theme-toggle-button": resolve(
+            import.meta.dirname,
+            "src/templates/components/theme-toggle-button/template.html",
+          ),
           "components-share": resolve(import.meta.dirname, "src/templates/components/share/template.html"),
           "components-base-layout": resolve(import.meta.dirname, "src/templates/components/base-layout/template.html"),
           "components-footer-sidebar": resolve(

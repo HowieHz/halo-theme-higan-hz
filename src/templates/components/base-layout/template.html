@@ -779,6 +779,10 @@
       type="module"
     ></script>
     <!--/* base-layout component tailwindcss style End */-->
+    <!--/* Menu Style start */-->
+    <!--/* Checking whether it is enabled is too complicated, so just include it directly. */-->
+    <th:block th:insert="~{components/menu/template :: head}"></th:block>
+    <!--/* Menu Style end */-->
   </head>
 
   <body
@@ -1096,7 +1100,7 @@
               th:if="${theme.config?.styles?.is_footer_menu_show}"
             >
               <ul>
-                <th:block th:insert="~{components/common/template :: base-menu}"></th:block>
+                <th:block th:insert="~{components/menu/template :: base-menu}"></th:block>
               </ul>
             </div>
           </footer>

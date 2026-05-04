@@ -1,0 +1,28 @@
+<head th:remove="tag">
+  <script
+    src="index.ts"
+    type="module"
+  ></script>
+</head>
+<body th:remove="tag">
+  <button
+    id="theme-toggle-button"
+    accesskey="t"
+    title="(Alt + T)"
+    type="button"
+    class="border-0 bg-transparent align-middle"
+  >
+    <span
+      id="theme-toggle-button-icon"
+      style="display: none"
+      class="icon iconify-large iconify -translate-x-px -translate-y-px"
+    ></span>
+    <style>
+      #theme-toggle-button {
+        & .icon:hover {
+          color: var(--color-accent);
+        }
+      }
+    </style>
+  </button>
+</body>

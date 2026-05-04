@@ -20,7 +20,7 @@
                   class="post-card-hover absolute -inset-x-4 -inset-y-2 z-0 opacity-0 sm:-inset-x-6 sm:rounded-2xl"
                 ></div>
                 <span
-                  class="iconify-middle color-accent relative z-10 iconify typcn--pin-outline"
+                  class="iconify-middle color-accent iconify typcn--pin-outline relative z-10"
                   th:if="${post.spec.pinned
                            and theme.config?.index_styles?.is_pin_icon_show
                            and theme.config?.index_styles?.pin_icon_position == 'left'}"
@@ -34,7 +34,7 @@
                   >
                 </a>
                 <span
-                  class="iconify-middle color-accent relative z-10 iconify typcn--pin-outline"
+                  class="iconify-middle color-accent iconify typcn--pin-outline relative z-10"
                   th:if="${post.spec.pinned
                            and theme.config?.index_styles?.is_pin_icon_show
                            and theme.config?.index_styles?.pin_icon_position == 'right'}"
