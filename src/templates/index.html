@@ -11,7 +11,7 @@
 >
   <head th:remove="tag">
     <link rel="canonical" th:if="${theme.config?.index_styles?.is_enable_canonical_link}" th:href="${siteUrl}" />
-    <script src="/page-components/index/index.ts" type="module"></script>
+    <script src="/_runtime/pages/index/index.ts" type="module"></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
     <th:block th:if="${theme.config?.index_styles?.quote}">
       <th:block th:insert="~{components/quote-fetcher/template :: head}"></th:block>

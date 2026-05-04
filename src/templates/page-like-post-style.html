@@ -16,7 +16,7 @@
       th:if="${theme.config?.custom_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{${singlePage.status.permalink}}"
     />
-    <script src="/page-components/page-like-post-style/index.ts" type="module"></script>
+    <script src="/_runtime/pages/page-like-post-style/index.ts" type="module"></script>
     <th:block
       th:if="${theme.config?.post_styles?.is_show_post_nav_share_button
                or theme.config?.post_styles?.is_show_share_footer}"

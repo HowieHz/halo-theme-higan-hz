@@ -15,7 +15,7 @@
       th:if="${theme.config?.photos_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{/photos}"
     />
-    <script src="/page-components/photos/index.ts" type="module"></script>
+    <script src="/_runtime/pages/photos/index.ts" type="module"></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
   </head>
   <body th:remove="tag">

@@ -19,7 +19,7 @@
       th:if="${theme.config?.tags_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{{prefix}(prefix = ${site.routes.tagsUri})}"
     />
-    <script src="/page-components/tags/index.ts" type="module"></script>
+    <script src="/_runtime/pages/tags/index.ts" type="module"></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
   </head>
   <body th:remove="tag">

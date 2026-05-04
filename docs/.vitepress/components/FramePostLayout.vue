@@ -32,6 +32,6 @@ onMounted(async () => {
 <style src="@runtime/global/global-styles/styles.css" scoped></style>
 <style src="@templates/components/text-size-normal/styles.css" scoped></style>
 <!-- 导入 post 页样式 -->
-<style src="@templates/page-components/post/styles.css" scoped></style>
+<style src="@runtime/pages/post/styles.css" scoped></style>
 <style src="@runtime/styles/article.css" scoped></style>
 <style src="@runtime/styles/article-metadata.css" scoped></style>
