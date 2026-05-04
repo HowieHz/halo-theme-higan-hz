@@ -15,8 +15,8 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        "@runtime": resolve(import.meta.dirname, "../../src/templates/_runtime/"),
-        "@templates": resolve(import.meta.dirname, "../../src/templates/"),
+        "@runtime": resolve(import.meta.dirname, "../../src/templates/_runtime"),
+        "@templates": resolve(import.meta.dirname, "../../src/templates"),
         "$higan-font-family": resolve(import.meta.dirname, "../../src/templates/_runtime/global/fonts/font-family.css"),
       },
     },
