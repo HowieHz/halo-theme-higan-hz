@@ -1,12 +1,12 @@
-import "../shared/main";
+import "@templates/global/main";
 import "./styles.css";
-import "../utils/article.css";
-import "../utils/article-metadata.css";
-import { isVisible, scrollToTop, show, toggle } from "../../components/animations/base";
-import { fadeIn } from "../../components/animations/fade-in";
-import { fadeOut } from "../../components/animations/fade-out";
-import { slideDown } from "../../components/animations/slide-down";
-import { slideUp } from "../../components/animations/slide-up";
+import "@templates/css-components/article.css";
+import "@templates/css-components/article-metadata.css";
+import { isVisible, scrollToTop, show, toggle } from "@templates/ts-components/animations/base";
+import { fadeIn } from "@templates/ts-components/animations/fade-in";
+import { fadeOut } from "@templates/ts-components/animations/fade-out";
+import { slideDown } from "@templates/ts-components/animations/slide-down";
+import { slideUp } from "@templates/ts-components/animations/slide-up";
 
 // Animation durations in milliseconds
 const ANIMATION_DURATION = 200;

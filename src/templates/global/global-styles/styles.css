@@ -1,6 +1,6 @@
-@import "./scrollbar.css";
-@import "./iconify.css";
-@import "../../components/fonts/styles.css";
+@import "../scrollbar/styles.css";
+@import "../iconify/styles.css";
+@import "../fonts/styles.css";
 
 @layer base {
   *,

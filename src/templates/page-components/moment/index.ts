@@ -1,1 +1,1 @@
-import "../shared/main";
+import "@templates/global/main";

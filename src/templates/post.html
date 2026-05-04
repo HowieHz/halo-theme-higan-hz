@@ -406,9 +406,9 @@
       <div th:replace="~{components/footer-nav-post/template :: footerNav}"></div>
     </th:block>
     <script type="module">
-      import { isMobile } from "/page-components/utils/device.ts";
-      import { initTOC } from "/page-components/utils/toc.ts";
-      import { initHeadingAnchors } from "/page-components/utils/heading-anchor.ts";
+      import { isMobile } from "@templates/ts-components/device.ts";
+      import { initTOC } from "@templates/ts-components/toc.ts";
+      import { initHeadingAnchors } from "@templates/ts-components/heading-anchor.ts";
 
       document.addEventListener("DOMContentLoaded", function () {
         // <!--/* generate toc

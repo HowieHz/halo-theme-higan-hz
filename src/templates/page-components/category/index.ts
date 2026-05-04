@@ -1,2 +1,2 @@
-import "../shared/main";
-import "../utils/id-archive.css";
+import "@templates/global/main";
+import "@templates/css-components/id-archive.css";

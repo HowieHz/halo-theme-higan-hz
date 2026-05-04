@@ -1,5 +1,5 @@
-import "./main.css";
-import "./tailwind.css";
+import "./global-styles/styles.css";
+import "./tailwindcss/styles.css";
 
 // 使此文件成为模块
 export {};

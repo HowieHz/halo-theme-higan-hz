@@ -15,7 +15,8 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        "@higan-font-family": resolve(import.meta.dirname, "../../src/templates/components/fonts/font-family.css"),
+        "@templates": resolve(import.meta.dirname, "../../src/templates"),
+        "$higan-font-family": resolve(import.meta.dirname, "../../src/templates/global/fonts/font-family.css"),
       },
     },
     plugins: [

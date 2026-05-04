@@ -1,3 +1,3 @@
-import "../shared/main";
+import "@templates/global/main";
 import "./styles.css";
-import "../utils/id-archive.css";
+import "@templates/css-components/id-archive.css";

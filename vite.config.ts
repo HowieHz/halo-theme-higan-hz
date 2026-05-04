@@ -85,11 +85,12 @@ export default defineConfig((): UserConfig => {
     base: "/themes/howiehz-higan/",
     resolve: {
       alias: {
-        "@higan-font-family": resolve(
+        "@templates": resolve(import.meta.dirname, "src/templates"),
+        "$higan-font-family": resolve(
           import.meta.dirname,
           buildProfile === "tiny"
-            ? "src/templates/components/fonts/font-family.tiny.css"
-            : "src/templates/components/fonts/font-family.css",
+            ? "src/templates/global/fonts/font-family.tiny.css"
+            : "src/templates/global/fonts/font-family.css",
         ),
       },
     },

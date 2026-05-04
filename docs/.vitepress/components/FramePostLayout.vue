@@ -27,11 +27,11 @@ onMounted(async () => {
 
 <style src="./default.css" scoped></style>
 <!-- 导入主题样式 -->
-<style src="../../../src/templates/components/theme-dark/styles.less" scoped></style>
-<style src="../../../src/templates/components/theme-light/styles.less" scoped></style>
-<style src="../../../src/templates/page-components/shared/main.css" scoped></style>
-<style src="../../../src/templates/components/text-size-normal/styles.css" scoped></style>
+<style src="@templates/components/theme-dark/styles.less" scoped></style>
+<style src="@templates/components/theme-light/styles.less" scoped></style>
+<style src="@templates/global/global-styles/styles.css" scoped></style>
+<style src="@templates/components/text-size-normal/styles.css" scoped></style>
 <!-- 导入 post 页样式 -->
-<style src="../../../src/templates/page-components/post/styles.css" scoped></style>
-<style src="../../../src/templates/page-components/utils/article.css" scoped></style>
-<style src="../../../src/templates/page-components/utils/article-metadata.css" scoped></style>
+<style src="@templates/page-components/post/styles.css" scoped></style>
+<style src="@templates/css-components/article.css" scoped></style>
+<style src="@templates/css-components/article-metadata.css" scoped></style>

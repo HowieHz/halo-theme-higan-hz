@@ -143,10 +143,10 @@ jobs:
           PRERELEASE_VERSION: ${{ needs.prerelease.outputs.prerelease_version }}
         run: |
           mapfile -t assets < <(
-            node --input-type=module -e "import fs from 'node:fs'; import path from 'node:path'; import { sortByDisplayOrder } from './.github/scripts/release-asset-order.js'; const baseDir = 'dist/theme-packages'; const fileNames = fs.readdirSync(baseDir).filter((fileName) => fs.statSync(path.join(baseDir, fileName)).isFile()); for (const fileName of sortByDisplayOrder(fileNames).reverse()) console.log(path.join(baseDir, fileName));"
+            node --input-type=module -e "import fs from 'node:fs'; import path from 'node:path'; import { sortByDisplayOrder } from './.github/scripts/release-asset-order.js'; const baseDir = 'dist/theme-packages'; const fileNames = fs.readdirSync(baseDir).filter((fileName) => fs.statSync(path.join(baseDir, fileName)).isFile()); for (const fileName of sortByDisplayOrder(fileNames)) console.log(path.join(baseDir, fileName));"
           )
-          # GitHub Releases currently display newly uploaded assets first,
-          # so upload in reverse order to keep the page order user-facing KISS.
+          # GitHub Releases currently preserve asset upload order in the UI,
+          # so upload assets in DISPLAY_ORDER directly.
           gh release create "$PRERELEASE_TAG" "${assets[@]}" \
             --title "$PRERELEASE_VERSION" \
             --notes-file .github/templates/release-note-template.md \

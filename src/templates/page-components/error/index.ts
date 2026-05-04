@@ -1,2 +1,2 @@
-import "../shared/main";
-import "../utils/article.css";
+import "@templates/global/main";
+import "@templates/css-components/article.css";
