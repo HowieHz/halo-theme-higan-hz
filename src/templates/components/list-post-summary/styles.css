@@ -7,10 +7,6 @@
 @source not "./index.ts";
 /* stylelint-enable at-rule-prelude-no-invalid */
 
-@plugin "@iconify/tailwind4" {
-  prefixes: mdi, fa-solid, fluent, typcn;
-}
-
 /* 多元文章列表样式 */
 .post-list-summary .group:hover .post-card-hover {
   background: color-mix(in oklab, var(--color-base-content) 5%, var(--color-base-100));

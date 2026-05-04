@@ -4,7 +4,3 @@
 /* stylelint-enable no-invalid-position-at-import-rule */
 
 @source "../../../index.html";
-
-@plugin "@iconify/tailwind4" {
-  prefixes: mdi, heroicons-outline, ic, simple-icons, ant-design, ri;
-}

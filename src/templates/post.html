@@ -180,7 +180,7 @@
                 <!--/* 分类图标和第一个“分类面包屑”保持在一行。 */-->
                 <span
                   th:if="${categoryLeafNodeIterStat.first}"
-                  class="fa-solid--archive iconify"
+                  class="iconify fa-solid--archive"
                 ></span>
                 <th:block
                   th:each="category, iterStat : ${categoryFinder.getBreadcrumbs(categoryLeafNode.metadata?.name)}"
@@ -216,7 +216,7 @@
                 <!--/* 标签图标和第一个标签项保持在一行。 */-->
                 <span
                   th:if="${iterStat.first}"
-                  class="fa-solid--tag iconify"
+                  class="iconify fa-solid--tag"
                 ></span>
                 <a
                   class="tag-link"
@@ -241,7 +241,7 @@
             th:if="${theme.config?.post_styles?.is_show_post_views}"
             th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
           >
-            <span class="mdi--eye-outline iconify"></span>
+            <span class="iconify mdi--eye-outline"></span>
             <span th:text="${post.stats?.visit}">文章阅读量替换位</span>
           </span>
           <!--/* 预计阅读时长 
@@ -254,7 +254,7 @@
                                    : #strings.length(post.content?.content) / 2 }"
             th:title="#{page.post.estimated-reading-time(#{common.words(${wordCount})})}"
           >
-            <span class="mdi--clock-outline iconify"></span>
+            <span class="iconify mdi--clock-outline"></span>
             <span
               class="readtime"
               th:text="#{common.min(${#numbers.formatDecimal(wordCount * 1.0 / 450, 1, 1) + '~' + #numbers.formatDecimal(wordCount * 1.0 / 350, 1, 1)})}"
@@ -273,7 +273,7 @@
                                    : #strings.length(post.content?.content) / 2 }"
             th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
           >
-            <span class="fluent--text-edit-style-character-a-32-regular iconify"></span>
+            <span class="iconify fluent--text-edit-style-character-a-32-regular"></span>
             <span
               class="word-count"
               th:text="${wordCount}"

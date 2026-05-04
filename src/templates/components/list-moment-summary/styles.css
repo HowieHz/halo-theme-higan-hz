@@ -8,10 +8,6 @@
 @source not "./alpine-data";
 /* stylelint-enable at-rule-prelude-no-invalid */
 
-@plugin "@iconify/tailwind4" {
-  prefixes: mdi, fluent;
-}
-
 video {
   height: auto;
   max-width: 100%;

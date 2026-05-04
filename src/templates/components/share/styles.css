@@ -6,7 +6,3 @@
 @source not "./README.md";
 @source not "./index.ts";
 /* stylelint-enable at-rule-prelude-no-invalid */
-
-@plugin "@iconify/tailwind4" {
-  prefixes: mdi, ic, simple-icons, ant-design, ri, icomoon-free, entypo-social, uil, cib, tabler, pepicons-pencil, fa;
-}

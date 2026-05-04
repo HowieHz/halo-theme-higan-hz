@@ -5,10 +5,6 @@
 
 @source "../../../tag.html";
 
-@plugin "@iconify/tailwind4" {
-  prefixes: heroicons-outline;
-}
-
 #archive h1::before {
   color: var(--tag-hash-color, currentColor);
   content: "#";

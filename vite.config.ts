@@ -39,6 +39,7 @@ export default defineConfig((): UserConfig => {
     BUILD_OUTPUT_PROFILES,
     "minify",
   );
+  const buildManifest = process.env.BUILD_MANIFEST === "true";
 
   const precompressAlgorithms =
     precompressProfile === "none"
@@ -137,6 +138,7 @@ export default defineConfig((): UserConfig => {
       target: ["chrome111", "edge111", "firefox114", "safari16.4"],
       outDir: resolve(import.meta.dirname, "templates"),
       emptyOutDir: true,
+      manifest: buildManifest,
       modulePreload: {
         // https://vite.dev/config/build-options#build-modulepreload
         // Only manually injected in src/templates/components/base-layout/template.html

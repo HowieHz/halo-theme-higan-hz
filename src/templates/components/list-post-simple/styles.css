@@ -7,10 +7,6 @@
 @source not "./index.ts";
 /* stylelint-enable at-rule-prelude-no-invalid */
 
-@plugin "@iconify/tailwind4" {
-  prefixes: mdi, typcn;
-}
-
 /* 文章列表样式 */
 .color-accent {
   color: var(--color-accent);

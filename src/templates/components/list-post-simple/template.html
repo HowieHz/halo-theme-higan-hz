@@ -42,7 +42,7 @@
             </div>
             <span class="post-item-content">
               <span
-                class="iconify-middle color-accent typcn--pin-outline iconify"
+                class="iconify-middle color-accent iconify typcn--pin-outline"
                 th:if="${post.spec.pinned
                          and theme.config?.index_styles?.is_pin_icon_show
                          and theme.config?.index_styles?.pin_icon_position == 'left'}"
@@ -57,12 +57,12 @@
                   class="color-time relative z-10 mt-0.5 mb-0 p-0 text-sm"
                   th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
                 >
-                  <span class="mdi--eye-outline iconify"></span>
+                  <span class="iconify mdi--eye-outline"></span>
                   <span th:text="${post.stats?.visit}">文章阅读量替换位</span>
                 </span>
               </th:block>
               <span
-                class="iconify-middle color-accent typcn--pin-outline iconify"
+                class="iconify-middle color-accent iconify typcn--pin-outline"
                 th:if="${post.spec.pinned
                          and theme.config?.index_styles?.is_pin_icon_show
                          and theme.config?.index_styles?.pin_icon_position == 'right'}"
