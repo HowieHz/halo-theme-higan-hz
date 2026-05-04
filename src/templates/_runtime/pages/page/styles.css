@@ -4,3 +4,7 @@
 /* stylelint-enable no-invalid-position-at-import-rule */
 
 @source "../../../page.html";
+
+@plugin "@iconify/tailwind4" {
+  prefixes: mdi, fluent;
+}

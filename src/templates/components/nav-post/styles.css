@@ -6,3 +6,7 @@
 @source not "./README.md";
 @source not "./index.ts";
 /* stylelint-enable at-rule-prelude-no-invalid */
+
+@plugin "@iconify/tailwind4" {
+  prefixes: mdi, material-symbols, ic;
+}

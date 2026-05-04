@@ -5,3 +5,7 @@
 /* stylelint-disable at-rule-prelude-no-invalid -- Tailwind @source not uses custom prelude syntax */
 @source not "./index.ts";
 /* stylelint-enable at-rule-prelude-no-invalid */
+
+@plugin "@iconify/tailwind4" {
+  prefixes: ph;
+}

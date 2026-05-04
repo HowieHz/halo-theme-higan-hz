@@ -7,6 +7,10 @@
 @source not "./index.ts";
 /* stylelint-enable at-rule-prelude-no-invalid */
 
+@plugin "@iconify/tailwind4" {
+  prefixes: material-symbols;
+}
+
 /* moment-video-modal start */
 .color-base-200 {
   background-color: var(--color-base-200);

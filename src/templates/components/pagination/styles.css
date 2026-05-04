@@ -7,6 +7,10 @@
 @source not "./index.ts";
 /* stylelint-enable at-rule-prelude-no-invalid */
 
+@plugin "@iconify/tailwind4" {
+  prefixes: material-symbols;
+}
+
 div.pager {
   display: inline-block;
   margin-top: 1rem;

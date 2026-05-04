@@ -5,6 +5,10 @@
 
 @source "../../../post.html";
 
+@plugin "@iconify/tailwind4" {
+  prefixes: mdi, fa-solid, fluent;
+}
+
 @layer base {
   /* 文章页桌面端/平板端文章右上角菜单 */
   #header-post {
