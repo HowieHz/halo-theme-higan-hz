@@ -236,16 +236,11 @@
         "src/templates/**/*.{js,ts}",
         "docs/.vitepress/theme/**/*.ts",
         "docs/.vitepress/components/**/*.ts",
-        "docs/.vitepress/utils/**/*.ts"
+        "docs/.vitepress/utils/**/*.ts",
+        "src/templates/**/*.html"
       ],
       "env": {
         "es2026": true,
-        "browser": true
-      }
-    },
-    {
-      "files": ["src/templates/**/*.html"],
-      "env": {
         "browser": true
       }
     },
@@ -255,6 +250,7 @@
         "QRious": "readonly"
       },
       "env": {
+        "es2026": true,
         "browser": true
       }
     },
