@@ -6,6 +6,12 @@ For rendering List<[CategoryTreeVo](#categorytreevo)>.
 
 ## Usage
 
+Head Content (for including necessary scripts/styles)
+
+```html
+<th:block th:insert="~{components/category-tree/template :: head}"></th:block>
+```
+
 Content Insertion
 
 ```html

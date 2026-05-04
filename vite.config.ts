@@ -10,7 +10,7 @@ import { compression, defineAlgorithm } from "vite-plugin-compression2";
 import { sri } from "vite-plugin-sri3";
 
 import pkg from "./package.json" with { type: "json" };
-import removeEmptyCssComments from "./plugins/vite-plugin-remove-empty-css-comments.ts";
+import cleanupGeneratedCssComments from "./plugins/vite-plugin-cleanup-generated-css-comments.ts";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify.ts";
 
 // Build profile controls which theme asset set is emitted, such as the default or tiny font bundle.
@@ -73,9 +73,10 @@ export default defineConfig((): UserConfig => {
           }),
         ]
       : []),
-    // remove /* empty css */ comments from generated JS files
-    // https://github.com/vitejs/vite/issues/1794#issuecomment-769819851
-    removeEmptyCssComments(),
+    // Clean up generated CSS-related comments:
+    // - strip Vite's injected `/* empty css */` markers from JS chunks
+    // - strip leading `/*! ... */` license banners from emitted CSS assets
+    cleanupGeneratedCssComments(),
     // Minify HTML while preserving Thymeleaf syntax
     thymeleafMinify({
       base: "/themes/howiehz-higan/",
