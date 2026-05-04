@@ -43,6 +43,22 @@ const browserLanguageOptions = {
   },
 };
 
+const htmlLanguageOptions = {
+  ecmaVersion: "latest",
+  sourceType: "script",
+  globals: {
+    ...globals.browser,
+  },
+};
+
+const qrcodeHtmlLanguageOptions = {
+  ...htmlLanguageOptions,
+  globals: {
+    ...htmlLanguageOptions.globals,
+    QRious: "readonly",
+  },
+};
+
 const nodeLanguageOptions = {
   ecmaVersion: 2024,
   sourceType: "module",
@@ -81,25 +97,16 @@ export default defineConfig(
     languageOptions: browserLanguageOptions,
   },
   {
+    // HTML templates: eslint-plugin-html lints inline scripts with classic script semantics.
     files: ["src/templates/**/*.html"],
     plugins: { html },
-    languageOptions: {
-      sourceType: "script",
-      globals: {
-        ...globals.browser,
-      },
-    },
+    languageOptions: htmlLanguageOptions,
   },
   {
+    // HTML template with an extra global provided by qrious.min.js.
     files: ["src/templates/public/assets/qrcode.html"],
     plugins: { html },
-    languageOptions: {
-      sourceType: "script",
-      globals: {
-        ...globals.browser,
-        QRious: "readonly",
-      },
-    },
+    languageOptions: qrcodeHtmlLanguageOptions,
   },
   {
     // Browser-side Vue SFCs covered by docs/tsconfig.browser.json.
