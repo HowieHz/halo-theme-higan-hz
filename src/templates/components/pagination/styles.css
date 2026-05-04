@@ -1,7 +1,11 @@
 @reference "../../_runtime/global/tailwindcss/styles.css";
+/* stylelint-disable no-invalid-position-at-import-rule -- Tailwind @import with custom layer and source syntax */
 @import "tailwindcss/utilities.css" layer(utilities) source(".");
+/* stylelint-enable no-invalid-position-at-import-rule */
+/* stylelint-disable at-rule-prelude-no-invalid -- Tailwind @source not uses custom prelude syntax */
 @source not "./README.md";
 @source not "./index.ts";
+/* stylelint-enable at-rule-prelude-no-invalid */
 
 div.pager {
   display: inline-block;
