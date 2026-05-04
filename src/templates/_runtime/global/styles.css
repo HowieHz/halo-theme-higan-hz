@@ -7,6 +7,11 @@
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 
 @source "./index.ts";
+
+@plugin "@iconify/tailwind4" {
+  prefixes: material-symbols;
+}
+
 /* stylelint-disable custom-property-pattern */
 @theme {
   --text-*: initial;
@@ -28,9 +33,3 @@
 @utility inline-block {
   display: inline-block !important;
 }
-
-/* @plugin "@iconify/tailwind4" {
-  prefixes:
-    mdi, heroicons-outline, fa-solid, fluent, material-symbols, ic, typcn, simple-icons, ant-design, ri, ph,
-    icomoon-free, entypo-social, uil, cib, tabler, pepicons-pencil, fa;
-} */

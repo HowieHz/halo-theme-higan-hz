@@ -5,6 +5,10 @@
 
 @source "../../../author.html";
 
+@plugin "@iconify/tailwind4" {
+  prefixes: heroicons-outline;
+}
+
 /* 作者页面样式开始 */
 .author {
   & .head-cover {
