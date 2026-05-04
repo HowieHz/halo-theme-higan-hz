@@ -75,6 +75,10 @@
       th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
       th:insert="~{components/theme-toggle-button/template :: head}"
     ></th:block>
+    <th:block
+      th:if="${theme.config?.post_styles?.is_show_footer_nav}"
+      th:insert="~{components/footer-nav-post/template :: head}"
+    ></th:block>
   </head>
   <body th:remove="tag">
     <th:block
@@ -463,9 +467,10 @@
         ></halo:comment>
       </div>
     </article>
-    <th:block th:if="${theme.config?.post_styles?.is_show_footer_nav}">
-      <div th:replace="~{components/footer-nav-post/template :: footerNav}"></div>
-    </th:block>
+    <th:block
+      th:if="${theme.config?.post_styles?.is_show_footer_nav}"
+      th:insert="~{components/footer-nav-post/template :: body}"
+    ></th:block>
     <script type="module">
       import { isMobile } from "@runtime/scripts/device.ts";
       import { initTOC } from "@runtime/scripts/toc.ts";
