@@ -1,0 +1,3 @@
+@reference "../../_runtime/global/tailwindcss/styles.css";
+@import "tailwindcss/utilities.css" layer(utilities) source(".");
+@source not "./index.ts";
