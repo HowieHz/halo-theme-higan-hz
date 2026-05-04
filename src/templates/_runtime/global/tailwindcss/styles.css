@@ -5,6 +5,8 @@
 /* stylelint-disable at-rule-prelude-no-invalid -- Tailwind @source not uses custom prelude syntax */
 @source not "../../../public/";
 @source not "../../../_runtime/scripts/animations";
+@source not "../../../_runtime/global/fonts";
+@source not "../../../_runtime/styles";
 @source not "../../../components/color-scheme-auto";
 @source not "../../../components/color-scheme-dark";
 @source not "../../../components/color-scheme-light";
@@ -14,7 +16,6 @@
 @source not "../../../components/custom-font-face-style";
 @source not "../../../components/dark-content-text-style";
 @source not "../../../components/example";
-@source not "../../../_runtime/global/fonts";
 @source not "../../../components/footer-bottom-content";
 @source not "../../../components/footer-sidebar";
 @source not "../../../components/halo-comment-widget";
@@ -45,7 +46,6 @@
 @source not "../../../components/theme-gray";
 @source not "../../../components/theme-light";
 @source not "../../../components/theme-light-blue";
-@source not "../../../components/themes";
 @source not "../../../components/toc-max-width-style";
 @source not "../../../components/upvote-runtime";
 @source not "../../../components/category-tree/README.md";
@@ -95,8 +95,7 @@
 @source not "../../../components/theme-light-blue/README.md";
 @source not "../../../components/toc-max-width-style/README.md";
 @source not "../../../components/upvote-runtime/README.md";
-@source not "../../../_runtime/pages/README.md";
-@source not "../../../README.md";
+@source not "../../../../README.md";
 /* stylelint-enable at-rule-prelude-no-invalid */
 /* stylelint-disable custom-property-pattern */
 @theme {
