@@ -64,7 +64,15 @@ export default defineConfig((): UserConfig => {
     // Tailwind CSS with Vite integration
     tailwindcss(),
     // Unplugin Tailwind CSS Mangle to obfuscate Tailwind CSS class names
-    ...(outputProfile === "minify" ? [utwm()] : []),
+    ...(outputProfile === "minify"
+      ? [
+          utwm({
+            generator: {
+              classPrefix: "-",
+            },
+          }),
+        ]
+      : []),
     // remove /* empty css */ comments from generated JS files
     // https://github.com/vitejs/vite/issues/1794#issuecomment-769819851
     removeEmptyCssComments(),
