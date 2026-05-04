@@ -1,13 +1,13 @@
 import { resolve } from "node:path";
 
 import { footnote } from "@mdit/plugin-footnote";
+import tailwindcss from "@tailwindcss/vite";
 import { whyframe } from "@whyframe/core";
 import { whyframeVue } from "@whyframe/vue";
 import browserslist from "browserslist";
 import { browserslistToTargets } from "lightningcss";
 import { defineConfig, type DefaultTheme } from "vitepress";
 import { chineseSearchOptimize, pagefindPlugin } from "vitepress-plugin-pagefind";
-import tailwindcss from "@tailwindcss/vite";
 
 import pkg from "../../package.json" with { type: "json" };
 
