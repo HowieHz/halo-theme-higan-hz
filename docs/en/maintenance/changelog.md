@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fixed a 404 issue in the tiny variant caused by incorrect template-path switching for the Mermaid / instant.page components.
+
 ## [1.66.1] - 2026-05-03
 
 ### 🚀 Features

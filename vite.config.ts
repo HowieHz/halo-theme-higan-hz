@@ -110,6 +110,18 @@ export default defineConfig((): UserConfig => {
             ? "src/templates/_runtime/global/fonts/font-family.tiny.css"
             : "src/templates/_runtime/global/fonts/font-family.css",
         ),
+        $instantpage: resolve(
+          import.meta.dirname,
+          buildProfile === "tiny"
+            ? "src/templates/components/instantpage-injection/index.tiny.ts"
+            : "src/templates/components/instantpage-injection/index.ts",
+        ),
+        "$mermaid-injection": resolve(
+          import.meta.dirname,
+          buildProfile === "tiny"
+            ? "src/templates/components/mermaid-injection/index.tiny.ts"
+            : "src/templates/components/mermaid-injection/index.ts",
+        ),
       },
     },
     plugins,
@@ -336,18 +348,6 @@ export default defineConfig((): UserConfig => {
             "src/templates/components/footer-nav-post/template.html",
           ),
           "components-nav-post": resolve(import.meta.dirname, "src/templates/components/nav-post/template.html"),
-          ...(buildProfile === "tiny"
-            ? {
-                "components-mermaid-injection": resolve(
-                  import.meta.dirname,
-                  "src/templates/components/mermaid-injection/template.tiny.html",
-                ),
-                "components-instantpage-injection": resolve(
-                  import.meta.dirname,
-                  "src/templates/components/instantpage-injection/template.tiny.html",
-                ),
-              }
-            : {}),
         },
         output:
           outputProfile === "original"
