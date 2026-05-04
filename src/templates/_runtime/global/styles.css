@@ -4,6 +4,9 @@
 @import "./base-styles/styles.css";
 @import "./scrollbar/styles.css";
 @import "./iconify/styles.css";
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+
+@source "./index.ts";
 /* stylelint-disable custom-property-pattern */
 @theme {
   --text-*: initial;

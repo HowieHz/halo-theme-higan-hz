@@ -3,9 +3,4 @@
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 /* stylelint-enable no-invalid-position-at-import-rule */
 
-@source "../../../tag.html";
-
-#archive h1::before {
-  color: var(--tag-hash-color, currentColor);
-  content: "#";
-}
+@source "../../../moment.html";

@@ -1,3 +1,10 @@
+@reference "../../global/styles.css";
+/* stylelint-disable no-invalid-position-at-import-rule -- Tailwind @import with custom layer and source syntax */
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+/* stylelint-enable no-invalid-position-at-import-rule */
+
+@source "../../../post.html";
+
 @layer base {
   /* 文章页桌面端/平板端文章右上角菜单 */
   #header-post {
