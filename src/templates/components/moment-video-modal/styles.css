@@ -1,3 +1,8 @@
+@reference "../../_runtime/global/tailwindcss/styles.css";
+@import "tailwindcss/utilities.css" layer(utilities) source(".");
+@source not "./README.md";
+@source not "./index.ts";
+
 /* moment-video-modal start */
 .color-base-200 {
   background-color: var(--color-base-200);
