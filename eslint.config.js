@@ -24,7 +24,13 @@ export default defineConfig(
   tseslint.configs.strict,
   tseslint.configs.stylistic,
   {
-    files: ["**/*.js", "**/*.ts"],
+    files: [
+      "src/templates/**/*.{js,ts}",
+      "docs/.vitepress/theme/**/*.ts",
+      "docs/.vitepress/components/**/*.ts",
+      "docs/.vitepress/utils/**/*.ts",
+      "docs/.vitepress/**/*.vue",
+    ],
 
     languageOptions: {
       ecmaVersion: "latest",
@@ -35,7 +41,7 @@ export default defineConfig(
     },
   },
   {
-    files: ["**/*.html"],
+    files: ["src/templates/**/*.html"],
     plugins: { html },
     languageOptions: {
       sourceType: "script",
@@ -56,7 +62,7 @@ export default defineConfig(
     },
   },
   {
-    files: ["**/*.vue"],
+    files: ["docs/.vitepress/components/**/*.vue", "docs/.vitepress/theme/**/*.vue"],
 
     languageOptions: {
       ecmaVersion: "latest",
@@ -69,10 +75,8 @@ export default defineConfig(
         parser: {
           // Script parser for `<script>`
           js: "espree",
-
           // Script parser for `<script lang="ts">`
           ts: tsParser,
-
           // Script parser for vue directives (e.g. `v-if=` or `:attribute=`)
           // and vue interpolations (e.g. `{{variable}}`).
           // If not specified, the parser determined by `<script lang ="...">` is used.
@@ -85,9 +89,19 @@ export default defineConfig(
     },
   },
   {
-    files: ["scripts/**/*.js", ".github/scripts/**/*.js"],
+    files: [
+      "docs/.vitepress/config.ts",
+      "docs/en/config.ts",
+      "vite.config.ts",
+      "plugins/**/*.ts",
+      "eslint.config.js",
+      "stylelint.config.js",
+      ".github/scripts/**/*.{js,ts}",
+    ],
 
     languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
       globals: {
         ...globals.node,
       },
