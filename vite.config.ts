@@ -342,9 +342,7 @@ export default defineConfig((): UserConfig => {
           outputProfile === "original"
             ? undefined
             : {
-                assetFileNames: () => {
-                  return `assets/${pkg.version}[hash:7][extname]`;
-                },
+                assetFileNames: `assets/${pkg.version}[hash:7][extname]`,
                 // JS entry files
                 // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
                 entryFileNames: `assets/${pkg.version}[hash:7].js`,

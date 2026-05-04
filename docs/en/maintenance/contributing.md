@@ -47,7 +47,7 @@ pnpm install
 To run the theme in development mode with live updates, execute:
 
 ```bash
-pnpm dev
+pnpm watch
 ```
 
 Uncompressed style files are generated in `tmp/`, which makes debugging easier.
@@ -57,7 +57,7 @@ Uncompressed style files are generated in `tmp/`, which makes debugging easier.
 For documentation development with live preview, run:
 
 ```bash
-pnpm docs:dev
+pnpm docs:watch
 ```
 
 Build production docs to `docs/.vitepress/dist` with:

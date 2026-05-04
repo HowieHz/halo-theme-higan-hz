@@ -47,7 +47,7 @@ pnpm install
 开发时，在项目根目录运行以下命令即可实时渲染修改。
 
 ```bash
-pnpm dev
+pnpm watch
 ```
 
 此时会在 `tmp/` 目录输出未压缩的样式文件，便于追踪问题。
@@ -57,7 +57,7 @@ pnpm dev
 开发文档时，在项目根目录运行以下命令可启动服务并实时预览修改。
 
 ```bash
-pnpm docs:dev
+pnpm docs:watch
 ```
 
 以下命令会将构建产物输出到 `docs/.vitepress/dist` 目录。

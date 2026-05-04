@@ -9,7 +9,7 @@
         <th:block th:if="${#annotations.getOrDefault(post, 'higan.howiehz.top/show-in-post-list', 'true') == 'true'}">
           <div class="grid grid-cols-1 md:grid-cols-4 md:items-baseline">
             <div class="group relative flex flex-col md:col-span-3">
-              <h2 class="color-text text-base static m-0 font-semibold tracking-tight">
+              <h2 class="color-text static m-0 text-base font-semibold tracking-tight">
                 <div
                   class="post-card-hover absolute -inset-x-4 -inset-y-2 z-0 opacity-0 sm:-inset-x-6 sm:rounded-2xl"
                 ></div>
@@ -34,7 +34,7 @@
                 th:if="${!#strings.equals(pageTemplateName, 'index')
                          or (#strings.equals(pageTemplateName, 'index')
                              and theme.config?.index_styles?.is_show_post_pubdate_in_post_list_summary)}"
-                class="color-base-content-80 text-sm relative z-10 order-first mb-3 flex items-center pl-3.5 md:hidden"
+                class="color-base-content-80 relative z-10 order-first mb-3 flex items-center pl-3.5 text-sm md:hidden"
                 th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
               >
                 <span class="absolute inset-y-0 left-0 flex items-center" aria-hidden="true">
@@ -45,7 +45,7 @@
               <th:block th:if="${theme.config?.index_styles?.is_show_post_categories_in_post_list_summary}">
                 <!--/* 使用 sm:inlne 而不是 sm:inline-block 是希望能在很多“分类面包屑”的情况下自动换行 */-->
                 <div
-                  class="article-category color-time text-sm relative z-20 mt-0.5 mb-0 block p-0 sm:inline"
+                  class="article-category color-time relative z-20 mt-0.5 mb-0 block p-0 text-sm sm:inline"
                   th:unless="${#lists.isEmpty(post.categories)}"
                 >
                   <th:block th:each="categoryLeafNode, categoryLeafNodeIterStat : ${post.categories}">
@@ -78,7 +78,7 @@
               </th:block>
               <th:block th:if="${theme.config?.index_styles?.is_show_post_tags_in_post_list_summary}">
                 <div
-                  class="article-tag color-time text-sm relative z-20 mt-0.5 mb-0 block p-0 sm:inline"
+                  class="article-tag color-time relative z-20 mt-0.5 mb-0 block p-0 text-sm sm:inline"
                   th:unless="${#lists.isEmpty(post.tags)}"
                 >
                   <span class="iconify mdi--tag-outline"></span>
@@ -100,7 +100,7 @@
               </th:block>
               <th:block th:if="${theme.config?.index_styles?.is_show_post_views_in_post_list_summary}">
                 <div
-                  class="color-time text-sm relative z-10 mt-0.5 mb-0 p-0"
+                  class="color-time relative z-10 mt-0.5 mb-0 p-0 text-sm"
                   th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
                 >
                   <span class="iconify mdi--eye-outline"></span>
@@ -109,7 +109,7 @@
               </th:block>
               <th:block th:if="${theme.config?.index_styles?.is_show_post_estimated_reading_time_in_post_list_summary}">
                 <div
-                  class="color-time text-sm relative z-10 mt-0.5 mb-0 p-0"
+                  class="color-time relative z-10 mt-0.5 mb-0 p-0 text-sm"
                   th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                          ? extraApiStatsFinder.getPostWordCount({name: post.metadata.name})
                                          : #strings.length(post.content?.content) / 2 }"
@@ -126,7 +126,7 @@
               </th:block>
               <th:block th:if="${theme.config?.index_styles?.is_show_post_word_count_in_post_list_summary}">
                 <span
-                  class="color-time text-sm relative z-10 mt-0.5 mb-0 p-0"
+                  class="color-time relative z-10 mt-0.5 mb-0 p-0 text-sm"
                   th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                          ? extraApiStatsFinder.getPostWordCount({name: post.metadata.name})
                                          : #strings.length(post.content?.content) / 2 }"
@@ -141,7 +141,7 @@
                 th:with="max_lines = ${theme.config?.index_styles?.post_excerpt_max_lines}"
               >
                 <p
-                  class="color-base-content-80 text-sm relative z-10 mt-2 mb-0 p-0"
+                  class="color-base-content-80 relative z-10 mt-2 mb-0 p-0 text-sm"
                   th:text="${post.status?.excerpt}"
                   th:classappend="|${max_lines == '1' ? 'v-line-clamp-1' : ''} ${max_lines == '2' ? 'v-line-clamp-2' : ''} ${max_lines == '3' ? 'v-line-clamp-3' : ''} ${max_lines == '4' ? 'v-line-clamp-4' : ''} ${max_lines == '5' ? 'v-line-clamp-5' : ''}|"
                 >
@@ -150,7 +150,7 @@
               </th:block>
               <div
                 aria-hidden="true"
-                class="color-primary text-sm relative z-10 mt-4 flex items-center font-medium"
+                class="color-primary relative z-10 mt-4 flex items-center text-sm font-medium"
                 th:text="#{page.index.postListPermalinkText}"
                 th:if="${theme.config?.index_styles?.is_show_index_post_list_permalink_text}"
               >
@@ -175,7 +175,7 @@
               th:if="${!#strings.equals(pageTemplateName, 'index')
                        or (#strings.equals(pageTemplateName, 'index')
                            and theme.config?.index_styles?.is_show_post_pubdate_in_post_list_summary)}"
-              class="color-base-content-80 text-sm relative z-10 order-first mt-1 mb-3 hidden items-center md:flex"
+              class="color-base-content-80 relative z-10 order-first mt-1 mb-3 hidden items-center text-sm md:flex"
               th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}"
               th:text="${#temporals.format(post.spec.publishTime, 'MMMM dd yyyy')}"
             >
