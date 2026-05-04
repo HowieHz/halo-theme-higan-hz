@@ -28,7 +28,7 @@
       aria-expanded="false"
       aria-controls="toc-overlay-tablet"
       th:aria-label="#{fragment.post-nav.toc-icon.aria-label}"
-      ><span class="iconify-large iconify ic--baseline-toc"></span
+      ><span class="iconify-large ic--baseline-toc iconify"></span
     ></a>
     <!--/* only show on tablet end */-->
     <span
@@ -52,7 +52,7 @@
           aria-expanded="true"
           aria-controls="nav actions toc"
         >
-          <span class="iconify-middle iconify material-symbols--menu -translate-y-px"></span>
+          <span class="iconify-middle iconify -translate-y-px material-symbols--menu"></span>
         </a>
       </div>
       <span
@@ -69,7 +69,7 @@
               role="button"
               data-toggle-target="#i-home"
             >
-              <span class="iconify-large iconify mdi--home-circle"></span>
+              <span class="iconify-large mdi--home-circle iconify"></span>
             </a>
           </li>
           <li th:if="${postCursor.hasPrevious()}">
@@ -80,7 +80,7 @@
               role="button"
               data-toggle-target="#i-prev"
             >
-              <span class="iconify-large iconify mdi--chevron-left"></span>
+              <span class="iconify-large mdi--chevron-left iconify"></span>
             </a>
           </li>
 
@@ -92,7 +92,7 @@
               role="button"
               data-toggle-target="#i-next"
             >
-              <span class="iconify-large iconify ic--round-chevron-right"></span>
+              <span class="iconify-large ic--round-chevron-right iconify"></span>
             </a>
           </li>
           <!--/* only show to top button on desktop */-->
@@ -121,7 +121,7 @@
               role="button"
               data-toggle-target="#i-toc"
             >
-              <span class="iconify-large iconify ic--baseline-toc"></span>
+              <span class="iconify-large ic--baseline-toc iconify"></span>
             </a>
           </li>
           <li th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}">
@@ -136,7 +136,7 @@
               aria-controls="share-list"
               data-toggle-target="#i-share"
             >
-              <span class="iconify-middle iconify mdi--share-variant-outline"></span>
+              <span class="iconify-middle mdi--share-variant-outline iconify"></span>
             </a>
           </li>
         </ul>
@@ -207,7 +207,7 @@
           onclick="event.preventDefault()"
           th:aria-label="#{fragment.post-nav.close-toc.aria-label}"
         >
-          <span class="iconify-large iconify ic--baseline-close"></span>
+          <span class="iconify-large ic--baseline-close iconify"></span>
         </a>
       </div>
       <div id="toc-tablet"></div>

@@ -4,7 +4,6 @@
     type="module"
   ></script>
 </head>
-<!--/*-->
 <body th:remove="tag">
   <div id="footer-post-container">
     <div id="footer-post">
@@ -37,7 +36,7 @@
           aria-expanded="false"
           aria-controls="nav-footer"
         >
-          <span class="iconify ic--baseline-menu"></span>
+          <span class="ic--baseline-menu iconify"></span>
           <span th:text="#{fragment.footer-nav.menu}"></span>
         </a>
         <a
@@ -49,7 +48,7 @@
           aria-expanded="false"
           aria-controls="toc-footer"
         >
-          <span class="iconify ic--baseline-toc"></span>
+          <span class="ic--baseline-toc iconify"></span>
           <span th:text="#{fragment.footer-nav.toc}"></span>
         </a>
         <a
@@ -62,7 +61,7 @@
           aria-controls="share-footer"
           th:if="${theme.config?.post_styles?.is_show_share_footer}"
         >
-          <span class="iconify ic--baseline-share"></span>
+          <span class="ic--baseline-share iconify"></span>
           <span th:text="#{fragment.footer-nav.share}"></span>
         </a>
         <a
@@ -73,10 +72,9 @@
           role="button"
           data-scroll-to-top
         >
-          <span class="iconify ic--baseline-arrow-upward"></span>
+          <span class="ic--baseline-arrow-upward iconify"></span>
         </a>
       </div>
     </div>
   </div>
 </body>
-<!--*/-->
