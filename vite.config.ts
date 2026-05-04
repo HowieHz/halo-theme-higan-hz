@@ -68,7 +68,7 @@ export default defineConfig((): UserConfig => {
       ? [
           utwm({
             generator: {
-              classPrefix: "-",
+              classPrefix: "_",
             },
           }),
         ]
