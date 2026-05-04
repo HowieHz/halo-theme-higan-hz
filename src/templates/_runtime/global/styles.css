@@ -1,6 +1,9 @@
 @layer theme, base, utilities;
 
 @import "tailwindcss/theme.css" layer(theme);
+@import "./base-styles/styles.css";
+@import "./scrollbar/styles.css";
+@import "./iconify/styles.css";
 /* stylelint-disable custom-property-pattern */
 @theme {
   --text-*: initial;

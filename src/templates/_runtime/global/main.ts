@@ -1,5 +1,5 @@
-import "./global-styles/styles.css";
-import "./tailwindcss/styles.css";
+import "./styles.css";
+import "./fonts/styles.css";
 
 document.addEventListener("DOMContentLoaded", (): void => {
   // 二级菜单显示/切换功能

@@ -1,4 +1,4 @@
-@reference "../../_runtime/global/tailwindcss/styles.css";
+@reference "../../_runtime/global/styles.css";
 /* stylelint-disable no-invalid-position-at-import-rule -- Tailwind @import with custom layer and source syntax */
 @import "tailwindcss/utilities.css" layer(utilities) source(".");
 /* stylelint-enable no-invalid-position-at-import-rule */
