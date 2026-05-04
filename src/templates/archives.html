@@ -19,7 +19,7 @@
       th:if="${theme.config?.archives_page_styles?.is_enable_canonical_link}"
       th:href="${siteUrl} + @{{prefix}(prefix = ${site.routes.archivesUri})}"
     />
-    <script src="/_runtime/pages/archives/index.ts" type="module"></script>
+    <script src="@runtime/pages/archives/index.ts" type="module"></script>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
     <th:block th:insert="~{components/list-post-simple/template :: head}"></th:block>
     <th:block th:insert="~{components/pagination/template :: head}"></th:block>
