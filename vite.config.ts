@@ -17,6 +17,8 @@ const BUILD_PROFILES = ["default", "tiny"] as const;
 type BuildProfile = (typeof BUILD_PROFILES)[number];
 const BUILD_PRECOMPRESS_PROFILES = ["br-only", "full", "none"] as const;
 type BuildPrecompressProfile = (typeof BUILD_PRECOMPRESS_PROFILES)[number];
+const BUILD_OUTPUT_PROFILES = ["custom", "original"] as const;
+type BuildOutputProfile = (typeof BUILD_OUTPUT_PROFILES)[number];
 
 function pickEnvValue<T extends string>(value: string | undefined, allowedValues: readonly T[], fallback: T): T {
   return allowedValues.includes(value as T) ? (value as T) : fallback;
@@ -28,6 +30,11 @@ export default defineConfig((): UserConfig => {
     process.env.BUILD_PRECOMPRESS_PROFILE,
     BUILD_PRECOMPRESS_PROFILES,
     "br-only",
+  );
+  const outputProfile = pickEnvValue<BuildOutputProfile>(
+    process.env.BUILD_OUTPUT_PROFILE,
+    BUILD_OUTPUT_PROFILES,
+    "custom",
   );
 
   const precompressAlgorithms =
@@ -331,17 +338,20 @@ export default defineConfig((): UserConfig => {
               }
             : {}),
         },
-        output: {
-          assetFileNames: () => {
-            return `assets/${pkg.version}[hash:7][extname]`;
-          },
-          // JS entry files
-          // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
-          entryFileNames: `assets/${pkg.version}[hash:7].js`,
-          // Dynamic chunks
-          // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
-          chunkFileNames: `assets/${pkg.version}[hash:7].js`,
-        },
+        output:
+          outputProfile === "original"
+            ? undefined
+            : {
+                assetFileNames: () => {
+                  return `assets/${pkg.version}[hash:7][extname]`;
+                },
+                // JS entry files
+                // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+                entryFileNames: `assets/${pkg.version}[hash:7].js`,
+                // Dynamic chunks
+                // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+                chunkFileNames: `assets/${pkg.version}[hash:7].js`,
+              },
       },
     },
   };
