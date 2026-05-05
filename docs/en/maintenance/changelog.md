@@ -23,6 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🔧 Code Refactoring
+
+- Migrated preset theme styles from Less preprocessing to build-time generated CSS, and removed the Less preprocessor dependency.
+- Refactored the Tailwind CSS output strategy to split styles by component and reuse emitted stylesheet assets for better asset utilization.
+- Changed the Tailwind CSS class mangling prefix from `tw-` to `_`.
+
 ### 🐛 Bug Fixes
 
 - Fixed a 404 issue in the tiny variant caused by incorrect template-path switching for the Mermaid / instant.page components.

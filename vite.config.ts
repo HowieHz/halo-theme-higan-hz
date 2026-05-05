@@ -111,7 +111,15 @@ export default defineConfig((): UserConfig => {
     // Tailwind CSS with Vite integration
     tailwindcss(),
     // Unplugin Tailwind CSS Mangle to obfuscate Tailwind CSS class names
-    ...(outputOption === "minify" ? [utwm()] : []),
+    ...(outputOption === "minify"
+      ? [
+          utwm({
+            generator: {
+              classPrefix: "_",
+            },
+          }),
+        ]
+      : []),
     // Clean up generated CSS-related comments:
     // - strip Vite's injected `/* empty css */` markers from JS chunks
     // - strip leading `/*! ... */` license banners from emitted CSS assets
