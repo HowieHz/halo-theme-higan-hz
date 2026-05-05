@@ -17,7 +17,7 @@
 
 ## 构建产物
 
-发布流程会基于当前构建规则生成多个主题安装包，并确保 `howiehz-higan-zh-hans.zip` 在发布附件列表中位于第一，以便 Halo CMS 在更新安装时优先使用简体中文配置版本。
+发布流程会基于当前构建规则生成多个主题安装包。GitHub Release 页面的附件顺序由 GitHub 决定；在 Halo 应用市场中，会确保 `howiehz-higan-zh-hans.zip` 位于第一，以便 Halo CMS 在自动更新时优先使用简体中文配置版本。
 
 当前发布产物包括：
 
