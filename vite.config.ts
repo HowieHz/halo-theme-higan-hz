@@ -140,7 +140,10 @@ export default defineConfig((): UserConfig => {
       "src/templates/components/moment-video-modal/template.html",
     ),
     "components-pagination": resolve(import.meta.dirname, "src/templates/components/pagination/template.html"),
-    "components-list-post-simple": resolve(import.meta.dirname, "src/templates/components/list-post-simple/template.html"),
+    "components-list-post-simple": resolve(
+      import.meta.dirname,
+      "src/templates/components/list-post-simple/template.html",
+    ),
     "components-list-post-summary": resolve(
       import.meta.dirname,
       "src/templates/components/list-post-summary/template.html",
@@ -153,7 +156,10 @@ export default defineConfig((): UserConfig => {
       import.meta.dirname,
       "src/templates/components/list-moment-summary/template.html",
     ),
-    "components-mermaid-injection": resolve(import.meta.dirname, "src/templates/components/mermaid-injection/template.html"),
+    "components-mermaid-injection": resolve(
+      import.meta.dirname,
+      "src/templates/components/mermaid-injection/template.html",
+    ),
     "components-instantpage-injection": resolve(
       import.meta.dirname,
       "src/templates/components/instantpage-injection/template.html",
@@ -174,7 +180,10 @@ export default defineConfig((): UserConfig => {
       import.meta.dirname,
       "src/templates/components/custom-cursor-style/template.html",
     ),
-    "components-header-logo-style": resolve(import.meta.dirname, "src/templates/components/header-logo-style/template.html"),
+    "components-header-logo-style": resolve(
+      import.meta.dirname,
+      "src/templates/components/header-logo-style/template.html",
+    ),
     "components-header": resolve(import.meta.dirname, "src/templates/components/header/template.html"),
     "components-halo-comment-widget": resolve(
       import.meta.dirname,
@@ -184,23 +193,38 @@ export default defineConfig((): UserConfig => {
       import.meta.dirname,
       "src/templates/components/color-scheme-light/template.html",
     ),
-    "components-color-scheme-dark": resolve(import.meta.dirname, "src/templates/components/color-scheme-dark/template.html"),
-    "components-color-scheme-auto": resolve(import.meta.dirname, "src/templates/components/color-scheme-auto/template.html"),
+    "components-color-scheme-dark": resolve(
+      import.meta.dirname,
+      "src/templates/components/color-scheme-dark/template.html",
+    ),
+    "components-color-scheme-auto": resolve(
+      import.meta.dirname,
+      "src/templates/components/color-scheme-auto/template.html",
+    ),
     "components-style-footer-sidebar": resolve(
       import.meta.dirname,
       "src/templates/components/style-footer-sidebar/template.html",
     ),
-    "components-text-size-small": resolve(import.meta.dirname, "src/templates/components/text-size-small/template.html"),
+    "components-text-size-small": resolve(
+      import.meta.dirname,
+      "src/templates/components/text-size-small/template.html",
+    ),
     "components-text-size-normal": resolve(
       import.meta.dirname,
       "src/templates/components/text-size-normal/template.html",
     ),
-    "components-text-size-large": resolve(import.meta.dirname, "src/templates/components/text-size-large/template.html"),
+    "components-text-size-large": resolve(
+      import.meta.dirname,
+      "src/templates/components/text-size-large/template.html",
+    ),
     "components-toc-max-width-style": resolve(
       import.meta.dirname,
       "src/templates/components/toc-max-width-style/template.html",
     ),
-    "components-inline-code-style": resolve(import.meta.dirname, "src/templates/components/inline-code-style/template.html"),
+    "components-inline-code-style": resolve(
+      import.meta.dirname,
+      "src/templates/components/inline-code-style/template.html",
+    ),
     "components-dark-content-text-style": resolve(
       import.meta.dirname,
       "src/templates/components/dark-content-text-style/template.html",
@@ -239,18 +263,30 @@ export default defineConfig((): UserConfig => {
       import.meta.dirname,
       "src/templates/components/heading-anchor-symbol-style/template.html",
     ),
-    "components-heading-anchor-svg": resolve(import.meta.dirname, "src/templates/components/heading-anchor-svg/template.html"),
-    "components-meta-theme-color": resolve(import.meta.dirname, "src/templates/components/meta-theme-color/template.html"),
+    "components-heading-anchor-svg": resolve(
+      import.meta.dirname,
+      "src/templates/components/heading-anchor-svg/template.html",
+    ),
+    "components-meta-theme-color": resolve(
+      import.meta.dirname,
+      "src/templates/components/meta-theme-color/template.html",
+    ),
     "components-theme-dark": resolve(import.meta.dirname, "src/templates/components/theme-dark/template.html"),
     "components-theme-light": resolve(import.meta.dirname, "src/templates/components/theme-light/template.html"),
-    "components-theme-dark-blue": resolve(import.meta.dirname, "src/templates/components/theme-dark-blue/template.html"),
+    "components-theme-dark-blue": resolve(
+      import.meta.dirname,
+      "src/templates/components/theme-dark-blue/template.html",
+    ),
     "components-theme-light-blue": resolve(
       import.meta.dirname,
       "src/templates/components/theme-light-blue/template.html",
     ),
     "components-theme-gray": resolve(import.meta.dirname, "src/templates/components/theme-gray/template.html"),
     "components-theme-auto": resolve(import.meta.dirname, "src/templates/components/theme-auto/template.html"),
-    "components-theme-auto-blue": resolve(import.meta.dirname, "src/templates/components/theme-auto-blue/template.html"),
+    "components-theme-auto-blue": resolve(
+      import.meta.dirname,
+      "src/templates/components/theme-auto-blue/template.html",
+    ),
     "components-menu": resolve(import.meta.dirname, "src/templates/components/menu/template.html"),
     "components-theme-toggle-button": resolve(
       import.meta.dirname,
@@ -271,7 +307,10 @@ export default defineConfig((): UserConfig => {
       import.meta.dirname,
       "src/templates/components/nav-page-like-post-style/template.html",
     ),
-    "components-footer-nav-post": resolve(import.meta.dirname, "src/templates/components/footer-nav-post/template.html"),
+    "components-footer-nav-post": resolve(
+      import.meta.dirname,
+      "src/templates/components/footer-nav-post/template.html",
+    ),
     "components-nav-post": resolve(import.meta.dirname, "src/templates/components/nav-post/template.html"),
     ...extraEntries,
   };

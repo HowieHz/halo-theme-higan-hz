@@ -2,25 +2,24 @@
  * 基于 entry 可达范围分桶的 Tailwind 类名混淆插件。
  *
  * 为什么不使用“全局唯一一张映射表”：
- * - 如果全局只保留一份映射，不同 entry 图里的共享 utility 会被压成同一个短类名，
- *   语义上就会退化成“到处都一样”。
- * - 这里改成“每个 bucket 一张映射表”，bucket 的含义是：
- *   “最终产物里，哪些 entry 能访问到这份文件”。
- * - 这样同一个 utility，例如 `hidden`，就可以同时在全局共享桶里变成 `_h`，
- *   又在 `post` 桶里变成 `m_p`。
+ *
+ * - 如果全局只保留一份映射，不同 entry 图里的共享 utility 会被压成同一个短类名，语义上就会退化成“到处都一样”。
+ * - 这里改成“每个 bucket 一张映射表”，bucket 的含义是： “最终产物里，哪些 entry 能访问到这份文件”。
+ * - 这样同一个 utility，例如 `hidden`，就可以同时在全局共享桶里变成 `_h`，又在 `post` 桶里变成 `m_p`。
  *
  * 为什么选 `writeBundle`，而不是 `generateBundle`：
- * - 这个项目需要基于最终输出的 HTML，以及后处理后的资源引用关系，
- *   才能算出真实可达图。
- * - 实际上对这里最稳定的事实来源，是磁盘上的最终产物树，
- *   不是更早阶段的内存 bundle。
+ *
+ * - 这个项目需要基于最终输出的 HTML，以及后处理后的资源引用关系，才能算出真实可达图。
+ * - 实际上对这里最稳定的事实来源，是磁盘上的最终产物树，不是更早阶段的内存 bundle。
  *
  * 这套方案的取舍：
+ *
  * - 优点：共享产物和入口独享产物可以拿到不同的短类名。
  * - 缺点：同一个 utility 可能会在多个 bucket 里重复生成。
  * - 注意：前缀表达的是“最终可达范围”，不是“原始源码归属”。
  * - 如果需要追源码归属，要看 mapping/debug 产物，不能只看前缀。
  */
+import { createHash } from "node:crypto";
 import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, extname, relative, resolve } from "node:path";
 
@@ -80,6 +79,9 @@ const CSS_FILE_EXTENSION = ".css";
 const DEFAULT_CLASS_LIST_FILE = ".tw-patch/tw-class-list.json";
 const DEFAULT_MAPPING_FILE = ".tw-patch/tw-mangle-mapping.json";
 const HTML_FILE_EXTENSION = ".html";
+const HTML_SRI_INTEGRITY_REGEX = /\s+integrity=["'][^"']+["']/u;
+const HTML_SRI_TAG_REGEX = /<(script|link)\b([^>]*?\b(?:src|href)=["']([^"']+)["'][^>]*?)>/gmu;
+const HTML_SRI_TARGET_REL_REGEX = /\brel=["'](?:stylesheet|modulepreload)["']/u;
 const JS_FILE_EXTENSIONS = new Set([".js", ".mjs"]);
 const THYMELEAF_COMPONENT_REFERENCE_REGEX =
   /~\{([A-Za-z0-9/_-]+)\s*::\s*(?:head|body|html|inlineInit|menu|fragment)\b/gmu;
@@ -105,6 +107,7 @@ function normalizePublicBase(value: string): string {
  * 将最终产物中的资源引用转换成相对输出目录的文件名。
  *
  * 只处理当前插件关心的几类引用：
+ * 
  * - 带 base 的最终资源路径
  * - 不带前导 `/` 但仍然以 base 开头的路径
  * - 已经是 `assets/...` 形式的路径
@@ -244,8 +247,7 @@ function buildTemplateGraph(
 /**
  * 记录每个 HTML 模板直接引用了哪些最终 JS/CSS/asset 文件。
  *
- * 注意这里只记“直接引用”，不做 JS/CSS 之间的传递展开。
- * 资源间的真正依赖关系交给 bundler graph 处理。
+ * 注意这里只记“直接引用”，不做 JS/CSS 之间的传递展开。资源间的真正依赖关系交给 bundler graph 处理。
  */
 function collectTemplateAssetReferences(
   fileContents: ReadonlyMap<string, string>,
@@ -328,10 +330,14 @@ function buildAssetGraph(bundle: Record<string, unknown>): Map<string, Set<strin
  * 从若干起点出发，收集图中所有可达文件。
  *
  * 这里同时用于：
+ * 
  * - 页面入口 -> 组件模板传播
  * - 模板直接引用的资源入口 -> bundler 资源图传播
  */
-function collectReachableFiles(graph: ReadonlyMap<string, ReadonlySet<string>>, entryFileNames: readonly string[]): Set<string> {
+function collectReachableFiles(
+  graph: ReadonlyMap<string, ReadonlySet<string>>,
+  entryFileNames: readonly string[],
+): Set<string> {
   const visitedFiles = new Set<string>();
   const pendingFiles = [...entryFileNames];
 
@@ -381,11 +387,13 @@ function toScanMarker(index: number): string {
  * 为单个 bucket 构造局部 UTWM 上下文。
  *
  * 这里不复用官方 `initConfig()` 的整套初始化流程，因为：
+ * 
  * - 当前插件的 bucket 逻辑已经先算出了最终 `original -> mangled`
  * - 我们只需要复用官方 handler 的 AST / 解析器改写能力
  * - 不希望再回退到“全局一张映射表”的语义
  *
  * 所以这里只手动注入最小必需状态：
+ * 
  * - `replaceMap`：供 handler 判断哪些类需要替换
  * - `classGenerator.newClassMap`：供 handler 在改写时读取既定短名
  */
@@ -407,13 +415,17 @@ function createBucketContext(mapping: ReadonlyMap<string, string>): Context {
 /**
  * 用官方 UTWM handler 改写最终产物。
  *
- * 这样做的意义不是改变 bucket 语义，而是把“怎么安全地改 HTML/CSS/JS”
- * 这件事重新交给官方实现：
+ * 这样做的意义不是改变 bucket 语义，而是把“怎么安全地改 HTML/CSS/JS”这件事重新交给官方实现：
+ * 
  * - HTML：`htmlparser2`
  * - CSS：`postcss` + `postcss-selector-parser`
  * - JS：Babel AST + `MagicString`
  */
-async function rewriteWithUtwmHandler(sourceText: string, fileName: string, mapping: ReadonlyMap<string, string>): Promise<string> {
+async function rewriteWithUtwmHandler(
+  sourceText: string,
+  fileName: string,
+  mapping: ReadonlyMap<string, string>,
+): Promise<string> {
   const ctx = createBucketContext(mapping);
   const extension = extname(fileName);
 
@@ -436,16 +448,22 @@ async function rewriteWithUtwmHandler(sourceText: string, fileName: string, mapp
  * 用官方 handler 做“只扫描不落盘”的类名提取。
  *
  * 做法不是手写 HTML/CSS/JS regex，而是：
+ * 
  * 1. 给每个已知 class 临时分配唯一 marker
  * 2. 跑一遍 UTWM 官方 handler
  * 3. 再从改写结果里回收 marker，反推出本文件实际命中的 class
  *
  * 这样扫描和真正改写共用同一套解析路径：
+ * 
  * - HTML：`htmlHandler`
  * - CSS：`cssHandler`
  * - JS：`jsHandler`
  */
-async function collectClassesWithUtwmHandler(sourceText: string, fileName: string, knownClasses: readonly string[]): Promise<Set<string>> {
+async function collectClassesWithUtwmHandler(
+  sourceText: string,
+  fileName: string,
+  knownClasses: readonly string[],
+): Promise<Set<string>> {
   const markerToClassName = new Map<string, string>();
   const classNameToMarker = new Map<string, string>();
 
@@ -470,15 +488,56 @@ async function collectClassesWithUtwmHandler(sourceText: string, fileName: strin
   return classes;
 }
 
-export default function tailwindcssMangleSignaturesPlugin(
-  options: TailwindcssMangleSignaturesPluginOptions,
-): Plugin {
+/** 计算文件内容对应的 `sha384-...`。 */
+function createSha384Integrity(source: Uint8Array): string {
+  return `sha384-${createHash("sha384").update(source).digest("base64")}`;
+}
+
+/**
+ * 按最终磁盘产物重算 HTML 中的 `integrity`。
+ *
+ * 当前插件会在 `vite-plugin-sri3` 之后继续改写 HTML/CSS/JS，
+ * 所以这里做一次最终兜底，确保 HTML 里的 hash 与真实文件一致。
+ */
+function reconcileHtmlSriAttributes(htmlSource: string, outputDir: string, base: string): string {
+  return htmlSource.replace(HTML_SRI_TAG_REGEX, (fullMatch, tagName: string, attributes: string, url: string) => {
+    const isScriptTag = tagName === "script";
+    const isSupportedLinkTag = tagName === "link" && HTML_SRI_TARGET_REL_REGEX.test(attributes);
+
+    if (!isScriptTag && !isSupportedLinkTag) {
+      return fullMatch;
+    }
+
+    const normalizedReference = normalizeBundleReference(url, base);
+
+    if (normalizedReference === null) {
+      return fullMatch;
+    }
+
+    const assetPath = resolve(outputDir, normalizedReference);
+    const assetStat = statSync(assetPath, { throwIfNoEntry: false });
+
+    if (assetStat === undefined || !assetStat.isFile()) {
+      return fullMatch;
+    }
+
+    const integrity = createSha384Integrity(readFileSync(assetPath));
+
+    if (HTML_SRI_INTEGRITY_REGEX.test(attributes)) {
+      return fullMatch.replace(HTML_SRI_INTEGRITY_REGEX, ` integrity="${integrity}"`);
+    }
+
+    return `<${tagName}${attributes} integrity="${integrity}">`;
+  });
+}
+
+export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMangleSignaturesPluginOptions): Plugin {
   const classListFile = resolve(options.projectRoot, options.classListFile ?? DEFAULT_CLASS_LIST_FILE);
   const mappingFile = resolve(options.projectRoot, options.mappingFile ?? DEFAULT_MAPPING_FILE);
   const normalizedBase = normalizePublicBase(options.base);
   const componentHtmlFiles = new Set<string>();
   const pageEntryOutputFiles = new Map<string, string>();
-      let knownClasses: string[] = [];
+  let knownClasses: string[] = [];
 
   for (const [entryKey, inputFile] of Object.entries(options.input)) {
     const outputHtmlFileName = toOutputHtmlFileName(options.templateRoot, inputFile);
@@ -506,16 +565,14 @@ export default function tailwindcssMangleSignaturesPlugin(
         throw new TypeError(`Tailwind class list must be a string array: ${classListFile}`);
       }
 
-        knownClasses = [...new Set(parsedClassList)].sort();
+      knownClasses = [...new Set(parsedClassList)].sort();
     },
     async writeBundle(outputOptions, bundle) {
       // 最终改写仍然发生在 writeBundle：
       // - 这里已经有真实 bundle metadata
       // - 磁盘上也已经有最终 HTML 模板，便于把改写结果直接写回
       const outputDir =
-        typeof outputOptions.dir === "string"
-          ? resolve(outputOptions.dir)
-          : resolve(options.projectRoot, "templates");
+        typeof outputOptions.dir === "string" ? resolve(outputOptions.dir) : resolve(options.projectRoot, "templates");
       const fileContents = new Map<string, string>();
       const outputFiles = collectOutputFiles(outputDir);
 
@@ -523,7 +580,11 @@ export default function tailwindcssMangleSignaturesPlugin(
         const relativeFileName = normalizePathSeparators(relative(outputDir, outputFile));
         const extension = extname(relativeFileName);
 
-        if (extension === HTML_FILE_EXTENSION || extension === CSS_FILE_EXTENSION || JS_FILE_EXTENSIONS.has(extension)) {
+        if (
+          extension === HTML_FILE_EXTENSION ||
+          extension === CSS_FILE_EXTENSION ||
+          JS_FILE_EXTENSIONS.has(extension)
+        ) {
           fileContents.set(relativeFileName, readFileSync(outputFile, "utf8"));
         }
       }
@@ -578,7 +639,13 @@ export default function tailwindcssMangleSignaturesPlugin(
       for (const [fileName, sourceText] of fileContents.entries()) {
         const extension = extname(fileName);
 
-        if (!(fileName.endsWith(HTML_FILE_EXTENSION) || fileName.endsWith(CSS_FILE_EXTENSION) || JS_FILE_EXTENSIONS.has(extension))) {
+        if (
+          !(
+            fileName.endsWith(HTML_FILE_EXTENSION) ||
+            fileName.endsWith(CSS_FILE_EXTENSION) ||
+            JS_FILE_EXTENSIONS.has(extension)
+          )
+        ) {
           continue;
         }
 
@@ -706,31 +773,56 @@ export default function tailwindcssMangleSignaturesPlugin(
         // 只是执行层从手写字符串替换切到了官方 handler。
         const rewrittenText = await rewriteWithUtwmHandler(sourceText, outputFilePath, localMapping);
         writeFileSync(outputFilePath, rewrittenText);
+        fileContents.set(fileName, rewrittenText);
+      }
+
+      for (const [fileName, sourceText] of fileContents.entries()) {
+        if (!fileName.endsWith(HTML_FILE_EXTENSION)) {
+          continue;
+        }
+
+        const rewrittenHtml = reconcileHtmlSriAttributes(sourceText, outputDir, normalizedBase);
+
+        if (rewrittenHtml === sourceText) {
+          continue;
+        }
+
+        const outputFilePath = resolve(outputDir, fileName);
+        writeFileSync(outputFilePath, rewrittenHtml);
+        fileContents.set(fileName, rewrittenHtml);
       }
 
       const debugSummary = {
         bucketKeys: [...classNameMapByBucket.keys()].sort(),
         bucketSummary: Object.fromEntries(
           [...classNameMapByBucket.entries()]
-            .map(([bucketKey, bucketClassNames]) => [
-              bucketKey,
-              {
-                classCount: bucketClassNames.size,
-                fileCount: filesByBucket.get(bucketKey)?.size ?? 0,
-                prefix: bucketPrefixMap.get(bucketKey) ?? "",
-              },
-            ] as const)
+            .map(
+              ([bucketKey, bucketClassNames]) =>
+                [
+                  bucketKey,
+                  {
+                    classCount: bucketClassNames.size,
+                    fileCount: filesByBucket.get(bucketKey)?.size ?? 0,
+                    prefix: bucketPrefixMap.get(bucketKey) ?? "",
+                  },
+                ] as const,
+            )
             .sort(([left], [right]) => left.localeCompare(right)),
         ),
         classFiles: [...classesByFile.keys()].sort(),
         entriesByFile: toSortedRecord(entriesByFile),
         filesByBucket: toSortedRecord(filesByBucket),
-        pageEntryOutputFiles: Object.fromEntries([...pageEntryOutputFiles.entries()].sort(([left], [right]) => left.localeCompare(right))),
+        pageEntryOutputFiles: Object.fromEntries(
+          [...pageEntryOutputFiles.entries()].sort(([left], [right]) => left.localeCompare(right)),
+        ),
       } satisfies DebugSummary;
 
       // mapping / debug 文件故意放在主题产物之外，
       // 这样排查分桶结果时不用反查压缩后的最终资源。
-      writeFileSync(resolve(options.projectRoot, ".tw-patch/tw-mangle-debug.json"), JSON.stringify(debugSummary, null, 2));
+      writeFileSync(
+        resolve(options.projectRoot, ".tw-patch/tw-mangle-debug.json"),
+        JSON.stringify(debugSummary, null, 2),
+      );
 
       mappingEntries.sort((left, right) => {
         if (left.bucket !== right.bucket) {
