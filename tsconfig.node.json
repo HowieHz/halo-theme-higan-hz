@@ -5,5 +5,5 @@
     "declarationDir": "./node_modules/.tmp/types/root/node",
     "isolatedDeclarations": false
   },
-  "include": ["vite.config.ts", "plugins/**/*.ts"]
+  "include": ["vite.config.ts", "plugins/**/*.ts", "src/scripts/**/*.ts"]
 }

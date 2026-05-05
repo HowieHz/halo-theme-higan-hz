@@ -1,1 +1,1 @@
-import "./styles.less";
+import "../../../generated/theme-light-blue.css";

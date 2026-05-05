@@ -106,7 +106,7 @@ pnpm build
 
 CI 会先自动运行 `pnpm fmt`，包含以下格式化步骤：
 
-- `oxfmt`：格式化 JSON、JSONC、YAML、Markdown、CSS、JavaScript、TypeScript、HTML、Vue 和 Less 文件
+- `oxfmt`：格式化 JSON、JSONC、YAML、Markdown、CSS、JavaScript、TypeScript、HTML 和 Vue 文件
 
 > 格式化产生的变更会自动提交。
 

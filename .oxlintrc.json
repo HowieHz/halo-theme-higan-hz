@@ -14,6 +14,8 @@
     "tmp/",
     ".tw-patch/",
     ".vite-inspect/",
+    "docs/.vitepress/generated/",
+    "src/generated/",
     "**/logs",
     "**/*.log",
     "**/npm-debug.log*",
@@ -233,7 +235,8 @@
     },
     {
       "files": [
-        "src/templates/**/*.{js,ts}",
+        "src/templates/**/*.ts",
+        "src/types/**/*.d.ts",
         "docs/.vitepress/theme/**/*.ts",
         "docs/.vitepress/components/**/*.ts",
         "docs/.vitepress/utils/**/*.ts",
@@ -265,6 +268,9 @@
       "files": [
         "docs/.vitepress/config.ts",
         "docs/en/config.ts",
+        "docs/.vitepress/types/node/**/*.d.ts",
+        "docs/.vitepress/scripts/**/*.ts",
+        "src/scripts/**/*.ts",
         "vite.config.ts",
         "plugins/**/*.ts",
         "eslint.config.js",
