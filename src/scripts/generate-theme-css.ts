@@ -45,6 +45,12 @@ function indentCssBlock(cssContent: string): string {
     .join("\n");
 }
 
+function wrapAutoThemeCss(themeSelector: string, lightTokens: ThemeTokens, darkTokens: ThemeTokens): string {
+  return `${wrapThemeCss(themeSelector, lightTokens)}\n@media (prefers-color-scheme: dark) {\n${indentCssBlock(
+    wrapThemeCss(themeSelector, darkTokens).trimEnd(),
+  )}\n}\n`;
+}
+
 const themesDir = resolve(import.meta.dirname, "../templates/_runtime/styles/themes");
 const generatedDir = resolve(import.meta.dirname, "../generated");
 
@@ -53,33 +59,24 @@ const themeDark = parseThemeTokens(resolve(themesDir, "theme-dark.css"));
 const themeLightBlue = parseThemeTokens(resolve(themesDir, "theme-light-blue.css"));
 const themeDarkBlue = parseThemeTokens(resolve(themesDir, "theme-dark-blue.css"));
 const themeGray = parseThemeTokens(resolve(themesDir, "theme-gray.css"));
+const staticThemes = [
+  ["theme-light.css", 'html[theme="light"]', themeLight],
+  ["theme-dark.css", 'html[theme="dark"]', themeDark],
+  ["theme-light-blue.css", 'html[theme="light-blue"]', themeLightBlue],
+  ["theme-dark-blue.css", 'html[theme="dark-blue"]', themeDarkBlue],
+  ["theme-gray.css", 'html[theme="gray"]', themeGray],
+] as const;
+const autoThemes = [
+  ["theme-auto.css", 'html[theme="auto"]', themeLight, themeDark],
+  ["theme-auto-blue.css", 'html[theme="auto-blue"]', themeLightBlue, themeDarkBlue],
+] as const;
 
 mkdirSync(generatedDir, { recursive: true });
 
-writeFileSync(resolve(generatedDir, "theme-light.css"), wrapThemeCss('html[theme="light"]', themeLight), "utf8");
-writeFileSync(resolve(generatedDir, "theme-dark.css"), wrapThemeCss('html[theme="dark"]', themeDark), "utf8");
-writeFileSync(
-  resolve(generatedDir, "theme-light-blue.css"),
-  wrapThemeCss('html[theme="light-blue"]', themeLightBlue),
-  "utf8",
-);
-writeFileSync(
-  resolve(generatedDir, "theme-dark-blue.css"),
-  wrapThemeCss('html[theme="dark-blue"]', themeDarkBlue),
-  "utf8",
-);
-writeFileSync(resolve(generatedDir, "theme-gray.css"), wrapThemeCss('html[theme="gray"]', themeGray), "utf8");
-writeFileSync(
-  resolve(generatedDir, "theme-auto.css"),
-  `${wrapThemeCss('html[theme="auto"]', themeLight)}\n@media (prefers-color-scheme: dark) {\n${indentCssBlock(
-    wrapThemeCss('html[theme="auto"]', themeDark).trimEnd(),
-  )}\n}\n`,
-  "utf8",
-);
-writeFileSync(
-  resolve(generatedDir, "theme-auto-blue.css"),
-  `${wrapThemeCss('html[theme="auto-blue"]', themeLightBlue)}\n@media (prefers-color-scheme: dark) {\n${indentCssBlock(
-    wrapThemeCss('html[theme="auto-blue"]', themeDarkBlue).trimEnd(),
-  )}\n}\n`,
-  "utf8",
-);
+for (const [fileName, themeSelector, themeTokens] of staticThemes) {
+  writeFileSync(resolve(generatedDir, fileName), wrapThemeCss(themeSelector, themeTokens), "utf8");
+}
+
+for (const [fileName, themeSelector, lightTokens, darkTokens] of autoThemes) {
+  writeFileSync(resolve(generatedDir, fileName), wrapAutoThemeCss(themeSelector, lightTokens, darkTokens), "utf8");
+}
