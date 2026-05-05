@@ -36,8 +36,8 @@ const listAssets = () => {
   }
 
   assertKnownAssets(assets);
-  // Halo App Store 与 GitHub Release 当前都是后上传的排在前面。
-  // 这里倒序上传，最终展示顺序就会与 DISPLAY_ORDER 一致。
+  // Halo App Store 当前可观测为后上传的资源排在前面。
+  // 这里倒序上传，以匹配 DISPLAY_ORDER 对应的市场展示顺序。
   return sortByDisplayOrder(assets).reverse();
 };
 

@@ -145,8 +145,8 @@ jobs:
           mapfile -t assets < <(
             node --input-type=module -e "import fs from 'node:fs'; import path from 'node:path'; import { sortByDisplayOrder } from './.github/scripts/release-asset-order.js'; const baseDir = 'dist/theme-packages'; const fileNames = fs.readdirSync(baseDir).filter((fileName) => fs.statSync(path.join(baseDir, fileName)).isFile()); for (const fileName of sortByDisplayOrder(fileNames)) console.log(path.join(baseDir, fileName));"
           )
-          # GitHub Releases currently preserve asset upload order in the UI,
-          # so upload assets in DISPLAY_ORDER directly.
+          # Keep a deterministic asset argument order for release creation.
+          # GitHub Release asset display order is not guaranteed by this workflow.
           gh release create "$PRERELEASE_TAG" "${assets[@]}" \
             --title "$PRERELEASE_VERSION" \
             --notes-file .github/templates/release-note-template.md \

@@ -28,7 +28,8 @@ incomplete assets in the store.
 
 ## Build Artifacts
 
-The release pipeline builds multiple installable theme archives and keeps `howiehz-higan-zh-hans.zip` first in the release asset list so Halo CMS prefers the Simplified Chinese package during update installs.
+The release pipeline builds multiple installable theme archives. Asset order on the GitHub Release page is determined by GitHub; in the Halo App Store,
+`howiehz-higan-zh-hans.zip` is kept first so Halo CMS can prefer the Simplified Chinese package during automatic updates.
 
 Current release artifacts:
 
