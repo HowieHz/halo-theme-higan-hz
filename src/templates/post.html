@@ -57,7 +57,6 @@
       src="@runtime/pages/post/index.ts"
       type="module"
     ></script>
-    <th:block th:insert="~{components/nav-post/template :: head}"></th:block>
     <th:block
       th:if="${theme.config?.post_styles?.is_post_upvote_button_show}"
       th:insert="~{components/upvote-runtime/template :: head}"
@@ -80,6 +79,7 @@
       th:if="${theme.config?.post_styles?.is_show_footer_nav}"
       th:insert="~{components/footer-nav-post/template :: head}"
     ></th:block>
+    <th:block th:insert="~{components/nav-post/template :: head}"></th:block>
   </head>
   <body th:remove="tag">
     <th:block

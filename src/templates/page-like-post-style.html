@@ -20,7 +20,6 @@
       src="@runtime/pages/page-like-post-style/index.ts"
       type="module"
     ></script>
-    <th:block th:insert="~{components/nav-page-like-post-style/template :: head}"></th:block>
     <th:block
       th:if="${theme.config?.post_styles?.is_show_post_nav_share_button
                or theme.config?.post_styles?.is_show_share_footer}"
@@ -39,6 +38,7 @@
       th:if="${theme.config?.post_styles?.is_show_footer_nav}"
       th:insert="~{components/footer-nav-page-like-post-style/template :: head}"
     ></th:block>
+    <th:block th:insert="~{components/nav-page-like-post-style/template :: head}"></th:block>
   </head>
   <body th:remove="tag">
     <th:block
