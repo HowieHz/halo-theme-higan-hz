@@ -148,16 +148,6 @@ function toOutputHtmlFileName(templateRoot: string, inputFile: string): string |
   return normalizePathSeparators(relative(templateRoot, inputFile));
 }
 
-/** 转义正则特殊字符，供动态构造匹配表达式使用。 */
-function escapeRegExp(value: string): string {
-  return value.replaceAll(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-/** 转义 CSS 类名里需要额外转义的字符。 */
-function escapeCssClassName(value: string): string {
-  return value.replaceAll(/[^A-Za-z0-9_-]/g, (character) => `\\${character}`);
-}
-
 /** 生成 a, b, ... z, aa, ab ... 这种稳定短序列。 */
 function getSequenceLabel(index: number): string {
   let remaining = index;
@@ -196,45 +186,6 @@ function collectOutputFiles(rootDir: string): string[] {
   }
 
   return outputFiles;
-}
-
-/** 从 HTML 的 class 属性中提取当前已知 Tailwind utility。 */
-function collectClassesFromHtml(source: string, knownClassSet: ReadonlySet<string>): Set<string> {
-  const classes = new Set<string>();
-  const classAttributeRegex = /\bclass\s*=\s*(["'])([\s\S]*?)\1/gmu;
-
-  for (const match of source.matchAll(classAttributeRegex)) {
-    const classValue = match[2];
-
-    for (const className of classValue.split(/\s+/u)) {
-      if (className !== "" && knownClassSet.has(className)) {
-        classes.add(className);
-      }
-    }
-  }
-
-  return classes;
-}
-
-/**
- * 从普通文本中按规则提取类名。
- *
- * 这里用于 CSS / JS 文本扫描，具体匹配方式由调用方提供。
- */
-function collectClassesFromText(
-  source: string,
-  knownClasses: readonly string[],
-  regexFactory: (className: string) => RegExp,
-): Set<string> {
-  const classes = new Set<string>();
-
-  for (const className of knownClasses) {
-    if (regexFactory(className).test(source)) {
-      classes.add(className);
-    }
-  }
-
-  return classes;
 }
 
 /** 从 Thymeleaf `th:insert` / `th:replace` 中提取组件模板引用。 */
@@ -409,16 +360,6 @@ function collectReachableFiles(graph: ReadonlyMap<string, ReadonlySet<string>>, 
   return visitedFiles;
 }
 
-/** 生成 CSS 选择器里的类名匹配正则。 */
-function createCssClassRegex(className: string): RegExp {
-  return new RegExp(`(^|[^A-Za-z0-9_-])\\.${escapeRegExp(escapeCssClassName(className))}(?=$|[^A-Za-z0-9_-])`, "gmu");
-}
-
-/** 生成 JS 字符串上下文中的类名匹配正则。 */
-function createJsClassRegex(className: string): RegExp {
-  return new RegExp(`(^|[\\s"'\\x60])${escapeRegExp(className)}(?=$|[\\s"'\\x60])`, "gmu");
-}
-
 /** 将 `Map<string, Set<string>>` 转成稳定排序后的普通对象，便于输出调试文件。 */
 function toSortedRecord(map: ReadonlyMap<string, ReadonlySet<string>>): Record<string, string[]> {
   return Object.fromEntries(
@@ -426,6 +367,14 @@ function toSortedRecord(map: ReadonlyMap<string, ReadonlySet<string>>): Record<s
       .sort(([left], [right]) => left.localeCompare(right))
       .map(([key, values]) => [key, [...values].sort()]),
   );
+}
+
+const SCAN_MARKER_PREFIX = "__tw_scan_";
+const SCAN_MARKER_REGEX = /__tw_scan_(\d+)__/gmu;
+
+/** 为扫描阶段生成稳定且可回收的占位类名。 */
+function toScanMarker(index: number): string {
+  return `${SCAN_MARKER_PREFIX}${index}__`;
 }
 
 /**
@@ -483,6 +432,44 @@ async function rewriteWithUtwmHandler(sourceText: string, fileName: string, mapp
   return sourceText;
 }
 
+/**
+ * 用官方 handler 做“只扫描不落盘”的类名提取。
+ *
+ * 做法不是手写 HTML/CSS/JS regex，而是：
+ * 1. 给每个已知 class 临时分配唯一 marker
+ * 2. 跑一遍 UTWM 官方 handler
+ * 3. 再从改写结果里回收 marker，反推出本文件实际命中的 class
+ *
+ * 这样扫描和真正改写共用同一套解析路径：
+ * - HTML：`htmlHandler`
+ * - CSS：`cssHandler`
+ * - JS：`jsHandler`
+ */
+async function collectClassesWithUtwmHandler(sourceText: string, fileName: string, knownClasses: readonly string[]): Promise<Set<string>> {
+  const markerToClassName = new Map<string, string>();
+  const classNameToMarker = new Map<string, string>();
+
+  for (const [classIndex, className] of knownClasses.entries()) {
+    const marker = toScanMarker(classIndex);
+    classNameToMarker.set(className, marker);
+    markerToClassName.set(marker, className);
+  }
+
+  const rewrittenText = await rewriteWithUtwmHandler(sourceText, fileName, classNameToMarker);
+  const classes = new Set<string>();
+
+  for (const match of rewrittenText.matchAll(SCAN_MARKER_REGEX)) {
+    const marker = match[0];
+    const className = markerToClassName.get(marker);
+
+    if (className !== undefined) {
+      classes.add(className);
+    }
+  }
+
+  return classes;
+}
+
 export default function tailwindcssMangleSignaturesPlugin(
   options: TailwindcssMangleSignaturesPluginOptions,
 ): Plugin {
@@ -491,8 +478,7 @@ export default function tailwindcssMangleSignaturesPlugin(
   const normalizedBase = normalizePublicBase(options.base);
   const componentHtmlFiles = new Set<string>();
   const pageEntryOutputFiles = new Map<string, string>();
-  let knownClasses: string[] = [];
-  let knownClassSet = new Set<string>();
+      let knownClasses: string[] = [];
 
   for (const [entryKey, inputFile] of Object.entries(options.input)) {
     const outputHtmlFileName = toOutputHtmlFileName(options.templateRoot, inputFile);
@@ -520,8 +506,7 @@ export default function tailwindcssMangleSignaturesPlugin(
         throw new TypeError(`Tailwind class list must be a string array: ${classListFile}`);
       }
 
-      knownClasses = [...new Set(parsedClassList)].sort();
-      knownClassSet = new Set(knownClasses);
+        knownClasses = [...new Set(parsedClassList)].sort();
     },
     async writeBundle(outputOptions, bundle) {
       // 最终改写仍然发生在 writeBundle：
@@ -591,16 +576,13 @@ export default function tailwindcssMangleSignaturesPlugin(
       }
 
       for (const [fileName, sourceText] of fileContents.entries()) {
-        let classes = new Set<string>();
         const extension = extname(fileName);
 
-        if (fileName.endsWith(HTML_FILE_EXTENSION)) {
-          classes = collectClassesFromHtml(sourceText, knownClassSet);
-        } else if (fileName.endsWith(CSS_FILE_EXTENSION)) {
-          classes = collectClassesFromText(sourceText, knownClasses, createCssClassRegex);
-        } else if (JS_FILE_EXTENSIONS.has(extension)) {
-          classes = collectClassesFromText(sourceText, knownClasses, createJsClassRegex);
+        if (!(fileName.endsWith(HTML_FILE_EXTENSION) || fileName.endsWith(CSS_FILE_EXTENSION) || JS_FILE_EXTENSIONS.has(extension))) {
+          continue;
         }
+
+        const classes = await collectClassesWithUtwmHandler(sourceText, fileName, knownClasses);
 
         if (classes.size === 0) {
           continue;
