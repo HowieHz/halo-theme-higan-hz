@@ -1,24 +1,40 @@
 /**
  * 基于 entry 可达范围分桶的 Tailwind 类名混淆插件。
  *
- * 为什么不使用“全局唯一一张映射表”：
+ * 1. 先收集候选 class
+ * - `tw-patch extract` 会先产出一份标准 utility 列表。
+ * - 本插件只会处理这份列表里的 class，避免误伤普通业务 class。
  *
+ * 2. 再计算每个文件最终被哪些 entry 可达
+ * - 每个 Vite input 都直接视为一个独立 entry 起点。
+ * - 再通过 bundler graph 的 `imports` / `importedCss` / `importedAssets` 沿最终产物关系继续传播归属。
+ * - 这里刻意看“最终产物可达关系”，而不是只看源码目录归属。
+ *
+ * 3. 按 entry 可达集合分 bucket
+ * - bucket 的含义是：“最终产物里，哪些 entry 能访问到这份文件”。
+ * - 如果两个文件最终都只被 `post` 访问，它们就在同一个 `post` bucket。
+ * - 如果一个文件会同时被 `post` 和 `page-like-post-style` 访问，它就进入 `post|page-like-post-style` bucket。
+ *
+ * 4. 每个 bucket 单独生成自己的短类名映射
+ * - 不再使用“全局唯一一张映射表”。
+ * - 全局共享桶保留最短前缀 `_`，其他 bucket 稳定分配 `a_`、`b_`、`c_`……
+ * - 这样同一个 utility 可以在不同 bucket 里拿到不同短名；前缀表达的是“最终可达范围”，不是“原始源码归属”。
+ *
+ * 为什么不使用“全局唯一一张映射表”：
  * - 如果全局只保留一份映射，不同 entry 图里的共享 utility 会被压成同一个短类名，语义上就会退化成“到处都一样”。
  * - 这里改成“每个 bucket 一张映射表”，bucket 的含义是： “最终产物里，哪些 entry 能访问到这份文件”。
  * - 这样同一个 utility，例如 `hidden`，就可以同时在全局共享桶里变成 `_h`，又在 `post` 桶里变成 `m_p`。
  *
- * 为什么选 `generateBundle`，而不是 `writeBundle`：
- *
- * - 这个项目需要基于最终输出的 HTML，以及后处理后的资源引用关系，才能算出真实可达图。
- * - 但 `vite-plugin-sri3` 会在 `generateBundle` 阶段计算 `integrity`，所以任何后改写都会直接污染 hash。
- * - 因此这里必须尽量早地改写 bundle 内存对象，让后续 SRI 看到的就是最终内容。
- *
  * 这套方案的取舍：
- *
  * - 优点：共享产物和入口独享产物可以拿到不同的短类名。
  * - 缺点：同一个 utility 可能会在多个 bucket 里重复生成。
  * - 注意：前缀表达的是“最终可达范围”，不是“原始源码归属”。
  * - 如果需要追源码归属，要看 mapping/debug 产物，不能只看前缀。
+ *
+ * 5. 最后按 bucket 改写 bundle 并输出映射
+ * - 扫描阶段和改写阶段都尽量复用官方 handler，而不是手写正则替换。
+ * - 插件会后挂到 Vite 内部 `vite:build-import-analysis` 的 `generateBundle`，这样既能拿到最终 HTML，又早于 `vite-plugin-sri3` 计算 `integrity`。
+ * - 最后把 mapping/debug 产物写到 `.tw-patch/`，用于排查 bucket 和类名归属。
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, extname, relative, resolve } from "node:path";
@@ -49,7 +65,7 @@ interface DebugSummary {
   classFiles: string[];
   entriesByFile: Record<string, string[]>;
   filesByBucket: Record<string, string[]>;
-  pageEntryOutputFiles: Record<string, string>;
+  entryOutputFiles: Record<string, string>;
   bucketSummary: Record<string, { classCount: number; fileCount: number; prefix: string }>;
 }
 
@@ -83,63 +99,10 @@ const DEFAULT_MAPPING_FILE = ".tw-patch/tw-mangle-mapping.json";
 const HTML_FILE_EXTENSION = ".html";
 const JS_FILE_EXTENSIONS = new Set([".js", ".mjs"]);
 const VITE_INTERNAL_ANALYSIS_PLUGIN = "vite:build-import-analysis";
-const THYMELEAF_COMPONENT_REFERENCE_REGEX =
-  /~\{([A-Za-z0-9/_-]+)\s*::\s*(?:head|body|html|inlineInit|menu|fragment)\b/gmu;
-const THYMELEAF_REPLACE_REFERENCE_REGEX = /th:(?:insert|replace)="([^"]+)"/gmu;
 
 /** 统一路径分隔符，避免 Windows 路径影响后续匹配。 */
 function normalizePathSeparators(value: string): string {
   return value.replaceAll("\\", "/");
-}
-
-/** 规范化公开访问 base，保证后续资源引用裁剪逻辑稳定。 */
-function normalizePublicBase(value: string): string {
-  const normalizedValue = normalizePathSeparators(value).trim();
-
-  if (normalizedValue === "" || normalizedValue === ".") {
-    return "/";
-  }
-
-  return normalizedValue.startsWith("/") ? normalizedValue : `/${normalizedValue}`;
-}
-
-/**
- * 将最终产物中的资源引用转换成相对输出目录的文件名。
- *
- * 只处理当前插件关心的几类引用：
- *
- * - 带 base 的最终资源路径
- * - 不带前导 `/` 但仍然以 base 开头的路径
- * - 已经是 `assets/...` 形式的路径
- */
-function normalizeBundleReference(value: string, base: string): string | null {
-  const normalizedValue = normalizePathSeparators(value.trim());
-  const normalizedBase = normalizePublicBase(base);
-
-  if (normalizedValue === "") {
-    return null;
-  }
-
-  if (normalizedValue.startsWith(normalizedBase)) {
-    return normalizedValue.slice(normalizedBase.length);
-  }
-
-  const baseWithoutLeadingSlash = normalizedBase.replace(/^\//u, "");
-
-  if (normalizedValue.startsWith(baseWithoutLeadingSlash)) {
-    return normalizedValue.slice(baseWithoutLeadingSlash.length);
-  }
-
-  if (normalizedValue.startsWith("assets/")) {
-    return normalizedValue;
-  }
-
-  return null;
-}
-
-/** 判断输入 entry 是否属于页面入口，而不是组件模板入口。 */
-function isPageEntry(entryKey: string): boolean {
-  return !entryKey.startsWith("components-");
 }
 
 /** 将源码 HTML 输入路径映射成最终输出目录中的 HTML 相对路径。 */
@@ -162,82 +125,6 @@ function getSequenceLabel(index: number): string {
   }
 
   return result;
-}
-
-/** 从 Thymeleaf `th:insert` / `th:replace` 中提取组件模板引用。 */
-function collectComponentReferences(source: string, componentHtmlFiles: ReadonlySet<string>): Set<string> {
-  const references = new Set<string>();
-
-  for (const match of source.matchAll(THYMELEAF_REPLACE_REFERENCE_REGEX)) {
-    const expression = match[1];
-
-    for (const componentMatch of expression.matchAll(THYMELEAF_COMPONENT_REFERENCE_REGEX)) {
-      const normalizedReference = `${componentMatch[1].trim()}.html`;
-
-      if (componentHtmlFiles.has(normalizedReference)) {
-        references.add(normalizedReference);
-      }
-    }
-  }
-
-  return references;
-}
-
-/** 从 HTML 的 `href` / `src` 中提取可落到最终输出目录的资源引用。 */
-function collectAssetReferences(source: string, base: string, availableFiles: ReadonlySet<string>): Set<string> {
-  const references = new Set<string>();
-  const assetReferenceRegex = /\b(?:href|src)\s*=\s*(["'])([^"']+)\1/gmu;
-
-  for (const match of source.matchAll(assetReferenceRegex)) {
-    const normalizedReference = normalizeBundleReference(match[2], base);
-
-    if (normalizedReference !== null && availableFiles.has(normalizedReference)) {
-      references.add(normalizedReference);
-    }
-  }
-
-  return references;
-}
-
-/** 只为 HTML 模板构建组件引用图，用于入口归属向模板传播。 */
-function buildTemplateGraph(
-  fileContents: ReadonlyMap<string, string>,
-  componentHtmlFiles: ReadonlySet<string>,
-): Map<string, Set<string>> {
-  const graph = new Map<string, Set<string>>();
-
-  for (const [fileName, sourceText] of fileContents.entries()) {
-    if (!fileName.endsWith(HTML_FILE_EXTENSION)) {
-      continue;
-    }
-
-    graph.set(fileName, collectComponentReferences(sourceText, componentHtmlFiles));
-  }
-
-  return graph;
-}
-
-/**
- * 记录每个 HTML 模板直接引用了哪些最终 JS/CSS/asset 文件。
- *
- * 注意这里只记“直接引用”，不做 JS/CSS 之间的传递展开。资源间的真正依赖关系交给 bundler graph 处理。
- */
-function collectTemplateAssetReferences(
-  fileContents: ReadonlyMap<string, string>,
-  base: string,
-  availableAssetFiles: ReadonlySet<string>,
-): Map<string, Set<string>> {
-  const referencesByTemplate = new Map<string, Set<string>>();
-
-  for (const [fileName, sourceText] of fileContents.entries()) {
-    if (!fileName.endsWith(HTML_FILE_EXTENSION)) {
-      continue;
-    }
-
-    referencesByTemplate.set(fileName, collectAssetReferences(sourceText, base, availableAssetFiles));
-  }
-
-  return referencesByTemplate;
 }
 
 /** 判断 bundle 条目是否至少像个输出文件节点。 */
@@ -536,9 +423,7 @@ function applyBundleFileContents(
 export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMangleSignaturesPluginOptions): Plugin {
   const classListFile = resolve(options.projectRoot, options.classListFile ?? DEFAULT_CLASS_LIST_FILE);
   const mappingFile = resolve(options.projectRoot, options.mappingFile ?? DEFAULT_MAPPING_FILE);
-  const normalizedBase = normalizePublicBase(options.base);
-  const componentHtmlFiles = new Set<string>();
-  const pageEntryOutputFiles = new Map<string, string>();
+  const entryOutputFiles = new Map<string, string>();
   let knownClasses: string[] = [];
 
   for (const [entryKey, inputFile] of Object.entries(options.input)) {
@@ -548,55 +433,31 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       continue;
     }
 
-    if (isPageEntry(entryKey)) {
-      pageEntryOutputFiles.set(entryKey, outputHtmlFileName);
-    } else {
-      componentHtmlFiles.add(outputHtmlFileName);
-    }
+    entryOutputFiles.set(entryKey, outputHtmlFileName);
   }
 
   const rewriteBundle = async (bundle: Record<string, unknown>): Promise<void> => {
-    const bundleFileNames = new Set(
-      Object.values(bundle)
-        .filter(isBundleFileLike)
-        .map((bundleFile) => bundleFile.fileName),
-    );
     const entriesByFile = new Map<string, Set<string>>();
     const classesByFile = new Map<string, Set<string>>();
     const filesByBucket = new Map<string, Set<string>>();
     const classNameMapByBucket = new Map<string, Map<string, string>>();
-    const pageEntryKeys = [...pageEntryOutputFiles.keys()].sort();
-    const globalBucketKey = pageEntryKeys.join("|");
+    const entryKeys = [...entryOutputFiles.keys()].sort();
+    const globalBucketKey = entryKeys.join("|");
     const bundleFileContents = collectBundleFileContents(bundle);
-    const templateGraph = buildTemplateGraph(bundleFileContents, componentHtmlFiles);
-    const templateAssetReferences = collectTemplateAssetReferences(bundleFileContents, normalizedBase, bundleFileNames);
     const assetGraph = buildAssetGraph(bundle);
     const fileNamesToRewrite = new Set(bundleFileContents.keys());
 
-    for (const [entryKey, outputHtmlFileName] of pageEntryOutputFiles.entries()) {
+    for (const [entryKey, outputHtmlFileName] of entryOutputFiles.entries()) {
       if (!bundleFileContents.has(outputHtmlFileName)) {
         continue;
       }
 
-      // 第一步：只在 HTML 模板层传播入口归属。
-      // 页面模板能触达哪些组件模板，由 Thymeleaf 引用关系决定。
-      const reachableTemplateFiles = collectReachableFiles(templateGraph, [outputHtmlFileName]);
-      const assetSeedFiles = new Set<string>();
+      const entryFileEntries = entriesByFile.get(outputHtmlFileName) ?? new Set<string>();
+      entryFileEntries.add(entryKey);
+      entriesByFile.set(outputHtmlFileName, entryFileEntries);
 
-      for (const fileName of reachableTemplateFiles) {
-        const entries = entriesByFile.get(fileName) ?? new Set<string>();
-        entries.add(entryKey);
-        entriesByFile.set(fileName, entries);
-
-        for (const assetFileName of templateAssetReferences.get(fileName) ?? new Set<string>()) {
-          assetSeedFiles.add(assetFileName);
-        }
-      }
-
-      // 第二步：资源层归属交给 bundler graph。
-      // 从页面及其组件模板直接引用到的最终 JS/CSS/asset 出发，
-      // 按 chunk/importedCss/importedAssets 做可达传播。
-      const reachableAssetFiles = collectReachableFiles(assetGraph, [...assetSeedFiles]);
+      // 每个 input 自己就是一个 entry 起点，后续只沿 bundler 资源图继续传播。
+      const reachableAssetFiles = collectReachableFiles(assetGraph, [outputHtmlFileName]);
 
       for (const fileName of reachableAssetFiles) {
         const entries = entriesByFile.get(fileName) ?? new Set<string>();
@@ -673,7 +534,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
     for (const bucketKey of sortedBucketKeys) {
       // 所有页面都能访问到的那个 bucket 被视为“全局共享桶”，
       // 故意保留最短前缀 `_`。
-      if (bucketKey === globalBucketKey && pageEntryKeys.length > 0) {
+      if (bucketKey === globalBucketKey && entryKeys.length > 0) {
         bucketPrefixMap.set(bucketKey, "_");
         continue;
       }
@@ -769,8 +630,8 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       classFiles: [...classesByFile.keys()].sort(),
       entriesByFile: toSortedRecord(entriesByFile),
       filesByBucket: toSortedRecord(filesByBucket),
-      pageEntryOutputFiles: Object.fromEntries(
-        [...pageEntryOutputFiles.entries()].sort(([left], [right]) => left.localeCompare(right)),
+      entryOutputFiles: Object.fromEntries(
+        [...entryOutputFiles.entries()].sort(([left], [right]) => left.localeCompare(right)),
       ),
     } satisfies DebugSummary;
 
