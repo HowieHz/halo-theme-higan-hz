@@ -23,7 +23,7 @@ type BuildPrecompressOption = (typeof BUILD_PRECOMPRESS_OPTIONS)[number];
 const BUILD_OUTPUT_OPTIONS = ["minify", "original"] as const;
 type BuildOutputOption = (typeof BUILD_OUTPUT_OPTIONS)[number];
 // Build modes select fixed presets for scope, precompress, output, and manifest.
-const BUILD_MODES = ["default", "preview", "full", "tiny"] as const;
+const BUILD_MODES = ["default", "preview-for-docs", "dev", "full", "tiny"] as const;
 type BuildMode = (typeof BUILD_MODES)[number];
 
 function pickEnvValue<T extends string>(value: string | undefined, allowedValues: readonly T[], fallback: T): T {
@@ -45,8 +45,14 @@ const BUILD_MODE_CONFIGS: Record<
     output: "minify",
     manifest: false,
   },
-  preview: {
+  "preview-for-docs": {
     scope: "tiny-injection",
+    precompress: "none",
+    output: "original",
+    manifest: true,
+  },
+  dev: {
+    scope: "all",
     precompress: "none",
     output: "original",
     manifest: true,

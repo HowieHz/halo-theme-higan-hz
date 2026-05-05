@@ -27,9 +27,9 @@
   "type": "module",
   "scripts": {
     "build": "NODE_OPTIONS=--max-old-space-size=16384 vite build",
-    "build:dev": "BUILD_MODE=preview pnpm run build",
+    "build:dev": "BUILD_MODE=dev pnpm run build",
     "build:full": "BUILD_MODE=full pnpm run build",
-    "build:theme-preview-for-docs": "BUILD_MODE=preview pnpm run build",
+    "build:theme-preview-for-docs": "BUILD_MODE=preview-for-docs pnpm run build",
     "build:tiny": "BUILD_MODE=tiny pnpm run build",
     "docs:build": "pnpm --filter docs build",
     "docs:prepare-assets": "pnpm --filter docs prepare-assets",
@@ -52,7 +52,7 @@
     "prepare": "husky && tw-patch install",
     "prewatch:vite": "pnpm run prebuild",
     "watch": "pnpm run '/^watch:/'",
-    "watch:vite": "NODE_OPTIONS=--max-old-space-size=16384 BUILD_MODE=preview vite build --watch"
+    "watch:vite": "NODE_OPTIONS=--max-old-space-size=16384 BUILD_MODE=dev vite build --watch"
   },
   "dependencies": {
     "alpinejs": "^3.15.12",
