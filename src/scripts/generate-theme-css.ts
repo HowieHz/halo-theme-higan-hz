@@ -4,7 +4,7 @@ import { resolve } from "node:path";
 type ThemeTokens = Record<string, string>;
 
 function parseThemeTokens(themePath: string): ThemeTokens {
-  const themeContent = readFileSync(themePath, "utf8").trim();
+  const themeContent = readFileSync(themePath, "utf8").replaceAll("\r\n", "\n").trim();
   const themeMatch = themeContent.match(/^:root\s*\{\n([\s\S]*?)\n\}$/);
 
   if (!themeMatch) {

@@ -1,4 +1,4 @@
-@import "../src/templates/_runtime/global/fonts/meslo-LG/styles.css";
+@import "@runtime/global/fonts/meslo-LG/styles.css";
 
 #vp-app {
   /* 用主题的 font-family，避免多次加载 inter 字体 */
