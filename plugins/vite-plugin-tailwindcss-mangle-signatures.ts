@@ -54,13 +54,35 @@ interface DebugSummary {
   bucketSummary: Record<string, { classCount: number; fileCount: number; prefix: string }>;
 }
 
+interface BundleMetadataLike {
+  importedAssets?: ReadonlySet<string>;
+  importedCss?: ReadonlySet<string>;
+}
+
+interface BundleChunkLike {
+  dynamicImports?: readonly string[];
+  fileName: string;
+  implicitlyLoadedBefore?: readonly string[];
+  imports?: readonly string[];
+  type: "chunk";
+  viteMetadata?: BundleMetadataLike;
+}
+
+interface BundleAssetLike {
+  fileName: string;
+  type: "asset";
+  viteMetadata?: BundleMetadataLike;
+}
+
+type BundleFileLike = BundleAssetLike | BundleChunkLike;
+
 const CSS_FILE_EXTENSION = ".css";
 const DEFAULT_CLASS_LIST_FILE = ".tw-patch/tw-class-list.json";
 const DEFAULT_MAPPING_FILE = ".tw-patch/tw-mangle-mapping.json";
 const HTML_FILE_EXTENSION = ".html";
 const JS_FILE_EXTENSIONS = new Set([".js", ".mjs"]);
 const THYMELEAF_COMPONENT_REFERENCE_REGEX =
-  /~\{([^}]+?)\s*::\s*(?:head|body|html|inlineInit|menu|fragment(?:\([^)]*\))?)\}/gmu;
+  /~\{([A-Za-z0-9/_-]+)\s*::\s*(?:head|body|html|inlineInit|menu|fragment)\b/gmu;
 const THYMELEAF_REPLACE_REFERENCE_REGEX = /th:(?:insert|replace)="([^"]+)"/gmu;
 
 /** 统一路径分隔符，避免 Windows 路径影响后续匹配。 */
@@ -250,57 +272,117 @@ function collectAssetReferences(source: string, base: string, availableFiles: Re
   return references;
 }
 
-/**
- * 基于最终产物构建引用图。
- *
- * 节点是最终输出文件，边表示一个文件在最终文本里引用到了另一个文件。
- * 这个图后面用于从页面入口反推每个文件属于哪些 entry bucket。
- */
-function buildOutputGraph(
+/** 只为 HTML 模板构建组件引用图，用于入口归属向模板传播。 */
+function buildTemplateGraph(
   fileContents: ReadonlyMap<string, string>,
-  base: string,
   componentHtmlFiles: ReadonlySet<string>,
 ): Map<string, Set<string>> {
-  // 图是基于最终产物文件构建的，不是基于源码模块图。
-  // 这样 bucket 才能和真实发布出去的输出拓扑保持一致。
   const graph = new Map<string, Set<string>>();
-  const availableFiles = new Set(fileContents.keys());
 
   for (const [fileName, sourceText] of fileContents.entries()) {
-    const references = new Set<string>();
-
-    if (fileName.endsWith(HTML_FILE_EXTENSION)) {
-      for (const reference of collectComponentReferences(sourceText, componentHtmlFiles)) {
-        references.add(reference);
-      }
-
-      for (const reference of collectAssetReferences(sourceText, base, availableFiles)) {
-        references.add(reference);
-      }
-    } else if (JS_FILE_EXTENSIONS.has(extname(fileName))) {
-      const importReferenceRegex = /(?:import|from)\s*(?:\(|)\s*["']([^"']+)["']/gmu;
-
-      for (const match of sourceText.matchAll(importReferenceRegex)) {
-        const normalizedReference = normalizeBundleReference(match[1], base);
-
-        if (normalizedReference !== null && availableFiles.has(normalizedReference)) {
-          references.add(normalizedReference);
-        }
-      }
+    if (!fileName.endsWith(HTML_FILE_EXTENSION)) {
+      continue;
     }
 
-    graph.set(fileName, references);
+    graph.set(fileName, collectComponentReferences(sourceText, componentHtmlFiles));
   }
 
   return graph;
 }
 
 /**
- * 从指定页面入口 HTML 出发，收集它在最终产物树中能访问到的所有文件。
+ * 记录每个 HTML 模板直接引用了哪些最终 JS/CSS/asset 文件。
+ *
+ * 注意这里只记“直接引用”，不做 JS/CSS 之间的传递展开。
+ * 资源间的真正依赖关系交给 bundler graph 处理。
  */
-function collectReachableFiles(graph: ReadonlyMap<string, ReadonlySet<string>>, entryHtmlFileName: string): Set<string> {
+function collectTemplateAssetReferences(
+  fileContents: ReadonlyMap<string, string>,
+  base: string,
+  availableAssetFiles: ReadonlySet<string>,
+): Map<string, Set<string>> {
+  const referencesByTemplate = new Map<string, Set<string>>();
+
+  for (const [fileName, sourceText] of fileContents.entries()) {
+    if (!fileName.endsWith(HTML_FILE_EXTENSION)) {
+      continue;
+    }
+
+    referencesByTemplate.set(fileName, collectAssetReferences(sourceText, base, availableAssetFiles));
+  }
+
+  return referencesByTemplate;
+}
+
+/** 判断 bundle 条目是否至少像个输出文件节点。 */
+function isBundleFileLike(value: unknown): value is BundleFileLike {
+  return typeof value === "object" && value !== null && "fileName" in value && "type" in value;
+}
+
+/** 基于 bundler metadata 构建最终资源图。 */
+function buildAssetGraph(bundle: Record<string, unknown>): Map<string, Set<string>> {
+  const graph = new Map<string, Set<string>>();
+  const availableFiles = new Set(
+    Object.values(bundle)
+      .filter(isBundleFileLike)
+      .map((bundleFile) => bundleFile.fileName),
+  );
+
+  for (const bundleValue of Object.values(bundle)) {
+    if (!isBundleFileLike(bundleValue)) {
+      continue;
+    }
+
+    const references = new Set<string>();
+
+    if (bundleValue.type === "chunk") {
+      for (const reference of bundleValue.imports ?? []) {
+        if (availableFiles.has(reference)) {
+          references.add(reference);
+        }
+      }
+
+      for (const reference of bundleValue.dynamicImports ?? []) {
+        if (availableFiles.has(reference)) {
+          references.add(reference);
+        }
+      }
+
+      for (const reference of bundleValue.implicitlyLoadedBefore ?? []) {
+        if (availableFiles.has(reference)) {
+          references.add(reference);
+        }
+      }
+    }
+
+    for (const reference of bundleValue.viteMetadata?.importedAssets ?? []) {
+      if (availableFiles.has(reference)) {
+        references.add(reference);
+      }
+    }
+
+    for (const reference of bundleValue.viteMetadata?.importedCss ?? []) {
+      if (availableFiles.has(reference)) {
+        references.add(reference);
+      }
+    }
+
+    graph.set(bundleValue.fileName, references);
+  }
+
+  return graph;
+}
+
+/**
+ * 从若干起点出发，收集图中所有可达文件。
+ *
+ * 这里同时用于：
+ * - 页面入口 -> 组件模板传播
+ * - 模板直接引用的资源入口 -> bundler 资源图传播
+ */
+function collectReachableFiles(graph: ReadonlyMap<string, ReadonlySet<string>>, entryFileNames: readonly string[]): Set<string> {
   const visitedFiles = new Set<string>();
-  const pendingFiles = [entryHtmlFileName];
+  const pendingFiles = [...entryFileNames];
 
   while (pendingFiles.length > 0) {
     const currentFile = pendingFiles.pop();
@@ -441,10 +523,10 @@ export default function tailwindcssMangleSignaturesPlugin(
       knownClasses = [...new Set(parsedClassList)].sort();
       knownClassSet = new Set(knownClasses);
     },
-    async writeBundle(outputOptions) {
-      // 第一阶段：扫描最终输出的 HTML / CSS / JS。
-      // 这样后面的替换才能基于真实 bundle，而不是基于源码时的假设，
-      // 包括共享 chunk 和改写后的资源路径。
+    async writeBundle(outputOptions, bundle) {
+      // 最终改写仍然发生在 writeBundle：
+      // - 这里已经有真实 bundle metadata
+      // - 磁盘上也已经有最终 HTML 模板，便于把改写结果直接写回
       const outputDir =
         typeof outputOptions.dir === "string"
           ? resolve(outputOptions.dir)
@@ -461,7 +543,14 @@ export default function tailwindcssMangleSignaturesPlugin(
         }
       }
 
-      const bundleGraph = buildOutputGraph(fileContents, normalizedBase, componentHtmlFiles);
+      const bundleFileNames = new Set(
+        Object.values(bundle)
+          .filter(isBundleFileLike)
+          .map((bundleFile) => bundleFile.fileName),
+      );
+      const templateGraph = buildTemplateGraph(fileContents, componentHtmlFiles);
+      const templateAssetReferences = collectTemplateAssetReferences(fileContents, normalizedBase, bundleFileNames);
+      const assetGraph = buildAssetGraph(bundle);
       const entriesByFile = new Map<string, Set<string>>();
       const classesByFile = new Map<string, Set<string>>();
       const filesByBucket = new Map<string, Set<string>>();
@@ -474,11 +563,27 @@ export default function tailwindcssMangleSignaturesPlugin(
           continue;
         }
 
-        // 从每个页面入口出发做可达分析，得到每个最终文件属于哪些 entry。
-        // 这个“entry 集合”就是后面分桶的依据。
-        const reachableFiles = collectReachableFiles(bundleGraph, outputHtmlFileName);
+        // 第一步：只在 HTML 模板层传播入口归属。
+        // 页面模板能触达哪些组件模板，由 Thymeleaf 引用关系决定。
+        const reachableTemplateFiles = collectReachableFiles(templateGraph, [outputHtmlFileName]);
+        const assetSeedFiles = new Set<string>();
 
-        for (const fileName of reachableFiles) {
+        for (const fileName of reachableTemplateFiles) {
+          const entries = entriesByFile.get(fileName) ?? new Set<string>();
+          entries.add(entryKey);
+          entriesByFile.set(fileName, entries);
+
+          for (const assetFileName of templateAssetReferences.get(fileName) ?? new Set<string>()) {
+            assetSeedFiles.add(assetFileName);
+          }
+        }
+
+        // 第二步：资源层归属交给 bundler graph。
+        // 从页面及其组件模板直接引用到的最终 JS/CSS/asset 出发，
+        // 按 chunk/importedCss/importedAssets 做可达传播。
+        const reachableAssetFiles = collectReachableFiles(assetGraph, [...assetSeedFiles]);
+
+        for (const fileName of reachableAssetFiles) {
           const entries = entriesByFile.get(fileName) ?? new Set<string>();
           entries.add(entryKey);
           entriesByFile.set(fileName, entries);
