@@ -1,7 +1,6 @@
 import { resolve } from "node:path";
 
 import { footnote } from "@mdit/plugin-footnote";
-import tailwindcss from "@tailwindcss/vite";
 import { whyframe } from "@whyframe/core";
 import { whyframeVue } from "@whyframe/vue";
 import browserslist from "browserslist";
@@ -22,7 +21,6 @@ export default defineConfig({
       },
     },
     plugins: [
-      tailwindcss(),
       // Initialize whyframe core plugin
       whyframe({
         components: [{ name: "DefaultRender" }],

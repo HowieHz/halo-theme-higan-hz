@@ -25,6 +25,8 @@ const vueFiles = ["docs/.vitepress/components/**/*.vue", "docs/.vitepress/theme/
 const nodeFiles = [
   "docs/.vitepress/config.ts",
   "docs/en/config.ts",
+  "docs/.vitepress/types/node/**/*.d.ts",
+  "docs/.vitepress/scripts/**/*.ts",
   "vite.config.ts",
   "plugins/**/*.ts",
   "eslint.config.js",

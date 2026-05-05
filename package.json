@@ -46,7 +46,9 @@
     "migrate:oxlint": "pnpm dlx @oxlint/migrate --type-aware --with-nursery && pnpm oxfmt -- --write .oxlintrc.json",
     "prebuild": "pnpm run lint:type-check:tsgo && tw-patch extract",
     "preinstall": "npx only-allow pnpm",
+    "prelint": "pnpm run prepare:docs-assets",
     "prepare": "husky && tw-patch install",
+    "prepare:docs-assets": "pnpm --filter docs run prepare:docs-assets",
     "prewatch:vite": "pnpm run prebuild",
     "watch": "pnpm run '/^watch:/'",
     "watch:vite": "NODE_OPTIONS=--max-old-space-size=16384 BUILD_PRECOMPRESS_PROFILE=none BUILD_OUTPUT_PROFILE=original vite build --watch"
