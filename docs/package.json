@@ -5,11 +5,11 @@
   "scripts": {
     "build": "vitepress build",
     "generate:preview-css": "node --experimental-strip-types .vitepress/scripts/generate-preview-css.ts",
-    "predocs:build": "pnpm run prepare-assets",
-    "predocs:preview": "pnpm run prepare-assets",
-    "predocs:watch": "pnpm run prepare-assets",
+    "prebuild": "pnpm run prepare-assets",
     "prepare-assets": "pnpm --dir .. run build:theme-preview-for-docs && pnpm run generate:preview-css",
+    "prepreview": "pnpm run prepare-assets",
     "preview": "pnpm run build && vitepress preview",
+    "prewatch": "pnpm run prepare-assets",
     "watch": "vitepress dev"
   },
   "dependencies": {
