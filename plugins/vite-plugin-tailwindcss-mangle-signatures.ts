@@ -2,36 +2,41 @@
  * 基于 entry 可达范围分桶的 Tailwind 类名混淆插件。
  *
  * 1. 先收集候选 class
+ *
  * - `tw-patch extract` 会先产出一份标准 utility 列表。
  * - 本插件只会处理这份列表里的 class，避免误伤普通业务 class。
  *
  * 2. 再计算每个文件最终被哪些 entry 可达
+ *
  * - 每个 Vite input 都直接视为一个独立 entry 起点。
  * - 再通过 bundler graph 的 `imports` / `importedCss` / `importedAssets` 沿最终产物关系继续传播归属。
  * - 这里刻意看“最终产物可达关系”，而不是只看源码目录归属。
  *
  * 3. 按 entry 可达集合分 bucket
- * - bucket 的含义是：“最终产物里，哪些 entry 能访问到这份文件”。
+ *
+ * - Bucket 的含义是：“最终产物里，哪些 entry 能访问到这份文件”。
  * - 如果两个文件最终都只被 `post` 访问，它们就在同一个 `post` bucket。
  * - 如果一个文件会同时被 `post` 和 `page-like-post-style` 访问，它就进入 `post|page-like-post-style` bucket。
  *
  * 4. 每个 bucket 单独生成自己的短类名映射
+ *
  * - 不再使用“全局唯一一张映射表”。
  * - 全局共享桶保留最短前缀 `_`，其他 bucket 稳定分配 `a_`、`b_`、`c_`……
  * - 这样同一个 utility 可以在不同 bucket 里拿到不同短名；前缀表达的是“最终可达范围”，不是“原始源码归属”。
  *
  * 为什么不使用“全局唯一一张映射表”：
+ *
  * - 如果全局只保留一份映射，不同 entry 图里的共享 utility 会被压成同一个短类名，语义上就会退化成“到处都一样”。
  * - 这里改成“每个 bucket 一张映射表”，bucket 的含义是： “最终产物里，哪些 entry 能访问到这份文件”。
  * - 这样同一个 utility，例如 `hidden`，就可以同时在全局共享桶里变成 `_h`，又在 `post` 桶里变成 `m_p`。
  *
  * 这套方案的取舍：
+ *
  * - 优点：共享产物和入口独享产物可以拿到不同的短类名。
  * - 缺点：同一个 utility 可能会在多个 bucket 里重复生成。
- * - 注意：前缀表达的是“最终可达范围”，不是“原始源码归属”。
- * - 如果需要追源码归属，要看 mapping/debug 产物，不能只看前缀。
  *
  * 5. 最后按 bucket 改写 bundle 并输出映射
+ *
  * - 扫描阶段和改写阶段都尽量复用官方 handler，而不是手写正则替换。
  * - 插件会后挂到 Vite 内部 `vite:build-import-analysis` 的 `generateBundle`，这样既能拿到最终 HTML，又早于 `vite-plugin-sri3` 计算 `integrity`。
  * - 最后把 mapping/debug 产物写到 `.tw-patch/`，用于排查 bucket 和类名归属。
