@@ -10,7 +10,7 @@
     "predocs:build": "pnpm run prepare:docs-assets",
     "predocs:preview": "pnpm run prepare:docs-assets",
     "predocs:watch": "pnpm run prepare:docs-assets",
-    "prepare:docs-assets": "pnpm --dir .. run build:docs-preview && pnpm run generate:preview-css"
+    "prepare:docs-assets": "pnpm --dir .. run build:theme-preview-for-docs && pnpm run generate:preview-css"
   },
   "dependencies": {
     "chart.js": "^4.5.1",

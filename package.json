@@ -28,8 +28,8 @@
   "scripts": {
     "build": "NODE_OPTIONS=--max-old-space-size=16384 vite build",
     "build:dev": "BUILD_PRECOMPRESS_PROFILE=none BUILD_OUTPUT_PROFILE=original pnpm run build",
-    "build:docs-preview": "BUILD_PROFILE=default BUILD_MANIFEST=true BUILD_PRECOMPRESS_PROFILE=none BUILD_OUTPUT_PROFILE=original pnpm run build",
     "build:full": "BUILD_PRECOMPRESS_PROFILE=full pnpm run build",
+    "build:theme-preview-for-docs": "BUILD_PROFILE=default BUILD_MANIFEST=true BUILD_PRECOMPRESS_PROFILE=none BUILD_OUTPUT_PROFILE=original pnpm run build",
     "build:tiny": "BUILD_PROFILE=tiny BUILD_PRECOMPRESS_PROFILE=none pnpm run build",
     "docs:build": "pnpm --filter docs docs:build",
     "docs:preview": "pnpm --filter docs docs:preview",
@@ -44,7 +44,7 @@
     "lint:type-check:docs:vue-tsc": "vue-tsc -b docs/tsconfig.browser.json",
     "lint:type-check:tsgo": "tsgo -b",
     "migrate:oxlint": "pnpm dlx @oxlint/migrate --type-aware --with-nursery && pnpm oxfmt -- --write .oxlintrc.json",
-    "prebuild": "pnpm run lint:type-check:tsgo && tw-patch extract",
+    "prebuild": "tw-patch extract",
     "preinstall": "npx only-allow pnpm",
     "prelint": "pnpm run prepare:docs-assets",
     "prepare": "husky && tw-patch install",
