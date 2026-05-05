@@ -24,6 +24,7 @@
 import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, extname, relative, resolve } from "node:path";
 
+import { Context, cssHandler, htmlHandler, jsHandler } from "@tailwindcss-mangle/core";
 import type { Plugin } from "vite";
 
 interface TailwindcssMangleSignaturesPluginOptions {
@@ -326,16 +327,6 @@ function collectReachableFiles(graph: ReadonlyMap<string, ReadonlySet<string>>, 
   return visitedFiles;
 }
 
-/** 创建 HTML class 属性值的局部重写函数。 */
-function createHtmlClassValueRewriter(
-  mapping: ReadonlyMap<string, string>,
-): (fullMatch: string, quote: string, classValue: string) => string {
-  return (_fullMatch, quote, classValue) => {
-    const rewrittenClassValue = classValue.replace(/\S+/gu, (className) => mapping.get(className) ?? className);
-    return `class=${quote}${rewrittenClassValue}${quote}`;
-  };
-}
-
 /** 生成 CSS 选择器里的类名匹配正则。 */
 function createCssClassRegex(className: string): RegExp {
   return new RegExp(`(^|[^A-Za-z0-9_-])\\.${escapeRegExp(escapeCssClassName(className))}(?=$|[^A-Za-z0-9_-])`, "gmu");
@@ -353,6 +344,61 @@ function toSortedRecord(map: ReadonlyMap<string, ReadonlySet<string>>): Record<s
       .sort(([left], [right]) => left.localeCompare(right))
       .map(([key, values]) => [key, [...values].sort()]),
   );
+}
+
+/**
+ * 为单个 bucket 构造局部 UTWM 上下文。
+ *
+ * 这里不复用官方 `initConfig()` 的整套初始化流程，因为：
+ * - 当前插件的 bucket 逻辑已经先算出了最终 `original -> mangled`
+ * - 我们只需要复用官方 handler 的 AST / 解析器改写能力
+ * - 不希望再回退到“全局一张映射表”的语义
+ *
+ * 所以这里只手动注入最小必需状态：
+ * - `replaceMap`：供 handler 判断哪些类需要替换
+ * - `classGenerator.newClassMap`：供 handler 在改写时读取既定短名
+ */
+function createBucketContext(mapping: ReadonlyMap<string, string>): Context {
+  const ctx = new Context();
+
+  for (const [originalClassName, mangledClassName] of mapping.entries()) {
+    ctx.replaceMap.set(originalClassName, mangledClassName);
+    ctx.classSet.add(originalClassName);
+    ctx.classGenerator.newClassMap[originalClassName] = {
+      name: mangledClassName,
+      usedBy: new Set<string>(),
+    };
+  }
+
+  return ctx;
+}
+
+/**
+ * 用官方 UTWM handler 改写最终产物。
+ *
+ * 这样做的意义不是改变 bucket 语义，而是把“怎么安全地改 HTML/CSS/JS”
+ * 这件事重新交给官方实现：
+ * - HTML：`htmlparser2`
+ * - CSS：`postcss` + `postcss-selector-parser`
+ * - JS：Babel AST + `MagicString`
+ */
+async function rewriteWithUtwmHandler(sourceText: string, fileName: string, mapping: ReadonlyMap<string, string>): Promise<string> {
+  const ctx = createBucketContext(mapping);
+  const extension = extname(fileName);
+
+  if (fileName.endsWith(HTML_FILE_EXTENSION)) {
+    return htmlHandler(sourceText, { ctx, id: fileName }).code;
+  }
+
+  if (fileName.endsWith(CSS_FILE_EXTENSION)) {
+    return (await cssHandler(sourceText, { ctx, id: fileName })).code;
+  }
+
+  if (JS_FILE_EXTENSIONS.has(extension)) {
+    return jsHandler(sourceText, { ctx, id: fileName }).code;
+  }
+
+  return sourceText;
 }
 
 export default function tailwindcssMangleSignaturesPlugin(
@@ -395,7 +441,7 @@ export default function tailwindcssMangleSignaturesPlugin(
       knownClasses = [...new Set(parsedClassList)].sort();
       knownClassSet = new Set(knownClasses);
     },
-    writeBundle(outputOptions) {
+    async writeBundle(outputOptions) {
       // 第一阶段：扫描最终输出的 HTML / CSS / JS。
       // 这样后面的替换才能基于真实 bundle，而不是基于源码时的假设，
       // 包括共享 chunk 和改写后的资源路径。
@@ -569,43 +615,10 @@ export default function tailwindcssMangleSignaturesPlugin(
         }
 
         const outputFilePath = resolve(outputDir, fileName);
-
-        if (fileName.endsWith(HTML_FILE_EXTENSION)) {
-          // HTML 只按当前文件所属 bucket 做局部替换，
-          // 不会套用其他 bucket 的映射。
-          const rewrittenText = sourceText.replace(
-            /\bclass\s*=\s*(["'])([\s\S]*?)\1/gmu,
-            createHtmlClassValueRewriter(localMapping),
-          );
-          writeFileSync(outputFilePath, rewrittenText);
-          continue;
-        }
-
-        if (fileName.endsWith(CSS_FILE_EXTENSION)) {
-          let rewrittenText = sourceText;
-
-          // CSS 也按 bucket 重写，这正是同一个原始 utility
-          // 能在整体产物中拥有多个混淆名的原因。
-          for (const [className, mangledName] of localMapping.entries()) {
-            rewrittenText = rewrittenText.replaceAll(createCssClassRegex(className), (_match, prefix: string) => `${prefix}.${mangledName}`);
-          }
-
-          writeFileSync(outputFilePath, rewrittenText);
-          continue;
-        }
-
-        if (JS_FILE_EXTENSIONS.has(extname(fileName))) {
-          let rewrittenText = sourceText;
-
-          // JS 这里只处理字符串级别的 class 引用。
-          // 这和当前仓库的运行时用法一致，也能避免为了这件事
-          // 再引入完整 JS AST 重写。
-          for (const [className, mangledName] of localMapping.entries()) {
-            rewrittenText = rewrittenText.replaceAll(createJsClassRegex(className), (_match, prefix: string) => `${prefix}${mangledName}`);
-          }
-
-          writeFileSync(outputFilePath, rewrittenText);
-        }
+        // 改写仍然严格限定在“当前文件所属 bucket 的局部映射”内，
+        // 只是执行层从手写字符串替换切到了官方 handler。
+        const rewrittenText = await rewriteWithUtwmHandler(sourceText, outputFilePath, localMapping);
+        writeFileSync(outputFilePath, rewrittenText);
       }
 
       const debugSummary = {
