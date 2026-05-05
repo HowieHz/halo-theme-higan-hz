@@ -13,36 +13,71 @@ import pkg from "./package.json" with { type: "json" };
 import cleanupGeneratedCssComments from "./plugins/vite-plugin-cleanup-generated-css-comments.ts";
 import thymeleafMinify from "./plugins/vite-plugin-thymeleaf-minify.ts";
 
-// Build profile controls which theme asset set is emitted, such as the default or tiny font bundle.
-const BUILD_PROFILES = ["default", "tiny"] as const;
-type BuildProfile = (typeof BUILD_PROFILES)[number];
+// Build scope controls which theme asset set is emitted, such as the full bundle, tiny injections, or all-tiny.
+const BUILD_SCOPES = ["all", "tiny-injection", "tiny"] as const;
+type BuildScope = (typeof BUILD_SCOPES)[number];
 // Precompress profile controls which pre-generated compressed assets are emitted alongside the build output.
-const BUILD_PRECOMPRESS_PROFILES = ["br-only", "full", "none"] as const;
-type BuildPrecompressProfile = (typeof BUILD_PRECOMPRESS_PROFILES)[number];
+const BUILD_PRECOMPRESS_OPTIONS = ["br-only", "all", "none"] as const;
+type BuildPrecompressOption = (typeof BUILD_PRECOMPRESS_OPTIONS)[number];
 // "minify" minimizes final artifact shape, including short asset names and Tailwind class mangling.
-const BUILD_OUTPUT_PROFILES = ["minify", "original"] as const;
-type BuildOutputProfile = (typeof BUILD_OUTPUT_PROFILES)[number];
+const BUILD_OUTPUT_OPTIONS = ["minify", "original"] as const;
+type BuildOutputOption = (typeof BUILD_OUTPUT_OPTIONS)[number];
+// Build modes select fixed presets for scope, precompress, output, and manifest.
+const BUILD_MODES = ["default", "preview", "full", "tiny"] as const;
+type BuildMode = (typeof BUILD_MODES)[number];
 
 function pickEnvValue<T extends string>(value: string | undefined, allowedValues: readonly T[], fallback: T): T {
   return allowedValues.includes(value as T) ? (value as T) : fallback;
 }
 
+const BUILD_MODE_CONFIGS: Record<
+  BuildMode,
+  {
+    scope: BuildScope;
+    precompress: BuildPrecompressOption;
+    output: BuildOutputOption;
+    manifest: boolean;
+  }
+> = {
+  default: {
+    scope: "all",
+    precompress: "br-only",
+    output: "minify",
+    manifest: false,
+  },
+  preview: {
+    scope: "tiny-injection",
+    precompress: "none",
+    output: "original",
+    manifest: true,
+  },
+  full: {
+    scope: "all",
+    precompress: "all",
+    output: "minify",
+    manifest: false,
+  },
+  tiny: {
+    scope: "tiny",
+    precompress: "none",
+    output: "minify",
+    manifest: false,
+  },
+};
+
 export default defineConfig((): UserConfig => {
-  const buildProfile = pickEnvValue<BuildProfile>(process.env.BUILD_PROFILE, BUILD_PROFILES, "default");
-  const precompressProfile = pickEnvValue<BuildPrecompressProfile>(
-    process.env.BUILD_PRECOMPRESS_PROFILE,
-    BUILD_PRECOMPRESS_PROFILES,
-    "br-only",
-  );
-  const outputProfile = pickEnvValue<BuildOutputProfile>(
-    process.env.BUILD_OUTPUT_PROFILE,
-    BUILD_OUTPUT_PROFILES,
-    "minify",
-  );
-  const buildManifest = process.env.BUILD_MANIFEST === "true";
+  const buildMode = pickEnvValue<BuildMode>(process.env.BUILD_MODE, BUILD_MODES, "default");
+  const {
+    manifest: buildManifest,
+    output: outputOption,
+    precompress: precompressOption,
+    scope: buildScope,
+  } = BUILD_MODE_CONFIGS[buildMode];
+  const useTinyFont = buildScope === "tiny";
+  const useTinyInjection = buildScope === "tiny-injection" || buildScope === "tiny";
 
   const precompressAlgorithms =
-    precompressProfile === "none"
+    precompressOption === "none"
       ? []
       : [
           defineAlgorithm("brotliCompress", {
@@ -50,7 +85,7 @@ export default defineConfig((): UserConfig => {
               [constants.BROTLI_PARAM_QUALITY]: 11,
             },
           }),
-          ...(precompressProfile === "full"
+          ...(precompressOption === "all"
             ? [
                 defineAlgorithm("gzip", { level: 9 }),
                 defineAlgorithm("zstandard", {
@@ -65,7 +100,7 @@ export default defineConfig((): UserConfig => {
     // Tailwind CSS with Vite integration
     tailwindcss(),
     // Unplugin Tailwind CSS Mangle to obfuscate Tailwind CSS class names
-    ...(outputProfile === "minify"
+    ...(outputOption === "minify"
       ? [
           utwm({
             generator: {
@@ -108,19 +143,19 @@ export default defineConfig((): UserConfig => {
         "@runtime": resolve(import.meta.dirname, "src/templates/_runtime"),
         "$higan-font-family": resolve(
           import.meta.dirname,
-          buildProfile === "tiny"
+          useTinyFont
             ? "src/templates/_runtime/global/fonts/font-family.tiny.css"
             : "src/templates/_runtime/global/fonts/font-family.css",
         ),
         $instantpage: resolve(
           import.meta.dirname,
-          buildProfile === "tiny"
+          useTinyInjection
             ? "src/templates/components/instantpage-injection/index.tiny.ts"
             : "src/templates/components/instantpage-injection/index.ts",
         ),
         "$mermaid-injection": resolve(
           import.meta.dirname,
-          buildProfile === "tiny"
+          useTinyInjection
             ? "src/templates/components/mermaid-injection/index.tiny.ts"
             : "src/templates/components/mermaid-injection/index.ts",
         ),
@@ -357,7 +392,7 @@ export default defineConfig((): UserConfig => {
           "components-nav-post": resolve(import.meta.dirname, "src/templates/components/nav-post/template.html"),
         },
         output:
-          outputProfile === "original"
+          outputOption === "original"
             ? undefined
             : {
                 assetFileNames: `assets/${pkg.version}[hash:7][extname]`,

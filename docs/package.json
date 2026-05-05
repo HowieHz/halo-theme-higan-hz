@@ -3,14 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "docs:build": "vitepress build",
-    "docs:preview": "pnpm run docs:build && vitepress preview",
-    "docs:watch": "vitepress dev",
+    "build": "vitepress build",
     "generate:preview-css": "node --experimental-strip-types .vitepress/scripts/generate-preview-css.ts",
-    "predocs:build": "pnpm run prepare:docs-assets",
-    "predocs:preview": "pnpm run prepare:docs-assets",
-    "predocs:watch": "pnpm run prepare:docs-assets",
-    "prepare:docs-assets": "pnpm --dir .. run build:theme-preview-for-docs && pnpm run generate:preview-css"
+    "predocs:build": "pnpm run prepare-assets",
+    "predocs:preview": "pnpm run prepare-assets",
+    "predocs:watch": "pnpm run prepare-assets",
+    "prepare-assets": "pnpm --dir .. run build:theme-preview-for-docs && pnpm run generate:preview-css",
+    "preview": "pnpm run build && vitepress preview",
+    "watch": "vitepress dev"
   },
   "dependencies": {
     "chart.js": "^4.5.1",
