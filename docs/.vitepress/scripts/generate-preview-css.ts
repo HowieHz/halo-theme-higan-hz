@@ -52,13 +52,13 @@ const generatedDir = resolve(import.meta.dirname, "../generated");
 
 const previewCssEntries = [
   {
-    outputFile: "index.css",
+    outputFile: "error.css",
     entryKeys: [
       "components/theme-dark/template.html",
       "components/theme-light/template.html",
       "components/text-size-normal/template.html",
       "components/base-layout/template.html",
-      "index.html",
+      "_runtime/pages/error/index.ts",
     ],
   },
   {

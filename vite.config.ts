@@ -37,6 +37,7 @@ const BUILD_MODE_CONFIGS: Record<
     precompress: BuildPrecompressOption;
     output: BuildOutputOption;
     manifest: boolean;
+    "extra-entries"?: Record<string, string>;
   }
 > = {
   default: {
@@ -46,10 +47,13 @@ const BUILD_MODE_CONFIGS: Record<
     manifest: false,
   },
   "preview-for-docs": {
-    scope: "tiny-injection",
+    scope: "tiny",
     precompress: "none",
     output: "original",
     manifest: true,
+    "extra-entries": {
+      "runtime-page-error": resolve(import.meta.dirname, "src/templates/_runtime/pages/error/index.ts"),
+    },
   },
   dev: {
     scope: "all",
@@ -78,6 +82,7 @@ export default defineConfig((): UserConfig => {
     output: outputOption,
     precompress: precompressOption,
     scope: buildScope,
+    "extra-entries": extraEntries = {},
   } = BUILD_MODE_CONFIGS[buildMode];
   const useTinyFont = buildScope === "tiny";
   const useTinyInjection = buildScope === "tiny-injection" || buildScope === "tiny";
@@ -396,6 +401,7 @@ export default defineConfig((): UserConfig => {
             "src/templates/components/footer-nav-post/template.html",
           ),
           "components-nav-post": resolve(import.meta.dirname, "src/templates/components/nav-post/template.html"),
+          ...extraEntries,
         },
         output:
           outputOption === "original"
