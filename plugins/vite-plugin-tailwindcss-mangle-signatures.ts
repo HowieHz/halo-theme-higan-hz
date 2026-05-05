@@ -98,11 +98,11 @@ interface BundleAssetLike {
 
 type BundleFileLike = BundleAssetLike | BundleChunkLike;
 
-const CSS_FILE_EXTENSION = ".css";
 const DEFAULT_CLASS_LIST_FILE = ".tw-patch/tw-class-list.json";
 const DEFAULT_MAPPING_FILE = ".tw-patch/tw-mangle-mapping.json";
+const CSS_FILE_EXTENSION = ".css";
 const HTML_FILE_EXTENSION = ".html";
-const JS_FILE_EXTENSIONS = new Set([".js", ".mjs"]);
+const JS_FILE_EXTENSIONS = new Set([".js"]);
 const VITE_INTERNAL_ANALYSIS_PLUGIN = "vite:build-import-analysis";
 
 /** 统一路径分隔符，避免 Windows 路径影响后续匹配。 */
@@ -240,6 +240,7 @@ function toSortedRecord(map: ReadonlyMap<string, ReadonlySet<string>>): Record<s
   );
 }
 
+/** 为扫描阶段生成稳定且可回收的占位类名。 */
 const SCAN_MARKER_PREFIX = "__tw_scan_";
 const SCAN_MARKER_REGEX = /__tw_scan_(\d+)__/gmu;
 
