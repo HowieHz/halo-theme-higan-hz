@@ -50,6 +50,7 @@ interface DebugSummary {
   entriesByFile: Record<string, string[]>;
   filesByBucket: Record<string, string[]>;
   pageEntryOutputFiles: Record<string, string>;
+  bucketSummary: Record<string, { classCount: number; fileCount: number; prefix: string }>;
 }
 
 const CSS_FILE_EXTENSION = ".css";
@@ -609,6 +610,18 @@ export default function tailwindcssMangleSignaturesPlugin(
 
       const debugSummary = {
         bucketKeys: [...classNameMapByBucket.keys()].sort(),
+        bucketSummary: Object.fromEntries(
+          [...classNameMapByBucket.entries()]
+            .map(([bucketKey, bucketClassNames]) => [
+              bucketKey,
+              {
+                classCount: bucketClassNames.size,
+                fileCount: filesByBucket.get(bucketKey)?.size ?? 0,
+                prefix: bucketPrefixMap.get(bucketKey) ?? "",
+              },
+            ] as const)
+            .sort(([left], [right]) => left.localeCompare(right)),
+        ),
         classFiles: [...classesByFile.keys()].sort(),
         entriesByFile: toSortedRecord(entriesByFile),
         filesByBucket: toSortedRecord(filesByBucket),
