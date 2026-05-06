@@ -83,6 +83,10 @@ const vueLanguageOptions = {
       "<template>": "espree",
     },
   },
+  globals: {
+    ...browserLanguageOptions.globals,
+    ...globals.vue,
+  },
 };
 
 export default defineConfig(

@@ -267,7 +267,8 @@
       "files": ["docs/.vitepress/components/**/*.vue", "docs/.vitepress/theme/**/*.vue"],
       "env": {
         "es2026": true,
-        "browser": true
+        "browser": true,
+        "vue": true
       }
     },
     {
