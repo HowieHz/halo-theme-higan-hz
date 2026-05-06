@@ -144,8 +144,8 @@ function isBundleFileLike(value: unknown): value is BundleFileLike {
  *
  * 除了 chunk / asset metadata 里的静态引用外，还会把最终 HTML 中显式写出的 `/themes/howiehz-higan/assets/*` 链接补回图里。
  *
- * 这是因为 Vite 输出的 HTML 资产本身不带 `viteMetadata`，如果不补这条边， 页面 HTML 虽然能拿到 entry 归属，但它引用到的最终 CSS / JS 资产会丢失归属， 进而导致 HTML 已改名而
- * CSS / JS 仍停留在原始 utility。
+ * 这是因为 Vite 输出的 HTML 资产本身不带 `viteMetadata`，如果不补这条边，页面 HTML 虽然能拿到 entry 归属，但它引用到的最终 CSS / JS 资产会丢失归属，进而导致 HTML 已改名而 CSS
+ * / JS 仍停留在原始 utility。
  */
 function buildAssetGraph(
   bundle: Record<string, unknown>,
