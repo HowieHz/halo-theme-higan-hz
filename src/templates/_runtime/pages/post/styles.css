@@ -80,7 +80,7 @@
 
     & #nav {
       color: var(--color-primary);
-      font-size: var(--text-sm);
+      font-size: var(--tw-text-sm);
       font-style: normal;
       letter-spacing: 0.01em;
 
@@ -304,7 +304,7 @@
 
       & .toc-level-2 {
         color: var(--color-base-content);
-        font-size: var(--text-sm);
+        font-size: var(--tw-text-sm);
 
         &::before {
           color: var(--color-primary);
@@ -487,7 +487,7 @@
 
         & .toc-level-2 {
           color: var(--color-base-content);
-          font-size: var(--text-sm);
+          font-size: var(--tw-text-sm);
 
           &::before {
             color: var(--color-primary);

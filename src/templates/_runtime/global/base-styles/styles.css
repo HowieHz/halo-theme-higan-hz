@@ -143,7 +143,7 @@
     }
 
     & small {
-      font-size: var(--text-sm);
+      font-size: var(--tw-text-sm);
     }
 
     & abbr {
@@ -202,7 +202,7 @@
 
       & td {
         border-bottom: none;
-        font-size: var(--text-sm);
+        font-size: var(--tw-text-sm);
         padding-block: 0;
         padding-inline: 0.5rem;
       }
@@ -450,7 +450,7 @@
   }
 
   pre {
-    font-size: var(--text-sm);
+    font-size: var(--tw-text-sm);
     line-height: 1.375rem;
     overflow-x: auto;
     padding-block: 0.625rem 0;
