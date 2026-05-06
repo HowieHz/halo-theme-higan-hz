@@ -4,7 +4,7 @@
 @import "./base-styles/styles.css";
 @import "./scrollbar/styles.css";
 @import "./iconify/styles.css";
-@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "tailwindcss/utilities.css" layer(utilities) source(none) prefix(tw);
 
 @source "./index.ts";
 

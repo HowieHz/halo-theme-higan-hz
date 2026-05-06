@@ -1,6 +1,6 @@
 @reference "../../_runtime/global/styles.css";
 /* stylelint-disable no-invalid-position-at-import-rule -- Tailwind @import with custom layer and source syntax */
-@import "tailwindcss/utilities.css" layer(utilities) source(".");
+@import "tailwindcss/utilities.css" layer(utilities) source(".") prefix(tw);
 /* stylelint-enable no-invalid-position-at-import-rule */
 /* stylelint-disable at-rule-prelude-no-invalid -- Tailwind @source not uses custom prelude syntax */
 @source not "./README.md";
