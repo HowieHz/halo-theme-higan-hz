@@ -442,8 +442,10 @@ function hijackGenerateBundle(plugin: Plugin, afterHook: GenerateBundleHandler):
   }
 }
 
-function collectBundleFileContents(bundle: Record<string, unknown>): Map<string, string> {
-  const bundleFileContents = new Map<string, string>();
+type BundleFileContent = string | Uint8Array;
+
+function collectBundleFileContents(bundle: Record<string, unknown>): Map<string, BundleFileContent> {
+  const bundleFileContents = new Map<string, BundleFileContent>();
 
   for (const bundleValue of Object.values(bundle)) {
     if (!isBundleFileLike(bundleValue)) {
@@ -451,9 +453,7 @@ function collectBundleFileContents(bundle: Record<string, unknown>): Map<string,
     }
 
     if (bundleValue.type === "asset") {
-      const sourceText =
-        typeof bundleValue.source === "string" ? bundleValue.source : Buffer.from(bundleValue.source).toString("utf8");
-      bundleFileContents.set(bundleValue.fileName, sourceText);
+      bundleFileContents.set(bundleValue.fileName, bundleValue.source);
       continue;
     }
 
@@ -465,9 +465,9 @@ function collectBundleFileContents(bundle: Record<string, unknown>): Map<string,
 
 function applyBundleFileContents(
   bundle: Record<string, unknown>,
-  bundleFileContents: ReadonlyMap<string, string>,
+  bundleFileContents: ReadonlyMap<string, BundleFileContent>,
 ): void {
-  for (const [fileName, sourceText] of bundleFileContents.entries()) {
+  for (const [fileName, sourceContent] of bundleFileContents.entries()) {
     const bundleValue = bundle[fileName];
 
     if (!isBundleFileLike(bundleValue)) {
@@ -475,11 +475,11 @@ function applyBundleFileContents(
     }
 
     if (bundleValue.type === "asset") {
-      bundleValue.source = sourceText;
+      bundleValue.source = sourceContent;
       continue;
     }
 
-    bundleValue.code = sourceText;
+    bundleValue.code = sourceContent;
   }
 }
 
