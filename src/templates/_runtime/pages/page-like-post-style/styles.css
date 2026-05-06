@@ -1,6 +1,5 @@
 @reference "../../global/styles.css";
-/* stylelint-disable no-invalid-position-at-import-rule -- Tailwind @import with custom layer and source syntax */
+/* stylelint-disable-next-line no-invalid-position-at-import-rule, at-rule-prelude-no-invalid -- Tailwind CSS v4 @import prelude syntax after @reference */
 @import "tailwindcss/utilities.css" layer(utilities) source(none) prefix(tw);
-/* stylelint-enable no-invalid-position-at-import-rule */
 
 @source "../../../page-like-post-style.html";
