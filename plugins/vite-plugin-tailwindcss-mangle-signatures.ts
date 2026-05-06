@@ -24,7 +24,7 @@
  * - 这里不会再把“同名 utility”跨 bucket 合并。
  * - 映射主键是 `(bucketKey, className)`，不是单独的 `className`。
  * - 也就是说，`a` 里的 `tw:hidden`、`b` 里的 `tw:hidden`、`a|b` 里的 `tw:hidden` 会是三份独立实例。
- * - 全局共享桶保留最短前缀 `_`，其他 bucket 稳定分配 `a_`、`b_`、`c_`……
+ * - 但最终类名不会再编码 bucket 前缀语义，而是统一走一张全局唯一的 `_a`、`_b`、`_c`…… 短名表。
  *
  * 为什么要按 bucket 实例化：
  *
@@ -37,20 +37,13 @@
  *   - `page-like-post-style|post` 共享 CSS 里的 `tw:hidden` 属于 `page-like-post-style|post`
  * - 所以这三处虽然原始 utility 同名，但最后会拿到三份不同短名。
  * - 同一个 bucket 里的 HTML / CSS / JS 仍然共用同一份映射，所以局部产物内部依然能严格对齐。
+ * - 短名分配时不会简单按 bucket 顺序发号，而是优先把更高频的实例分到更短的名字。
  *
  * 这套方案的取舍：
  *
  * - 优点：更符合“组件私有化 utility”的直觉，不会因为别的 bucket 也用了同名 utility，就和当前组件共用同一个 mangled class。
+ * - 优点：高频实例会优先拿到更短的类名，整体压缩收益更高。
  * - 缺点：共享能力更弱，同一个 utility 在不同 bucket 会重复生成。
- *
- * 额外的作用域取舍：
- *
- * - 现在除了短类名映射，还会给非全局 bucket 分配一个 Vue scoped CSS 风格的裸属性作用域，比如 `_a`、`_b`。
- * - 这里故意不只给“组件根节点”打作用域，而是按元素当前实际命中的 utility，给它补上对应 bucket 的裸属性作用域。
- * - 原因是主题模板经常出现多根节点，或者用 `th:block` 这种不会真正输出到最终 DOM 的假根节点。
- * - 如果只依赖单根容器，scope 很容易在模板层失效；把作用域属性直接打到每个实际元素上，才能稳定对齐最终渲染结果。
- * - 一个元素如果同时命中了多个非全局 utility bucket，就会同时带上多个裸属性；这是预期行为，因为前缀表达的是“最终可达范围”，不是“源码文件归属”。
- * - 同时刻意跳过 `head` 子树，因为那里只承载资源声明，不参与组件 DOM 作用域。
  *
  * 5. 最后按 bucket 改写 bundle 并输出映射
  *
@@ -81,8 +74,6 @@ interface MappingEntry {
   files: string[];
   mangled: string;
   original: string;
-  prefix: string;
-  scope: string | null;
 }
 
 interface DebugSummary {
@@ -91,7 +82,7 @@ interface DebugSummary {
   entriesByFile: Record<string, string[]>;
   filesByBucket: Record<string, string[]>;
   entryOutputFiles: Record<string, string>;
-  bucketSummary: Record<string, { classCount: number; fileCount: number; prefix: string; scope: string | null }>;
+  bucketSummary: Record<string, { classCount: number; fileCount: number }>;
 }
 
 interface BundleMetadataLike {
@@ -128,66 +119,6 @@ const UTF8_TEXT_DECODER = new TextDecoder("utf8");
 const requireFromCurrentModule = createRequire(import.meta.url);
 const requireFromUtwmCore = createRequire(requireFromCurrentModule.resolve("@tailwindcss-mangle/core"));
 
-interface HtmlParserLike {
-  end(): void;
-  endIndex: number;
-  startIndex: number;
-  write(sourceText: string): void;
-}
-
-type HtmlParserConstructor = new (callbacks: {
-  onopentag?: (tagName: string, attributes: Record<string, string>) => void;
-}) => HtmlParserLike;
-
-interface SelectorClassNodeLike {
-  parent?: {
-    insertAfter(referenceNode: SelectorClassNodeLike, nextNode: unknown): void;
-  };
-  value: string;
-}
-
-interface SelectorRootLike {
-  walkClasses(callback: (classNode: SelectorClassNodeLike) => void): void;
-}
-
-interface SelectorParserProcessorLike {
-  processSync(selectorText: string): string;
-}
-
-type SelectorParserFactory = ((transformer: (root: SelectorRootLike) => void) => SelectorParserProcessorLike) & {
-  attribute(options: { attribute: string }): unknown;
-};
-
-interface PostcssRuleLike {
-  selector: string;
-}
-
-interface PostcssProcessResultLike {
-  css: string;
-}
-
-interface PostcssProcessorLike {
-  process(
-    sourceText: string,
-    options: {
-      from?: string;
-      to?: string;
-    },
-  ): Promise<PostcssProcessResultLike>;
-}
-
-type PostcssFactory = (plugins: readonly unknown[]) => PostcssProcessorLike;
-
-const { Parser: HtmlParser } = requireFromUtwmCore("htmlparser2") as { Parser: HtmlParserConstructor };
-const selectorParserModule = requireFromUtwmCore("postcss-selector-parser") as {
-  default?: SelectorParserFactory;
-};
-const selectorParser = (selectorParserModule.default ?? selectorParserModule) as SelectorParserFactory;
-const postcssModule = requireFromUtwmCore("postcss") as {
-  default?: PostcssFactory;
-};
-const createPostcssProcessor = (postcssModule.default ?? postcssModule) as PostcssFactory;
-
 /** 统一路径分隔符，避免 Windows 路径影响后续匹配。 */
 function normalizePathSeparators(value: string): string {
   return value.replaceAll("\\", "/");
@@ -218,8 +149,8 @@ function getSequenceLabel(index: number): string {
   return result;
 }
 
-/** 生成 `_a`、`_b`、`_c` 这种稳定裸属性作用域名。 */
-function getScopeAttributeName(index: number): string {
+/** 生成 `_a`、`_b`、`_c` 这种稳定短类名。 */
+function getMangledClassName(index: number): string {
   return `_${getSequenceLabel(index)}`;
 }
 
@@ -425,146 +356,20 @@ function toSortedRecord(map: ReadonlyMap<string, ReadonlySet<string>>): Record<s
   );
 }
 
-/** 计算 HTML 起始标签里插入作用域属性的准确位置，兼容普通标签和自闭合标签。 */
-function getHtmlScopeInsertionIndex(sourceText: string, tagEndIndex: number): number {
-  let insertionIndex = tagEndIndex;
+/** 统计某个 class 在当前文本里实际命中了多少次。 */
+function countClassOccurrencesInText(sourceText: string, fileName: string, className: string): number {
+  const marker = toScanMarker(0);
+  const classNameToMarker = new Map([[className, marker]]);
 
-  while (insertionIndex > 0 && /\s/u.test(sourceText[insertionIndex - 1] ?? "")) {
-    insertionIndex--;
-  }
+  return rewriteWithUtwmHandler(sourceText, fileName, classNameToMarker).then((rewrittenText) => {
+    let count = 0;
 
-  if (sourceText[insertionIndex - 1] === "/") {
-    return insertionIndex - 1;
-  }
+    for (const _match of rewrittenText.matchAll(SCAN_MARKER_REGEX)) {
+      count++;
+    }
 
-  return tagEndIndex;
-}
-
-/**
- * 给 HTML 文件 `body` 相关部分里的每个实际元素按需补上裸属性作用域。
- *
- * 这里刻意不依赖“单根组件”假设，而是学习 Vue scoped CSS 的思路，直接给每个实际元素打点。 这样即使模板是多根节点，或者根本没有真实根、只是 `th:block` 假根，也不会丢掉作用域边界。
- *
- * 同时也不是“整文件统一打一坨 scope”，而是按元素自身最终命中的 mangled class 反推：
- *
- * - 只有真正带了 bucket utility 的元素才会拿到 scope
- * - 拿多少 scope，就取决于这个元素当前 class 里实际命中了哪些 utility bucket
- * - 没有 utility class 的元素不用带 scope，避免无意义污染模板
- *
- * 同时刻意跳过 `head` 子树：
- *
- * - 这些标签不会参与最终页面里的组件 DOM 匹配
- * - 继续给 `<link>` / `<meta>` 之类资源声明打 scope 只会让模板更脏，没有收益
- */
-function injectScopeAttributeIntoHtml(
-  sourceText: string,
-  scopeAttributesByMangledClassName: ReadonlyMap<string, ReadonlySet<string>>,
-): string {
-  const scopedInsertions: Array<{ index: number; scopeAttributes: string[] }> = [];
-  let headDepth = 0;
-  const parser = new HtmlParser({
-    onopentag(tagName, attributes) {
-      const normalizedTagName = tagName.toLowerCase();
-
-      if (normalizedTagName === "head") {
-        headDepth++;
-        return;
-      }
-
-      if (headDepth > 0 || normalizedTagName === "th:block") {
-        return;
-      }
-
-      const classAttributeValue = attributes.class;
-
-      if (typeof classAttributeValue !== "string" || classAttributeValue.trim() === "") {
-        return;
-      }
-
-      const scopeAttributes = new Set<string>();
-
-      for (const className of classAttributeValue.split(/\s+/u)) {
-        const classScopeAttributes = scopeAttributesByMangledClassName.get(className);
-
-        if (classScopeAttributes === undefined) {
-          continue;
-        }
-
-        for (const scopeAttribute of classScopeAttributes) {
-          scopeAttributes.add(scopeAttribute);
-        }
-      }
-
-      if (scopeAttributes.size === 0) {
-        return;
-      }
-
-      scopedInsertions.push({
-        index: getHtmlScopeInsertionIndex(sourceText, parser.endIndex),
-        scopeAttributes: [...scopeAttributes].sort(),
-      });
-    },
-    onclosetag(tagName) {
-      if (tagName.toLowerCase() === "head" && headDepth > 0) {
-        headDepth--;
-      }
-    },
+    return count;
   });
-
-  parser.write(sourceText);
-  parser.end();
-
-  let scopedHtml = sourceText;
-
-  for (const { index, scopeAttributes } of scopedInsertions.toReversed()) {
-    scopedHtml = `${scopedHtml.slice(0, index)} ${scopeAttributes.join(" ")}${scopedHtml.slice(index)}`;
-  }
-
-  return scopedHtml;
-}
-
-/**
- * 给 bucket 内的 utility 选择器按 class 自己的 bucket 补上 Vue 风格的作用域属性。
- *
- * 这里故意只处理当前文件实际命中的 mangled utility class，不碰自定义业务选择器。 这样既能隔离不同 bucket 的同名 utility，又不会误伤像 `#header-post a` 这种手写规则。
- */
-async function injectScopeAttributeIntoCss(
-  sourceText: string,
-  scopeAttributesByMangledClassName: ReadonlyMap<string, ReadonlySet<string>>,
-  fileName: string,
-): Promise<string> {
-  if (scopeAttributesByMangledClassName.size === 0) {
-    return sourceText;
-  }
-
-  const plugin = {
-    postcssPlugin: "tailwindcss-mangle-signatures-scope-attribute",
-    Rule(rule: PostcssRuleLike) {
-      rule.selector = selectorParser((selectors) => {
-        selectors.walkClasses((classNode) => {
-          const scopeAttributes = scopeAttributesByMangledClassName.get(classNode.value);
-
-          if (scopeAttributes === undefined || scopeAttributes.size === 0) {
-            return;
-          }
-
-          for (const scopeAttribute of [...scopeAttributes].sort().toReversed()) {
-            classNode.parent?.insertAfter(classNode, selectorParser.attribute({ attribute: scopeAttribute }));
-          }
-        });
-      }).processSync(rule.selector);
-    },
-  } satisfies {
-    Rule(rule: PostcssRuleLike): void;
-    postcssPlugin: string;
-  };
-
-  const { css } = await createPostcssProcessor([plugin]).process(sourceText, {
-    from: fileName,
-    to: fileName,
-  });
-
-  return css;
 }
 
 const SCAN_MARKER_PREFIX = "__tw_scan_";
@@ -610,36 +415,23 @@ function createBucketContext(mapping: ReadonlyMap<string, string>): Context {
  * 这样做的意义不是改变 bucket 语义，而是把“怎么安全地改 HTML/CSS/JS”这件事重新交给官方实现：
  *
  * - HTML：`htmlparser2`
- * - CSS：`postcss` + `postcss-selector-parser`
+ * - CSS：UTWM 官方 CSS handler
  * - JS：Babel AST + `MagicString`
  */
 async function rewriteWithUtwmHandler(
   sourceText: string,
   fileName: string,
   mapping: ReadonlyMap<string, string>,
-  scopeAttributesByMangledClassName?: ReadonlyMap<string, ReadonlySet<string>>,
 ): Promise<string> {
   const ctx = createBucketContext(mapping);
   const extension = extname(fileName);
 
   if (fileName.endsWith(HTML_FILE_EXTENSION)) {
-    const rewrittenHtml = htmlHandler(sourceText, { ctx, id: fileName }).code;
-
-    if (scopeAttributesByMangledClassName === undefined) {
-      return rewrittenHtml;
-    }
-
-    return injectScopeAttributeIntoHtml(rewrittenHtml, scopeAttributesByMangledClassName);
+    return htmlHandler(sourceText, { ctx, id: fileName }).code;
   }
 
   if (fileName.endsWith(CSS_FILE_EXTENSION)) {
-    const rewrittenCss = (await cssHandler(sourceText, { ctx, id: fileName })).code;
-
-    if (scopeAttributesByMangledClassName === undefined) {
-      return rewrittenCss;
-    }
-
-    return injectScopeAttributeIntoCss(rewrittenCss, scopeAttributesByMangledClassName, fileName);
+    return (await cssHandler(sourceText, { ctx, id: fileName })).code;
   }
 
   if (JS_FILE_EXTENSIONS.has(extension)) {
@@ -792,6 +584,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
   const rewriteBundle = async (bundle: Record<string, unknown>): Promise<void> => {
     const entriesByFile = new Map<string, Set<string>>();
     const classesByFile = new Map<string, Set<string>>();
+    const classOccurrenceCountByFile = new Map<string, Map<string, number>>();
     const filesByClassByBucket = new Map<string, Map<string, Set<string>>>();
     const filesByBucket = new Map<string, Set<string>>();
     const classNameMapByBucket = new Map<string, Map<string, string>>();
@@ -834,6 +627,13 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       }
 
       classesByFile.set(fileName, classes);
+      const classOccurrenceCounts = new Map<string, number>();
+
+      for (const className of classes) {
+        classOccurrenceCounts.set(className, await countClassOccurrencesInText(sourceText, fileName, className));
+      }
+
+      classOccurrenceCountByFile.set(fileName, classOccurrenceCounts);
 
       const entries = [...(entriesByFile.get(fileName) ?? new Set<string>())].sort();
 
@@ -870,51 +670,70 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
 
       return left.localeCompare(right);
     });
-    const bucketPrefixMap = new Map<string, string>();
-    const bucketScopeAttributeMap = new Map<string, string>();
-    let nextBucketIndex = 0;
-
-    for (const bucketKey of sortedBucketKeys) {
-      // 所有页面都能访问到的那个 bucket 被视为“全局共享桶”，
-      // 故意保留最短前缀 `_`。
-      if (bucketKey === globalBucketKey && entryKeys.length > 0) {
-        bucketPrefixMap.set(bucketKey, "_");
-        continue;
-      }
-
-      // 其他 bucket 按排序后的稳定顺序分配前缀。
-      bucketPrefixMap.set(bucketKey, `${getSequenceLabel(nextBucketIndex)}_`);
-      bucketScopeAttributeMap.set(bucketKey, getScopeAttributeName(nextBucketIndex));
-      nextBucketIndex++;
-    }
-
     const mappingEntries: MappingEntry[] = [];
-
-    for (const bucketKey of sortedBucketKeys) {
+    let nextClassIndex = 0;
+    const weightedBucketClasses = sortedBucketKeys.flatMap((bucketKey) => {
       const bucketClassNames = classNameMapByBucket.get(bucketKey);
       const bucketClassFiles = filesByClassByBucket.get(bucketKey);
-      const prefix = bucketPrefixMap.get(bucketKey);
-      const scopeAttribute = bucketScopeAttributeMap.get(bucketKey) ?? null;
 
-      if (bucketClassNames === undefined || bucketClassFiles === undefined || prefix === undefined) {
+      if (bucketClassNames === undefined || bucketClassFiles === undefined) {
+        return [];
+      }
+
+      return [...bucketClassNames.keys()].map((className) => {
+        const files = [...(bucketClassFiles.get(className) ?? new Set<string>())];
+        let occurrenceCount = 0;
+
+        for (const fileName of files) {
+          occurrenceCount += classOccurrenceCountByFile.get(fileName)?.get(className) ?? 0;
+        }
+
+        return {
+          bucketKey,
+          className,
+          files,
+          occurrenceCount,
+        };
+      });
+    });
+
+    weightedBucketClasses.sort((left, right) => {
+      if (left.occurrenceCount !== right.occurrenceCount) {
+        return right.occurrenceCount - left.occurrenceCount;
+      }
+
+      if (left.bucketKey !== right.bucketKey) {
+        if (left.bucketKey === globalBucketKey) {
+          return -1;
+        }
+
+        if (right.bucketKey === globalBucketKey) {
+          return 1;
+        }
+
+        return left.bucketKey.localeCompare(right.bucketKey);
+      }
+
+      return left.className.localeCompare(right.className);
+    });
+
+    for (const { bucketKey, className, files } of weightedBucketClasses) {
+      const bucketClassNames = classNameMapByBucket.get(bucketKey);
+
+      if (bucketClassNames === undefined) {
         continue;
       }
 
-      const sortedClassNames = [...bucketClassNames.keys()].sort();
-
-      for (const [classIndex, className] of sortedClassNames.entries()) {
-        const mangledName = `${prefix}${getSequenceLabel(classIndex)}`;
-        bucketClassNames.set(className, mangledName);
-        mappingEntries.push({
-          bucket: bucketKey,
-          entries: bucketKey === "" ? [] : bucketKey.split("|"),
-          files: [...(bucketClassFiles.get(className) ?? new Set<string>())].sort(),
-          mangled: mangledName,
-          original: className,
-          prefix,
-          scope: scopeAttribute,
-        });
-      }
+      const mangledName = getMangledClassName(nextClassIndex);
+      nextClassIndex++;
+      bucketClassNames.set(className, mangledName);
+      mappingEntries.push({
+        bucket: bucketKey,
+        entries: bucketKey === "" ? [] : bucketKey.split("|"),
+        files: files.sort(),
+        mangled: mangledName,
+        original: className,
+      });
     }
 
     for (const [fileName, sourceText] of bundleFileContents.entries()) {
@@ -939,8 +758,6 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       const bucketKey = entries.join("|");
       const bucketClassNames = classNameMapByBucket.get(bucketKey);
       const localMapping = new Map<string, string>();
-      const scopeAttributesByMangledClassName = new Map<string, Set<string>>();
-      const scopeAttribute = bucketScopeAttributeMap.get(bucketKey);
 
       if (bucketClassNames === undefined) {
         continue;
@@ -952,14 +769,6 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
         if (mangledName !== undefined && mangledName !== "") {
           localMapping.set(className, mangledName);
         }
-
-        if (mangledName === undefined || scopeAttribute === undefined) {
-          continue;
-        }
-
-        const scopeAttributes = scopeAttributesByMangledClassName.get(mangledName) ?? new Set<string>();
-        scopeAttributes.add(scopeAttribute);
-        scopeAttributesByMangledClassName.set(mangledName, scopeAttributes);
       }
 
       if (localMapping.size === 0) {
@@ -968,12 +777,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
 
       // 改写时直接使用“当前文件桶”自己的局部映射，
       // 保证同一个 bucket 内的 HTML / CSS / JS 对齐，同时不跨 bucket 共享同名 utility。
-      const rewrittenText = await rewriteWithUtwmHandler(
-        textSource,
-        fileName,
-        localMapping,
-        scopeAttributesByMangledClassName,
-      );
+      const rewrittenText = await rewriteWithUtwmHandler(textSource, fileName, localMapping);
       bundleFileContents.set(fileName, rewrittenText);
     }
 
@@ -988,8 +792,6 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
                 {
                   classCount: bucketClassNames.size,
                   fileCount: filesByBucket.get(bucketKey)?.size ?? 0,
-                  prefix: bucketPrefixMap.get(bucketKey) ?? "",
-                  scope: bucketScopeAttributeMap.get(bucketKey) ?? null,
                 },
               ] as const,
           )
