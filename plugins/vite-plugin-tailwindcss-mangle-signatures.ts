@@ -24,7 +24,8 @@
  * - 这里不会再把“同名 utility”跨 bucket 合并。
  * - 映射主键是 `(bucketKey, className)`，不是单独的 `className`。
  * - 也就是说，`a` 里的 `tw:hidden`、`b` 里的 `tw:hidden`、`a|b` 里的 `tw:hidden` 会是三份独立实例。
- * - 但最终类名不会再编码 bucket 前缀语义，而是统一走一张全局唯一的 `_a`、`_b`、`_c`…… 短名表。
+ * - 但真正参与短名分配的，只是“最终有 CSS 规则落盘”的 bucket 实例。
+ * - 最终类名不会再编码 bucket 前缀语义，而是统一走一张全局唯一的 `_a`、`_b`、`_c`…… 短名表。
  *
  * 为什么要按 bucket 实例化：
  *
@@ -36,7 +37,7 @@
  *   - `components-nav-page-like-post-style` 里的 `tw:hidden` 只属于 `components-nav-page-like-post-style`
  *   - `page-like-post-style|post` 共享 CSS 里的 `tw:hidden` 属于 `page-like-post-style|post`
  * - 所以这三处虽然原始 utility 同名，但最后会拿到三份不同短名。
- * - 同一个 bucket 里的 HTML / CSS / JS 仍然共用同一份映射，所以局部产物内部依然能严格对齐。
+ * - 注意最终短名是由“真正承载 CSS 规则的 bucket”拥有，不是由 HTML / JS 文件自己拥有。
  * - 短名分配时不会简单按 bucket 顺序发号，而是优先把更高频的实例分到更短的名字。
  *
  * 这套方案的取舍：
@@ -45,10 +46,12 @@
  * - 优点：高频实例会优先拿到更短的类名，整体压缩收益更高。
  * - 缺点：共享能力更弱，同一个 utility 在不同 bucket 会重复生成。
  *
- * 5. 最后按 bucket 改写 bundle 并输出映射
+ * 5. 最后按 CSS owner bucket 改写 bundle 并输出映射
  *
  * - 扫描阶段和改写阶段都尽量复用官方 handler，而不是手写正则替换。
  * - 插件会后挂到 Vite 内部 `vite:build-import-analysis` 的 `generateBundle`，这样既能拿到最终 HTML，又早于 `vite-plugin-sri3` 计算 `integrity`。
+ * - CSS 文件直接使用自己的 bucket 映射；HTML / JS 文件则会回看“自己最终能到达哪些 CSS 文件”，并跟随真正承载该 utility 规则的 CSS bucket 短名。
+ * - 这样可以避免“HTML / JS 先按自身 bucket 改名，但最终 CSS 规则其实落在共享 bucket”造成的错配。
  * - 最后把 mapping/debug 产物写到 `.tw-patch/`，用于排查 bucket 和类名归属。
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -783,15 +786,12 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
     /**
      * 为 HTML / JS 消费方解析“真正承载该 utility 规则的 CSS bucket”。
      *
-     * 当前实现不再让 HTML / JS 直接按自己的文件 bucket 私有命名，
-     * 而是优先跟随最终可达的 CSS 产物：
+     * 当前实现不再让 HTML / JS 直接按自己的文件 bucket 私有命名， 而是优先跟随最终可达的 CSS 产物：
      *
      * - CSS 文件：继续使用自己的 bucket 映射；
-     * - HTML / JS：从当前文件可达的 CSS 文件里找这条 utility 最终落在哪个 bucket，
-     *   再回填那个 bucket 的短名。
+     * - HTML / JS：从当前文件可达的 CSS 文件里找这条 utility 最终落在哪个 bucket， 再回填那个 bucket 的短名。
      *
-     * 这样至少可以避免“HTML 已改成私有名，但真正落盘的 CSS 规则在共享 bucket”
-     * 这种直接错配。
+     * 这样至少可以避免“HTML 已改成私有名，但真正落盘的 CSS 规则在共享 bucket” 这种直接错配。
      */
     const resolveMangledNameForFileClass = (fileName: string, className: string): string | undefined => {
       const currentBucketKey = bucketKeyByFile.get(fileName);
