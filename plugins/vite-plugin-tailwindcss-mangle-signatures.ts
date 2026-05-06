@@ -19,22 +19,22 @@
  * - 如果两个文件最终都只被 `post` 访问，它们就在同一个 `post` bucket。
  * - 如果一个文件会同时被 `post` 和 `page-like-post-style` 访问，它就进入 `post|page-like-post-style` bucket。
  *
- * 4. 每个 bucket 单独生成自己的短类名映射
+ * 4. 每个 utility 只生成一份最终短类名映射
  *
- * - 不再使用“全局唯一一张映射表”。
+ * - 先把“同一个 utility 出现在哪些文件桶里”合并成一个 canonical bucket，再分配短名。
+ * - 这样 HTML / CSS / JS 才会对同一个 utility 看到同一个短类名，避免同页不同产物对不齐。
  * - 全局共享桶保留最短前缀 `_`，其他 bucket 稳定分配 `a_`、`b_`、`c_`……
- * - 这样同一个 utility 可以在不同 bucket 里拿到不同短名；前缀表达的是“最终可达范围”，不是“原始源码归属”。
  *
- * 为什么不使用“全局唯一一张映射表”：
+ * 为什么先合并 bucket 再生成映射：
  *
- * - 如果全局只保留一份映射，不同 entry 图里的共享 utility 会被压成同一个短类名，语义上就会退化成“到处都一样”。
- * - 这里改成“每个 bucket 一张映射表”，bucket 的含义是： “最终产物里，哪些 entry 能访问到这份文件”。
- * - 这样同一个 utility，例如 `hidden`，就可以同时在全局共享桶里变成 `_h`，又在 `post` 桶里变成 `m_p`。
+ * - 如果按“文件桶”分别生成，同一个 utility 在 HTML 和 CSS 里可能拿到不同短名，最后就会炸对齐。
+ * - 这里改成按 utility 归并后的 canonical bucket 生成，bucket 表达的是“这个 utility 最终被哪些 entry 共同可达”。
+ * - 这样同一个 utility，例如 `hidden`，只会有一份映射，不会在不同产物里各改各的。
  *
  * 这套方案的取舍：
  *
- * - 优点：共享产物和入口独享产物可以拿到不同的短类名。
- * - 缺点：同一个 utility 可能会在多个 bucket 里重复生成。
+ * - 优点：同一个 utility 在 HTML / CSS / JS 里始终一致。
+ * - 缺点：共享范围越大，能省下来的前缀就越少。
  *
  * 5. 最后按 bucket 改写 bundle 并输出映射
  *
@@ -132,6 +132,25 @@ function getSequenceLabel(index: number): string {
   }
 
   return result;
+}
+
+/** 把多个 file bucket 合并成一个 canonical bucket。 */
+function mergeBucketKeys(bucketKeys: readonly string[]): string {
+  const entryNames = new Set<string>();
+
+  for (const bucketKey of bucketKeys) {
+    if (bucketKey === "") {
+      continue;
+    }
+
+    for (const entryName of bucketKey.split("|")) {
+      if (entryName !== "") {
+        entryNames.add(entryName);
+      }
+    }
+  }
+
+  return [...entryNames].sort().join("|");
 }
 
 /** 判断 bundle 条目是否至少像个输出文件节点。 */
@@ -474,6 +493,8 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
   const rewriteBundle = async (bundle: Record<string, unknown>): Promise<void> => {
     const entriesByFile = new Map<string, Set<string>>();
     const classesByFile = new Map<string, Set<string>>();
+    const filesByClass = new Map<string, Set<string>>();
+    const bucketKeysByClass = new Map<string, Set<string>>();
     const filesByBucket = new Map<string, Set<string>>();
     const classNameMapByBucket = new Map<string, Map<string, string>>();
     const entryKeys = [...entryOutputFiles.keys()].sort();
@@ -539,17 +560,23 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       bucketFiles.add(fileName);
       filesByBucket.set(bucketKey, bucketFiles);
 
-      // 映射表是“每个 bucket 一份”，不是全局唯一一份。
-      // 所以同一个 utility 可以在不同可达组里拿到不同短名。
-      const bucketClassNames = classNameMapByBucket.get(bucketKey) ?? new Map<string, string>();
-
       for (const className of classes) {
-        if (!bucketClassNames.has(className)) {
-          bucketClassNames.set(className, "");
-        }
-      }
+        const bucketKeys = bucketKeysByClass.get(className) ?? new Set<string>();
+        bucketKeys.add(bucketKey);
+        bucketKeysByClass.set(className, bucketKeys);
 
-      classNameMapByBucket.set(bucketKey, bucketClassNames);
+        const classFiles = filesByClass.get(className) ?? new Set<string>();
+        classFiles.add(fileName);
+        filesByClass.set(className, classFiles);
+      }
+    }
+
+    for (const [className, bucketKeys] of bucketKeysByClass.entries()) {
+      const canonicalBucketKey = mergeBucketKeys([...bucketKeys]);
+      const bucketClassNames = classNameMapByBucket.get(canonicalBucketKey) ?? new Map<string, string>();
+
+      bucketClassNames.set(className, "");
+      classNameMapByBucket.set(canonicalBucketKey, bucketClassNames);
     }
 
     const sortedBucketKeys = [...classNameMapByBucket.keys()].sort((left, right) => {
@@ -580,6 +607,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
     }
 
     const mappingEntries: MappingEntry[] = [];
+    const classNameToMangledName = new Map<string, string>();
 
     for (const bucketKey of sortedBucketKeys) {
       const bucketClassNames = classNameMapByBucket.get(bucketKey);
@@ -594,10 +622,11 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       for (const [classIndex, className] of sortedClassNames.entries()) {
         const mangledName = `${prefix}${getSequenceLabel(classIndex)}`;
         bucketClassNames.set(className, mangledName);
+        classNameToMangledName.set(className, mangledName);
         mappingEntries.push({
           bucket: bucketKey,
           entries: bucketKey === "" ? [] : bucketKey.split("|"),
-          files: [...(filesByBucket.get(bucketKey) ?? new Set<string>())].sort(),
+          files: [...(filesByClass.get(className) ?? new Set<string>())].sort(),
           mangled: mangledName,
           original: className,
           prefix,
@@ -618,17 +647,10 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
         continue;
       }
 
-      const bucketKey = entries.join("|");
-      const bucketClassNames = classNameMapByBucket.get(bucketKey);
-
-      if (bucketClassNames === undefined) {
-        continue;
-      }
-
       const localMapping = new Map<string, string>();
 
       for (const className of classes) {
-        const mangledName = bucketClassNames.get(className);
+        const mangledName = classNameToMangledName.get(className);
 
         if (mangledName !== undefined && mangledName !== "") {
           localMapping.set(className, mangledName);
@@ -639,8 +661,8 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
         continue;
       }
 
-      // 改写仍然严格限定在“当前文件所属 bucket 的局部映射”内，
-      // 只是执行层从手写字符串替换切到了官方 handler。
+      // 改写时不再按“当前文件桶”单独选映射，
+      // 而是直接使用同一个 utility 的 canonical 映射，确保 HTML / CSS / JS 对齐。
       const rewrittenText = await rewriteWithUtwmHandler(sourceText, fileName, localMapping);
       bundleFileContents.set(fileName, rewrittenText);
     }
