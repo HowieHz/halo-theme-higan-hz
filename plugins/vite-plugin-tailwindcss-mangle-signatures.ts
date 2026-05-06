@@ -10,6 +10,7 @@
  *
  * - 每个 Vite input 都直接视为一个独立 entry 起点。
  * - 再通过 bundler graph 的 `imports` / `importedCss` / `importedAssets` 沿最终产物关系继续传播归属。
+ * - 对 HTML 产物，还会额外读取最终 `href` / `src` 里引用到的 `assets/*`，把页面模板和最终 CSS / JS 资产重新连起来。
  * - 这里刻意看“最终产物可达关系”，而不是只看源码目录归属。
  *
  * 3. 按 entry 可达集合分 bucket
@@ -102,6 +103,7 @@ const DEFAULT_MAPPING_FILE = ".tw-patch/tw-mangle-mapping.json";
 const CSS_FILE_EXTENSION = ".css";
 const HTML_FILE_EXTENSION = ".html";
 const JS_FILE_EXTENSIONS = new Set([".js"]);
+const HTML_ASSET_REFERENCE_REGEX = /(?:href|src)="\/themes\/howiehz-higan\/([^"]+)"/gmu;
 const VITE_INTERNAL_ANALYSIS_PLUGIN = "vite:build-import-analysis";
 
 /** 统一路径分隔符，避免 Windows 路径影响后续匹配。 */
@@ -136,8 +138,18 @@ function isBundleFileLike(value: unknown): value is BundleFileLike {
   return typeof value === "object" && value !== null && "fileName" in value && "type" in value;
 }
 
-/** 基于 bundler metadata 构建最终资源图。 */
-function buildAssetGraph(bundle: Record<string, unknown>): Map<string, Set<string>> {
+/**
+ * 基于 bundler metadata 构建最终资源图。
+ *
+ * 除了 chunk / asset metadata 里的静态引用外，还会把最终 HTML 中显式写出的 `/themes/howiehz-higan/assets/*` 链接补回图里。
+ *
+ * 这是因为 Vite 输出的 HTML 资产本身不带 `viteMetadata`，如果不补这条边， 页面 HTML 虽然能拿到 entry 归属，但它引用到的最终 CSS / JS 资产会丢失归属， 进而导致 HTML 已改名而
+ * CSS / JS 仍停留在原始 utility。
+ */
+function buildAssetGraph(
+  bundle: Record<string, unknown>,
+  bundleFileContents: ReadonlyMap<string, string>,
+): Map<string, Set<string>> {
   const graph = new Map<string, Set<string>>();
   const availableFiles = new Set(
     Object.values(bundle)
@@ -185,6 +197,24 @@ function buildAssetGraph(bundle: Record<string, unknown>): Map<string, Set<strin
     }
 
     graph.set(bundleValue.fileName, references);
+  }
+
+  for (const [fileName, sourceText] of bundleFileContents.entries()) {
+    if (!fileName.endsWith(HTML_FILE_EXTENSION)) {
+      continue;
+    }
+
+    const references = graph.get(fileName) ?? new Set<string>();
+
+    for (const match of sourceText.matchAll(HTML_ASSET_REFERENCE_REGEX)) {
+      const referencedFileName = match[1];
+
+      if (referencedFileName !== undefined && availableFiles.has(referencedFileName)) {
+        references.add(referencedFileName);
+      }
+    }
+
+    graph.set(fileName, references);
   }
 
   return graph;
@@ -448,7 +478,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
     const entryKeys = [...entryOutputFiles.keys()].sort();
     const globalBucketKey = entryKeys.join("|");
     const bundleFileContents = collectBundleFileContents(bundle);
-    const assetGraph = buildAssetGraph(bundle);
+    const assetGraph = buildAssetGraph(bundle, bundleFileContents);
     const fileNamesToRewrite = new Set(bundleFileContents.keys());
 
     for (const [entryKey, outputHtmlFileName] of entryOutputFiles.entries()) {
