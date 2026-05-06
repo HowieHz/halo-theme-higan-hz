@@ -52,7 +52,6 @@
  * - 最后把 mapping/debug 产物写到 `.tw-patch/`，用于排查 bucket 和类名归属。
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { createRequire } from "node:module";
 import { dirname, extname, relative, resolve } from "node:path";
 
 import { Context, cssHandler, htmlHandler, jsHandler } from "@tailwindcss-mangle/core";
@@ -116,8 +115,6 @@ const HTML_FILE_EXTENSION = ".html";
 const JS_FILE_EXTENSIONS = new Set([".js"]);
 const VITE_INTERNAL_ANALYSIS_PLUGIN = "vite:build-import-analysis";
 const UTF8_TEXT_DECODER = new TextDecoder("utf8");
-const requireFromCurrentModule = createRequire(import.meta.url);
-const requireFromUtwmCore = createRequire(requireFromCurrentModule.resolve("@tailwindcss-mangle/core"));
 
 /** 统一路径分隔符，避免 Windows 路径影响后续匹配。 */
 function normalizePathSeparators(value: string): string {
@@ -357,7 +354,7 @@ function toSortedRecord(map: ReadonlyMap<string, ReadonlySet<string>>): Record<s
 }
 
 /** 统计某个 class 在当前文本里实际命中了多少次。 */
-function countClassOccurrencesInText(sourceText: string, fileName: string, className: string): number {
+function countClassOccurrencesInText(sourceText: string, fileName: string, className: string): Promise<number> {
   const marker = toScanMarker(0);
   const classNameToMarker = new Map([[className, marker]]);
 
