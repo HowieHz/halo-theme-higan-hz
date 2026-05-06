@@ -31,6 +31,21 @@
   display: inline-block !important;
 }
 
+@utility iconify {
+  background-color: currentcolor;
+  display: inline-block;
+  height: 1em;
+  mask-image: var(--svg);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  text-align: center;
+  vertical-align: middle;
+  width: 1em;
+
+  /* font-size: 1em; default */
+  /* color: var(--color-base-content); */
+}
+
 @plugin "@iconify/tailwind4" {
   prefixes:
     mdi, heroicons-outline, fa-solid, fluent, material-symbols, ic, typcn, simple-icons, ant-design, ri, ph,
