@@ -32,6 +32,7 @@
  * - 再按 utility 回看：这个 utility 出现在哪些文件里，这些文件又分别属于哪些文件桶。
  * - 最后把这些文件桶合成一个 canonical bucket，给这个 utility 只分配一次短名。
  * - 例如 `mdi--eye-outline` 同时出现在 `post.html`、`post` 对应的 CSS、以及 `page-like-post-style` 共享 CSS 里：
+ *
  *   - `post.html` 只属于 `post`
  *   - `post` 对应的 CSS 可能属于 `page-like-post-style|post`
  *   - `page-like-post-style` 的共享 CSS 也属于 `page-like-post-style|post`
