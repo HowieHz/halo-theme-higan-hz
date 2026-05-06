@@ -45,6 +45,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, extname, relative, resolve } from "node:path";
 
+import { defaultMangleClassFilter } from "@tailwindcss-mangle/shared";
 import { Context, cssHandler, htmlHandler, jsHandler } from "@tailwindcss-mangle/core";
 import type { Plugin } from "vite";
 
@@ -702,7 +703,9 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
         throw new TypeError(`Tailwind class list must be a string array: ${classListFile}`);
       }
 
-      knownClasses = [...new Set(parsedClassList)].sort();
+      // 先套官方默认过滤器，再进入扫描/映射链路。
+      // 这样 `hidden` / `block` 这类普通单词不会被放进 replaceMap。
+      knownClasses = [...new Set(parsedClassList)].filter(defaultMangleClassFilter).sort();
     },
     configResolved(config) {
       const internalAnalysisPlugin = config.plugins.find((plugin) => plugin.name === VITE_INTERNAL_ANALYSIS_PLUGIN);
