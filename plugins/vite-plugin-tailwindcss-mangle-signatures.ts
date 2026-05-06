@@ -560,6 +560,11 @@ function applyBundleFileContents(
   }
 }
 
+/** 当前文件是否为最终 CSS 产物。 */
+function isCssBundleFile(fileName: string): boolean {
+  return fileName.endsWith(CSS_FILE_EXTENSION);
+}
+
 export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMangleSignaturesPluginOptions): Plugin {
   const normalizedBase = normalizeBasePath(options.base);
   const classListFile = resolve(options.projectRoot, options.classListFile ?? DEFAULT_CLASS_LIST_FILE);
@@ -585,6 +590,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
     const filesByClassByBucket = new Map<string, Map<string, Set<string>>>();
     const filesByBucket = new Map<string, Set<string>>();
     const classNameMapByBucket = new Map<string, Map<string, string>>();
+    const bucketKeyByFile = new Map<string, string>();
     const entryKeys = [...entryOutputFiles.keys()].sort();
     const globalBucketKey = entryKeys.join("|");
     const bundleFileContents = collectBundleFileContents(bundle);
@@ -639,6 +645,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       }
 
       const bucketKey = entries.join("|");
+      bucketKeyByFile.set(fileName, bucketKey);
       const bucketFiles = filesByBucket.get(bucketKey) ?? new Set<string>();
       bucketFiles.add(fileName);
       filesByBucket.set(bucketKey, bucketFiles);
@@ -677,20 +684,28 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
         return [];
       }
 
-      return [...bucketClassNames.keys()].map((className) => {
+      return [...bucketClassNames.keys()].flatMap((className) => {
         const files = [...(bucketClassFiles.get(className) ?? new Set<string>())];
+        const cssFiles = files.filter(isCssBundleFile);
+
+        if (cssFiles.length === 0) {
+          return [];
+        }
+
         let occurrenceCount = 0;
 
         for (const fileName of files) {
           occurrenceCount += classOccurrenceCountByFile.get(fileName)?.get(className) ?? 0;
         }
 
-        return {
-          bucketKey,
-          className,
-          files,
-          occurrenceCount,
-        };
+        return [
+          {
+            bucketKey,
+            className,
+            files,
+            occurrenceCount,
+          },
+        ];
       });
     });
 
@@ -733,6 +748,106 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       });
     }
 
+    const reachableCssFilesByFile = new Map<string, string[]>();
+    const cssBucketKeysByClass = new Map<string, Set<string>>();
+
+    for (const [fileName, classes] of classesByFile.entries()) {
+      if (!isCssBundleFile(fileName)) {
+        continue;
+      }
+
+      const bucketKey = bucketKeyByFile.get(fileName);
+
+      if (bucketKey === undefined) {
+        continue;
+      }
+
+      for (const className of classes) {
+        const bucketKeys = cssBucketKeysByClass.get(className) ?? new Set<string>();
+        bucketKeys.add(bucketKey);
+        cssBucketKeysByClass.set(className, bucketKeys);
+      }
+    }
+
+    for (const fileName of fileNamesToRewrite) {
+      if (isCssBundleFile(fileName)) {
+        continue;
+      }
+
+      const reachableCssFiles = [...collectReachableFiles(assetGraph, [fileName])]
+        .filter((reachableFileName) => isCssBundleFile(reachableFileName) && classesByFile.has(reachableFileName))
+        .sort();
+      reachableCssFilesByFile.set(fileName, reachableCssFiles);
+    }
+
+    /**
+     * 为 HTML / JS 消费方解析“真正承载该 utility 规则的 CSS bucket”。
+     *
+     * 当前实现不再让 HTML / JS 直接按自己的文件 bucket 私有命名，
+     * 而是优先跟随最终可达的 CSS 产物：
+     *
+     * - CSS 文件：继续使用自己的 bucket 映射；
+     * - HTML / JS：从当前文件可达的 CSS 文件里找这条 utility 最终落在哪个 bucket，
+     *   再回填那个 bucket 的短名。
+     *
+     * 这样至少可以避免“HTML 已改成私有名，但真正落盘的 CSS 规则在共享 bucket”
+     * 这种直接错配。
+     */
+    const resolveMangledNameForFileClass = (fileName: string, className: string): string | undefined => {
+      const currentBucketKey = bucketKeyByFile.get(fileName);
+
+      if (currentBucketKey === undefined) {
+        return undefined;
+      }
+
+      if (isCssBundleFile(fileName)) {
+        return classNameMapByBucket.get(currentBucketKey)?.get(className);
+      }
+
+      const reachableCssFiles = reachableCssFilesByFile.get(fileName) ?? [];
+      const candidateBucketKeys = new Set<string>();
+
+      for (const cssFileName of reachableCssFiles) {
+        const cssClasses = classesByFile.get(cssFileName);
+
+        if (cssClasses?.has(className)) {
+          const cssBucketKey = bucketKeyByFile.get(cssFileName);
+
+          if (cssBucketKey !== undefined) {
+            candidateBucketKeys.add(cssBucketKey);
+          }
+        }
+      }
+
+      const fallbackBucketKeys = cssBucketKeysByClass.get(className) ?? new Set<string>();
+
+      for (const bucketKey of fallbackBucketKeys) {
+        candidateBucketKeys.add(bucketKey);
+      }
+
+      const orderedBucketKeys = [...candidateBucketKeys].sort((left, right) => {
+        if (left === currentBucketKey) {
+          return -1;
+        }
+
+        if (right === currentBucketKey) {
+          return 1;
+        }
+
+        return left.localeCompare(right);
+      });
+
+      for (const bucketKey of orderedBucketKeys) {
+        const mangledName = classNameMapByBucket.get(bucketKey)?.get(className);
+
+        if (mangledName !== undefined && mangledName !== "") {
+          return mangledName;
+        }
+      }
+
+      return undefined;
+    };
+
     for (const [fileName, sourceText] of bundleFileContents.entries()) {
       const classes = classesByFile.get(fileName);
 
@@ -752,16 +867,10 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
         continue;
       }
 
-      const bucketKey = entries.join("|");
-      const bucketClassNames = classNameMapByBucket.get(bucketKey);
       const localMapping = new Map<string, string>();
 
-      if (bucketClassNames === undefined) {
-        continue;
-      }
-
       for (const className of classes) {
-        const mangledName = bucketClassNames.get(className);
+        const mangledName = resolveMangledNameForFileClass(fileName, className);
 
         if (mangledName !== undefined && mangledName !== "") {
           localMapping.set(className, mangledName);
@@ -772,8 +881,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
         continue;
       }
 
-      // 改写时直接使用“当前文件桶”自己的局部映射，
-      // 保证同一个 bucket 内的 HTML / CSS / JS 对齐，同时不跨 bucket 共享同名 utility。
+      // CSS 继续使用自己的 owner bucket；HTML / JS 则回填实际承载规则的 CSS bucket 短名。
       const rewrittenText = await rewriteWithUtwmHandler(textSource, fileName, localMapping);
       bundleFileContents.set(fileName, rewrittenText);
     }
