@@ -19,31 +19,29 @@
  * - 如果两个文件最终都只被 `post` 访问，它们就在同一个 `post` bucket。
  * - 如果一个文件会同时被 `post` 和 `page-like-post-style` 访问，它就进入 `post|page-like-post-style` bucket。
  *
- * 4. 每个 utility 只生成一份最终短类名映射
+ * 4. 每个 bucket 内的 utility 单独生成一份短类名映射
  *
- * - 这里的 canonical bucket 不是新入口，也不是新文件。
- * - 它只是“同一个 utility 命中了哪些文件桶”之后，把这些桶做并集得到的唯一 key。
- * - 这样 HTML / CSS / JS 看到的就会是同一份映射，不会出现同一个 utility 在不同产物里名字不一致。
+ * - 这里不会再把“同名 utility”跨 bucket 合并。
+ * - 映射主键是 `(bucketKey, className)`，不是单独的 `className`。
+ * - 也就是说，`a` 里的 `tw:hidden`、`b` 里的 `tw:hidden`、`a|b` 里的 `tw:hidden` 会是三份独立实例。
  * - 全局共享桶保留最短前缀 `_`，其他 bucket 稳定分配 `a_`、`b_`、`c_`……
  *
- * 为什么先合并 bucket 再生成映射：
+ * 为什么要按 bucket 实例化：
  *
  * - 先按文件算“文件桶”：这个 HTML / CSS / JS 文件最终能被哪些 entry 访问到。
- * - 再按 utility 回看：这个 utility 出现在哪些文件里，这些文件又分别属于哪些文件桶。
- * - 最后把这些文件桶合成一个 canonical bucket，给这个 utility 只分配一次短名。
- * - 例如 `mdi--eye-outline` 同时出现在 `post.html`、`post` 对应的 CSS、以及 `page-like-post-style` 共享 CSS 里：
+ * - 再在当前文件桶内部，给该文件实际命中的 utility 独立分配短名。
+ * - 例如 `tw:hidden` 同时出现在 `nav-post`、`nav-page-like-post-style`、以及 `post` 页面自己的共享 CSS 里：
  *
- *   - `post.html` 只属于 `post`
- *   - `post` 对应的 CSS 可能属于 `page-like-post-style|post`
- *   - `page-like-post-style` 的共享 CSS 也属于 `page-like-post-style|post`
- *   - 所以这个 utility 的 canonical bucket 最后就是 `page-like-post-style|post`
- * - 这样 HTML 和 CSS 才会拿到同一个短名，不会一个是 `ac_m`，另一个是 `aa_o`。
- * - 如果不做这一步，HTML 和 CSS 可能会各自生成不同短名，结果就会对不齐。
+ *   - `components-nav-post` 里的 `tw:hidden` 只属于 `components-nav-post`
+ *   - `components-nav-page-like-post-style` 里的 `tw:hidden` 只属于 `components-nav-page-like-post-style`
+ *   - `page-like-post-style|post` 共享 CSS 里的 `tw:hidden` 属于 `page-like-post-style|post`
+ * - 所以这三处虽然原始 utility 同名，但最后会拿到三份不同短名。
+ * - 同一个 bucket 里的 HTML / CSS / JS 仍然共用同一份映射，所以局部产物内部依然能严格对齐。
  *
  * 这套方案的取舍：
  *
- * - 优点：同一个 utility 在 HTML / CSS / JS 里始终一致。
- * - 缺点：共享范围越大，能省下来的前缀就越少。
+ * - 优点：更符合“组件私有化 utility”的直觉，不会因为别的 bucket 也用了同名 utility，就和当前组件共用同一个 mangled class。
+ * - 缺点：共享能力更弱，同一个 utility 在不同 bucket 会重复生成。
  *
  * 额外的作用域取舍：
  *
@@ -223,25 +221,6 @@ function getSequenceLabel(index: number): string {
 /** 生成 `_a`、`_b`、`_c` 这种稳定裸属性作用域名。 */
 function getScopeAttributeName(index: number): string {
   return `_${getSequenceLabel(index)}`;
-}
-
-/** 把多个 file bucket 合并成一个 canonical bucket。 */
-function mergeBucketKeys(bucketKeys: readonly string[]): string {
-  const entryNames = new Set<string>();
-
-  for (const bucketKey of bucketKeys) {
-    if (bucketKey === "") {
-      continue;
-    }
-
-    for (const entryName of bucketKey.split("|")) {
-      if (entryName !== "") {
-        entryNames.add(entryName);
-      }
-    }
-  }
-
-  return [...entryNames].sort().join("|");
 }
 
 /** 判断 bundle 条目是否至少像个输出文件节点。 */
@@ -813,8 +792,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
   const rewriteBundle = async (bundle: Record<string, unknown>): Promise<void> => {
     const entriesByFile = new Map<string, Set<string>>();
     const classesByFile = new Map<string, Set<string>>();
-    const filesByClass = new Map<string, Set<string>>();
-    const bucketKeysByClass = new Map<string, Set<string>>();
+    const filesByClassByBucket = new Map<string, Map<string, Set<string>>>();
     const filesByBucket = new Map<string, Set<string>>();
     const classNameMapByBucket = new Map<string, Map<string, string>>();
     const entryKeys = [...entryOutputFiles.keys()].sort();
@@ -867,24 +845,18 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       const bucketFiles = filesByBucket.get(bucketKey) ?? new Set<string>();
       bucketFiles.add(fileName);
       filesByBucket.set(bucketKey, bucketFiles);
+      const bucketClassNames = classNameMapByBucket.get(bucketKey) ?? new Map<string, string>();
+      const bucketClassFiles = filesByClassByBucket.get(bucketKey) ?? new Map<string, Set<string>>();
 
       for (const className of classes) {
-        const bucketKeys = bucketKeysByClass.get(className) ?? new Set<string>();
-        bucketKeys.add(bucketKey);
-        bucketKeysByClass.set(className, bucketKeys);
-
-        const classFiles = filesByClass.get(className) ?? new Set<string>();
+        bucketClassNames.set(className, "");
+        const classFiles = bucketClassFiles.get(className) ?? new Set<string>();
         classFiles.add(fileName);
-        filesByClass.set(className, classFiles);
+        bucketClassFiles.set(className, classFiles);
       }
-    }
 
-    for (const [className, bucketKeys] of bucketKeysByClass.entries()) {
-      const canonicalBucketKey = mergeBucketKeys([...bucketKeys]);
-      const bucketClassNames = classNameMapByBucket.get(canonicalBucketKey) ?? new Map<string, string>();
-
-      bucketClassNames.set(className, "");
-      classNameMapByBucket.set(canonicalBucketKey, bucketClassNames);
+      classNameMapByBucket.set(bucketKey, bucketClassNames);
+      filesByClassByBucket.set(bucketKey, bucketClassFiles);
     }
 
     const sortedBucketKeys = [...classNameMapByBucket.keys()].sort((left, right) => {
@@ -917,15 +889,14 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
     }
 
     const mappingEntries: MappingEntry[] = [];
-    const classNameToMangledName = new Map<string, string>();
-    const classNameToScopeAttribute = new Map<string, string>();
 
     for (const bucketKey of sortedBucketKeys) {
       const bucketClassNames = classNameMapByBucket.get(bucketKey);
+      const bucketClassFiles = filesByClassByBucket.get(bucketKey);
       const prefix = bucketPrefixMap.get(bucketKey);
       const scopeAttribute = bucketScopeAttributeMap.get(bucketKey) ?? null;
 
-      if (bucketClassNames === undefined || prefix === undefined) {
+      if (bucketClassNames === undefined || bucketClassFiles === undefined || prefix === undefined) {
         continue;
       }
 
@@ -934,14 +905,10 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       for (const [classIndex, className] of sortedClassNames.entries()) {
         const mangledName = `${prefix}${getSequenceLabel(classIndex)}`;
         bucketClassNames.set(className, mangledName);
-        classNameToMangledName.set(className, mangledName);
-        if (scopeAttribute !== null) {
-          classNameToScopeAttribute.set(className, scopeAttribute);
-        }
         mappingEntries.push({
           bucket: bucketKey,
           entries: bucketKey === "" ? [] : bucketKey.split("|"),
-          files: [...(filesByClass.get(className) ?? new Set<string>())].sort(),
+          files: [...(bucketClassFiles.get(className) ?? new Set<string>())].sort(),
           mangled: mangledName,
           original: className,
           prefix,
@@ -969,17 +936,22 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
         continue;
       }
 
+      const bucketKey = entries.join("|");
+      const bucketClassNames = classNameMapByBucket.get(bucketKey);
       const localMapping = new Map<string, string>();
       const scopeAttributesByMangledClassName = new Map<string, Set<string>>();
+      const scopeAttribute = bucketScopeAttributeMap.get(bucketKey);
+
+      if (bucketClassNames === undefined) {
+        continue;
+      }
 
       for (const className of classes) {
-        const mangledName = classNameToMangledName.get(className);
+        const mangledName = bucketClassNames.get(className);
 
         if (mangledName !== undefined && mangledName !== "") {
           localMapping.set(className, mangledName);
         }
-
-        const scopeAttribute = classNameToScopeAttribute.get(className);
 
         if (mangledName === undefined || scopeAttribute === undefined) {
           continue;
@@ -994,8 +966,8 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
         continue;
       }
 
-      // 改写时不再按“当前文件桶”单独选映射，
-      // 而是直接使用同一个 utility 的 canonical 映射，确保 HTML / CSS / JS 对齐。
+      // 改写时直接使用“当前文件桶”自己的局部映射，
+      // 保证同一个 bucket 内的 HTML / CSS / JS 对齐，同时不跨 bucket 共享同名 utility。
       const rewrittenText = await rewriteWithUtwmHandler(
         textSource,
         fileName,
