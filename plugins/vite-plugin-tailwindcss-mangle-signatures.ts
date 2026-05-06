@@ -48,7 +48,6 @@ import { Context, cssHandler, htmlHandler, jsHandler } from "@tailwindcss-mangle
 import type { Plugin } from "vite";
 
 interface TailwindcssMangleSignaturesPluginOptions {
-  base: string;
   classListFile?: string;
   input: Record<string, string>;
   mappingFile?: string;
@@ -240,7 +239,6 @@ function toSortedRecord(map: ReadonlyMap<string, ReadonlySet<string>>): Record<s
   );
 }
 
-/** 为扫描阶段生成稳定且可回收的占位类名。 */
 const SCAN_MARKER_PREFIX = "__tw_scan_";
 const SCAN_MARKER_REGEX = /__tw_scan_(\d+)__/gmu;
 

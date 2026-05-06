@@ -25,6 +25,14 @@ type BuildOutputOption = (typeof BUILD_OUTPUT_OPTIONS)[number];
 // Build modes select fixed presets for scope, precompress, output, and manifest.
 const BUILD_MODES = ["default", "preview-for-docs", "dev", "full", "tiny"] as const;
 type BuildMode = (typeof BUILD_MODES)[number];
+type BuildEntryMap = Record<string, string>;
+type BuildModeConfig = {
+  scope: BuildScope;
+  precompress: BuildPrecompressOption;
+  output: BuildOutputOption;
+  manifest: boolean;
+  "extra-entries"?: BuildEntryMap;
+};
 
 function pickEnvValue<T extends string>(value: string | undefined, allowedValues: readonly T[], fallback: T): T {
   if (typeof value === "string") {
@@ -38,84 +46,8 @@ function pickEnvValue<T extends string>(value: string | undefined, allowedValues
   return fallback;
 }
 
-const BUILD_MODE_CONFIGS: Record<
-  BuildMode,
-  {
-    scope: BuildScope;
-    precompress: BuildPrecompressOption;
-    output: BuildOutputOption;
-    manifest: boolean;
-    "extra-entries"?: Record<string, string>;
-  }
-> = {
-  default: {
-    scope: "all",
-    precompress: "br-only",
-    output: "minify",
-    manifest: false,
-  },
-  "preview-for-docs": {
-    scope: "tiny",
-    precompress: "none",
-    output: "original",
-    manifest: true,
-    "extra-entries": {
-      "runtime-page-error": resolve(import.meta.dirname, "src/templates/_runtime/pages/error/index.ts"),
-    },
-  },
-  dev: {
-    scope: "all",
-    precompress: "none",
-    output: "original",
-    manifest: true,
-  },
-  full: {
-    scope: "all",
-    precompress: "all",
-    output: "minify",
-    manifest: false,
-  },
-  tiny: {
-    scope: "tiny",
-    precompress: "none",
-    output: "minify",
-    manifest: false,
-  },
-};
-
-export default defineConfig((): UserConfig => {
-  const buildMode = pickEnvValue<BuildMode>(process.env.BUILD_MODE, BUILD_MODES, "default");
-  const {
-    manifest: buildManifest,
-    output: outputOption,
-    precompress: precompressOption,
-    scope: buildScope,
-    "extra-entries": extraEntries = {},
-  } = BUILD_MODE_CONFIGS[buildMode];
-  const useTinyFont = buildScope === "tiny";
-  const useTinyInjection = buildScope === "tiny-injection" || buildScope === "tiny";
-
-  const precompressAlgorithms =
-    precompressOption === "none"
-      ? []
-      : [
-          defineAlgorithm("brotliCompress", {
-            params: {
-              [constants.BROTLI_PARAM_QUALITY]: 11,
-            },
-          }),
-          ...(precompressOption === "all"
-            ? [
-                defineAlgorithm("gzip", { level: 9 }),
-                defineAlgorithm("zstandard", {
-                  params: {
-                    [constants.ZSTD_c_compressionLevel]: 19,
-                  },
-                }),
-              ]
-            : []),
-        ];
-  const input = {
+function getBuildInputs(extraEntries: BuildEntryMap = {}): BuildEntryMap {
+  return {
     // pages
     archives: resolve(import.meta.dirname, "src/templates/archives.html"),
     author: resolve(import.meta.dirname, "src/templates/author.html"),
@@ -314,6 +246,77 @@ export default defineConfig((): UserConfig => {
     "components-nav-post": resolve(import.meta.dirname, "src/templates/components/nav-post/template.html"),
     ...extraEntries,
   };
+}
+
+const BUILD_MODE_CONFIGS: Record<BuildMode, BuildModeConfig> = {
+  default: {
+    scope: "all",
+    precompress: "br-only",
+    output: "minify",
+    manifest: false,
+  },
+  "preview-for-docs": {
+    scope: "tiny",
+    precompress: "none",
+    output: "original",
+    manifest: true,
+    "extra-entries": {
+      "runtime-page-error": resolve(import.meta.dirname, "src/templates/_runtime/pages/error/index.ts"),
+    },
+  },
+  dev: {
+    scope: "all",
+    precompress: "none",
+    output: "original",
+    manifest: true,
+  },
+  full: {
+    scope: "all",
+    precompress: "all",
+    output: "minify",
+    manifest: false,
+  },
+  tiny: {
+    scope: "tiny",
+    precompress: "none",
+    output: "minify",
+    manifest: false,
+  },
+};
+
+export default defineConfig((): UserConfig => {
+  const buildMode = pickEnvValue<BuildMode>(process.env.BUILD_MODE, BUILD_MODES, "default");
+  const {
+    manifest: buildManifest,
+    output: outputOption,
+    precompress: precompressOption,
+    scope: buildScope,
+    "extra-entries": extraEntries = {},
+  } = BUILD_MODE_CONFIGS[buildMode];
+  const useTinyFont = buildScope === "tiny";
+  const useTinyInjection = buildScope === "tiny-injection" || buildScope === "tiny";
+  const input = getBuildInputs(extraEntries);
+
+  const precompressAlgorithms =
+    precompressOption === "none"
+      ? []
+      : [
+          defineAlgorithm("brotliCompress", {
+            params: {
+              [constants.BROTLI_PARAM_QUALITY]: 11,
+            },
+          }),
+          ...(precompressOption === "all"
+            ? [
+                defineAlgorithm("gzip", { level: 9 }),
+                defineAlgorithm("zstandard", {
+                  params: {
+                    [constants.ZSTD_c_compressionLevel]: 19,
+                  },
+                }),
+              ]
+            : []),
+        ];
 
   const plugins = [
     // Tailwind CSS with Vite integration
@@ -322,7 +325,6 @@ export default defineConfig((): UserConfig => {
     ...(outputOption === "minify"
       ? [
           tailwindcssMangleSignaturesPlugin({
-            base: "/themes/howiehz-higan/",
             input,
             projectRoot: import.meta.dirname,
             templateRoot: resolve(import.meta.dirname, "src/templates"),
