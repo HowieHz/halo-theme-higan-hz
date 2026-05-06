@@ -45,8 +45,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, extname, relative, resolve } from "node:path";
 
-import { defaultMangleClassFilter } from "@tailwindcss-mangle/shared";
 import { Context, cssHandler, htmlHandler, jsHandler } from "@tailwindcss-mangle/core";
+import { defaultMangleClassFilter } from "@tailwindcss-mangle/shared";
 import type { Plugin } from "vite";
 
 interface TailwindcssMangleSignaturesPluginOptions {
