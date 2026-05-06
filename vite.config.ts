@@ -319,42 +319,6 @@ export default defineConfig((): UserConfig => {
             : []),
         ];
 
-  const plugins = [
-    // Tailwind CSS with Vite integration
-    tailwindcss(),
-    // Unplugin Tailwind CSS Mangle to obfuscate Tailwind CSS class names
-    tailwindcssMangleSignaturesPlugin({
-      base: themeBase,
-      input,
-      projectRoot: import.meta.dirname,
-      templateRoot: resolve(import.meta.dirname, "src/templates"),
-    }),
-    // Clean up generated CSS-related comments:
-    // - strip Vite's injected `/* empty css */` markers from JS chunks
-    // - strip leading `/*! ... */` license banners from emitted CSS assets
-    cleanupGeneratedCssComments(),
-    // Minify HTML while preserving Thymeleaf syntax
-    thymeleafMinify({
-      base: themeBase,
-    }),
-    // Generate Subresource Integrity (SRI) hashes for all output files
-    sri(),
-  ];
-
-  if (precompressAlgorithms.length > 0) {
-    plugins.push(
-      // precompress assets using specified algorithms for optimal delivery
-      compression({
-        algorithms: precompressAlgorithms,
-        include: [
-          /\.(atom|rss|xml|xhtml|js|mjs|ts|json|css|eot|otf|ttf|svg|ico|bmp|dib|txt|text|log|md|conf|ini|cfg)$/,
-        ],
-        // Root *.html, error/**/*.html and */ components/**/*.html are template files and should not be compressed
-        // exclude: [/^[^/]*\.html$/, /^error\/.*\.html$/, /^components\/.*\.html$/],
-      }),
-    );
-  }
-
   return {
     root: resolve(import.meta.dirname, "src/templates/"),
     base: themeBase,
@@ -381,7 +345,40 @@ export default defineConfig((): UserConfig => {
         ),
       },
     },
-    plugins,
+    plugins: [
+      // Tailwind CSS with Vite integration
+      tailwindcss(),
+      // Unplugin Tailwind CSS Mangle to obfuscate Tailwind CSS class names
+      tailwindcssMangleSignaturesPlugin({
+        base: themeBase,
+        input,
+        projectRoot: import.meta.dirname,
+        templateRoot: resolve(import.meta.dirname, "src/templates"),
+      }),
+      // Clean up generated CSS-related comments:
+      // - strip Vite's injected `/* empty css */` markers from JS chunks
+      // - strip leading `/*! ... */` license banners from emitted CSS assets
+      cleanupGeneratedCssComments(),
+      // Minify HTML while preserving Thymeleaf syntax
+      thymeleafMinify({
+        base: themeBase,
+      }),
+      // Generate Subresource Integrity (SRI) hashes for all output files
+      sri(),
+      // precompress assets using specified algorithms for optimal delivery
+      ...(precompressAlgorithms.length > 0
+        ? [
+            compression({
+              algorithms: precompressAlgorithms,
+              include: [
+                /\.(atom|rss|xml|xhtml|js|mjs|ts|json|css|eot|otf|ttf|svg|ico|bmp|dib|txt|text|log|md|conf|ini|cfg)$/,
+              ],
+              // Root *.html, error/**/*.html and */ components/**/*.html are template files and should not be compressed
+              // exclude: [/^[^/]*\.html$/, /^error\/.*\.html$/, /^components\/.*\.html$/],
+            }),
+          ]
+        : []),
+    ],
     css: {
       transformer: "lightningcss",
       lightningcss: {
