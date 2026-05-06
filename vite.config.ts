@@ -323,16 +323,12 @@ export default defineConfig((): UserConfig => {
     // Tailwind CSS with Vite integration
     tailwindcss(),
     // Unplugin Tailwind CSS Mangle to obfuscate Tailwind CSS class names
-    ...(outputOption === "minify"
-      ? [
-          tailwindcssMangleSignaturesPlugin({
-            base: themeBase,
-            input,
-            projectRoot: import.meta.dirname,
-            templateRoot: resolve(import.meta.dirname, "src/templates"),
-          }),
-        ]
-      : []),
+    tailwindcssMangleSignaturesPlugin({
+      base: themeBase,
+      input,
+      projectRoot: import.meta.dirname,
+      templateRoot: resolve(import.meta.dirname, "src/templates"),
+    }),
     // Clean up generated CSS-related comments:
     // - strip Vite's injected `/* empty css */` markers from JS chunks
     // - strip leading `/*! ... */` license banners from emitted CSS assets
