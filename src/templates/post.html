@@ -107,8 +107,8 @@
     >
       <header>
         <h1
-          class="my-0 text-[1.5em] leading-tight"
-          th:classappend="${theme.config?.post_styles?.post_title_uppper} ? 'uppercase'"
+          class="tw:my-0 tw:text-[1.5em] tw:leading-tight"
+          th:classappend="${theme.config?.post_styles?.post_title_uppper} ? 'tw:uppercase'"
           itemprop="name headline"
         >
           <th:block th:text="${post.spec?.title}">标题替换位</th:block
@@ -120,7 +120,7 @@
         <div class="meta">
           <!--/* 展示文章作者名 */-->
           <span
-            class="font-bold tracking-wider uppercase"
+            class="tw:font-bold tw:tracking-wider tw:uppercase"
             itemprop="author"
             itemscope
             th:each="contributor : ${post?.contributors}"
@@ -136,7 +136,7 @@
           </span>
 
           <div
-            class="post-publish-time inline"
+            class="post-publish-time tw:inline"
             th:if="${theme.config?.post_styles?.is_show_post_publish_time}"
           >
             <span
@@ -151,7 +151,7 @@
             >
           </div>
           <div
-            class="post-update-time block sm:inline"
+            class="post-update-time tw:block tw:sm:inline"
             th:if="${theme.config?.post_styles?.is_show_post_updated_time}"
           >
             <span
@@ -167,20 +167,20 @@
           </div>
 
           <!--/* 分隔符 */-->
-          <span class="meta-separator hidden before:content-['|'] last:hidden sm:inline"></span>
+          <span class="meta-separator tw:hidden tw:before:content-['|'] tw:last:hidden tw:sm:inline"></span>
 
           <!--/* 使用 sm:inlne 而不是 sm:inline-block 是希望能在很多“分类面包屑”的情况下自动换行 */-->
           <div
-            class="article-category block sm:inline"
+            class="article-category tw:block tw:sm:inline"
             th:unless="${#lists.isEmpty(post.categories)}"
           >
             <th:block th:each="categoryLeafNode, categoryLeafNodeIterStat : ${post.categories}">
               <!--/* inline-block 使一个“分类面包屑”不会被分到两行 */-->
-              <span class="categoryBreadcrumbs inline-block">
+              <span class="categoryBreadcrumbs tw:inline-block">
                 <!--/* 分类图标和第一个“分类面包屑”保持在一行。 */-->
                 <span
                   th:if="${categoryLeafNodeIterStat.first}"
-                  class="iconify fa-solid--archive"
+                  class="tw:iconify tw:fa-solid--archive"
                 ></span>
                 <th:block
                   th:each="category, iterStat : ${categoryFinder.getBreadcrumbs(categoryLeafNode.metadata?.name)}"
@@ -207,16 +207,16 @@
 
           <!--/* 使用 sm:inlne 而不是 sm:inline-block 是希望能在很多标签项的情况下自动换行 */-->
           <div
-            class="article-tag block sm:inline"
+            class="article-tag tw:block tw:sm:inline"
             th:unless="${#lists.isEmpty(post.tags)}"
           >
             <th:block th:each="tag, iterStat : ${post.tags}">
               <!--/* inline-block 保证一个标签项的内容保持在一行。 */-->
-              <span class="inline-block">
+              <span class="tw:inline-block">
                 <!--/* 标签图标和第一个标签项保持在一行。 */-->
                 <span
                   th:if="${iterStat.first}"
-                  class="iconify fa-solid--tag"
+                  class="tw:iconify tw:fa-solid--tag"
                 ></span>
                 <a
                   class="tag-link"
@@ -237,24 +237,24 @@
 
           <!--/* inline-block 保证图标和数字在一行 */-->
           <span
-            class="inline-block"
+            class="tw:inline-block"
             th:if="${theme.config?.post_styles?.is_show_post_views}"
             th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
           >
-            <span class="iconify mdi--eye-outline"></span>
+            <span class="tw:iconify tw:mdi--eye-outline"></span>
             <span th:text="${post.stats?.visit}">文章阅读量替换位</span>
           </span>
           <!--/* 预计阅读时长 
           inline-block 保证图标和数字在一行 */-->
           <span
-            class="inline-block"
+            class="tw:inline-block"
             th:if="${theme.config?.post_styles?.is_show_post_estimated_reading_time}"
             th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                    ? extraApiStatsFinder.getPostWordCount({name: post.metadata.name})
                                    : #strings.length(post.content?.content) / 2 }"
             th:title="#{page.post.estimated-reading-time(#{common.words(${wordCount})})}"
           >
-            <span class="iconify mdi--clock-outline"></span>
+            <span class="tw:iconify tw:mdi--clock-outline"></span>
             <span
               class="readtime"
               th:text="#{common.min(${#numbers.formatDecimal(wordCount * 1.0 / 450, 1, 1) + '~' + #numbers.formatDecimal(wordCount * 1.0 / 350, 1, 1)})}"
@@ -266,14 +266,14 @@
           <!--/* 字数统计 
           inline-block 保证图标和数字在一行 */-->
           <span
-            class="inline-block"
+            class="tw:inline-block"
             th:if="${theme.config?.post_styles?.is_show_post_word_count}"
             th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                    ? extraApiStatsFinder.getPostWordCount({name: post.metadata.name})
                                    : #strings.length(post.content?.content) / 2 }"
             th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
           >
-            <span class="iconify fluent--text-edit-style-character-a-32-regular"></span>
+            <span class="tw:iconify tw:fluent--text-edit-style-character-a-32-regular"></span>
             <span
               class="word-count"
               th:text="${wordCount}"
@@ -284,20 +284,20 @@
       </header>
 
       <div
-        class="content flex-auto"
+        class="content tw:flex-auto"
         itemprop="articleBody"
         th:utext="${post.content?.content}"
       >
         文章内容填充处
       </div>
       <th:block th:if="${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show}">
-        <hr class="divide mt-10 mb-0" />
+        <hr class="divide tw:mt-10 tw:mb-0" />
       </th:block>
       <th:block th:if="${theme.config?.post_styles?.is_post_upvote_button_show}">
         <!--/* 如果下面的推荐文章，评论区等都没开，直接接上页脚。
         是 article 里最后一个元素会设置为 mb-0（也就是 last:mb-0） */-->
         <a
-          class="upvote-button mt-2 mb-0"
+          class="upvote-button tw:mt-2 tw:mb-0"
           href="#"
           th:data-post-name="${post.metadata.name}"
           th:style="'display: flex;
@@ -305,7 +305,7 @@
             justify-content:' + ${theme.config?.post_styles?.post_upvote_button_position} + ';'"
         >
           <span
-            class="iconify"
+            class="tw:iconify"
             th:width="${theme.config?.post_styles?.post_upvote_button_width}"
             th:height="${theme.config?.post_styles?.post_upvote_button_height}"
             style="
@@ -361,9 +361,9 @@
                                                 })},
                    targetPagePostList = ${targetPagePostFinderResult.items}"
         >
-          <div class="recommendations mt-10">
+          <div class="recommendations tw:mt-10">
             <h4
-              class="mb-2"
+              class="tw:mb-2"
               th:text="#{fragment.post-nav.recommended}"
             >
               推荐文章 标题填充位
@@ -428,7 +428,7 @@
         th:if="${theme.config?.post_styles?.is_post_prev_next_navigation_show}"
       >
         <span
-          class="post-navigation mt-10 mb-0"
+          class="post-navigation tw:mt-10 tw:mb-0"
           th:if="${postCursor.hasPrevious()
                   or postCursor.hasNext()}"
         >
@@ -454,12 +454,12 @@
       <!--/* 上一个也是分隔线或者点赞按钮，这个 hr 就会隐藏，这个隐藏逻辑是 CSS 样式做的工作 */-->
       <hr
         th:if="${theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show}"
-        class="divide mt-10 mb-0"
+        class="divide tw:mt-10 tw:mb-0"
       />
 
       <div
         th:if="${theme.config?.post_styles?.is_post_comment_section_show and haloCommentEnabled}"
-        class="mt-5"
+        class="tw:mt-5"
       >
         <halo:comment
           group="content.halo.run"

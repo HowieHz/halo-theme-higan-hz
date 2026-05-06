@@ -40,12 +40,12 @@
       itemtype="http://schema.org/BlogPosting"
     >
       <section class="about">
-        <div class="relative">
+        <div class="tw:relative">
           <div
-            class="head-cover absolute inset-x-0 inset-y-0 -z-20"
+            class="head-cover tw:absolute tw:inset-x-0 tw:inset-y-0 tw:-z-20"
             th:style="|background-image: url(${#annotations.getOrDefault(author, 'higan.howiehz.top/author-header-image', '')});|"
           ></div>
-          <div class="profile-wrap z-20">
+          <div class="profile-wrap tw:z-20">
             <div class="profile-content">
               <picture>
                 <source
@@ -113,7 +113,7 @@
                       target="_blank"
                       rel="noopener"
                     >
-                      <span class="iconify-middle iconify heroicons-outline--rss"></span
+                      <span class="iconify-middle tw:iconify tw:heroicons-outline--rss"></span
                     ></a>
                   </th:block>
                 </p>
@@ -127,7 +127,7 @@
         </div>
       </section>
 
-      <div class="mt-16 flex flex-auto flex-col sm:mt-20">
+      <div class="tw:mt-16 tw:flex tw:flex-auto tw:flex-col tw:sm:mt-20">
         <th:block
           th:insert="~{components/list-post-simple/template :: body(posts = ${posts}, showPagination = true, pageTemplateName = 'author')}"
         ></th:block>

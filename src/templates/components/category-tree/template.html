@@ -10,7 +10,7 @@
 >
   <ul
     th:unless="${#lists.isEmpty(categories)}"
-    class="flex-auto"
+    class="tw:flex-auto"
   >
     <li th:replace="~{:: single(categories = ${categories})}"></li>
   </ul>
@@ -18,7 +18,7 @@
 
 <ul
   th:fragment="next(categories)"
-  class="flex-auto"
+  class="tw:flex-auto"
 >
   <li
     th:fragment="single(categories)"

@@ -24,7 +24,7 @@
         role="button"
         th:aria-label="#{fragment.menu.toggle-button.aria-label}"
       >
-        <span class="iconify-huge iconify material-symbols--menu"></span>
+        <span class="iconify-huge tw:iconify tw:material-symbols--menu"></span>
       </a>
     </li>
 
@@ -165,11 +165,11 @@
     <!--/* 有子菜单的菜单项 */-->
     <span class="submenu-container">
       <button
-        class="submenu-toggle v-cursor-pointer m-0 border-none bg-transparent p-0 focus:outline-none"
+        class="submenu-toggle v-cursor-pointer tw:m-0 tw:border-none tw:bg-transparent tw:p-0 tw:focus:outline-none"
         th:aria-label="#{fragment.menu.submenu-toggle.aria-label}"
         type="button"
       >
-        <span class="iconify-large-middle mr-1 iconify material-symbols--keyboard-arrow-down"></span></button
+        <span class="iconify-large-middle tw:mr-1 tw:iconify tw:material-symbols--keyboard-arrow-down"></span></button
       ><a
         class="submenu-link"
         th:href="@{${item?.status?.href}}"

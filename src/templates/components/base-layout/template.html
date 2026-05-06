@@ -656,15 +656,15 @@
           themeIcon.style.removeProperty("display"); // <!--/* remove display: none */-->
 
           Array.from(themeIcon.classList).forEach((c) => {
-            if (c.startsWith("ph--")) themeIcon.classList.remove(c);
+            if (c.startsWith("tw:ph--")) themeIcon.classList.remove(c);
           });
 
           if (theme === THEME_LIGHT) {
-            themeIcon.classList.add("ph--sun-bold");
+            themeIcon.classList.add("tw:ph--sun-bold");
           } else if (theme === THEME_DARK) {
-            themeIcon.classList.add("ph--moon-bold");
+            themeIcon.classList.add("tw:ph--moon-bold");
           } else {
-            themeIcon.classList.add("ph--circle-bold");
+            themeIcon.classList.add("tw:ph--circle-bold");
           }
         }
 
@@ -786,7 +786,7 @@
   </head>
 
   <body
-    class="transition-colors duration-300"
+    class="tw:transition-colors tw:duration-300"
     th:classappend="|text-size-${theme.config?.styles?.text_size}|"
   >
     <script th:if="${theme.config?.global?.is_i18n_menu_show}">
@@ -959,10 +959,10 @@
                     isBottomSidebarContent = ${isBottomSidebarContent}
                   )}"
     >
-      <div class="max-width min-width content-width mx-auto px-4 sm:px-8">
+      <div class="max-width min-width content-width tw:mx-auto tw:px-4 tw:sm:px-8">
         <th:block th:replace="${navbar}"></th:block>
         <div
-          class="content index pt-16"
+          class="content index tw:pt-16"
           th:classappend="${theme.config?.styles?.is_footer_force_bottom} ? 'min-h-100vh' : '' "
         >
           <th:block th:replace="${header}"></th:block>
@@ -973,7 +973,7 @@
 
           <footer
             id="footer"
-            class="mt-auto mb-5 pt-5"
+            class="tw:mt-auto tw:mb-5 tw:pt-5"
           >
             <div class="footer-left">
               <!--/* 这里不能使用自闭合标签，否则在经过 html minify 处理后会变成 <halo:footer> ，无法正常注入 */-->
@@ -994,7 +994,7 @@
                                and pluginFinder.available('extra-api', '3.*'))}"
                   >
                     <span
-                      class="iconify"
+                      class="tw:iconify"
                       th:style="|--svg:url('${item?.icon.value}')|"
                       th:if="${item?.icon != null and item?.icon != ''}"
                     ></span>

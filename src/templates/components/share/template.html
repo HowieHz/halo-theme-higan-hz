@@ -27,12 +27,12 @@
             href="#"
           >
             <span
-              class="iconify"
+              class="tw:iconify"
               th:style="|--svg:url('${item?.icon.value}')|"
               th:if="${item?.icon != null and item?.icon != ''}"
             ></span>
             <span
-              class="iconify mdi--share-circle"
+              class="tw:iconify tw:mdi--share-circle"
               th:if="${item?.icon == null or item?.icon == ''}"
             ></span>
           </a>
@@ -100,93 +100,93 @@
           >
             <!--/* 自定义图标覆盖 */-->
             <span
-              class="iconify"
+              class="tw:iconify"
               th:style="|--svg:url('${item?.icon.value}')|"
               th:if="${item?.icon != null and item?.icon != ''}"
             ></span>
             <!--/* 默认图标 */-->
             <span
-              class="iconify icomoon-free--mail4"
+              class="tw:iconify tw:icomoon-free--mail4"
               th:if="${item?.type == 'email' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify pepicons-pencil--qr-code-circle-filled"
+              class="tw:iconify tw:pepicons-pencil--qr-code-circle-filled"
               th:if="${item?.type == 'qrcode' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify ic--baseline-facebook"
+              class="tw:iconify tw:ic--baseline-facebook"
               th:if="${item?.type == 'facebook' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify ant-design--reddit-circle-filled"
+              class="tw:iconify tw:ant-design--reddit-circle-filled"
               th:if="${item?.type == 'reddit' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify mdi--twitter-circle"
+              class="tw:iconify tw:mdi--twitter-circle"
               th:if="${item?.type == 'x' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify entypo-social--linkedin-with-circle"
+              class="tw:iconify tw:entypo-social--linkedin-with-circle"
               th:if="${item?.type == 'linkedin' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify mdi--pinterest"
+              class="tw:iconify tw:mdi--pinterest"
               th:if="${item?.type == 'pinterest' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify uil--telegram"
+              class="tw:iconify tw:uil--telegram"
               th:if="${item?.type == 'telegram' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify ri--whatsapp-fill"
+              class="tw:iconify tw:ri--whatsapp-fill"
               th:if="${item?.type == 'whatsapp' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify entypo-social--tumblr-with-circle"
+              class="tw:iconify tw:entypo-social--tumblr-with-circle"
               th:if="${item?.type == 'tumblr' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify simple-icons--blogger"
+              class="tw:iconify tw:simple-icons--blogger"
               th:if="${item?.type == 'blogger' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify simple-icons--gmail"
+              class="tw:iconify tw:simple-icons--gmail"
               th:if="${item?.type == 'gmail' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify simple-icons--yahoo"
+              class="tw:iconify tw:simple-icons--yahoo"
               th:if="${item?.type == 'yahoomail' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify simple-icons--skype"
+              class="tw:iconify tw:simple-icons--skype"
               th:if="${item?.type == 'skype' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify simple-icons--line"
+              class="tw:iconify tw:simple-icons--line"
               th:if="${item?.type == 'line' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify fa--hacker-news"
+              class="tw:iconify tw:fa--hacker-news"
               th:if="${item?.type == 'hackernews' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify ant-design--qq-circle-filled"
+              class="tw:iconify tw:ant-design--qq-circle-filled"
               th:if="${item?.type == 'qq' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify ant-design--weibo-circle-filled"
+              class="tw:iconify tw:ant-design--weibo-circle-filled"
               th:if="${item?.type == 'weibo' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify ant-design--wechat-filled"
+              class="tw:iconify tw:ant-design--wechat-filled"
               th:if="${item?.type == 'wechat' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify cib--qzone"
+              class="tw:iconify tw:cib--qzone"
               th:if="${item?.type == 'qzone' and (item?.icon == null or item?.icon == '')}"
             ></span>
             <span
-              class="iconify tabler--brand-douban"
+              class="tw:iconify tw:tabler--brand-douban"
               th:if="${item?.type == 'douban' and (item?.icon == null or item?.icon == '')}"
             ></span>
           </a>
@@ -210,7 +210,7 @@
                                             #uris.escapeQueryParam(title))}"
               >
                 <span
-                  class="iconify"
+                  class="tw:iconify"
                   th:style="|--svg:url('${custom_item?.icon.value}')|"
                 ></span>
               </a>

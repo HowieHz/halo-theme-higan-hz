@@ -58,13 +58,13 @@ document.addEventListener("DOMContentLoaded", (): void => {
       link.setAttribute("data-submenu-index", currentIndex.toString());
 
       // 更新按钮图标方向
-      const icon = toggle.querySelector(".iconify");
+      const icon = toggle.querySelector(".tw\\:iconify");
       if (icon) {
         // 最后一个子菜单时显示向上箭头
         const isLast = currentIndex === count - 1;
-        icon.classList.toggle("material-symbols--keyboard-arrow-up", isLast);
+        icon.classList.toggle("tw:material-symbols--keyboard-arrow-up", isLast);
         // 其他情况显示向下箭头
-        icon.classList.toggle("material-symbols--keyboard-arrow-down", !isLast);
+        icon.classList.toggle("tw:material-symbols--keyboard-arrow-down", !isLast);
       }
     });
   });
