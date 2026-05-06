@@ -21,15 +21,23 @@
  *
  * 4. 每个 utility 只生成一份最终短类名映射
  *
- * - 先把“同一个 utility 出现在哪些文件桶里”合并成一个 canonical bucket，再分配短名。
- * - 这样 HTML / CSS / JS 才会对同一个 utility 看到同一个短类名，避免同页不同产物对不齐。
+ * - 这里的 canonical bucket 不是新入口，也不是新文件。
+ * - 它只是“同一个 utility 命中了哪些文件桶”之后，把这些桶做并集得到的唯一 key。
+ * - 这样 HTML / CSS / JS 看到的就会是同一份映射，不会出现同一个 utility 在不同产物里名字不一致。
  * - 全局共享桶保留最短前缀 `_`，其他 bucket 稳定分配 `a_`、`b_`、`c_`……
  *
  * 为什么先合并 bucket 再生成映射：
  *
- * - 如果按“文件桶”分别生成，同一个 utility 在 HTML 和 CSS 里可能拿到不同短名，最后就会炸对齐。
- * - 这里改成按 utility 归并后的 canonical bucket 生成，bucket 表达的是“这个 utility 最终被哪些 entry 共同可达”。
- * - 这样同一个 utility，例如 `hidden`，只会有一份映射，不会在不同产物里各改各的。
+ * - 先按文件算“文件桶”：这个 HTML / CSS / JS 文件最终能被哪些 entry 访问到。
+ * - 再按 utility 回看：这个 utility 出现在哪些文件里，这些文件又分别属于哪些文件桶。
+ * - 最后把这些文件桶合成一个 canonical bucket，给这个 utility 只分配一次短名。
+ * - 例如 `mdi--eye-outline` 同时出现在 `post.html`、`post` 对应的 CSS、以及 `page-like-post-style` 共享 CSS 里：
+ *   - `post.html` 只属于 `post`
+ *   - `post` 对应的 CSS 可能属于 `page-like-post-style|post`
+ *   - `page-like-post-style` 的共享 CSS 也属于 `page-like-post-style|post`
+ *   - 所以这个 utility 的 canonical bucket 最后就是 `page-like-post-style|post`
+ * - 这样 HTML 和 CSS 才会拿到同一个短名，不会一个是 `ac_m`，另一个是 `aa_o`。
+ * - 如果不做这一步，HTML 和 CSS 可能会各自生成不同短名，结果就会对不齐。
  *
  * 这套方案的取舍：
  *
