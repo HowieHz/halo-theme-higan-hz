@@ -301,7 +301,12 @@ function buildAssetGraph(
     const references = graph.get(fileName) ?? new Set<string>();
 
     for (const match of sourceText.matchAll(htmlAssetReferenceRegex)) {
-      const referencedFileName = normalizeReferencedBundleFileName(match[1] ?? match[2] ?? match[3] ?? "");
+      // `match[0]` 是整段 `href=` / `src=` 命中的原始文本，这里不需要；
+      // 只关心三个互斥捕获组里真正命中的那个路径：
+      // 1. 双引号 2. 单引号 3. 无引号。
+      const [, doubleQuotedPath, singleQuotedPath, barePath] = match;
+      const referencedPath = doubleQuotedPath ?? singleQuotedPath ?? barePath ?? "";
+      const referencedFileName = normalizeReferencedBundleFileName(referencedPath);
 
       if (referencedFileName !== "" && availableFiles.has(referencedFileName)) {
         references.add(referencedFileName);
@@ -465,7 +470,7 @@ async function collectClassesWithUtwmHandler(
   const classes = new Set<string>();
 
   for (const match of rewrittenText.matchAll(SCAN_MARKER_REGEX)) {
-    const marker = match[0];
+    const [marker = ""] = match;
     const className = markerToClassName.get(marker);
 
     if (className !== undefined) {
