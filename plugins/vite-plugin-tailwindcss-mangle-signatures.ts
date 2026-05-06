@@ -59,6 +59,7 @@ import { defaultMangleClassFilter } from "@tailwindcss-mangle/shared";
 import type { Plugin } from "vite";
 
 interface TailwindcssMangleSignaturesPluginOptions {
+  base: string;
   classListFile?: string;
   input: Record<string, string>;
   mappingFile?: string;
@@ -113,8 +114,8 @@ const DEFAULT_MAPPING_FILE = ".tw-patch/tw-mangle-mapping.json";
 const CSS_FILE_EXTENSION = ".css";
 const HTML_FILE_EXTENSION = ".html";
 const JS_FILE_EXTENSIONS = new Set([".js"]);
-const HTML_ASSET_REFERENCE_REGEX = /(?:href|src)="\/themes\/howiehz-higan\/([^"]+)"/gmu;
 const VITE_INTERNAL_ANALYSIS_PLUGIN = "vite:build-import-analysis";
+const UTF8_TEXT_DECODER = new TextDecoder("utf8");
 
 /** 统一路径分隔符，避免 Windows 路径影响后续匹配。 */
 function normalizePathSeparators(value: string): string {
@@ -123,6 +124,9 @@ function normalizePathSeparators(value: string): string {
 
 /** 将源码 HTML 输入路径映射成最终输出目录中的 HTML 相对路径。 */
 function toOutputHtmlFileName(templateRoot: string, inputFile: string): string | null {
+  // 这里故意只把 HTML input 当作页面 entry 起点。
+  // 纯 TS / CSS input 当前不参与 bucket 传播，这是插件的预期语义，
+  // 因为它服务的是模板页面可达范围，而不是任意资源入口。
   if (extname(inputFile) !== HTML_FILE_EXTENSION) {
     return null;
   }
@@ -167,17 +171,72 @@ function isBundleFileLike(value: unknown): value is BundleFileLike {
   return typeof value === "object" && value !== null && "fileName" in value && "type" in value;
 }
 
+/** 转义普通字符串，供动态正则拼接使用。 */
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/** 统一并校验外部传入的 base，保证后续匹配总是以 `/` 结尾。 */
+function normalizeBasePath(base: string): string {
+  const normalizedBase = normalizePathSeparators(base).trim();
+
+  if (normalizedBase === "") {
+    throw new TypeError("tailwindcss-mangle-signatures requires a non-empty base");
+  }
+
+  return normalizedBase.endsWith("/") ? normalizedBase : `${normalizedBase}/`;
+}
+
+/** 根据主题 base 生成 HTML 中 `href` / `src` 的资源回连正则。 */
+function createHtmlAssetReferenceRegex(base: string): RegExp {
+  const escapedBase = escapeRegExp(base);
+  const bareUrlPattern = `${escapedBase}([^\\s"'=<>]+)`;
+
+  return new RegExp(
+    String.raw`(?:href|src)\s*=\s*(?:"${escapedBase}([^"]+)"|'${escapedBase}([^']+)'|${bareUrlPattern})`,
+    "gmu",
+  );
+}
+
+/** 当前这套改写只接受文本资源。 */
+function isTextOutputFile(fileName: string): boolean {
+  const extension = extname(fileName);
+
+  return (
+    fileName.endsWith(HTML_FILE_EXTENSION) || fileName.endsWith(CSS_FILE_EXTENSION) || JS_FILE_EXTENSIONS.has(extension)
+  );
+}
+
+/** 把 bundle 里的资源内容统一成可供 handler 处理的文本。 */
+function toTextBundleFileContent(fileName: string, sourceContent: BundleFileContent | undefined): string | null {
+  if (sourceContent === undefined || !isTextOutputFile(fileName)) {
+    return null;
+  }
+
+  if (typeof sourceContent === "string") {
+    return sourceContent;
+  }
+
+  return UTF8_TEXT_DECODER.decode(sourceContent);
+}
+
+/** 去掉 query/hash，便于把 HTML 里的资源引用映射回 bundle 文件名。 */
+function normalizeReferencedBundleFileName(reference: string): string {
+  return reference.split(/[?#]/u, 1)[0] ?? reference;
+}
+
 /**
  * 基于 bundler metadata 构建最终资源图。
  *
- * 除了 chunk / asset metadata 里的静态引用外，还会把最终 HTML 中显式写出的 `/themes/howiehz-higan/assets/*` 链接补回图里。
+ * 除了 chunk / asset metadata 里的静态引用外，还会把最终 HTML 中显式写出的 base 下资源链接补回图里。
  *
  * 这是因为 Vite 输出的 HTML 资产本身不带 `viteMetadata`，如果不补这条边，页面 HTML 虽然能拿到 entry 归属，但它引用到的最终 CSS / JS 资产会丢失归属，进而导致 HTML 已改名而 CSS
  * / JS 仍停留在原始 utility。
  */
 function buildAssetGraph(
   bundle: Record<string, unknown>,
-  bundleFileContents: ReadonlyMap<string, string>,
+  bundleFileContents: ReadonlyMap<string, BundleFileContent>,
+  htmlAssetReferenceRegex: RegExp,
 ): Map<string, Set<string>> {
   const graph = new Map<string, Set<string>>();
   const availableFiles = new Set(
@@ -228,17 +287,23 @@ function buildAssetGraph(
     graph.set(bundleValue.fileName, references);
   }
 
-  for (const [fileName, sourceText] of bundleFileContents.entries()) {
+  for (const [fileName, sourceContent] of bundleFileContents.entries()) {
     if (!fileName.endsWith(HTML_FILE_EXTENSION)) {
+      continue;
+    }
+
+    const sourceText = toTextBundleFileContent(fileName, sourceContent);
+
+    if (sourceText === null) {
       continue;
     }
 
     const references = graph.get(fileName) ?? new Set<string>();
 
-    for (const match of sourceText.matchAll(HTML_ASSET_REFERENCE_REGEX)) {
-      const referencedFileName = match[1];
+    for (const match of sourceText.matchAll(htmlAssetReferenceRegex)) {
+      const referencedFileName = normalizeReferencedBundleFileName(match[1] ?? match[2] ?? match[3] ?? "");
 
-      if (referencedFileName !== undefined && availableFiles.has(referencedFileName)) {
+      if (referencedFileName !== "" && availableFiles.has(referencedFileName)) {
         references.add(referencedFileName);
       }
     }
@@ -444,6 +509,7 @@ function hijackGenerateBundle(plugin: Plugin, afterHook: GenerateBundleHandler):
 
 type BundleFileContent = string | Uint8Array;
 
+/** 收集 bundle 里所有可改写文件，保留文本和二进制原始类型。 */
 function collectBundleFileContents(bundle: Record<string, unknown>): Map<string, BundleFileContent> {
   const bundleFileContents = new Map<string, BundleFileContent>();
 
@@ -463,6 +529,7 @@ function collectBundleFileContents(bundle: Record<string, unknown>): Map<string,
   return bundleFileContents;
 }
 
+/** 把改写后的内容写回 bundle，二进制保持原样，文本按字符串回填。 */
 function applyBundleFileContents(
   bundle: Record<string, unknown>,
   bundleFileContents: ReadonlyMap<string, BundleFileContent>,
@@ -479,12 +546,18 @@ function applyBundleFileContents(
       continue;
     }
 
+    if (typeof sourceContent !== "string") {
+      throw new TypeError(`Chunk output must remain text: ${fileName}`);
+    }
+
     bundleValue.code = sourceContent;
   }
 }
 
 export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMangleSignaturesPluginOptions): Plugin {
+  const normalizedBase = normalizeBasePath(options.base);
   const classListFile = resolve(options.projectRoot, options.classListFile ?? DEFAULT_CLASS_LIST_FILE);
+  const htmlAssetReferenceRegex = createHtmlAssetReferenceRegex(normalizedBase);
   const mappingFile = resolve(options.projectRoot, options.mappingFile ?? DEFAULT_MAPPING_FILE);
   const entryOutputFiles = new Map<string, string>();
   let knownClasses: string[] = [];
@@ -509,7 +582,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
     const entryKeys = [...entryOutputFiles.keys()].sort();
     const globalBucketKey = entryKeys.join("|");
     const bundleFileContents = collectBundleFileContents(bundle);
-    const assetGraph = buildAssetGraph(bundle, bundleFileContents);
+    const assetGraph = buildAssetGraph(bundle, bundleFileContents, htmlAssetReferenceRegex);
     const fileNamesToRewrite = new Set(bundleFileContents.keys());
 
     for (const [entryKey, outputHtmlFileName] of entryOutputFiles.entries()) {
@@ -532,21 +605,9 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
     }
 
     for (const fileName of fileNamesToRewrite) {
-      const sourceText = bundleFileContents.get(fileName);
+      const sourceText = toTextBundleFileContent(fileName, bundleFileContents.get(fileName));
 
-      if (sourceText === undefined) {
-        continue;
-      }
-
-      const extension = extname(fileName);
-
-      if (
-        !(
-          fileName.endsWith(HTML_FILE_EXTENSION) ||
-          fileName.endsWith(CSS_FILE_EXTENSION) ||
-          JS_FILE_EXTENSIONS.has(extension)
-        )
-      ) {
+      if (sourceText === null) {
         continue;
       }
 
@@ -650,6 +711,12 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
         continue;
       }
 
+      const textSource = toTextBundleFileContent(fileName, sourceText);
+
+      if (textSource === null) {
+        continue;
+      }
+
       const entries = [...(entriesByFile.get(fileName) ?? new Set<string>())].sort();
 
       if (entries.length === 0) {
@@ -672,7 +739,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
 
       // 改写时不再按“当前文件桶”单独选映射，
       // 而是直接使用同一个 utility 的 canonical 映射，确保 HTML / CSS / JS 对齐。
-      const rewrittenText = await rewriteWithUtwmHandler(sourceText, fileName, localMapping);
+      const rewrittenText = await rewriteWithUtwmHandler(textSource, fileName, localMapping);
       bundleFileContents.set(fileName, rewrittenText);
     }
 

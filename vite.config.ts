@@ -286,6 +286,7 @@ const BUILD_MODE_CONFIGS: Record<BuildMode, BuildModeConfig> = {
 
 export default defineConfig((): UserConfig => {
   const buildMode = pickEnvValue<BuildMode>(process.env.BUILD_MODE, BUILD_MODES, "default");
+  const themeBase = "/themes/howiehz-higan/";
   const {
     manifest: buildManifest,
     output: outputOption,
@@ -325,6 +326,7 @@ export default defineConfig((): UserConfig => {
     ...(outputOption === "minify"
       ? [
           tailwindcssMangleSignaturesPlugin({
+            base: themeBase,
             input,
             projectRoot: import.meta.dirname,
             templateRoot: resolve(import.meta.dirname, "src/templates"),
@@ -337,7 +339,7 @@ export default defineConfig((): UserConfig => {
     cleanupGeneratedCssComments(),
     // Minify HTML while preserving Thymeleaf syntax
     thymeleafMinify({
-      base: "/themes/howiehz-higan/",
+      base: themeBase,
     }),
     // Generate Subresource Integrity (SRI) hashes for all output files
     sri(),
@@ -359,7 +361,7 @@ export default defineConfig((): UserConfig => {
 
   return {
     root: resolve(import.meta.dirname, "src/templates/"),
-    base: "/themes/howiehz-higan/",
+    base: themeBase,
     resolve: {
       alias: {
         "@runtime": resolve(import.meta.dirname, "src/templates/_runtime"),
