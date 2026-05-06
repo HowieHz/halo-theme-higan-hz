@@ -8,9 +8,10 @@ outline: deep
 
 <!-- markdownlint-disable MD011 -->
 <script setup lang="ts">
-import { ref, onMounted, computed, watch, h, defineComponent } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { defineClientComponent, useData } from 'vitepress'
 import { decodeAuditFile, type AuditFile, type AuditPageResult, type ResourceType } from '../.vitepress/utils/page-size-audit-schema'
+import ProgressBar from '../.vitepress/components/ProgressBar.vue'
 
 const { isDark } = useData()
 
@@ -42,6 +43,7 @@ type IndexedAuditEntry = {
 }
 
 type DatasetKind = 'themeGzipped' | 'themeRaw' | 'resourcesGzipped' | 'resourcesRaw'
+type ProgressStage = 'dataLoading' | 'dataProcessing' | 'chartCreation'
 const datasetKinds = ['themeGzipped', 'themeRaw', 'resourcesGzipped', 'resourcesRaw'] as const satisfies readonly DatasetKind[]
 type NumericSeries = Record<ResourceType, Array<number | null>>
 type PageDatasets = Record<DatasetKind, NumericSeries>
@@ -156,80 +158,16 @@ const rawDatasets = ref<RawDatasetsState | null>(null) // 存储原始数据用�
 // 加载进度状态
 const loadingProgress = ref(0)
 const isLoading = ref(false)
-const loadingStage = ref('')
+const loadingStage = ref<ProgressStage>('dataLoading')
 
 // 每个图表的加载状态
 const chartLoadingStatus = ref<ChartLoadingState>(createChartLoadingState())
 
-// 进度条组件
-const ProgressBar = defineComponent({
-  props: {
-    isLoading: Boolean,
-    stage: String,
-    progress: Number
-  },
-  setup(props) {
-    const stageNames = {
-      dataLoading: '加载数据',
-      dataProcessing: '数据排序与处理',
-      chartCreation: '图表数据创建'
-    }
-
-    return () => {
-      if (!props.isLoading) return null
-
-      // 根据主题适配颜色
-      const textColor = isDark.value ? '#cbd5e0' : '#4a5568'
-      const bgColor = isDark.value ? '#374151' : '#e5e7eb'
-      const progressGradient = isDark.value
-        ? 'linear-gradient(90deg, #60a5fa 0%, #a78bfa 100%)'
-        : 'linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%)'
-
-      return h('div', {
-        style: {
-          textAlign: 'center',
-          padding: '1.5rem',
-          color: textColor
-        }
-      }, [
-        h('div', {
-          style: {
-            fontSize: '1rem',
-            fontWeight: '600',
-            marginBottom: '0.5rem',
-            color: textColor
-          }
-        }, `正在${stageNames[props.stage]}...`),
-        h('div', {
-          style: {
-            width: '100%',
-            height: '4px',
-            background: bgColor,
-            borderRadius: '2px',
-            overflow: 'hidden',
-            marginTop: '0.75rem'
-          }
-        }, [
-          h('div', {
-            style: {
-              width: `${props.progress}%`,
-              height: '100%',
-              background: progressGradient,
-              transition: 'width 0.3s ease'
-            }
-          })
-        ]),
-        h('div', {
-          style: {
-            fontSize: '0.875rem',
-            marginTop: '0.5rem',
-            color: textColor
-          }
-        }, `进度: ${props.progress}%`)
-      ])
-    }
-  }
-})
+const labels = {
+  dataLoading: '加载数据',
+  dataProcessing: '数据排序与处理',
+  chartCreation: '图表数据创建'
+} as const satisfies Record<ProgressStage, string>
 
 // 图表选项配置（响应式，适配主题文字颜色）
 const chartOptions = computed(() => ({
@@ -545,7 +483,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.average.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.average.themeGzipped" :stage="loadingStage" :labels="labels" :progress="loadingProgress" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.average?.themeGzipped">
   <LineChart :data="chartDatasets.average.themeGzipped" :options="chartOptions" />
@@ -554,7 +492,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.average.themeRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.average.themeRaw" :stage="loadingStage" :labels="labels" :progress="loadingProgress" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.average?.themeRaw">
   <LineChart :data="chartDatasets.average.themeRaw" :options="chartOptions" />
@@ -563,7 +501,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.average.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.average.resourcesGzipped" :stage="loadingStage" :labels="labels" :progress="loadingProgress" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.average?.resourcesGzipped">
   <LineChart :data="chartDatasets.average.resourcesGzipped" :options="chartOptions" />
@@ -572,7 +510,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.average.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.average.resourcesRaw" :stage="loadingStage" :labels="labels" :progress="loadingProgress" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.average?.resourcesRaw">
   <LineChart :data="chartDatasets.average.resourcesRaw" :options="chartOptions" />
@@ -583,7 +521,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.home.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.home.themeGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.home?.themeGzipped">
   <LineChart :data="chartDatasets.home.themeGzipped" :options="chartOptions" />
@@ -592,7 +530,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.home.themeRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.home.themeRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.home?.themeRaw">
   <LineChart :data="chartDatasets.home.themeRaw" :options="chartOptions" />
@@ -601,7 +539,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.home.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.home.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.home?.resourcesGzipped">
   <LineChart :data="chartDatasets.home.resourcesGzipped" :options="chartOptions" />
@@ -610,7 +548,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.home.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.home.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.home?.resourcesRaw">
   <LineChart :data="chartDatasets.home.resourcesRaw" :options="chartOptions" />
@@ -621,7 +559,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.archives.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.archives.themeGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.archives?.themeGzipped">
   <LineChart :data="chartDatasets.archives.themeGzipped" :options="chartOptions" />
@@ -630,7 +568,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.archives.themeRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.archives.themeRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.archives?.themeRaw">
   <LineChart :data="chartDatasets.archives.themeRaw" :options="chartOptions" />
@@ -639,7 +577,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.archives.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.archives.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.archives?.resourcesGzipped">
   <LineChart :data="chartDatasets.archives.resourcesGzipped" :options="chartOptions" />
@@ -648,7 +586,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.archives.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.archives.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.archives?.resourcesRaw">
   <LineChart :data="chartDatasets.archives.resourcesRaw" :options="chartOptions" />
@@ -659,7 +597,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.post.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.post.themeGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.post?.themeGzipped">
   <LineChart :data="chartDatasets.post.themeGzipped" :options="chartOptions" />
@@ -668,7 +606,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.post.themeRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.post.themeRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.post?.themeRaw">
   <LineChart :data="chartDatasets.post.themeRaw" :options="chartOptions" />
@@ -677,7 +615,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.post.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.post.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.post?.resourcesGzipped">
   <LineChart :data="chartDatasets.post.resourcesGzipped" :options="chartOptions" />
@@ -686,7 +624,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.post.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.post.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.post?.resourcesRaw">
   <LineChart :data="chartDatasets.post.resourcesRaw" :options="chartOptions" />
@@ -697,7 +635,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.tags.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.tags.themeGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.tags?.themeGzipped">
   <LineChart :data="chartDatasets.tags.themeGzipped" :options="chartOptions" />
@@ -706,7 +644,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.tags.themeRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.tags.themeRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.tags?.themeRaw">
   <LineChart :data="chartDatasets.tags.themeRaw" :options="chartOptions" />
@@ -715,7 +653,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.tags.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.tags.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.tags?.resourcesGzipped">
   <LineChart :data="chartDatasets.tags.resourcesGzipped" :options="chartOptions" />
@@ -724,7 +662,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.tags.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.tags.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.tags?.resourcesRaw">
   <LineChart :data="chartDatasets.tags.resourcesRaw" :options="chartOptions" />
@@ -735,7 +673,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.tagDetail.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.tagDetail.themeGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.tagDetail?.themeGzipped">
   <LineChart :data="chartDatasets.tagDetail.themeGzipped" :options="chartOptions" />
@@ -744,7 +682,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.tagDetail.themeRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.tagDetail.themeRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.tagDetail?.themeRaw">
   <LineChart :data="chartDatasets.tagDetail.themeRaw" :options="chartOptions" />
@@ -753,7 +691,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.tagDetail.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.tagDetail.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.tagDetail?.resourcesGzipped">
   <LineChart :data="chartDatasets.tagDetail.resourcesGzipped" :options="chartOptions" />
@@ -762,7 +700,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.tagDetail.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.tagDetail.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.tagDetail?.resourcesRaw">
   <LineChart :data="chartDatasets.tagDetail.resourcesRaw" :options="chartOptions" />
@@ -773,7 +711,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.categories.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.categories.themeGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.categories?.themeGzipped">
   <LineChart :data="chartDatasets.categories.themeGzipped" :options="chartOptions" />
@@ -782,7 +720,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.categories.themeRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.categories.themeRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.categories?.themeRaw">
   <LineChart :data="chartDatasets.categories.themeRaw" :options="chartOptions" />
@@ -791,7 +729,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.categories.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.categories.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.categories?.resourcesGzipped">
   <LineChart :data="chartDatasets.categories.resourcesGzipped" :options="chartOptions" />
@@ -800,7 +738,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.categories.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.categories.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.categories?.resourcesRaw">
   <LineChart :data="chartDatasets.categories.resourcesRaw" :options="chartOptions" />
@@ -811,7 +749,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.categoryDetail.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.categoryDetail.themeGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.categoryDetail?.themeGzipped">
   <LineChart :data="chartDatasets.categoryDetail.themeGzipped" :options="chartOptions" />
@@ -820,7 +758,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.categoryDetail.themeRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.categoryDetail.themeRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.categoryDetail?.themeRaw">
   <LineChart :data="chartDatasets.categoryDetail.themeRaw" :options="chartOptions" />
@@ -829,7 +767,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.categoryDetail.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.categoryDetail.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.categoryDetail?.resourcesGzipped">
   <LineChart :data="chartDatasets.categoryDetail.resourcesGzipped" :options="chartOptions" />
@@ -838,7 +776,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.categoryDetail.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.categoryDetail.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.categoryDetail?.resourcesRaw">
   <LineChart :data="chartDatasets.categoryDetail.resourcesRaw" :options="chartOptions" />
@@ -849,7 +787,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.author.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.author.themeGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.author?.themeGzipped">
   <LineChart :data="chartDatasets.author.themeGzipped" :options="chartOptions" />
@@ -858,7 +796,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.author.themeRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.author.themeRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.author?.themeRaw">
   <LineChart :data="chartDatasets.author.themeRaw" :options="chartOptions" />
@@ -867,7 +805,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.author.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.author.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.author?.resourcesGzipped">
   <LineChart :data="chartDatasets.author.resourcesGzipped" :options="chartOptions" />
@@ -876,7 +814,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.author.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.author.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.author?.resourcesRaw">
   <LineChart :data="chartDatasets.author.resourcesRaw" :options="chartOptions" />
@@ -887,7 +825,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.about.themeGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.about.themeGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.about?.themeGzipped">
   <LineChart :data="chartDatasets.about.themeGzipped" :options="chartOptions" />
@@ -896,7 +834,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 主题资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.about.themeRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.about.themeRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.about?.themeRaw">
   <LineChart :data="chartDatasets.about.themeRaw" :options="chartOptions" />
@@ -905,7 +843,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（压缩）
 
-<ProgressBar :isLoading="chartLoadingStatus.about.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.about.resourcesGzipped" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.about?.resourcesGzipped">
   <LineChart :data="chartDatasets.about.resourcesGzipped" :options="chartOptions" />
@@ -914,7 +852,7 @@ const LineChart = defineClientComponent(async () => {
 
 ::: details 页面资源（原始）
 
-<ProgressBar :isLoading="chartLoadingStatus.about.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" />
+<ProgressBar :isLoading="chartLoadingStatus.about.resourcesRaw" :stage="loadingStage" :progress="loadingProgress" :labels="labels" label="进度" />
 
 <div style="position: relative; height: 400px;" v-if="chartDatasets.about?.resourcesRaw">
   <LineChart :data="chartDatasets.about.resourcesRaw" :options="chartOptions" />
