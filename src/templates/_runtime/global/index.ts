@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
       link.setAttribute("data-submenu-index", currentIndex.toString());
 
       // 更新按钮图标方向
-      const icon = toggle.querySelector(".tw\\:iconify");
+      const icon = toggle.querySelector('[class~="tw:iconify"]');
       if (icon) {
         // 最后一个子菜单时显示向上箭头
         const isLast = currentIndex === count - 1;

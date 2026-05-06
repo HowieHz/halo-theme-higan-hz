@@ -114,8 +114,8 @@
               import { slideUp } from "@runtime/scripts/animations/slide-up";
 
               function toggleVisibility(element, duration_of_expand_collapse_animation) {
-                const caretRight = element.querySelector(".tw\\:mdi--chevron-right");
-                const caretDown = element.querySelector(".tw\\:mdi--chevron-down");
+                const caretRight = element.querySelector('[class~="tw:mdi--chevron-right"]');
+                const caretDown = element.querySelector('[class~="tw:mdi--chevron-down"]');
                 const nextElement = element.nextElementSibling;
 
                 if (!nextElement) {
