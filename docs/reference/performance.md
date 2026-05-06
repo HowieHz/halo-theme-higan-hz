@@ -169,7 +169,6 @@ const ProgressBar = defineComponent({
     progress: Number
   },
   setup(props) {
-    // @ts-expect-error TS6133: vue-tsc false positive in VitePress Markdown; stage labels are used by the render function below.
     const stageNames = {
       dataLoading: '加载数据',
       dataProcessing: '数据排序与处理',

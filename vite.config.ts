@@ -26,13 +26,13 @@ type BuildOutputOption = (typeof BUILD_OUTPUT_OPTIONS)[number];
 const BUILD_MODES = ["default", "preview-for-docs", "dev", "full", "tiny"] as const;
 type BuildMode = (typeof BUILD_MODES)[number];
 type BuildEntryMap = Record<string, string>;
-type BuildModeConfig = {
+interface BuildModeConfig {
   scope: BuildScope;
   precompress: BuildPrecompressOption;
   output: BuildOutputOption;
   manifest: boolean;
   "extra-entries"?: BuildEntryMap;
-};
+}
 
 function pickEnvValue<T extends string>(value: string | undefined, allowedValues: readonly T[], fallback: T): T {
   if (typeof value === "string") {
