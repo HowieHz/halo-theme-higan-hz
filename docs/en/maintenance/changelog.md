@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fixed a visual inconsistency in the RSS icons on the home, author, category, and tag pages.
+
 ## [1.66.4] - 2026-05-08
 
 ### 🐛 Bug Fixes
