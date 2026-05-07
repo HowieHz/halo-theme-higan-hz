@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🐛 Bug Fixes
 
 - Fixed a visual inconsistency in the RSS icons on the home, author, category, and tag pages.
+- Fixed an issue where the light/dark mode toggle controller script was not injected together with the toggle button component, causing all three icons to always be loaded.
 
 ## [1.66.4] - 2026-05-08
 

@@ -3,6 +3,173 @@
     src="index.ts"
     type="module"
   ></script>
+  <script
+    th:data-theme-dark="${theme_dark}"
+    th:data-theme-light="${theme_light}"
+    th:data-theme-auto="${theme_auto}"
+    th:data-save-color-scheme-settings-to-browser="${theme.config?.styles?.is_save_color_scheme_settings_to_browser}"
+    th:data-auto-switch-color-scheme-based-on-browser-settings="${theme.config?.styles?.is_auto_switch_color_scheme_based_on_browser_settings}"
+    th:data-custom-theme-dark-id="${custom_theme_dark_id}"
+    th:data-custom-theme-light-id="${custom_theme_light_id}"
+    th:data-custom-theme-auto-id="${custom_theme_auto_id}"
+  >
+    (function (dataset) {
+      const customColorSchemeConfigElement = document.querySelector("#custom-color-config");
+
+      let THEME_DARK = dataset?.themeDark;
+      let THEME_LIGHT = dataset?.themeLight;
+      let THEME_AUTO = dataset?.themeAuto;
+      const is_save_color_scheme_settings_to_browser = dataset?.saveColorSchemeSettingsToBrowser === "true";
+
+      // <!--/* Map each concrete theme name to its corresponding data-color-scheme value. */-->
+      const themeColorSchemeMap = {
+        auto: "auto",
+        dark: "dark",
+        light: "light",
+        "auto-blue": "auto",
+        "dark-blue": "dark",
+        "light-blue": "light",
+        gray: "light",
+      };
+
+      if (THEME_DARK == "custom") {
+        /* eslint-disable-next-line no-undef -- Defined earlier by components/custom-color-schema-config/template.html. */
+        let customColorSchema = allCustomColorSchema.find((schema) => schema.id === dataset?.customThemeDarkId);
+        if (customColorSchema) {
+          THEME_DARK = "theme-" + customColorSchema.id;
+          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        }
+      }
+      if (THEME_LIGHT == "custom") {
+        /* eslint-disable-next-line no-undef -- Defined earlier by components/custom-color-schema-config/template.html. */
+        let customColorSchema = allCustomColorSchema.find((schema) => schema.id === dataset?.customThemeLightId);
+        if (customColorSchema) {
+          THEME_LIGHT = "theme-" + customColorSchema.id;
+          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        }
+      }
+      if (THEME_AUTO == "custom") {
+        /* eslint-disable-next-line no-undef -- Defined earlier by components/custom-color-schema-config/template.html. */
+        let customColorSchema = allCustomColorSchema.find((schema) => schema.id === dataset?.customThemeAutoId);
+        if (customColorSchema) {
+          THEME_AUTO = "theme-" + customColorSchema.id;
+          themeColorSchemeMap["theme-" + customColorSchema.id] = customColorSchema.type;
+        }
+      }
+
+      const isAutoModeDisabled = THEME_AUTO === THEME_LIGHT;
+      const THEME_ICON_CLASS = {
+        auto: "tw:fa--circle-o",
+        dark: "tw:ant-design--moon-outlined",
+        light: "tw:ant-design--sun-outlined",
+      };
+      const themeIconClasses = Object.values(THEME_ICON_CLASS);
+
+      function getThemeIconClass(theme) {
+        if (theme === THEME_DARK) {
+          return THEME_ICON_CLASS.dark;
+        }
+        if (theme === THEME_AUTO && !isAutoModeDisabled) {
+          return THEME_ICON_CLASS.auto;
+        }
+        return THEME_ICON_CLASS.light;
+      }
+
+      function updateThemeIcon(theme) {
+        const themeIcon = document.getElementById("theme-toggle-button-icon");
+        if (!themeIcon) return;
+        themeIcon.style.removeProperty("display"); // <!--/* remove display: none */-->
+
+        const nextIconClass = getThemeIconClass(theme);
+
+        for (const iconClass of themeIconClasses) {
+          themeIcon.classList.toggle(iconClass, iconClass === nextIconClass);
+        }
+      }
+
+      function updateTagAttribute(theme) {
+        document.documentElement.setAttribute("data-color-scheme", themeColorSchemeMap[theme]);
+        document.documentElement.setAttribute("theme", theme);
+      }
+
+      function applyThemeNoSave(theme) {
+        updateTagAttribute(theme);
+        updateThemeIcon(theme);
+      }
+
+      function applyTheme(theme) {
+        if (is_save_color_scheme_settings_to_browser === true && typeof Storage !== "undefined") {
+          localStorage.setItem("pref-theme", themeColorSchemeMap[theme]);
+        } else if (typeof Storage === "undefined") {
+          console.log("[Higan Haozi][base-layout] Sorry, your browser does not support web storage...");
+        }
+        applyThemeNoSave(theme);
+      }
+
+      function getPreferredTheme() {
+        const storedTheme = localStorage.getItem("pref-theme");
+        if (storedTheme) {
+          return storedTheme;
+        }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
+      }
+
+      if (is_save_color_scheme_settings_to_browser !== true && typeof Storage !== "undefined") {
+        localStorage.removeItem("pref-theme");
+      }
+      const is_auto_switch_color_scheme_based_on_browser_settings =
+        dataset?.autoSwitchColorSchemeBasedOnBrowserSettings === "true";
+      if (is_auto_switch_color_scheme_based_on_browser_settings) {
+        switch (getPreferredTheme()) {
+          case "dark":
+            updateTagAttribute(THEME_DARK);
+            break;
+          case "light":
+            updateTagAttribute(THEME_LIGHT);
+            break;
+          case "auto":
+            updateTagAttribute(THEME_AUTO);
+            break;
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        switch (getPreferredTheme()) {
+          case "dark":
+            updateThemeIcon(THEME_DARK);
+            break;
+          case "light":
+            updateThemeIcon(THEME_LIGHT);
+            break;
+          case "auto":
+            updateThemeIcon(THEME_AUTO);
+            break;
+        }
+      });
+
+      function toggleTheme(event) {
+        event.preventDefault(); // <!--/* 阻止默认行为，防止页面刷新 */-->
+        const currentTheme = document.documentElement.attributes["theme"].value;
+        let newTheme;
+        // <!--/* light -> dark -> auto -> light */-->
+        if (currentTheme === THEME_LIGHT) {
+          newTheme = THEME_DARK;
+        } else if (currentTheme === THEME_DARK) {
+          newTheme = isAutoModeDisabled ? THEME_LIGHT : THEME_AUTO;
+        } else {
+          newTheme = THEME_LIGHT;
+        }
+        applyTheme(newTheme);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("theme-toggle-button").addEventListener("click", toggleTheme);
+      });
+    })(document.currentScript?.dataset);
+  </script>
 </head>
 <body th:remove="tag">
   <button
