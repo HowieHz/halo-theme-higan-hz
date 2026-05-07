@@ -650,21 +650,23 @@
           }
         }
 
+        const themeIconClassByTheme = {
+          [THEME_LIGHT]: "tw:ant-design--sun-outlined",
+          [THEME_DARK]: "tw:ant-design--moon-outlined",
+          [THEME_AUTO]: "tw:fa--circle-o",
+        };
+
+        const themeIconClasses = Object.values(themeIconClassByTheme);
+
         function updateThemeIcon(theme) {
           const themeIcon = document.getElementById("theme-toggle-button-icon");
           if (!themeIcon) return;
           themeIcon.style.removeProperty("display"); // <!--/* remove display: none */-->
 
-          Array.from(themeIcon.classList).forEach((c) => {
-            if (c.startsWith("tw:ph--")) themeIcon.classList.remove(c);
-          });
+          const nextIconClass = themeIconClassByTheme[theme] ?? themeIconClassByTheme[THEME_AUTO];
 
-          if (theme === THEME_LIGHT) {
-            themeIcon.classList.add("tw:ph--sun-bold");
-          } else if (theme === THEME_DARK) {
-            themeIcon.classList.add("tw:ph--moon-bold");
-          } else {
-            themeIcon.classList.add("tw:ph--circle-bold");
+          for (const iconClass of themeIconClasses) {
+            themeIcon.classList.toggle(iconClass, iconClass === nextIconClass);
           }
         }
 

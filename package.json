@@ -26,7 +26,7 @@
   },
   "type": "module",
   "scripts": {
-    "build": "NODE_OPTIONS=--max-old-space-size=24576 vite build",
+    "build": "NODE_OPTIONS=--max-old-space-size=16384 vite build",
     "build:dev": "BUILD_MODE=dev pnpm run build",
     "build:full": "BUILD_MODE=full pnpm run build",
     "build:theme-preview-for-docs": "BUILD_MODE=preview-for-docs pnpm run build",
@@ -52,7 +52,7 @@
     "prepare": "husky && tw-patch install",
     "prewatch:vite": "pnpm run prebuild",
     "watch": "pnpm run '/^watch:/'",
-    "watch:vite": "NODE_OPTIONS=--max-old-space-size=24576 BUILD_MODE=dev vite build --watch"
+    "watch:vite": "NODE_OPTIONS=--max-old-space-size=16384 BUILD_MODE=dev vite build --watch"
   },
   "dependencies": {
     "alpinejs": "^3.15.12",
@@ -69,7 +69,6 @@
     "@iconify-json/ic": "^1.2.4",
     "@iconify-json/material-symbols": "^1.2.70",
     "@iconify-json/mdi": "^1.2.3",
-    "@iconify-json/ph": "^1.2.2",
     "@iconify-json/simple-icons": "^1.2.81",
     "@iconify-json/typcn": "^1.2.2",
     "@iconify/tailwind4": "^1.2.3",
