@@ -31,7 +31,7 @@ outline: deep
 
 插件 [plugin-photos](https://github.com/halo-sigs/plugin-photos)（[应用市场页面](https://www.halo.run/store/apps/app-BmQJW)）
 
-主题提供了图库页面（`/photos`）支持。详情请阅读[图库页样式](/guide/theme-configuration#图库页样式)相关文档。
+主题提供了图库页面（`/photos(?group={groupName})`）支持。详情请阅读[图库页样式](/guide/theme-configuration#图库页样式)相关文档。
 
 ## 瞬间页
 

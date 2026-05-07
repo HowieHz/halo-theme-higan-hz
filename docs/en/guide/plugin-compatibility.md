@@ -33,7 +33,7 @@ The theme provides links page (`/links`) support, please read [Links Page Style]
 
 Plugin [plugin-photos](https://github.com/halo-sigs/plugin-photos) ([App Store Page](https://www.halo.run/store/apps/app-BmQJW))
 
-The theme provides photo gallery page (`/photos`) support. Please read [Photo Gallery Page Style](/en/guide/theme-configuration#photo-gallery-page-style) related documentation for details.
+The theme provides photo gallery page (`/photos(?group={groupName})`) support. Please read [Photo Gallery Page Style](/en/guide/theme-configuration#photo-gallery-page-style) related documentation for details.
 
 ## Moments Page
 

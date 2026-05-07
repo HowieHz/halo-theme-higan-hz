@@ -43,7 +43,7 @@ In the default access path column in the table, `{xxx}` represents variables (pl
 | Template File  | Page                        | Default Path                                   | Required Plugin                                                       |
 | -------------- | --------------------------- | ---------------------------------------------- | --------------------------------------------------------------------- |
 | `links.html`   | Links List                  | `/links`                                       | [plugin-links](https://github.com/halo-sigs/plugin-links)             |
-| `photos.html`  | Photos Page                 | `/photos`                                      | [plugin-photos](https://github.com/halo-sigs/plugin-photos)           |
+| `photos.html`  | Photos Page                 | `/photos(?group={groupName})`                  | [plugin-photos](https://github.com/halo-sigs/plugin-photos)           |
 | `moments.html` | Moments List                | `/moments(/page/{page})(?tag={tag})`           | [plugin-moments](https://github.com/halo-sigs/plugin-moments)         |
 | `moment.html`  | Moment Detail               | `/moments/{name}`                              | [plugin-moments](https://github.com/halo-sigs/plugin-moments)         |
 | `friends.html` | Moments (Feed Subscription) | `/friends(/page/{page})(?linkName={linkName})` | [plugin-friends](https://github.com/chengzhongxue/plugin-friends-new) |
