@@ -23,6 +23,10 @@
 
 ## [Unreleased]
 
+### 🚀 新功能
+
+- 适配 [图库管理插件 plugin-photos](https://www.halo.run/store/apps/app-BmQJW) v2 的单组视图（`/photos(?group={groupName})`）。
+
 ### 🔧 代码重构
 
 - 将预设主题样式从 Less 预处理迁移为构建期生成 CSS，并移除 Less 预处理器依赖。

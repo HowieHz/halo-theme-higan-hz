@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🚀 Features
+
+- Adapted the [plugin-photos](https://www.halo.run/store/apps/app-BmQJW) v2 single-group view (`/photos(?group={groupName})`).
+
 ### 🔧 Code Refactoring
 
 - Migrated preset theme styles from Less preprocessing to build-time generated CSS, and removed the Less preprocessor dependency.
