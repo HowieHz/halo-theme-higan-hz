@@ -1,9 +1,11 @@
-<head th:remove="tag">
+<head
+  th:remove="tag"
+  th:if="${theme.config?.styles?.dark_content_text_style != 'no-adjustment'}"
+>
   <!--/*/
   <style
     th:inline="css"
     th:with="darkContentTextStyle = ${theme.config?.styles?.dark_content_text_style}"
-    th:if="${darkContentTextStyle != 'no-adjustment'}"
   >
     @layer base {
       html[data-color-scheme="dark"] article .content > :is(p, ul, ol, dl, table) {
