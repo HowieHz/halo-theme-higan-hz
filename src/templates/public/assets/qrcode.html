@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QRCode Share</title>
     <style>
-      canvas {
+      #qrcode canvas {
         left: 50%;
         position: absolute;
         top: 50%;
@@ -18,20 +18,21 @@
     </style>
   </head>
   <body>
-    <script crossorigin src="/themes/howiehz-higan/assets/lib/qrious/qrious.min.js" integrity="sha384-qkxtUqTAlrqKgvVg+UxHKpqGZZS5n838/QQeuxqJ3VeoD7w+2OOGMA2GS4UpR1IZ"></script>
+    <script crossorigin src="/themes/howiehz-higan/assets/lib/easyqrcode/easy.qrcode.4.6.2.min.js" integrity="sha384-+ACTh1wjQ5SAGove5YFrqDcZPJ5t2ylJTxpj7hjCPS4NvdTmo4YVZHGSJcRJphJf"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const params = new URLSearchParams(window.location.search);
-        const url = params.get("url");
-        const size = params.get("size");
-        new QRious({
-          element: document.getElementById("qrcode-canvas"),
-          size: size,
-          value: url,
-          background: "#eceae7",
+        const url = params.get("url") ?? "";
+        const size = Number.parseInt(params.get("size") ?? "", 10) || 200;
+        new QRCode(document.getElementById("qrcode"), {
+          colorLight: "#eceae7",
+          correctLevel: QRCode.CorrectLevel.L,
+          height: size,
+          text: url,
+          width: size,
         });
       });
     </script>
-    <canvas id="qrcode-canvas"></canvas>
+    <div id="qrcode"></div>
   </body>
 </html>
