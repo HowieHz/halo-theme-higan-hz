@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.66.4] - 2026-05-08
+
 ### 🐛 Bug Fixes
 
 - Fixed an issue where the light/dark toggle could incorrectly show the auto-mode icon while in light mode when the Auto Mode Color Scheme matched the Light Mode Color Scheme.
@@ -1971,7 +1973,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.3...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.4...HEAD
+[1.66.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.3...v1.66.4
 [1.66.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.2...v1.66.3
 [1.66.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.1...v1.66.2
 [1.66.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.0...v1.66.1

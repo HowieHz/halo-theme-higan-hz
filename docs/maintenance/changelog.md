@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.66.4] - 2026-05-08
+
 ### 🐛 错误修复
 
 - 修复“自动模式配色方案”与“浅色模式配色方案”相同时，深浅色切换按钮在浅色状态下错误显示为自动模式图标的问题。
@@ -1897,7 +1899,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.3...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.4...HEAD
+[1.66.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.3...v1.66.4
 [1.66.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.2...v1.66.3
 [1.66.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.1...v1.66.2
 [1.66.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.0...v1.66.1
