@@ -56,7 +56,7 @@ const qrcodeHtmlLanguageOptions = {
   ...htmlLanguageOptions,
   globals: {
     ...htmlLanguageOptions.globals,
-    QRious: "readonly",
+    QRCode: "readonly",
   },
 };
 
@@ -108,7 +108,7 @@ export default defineConfig(
     languageOptions: htmlLanguageOptions,
   },
   {
-    // HTML template with an extra global provided by qrious.min.js.
+    // HTML template with an extra global provided by EasyQRCodeJS.
     files: ["src/templates/public/assets/qrcode.html"],
     plugins: { html },
     languageOptions: qrcodeHtmlLanguageOptions,

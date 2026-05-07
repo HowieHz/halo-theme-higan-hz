@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🔧 Code Refactoring
+
+- Migrated the front-end QR code generator used by the QR code share page from `qrious` to `EasyQRCodeJS`.
+
 ## [1.66.2] - 2026-05-07
 
 ### 🚀 Features
