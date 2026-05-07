@@ -59,13 +59,13 @@
  * 1. 先做可达性过滤
  *
  * - 从当前 HTML 文件出发，只保留它最终真的会加载到的 CSS bucket。
- * - 例如 `post.html` 最终能加载 `post`、`post|page-like-post-style`、`post|page-like-post-style|archives`， 那这三个 bucket
+ * - 例如 `post.html` 最终能加载 `post`、`post|page-like-post-style`、`post|page-like-post-style|archives`，那这三个 bucket
  *   才有资格参与；一个当前页面根本加载不到的 `page-like-post-style` bucket 会直接出局。
  *
  * 2. 再按单个标签的 `class=""` 分组判断
  *
  * - 这里不是把整个组件文件里的 class 一锅端，而是一个标签一组。
- * - 例如 `<span class="hidden block"></span>` 会单独拿 `hidden + block` 这组 utility 选 bucket； 另一个 `<div class="hidden
+ * - 例如 `<span class="hidden block"></span>` 会单独拿 `hidden + block` 这组 utility 选 bucket；另一个 `<div class="hidden
  *   inline"></div>` 会单独再选自己的 bucket。
  *
  * 3. 在候选 bucket 里先比“覆盖情况”
@@ -80,8 +80,8 @@
  *
  * 4. 如果都能完整覆盖，再做稳定 tie-break
  *
- * - 先比“和当前文件 entry 的重叠度”： 当前文件属于哪些 entry，候选 bucket 又属于哪些 entry，交集更大的优先。
- * - 再比“bucket 更窄”： 如果当前文件是 `post`，而 `post`、`post|page-like-post-style`、`post|page-like-post-style|archives` 都能完整覆盖同一个标签的
+ * - 先比“和当前文件 entry 的重叠度”：当前文件属于哪些 entry，候选 bucket 又属于哪些 entry，交集更大的优先。
+ * - 再比“bucket 更窄”：如果当前文件是 `post`，而 `post`、`post|page-like-post-style`、`post|page-like-post-style|archives` 都能完整覆盖同一个标签的
  *   class，那么会优先 `post`，其次 `post|page-like-post-style`，最后才是更宽的三方共享 bucket。
  * - 最后再按字典序稳定化，避免完全打平时构建结果抖动。
  * - 这样可以避免“HTML / JS 先按自身 bucket 改名，但最终 CSS 规则其实落在共享 bucket”造成的错配。
