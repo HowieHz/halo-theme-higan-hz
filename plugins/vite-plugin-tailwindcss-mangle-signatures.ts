@@ -53,6 +53,37 @@
  * - CSS 文件直接使用自己的 bucket 映射。
  * - HTML / JS 文件只会在“自己最终能到达哪些 CSS 文件”这个候选范围内选短名，不再回退到无关组件 bucket。
  * - 其中 HTML 还会按同一个 `class=""` 属性里的 utility 做协同打分，尽量让同一标签上的 class 落到同一个 CSS owner bucket。
+ *
+ * HTML 选 bucket 的顺序可以直接理解成下面这 4 步：
+ *
+ * 1. 先做可达性过滤
+ *
+ * - 从当前 HTML 文件出发，只保留它最终真的会加载到的 CSS bucket。
+ * - 例如 `post.html` 最终能加载 `post`、`post|page-like-post-style`、`post|page-like-post-style|archives`， 那这三个 bucket
+ *   才有资格参与；一个当前页面根本加载不到的 `page-like-post-style` bucket 会直接出局。
+ *
+ * 2. 再按单个标签的 `class=""` 分组判断
+ *
+ * - 这里不是把整个组件文件里的 class 一锅端，而是一个标签一组。
+ * - 例如 `<span class="hidden block"></span>` 会单独拿 `hidden + block` 这组 utility 选 bucket； 另一个 `<div class="hidden
+ *   inline"></div>` 会单独再选自己的 bucket。
+ *
+ * 3. 在候选 bucket 里先比“覆盖情况”
+ *
+ * - 谁能同时覆盖当前这组 utility 里的更多 class，谁优先。
+ * - 例如当前标签是 `hidden + block`：
+ *
+ *   - `post` bucket 同时有 `hidden` 和 `block`
+ *   - `post|page-like-post-style` 只有 `hidden`
+ *   - `post|page-like-post-style|archives` 同时有 `hidden` 和 `block`
+ * - 那中间这个只覆盖 1 个的 bucket 会先被淘汰，剩下两个完整覆盖者再进入下一轮。
+ *
+ * 4. 如果都能完整覆盖，再做稳定 tie-break
+ *
+ * - 先比“和当前文件 entry 的重叠度”： 当前文件属于哪些 entry，候选 bucket 又属于哪些 entry，交集更大的优先。
+ * - 再比“bucket 更窄”： 如果当前文件是 `post`，而 `post`、`post|page-like-post-style`、`post|page-like-post-style|archives` 都能完整覆盖同一个标签的
+ *   class，那么会优先 `post`，其次 `post|page-like-post-style`，最后才是更宽的三方共享 bucket。
+ * - 最后再按字典序稳定化，避免完全打平时构建结果抖动。
  * - 这样可以避免“HTML / JS 先按自身 bucket 改名，但最终 CSS 规则其实落在共享 bucket”造成的错配。
  * - 最后把 mapping/debug 产物写到 `.tw-patch/`，用于排查 bucket 和类名归属。
  */
@@ -954,6 +985,20 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
      * - CSS 文件：继续使用自己的 bucket 映射；
      * - HTML：先按同一个 `class=""` 分组做协同打分，再回填最终胜出的 CSS owner bucket；
      * - JS：只在当前文件可达的 CSS bucket 里选，不再 fallback 到无关组件 bucket。
+     *
+     * 一个最小例子：
+     *
+     * - 当前页面是 `post.html`
+     * - 当前标签是 `<span class="hidden block"></span>`
+     * - 候选 bucket 有 `post`、`post|page-like-post-style`、`post|page-like-post-style|archives`
+     *
+     * 如果三者都能完整覆盖 `hidden + block`，那最终会优先：
+     *
+     * - `post`
+     * - 再 `post|page-like-post-style`
+     * - 最后 `post|page-like-post-style|archives`
+     *
+     * 也就是“先看当前页面更窄、更贴近自己的 bucket，只有前者覆盖不全时才退到更宽的共享 bucket”。
      *
      * 这样至少可以避免“HTML 已改成私有名，但真正落盘的 CSS 规则在共享 bucket”这种直接错配。
      */
