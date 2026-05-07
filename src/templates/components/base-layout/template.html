@@ -650,20 +650,30 @@
           }
         }
 
-        const themeIconClassByTheme = {
-          [THEME_LIGHT]: "tw:ant-design--sun-outlined",
-          [THEME_DARK]: "tw:ant-design--moon-outlined",
-          [THEME_AUTO]: "tw:fa--circle-thin",
+        const isAutoModeDisabled = THEME_AUTO === THEME_LIGHT;
+        const THEME_ICON_CLASS = {
+          auto: "tw:fa--circle-o",
+          dark: "tw:ant-design--moon-outlined",
+          light: "tw:ant-design--sun-outlined",
         };
+        const themeIconClasses = Object.values(THEME_ICON_CLASS);
 
-        const themeIconClasses = Object.values(themeIconClassByTheme);
+        function getThemeIconClass(theme) {
+          if (theme === THEME_DARK) {
+            return THEME_ICON_CLASS.dark;
+          }
+          if (theme === THEME_AUTO && !isAutoModeDisabled) {
+            return THEME_ICON_CLASS.auto;
+          }
+          return THEME_ICON_CLASS.light;
+        }
 
         function updateThemeIcon(theme) {
           const themeIcon = document.getElementById("theme-toggle-button-icon");
           if (!themeIcon) return;
           themeIcon.style.removeProperty("display"); // <!--/* remove display: none */-->
 
-          const nextIconClass = themeIconClassByTheme[theme] ?? themeIconClassByTheme[THEME_AUTO];
+          const nextIconClass = getThemeIconClass(theme);
 
           for (const iconClass of themeIconClasses) {
             themeIcon.classList.toggle(iconClass, iconClass === nextIconClass);
@@ -741,7 +751,7 @@
           if (currentTheme === THEME_LIGHT) {
             newTheme = THEME_DARK;
           } else if (currentTheme === THEME_DARK) {
-            newTheme = THEME_AUTO;
+            newTheme = isAutoModeDisabled ? THEME_LIGHT : THEME_AUTO;
           } else {
             newTheme = THEME_LIGHT;
           }

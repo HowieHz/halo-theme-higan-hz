@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fixed an issue where the light/dark toggle could incorrectly show the auto-mode icon while in light mode when the Auto Mode Color Scheme matched the Light Mode Color Scheme.
+
 ## [1.66.3] - 2026-05-07
 
 ### 🔧 Code Refactoring
