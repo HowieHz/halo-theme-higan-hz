@@ -50,7 +50,9 @@
  *
  * - 扫描阶段和改写阶段都尽量复用官方 handler，而不是手写正则替换。
  * - 插件会后挂到 Vite 内部 `vite:build-import-analysis` 的 `generateBundle`，这样既能拿到最终 HTML，又早于 `vite-plugin-sri3` 计算 `integrity`。
- * - CSS 文件直接使用自己的 bucket 映射；HTML / JS 文件则会回看“自己最终能到达哪些 CSS 文件”，并跟随真正承载该 utility 规则的 CSS bucket 短名。
+ * - CSS 文件直接使用自己的 bucket 映射。
+ * - HTML / JS 文件只会在“自己最终能到达哪些 CSS 文件”这个候选范围内选短名，不再回退到无关组件 bucket。
+ * - 其中 HTML 还会按同一个 `class=""` 属性里的 utility 做协同打分，尽量让同一标签上的 class 落到同一个 CSS owner bucket。
  * - 这样可以避免“HTML / JS 先按自身 bucket 改名，但最终 CSS 规则其实落在共享 bucket”造成的错配。
  * - 最后把 mapping/debug 产物写到 `.tw-patch/`，用于排查 bucket 和类名归属。
  */
@@ -211,6 +213,24 @@ function toTextBundleFileContent(fileName: string, sourceContent: BundleFileCont
 /** 去掉 query/hash，便于把 HTML 里的资源引用映射回 bundle 文件名。 */
 function normalizeReferencedBundleFileName(reference: string): string {
   return reference.split(/[?#]/u, 1)[0] ?? reference;
+}
+
+/** 提取 HTML 中每个 `class=""` 属性里的 class 组，供同标签协同选 bucket 使用。 */
+function collectHtmlClassGroups(sourceText: string): string[][] {
+  const classGroups: string[][] = [];
+  const classAttributeRegex = /(?:^|[\s<])class\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/gmu;
+
+  for (const match of sourceText.matchAll(classAttributeRegex)) {
+    const [, doubleQuotedValue, singleQuotedValue, bareValue] = match;
+    const rawClassValue = doubleQuotedValue ?? singleQuotedValue ?? bareValue ?? "";
+    const classNames = rawClassValue.split(/\s+/u).filter((className) => className !== "");
+
+    if (classNames.length > 0) {
+      classGroups.push(classNames);
+    }
+  }
+
+  return classGroups;
 }
 
 /**
@@ -568,6 +588,11 @@ function isCssBundleFile(fileName: string): boolean {
   return fileName.endsWith(CSS_FILE_EXTENSION);
 }
 
+/** 当前文件是否为最终 HTML 模板产物。 */
+function isHtmlBundleFile(fileName: string): boolean {
+  return fileName.endsWith(HTML_FILE_EXTENSION);
+}
+
 export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMangleSignaturesPluginOptions): Plugin {
   const normalizedBase = normalizeBasePath(options.base);
   const classListFile = resolve(options.projectRoot, options.classListFile ?? DEFAULT_CLASS_LIST_FILE);
@@ -752,26 +777,6 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
     }
 
     const reachableCssFilesByFile = new Map<string, string[]>();
-    const cssBucketKeysByClass = new Map<string, Set<string>>();
-
-    for (const [fileName, classes] of classesByFile.entries()) {
-      if (!isCssBundleFile(fileName)) {
-        continue;
-      }
-
-      const bucketKey = bucketKeyByFile.get(fileName);
-
-      if (bucketKey === undefined) {
-        continue;
-      }
-
-      for (const className of classes) {
-        const bucketKeys = cssBucketKeysByClass.get(className) ?? new Set<string>();
-        bucketKeys.add(bucketKey);
-        cssBucketKeysByClass.set(className, bucketKeys);
-      }
-    }
-
     for (const fileName of fileNamesToRewrite) {
       if (isCssBundleFile(fileName)) {
         continue;
@@ -783,15 +788,174 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       reachableCssFilesByFile.set(fileName, reachableCssFiles);
     }
 
+    const getCandidateBucketKeysForFileClass = (fileName: string, className: string): string[] => {
+      const reachableCssFiles = reachableCssFilesByFile.get(fileName) ?? [];
+      const candidateBucketKeys = new Set<string>();
+
+      for (const cssFileName of reachableCssFiles) {
+        const cssClasses = classesByFile.get(cssFileName);
+
+        if (!cssClasses?.has(className)) {
+          continue;
+        }
+
+        const cssBucketKey = bucketKeyByFile.get(cssFileName);
+
+        if (cssBucketKey !== undefined) {
+          candidateBucketKeys.add(cssBucketKey);
+        }
+      }
+
+      return [...candidateBucketKeys].sort();
+    };
+
+    const getBucketOverlapScore = (fileName: string, bucketKey: string): number => {
+      const fileEntries = entriesByFile.get(fileName);
+
+      if (fileEntries === undefined) {
+        return 0;
+      }
+
+      const bucketEntries = bucketKey === "" ? [] : bucketKey.split("|");
+      let overlapCount = 0;
+
+      for (const entry of bucketEntries) {
+        if (fileEntries.has(entry)) {
+          overlapCount++;
+        }
+      }
+
+      return overlapCount;
+    };
+
+    const compareCandidateBucketKeys = (fileName: string, left: string, right: string): number => {
+      const leftOverlapScore = getBucketOverlapScore(fileName, left);
+      const rightOverlapScore = getBucketOverlapScore(fileName, right);
+
+      if (leftOverlapScore !== rightOverlapScore) {
+        return rightOverlapScore - leftOverlapScore;
+      }
+
+      const leftEntryCount = left === "" ? 0 : left.split("|").length;
+      const rightEntryCount = right === "" ? 0 : right.split("|").length;
+
+      if (leftEntryCount !== rightEntryCount) {
+        return leftEntryCount - rightEntryCount;
+      }
+
+      return left.localeCompare(right);
+    };
+
+    const preferredBucketKeyByFileClass = new Map<string, Map<string, string>>();
+
+    for (const [fileName, sourceContent] of bundleFileContents.entries()) {
+      if (!isHtmlBundleFile(fileName)) {
+        continue;
+      }
+
+      const sourceText = toTextBundleFileContent(fileName, sourceContent);
+
+      if (sourceText === null) {
+        continue;
+      }
+
+      const fileClasses = classesByFile.get(fileName);
+
+      if (fileClasses === undefined) {
+        continue;
+      }
+
+      const scoreByClassByBucket = new Map<string, Map<string, number>>();
+
+      for (const classGroup of collectHtmlClassGroups(sourceText)) {
+        const relevantClasses = classGroup.filter((className) => fileClasses.has(className));
+
+        if (relevantClasses.length === 0) {
+          continue;
+        }
+
+        const candidateBucketKeysByClass = new Map<string, string[]>();
+        const bucketCoverageCount = new Map<string, number>();
+
+        for (const className of relevantClasses) {
+          const candidateBucketKeys = getCandidateBucketKeysForFileClass(fileName, className);
+
+          if (candidateBucketKeys.length === 0) {
+            continue;
+          }
+
+          candidateBucketKeysByClass.set(className, candidateBucketKeys);
+
+          for (const bucketKey of candidateBucketKeys) {
+            bucketCoverageCount.set(bucketKey, (bucketCoverageCount.get(bucketKey) ?? 0) + 1);
+          }
+        }
+
+        for (const [className, candidateBucketKeys] of candidateBucketKeysByClass.entries()) {
+          const bucketScores = scoreByClassByBucket.get(className) ?? new Map<string, number>();
+
+          for (const bucketKey of candidateBucketKeys) {
+            bucketScores.set(bucketKey, (bucketScores.get(bucketKey) ?? 0) + (bucketCoverageCount.get(bucketKey) ?? 0));
+          }
+
+          scoreByClassByBucket.set(className, bucketScores);
+        }
+      }
+
+      const preferredBucketKeys = new Map<string, string>();
+
+      for (const className of fileClasses) {
+        const candidateBucketKeys = getCandidateBucketKeysForFileClass(fileName, className);
+
+        if (candidateBucketKeys.length === 0) {
+          continue;
+        }
+
+        const bucketScores = scoreByClassByBucket.get(className);
+
+        if (bucketScores === undefined) {
+          const [preferredBucketKey] = [...candidateBucketKeys].sort((left, right) =>
+            compareCandidateBucketKeys(fileName, left, right),
+          );
+
+          if (preferredBucketKey !== undefined) {
+            preferredBucketKeys.set(className, preferredBucketKey);
+          }
+
+          continue;
+        }
+
+        const orderedBucketKeys = [...candidateBucketKeys].sort((left, right) => {
+          const leftScore = bucketScores.get(left) ?? 0;
+          const rightScore = bucketScores.get(right) ?? 0;
+
+          if (leftScore !== rightScore) {
+            return rightScore - leftScore;
+          }
+
+          return compareCandidateBucketKeys(fileName, left, right);
+        });
+
+        const [preferredBucketKey] = orderedBucketKeys;
+
+        if (preferredBucketKey !== undefined) {
+          preferredBucketKeys.set(className, preferredBucketKey);
+        }
+      }
+
+      preferredBucketKeyByFileClass.set(fileName, preferredBucketKeys);
+    }
+
     /**
      * 为 HTML / JS 消费方解析“真正承载该 utility 规则的 CSS bucket”。
      *
-     * 当前实现不再让 HTML / JS 直接按自己的文件 bucket 私有命名， 而是优先跟随最终可达的 CSS 产物：
+     * 当前实现不再让 HTML / JS 直接按自己的文件 bucket 私有命名，而是只在当前文件最终可达的 CSS 产物里找 owner bucket：
      *
      * - CSS 文件：继续使用自己的 bucket 映射；
-     * - HTML / JS：从当前文件可达的 CSS 文件里找这条 utility 最终落在哪个 bucket， 再回填那个 bucket 的短名。
+     * - HTML：先按同一个 `class=""` 分组做协同打分，再回填最终胜出的 CSS owner bucket；
+     * - JS：只在当前文件可达的 CSS bucket 里选，不再 fallback 到无关组件 bucket。
      *
-     * 这样至少可以避免“HTML 已改成私有名，但真正落盘的 CSS 规则在共享 bucket” 这种直接错配。
+     * 这样至少可以避免“HTML 已改成私有名，但真正落盘的 CSS 规则在共享 bucket”这种直接错配。
      */
     const resolveMangledNameForFileClass = (fileName: string, className: string): string | undefined => {
       const currentBucketKey = bucketKeyByFile.get(fileName);
@@ -804,38 +968,17 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
         return classNameMapByBucket.get(currentBucketKey)?.get(className);
       }
 
-      const reachableCssFiles = reachableCssFilesByFile.get(fileName) ?? [];
-      const candidateBucketKeys = new Set<string>();
+      if (isHtmlBundleFile(fileName)) {
+        const preferredBucketKey = preferredBucketKeyByFileClass.get(fileName)?.get(className);
 
-      for (const cssFileName of reachableCssFiles) {
-        const cssClasses = classesByFile.get(cssFileName);
-
-        if (cssClasses?.has(className)) {
-          const cssBucketKey = bucketKeyByFile.get(cssFileName);
-
-          if (cssBucketKey !== undefined) {
-            candidateBucketKeys.add(cssBucketKey);
-          }
+        if (preferredBucketKey !== undefined) {
+          return classNameMapByBucket.get(preferredBucketKey)?.get(className);
         }
       }
 
-      const fallbackBucketKeys = cssBucketKeysByClass.get(className) ?? new Set<string>();
-
-      for (const bucketKey of fallbackBucketKeys) {
-        candidateBucketKeys.add(bucketKey);
-      }
-
-      const orderedBucketKeys = [...candidateBucketKeys].sort((left, right) => {
-        if (left === currentBucketKey) {
-          return -1;
-        }
-
-        if (right === currentBucketKey) {
-          return 1;
-        }
-
-        return left.localeCompare(right);
-      });
+      const orderedBucketKeys = getCandidateBucketKeysForFileClass(fileName, className).sort((left, right) =>
+        compareCandidateBucketKeys(fileName, left, right),
+      );
 
       for (const bucketKey of orderedBucketKeys) {
         const mangledName = classNameMapByBucket.get(bucketKey)?.get(className);
