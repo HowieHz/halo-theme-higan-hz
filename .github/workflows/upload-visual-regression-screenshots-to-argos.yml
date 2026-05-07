@@ -123,6 +123,16 @@ jobs:
             echo '```' >> $GITHUB_STEP_SUMMARY
             tail -n 200 argos-upload.log >> $GITHUB_STEP_SUMMARY || true
             echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            build_url=$(grep -Eo 'https://app\.argos-ci\.com/[[:alnum:]-]+/[[:alnum:]-]+/builds/[0-9]+' argos-upload.log | tail -n 1 || true)
+
+            {
+              echo "### Argos upload complete"
+              if [ -n "$build_url" ]; then
+                echo ""
+                echo "Build: $build_url"
+              fi
+            } >> "$GITHUB_STEP_SUMMARY"
           fi
 
           # Don't fail the workflow; we've recorded the failure in the step summary.

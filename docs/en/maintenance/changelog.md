@@ -91,6 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🛠️ Miscellaneous Chores
 
 - Updated dependencies.
+- Reordered the theme build workflow to run `default` / `full` / `tiny` in a cache-friendlier order, and write the Argos build link into the Job Summary on successful uploads.
 
 ## [1.64.0] - 2026-04-21
 
