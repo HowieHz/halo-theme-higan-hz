@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.66.2] - 2026-05-07
+
 ### 🚀 新功能
 
 - 适配 [图库管理插件 plugin-photos](https://www.halo.run/store/apps/app-BmQJW) v2 的单组视图（`/photos(?group={groupName})`）。
@@ -1885,7 +1887,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.2...HEAD
+[1.66.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.1...v1.66.2
 [1.66.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.0...v1.66.1
 [1.66.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.65.2...v1.66.0
 [1.65.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.65.1...v1.65.2

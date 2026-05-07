@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.66.2] - 2026-05-07
+
 ### 🚀 Features
 
 - Adapted the [plugin-photos](https://www.halo.run/store/apps/app-BmQJW) v2 single-group view (`/photos(?group={groupName})`).
@@ -1959,7 +1961,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.2...HEAD
+[1.66.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.1...v1.66.2
 [1.66.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.0...v1.66.1
 [1.66.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.65.2...v1.66.0
 [1.65.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.65.1...v1.65.2
