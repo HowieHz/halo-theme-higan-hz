@@ -199,6 +199,10 @@ function getBuildInputs(extraEntries: BuildEntryMap = {}): BuildEntryMap {
       import.meta.dirname,
       "src/templates/components/heading-anchor-svg/template.html",
     ),
+    "components-photo-list-item": resolve(
+      import.meta.dirname,
+      "src/templates/components/photo-list-item/template.html",
+    ),
     "components-meta-theme-color": resolve(
       import.meta.dirname,
       "src/templates/components/meta-theme-color/template.html",
