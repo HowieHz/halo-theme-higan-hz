@@ -246,6 +246,33 @@ function normalizeReferencedBundleFileName(reference: string): string {
   return reference.split(/[?#]/u, 1)[0] ?? reference;
 }
 
+/**
+ * 先统一抓出所有 `<script ...>...</script>`，再做属性级判定。
+ *
+ * 这样不会因为属性顺序、换行、`th:*`、`data-*` 之类模板属性而漏掉目标内联脚本。
+ */
+const INLINE_SCRIPT_TAG_REGEX = /<script\b([^>]*)>([\s\S]*?)<\/script>/gimu;
+
+/** 判断某个 `<script>` 是否属于允许参与改写的两种内联脚本形态。 */
+function isEligibleInlineScript(attributesText: string): boolean {
+  if (/\bsrc\s*=/imu.test(attributesText)) {
+    return false;
+  }
+
+  const hasTypeAttribute = /\btype\s*=/imu.test(attributesText);
+  const hasModuleType = /\btype\s*=\s*(?:"module"|'module'|module)\b/imu.test(attributesText);
+  const hasViteIgnore = /\bvite-ignore\b/imu.test(attributesText);
+
+  // 只处理两类：
+  // 1. 经典内联脚本：`<script ...>`，允许带其他模板属性，但不能声明 `type=...`
+  // 2. Vite 忽略的模块内联脚本：`<script vite-ignore type="module" ...>`
+  if (!hasTypeAttribute && !hasViteIgnore) {
+    return true;
+  }
+
+  return hasModuleType && hasViteIgnore;
+}
+
 /** 提取 HTML 中每个 `class=""` 属性里的 class 组，供同标签协同选 bucket 使用。 */
 function collectHtmlClassGroups(sourceText: string): string[][] {
   const classGroups: string[][] = [];
@@ -262,6 +289,30 @@ function collectHtmlClassGroups(sourceText: string): string[][] {
   }
 
   return classGroups;
+}
+
+/** 用官方 `jsHandler` 二次处理 HTML 中符合条件的内联 `<script>`。 */
+function rewriteEligibleInlineScriptsInHtml(
+  sourceText: string,
+  fileName: string,
+  mapping: ReadonlyMap<string, string>,
+): string {
+  return sourceText.replace(INLINE_SCRIPT_TAG_REGEX, (wholeMatch, attributesText: string, scriptContent: string) => {
+    if (!isEligibleInlineScript(attributesText)) {
+      return wholeMatch;
+    }
+
+    const rewrittenScript = jsHandler(scriptContent, {
+      ctx: createBucketContext(mapping),
+      id: `${fileName}#inline-script`,
+    }).code;
+
+    if (rewrittenScript === scriptContent) {
+      return wholeMatch;
+    }
+
+    return wholeMatch.replace(scriptContent, rewrittenScript);
+  });
 }
 
 /**
@@ -465,7 +516,7 @@ function createBucketContext(mapping: ReadonlyMap<string, string>): Context {
  *
  * 这样做的意义不是改变 bucket 语义，而是把“怎么安全地改 HTML/CSS/JS”这件事重新交给官方实现：
  *
- * - HTML：`htmlparser2`
+ * - HTML：先走 `htmlparser2` 改 `class=""`，再补一层符合条件的内联 `<script>` -> `jsHandler`
  * - CSS：UTWM 官方 CSS handler
  * - JS：Babel AST + `MagicString`
  */
@@ -478,7 +529,16 @@ async function rewriteWithUtwmHandler(
   const extension = extname(fileName);
 
   if (fileName.endsWith(HTML_FILE_EXTENSION)) {
-    return htmlHandler(sourceText, { ctx, id: fileName }).code;
+    const rewrittenHtml = htmlHandler(sourceText, { ctx, id: fileName }).code;
+
+    // `@tailwindcss-mangle/core` 的 `htmlHandler` 只会处理 `class=""` 属性，
+    // 不会继续进入内联 `<script>`。这里额外补一层，仅处理：
+    //
+    // - `<script> ... </script>`
+    // - `<script vite-ignore type="module"> ... </script>`
+    //
+    // 并显式跳过带 `src=` 的脚本标签，避免误改外链资源引用。
+    return rewriteEligibleInlineScriptsInHtml(rewrittenHtml, fileName, mapping);
   }
 
   if (fileName.endsWith(CSS_FILE_EXTENSION)) {
