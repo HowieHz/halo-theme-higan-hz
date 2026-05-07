@@ -1,1 +1,1 @@
-import "@runtime/global/main";
+import "@runtime/global";

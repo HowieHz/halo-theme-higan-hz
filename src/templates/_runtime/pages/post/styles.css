@@ -1,3 +1,9 @@
+@reference "../../global/styles.css";
+/* stylelint-disable-next-line no-invalid-position-at-import-rule, at-rule-prelude-no-invalid -- Tailwind CSS v4 @import prelude syntax after @reference */
+@import "tailwindcss/utilities.css" layer(utilities) source(none) prefix(tw);
+
+@source "../../../post.html";
+
 @layer base {
   /* 文章页桌面端/平板端文章右上角菜单 */
   #header-post {
@@ -73,7 +79,7 @@
 
     & #nav {
       color: var(--color-primary);
-      font-size: var(--text-sm);
+      font-size: var(--tw-text-sm);
       font-style: normal;
       letter-spacing: 0.01em;
 
@@ -297,7 +303,7 @@
 
       & .toc-level-2 {
         color: var(--color-base-content);
-        font-size: var(--text-sm);
+        font-size: var(--tw-text-sm);
 
         &::before {
           color: var(--color-primary);
@@ -480,7 +486,7 @@
 
         & .toc-level-2 {
           color: var(--color-base-content);
-          font-size: var(--text-sm);
+          font-size: var(--tw-text-sm);
 
           &::before {
             color: var(--color-primary);

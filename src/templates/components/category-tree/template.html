@@ -1,13 +1,16 @@
-<!--/*-->
-<head th:remove="tag"></head>
-<!--*/-->
+<head th:remove="tag">
+  <script
+    src="index.ts"
+    type="module"
+  ></script>
+</head>
 <body
   th:remove="tag"
   th:fragment="body(categories)"
 >
   <ul
     th:unless="${#lists.isEmpty(categories)}"
-    class="flex-auto"
+    class="tw:flex-auto"
   >
     <li th:replace="~{:: single(categories = ${categories})}"></li>
   </ul>
@@ -15,7 +18,7 @@
 
 <ul
   th:fragment="next(categories)"
-  class="flex-auto"
+  class="tw:flex-auto"
 >
   <li
     th:fragment="single(categories)"

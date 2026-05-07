@@ -106,7 +106,7 @@ CI (GitHub Actions) runs the following checks for PRs. Some checks are triggered
 
 CI first runs `pnpm fmt`, including the following formatting steps:
 
-- `oxfmt`: Formatting for JSON, JSONC, YAML, Markdown, CSS, JavaScript, TypeScript, HTML, Vue and Less files
+- `oxfmt`: Formatting for JSON, JSONC, YAML, Markdown, CSS, JavaScript, TypeScript, HTML, Vue files
 
 > Changes produced by formatting will be automatically committed.
 

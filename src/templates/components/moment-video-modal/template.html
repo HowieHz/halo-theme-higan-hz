@@ -16,60 +16,62 @@
     <video
       preload="metadata"
       th:src="${media.url}"
-      class="m-0 h-full object-cover"
+      class="tw:m-0 tw:h-full tw:object-cover"
     ></video>
     <div
       th:if="${#strings.equals(media.type, 'VIDEO')}"
-      class="color-base-200 v-cursor-pointer absolute flex h-full w-full items-center justify-center rounded-lg opacity-50 transition-all hover:opacity-70"
+      class="color-base-200 v-cursor-pointer tw:absolute tw:flex tw:h-full tw:w-full tw:items-center tw:justify-center tw:rounded-lg tw:opacity-50 tw:transition-all tw:hover:opacity-70"
       @click="openVideoModal = true"
     >
-      <span class="iconify-large iconify material-symbols--play-circle-outline"></span>
+      <span class="iconify-large tw:iconify tw:material-symbols--play-circle-outline"></span>
     </div>
 
     <template x-teleport="body">
       <div>
         <div
-          class="fixed inset-0 z-50 bg-[#0006] opacity-100 backdrop-blur-xs"
+          class="tw:fixed tw:inset-0 tw:z-50 tw:bg-[#0006] tw:opacity-100 tw:backdrop-blur-xs"
           aria-hidden="true"
           x-show="openVideoModal"
-          x-transition:enter="ease-in-out duration-200"
-          x-transition:enter-start="opacity-0"
-          x-transition:enter-end="opacity-100"
-          x-transition:leave="ease-in-out duration-200"
-          x-transition:leave-start="opacity-100"
-          x-transition:leave-end="opacity-0"
+          x-transition:enter="tw:ease-in-out tw:duration-200"
+          x-transition:enter-start="tw:opacity-0"
+          x-transition:enter-end="tw:opacity-100"
+          x-transition:leave="tw:ease-in-out tw:duration-200"
+          x-transition:leave-start="tw:opacity-100"
+          x-transition:leave-end="tw:opacity-0"
         ></div>
         <div
-          class="fixed inset-0 z-50 overflow-y-auto"
+          class="tw:fixed tw:inset-0 tw:z-50 tw:overflow-y-auto"
           tabindex="-1"
           x-show="openVideoModal"
-          x-transition:enter="ease-out duration-200"
-          x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-          x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-          x-transition:leave="ease-in duration-200"
-          x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-          x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          x-transition:enter="tw:ease-out tw:duration-200"
+          x-transition:enter-start="tw:opacity-0 tw:translate-y-4 tw:sm:translate-y-0 tw:sm:scale-95"
+          x-transition:enter-end="tw:opacity-100 tw:translate-y-0 tw:sm:scale-100"
+          x-transition:leave="tw:ease-in tw:duration-200"
+          x-transition:leave-start="tw:opacity-100 tw:translate-y-0 tw:sm:scale-100"
+          x-transition:leave-end="tw:opacity-0 tw:translate-y-4 tw:sm:translate-y-0 tw:sm:scale-95"
         >
           <template x-if="openVideoModal">
-            <div class="flex min-h-full flex-col items-center justify-center p-4 text-center sm:p-0">
+            <div
+              class="tw:flex tw:min-h-full tw:flex-col tw:items-center tw:justify-center tw:p-4 tw:text-center tw:sm:p-0"
+            >
               <div
                 @click.outside="openVideoModal = false"
-                class="color-base-300 relative my-4 transform overflow-hidden rounded-xs text-left shadow-xl transition-all sm:w-full sm:max-w-xl"
+                class="color-base-300 tw:relative tw:my-4 tw:transform tw:overflow-hidden tw:rounded-xs tw:text-left tw:shadow-xl tw:transition-all tw:sm:w-full tw:sm:max-w-xl"
               >
                 <video
                   preload="metadata"
                   th:src="${media.url}"
-                  class="w-full"
+                  class="tw:w-full"
                   controls
                 ></video>
               </div>
               <div>
                 <div
                   @click="openVideoModal = false;"
-                  class="color-base-300 group inline-flex items-center justify-center rounded-full p-1.5"
+                  class="color-base-300 group tw:inline-flex tw:items-center tw:justify-center tw:rounded-full tw:p-1.5"
                 >
                   <span
-                    class="iconify-large color-base-content-80 group-hover-text-base-content iconify block material-symbols--cancel-rounded"
+                    class="iconify-large color-base-content-80 group-hover-text-base-content tw:iconify tw:block tw:material-symbols--cancel-rounded"
                   ></span>
                 </div>
               </div>

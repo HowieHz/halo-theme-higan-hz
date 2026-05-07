@@ -8,5 +8,5 @@
       "@runtime/*": ["./src/templates/_runtime/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts"]
+  "include": ["src/templates/**/*.ts", "src/types/**/*.d.ts"]
 }

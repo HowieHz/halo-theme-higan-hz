@@ -30,9 +30,9 @@
   <body th:remove="tag">
     <div
       id="archive"
-      class="content flex-auto"
+      class="content tw:flex-auto"
     >
-      <div class="flex-1">
+      <div class="tw:flex-1">
         <div
           th:each="archive : ${archives}"
           th:unless="${theme.config?.archives_page_styles?.is_collapse_post_list_by_publication_year_and_month}"
@@ -54,31 +54,31 @@
           <div th:each="archive : ${archives}">
             <h2 class="v-cursor-pointer">
               <span th:text="${archive.year}"></span>
-              <span class="iconify-large iconify mdi--chevron-right"></span>
+              <span class="iconify-large tw:iconify tw:mdi--chevron-right"></span>
               <span
-                class="iconify-large iconify mdi--chevron-down"
+                class="iconify-large tw:iconify tw:mdi--chevron-down"
                 style="display: none"
               ></span>
             </h2>
             <ul
-              class="m-0 flex-auto p-0"
+              class="tw:m-0 tw:flex-auto tw:p-0"
               style="display: none"
             >
               <th:block th:each="month : ${archive.months}">
-                <div class="month-container ml-7 flex">
-                  <h3 class="v-cursor-pointer -mt-2 flex-none no-underline">
+                <div class="month-container tw:ml-7 tw:flex">
+                  <h3 class="v-cursor-pointer tw:-mt-2 tw:flex-none tw:no-underline">
                     <span
                       th:text="${month.month}"
-                      class="underline"
+                      class="tw:underline"
                     ></span>
-                    <span class="iconify-large iconify mdi--chevron-right"></span>
+                    <span class="iconify-large tw:iconify tw:mdi--chevron-right"></span>
                     <span
-                      class="iconify-large iconify mdi--chevron-down"
+                      class="iconify-large tw:iconify tw:mdi--chevron-down"
                       style="display: none"
                     ></span>
                   </h3>
                   <ul
-                    class="common-post-list flex-auto"
+                    class="common-post-list tw:flex-auto"
                     style="display: none"
                   >
                     <li
@@ -96,7 +96,7 @@
                           >文章发布时间替换位</time
                         >
                       </div>
-                      <div class="line-clamp-1">
+                      <div class="tw:line-clamp-1">
                         <a
                           class="post-title"
                           th:href="@{${post.status?.permalink}}"
@@ -114,8 +114,8 @@
               import { slideUp } from "@runtime/scripts/animations/slide-up";
 
               function toggleVisibility(element, duration_of_expand_collapse_animation) {
-                const caretRight = element.querySelector(".mdi--chevron-right");
-                const caretDown = element.querySelector(".mdi--chevron-down");
+                const caretRight = element.querySelector('[class~="tw:mdi--chevron-right"]');
+                const caretDown = element.querySelector('[class~="tw:mdi--chevron-down"]');
                 const nextElement = element.nextElementSibling;
 
                 if (!nextElement) {

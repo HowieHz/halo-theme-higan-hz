@@ -1,0 +1,51 @@
+@layer theme, base, utilities;
+
+@import "tailwindcss/theme.css" layer(theme) prefix(tw);
+@import "./base-styles/styles.css";
+@import "./scrollbar/styles.css";
+@import "./iconify/styles.css";
+/* stylelint-disable-next-line at-rule-prelude-no-invalid -- Tailwind CSS v4 @import prelude syntax */
+@import "tailwindcss/utilities.css" layer(utilities) source(none) prefix(tw);
+
+@source "./index.ts";
+
+/* stylelint-disable custom-property-pattern */
+@theme {
+  --text-*: initial;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.75rem;
+}
+/* stylelint-enable custom-property-pattern */
+
+@utility no-underline {
+  text-decoration: none !important;
+}
+
+@utility break-all {
+  word-break: break-all !important;
+}
+
+@utility inline-block {
+  display: inline-block !important;
+}
+
+@utility iconify {
+  background-color: currentcolor;
+  display: inline-block;
+  height: 1em;
+  mask-image: var(--svg);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  text-align: center;
+  vertical-align: middle;
+  width: 1em;
+
+  /* font-size: 1em; default */
+  /* color: var(--color-base-content); */
+}
+
+@plugin "@iconify/tailwind4" {
+  prefixes: mdi, fa-solid, material-symbols, ic, typcn, simple-icons, ant-design, fa;
+}

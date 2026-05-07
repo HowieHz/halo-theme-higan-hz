@@ -3,6 +3,10 @@
     src="index.ts"
     type="module"
   ></script>
+  <th:block
+    th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
+    th:insert="~{components/theme-toggle-button/template :: head}"
+  ></th:block>
 </head>
 <body th:remove="tag">
   <header id="header">
@@ -61,7 +65,10 @@
       <div id="title">
         <span class="h1">
           <th:block th:text="${site?.title}">站点标题替换位</th:block
-          ><th:block th:replace="~{components/common/template :: theme-toggle-button}"></th:block>
+          ><th:block
+            th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
+            th:insert="~{components/theme-toggle-button/template :: body}"
+          ></th:block>
         </span>
       </div>
     </a>
@@ -69,7 +76,7 @@
       id="nav"
       th:if="${theme.config?.styles?.is_show_header_menu}"
     >
-      <th:block th:insert="~{components/common/template :: menu(showIcon=true)}"></th:block>
+      <th:block th:insert="~{components/menu/template :: menu(showIcon=true)}"></th:block>
     </div>
   </header>
 </body>

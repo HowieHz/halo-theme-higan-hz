@@ -14,7 +14,8 @@ import vueParser from "vue-eslint-parser";
 const gitignorePath = resolve(import.meta.dirname, ".gitignore");
 
 const browserTsFiles = [
-  "src/templates/**/*.{js,ts}",
+  "src/templates/**/*.ts",
+  "src/types/**/*.d.ts",
   "docs/.vitepress/theme/**/*.ts",
   "docs/.vitepress/components/**/*.ts",
   "docs/.vitepress/utils/**/*.ts",
@@ -25,6 +26,9 @@ const vueFiles = ["docs/.vitepress/components/**/*.vue", "docs/.vitepress/theme/
 const nodeFiles = [
   "docs/.vitepress/config.ts",
   "docs/en/config.ts",
+  "docs/.vitepress/types/node/**/*.d.ts",
+  "docs/.vitepress/scripts/**/*.ts",
+  "src/scripts/**/*.ts",
   "vite.config.ts",
   "plugins/**/*.ts",
   "eslint.config.js",
@@ -78,6 +82,10 @@ const vueLanguageOptions = {
       // If not specified, the parser determined by `<script lang ="...">` is used.
       "<template>": "espree",
     },
+  },
+  globals: {
+    ...browserLanguageOptions.globals,
+    ...globals.vue,
   },
 };
 

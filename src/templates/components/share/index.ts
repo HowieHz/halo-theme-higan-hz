@@ -1,3 +1,5 @@
+import "./styles.css";
+
 const SHARE_LOG_PREFIX = "[Higan Haozi][share]";
 
 document.addEventListener("click", (event: Event): void => {

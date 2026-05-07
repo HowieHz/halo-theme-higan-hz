@@ -650,21 +650,23 @@
           }
         }
 
+        const themeIconClassByTheme = {
+          [THEME_LIGHT]: "tw:ant-design--sun-outlined",
+          [THEME_DARK]: "tw:ant-design--moon-outlined",
+          [THEME_AUTO]: "tw:fa--circle-thin",
+        };
+
+        const themeIconClasses = Object.values(themeIconClassByTheme);
+
         function updateThemeIcon(theme) {
           const themeIcon = document.getElementById("theme-toggle-button-icon");
           if (!themeIcon) return;
           themeIcon.style.removeProperty("display"); // <!--/* remove display: none */-->
 
-          Array.from(themeIcon.classList).forEach((c) => {
-            if (c.startsWith("ph--")) themeIcon.classList.remove(c);
-          });
+          const nextIconClass = themeIconClassByTheme[theme] ?? themeIconClassByTheme[THEME_AUTO];
 
-          if (theme === THEME_LIGHT) {
-            themeIcon.classList.add("ph--sun-bold");
-          } else if (theme === THEME_DARK) {
-            themeIcon.classList.add("ph--moon-bold");
-          } else {
-            themeIcon.classList.add("ph--circle-bold");
+          for (const iconClass of themeIconClasses) {
+            themeIcon.classList.toggle(iconClass, iconClass === nextIconClass);
           }
         }
 
@@ -773,10 +775,20 @@
       });
     </script>
     <!--/* CSS Variable to Meta Theme-Color Observer End */-->
+    <!--/* base-layout component tailwindcss style Start */-->
+    <script
+      src="index.ts"
+      type="module"
+    ></script>
+    <!--/* base-layout component tailwindcss style End */-->
+    <!--/* Menu Style start */-->
+    <!--/* Checking whether it is enabled is too complicated, so just include it directly. */-->
+    <th:block th:insert="~{components/menu/template :: head}"></th:block>
+    <!--/* Menu Style end */-->
   </head>
 
   <body
-    class="transition-colors duration-300"
+    class="tw:transition-colors tw:duration-300"
     th:classappend="|text-size-${theme.config?.styles?.text_size}|"
   >
     <script th:if="${theme.config?.global?.is_i18n_menu_show}">
@@ -949,10 +961,10 @@
                     isBottomSidebarContent = ${isBottomSidebarContent}
                   )}"
     >
-      <div class="max-width min-width content-width mx-auto px-4 sm:px-8">
+      <div class="max-width min-width content-width tw:mx-auto tw:px-4 tw:sm:px-8">
         <th:block th:replace="${navbar}"></th:block>
         <div
-          class="content index pt-16"
+          class="content index tw:pt-16"
           th:classappend="${theme.config?.styles?.is_footer_force_bottom} ? 'min-h-100vh' : '' "
         >
           <th:block th:replace="${header}"></th:block>
@@ -963,7 +975,7 @@
 
           <footer
             id="footer"
-            class="mt-auto mb-5 pt-5"
+            class="tw:mt-auto tw:mb-5 tw:pt-5"
           >
             <div class="footer-left">
               <!--/* 这里不能使用自闭合标签，否则在经过 html minify 处理后会变成 <halo:footer> ，无法正常注入 */-->
@@ -984,7 +996,7 @@
                                and pluginFinder.available('extra-api', '3.*'))}"
                   >
                     <span
-                      class="iconify"
+                      class="tw:iconify"
                       th:style="|--svg:url('${item?.icon.value}')|"
                       th:if="${item?.icon != null and item?.icon != ''}"
                     ></span>
@@ -1090,7 +1102,7 @@
               th:if="${theme.config?.styles?.is_footer_menu_show}"
             >
               <ul>
-                <th:block th:insert="~{components/common/template :: base-menu}"></th:block>
+                <th:block th:insert="~{components/menu/template :: base-menu}"></th:block>
               </ul>
             </div>
           </footer>

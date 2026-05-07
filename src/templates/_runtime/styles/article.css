@@ -12,7 +12,7 @@ article {
 
       & * {
         color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
-        font-size: var(--text-sm);
+        font-size: var(--tw-text-sm);
       }
     }
   }

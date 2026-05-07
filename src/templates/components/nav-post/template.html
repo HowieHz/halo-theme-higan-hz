@@ -1,47 +1,46 @@
-<!--/*-->
-<head></head>
-<body></body>
-<!--*/-->
-<th:block
-  xmlns:th="https://www.thymeleaf.org"
-  th:fragment="navbar"
->
+<head th:remove="tag">
+  <script
+    src="index.ts"
+    type="module"
+  ></script>
+</head>
+<body th:remove="tag">
   <div
     id="header-post"
-    class="fixed top-8 right-0 z-50 float-right hidden sm:block"
+    class="tw:fixed tw:top-8 tw:right-0 tw:z-50 tw:float-right tw:hidden tw:sm:block"
   >
     <!--/* only show on tablet start, display when the page is not at the top */-->
     <a
       id="top-icon-tablet"
-      class="hidden lg:hidden!"
+      class="tw:hidden tw:lg:hidden!"
       href="#"
       role="button"
       data-scroll-to-top
       th:aria-label="#{fragment.post-nav.actions.to-top-icon.aria-label}"
-      ><span class="iconify-large iconify material-symbols--keyboard-arrow-up"></span
+      ><span class="iconify-large tw:iconify tw:material-symbols--keyboard-arrow-up"></span
     ></a>
     <a
       id="toc-icon-tablet"
-      class="hidden lg:hidden!"
+      class="tw:hidden tw:lg:hidden!"
       href="#"
       role="button"
       onclick="event.preventDefault()"
       aria-expanded="false"
       aria-controls="toc-overlay-tablet"
       th:aria-label="#{fragment.post-nav.toc-icon.aria-label}"
-      ><span class="iconify-large iconify ic--baseline-toc"></span
+      ><span class="iconify-large tw:iconify tw:ic--baseline-toc"></span
     ></a>
     <!--/* only show on tablet end */-->
     <span
       id="menu"
-      class="mr-8"
+      class="tw:mr-8"
     >
-      <div class="flex items-center justify-end">
+      <div class="tw:flex tw:items-center tw:justify-end">
         <span
           id="nav"
-          class="hidden lg:block"
+          class="tw:hidden tw:lg:block"
         >
-          <th:block th:insert="~{components/common/template :: menu(showIcon=false)}"></th:block>
+          <th:block th:insert="~{components/menu/template :: menu(showIcon=false)}"></th:block>
         </span>
         <a
           id="menu-icon"
@@ -53,15 +52,15 @@
           aria-expanded="true"
           aria-controls="nav actions toc"
         >
-          <span class="iconify-middle iconify -translate-y-px material-symbols--menu"></span>
+          <span class="iconify-middle tw:iconify tw:-translate-y-px tw:material-symbols--menu"></span>
         </a>
       </div>
       <span
         id="actions"
-        class="float-right mt-8 mr-8 hidden text-right lg:block"
+        class="tw:float-right tw:mt-8 tw:mr-8 tw:hidden tw:text-right tw:lg:block"
         th:with="postCursor = ${postFinder.cursor(post.metadata?.name)}"
       >
-        <ul class="float-right block">
+        <ul class="tw:float-right tw:block">
           <li>
             <a
               th:href="@{/}"
@@ -70,7 +69,7 @@
               role="button"
               data-toggle-target="#i-home"
             >
-              <span class="iconify-large iconify mdi--home-circle"></span>
+              <span class="iconify-large tw:iconify tw:mdi--home-circle"></span>
             </a>
           </li>
           <li th:if="${postCursor.hasPrevious()}">
@@ -81,7 +80,7 @@
               role="button"
               data-toggle-target="#i-prev"
             >
-              <span class="iconify-large iconify mdi--chevron-left"></span>
+              <span class="iconify-large tw:iconify tw:mdi--chevron-left"></span>
             </a>
           </li>
 
@@ -93,11 +92,11 @@
               role="button"
               data-toggle-target="#i-next"
             >
-              <span class="iconify-large iconify ic--round-chevron-right"></span>
+              <span class="iconify-large tw:iconify tw:ic--round-chevron-right"></span>
             </a>
           </li>
           <!--/* only show to top button on desktop */-->
-          <li class="hidden lg:inline-block">
+          <li class="tw:hidden tw:lg:inline-block">
             <a
               class="icon"
               href="#"
@@ -106,11 +105,11 @@
               role="button"
               data-toggle-target="#i-top"
             >
-              <span class="iconify-large iconify material-symbols--keyboard-arrow-up"></span>
+              <span class="iconify-large tw:iconify tw:material-symbols--keyboard-arrow-up"></span>
             </a>
           </li>
           <!--/* only show toc button on tablet */-->
-          <li class="lg:hidden">
+          <li class="tw:lg:hidden">
             <a
               class="icon"
               href="#"
@@ -122,7 +121,7 @@
               role="button"
               data-toggle-target="#i-toc"
             >
-              <span class="iconify-large iconify ic--baseline-toc"></span>
+              <span class="iconify-large tw:iconify tw:ic--baseline-toc"></span>
             </a>
           </li>
           <li th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}">
@@ -137,41 +136,41 @@
               aria-controls="share-list"
               data-toggle-target="#i-share"
             >
-              <span class="iconify-middle iconify mdi--share-variant-outline"></span>
+              <span class="iconify-middle tw:iconify tw:mdi--share-variant-outline"></span>
             </a>
           </li>
         </ul>
 
         <span
           id="i-prev"
-          class="info hidden"
+          class="info tw:hidden"
           th:text="#{fragment.post-nav.prev}"
         ></span>
         <span
           id="i-next"
-          class="info hidden"
+          class="info tw:hidden"
           th:text="#{fragment.post-nav.next}"
         ></span>
 
         <span
           id="i-top"
-          class="info hidden"
+          class="info tw:hidden"
           th:text="#{fragment.post-nav.toTop}"
         ></span>
         <span
           id="i-toc"
-          class="info hidden"
+          class="info tw:hidden"
           th:text="#{fragment.post-nav.toc}"
         ></span>
         <span
           th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
           id="i-share"
-          class="info hidden"
+          class="info tw:hidden"
           th:text="#{fragment.post-nav.sharePost}"
         ></span>
         <span
           id="i-home"
-          class="info hidden"
+          class="info tw:hidden"
           th:text="#{fragment.post-nav.backToHome}"
         ></span>
       </span>
@@ -179,7 +178,7 @@
       <div
         th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
         id="share-list"
-        class="clear-both pt-4 pr-8 text-right"
+        class="tw:clear-both tw:pt-4 tw:pr-8 tw:text-right"
         style="display: none"
       >
         <th:block
@@ -189,13 +188,13 @@
       </div>
       <div
         id="toc"
-        class="hidden lg:block"
+        class="tw:hidden tw:lg:block"
       ></div>
     </span>
   </div>
   <div
     id="toc-overlay-tablet"
-    class="hidden"
+    class="tw:hidden"
   >
     <div id="toc-overlay-backdrop"></div>
     <div id="toc-overlay-content">
@@ -208,10 +207,10 @@
           onclick="event.preventDefault()"
           th:aria-label="#{fragment.post-nav.close-toc.aria-label}"
         >
-          <span class="iconify-large iconify ic--baseline-close"></span>
+          <span class="iconify-large tw:iconify tw:ic--baseline-close"></span>
         </a>
       </div>
       <div id="toc-tablet"></div>
     </div>
   </div>
-</th:block>
+</body>

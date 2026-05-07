@@ -6,7 +6,7 @@
     head = ~{:: head},
     content = ~{:: body}, 
     header = ~{}, 
-    navbar = ~{components/nav-page-like-post-style/template :: navbar}, 
+    navbar = ~{components/nav-page-like-post-style/template :: body}, 
     language = ${#annotations.get(singlePage, 'higan.howiehz.top/page-language')}
   )}"
 >
@@ -30,6 +30,15 @@
                and haloCommentEnabled}"
       th:insert="~{components/halo-comment-widget/template :: head}"
     ></th:block>
+    <th:block
+      th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
+      th:insert="~{components/theme-toggle-button/template :: head}"
+    ></th:block>
+    <th:block
+      th:if="${theme.config?.post_styles?.is_show_footer_nav}"
+      th:insert="~{components/footer-nav-page-like-post-style/template :: head}"
+    ></th:block>
+    <th:block th:insert="~{components/nav-page-like-post-style/template :: head}"></th:block>
   </head>
   <body th:remove="tag">
     <th:block
@@ -58,20 +67,23 @@
       <header>
         <h1>
           <th:block th:text="${singlePage.spec?.title}">标题替换位</th:block
-          ><th:block th:replace="~{components/common/template :: theme-toggle-button}"></th:block>
+          ><th:block
+            th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
+            th:insert="~{components/theme-toggle-button/template :: body}"
+          ></th:block>
         </h1>
         <div class="meta">
           <!--/* 预计阅读时长 
           inline-block 保证图标和数字在一行 */-->
           <span
-            class="inline-block"
+            class="tw:inline-block"
             th:if="${theme.config?.custom_page_styles?.is_show_post_estimated_reading_time}"
             th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                    ? extraApiStatsFinder.getContentWordCount(singlePage.content?.content)
                                    : #strings.length(singlePage.content?.content) / 2 }"
             th:title="#{page.post.estimated-reading-time(#{common.words(${wordCount})})}"
           >
-            <span class="iconify mdi--clock-outline"></span>
+            <span class="tw:iconify tw:mdi--clock-outline"></span>
             <span
               class="readtime"
               th:text="#{common.min(${#numbers.formatDecimal(wordCount * 1.0 / 450, 1, 1) + '~' + #numbers.formatDecimal(wordCount * 1.0 / 350, 1, 1)})}"
@@ -83,14 +95,14 @@
           <!--/* 字数统计 
           inline-block 保证图标和数字在一行 */-->
           <span
-            class="inline-block"
+            class="tw:inline-block"
             th:if="${theme.config?.custom_page_styles?.is_show_post_word_count}"
             th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                    ? extraApiStatsFinder.getContentWordCount(singlePage.content?.content)
                                    : #strings.length(singlePage.content?.content) / 2 }"
             th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
           >
-            <span class="iconify fluent--text-edit-style-character-a-32-regular"></span>
+            <span class="tw:iconify tw:mdi--format-text"></span>
             <span
               class="word-count"
               th:text="${wordCount}"
@@ -101,7 +113,7 @@
       </header>
 
       <div
-        class="content flex-auto"
+        class="content tw:flex-auto"
         itemprop="articleBody"
         th:utext="${singlePage.content?.content}"
       >
@@ -109,7 +121,7 @@
       </div>
       <hr
         th:if="${theme.config?.custom_page_styles?.is_dividing_line_at_the_end_of_content_show}"
-        class="divide my-10"
+        class="divide tw:my-10"
       />
       <div
         class="post-comment"
@@ -123,7 +135,10 @@
         ></halo:comment>
       </div>
     </article>
-    <div th:replace="~{components/footer-nav-page-like-post-style/template :: footerNav}"></div>
+    <th:block
+      th:if="${theme.config?.post_styles?.is_show_footer_nav}"
+      th:insert="~{components/footer-nav-page-like-post-style/template :: body}"
+    ></th:block>
     <script type="module">
       import { isMobile } from "@runtime/scripts/device.ts";
       import { initTOC } from "@runtime/scripts/toc.ts";

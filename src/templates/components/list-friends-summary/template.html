@@ -10,26 +10,26 @@
   th:remove="tag"
   th:fragment="body(friends, pageTemplateName)"
 >
-  <section class="friends-list-summary flex flex-auto flex-col">
-    <div class="flex flex-auto flex-col space-y-10">
+  <section class="friends-list-summary tw:flex tw:flex-auto tw:flex-col">
+    <div class="tw:flex tw:flex-auto tw:flex-col tw:space-y-10">
       <th:block
         th:each="friend : ${friends.items}"
         th:with="spec = ${friend.spec}"
       >
-        <div class="grid grid-cols-1 md:grid-cols-4 md:items-baseline">
-          <div class="group relative flex flex-col md:col-span-3">
-            <h2 class="color-text static m-0 text-base font-semibold tracking-tight">
+        <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-4 tw:md:items-baseline">
+          <div class="group tw:relative tw:flex tw:flex-col tw:md:col-span-3">
+            <h2 class="color-text tw:static tw:m-0 tw:text-base tw:font-semibold tw:tracking-tight">
               <div
-                class="friend-card-hover absolute -inset-x-4 -inset-y-2 z-0 opacity-0 sm:-inset-x-6 sm:rounded-2xl"
+                class="friend-card-hover tw:absolute tw:-inset-x-4 tw:-inset-y-2 tw:z-0 tw:opacity-0 tw:sm:-inset-x-6 tw:sm:rounded-2xl"
               ></div>
               <a
                 th:href="@{${spec.postLink}}"
                 target="_blank"
                 rel="noopener"
               >
-                <span class="absolute -inset-x-4 -inset-y-2 z-20 sm:-inset-x-6 sm:rounded-2xl"></span>
+                <span class="tw:absolute tw:-inset-x-4 tw:-inset-y-2 tw:z-20 tw:sm:-inset-x-6 tw:sm:rounded-2xl"></span>
                 <span
-                  class="relative z-10"
+                  class="tw:relative tw:z-10"
                   th:text="${spec.title}"
                   >文章标题替换位</span
                 >
@@ -42,14 +42,14 @@
                            and theme.config?.index_styles?.is_show_friend_pubdate)
                        or (#strings.equals(pageTemplateName, 'friends')
                            and theme.config?.friends_page_styles?.is_show_friend_pubdate)}"
-              class="color-base-content-80 relative z-10 order-first mb-3 flex items-center pl-3.5 text-sm md:hidden"
+              class="color-base-content-80 tw:relative tw:z-10 tw:order-first tw:mb-3 tw:flex tw:items-center tw:pl-3.5 tw:text-sm tw:md:hidden"
               th:datetime="${#temporals.format(spec.pubDate, 'yyyy-MM-dd')}"
             >
               <span
-                class="absolute inset-y-0 left-0 flex items-center"
+                class="tw:absolute tw:inset-y-0 tw:left-0 tw:flex tw:items-center"
                 aria-hidden="true"
               >
-                <span class="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500"></span>
+                <span class="tw:h-4 tw:w-0.5 tw:rounded-full tw:bg-zinc-200 tw:dark:bg-zinc-500"></span>
               </span>
               <th:block th:text="${#temporals.format(spec.pubDate, 'MMMM dd yyyy')}"></th:block>
             </time>
@@ -60,7 +60,7 @@
                            and theme.config?.index_styles?.is_show_friend_author)
                        or (#strings.equals(pageTemplateName, 'friends')
                            and theme.config?.friends_page_styles?.is_show_friend_author)}"
-              class="friend-author color-time relative z-20 mt-0.5 mb-0 flex items-center text-sm"
+              class="friend-author color-time tw:relative tw:z-20 tw:mt-0.5 tw:mb-0 tw:flex tw:items-center tw:text-sm"
             >
               <a
                 th:if="${!(#strings.equals(pageTemplateName, 'index')
@@ -72,12 +72,12 @@
                 th:href="@{${spec.authorUrl}}"
                 target="_blank"
                 rel="noopener"
-                class="mr-2"
+                class="tw:mr-2"
               >
                 <img
                   th:src="${spec.logo}"
                   th:alt="${spec.author}"
-                  class="friend-author-avatar h-6 w-6 rounded-full"
+                  class="friend-author-avatar tw:h-6 tw:w-6 tw:rounded-full"
                   loading="lazy"
                 />
               </a>
@@ -110,7 +110,7 @@
                                         : '3')}"
             >
               <p
-                class="color-base-content-80 relative z-10 mt-2 mb-0 p-0 text-sm"
+                class="color-base-content-80 tw:relative tw:z-10 tw:mt-2 tw:mb-0 tw:p-0 tw:text-sm"
                 th:text="${spec.description}"
                 th:classappend="|${max_lines == '1' ? 'v-line-clamp-1' : ''} ${max_lines == '2' ? 'v-line-clamp-2' : ''} ${max_lines == '3' ? 'v-line-clamp-3' : ''} ${max_lines == '4' ? 'v-line-clamp-4' : ''} ${max_lines == '5' ? 'v-line-clamp-5' : ''}|"
               >
@@ -125,7 +125,7 @@
                        or (#strings.equals(pageTemplateName, 'friends')
                            and theme.config?.friends_page_styles?.is_show_friend_permalink_text)}"
               aria-hidden="true"
-              class="color-primary relative z-10 mt-4 flex items-center text-sm font-medium"
+              class="color-primary tw:relative tw:z-10 tw:mt-4 tw:flex tw:items-center tw:text-sm tw:font-medium"
               th:text="#{page.friends.postListPermalinkText}"
             >
               阅读全文
@@ -138,7 +138,7 @@
                          and theme.config?.index_styles?.is_show_friend_pubdate)
                      or (#strings.equals(pageTemplateName, 'friends')
                          and theme.config?.friends_page_styles?.is_show_friend_pubdate)}"
-            class="color-base-content-80 relative z-10 order-first mt-1 mb-3 hidden items-center text-sm md:flex"
+            class="color-base-content-80 tw:relative tw:z-10 tw:order-first tw:mt-1 tw:mb-3 tw:hidden tw:items-center tw:text-sm tw:md:flex"
             th:datetime="${#temporals.format(spec.pubDate, 'yyyy-MM-dd')}"
             th:text="${#temporals.format(spec.pubDate, 'MMMM dd yyyy')}"
           >

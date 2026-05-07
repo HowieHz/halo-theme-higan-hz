@@ -10,8 +10,8 @@
 </head>
 <body th:remove="tag">
   <!--/* content(posts, showPagination) */-->
-  <section class="simple-post-list flex flex-auto flex-col">
-    <ul class="common-post-list flex-auto">
+  <section class="simple-post-list tw:flex tw:flex-auto tw:flex-col">
+    <ul class="common-post-list tw:flex-auto">
       <th:block th:each="post : ${posts}">
         <th:block th:if="${#annotations.getOrDefault(post, 'higan.howiehz.top/show-in-post-list', 'true') == 'true'}">
           <li class="post-item">
@@ -42,7 +42,7 @@
             </div>
             <span class="post-item-content">
               <span
-                class="iconify-middle color-accent iconify typcn--pin-outline"
+                class="iconify-middle color-accent tw:iconify tw:typcn--pin-outline"
                 th:if="${post.spec.pinned
                          and theme.config?.index_styles?.is_pin_icon_show
                          and theme.config?.index_styles?.pin_icon_position == 'left'}"
@@ -54,15 +54,15 @@
               >
               <th:block th:if="${theme.config?.index_styles?.is_show_post_views_in_simple_post_list}">
                 <span
-                  class="color-time relative z-10 mt-0.5 mb-0 p-0 text-sm"
+                  class="color-time tw:relative tw:z-10 tw:mt-0.5 tw:mb-0 tw:p-0 tw:text-sm"
                   th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
                 >
-                  <span class="iconify mdi--eye-outline"></span>
+                  <span class="tw:iconify tw:mdi--eye-outline"></span>
                   <span th:text="${post.stats?.visit}">文章阅读量替换位</span>
                 </span>
               </th:block>
               <span
-                class="iconify-middle color-accent iconify typcn--pin-outline"
+                class="iconify-middle color-accent tw:iconify tw:typcn--pin-outline"
                 th:if="${post.spec.pinned
                          and theme.config?.index_styles?.is_pin_icon_show
                          and theme.config?.index_styles?.pin_icon_position == 'right'}"

@@ -14,6 +14,8 @@
     "tmp/",
     ".tw-patch/",
     ".vite-inspect/",
+    "docs/.vitepress/generated/",
+    "src/generated/",
     "**/logs",
     "**/*.log",
     "**/npm-debug.log*",
@@ -150,10 +152,16 @@
     "use-isnan": "error",
     "valid-typeof": "error",
     "vue/no-arrow-functions-in-watch": "error",
+    "vue/no-deprecated-data-object-declaration": "error",
+    "vue/no-deprecated-delete-set": "error",
     "vue/no-deprecated-destroyed-lifecycle": "error",
+    "vue/no-deprecated-events-api": "error",
+    "vue/no-deprecated-model-definition": "error",
+    "vue/no-deprecated-vue-config-keycodes": "error",
     "vue/no-export-in-script-setup": "error",
     "vue/no-lifecycle-after-await": "error",
     "vue/prefer-import-from-vue": "error",
+    "vue/return-in-computed-property": "error",
     "vue/valid-define-emits": "error",
     "vue/valid-define-props": "error",
     "vue/no-multiple-slot-args": "warn",
@@ -233,7 +241,8 @@
     },
     {
       "files": [
-        "src/templates/**/*.{js,ts}",
+        "src/templates/**/*.ts",
+        "src/types/**/*.d.ts",
         "docs/.vitepress/theme/**/*.ts",
         "docs/.vitepress/components/**/*.ts",
         "docs/.vitepress/utils/**/*.ts",
@@ -258,13 +267,17 @@
       "files": ["docs/.vitepress/components/**/*.vue", "docs/.vitepress/theme/**/*.vue"],
       "env": {
         "es2026": true,
-        "browser": true
+        "browser": true,
+        "vue": true
       }
     },
     {
       "files": [
         "docs/.vitepress/config.ts",
         "docs/en/config.ts",
+        "docs/.vitepress/types/node/**/*.d.ts",
+        "docs/.vitepress/scripts/**/*.ts",
+        "src/scripts/**/*.ts",
         "vite.config.ts",
         "plugins/**/*.ts",
         "eslint.config.js",

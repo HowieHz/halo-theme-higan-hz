@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": ["src/templates/public/assets/**"],
+  "ignorePatterns": ["src/generated/**", "src/templates/public/assets/**", "docs/.vitepress/generated/**"],
   "jsdoc": {},
   "overrides": [
     {
@@ -16,6 +16,6 @@
     "sortScripts": true
   },
   "sortTailwindcss": {
-    "stylesheet": "./src/templates/_runtime/global/tailwindcss/styles.css"
+    "stylesheet": "./src/templates/_runtime/global/styles.css"
   }
 }

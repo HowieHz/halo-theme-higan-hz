@@ -3,9 +3,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "docs:build": "vitepress build",
-    "docs:preview": "pnpm run docs:build && vitepress preview",
-    "docs:watch": "vitepress dev"
+    "build": "vitepress build",
+    "generate:preview-css": "node --experimental-strip-types .vitepress/scripts/generate-preview-css.ts",
+    "prebuild": "pnpm run prepare-assets",
+    "prepare-assets": "pnpm --dir .. run build:theme-preview-for-docs && pnpm run generate:preview-css",
+    "prepreview": "pnpm run prepare-assets",
+    "preview": "pnpm run build && vitepress preview",
+    "prewatch": "pnpm run prepare-assets",
+    "watch": "vitepress dev"
   },
   "dependencies": {
     "chart.js": "^4.5.1",
@@ -17,7 +22,6 @@
     "@whyframe/core": "^0.2.0",
     "@whyframe/vue": "^0.2.0",
     "browserslist": "^4.28.2",
-    "less": "^4.6.4",
     "lightningcss": "^1.32.0",
     "pagefind": "^1.5.2",
     "vitepress": "2.0.0-alpha.17",

@@ -1,3 +1,11 @@
+@reference "../../_runtime/global/styles.css";
+/* stylelint-disable-next-line no-invalid-position-at-import-rule, at-rule-prelude-no-invalid -- Tailwind CSS v4 @import prelude syntax after @reference */
+@import "tailwindcss/utilities.css" layer(utilities) source(".") prefix(tw);
+/* stylelint-disable at-rule-prelude-no-invalid -- Tailwind @source not uses custom prelude syntax */
+@source not "./README.md";
+@source not "./index.ts";
+/* stylelint-enable at-rule-prelude-no-invalid */
+
 /* 朋友圈文章列表样式 */
 .friends-list-summary .group:hover .friend-card-hover {
   background: color-mix(in oklab, var(--color-base-content) 5%, var(--color-base-100));
