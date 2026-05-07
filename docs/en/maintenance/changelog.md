@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.66.5] - 2026-05-08
+
 ### 🐛 Bug Fixes
 
 - Fixed a visual inconsistency in the RSS icons on the home, author, category, and tag pages.
@@ -1978,7 +1980,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.4...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.5...HEAD
+[1.66.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.4...v1.66.5
 [1.66.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.3...v1.66.4
 [1.66.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.2...v1.66.3
 [1.66.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.1...v1.66.2
