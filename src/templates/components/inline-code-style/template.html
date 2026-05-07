@@ -1,9 +1,8 @@
-<head th:remove="tag">
+<head th:remove="tag" th:if="${theme.config?.styles?.inline_code_style != 'dotted-border'}">
   <!--/*/
   <style
     th:inline="css"
     th:with="inlineCodeStyle = ${theme.config?.styles?.inline_code_style}"
-    th:if="${inlineCodeStyle != 'dotted-border'}"
   >
     @layer base {
       :not(pre) > code {
