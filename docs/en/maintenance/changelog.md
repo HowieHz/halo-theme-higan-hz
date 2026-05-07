@@ -91,6 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🛠️ Miscellaneous Chores
 
 - Updated dependencies.
+- Made the `default` and `full` theme packages share the same `full` build output, splitting only at packaging time for the fully precompressed and default variants.
 
 ## [1.64.0] - 2026-04-21
 

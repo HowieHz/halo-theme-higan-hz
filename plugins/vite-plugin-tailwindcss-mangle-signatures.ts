@@ -246,22 +246,114 @@ function normalizeReferencedBundleFileName(reference: string): string {
   return reference.split(/[?#]/u, 1)[0] ?? reference;
 }
 
-/**
- * 先统一抓出所有 `<script ...>...</script>`，再做属性级判定。
- *
- * 这样不会因为属性顺序、换行、`th:*`、`data-*` 之类模板属性而漏掉目标内联脚本。
- */
-const INLINE_SCRIPT_TAG_REGEX = /<script\b([^>]*)>([\s\S]*?)<\/script>/gimu;
+/** 统一读取 HTML 属性名，避免把 `data-src` / `data-type` 误判成目标属性。 */
+function collectHtmlAttributeNames(attributesText: string): Set<string> {
+  const attributeNames = new Set<string>();
+  const attributeRegex = /([^\s"'=<>`/]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/gmu;
+
+  for (const match of attributesText.matchAll(attributeRegex)) {
+    const [attributeName = ""] = match;
+
+    if (attributeName !== "") {
+      attributeNames.add(attributeName.toLowerCase());
+    }
+  }
+
+  return attributeNames;
+}
+
+/** 找到 `<script ...>` 的结束 `>`，并跳过属性值里的 `>`。 */
+function findTagEnd(sourceText: string, startIndex: number): number {
+  let quote: string | null = null;
+
+  for (let index = startIndex; index < sourceText.length; index++) {
+    const currentChar = sourceText[index];
+
+    if (quote !== null) {
+      if (currentChar === quote) {
+        quote = null;
+      }
+      continue;
+    }
+
+    if (currentChar === "'" || currentChar === '"') {
+      quote = currentChar;
+      continue;
+    }
+
+    if (currentChar === ">") {
+      return index;
+    }
+  }
+
+  return -1;
+}
+
+interface InlineScriptTagMatch {
+  attributesText: string;
+  closeTagEndIndex: number;
+  contentText: string;
+  endIndex: number;
+  startIndex: number;
+}
+
+/** 从源文本里找下一个 `<script>` 标签，只接收真正的脚本节点。 */
+function findNextInlineScriptTag(sourceText: string, fromIndex: number): InlineScriptTagMatch | null {
+  const openTagStartIndex = sourceText.indexOf("<script", fromIndex);
+
+  if (openTagStartIndex === -1) {
+    return null;
+  }
+
+  const openTagNameEndIndex = openTagStartIndex + "<script".length;
+  const openTagEndIndex = findTagEnd(sourceText, openTagNameEndIndex);
+
+  if (openTagEndIndex === -1) {
+    return null;
+  }
+
+  const closeTagStartIndex = sourceText.toLowerCase().indexOf("</script>", openTagEndIndex + 1);
+
+  if (closeTagStartIndex === -1) {
+    return null;
+  }
+
+  return {
+    attributesText: sourceText.slice(openTagNameEndIndex, openTagEndIndex),
+    closeTagEndIndex: closeTagStartIndex + "</script>".length,
+    contentText: sourceText.slice(openTagEndIndex + 1, closeTagStartIndex),
+    endIndex: closeTagStartIndex + "</script>".length,
+    startIndex: openTagStartIndex,
+  };
+}
+
+/** 去掉 HTML 里的脚本体，避免把 JS 字符串里的 `class="..."` 误当成真实 HTML class。 */
+function stripInlineScriptsFromHtml(sourceText: string): string {
+  let strippedSourceText = "";
+  let currentIndex = 0;
+
+  while (true) {
+    const inlineScriptMatch = findNextInlineScriptTag(sourceText, currentIndex);
+
+    if (inlineScriptMatch === null) {
+      return strippedSourceText + sourceText.slice(currentIndex);
+    }
+
+    strippedSourceText += sourceText.slice(currentIndex, inlineScriptMatch.startIndex);
+    currentIndex = inlineScriptMatch.endIndex;
+  }
+}
 
 /** 判断某个 `<script>` 是否属于允许参与改写的两种内联脚本形态。 */
 function isEligibleInlineScript(attributesText: string): boolean {
-  if (/\bsrc\s*=/imu.test(attributesText)) {
+  const attributeNames = collectHtmlAttributeNames(attributesText);
+
+  if (attributeNames.has("src")) {
     return false;
   }
 
-  const hasTypeAttribute = /\btype\s*=/imu.test(attributesText);
-  const hasModuleType = /\btype\s*=\s*(?:"module"|'module'|module)\b/imu.test(attributesText);
-  const hasViteIgnore = /\bvite-ignore\b/imu.test(attributesText);
+  const hasTypeAttribute = attributeNames.has("type");
+  const hasViteIgnore = attributeNames.has("vite-ignore");
 
   // 只处理两类：
   // 1. 经典内联脚本：`<script ...>`，允许带其他模板属性，但不能声明 `type=...`
@@ -270,15 +362,16 @@ function isEligibleInlineScript(attributesText: string): boolean {
     return true;
   }
 
-  return hasModuleType && hasViteIgnore;
+  return hasViteIgnore && /\btype\s*=\s*(?:"module"|'module'|module)\b/imu.test(attributesText);
 }
 
 /** 提取 HTML 中每个 `class=""` 属性里的 class 组，供同标签协同选 bucket 使用。 */
 function collectHtmlClassGroups(sourceText: string): string[][] {
   const classGroups: string[][] = [];
+  const safeSourceText = stripInlineScriptsFromHtml(sourceText);
   const classAttributeRegex = /(?:^|[\s<])class\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/gmu;
 
-  for (const match of sourceText.matchAll(classAttributeRegex)) {
+  for (const match of safeSourceText.matchAll(classAttributeRegex)) {
     const [, doubleQuotedValue, singleQuotedValue, bareValue] = match;
     const rawClassValue = doubleQuotedValue ?? singleQuotedValue ?? bareValue ?? "";
     const classNames = rawClassValue.split(/\s+/u).filter((className) => className !== "");
@@ -297,22 +390,43 @@ function rewriteEligibleInlineScriptsInHtml(
   fileName: string,
   mapping: ReadonlyMap<string, string>,
 ): string {
-  return sourceText.replace(INLINE_SCRIPT_TAG_REGEX, (wholeMatch, attributesText: string, scriptContent: string) => {
-    if (!isEligibleInlineScript(attributesText)) {
-      return wholeMatch;
+  let rewrittenSourceText = "";
+  let currentIndex = 0;
+
+  while (true) {
+    const inlineScriptMatch = findNextInlineScriptTag(sourceText, currentIndex);
+
+    if (inlineScriptMatch === null) {
+      return rewrittenSourceText + sourceText.slice(currentIndex);
     }
 
-    const rewrittenScript = jsHandler(scriptContent, {
+    const { attributesText, contentText, endIndex, startIndex } = inlineScriptMatch;
+    rewrittenSourceText += sourceText.slice(currentIndex, startIndex);
+
+    if (!isEligibleInlineScript(attributesText)) {
+      rewrittenSourceText += sourceText.slice(startIndex, endIndex);
+      currentIndex = endIndex;
+      continue;
+    }
+
+    const rewrittenScript = jsHandler(contentText, {
       ctx: createBucketContext(mapping),
       id: `${fileName}#inline-script`,
     }).code;
 
-    if (rewrittenScript === scriptContent) {
-      return wholeMatch;
+    if (rewrittenScript === contentText) {
+      rewrittenSourceText += sourceText.slice(startIndex, endIndex);
+      currentIndex = endIndex;
+      continue;
     }
 
-    return wholeMatch.replace(scriptContent, rewrittenScript);
-  });
+    rewrittenSourceText += sourceText.slice(startIndex, startIndex + "<script".length);
+    rewrittenSourceText += attributesText;
+    rewrittenSourceText += ">";
+    rewrittenSourceText += rewrittenScript;
+    rewrittenSourceText += "</script>";
+    currentIndex = endIndex;
+  }
 }
 
 /**
