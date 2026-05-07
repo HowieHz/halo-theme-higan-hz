@@ -66,15 +66,23 @@ jobs:
         if: inputs.version_override != ''
         run: node .github/scripts/update-theme-version.js "${{ inputs.version_override }}"
 
-      - name: Build Default
-        run: pnpm build
+      - name: Build Full
+        run: pnpm build:full
+
+      - name: Prepare Default Templates
+        id: default-templates
+        shell: bash
+        run: |
+          DEFAULT_TEMPLATES_DIR="$RUNNER_TEMP/templates-default"
+          rm -rf "$DEFAULT_TEMPLATES_DIR"
+          mkdir -p "$DEFAULT_TEMPLATES_DIR"
+          cp -a "$GITHUB_WORKSPACE/templates/." "$DEFAULT_TEMPLATES_DIR/"
+          find "$DEFAULT_TEMPLATES_DIR" -type f \( -name '*.gz' -o -name '*.zst' \) -delete
+          echo "path=$DEFAULT_TEMPLATES_DIR" >> "$GITHUB_OUTPUT"
 
       - name: Pack Default
         shell: bash
-        run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$GITHUB_WORKSPACE/dist/theme-packages" "$GITHUB_WORKSPACE/templates"
-
-      - name: Build Full
-        run: pnpm build:full
+        run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$GITHUB_WORKSPACE/dist/theme-packages" "${{ steps.default-templates.outputs.path }}"
 
       - name: Pack Full
         shell: bash
