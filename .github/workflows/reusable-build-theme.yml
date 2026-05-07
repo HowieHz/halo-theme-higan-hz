@@ -69,6 +69,10 @@ jobs:
       - name: Build Full
         run: pnpm build:full
 
+      - name: Pack Full
+        shell: bash
+        run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$GITHUB_WORKSPACE/dist/theme-packages" "$GITHUB_WORKSPACE/templates" "-full-precompressed"
+
       - name: Prepare Default Templates
         id: default-templates
         shell: bash
@@ -83,10 +87,6 @@ jobs:
       - name: Pack Default
         shell: bash
         run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$GITHUB_WORKSPACE/dist/theme-packages" "${{ steps.default-templates.outputs.path }}"
-
-      - name: Pack Full
-        shell: bash
-        run: bash .github/scripts/build-theme-packages.sh "${{ inputs.include_list_path }}" "$GITHUB_WORKSPACE/dist/theme-packages" "$GITHUB_WORKSPACE/templates" "-full-precompressed"
 
       - name: Build Tiny
         run: pnpm build:tiny
