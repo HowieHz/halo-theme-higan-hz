@@ -256,7 +256,7 @@
     {
       "files": ["src/templates/public/assets/qrcode.html"],
       "globals": {
-        "QRious": "readonly"
+        "QRCode": "readonly"
       },
       "env": {
         "es2026": true,
