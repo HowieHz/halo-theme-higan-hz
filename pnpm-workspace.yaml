@@ -9,3 +9,4 @@ allowBuilds:
   esbuild: true
   unrs-resolver: true
 shellEmulator: true
+dedupePeers: true
