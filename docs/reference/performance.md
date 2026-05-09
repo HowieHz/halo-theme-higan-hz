@@ -8,8 +8,19 @@ outline: deep
 
 <!-- markdownlint-disable MD011 -->
 <script setup lang="ts">
+import {
+  Chart as ChartJS,
+  type ChartOptions,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip
+} from 'chart.js'
 import { computed, onMounted, ref, watch } from 'vue'
-import { defineClientComponent, useData } from 'vitepress'
+import { Line as LineChart } from 'vue-chartjs'
+import { useData } from 'vitepress'
 import { decodeAuditFile, type AuditFile, type AuditPageResult, type ResourceType } from '../.vitepress/utils/page-size-audit-schema'
 import ProgressBar from '../.vitepress/components/ProgressBar.vue'
 
@@ -98,6 +109,44 @@ const selectedRangeStart = ref('')
 const selectedRangeEnd = ref('')
 let chartSettingsTransitionToken = 0
 let chartSettingsDoneTimer: ReturnType<typeof setTimeout> | null = null
+
+const exclusiveTooltipPlugin = {
+  id: 'exclusiveTooltip',
+  afterInit(chart: any) {
+    activeCharts.add(chart)
+  },
+  beforeEvent(chart: any, args: { event?: { type?: string } }) {
+    const eventType = args.event?.type
+    if (!eventType || !['mousemove', 'mouseout', 'touchstart', 'touchmove', 'click'].includes(eventType)) {
+      return
+    }
+
+    for (const otherChart of activeCharts) {
+      if (otherChart === chart) continue
+      if ((otherChart.tooltip?.getActiveElements().length ?? 0) === 0) continue
+      otherChart.tooltip?.setActiveElements([], { x: 0, y: 0 })
+      otherChart.update('none')
+    }
+
+    if (eventType === 'mouseout' && (chart.tooltip?.getActiveElements().length ?? 0) > 0) {
+      chart.tooltip?.setActiveElements([], { x: 0, y: 0 })
+      chart.update('none')
+    }
+  },
+  afterDestroy(chart: any) {
+    activeCharts.delete(chart)
+  }
+}
+
+ChartJS.register(
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  exclusiveTooltipPlugin
+)
 
 function pad2(value: number): string {
   return String(value).padStart(2, '0')
@@ -395,7 +444,7 @@ function buildChartDatasets(source: RawDatasetsState, updateLoading = false): Ch
 }
 
 // 图表选项配置（响应式，适配主题文字颜色）
-const chartOptions = computed(() => ({
+const chartOptions = computed<ChartOptions<'line'>>(() => ({
   responsive: true,
   maintainAspectRatio: false,
   animation: false,
@@ -684,61 +733,6 @@ onMounted(async () => {
   }
 })
 
-// 使用 defineClientComponent 创建 Line 图表组件
-const LineChart = defineClientComponent(async () => {
-  const chartjs = await import('chart.js')
-  const { Line } = await import('vue-chartjs')
-
-  const {
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  } = chartjs
-
-  const ChartJS = chartjs.Chart
-  const exclusiveTooltipPlugin = {
-    id: 'exclusiveTooltip',
-    afterInit(chart: typeof ChartJS.prototype) {
-      activeCharts.add(chart)
-    },
-    beforeEvent(chart: typeof ChartJS.prototype, args: { event?: { type?: string } }) {
-      const eventType = args.event?.type
-      if (!eventType || !['mousemove', 'mouseout', 'touchstart', 'touchmove', 'click'].includes(eventType)) {
-        return
-      }
-
-      for (const otherChart of activeCharts) {
-        if (otherChart === chart) continue
-        if ((otherChart.tooltip?.getActiveElements().length ?? 0) === 0) continue
-        otherChart.tooltip?.setActiveElements([], { x: 0, y: 0 })
-        otherChart.update('none')
-      }
-
-      if (eventType === 'mouseout' && (chart.tooltip?.getActiveElements().length ?? 0) > 0) {
-        chart.tooltip?.setActiveElements([], { x: 0, y: 0 })
-        chart.update('none')
-      }
-    },
-    afterDestroy(chart: typeof ChartJS.prototype) {
-      activeCharts.delete(chart)
-    }
-  }
-  
-  ChartJS.register(
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-    exclusiveTooltipPlugin
-  )
-
-  return Line
-})
 </script>
 <!-- markdownlint-enable MD011 -->
 
