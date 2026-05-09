@@ -92,6 +92,7 @@ type ChartLoadingFlags = Record<DatasetKind, boolean>
 type ChartLoadingState = Record<PageKey, ChartLoadingFlags>
 
 const axisMode = ref<AxisMode>('version')
+const activeCharts = new Set<any>()
 
 function pad2(value: number): string {
   return String(value).padStart(2, '0')
@@ -588,14 +589,42 @@ const LineChart = defineClientComponent(async () => {
   } = chartjs
 
   const ChartJS = chartjs.Chart
+  const exclusiveTooltipPlugin = {
+    id: 'exclusiveTooltip',
+    afterInit(chart: typeof ChartJS.prototype) {
+      activeCharts.add(chart)
+    },
+    beforeEvent(chart: typeof ChartJS.prototype, args: { event?: { type?: string } }) {
+      const eventType = args.event?.type
+      if (!eventType || !['mousemove', 'mouseout', 'touchstart', 'touchmove', 'click'].includes(eventType)) {
+        return
+      }
 
+      for (const otherChart of activeCharts) {
+        if (otherChart === chart) continue
+        if ((otherChart.tooltip?.getActiveElements().length ?? 0) === 0) continue
+        otherChart.tooltip?.setActiveElements([], { x: 0, y: 0 })
+        otherChart.update('none')
+      }
+
+      if (eventType === 'mouseout' && (chart.tooltip?.getActiveElements().length ?? 0) > 0) {
+        chart.tooltip?.setActiveElements([], { x: 0, y: 0 })
+        chart.update('none')
+      }
+    },
+    afterDestroy(chart: typeof ChartJS.prototype) {
+      activeCharts.delete(chart)
+    }
+  }
+  
   ChartJS.register(
     LinearScale,
     PointElement,
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    exclusiveTooltipPlugin
   )
 
   return Line
