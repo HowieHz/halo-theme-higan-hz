@@ -99,6 +99,7 @@ const datasetKinds = performanceDatasetKinds;
 
 const activeCharts = new Set<Chart>();
 const axisMode = ref<AxisMode>("version");
+const renderedAxisMode = ref<AxisMode>("version");
 const chartDatasets = ref<ChartDatasetCollection>({});
 const rawDatasets = ref<RawDatasetsState | null>(null);
 const loadingProgress = ref(0);
@@ -108,6 +109,8 @@ const chartLoadingStatus = ref<ChartLoadingState>(createChartLoadingState());
 const chartSettingsStatus = ref<ChartSettingsStatus>("idle");
 const selectedRangeStart = ref("");
 const selectedRangeEnd = ref("");
+const renderedRangeStart = ref("");
+const renderedRangeEnd = ref("");
 
 let chartSettingsTransitionToken = 0;
 let chartSettingsDoneTimer: ReturnType<typeof setTimeout> | null = null;
@@ -294,19 +297,19 @@ const resourceColors = computed<Record<ResourceType, string>>(() =>
       },
 );
 
-const rangeOptions = computed<AxisRangeOption[]>(() => {
-  if (!rawDatasets.value) return [];
+function createRangeOptions(mode: AxisMode, source: RawDatasetsState | null): AxisRangeOption[] {
+  if (!source) return [];
 
-  if (axisMode.value === "version") {
-    return rawDatasets.value.versions.map((version, index) => ({
+  if (mode === "version") {
+    return source.versions.map((version, index) => ({
       value: version,
       label: version,
       position: index,
     }));
   }
 
-  return rawDatasets.value.versions.flatMap((version, index) => {
-    const publishedAt = rawDatasets.value?.publishedAts[index] ?? 0;
+  return source.versions.flatMap((version, index) => {
+    const publishedAt = source.publishedAts[index] ?? 0;
     if (publishedAt <= 0) return [];
     return [
       {
@@ -316,7 +319,10 @@ const rangeOptions = computed<AxisRangeOption[]>(() => {
       },
     ];
   });
-});
+}
+
+const rangeOptions = computed<AxisRangeOption[]>(() => createRangeOptions(axisMode.value, rawDatasets.value));
+const renderedRangeOptions = computed<AxisRangeOption[]>(() => createRangeOptions(renderedAxisMode.value, rawDatasets.value));
 
 function getRangeOptionIndex(value: string, options: AxisRangeOption[]): number {
   return options.findIndex((option) => option.value === value);
@@ -352,14 +358,13 @@ function normalizeRangeSelection(changedField: "start" | "end" | "auto" = "auto"
   selectedRangeEnd.value = selectedRangeStart.value;
 }
 
-const selectedRangeBounds = computed(() => {
-  const options = rangeOptions.value;
+function resolveRangeBounds(startValue: string, endValue: string, options: AxisRangeOption[]) {
   if (options.length === 0) {
     return { min: 0, max: 0 };
   }
 
-  const startIndex = getRangeOptionIndex(selectedRangeStart.value, options);
-  const endIndex = getRangeOptionIndex(selectedRangeEnd.value, options);
+  const startIndex = getRangeOptionIndex(startValue, options);
+  const endIndex = getRangeOptionIndex(endValue, options);
   const safeStartIndex = startIndex === -1 ? 0 : startIndex;
   const safeEndIndex = endIndex === -1 ? options.length - 1 : endIndex;
   const minIndex = Math.min(safeStartIndex, safeEndIndex);
@@ -369,28 +374,32 @@ const selectedRangeBounds = computed(() => {
     min: options[minIndex].position,
     max: options[maxIndex].position,
   };
-});
+}
+
+const renderedRangeBounds = computed(() =>
+  resolveRangeBounds(renderedRangeStart.value, renderedRangeEnd.value, renderedRangeOptions.value),
+);
 
 const xAxisRange = computed(() => {
   if (!rawDatasets.value) {
     return { min: 0, max: 0 };
   }
 
-  return selectedRangeBounds.value;
+  return renderedRangeBounds.value;
 });
 
 function buildChartPoints(series: (number | null)[], timelineEntries: TimelineEntry[]): ChartPoint[] {
   const points = timelineEntries
     .map(({ version, publishedAt, index }) => ({
-      x: axisMode.value === "version" ? index : publishedAt,
+      x: renderedAxisMode.value === "version" ? index : publishedAt,
       y: series[index] ?? null,
       version,
       publishedAt,
     }))
-    .filter((point) => axisMode.value !== "time" || point.x > 0)
-    .filter((point) => point.x >= selectedRangeBounds.value.min && point.x <= selectedRangeBounds.value.max);
+    .filter((point) => renderedAxisMode.value !== "time" || point.x > 0)
+    .filter((point) => point.x >= renderedRangeBounds.value.min && point.x <= renderedRangeBounds.value.max);
 
-  if (axisMode.value === "time") {
+  if (renderedAxisMode.value === "time") {
     points.sort((a, b) => a.x - b.x);
   }
 
@@ -488,20 +497,20 @@ const chartOptions = computed<ChartOptions<"line">>(() => ({
       max: xAxisRange.value.max,
       title: {
         display: true,
-        text: axisMode.value === "version" ? text.value.xAxisVersion : text.value.xAxisTime,
+        text: renderedAxisMode.value === "version" ? text.value.xAxisVersion : text.value.xAxisTime,
         color: isDark.value ? "#e2e8f0" : "#2c3e50",
       },
       ticks: {
         autoSkip: true,
-        maxRotation: axisMode.value === "version" ? 45 : 0,
-        minRotation: axisMode.value === "version" ? 45 : 0,
-        stepSize: axisMode.value === "version" ? 1 : undefined,
+        maxRotation: renderedAxisMode.value === "version" ? 45 : 0,
+        minRotation: renderedAxisMode.value === "version" ? 45 : 0,
+        stepSize: renderedAxisMode.value === "version" ? 1 : undefined,
         color: isDark.value ? "#cbd5e0" : "#4a5568",
         callback: (value: number | string, index: number, ticks: { value: number | string }[]) => {
           const numericValue = parseTickTimestamp(value);
           if (numericValue === null) return "";
 
-          if (axisMode.value === "version") {
+          if (renderedAxisMode.value === "version") {
             const versionIndex = Math.round(numericValue);
             if (Math.abs(numericValue - versionIndex) > Number.EPSILON) return "";
             return rawDatasets.value?.versions[versionIndex] ?? "";
@@ -562,7 +571,14 @@ async function refreshChartDatasetsWithFeedback() {
   await nextTick();
   await waitForNextFrame();
   if (currentToken !== chartSettingsTransitionToken || !rawDatasets.value) return;
+  renderedAxisMode.value = axisMode.value;
+  renderedRangeStart.value = selectedRangeStart.value;
+  renderedRangeEnd.value = selectedRangeEnd.value;
+  await nextTick();
+  await waitForNextFrame();
+  if (currentToken !== chartSettingsTransitionToken || !rawDatasets.value) return;
   chartDatasets.value = buildChartDatasets(rawDatasets.value);
+  await nextTick();
   await waitForNextFrame();
   if (currentToken !== chartSettingsTransitionToken) return;
   chartSettingsStatus.value = "done";
@@ -742,6 +758,9 @@ onMounted(async () => {
       publishedAts,
     };
     normalizeRangeSelection("auto");
+    renderedAxisMode.value = axisMode.value;
+    renderedRangeStart.value = selectedRangeStart.value;
+    renderedRangeEnd.value = selectedRangeEnd.value;
 
     console.time("  3️⃣ Chart Data Creation");
     loadingStage.value = "chartCreation";
