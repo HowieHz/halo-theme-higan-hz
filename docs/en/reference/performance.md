@@ -128,6 +128,17 @@ function formatTimeAxisTick(timestamp: number, includeYear: boolean): string {
   return formatLocalDate(timestamp, includeYear)
 }
 
+function shouldShowYearOnTick(timestamp: number, previousTimestamp: number | null): boolean {
+  if (timestamp <= 0) return false
+  if (previousTimestamp === null || previousTimestamp <= 0) return true
+  return new Date(timestamp).getFullYear() !== new Date(previousTimestamp).getFullYear()
+}
+
+function parseTickTimestamp(value: number | string): number | null {
+  const numericValue = typeof value === 'number' ? value : Number(value)
+  return Number.isFinite(numericValue) ? numericValue : null
+}
+
 function createEmptyNumericSeries(): NumericSeries {
   return {
     document: [],
@@ -247,12 +258,6 @@ const xAxisRange = computed(() => {
   }
 })
 
-const timeAxisUsesYear = computed(() => {
-  const publishedAts = rawDatasets.value?.publishedAts.filter((timestamp) => timestamp > 0) ?? []
-  const years = new Set(publishedAts.map((timestamp) => new Date(timestamp).getFullYear()))
-  return years.size > 1
-})
-
 function buildChartPoints(series: Array<number | null>, timelineEntries: TimelineEntry[]): ChartPoint[] {
   const points = timelineEntries
     .map(({ version, publishedAt, index }) => ({
@@ -361,9 +366,9 @@ const chartOptions = computed(() => ({
         minRotation: axisMode.value === 'version' ? 45 : 0,
         stepSize: axisMode.value === 'version' ? 1 : undefined,
         color: isDark.value ? '#cbd5e0' : '#4a5568',
-        callback: (value: number | string) => {
-          const numericValue = typeof value === 'number' ? value : Number(value)
-          if (!Number.isFinite(numericValue)) return ''
+        callback: (value: number | string, index: number, ticks: Array<{ value: number | string }>) => {
+          const numericValue = parseTickTimestamp(value)
+          if (numericValue === null) return ''
 
           if (axisMode.value === 'version') {
             const index = Math.round(numericValue)
@@ -371,7 +376,8 @@ const chartOptions = computed(() => ({
             return rawDatasets.value?.versions[index] ?? ''
           }
 
-          return formatTimeAxisTick(numericValue, timeAxisUsesYear.value)
+          const previousTimestamp = index > 0 ? parseTickTimestamp(ticks[index - 1]?.value) : null
+          return formatTimeAxisTick(numericValue, shouldShowYearOnTick(numericValue, previousTimestamp))
         }
       },
       grid: {
