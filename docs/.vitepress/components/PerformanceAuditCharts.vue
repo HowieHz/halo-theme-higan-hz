@@ -19,17 +19,23 @@ import {
   type AuditFile,
   type AuditPageResult,
   type ResourceType,
+  resourceTypeEntries,
 } from "../utils/page-size-audit-schema";
 import {
-  performanceAuditText,
-  type LocaleKey,
+  performanceAuditPageEntries,
+  performanceDatasetKinds,
+  type PerformanceContentPageKey,
   type PerformanceDatasetKind,
   type PerformancePageKey,
   type PerformanceProgressStage,
+} from "./performance-audit-meta";
+import {
+  performanceAuditText,
+  type LocaleKey,
 } from "./performance-audit-text";
 import ProgressBar from "./ProgressBar.vue";
 
-type ContentPageKey = Exclude<PerformancePageKey, "average">;
+type ContentPageKey = PerformanceContentPageKey;
 type PageKey = PerformancePageKey;
 type AxisMode = "version" | "time";
 type DatasetKind = PerformanceDatasetKind;
@@ -91,34 +97,9 @@ const props = defineProps<{
 
 const { isDark } = useData();
 
-const pageEntries = [
-  { key: "home", url: "/" },
-  { key: "archives", url: "/archives" },
-  { key: "post", url: "/archives/hello-halo" },
-  { key: "tags", url: "/tags" },
-  { key: "tagDetail", url: "/tags/halo" },
-  { key: "categories", url: "/categories" },
-  { key: "categoryDetail", url: "/categories/default" },
-  { key: "author", url: "/authors/admin" },
-  { key: "about", url: "/about" },
-] as const satisfies readonly { key: ContentPageKey; url: string }[];
-
-const resourceTypes = [
-  "document",
-  "font",
-  "script",
-  "stylesheet",
-  "image",
-  "fetch",
-  "other",
-  "total",
-] as const satisfies readonly ResourceType[];
-const datasetKinds = [
-  "themeGzipped",
-  "themeRaw",
-  "resourcesGzipped",
-  "resourcesRaw",
-] as const satisfies readonly DatasetKind[];
+const pageEntries = performanceAuditPageEntries satisfies readonly { key: ContentPageKey; url: string }[];
+const resourceTypes = resourceTypeEntries satisfies readonly ResourceType[];
+const datasetKinds = performanceDatasetKinds satisfies readonly DatasetKind[];
 
 const activeCharts = new Set<Chart>();
 const axisMode = ref<AxisMode>("version");

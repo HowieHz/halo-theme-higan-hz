@@ -27,7 +27,7 @@ const pageUrls = [
 ] as const;
 
 const groupKeys = ["resources", "themeResources"] as const;
-const resourceTypeEntries = ["document", "font", "script", "stylesheet", "image", "fetch", "other", "total"] as const;
+export const resourceTypeEntries = ["document", "font", "script", "stylesheet", "image", "fetch", "other", "total"] as const;
 
 export type ResourceType = (typeof resourceTypeEntries)[number];
 

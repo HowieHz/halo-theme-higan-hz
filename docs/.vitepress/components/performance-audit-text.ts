@@ -1,19 +1,11 @@
 import type { ResourceType } from "../utils/page-size-audit-schema";
+import type {
+  PerformanceDatasetKind,
+  PerformancePageKey,
+  PerformanceProgressStage,
+} from "./performance-audit-meta";
 
 export type LocaleKey = "zh-CN" | "en";
-export type PerformancePageKey =
-  | "home"
-  | "archives"
-  | "post"
-  | "tags"
-  | "tagDetail"
-  | "categories"
-  | "categoryDetail"
-  | "author"
-  | "about"
-  | "average";
-export type PerformanceDatasetKind = "themeGzipped" | "themeRaw" | "resourcesGzipped" | "resourcesRaw";
-export type PerformanceProgressStage = "dataLoading" | "dataProcessing" | "chartCreation";
 
 export interface PerformanceAuditLocaleText {
   noPublishedTime: string;
