@@ -22,21 +22,21 @@ import {
   resourceTypeEntries,
 } from "../utils/page-size-audit-schema";
 import {
-  performanceAuditPageEntries,
+  performanceAuditPages,
   performanceDatasetKinds,
-  type PerformanceContentPageKey,
+  type PerformanceAuditPageKey,
   type PerformanceDatasetKind,
-  type PerformancePageKey,
+  type PerformanceAuditSectionKey,
   type PerformanceProgressStage,
-} from "./performance-audit-meta";
+} from "./performance-audit-constants";
 import {
   performanceAuditText,
   type LocaleKey,
 } from "./performance-audit-text";
 import ProgressBar from "./ProgressBar.vue";
 
-type ContentPageKey = PerformanceContentPageKey;
-type PageKey = PerformancePageKey;
+type ContentPageKey = PerformanceAuditPageKey;
+type PageKey = PerformanceAuditSectionKey;
 type AxisMode = "version" | "time";
 type DatasetKind = PerformanceDatasetKind;
 type ProgressStage = PerformanceProgressStage;
@@ -97,7 +97,7 @@ const props = defineProps<{
 
 const { isDark } = useData();
 
-const pageEntries = performanceAuditPageEntries satisfies readonly { key: ContentPageKey; url: string }[];
+const pageEntries = performanceAuditPages satisfies readonly { key: ContentPageKey; url: string }[];
 const resourceTypes = resourceTypeEntries satisfies readonly ResourceType[];
 const datasetKinds = performanceDatasetKinds satisfies readonly DatasetKind[];
 

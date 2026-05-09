@@ -1,9 +1,9 @@
 import type { ResourceType } from "../utils/page-size-audit-schema";
 import type {
   PerformanceDatasetKind,
-  PerformancePageKey,
+  PerformanceAuditSectionKey,
   PerformanceProgressStage,
-} from "./performance-audit-meta";
+} from "./performance-audit-constants";
 
 export type LocaleKey = "zh-CN" | "en";
 
@@ -26,7 +26,7 @@ export interface PerformanceAuditLocaleText {
   xAxisTime: string;
   progressLabel: string;
   loadingStages: Record<PerformanceProgressStage, string>;
-  sectionTitles: Record<PerformancePageKey, string>;
+  sectionTitles: Record<PerformanceAuditSectionKey, string>;
   datasetTitles: Record<PerformanceDatasetKind, string>;
   resourceLabels: Record<ResourceType, string>;
 }

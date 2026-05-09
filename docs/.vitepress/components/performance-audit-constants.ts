@@ -1,4 +1,4 @@
-export const performanceAuditPageEntries = [
+export const performanceAuditPages = [
   { key: "home", url: "/" },
   { key: "archives", url: "/archives" },
   { key: "post", url: "/archives/hello-halo" },
@@ -10,8 +10,8 @@ export const performanceAuditPageEntries = [
   { key: "about", url: "/about" },
 ] as const;
 
-export type PerformanceContentPageKey = (typeof performanceAuditPageEntries)[number]["key"];
-export type PerformancePageKey = PerformanceContentPageKey | "average";
+export type PerformanceAuditPageKey = (typeof performanceAuditPages)[number]["key"];
+export type PerformanceAuditSectionKey = PerformanceAuditPageKey | "average";
 
 export const performanceDatasetKinds = [
   "themeGzipped",
