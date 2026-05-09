@@ -389,7 +389,7 @@ const chartOptions = computed(() => ({
       }
     },
     tooltip: {
-      mode: 'x',
+      mode: 'index',
       intersect: false,
       backgroundColor: isDark.value ? '#2d3748' : '#ffffff',
       titleColor: isDark.value ? '#e2e8f0' : '#2c3e50',
@@ -406,7 +406,7 @@ const chartOptions = computed(() => ({
     }
   },
   interaction: {
-    mode: 'nearest',
+    mode: 'index',
     axis: 'x',
     intersect: false
   }
