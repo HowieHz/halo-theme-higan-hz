@@ -103,7 +103,16 @@ const pageEntries = [
   { key: "about", url: "/about" },
 ] as const satisfies readonly { key: ContentPageKey; url: string }[];
 
-const resourceTypes = ["document", "font", "script", "stylesheet", "image", "fetch", "other", "total"] as const;
+const resourceTypes = [
+  "document",
+  "font",
+  "script",
+  "stylesheet",
+  "image",
+  "fetch",
+  "other",
+  "total",
+] as const satisfies readonly ResourceType[];
 const datasetKinds = [
   "themeGzipped",
   "themeRaw",
