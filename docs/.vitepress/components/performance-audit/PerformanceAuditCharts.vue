@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { useData } from "vitepress";
-import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { Line as LineChart } from "vue-chartjs";
 
 import {
@@ -447,6 +447,12 @@ function buildChartDatasets(source: RawDatasetsState, updateLoading = false): Ch
   return currentChartDatasets;
 }
 
+function waitForNextFrame(): Promise<void> {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => resolve());
+  });
+}
+
 const chartOptions = computed<ChartOptions<"line">>(() => ({
   responsive: true,
   maintainAspectRatio: false,
@@ -542,7 +548,7 @@ const chartOptions = computed<ChartOptions<"line">>(() => ({
   },
 }));
 
-function refreshChartDatasetsWithFeedback() {
+async function refreshChartDatasetsWithFeedback() {
   if (!rawDatasets.value) return;
 
   if (chartSettingsDoneTimer) {
@@ -553,19 +559,18 @@ function refreshChartDatasetsWithFeedback() {
   chartSettingsStatus.value = "rendering";
   chartSettingsTransitionToken += 1;
   const currentToken = chartSettingsTransitionToken;
+  await nextTick();
+  await waitForNextFrame();
+  if (currentToken !== chartSettingsTransitionToken || !rawDatasets.value) return;
   chartDatasets.value = buildChartDatasets(rawDatasets.value);
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      if (currentToken === chartSettingsTransitionToken) {
-        chartSettingsStatus.value = "done";
-        chartSettingsDoneTimer = setTimeout(() => {
-          if (currentToken === chartSettingsTransitionToken) {
-            chartSettingsStatus.value = "idle";
-          }
-        }, 500);
-      }
-    });
-  });
+  await waitForNextFrame();
+  if (currentToken !== chartSettingsTransitionToken) return;
+  chartSettingsStatus.value = "done";
+  chartSettingsDoneTimer = setTimeout(() => {
+    if (currentToken === chartSettingsTransitionToken) {
+      chartSettingsStatus.value = "idle";
+    }
+  }, 500);
 }
 
 function getChartData(pageKey: PageKey, kind: DatasetKind): ChartSeries | null {
@@ -774,10 +779,10 @@ onBeforeUnmount(() => {
         aria-live="polite"
       >
         <span
+          v-if="chartSettingsStatus === 'rendering'"
           class="axis-mode-switch__status-icon"
           :class="{ 'axis-mode-switch__status-icon--spinning': chartSettingsStatus === 'rendering' }"
         >
-          {{ chartSettingsStatus === "rendering" ? "" : "√" }}
         </span>
         {{ chartSettingsStatus === "rendering" ? text.rendering : text.rendered }}
       </span>
