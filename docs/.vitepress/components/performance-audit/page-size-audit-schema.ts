@@ -1,8 +1,10 @@
+import { performanceAuditPages, resourceTypeEntries, type ResourceType } from "../performance-audit/shared";
+
 /**
  * Page size audit JSON extreme compact schema helpers.
  *
- * Protocol only: - root[0]: metadata -> [haloVersion, javaVersion, themeVersion, lhciVersion, generatedAt] - root[1]:
- * flat numbers -> 9 pages * 2 groups * 8 resource types * 2 stats = 288 numbers
+ * Protocol only: - root[0]: metadata -> [haloVersion, javaVersion, themeVersion, lhciVersion, generatedAt, publishedAt]
+ * - root[1]: flat numbers -> 9 pages * 2 groups * 8 resource types * 2 stats = 288 numbers
  *
  * Fixed page order: /, /archives, /archives/hello-halo, /tags, /tags/halo, /categories, /categories/default,
  * /authors/admin, /about
@@ -14,22 +16,9 @@
  * Stat order: transferSize, resourceSize
  */
 
-const pageUrls = [
-  "/",
-  "/archives",
-  "/archives/hello-halo",
-  "/tags",
-  "/tags/halo",
-  "/categories",
-  "/categories/default",
-  "/authors/admin",
-  "/about",
-] as const;
+const pageUrls = performanceAuditPages.map(({ url }) => url) as (typeof performanceAuditPages)[number]["url"][];
 
 const groupKeys = ["resources", "themeResources"] as const;
-const resourceTypeEntries = ["document", "font", "script", "stylesheet", "image", "fetch", "other", "total"] as const;
-
-export type ResourceType = (typeof resourceTypeEntries)[number];
 
 export interface AuditResourceStat {
   transferSize: number;
@@ -51,6 +40,7 @@ export interface AuditFile {
     themeVersion: string;
     lhciVersion: string;
     generatedAt: string;
+    publishedAt: number;
   };
   timestamp: string;
   results: AuditPageResult[];
@@ -86,6 +76,7 @@ function decodeMetadata(raw: unknown): AuditFile["metadata"] {
     themeVersion: asString(value[2]),
     lhciVersion: asString(value[3]),
     generatedAt: asString(value[4]),
+    publishedAt: asFiniteNumber(value[5]),
   };
 }
 

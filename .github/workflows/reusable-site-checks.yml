@@ -39,6 +39,11 @@ on:
         type: string
         default: "page-size-report"
         description: "Base filename for the generated report"
+      version_published_at:
+        required: false
+        type: string
+        default: ""
+        description: "Version published time used for release-based audit reports"
       json_only:
         required: false
         type: boolean
@@ -849,6 +854,7 @@ jobs:
           THEME_VERSION: ${{ inputs.theme_ref }}
           GITHUB_SHA: ${{ github.sha }}
           LIGHTHOUSE_CI_VERSION: ${{ env.LIGHTHOUSE_CI_VERSION }}
+          VERSION_PUBLISHED_AT: ${{ inputs.version_published_at }}
           REF_NAME: ${{ inputs.ref_name }}
         run: |
           if [ ! -d "./.lighthouseci" ]; then

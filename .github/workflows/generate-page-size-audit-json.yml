@@ -42,6 +42,7 @@ jobs:
       summary_start_version: ${{ steps.get-versions.outputs.summary_start_version }}
       summary_end_version: ${{ steps.get-versions.outputs.summary_end_version }}
       halo_version: ${{ steps.get-versions.outputs.halo_version }}
+      version_published_at_map: ${{ steps.get-versions.outputs.version_published_at_map }}
 
     steps:
       - name: Checkout
@@ -146,6 +147,10 @@ jobs:
               return versionA.patch - versionB.patch;
             });
 
+            const versionPublishedAtMap = Object.fromEntries(
+              stableReleases.map((release) => [release.tag_name, release.published_at || release.created_at || ''])
+            );
+
             // Find the version range
             const resolvedStartVersion = startVersion === 'latest' ? stableReleases.at(-1)?.tag_name ?? '' : startVersion;
             const resolvedEndVersion = endVersion === 'latest' || endVersion === '' ? stableReleases.at(-1)?.tag_name ?? '' : endVersion;
@@ -170,6 +175,7 @@ jobs:
             core.setOutput('versions', JSON.stringify(versionList));
             core.setOutput('summary_start_version', formatVersion(versionList[0] || ''));
             core.setOutput('summary_end_version', formatVersion(versionList[versionList.length - 1] || ''));
+            core.setOutput('version_published_at_map', JSON.stringify(versionPublishedAtMap));
 
       - name: Write versions summary
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # https://github.com/actions/github-script/releases/tag/v9.0.0
@@ -198,6 +204,7 @@ jobs:
       theme_ref: ${{ matrix.version }}
       ref_name: ${{ matrix.version }}
       halo_version: ${{ needs.get-versions.outputs.halo_version }}
+      version_published_at: ${{ fromJson(needs.get-versions.outputs.version_published_at_map)[matrix.version] || '' }}
       output_dir: ".github/page_size_audit_results"
       output_filename: ${{ matrix.version }}
       json_only: true

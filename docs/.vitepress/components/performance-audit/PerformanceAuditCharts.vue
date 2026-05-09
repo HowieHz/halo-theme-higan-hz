@@ -1,0 +1,1065 @@
+<script setup lang="ts">
+import {
+  Chart as ChartJS,
+  type Chart,
+  type ChartOptions,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+} from "chart.js";
+import { useData } from "vitepress";
+import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from "vue";
+import { Line as LineChart } from "vue-chartjs";
+
+import { decodeAuditFile, type AuditFile, type AuditPageResult } from "./page-size-audit-schema";
+import ProgressBar from "./ProgressBar.vue";
+import {
+  performanceAuditPages,
+  performanceAuditText,
+  performanceDatasetKinds,
+  resourceTypeEntries,
+  type LocaleKey,
+  type PerformanceDatasetKind,
+  type PerformanceAuditSectionKey,
+  type PerformanceProgressStage,
+  type ResourceType,
+} from "./shared";
+
+type PageKey = PerformanceAuditSectionKey;
+type AxisMode = "version" | "time";
+type DatasetKind = PerformanceDatasetKind;
+type ProgressStage = PerformanceProgressStage;
+type ChartSettingsStatus = "idle" | "rendering" | "done";
+interface TimelineEntry {
+  version: string;
+  publishedAt: number;
+  index: number;
+}
+interface ChartPoint {
+  x: number;
+  y: number | null;
+  version: string;
+  publishedAt: number;
+}
+interface LoadedAuditEntry {
+  version: string;
+  publishedAt: number;
+  data: AuditFile;
+}
+interface IndexedAuditEntry {
+  version: string;
+  publishedAt: number;
+  resultsByUrl: Map<string, AuditPageResult>;
+}
+type NumericSeries = Record<ResourceType, (number | null)[]>;
+type PageDatasets = Record<DatasetKind, NumericSeries>;
+type DatasetCollection = Record<PageKey, PageDatasets>;
+interface ChartSeries {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: ChartPoint[];
+    borderColor: string;
+    backgroundColor: string;
+    tension: number;
+    borderWidth: number;
+  }[];
+}
+type ChartPageData = Record<DatasetKind, ChartSeries>;
+type ChartDatasetCollection = Partial<Record<PageKey, ChartPageData>>;
+interface RawDatasetsState {
+  datasets: DatasetCollection;
+  versions: string[];
+  publishedAts: number[];
+}
+interface AxisRangeOption {
+  value: string;
+  label: string;
+  position: number;
+}
+interface ChartConfig {
+  axisMode: AxisMode;
+  rangeStart: string;
+  rangeEnd: string;
+}
+type ChartLoadingFlags = Record<DatasetKind, boolean>;
+type ChartLoadingState = Record<PageKey, ChartLoadingFlags>;
+
+const props = defineProps<{
+  locale: LocaleKey;
+}>();
+
+const { isDark } = useData();
+
+const pageEntries = performanceAuditPages;
+const resourceTypes = resourceTypeEntries;
+const datasetKinds = performanceDatasetKinds;
+
+const activeCharts = new Set<Chart>();
+const chartDatasets = ref<ChartDatasetCollection>({});
+const rawDatasets = ref<RawDatasetsState | null>(null);
+const loadingProgress = ref(0);
+const isLoading = ref(false);
+const loadingStage = ref<ProgressStage>("dataLoading");
+const chartLoadingStatus = ref<ChartLoadingState>(createChartLoadingState());
+const chartSettingsStatus = ref<ChartSettingsStatus>("idle");
+const pendingChartConfig = reactive<ChartConfig>({
+  axisMode: "version",
+  rangeStart: "",
+  rangeEnd: "",
+});
+const activeChartConfig = reactive<ChartConfig>({
+  axisMode: "version",
+  rangeStart: "",
+  rangeEnd: "",
+});
+
+let chartSettingsTransitionToken = 0;
+let chartSettingsDoneTimer: ReturnType<typeof setTimeout> | null = null;
+
+const text = computed(() => performanceAuditText[props.locale]);
+const loadingLabels = computed(() => text.value.loadingStages);
+const sectionList = computed(
+  () =>
+    [
+      { key: "average", title: text.value.sectionTitles.average },
+      ...pageEntries.map(({ key }) => ({
+        key,
+        title: text.value.sectionTitles[key],
+      })),
+    ] satisfies { key: PageKey; title: string }[],
+);
+const datasetList = computed(() =>
+  datasetKinds.map((key) => ({
+    key,
+    title: text.value.datasetTitles[key],
+  })),
+);
+const chartControlsStatusText = computed(() => {
+  if (isLoading.value) {
+    return `${text.value.loading} ${loadingProgress.value}%`;
+  }
+
+  if (chartSettingsStatus.value === "rendering") {
+    return text.value.rendering;
+  }
+
+  if (chartSettingsStatus.value === "done") {
+    return text.value.rendered;
+  }
+
+  return "";
+});
+
+const exclusiveTooltipPlugin = {
+  id: "exclusiveTooltip",
+  afterInit(chart: Chart) {
+    activeCharts.add(chart);
+  },
+  beforeEvent(chart: Chart, args: { event?: { type?: string } }) {
+    const eventType = args.event?.type;
+    if (!eventType || !["mousemove", "mouseout", "touchstart", "touchmove", "click"].includes(eventType)) {
+      return;
+    }
+
+    for (const otherChart of activeCharts) {
+      if (otherChart === chart) continue;
+      if ((otherChart.tooltip?.getActiveElements().length ?? 0) === 0) continue;
+      otherChart.tooltip?.setActiveElements([], { x: 0, y: 0 });
+      otherChart.update("none");
+    }
+
+    if (eventType === "mouseout" && (chart.tooltip?.getActiveElements().length ?? 0) > 0) {
+      chart.tooltip?.setActiveElements([], { x: 0, y: 0 });
+      chart.update("none");
+    }
+  },
+  afterDestroy(chart: Chart) {
+    activeCharts.delete(chart);
+  },
+};
+
+ChartJS.register(LinearScale, PointElement, LineElement, Title, Tooltip, Legend, exclusiveTooltipPlugin);
+
+function createEmptyNumericSeries(): NumericSeries {
+  return {
+    document: [],
+    font: [],
+    script: [],
+    stylesheet: [],
+    image: [],
+    fetch: [],
+    other: [],
+    total: [],
+  };
+}
+
+function createEmptyPageDatasets(): PageDatasets {
+  return {
+    themeGzipped: createEmptyNumericSeries(),
+    themeRaw: createEmptyNumericSeries(),
+    resourcesGzipped: createEmptyNumericSeries(),
+    resourcesRaw: createEmptyNumericSeries(),
+  };
+}
+
+function createDatasetCollection(): DatasetCollection {
+  return {
+    average: createEmptyPageDatasets(),
+    home: createEmptyPageDatasets(),
+    archives: createEmptyPageDatasets(),
+    post: createEmptyPageDatasets(),
+    tags: createEmptyPageDatasets(),
+    tagDetail: createEmptyPageDatasets(),
+    categories: createEmptyPageDatasets(),
+    categoryDetail: createEmptyPageDatasets(),
+    author: createEmptyPageDatasets(),
+    about: createEmptyPageDatasets(),
+  };
+}
+
+function createChartLoadingState(isChartLoading = false): ChartLoadingState {
+  const flags: ChartLoadingFlags = {
+    themeGzipped: isChartLoading,
+    themeRaw: isChartLoading,
+    resourcesGzipped: isChartLoading,
+    resourcesRaw: isChartLoading,
+  };
+
+  return {
+    average: { ...flags },
+    home: { ...flags },
+    archives: { ...flags },
+    post: { ...flags },
+    tags: { ...flags },
+    tagDetail: { ...flags },
+    categories: { ...flags },
+    categoryDetail: { ...flags },
+    author: { ...flags },
+    about: { ...flags },
+  };
+}
+
+function pad2(value: number): string {
+  return String(value).padStart(2, "0");
+}
+
+function formatUtcOffset(date: Date): string {
+  const totalMinutes = -date.getTimezoneOffset();
+  const sign = totalMinutes >= 0 ? "+" : "-";
+  const absoluteMinutes = Math.abs(totalMinutes);
+  const hours = Math.floor(absoluteMinutes / 60);
+  const minutes = absoluteMinutes % 60;
+  return minutes === 0 ? `UTC${sign}${hours}` : `UTC${sign}${hours}:${pad2(minutes)}`;
+}
+
+function formatLocalDate(timestamp: number, includeYear: boolean): string {
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = pad2(date.getMonth() + 1);
+  const day = pad2(date.getDate());
+  return includeYear ? `${year}-${month}-${day}` : `${month}-${day}`;
+}
+
+function formatLocalDateTime(timestamp: number): string {
+  const date = new Date(timestamp);
+  return `${formatLocalDate(timestamp, true)} ${pad2(date.getHours())}:${pad2(date.getMinutes())} ${formatUtcOffset(date)}`;
+}
+
+function formatPublishedTime(timestamp: number): string {
+  return timestamp > 0 ? formatLocalDateTime(timestamp) : text.value.noPublishedTime;
+}
+
+function formatTimeAxisTick(timestamp: number, includeYear: boolean): string {
+  if (timestamp <= 0) return "";
+  return formatLocalDate(timestamp, includeYear);
+}
+
+function shouldShowYearOnTick(timestamp: number, previousTimestamp: number | null): boolean {
+  if (timestamp <= 0) return false;
+  if (previousTimestamp === null || previousTimestamp <= 0) return true;
+  return new Date(timestamp).getFullYear() !== new Date(previousTimestamp).getFullYear();
+}
+
+function parseTickTimestamp(value: number | string): number | null {
+  const numericValue = typeof value === "number" ? value : Number(value);
+  return Number.isFinite(numericValue) ? numericValue : null;
+}
+
+function formatRangeOptionLabel(version: string, publishedAt: number): string {
+  return `${formatLocalDate(publishedAt, true)} · ${version}`;
+}
+
+function applyChartConfig(target: ChartConfig, source: ChartConfig) {
+  target.axisMode = source.axisMode;
+  target.rangeStart = source.rangeStart;
+  target.rangeEnd = source.rangeEnd;
+}
+
+const resourceColors = computed<Record<ResourceType, string>>(() =>
+  isDark.value
+    ? {
+        document: "#b794f4",
+        font: "#4fd1c5",
+        script: "#fc8181",
+        stylesheet: "#63b3ed",
+        image: "#f6ad55",
+        fetch: "#68d391",
+        other: "#cbd5e0",
+        total: "#e2e8f0",
+      }
+    : {
+        document: "#8e44ad",
+        font: "#16a085",
+        script: "#e74c3c",
+        stylesheet: "#3498db",
+        image: "#f39c12",
+        fetch: "#27ae60",
+        other: "#95a5a6",
+        total: "#2c3e50",
+      },
+);
+
+function createRangeOptions(mode: AxisMode, source: RawDatasetsState | null): AxisRangeOption[] {
+  if (!source) return [];
+
+  if (mode === "version") {
+    return source.versions.map((version, index) => ({
+      value: version,
+      label: version,
+      position: index,
+    }));
+  }
+
+  return source.versions.flatMap((version, index) => {
+    const publishedAt = source.publishedAts[index] ?? 0;
+    if (publishedAt <= 0) return [];
+    return [
+      {
+        value: version,
+        label: formatRangeOptionLabel(version, publishedAt),
+        position: publishedAt,
+      },
+    ];
+  });
+}
+
+const rangeOptions = computed<AxisRangeOption[]>(() =>
+  createRangeOptions(pendingChartConfig.axisMode, rawDatasets.value),
+);
+const activeRangeOptions = computed<AxisRangeOption[]>(() =>
+  createRangeOptions(activeChartConfig.axisMode, rawDatasets.value),
+);
+
+function getRangeOptionIndex(value: string, options: AxisRangeOption[]): number {
+  return options.findIndex((option) => option.value === value);
+}
+
+function normalizeRangeSelection(changedField: "start" | "end" | "auto" = "auto") {
+  const options = rangeOptions.value;
+  if (options.length === 0) {
+    pendingChartConfig.rangeStart = "";
+    pendingChartConfig.rangeEnd = "";
+    return;
+  }
+
+  if (getRangeOptionIndex(pendingChartConfig.rangeStart, options) === -1) {
+    pendingChartConfig.rangeStart = options[0].value;
+  }
+
+  if (getRangeOptionIndex(pendingChartConfig.rangeEnd, options) === -1) {
+    pendingChartConfig.rangeEnd = options[options.length - 1].value;
+  }
+
+  const startIndex = getRangeOptionIndex(pendingChartConfig.rangeStart, options);
+  const endIndex = getRangeOptionIndex(pendingChartConfig.rangeEnd, options);
+
+  if (startIndex === -1 || endIndex === -1) return;
+  if (startIndex <= endIndex) return;
+
+  if (changedField === "end") {
+    pendingChartConfig.rangeStart = pendingChartConfig.rangeEnd;
+    return;
+  }
+
+  pendingChartConfig.rangeEnd = pendingChartConfig.rangeStart;
+}
+
+function resolveRangeBounds(startValue: string, endValue: string, options: AxisRangeOption[]) {
+  if (options.length === 0) {
+    return { min: 0, max: 0 };
+  }
+
+  const startIndex = getRangeOptionIndex(startValue, options);
+  const endIndex = getRangeOptionIndex(endValue, options);
+  const safeStartIndex = startIndex === -1 ? 0 : startIndex;
+  const safeEndIndex = endIndex === -1 ? options.length - 1 : endIndex;
+  const minIndex = Math.min(safeStartIndex, safeEndIndex);
+  const maxIndex = Math.max(safeStartIndex, safeEndIndex);
+
+  return {
+    min: options[minIndex].position,
+    max: options[maxIndex].position,
+  };
+}
+
+const renderedRangeBounds = computed(() =>
+  resolveRangeBounds(activeChartConfig.rangeStart, activeChartConfig.rangeEnd, activeRangeOptions.value),
+);
+
+const xAxisRange = computed(() => {
+  if (!rawDatasets.value) {
+    return { min: 0, max: 0 };
+  }
+
+  return renderedRangeBounds.value;
+});
+
+function buildChartPoints(series: (number | null)[], timelineEntries: TimelineEntry[]): ChartPoint[] {
+  const points = timelineEntries
+    .map(({ version, publishedAt, index }) => ({
+      x: activeChartConfig.axisMode === "version" ? index : publishedAt,
+      y: series[index] ?? null,
+      version,
+      publishedAt,
+    }))
+    .filter((point) => activeChartConfig.axisMode !== "time" || point.x > 0)
+    .filter((point) => point.x >= renderedRangeBounds.value.min && point.x <= renderedRangeBounds.value.max);
+
+  if (activeChartConfig.axisMode === "time") {
+    points.sort((a, b) => a.x - b.x);
+  }
+
+  return points;
+}
+
+function buildChartDatasets(source: RawDatasetsState, updateLoading = false): ChartDatasetCollection {
+  const colors = resourceColors.value;
+  const timelineEntries = source.versions.map((version, index) => ({
+    version,
+    publishedAt: source.publishedAts[index] ?? 0,
+    index,
+  }));
+  let processedCount = 0;
+  const totalCharts = (pageEntries.length + 1) * datasetKinds.length;
+  const currentChartDatasets: ChartDatasetCollection = {};
+
+  const createChartSeries = (series: NumericSeries): ChartSeries => ({
+    labels: source.versions,
+    datasets: resourceTypes.map((type) => ({
+      label: text.value.resourceLabels[type],
+      data: buildChartPoints(series[type], timelineEntries),
+      borderColor: colors[type],
+      backgroundColor: colors[type],
+      tension: 0.1,
+      borderWidth: type === "total" ? 3 : 2,
+    })),
+  });
+
+  const updateChartData = (pageKey: PageKey, pageData: PageDatasets) => {
+    const pageCharts: ChartPageData = {
+      themeGzipped: createChartSeries(pageData.themeGzipped),
+      themeRaw: createChartSeries(pageData.themeRaw),
+      resourcesGzipped: createChartSeries(pageData.resourcesGzipped),
+      resourcesRaw: createChartSeries(pageData.resourcesRaw),
+    };
+
+    if (updateLoading) {
+      for (const kind of datasetKinds) {
+        chartLoadingStatus.value[pageKey][kind] = false;
+        processedCount++;
+        loadingProgress.value = Math.round((processedCount / totalCharts) * 100);
+      }
+    }
+
+    currentChartDatasets[pageKey] = pageCharts;
+  };
+
+  for (const { key } of pageEntries) {
+    updateChartData(key, source.datasets[key]);
+  }
+  updateChartData("average", source.datasets.average);
+
+  return currentChartDatasets;
+}
+
+function waitForNextFrame(): Promise<void> {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => resolve());
+  });
+}
+
+const chartOptions = computed<ChartOptions<"line">>(() => ({
+  responsive: true,
+  maintainAspectRatio: false,
+  animation: false,
+  elements: {
+    point: {
+      radius: 0,
+      hitRadius: 5,
+      hoverRadius: 5,
+    },
+  },
+  scales: {
+    y: {
+      beginAtZero: true,
+      title: {
+        display: true,
+        text: "KiB",
+        color: isDark.value ? "#e2e8f0" : "#2c3e50",
+      },
+      ticks: {
+        color: isDark.value ? "#cbd5e0" : "#4a5568",
+      },
+      grid: {
+        color: isDark.value ? "#4a5568" : "#e2e8f0",
+      },
+    },
+    x: {
+      type: "linear",
+      bounds: "data",
+      offset: false,
+      grace: 0,
+      min: xAxisRange.value.min,
+      max: xAxisRange.value.max,
+      title: {
+        display: true,
+        text: activeChartConfig.axisMode === "version" ? text.value.xAxisVersion : text.value.xAxisTime,
+        color: isDark.value ? "#e2e8f0" : "#2c3e50",
+      },
+      ticks: {
+        autoSkip: true,
+        maxRotation: activeChartConfig.axisMode === "version" ? 45 : 0,
+        minRotation: activeChartConfig.axisMode === "version" ? 45 : 0,
+        stepSize: activeChartConfig.axisMode === "version" ? 1 : undefined,
+        color: isDark.value ? "#cbd5e0" : "#4a5568",
+        callback: (value: number | string, index: number, ticks: { value: number | string }[]) => {
+          const numericValue = parseTickTimestamp(value);
+          if (numericValue === null) return "";
+
+          if (activeChartConfig.axisMode === "version") {
+            const versionIndex = Math.round(numericValue);
+            if (Math.abs(numericValue - versionIndex) > Number.EPSILON) return "";
+            return rawDatasets.value?.versions[versionIndex] ?? "";
+          }
+
+          const previousTimestamp = index > 0 ? parseTickTimestamp(ticks[index - 1]?.value) : null;
+          return formatTimeAxisTick(numericValue, shouldShowYearOnTick(numericValue, previousTimestamp));
+        },
+      },
+      grid: {
+        color: isDark.value ? "#4a5568" : "#e2e8f0",
+      },
+    },
+  },
+  plugins: {
+    legend: {
+      display: true,
+      position: "top",
+      labels: {
+        color: isDark.value ? "#e2e8f0" : "#2c3e50",
+      },
+    },
+    tooltip: {
+      mode: "index",
+      intersect: false,
+      backgroundColor: isDark.value ? "#2d3748" : "#ffffff",
+      titleColor: isDark.value ? "#e2e8f0" : "#2c3e50",
+      bodyColor: isDark.value ? "#cbd5e0" : "#4a5568",
+      borderColor: isDark.value ? "#4a5568" : "#e2e8f0",
+      borderWidth: 1,
+      callbacks: {
+        title: (items: { raw?: unknown }[]) => {
+          const point = items[0]?.raw as ChartPoint | undefined;
+          if (!point) return "";
+          return [point.version, formatPublishedTime(point.publishedAt)];
+        },
+      },
+    },
+  },
+  interaction: {
+    mode: "index",
+    axis: "x",
+    intersect: false,
+  },
+}));
+
+async function refreshChartDatasetsWithFeedback() {
+  if (!rawDatasets.value) return;
+
+  if (chartSettingsDoneTimer) {
+    clearTimeout(chartSettingsDoneTimer);
+    chartSettingsDoneTimer = null;
+  }
+
+  chartSettingsStatus.value = "rendering";
+  chartSettingsTransitionToken += 1;
+  const currentToken = chartSettingsTransitionToken;
+  await nextTick();
+  await waitForNextFrame();
+  if (currentToken !== chartSettingsTransitionToken || !rawDatasets.value) return;
+  applyChartConfig(activeChartConfig, pendingChartConfig);
+  await nextTick();
+  await waitForNextFrame();
+  if (currentToken !== chartSettingsTransitionToken || !rawDatasets.value) return;
+  chartDatasets.value = buildChartDatasets(rawDatasets.value);
+  await nextTick();
+  await waitForNextFrame();
+  if (currentToken !== chartSettingsTransitionToken) return;
+  chartSettingsStatus.value = "done";
+  chartSettingsDoneTimer = setTimeout(() => {
+    if (currentToken === chartSettingsTransitionToken) {
+      chartSettingsStatus.value = "idle";
+    }
+  }, 500);
+}
+
+function getChartData(pageKey: PageKey, kind: DatasetKind): ChartSeries | null {
+  return chartDatasets.value[pageKey]?.[kind] ?? null;
+}
+
+function getChartLoading(pageKey: PageKey, kind: DatasetKind): boolean {
+  return chartLoadingStatus.value[pageKey][kind];
+}
+
+function hasChartData(pageKey: PageKey, kind: DatasetKind): boolean {
+  return getChartData(pageKey, kind) !== null;
+}
+
+watch(
+  [rangeOptions, () => pendingChartConfig.axisMode],
+  () => {
+    normalizeRangeSelection("auto");
+  },
+  { immediate: true },
+);
+
+watch(
+  () => pendingChartConfig.rangeStart,
+  () => {
+    normalizeRangeSelection("start");
+  },
+);
+
+watch(
+  () => pendingChartConfig.rangeEnd,
+  () => {
+    normalizeRangeSelection("end");
+  },
+);
+
+watch(
+  [
+    isDark,
+    () => pendingChartConfig.axisMode,
+    () => pendingChartConfig.rangeStart,
+    () => pendingChartConfig.rangeEnd,
+    text,
+  ],
+  () => {
+    refreshChartDatasetsWithFeedback();
+  },
+);
+
+onMounted(async () => {
+  try {
+    console.timeEnd("📊 Chart Initialization Total Time");
+    console.timeEnd("  1️⃣ Data Loading");
+    console.timeEnd("  2️⃣ Data Sorting and Processing");
+    console.timeEnd("  3️⃣ Chart Data Creation");
+  } catch {
+    // Ignore non-existent timer errors
+  }
+
+  console.time("📊 Chart Initialization Total Time");
+  isLoading.value = true;
+  loadingProgress.value = 0;
+  chartLoadingStatus.value = createChartLoadingState(true);
+
+  try {
+    console.time("  1️⃣ Data Loading");
+    loadingStage.value = "dataLoading";
+
+    const jsonFiles = import.meta.glob<{ default: unknown }>("../../../../.github/page_size_audit_results/*.json");
+    const paths = Object.keys(jsonFiles);
+    const totalFiles = paths.length;
+    let completedCount = 0;
+
+    const loadPromises = paths.map(async (path) => {
+      const module = await jsonFiles[path]();
+      const version = path.match(/v\d+\.\d+\.\d+/)?.[0];
+
+      completedCount++;
+      loadingProgress.value = Math.round((completedCount / totalFiles) * 100);
+
+      if (version && module.default) {
+        const data = decodeAuditFile(module.default);
+        return {
+          version,
+          publishedAt: data.metadata.publishedAt,
+          data,
+        };
+      }
+      return null;
+    });
+
+    const allData = (await Promise.all(loadPromises)).filter((item): item is LoadedAuditEntry => item !== null);
+
+    console.timeEnd("  1️⃣ Data Loading");
+
+    console.time("  2️⃣ Data Sorting and Processing");
+    loadingStage.value = "dataProcessing";
+    loadingProgress.value = 0;
+
+    allData.sort((a, b) => {
+      const parseVersion = (version: string) => version.replace("v", "").split(".").map(Number);
+      const [aMajor, aMinor, aPatch] = parseVersion(a.version);
+      const [bMajor, bMinor, bPatch] = parseVersion(b.version);
+
+      if (aMajor !== bMajor) return aMajor - bMajor;
+      if (aMinor !== bMinor) return aMinor - bMinor;
+      return aPatch - bPatch;
+    });
+
+    const indexedData: IndexedAuditEntry[] = allData.map(({ version, publishedAt, data }) => ({
+      version,
+      publishedAt,
+      resultsByUrl: new Map<string, AuditPageResult>(
+        data.results.map((result: AuditPageResult) => [result.url, result]),
+      ),
+    }));
+    const versions = indexedData.map(({ version }) => version);
+    const publishedAts = indexedData.map(({ publishedAt }) => publishedAt);
+    const datasets = createDatasetCollection();
+
+    for (const { key, url } of pageEntries) {
+      for (const { resultsByUrl } of indexedData) {
+        const pageData = resultsByUrl.get(url);
+        if (pageData) {
+          for (const type of resourceTypes) {
+            datasets[key].themeGzipped[type].push(pageData.themeResources[type].transferSize / 1024);
+            datasets[key].themeRaw[type].push(pageData.themeResources[type].resourceSize / 1024);
+            datasets[key].resourcesGzipped[type].push(pageData.resources[type].transferSize / 1024);
+            datasets[key].resourcesRaw[type].push(pageData.resources[type].resourceSize / 1024);
+          }
+        } else {
+          for (const type of resourceTypes) {
+            datasets[key].themeGzipped[type].push(null);
+            datasets[key].themeRaw[type].push(null);
+            datasets[key].resourcesGzipped[type].push(null);
+            datasets[key].resourcesRaw[type].push(null);
+          }
+        }
+      }
+    }
+
+    const hasCompleteDatasetValues = (
+      values: Record<DatasetKind, number | null>,
+    ): values is Record<DatasetKind, number> => datasetKinds.every((kind) => values[kind] !== null);
+
+    for (let index = 0; index < versions.length; index++) {
+      for (const type of resourceTypes) {
+        const sums = {
+          themeGzipped: 0,
+          themeRaw: 0,
+          resourcesGzipped: 0,
+          resourcesRaw: 0,
+        } satisfies Record<DatasetKind, number>;
+        let count = 0;
+
+        for (const { key } of pageEntries) {
+          const values = {
+            themeGzipped: datasets[key].themeGzipped[type][index],
+            themeRaw: datasets[key].themeRaw[type][index],
+            resourcesGzipped: datasets[key].resourcesGzipped[type][index],
+            resourcesRaw: datasets[key].resourcesRaw[type][index],
+          } satisfies Record<DatasetKind, number | null>;
+
+          if (hasCompleteDatasetValues(values)) {
+            for (const kind of datasetKinds) {
+              sums[kind] += values[kind];
+            }
+            count++;
+          }
+        }
+
+        for (const kind of datasetKinds) {
+          datasets.average[kind][type].push(count > 0 ? sums[kind] / count : null);
+        }
+      }
+    }
+
+    loadingProgress.value = 100;
+    console.timeEnd("  2️⃣ Data Sorting and Processing");
+
+    rawDatasets.value = {
+      datasets,
+      versions,
+      publishedAts,
+    };
+    normalizeRangeSelection("auto");
+    applyChartConfig(activeChartConfig, pendingChartConfig);
+
+    console.time("  3️⃣ Chart Data Creation");
+    loadingStage.value = "chartCreation";
+    loadingProgress.value = 0;
+    chartDatasets.value = buildChartDatasets(rawDatasets.value, true);
+    loadingProgress.value = 100;
+    console.timeEnd("  3️⃣ Chart Data Creation");
+    console.timeEnd("📊 Chart Initialization Total Time");
+  } catch (error) {
+    console.error(text.value.loadErrorPrefix, error);
+  } finally {
+    isLoading.value = false;
+    loadingProgress.value = 100;
+  }
+});
+
+onBeforeUnmount(() => {
+  if (chartSettingsDoneTimer) {
+    clearTimeout(chartSettingsDoneTimer);
+    chartSettingsDoneTimer = null;
+  }
+  activeCharts.clear();
+});
+</script>
+
+<template>
+  <div class="chart-controls">
+    <div class="chart-controls__header">
+      <div class="chart-controls__title">
+        {{ text.chartSettings }}
+      </div>
+      <span
+        v-if="isLoading || chartSettingsStatus !== 'idle'"
+        class="axis-mode-switch__loading"
+        aria-live="polite"
+      >
+        <span
+          v-if="!isLoading && chartSettingsStatus === 'rendering'"
+          class="axis-mode-switch__status-icon"
+          :class="{ 'axis-mode-switch__status-icon--spinning': chartSettingsStatus === 'rendering' }"
+        />
+        {{ chartControlsStatusText }}
+      </span>
+    </div>
+    <div class="axis-mode-switch">
+      <span class="axis-mode-switch__label">{{ text.axisMode }}</span>
+      <label class="axis-mode-switch__control">
+        <select
+          v-model="pendingChartConfig.axisMode"
+          class="axis-mode-switch__select"
+          :aria-label="text.ariaAxisMode"
+        >
+          <option value="version">{{ text.versionSpacing }}</option>
+          <option value="time">{{ text.timeSpacing }}</option>
+        </select>
+      </label>
+    </div>
+    <div class="chart-range-controls">
+      <span class="axis-mode-switch__label">
+        {{ pendingChartConfig.axisMode === "version" ? text.versionRange : text.timeRange }}
+      </span>
+      <label class="axis-mode-switch__control">
+        <select
+          v-model="pendingChartConfig.rangeStart"
+          class="axis-mode-switch__select axis-mode-switch__select--range"
+          :aria-label="text.ariaRangeStart"
+        >
+          <option
+            v-for="option in rangeOptions"
+            :key="`start-${option.value}`"
+            :value="option.value"
+          >
+            {{ option.label }}
+          </option>
+        </select>
+      </label>
+      <span class="chart-range-controls__separator">{{ text.rangeSeparator }}</span>
+      <label class="axis-mode-switch__control">
+        <select
+          v-model="pendingChartConfig.rangeEnd"
+          class="axis-mode-switch__select axis-mode-switch__select--range"
+          :aria-label="text.ariaRangeEnd"
+        >
+          <option
+            v-for="option in rangeOptions"
+            :key="`end-${option.value}`"
+            :value="option.value"
+          >
+            {{ option.label }}
+          </option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <section
+    v-for="section in sectionList"
+    :key="section.key"
+    class="performance-chart-section"
+  >
+    <h3>{{ section.title }}</h3>
+
+    <details
+      v-for="dataset in datasetList"
+      :key="`${section.key}-${dataset.key}`"
+      class="performance-chart-details"
+    >
+      <summary>{{ dataset.title }}</summary>
+
+      <div class="performance-chart-details__body">
+        <ProgressBar
+          :is-loading="getChartLoading(section.key, dataset.key)"
+          :stage="loadingStage"
+          :labels="loadingLabels"
+          :progress="loadingProgress"
+          :label="text.progressLabel"
+        />
+
+        <div
+          v-if="hasChartData(section.key, dataset.key)"
+          class="performance-chart-canvas"
+        >
+          <LineChart
+            :data="getChartData(section.key, dataset.key) ?? { labels: [], datasets: [] }"
+            :options="chartOptions"
+          />
+        </div>
+      </div>
+    </details>
+  </section>
+</template>
+
+<style scoped>
+.chart-controls {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
+  margin: 1rem 0 1.5rem;
+  padding: 0.85rem 1rem;
+}
+
+.chart-controls__header {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.chart-controls__title {
+  color: var(--vp-c-text-1);
+  font-weight: 600;
+}
+
+.axis-mode-switch,
+.chart-range-controls {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.chart-range-controls {
+  margin-top: 0.85rem;
+}
+
+.axis-mode-switch__label,
+.chart-range-controls__separator {
+  color: var(--vp-c-text-2);
+}
+
+.axis-mode-switch__control {
+  align-items: center;
+  display: inline-flex;
+  position: relative;
+}
+
+.axis-mode-switch__select {
+  appearance: none;
+  background: var(--vp-c-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8L9.5 4.5' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-position: right 0.8rem center;
+  background-repeat: no-repeat;
+  background-size: 0.75rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  color: var(--vp-c-text-1);
+  cursor: pointer;
+  min-width: 10rem;
+  padding: 0.45rem 2.5rem 0.45rem 0.75rem;
+}
+
+.axis-mode-switch__select--range {
+  min-width: 13rem;
+}
+
+.axis-mode-switch__loading {
+  align-items: center;
+  color: var(--vp-c-text-2);
+  display: inline-flex;
+  font-size: 0.95rem;
+  gap: 0.5rem;
+}
+
+.axis-mode-switch__status-icon {
+  align-items: center;
+  color: var(--vp-c-brand-1);
+  display: inline-flex;
+  font-weight: 700;
+  height: 0.95rem;
+  justify-content: center;
+  width: 0.95rem;
+}
+
+.axis-mode-switch__status-icon--spinning {
+  animation: axis-mode-spin 0.8s linear infinite;
+  border: 2px solid color-mix(in srgb, var(--vp-c-brand-1) 25%, transparent);
+  border-radius: 999px;
+  border-top-color: var(--vp-c-brand-1);
+}
+
+.performance-chart-section + .performance-chart-section {
+  margin-top: 2rem;
+}
+
+.performance-chart-details {
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  margin: 1rem 0;
+  overflow: hidden;
+}
+
+.performance-chart-details > summary {
+  color: var(--vp-c-text-1);
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0;
+  padding: 0.9rem 1rem;
+  user-select: none;
+}
+
+.performance-chart-details[open] > summary {
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.performance-chart-details__body {
+  padding: 0 1rem 1rem;
+}
+
+.performance-chart-canvas {
+  height: 400px;
+  position: relative;
+}
+
+@keyframes axis-mode-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

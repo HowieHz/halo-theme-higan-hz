@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 // Special api to mount the app
 import { createApp } from "whyframe:app";
 
-import { extendStylesScope, trackColorScheme } from "./utils";
+import { extendStylesScope, trackColorScheme } from "./frame-runtime";
 
 const el = ref();
 
