@@ -13,12 +13,7 @@ export const performanceAuditPages = [
 export type PerformanceAuditPageKey = (typeof performanceAuditPages)[number]["key"];
 export type PerformanceAuditSectionKey = PerformanceAuditPageKey | "average";
 
-export const performanceDatasetKinds = [
-  "themeGzipped",
-  "themeRaw",
-  "resourcesGzipped",
-  "resourcesRaw",
-] as const;
+export const performanceDatasetKinds = ["themeGzipped", "themeRaw", "resourcesGzipped", "resourcesRaw"] as const;
 
 export type PerformanceDatasetKind = (typeof performanceDatasetKinds)[number];
 

@@ -2,13 +2,13 @@
 import { useData } from "vitepress";
 import { computed } from "vue";
 
-type ProgressStage = "dataLoading" | "dataProcessing" | "chartCreation";
+import type { PerformanceProgressStage } from "./performance-audit-constants";
 
 const props = defineProps<{
   isLoading: boolean;
   progress: number;
-  stage: ProgressStage;
-  labels: Record<ProgressStage, string>;
+  stage: PerformanceProgressStage;
+  labels: Record<PerformanceProgressStage, string>;
   label: string;
 }>();
 

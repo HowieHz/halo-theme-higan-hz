@@ -29,10 +29,7 @@ import {
   type PerformanceAuditSectionKey,
   type PerformanceProgressStage,
 } from "./performance-audit-constants";
-import {
-  performanceAuditText,
-  type LocaleKey,
-} from "./performance-audit-text";
+import { performanceAuditText, type LocaleKey } from "./performance-audit-text";
 import ProgressBar from "./ProgressBar.vue";
 
 type ContentPageKey = PerformanceAuditPageKey;
