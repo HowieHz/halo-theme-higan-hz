@@ -986,7 +986,10 @@ onBeforeUnmount(() => {
           :label="text.progressLabel"
         />
 
-        <div v-if="hasChartData(section.key, dataset.key)" class="performance-chart-canvas">
+        <div
+          v-if="hasChartData(section.key, dataset.key)"
+          class="performance-chart-canvas"
+        >
           <LineChart
             :data="getChartData(section.key, dataset.key) ?? { labels: [], datasets: [] }"
             :options="chartOptions"

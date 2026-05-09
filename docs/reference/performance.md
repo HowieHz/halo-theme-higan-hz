@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+<!-- markdownlint-disable MD033 -->
+
 # 性能参考
 
 <script setup lang="ts">
