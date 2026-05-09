@@ -608,7 +608,7 @@ jobs:
               MISSING_PACKAGES+=("@argos-ci/playwright")
             fi
             if [ ${#MISSING_PACKAGES[@]} -gt 0 ]; then
-              pnpm add -w -D "${MISSING_PACKAGES[@]}" || echo "⚠️  Playwright install failed, continuing"
+              pnpm add -w -D --allow-build=sharp "${MISSING_PACKAGES[@]}" || echo "⚠️  Playwright install failed, continuing"
             else
               echo "✓ playwright and @argos-ci/playwright already available"
             fi
@@ -787,7 +787,7 @@ jobs:
             MISSING_PACKAGES+=("@argos-ci/playwright")
           fi
           if [ ${#MISSING_PACKAGES[@]} -gt 0 ]; then
-            pnpm add -w -D "${MISSING_PACKAGES[@]}" || echo "⚠️  Playwright install failed, continuing"
+            pnpm add -w -D --allow-build=sharp "${MISSING_PACKAGES[@]}" || echo "⚠️  Playwright install failed, continuing"
           else
             echo "✓ playwright and @argos-ci/playwright already available"
           fi
