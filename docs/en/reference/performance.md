@@ -13,7 +13,7 @@ This documentation is AI-generated. You can help improve it by submitting an [Is
 :::
 
 <script setup lang="ts">
-import PerformanceAuditCharts from '../../.vitepress/components/PerformanceAuditCharts.vue'
+import PerformanceAuditCharts from '../../.vitepress/components/performance-audit/PerformanceAuditCharts.vue'
 </script>
 
 ## Lighthouse

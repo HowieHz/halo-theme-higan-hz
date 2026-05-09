@@ -18,21 +18,20 @@ import {
   decodeAuditFile,
   type AuditFile,
   type AuditPageResult,
-  type ResourceType,
-  resourceTypeEntries,
-} from "../utils/page-size-audit-schema";
+} from "./page-size-audit-schema";
 import {
   performanceAuditPages,
+  performanceAuditText,
   performanceDatasetKinds,
-  type PerformanceAuditPageKey,
+  resourceTypeEntries,
+  type LocaleKey,
   type PerformanceDatasetKind,
   type PerformanceAuditSectionKey,
   type PerformanceProgressStage,
-} from "./performance-audit-constants";
-import { performanceAuditText, type LocaleKey } from "./performance-audit-text";
+  type ResourceType,
+} from "./shared";
 import ProgressBar from "./ProgressBar.vue";
 
-type ContentPageKey = PerformanceAuditPageKey;
 type PageKey = PerformanceAuditSectionKey;
 type AxisMode = "version" | "time";
 type DatasetKind = PerformanceDatasetKind;
@@ -94,9 +93,9 @@ const props = defineProps<{
 
 const { isDark } = useData();
 
-const pageEntries = performanceAuditPages satisfies readonly { key: ContentPageKey; url: string }[];
-const resourceTypes = resourceTypeEntries satisfies readonly ResourceType[];
-const datasetKinds = performanceDatasetKinds satisfies readonly DatasetKind[];
+const pageEntries = performanceAuditPages;
+const resourceTypes = resourceTypeEntries;
+const datasetKinds = performanceDatasetKinds;
 
 const activeCharts = new Set<Chart>();
 const axisMode = ref<AxisMode>("version");
@@ -620,7 +619,7 @@ onMounted(async () => {
     console.time("  1️⃣ Data Loading");
     loadingStage.value = "dataLoading";
 
-    const jsonFiles = import.meta.glob<{ default: unknown }>("../../../.github/page_size_audit_results/*.json");
+    const jsonFiles = import.meta.glob<{ default: unknown }>("../../../../.github/page_size_audit_results/*.json");
     const paths = Object.keys(jsonFiles);
     const totalFiles = paths.length;
     let completedCount = 0;
@@ -974,6 +973,7 @@ onBeforeUnmount(() => {
   color: var(--vp-c-text-1);
   cursor: pointer;
   font-weight: 600;
+  margin: 0;
   padding: 0.9rem 1rem;
   user-select: none;
 }

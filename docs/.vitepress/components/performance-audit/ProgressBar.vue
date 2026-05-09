@@ -2,7 +2,7 @@
 import { useData } from "vitepress";
 import { computed } from "vue";
 
-import type { PerformanceProgressStage } from "./performance-audit-constants";
+import type { PerformanceProgressStage } from "./shared";
 
 const props = defineProps<{
   isLoading: boolean;

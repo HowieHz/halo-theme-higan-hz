@@ -1,4 +1,8 @@
-import { performanceAuditPages } from "../components/performance-audit-constants";
+import {
+  performanceAuditPages,
+  resourceTypeEntries,
+  type ResourceType,
+} from "../performance-audit/shared";
 
 /**
  * Page size audit JSON extreme compact schema helpers.
@@ -19,18 +23,6 @@ import { performanceAuditPages } from "../components/performance-audit-constants
 const pageUrls = performanceAuditPages.map(({ url }) => url) as (typeof performanceAuditPages)[number]["url"][];
 
 const groupKeys = ["resources", "themeResources"] as const;
-export const resourceTypeEntries = [
-  "document",
-  "font",
-  "script",
-  "stylesheet",
-  "image",
-  "fetch",
-  "other",
-  "total",
-] as const;
-
-export type ResourceType = (typeof resourceTypeEntries)[number];
 
 export interface AuditResourceStat {
   transferSize: number;

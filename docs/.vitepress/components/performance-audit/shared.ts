@@ -1,9 +1,26 @@
-import type { ResourceType } from "../utils/page-size-audit-schema";
-import type {
-  PerformanceDatasetKind,
-  PerformanceAuditSectionKey,
-  PerformanceProgressStage,
-} from "./performance-audit-constants";
+export const performanceAuditPages = [
+  { key: "home", url: "/" },
+  { key: "archives", url: "/archives" },
+  { key: "post", url: "/archives/hello-halo" },
+  { key: "tags", url: "/tags" },
+  { key: "tagDetail", url: "/tags/halo" },
+  { key: "categories", url: "/categories" },
+  { key: "categoryDetail", url: "/categories/default" },
+  { key: "author", url: "/authors/admin" },
+  { key: "about", url: "/about" },
+] as const;
+
+export type PerformanceAuditPageKey = (typeof performanceAuditPages)[number]["key"];
+export type PerformanceAuditSectionKey = PerformanceAuditPageKey | "average";
+
+export const performanceDatasetKinds = ["themeGzipped", "themeRaw", "resourcesGzipped", "resourcesRaw"] as const;
+export type PerformanceDatasetKind = (typeof performanceDatasetKinds)[number];
+
+export const performanceProgressStages = ["dataLoading", "dataProcessing", "chartCreation"] as const;
+export type PerformanceProgressStage = (typeof performanceProgressStages)[number];
+
+export const resourceTypeEntries = ["document", "font", "script", "stylesheet", "image", "fetch", "other", "total"] as const;
+export type ResourceType = (typeof resourceTypeEntries)[number];
 
 export type LocaleKey = "zh-CN" | "en";
 
@@ -39,8 +56,8 @@ export const performanceAuditText = {
     rendering: "渲染中",
     rendered: "渲染完毕",
     axisMode: "横轴模式",
-    versionSpacing: "版本均分",
-    timeSpacing: "时间均分",
+    versionSpacing: "版本号",
+    timeSpacing: "发布时间",
     versionRange: "版本范围",
     timeRange: "时间范围",
     rangeSeparator: "至",
@@ -91,8 +108,8 @@ export const performanceAuditText = {
     rendering: "Rendering",
     rendered: "Rendered",
     axisMode: "Axis mode",
-    versionSpacing: "Version spacing",
-    timeSpacing: "Time spacing",
+    versionSpacing: "Version",
+    timeSpacing: "Published Time",
     versionRange: "Version range",
     timeRange: "Time range",
     rangeSeparator: "to",
