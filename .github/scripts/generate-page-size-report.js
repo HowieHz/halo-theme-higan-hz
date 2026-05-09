@@ -175,7 +175,8 @@ function generateMarkdownReport(results, metadata = {}) {
     metadata.javaVersion ||
     metadata.themeVersion ||
     metadata.lhciVersion ||
-    metadata.generatedAt
+    metadata.generatedAt ||
+    metadata.publishedAt
   ) {
     markdown += `**Test Environment:**\n`;
     if (metadata.haloVersion) markdown += `- Halo CMS Version: ${metadata.haloVersion}\n`;
@@ -192,6 +193,10 @@ function generateMarkdownReport(results, metadata = {}) {
     if (metadata.generatedAt) {
       const date = new Date(metadata.generatedAt);
       markdown += `- Generated At: ${date.toISOString()}\n`;
+    }
+    if (metadata.publishedAt) {
+      const date = new Date(metadata.publishedAt);
+      markdown += `- Version Published At: ${date.toISOString()}\n`;
     }
     markdown += `\n`;
   }
@@ -294,12 +299,15 @@ async function main() {
     const results = await parseLighthouseResults();
 
     // 收集元数据
+    const generatedAt = new Date().toISOString();
+    const publishedAt = Date.parse(process.env.VERSION_PUBLISHED_AT || "");
     const metadata = {
       haloVersion: process.env.HALO_VERSION || null,
       javaVersion: process.env.JAVA_VERSION || null,
       themeVersion: normalizeThemeVersion(process.env.THEME_VERSION || process.env.GITHUB_SHA || null),
       lhciVersion: process.env.LIGHTHOUSE_CI_VERSION || null,
-      generatedAt: new Date().toISOString(),
+      generatedAt,
+      publishedAt: Number.isFinite(publishedAt) ? publishedAt : 0,
     };
 
     // 生成 JSON 报告
