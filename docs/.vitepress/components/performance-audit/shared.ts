@@ -19,7 +19,16 @@ export type PerformanceDatasetKind = (typeof performanceDatasetKinds)[number];
 export const performanceProgressStages = ["dataLoading", "dataProcessing", "chartCreation"] as const;
 export type PerformanceProgressStage = (typeof performanceProgressStages)[number];
 
-export const resourceTypeEntries = ["document", "font", "script", "stylesheet", "image", "fetch", "other", "total"] as const;
+export const resourceTypeEntries = [
+  "document",
+  "font",
+  "script",
+  "stylesheet",
+  "image",
+  "fetch",
+  "other",
+  "total",
+] as const;
 export type ResourceType = (typeof resourceTypeEntries)[number];
 
 export type LocaleKey = "zh-CN" | "en";

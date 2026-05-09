@@ -14,11 +14,8 @@ import { useData } from "vitepress";
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from "vue";
 import { Line as LineChart } from "vue-chartjs";
 
-import {
-  decodeAuditFile,
-  type AuditFile,
-  type AuditPageResult,
-} from "./page-size-audit-schema";
+import { decodeAuditFile, type AuditFile, type AuditPageResult } from "./page-size-audit-schema";
+import ProgressBar from "./ProgressBar.vue";
 import {
   performanceAuditPages,
   performanceAuditText,
@@ -30,7 +27,6 @@ import {
   type PerformanceProgressStage,
   type ResourceType,
 } from "./shared";
-import ProgressBar from "./ProgressBar.vue";
 
 type PageKey = PerformanceAuditSectionKey;
 type AxisMode = "version" | "time";
@@ -142,6 +138,21 @@ const datasetList = computed(() =>
     title: text.value.datasetTitles[key],
   })),
 );
+const chartControlsStatusText = computed(() => {
+  if (isLoading.value) {
+    return `${text.value.loading} ${loadingProgress.value}%`;
+  }
+
+  if (chartSettingsStatus.value === "rendering") {
+    return text.value.rendering;
+  }
+
+  if (chartSettingsStatus.value === "done") {
+    return text.value.rendered;
+  }
+
+  return "";
+});
 
 const exclusiveTooltipPlugin = {
   id: "exclusiveTooltip",
@@ -336,8 +347,12 @@ function createRangeOptions(mode: AxisMode, source: RawDatasetsState | null): Ax
   });
 }
 
-const rangeOptions = computed<AxisRangeOption[]>(() => createRangeOptions(pendingChartConfig.axisMode, rawDatasets.value));
-const activeRangeOptions = computed<AxisRangeOption[]>(() => createRangeOptions(activeChartConfig.axisMode, rawDatasets.value));
+const rangeOptions = computed<AxisRangeOption[]>(() =>
+  createRangeOptions(pendingChartConfig.axisMode, rawDatasets.value),
+);
+const activeRangeOptions = computed<AxisRangeOption[]>(() =>
+  createRangeOptions(activeChartConfig.axisMode, rawDatasets.value),
+);
 
 function getRangeOptionIndex(value: string, options: AxisRangeOption[]): number {
   return options.findIndex((option) => option.value === value);
@@ -622,17 +637,32 @@ watch(
   { immediate: true },
 );
 
-watch(() => pendingChartConfig.rangeStart, () => {
-  normalizeRangeSelection("start");
-});
+watch(
+  () => pendingChartConfig.rangeStart,
+  () => {
+    normalizeRangeSelection("start");
+  },
+);
 
-watch(() => pendingChartConfig.rangeEnd, () => {
-  normalizeRangeSelection("end");
-});
+watch(
+  () => pendingChartConfig.rangeEnd,
+  () => {
+    normalizeRangeSelection("end");
+  },
+);
 
-watch([isDark, () => pendingChartConfig.axisMode, () => pendingChartConfig.rangeStart, () => pendingChartConfig.rangeEnd, text], () => {
-  refreshChartDatasetsWithFeedback();
-});
+watch(
+  [
+    isDark,
+    () => pendingChartConfig.axisMode,
+    () => pendingChartConfig.rangeStart,
+    () => pendingChartConfig.rangeEnd,
+    text,
+  ],
+  () => {
+    refreshChartDatasetsWithFeedback();
+  },
+);
 
 onMounted(async () => {
   try {
@@ -808,18 +838,12 @@ onBeforeUnmount(() => {
         class="axis-mode-switch__loading"
         aria-live="polite"
       >
-        <template v-if="isLoading">
-          {{ text.loading }} {{ loadingProgress }}%
-        </template>
-        <template v-else>
-          <span
-            v-if="chartSettingsStatus === 'rendering'"
-            class="axis-mode-switch__status-icon"
-            :class="{ 'axis-mode-switch__status-icon--spinning': chartSettingsStatus === 'rendering' }"
-          >
-          </span>
-          {{ chartSettingsStatus === "rendering" ? text.rendering : text.rendered }}
-        </template>
+        <span
+          v-if="!isLoading && chartSettingsStatus === 'rendering'"
+          class="axis-mode-switch__status-icon"
+          :class="{ 'axis-mode-switch__status-icon--spinning': chartSettingsStatus === 'rendering' }"
+        />
+        {{ chartControlsStatusText }}
       </span>
     </div>
     <div class="axis-mode-switch">

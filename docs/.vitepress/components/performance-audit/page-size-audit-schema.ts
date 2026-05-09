@@ -1,8 +1,4 @@
-import {
-  performanceAuditPages,
-  resourceTypeEntries,
-  type ResourceType,
-} from "../performance-audit/shared";
+import { performanceAuditPages, resourceTypeEntries, type ResourceType } from "../performance-audit/shared";
 
 /**
  * Page size audit JSON extreme compact schema helpers.
