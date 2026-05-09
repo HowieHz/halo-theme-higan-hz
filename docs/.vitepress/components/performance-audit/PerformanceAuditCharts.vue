@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { useData } from "vitepress";
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from "vue";
 import { Line as LineChart } from "vue-chartjs";
 
 import {
@@ -84,6 +84,11 @@ interface AxisRangeOption {
   label: string;
   position: number;
 }
+interface ChartConfig {
+  axisMode: AxisMode;
+  rangeStart: string;
+  rangeEnd: string;
+}
 type ChartLoadingFlags = Record<DatasetKind, boolean>;
 type ChartLoadingState = Record<PageKey, ChartLoadingFlags>;
 
@@ -98,8 +103,6 @@ const resourceTypes = resourceTypeEntries;
 const datasetKinds = performanceDatasetKinds;
 
 const activeCharts = new Set<Chart>();
-const axisMode = ref<AxisMode>("version");
-const renderedAxisMode = ref<AxisMode>("version");
 const chartDatasets = ref<ChartDatasetCollection>({});
 const rawDatasets = ref<RawDatasetsState | null>(null);
 const loadingProgress = ref(0);
@@ -107,10 +110,16 @@ const isLoading = ref(false);
 const loadingStage = ref<ProgressStage>("dataLoading");
 const chartLoadingStatus = ref<ChartLoadingState>(createChartLoadingState());
 const chartSettingsStatus = ref<ChartSettingsStatus>("idle");
-const selectedRangeStart = ref("");
-const selectedRangeEnd = ref("");
-const renderedRangeStart = ref("");
-const renderedRangeEnd = ref("");
+const pendingChartConfig = reactive<ChartConfig>({
+  axisMode: "version",
+  rangeStart: "",
+  rangeEnd: "",
+});
+const activeChartConfig = reactive<ChartConfig>({
+  axisMode: "version",
+  rangeStart: "",
+  rangeEnd: "",
+});
 
 let chartSettingsTransitionToken = 0;
 let chartSettingsDoneTimer: ReturnType<typeof setTimeout> | null = null;
@@ -273,6 +282,12 @@ function formatRangeOptionLabel(version: string, publishedAt: number): string {
   return `${formatLocalDate(publishedAt, true)} · ${version}`;
 }
 
+function applyChartConfig(target: ChartConfig, source: ChartConfig) {
+  target.axisMode = source.axisMode;
+  target.rangeStart = source.rangeStart;
+  target.rangeEnd = source.rangeEnd;
+}
+
 const resourceColors = computed<Record<ResourceType, string>>(() =>
   isDark.value
     ? {
@@ -321,8 +336,8 @@ function createRangeOptions(mode: AxisMode, source: RawDatasetsState | null): Ax
   });
 }
 
-const rangeOptions = computed<AxisRangeOption[]>(() => createRangeOptions(axisMode.value, rawDatasets.value));
-const renderedRangeOptions = computed<AxisRangeOption[]>(() => createRangeOptions(renderedAxisMode.value, rawDatasets.value));
+const rangeOptions = computed<AxisRangeOption[]>(() => createRangeOptions(pendingChartConfig.axisMode, rawDatasets.value));
+const activeRangeOptions = computed<AxisRangeOption[]>(() => createRangeOptions(activeChartConfig.axisMode, rawDatasets.value));
 
 function getRangeOptionIndex(value: string, options: AxisRangeOption[]): number {
   return options.findIndex((option) => option.value === value);
@@ -331,31 +346,31 @@ function getRangeOptionIndex(value: string, options: AxisRangeOption[]): number 
 function normalizeRangeSelection(changedField: "start" | "end" | "auto" = "auto") {
   const options = rangeOptions.value;
   if (options.length === 0) {
-    selectedRangeStart.value = "";
-    selectedRangeEnd.value = "";
+    pendingChartConfig.rangeStart = "";
+    pendingChartConfig.rangeEnd = "";
     return;
   }
 
-  if (getRangeOptionIndex(selectedRangeStart.value, options) === -1) {
-    selectedRangeStart.value = options[0].value;
+  if (getRangeOptionIndex(pendingChartConfig.rangeStart, options) === -1) {
+    pendingChartConfig.rangeStart = options[0].value;
   }
 
-  if (getRangeOptionIndex(selectedRangeEnd.value, options) === -1) {
-    selectedRangeEnd.value = options[options.length - 1].value;
+  if (getRangeOptionIndex(pendingChartConfig.rangeEnd, options) === -1) {
+    pendingChartConfig.rangeEnd = options[options.length - 1].value;
   }
 
-  const startIndex = getRangeOptionIndex(selectedRangeStart.value, options);
-  const endIndex = getRangeOptionIndex(selectedRangeEnd.value, options);
+  const startIndex = getRangeOptionIndex(pendingChartConfig.rangeStart, options);
+  const endIndex = getRangeOptionIndex(pendingChartConfig.rangeEnd, options);
 
   if (startIndex === -1 || endIndex === -1) return;
   if (startIndex <= endIndex) return;
 
   if (changedField === "end") {
-    selectedRangeStart.value = selectedRangeEnd.value;
+    pendingChartConfig.rangeStart = pendingChartConfig.rangeEnd;
     return;
   }
 
-  selectedRangeEnd.value = selectedRangeStart.value;
+  pendingChartConfig.rangeEnd = pendingChartConfig.rangeStart;
 }
 
 function resolveRangeBounds(startValue: string, endValue: string, options: AxisRangeOption[]) {
@@ -377,7 +392,7 @@ function resolveRangeBounds(startValue: string, endValue: string, options: AxisR
 }
 
 const renderedRangeBounds = computed(() =>
-  resolveRangeBounds(renderedRangeStart.value, renderedRangeEnd.value, renderedRangeOptions.value),
+  resolveRangeBounds(activeChartConfig.rangeStart, activeChartConfig.rangeEnd, activeRangeOptions.value),
 );
 
 const xAxisRange = computed(() => {
@@ -391,15 +406,15 @@ const xAxisRange = computed(() => {
 function buildChartPoints(series: (number | null)[], timelineEntries: TimelineEntry[]): ChartPoint[] {
   const points = timelineEntries
     .map(({ version, publishedAt, index }) => ({
-      x: renderedAxisMode.value === "version" ? index : publishedAt,
+      x: activeChartConfig.axisMode === "version" ? index : publishedAt,
       y: series[index] ?? null,
       version,
       publishedAt,
     }))
-    .filter((point) => renderedAxisMode.value !== "time" || point.x > 0)
+    .filter((point) => activeChartConfig.axisMode !== "time" || point.x > 0)
     .filter((point) => point.x >= renderedRangeBounds.value.min && point.x <= renderedRangeBounds.value.max);
 
-  if (renderedAxisMode.value === "time") {
+  if (activeChartConfig.axisMode === "time") {
     points.sort((a, b) => a.x - b.x);
   }
 
@@ -497,20 +512,20 @@ const chartOptions = computed<ChartOptions<"line">>(() => ({
       max: xAxisRange.value.max,
       title: {
         display: true,
-        text: renderedAxisMode.value === "version" ? text.value.xAxisVersion : text.value.xAxisTime,
+        text: activeChartConfig.axisMode === "version" ? text.value.xAxisVersion : text.value.xAxisTime,
         color: isDark.value ? "#e2e8f0" : "#2c3e50",
       },
       ticks: {
         autoSkip: true,
-        maxRotation: renderedAxisMode.value === "version" ? 45 : 0,
-        minRotation: renderedAxisMode.value === "version" ? 45 : 0,
-        stepSize: renderedAxisMode.value === "version" ? 1 : undefined,
+        maxRotation: activeChartConfig.axisMode === "version" ? 45 : 0,
+        minRotation: activeChartConfig.axisMode === "version" ? 45 : 0,
+        stepSize: activeChartConfig.axisMode === "version" ? 1 : undefined,
         color: isDark.value ? "#cbd5e0" : "#4a5568",
         callback: (value: number | string, index: number, ticks: { value: number | string }[]) => {
           const numericValue = parseTickTimestamp(value);
           if (numericValue === null) return "";
 
-          if (renderedAxisMode.value === "version") {
+          if (activeChartConfig.axisMode === "version") {
             const versionIndex = Math.round(numericValue);
             if (Math.abs(numericValue - versionIndex) > Number.EPSILON) return "";
             return rawDatasets.value?.versions[versionIndex] ?? "";
@@ -571,9 +586,7 @@ async function refreshChartDatasetsWithFeedback() {
   await nextTick();
   await waitForNextFrame();
   if (currentToken !== chartSettingsTransitionToken || !rawDatasets.value) return;
-  renderedAxisMode.value = axisMode.value;
-  renderedRangeStart.value = selectedRangeStart.value;
-  renderedRangeEnd.value = selectedRangeEnd.value;
+  applyChartConfig(activeChartConfig, pendingChartConfig);
   await nextTick();
   await waitForNextFrame();
   if (currentToken !== chartSettingsTransitionToken || !rawDatasets.value) return;
@@ -602,22 +615,22 @@ function hasChartData(pageKey: PageKey, kind: DatasetKind): boolean {
 }
 
 watch(
-  [rangeOptions, axisMode],
+  [rangeOptions, () => pendingChartConfig.axisMode],
   () => {
     normalizeRangeSelection("auto");
   },
   { immediate: true },
 );
 
-watch(selectedRangeStart, () => {
+watch(() => pendingChartConfig.rangeStart, () => {
   normalizeRangeSelection("start");
 });
 
-watch(selectedRangeEnd, () => {
+watch(() => pendingChartConfig.rangeEnd, () => {
   normalizeRangeSelection("end");
 });
 
-watch([isDark, axisMode, selectedRangeStart, selectedRangeEnd, text], () => {
+watch([isDark, () => pendingChartConfig.axisMode, () => pendingChartConfig.rangeStart, () => pendingChartConfig.rangeEnd, text], () => {
   refreshChartDatasetsWithFeedback();
 });
 
@@ -758,9 +771,7 @@ onMounted(async () => {
       publishedAts,
     };
     normalizeRangeSelection("auto");
-    renderedAxisMode.value = axisMode.value;
-    renderedRangeStart.value = selectedRangeStart.value;
-    renderedRangeEnd.value = selectedRangeEnd.value;
+    applyChartConfig(activeChartConfig, pendingChartConfig);
 
     console.time("  3️⃣ Chart Data Creation");
     loadingStage.value = "chartCreation";
@@ -810,7 +821,7 @@ onBeforeUnmount(() => {
       <span class="axis-mode-switch__label">{{ text.axisMode }}</span>
       <label class="axis-mode-switch__control">
         <select
-          v-model="axisMode"
+          v-model="pendingChartConfig.axisMode"
           class="axis-mode-switch__select"
           :aria-label="text.ariaAxisMode"
         >
@@ -820,10 +831,12 @@ onBeforeUnmount(() => {
       </label>
     </div>
     <div class="chart-range-controls">
-      <span class="axis-mode-switch__label">{{ axisMode === "version" ? text.versionRange : text.timeRange }}</span>
+      <span class="axis-mode-switch__label">
+        {{ pendingChartConfig.axisMode === "version" ? text.versionRange : text.timeRange }}
+      </span>
       <label class="axis-mode-switch__control">
         <select
-          v-model="selectedRangeStart"
+          v-model="pendingChartConfig.rangeStart"
           class="axis-mode-switch__select axis-mode-switch__select--range"
           :aria-label="text.ariaRangeStart"
         >
@@ -839,7 +852,7 @@ onBeforeUnmount(() => {
       <span class="chart-range-controls__separator">{{ text.rangeSeparator }}</span>
       <label class="axis-mode-switch__control">
         <select
-          v-model="selectedRangeEnd"
+          v-model="pendingChartConfig.rangeEnd"
           class="axis-mode-switch__select axis-mode-switch__select--range"
           :aria-label="text.ariaRangeEnd"
         >
