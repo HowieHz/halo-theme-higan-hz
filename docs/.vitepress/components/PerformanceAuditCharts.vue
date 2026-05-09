@@ -64,14 +64,14 @@ type PageDatasets = Record<DatasetKind, NumericSeries>;
 type DatasetCollection = Record<PageKey, PageDatasets>;
 interface ChartSeries {
   labels: string[];
-  datasets: Array<{
+  datasets: {
     label: string;
     data: ChartPoint[];
     borderColor: string;
     backgroundColor: string;
     tension: number;
     borderWidth: number;
-  }>;
+  }[];
 }
 type ChartPageData = Record<DatasetKind, ChartSeries>;
 type ChartDatasetCollection = Partial<Record<PageKey, ChartPageData>>;
@@ -708,6 +708,10 @@ function getChartLoading(pageKey: PageKey, kind: DatasetKind): boolean {
   return chartLoadingStatus.value[pageKey][kind];
 }
 
+function hasChartData(pageKey: PageKey, kind: DatasetKind): boolean {
+  return getChartData(pageKey, kind) !== null;
+}
+
 watch(
   [rangeOptions, axisMode],
   () => {
@@ -893,7 +897,9 @@ onBeforeUnmount(() => {
 <template>
   <div class="chart-controls">
     <div class="chart-controls__header">
-      <div class="chart-controls__title">{{ text.chartSettings }}</div>
+      <div class="chart-controls__title">
+        {{ text.chartSettings }}
+      </div>
       <span
         v-if="chartSettingsStatus !== 'idle'"
         class="axis-mode-switch__loading"
@@ -973,19 +979,16 @@ onBeforeUnmount(() => {
 
       <div class="performance-chart-details__body">
         <ProgressBar
-          :isLoading="getChartLoading(section.key, dataset.key)"
+          :is-loading="getChartLoading(section.key, dataset.key)"
           :stage="loadingStage"
           :labels="loadingLabels"
           :progress="loadingProgress"
           :label="text.progressLabel"
         />
 
-        <div
-          v-if="getChartData(section.key, dataset.key)"
-          class="performance-chart-canvas"
-        >
+        <div v-if="hasChartData(section.key, dataset.key)" class="performance-chart-canvas">
           <LineChart
-            :data="getChartData(section.key, dataset.key)!"
+            :data="getChartData(section.key, dataset.key) ?? { labels: [], datasets: [] }"
             :options="chartOptions"
           />
         </div>
@@ -1040,7 +1043,6 @@ onBeforeUnmount(() => {
 }
 
 .axis-mode-switch__select {
-  appearance: none;
   appearance: none;
   background: var(--vp-c-bg);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8L9.5 4.5' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
