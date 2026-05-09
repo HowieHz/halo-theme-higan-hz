@@ -28,6 +28,7 @@ export interface PerformanceAuditLocaleText {
   noPublishedTime: string;
   loadErrorPrefix: string;
   chartSettings: string;
+  loading: string;
   rendering: string;
   rendered: string;
   axisMode: string;
@@ -53,6 +54,7 @@ export const performanceAuditText = {
     noPublishedTime: "未记录发布时间",
     loadErrorPrefix: "加载图表数据失败:",
     chartSettings: "图表设置",
+    loading: "加载中",
     rendering: "渲染中",
     rendered: "渲染完毕",
     axisMode: "横轴模式",
@@ -105,6 +107,7 @@ export const performanceAuditText = {
     noPublishedTime: "Published time unavailable",
     loadErrorPrefix: "Failed to load chart data:",
     chartSettings: "Chart Settings",
+    loading: "Loading",
     rendering: "Rendering",
     rendered: "Rendered",
     axisMode: "Axis mode",

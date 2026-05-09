@@ -804,17 +804,22 @@ onBeforeUnmount(() => {
         {{ text.chartSettings }}
       </div>
       <span
-        v-if="chartSettingsStatus !== 'idle'"
+        v-if="isLoading || chartSettingsStatus !== 'idle'"
         class="axis-mode-switch__loading"
         aria-live="polite"
       >
-        <span
-          v-if="chartSettingsStatus === 'rendering'"
-          class="axis-mode-switch__status-icon"
-          :class="{ 'axis-mode-switch__status-icon--spinning': chartSettingsStatus === 'rendering' }"
-        >
-        </span>
-        {{ chartSettingsStatus === "rendering" ? text.rendering : text.rendered }}
+        <template v-if="isLoading">
+          {{ text.loading }} {{ loadingProgress }}%
+        </template>
+        <template v-else>
+          <span
+            v-if="chartSettingsStatus === 'rendering'"
+            class="axis-mode-switch__status-icon"
+            :class="{ 'axis-mode-switch__status-icon--spinning': chartSettingsStatus === 'rendering' }"
+          >
+          </span>
+          {{ chartSettingsStatus === "rendering" ? text.rendering : text.rendered }}
+        </template>
       </span>
     </div>
     <div class="axis-mode-switch">
