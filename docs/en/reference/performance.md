@@ -88,11 +88,20 @@ type RawDatasetsState = {
   versions: string[]
   publishedAts: number[]
 }
+type AxisRangeOption = {
+  value: string
+  label: string
+  position: number
+}
 type ChartLoadingFlags = Record<DatasetKind, boolean>
 type ChartLoadingState = Record<PageKey, ChartLoadingFlags>
 
 const axisMode = ref<AxisMode>('version')
 const activeCharts = new Set<any>()
+const isChartSettingsTransitioning = ref(false)
+const selectedRangeStart = ref('')
+const selectedRangeEnd = ref('')
+let chartSettingsTransitionToken = 0
 
 function pad2(value: number): string {
   return String(value).padStart(2, '0')
@@ -138,6 +147,10 @@ function shouldShowYearOnTick(timestamp: number, previousTimestamp: number | nul
 function parseTickTimestamp(value: number | string): number | null {
   const numericValue = typeof value === 'number' ? value : Number(value)
   return Number.isFinite(numericValue) ? numericValue : null
+}
+
+function formatRangeOptionLabel(version: string, publishedAt: number): string {
+  return `${formatLocalDate(publishedAt, true)} · ${version}`
 }
 
 function createEmptyNumericSeries(): NumericSeries {
@@ -238,25 +251,87 @@ const labels = {
   chartCreation: 'Creating Chart Data'
 } as const satisfies Record<ProgressStage, string>
 
+const rangeOptions = computed<AxisRangeOption[]>(() => {
+  if (!rawDatasets.value) return []
+
+  if (axisMode.value === 'version') {
+    return rawDatasets.value.versions.map((version, index) => ({
+      value: version,
+      label: version,
+      position: index
+    }))
+  }
+
+  return rawDatasets.value.versions.flatMap((version, index) => {
+    const publishedAt = rawDatasets.value?.publishedAts[index] ?? 0
+    if (publishedAt <= 0) return []
+    return [{
+      value: version,
+      label: formatRangeOptionLabel(version, publishedAt),
+      position: publishedAt
+    }]
+  })
+})
+
+function getRangeOptionIndex(value: string, options: AxisRangeOption[]): number {
+  return options.findIndex((option) => option.value === value)
+}
+
+function normalizeRangeSelection(changedField: 'start' | 'end' | 'auto' = 'auto') {
+  const options = rangeOptions.value
+  if (options.length === 0) {
+    selectedRangeStart.value = ''
+    selectedRangeEnd.value = ''
+    return
+  }
+
+  if (getRangeOptionIndex(selectedRangeStart.value, options) === -1) {
+    selectedRangeStart.value = options[0].value
+  }
+
+  if (getRangeOptionIndex(selectedRangeEnd.value, options) === -1) {
+    selectedRangeEnd.value = options[options.length - 1].value
+  }
+
+  const startIndex = getRangeOptionIndex(selectedRangeStart.value, options)
+  const endIndex = getRangeOptionIndex(selectedRangeEnd.value, options)
+
+  if (startIndex === -1 || endIndex === -1) return
+  if (startIndex <= endIndex) return
+
+  if (changedField === 'end') {
+    selectedRangeStart.value = selectedRangeEnd.value
+    return
+  }
+
+  selectedRangeEnd.value = selectedRangeStart.value
+}
+
+const selectedRangeBounds = computed(() => {
+  const options = rangeOptions.value
+  if (options.length === 0) {
+    return { min: 0, max: 0 }
+  }
+
+  const startIndex = getRangeOptionIndex(selectedRangeStart.value, options)
+  const endIndex = getRangeOptionIndex(selectedRangeEnd.value, options)
+  const safeStartIndex = startIndex === -1 ? 0 : startIndex
+  const safeEndIndex = endIndex === -1 ? options.length - 1 : endIndex
+  const minIndex = Math.min(safeStartIndex, safeEndIndex)
+  const maxIndex = Math.max(safeStartIndex, safeEndIndex)
+
+  return {
+    min: options[minIndex].position,
+    max: options[maxIndex].position
+  }
+})
+
 const xAxisRange = computed(() => {
   if (!rawDatasets.value) {
     return { min: 0, max: 0 }
   }
 
-  if (axisMode.value === 'version') {
-    const lastIndex = Math.max(rawDatasets.value.versions.length - 1, 0)
-    return { min: 0, max: lastIndex }
-  }
-
-  const validPublishedAts = rawDatasets.value.publishedAts.filter((timestamp) => timestamp > 0)
-  if (validPublishedAts.length === 0) {
-    return { min: 0, max: 0 }
-  }
-
-  return {
-    min: validPublishedAts[0],
-    max: validPublishedAts[validPublishedAts.length - 1]
-  }
+  return selectedRangeBounds.value
 })
 
 function buildChartPoints(series: Array<number | null>, timelineEntries: TimelineEntry[]): ChartPoint[] {
@@ -268,6 +343,7 @@ function buildChartPoints(series: Array<number | null>, timelineEntries: Timelin
       publishedAt
     }))
     .filter((point) => axisMode.value !== 'time' || point.x > 0)
+    .filter((point) => point.x >= selectedRangeBounds.value.min && point.x <= selectedRangeBounds.value.max)
 
   if (axisMode.value === 'time') {
     points.sort((a, b) => a.x - b.x)
@@ -418,9 +494,36 @@ const chartOptions = computed(() => ({
   }
 }))
 
-watch([isDark, axisMode], () => {
+function refreshChartDatasetsWithFeedback() {
   if (!rawDatasets.value) return
+
+  isChartSettingsTransitioning.value = true
+  chartSettingsTransitionToken += 1
+  const currentToken = chartSettingsTransitionToken
   chartDatasets.value = buildChartDatasets(rawDatasets.value)
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      if (currentToken === chartSettingsTransitionToken) {
+        isChartSettingsTransitioning.value = false
+      }
+    })
+  })
+}
+
+watch([rangeOptions, axisMode], () => {
+  normalizeRangeSelection('auto')
+}, { immediate: true })
+
+watch(selectedRangeStart, () => {
+  normalizeRangeSelection('start')
+})
+
+watch(selectedRangeEnd, () => {
+  normalizeRangeSelection('end')
+})
+
+watch([isDark, axisMode, selectedRangeStart, selectedRangeEnd], () => {
+  refreshChartDatasetsWithFeedback()
 })
 
 // Load and process data
@@ -558,6 +661,7 @@ onMounted(async () => {
       versions,
       publishedAts
     }
+    normalizeRangeSelection('auto')
 
     console.time('  3️⃣ Chart Data Creation')
     loadingStage.value = 'chartCreation'
@@ -640,15 +744,43 @@ const LineChart = defineClientComponent(async () => {
 
 ## Size Monitoring
 
-<div class="axis-mode-switch">
-  <span class="axis-mode-switch__label">Axis mode</span>
-  <label class="axis-mode-switch__control">
-    <input v-model="axisMode" type="checkbox" true-value="time" false-value="version" aria-label="Switch axis mode" />
-    <span class="axis-mode-switch__track">
-      <span class="axis-mode-switch__thumb"></span>
+<div class="chart-controls">
+  <div class="chart-controls__title">Chart Settings</div>
+  <div class="axis-mode-switch">
+    <span class="axis-mode-switch__label">Axis mode</span>
+    <label class="axis-mode-switch__control">
+      <select v-model="axisMode" class="axis-mode-switch__select" aria-label="Switch axis mode">
+        <option value="version">Version spacing</option>
+        <option value="time">Time spacing</option>
+      </select>
+    </label>
+    <span v-if="isChartSettingsTransitioning" class="axis-mode-switch__loading" aria-live="polite">
+      <span class="axis-mode-switch__spinner"></span>
+      Switching
     </span>
-  </label>
-  <span class="axis-mode-switch__value">{{ axisMode === 'version' ? 'Version spacing' : 'Time spacing' }}</span>
+  </div>
+  <div class="chart-range-controls">
+    <span class="axis-mode-switch__label">{{ axisMode === 'version' ? 'Version range' : 'Time range' }}</span>
+    <label class="axis-mode-switch__control">
+      <select v-model="selectedRangeStart" class="axis-mode-switch__select axis-mode-switch__select--range" aria-label="Select range start">
+        <option v-for="option in rangeOptions" :key="`start-${option.value}`" :value="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+    </label>
+    <span class="chart-range-controls__separator">to</span>
+    <label class="axis-mode-switch__control">
+      <select v-model="selectedRangeEnd" class="axis-mode-switch__select axis-mode-switch__select--range" aria-label="Select range end">
+        <option v-for="option in rangeOptions" :key="`end-${option.value}`" :value="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+    </label>
+    <span v-if="isChartSettingsTransitioning" class="axis-mode-switch__loading" aria-live="polite">
+      <span class="axis-mode-switch__spinner"></span>
+      Updating
+    </span>
+  </div>
 </div>
 
 ### Average Per Page
@@ -1037,6 +1169,17 @@ const LineChart = defineClientComponent(async () => {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem;
+}
+
+.chart-range-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+}
+
+.chart-controls {
   margin: 1rem 0 1.5rem;
   padding: 0.85rem 1rem;
   border: 1px solid var(--vp-c-divider);
@@ -1044,49 +1187,62 @@ const LineChart = defineClientComponent(async () => {
   background: var(--vp-c-bg-soft);
 }
 
-.axis-mode-switch__label,
-.axis-mode-switch__value {
+.chart-controls__title {
+  margin-bottom: 0.85rem;
+  color: var(--vp-c-text-1);
   font-weight: 600;
 }
 
 .axis-mode-switch__control {
+  position: relative;
   display: inline-flex;
+  align-items: center;
+}
+
+.axis-mode-switch__select {
+  min-width: 10rem;
+  padding: 0.45rem 2.5rem 0.45rem 0.75rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8L9.5 4.5' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  background-size: 0.75rem;
+  appearance: none;
+  -webkit-appearance: none;
   cursor: pointer;
 }
 
-.axis-mode-switch__control input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
+.axis-mode-switch__select--range {
+  min-width: 13rem;
 }
 
-.axis-mode-switch__track {
-  position: relative;
+.chart-range-controls__separator {
+  color: var(--vp-c-text-2);
+}
+
+.axis-mode-switch__loading {
   display: inline-flex;
-  width: 3.5rem;
-  height: 1.9rem;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--vp-c-text-2);
+  font-size: 0.95rem;
+}
+
+.axis-mode-switch__spinner {
+  width: 0.95rem;
+  height: 0.95rem;
+  border: 2px solid color-mix(in srgb, var(--vp-c-brand-1) 25%, transparent);
+  border-top-color: var(--vp-c-brand-1);
   border-radius: 999px;
-  background: var(--vp-c-divider);
-  transition: background-color 0.2s ease;
+  animation: axis-mode-spin 0.8s linear infinite;
 }
 
-.axis-mode-switch__thumb {
-  position: absolute;
-  top: 0.2rem;
-  left: 0.2rem;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  background: var(--vp-c-bg);
-  box-shadow: 0 2px 8px rgb(15 23 42 / 0.15);
-  transition: transform 0.2s ease;
-}
-
-.axis-mode-switch__control input:checked + .axis-mode-switch__track {
-  background: var(--vp-c-brand-1);
-}
-
-.axis-mode-switch__control input:checked + .axis-mode-switch__track .axis-mode-switch__thumb {
-  transform: translateX(1.6rem);
+@keyframes axis-mode-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
