@@ -23,7 +23,6 @@ import {
 import {
   performanceAuditText,
   type LocaleKey,
-  type PerformanceAuditLocaleText,
   type PerformanceDatasetKind,
   type PerformancePageKey,
   type PerformanceProgressStage,
@@ -127,7 +126,7 @@ const selectedRangeEnd = ref("");
 let chartSettingsTransitionToken = 0;
 let chartSettingsDoneTimer: ReturnType<typeof setTimeout> | null = null;
 
-const text = computed<PerformanceAuditLocaleText>(() => performanceAuditText[props.locale]);
+const text = computed(() => performanceAuditText[props.locale]);
 const loadingLabels = computed(() => text.value.loadingStages);
 const sectionList = computed(
   () =>
@@ -199,13 +198,18 @@ function createEmptyPageDatasets(): PageDatasets {
 }
 
 function createDatasetCollection(): DatasetCollection {
-  const datasets = { average: createEmptyPageDatasets() } as DatasetCollection;
-
-  for (const { key } of pageEntries) {
-    datasets[key] = createEmptyPageDatasets();
-  }
-
-  return datasets;
+  return {
+    average: createEmptyPageDatasets(),
+    home: createEmptyPageDatasets(),
+    archives: createEmptyPageDatasets(),
+    post: createEmptyPageDatasets(),
+    tags: createEmptyPageDatasets(),
+    tagDetail: createEmptyPageDatasets(),
+    categories: createEmptyPageDatasets(),
+    categoryDetail: createEmptyPageDatasets(),
+    author: createEmptyPageDatasets(),
+    about: createEmptyPageDatasets(),
+  };
 }
 
 function createChartLoadingState(isChartLoading = false): ChartLoadingState {
@@ -215,13 +219,19 @@ function createChartLoadingState(isChartLoading = false): ChartLoadingState {
     resourcesGzipped: isChartLoading,
     resourcesRaw: isChartLoading,
   };
-  const state = { average: { ...flags } } as ChartLoadingState;
 
-  for (const { key } of pageEntries) {
-    state[key] = { ...flags };
-  }
-
-  return state;
+  return {
+    average: { ...flags },
+    home: { ...flags },
+    archives: { ...flags },
+    post: { ...flags },
+    tags: { ...flags },
+    tagDetail: { ...flags },
+    categories: { ...flags },
+    categoryDetail: { ...flags },
+    author: { ...flags },
+    about: { ...flags },
+  };
 }
 
 function pad2(value: number): string {
@@ -410,7 +420,7 @@ function buildChartDatasets(source: RawDatasetsState, updateLoading = false): Ch
   }));
   let processedCount = 0;
   const totalCharts = (pageEntries.length + 1) * datasetKinds.length;
-  const currentChartDatasets = {} as ChartDatasetCollection;
+  const currentChartDatasets: ChartDatasetCollection = {};
 
   const createChartSeries = (series: NumericSeries): ChartSeries => ({
     labels: source.versions,
@@ -425,11 +435,15 @@ function buildChartDatasets(source: RawDatasetsState, updateLoading = false): Ch
   });
 
   const updateChartData = (pageKey: PageKey, pageData: PageDatasets) => {
-    const pageCharts = {} as ChartPageData;
+    const pageCharts: ChartPageData = {
+      themeGzipped: createChartSeries(pageData.themeGzipped),
+      themeRaw: createChartSeries(pageData.themeRaw),
+      resourcesGzipped: createChartSeries(pageData.resourcesGzipped),
+      resourcesRaw: createChartSeries(pageData.resourcesRaw),
+    };
 
-    for (const kind of datasetKinds) {
-      pageCharts[kind] = createChartSeries(pageData[kind]);
-      if (updateLoading) {
+    if (updateLoading) {
+      for (const kind of datasetKinds) {
         chartLoadingStatus.value[pageKey][kind] = false;
         processedCount++;
         loadingProgress.value = Math.round((processedCount / totalCharts) * 100);
