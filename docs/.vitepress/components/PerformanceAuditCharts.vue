@@ -162,7 +162,7 @@ const localeText = {
       chartCreation: "图表数据创建",
     },
     sectionTitles: {
-      average: "平均每个页面",
+      average: "页面平均值",
       home: "首页",
       archives: "文章归档",
       post: "文章详情",
