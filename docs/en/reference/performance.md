@@ -93,15 +93,17 @@ type AxisRangeOption = {
   label: string
   position: number
 }
+type ChartSettingsStatus = 'idle' | 'rendering' | 'done'
 type ChartLoadingFlags = Record<DatasetKind, boolean>
 type ChartLoadingState = Record<PageKey, ChartLoadingFlags>
 
 const axisMode = ref<AxisMode>('version')
 const activeCharts = new Set<any>()
-const isChartSettingsTransitioning = ref(false)
+const chartSettingsStatus = ref<ChartSettingsStatus>('idle')
 const selectedRangeStart = ref('')
 const selectedRangeEnd = ref('')
 let chartSettingsTransitionToken = 0
+let chartSettingsDoneTimer: ReturnType<typeof setTimeout> | null = null
 
 function pad2(value: number): string {
   return String(value).padStart(2, '0')
@@ -497,14 +499,24 @@ const chartOptions = computed(() => ({
 function refreshChartDatasetsWithFeedback() {
   if (!rawDatasets.value) return
 
-  isChartSettingsTransitioning.value = true
+  if (chartSettingsDoneTimer) {
+    clearTimeout(chartSettingsDoneTimer)
+    chartSettingsDoneTimer = null
+  }
+
+  chartSettingsStatus.value = 'rendering'
   chartSettingsTransitionToken += 1
   const currentToken = chartSettingsTransitionToken
   chartDatasets.value = buildChartDatasets(rawDatasets.value)
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       if (currentToken === chartSettingsTransitionToken) {
-        isChartSettingsTransitioning.value = false
+        chartSettingsStatus.value = 'done'
+        chartSettingsDoneTimer = setTimeout(() => {
+          if (currentToken === chartSettingsTransitionToken) {
+            chartSettingsStatus.value = 'idle'
+          }
+        }, 500)
       }
     })
   })
@@ -546,7 +558,7 @@ onMounted(async () => {
     console.time('  1️⃣ Data Loading')
     loadingStage.value = 'dataLoading'
 
-    const jsonFiles = import.meta.glob<{ default: unknown }>('../../.github/page_size_audit_results/*.json')
+    const jsonFiles = import.meta.glob<{ default: unknown }>('../../../.github/page_size_audit_results/*.json')
     const paths = Object.keys(jsonFiles)
     const totalFiles = paths.length
     let completedCount = 0
@@ -745,7 +757,18 @@ const LineChart = defineClientComponent(async () => {
 ## Size Monitoring
 
 <div class="chart-controls">
-  <div class="chart-controls__title">Chart Settings</div>
+  <div class="chart-controls__header">
+    <div class="chart-controls__title">Chart Settings</div>
+    <span v-if="chartSettingsStatus !== 'idle'" class="axis-mode-switch__loading" aria-live="polite">
+      <span
+        class="axis-mode-switch__status-icon"
+        :class="{ 'axis-mode-switch__status-icon--spinning': chartSettingsStatus === 'rendering' }"
+      >
+        {{ chartSettingsStatus === 'rendering' ? '' : '√' }}
+      </span>
+      {{ chartSettingsStatus === 'rendering' ? 'Rendering' : 'Rendered' }}
+    </span>
+  </div>
   <div class="axis-mode-switch">
     <span class="axis-mode-switch__label">Axis mode</span>
     <label class="axis-mode-switch__control">
@@ -754,10 +777,6 @@ const LineChart = defineClientComponent(async () => {
         <option value="time">Time spacing</option>
       </select>
     </label>
-    <span v-if="isChartSettingsTransitioning" class="axis-mode-switch__loading" aria-live="polite">
-      <span class="axis-mode-switch__spinner"></span>
-      Switching
-    </span>
   </div>
   <div class="chart-range-controls">
     <span class="axis-mode-switch__label">{{ axisMode === 'version' ? 'Version range' : 'Time range' }}</span>
@@ -776,10 +795,6 @@ const LineChart = defineClientComponent(async () => {
         </option>
       </select>
     </label>
-    <span v-if="isChartSettingsTransitioning" class="axis-mode-switch__loading" aria-live="polite">
-      <span class="axis-mode-switch__spinner"></span>
-      Updating
-    </span>
   </div>
 </div>
 
@@ -1187,8 +1202,15 @@ const LineChart = defineClientComponent(async () => {
   background: var(--vp-c-bg-soft);
 }
 
-.chart-controls__title {
+.chart-controls__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
   margin-bottom: 0.85rem;
+}
+
+.chart-controls__title {
   color: var(--vp-c-text-1);
   font-weight: 600;
 }
@@ -1231,9 +1253,17 @@ const LineChart = defineClientComponent(async () => {
   font-size: 0.95rem;
 }
 
-.axis-mode-switch__spinner {
+.axis-mode-switch__status-icon {
   width: 0.95rem;
   height: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--vp-c-brand-1);
+  font-weight: 700;
+}
+
+.axis-mode-switch__status-icon--spinning {
   border: 2px solid color-mix(in srgb, var(--vp-c-brand-1) 25%, transparent);
   border-top-color: var(--vp-c-brand-1);
   border-radius: 999px;
