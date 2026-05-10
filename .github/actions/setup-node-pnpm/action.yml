@@ -27,11 +27,11 @@ runs:
 
     - name: Setup pnpm (normal, when packageManager declares pnpm)
       if: ${{ steps.detect-pm.outputs.pm != '' && contains(steps.detect-pm.outputs.pm, 'pnpm') }}
-      uses: pnpm/action-setup@8912a9102ac27614460f54aedde9e1e7f9aec20d # https://github.com/pnpm/action-setup/releases/tag/v6.0.5
+      uses: pnpm/action-setup@91ab88e2619ed1f46221f0ba42d1492c02baf788 # https://github.com/pnpm/action-setup/releases/tag/v6.0.6
 
     - name: Setup pnpm (fallback when packageManager missing)
       if: ${{ steps.detect-pm.outputs.pm == '' }}
-      uses: pnpm/action-setup@8912a9102ac27614460f54aedde9e1e7f9aec20d # https://github.com/pnpm/action-setup/releases/tag/v6.0.5
+      uses: pnpm/action-setup@91ab88e2619ed1f46221f0ba42d1492c02baf788 # https://github.com/pnpm/action-setup/releases/tag/v6.0.6
       with:
         version: ${{ inputs.pnpm-version }}
 
