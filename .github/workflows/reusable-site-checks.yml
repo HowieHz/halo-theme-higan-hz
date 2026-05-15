@@ -610,7 +610,7 @@ jobs:
               MISSING_PACKAGES+=("playwright")
             fi
             if ! node --input-type=module -e "await import('@argos-ci/playwright')" >/dev/null 2>&1; then
-              MISSING_PACKAGES+=("@argos-ci/playwright")
+              MISSING_PACKAGES+=("@argos-ci/playwright@6.6.4")
             fi
             if [ ${#MISSING_PACKAGES[@]} -gt 0 ]; then
               pnpm add -w -D --allow-build=sharp --allow-build=esbuild --allow-build=unrs-resolver "${MISSING_PACKAGES[@]}" || echo "⚠️  Playwright install failed, continuing"
@@ -789,7 +789,7 @@ jobs:
             MISSING_PACKAGES+=("playwright")
           fi
           if ! node --input-type=module -e "await import('@argos-ci/playwright')" >/dev/null 2>&1; then
-            MISSING_PACKAGES+=("@argos-ci/playwright")
+            MISSING_PACKAGES+=("@argos-ci/playwright@6.6.4")
           fi
           if [ ${#MISSING_PACKAGES[@]} -gt 0 ]; then
             pnpm add -w -D --allow-build=sharp --allow-build=esbuild --allow-build=unrs-resolver "${MISSING_PACKAGES[@]}" || echo "⚠️  Playwright install failed, continuing"
