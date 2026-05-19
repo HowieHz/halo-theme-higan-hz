@@ -132,12 +132,17 @@ After formatting, CI automatically runs `pnpm lint`, including the following che
 
 #### Versioning and Release Guard
 
-- Auto-fix versioning: PRs labeled `release` also auto-fix `package.json` `version` through the automatic maintenance workflow (`maintain-code.yml`) after formatting and linting. This fix runs only when the PR base is the latest commit on the target branch, and it only changes `package.json`; if the base is stale, no version fix is committed and the PR branch must be updated first.
+- Auto-fix versioning: PRs labeled `release` also auto-fix `package.json` `version` through the automatic maintenance workflow (`maintain-code.yml`) after formatting and linting.
+  This fix runs only when the PR base is the latest commit on the target branch,
+  and it only changes `package.json`; if the base is stale,
+  no version fix is committed and the PR branch must be updated first.
 - Release guard checks:
   - Verifies that `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` still contain `## [Unreleased]` (fails if missing).
   - Verifies that changelog compare-link definitions at the end of `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` are complete and match release headings (fails if missing or mismatched).
   - Ensures non-release PRs do not manually modify the `version` field in `package.json` (fails if changed).
-  - Ensures release PRs (with the `release` label) update the `version` field in `package.json` (fails if unchanged), use a valid semantic version matching `/^\d+\.\d+\.\d+$/` (fails if invalid), and match the target version inferred from commit-message semantics within the range from the latest stable tag to the PR's latest commit.
+  - Ensures release PRs (with the `release` label) update the `version` field in `package.json` (fails if unchanged),
+    use a valid semantic version matching `/^\d+\.\d+\.\d+$/` (fails if invalid),
+    and match the target version inferred from commit-message semantics within the range from the latest stable tag to the PR's latest commit.
   - Ensures release PRs (with the `release` label) are based on the latest commit of the target branch (fails if stale).
   - Prevents manual changes to `spec.version` in `theme.yaml` and `i18n-settings/theme.*.yaml` in PRs (fails if changed).
 
@@ -170,7 +175,9 @@ Before releasing, confirm all of the following:
    `## [Unreleased]` heading has not been removed, and
    compare-link definitions at the end are retained
    (the release workflow will rebuild this section automatically).
-3. In release PRs (with the `release` label), only `package.json` `version` should change. The automatic maintenance workflow (`maintain-code.yml`) can auto-fix it when the PR base is not stale, and that value becomes the target stable version.
+3. In release PRs (with the `release` label), only `package.json` `version` should change.
+   The automatic maintenance workflow (`maintain-code.yml`) can auto-fix it when the PR base is not stale,
+   and that value becomes the target stable version.
 4. Manually verify that the `requires` field in `theme.yaml` and `i18n-settings/theme.*.yaml` still matches the target Halo CMS compatibility range.
 
 ### Stable Release Procedure

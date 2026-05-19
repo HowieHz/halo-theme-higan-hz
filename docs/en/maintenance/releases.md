@@ -8,7 +8,11 @@ This project uses semantic versioning in the format `MAJOR.MINOR.PATCH`.
 - `MINOR`: incremented when configuration updates are introduced.
 - `PATCH`: incremented when changes do not update configuration files.
 
-During release, non-merge commit subjects between the latest stable tag and the latest commit determine the actual bump level, excluding commit subjects starting with `docs` (for example `docs:`, `docs!:`, `docs!!:`). The number of `!` characters before the first `:` controls the level: `!!` bumps `MAJOR`, `!` bumps `MINOR`, and no `!` bumps `PATCH`. The highest level in the range wins.
+During release, non-merge commit subjects between the latest stable tag and the latest commit determine the actual bump level,
+excluding commit subjects starting with `docs` (for example `docs:`, `docs!:`, `docs!!:`).
+The number of `!` characters before the first `:` controls the level:
+`!!` bumps `MAJOR`, `!` bumps `MINOR`, and no `!` bumps `PATCH`.
+The highest level in the range wins.
 
 ## Release Types
 
