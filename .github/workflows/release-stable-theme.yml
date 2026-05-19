@@ -41,19 +41,15 @@ jobs:
             exit 1
           fi
 
-          PREVIOUS_TAG=$(git tag --list 'v*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)
-          if [ -z "$PREVIOUS_TAG" ]; then
-            echo "No stable release tag found" >&2
-            exit 1
-          fi
-
+          PREVIOUS_TAG=$(node .github/scripts/release-version-policy.js latest-stable-tag)
           if git rev-parse "v$RELEASE_VERSION" >/dev/null 2>&1; then
             echo "Target release tag already exists: v$RELEASE_VERSION" >&2
             exit 1
           fi
 
-          if [ "$(printf '%s\n%s\n' "${PREVIOUS_TAG#v}" "$RELEASE_VERSION" | sort -V | tail -n 1)" != "$RELEASE_VERSION" ] || [ "${PREVIOUS_TAG#v}" = "$RELEASE_VERSION" ]; then
-            echo "Target release version must be greater than previous stable version ${PREVIOUS_TAG#v}" >&2
+          EXPECTED_RELEASE_VERSION=$(node .github/scripts/release-version-policy.js next "${PREVIOUS_TAG#v}" "${PREVIOUS_TAG}..HEAD")
+          if [ "$RELEASE_VERSION" != "$EXPECTED_RELEASE_VERSION" ]; then
+            echo "Target release version must match commit-message policy for ${PREVIOUS_TAG}..HEAD; expected $EXPECTED_RELEASE_VERSION, got $RELEASE_VERSION" >&2
             exit 1
           fi
 

@@ -130,22 +130,26 @@ After formatting, CI automatically runs `pnpm lint`, including the following che
 
 > All lint steps run with auto-fix enabled. If fixes are applied, the changes are committed automatically.
 
+#### Versioning and Release Guard
+
+- Auto-fix versioning: PRs labeled `release` also auto-fix `package.json` `version` through the automatic maintenance workflow (`maintain-code.yml`) after formatting and linting.
+  This fix runs only when the PR base is the latest commit on the target branch,
+  and it only changes `package.json`; if the base is stale,
+  no version fix is committed and the PR branch must be updated first.
+- Release guard checks:
+  - Verifies that `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` still contain `## [Unreleased]` (fails if missing).
+  - Verifies that changelog compare-link definitions at the end of `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` are complete and match release headings (fails if missing or mismatched).
+  - Ensures non-release PRs do not manually modify the `version` field in `package.json` (fails if changed).
+  - Ensures release PRs (with the `release` label) update the `version` field in `package.json` (fails if unchanged),
+    use a valid semantic version matching `/^\d+\.\d+\.\d+$/` (fails if invalid),
+    and match the target version inferred from commit-message semantics within the range from the latest stable tag to the PR's latest commit.
+  - Ensures release PRs (with the `release` label) are based on the latest commit of the target branch (fails if stale).
+  - Prevents manual changes to `spec.version` in `theme.yaml` and `i18n-settings/theme.*.yaml` in PRs (fails if changed).
+
 #### Lighthouse CI
 
 - Checks Lighthouse scores and outputs reports (all scores must be full marks).
 - Compares page resource-size differences against the baseline version and outputs reports.
-
-#### Release Guard Checks
-
-- Verifies that `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` still contain `## [Unreleased]` (fails if missing).
-- Verifies that changelog compare-link definitions at the end of `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` are complete and match release headings (fails if missing or mismatched).
-- Ensures non-release PRs do not manually modify the `version` field in `package.json` (fails if changed).
-- Ensures release PRs (with the `release` label) update the `version`
-  field in `package.json` (fails if unchanged), use a valid semantic
-  version matching `/^\d+\.\d+\.\d+$/` (fails if invalid), and set a
-  version greater than the target branch's current `package.json`
-  version (fails if not incremented).
-- Prevents manual changes to `spec.version` in `theme.yaml` and `i18n-settings/theme.*.yaml` in PRs (fails if changed).
 
 #### Page Resource Size Diff Check
 
@@ -171,7 +175,9 @@ Before releasing, confirm all of the following:
    `## [Unreleased]` heading has not been removed, and
    compare-link definitions at the end are retained
    (the release workflow will rebuild this section automatically).
-3. In release PRs (with the `release` label), only `package.json` `version` should be changed manually. That value becomes the target stable version.
+3. In release PRs (with the `release` label), only `package.json` `version` should change.
+   The automatic maintenance workflow (`maintain-code.yml`) can auto-fix it when the PR base is not stale,
+   and that value becomes the target stable version.
 4. Manually verify that the `requires` field in `theme.yaml` and `i18n-settings/theme.*.yaml` still matches the target Halo CMS compatibility range.
 
 ### Stable Release Procedure
@@ -179,8 +185,8 @@ Before releasing, confirm all of the following:
 Stable releases are published automatically from a labeled PR:
 
 1. Create a PR for the release (or use an existing aggregation PR).
-2. Add the `release` label and change `package.json` `version` to the target semantic version, such as `1.57.6`.
-3. Wait for `check-release-guard.yml` to pass and confirm both the target version (from `package.json`) and the previous stable version shown in the workflow summary.
+2. Add the `release` label. The automatic maintenance workflow (`maintain-code.yml`) auto-fixes `package.json` `version` to the target semantic version when the PR base is not stale.
+3. Wait for `check-release-guard.yml` to pass and confirm the target version matches the PR's commit-message semantics.
 4. Merge the PR into `main`.
 
 After merge, the bot automatically:
@@ -210,8 +216,8 @@ Nightly pre-releases do not require manual version changes or a manually pushed 
 2. A Nightly pre-release is created only when all of the following are true:
    - There are commits within the previous calendar-day window in Asia/Shanghai.
    - There are commits after the latest stable or pre-release tag.
-   - Commits whose subject starts with `docs:` are excluded.
-3. The Nightly pre-release version rule is “current patch version + 1”, then append `-alpha.yyyyMMddHHmmssSSS`.
+   - Merge commits and commit subjects starting with `docs` (for example `docs:`, `docs!:`, `docs!!:`) are excluded.
+3. The Nightly pre-release version rule is “the version inferred from commit-message semantics in the range from the latest stable tag to the latest commit”, then append `-alpha.yyyyMMddHHmmssSSS`.
 4. The workflow creates a temporary local branch in the runner, updates version fields, and builds assets without pushing that branch.
 5. Before publishing the GitHub pre-release or syncing the Halo App Store, the workflow verifies attestation for every nightly `.zip` artifact.
 6. After verification passes, the scheduled nightly run creates only the GitHub pre-release and does not sync to the Halo App Store by default.

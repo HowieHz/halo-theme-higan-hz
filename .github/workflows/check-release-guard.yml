@@ -25,9 +25,14 @@ jobs:
       - name: Install js-yaml
         run: pnpm add -w -D js-yaml
 
+      - name: Fetch target branch
+        run: git fetch origin "${{ github.event.pull_request.base.ref }}:refs/remotes/origin/${{ github.event.pull_request.base.ref }}" --tags
+
       - name: Check changelog and version constraints
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           IS_RELEASE_PR: ${{ contains(github.event.pull_request.labels.*.name, 'release') }}
         run: |
           node <<'NODE'
@@ -38,6 +43,8 @@ jobs:
 
           const baseSha = process.env.BASE_SHA;
           const isReleasePr = process.env.IS_RELEASE_PR === 'true';
+          const headSha = process.env.HEAD_SHA;
+          const baseRef = process.env.BASE_REF;
           const localizedThemeFiles = fs
             .readdirSync(path.join(process.cwd(), 'i18n-settings'))
             .filter((fileName) => /^theme\..+\.ya?ml$/u.test(fileName))
@@ -54,14 +61,17 @@ jobs:
             return String(value).trim();
           };
 
-          const parseVersion = (v) => v.split('.').map(Number);
-          const isGreaterThan = (a, b) => {
-            const [aMajor, aMinor, aPatch] = parseVersion(a);
-            const [bMajor, bMinor, bPatch] = parseVersion(b);
-            if (aMajor !== bMajor) return aMajor > bMajor;
-            if (aMinor !== bMinor) return aMinor > bMinor;
-            return aPatch > bPatch;
-          };
+          const getPreviousStableTag = () =>
+            execFileSync('node', ['.github/scripts/release-version-policy.js', 'latest-stable-tag'], { encoding: 'utf8' }).trim();
+
+          const inferExpectedReleaseVersion = (baseVersion, commitRange) =>
+            execFileSync('node', ['.github/scripts/release-version-policy.js', 'next', baseVersion, commitRange], {
+              encoding: 'utf8',
+            }).trim();
+          const getRemoteBaseSha = () =>
+            execFileSync('git', ['rev-parse', `origin/${baseRef}`], {
+              encoding: 'utf8',
+            }).trim();
 
           const changelogVersionHeadingRegex = /^## \[(\d+\.\d+\.\d+)\]\s*-\s*/gmu;
           const changelogLinkDefRegex = /^\[(Unreleased|unreleased|\d+\.\d+\.\d+)\]:\s*(https:\/\/github\.com\/HowieHz\/halo-theme-higan-hz\/(?:compare\/\S+|releases\/tag\/\S+))\s*$/gmu;
@@ -104,14 +114,27 @@ jobs:
           const currentPackageVersion = readVersionFromPackageJson(fs.readFileSync('package.json', 'utf8'));
           const basePackageVersion = readVersionFromPackageJson(readFromGit(baseSha, 'package.json'));
           if (isReleasePr) {
+            const latestBaseSha = getRemoteBaseSha();
+            if (baseSha !== latestBaseSha) {
+              throw new Error(`release PR base must be the latest ${baseRef} commit: base is ${baseSha}, latest is ${latestBaseSha}`);
+            }
             if (currentPackageVersion === basePackageVersion) {
               throw new Error(`release PR must change package.json version: ${basePackageVersion}`);
             }
             if (!/^\d+\.\d+\.\d+$/u.test(currentPackageVersion)) {
               throw new Error(`package.json version in release PR must be semantic version (x.y.z), got: ${currentPackageVersion}`);
             }
-            if (!isGreaterThan(currentPackageVersion, basePackageVersion)) {
-              throw new Error(`release PR version must be greater than base version: ${basePackageVersion} -> ${currentPackageVersion}`);
+            const previousStableTag = getPreviousStableTag();
+            if (!previousStableTag) {
+              throw new Error('Unable to find previous stable release tag');
+            }
+            const previousStableVersion = previousStableTag.slice(1);
+            const commitRange = `${previousStableTag}..${headSha}`;
+            const expectedPackageVersion = inferExpectedReleaseVersion(previousStableVersion, commitRange);
+            if (currentPackageVersion !== expectedPackageVersion) {
+              throw new Error(
+                `release PR version must match commit-message policy for ${commitRange}: expected ${expectedPackageVersion}, got ${currentPackageVersion}`,
+              );
             }
           } else if (currentPackageVersion !== basePackageVersion) {
             throw new Error(`package.json version must not be changed in non-release PRs: ${basePackageVersion} -> ${currentPackageVersion}`);

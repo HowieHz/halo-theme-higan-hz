@@ -64,9 +64,8 @@ jobs:
           else
             COMMIT_RANGE="HEAD"
           fi
-          EXCLUDED_SUBJECT_PREFIX='docs:'
-          COMMIT_COUNT=$(git log "$COMMIT_RANGE" --since="$WINDOW_START" --until="$WINDOW_END" --format='%s' \
-            | awk -v prefix="$EXCLUDED_SUBJECT_PREFIX" 'index($0, prefix) != 1' \
+          COMMIT_COUNT=$(git log "$COMMIT_RANGE" --no-merges --since="$WINDOW_START" --until="$WINDOW_END" --format='%s' \
+            | grep -Ev '^docs(!{0,2})?:' \
             | grep -c . || true)
           echo "last_version_tag=${LAST_VERSION_TAG:-none}" >> "$GITHUB_OUTPUT"
           echo "commit_range=$COMMIT_RANGE" >> "$GITHUB_OUTPUT"
@@ -87,12 +86,12 @@ jobs:
         if: steps.changes.outputs.should_release == 'true'
         id: version
         run: |
-          CURRENT_VERSION=$(node -p "JSON.parse(require('node:fs').readFileSync('package.json', 'utf8')).version")
-          BASE_VERSION=${CURRENT_VERSION%%-*}
-          IFS='.' read -r MAJOR MINOR PATCH <<< "$BASE_VERSION"
-          NEXT_PATCH=$((PATCH + 1))
+          LATEST_STABLE_TAG=$(node .github/scripts/release-version-policy.js latest-stable-tag)
+          BASE_STABLE_VERSION=${LATEST_STABLE_TAG#v}
+          COMMIT_RANGE="$LATEST_STABLE_TAG..HEAD"
+          NEXT_BASE_VERSION=$(node .github/scripts/release-version-policy.js next "$BASE_STABLE_VERSION" "$COMMIT_RANGE")
           TIMESTAMP=$(TZ=Asia/Shanghai date +%Y%m%d%H%M%S%3N)
-          PRERELEASE_VERSION="$MAJOR.$MINOR.$NEXT_PATCH-alpha.$TIMESTAMP"
+          PRERELEASE_VERSION="$NEXT_BASE_VERSION-alpha.$TIMESTAMP"
           PRERELEASE_TAG="v$PRERELEASE_VERSION"
           if git rev-parse "$PRERELEASE_TAG" >/dev/null 2>&1; then
             echo "Prerelease tag already exists: $PRERELEASE_TAG" >&2
