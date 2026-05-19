@@ -130,18 +130,21 @@ CI 会先自动运行 `pnpm fmt`，包含以下格式化步骤：
 
 > 所有求疵步骤都开启了自动修正，若有变更会自动提交。
 
+#### 版本号与发版约束检查
+
+- 自动修正版本号：`release` 标签的 PR 会由自动修订工作流（`maintain-code.yml`）在格式化与求疵之后自动修正 `package.json` 的 `version`。该修正只在 PR 的 base 是目标分支最新提交时运行，并只修改 `package.json`；如果 base 已落后，则不会自动修改，需先更新 PR 分支。
+- 发版约束检查：
+  - 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 是否仍然保留 `## [Unreleased]`（如未保留则不通过检查）。
+  - 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 末尾的版本对比链接定义是否完整且正确（如缺失或与版本段落不匹配则不通过检查）。
+  - 检查非发布 PR 中是否手动修改了 `package.json` 的 `version`（如有修改则不通过检查）。
+  - 检查发布 PR（带 `release` 标签）是否手动修改了 `package.json` 的 `version`（如未修改则不通过检查），且为合法语义化版本号（如不符合 `/^\d+\.\d+\.\d+$/` 则不通过检查），且必须与“上一个正式版 Tag 到 PR 最新提交”范围内按提交标题语义推导出的目标版本号一致。
+  - 检查发布 PR（带 `release` 标签）的 base 是否为目标分支最新提交（如已落后则不通过检查）。
+  - 检查 PR 中是否手动修改了 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 的 `spec.version`（如有修改则不通过检查）。
+
 #### 页面审计
 
 - 使用 Lighthouse CI 检查页面评分并输出报告（需全部满分）。
 - 与基线版本进行页面资源体积差异检查并输出报告。
-
-#### 发版约束检查
-
-- 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 是否仍然保留 `## [Unreleased]`（如未保留则不通过检查）。
-- 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 末尾的版本对比链接定义是否完整且正确（如缺失或与版本段落不匹配则不通过检查）。
-- 检查非发布 PR 中是否手动修改了 `package.json` 的 `version`（如有修改则不通过检查）。
-- 检查发布 PR（带 `release` 标签）是否手动修改了 `package.json` 的 `version`（如未修改则不通过检查），且为合法语义化版本号（如不符合 `/^\d+\.\d+\.\d+$/` 则不通过检查），且新版本号必须大于目标分支 `package.json` 的 `version` 字段的版本号（如未递增则不通过检查）。
-- 检查 PR 中是否手动修改了 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 的 `spec.version`（如有修改则不通过检查）。
 
 #### 页面资源体积差异检查
 
@@ -162,7 +165,7 @@ CI 会先自动运行 `pnpm fmt`，包含以下格式化步骤：
 
 1. 计划合并到本次版本的分支或 PR 都已完成合并。
 2. `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 的 `## [Unreleased]` 下已经补充完整本次版本说明，并且 `## [Unreleased]` 标题没有被删除，以及末尾的版本对比链接定义已保留（发布工作流会自动重建该部分）。
-3. 发布 PR（带 `release` 标签）仅允许手动修改 `package.json` 的 `version`，该值将作为正式版目标版本号。
+3. 发布 PR（带 `release` 标签）仅允许 `package.json` 的 `version` 发生变化；该值可由自动修订工作流（`maintain-code.yml`）在 PR base 未落后时自动修正，并将作为正式版目标版本号。
 4. 发布前人工确认 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 中的 `requires` 仍符合目标 Halo CMS 版本要求。
 
 ### 正式版发布方法
@@ -170,8 +173,8 @@ CI 会先自动运行 `pnpm fmt`，包含以下格式化步骤：
 正式版通过带标签的 PR 自动发布：
 
 1. 创建用于正式发布的 PR（或在现有汇总 PR 上发布）。
-2. 为 PR 添加 `release` 标签，并将 `package.json` 的 `version` 改为目标语义化版本号（例如 `1.57.6`）。
-3. 等待 `check-release-guard.yml` 检查通过，并确认摘要中的目标版本号（来自 `package.json`）与上一个正式版版本号无误。
+2. 为 PR 添加 `release` 标签。自动修订工作流（`maintain-code.yml`）会在 PR base 未落后时自动将 `package.json` 的 `version` 修正为目标语义化版本号。
+3. 等待 `check-release-guard.yml` 检查通过，并确认摘要中的目标版本号与该 PR 的提交语义规则一致。
 4. 合并 PR 到 `main`。
 
 PR 合并后，机器人会自动执行以下动作：
@@ -194,8 +197,8 @@ PR 合并后，机器人会自动执行以下动作：
 2. 仅当同时满足以下条件时才会自动生成测试版：
    - 有提交位于“前一个自然日（Asia/Shanghai）”时间窗口内。
    - 有提交位于“上一个正式版/测试版 Tag 之后”的提交范围内。
-   - 会排除提交信息以 `docs:` 开头的自动提交。
-3. 测试版版本号规则为“当前版本的修订号 + 1，再加上 `-alpha.yyyyMMddHHmmssSSS`”。
+   - 会排除 merge commit 和以 `docs` 开头的提交标题（例如 `docs:`, `docs!:`, `docs!!:`）。
+3. 测试版版本号规则为“上一个正式版 Tag 到最新提交之间的最高提交语义级别对应的版本号，再加上 `-alpha.yyyyMMddHHmmssSSS`”。
 4. 工作流仅在运行环境内创建本地临时分支，完成版本号改写与构建产物；该分支不会推送到远端。
 5. 在发布 GitHub pre-release 或同步 Halo 应用市场之前，工作流会先校验全部 nightly `.zip` 产物的 GitHub Artifact Attestation。
 6. 每日定时触发的测试版在验证通过后仅创建 GitHub pre-release，默认不同步到 Halo 应用市场。

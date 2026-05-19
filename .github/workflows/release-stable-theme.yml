@@ -52,8 +52,9 @@ jobs:
             exit 1
           fi
 
-          if [ "$(printf '%s\n%s\n' "${PREVIOUS_TAG#v}" "$RELEASE_VERSION" | sort -V | tail -n 1)" != "$RELEASE_VERSION" ] || [ "${PREVIOUS_TAG#v}" = "$RELEASE_VERSION" ]; then
-            echo "Target release version must be greater than previous stable version ${PREVIOUS_TAG#v}" >&2
+          EXPECTED_RELEASE_VERSION=$(node .github/scripts/release-version-policy.js next "${PREVIOUS_TAG#v}" "${PREVIOUS_TAG}..HEAD")
+          if [ "$RELEASE_VERSION" != "$EXPECTED_RELEASE_VERSION" ]; then
+            echo "Target release version must match commit-message policy for ${PREVIOUS_TAG}..HEAD; expected $EXPECTED_RELEASE_VERSION, got $RELEASE_VERSION" >&2
             exit 1
           fi
 
