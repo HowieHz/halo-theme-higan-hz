@@ -1,6 +1,6 @@
 import { execFileSync } from "node:child_process";
-import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const BUMP_LEVELS = {
   patch: 0,
