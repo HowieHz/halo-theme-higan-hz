@@ -68,12 +68,7 @@ jobs:
             exit 0
           fi
 
-          PREVIOUS_TAG=$(git tag --list 'v*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)
-          if [ -z "$PREVIOUS_TAG" ]; then
-            echo "No stable release tag found" >&2
-            exit 1
-          fi
-
+          PREVIOUS_TAG=$(node .github/scripts/release-version-policy.js latest-stable-tag)
           EXPECTED_VERSION=$(node .github/scripts/release-version-policy.js next "${PREVIOUS_TAG#v}" "${PREVIOUS_TAG}..${HEAD_SHA}")
           CURRENT_VERSION=$(node -p "JSON.parse(require('node:fs').readFileSync('package.json', 'utf8')).version")
           echo "expected_version=$EXPECTED_VERSION" >> "$GITHUB_OUTPUT"

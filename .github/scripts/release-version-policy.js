@@ -11,6 +11,15 @@ const BUMP_LEVELS = {
 const BUMP_NAMES = ["patch", "minor", "major"];
 const DOCS_SUBJECT_RE = /^docs(!{0,2})?:/u;
 
+function compareStableVersions(left, right) {
+  const a = parseStableVersion(left);
+  const b = parseStableVersion(right);
+
+  if (a.major !== b.major) return a.major - b.major;
+  if (a.minor !== b.minor) return a.minor - b.minor;
+  return a.patch - b.patch;
+}
+
 export function parseStableVersion(version) {
   const match = /^(\d+)\.(\d+)\.(\d+)$/u.exec(String(version).trim());
   if (!match) {
@@ -44,9 +53,6 @@ export function inferHighestBumpLevel(subjects) {
   let highest = BUMP_LEVELS.patch;
 
   for (const subject of subjects) {
-    if (DOCS_SUBJECT_RE.test(subject)) {
-      continue;
-    }
     highest = Math.max(highest, inferSubjectBumpLevel(subject));
   }
 
@@ -90,10 +96,20 @@ export function inferNextVersion(baseVersion, commitRange) {
   };
 }
 
+export function getLatestStableTag() {
+  return execFileSync("git", ["tag", "--list", "v*"], { encoding: "utf8" })
+    .split(/\r?\n/u)
+    .map((tag) => tag.trim())
+    .filter((tag) => /^v\d+\.\d+\.\d+$/u.test(tag))
+    .sort((left, right) => compareStableVersions(left.slice(1), right.slice(1)))
+    .at(-1);
+}
+
 function printUsageAndExit() {
   console.error(
     [
       "Usage:",
+      "  node .github/scripts/release-version-policy.js latest-stable-tag",
       "  node .github/scripts/release-version-policy.js bump <commit-range>",
       "  node .github/scripts/release-version-policy.js next <base-version> <commit-range>",
       "  node .github/scripts/release-version-policy.js check <base-version> <target-version> <commit-range>",
@@ -106,7 +122,13 @@ const currentFilePath = fileURLToPath(import.meta.url);
 if (process.argv[1] && path.resolve(process.argv[1]) === currentFilePath) {
   const command = process.argv[2];
 
-  if (command === "bump") {
+  if (command === "latest-stable-tag") {
+    const tag = getLatestStableTag();
+    if (!tag) {
+      throw new Error("Unable to find previous stable release tag");
+    }
+    console.log(tag);
+  } else if (command === "bump") {
     const commitRange = process.argv[3];
     if (!commitRange) {
       printUsageAndExit();

@@ -62,18 +62,7 @@ jobs:
           };
 
           const getPreviousStableTag = () =>
-            execFileSync('git', ['tag', '--list', 'v*'], { encoding: 'utf8' })
-              .split(/\r?\n/u)
-              .map((tag) => tag.trim())
-              .filter((tag) => /^v\d+\.\d+\.\d+$/u.test(tag))
-              .sort((a, b) => {
-                const [aMajor, aMinor, aPatch] = a.slice(1).split('.').map(Number);
-                const [bMajor, bMinor, bPatch] = b.slice(1).split('.').map(Number);
-                if (aMajor !== bMajor) return aMajor - bMajor;
-                if (aMinor !== bMinor) return aMinor - bMinor;
-                return aPatch - bPatch;
-              })
-              .at(-1);
+            execFileSync('node', ['.github/scripts/release-version-policy.js', 'latest-stable-tag'], { encoding: 'utf8' }).trim();
 
           const inferExpectedReleaseVersion = (baseVersion, commitRange) =>
             execFileSync('node', ['.github/scripts/release-version-policy.js', 'next', baseVersion, commitRange], {

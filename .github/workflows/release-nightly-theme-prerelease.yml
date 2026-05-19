@@ -86,15 +86,9 @@ jobs:
         if: steps.changes.outputs.should_release == 'true'
         id: version
         run: |
-          LATEST_STABLE_TAG=$(git tag --list 'v*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)
-          if [ -n "$LATEST_STABLE_TAG" ]; then
-            BASE_STABLE_VERSION=${LATEST_STABLE_TAG#v}
-            COMMIT_RANGE="$LATEST_STABLE_TAG..HEAD"
-          else
-            BASE_VERSION=$(node -p "JSON.parse(require('node:fs').readFileSync('package.json', 'utf8')).version")
-            BASE_STABLE_VERSION=${BASE_VERSION%%-*}
-            COMMIT_RANGE="HEAD"
-          fi
+          LATEST_STABLE_TAG=$(node .github/scripts/release-version-policy.js latest-stable-tag)
+          BASE_STABLE_VERSION=${LATEST_STABLE_TAG#v}
+          COMMIT_RANGE="$LATEST_STABLE_TAG..HEAD"
           NEXT_BASE_VERSION=$(node .github/scripts/release-version-policy.js next "$BASE_STABLE_VERSION" "$COMMIT_RANGE")
           TIMESTAMP=$(TZ=Asia/Shanghai date +%Y%m%d%H%M%S%3N)
           PRERELEASE_VERSION="$NEXT_BASE_VERSION-alpha.$TIMESTAMP"
