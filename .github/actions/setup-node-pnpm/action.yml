@@ -8,7 +8,7 @@ inputs:
   pnpm-version:
     description: Fallback pnpm version when packageManager is missing
     required: false
-    default: "11.1.3"
+    default: "11.2.2"
 runs:
   using: composite
   steps:
