@@ -152,15 +152,10 @@
 
   @media (width < 640px) {
     & #title {
-      display: table;
+      align-items: center;
+      display: flex;
       margin-right: 5rem;
       min-height: 3.125rem;
-
-      & h1,
-      & .h1 {
-        display: table-cell;
-        vertical-align: middle;
-      }
     }
   }
 }

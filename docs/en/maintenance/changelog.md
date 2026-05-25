@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🔧 Code Refactoring
+
+- Replaced the mobile header title's table-cell vertical centering with Flexbox.
+
 ## [1.66.8] - 2026-05-26
 
 ### 🔧 Code Refactoring
