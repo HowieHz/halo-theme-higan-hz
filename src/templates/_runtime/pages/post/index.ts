@@ -153,7 +153,7 @@ type PostHeaderArticleAvoidanceTarget = {
   initialMarginInlineEnd: string | null;
 };
 
-let schedulePostHeaderArticleAvoidanceAfterDomChange: (() => void) | null = null;
+let schedulePostHeaderArticleAvoidanceAfterDomChange = (): void => {};
 let postHeaderArticleAvoidanceFrame: number | null = null;
 let postHeaderArticleAvoidanceTimeout: number | null = null;
 
@@ -747,7 +747,7 @@ document.addEventListener("mouseover", (e: Event): void => {
     const toggleTarget = toggleElement.dataset.toggleTarget;
     if (toggleTarget) {
       toggle(toggleTarget);
-      schedulePostHeaderArticleAvoidanceAfterDomChange?.();
+      schedulePostHeaderArticleAvoidanceAfterDomChange();
     }
   }
 });
@@ -760,7 +760,7 @@ document.addEventListener("mouseout", (e: Event): void => {
     const toggleTarget = toggleElement.dataset.toggleTarget;
     if (toggleTarget) {
       toggle(toggleTarget);
-      schedulePostHeaderArticleAvoidanceAfterDomChange?.();
+      schedulePostHeaderArticleAvoidanceAfterDomChange();
     }
   }
 });
