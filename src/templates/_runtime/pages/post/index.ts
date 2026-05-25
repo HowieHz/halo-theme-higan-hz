@@ -387,7 +387,7 @@ function reduceFooterPostNavState(state: FooterPostNavState, event: FooterPostNa
 }
 
 function setElementVisibility(
-  element: HTMLElement | NodeListOf<HTMLElement> | HTMLElement[],
+  element: HTMLElement | HTMLElement[],
   isShown: boolean,
   options: Required<RenderPostHeaderNavOptions>,
 ): void {
