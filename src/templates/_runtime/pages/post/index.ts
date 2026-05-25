@@ -3,7 +3,7 @@ import "./styles.css";
 import "@runtime/styles/article-header.css";
 import "@runtime/styles/article.css";
 import "@runtime/styles/article-metadata.css";
-import { isVisible, scrollToTop, show, toggle } from "@runtime/scripts/animations/base";
+import { hide, isVisible, scrollToTop, show, toggle } from "@runtime/scripts/animations/base";
 import { fadeIn } from "@runtime/scripts/animations/fade-in";
 import { fadeOut } from "@runtime/scripts/animations/fade-out";
 import { slideDown } from "@runtime/scripts/animations/slide-down";
@@ -11,6 +11,138 @@ import { slideUp } from "@runtime/scripts/animations/slide-up";
 
 // Animation durations in milliseconds
 const ANIMATION_DURATION = 200;
+const POST_HEADER_NAV_ANIMATION_DURATION = 50;
+
+type ViewportMode = "desktop" | "tablet" | "mobile";
+type TabletMode = "top" | "quickActions";
+
+// 顶部 #header-post 导航状态。
+// 状态描述“用户意图 + 环境”，不描述具体 DOM display。
+// 移动端底部 #footer-post 由下方 "#actions-footer > #menu/#toc/#share" 和 "#footer-post" 滚动逻辑管理。
+type PostHeaderNavState = {
+  viewportMode: ViewportMode;
+  tabletMode: TabletMode;
+  isMenuContentOpen: boolean;
+  isShareOpen: boolean;
+};
+
+type RenderPostHeaderNavOptions = {
+  animate?: boolean;
+  duration?: number;
+};
+
+function getViewportMode(): ViewportMode {
+  // 与模板/CSS 断点保持一致：lg=1024px，sm=640px。
+  if (window.innerWidth >= 1024) {
+    return "desktop";
+  }
+  if (window.innerWidth >= 640) {
+    return "tablet";
+  }
+  return "mobile";
+}
+
+function getTabletMode(currentMode: TabletMode): TabletMode {
+  const topDistance = getTopDistance();
+
+  // 平板端 #header-post 滚动模式：scrollY < 50 显示 #menu-icon，scrollY > 100 显示 #top-icon-tablet 和 #toc-icon-tablet。
+  // 50~100 区间维持当前模式，避免临界点附近反复切换。
+  if (topDistance < 50) {
+    return "top";
+  }
+  if (topDistance > 100) {
+    return "quickActions";
+  }
+  return currentMode;
+}
+
+function createPostHeaderNavState(): PostHeaderNavState {
+  const viewportMode = getViewportMode();
+
+  // 初始化顶部 #header-post：桌面端展开 #nav/#actions/#toc，平板端和移动端折叠 #nav/#actions/#toc，#share-list 始终关闭。
+  return {
+    viewportMode,
+    tabletMode: viewportMode === "tablet" ? getTabletMode("top") : "top",
+    isMenuContentOpen: viewportMode === "desktop",
+    isShareOpen: false,
+  };
+}
+
+function setElementVisibility(
+  element: HTMLElement | NodeListOf<HTMLElement> | HTMLElement[],
+  isShown: boolean,
+  options: Required<RenderPostHeaderNavOptions>,
+): void {
+  if (Array.isArray(element)) {
+    element.forEach((item) => {
+      setElementVisibility(item, isShown, options);
+    });
+    return;
+  }
+
+  if (options.animate) {
+    if (isShown) {
+      fadeIn(element, options.duration);
+    } else {
+      fadeOut(element, options.duration);
+    }
+    return;
+  }
+
+  if (isShown) {
+    show(element);
+  } else if (isVisible(element)) {
+    // 非动画初始化时，不触碰已经由 Tailwind/CSS 隐藏的元素，避免把 display:none 记为默认显示值。
+    hide(element);
+  }
+}
+
+/**
+ * 顶部文章导航唯一显隐出口。
+ *
+ * 只有这里能控制 #menu-icon、#nav、#actions、#toc、#share-list、#top-icon-tablet、#toc-icon-tablet。
+ */
+function renderPostHeaderNav(state: PostHeaderNavState, options: RenderPostHeaderNavOptions = {}): void {
+  const renderOptions: Required<RenderPostHeaderNavOptions> = {
+    animate: options.animate ?? true,
+    duration: options.duration ?? POST_HEADER_NAV_ANIMATION_DURATION,
+  };
+
+  const menuIcon = document.querySelector<HTMLElement>("#header-post #menu-icon");
+  const nav = document.querySelector<HTMLElement>("#header-post #nav");
+  const actions = document.querySelector<HTMLElement>("#header-post #actions");
+  const toc = document.querySelector<HTMLElement>("#header-post #toc");
+  const shareList = document.querySelector<HTMLElement>("#header-post #share-list");
+  const topIconTablet = document.querySelector<HTMLElement>("#header-post #top-icon-tablet");
+  const tocIconTablet = document.querySelector<HTMLElement>("#header-post #toc-icon-tablet");
+  const shareButton = document.querySelector<HTMLElement>("#header-post #actions #action-share");
+  const menuContent = [nav, actions, toc].filter((element): element is HTMLElement => element !== null);
+
+  if (!menuIcon || !topIconTablet || !tocIconTablet || menuContent.length === 0) {
+    return;
+  }
+
+  const isQuickActionsMode = state.viewportMode === "tablet" && state.tabletMode === "quickActions";
+  const isTopNavEnabled = state.viewportMode !== "mobile";
+  const isMenuIconShown = isTopNavEnabled && !isQuickActionsMode;
+  const isMenuContentShown = isMenuIconShown && state.isMenuContentOpen;
+  const isShareListShown = isMenuContentShown && state.isShareOpen;
+  const areTabletQuickActionsShown = isQuickActionsMode;
+
+  // #menu-icon.active、#menu-icon[aria-expanded]、#action-share[aria-expanded] 表达状态里的展开意图。
+  // 不从动画中间态或当前 DOM display 反推，避免状态和界面互相覆盖。
+  menuIcon.classList.toggle("active", state.isMenuContentOpen);
+  menuIcon.setAttribute("aria-expanded", String(state.isMenuContentOpen));
+  shareButton?.setAttribute("aria-expanded", String(state.isShareOpen));
+
+  setElementVisibility(menuIcon, isMenuIconShown, renderOptions);
+  setElementVisibility(menuContent, isMenuContentShown, renderOptions);
+  if (shareList) {
+    setElementVisibility(shareList, isShareListShown, renderOptions);
+  }
+  setElementVisibility(topIconTablet, areTabletQuickActionsShown, renderOptions);
+  setElementVisibility(tocIconTablet, areTabletQuickActionsShown, renderOptions);
+}
 
 document.addEventListener("click", (e: Event): void => {
   const target = e.target as HTMLElement;
@@ -120,166 +252,156 @@ document.addEventListener("DOMContentLoaded", (): void => {
       }
     });
 
-    // 桌面端 文章页 导航栏 按钮事件 绑定
-    const shareButton: HTMLElement | null = document.querySelector("#actions #action-share");
+    let postHeaderNavState = createPostHeaderNavState();
+    renderPostHeaderNav(postHeaderNavState, { animate: false });
+
+    const shareButton: HTMLElement | null = document.querySelector("#header-post #actions #action-share");
+    const menuIcon: HTMLElement | null = document.querySelector<HTMLElement>("#header-post #menu-icon");
+    const tocIconTablet: HTMLElement | null = document.querySelector<HTMLElement>("#header-post #toc-icon-tablet");
+
+    // 平板端、桌面端顶部菜单按钮 #menu-icon：点击后只切换 #nav/#actions/#toc 的展开状态。
+    menuIcon?.addEventListener("click", (e: Event): void => {
+      e.preventDefault();
+
+      const isMenuContentOpen = !postHeaderNavState.isMenuContentOpen;
+      postHeaderNavState = {
+        ...postHeaderNavState,
+        isMenuContentOpen,
+        // #nav/#actions/#toc 收起时同步收起 #share-list，避免分享菜单脱离顶部菜单单独显示。
+        isShareOpen: isMenuContentOpen ? postHeaderNavState.isShareOpen : false,
+      };
+      renderPostHeaderNav(postHeaderNavState);
+    });
+
+    // 平板端、桌面端顶部分享按钮 #action-share：点击后只切换 #share-list 的展开状态。
+    // #share-list 是否实际显示仍由 renderPostHeaderNav 结合 #nav/#actions/#toc 的展开状态决定。
     shareButton?.addEventListener("click", (): void => {
-      const shareMenu = document.getElementById("share-list");
-      if (!shareMenu) {
+      postHeaderNavState = {
+        ...postHeaderNavState,
+        isShareOpen: !postHeaderNavState.isShareOpen,
+      };
+      renderPostHeaderNav(postHeaderNavState);
+    });
+
+    // 顶部 #header-post resize 逻辑：视口跨断点后按新视口重建顶部导航状态。
+    window.addEventListener("resize", (): void => {
+      const viewportMode = getViewportMode();
+
+      // 桌面端展开 #nav/#actions/#toc；平板端和移动端收起 #nav/#actions/#toc 和 #share-list。
+      postHeaderNavState = {
+        ...postHeaderNavState,
+        viewportMode,
+        tabletMode: viewportMode === "tablet" ? getTabletMode(postHeaderNavState.tabletMode) : "top",
+        isMenuContentOpen: viewportMode === "desktop",
+        isShareOpen: false,
+      };
+      renderPostHeaderNav(postHeaderNavState);
+    });
+
+    // 平板端目录浮层 #toc-overlay-tablet：绑定打开按钮、关闭按钮、背景和目录项点击事件。
+    const tocOverlayTablet: HTMLElement | null = document.querySelector("#toc-overlay-tablet");
+    const tocOverlayClose: HTMLElement | null = document.querySelector("#toc-overlay-close");
+    const tocOverlayBackdrop: HTMLElement | null = document.querySelector("#toc-overlay-backdrop");
+    const actionTocTablet: HTMLElement | null = document.querySelector("#action-toc-tablet");
+    const actionTocTabletMenu: HTMLElement | null = document.querySelector("#action-toc-tablet-menu");
+
+    // 平板端目录浮层 #toc-overlay-tablet：由 #toc-icon-tablet、#action-toc-tablet、#action-toc-tablet-menu 共用打开/关闭逻辑。
+    const toggleTocOverlay = (button: HTMLElement | null): void => {
+      if (!tocOverlayTablet || !button) {
         return;
       }
-      if (isVisible(shareMenu)) {
-        shareButton.setAttribute("aria-expanded", "false");
-        slideUp(shareMenu, ANIMATION_DURATION);
+      if (isVisible(tocOverlayTablet)) {
+        button.setAttribute("aria-expanded", "false");
+        fadeOut(tocOverlayTablet, ANIMATION_DURATION);
       } else {
-        shareButton.setAttribute("aria-expanded", "true");
-        slideDown(shareMenu, ANIMATION_DURATION);
+        button.setAttribute("aria-expanded", "true");
+        fadeIn(tocOverlayTablet, ANIMATION_DURATION);
+
+        // 平板端目录浮层打开后，把当前文章位置对应的 .toc-active 滚到浮层可视区域中间。
+        const activeLink = tocOverlayTablet.querySelector<HTMLElement>(".toc-active");
+        if (activeLink) {
+          setTimeout(() => {
+            activeLink.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+              inline: "center",
+            });
+          }, ANIMATION_DURATION);
+        }
+      }
+    };
+
+    // 平板端滚动后的浮动目录按钮 #toc-icon-tablet：点击打开/关闭 #toc-overlay-tablet。
+    tocIconTablet?.addEventListener("click", (): void => {
+      toggleTocOverlay(tocIconTablet);
+    });
+
+    // 平板端顶部 #actions 中的目录按钮 #action-toc-tablet：点击打开/关闭 #toc-overlay-tablet。
+    actionTocTablet?.addEventListener("click", (): void => {
+      toggleTocOverlay(actionTocTablet);
+    });
+
+    // 平板端顶部菜单中的目录按钮 #action-toc-tablet-menu：点击打开/关闭 #toc-overlay-tablet。
+    actionTocTabletMenu?.addEventListener("click", (): void => {
+      toggleTocOverlay(actionTocTabletMenu);
+    });
+
+    // 平板端目录浮层关闭按钮 #toc-overlay-close：点击后关闭 #toc-overlay-tablet。
+    tocOverlayClose?.addEventListener("click", (): void => {
+      if (tocOverlayTablet) {
+        tocIconTablet?.setAttribute("aria-expanded", "false");
+        actionTocTablet?.setAttribute("aria-expanded", "false");
+        actionTocTabletMenu?.setAttribute("aria-expanded", "false");
+        fadeOut(tocOverlayTablet, ANIMATION_DURATION);
       }
     });
 
-    const menuComponents: NodeListOf<HTMLElement> = document.querySelectorAll<HTMLElement>(
-      "#menu #nav, #menu #actions, #menu #toc",
-    );
-
-    const shareListComponents: HTMLElement | null = document.querySelector<HTMLElement>("#menu #share-list");
-    const menuIcon: HTMLElement | null = document.querySelector<HTMLElement>("#menu-icon");
-    const topIcon: HTMLElement | null = document.querySelector<HTMLElement>("#top-icon-tablet");
-    const tocIconTablet: HTMLElement | null = document.querySelector<HTMLElement>("#toc-icon-tablet");
-
-    if (menuComponents && shareListComponents && menuIcon && topIcon && tocIconTablet) {
-      // 在高分辨率笔记本电脑和桌面端显示菜单
-      // 大于等于 1024px 的屏幕宽度 页面完成初始化时自动显示菜单
-      if (window.matchMedia("(min-width: 1024px)").matches) {
-        // menuIcon.classList.add("active"); // 为 #header-post .active 样式设置，模板默认有 active，无需添加
-        show(menuComponents);
-      } else {
-        menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
-        menuIcon.setAttribute("aria-expanded", "false"); // aria-expanded 属性设置为 false，表示菜单初始为折叠状态
-      }
-
-      // 平板端、桌面端 文章页 菜单 按钮事件
-      menuIcon.addEventListener("click", (e: Event): void => {
-        e.preventDefault();
-        if (isVisible(menuComponents)) {
-          menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
-          menuIcon.setAttribute("aria-expanded", "false"); // 切换 aria-expanded 属性值
-          fadeOut(menuComponents, 50); // 隐藏菜单
-          // 收起二级菜单
-          shareButton?.setAttribute("aria-expanded", "false");
-          fadeOut(shareListComponents, 50); // 隐藏分享菜单
-        } else {
-          menuIcon.classList.add("active"); // 为 #header-post .active 样式设置
-          menuIcon.setAttribute("aria-expanded", "true"); // 切换 aria-expanded 属性值
-          fadeIn(menuComponents, 50); // 显示菜单
-        }
-      });
-
-      // 平板端 TOC 按钮和 overlay 事件
-      const tocOverlayTablet: HTMLElement | null = document.querySelector("#toc-overlay-tablet");
-      const tocOverlayClose: HTMLElement | null = document.querySelector("#toc-overlay-close");
-      const tocOverlayBackdrop: HTMLElement | null = document.querySelector("#toc-overlay-backdrop");
-      const actionTocTablet: HTMLElement | null = document.querySelector("#action-toc-tablet");
-      const actionTocTabletMenu: HTMLElement | null = document.querySelector("#action-toc-tablet-menu");
-
-      // 通用的 TOC overlay 打开/关闭函数
-      const toggleTocOverlay = (button: HTMLElement | null): void => {
-        if (!tocOverlayTablet || !button) {
-          return;
-        }
-        if (isVisible(tocOverlayTablet)) {
-          button.setAttribute("aria-expanded", "false");
-          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
-        } else {
-          button.setAttribute("aria-expanded", "true");
-          fadeIn(tocOverlayTablet, ANIMATION_DURATION);
-
-          // 滚动到激活的目录项
-          const activeLink = tocOverlayTablet.querySelector<HTMLElement>(".toc-active");
-          if (activeLink) {
-            setTimeout(() => {
-              activeLink.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-                inline: "center",
-              });
-            }, ANIMATION_DURATION);
-          }
-        }
-      };
-
-      // TOC 按钮点击事件（浮动按钮）
-      tocIconTablet.addEventListener("click", (): void => {
-        toggleTocOverlay(tocIconTablet);
-      });
-
-      // actions 菜单中的 TOC 按钮点击事件
-      actionTocTablet?.addEventListener("click", (): void => {
-        toggleTocOverlay(actionTocTablet);
-      });
-
-      actionTocTabletMenu?.addEventListener("click", (): void => {
-        toggleTocOverlay(actionTocTabletMenu);
-      });
-
-      // 关闭按钮点击事件
-      tocOverlayClose?.addEventListener("click", (): void => {
-        if (tocOverlayTablet) {
-          tocIconTablet.setAttribute("aria-expanded", "false");
-          actionTocTablet?.setAttribute("aria-expanded", "false");
-          actionTocTabletMenu?.setAttribute("aria-expanded", "false");
-          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
-        }
-      });
-
-      // 点击背景关闭
-      tocOverlayBackdrop?.addEventListener("click", (): void => {
-        if (tocOverlayTablet) {
-          tocIconTablet.setAttribute("aria-expanded", "false");
-          actionTocTablet?.setAttribute("aria-expanded", "false");
-          actionTocTabletMenu?.setAttribute("aria-expanded", "false");
-          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
-        }
-      });
-
-      // 点击 TOC 项目后关闭 overlay
+    // 平板端目录浮层背景 #toc-overlay-backdrop：点击后关闭 #toc-overlay-tablet。
+    tocOverlayBackdrop?.addEventListener("click", (): void => {
       if (tocOverlayTablet) {
-        tocOverlayTablet.addEventListener("click", (e: Event): void => {
-          const target = e.target;
-          if (target instanceof HTMLElement) {
-            const tocLink = target.closest<HTMLElement>(".toc-link");
-            if (tocLink) {
-              tocIconTablet.setAttribute("aria-expanded", "false");
-              actionTocTablet?.setAttribute("aria-expanded", "false");
-              actionTocTabletMenu?.setAttribute("aria-expanded", "false");
-              fadeOut(tocOverlayTablet, ANIMATION_DURATION);
-            }
-          }
-        });
+        tocIconTablet?.setAttribute("aria-expanded", "false");
+        actionTocTablet?.setAttribute("aria-expanded", "false");
+        actionTocTabletMenu?.setAttribute("aria-expanded", "false");
+        fadeOut(tocOverlayTablet, ANIMATION_DURATION);
       }
+    });
 
-      // 平板端 文章页 导航栏、回到顶部按钮、TOC 按钮 页面滚动相关逻辑
-      // 添加滚动监听器，用于隐藏/显示导航链接
-      window.addEventListener("scroll", (): void => {
-        const topDistance = getTopDistance();
-
-        // 顶部菜单按钮、顶部菜单、回到顶部按钮、TOC 按钮 根据页面滚动距离 显示/隐藏
-        if (window.matchMedia("(min-width: 640px) and (not (min-width: 1024px))").matches) {
-          if (topDistance < 50) {
-            fadeIn(menuIcon, ANIMATION_DURATION);
-            fadeOut(topIcon, ANIMATION_DURATION);
-            fadeOut(tocIconTablet, ANIMATION_DURATION);
-          } else if (topDistance > 100) {
-            menuIcon.classList.remove("active"); // 为 #header-post .active 样式设置
-            fadeOut(menuIcon, ANIMATION_DURATION);
-            menuIcon.setAttribute("aria-expanded", "false"); // 切换 aria-expanded 属性值
-            fadeOut(menuComponents, ANIMATION_DURATION);
-            shareButton?.setAttribute("aria-expanded", "false");
-            fadeOut(shareListComponents, ANIMATION_DURATION);
-            fadeIn(topIcon, ANIMATION_DURATION);
-            fadeIn(tocIconTablet, ANIMATION_DURATION);
+    // 平板端目录浮层目录项 .toc-link：点击跳转标题后关闭 #toc-overlay-tablet，避免浮层遮挡正文。
+    if (tocOverlayTablet) {
+      tocOverlayTablet.addEventListener("click", (e: Event): void => {
+        const target = e.target;
+        if (target instanceof HTMLElement) {
+          const tocLink = target.closest<HTMLElement>(".toc-link");
+          if (tocLink) {
+            tocIconTablet?.setAttribute("aria-expanded", "false");
+            actionTocTablet?.setAttribute("aria-expanded", "false");
+            actionTocTabletMenu?.setAttribute("aria-expanded", "false");
+            fadeOut(tocOverlayTablet, ANIMATION_DURATION);
           }
         }
       });
     }
+
+    // 平板端顶部 #header-post 页面滚动逻辑：在顶部菜单按钮和回到顶部/目录快捷按钮之间切换。
+    // 使用 getTabletMode 的 <50 / >100 滞回区间，避免滚动临界点闪烁。
+    window.addEventListener("scroll", (): void => {
+      const viewportMode = getViewportMode();
+
+      if (viewportMode !== "tablet") {
+        return;
+      }
+
+      const tabletMode = getTabletMode(postHeaderNavState.tabletMode);
+      postHeaderNavState = {
+        ...postHeaderNavState,
+        viewportMode,
+        tabletMode,
+        // 进入 quickActions 时隐藏 #menu-icon，并强制收起 #nav/#actions/#toc 和 #share-list。
+        isMenuContentOpen: tabletMode === "quickActions" ? false : postHeaderNavState.isMenuContentOpen,
+        isShareOpen: tabletMode === "quickActions" ? false : postHeaderNavState.isShareOpen,
+      };
+      renderPostHeaderNav(postHeaderNavState, { duration: ANIMATION_DURATION });
+    });
 
     const footerNav: HTMLElement | null = document.querySelector<HTMLElement>("#footer-post");
     let lastScrollTop = 0;
