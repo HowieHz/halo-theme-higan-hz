@@ -12,6 +12,7 @@ import { slideUp } from "@runtime/scripts/animations/slide-up";
 // Animation durations in milliseconds
 const ANIMATION_DURATION = 200;
 const POST_HEADER_NAV_ANIMATION_DURATION = 50;
+const POST_HEADER_ARTICLE_AVOIDANCE_GAP = 16;
 
 type ViewportMode = "desktop" | "tablet" | "mobile";
 type TabletMode = "top" | "quickActions";
@@ -38,6 +39,12 @@ type PostHeaderNavState = {
 };
 
 type PostHeaderNavElements = {
+  // 顶部导航根容器 #header-post，用于观察顶部菜单可视尺寸变化。
+  headerPost: HTMLElement;
+  // 文章标题区域 #article-header；桌面端/平板端顶部菜单可能覆盖它，移动端底部 #footer-post 由 FooterPostNavState/renderFooterPostNav 管理。
+  articleHeader: HTMLElement | null;
+  // #article-header 原始内联 margin-inline-end；避让取消时恢复这个值，避免覆盖模板已有内联样式。
+  articleHeaderInitialMarginInlineEnd: string | null;
   // 顶部菜单按钮 #header-post #menu-icon。
   menuIcon: HTMLElement;
   // 顶部导航链接容器 #header-post #nav。
@@ -131,6 +138,20 @@ type FooterPostNavEvent =
   | { type: "toggleShare" }
   | { type: "scroll"; scrollY: number };
 
+type RectBounds = {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+};
+
+type VisibleRect = RectBounds & {
+  width: number;
+  height: number;
+};
+
+let schedulePostHeaderArticleAvoidanceAfterDomChange: (() => void) | null = null;
+
 function getViewportMode(): ViewportMode {
   // 与模板/CSS 断点保持一致：lg=1024px，sm=640px。
   if (window.innerWidth >= 1024) {
@@ -201,6 +222,8 @@ function createPostHeaderNavEnvironment(currentTabletMode: TabletMode = "top"): 
 }
 
 function getPostHeaderNavElements(): PostHeaderNavElements | null {
+  const headerPost = document.querySelector<HTMLElement>("#header-post");
+  const articleHeader = document.querySelector<HTMLElement>("#article-header");
   const menuIcon = document.querySelector<HTMLElement>("#header-post #menu-icon");
   const nav = document.querySelector<HTMLElement>("#header-post #nav");
   const actions = document.querySelector<HTMLElement>("#header-post #actions");
@@ -210,11 +233,14 @@ function getPostHeaderNavElements(): PostHeaderNavElements | null {
   const tocIconTablet = document.querySelector<HTMLElement>("#header-post #toc-icon-tablet");
   const shareButton = document.querySelector<HTMLElement>("#header-post #actions #action-share");
 
-  if (!menuIcon || !nav || !actions || !toc || !topIconTablet || !tocIconTablet) {
+  if (!headerPost || !menuIcon || !nav || !actions || !toc || !topIconTablet || !tocIconTablet) {
     return null;
   }
 
   return {
+    headerPost,
+    articleHeader,
+    articleHeaderInitialMarginInlineEnd: articleHeader?.style.getPropertyValue("margin-inline-end") || null,
     menuIcon,
     nav,
     actions,
@@ -401,6 +427,179 @@ function setSlideElementVisibility(
   }
 }
 
+function doRectsOverlapVertically(firstRect: RectBounds, secondRect: RectBounds): boolean {
+  // #article-header 只需要避让和标题区域在 Y 轴相交的顶部菜单元素。
+  return firstRect.top < secondRect.bottom && firstRect.bottom > secondRect.top;
+}
+
+function getViewportClippedRect(element: HTMLElement): VisibleRect | null {
+  // 桌面端/平板端避让只关心用户当前能看到的矩形；元素超出 viewport 的部分不计入 #article-header 避让。
+  const rect = element.getBoundingClientRect();
+  const top = Math.max(0, rect.top);
+  const right = Math.min(window.innerWidth, rect.right);
+  const bottom = Math.min(window.innerHeight, rect.bottom);
+  const left = Math.max(0, rect.left);
+  const width = right - left;
+  const height = bottom - top;
+
+  if (width <= 0 || height <= 0) {
+    return null;
+  }
+
+  return {
+    top,
+    right,
+    bottom,
+    left,
+    width,
+    height,
+  };
+}
+
+function getCurrentPostHeaderArticleAvoidanceMargin(articleHeader: HTMLElement): number {
+  const value = Number(articleHeader.dataset.postHeaderAvoidanceMarginInlineEnd);
+
+  return Number.isFinite(value) ? value : 0;
+}
+
+function restorePostHeaderArticleAvoidanceMargin(elements: PostHeaderNavElements): void {
+  // 桌面端/平板端顶部菜单不再覆盖 #article-header，或进入移动端时，撤销本次避让写入的 margin-inline-end。
+  const { articleHeader } = elements;
+
+  if (!articleHeader) {
+    return;
+  }
+
+  delete articleHeader.dataset.postHeaderAvoidanceMarginInlineEnd;
+
+  if (elements.articleHeaderInitialMarginInlineEnd) {
+    articleHeader.style.setProperty("margin-inline-end", elements.articleHeaderInitialMarginInlineEnd);
+  } else {
+    articleHeader.style.removeProperty("margin-inline-end");
+  }
+}
+
+function getPostHeaderArticleAvoidanceCandidates(elements: PostHeaderNavElements): HTMLElement[] {
+  // 只测量顶部菜单里会靠近 #article-header 的元素。
+  // 不直接测量整个 #header-post，因为平板端 quickActions 的 #top-icon-tablet/#toc-icon-tablet 是 fixed 到右下角的快捷按钮。
+  const infoItems = Array.from(elements.actions.querySelectorAll<HTMLElement>(".info"));
+  const candidates = [
+    elements.menuIcon,
+    elements.nav,
+    elements.actions,
+    elements.shareList,
+    elements.toc,
+    ...infoItems,
+  ];
+
+  return candidates.filter((element): element is HTMLElement => Boolean(element));
+}
+
+function updatePostHeaderArticleAvoidance(elements: PostHeaderNavElements, state: PostHeaderNavState): void {
+  // 桌面端/平板端 #article-header 避让逻辑：根据 #header-post 当前可见子元素的 X/Y 矩形，给标题区域右侧留出空间。
+  // 移动端顶部 #header-post 退出显示，底部 #footer-post 不参与这个避让计算。
+  const { articleHeader } = elements;
+
+  if (!articleHeader) {
+    return;
+  }
+
+  if (state.environment.viewportMode === "mobile") {
+    restorePostHeaderArticleAvoidanceMargin(elements);
+    return;
+  }
+
+  const articleHeaderRect = articleHeader.getBoundingClientRect();
+  const articleHeaderVisibleRect = getViewportClippedRect(articleHeader);
+
+  if (!articleHeaderVisibleRect) {
+    restorePostHeaderArticleAvoidanceMargin(elements);
+    return;
+  }
+
+  const currentAvoidanceMargin = getCurrentPostHeaderArticleAvoidanceMargin(articleHeader);
+  const articleHeaderNaturalRight = articleHeaderRect.right + currentAvoidanceMargin;
+  const overlappingCandidateRects = getPostHeaderArticleAvoidanceCandidates(elements)
+    .filter((element) => isVisible(element))
+    .map((element) => getViewportClippedRect(element))
+    .filter((rect): rect is VisibleRect => {
+      return (
+        rect !== null &&
+        doRectsOverlapVertically(rect, articleHeaderVisibleRect) &&
+        rect.left < articleHeaderNaturalRight &&
+        rect.right > articleHeaderVisibleRect.left
+      );
+    });
+
+  if (overlappingCandidateRects.length === 0) {
+    restorePostHeaderArticleAvoidanceMargin(elements);
+    return;
+  }
+
+  const visibleLeft = Math.min(...overlappingCandidateRects.map((rect) => rect.left));
+  // #article-header 只避让“标题区域自然右边界”和顶部菜单可见左边界之间的重叠宽度。
+  // 不使用 window.innerWidth - visibleLeft，避免把顶部菜单右侧到视口边缘的空白也算进避让距离。
+  const requiredMargin = Math.max(
+    0,
+    Math.ceil(articleHeaderNaturalRight - visibleLeft + POST_HEADER_ARTICLE_AVOIDANCE_GAP),
+  );
+
+  articleHeader.dataset.postHeaderAvoidanceMarginInlineEnd = String(requiredMargin);
+  articleHeader.style.setProperty(
+    "margin-inline-end",
+    `calc(${elements.articleHeaderInitialMarginInlineEnd || "0px"} + ${requiredMargin}px)`,
+  );
+}
+
+function schedulePostHeaderArticleAvoidance(
+  elements: PostHeaderNavElements,
+  state: PostHeaderNavState,
+  delay = 0,
+): void {
+  // 顶部 #header-post 的 fade/slide 动画会在结束时改变最终 display，高度/宽度需要立即算一次、动画结束后再算一次。
+  const update = (): void => {
+    window.requestAnimationFrame(() => {
+      updatePostHeaderArticleAvoidance(elements, state);
+    });
+  };
+
+  update();
+
+  if (delay > 0) {
+    window.setTimeout(update, delay);
+  }
+}
+
+function observePostHeaderArticleAvoidanceChanges(
+  elements: PostHeaderNavElements,
+  getState: () => PostHeaderNavState,
+): void {
+  // 桌面端目录 #toc 在 DOMContentLoaded 后生成，hover 文案和分享列表也会改变 #header-post 的实际尺寸。
+  // ResizeObserver 捕获这些非点击路径的尺寸变化，再触发 #article-header 避让重算。
+  if (!("ResizeObserver" in window)) {
+    return;
+  }
+
+  const resizeObserver = new ResizeObserver(() => {
+    schedulePostHeaderArticleAvoidance(elements, getState());
+  });
+  const observedElements = [
+    elements.headerPost,
+    elements.menuIcon,
+    elements.nav,
+    elements.actions,
+    elements.shareList,
+    elements.toc,
+    elements.articleHeader,
+  ];
+
+  observedElements.forEach((element) => {
+    if (element) {
+      resizeObserver.observe(element);
+    }
+  });
+}
+
 /**
  * 顶部文章导航唯一显隐出口。
  *
@@ -442,6 +641,10 @@ function renderPostHeaderNav(
   }
   setElementVisibility(elements.topIconTablet, areTabletQuickActionsShown, renderOptions);
   setElementVisibility(elements.tocIconTablet, areTabletQuickActionsShown, renderOptions);
+
+  // 桌面端/平板端 #header-post 显隐或动画改变可视尺寸后，重新计算 #article-header 右侧避让。
+  // 移动端底部 #footer-post 不走这条路径，避免把底部导航尺寸算进文章标题区域。
+  schedulePostHeaderArticleAvoidance(elements, state, renderOptions.animate ? renderOptions.duration : 0);
 }
 
 /**
@@ -526,6 +729,7 @@ document.addEventListener("mouseover", (e: Event): void => {
     const toggleTarget = toggleElement.dataset.toggleTarget;
     if (toggleTarget) {
       toggle(toggleTarget);
+      schedulePostHeaderArticleAvoidanceAfterDomChange?.();
     }
   }
 });
@@ -538,6 +742,7 @@ document.addEventListener("mouseout", (e: Event): void => {
     const toggleTarget = toggleElement.dataset.toggleTarget;
     if (toggleTarget) {
       toggle(toggleTarget);
+      schedulePostHeaderArticleAvoidanceAfterDomChange?.();
     }
   }
 });
@@ -549,6 +754,12 @@ document.addEventListener("DOMContentLoaded", (): void => {
     let postHeaderNavState = createPostHeaderNavState();
 
     if (postHeaderNavElements) {
+      // 桌面端/平板端顶部 #header-post：hover 文案、目录生成、分享菜单动画都会改变顶部菜单可视尺寸。
+      // 这些变化统一触发 #article-header 右侧避让，避免标题区域和顶部菜单重叠。
+      schedulePostHeaderArticleAvoidanceAfterDomChange = () => {
+        schedulePostHeaderArticleAvoidance(postHeaderNavElements, postHeaderNavState, ANIMATION_DURATION);
+      };
+      observePostHeaderArticleAvoidanceChanges(postHeaderNavElements, () => postHeaderNavState);
       renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, { animate: false });
     }
 
@@ -675,6 +886,12 @@ document.addEventListener("DOMContentLoaded", (): void => {
       }
 
       const viewportMode = getViewportMode();
+
+      if (viewportMode === "desktop") {
+        // 桌面端 #header-post 固定在右上角；页面滚动会改变 #article-header 与顶部菜单的 Y 轴相交关系。
+        schedulePostHeaderArticleAvoidance(postHeaderNavElements, postHeaderNavState);
+        return;
+      }
 
       if (viewportMode !== "tablet") {
         return;
