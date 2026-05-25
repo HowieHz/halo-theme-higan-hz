@@ -25,10 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🛠️ Miscellaneous Chores
 
-- Adjusted stable and nightly version derivation to use commit-message semantics between the latest stable tag and the latest commit,
-  picking the highest level for MAJOR / MINOR / PATCH, while keeping the nightly `-alpha.yyyyMMddHHmmssSSS` suffix.
-- Synced the release guard and release workflows so stable and nightly versions follow the same commit-message policy.
-- Added automatic `package.json` version fixes for PRs labeled `release`, and require release PRs to be based on the latest target-branch commit.
+- Updated dependencies.
 
 ## [1.66.6] - 2026-05-15
 
