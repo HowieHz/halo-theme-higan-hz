@@ -813,17 +813,36 @@ document.addEventListener("DOMContentLoaded", (): void => {
       const tocOverlayBackdrop: HTMLElement | null = document.querySelector("#toc-overlay-backdrop");
       const actionTocTablet: HTMLElement | null = document.querySelector("#action-toc-tablet");
       const actionTocTabletMenu: HTMLElement | null = document.querySelector("#action-toc-tablet-menu");
+      const tocOverlayControls = [postHeaderNavElements.tocIconTablet, actionTocTablet, actionTocTabletMenu].filter(
+        (control): control is HTMLElement => control !== null,
+      );
+
+      // 平板端目录浮层控制按钮：#toc-overlay-tablet 打开或关闭时，同步所有入口按钮的 aria-expanded。
+      const setTocOverlayControlsExpanded = (isExpanded: boolean): void => {
+        tocOverlayControls.forEach((control) => {
+          control.setAttribute("aria-expanded", String(isExpanded));
+        });
+      };
+
+      // 平板端目录浮层 #toc-overlay-tablet：关闭浮层并同步 #toc-icon-tablet/#action-toc-tablet/#action-toc-tablet-menu。
+      const closeTocOverlay = (): void => {
+        if (!tocOverlayTablet) {
+          return;
+        }
+
+        setTocOverlayControlsExpanded(false);
+        fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+      };
 
       // 平板端目录浮层 #toc-overlay-tablet：由 #toc-icon-tablet、#action-toc-tablet、#action-toc-tablet-menu 共用打开/关闭逻辑。
-      const toggleTocOverlay = (button: HTMLElement | null): void => {
-        if (!tocOverlayTablet || !button) {
+      const toggleTocOverlay = (): void => {
+        if (!tocOverlayTablet) {
           return;
         }
         if (isVisible(tocOverlayTablet)) {
-          button.setAttribute("aria-expanded", "false");
-          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+          closeTocOverlay();
         } else {
-          button.setAttribute("aria-expanded", "true");
+          setTocOverlayControlsExpanded(true);
           fadeIn(tocOverlayTablet, ANIMATION_DURATION);
 
           // 平板端目录浮层打开后，把当前文章位置对应的 .toc-active 滚到浮层可视区域中间。
@@ -842,37 +861,27 @@ document.addEventListener("DOMContentLoaded", (): void => {
 
       // 平板端滚动后的浮动目录按钮 #toc-icon-tablet：点击打开/关闭 #toc-overlay-tablet。
       postHeaderNavElements.tocIconTablet.addEventListener("click", (): void => {
-        toggleTocOverlay(postHeaderNavElements.tocIconTablet);
+        toggleTocOverlay();
       });
 
       // 平板端顶部 #actions 中的目录按钮 #action-toc-tablet：点击打开/关闭 #toc-overlay-tablet。
       actionTocTablet?.addEventListener("click", (): void => {
-        toggleTocOverlay(actionTocTablet);
+        toggleTocOverlay();
       });
 
       // 平板端顶部菜单中的目录按钮 #action-toc-tablet-menu：点击打开/关闭 #toc-overlay-tablet。
       actionTocTabletMenu?.addEventListener("click", (): void => {
-        toggleTocOverlay(actionTocTabletMenu);
+        toggleTocOverlay();
       });
 
       // 平板端目录浮层关闭按钮 #toc-overlay-close：点击后关闭 #toc-overlay-tablet。
       tocOverlayClose?.addEventListener("click", (): void => {
-        if (tocOverlayTablet) {
-          postHeaderNavElements.tocIconTablet.setAttribute("aria-expanded", "false");
-          actionTocTablet?.setAttribute("aria-expanded", "false");
-          actionTocTabletMenu?.setAttribute("aria-expanded", "false");
-          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
-        }
+        closeTocOverlay();
       });
 
       // 平板端目录浮层背景 #toc-overlay-backdrop：点击后关闭 #toc-overlay-tablet。
       tocOverlayBackdrop?.addEventListener("click", (): void => {
-        if (tocOverlayTablet) {
-          postHeaderNavElements.tocIconTablet.setAttribute("aria-expanded", "false");
-          actionTocTablet?.setAttribute("aria-expanded", "false");
-          actionTocTabletMenu?.setAttribute("aria-expanded", "false");
-          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
-        }
+        closeTocOverlay();
       });
 
       // 平板端目录浮层目录项 .toc-link：点击跳转标题后关闭 #toc-overlay-tablet，避免浮层遮挡正文。
@@ -882,10 +891,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
           if (target instanceof HTMLElement) {
             const tocLink = target.closest<HTMLElement>(".toc-link");
             if (tocLink) {
-              postHeaderNavElements.tocIconTablet.setAttribute("aria-expanded", "false");
-              actionTocTablet?.setAttribute("aria-expanded", "false");
-              actionTocTabletMenu?.setAttribute("aria-expanded", "false");
-              fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+              closeTocOverlay();
             }
           }
         });
