@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.66.7] - 2026-05-25
+
 ### 🛠️ 杂项维护
 
 - 更新依赖。
@@ -1916,7 +1918,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.6...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.7...HEAD
+[1.66.7]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.6...v1.66.7
 [1.66.6]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.5...v1.66.6
 [1.66.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.4...v1.66.5
 [1.66.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.3...v1.66.4
