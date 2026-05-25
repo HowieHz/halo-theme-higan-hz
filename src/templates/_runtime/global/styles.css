@@ -5,8 +5,6 @@
 /* stylelint-disable-next-line at-rule-prelude-no-invalid -- Tailwind CSS v4 @import prelude syntax */
 @import "tailwindcss/utilities.css" layer(utilities) source(none) prefix(tw);
 
-@source "./index.ts";
-
 /* stylelint-disable custom-property-pattern */
 @theme {
   --text-*: initial;
