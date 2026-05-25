@@ -15,7 +15,6 @@ const POST_HEADER_NAV_ANIMATION_DURATION = 50;
 
 type ViewportMode = "desktop" | "tablet" | "mobile";
 type TabletMode = "top" | "quickActions";
-type FooterPostPanel = "none" | "menu" | "toc" | "share";
 
 type PostHeaderNavEnvironment = {
   // 当前视口所属断点：desktop 控制桌面端顶部导航，tablet 控制平板端顶部导航，mobile 让顶部导航退出显示。
@@ -80,14 +79,18 @@ type FooterPostNavEnvironment = {
 };
 
 type FooterPostNavIntent = {
-  // 当前展开的移动端底部子菜单：none 表示 #nav-footer/#toc-footer/#share-footer 全部收起。
-  activePanel: FooterPostPanel;
+  // 移动端底部菜单容器 #nav-footer 是否展开。
+  isMenuOpen: boolean;
+  // 移动端底部目录容器 #toc-footer 是否展开。
+  isTocOpen: boolean;
+  // 移动端底部分享容器 #share-footer 是否展开。
+  isShareOpen: boolean;
   // 用户当前是否希望显示移动端底部导航栏容器 #footer-post。
   isFooterVisible: boolean;
 };
 
 // 移动端底部 #footer-post 导航状态。
-// 状态描述 #nav-footer/#toc-footer/#share-footer 当前展开哪一个、#footer-post 是否显示、#actions-footer > #top 是否显示的输入条件。
+// 状态描述 #nav-footer/#toc-footer/#share-footer 是否展开、#footer-post 是否显示、#actions-footer > #top 是否显示的输入条件。
 // 状态不描述具体 DOM display。
 type FooterPostNavState = {
   environment: FooterPostNavEnvironment;
@@ -173,13 +176,16 @@ function createFooterPostNavState(): FooterPostNavState {
   const scrollY = getTopDistance();
 
   // 初始化移动端底部 #footer-post：#footer-post 显示，#nav-footer/#toc-footer/#share-footer 收起，#actions-footer > #top 隐藏。
+  // scrollY 使用页面当前位置，避免浏览器恢复滚动位置后第一次滚动方向误判。
   return {
     environment: {
       scrollY,
       isTopActionVisible: false,
     },
     intent: {
-      activePanel: "none",
+      isMenuOpen: false,
+      isTocOpen: false,
+      isShareOpen: false,
       isFooterVisible: true,
     },
   };
@@ -302,7 +308,8 @@ function reduceFooterPostNavState(state: FooterPostNavState, event: FooterPostNa
       return {
         ...state,
         intent: {
-          activePanel: state.intent.activePanel === "menu" ? "none" : "menu",
+          ...state.intent,
+          isMenuOpen: !state.intent.isMenuOpen,
           isFooterVisible: true,
         },
       };
@@ -310,7 +317,8 @@ function reduceFooterPostNavState(state: FooterPostNavState, event: FooterPostNa
       return {
         ...state,
         intent: {
-          activePanel: state.intent.activePanel === "toc" ? "none" : "toc",
+          ...state.intent,
+          isTocOpen: !state.intent.isTocOpen,
           isFooterVisible: true,
         },
       };
@@ -318,7 +326,8 @@ function reduceFooterPostNavState(state: FooterPostNavState, event: FooterPostNa
       return {
         ...state,
         intent: {
-          activePanel: state.intent.activePanel === "share" ? "none" : "share",
+          ...state.intent,
+          isShareOpen: !state.intent.isShareOpen,
           isFooterVisible: true,
         },
       };
@@ -331,7 +340,9 @@ function reduceFooterPostNavState(state: FooterPostNavState, event: FooterPostNa
         },
         intent: {
           // 移动端底部 #footer-post 页面滚动时关闭 #nav-footer/#toc-footer/#share-footer。
-          activePanel: "none",
+          isMenuOpen: false,
+          isTocOpen: false,
+          isShareOpen: false,
           // 向上滚动显示 #footer-post，向下滚动隐藏 #footer-post。
           isFooterVisible: event.scrollY <= state.environment.scrollY,
         },
@@ -448,19 +459,19 @@ function renderFooterPostNav(
     duration: options.duration ?? ANIMATION_DURATION,
   };
 
-  elements.footerMenuButton?.setAttribute("aria-expanded", String(state.intent.activePanel === "menu"));
-  elements.footerTocButton?.setAttribute("aria-expanded", String(state.intent.activePanel === "toc"));
-  elements.footerShareButton?.setAttribute("aria-expanded", String(state.intent.activePanel === "share"));
+  elements.footerMenuButton?.setAttribute("aria-expanded", String(state.intent.isMenuOpen));
+  elements.footerTocButton?.setAttribute("aria-expanded", String(state.intent.isTocOpen));
+  elements.footerShareButton?.setAttribute("aria-expanded", String(state.intent.isShareOpen));
 
   setSlideElementVisibility(elements.footerNav, state.intent.isFooterVisible, renderOptions);
   if (elements.navFooter) {
-    setSlideElementVisibility(elements.navFooter, state.intent.activePanel === "menu", renderOptions);
+    setSlideElementVisibility(elements.navFooter, state.intent.isMenuOpen, renderOptions);
   }
   if (elements.tocFooter) {
-    setSlideElementVisibility(elements.tocFooter, state.intent.activePanel === "toc", renderOptions);
+    setSlideElementVisibility(elements.tocFooter, state.intent.isTocOpen, renderOptions);
   }
   if (elements.shareFooter) {
-    setSlideElementVisibility(elements.shareFooter, state.intent.activePanel === "share", renderOptions);
+    setSlideElementVisibility(elements.shareFooter, state.intent.isShareOpen, renderOptions);
   }
 
   elements.footerTopIcon?.style.setProperty(
@@ -468,7 +479,7 @@ function renderFooterPostNav(
     state.environment.isTopActionVisible ? "scale(1)" : "scale(0)",
   );
 
-  if (state.intent.activePanel === "toc" && options.scrollActiveTocIntoView && elements.tocFooter) {
+  if (state.intent.isTocOpen && options.scrollActiveTocIntoView && elements.tocFooter) {
     // 移动端底部目录 #toc-footer 展开后，把当前文章位置对应的 .toc-active 滚到子菜单可视区域中间。
     const activeLink = elements.tocFooter.querySelector<HTMLElement>(".toc-active");
 
@@ -692,7 +703,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
 
     // 移动端底部导航栏按钮 #actions-footer > #toc：点击后只切换 #toc-footer 的展开状态。
     footerPostNavElements?.footerTocButton?.addEventListener("click", (): void => {
-      const isOpeningToc = footerPostNavState.intent.activePanel !== "toc";
+      const isOpeningToc = !footerPostNavState.intent.isTocOpen;
 
       footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "toggleToc" });
       renderFooterPostNav(footerPostNavState, footerPostNavElements, { scrollActiveTocIntoView: isOpeningToc });
