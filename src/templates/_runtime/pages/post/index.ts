@@ -62,6 +62,8 @@ type PostHeaderNavElements = {
 type RenderPostHeaderNavOptions = {
   animate?: boolean;
   duration?: number;
+  // #action-share 点击展开/收起 #share-list 时使用 slide；其他顶部导航状态变化仍使用 fade。
+  shareListAnimation?: "fade" | "slide";
 };
 
 type PostHeaderNavEvent =
@@ -401,6 +403,7 @@ function renderPostHeaderNav(
   const renderOptions: Required<RenderPostHeaderNavOptions> = {
     animate: options.animate ?? true,
     duration: options.duration ?? POST_HEADER_NAV_ANIMATION_DURATION,
+    shareListAnimation: options.shareListAnimation ?? "fade",
   };
 
   const isQuickActionsMode =
@@ -420,7 +423,11 @@ function renderPostHeaderNav(
   setElementVisibility(elements.menuIcon, isMenuIconShown, renderOptions);
   setElementVisibility(elements.menuContent, isMenuContentShown, renderOptions);
   if (elements.shareList) {
-    setElementVisibility(elements.shareList, isShareListShown, renderOptions);
+    if (renderOptions.shareListAnimation === "slide") {
+      setSlideElementVisibility(elements.shareList, isShareListShown, renderOptions);
+    } else {
+      setElementVisibility(elements.shareList, isShareListShown, renderOptions);
+    }
   }
   setElementVisibility(elements.topIconTablet, areTabletQuickActionsShown, renderOptions);
   setElementVisibility(elements.tocIconTablet, areTabletQuickActionsShown, renderOptions);
@@ -546,7 +553,10 @@ document.addEventListener("DOMContentLoaded", (): void => {
     // #share-list 是否实际显示仍由 renderPostHeaderNav 结合 #nav/#actions/#toc 的展开状态决定。
     postHeaderNavElements?.shareButton?.addEventListener("click", (): void => {
       postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, { type: "toggleShare" });
-      renderPostHeaderNav(postHeaderNavState, postHeaderNavElements);
+      renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, {
+        duration: ANIMATION_DURATION,
+        shareListAnimation: "slide",
+      });
     });
 
     // 顶部 #header-post resize 逻辑：视口跨断点后按新视口重建顶部导航状态。
