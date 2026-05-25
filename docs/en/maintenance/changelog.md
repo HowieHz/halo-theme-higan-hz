@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.66.9] - 2026-05-26
+
 ### 🐛 Bug Fixes
 
 - Fixed unintended spacing between titles and the theme toggle button.
@@ -2021,7 +2023,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.8...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.9...HEAD
+[1.66.9]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.8...v1.66.9
 [1.66.8]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.7...v1.66.8
 [1.66.7]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.6...v1.66.7
 [1.66.6]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.5...v1.66.6
