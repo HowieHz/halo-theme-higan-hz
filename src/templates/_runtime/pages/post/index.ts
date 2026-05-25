@@ -155,6 +155,7 @@ type PostHeaderArticleAvoidanceTarget = {
 
 let schedulePostHeaderArticleAvoidanceAfterDomChange: (() => void) | null = null;
 let postHeaderArticleAvoidanceFrame: number | null = null;
+let postHeaderArticleAvoidanceTimeout: number | null = null;
 
 function getViewportMode(): ViewportMode {
   // 与模板/CSS 断点保持一致：lg=1024px，sm=640px。
@@ -579,7 +580,14 @@ function schedulePostHeaderArticleAvoidance(elements: PostHeaderNavElements, del
   update();
 
   if (delay > 0) {
-    window.setTimeout(update, delay);
+    if (postHeaderArticleAvoidanceTimeout !== null) {
+      window.clearTimeout(postHeaderArticleAvoidanceTimeout);
+    }
+
+    postHeaderArticleAvoidanceTimeout = window.setTimeout(() => {
+      postHeaderArticleAvoidanceTimeout = null;
+      update();
+    }, delay);
   }
 }
 
