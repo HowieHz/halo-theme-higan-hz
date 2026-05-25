@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🔧 Code Refactoring
+
+- Optimized font asset output names to improve font cache reuse after theme version updates.
+
 ### 🐛 Bug Fixes
 
 - Optimized the light/dark mode toggle button size so it aligns better with the visual proportions of the site title area.
