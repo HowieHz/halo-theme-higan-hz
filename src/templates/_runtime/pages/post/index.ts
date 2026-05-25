@@ -13,6 +13,10 @@ import { slideUp } from "@runtime/scripts/animations/slide-up";
 const ANIMATION_DURATION = 200;
 const POST_HEADER_NAV_ANIMATION_DURATION = 50;
 const POST_HEADER_ARTICLE_AVOIDANCE_GAP = 16;
+// 页面滚动滞回阈值：低于 LOW 进入靠近顶部状态，高于 HIGH 进入已滚动状态。
+// 顶部 #header-post 平板 quickActions 和移动端底部 #actions-footer > #top 共用这组阈值，但各自维护自己的导航状态。
+const SCROLL_HYSTERESIS_LOW = 50;
+const SCROLL_HYSTERESIS_HIGH = 100;
 
 type ViewportMode = "desktop" | "tablet" | "mobile";
 type TabletMode = "top" | "quickActions";
@@ -79,7 +83,7 @@ type PostHeaderNavEvent =
 type FooterPostNavEnvironment = {
   // 当前页面滚动位置，用于判断 #actions-footer > #top 显隐。
   scrollY: number;
-  // 移动端底部回到顶部按钮 #actions-footer > #top 当前是否显示；scrollY 处于 50~100 滞回区间时保持这个值。
+  // 移动端底部回到顶部按钮 #actions-footer > #top 当前是否显示；scrollY 处于 LOW~HIGH 滞回区间时保持这个值。
   isTopActionVisible: boolean;
 };
 
@@ -171,12 +175,12 @@ function getViewportMode(): ViewportMode {
 function getTabletMode(currentMode: TabletMode): TabletMode {
   const topDistance = getTopDistance();
 
-  // 平板端 #header-post 滚动模式：scrollY < 50 显示 #menu-icon，scrollY > 100 显示 #top-icon-tablet 和 #toc-icon-tablet。
-  // 50~100 区间维持当前模式，避免临界点附近反复切换。
-  if (topDistance < 50) {
+  // 平板端 #header-post 滚动模式：scrollY < LOW 显示 #menu-icon，scrollY > HIGH 显示 #top-icon-tablet 和 #toc-icon-tablet。
+  // LOW~HIGH 区间维持当前模式，避免临界点附近反复切换。
+  if (topDistance < SCROLL_HYSTERESIS_LOW) {
     return "top";
   }
-  if (topDistance > 100) {
+  if (topDistance > SCROLL_HYSTERESIS_HIGH) {
     return "quickActions";
   }
   return currentMode;
@@ -329,10 +333,10 @@ function reducePostHeaderNavState(state: PostHeaderNavState, event: PostHeaderNa
 }
 
 function shouldShowFooterTopAction(scrollY: number, currentValue: boolean): boolean {
-  if (scrollY < 50) {
+  if (scrollY < SCROLL_HYSTERESIS_LOW) {
     return false;
   }
-  if (scrollY > 100) {
+  if (scrollY > SCROLL_HYSTERESIS_HIGH) {
     return true;
   }
   return currentValue;
@@ -371,7 +375,7 @@ function reduceFooterPostNavState(state: FooterPostNavState, event: FooterPostNa
       return {
         environment: {
           scrollY: event.scrollY,
-          // 移动端底部回到顶部按钮 #actions-footer > #top：scrollY < 50 隐藏，scrollY > 100 显示，50~100 保持当前状态。
+          // 移动端底部回到顶部按钮 #actions-footer > #top：scrollY < LOW 隐藏，scrollY > HIGH 显示，LOW~HIGH 保持当前状态。
           isTopActionVisible: shouldShowFooterTopAction(event.scrollY, state.environment.isTopActionVisible),
         },
         intent: {
@@ -898,7 +902,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
       }
 
       // 平板端顶部 #header-post 页面滚动逻辑：在顶部菜单按钮和回到顶部/目录快捷按钮之间切换。
-      // 使用 getTabletMode 的 <50 / >100 滞回区间，避免滚动临界点闪烁。
+      // 使用 getTabletMode 的 LOW/HIGH 滞回区间，避免滚动临界点闪烁。
       window.addEventListener("scroll", (): void => {
         const viewportMode = getViewportMode();
 
