@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed article navigation menu icons not being vertically centered.
 - Fixed incorrect CSS cascade layer ordering when component styles load before global styles, which could let base styles override Tailwind utility classes.
 - Fixed submenu toggle buttons always showing the down arrow.
+- Fixed the post page top menu potentially overlapping the article title and metadata on desktop and tablet viewports.
 
 ### 🔧 Code Refactoring
 
