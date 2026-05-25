@@ -415,7 +415,7 @@ export default defineConfig((): UserConfig => {
                   );
 
                   if (isFontAsset) {
-                    return "assets/[hash:8][extname]";
+                    return "assets/[hash:7][extname]";
                   }
 
                   return `assets/${pkg.version}[hash:7][extname]`;
