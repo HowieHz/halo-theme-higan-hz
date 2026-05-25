@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🐛 Bug Fixes
 
 - Fixed unintended spacing between titles and the theme toggle button.
+- Fixed article navigation menu icons not being vertically centered.
 
 ### 🔧 Code Refactoring
 
