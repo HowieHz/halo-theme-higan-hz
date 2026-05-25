@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.66.8] - 2026-05-26
+
 ### 🔧 Code Refactoring
 
 - Optimized font asset output names to improve font cache reuse after theme version updates.
@@ -2003,7 +2005,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.7...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.8...HEAD
+[1.66.8]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.7...v1.66.8
 [1.66.7]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.6...v1.66.7
 [1.66.6]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.5...v1.66.6
 [1.66.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.4...v1.66.5
