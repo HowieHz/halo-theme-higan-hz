@@ -912,30 +912,28 @@ document.addEventListener("DOMContentLoaded", (): void => {
 
     if (footerPostNavElements) {
       renderFooterPostNav(footerPostNavState, footerPostNavElements, { animate: false });
-    }
 
-    // 移动端底部导航栏按钮 #actions-footer > #menu：点击后只切换 #nav-footer 的展开状态。
-    footerPostNavElements?.footerMenuButton?.addEventListener("click", (): void => {
-      footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "toggleMenu" });
-      renderFooterPostNav(footerPostNavState, footerPostNavElements);
-    });
+      // 移动端底部导航栏按钮 #actions-footer > #menu：点击后只切换 #nav-footer 的展开状态。
+      footerPostNavElements.footerMenuButton?.addEventListener("click", (): void => {
+        footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "toggleMenu" });
+        renderFooterPostNav(footerPostNavState, footerPostNavElements);
+      });
 
-    // 移动端底部导航栏按钮 #actions-footer > #toc：点击后只切换 #toc-footer 的展开状态。
-    footerPostNavElements?.footerTocButton?.addEventListener("click", (): void => {
-      const isOpeningToc = !footerPostNavState.intent.isTocOpen;
+      // 移动端底部导航栏按钮 #actions-footer > #toc：点击后只切换 #toc-footer 的展开状态。
+      footerPostNavElements.footerTocButton?.addEventListener("click", (): void => {
+        const isOpeningToc = !footerPostNavState.intent.isTocOpen;
 
-      footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "toggleToc" });
-      renderFooterPostNav(footerPostNavState, footerPostNavElements, { scrollActiveTocIntoView: isOpeningToc });
-    });
+        footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "toggleToc" });
+        renderFooterPostNav(footerPostNavState, footerPostNavElements, { scrollActiveTocIntoView: isOpeningToc });
+      });
 
-    // 移动端底部导航栏按钮 #actions-footer > #share：点击后只切换 #share-footer 的展开状态。
-    footerPostNavElements?.footerShareButton?.addEventListener("click", (): void => {
-      footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "toggleShare" });
-      renderFooterPostNav(footerPostNavState, footerPostNavElements);
-    });
+      // 移动端底部导航栏按钮 #actions-footer > #share：点击后只切换 #share-footer 的展开状态。
+      footerPostNavElements.footerShareButton?.addEventListener("click", (): void => {
+        footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "toggleShare" });
+        renderFooterPostNav(footerPostNavState, footerPostNavElements);
+      });
 
-    /** 移动端 #footer-post 页面滚动逻辑：向上滚动显示 #footer-post，向下滚动隐藏 #footer-post。 */
-    if (footerPostNavElements) {
+      /** 移动端 #footer-post 页面滚动逻辑：向上滚动显示 #footer-post，向下滚动隐藏 #footer-post。 */
       window.addEventListener("scroll", (): void => {
         const topDistance = getTopDistance();
 
