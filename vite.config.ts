@@ -410,15 +410,11 @@ export default defineConfig((): UserConfig => {
             ? undefined
             : {
                 assetFileNames: (assetInfo) => {
-                  const isFontAsset = assetInfo.originalFileNames.some((fileName) =>
+                  const isFontAsset = [...assetInfo.originalFileNames, ...assetInfo.names].some((fileName) =>
                     FONT_ASSET_EXTENSIONS.has(extname(fileName).toLowerCase()),
                   );
 
-                  if (isFontAsset) {
-                    return "assets/[hash:8][extname]";
-                  }
-
-                  return `assets/${pkg.version}[hash:7][extname]`;
+                  return isFontAsset ? "assets/[hash:8][extname]" : `assets/${pkg.version}[hash:7][extname]`;
                 },
                 // JS entry files
                 // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
