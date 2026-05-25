@@ -2,9 +2,11 @@
   margin: 0 auto 2rem;
   width: 100%;
 
-  & h1,
   & .h1 {
+    align-items: center;
     color: var(--color-base-content);
+    display: flex;
+    flex-wrap: wrap;
     font-size: 1.5rem;
     font-style: normal;
     font-weight: 700;
@@ -12,6 +14,16 @@
     line-height: 2rem;
     margin-bottom: 0;
     margin-top: 0;
+
+    @media (width < 640px) {
+      margin-right: 5rem;
+      min-height: 3.125rem;
+    }
+
+    & .title-text {
+      min-width: 0;
+      overflow-wrap: break-word;
+    }
   }
 
   & a {
@@ -148,19 +160,5 @@
 
   &:hover #logo {
     filter: none;
-  }
-
-  @media (width < 640px) {
-    & #title {
-      display: table;
-      margin-right: 5rem;
-      min-height: 3.125rem;
-
-      & h1,
-      & .h1 {
-        display: table-cell;
-        vertical-align: middle;
-      }
-    }
   }
 }
