@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🔧 Code Refactoring
 
 - Refactored the header title layout to align the theme toggle button with Flexbox and improve wrapping for long site titles.
+- Replaced the mobile header title's table-cell vertical centering with Flexbox.
 
 ## [1.66.8] - 2026-05-26
 
