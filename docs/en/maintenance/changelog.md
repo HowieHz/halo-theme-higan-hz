@@ -23,9 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fixed unintended spacing between the header site title and the theme toggle button.
+
 ### 🔧 Code Refactoring
 
-- Refactored the header title layout to align the theme toggle button with Flexbox and improve wrapping for long site titles.
 - Replaced the mobile header title's table-cell vertical centering with Flexbox.
 
 ## [1.66.8] - 2026-05-26
