@@ -41,16 +41,8 @@ type PostHeaderNavState = {
 type PostHeaderNavElements = {
   // 顶部导航根容器 #header-post，用于观察顶部菜单可视尺寸变化。
   headerPost: HTMLElement;
-  // 文章标题区域 #article-header；用于定位里面需要单独避让的 h1 和 .meta。
-  articleHeader: HTMLElement | null;
-  // 文章标题 #article-header > h1；桌面端/平板端顶部菜单可能覆盖它。
-  articleHeaderTitle: HTMLElement | null;
-  // #article-header > h1 原始内联 margin-inline-end；避让取消时恢复这个值，避免覆盖模板已有内联样式。
-  articleHeaderTitleInitialMarginInlineEnd: string | null;
-  // 文章元信息 #article-header > .meta；桌面端/平板端顶部菜单可能覆盖它。
-  articleHeaderMeta: HTMLElement | null;
-  // #article-header > .meta 原始内联 margin-inline-end；避让取消时恢复这个值，避免覆盖模板已有内联样式。
-  articleHeaderMetaInitialMarginInlineEnd: string | null;
+  // 文章标题区域内需要单独避让顶部菜单的目标：#article-header > h1 和 #article-header > .meta。
+  articleAvoidanceTargets: PostHeaderArticleAvoidanceTarget[];
   // 顶部菜单按钮 #header-post #menu-icon。
   menuIcon: HTMLElement;
   // 顶部导航链接容器 #header-post #nav。
@@ -162,6 +154,7 @@ type PostHeaderArticleAvoidanceTarget = {
 };
 
 let schedulePostHeaderArticleAvoidanceAfterDomChange: (() => void) | null = null;
+let postHeaderArticleAvoidanceFrame: number | null = null;
 
 function getViewportMode(): ViewportMode {
   // 与模板/CSS 断点保持一致：lg=1024px，sm=640px。
@@ -234,7 +227,6 @@ function createPostHeaderNavEnvironment(currentTabletMode: TabletMode = "top"): 
 
 function getPostHeaderNavElements(): PostHeaderNavElements | null {
   const headerPost = document.querySelector<HTMLElement>("#header-post");
-  const articleHeader = document.querySelector<HTMLElement>("#article-header");
   const articleHeaderTitle = document.querySelector<HTMLElement>("#article-header > h1");
   const articleHeaderMeta = document.querySelector<HTMLElement>("#article-header > .meta");
   const menuIcon = document.querySelector<HTMLElement>("#header-post #menu-icon");
@@ -252,11 +244,12 @@ function getPostHeaderNavElements(): PostHeaderNavElements | null {
 
   return {
     headerPost,
-    articleHeader,
-    articleHeaderTitle,
-    articleHeaderTitleInitialMarginInlineEnd: articleHeaderTitle?.style.getPropertyValue("margin-inline-end") || null,
-    articleHeaderMeta,
-    articleHeaderMetaInitialMarginInlineEnd: articleHeaderMeta?.style.getPropertyValue("margin-inline-end") || null,
+    articleAvoidanceTargets: [articleHeaderTitle, articleHeaderMeta]
+      .filter((element): element is HTMLElement => element !== null)
+      .map((element) => ({
+        element,
+        initialMarginInlineEnd: element.style.getPropertyValue("margin-inline-end") || null,
+      })),
     menuIcon,
     nav,
     actions,
@@ -449,7 +442,7 @@ function doRectsOverlapVertically(firstRect: RectBounds, secondRect: RectBounds)
 }
 
 function getViewportClippedRect(element: HTMLElement): VisibleRect | null {
-  // 桌面端/平板端避让只关心用户当前能看到的矩形；元素超出 viewport 的部分不计入 #article-header 避让。
+  // 桌面端/平板端避让只关心用户当前能看到的矩形；元素超出 viewport 的部分不计入 h1/.meta 避让。
   const rect = element.getBoundingClientRect();
   const top = Math.max(0, rect.top);
   const right = Math.min(window.innerWidth, rect.right);
@@ -472,21 +465,6 @@ function getViewportClippedRect(element: HTMLElement): VisibleRect | null {
   };
 }
 
-function getPostHeaderArticleAvoidanceTargets(elements: PostHeaderNavElements): PostHeaderArticleAvoidanceTarget[] {
-  const targets = [
-    {
-      element: elements.articleHeaderTitle,
-      initialMarginInlineEnd: elements.articleHeaderTitleInitialMarginInlineEnd,
-    },
-    {
-      element: elements.articleHeaderMeta,
-      initialMarginInlineEnd: elements.articleHeaderMetaInitialMarginInlineEnd,
-    },
-  ];
-
-  return targets.filter((target): target is PostHeaderArticleAvoidanceTarget => target.element !== null);
-}
-
 function getCurrentPostHeaderArticleAvoidanceMargin(target: HTMLElement): number {
   const value = Number(target.dataset.postHeaderAvoidanceMarginInlineEnd);
 
@@ -506,7 +484,7 @@ function restorePostHeaderArticleAvoidanceTargetMargin(target: PostHeaderArticle
 
 function restorePostHeaderArticleAvoidanceMargin(elements: PostHeaderNavElements): void {
   // 移动端顶部 #header-post 退出显示时，撤销 #article-header > h1 和 #article-header > .meta 上的避让 margin。
-  getPostHeaderArticleAvoidanceTargets(elements).forEach((target) => {
+  elements.articleAvoidanceTargets.forEach((target) => {
     restorePostHeaderArticleAvoidanceTargetMargin(target);
   });
 }
@@ -572,32 +550,29 @@ function updatePostHeaderArticleAvoidanceTarget(
   );
 }
 
-function updatePostHeaderArticleAvoidance(elements: PostHeaderNavElements, state: PostHeaderNavState): void {
-  // 桌面端/平板端 #article-header 避让逻辑：逐个计算 h1 和 .meta 是否需要避让顶部 #header-post。
+function updatePostHeaderArticleAvoidance(elements: PostHeaderNavElements): void {
+  // 桌面端/平板端 #article-header > h1/.meta 避让逻辑：逐个计算是否需要避让顶部 #header-post。
   // 移动端顶部 #header-post 退出显示，底部 #footer-post 不参与这个避让计算。
-  if (!elements.articleHeader) {
-    return;
-  }
-
-  if (state.environment.viewportMode === "mobile") {
+  if (getViewportMode() === "mobile") {
     restorePostHeaderArticleAvoidanceMargin(elements);
     return;
   }
 
-  getPostHeaderArticleAvoidanceTargets(elements).forEach((target) => {
+  elements.articleAvoidanceTargets.forEach((target) => {
     updatePostHeaderArticleAvoidanceTarget(target, elements);
   });
 }
 
-function schedulePostHeaderArticleAvoidance(
-  elements: PostHeaderNavElements,
-  state: PostHeaderNavState,
-  delay = 0,
-): void {
+function schedulePostHeaderArticleAvoidance(elements: PostHeaderNavElements, delay = 0): void {
   // 顶部 #header-post 的 fade/slide 动画会在结束时改变最终 display，高度/宽度需要立即算一次、动画结束后再算一次。
   const update = (): void => {
-    window.requestAnimationFrame(() => {
-      updatePostHeaderArticleAvoidance(elements, state);
+    if (postHeaderArticleAvoidanceFrame !== null) {
+      return;
+    }
+
+    postHeaderArticleAvoidanceFrame = window.requestAnimationFrame(() => {
+      postHeaderArticleAvoidanceFrame = null;
+      updatePostHeaderArticleAvoidance(elements);
     });
   };
 
@@ -608,10 +583,7 @@ function schedulePostHeaderArticleAvoidance(
   }
 }
 
-function observePostHeaderArticleAvoidanceChanges(
-  elements: PostHeaderNavElements,
-  getState: () => PostHeaderNavState,
-): void {
+function observePostHeaderArticleAvoidanceChanges(elements: PostHeaderNavElements): void {
   // 桌面端目录 #toc 在 DOMContentLoaded 后生成，hover 文案和分享列表也会改变 #header-post 的实际尺寸。
   // ResizeObserver 捕获这些非点击路径的尺寸变化，再触发 #article-header > h1/.meta 避让重算。
   if (!("ResizeObserver" in window)) {
@@ -619,7 +591,7 @@ function observePostHeaderArticleAvoidanceChanges(
   }
 
   const resizeObserver = new ResizeObserver(() => {
-    schedulePostHeaderArticleAvoidance(elements, getState());
+    schedulePostHeaderArticleAvoidance(elements);
   });
   const observedElements = [
     elements.headerPost,
@@ -628,9 +600,7 @@ function observePostHeaderArticleAvoidanceChanges(
     elements.actions,
     elements.shareList,
     elements.toc,
-    elements.articleHeader,
-    elements.articleHeaderTitle,
-    elements.articleHeaderMeta,
+    ...elements.articleAvoidanceTargets.map((target) => target.element),
   ];
 
   observedElements.forEach((element) => {
@@ -682,9 +652,9 @@ function renderPostHeaderNav(
   setElementVisibility(elements.topIconTablet, areTabletQuickActionsShown, renderOptions);
   setElementVisibility(elements.tocIconTablet, areTabletQuickActionsShown, renderOptions);
 
-  // 桌面端/平板端 #header-post 显隐或动画改变可视尺寸后，重新计算 #article-header 右侧避让。
+  // 桌面端/平板端 #header-post 显隐或动画改变可视尺寸后，重新计算 #article-header > h1/.meta 右侧避让。
   // 移动端底部 #footer-post 不走这条路径，避免把底部导航尺寸算进文章标题区域。
-  schedulePostHeaderArticleAvoidance(elements, state, renderOptions.animate ? renderOptions.duration : 0);
+  schedulePostHeaderArticleAvoidance(elements, renderOptions.animate ? renderOptions.duration : 0);
 }
 
 /**
@@ -795,11 +765,11 @@ document.addEventListener("DOMContentLoaded", (): void => {
 
     if (postHeaderNavElements) {
       // 桌面端/平板端顶部 #header-post：hover 文案、目录生成、分享菜单动画都会改变顶部菜单可视尺寸。
-      // 这些变化统一触发 #article-header 右侧避让，避免标题区域和顶部菜单重叠。
+      // 这些变化统一触发 #article-header > h1/.meta 右侧避让，避免标题文字或元信息和顶部菜单重叠。
       schedulePostHeaderArticleAvoidanceAfterDomChange = () => {
-        schedulePostHeaderArticleAvoidance(postHeaderNavElements, postHeaderNavState, ANIMATION_DURATION);
+        schedulePostHeaderArticleAvoidance(postHeaderNavElements, ANIMATION_DURATION);
       };
-      observePostHeaderArticleAvoidanceChanges(postHeaderNavElements, () => postHeaderNavState);
+      observePostHeaderArticleAvoidanceChanges(postHeaderNavElements);
       renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, { animate: false });
     }
 
@@ -928,8 +898,8 @@ document.addEventListener("DOMContentLoaded", (): void => {
       const viewportMode = getViewportMode();
 
       if (viewportMode === "desktop") {
-        // 桌面端 #header-post 固定在右上角；页面滚动会改变 #article-header 与顶部菜单的 Y 轴相交关系。
-        schedulePostHeaderArticleAvoidance(postHeaderNavElements, postHeaderNavState);
+        // 桌面端 #header-post 固定在右上角；页面滚动会改变 #article-header > h1/.meta 与顶部菜单的 Y 轴相交关系。
+        schedulePostHeaderArticleAvoidance(postHeaderNavElements);
         return;
       }
 
