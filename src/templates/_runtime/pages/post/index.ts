@@ -13,6 +13,7 @@ import { slideUp } from "@runtime/scripts/animations/slide-up";
 const ANIMATION_DURATION = 200;
 const POST_HEADER_NAV_ANIMATION_DURATION = 50;
 const POST_HEADER_ARTICLE_AVOIDANCE_GAP = 16;
+const POST_HEADER_ARTICLE_AVOIDANCE_RESTORE_DURATION = 200;
 // 页面滚动滞回阈值：低于 LOW 进入靠近顶部状态，高于 HIGH 进入已滚动状态。
 // 顶部 #header-post 平板 quickActions 和移动端底部 #actions-footer > #top 共用这组阈值，但各自维护自己的导航状态。
 const SCROLL_HYSTERESIS_LOW = 50;
@@ -155,6 +156,8 @@ type VisibleRect = RectBounds & {
 type PostHeaderArticleAvoidanceTarget = {
   element: HTMLElement;
   initialMarginInlineEnd: string | null;
+  initialComputedMarginInlineEnd: number;
+  initialTransition: string | null;
 };
 
 let schedulePostHeaderArticleAvoidanceAfterDomChange = (): void => {};
@@ -254,6 +257,8 @@ function getPostHeaderNavElements(): PostHeaderNavElements | null {
       .map((element) => ({
         element,
         initialMarginInlineEnd: element.style.getPropertyValue("margin-inline-end") || null,
+        initialComputedMarginInlineEnd: Number.parseFloat(window.getComputedStyle(element).marginInlineEnd) || 0,
+        initialTransition: element.style.getPropertyValue("transition") || null,
       })),
     menuIcon,
     nav,
@@ -476,8 +481,40 @@ function getCurrentPostHeaderArticleAvoidanceMargin(target: HTMLElement): number
   return Number.isFinite(value) ? value : 0;
 }
 
+function getRenderedPostHeaderArticleAvoidanceMargin(target: PostHeaderArticleAvoidanceTarget): number {
+  const value =
+    Number.parseFloat(window.getComputedStyle(target.element).marginInlineEnd) - target.initialComputedMarginInlineEnd;
+
+  return Number.isFinite(value) ? Math.max(0, value) : getCurrentPostHeaderArticleAvoidanceMargin(target.element);
+}
+
+function setPostHeaderArticleAvoidanceTargetTransition(
+  target: PostHeaderArticleAvoidanceTarget,
+  shouldAnimateRestore: boolean,
+): void {
+  if (shouldAnimateRestore) {
+    const transition = `margin-inline-end ${POST_HEADER_ARTICLE_AVOIDANCE_RESTORE_DURATION}ms ease`;
+    target.element.style.setProperty(
+      "transition",
+      target.initialTransition ? `${target.initialTransition}, ${transition}` : transition,
+    );
+    return;
+  }
+
+  if (target.initialTransition) {
+    target.element.style.setProperty("transition", target.initialTransition);
+  } else {
+    target.element.style.removeProperty("transition");
+  }
+}
+
 function restorePostHeaderArticleAvoidanceTargetMargin(target: PostHeaderArticleAvoidanceTarget): void {
   // 桌面端/平板端顶部菜单不再覆盖目标元素时，撤销写到 #article-header > h1 或 #article-header > .meta 的 margin-inline-end。
+  // 往右恢复标题/元信息可用宽度时加短过渡，减少鼠标掠过 #header-post 操作按钮时的抖动。
+  const currentAvoidanceMargin = getCurrentPostHeaderArticleAvoidanceMargin(target.element);
+  if (currentAvoidanceMargin > 0) {
+    setPostHeaderArticleAvoidanceTargetTransition(target, true);
+  }
   delete target.element.dataset.postHeaderAvoidanceMarginInlineEnd;
 
   if (target.initialMarginInlineEnd) {
@@ -525,7 +562,7 @@ function updatePostHeaderArticleAvoidanceTarget(
   }
 
   const currentAvoidanceMargin = getCurrentPostHeaderArticleAvoidanceMargin(target.element);
-  const targetNaturalRight = targetRect.right + currentAvoidanceMargin;
+  const targetNaturalRight = targetRect.right + getRenderedPostHeaderArticleAvoidanceMargin(target);
   const overlappingCandidateRects = getPostHeaderArticleAvoidanceCandidates(elements)
     .filter((element) => isVisible(element))
     .map((element) => getViewportClippedRect(element))
@@ -547,6 +584,11 @@ function updatePostHeaderArticleAvoidanceTarget(
   // #article-header > h1/.meta 只避让“目标元素自然右边界”和顶部菜单可见左边界之间的重叠宽度。
   // 不使用 window.innerWidth - visibleLeft，避免把顶部菜单右侧到视口边缘的空白也算进避让距离。
   const requiredMargin = Math.max(0, Math.ceil(targetNaturalRight - visibleLeft + POST_HEADER_ARTICLE_AVOIDANCE_GAP));
+  // #article-header > h1/.meta 需要向左缩小时立即扩大 margin-inline-end，避免顶部菜单覆盖。
+  // #article-header > h1/.meta 往右恢复可用宽度时才使用短过渡，缓冲 #header-post hover 文案造成的尺寸变化。
+  if (requiredMargin !== currentAvoidanceMargin) {
+    setPostHeaderArticleAvoidanceTargetTransition(target, requiredMargin < currentAvoidanceMargin);
+  }
 
   target.element.dataset.postHeaderAvoidanceMarginInlineEnd = String(requiredMargin);
   target.element.style.setProperty(

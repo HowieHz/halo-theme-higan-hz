@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Improved the transition when the desktop and tablet post page top menu restores article-header avoidance, reducing article title and metadata jitter while hovering action buttons.
+
 ## [1.66.9] - 2026-05-26
 
 ### 🐛 Bug Fixes
