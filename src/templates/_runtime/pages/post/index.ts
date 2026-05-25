@@ -15,6 +15,7 @@ const POST_HEADER_NAV_ANIMATION_DURATION = 50;
 
 type ViewportMode = "desktop" | "tablet" | "mobile";
 type TabletMode = "top" | "quickActions";
+type FooterPostPanel = "none" | "menu" | "toc" | "share";
 
 // 顶部 #header-post 导航状态。
 // 状态描述“用户意图 + 环境”，不描述具体 DOM display。
@@ -29,6 +30,27 @@ type PostHeaderNavState = {
 type RenderPostHeaderNavOptions = {
   animate?: boolean;
   duration?: number;
+};
+
+// 移动端底部 #footer-post 导航状态。
+// 状态描述 #nav-footer/#toc-footer/#share-footer 当前展开哪一个、#footer-post 是否显示、#actions-footer > #top 是否显示。
+// 状态不描述具体 DOM display。
+type FooterPostNavState = {
+  // 当前展开的移动端底部子菜单：none 表示 #nav-footer/#toc-footer/#share-footer 全部收起。
+  activePanel: FooterPostPanel;
+  // 是否显示移动端底部导航栏容器 #footer-post。
+  isFooterVisible: boolean;
+  // 是否显示移动端底部回到顶部按钮 #actions-footer > #top。
+  isTopActionVisible: boolean;
+};
+
+type RenderFooterPostNavOptions = {
+  // 是否使用 slideUp/slideDown 动画更新 #footer-post 和底部子菜单显隐。
+  animate?: boolean;
+  // #footer-post 和底部子菜单显隐动画时长，单位毫秒。
+  duration?: number;
+  // 打开 #toc-footer 后是否把当前 .toc-active 滚动到 #toc-footer 可视区域中间。
+  scrollActiveTocIntoView?: boolean;
 };
 
 function getViewportMode(): ViewportMode {
@@ -68,6 +90,15 @@ function createPostHeaderNavState(): PostHeaderNavState {
   };
 }
 
+function createFooterPostNavState(): FooterPostNavState {
+  // 初始化移动端底部 #footer-post：#footer-post 显示，#nav-footer/#toc-footer/#share-footer 收起，#actions-footer > #top 隐藏。
+  return {
+    activePanel: "none",
+    isFooterVisible: true,
+    isTopActionVisible: false,
+  };
+}
+
 function setElementVisibility(
   element: HTMLElement | NodeListOf<HTMLElement> | HTMLElement[],
   isShown: boolean,
@@ -93,6 +124,27 @@ function setElementVisibility(
     show(element);
   } else if (isVisible(element)) {
     // 非动画初始化时，不触碰已经由 Tailwind/CSS 隐藏的元素，避免把 display:none 记为默认显示值。
+    hide(element);
+  }
+}
+
+function setSlideElementVisibility(
+  element: HTMLElement,
+  isShown: boolean,
+  options: Required<Pick<RenderFooterPostNavOptions, "animate" | "duration">>,
+): void {
+  if (options.animate) {
+    if (isShown) {
+      slideDown(element, options.duration);
+    } else {
+      slideUp(element, options.duration);
+    }
+    return;
+  }
+
+  if (isShown) {
+    show(element);
+  } else {
     hide(element);
   }
 }
@@ -142,6 +194,63 @@ function renderPostHeaderNav(state: PostHeaderNavState, options: RenderPostHeade
   }
   setElementVisibility(topIconTablet, areTabletQuickActionsShown, renderOptions);
   setElementVisibility(tocIconTablet, areTabletQuickActionsShown, renderOptions);
+}
+
+/**
+ * 移动端底部文章导航唯一显隐出口。
+ *
+ * 只有这里能控制 #footer-post、#actions-footer > #menu/#toc/#share/#top、#nav-footer、#toc-footer、#share-footer。
+ */
+function renderFooterPostNav(state: FooterPostNavState, options: RenderFooterPostNavOptions = {}): void {
+  const renderOptions = {
+    animate: options.animate ?? true,
+    duration: options.duration ?? ANIMATION_DURATION,
+  };
+
+  const footerNav = document.querySelector<HTMLElement>("#footer-post");
+  const footerMenuButton = document.querySelector<HTMLElement>("#actions-footer > #menu");
+  const footerTocButton = document.querySelector<HTMLElement>("#actions-footer > #toc");
+  const footerShareButton = document.querySelector<HTMLElement>("#actions-footer > #share");
+  const footerTopIcon = document.querySelector<HTMLElement>("#actions-footer > #top");
+  const navFooter = document.querySelector<HTMLElement>("#nav-footer");
+  const tocFooter = document.querySelector<HTMLElement>("#toc-footer");
+  const shareFooter = document.querySelector<HTMLElement>("#share-footer");
+
+  if (!footerNav) {
+    return;
+  }
+
+  footerMenuButton?.setAttribute("aria-expanded", String(state.activePanel === "menu"));
+  footerTocButton?.setAttribute("aria-expanded", String(state.activePanel === "toc"));
+  footerShareButton?.setAttribute("aria-expanded", String(state.activePanel === "share"));
+
+  setSlideElementVisibility(footerNav, state.isFooterVisible, renderOptions);
+  if (navFooter) {
+    setSlideElementVisibility(navFooter, state.activePanel === "menu", renderOptions);
+  }
+  if (tocFooter) {
+    setSlideElementVisibility(tocFooter, state.activePanel === "toc", renderOptions);
+  }
+  if (shareFooter) {
+    setSlideElementVisibility(shareFooter, state.activePanel === "share", renderOptions);
+  }
+
+  footerTopIcon?.style.setProperty("transform", state.isTopActionVisible ? "scale(1)" : "scale(0)");
+
+  if (state.activePanel === "toc" && options.scrollActiveTocIntoView && tocFooter) {
+    // 移动端底部目录 #toc-footer 展开后，把当前文章位置对应的 .toc-active 滚到子菜单可视区域中间。
+    const activeLink = tocFooter.querySelector<HTMLElement>(".toc-active");
+
+    if (activeLink) {
+      setTimeout(() => {
+        activeLink.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "center",
+        });
+      }, renderOptions.duration);
+    }
+  }
 }
 
 document.addEventListener("click", (e: Event): void => {
@@ -194,64 +303,6 @@ document.addEventListener("mouseout", (e: Event): void => {
 document.addEventListener("DOMContentLoaded", (): void => {
   /** 控制博客文章页面中菜单的不同版本 适用于桌面端、平板端和移动端 */
   if (document.querySelector(".post")) {
-    // 移动端 文章页 底部导航栏 按钮事件 绑定
-    const footerMenuButton: HTMLElement | null = document.querySelector("#actions-footer > #menu");
-    const footerTocButton: HTMLElement | null = document.querySelector("#actions-footer > #toc");
-    const footerShareButton: HTMLElement | null = document.querySelector("#actions-footer > #share");
-    footerMenuButton?.addEventListener("click", (): void => {
-      const navFooter: HTMLElement | null = document.querySelector("#nav-footer");
-      if (!navFooter) {
-        return;
-      }
-      if (isVisible(navFooter)) {
-        footerMenuButton.setAttribute("aria-expanded", "false");
-        slideUp(navFooter, ANIMATION_DURATION);
-      } else {
-        footerMenuButton.setAttribute("aria-expanded", "true");
-        slideDown(navFooter, ANIMATION_DURATION);
-      }
-    });
-    footerTocButton?.addEventListener("click", (): void => {
-      const tocFooter: HTMLElement | null = document.querySelector("#toc-footer");
-      if (!tocFooter) {
-        return;
-      }
-      if (isVisible(tocFooter)) {
-        footerTocButton.setAttribute("aria-expanded", "false");
-        slideUp(tocFooter, ANIMATION_DURATION);
-      } else {
-        footerTocButton.setAttribute("aria-expanded", "true");
-        // First, play the slide-down animation
-        slideDown(tocFooter, ANIMATION_DURATION);
-
-        // Then instantly scroll to active item position
-        const activeLink = tocFooter.querySelector<HTMLElement>(".toc-active");
-
-        if (activeLink) {
-          setTimeout(() => {
-            activeLink.scrollIntoView({
-              behavior: "smooth",
-              block: "center",
-              inline: "center",
-            });
-          }, ANIMATION_DURATION);
-        }
-      }
-    });
-    footerShareButton?.addEventListener("click", (): void => {
-      const shareFooter: HTMLElement | null = document.querySelector("#share-footer");
-      if (!shareFooter) {
-        return;
-      }
-      if (isVisible(shareFooter)) {
-        footerShareButton.setAttribute("aria-expanded", "false");
-        slideUp(shareFooter, ANIMATION_DURATION);
-      } else {
-        footerShareButton.setAttribute("aria-expanded", "true");
-        slideDown(shareFooter, ANIMATION_DURATION);
-      }
-    });
-
     let postHeaderNavState = createPostHeaderNavState();
     renderPostHeaderNav(postHeaderNavState, { animate: false });
 
@@ -403,45 +454,69 @@ document.addEventListener("DOMContentLoaded", (): void => {
       renderPostHeaderNav(postHeaderNavState, { duration: ANIMATION_DURATION });
     });
 
-    const footerNav: HTMLElement | null = document.querySelector<HTMLElement>("#footer-post");
-    let lastScrollTop = 0;
-    const navFooter: HTMLElement | null = document.querySelector<HTMLElement>("#nav-footer");
-    const tocFooter: HTMLElement | null = document.querySelector<HTMLElement>("#toc-footer");
-    const shareFooter: HTMLElement | null = document.querySelector<HTMLElement>("#share-footer");
-    const footerTopIcon: HTMLElement | null = document.querySelector<HTMLElement>("#actions-footer > #top");
+    let footerPostNavState = createFooterPostNavState();
+    renderFooterPostNav(footerPostNavState, { animate: false });
 
-    /** 移动端 文章页 底部导航栏 页面滚动相关逻辑 向上滚动时显示移动端导航菜单，向下滚动时再次隐藏 */
+    const footerMenuButton: HTMLElement | null = document.querySelector("#actions-footer > #menu");
+    const footerTocButton: HTMLElement | null = document.querySelector("#actions-footer > #toc");
+    const footerShareButton: HTMLElement | null = document.querySelector("#actions-footer > #share");
+
+    // 移动端底部导航栏按钮 #actions-footer > #menu：点击后只切换 #nav-footer 的展开状态。
+    footerMenuButton?.addEventListener("click", (): void => {
+      footerPostNavState = {
+        ...footerPostNavState,
+        activePanel: footerPostNavState.activePanel === "menu" ? "none" : "menu",
+        isFooterVisible: true,
+      };
+      renderFooterPostNav(footerPostNavState);
+    });
+
+    // 移动端底部导航栏按钮 #actions-footer > #toc：点击后只切换 #toc-footer 的展开状态。
+    footerTocButton?.addEventListener("click", (): void => {
+      const isOpeningToc = footerPostNavState.activePanel !== "toc";
+
+      footerPostNavState = {
+        ...footerPostNavState,
+        activePanel: isOpeningToc ? "toc" : "none",
+        isFooterVisible: true,
+      };
+      renderFooterPostNav(footerPostNavState, { scrollActiveTocIntoView: isOpeningToc });
+    });
+
+    // 移动端底部导航栏按钮 #actions-footer > #share：点击后只切换 #share-footer 的展开状态。
+    footerShareButton?.addEventListener("click", (): void => {
+      footerPostNavState = {
+        ...footerPostNavState,
+        activePanel: footerPostNavState.activePanel === "share" ? "none" : "share",
+        isFooterVisible: true,
+      };
+      renderFooterPostNav(footerPostNavState);
+    });
+
+    let footerLastScrollTop = 0;
+    const footerNav: HTMLElement | null = document.querySelector<HTMLElement>("#footer-post");
+
+    /** 移动端 #footer-post 页面滚动逻辑：向上滚动显示 #footer-post，向下滚动隐藏 #footer-post。 */
     if (footerNav) {
       window.addEventListener("scroll", (): void => {
         const topDistance = getTopDistance();
 
-        // 在滚动时，关闭全部底部导航栏子菜单
-        footerTocButton?.setAttribute("aria-expanded", "false");
-        footerMenuButton?.setAttribute("aria-expanded", "false");
-        footerShareButton?.setAttribute("aria-expanded", "false");
-        for (const footer of [tocFooter, navFooter, shareFooter]) {
-          if (footer) {
-            slideUp(footer, ANIMATION_DURATION);
-          }
-        }
-
-        if (topDistance > lastScrollTop) {
-          // 向下滚动 -> 隐藏菜单
-          slideUp(footerNav, ANIMATION_DURATION);
-        } else {
-          // 向上滚动 -> 显示菜单
-          slideDown(footerNav, ANIMATION_DURATION);
-        }
-        lastScrollTop = topDistance;
-
-        // 回到顶部按钮 根据页面滚动距离 显示/隐藏
+        // 移动端底部回到顶部按钮 #actions-footer > #top：scrollY < 50 隐藏，scrollY > 100 显示，50~100 保持当前状态。
+        let isTopActionVisible = footerPostNavState.isTopActionVisible;
         if (topDistance < 50) {
-          // 隐藏回到顶部按钮
-          footerTopIcon?.style.setProperty("transform", "scale(0)");
+          isTopActionVisible = false;
         } else if (topDistance > 100) {
-          // 显示回到顶部按钮
-          footerTopIcon?.style.setProperty("transform", "scale(1)");
+          isTopActionVisible = true;
         }
+
+        // 移动端底部 #footer-post 页面滚动时关闭 #nav-footer/#toc-footer/#share-footer，再按滚动方向显示/隐藏 #footer-post。
+        footerPostNavState = {
+          activePanel: "none",
+          isFooterVisible: topDistance <= footerLastScrollTop,
+          isTopActionVisible,
+        };
+        footerLastScrollTop = topDistance;
+        renderFooterPostNav(footerPostNavState);
       });
     }
 
