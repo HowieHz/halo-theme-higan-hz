@@ -9,7 +9,7 @@
   ></th:block>
 </head>
 <body th:remove="tag">
-  <header id="header">
+  <header id="header-component">
     <a th:href="@{/}">
       <th:block
         th:with="styles = ${theme.config?.styles},
@@ -62,14 +62,19 @@
         ></th:block>
       </th:block>
 
-      <div id="title">
-        <span class="h1">
-          <th:block th:text="${site?.title}">站点标题替换位</th:block
-          ><th:block
-            th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
-            th:insert="~{components/theme-toggle-button/template :: body}"
-          ></th:block>
-        </span>
+      <div
+        id="title"
+        class="h1"
+      >
+        <span
+          class="title-text"
+          th:text="${site?.title}"
+          >站点标题替换位</span
+        >
+        <th:block
+          th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
+          th:insert="~{components/theme-toggle-button/template :: body}"
+        ></th:block>
       </div>
     </a>
     <div

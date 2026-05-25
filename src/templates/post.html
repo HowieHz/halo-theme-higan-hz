@@ -105,14 +105,18 @@
       itemscope
       itemtype="http://schema.org/BlogPosting"
     >
-      <header>
+      <header id="article-header">
         <h1
           class="tw:my-0 tw:text-[1.5em] tw:leading-tight"
           th:classappend="${theme.config?.post_styles?.post_title_uppper} ? 'tw:uppercase'"
           itemprop="name headline"
         >
-          <th:block th:text="${post.spec?.title}">标题替换位</th:block
-          ><th:block
+          <span
+            class="article-title-text"
+            th:text="${post.spec?.title}"
+            >标题替换位</span
+          >
+          <th:block
             th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
             th:insert="~{components/theme-toggle-button/template :: body}"
           ></th:block>

@@ -4,9 +4,9 @@ import { fadeIn } from "@runtime/scripts/animations/fade-in";
 import { fadeOut } from "@runtime/scripts/animations/fade-out";
 
 document.addEventListener("DOMContentLoaded", (): void => {
-  const mobileMenuIcon: HTMLElement | null = document.querySelector("#header > #nav > ul > .icon > a");
+  const mobileMenuIcon: HTMLElement | null = document.querySelector("#header-component > #nav > ul > .icon > a");
   const mobileMenuItems: NodeListOf<HTMLElement> | null = document.querySelectorAll(
-    "#header > #nav > ul > li:not(:first-child)",
+    "#header-component > #nav > ul > li:not(:first-child)",
   );
   // 移动端 主页页眉菜单 按钮事件 绑定
   mobileMenuIcon?.addEventListener("click", (): void => {

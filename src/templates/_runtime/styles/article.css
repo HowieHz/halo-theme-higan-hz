@@ -5,18 +5,6 @@ article {
   flex-direction: column;
   min-height: 100%;
 
-  & header {
-    & .meta {
-      margin-bottom: 1rem;
-      margin-top: 0;
-
-      & * {
-        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
-        font-size: var(--tw-text-sm);
-      }
-    }
-  }
-
   & .content {
     & h1,
     & h2,
