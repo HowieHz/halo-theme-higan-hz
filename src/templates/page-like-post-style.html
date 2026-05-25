@@ -66,7 +66,11 @@
     >
       <header>
         <h1>
-          <span th:text="${singlePage.spec?.title}">标题替换位</span>
+          <span
+            class="article-title-text"
+            th:text="${singlePage.spec?.title}"
+            >标题替换位</span
+          >
           <th:block
             th:if="${theme.config?.styles?.is_show_color_scheme_toggle_button}"
             th:insert="~{components/theme-toggle-button/template :: body}"

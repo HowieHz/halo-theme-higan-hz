@@ -1,5 +1,6 @@
 import "@runtime/global";
 import "./styles.css";
+import "@runtime/styles/article-header.css";
 import "@runtime/styles/article.css";
 import "@runtime/styles/article-metadata.css";
 import { isVisible, scrollToTop, show, toggle } from "@runtime/scripts/animations/base";
