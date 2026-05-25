@@ -201,12 +201,12 @@ function createPostHeaderNavState(): PostHeaderNavState {
 function createFooterPostNavState(): FooterPostNavState {
   const scrollY = getTopDistance();
 
-  // 初始化移动端底部 #footer-post：#footer-post 显示，#nav-footer/#toc-footer/#share-footer 收起，#actions-footer > #top 隐藏。
+  // 初始化移动端底部 #footer-post：#footer-post 显示，#nav-footer/#toc-footer/#share-footer 收起，#actions-footer > #top 按当前滚动位置显隐。
   // scrollY 使用页面当前位置，避免浏览器恢复滚动位置后第一次滚动方向误判。
   return {
     environment: {
       scrollY,
-      isTopActionVisible: false,
+      isTopActionVisible: shouldShowFooterTopAction(scrollY, false),
     },
     intent: {
       isMenuOpen: false,
