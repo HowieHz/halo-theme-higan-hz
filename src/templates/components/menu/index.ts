@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", (): void => {
       // 阻止默认跳转行为
       event.preventDefault();
 
-      // 找到当前按钮对应的链接元素
-      const link = toggle.parentElement?.querySelector(".submenu-link") as HTMLAnchorElement;
+      // 找到当前按钮对应的菜单链接 <a.submenu-link>。
+      const link = toggle.parentElement?.querySelector<HTMLAnchorElement>(".submenu-link");
       if (!link) return;
 
       // 读取属性工具函数（避免重复 getAttribute）
