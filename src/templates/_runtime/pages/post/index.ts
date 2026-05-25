@@ -771,149 +771,141 @@ document.addEventListener("DOMContentLoaded", (): void => {
       };
       observePostHeaderArticleAvoidanceChanges(postHeaderNavElements);
       renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, { animate: false });
-    }
 
-    // 平板端、桌面端顶部菜单按钮 #menu-icon：点击后只切换 #nav/#actions/#toc 的展开状态。
-    postHeaderNavElements?.menuIcon.addEventListener("click", (e: Event): void => {
-      e.preventDefault();
+      // 平板端、桌面端顶部菜单按钮 #menu-icon：点击后只切换 #nav/#actions/#toc 的展开状态。
+      postHeaderNavElements.menuIcon.addEventListener("click", (e: Event): void => {
+        e.preventDefault();
 
-      postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, { type: "toggleMenuContent" });
-      renderPostHeaderNav(postHeaderNavState, postHeaderNavElements);
-    });
-
-    // 平板端、桌面端顶部分享按钮 #action-share：点击后只切换 #share-list 的展开状态。
-    // #share-list 是否实际显示仍由 renderPostHeaderNav 结合 #nav/#actions/#toc 的展开状态决定。
-    postHeaderNavElements?.shareButton?.addEventListener("click", (): void => {
-      postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, { type: "toggleShare" });
-      renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, {
-        duration: ANIMATION_DURATION,
-        shareListAnimation: "slide",
+        postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, { type: "toggleMenuContent" });
+        renderPostHeaderNav(postHeaderNavState, postHeaderNavElements);
       });
-    });
 
-    // 顶部 #header-post resize 逻辑：视口跨断点后按新视口重建顶部导航状态。
-    window.addEventListener("resize", (): void => {
-      if (!postHeaderNavElements) {
-        return;
-      }
-
-      postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, {
-        type: "resize",
-        environment: createPostHeaderNavEnvironment(postHeaderNavState.environment.tabletMode),
+      // 平板端、桌面端顶部分享按钮 #action-share：点击后只切换 #share-list 的展开状态。
+      // #share-list 是否实际显示仍由 renderPostHeaderNav 结合 #nav/#actions/#toc 的展开状态决定。
+      postHeaderNavElements.shareButton?.addEventListener("click", (): void => {
+        postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, { type: "toggleShare" });
+        renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, {
+          duration: ANIMATION_DURATION,
+          shareListAnimation: "slide",
+        });
       });
-      renderPostHeaderNav(postHeaderNavState, postHeaderNavElements);
-    });
 
-    // 平板端目录浮层 #toc-overlay-tablet：绑定打开按钮、关闭按钮、背景和目录项点击事件。
-    const tocOverlayTablet: HTMLElement | null = document.querySelector("#toc-overlay-tablet");
-    const tocOverlayClose: HTMLElement | null = document.querySelector("#toc-overlay-close");
-    const tocOverlayBackdrop: HTMLElement | null = document.querySelector("#toc-overlay-backdrop");
-    const actionTocTablet: HTMLElement | null = document.querySelector("#action-toc-tablet");
-    const actionTocTabletMenu: HTMLElement | null = document.querySelector("#action-toc-tablet-menu");
+      // 顶部 #header-post resize 逻辑：视口跨断点后按新视口重建顶部导航状态。
+      window.addEventListener("resize", (): void => {
+        postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, {
+          type: "resize",
+          environment: createPostHeaderNavEnvironment(postHeaderNavState.environment.tabletMode),
+        });
+        renderPostHeaderNav(postHeaderNavState, postHeaderNavElements);
+      });
 
-    // 平板端目录浮层 #toc-overlay-tablet：由 #toc-icon-tablet、#action-toc-tablet、#action-toc-tablet-menu 共用打开/关闭逻辑。
-    const toggleTocOverlay = (button: HTMLElement | null): void => {
-      if (!tocOverlayTablet || !button) {
-        return;
-      }
-      if (isVisible(tocOverlayTablet)) {
-        button.setAttribute("aria-expanded", "false");
-        fadeOut(tocOverlayTablet, ANIMATION_DURATION);
-      } else {
-        button.setAttribute("aria-expanded", "true");
-        fadeIn(tocOverlayTablet, ANIMATION_DURATION);
+      // 平板端目录浮层 #toc-overlay-tablet：绑定打开按钮、关闭按钮、背景和目录项点击事件。
+      const tocOverlayTablet: HTMLElement | null = document.querySelector("#toc-overlay-tablet");
+      const tocOverlayClose: HTMLElement | null = document.querySelector("#toc-overlay-close");
+      const tocOverlayBackdrop: HTMLElement | null = document.querySelector("#toc-overlay-backdrop");
+      const actionTocTablet: HTMLElement | null = document.querySelector("#action-toc-tablet");
+      const actionTocTabletMenu: HTMLElement | null = document.querySelector("#action-toc-tablet-menu");
 
-        // 平板端目录浮层打开后，把当前文章位置对应的 .toc-active 滚到浮层可视区域中间。
-        const activeLink = tocOverlayTablet.querySelector<HTMLElement>(".toc-active");
-        if (activeLink) {
-          setTimeout(() => {
-            activeLink.scrollIntoView({
-              behavior: "smooth",
-              block: "center",
-              inline: "center",
-            });
-          }, ANIMATION_DURATION);
+      // 平板端目录浮层 #toc-overlay-tablet：由 #toc-icon-tablet、#action-toc-tablet、#action-toc-tablet-menu 共用打开/关闭逻辑。
+      const toggleTocOverlay = (button: HTMLElement | null): void => {
+        if (!tocOverlayTablet || !button) {
+          return;
         }
-      }
-    };
+        if (isVisible(tocOverlayTablet)) {
+          button.setAttribute("aria-expanded", "false");
+          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+        } else {
+          button.setAttribute("aria-expanded", "true");
+          fadeIn(tocOverlayTablet, ANIMATION_DURATION);
 
-    // 平板端滚动后的浮动目录按钮 #toc-icon-tablet：点击打开/关闭 #toc-overlay-tablet。
-    postHeaderNavElements?.tocIconTablet.addEventListener("click", (): void => {
-      toggleTocOverlay(postHeaderNavElements.tocIconTablet);
-    });
-
-    // 平板端顶部 #actions 中的目录按钮 #action-toc-tablet：点击打开/关闭 #toc-overlay-tablet。
-    actionTocTablet?.addEventListener("click", (): void => {
-      toggleTocOverlay(actionTocTablet);
-    });
-
-    // 平板端顶部菜单中的目录按钮 #action-toc-tablet-menu：点击打开/关闭 #toc-overlay-tablet。
-    actionTocTabletMenu?.addEventListener("click", (): void => {
-      toggleTocOverlay(actionTocTabletMenu);
-    });
-
-    // 平板端目录浮层关闭按钮 #toc-overlay-close：点击后关闭 #toc-overlay-tablet。
-    tocOverlayClose?.addEventListener("click", (): void => {
-      if (tocOverlayTablet) {
-        postHeaderNavElements?.tocIconTablet.setAttribute("aria-expanded", "false");
-        actionTocTablet?.setAttribute("aria-expanded", "false");
-        actionTocTabletMenu?.setAttribute("aria-expanded", "false");
-        fadeOut(tocOverlayTablet, ANIMATION_DURATION);
-      }
-    });
-
-    // 平板端目录浮层背景 #toc-overlay-backdrop：点击后关闭 #toc-overlay-tablet。
-    tocOverlayBackdrop?.addEventListener("click", (): void => {
-      if (tocOverlayTablet) {
-        postHeaderNavElements?.tocIconTablet.setAttribute("aria-expanded", "false");
-        actionTocTablet?.setAttribute("aria-expanded", "false");
-        actionTocTabletMenu?.setAttribute("aria-expanded", "false");
-        fadeOut(tocOverlayTablet, ANIMATION_DURATION);
-      }
-    });
-
-    // 平板端目录浮层目录项 .toc-link：点击跳转标题后关闭 #toc-overlay-tablet，避免浮层遮挡正文。
-    if (tocOverlayTablet) {
-      tocOverlayTablet.addEventListener("click", (e: Event): void => {
-        const target = e.target;
-        if (target instanceof HTMLElement) {
-          const tocLink = target.closest<HTMLElement>(".toc-link");
-          if (tocLink) {
-            postHeaderNavElements?.tocIconTablet.setAttribute("aria-expanded", "false");
-            actionTocTablet?.setAttribute("aria-expanded", "false");
-            actionTocTabletMenu?.setAttribute("aria-expanded", "false");
-            fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+          // 平板端目录浮层打开后，把当前文章位置对应的 .toc-active 滚到浮层可视区域中间。
+          const activeLink = tocOverlayTablet.querySelector<HTMLElement>(".toc-active");
+          if (activeLink) {
+            setTimeout(() => {
+              activeLink.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+                inline: "center",
+              });
+            }, ANIMATION_DURATION);
           }
         }
+      };
+
+      // 平板端滚动后的浮动目录按钮 #toc-icon-tablet：点击打开/关闭 #toc-overlay-tablet。
+      postHeaderNavElements.tocIconTablet.addEventListener("click", (): void => {
+        toggleTocOverlay(postHeaderNavElements.tocIconTablet);
+      });
+
+      // 平板端顶部 #actions 中的目录按钮 #action-toc-tablet：点击打开/关闭 #toc-overlay-tablet。
+      actionTocTablet?.addEventListener("click", (): void => {
+        toggleTocOverlay(actionTocTablet);
+      });
+
+      // 平板端顶部菜单中的目录按钮 #action-toc-tablet-menu：点击打开/关闭 #toc-overlay-tablet。
+      actionTocTabletMenu?.addEventListener("click", (): void => {
+        toggleTocOverlay(actionTocTabletMenu);
+      });
+
+      // 平板端目录浮层关闭按钮 #toc-overlay-close：点击后关闭 #toc-overlay-tablet。
+      tocOverlayClose?.addEventListener("click", (): void => {
+        if (tocOverlayTablet) {
+          postHeaderNavElements.tocIconTablet.setAttribute("aria-expanded", "false");
+          actionTocTablet?.setAttribute("aria-expanded", "false");
+          actionTocTabletMenu?.setAttribute("aria-expanded", "false");
+          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+        }
+      });
+
+      // 平板端目录浮层背景 #toc-overlay-backdrop：点击后关闭 #toc-overlay-tablet。
+      tocOverlayBackdrop?.addEventListener("click", (): void => {
+        if (tocOverlayTablet) {
+          postHeaderNavElements.tocIconTablet.setAttribute("aria-expanded", "false");
+          actionTocTablet?.setAttribute("aria-expanded", "false");
+          actionTocTabletMenu?.setAttribute("aria-expanded", "false");
+          fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+        }
+      });
+
+      // 平板端目录浮层目录项 .toc-link：点击跳转标题后关闭 #toc-overlay-tablet，避免浮层遮挡正文。
+      if (tocOverlayTablet) {
+        tocOverlayTablet.addEventListener("click", (e: Event): void => {
+          const target = e.target;
+          if (target instanceof HTMLElement) {
+            const tocLink = target.closest<HTMLElement>(".toc-link");
+            if (tocLink) {
+              postHeaderNavElements.tocIconTablet.setAttribute("aria-expanded", "false");
+              actionTocTablet?.setAttribute("aria-expanded", "false");
+              actionTocTabletMenu?.setAttribute("aria-expanded", "false");
+              fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+            }
+          }
+        });
+      }
+
+      // 平板端顶部 #header-post 页面滚动逻辑：在顶部菜单按钮和回到顶部/目录快捷按钮之间切换。
+      // 使用 getTabletMode 的 <50 / >100 滞回区间，避免滚动临界点闪烁。
+      window.addEventListener("scroll", (): void => {
+        const viewportMode = getViewportMode();
+
+        if (viewportMode === "desktop") {
+          // 桌面端 #header-post 固定在右上角；页面滚动会改变 #article-header > h1/.meta 与顶部菜单的 Y 轴相交关系。
+          schedulePostHeaderArticleAvoidance(postHeaderNavElements);
+          return;
+        }
+
+        if (viewportMode !== "tablet") {
+          return;
+        }
+
+        postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, {
+          type: "tabletScroll",
+          viewportMode,
+          tabletMode: getTabletMode(postHeaderNavState.environment.tabletMode),
+        });
+        renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, { duration: ANIMATION_DURATION });
       });
     }
-
-    // 平板端顶部 #header-post 页面滚动逻辑：在顶部菜单按钮和回到顶部/目录快捷按钮之间切换。
-    // 使用 getTabletMode 的 <50 / >100 滞回区间，避免滚动临界点闪烁。
-    window.addEventListener("scroll", (): void => {
-      if (!postHeaderNavElements) {
-        return;
-      }
-
-      const viewportMode = getViewportMode();
-
-      if (viewportMode === "desktop") {
-        // 桌面端 #header-post 固定在右上角；页面滚动会改变 #article-header > h1/.meta 与顶部菜单的 Y 轴相交关系。
-        schedulePostHeaderArticleAvoidance(postHeaderNavElements);
-        return;
-      }
-
-      if (viewportMode !== "tablet") {
-        return;
-      }
-
-      postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, {
-        type: "tabletScroll",
-        viewportMode,
-        tabletMode: getTabletMode(postHeaderNavState.environment.tabletMode),
-      });
-      renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, { duration: ANIMATION_DURATION });
-    });
 
     const footerPostNavElements = getFooterPostNavElements();
     let footerPostNavState = createFooterPostNavState();
