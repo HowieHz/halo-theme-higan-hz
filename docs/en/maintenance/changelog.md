@@ -30,6 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed incorrect CSS cascade layer ordering when component styles load before global styles, which could let base styles override Tailwind utility classes.
 - Fixed submenu toggle buttons always showing the down arrow.
 - Fixed the post page top menu potentially overlapping the article title and metadata on desktop and tablet viewports.
+- Fixed unsynchronized `aria-expanded` states across multiple tablet post TOC overlay entry buttons.
+- Fixed the mobile post page footer navigation initialization not using the current scroll position, which could make the first restored-scroll direction check incorrect.
+- Fixed the initial visibility of the mobile post page footer back-to-top button after restoring the scroll position.
 
 ### 🔧 Code Refactoring
 
