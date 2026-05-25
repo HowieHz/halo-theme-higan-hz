@@ -1,5 +1,3 @@
-@layer theme, base, utilities;
-
 @import "tailwindcss/theme.css" layer(theme) prefix(tw);
 @import "./base-styles/styles.css";
 @import "./scrollbar/styles.css";
