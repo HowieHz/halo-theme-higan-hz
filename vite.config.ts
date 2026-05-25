@@ -1,4 +1,4 @@
-import { resolve } from "node:path";
+import { extname, resolve } from "node:path";
 import { constants } from "node:zlib";
 
 import tailwindcss from "@tailwindcss/vite";
@@ -33,6 +33,8 @@ interface BuildModeConfig {
   manifest: boolean;
   "extra-entries"?: BuildEntryMap;
 }
+
+const FONT_ASSET_EXTENSIONS = new Set([".woff", ".woff2", ".ttf"]);
 
 function pickEnvValue<T extends string>(value: string | undefined, allowedValues: readonly T[], fallback: T): T {
   if (typeof value === "string") {
@@ -407,7 +409,17 @@ export default defineConfig((): UserConfig => {
           outputOption === "original"
             ? undefined
             : {
-                assetFileNames: `assets/${pkg.version}[hash:7][extname]`,
+                assetFileNames: (assetInfo) => {
+                  const isFontAsset = assetInfo.names.some((fileName) =>
+                    FONT_ASSET_EXTENSIONS.has(extname(fileName).toLowerCase()),
+                  );
+
+                  if (isFontAsset) {
+                    return "assets/[hash:7][extname]";
+                  }
+
+                  return `assets/${pkg.version}[hash:7][extname]`;
+                },
                 // JS entry files
                 // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
                 entryFileNames: `assets/${pkg.version}[hash:7].js`,
