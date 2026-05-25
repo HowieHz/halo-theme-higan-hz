@@ -163,7 +163,7 @@
   </th:block>
   <th:block th:unless="${#lists.isEmpty(item?.children)}">
     <!--/* 有子菜单的菜单项 */-->
-    <span class="submenu-container">
+    <span class="submenu-container tw:flex tw:flex-row">
       <button
         class="submenu-toggle v-cursor-pointer tw:m-0 tw:border-none tw:bg-transparent tw:p-0 tw:focus:outline-none"
         th:aria-label="#{fragment.menu.submenu-toggle.aria-label}"

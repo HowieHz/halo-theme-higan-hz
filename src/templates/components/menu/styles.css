@@ -3,5 +3,4 @@
 @import "tailwindcss/utilities.css" layer(utilities) source(".") prefix(tw);
 /* stylelint-disable at-rule-prelude-no-invalid -- Tailwind @source not uses custom prelude syntax */
 @source not "./README.md";
-@source not "./index.ts";
 /* stylelint-enable at-rule-prelude-no-invalid */

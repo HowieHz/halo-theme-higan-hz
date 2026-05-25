@@ -28,10 +28,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed unintended spacing between titles and the theme toggle button.
 - Fixed article navigation menu icons not being vertically centered.
 - Fixed incorrect CSS cascade layer ordering when component styles load before global styles, which could let base styles override Tailwind utility classes.
+- Fixed submenu toggle buttons always showing the down arrow.
+- Fixed the post page top menu potentially overlapping the article title and metadata on desktop and tablet viewports.
 
 ### 🔧 Code Refactoring
 
 - Replaced the mobile header title's table-cell vertical centering with Flexbox.
+- Optimized the toggle button placement for post page footer menu items that contain submenus.
 
 ## [1.66.8] - 2026-05-26
 
