@@ -17,14 +17,46 @@ type ViewportMode = "desktop" | "tablet" | "mobile";
 type TabletMode = "top" | "quickActions";
 type FooterPostPanel = "none" | "menu" | "toc" | "share";
 
+type PostHeaderNavEnvironment = {
+  // 当前视口所属断点：desktop 控制桌面端顶部导航，tablet 控制平板端顶部导航，mobile 让顶部导航退出显示。
+  viewportMode: ViewportMode;
+  // 平板端顶部 #header-post 模式：top 显示 #menu-icon，quickActions 显示 #top-icon-tablet/#toc-icon-tablet。
+  tabletMode: TabletMode;
+};
+
+type PostHeaderNavIntent = {
+  // 用户是否希望展开顶部 #header-post 的 #nav/#actions/#toc。
+  isMenuContentOpen: boolean;
+  // 用户是否希望展开顶部 #header-post 的 #share-list。
+  isShareOpen: boolean;
+};
+
 // 顶部 #header-post 导航状态。
 // 状态描述“用户意图 + 环境”，不描述具体 DOM display。
-// 移动端底部 #footer-post 由下方 "#actions-footer > #menu/#toc/#share" 和 "#footer-post" 滚动逻辑管理。
 type PostHeaderNavState = {
-  viewportMode: ViewportMode;
-  tabletMode: TabletMode;
-  isMenuContentOpen: boolean;
-  isShareOpen: boolean;
+  environment: PostHeaderNavEnvironment;
+  intent: PostHeaderNavIntent;
+};
+
+type PostHeaderNavElements = {
+  // 顶部菜单按钮 #header-post #menu-icon。
+  menuIcon: HTMLElement;
+  // 顶部导航链接容器 #header-post #nav。
+  nav: HTMLElement;
+  // 顶部操作按钮容器 #header-post #actions。
+  actions: HTMLElement;
+  // 顶部桌面端目录容器 #header-post #toc。
+  toc: HTMLElement;
+  // 顶部分享列表 #header-post #share-list；配置关闭分享按钮时不存在。
+  shareList: HTMLElement | null;
+  // 平板端滚动后的回到顶部快捷按钮 #header-post #top-icon-tablet。
+  topIconTablet: HTMLElement;
+  // 平板端滚动后的目录快捷按钮 #header-post #toc-icon-tablet。
+  tocIconTablet: HTMLElement;
+  // 顶部分享按钮 #header-post #actions #action-share；配置关闭分享按钮时不存在。
+  shareButton: HTMLElement | null;
+  // 顶部菜单内容集合：#nav/#actions/#toc。
+  menuContent: HTMLElement[];
 };
 
 type RenderPostHeaderNavOptions = {
@@ -32,16 +64,32 @@ type RenderPostHeaderNavOptions = {
   duration?: number;
 };
 
-// 移动端底部 #footer-post 导航状态。
-// 状态描述 #nav-footer/#toc-footer/#share-footer 当前展开哪一个、#footer-post 是否显示、#actions-footer > #top 是否显示。
-// 状态不描述具体 DOM display。
-type FooterPostNavState = {
+type PostHeaderNavEvent =
+  | { type: "toggleMenuContent" }
+  | { type: "toggleShare" }
+  | { type: "resize"; environment: PostHeaderNavEnvironment }
+  | { type: "tabletScroll"; tabletMode: TabletMode; viewportMode: ViewportMode };
+
+type FooterPostNavEnvironment = {
+  // 当前页面滚动位置，用于判断 #actions-footer > #top 显隐。
+  scrollY: number;
+  // 移动端底部回到顶部按钮 #actions-footer > #top 当前是否显示；scrollY 处于 50~100 滞回区间时保持这个值。
+  isTopActionVisible: boolean;
+};
+
+type FooterPostNavIntent = {
   // 当前展开的移动端底部子菜单：none 表示 #nav-footer/#toc-footer/#share-footer 全部收起。
   activePanel: FooterPostPanel;
-  // 是否显示移动端底部导航栏容器 #footer-post。
+  // 用户当前是否希望显示移动端底部导航栏容器 #footer-post。
   isFooterVisible: boolean;
-  // 是否显示移动端底部回到顶部按钮 #actions-footer > #top。
-  isTopActionVisible: boolean;
+};
+
+// 移动端底部 #footer-post 导航状态。
+// 状态描述 #nav-footer/#toc-footer/#share-footer 当前展开哪一个、#footer-post 是否显示、#actions-footer > #top 是否显示的输入条件。
+// 状态不描述具体 DOM display。
+type FooterPostNavState = {
+  environment: FooterPostNavEnvironment;
+  intent: FooterPostNavIntent;
 };
 
 type RenderFooterPostNavOptions = {
@@ -52,6 +100,31 @@ type RenderFooterPostNavOptions = {
   // 打开 #toc-footer 后是否把当前 .toc-active 滚动到 #toc-footer 可视区域中间。
   scrollActiveTocIntoView?: boolean;
 };
+
+type FooterPostNavElements = {
+  // 移动端底部导航栏容器 #footer-post。
+  footerNav: HTMLElement;
+  // 移动端底部菜单按钮 #actions-footer > #menu。
+  footerMenuButton: HTMLElement | null;
+  // 移动端底部目录按钮 #actions-footer > #toc。
+  footerTocButton: HTMLElement | null;
+  // 移动端底部分享按钮 #actions-footer > #share；配置关闭分享按钮时不存在。
+  footerShareButton: HTMLElement | null;
+  // 移动端底部回到顶部按钮 #actions-footer > #top。
+  footerTopIcon: HTMLElement | null;
+  // 移动端底部菜单容器 #nav-footer。
+  navFooter: HTMLElement | null;
+  // 移动端底部目录容器 #toc-footer。
+  tocFooter: HTMLElement | null;
+  // 移动端底部分享容器 #share-footer；配置关闭分享按钮时不存在。
+  shareFooter: HTMLElement | null;
+};
+
+type FooterPostNavEvent =
+  | { type: "toggleMenu" }
+  | { type: "toggleToc" }
+  | { type: "toggleShare" }
+  | { type: "scroll"; scrollY: number };
 
 function getViewportMode(): ViewportMode {
   // 与模板/CSS 断点保持一致：lg=1024px，sm=640px。
@@ -83,20 +156,186 @@ function createPostHeaderNavState(): PostHeaderNavState {
 
   // 初始化顶部 #header-post：桌面端展开 #nav/#actions/#toc，平板端和移动端折叠 #nav/#actions/#toc，#share-list 始终关闭。
   return {
-    viewportMode,
-    tabletMode: viewportMode === "tablet" ? getTabletMode("top") : "top",
-    isMenuContentOpen: viewportMode === "desktop",
-    isShareOpen: false,
+    environment: {
+      viewportMode,
+      tabletMode: viewportMode === "tablet" ? getTabletMode("top") : "top",
+    },
+    intent: {
+      isMenuContentOpen: viewportMode === "desktop",
+      isShareOpen: false,
+    },
   };
 }
 
 function createFooterPostNavState(): FooterPostNavState {
+  const scrollY = getTopDistance();
+
   // 初始化移动端底部 #footer-post：#footer-post 显示，#nav-footer/#toc-footer/#share-footer 收起，#actions-footer > #top 隐藏。
   return {
-    activePanel: "none",
-    isFooterVisible: true,
-    isTopActionVisible: false,
+    environment: {
+      scrollY,
+      isTopActionVisible: false,
+    },
+    intent: {
+      activePanel: "none",
+      isFooterVisible: true,
+    },
   };
+}
+
+function createPostHeaderNavEnvironment(currentTabletMode: TabletMode = "top"): PostHeaderNavEnvironment {
+  const viewportMode = getViewportMode();
+
+  return {
+    viewportMode,
+    tabletMode: viewportMode === "tablet" ? getTabletMode(currentTabletMode) : "top",
+  };
+}
+
+function getPostHeaderNavElements(): PostHeaderNavElements | null {
+  const menuIcon = document.querySelector<HTMLElement>("#header-post #menu-icon");
+  const nav = document.querySelector<HTMLElement>("#header-post #nav");
+  const actions = document.querySelector<HTMLElement>("#header-post #actions");
+  const toc = document.querySelector<HTMLElement>("#header-post #toc");
+  const shareList = document.querySelector<HTMLElement>("#header-post #share-list");
+  const topIconTablet = document.querySelector<HTMLElement>("#header-post #top-icon-tablet");
+  const tocIconTablet = document.querySelector<HTMLElement>("#header-post #toc-icon-tablet");
+  const shareButton = document.querySelector<HTMLElement>("#header-post #actions #action-share");
+
+  if (!menuIcon || !nav || !actions || !toc || !topIconTablet || !tocIconTablet) {
+    return null;
+  }
+
+  return {
+    menuIcon,
+    nav,
+    actions,
+    toc,
+    shareList,
+    topIconTablet,
+    tocIconTablet,
+    shareButton,
+    menuContent: [nav, actions, toc],
+  };
+}
+
+function getFooterPostNavElements(): FooterPostNavElements | null {
+  const footerNav = document.querySelector<HTMLElement>("#footer-post");
+
+  if (!footerNav) {
+    return null;
+  }
+
+  return {
+    footerNav,
+    footerMenuButton: document.querySelector<HTMLElement>("#actions-footer > #menu"),
+    footerTocButton: document.querySelector<HTMLElement>("#actions-footer > #toc"),
+    footerShareButton: document.querySelector<HTMLElement>("#actions-footer > #share"),
+    footerTopIcon: document.querySelector<HTMLElement>("#actions-footer > #top"),
+    navFooter: document.querySelector<HTMLElement>("#nav-footer"),
+    tocFooter: document.querySelector<HTMLElement>("#toc-footer"),
+    shareFooter: document.querySelector<HTMLElement>("#share-footer"),
+  };
+}
+
+function reducePostHeaderNavState(state: PostHeaderNavState, event: PostHeaderNavEvent): PostHeaderNavState {
+  switch (event.type) {
+    case "toggleMenuContent": {
+      const isMenuContentOpen = !state.intent.isMenuContentOpen;
+
+      return {
+        ...state,
+        intent: {
+          isMenuContentOpen,
+          // #nav/#actions/#toc 收起时同步收起 #share-list，避免分享菜单脱离顶部菜单单独显示。
+          isShareOpen: isMenuContentOpen ? state.intent.isShareOpen : false,
+        },
+      };
+    }
+    case "toggleShare":
+      return {
+        ...state,
+        intent: {
+          ...state.intent,
+          isShareOpen: !state.intent.isShareOpen,
+        },
+      };
+    case "resize":
+      return {
+        environment: event.environment,
+        intent: {
+          // 桌面端展开 #nav/#actions/#toc；平板端和移动端收起 #nav/#actions/#toc 和 #share-list。
+          isMenuContentOpen: event.environment.viewportMode === "desktop",
+          isShareOpen: false,
+        },
+      };
+    case "tabletScroll":
+      return {
+        environment: {
+          viewportMode: event.viewportMode,
+          tabletMode: event.tabletMode,
+        },
+        intent: {
+          // 进入 quickActions 时隐藏 #menu-icon，并强制收起 #nav/#actions/#toc 和 #share-list。
+          isMenuContentOpen: event.tabletMode === "quickActions" ? false : state.intent.isMenuContentOpen,
+          isShareOpen: event.tabletMode === "quickActions" ? false : state.intent.isShareOpen,
+        },
+      };
+  }
+}
+
+function shouldShowFooterTopAction(scrollY: number, currentValue: boolean): boolean {
+  if (scrollY < 50) {
+    return false;
+  }
+  if (scrollY > 100) {
+    return true;
+  }
+  return currentValue;
+}
+
+function reduceFooterPostNavState(state: FooterPostNavState, event: FooterPostNavEvent): FooterPostNavState {
+  switch (event.type) {
+    case "toggleMenu":
+      return {
+        ...state,
+        intent: {
+          activePanel: state.intent.activePanel === "menu" ? "none" : "menu",
+          isFooterVisible: true,
+        },
+      };
+    case "toggleToc":
+      return {
+        ...state,
+        intent: {
+          activePanel: state.intent.activePanel === "toc" ? "none" : "toc",
+          isFooterVisible: true,
+        },
+      };
+    case "toggleShare":
+      return {
+        ...state,
+        intent: {
+          activePanel: state.intent.activePanel === "share" ? "none" : "share",
+          isFooterVisible: true,
+        },
+      };
+    case "scroll": {
+      return {
+        environment: {
+          scrollY: event.scrollY,
+          // 移动端底部回到顶部按钮 #actions-footer > #top：scrollY < 50 隐藏，scrollY > 100 显示，50~100 保持当前状态。
+          isTopActionVisible: shouldShowFooterTopAction(event.scrollY, state.environment.isTopActionVisible),
+        },
+        intent: {
+          // 移动端底部 #footer-post 页面滚动时关闭 #nav-footer/#toc-footer/#share-footer。
+          activePanel: "none",
+          // 向上滚动显示 #footer-post，向下滚动隐藏 #footer-post。
+          isFooterVisible: event.scrollY <= state.environment.scrollY,
+        },
+      };
+    }
+  }
 }
 
 function setElementVisibility(
@@ -154,46 +393,37 @@ function setSlideElementVisibility(
  *
  * 只有这里能控制 #menu-icon、#nav、#actions、#toc、#share-list、#top-icon-tablet、#toc-icon-tablet。
  */
-function renderPostHeaderNav(state: PostHeaderNavState, options: RenderPostHeaderNavOptions = {}): void {
+function renderPostHeaderNav(
+  state: PostHeaderNavState,
+  elements: PostHeaderNavElements,
+  options: RenderPostHeaderNavOptions = {},
+): void {
   const renderOptions: Required<RenderPostHeaderNavOptions> = {
     animate: options.animate ?? true,
     duration: options.duration ?? POST_HEADER_NAV_ANIMATION_DURATION,
   };
 
-  const menuIcon = document.querySelector<HTMLElement>("#header-post #menu-icon");
-  const nav = document.querySelector<HTMLElement>("#header-post #nav");
-  const actions = document.querySelector<HTMLElement>("#header-post #actions");
-  const toc = document.querySelector<HTMLElement>("#header-post #toc");
-  const shareList = document.querySelector<HTMLElement>("#header-post #share-list");
-  const topIconTablet = document.querySelector<HTMLElement>("#header-post #top-icon-tablet");
-  const tocIconTablet = document.querySelector<HTMLElement>("#header-post #toc-icon-tablet");
-  const shareButton = document.querySelector<HTMLElement>("#header-post #actions #action-share");
-  const menuContent = [nav, actions, toc].filter((element): element is HTMLElement => element !== null);
-
-  if (!menuIcon || !topIconTablet || !tocIconTablet || menuContent.length === 0) {
-    return;
-  }
-
-  const isQuickActionsMode = state.viewportMode === "tablet" && state.tabletMode === "quickActions";
-  const isTopNavEnabled = state.viewportMode !== "mobile";
+  const isQuickActionsMode =
+    state.environment.viewportMode === "tablet" && state.environment.tabletMode === "quickActions";
+  const isTopNavEnabled = state.environment.viewportMode !== "mobile";
   const isMenuIconShown = isTopNavEnabled && !isQuickActionsMode;
-  const isMenuContentShown = isMenuIconShown && state.isMenuContentOpen;
-  const isShareListShown = isMenuContentShown && state.isShareOpen;
+  const isMenuContentShown = isMenuIconShown && state.intent.isMenuContentOpen;
+  const isShareListShown = isMenuContentShown && state.intent.isShareOpen;
   const areTabletQuickActionsShown = isQuickActionsMode;
 
   // #menu-icon.active、#menu-icon[aria-expanded]、#action-share[aria-expanded] 表达状态里的展开意图。
   // 不从动画中间态或当前 DOM display 反推，避免状态和界面互相覆盖。
-  menuIcon.classList.toggle("active", state.isMenuContentOpen);
-  menuIcon.setAttribute("aria-expanded", String(state.isMenuContentOpen));
-  shareButton?.setAttribute("aria-expanded", String(state.isShareOpen));
+  elements.menuIcon.classList.toggle("active", state.intent.isMenuContentOpen);
+  elements.menuIcon.setAttribute("aria-expanded", String(state.intent.isMenuContentOpen));
+  elements.shareButton?.setAttribute("aria-expanded", String(state.intent.isShareOpen));
 
-  setElementVisibility(menuIcon, isMenuIconShown, renderOptions);
-  setElementVisibility(menuContent, isMenuContentShown, renderOptions);
-  if (shareList) {
-    setElementVisibility(shareList, isShareListShown, renderOptions);
+  setElementVisibility(elements.menuIcon, isMenuIconShown, renderOptions);
+  setElementVisibility(elements.menuContent, isMenuContentShown, renderOptions);
+  if (elements.shareList) {
+    setElementVisibility(elements.shareList, isShareListShown, renderOptions);
   }
-  setElementVisibility(topIconTablet, areTabletQuickActionsShown, renderOptions);
-  setElementVisibility(tocIconTablet, areTabletQuickActionsShown, renderOptions);
+  setElementVisibility(elements.topIconTablet, areTabletQuickActionsShown, renderOptions);
+  setElementVisibility(elements.tocIconTablet, areTabletQuickActionsShown, renderOptions);
 }
 
 /**
@@ -201,45 +431,39 @@ function renderPostHeaderNav(state: PostHeaderNavState, options: RenderPostHeade
  *
  * 只有这里能控制 #footer-post、#actions-footer > #menu/#toc/#share/#top、#nav-footer、#toc-footer、#share-footer。
  */
-function renderFooterPostNav(state: FooterPostNavState, options: RenderFooterPostNavOptions = {}): void {
+function renderFooterPostNav(
+  state: FooterPostNavState,
+  elements: FooterPostNavElements,
+  options: RenderFooterPostNavOptions = {},
+): void {
   const renderOptions = {
     animate: options.animate ?? true,
     duration: options.duration ?? ANIMATION_DURATION,
   };
 
-  const footerNav = document.querySelector<HTMLElement>("#footer-post");
-  const footerMenuButton = document.querySelector<HTMLElement>("#actions-footer > #menu");
-  const footerTocButton = document.querySelector<HTMLElement>("#actions-footer > #toc");
-  const footerShareButton = document.querySelector<HTMLElement>("#actions-footer > #share");
-  const footerTopIcon = document.querySelector<HTMLElement>("#actions-footer > #top");
-  const navFooter = document.querySelector<HTMLElement>("#nav-footer");
-  const tocFooter = document.querySelector<HTMLElement>("#toc-footer");
-  const shareFooter = document.querySelector<HTMLElement>("#share-footer");
+  elements.footerMenuButton?.setAttribute("aria-expanded", String(state.intent.activePanel === "menu"));
+  elements.footerTocButton?.setAttribute("aria-expanded", String(state.intent.activePanel === "toc"));
+  elements.footerShareButton?.setAttribute("aria-expanded", String(state.intent.activePanel === "share"));
 
-  if (!footerNav) {
-    return;
+  setSlideElementVisibility(elements.footerNav, state.intent.isFooterVisible, renderOptions);
+  if (elements.navFooter) {
+    setSlideElementVisibility(elements.navFooter, state.intent.activePanel === "menu", renderOptions);
+  }
+  if (elements.tocFooter) {
+    setSlideElementVisibility(elements.tocFooter, state.intent.activePanel === "toc", renderOptions);
+  }
+  if (elements.shareFooter) {
+    setSlideElementVisibility(elements.shareFooter, state.intent.activePanel === "share", renderOptions);
   }
 
-  footerMenuButton?.setAttribute("aria-expanded", String(state.activePanel === "menu"));
-  footerTocButton?.setAttribute("aria-expanded", String(state.activePanel === "toc"));
-  footerShareButton?.setAttribute("aria-expanded", String(state.activePanel === "share"));
+  elements.footerTopIcon?.style.setProperty(
+    "transform",
+    state.environment.isTopActionVisible ? "scale(1)" : "scale(0)",
+  );
 
-  setSlideElementVisibility(footerNav, state.isFooterVisible, renderOptions);
-  if (navFooter) {
-    setSlideElementVisibility(navFooter, state.activePanel === "menu", renderOptions);
-  }
-  if (tocFooter) {
-    setSlideElementVisibility(tocFooter, state.activePanel === "toc", renderOptions);
-  }
-  if (shareFooter) {
-    setSlideElementVisibility(shareFooter, state.activePanel === "share", renderOptions);
-  }
-
-  footerTopIcon?.style.setProperty("transform", state.isTopActionVisible ? "scale(1)" : "scale(0)");
-
-  if (state.activePanel === "toc" && options.scrollActiveTocIntoView && tocFooter) {
+  if (state.intent.activePanel === "toc" && options.scrollActiveTocIntoView && elements.tocFooter) {
     // 移动端底部目录 #toc-footer 展开后，把当前文章位置对应的 .toc-active 滚到子菜单可视区域中间。
-    const activeLink = tocFooter.querySelector<HTMLElement>(".toc-active");
+    const activeLink = elements.tocFooter.querySelector<HTMLElement>(".toc-active");
 
     if (activeLink) {
       setTimeout(() => {
@@ -303,50 +527,39 @@ document.addEventListener("mouseout", (e: Event): void => {
 document.addEventListener("DOMContentLoaded", (): void => {
   /** 控制博客文章页面中菜单的不同版本 适用于桌面端、平板端和移动端 */
   if (document.querySelector(".post")) {
+    const postHeaderNavElements = getPostHeaderNavElements();
     let postHeaderNavState = createPostHeaderNavState();
-    renderPostHeaderNav(postHeaderNavState, { animate: false });
 
-    const shareButton: HTMLElement | null = document.querySelector("#header-post #actions #action-share");
-    const menuIcon: HTMLElement | null = document.querySelector<HTMLElement>("#header-post #menu-icon");
-    const tocIconTablet: HTMLElement | null = document.querySelector<HTMLElement>("#header-post #toc-icon-tablet");
+    if (postHeaderNavElements) {
+      renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, { animate: false });
+    }
 
     // 平板端、桌面端顶部菜单按钮 #menu-icon：点击后只切换 #nav/#actions/#toc 的展开状态。
-    menuIcon?.addEventListener("click", (e: Event): void => {
+    postHeaderNavElements?.menuIcon.addEventListener("click", (e: Event): void => {
       e.preventDefault();
 
-      const isMenuContentOpen = !postHeaderNavState.isMenuContentOpen;
-      postHeaderNavState = {
-        ...postHeaderNavState,
-        isMenuContentOpen,
-        // #nav/#actions/#toc 收起时同步收起 #share-list，避免分享菜单脱离顶部菜单单独显示。
-        isShareOpen: isMenuContentOpen ? postHeaderNavState.isShareOpen : false,
-      };
-      renderPostHeaderNav(postHeaderNavState);
+      postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, { type: "toggleMenuContent" });
+      renderPostHeaderNav(postHeaderNavState, postHeaderNavElements);
     });
 
     // 平板端、桌面端顶部分享按钮 #action-share：点击后只切换 #share-list 的展开状态。
     // #share-list 是否实际显示仍由 renderPostHeaderNav 结合 #nav/#actions/#toc 的展开状态决定。
-    shareButton?.addEventListener("click", (): void => {
-      postHeaderNavState = {
-        ...postHeaderNavState,
-        isShareOpen: !postHeaderNavState.isShareOpen,
-      };
-      renderPostHeaderNav(postHeaderNavState);
+    postHeaderNavElements?.shareButton?.addEventListener("click", (): void => {
+      postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, { type: "toggleShare" });
+      renderPostHeaderNav(postHeaderNavState, postHeaderNavElements);
     });
 
     // 顶部 #header-post resize 逻辑：视口跨断点后按新视口重建顶部导航状态。
     window.addEventListener("resize", (): void => {
-      const viewportMode = getViewportMode();
+      if (!postHeaderNavElements) {
+        return;
+      }
 
-      // 桌面端展开 #nav/#actions/#toc；平板端和移动端收起 #nav/#actions/#toc 和 #share-list。
-      postHeaderNavState = {
-        ...postHeaderNavState,
-        viewportMode,
-        tabletMode: viewportMode === "tablet" ? getTabletMode(postHeaderNavState.tabletMode) : "top",
-        isMenuContentOpen: viewportMode === "desktop",
-        isShareOpen: false,
-      };
-      renderPostHeaderNav(postHeaderNavState);
+      postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, {
+        type: "resize",
+        environment: createPostHeaderNavEnvironment(postHeaderNavState.environment.tabletMode),
+      });
+      renderPostHeaderNav(postHeaderNavState, postHeaderNavElements);
     });
 
     // 平板端目录浮层 #toc-overlay-tablet：绑定打开按钮、关闭按钮、背景和目录项点击事件。
@@ -383,8 +596,8 @@ document.addEventListener("DOMContentLoaded", (): void => {
     };
 
     // 平板端滚动后的浮动目录按钮 #toc-icon-tablet：点击打开/关闭 #toc-overlay-tablet。
-    tocIconTablet?.addEventListener("click", (): void => {
-      toggleTocOverlay(tocIconTablet);
+    postHeaderNavElements?.tocIconTablet.addEventListener("click", (): void => {
+      toggleTocOverlay(postHeaderNavElements.tocIconTablet);
     });
 
     // 平板端顶部 #actions 中的目录按钮 #action-toc-tablet：点击打开/关闭 #toc-overlay-tablet。
@@ -400,7 +613,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
     // 平板端目录浮层关闭按钮 #toc-overlay-close：点击后关闭 #toc-overlay-tablet。
     tocOverlayClose?.addEventListener("click", (): void => {
       if (tocOverlayTablet) {
-        tocIconTablet?.setAttribute("aria-expanded", "false");
+        postHeaderNavElements?.tocIconTablet.setAttribute("aria-expanded", "false");
         actionTocTablet?.setAttribute("aria-expanded", "false");
         actionTocTabletMenu?.setAttribute("aria-expanded", "false");
         fadeOut(tocOverlayTablet, ANIMATION_DURATION);
@@ -410,7 +623,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
     // 平板端目录浮层背景 #toc-overlay-backdrop：点击后关闭 #toc-overlay-tablet。
     tocOverlayBackdrop?.addEventListener("click", (): void => {
       if (tocOverlayTablet) {
-        tocIconTablet?.setAttribute("aria-expanded", "false");
+        postHeaderNavElements?.tocIconTablet.setAttribute("aria-expanded", "false");
         actionTocTablet?.setAttribute("aria-expanded", "false");
         actionTocTabletMenu?.setAttribute("aria-expanded", "false");
         fadeOut(tocOverlayTablet, ANIMATION_DURATION);
@@ -424,7 +637,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
         if (target instanceof HTMLElement) {
           const tocLink = target.closest<HTMLElement>(".toc-link");
           if (tocLink) {
-            tocIconTablet?.setAttribute("aria-expanded", "false");
+            postHeaderNavElements?.tocIconTablet.setAttribute("aria-expanded", "false");
             actionTocTablet?.setAttribute("aria-expanded", "false");
             actionTocTabletMenu?.setAttribute("aria-expanded", "false");
             fadeOut(tocOverlayTablet, ANIMATION_DURATION);
@@ -436,87 +649,58 @@ document.addEventListener("DOMContentLoaded", (): void => {
     // 平板端顶部 #header-post 页面滚动逻辑：在顶部菜单按钮和回到顶部/目录快捷按钮之间切换。
     // 使用 getTabletMode 的 <50 / >100 滞回区间，避免滚动临界点闪烁。
     window.addEventListener("scroll", (): void => {
+      if (!postHeaderNavElements) {
+        return;
+      }
+
       const viewportMode = getViewportMode();
 
       if (viewportMode !== "tablet") {
         return;
       }
 
-      const tabletMode = getTabletMode(postHeaderNavState.tabletMode);
-      postHeaderNavState = {
-        ...postHeaderNavState,
+      postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, {
+        type: "tabletScroll",
         viewportMode,
-        tabletMode,
-        // 进入 quickActions 时隐藏 #menu-icon，并强制收起 #nav/#actions/#toc 和 #share-list。
-        isMenuContentOpen: tabletMode === "quickActions" ? false : postHeaderNavState.isMenuContentOpen,
-        isShareOpen: tabletMode === "quickActions" ? false : postHeaderNavState.isShareOpen,
-      };
-      renderPostHeaderNav(postHeaderNavState, { duration: ANIMATION_DURATION });
+        tabletMode: getTabletMode(postHeaderNavState.environment.tabletMode),
+      });
+      renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, { duration: ANIMATION_DURATION });
     });
 
+    const footerPostNavElements = getFooterPostNavElements();
     let footerPostNavState = createFooterPostNavState();
-    renderFooterPostNav(footerPostNavState, { animate: false });
 
-    const footerMenuButton: HTMLElement | null = document.querySelector("#actions-footer > #menu");
-    const footerTocButton: HTMLElement | null = document.querySelector("#actions-footer > #toc");
-    const footerShareButton: HTMLElement | null = document.querySelector("#actions-footer > #share");
+    if (footerPostNavElements) {
+      renderFooterPostNav(footerPostNavState, footerPostNavElements, { animate: false });
+    }
 
     // 移动端底部导航栏按钮 #actions-footer > #menu：点击后只切换 #nav-footer 的展开状态。
-    footerMenuButton?.addEventListener("click", (): void => {
-      footerPostNavState = {
-        ...footerPostNavState,
-        activePanel: footerPostNavState.activePanel === "menu" ? "none" : "menu",
-        isFooterVisible: true,
-      };
-      renderFooterPostNav(footerPostNavState);
+    footerPostNavElements?.footerMenuButton?.addEventListener("click", (): void => {
+      footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "toggleMenu" });
+      renderFooterPostNav(footerPostNavState, footerPostNavElements);
     });
 
     // 移动端底部导航栏按钮 #actions-footer > #toc：点击后只切换 #toc-footer 的展开状态。
-    footerTocButton?.addEventListener("click", (): void => {
-      const isOpeningToc = footerPostNavState.activePanel !== "toc";
+    footerPostNavElements?.footerTocButton?.addEventListener("click", (): void => {
+      const isOpeningToc = footerPostNavState.intent.activePanel !== "toc";
 
-      footerPostNavState = {
-        ...footerPostNavState,
-        activePanel: isOpeningToc ? "toc" : "none",
-        isFooterVisible: true,
-      };
-      renderFooterPostNav(footerPostNavState, { scrollActiveTocIntoView: isOpeningToc });
+      footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "toggleToc" });
+      renderFooterPostNav(footerPostNavState, footerPostNavElements, { scrollActiveTocIntoView: isOpeningToc });
     });
 
     // 移动端底部导航栏按钮 #actions-footer > #share：点击后只切换 #share-footer 的展开状态。
-    footerShareButton?.addEventListener("click", (): void => {
-      footerPostNavState = {
-        ...footerPostNavState,
-        activePanel: footerPostNavState.activePanel === "share" ? "none" : "share",
-        isFooterVisible: true,
-      };
-      renderFooterPostNav(footerPostNavState);
+    footerPostNavElements?.footerShareButton?.addEventListener("click", (): void => {
+      footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "toggleShare" });
+      renderFooterPostNav(footerPostNavState, footerPostNavElements);
     });
 
-    let footerLastScrollTop = 0;
-    const footerNav: HTMLElement | null = document.querySelector<HTMLElement>("#footer-post");
-
     /** 移动端 #footer-post 页面滚动逻辑：向上滚动显示 #footer-post，向下滚动隐藏 #footer-post。 */
-    if (footerNav) {
+    if (footerPostNavElements) {
       window.addEventListener("scroll", (): void => {
         const topDistance = getTopDistance();
 
-        // 移动端底部回到顶部按钮 #actions-footer > #top：scrollY < 50 隐藏，scrollY > 100 显示，50~100 保持当前状态。
-        let isTopActionVisible = footerPostNavState.isTopActionVisible;
-        if (topDistance < 50) {
-          isTopActionVisible = false;
-        } else if (topDistance > 100) {
-          isTopActionVisible = true;
-        }
-
-        // 移动端底部 #footer-post 页面滚动时关闭 #nav-footer/#toc-footer/#share-footer，再按滚动方向显示/隐藏 #footer-post。
-        footerPostNavState = {
-          activePanel: "none",
-          isFooterVisible: topDistance <= footerLastScrollTop,
-          isTopActionVisible,
-        };
-        footerLastScrollTop = topDistance;
-        renderFooterPostNav(footerPostNavState);
+        footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "scroll", scrollY: topDistance });
+        renderFooterPostNav(footerPostNavState, footerPostNavElements);
       });
     }
 
