@@ -1,24 +1,22 @@
-article {
-  & header {
-    & h1 {
-      align-items: center;
-      display: flex;
-      flex-wrap: wrap;
+#article-header {
+  & h1 {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
 
-      & .article-title-text {
-        min-width: 0;
-        overflow-wrap: break-word;
-      }
+    & .article-title-text {
+      min-width: 0;
+      overflow-wrap: break-word;
     }
+  }
 
-    & .meta {
-      margin-bottom: 1rem;
-      margin-top: 0;
+  & .meta {
+    margin-bottom: 1rem;
+    margin-top: 0;
 
-      & * {
-        color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
-        font-size: var(--tw-text-sm);
-      }
+    & * {
+      color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+      font-size: var(--tw-text-sm);
     }
   }
 }
