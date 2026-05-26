@@ -139,7 +139,7 @@
           </span>
           <!--/* 使用 sm:inline-block 避免发布时间被断到两行 */-->
           <div
-            class="post-publish-time tw:block tw:sm:inline-block"
+            class="post-publish-time tw:block tw:basis-full tw:sm:inline-block tw:sm:basis-auto"
             th:if="${theme.config?.post_styles?.is_show_post_publish_time}"
           >
             <span
@@ -156,7 +156,7 @@
           </div>
           <!--/* 使用 sm:inline-block 避免更新时间被断到两行 */-->
           <div
-            class="post-update-time tw:block tw:sm:inline-block"
+            class="post-update-time tw:block tw:basis-full tw:sm:inline-block tw:sm:basis-auto"
             th:if="${theme.config?.post_styles?.is_show_post_updated_time}"
           >
             <span
@@ -173,7 +173,7 @@
           </div>
 
           <div
-            class="article-category tw:flex tw:flex-wrap tw:items-center tw:gap-x-[1ch] tw:align-middle tw:sm:inline-flex"
+            class="article-category tw:flex tw:basis-full tw:flex-wrap tw:items-center tw:gap-x-[1ch] tw:align-middle tw:sm:inline-flex tw:sm:basis-auto"
             th:unless="${#lists.isEmpty(post.categories)}"
           >
             <th:block th:each="categoryLeafNode, categoryLeafNodeIterStat : ${post.categories}">
@@ -209,7 +209,7 @@
           </div>
 
           <div
-            class="article-tag tw:flex tw:flex-wrap tw:items-center tw:gap-x-[1ch] tw:align-middle tw:sm:inline-flex"
+            class="article-tag tw:flex tw:basis-full tw:flex-wrap tw:items-center tw:gap-x-[1ch] tw:align-middle tw:sm:inline-flex tw:sm:basis-auto"
             th:unless="${#lists.isEmpty(post.tags)}"
           >
             <th:block th:each="tag, iterStat : ${post.tags}">
