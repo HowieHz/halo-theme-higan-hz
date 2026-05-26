@@ -11,8 +11,12 @@
   }
 
   & .meta {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
     margin-bottom: 1rem;
     margin-top: 0;
+    vertical-align: middle;
 
     & > :is(span, div):not(:last-child) {
       margin-inline-end: 1ch;

@@ -172,14 +172,13 @@
             >
           </div>
 
-          <!--/* 使用 sm:inlne 而不是 sm:inline-block 是希望能在很多“分类面包屑”的情况下自动换行 */-->
           <div
-            class="article-category tw:block tw:sm:inline"
+            class="article-category tw:flex tw:flex-wrap tw:items-center tw:gap-x-[1ch] tw:align-middle tw:sm:inline-flex"
             th:unless="${#lists.isEmpty(post.categories)}"
           >
             <th:block th:each="categoryLeafNode, categoryLeafNodeIterStat : ${post.categories}">
               <!--/* inline-flex 使一个“分类面包屑”不会被分到两行 */-->
-              <span class="categoryBreadcrumbs tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle">
+              <span class="categoryBreadcrumbs tw:inline-flex tw:items-center tw:gap-x-[1ch] tw:align-middle">
                 <!--/* 分类图标和第一个“分类面包屑”保持在一行。 */-->
                 <span
                   th:if="${categoryLeafNodeIterStat.first}"
@@ -199,24 +198,23 @@
                 </th:block>
                 <!--/* 除最后一个“分类面包屑”没有逗号，其他“分类面包屑”末尾都有逗号，
                 并且和这个“分类面包屑”保持在一行（被 tw:inline-flex 包含）。
-                tw:ms-[-1ch] 是为了抵消 tw:gap-[1ch] */-->
+                tw:ms-[-1ch] 是为了抵消 tw:gap-x-[1ch] */-->
                 <span
                   th:if="${!categoryLeafNodeIterStat.last}"
-                  class="tw:ms-[-1ch] tw:me-[1ch]"
+                  class="tw:ms-[-1ch]"
                   >,</span
                 >
               </span>
             </th:block>
           </div>
 
-          <!--/* 使用 sm:inlne 而不是 sm:inline-block 是希望能在很多标签项的情况下自动换行 */-->
           <div
-            class="article-tag tw:block tw:sm:inline"
+            class="article-tag tw:flex tw:flex-wrap tw:items-center tw:gap-x-[1ch] tw:align-middle tw:sm:inline-flex"
             th:unless="${#lists.isEmpty(post.tags)}"
           >
             <th:block th:each="tag, iterStat : ${post.tags}">
               <!--/* inline-flex 保证一个标签项的内容保持在一行。 */-->
-              <span class="tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle">
+              <span class="tw:inline-flex tw:items-center tw:gap-x-[1ch] tw:align-middle">
                 <!--/* 标签图标和第一个标签项保持在一行。 */-->
                 <span
                   th:if="${iterStat.first}"
@@ -236,7 +234,7 @@
                 ><!--/*
                 */--><span
                   th:unless="${iterStat.last}"
-                  class="tw:ms-[-1ch] tw:me-[1ch]"
+                  class="tw:ms-[-1ch]"
                   >,</span
                 >
               </span>
@@ -245,7 +243,7 @@
 
           <!--/* inline-flex 保证图标和数字在一行 */-->
           <span
-            class="tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle"
+            class="tw:inline-flex tw:items-center tw:gap-x-[1ch] tw:align-middle"
             th:if="${theme.config?.post_styles?.is_show_post_views}"
             th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
           >
@@ -255,7 +253,7 @@
           <!--/* 预计阅读时长 
           inline-flex 保证图标和数字在一行 */-->
           <span
-            class="tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle"
+            class="tw:inline-flex tw:items-center tw:gap-x-[1ch] tw:align-middle"
             th:if="${theme.config?.post_styles?.is_show_post_estimated_reading_time}"
             th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                    ? extraApiStatsFinder.getPostWordCount({name: post.metadata.name})
@@ -274,7 +272,7 @@
           <!--/* 字数统计 
           inline-flex 保证图标和数字在一行 */-->
           <span
-            class="tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle"
+            class="tw:inline-flex tw:items-center tw:gap-x-[1ch] tw:align-middle"
             th:if="${theme.config?.post_styles?.is_show_post_word_count}"
             th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                    ? extraApiStatsFinder.getPostWordCount({name: post.metadata.name})
