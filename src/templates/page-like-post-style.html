@@ -80,7 +80,7 @@
           <!--/* 预计阅读时长 
           inline-flex 保证图标和数字在一行 */-->
           <span
-            class="tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle"
+            class="tw:inline-flex tw:items-center tw:gap-x-[1ch] tw:align-middle"
             th:if="${theme.config?.custom_page_styles?.is_show_post_estimated_reading_time}"
             th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                    ? extraApiStatsFinder.getContentWordCount(singlePage.content?.content)
@@ -99,7 +99,7 @@
           <!--/* 字数统计 
           inline-flex 保证图标和数字在一行 */-->
           <span
-            class="tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle"
+            class="tw:inline-flex tw:items-center tw:gap-x-[1ch] tw:align-middle"
             th:if="${theme.config?.custom_page_styles?.is_show_post_word_count}"
             th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                    ? extraApiStatsFinder.getContentWordCount(singlePage.content?.content)
