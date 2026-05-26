@@ -779,49 +779,51 @@ function getTopDistance(): number {
   return window.scrollY || 0;
 }
 
-/** 桌面端/平板端顶部 #actions 按钮 hover 文案：按钮提供 data-text，#actions > .info 是唯一显示槽。 */
-function getPostActionInfoElement(actionElement: HTMLElement): HTMLElement | null {
-  return actionElement.closest<HTMLElement>("#actions")?.querySelector<HTMLElement>(".info") ?? null;
-}
+function bindPostHeaderActionHoverText(elements: PostHeaderNavElements): void {
+  // 桌面端/平板端顶部 #actions 按钮 hover 文案：按钮提供 data-text，#actions > .info 是唯一显示槽。
+  const infoElement = elements.actions.querySelector<HTMLElement>(".info");
 
-function isMovingInsideElement(event: MouseEvent, element: HTMLElement): boolean {
-  return event.relatedTarget instanceof Node && element.contains(event.relatedTarget);
-}
-
-document.addEventListener("mouseover", (event: MouseEvent): void => {
-  const target = event.target instanceof Element ? event.target : null;
-  const actionElement = target?.closest<HTMLElement>("#header-post #actions [data-text]");
-
-  if (!actionElement || isMovingInsideElement(event, actionElement)) {
+  if (!infoElement) {
     return;
   }
 
-  const text = actionElement.dataset.text;
-  const infoElement = getPostActionInfoElement(actionElement);
+  const getActionElement = (event: MouseEvent): HTMLElement | null => {
+    const target = event.target instanceof Element ? event.target : null;
+    const actionElement = target?.closest<HTMLElement>("[data-text]");
 
-  if (text && infoElement) {
+    return actionElement && elements.actions.contains(actionElement) ? actionElement : null;
+  };
+
+  elements.actions.addEventListener("mouseover", (event) => {
+    const actionElement = getActionElement(event);
+
+    if (!actionElement || (event.relatedTarget instanceof Node && actionElement.contains(event.relatedTarget))) {
+      return;
+    }
+
+    const text = actionElement.dataset.text;
+
+    if (!text) {
+      return;
+    }
+
     infoElement.textContent = text;
     show(infoElement);
     schedulePostHeaderArticleAvoidanceAfterDomChange();
-  }
-});
+  });
 
-document.addEventListener("mouseout", (event: MouseEvent): void => {
-  const target = event.target instanceof Element ? event.target : null;
-  const actionElement = target?.closest<HTMLElement>("#header-post #actions [data-text]");
+  elements.actions.addEventListener("mouseout", (event) => {
+    const actionElement = getActionElement(event);
 
-  if (!actionElement || isMovingInsideElement(event, actionElement)) {
-    return;
-  }
+    if (!actionElement || (event.relatedTarget instanceof Node && actionElement.contains(event.relatedTarget))) {
+      return;
+    }
 
-  const infoElement = getPostActionInfoElement(actionElement);
-
-  if (infoElement) {
     hide(infoElement);
     infoElement.textContent = "";
     schedulePostHeaderArticleAvoidanceAfterDomChange();
-  }
-});
+  });
+}
 
 document.addEventListener("DOMContentLoaded", (): void => {
   /** 控制博客文章页面中菜单的不同版本 适用于桌面端、平板端和移动端 */
@@ -836,6 +838,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
         schedulePostHeaderArticleAvoidance(postHeaderNavElements, ANIMATION_DURATION);
       };
       observePostHeaderArticleAvoidanceChanges(postHeaderNavElements);
+      bindPostHeaderActionHoverText(postHeaderNavElements);
       renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, { animate: false });
 
       // 平板端、桌面端顶部菜单按钮 #menu-icon：点击后只切换 #nav/#actions/#toc 的展开状态。
