@@ -178,7 +178,7 @@
             th:unless="${#lists.isEmpty(post.categories)}"
           >
             <th:block th:each="categoryLeafNode, categoryLeafNodeIterStat : ${post.categories}">
-              <!--/* inline-block 使一个“分类面包屑”不会被分到两行 */-->
+              <!--/* inline-flex 使一个“分类面包屑”不会被分到两行 */-->
               <span class="categoryBreadcrumbs tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle">
                 <!--/* 分类图标和第一个“分类面包屑”保持在一行。 */-->
                 <span
@@ -215,8 +215,8 @@
             th:unless="${#lists.isEmpty(post.tags)}"
           >
             <th:block th:each="tag, iterStat : ${post.tags}">
-              <!--/* inline-block 保证一个标签项的内容保持在一行。 */-->
-              <span class="tw:inline-block">
+              <!--/* inline-flex 保证一个标签项的内容保持在一行。 */-->
+              <span class="tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle">
                 <!--/* 标签图标和第一个标签项保持在一行。 */-->
                 <span
                   th:if="${iterStat.first}"
