@@ -10,10 +10,11 @@
     }
   }
 
-  & .meta {
+  & .meta:has(> *) {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
+    /* :has(> *) -> margin-bottom is only applied when there are child elements */
     margin-bottom: 1rem;
     margin-top: 0;
     vertical-align: middle;
