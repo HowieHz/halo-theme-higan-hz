@@ -131,7 +131,7 @@
               </th:block>
               <th:block th:if="${theme.config?.index_styles?.is_show_post_views_in_post_list_summary}">
                 <div
-                  class="color-time tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle tw:z-10 tw:mt-0.5 tw:mb-0 tw:p-0 tw:text-sm"
+                  class="color-time tw:relative tw:z-10 tw:mt-0.5 tw:mb-0 tw:inline-flex tw:items-center tw:gap-[1ch] tw:p-0 tw:align-middle tw:text-sm"
                   th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
                 >
                   <span class="tw:iconify tw:mdi--eye-outline"></span>
@@ -140,7 +140,7 @@
               </th:block>
               <th:block th:if="${theme.config?.index_styles?.is_show_post_estimated_reading_time_in_post_list_summary}">
                 <div
-                  class="color-time tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle tw:z-10 tw:mt-0.5 tw:mb-0 tw:p-0 tw:text-sm"
+                  class="color-time tw:relative tw:z-10 tw:mt-0.5 tw:mb-0 tw:inline-flex tw:items-center tw:gap-[1ch] tw:p-0 tw:align-middle tw:text-sm"
                   th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                          ? extraApiStatsFinder.getPostWordCount({name: post.metadata.name})
                                          : #strings.length(post.content?.content) / 2 }"
@@ -157,7 +157,7 @@
               </th:block>
               <th:block th:if="${theme.config?.index_styles?.is_show_post_word_count_in_post_list_summary}">
                 <span
-                  class="color-time tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle tw:z-10 tw:mt-0.5 tw:mb-0 tw:p-0 tw:text-sm"
+                  class="color-time tw:relative tw:z-10 tw:mt-0.5 tw:mb-0 tw:inline-flex tw:items-center tw:gap-[1ch] tw:p-0 tw:align-middle tw:text-sm"
                   th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                          ? extraApiStatsFinder.getPostWordCount({name: post.metadata.name})
                                          : #strings.length(post.content?.content) / 2 }"

@@ -139,10 +139,11 @@
           </span>
 
           <div
-            class="post-publish-time tw:inline"
+            class="post-publish-time tw:block tw:sm:inline"
             th:if="${theme.config?.post_styles?.is_show_post_publish_time}"
           >
             <span
+              th:class="tw:me-[1ch]"
               th:text="#{page.post.published-on}"
               th:if="${theme.config?.post_styles?.is_show_post_publish_time_left_text}"
             ></span>
@@ -158,6 +159,7 @@
             th:if="${theme.config?.post_styles?.is_show_post_updated_time}"
           >
             <span
+              th:class="tw:me-[1ch]"
               th:text="#{page.post.updated-on}"
               th:if="${theme.config?.post_styles?.is_show_post_updated_time_left_text}"
             ></span>
