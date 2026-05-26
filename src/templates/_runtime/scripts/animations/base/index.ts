@@ -63,6 +63,7 @@ export function isVisible(input: HTMLElement | NodeListOf<HTMLElement> | null): 
 
 // 存储元素默认显示值的映射表
 const defaultDisplayMap: Record<string, string> = {};
+const animationCleanupMap = new WeakMap<HTMLElement, () => void>();
 
 /**
  * 获取元素的默认 display 值
@@ -151,6 +152,7 @@ export function hideElement(element: HTMLElement): void {
  */
 function cleanupAnimation(element: HTMLElement, className: string, callback?: () => void): () => void {
   return () => {
+    animationCleanupMap.delete(element);
     element.classList.remove(className);
     element.style.animationDuration = "";
     callback?.();
@@ -171,10 +173,18 @@ export function setupAnimation(
   duration: number,
   onComplete?: () => void,
 ): void {
+  animationCleanupMap.get(element)?.();
+
   element.classList.add(className);
   element.style.animationDuration = `${duration}ms`;
 
   const handleAnimationEnd = cleanupAnimation(element, className, onComplete);
+  animationCleanupMap.set(element, () => {
+    element.removeEventListener("animationend", handleAnimationEnd);
+    element.classList.remove(className);
+    element.style.animationDuration = "";
+    animationCleanupMap.delete(element);
+  });
   element.addEventListener("animationend", handleAnimationEnd, { once: true });
 }
 
