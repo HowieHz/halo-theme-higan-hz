@@ -528,8 +528,14 @@
   .post-navigation {
     & a {
       color: var(--color-base-content);
+    }
+  }
 
-      /* 去除下划线用这个 background-image: none; */
+  .recommendations {
+    & .meta {
+      color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
+      font-size: var(--text);
+      white-space: nowrap;
     }
   }
 
