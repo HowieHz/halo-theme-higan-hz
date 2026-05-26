@@ -137,9 +137,9 @@
               style="background-image: none"
             ></a>
           </span>
-
+          <!--/* 使用 sm:inline-block 避免发布时间被断到两行 */-->
           <div
-            class="post-publish-time tw:block tw:sm:inline"
+            class="post-publish-time tw:block tw:sm:inline-block"
             th:if="${theme.config?.post_styles?.is_show_post_publish_time}"
           >
             <span
@@ -154,8 +154,9 @@
               >文章发布时间替换位</time
             >
           </div>
+          <!--/* 使用 sm:inline-block 避免更新时间被断到两行 */-->
           <div
-            class="post-update-time tw:block tw:sm:inline"
+            class="post-update-time tw:block tw:sm:inline-block"
             th:if="${theme.config?.post_styles?.is_show_post_updated_time}"
           >
             <span
@@ -170,9 +171,6 @@
               >文章更新时间替换位</time
             >
           </div>
-
-          <!--/* 分隔符 */-->
-          <span class="meta-separator tw:hidden tw:before:content-['|'] tw:last:hidden tw:sm:inline"></span>
 
           <!--/* 使用 sm:inlne 而不是 sm:inline-block 是希望能在很多“分类面包屑”的情况下自动换行 */-->
           <div
