@@ -243,9 +243,9 @@
             </th:block>
           </div>
 
-          <!--/* inline-block 保证图标和数字在一行 */-->
+          <!--/* inline-flex 保证图标和数字在一行 */-->
           <span
-            class="tw:inline-block"
+            class="tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle"
             th:if="${theme.config?.post_styles?.is_show_post_views}"
             th:title="|#{page.post.visit-stats} ${post.stats?.visit}|"
           >
@@ -253,9 +253,9 @@
             <span th:text="${post.stats?.visit}">文章阅读量替换位</span>
           </span>
           <!--/* 预计阅读时长 
-          inline-block 保证图标和数字在一行 */-->
+          inline-flex 保证图标和数字在一行 */-->
           <span
-            class="tw:inline-block"
+            class="tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle"
             th:if="${theme.config?.post_styles?.is_show_post_estimated_reading_time}"
             th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                    ? extraApiStatsFinder.getPostWordCount({name: post.metadata.name})
@@ -272,9 +272,9 @@
           </span>
 
           <!--/* 字数统计 
-          inline-block 保证图标和数字在一行 */-->
+          inline-flex 保证图标和数字在一行 */-->
           <span
-            class="tw:inline-block"
+            class="tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle"
             th:if="${theme.config?.post_styles?.is_show_post_word_count}"
             th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                    ? extraApiStatsFinder.getPostWordCount({name: post.metadata.name})
