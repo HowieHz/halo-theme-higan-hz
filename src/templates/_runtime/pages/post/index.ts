@@ -505,7 +505,7 @@ function setPostHeaderArticleAvoidanceTargetTransition(
 
 function restorePostHeaderArticleAvoidanceTargetMargin(target: PostHeaderArticleAvoidanceTarget): void {
   // 桌面端/平板端顶部菜单不再覆盖目标元素时，撤销写到 #article-header > h1 或 #article-header > .meta 的 margin-inline-end。
-  // 往右恢复标题/元信息可用宽度时加短过渡，减少鼠标掠过 #header-post 操作按钮时的抖动。
+  // 往右恢复标题/元信息可用宽度时使用更长过渡，减少鼠标掠过 #header-post 操作按钮时的抖动。
   const currentAvoidanceMargin = getCurrentPostHeaderArticleAvoidanceMargin(target.element);
   if (currentAvoidanceMargin > 0) {
     setPostHeaderArticleAvoidanceTargetTransition(target, "restore");
