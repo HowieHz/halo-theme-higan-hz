@@ -80,6 +80,6 @@ export default {
     "max-nesting-depth": 99, // 限制嵌套深度
     "color-hex-length": "short", // 使用短十六进制颜色代码
     "declaration-block-single-line-max-declarations": 1, // 单行最多声明数
-    "unit-allowed-list": ["px", "em", "rem", "%", "s", "vh", "vw", "deg", "fr", "vmax", "vmin", "ms"], // 允许的单位
+    "unit-allowed-list": ["px", "em", "rem", "%", "s", "vh", "vw", "deg", "fr", "vmax", "vmin", "ms", "ch"], // 允许的单位
   },
 };

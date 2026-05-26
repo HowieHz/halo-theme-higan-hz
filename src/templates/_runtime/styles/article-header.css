@@ -14,6 +14,10 @@
     margin-bottom: 1rem;
     margin-top: 0;
 
+    & > :is(span, div):not(:last-child) {
+      margin-inline-end: 1ch;
+    }
+
     & * {
       color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
       font-size: var(--tw-text-sm);

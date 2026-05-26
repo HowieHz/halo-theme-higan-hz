@@ -143,12 +143,10 @@
 
         <span class="info tw:hidden"></span>
       </span>
-      <br />
       <div
         th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
         id="share-list"
-        class="tw:clear-both tw:pt-4 tw:pr-8 tw:text-right"
-        style="display: none"
+        class="tw:clear-both tw:ml-auto tw:hidden tw:w-max tw:pt-4 tw:pr-8 tw:text-right"
       >
         <th:block
           th:insert="~{components/share/template :: body(originPermalink = ${post.status.permalink},
