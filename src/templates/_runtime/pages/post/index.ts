@@ -17,8 +17,8 @@ const POST_HEADER_ARTICLE_AVOIDANCE_SHRINK_DURATION = 50;
 const POST_HEADER_ARTICLE_AVOIDANCE_RESTORE_DURATION = 200;
 // 页面滚动滞回阈值：低于 LOW 进入靠近顶部状态，高于 HIGH 进入已滚动状态。
 // 顶部 #header-post 平板 quickActions 和移动端底部 #actions-footer > #top 共用这组阈值，但各自维护自己的导航状态。
-const SCROLL_HYSTERESIS_LOW = 50;
-const SCROLL_HYSTERESIS_HIGH = 100;
+const SCROLL_HYSTERESIS_LOW = 50; // px
+const SCROLL_HYSTERESIS_HIGH = 100; // px
 
 type ViewportMode = "desktop" | "tablet" | "mobile";
 type TabletMode = "top" | "quickActions";
@@ -808,14 +808,13 @@ function bindPostHeaderActionHoverText(elements: PostHeaderNavElements): void {
     }
 
     infoElement.textContent = text;
-    show(infoElement);
+    fadeIn(infoElement, POST_HEADER_NAV_ANIMATION_DURATION);
     schedulePostHeaderArticleAvoidanceAfterDomChange();
   });
 
   // 鼠标在 #actions 内多个按钮之间移动时只替换文案；离开整个 #actions 后才隐藏单槽文案。
   elements.actions.addEventListener("mouseleave", () => {
-    hide(infoElement);
-    infoElement.textContent = "";
+    fadeOut(infoElement, POST_HEADER_NAV_ANIMATION_DURATION);
     schedulePostHeaderArticleAvoidanceAfterDomChange();
   });
 }
