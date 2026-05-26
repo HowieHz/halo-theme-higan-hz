@@ -65,7 +65,7 @@
                 >
                   <th:block th:each="categoryLeafNode, categoryLeafNodeIterStat : ${post.categories}">
                     <!--/* inline-block 使一个“分类面包屑”不会被分到两行 */-->
-                    <span class="categoryBreadcrumbs tw:inline-block">
+                    <span class="categoryBreadcrumbs tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle">
                       <!--/* 分类图标和第一个“分类面包屑”保持在一行。 */-->
                       <span
                         th:if="${categoryLeafNodeIterStat.first}"
@@ -81,16 +81,15 @@
                         >
                           文章分类名替换位 </a
                         ><!--/*
-                      */--><span th:unless="${iterStat.last}"> ></span
-                        ><!--/* 除最后一个“分类面包屑”没有逗号，其他“分类面包屑”末尾都有逗号，并且和这个“分类面包屑”保持在一行。
-                      */--><span
-                          th:if="${iterStat.last
-                                   and !categoryLeafNodeIterStat.last}"
-                          >,</span
-                        >
-                        <!--/* 逗号需要写在此层 th:block，然后用注释连接起来，否则逗号前会出现空格 */-->
+                        */--><span th:unless="${iterStat.last}">></span>
                       </th:block>
                     </span>
+                    <!--/* 除最后一个“分类面包屑”没有逗号，其他“分类面包屑”末尾都有逗号，并且和这个“分类面包屑”保持在一行。*/-->
+                    <span
+                      th:if="${!categoryLeafNodeIterStat.last}"
+                      class="tw:me-[1ch]"
+                      >,</span
+                    >
                   </th:block>
                 </div>
               </th:block>
@@ -99,20 +98,32 @@
                   class="article-tag color-time tw:relative tw:z-20 tw:mt-0.5 tw:mb-0 tw:block tw:p-0 tw:text-sm tw:sm:inline"
                   th:unless="${#lists.isEmpty(post.tags)}"
                 >
-                  <span class="tw:iconify tw:mdi--tag-outline"></span>
-                  <th:block th:each="tag : ${post.tags}">
-                    <a
-                      class="tag-link color-time"
-                      th:with="tagColor = ${tag.spec?.color}"
-                      th:href="@{${tag.status?.permalink}}"
-                      th:text="${tag.spec?.displayName}"
-                      th:style="${tagColor != null
-                                and !#strings.equalsIgnoreCase(tagColor, '#ffffff')}
-                              ? |--tag-hash-color:${tagColor};|
-                              : null"
-                    >
-                      文章标签名替换位
-                    </a>
+                  <th:block th:each="tag, iterStat : ${post.tags}">
+                    <!--/* inline-block 保证一个标签项的内容保持在一行。 */-->
+                    <span class="tw:inline-block">
+                      <!--/* 标签图标和第一个标签项保持在一行。 */-->
+                      <span
+                        th:if="${iterStat.first}"
+                        class="tw:iconify tw:fa-solid--tag"
+                      ></span>
+                      <a
+                        class="tag-link"
+                        th:with="tagColor = ${tag.spec?.color}"
+                        th:href="@{${tag.status?.permalink}}"
+                        th:text="${tag.spec?.displayName}"
+                        th:style="${tagColor != null
+                            and !#strings.equalsIgnoreCase(tagColor, '#ffffff')}
+                          ? |--tag-hash-color:${tagColor};|
+                          : null"
+                      >
+                        文章标签名替换位 </a
+                      ><!--/*
+                      */--><span
+                        th:unless="${iterStat.last}"
+                        class="tw:me-[1ch]"
+                        >,</span
+                      >
+                    </span>
                   </th:block>
                 </div>
               </th:block>

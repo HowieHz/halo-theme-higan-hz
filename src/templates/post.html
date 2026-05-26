@@ -124,7 +124,7 @@
         <div class="meta">
           <!--/* 展示文章作者名 */-->
           <span
-            class="tw:font-bold tw:tracking-wider tw:uppercase"
+            class="tw:inline-flex tw:font-bold tw:tracking-wider tw:uppercase"
             itemprop="author"
             itemscope
             th:each="contributor : ${post?.contributors}"
@@ -179,7 +179,7 @@
           >
             <th:block th:each="categoryLeafNode, categoryLeafNodeIterStat : ${post.categories}">
               <!--/* inline-block 使一个“分类面包屑”不会被分到两行 */-->
-              <span class="categoryBreadcrumbs tw:inline-block">
+              <span class="categoryBreadcrumbs tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle">
                 <!--/* 分类图标和第一个“分类面包屑”保持在一行。 */-->
                 <span
                   th:if="${categoryLeafNodeIterStat.first}"
@@ -195,16 +195,15 @@
                   >
                     文章分类名替换位 </a
                   ><!--/*
-                  */--><span th:unless="${iterStat.last}"> ></span
-                  ><!--/* 除最后一个“分类面包屑”没有逗号，其他“分类面包屑”末尾都有逗号，并且和这个“分类面包屑”保持在一行。
-                  */--><span
-                    th:if="${iterStat.last
-                             and !categoryLeafNodeIterStat.last}"
-                    >,</span
-                  >
-                  <!--/* 逗号需要写在此层 th:block，然后用注释连接起来，否则逗号前会出现空格 */-->
+                  */--><span th:unless="${iterStat.last}">></span>
                 </th:block>
               </span>
+              <!--/* 除最后一个“分类面包屑”没有逗号，其他“分类面包屑”末尾都有逗号，并且和这个“分类面包屑”保持在一行。*/-->
+              <span
+                th:if="${!categoryLeafNodeIterStat.last}"
+                class="tw:me-[1ch]"
+                >,</span
+              >
             </th:block>
           </div>
 
@@ -233,7 +232,11 @@
                 >
                   文章标签名替换位 </a
                 ><!--/*
-                */--><span th:unless="${iterStat.last}">,</span>
+                */--><span
+                  th:unless="${iterStat.last}"
+                  class="tw:me-[1ch]"
+                  >,</span
+                >
               </span>
             </th:block>
           </div>
