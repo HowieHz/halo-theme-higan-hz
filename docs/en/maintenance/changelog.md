@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.66.10] - 2026-05-26
+
 ### 🔧 Code Refactoring
 
 - Optimized the RSS icon size on author, category, and tag pages.
@@ -2042,7 +2044,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.9...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.10...HEAD
+[1.66.10]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.9...v1.66.10
 [1.66.9]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.8...v1.66.9
 [1.66.8]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.7...v1.66.8
 [1.66.7]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.6...v1.66.7

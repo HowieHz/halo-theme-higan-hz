@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.66.10] - 2026-05-26
+
 ### 🔧 代码重构
 
 - 优化作者页、分类页和标签页的 RSS 图标大小。
@@ -1961,7 +1963,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.9...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.10...HEAD
+[1.66.10]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.9...v1.66.10
 [1.66.9]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.8...v1.66.9
 [1.66.8]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.7...v1.66.8
 [1.66.7]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.6...v1.66.7
