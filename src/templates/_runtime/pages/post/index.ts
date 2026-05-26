@@ -812,13 +812,8 @@ function bindPostHeaderActionHoverText(elements: PostHeaderNavElements): void {
     schedulePostHeaderArticleAvoidanceAfterDomChange();
   });
 
-  elements.actions.addEventListener("mouseout", (event) => {
-    const actionElement = getActionElement(event);
-
-    if (!actionElement || (event.relatedTarget instanceof Node && actionElement.contains(event.relatedTarget))) {
-      return;
-    }
-
+  // 鼠标在 #actions 内多个按钮之间移动时只替换文案；离开整个 #actions 后才隐藏单槽文案。
+  elements.actions.addEventListener("mouseleave", () => {
     hide(infoElement);
     infoElement.textContent = "";
     schedulePostHeaderArticleAvoidanceAfterDomChange();
