@@ -197,13 +197,15 @@
                   ><!--/*
                   */--><span th:unless="${iterStat.last}">></span>
                 </th:block>
+                <!--/* 除最后一个“分类面包屑”没有逗号，其他“分类面包屑”末尾都有逗号，
+                并且和这个“分类面包屑”保持在一行（被 tw:inline-flex 包含）。
+                tw:ms-[-1ch] 是为了抵消 tw:gap-[1ch] */-->
+                <span
+                  th:if="${!categoryLeafNodeIterStat.last}"
+                  class="tw:ms-[-1ch] tw:me-[1ch]"
+                  >,</span
+                >
               </span>
-              <!--/* 除最后一个“分类面包屑”没有逗号，其他“分类面包屑”末尾都有逗号，并且和这个“分类面包屑”保持在一行。*/-->
-              <span
-                th:if="${!categoryLeafNodeIterStat.last}"
-                class="tw:me-[1ch]"
-                >,</span
-              >
             </th:block>
           </div>
 
