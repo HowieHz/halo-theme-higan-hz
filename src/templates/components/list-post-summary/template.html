@@ -64,7 +64,7 @@
                   th:unless="${#lists.isEmpty(post.categories)}"
                 >
                   <th:block th:each="categoryLeafNode, categoryLeafNodeIterStat : ${post.categories}">
-                    <!--/* inline-block 使一个“分类面包屑”不会被分到两行 */-->
+                    <!--/* inline-flex 使一个“分类面包屑”不会被分到两行 */-->
                     <span class="categoryBreadcrumbs tw:inline-flex tw:items-center tw:gap-[1ch] tw:align-middle">
                       <!--/* 分类图标和第一个“分类面包屑”保持在一行。 */-->
                       <span
@@ -122,7 +122,7 @@
                       ><!--/*
                       */--><span
                         th:unless="${iterStat.last}"
-                        class="tw:me-[1ch]"
+                        class="tw:ms-[-1ch] tw:me-[1ch]"
                         >,</span
                       >
                     </span>
