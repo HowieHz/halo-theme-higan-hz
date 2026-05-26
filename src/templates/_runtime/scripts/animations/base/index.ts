@@ -179,12 +179,14 @@ export function setupAnimation(
   element.style.animationDuration = `${duration}ms`;
 
   const handleAnimationEnd = cleanupAnimation(element, className, onComplete);
+  // 动画被提前打断，调用 animationCleanupMap 中的清理函数
   animationCleanupMap.set(element, () => {
     element.removeEventListener("animationend", handleAnimationEnd);
     element.classList.remove(className);
     element.style.animationDuration = "";
     animationCleanupMap.delete(element);
   });
+  // 动画正常结束，走 animationend 事件，调用 handleAnimationEnd 进行清理
   element.addEventListener("animationend", handleAnimationEnd, { once: true });
 }
 
