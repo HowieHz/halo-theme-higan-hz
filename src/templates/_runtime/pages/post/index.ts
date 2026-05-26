@@ -3,7 +3,7 @@ import "./styles.css";
 import "@runtime/styles/article-header.css";
 import "@runtime/styles/article.css";
 import "@runtime/styles/article-metadata.css";
-import { hide, isVisible, scrollToTop, show, toggle } from "@runtime/scripts/animations/base";
+import { hide, isVisible, scrollToTop, show } from "@runtime/scripts/animations/base";
 import { fadeIn } from "@runtime/scripts/animations/fade-in";
 import { fadeOut } from "@runtime/scripts/animations/fade-out";
 import { slideDown } from "@runtime/scripts/animations/slide-down";
@@ -13,6 +13,7 @@ import { slideUp } from "@runtime/scripts/animations/slide-up";
 const ANIMATION_DURATION = 200;
 const POST_HEADER_NAV_ANIMATION_DURATION = 50;
 const POST_HEADER_ARTICLE_AVOIDANCE_GAP = 16;
+const POST_HEADER_ARTICLE_AVOIDANCE_SHRINK_DURATION = 50;
 const POST_HEADER_ARTICLE_AVOIDANCE_RESTORE_DURATION = 200;
 // 页面滚动滞回阈值：低于 LOW 进入靠近顶部状态，高于 HIGH 进入已滚动状态。
 // 顶部 #header-post 平板 quickActions 和移动端底部 #actions-footer > #top 共用这组阈值，但各自维护自己的导航状态。
@@ -159,6 +160,7 @@ type PostHeaderArticleAvoidanceTarget = {
   initialComputedMarginInlineEnd: number;
   initialTransition: string | null;
 };
+type PostHeaderArticleAvoidanceTransitionMode = "shrink" | "restore";
 
 let schedulePostHeaderArticleAvoidanceAfterDomChange = (): void => {};
 let postHeaderArticleAvoidanceFrame: number | null = null;
@@ -490,22 +492,15 @@ function getRenderedPostHeaderArticleAvoidanceMargin(target: PostHeaderArticleAv
 
 function setPostHeaderArticleAvoidanceTargetTransition(
   target: PostHeaderArticleAvoidanceTarget,
-  shouldAnimateRestore: boolean,
+  mode: PostHeaderArticleAvoidanceTransitionMode,
 ): void {
-  if (shouldAnimateRestore) {
-    const transition = `margin-inline-end ${POST_HEADER_ARTICLE_AVOIDANCE_RESTORE_DURATION}ms ease`;
-    target.element.style.setProperty(
-      "transition",
-      target.initialTransition ? `${target.initialTransition}, ${transition}` : transition,
-    );
-    return;
-  }
-
-  if (target.initialTransition) {
-    target.element.style.setProperty("transition", target.initialTransition);
-  } else {
-    target.element.style.removeProperty("transition");
-  }
+  const duration =
+    mode === "shrink" ? POST_HEADER_ARTICLE_AVOIDANCE_SHRINK_DURATION : POST_HEADER_ARTICLE_AVOIDANCE_RESTORE_DURATION;
+  const transition = `margin-inline-end ${duration}ms ease`;
+  target.element.style.setProperty(
+    "transition",
+    target.initialTransition ? `${target.initialTransition}, ${transition}` : transition,
+  );
 }
 
 function restorePostHeaderArticleAvoidanceTargetMargin(target: PostHeaderArticleAvoidanceTarget): void {
@@ -513,7 +508,7 @@ function restorePostHeaderArticleAvoidanceTargetMargin(target: PostHeaderArticle
   // 往右恢复标题/元信息可用宽度时加短过渡，减少鼠标掠过 #header-post 操作按钮时的抖动。
   const currentAvoidanceMargin = getCurrentPostHeaderArticleAvoidanceMargin(target.element);
   if (currentAvoidanceMargin > 0) {
-    setPostHeaderArticleAvoidanceTargetTransition(target, true);
+    setPostHeaderArticleAvoidanceTargetTransition(target, "restore");
   }
   delete target.element.dataset.postHeaderAvoidanceMarginInlineEnd;
 
@@ -584,10 +579,13 @@ function updatePostHeaderArticleAvoidanceTarget(
   // #article-header > h1/.meta 只避让“目标元素自然右边界”和顶部菜单可见左边界之间的重叠宽度。
   // 不使用 window.innerWidth - visibleLeft，避免把顶部菜单右侧到视口边缘的空白也算进避让距离。
   const requiredMargin = Math.max(0, Math.ceil(targetNaturalRight - visibleLeft + POST_HEADER_ARTICLE_AVOIDANCE_GAP));
-  // #article-header > h1/.meta 需要向左缩小时立即扩大 margin-inline-end，避免顶部菜单覆盖。
-  // #article-header > h1/.meta 往右恢复可用宽度时才使用短过渡，缓冲 #header-post hover 文案造成的尺寸变化。
+  // #article-header > h1/.meta 需要向左缩小时使用更短过渡，减少顶部菜单覆盖窗口。
+  // #article-header > h1/.meta 往右恢复可用宽度时使用更长过渡，缓冲 #header-post hover 文案造成的尺寸变化。
   if (requiredMargin !== currentAvoidanceMargin) {
-    setPostHeaderArticleAvoidanceTargetTransition(target, requiredMargin < currentAvoidanceMargin);
+    setPostHeaderArticleAvoidanceTargetTransition(
+      target,
+      requiredMargin > currentAvoidanceMargin ? "shrink" : "restore",
+    );
   }
 
   target.element.dataset.postHeaderAvoidanceMarginInlineEnd = String(requiredMargin);
@@ -781,33 +779,47 @@ function getTopDistance(): number {
   return window.scrollY || 0;
 }
 
-/**
- * Event delegation for toggle functionality on hover Handle mouseover and mouseout events for elements with
- * data-toggle-target attribute
- */
-document.addEventListener("mouseover", (e: Event): void => {
-  const target = e.target as HTMLElement;
-  const toggleElement = target.closest<HTMLElement>("[data-toggle-target]");
+/** 桌面端/平板端顶部 #actions 按钮 hover 文案：按钮提供 data-text，#actions > .info 是唯一显示槽。 */
+function getPostActionInfoElement(actionElement: HTMLElement): HTMLElement | null {
+  return actionElement.closest<HTMLElement>("#actions")?.querySelector<HTMLElement>(".info") ?? null;
+}
 
-  if (toggleElement) {
-    const toggleTarget = toggleElement.dataset.toggleTarget;
-    if (toggleTarget) {
-      toggle(toggleTarget);
-      schedulePostHeaderArticleAvoidanceAfterDomChange();
-    }
+function isMovingInsideElement(event: MouseEvent, element: HTMLElement): boolean {
+  return event.relatedTarget instanceof Node && element.contains(event.relatedTarget);
+}
+
+document.addEventListener("mouseover", (event: MouseEvent): void => {
+  const target = event.target instanceof Element ? event.target : null;
+  const actionElement = target?.closest<HTMLElement>("#header-post #actions [data-text]");
+
+  if (!actionElement || isMovingInsideElement(event, actionElement)) {
+    return;
+  }
+
+  const text = actionElement.dataset.text;
+  const infoElement = getPostActionInfoElement(actionElement);
+
+  if (text && infoElement) {
+    infoElement.textContent = text;
+    show(infoElement);
+    schedulePostHeaderArticleAvoidanceAfterDomChange();
   }
 });
 
-document.addEventListener("mouseout", (e: Event): void => {
-  const target = e.target as HTMLElement;
-  const toggleElement = target.closest<HTMLElement>("[data-toggle-target]");
+document.addEventListener("mouseout", (event: MouseEvent): void => {
+  const target = event.target instanceof Element ? event.target : null;
+  const actionElement = target?.closest<HTMLElement>("#header-post #actions [data-text]");
 
-  if (toggleElement) {
-    const toggleTarget = toggleElement.dataset.toggleTarget;
-    if (toggleTarget) {
-      toggle(toggleTarget);
-      schedulePostHeaderArticleAvoidanceAfterDomChange();
-    }
+  if (!actionElement || isMovingInsideElement(event, actionElement)) {
+    return;
+  }
+
+  const infoElement = getPostActionInfoElement(actionElement);
+
+  if (infoElement) {
+    hide(infoElement);
+    infoElement.textContent = "";
+    schedulePostHeaderArticleAvoidanceAfterDomChange();
   }
 });
 
