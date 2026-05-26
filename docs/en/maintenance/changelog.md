@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🐛 Bug Fixes
 
 - Fixed extra vertical spacing when category, tag, and other metadata items wrap on post pages and the home rich post list.
+- Fixed extra spaces between metadata items on post pages and the home rich post list.
 
 ## [1.66.10] - 2026-05-26
 
