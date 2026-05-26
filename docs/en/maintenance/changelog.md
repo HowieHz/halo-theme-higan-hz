@@ -23,8 +23,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🔧 Code Refactoring
+
+- Optimized the RSS icon size on author, category, and tag pages.
+
 ### 🐛 Bug Fixes
 
+- Fixed excessive left avoidance of the article title and metadata after expanding the top share list on desktop and tablet post pages.
+- Fixed an issue where publish and update times in post metadata could be split across two lines.
+- Stabilized the spacing between post metadata items,
+  and the internal icon, text, and separator spacing for metadata items such as
+  categories, tags, view count, estimated reading time, and word count, to 1ch
+  on post pages, single pages, and the home rich post list;
+  unified wrapping positions and vertical alignment.
+- Fixed vertical misalignment of text in menu items with submenus.
+- Fixed excessive left avoidance of the article title and metadata caused by the default left padding of the desktop post table of contents.
 - Improved the transition when the desktop and tablet post page top menu shrinks and restores article-header avoidance, reducing article title and metadata jitter while hovering action buttons.
 - Improved hover text fade-in and fade-out rendering for desktop and tablet post page top action buttons, preventing multiple labels from showing at once while quickly moving across buttons.
 - Fixed an issue where stale `animationend` callbacks from interrupted CSS animations could affect the new animation state.
