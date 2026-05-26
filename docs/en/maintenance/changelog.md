@@ -23,6 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Improved the transition when the desktop and tablet post page top menu shrinks and restores article-header avoidance, reducing article title and metadata jitter while hovering action buttons.
+- Improved hover text fade-in and fade-out rendering for desktop and tablet post page top action buttons, preventing multiple labels from showing at once while quickly moving across buttons.
+- Fixed an issue where stale `animationend` callbacks from interrupted CSS animations could affect the new animation state.
+
 ## [1.66.9] - 2026-05-26
 
 ### 🐛 Bug Fixes

@@ -3,7 +3,7 @@ import "./styles.css";
 import "@runtime/styles/article-header.css";
 import "@runtime/styles/article.css";
 import "@runtime/styles/article-metadata.css";
-import { hide, isVisible, scrollToTop, show, toggle } from "@runtime/scripts/animations/base";
+import { hide, isVisible, scrollToTop, show } from "@runtime/scripts/animations/base";
 import { fadeIn } from "@runtime/scripts/animations/fade-in";
 import { fadeOut } from "@runtime/scripts/animations/fade-out";
 import { slideDown } from "@runtime/scripts/animations/slide-down";
@@ -13,10 +13,12 @@ import { slideUp } from "@runtime/scripts/animations/slide-up";
 const ANIMATION_DURATION = 200;
 const POST_HEADER_NAV_ANIMATION_DURATION = 50;
 const POST_HEADER_ARTICLE_AVOIDANCE_GAP = 16;
+const POST_HEADER_ARTICLE_AVOIDANCE_SHRINK_DURATION = 50;
+const POST_HEADER_ARTICLE_AVOIDANCE_RESTORE_DURATION = 200;
 // 页面滚动滞回阈值：低于 LOW 进入靠近顶部状态，高于 HIGH 进入已滚动状态。
 // 顶部 #header-post 平板 quickActions 和移动端底部 #actions-footer > #top 共用这组阈值，但各自维护自己的导航状态。
-const SCROLL_HYSTERESIS_LOW = 50;
-const SCROLL_HYSTERESIS_HIGH = 100;
+const SCROLL_HYSTERESIS_LOW = 50; // px
+const SCROLL_HYSTERESIS_HIGH = 100; // px
 
 type ViewportMode = "desktop" | "tablet" | "mobile";
 type TabletMode = "top" | "quickActions";
@@ -155,7 +157,10 @@ type VisibleRect = RectBounds & {
 type PostHeaderArticleAvoidanceTarget = {
   element: HTMLElement;
   initialMarginInlineEnd: string | null;
+  initialComputedMarginInlineEnd: number;
+  initialTransition: string | null;
 };
+type PostHeaderArticleAvoidanceTransitionMode = "shrink" | "restore";
 
 let schedulePostHeaderArticleAvoidanceAfterDomChange = (): void => {};
 let postHeaderArticleAvoidanceFrame: number | null = null;
@@ -254,6 +259,8 @@ function getPostHeaderNavElements(): PostHeaderNavElements | null {
       .map((element) => ({
         element,
         initialMarginInlineEnd: element.style.getPropertyValue("margin-inline-end") || null,
+        initialComputedMarginInlineEnd: Number.parseFloat(window.getComputedStyle(element).marginInlineEnd) || 0,
+        initialTransition: element.style.getPropertyValue("transition") || null,
       })),
     menuIcon,
     nav,
@@ -476,8 +483,33 @@ function getCurrentPostHeaderArticleAvoidanceMargin(target: HTMLElement): number
   return Number.isFinite(value) ? value : 0;
 }
 
+function getRenderedPostHeaderArticleAvoidanceMargin(target: PostHeaderArticleAvoidanceTarget): number {
+  const value =
+    Number.parseFloat(window.getComputedStyle(target.element).marginInlineEnd) - target.initialComputedMarginInlineEnd;
+
+  return Number.isFinite(value) ? Math.max(0, value) : getCurrentPostHeaderArticleAvoidanceMargin(target.element);
+}
+
+function setPostHeaderArticleAvoidanceTargetTransition(
+  target: PostHeaderArticleAvoidanceTarget,
+  mode: PostHeaderArticleAvoidanceTransitionMode,
+): void {
+  const duration =
+    mode === "shrink" ? POST_HEADER_ARTICLE_AVOIDANCE_SHRINK_DURATION : POST_HEADER_ARTICLE_AVOIDANCE_RESTORE_DURATION;
+  const transition = `margin-inline-end ${duration}ms ease`;
+  target.element.style.setProperty(
+    "transition",
+    target.initialTransition ? `${target.initialTransition}, ${transition}` : transition,
+  );
+}
+
 function restorePostHeaderArticleAvoidanceTargetMargin(target: PostHeaderArticleAvoidanceTarget): void {
   // 桌面端/平板端顶部菜单不再覆盖目标元素时，撤销写到 #article-header > h1 或 #article-header > .meta 的 margin-inline-end。
+  // 往右恢复标题/元信息可用宽度时使用更长过渡，减少鼠标掠过 #header-post 操作按钮时的抖动。
+  const currentAvoidanceMargin = getCurrentPostHeaderArticleAvoidanceMargin(target.element);
+  if (currentAvoidanceMargin > 0) {
+    setPostHeaderArticleAvoidanceTargetTransition(target, "restore");
+  }
   delete target.element.dataset.postHeaderAvoidanceMarginInlineEnd;
 
   if (target.initialMarginInlineEnd) {
@@ -525,7 +557,7 @@ function updatePostHeaderArticleAvoidanceTarget(
   }
 
   const currentAvoidanceMargin = getCurrentPostHeaderArticleAvoidanceMargin(target.element);
-  const targetNaturalRight = targetRect.right + currentAvoidanceMargin;
+  const targetNaturalRight = targetRect.right + getRenderedPostHeaderArticleAvoidanceMargin(target);
   const overlappingCandidateRects = getPostHeaderArticleAvoidanceCandidates(elements)
     .filter((element) => isVisible(element))
     .map((element) => getViewportClippedRect(element))
@@ -547,6 +579,14 @@ function updatePostHeaderArticleAvoidanceTarget(
   // #article-header > h1/.meta 只避让“目标元素自然右边界”和顶部菜单可见左边界之间的重叠宽度。
   // 不使用 window.innerWidth - visibleLeft，避免把顶部菜单右侧到视口边缘的空白也算进避让距离。
   const requiredMargin = Math.max(0, Math.ceil(targetNaturalRight - visibleLeft + POST_HEADER_ARTICLE_AVOIDANCE_GAP));
+  // #article-header > h1/.meta 需要向左缩小时使用更短过渡，减少顶部菜单覆盖窗口。
+  // #article-header > h1/.meta 往右恢复可用宽度时使用更长过渡，缓冲 #header-post hover 文案造成的尺寸变化。
+  if (requiredMargin !== currentAvoidanceMargin) {
+    setPostHeaderArticleAvoidanceTargetTransition(
+      target,
+      requiredMargin > currentAvoidanceMargin ? "shrink" : "restore",
+    );
+  }
 
   target.element.dataset.postHeaderAvoidanceMarginInlineEnd = String(requiredMargin);
   target.element.style.setProperty(
@@ -739,35 +779,45 @@ function getTopDistance(): number {
   return window.scrollY || 0;
 }
 
-/**
- * Event delegation for toggle functionality on hover Handle mouseover and mouseout events for elements with
- * data-toggle-target attribute
- */
-document.addEventListener("mouseover", (e: Event): void => {
-  const target = e.target as HTMLElement;
-  const toggleElement = target.closest<HTMLElement>("[data-toggle-target]");
+function bindPostHeaderActionHoverText(elements: PostHeaderNavElements): void {
+  // 桌面端/平板端顶部 #actions 按钮 hover 文案：按钮提供 data-text，#actions > .info 是唯一显示槽。
+  const infoElement = elements.actions.querySelector<HTMLElement>(".info");
 
-  if (toggleElement) {
-    const toggleTarget = toggleElement.dataset.toggleTarget;
-    if (toggleTarget) {
-      toggle(toggleTarget);
-      schedulePostHeaderArticleAvoidanceAfterDomChange();
-    }
+  if (!infoElement) {
+    return;
   }
-});
 
-document.addEventListener("mouseout", (e: Event): void => {
-  const target = e.target as HTMLElement;
-  const toggleElement = target.closest<HTMLElement>("[data-toggle-target]");
+  const getActionElement = (event: MouseEvent): HTMLElement | null => {
+    const target = event.target instanceof Element ? event.target : null;
+    const actionElement = target?.closest<HTMLElement>("[data-text]");
 
-  if (toggleElement) {
-    const toggleTarget = toggleElement.dataset.toggleTarget;
-    if (toggleTarget) {
-      toggle(toggleTarget);
-      schedulePostHeaderArticleAvoidanceAfterDomChange();
+    return actionElement && elements.actions.contains(actionElement) ? actionElement : null;
+  };
+
+  elements.actions.addEventListener("mouseover", (event) => {
+    const actionElement = getActionElement(event);
+
+    if (!actionElement || (event.relatedTarget instanceof Node && actionElement.contains(event.relatedTarget))) {
+      return;
     }
-  }
-});
+
+    const text = actionElement.dataset.text;
+
+    if (!text) {
+      return;
+    }
+
+    infoElement.textContent = text;
+    fadeIn(infoElement, POST_HEADER_NAV_ANIMATION_DURATION);
+    schedulePostHeaderArticleAvoidanceAfterDomChange();
+  });
+
+  // 鼠标在 #actions 内多个按钮之间移动时只替换文案；离开整个 #actions 后才隐藏单槽文案。
+  elements.actions.addEventListener("mouseleave", () => {
+    fadeOut(infoElement, POST_HEADER_NAV_ANIMATION_DURATION);
+    schedulePostHeaderArticleAvoidanceAfterDomChange();
+  });
+}
 
 document.addEventListener("DOMContentLoaded", (): void => {
   /** 控制博客文章页面中菜单的不同版本 适用于桌面端、平板端和移动端 */
@@ -782,6 +832,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
         schedulePostHeaderArticleAvoidance(postHeaderNavElements, ANIMATION_DURATION);
       };
       observePostHeaderArticleAvoidanceChanges(postHeaderNavElements);
+      bindPostHeaderActionHoverText(postHeaderNavElements);
       renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, { animate: false });
 
       // 平板端、桌面端顶部菜单按钮 #menu-icon：点击后只切换 #nav/#actions/#toc 的展开状态。

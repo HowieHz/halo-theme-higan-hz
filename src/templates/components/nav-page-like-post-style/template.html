@@ -66,7 +66,7 @@
               class="icon"
               th:aria-label="#{fragment.post-nav.actions.home-icon.aria-label}"
               role="button"
-              data-toggle-target="#i-home"
+              th:data-text="#{fragment.post-nav.backToHome}"
             >
               <span class="iconify-large tw:iconify tw:mdi--home-circle"></span>
             </a>
@@ -79,7 +79,7 @@
               data-scroll-to-top
               th:aria-label="#{fragment.post-nav.actions.to-top-icon.aria-label}"
               role="button"
-              data-toggle-target="#i-top"
+              th:data-text="#{fragment.post-nav.toTop}"
             >
               <span class="iconify-large tw:iconify tw:material-symbols--keyboard-arrow-up"></span>
             </a>
@@ -95,7 +95,7 @@
               th:aria-label="#{fragment.post-nav.toc-icon.aria-label}"
               id="action-toc-tablet-menu"
               role="button"
-              data-toggle-target="#i-toc"
+              th:data-text="#{fragment.post-nav.toc}"
             >
               <span class="iconify-large tw:iconify tw:ic--baseline-toc"></span>
             </a>
@@ -110,34 +110,14 @@
               role="button"
               aria-expanded="false"
               aria-controls="share-list"
-              data-toggle-target="#i-share"
+              th:data-text="#{fragment.post-nav.sharePost}"
             >
               <span class="iconify-middle tw:iconify tw:mdi--share-variant-outline"></span>
             </a>
           </li>
         </ul>
 
-        <span
-          id="i-top"
-          class="info tw:hidden"
-          th:text="#{fragment.post-nav.toTop}"
-        ></span>
-        <span
-          id="i-toc"
-          class="info tw:hidden"
-          th:text="#{fragment.post-nav.toc}"
-        ></span>
-        <span
-          th:if="${theme.config?.post_styles?.is_show_post_nav_share_button}"
-          id="i-share"
-          class="info tw:hidden"
-          th:text="#{fragment.post-nav.sharePost}"
-        ></span>
-        <span
-          id="i-home"
-          class="info tw:hidden"
-          th:text="#{fragment.post-nav.backToHome}"
-        ></span>
+        <span class="info tw:hidden"></span>
       </span>
       <br />
       <div
