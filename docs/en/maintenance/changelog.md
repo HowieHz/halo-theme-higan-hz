@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.66.11] - 2026-05-26
+
 ### 🐛 Bug Fixes
 
 - Fixed extra vertical spacing when category, tag, and other metadata items wrap on post pages and the home rich post list.
@@ -2049,7 +2051,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.10...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.11...HEAD
+[1.66.11]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.10...v1.66.11
 [1.66.10]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.9...v1.66.10
 [1.66.9]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.8...v1.66.9
 [1.66.8]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.7...v1.66.8
