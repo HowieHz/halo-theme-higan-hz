@@ -55,8 +55,6 @@ type PostHeaderNavElements = {
   nav: HTMLElement;
   // 顶部操作按钮容器 #header-post #actions。
   actions: HTMLElement;
-  // 顶部桌面端目录容器 #header-post #toc-desktop。
-  toc: HTMLElement;
   // 顶部桌面端目录外层容器。菜单状态机只显隐外层，避免覆盖 #toc-desktop 的 lg 断点类。
   tocPanel: HTMLElement;
   // 顶部分享列表 #header-post #share-list；配置关闭分享按钮时不存在。
@@ -244,14 +242,13 @@ function getPostHeaderNavElements(): PostHeaderNavElements | null {
   const menuIcon = document.querySelector<HTMLElement>("#header-post #menu-icon");
   const nav = document.querySelector<HTMLElement>("#header-post #nav");
   const actions = document.querySelector<HTMLElement>("#header-post #actions");
-  const toc = document.querySelector<HTMLElement>("#header-post #toc-desktop");
   const tocPanel = document.querySelector<HTMLElement>("#header-post #toc-desktop-panel");
   const shareList = document.querySelector<HTMLElement>("#header-post #share-list");
   const topIconTablet = document.querySelector<HTMLElement>("#header-post #top-icon-tablet");
   const tocIconTablet = document.querySelector<HTMLElement>("#header-post #toc-icon-tablet");
   const shareButton = document.querySelector<HTMLElement>("#header-post #actions #action-share");
 
-  if (!headerPost || !menuIcon || !nav || !actions || !toc || !tocPanel || !topIconTablet || !tocIconTablet) {
+  if (!headerPost || !menuIcon || !nav || !actions || !tocPanel || !topIconTablet || !tocIconTablet) {
     return null;
   }
 
@@ -268,7 +265,6 @@ function getPostHeaderNavElements(): PostHeaderNavElements | null {
     menuIcon,
     nav,
     actions,
-    toc,
     tocPanel,
     shareList,
     topIconTablet,
