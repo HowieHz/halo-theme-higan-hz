@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🚀 Features
+
+- Added a Home entry to the mobile footer navigation on post and single pages.
+
 ### 🔧 Code Refactoring
 
 - Optimized the tablet TOC overlay scroll area on post and single pages so the overlay title, close button, and divider stay fixed while only the TOC content scrolls.
