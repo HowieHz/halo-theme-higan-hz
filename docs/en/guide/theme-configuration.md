@@ -5610,7 +5610,78 @@ Boolean
 
 When enabled, you can configure
 
-- Share buttons in mobile bottom navigation bar
+- [Home button in mobile bottom navigation bar](#footer-home-button)
+- [Share buttons in mobile bottom navigation bar](#footer-share-button)
+
+:::
+
+### Home Button in Mobile Bottom Navigation Bar {#footer-home-button}
+
+::: info 🎯 Purpose
+
+Controls whether to display the Home button in the mobile footer navigation on post and single pages.
+
+:::
+::: info 📂 Configuration Item Location
+
+([Post Page Style -> Mobile Bottom Navigation Bar](#mobile-bottom-navigation-bar) must be enabled)
+
+Post Page Style -> Home Button in the Mobile Footer Navigation
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Home%20button%20in%20the%20mobile%20footer%20navigation" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.post_styles?.is_show_home_footer`
+
+:::
+
+### Share Buttons in Mobile Bottom Navigation Bar {#footer-share-button}
+
+::: info 🎯 Purpose
+
+Controls whether to display the share button in the mobile footer navigation on post and single pages.
+
+:::
+::: info 📂 Configuration Item Location
+
+([Post Page Style -> Mobile Bottom Navigation Bar](#mobile-bottom-navigation-bar) must be enabled)
+
+Post Page Style -> Share Buttons in the Mobile Footer Navigation
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Share%20buttons%20in%20the%20mobile%20footer%20navigation" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.post_styles?.is_show_share_footer`
 
 :::
 

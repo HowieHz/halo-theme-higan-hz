@@ -1513,6 +1513,11 @@ spec:
           label: Mobile footer navigation
           value: true
         - $formkit: switch
+          name: is_show_home_footer
+          if: "$is_show_footer_nav === true"
+          label: Home button in the mobile footer navigation
+          value: true
+        - $formkit: switch
           name: is_show_share_footer
           if: "$is_show_footer_nav === true"
           label: Share buttons in the mobile footer navigation

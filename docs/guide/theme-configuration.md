@@ -5605,7 +5605,78 @@ HTML 代码也是可以的：
 
 启用后可以配置
 
-- 移动端底部导航栏中的分享按钮
+- [移动端底部导航栏中的首页按钮](#footer-home-button)
+- [移动端底部导航栏中的分享按钮](#footer-share-button)
+
+:::
+
+### 移动端底部导航栏中的首页按钮 {#footer-home-button}
+
+::: info 🎯 用途
+
+控制是否在移动端文章页和独立页面底部导航栏中显示首页按钮。
+
+:::
+::: info 📂 配置项位置
+
+（[文章页样式 -> 移动端底部导航栏](#移动端底部导航栏)启用时显示）
+
+文章页样式 -> 移动端底部导航栏中的首页按钮
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=移动端底部导航栏中的首页按钮" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_show_home_footer`
+
+:::
+
+### 移动端底部导航栏中的分享按钮 {#footer-share-button}
+
+::: info 🎯 用途
+
+控制是否在移动端文章页和独立页面底部导航栏中显示分享按钮。
+
+:::
+::: info 📂 配置项位置
+
+（[文章页样式 -> 移动端底部导航栏](#移动端底部导航栏)启用时显示）
+
+文章页样式 -> 移动端底部导航栏中的分享按钮
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=移动端底部导航栏中的分享按钮" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_show_share_footer`
 
 :::
 

@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🚀 Features
 
 - Added a Home entry to the mobile footer navigation on post and single pages.
+- Added an option to control the mobile footer navigation Home button on post and single pages.
 
 ### 🔧 Code Refactoring
 

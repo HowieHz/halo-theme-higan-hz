@@ -1513,6 +1513,11 @@ spec:
           label: 移动端底部导航栏
           value: true
         - $formkit: switch
+          name: is_show_home_footer
+          if: "$is_show_footer_nav === true"
+          label: 移动端底部导航栏中的首页按钮
+          value: true
+        - $formkit: switch
           name: is_show_share_footer
           if: "$is_show_footer_nav === true"
           label: 移动端底部导航栏中的分享按钮
