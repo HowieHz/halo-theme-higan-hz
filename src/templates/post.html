@@ -479,13 +479,11 @@
       th:insert="~{components/footer-nav-post/template :: body}"
     ></th:block>
     <script type="module">
-      import { initTOC } from "@runtime/scripts/toc.ts";
+      import { initTOCs } from "@runtime/scripts/toc.ts";
       import { initHeadingAnchors } from "@runtime/scripts/heading-anchor.ts";
 
       document.addEventListener("DOMContentLoaded", function () {
-        ["#toc-desktop", "#toc-tablet", "#toc-footer"].forEach((tocSelector) => {
-          initTOC("article > .content", tocSelector);
-        });
+        initTOCs("article > .content", ["#toc-desktop", "#toc-tablet", "#toc-footer"]);
         initHeadingAnchors("article > .content");
       });
     </script>
