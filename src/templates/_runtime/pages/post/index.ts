@@ -16,7 +16,7 @@ const POST_HEADER_ARTICLE_AVOIDANCE_GAP = 16;
 const POST_HEADER_ARTICLE_AVOIDANCE_SHRINK_DURATION = 50;
 const POST_HEADER_ARTICLE_AVOIDANCE_RESTORE_DURATION = 200;
 // 页面滚动滞回阈值：低于 LOW 进入靠近顶部状态，高于 HIGH 进入已滚动状态。
-// 顶部 #header-post 平板 quickActions 和移动端底部 #actions-footer > #top 共用这组阈值，但各自维护自己的导航状态。
+// 顶部 #header-post 平板 quickActions 和移动端底部 #actions-footer > #footer-top 共用这组阈值，但各自维护自己的导航状态。
 const SCROLL_HYSTERESIS_LOW = 50; // px
 const SCROLL_HYSTERESIS_HIGH = 100; // px
 
@@ -83,9 +83,9 @@ type PostHeaderNavEvent =
   | { type: "tabletScroll"; tabletMode: TabletMode; viewportMode: ViewportMode };
 
 type FooterPostNavEnvironment = {
-  // 当前页面滚动位置，用于判断 #actions-footer > #top 显隐。
+  // 当前页面滚动位置，用于判断 #actions-footer > #footer-top 显隐。
   scrollY: number;
-  // 移动端底部回到顶部按钮 #actions-footer > #top 当前是否显示；scrollY 处于 LOW~HIGH 滞回区间时保持这个值。
+  // 移动端底部回到顶部按钮 #actions-footer > #footer-top 当前是否显示；scrollY 处于 LOW~HIGH 滞回区间时保持这个值。
   isTopActionVisible: boolean;
 };
 
@@ -101,7 +101,7 @@ type FooterPostNavIntent = {
 };
 
 // 移动端底部 #footer-post 导航状态。
-// 状态描述 #nav-footer/#toc-footer/#share-footer 是否展开、#footer-post 是否显示、#actions-footer > #top 是否显示的输入条件。
+// 状态描述 #nav-footer/#toc-footer/#share-footer 是否展开、#footer-post 是否显示、#actions-footer > #footer-top 是否显示的输入条件。
 // 状态不描述具体 DOM display。
 type FooterPostNavState = {
   environment: FooterPostNavEnvironment;
@@ -120,13 +120,13 @@ type RenderFooterPostNavOptions = {
 type FooterPostNavElements = {
   // 移动端底部导航栏容器 #footer-post。
   footerNav: HTMLElement;
-  // 移动端底部菜单按钮 #actions-footer > #menu。
+  // 移动端底部菜单按钮 #actions-footer > #footer-menu。
   footerMenuButton: HTMLElement | null;
-  // 移动端底部目录按钮 #actions-footer > #toc。
+  // 移动端底部目录按钮 #actions-footer > #footer-toc。
   footerTocButton: HTMLElement | null;
-  // 移动端底部分享按钮 #actions-footer > #share；配置关闭分享按钮时不存在。
+  // 移动端底部分享按钮 #actions-footer > #footer-share；配置关闭分享按钮时不存在。
   footerShareButton: HTMLElement | null;
-  // 移动端底部回到顶部按钮 #actions-footer > #top。
+  // 移动端底部回到顶部按钮 #actions-footer > #footer-top。
   footerTopIcon: HTMLElement | null;
   // 移动端底部菜单容器 #nav-footer。
   navFooter: HTMLElement | null;
@@ -210,7 +210,7 @@ function createPostHeaderNavState(): PostHeaderNavState {
 function createFooterPostNavState(): FooterPostNavState {
   const scrollY = getTopDistance();
 
-  // 初始化移动端底部 #footer-post：#footer-post 显示，#nav-footer/#toc-footer/#share-footer 收起，#actions-footer > #top 按当前滚动位置显隐。
+  // 初始化移动端底部 #footer-post：#footer-post 显示，#nav-footer/#toc-footer/#share-footer 收起，#actions-footer > #footer-top 按当前滚动位置显隐。
   // scrollY 使用页面当前位置，避免浏览器恢复滚动位置后第一次滚动方向误判。
   return {
     environment: {
@@ -283,10 +283,10 @@ function getFooterPostNavElements(): FooterPostNavElements | null {
 
   return {
     footerNav,
-    footerMenuButton: document.querySelector<HTMLElement>("#actions-footer > #menu"),
-    footerTocButton: document.querySelector<HTMLElement>("#actions-footer > #toc"),
-    footerShareButton: document.querySelector<HTMLElement>("#actions-footer > #share"),
-    footerTopIcon: document.querySelector<HTMLElement>("#actions-footer > #top"),
+    footerMenuButton: document.querySelector<HTMLElement>("#actions-footer > #footer-menu"),
+    footerTocButton: document.querySelector<HTMLElement>("#actions-footer > #footer-toc"),
+    footerShareButton: document.querySelector<HTMLElement>("#actions-footer > #footer-share"),
+    footerTopIcon: document.querySelector<HTMLElement>("#actions-footer > #footer-top"),
     navFooter: document.querySelector<HTMLElement>("#nav-footer"),
     tocFooter: document.querySelector<HTMLElement>("#toc-footer"),
     shareFooter: document.querySelector<HTMLElement>("#share-footer"),
@@ -382,7 +382,7 @@ function reduceFooterPostNavState(state: FooterPostNavState, event: FooterPostNa
       return {
         environment: {
           scrollY: event.scrollY,
-          // 移动端底部回到顶部按钮 #actions-footer > #top：scrollY < LOW 隐藏，scrollY > HIGH 显示，LOW~HIGH 保持当前状态。
+          // 移动端底部回到顶部按钮 #actions-footer > #footer-top：scrollY < LOW 隐藏，scrollY > HIGH 显示，LOW~HIGH 保持当前状态。
           isTopActionVisible: shouldShowFooterTopAction(event.scrollY, state.environment.isTopActionVisible),
         },
         intent: {
@@ -793,7 +793,8 @@ function renderPostHeaderNav(
 /**
  * 移动端底部文章导航唯一显隐出口。
  *
- * 只有这里能控制 #footer-post、#actions-footer > #menu/#toc/#share/#top、#nav-footer、#toc-footer、#share-footer。
+ * 只有这里能控制 #footer-post、#actions-footer >
+ * #footer-menu/#footer-toc/#footer-share/#footer-top、#nav-footer、#toc-footer、#share-footer。
  */
 function renderFooterPostNav(
   state: FooterPostNavState,
@@ -1103,13 +1104,13 @@ document.addEventListener("DOMContentLoaded", (): void => {
     if (footerPostNavElements) {
       renderFooterPostNav(footerPostNavState, footerPostNavElements, { animate: false });
 
-      // 移动端底部导航栏按钮 #actions-footer > #menu：点击后只切换 #nav-footer 的展开状态。
+      // 移动端底部导航栏按钮 #actions-footer > #footer-menu：点击后只切换 #nav-footer 的展开状态。
       footerPostNavElements.footerMenuButton?.addEventListener("click", (): void => {
         footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "toggleMenu" });
         renderFooterPostNav(footerPostNavState, footerPostNavElements);
       });
 
-      // 移动端底部导航栏按钮 #actions-footer > #toc：点击后只切换 #toc-footer 的展开状态。
+      // 移动端底部导航栏按钮 #actions-footer > #footer-toc：点击后只切换 #toc-footer 的展开状态。
       footerPostNavElements.footerTocButton?.addEventListener("click", (): void => {
         const isOpeningToc = !footerPostNavState.intent.isTocOpen;
 
@@ -1117,7 +1118,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
         renderFooterPostNav(footerPostNavState, footerPostNavElements, { scrollActiveTocIntoView: isOpeningToc });
       });
 
-      // 移动端底部导航栏按钮 #actions-footer > #share：点击后只切换 #share-footer 的展开状态。
+      // 移动端底部导航栏按钮 #actions-footer > #footer-share：点击后只切换 #share-footer 的展开状态。
       footerPostNavElements.footerShareButton?.addEventListener("click", (): void => {
         footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "toggleShare" });
         renderFooterPostNav(footerPostNavState, footerPostNavElements);
