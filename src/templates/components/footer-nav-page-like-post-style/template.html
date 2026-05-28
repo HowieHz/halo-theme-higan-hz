@@ -32,6 +32,7 @@
           class="icon"
           th:href="@{/}"
           th:aria-label="#{common.backToHome}"
+          th:if="${theme.config?.post_styles?.is_show_home_footer}"
         >
           <span class="tw:iconify tw:mdi--home-circle"></span>
           <span th:text="#{common.home}"></span>
