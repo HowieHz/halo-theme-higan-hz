@@ -607,7 +607,7 @@ function getPostHeaderArticleAvoidanceCandidates(elements: PostHeaderNavElements
     elements.nav,
     elements.actions,
     elements.shareList,
-    elements.toc,
+    elements.tocPanel,
     ...infoItems,
   ];
 
@@ -708,7 +708,7 @@ function schedulePostHeaderArticleAvoidance(elements: PostHeaderNavElements, del
 }
 
 function observePostHeaderArticleAvoidanceChanges(elements: PostHeaderNavElements): void {
-  // 桌面端目录 #toc-desktop 在 DOMContentLoaded 后生成，hover 文案和分享列表也会改变 #header-post 的实际尺寸。
+  // 桌面端目录 #toc-desktop-panel 在 DOMContentLoaded 后生成内容，hover 文案和分享列表也会改变 #header-post 的实际尺寸。
   // ResizeObserver 捕获这些非点击路径的尺寸变化，再触发 #article-header > h1/.meta 避让重算。
   if (!("ResizeObserver" in window)) {
     return;
@@ -723,7 +723,7 @@ function observePostHeaderArticleAvoidanceChanges(elements: PostHeaderNavElement
     elements.nav,
     elements.actions,
     elements.shareList,
-    elements.toc,
+    elements.tocPanel,
     ...elements.articleAvoidanceTargets.map((target) => target.element),
   ];
 
