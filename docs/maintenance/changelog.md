@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.67.0] - 2026-05-28
+
 ### 🚀 新功能
 
 - 为文章页和独立页面移动端底部导航新增返回首页入口。
@@ -1984,7 +1986,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.11...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.67.0...HEAD
+[1.67.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.11...v1.67.0
 [1.66.11]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.10...v1.66.11
 [1.66.10]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.9...v1.66.10
 [1.66.9]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.8...v1.66.9
