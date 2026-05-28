@@ -31,7 +31,7 @@ type PostHeaderNavEnvironment = {
 };
 
 type PostHeaderNavIntent = {
-  // 用户是否希望展开顶部 #header-post 的 #nav/#actions/#toc-desktop。
+  // 用户是否希望展开顶部 #header-post 的 #nav/#actions/#toc-desktop-panel。
   isMenuContentOpen: boolean;
   // 用户是否希望展开顶部 #header-post 的 #share-list。
   isShareOpen: boolean;
@@ -57,6 +57,8 @@ type PostHeaderNavElements = {
   actions: HTMLElement;
   // 顶部桌面端目录容器 #header-post #toc-desktop。
   toc: HTMLElement;
+  // 顶部桌面端目录外层容器。菜单状态机只显隐外层，避免覆盖 #toc-desktop 的 lg 断点类。
+  tocPanel: HTMLElement;
   // 顶部分享列表 #header-post #share-list；配置关闭分享按钮时不存在。
   shareList: HTMLElement | null;
   // 平板端滚动后的回到顶部快捷按钮 #header-post #top-icon-tablet。
@@ -65,7 +67,7 @@ type PostHeaderNavElements = {
   tocIconTablet: HTMLElement;
   // 顶部分享按钮 #header-post #actions #action-share；配置关闭分享按钮时不存在。
   shareButton: HTMLElement | null;
-  // 顶部菜单内容集合：#nav/#actions/#toc-desktop。
+  // 顶部菜单内容集合：#nav/#actions/#toc-desktop-panel。
   menuContent: HTMLElement[];
 };
 
@@ -194,7 +196,7 @@ function getTabletMode(currentMode: TabletMode): TabletMode {
 function createPostHeaderNavState(): PostHeaderNavState {
   const viewportMode = getViewportMode();
 
-  // 初始化顶部 #header-post：桌面端展开 #nav/#actions/#toc-desktop，平板端和移动端折叠 #nav/#actions/#toc-desktop，#share-list 始终关闭。
+  // 初始化顶部 #header-post：桌面端展开 #nav/#actions/#toc-desktop-panel，平板端和移动端折叠 #nav/#actions/#toc-desktop-panel，#share-list 始终关闭。
   return {
     environment: {
       viewportMode,
@@ -243,12 +245,13 @@ function getPostHeaderNavElements(): PostHeaderNavElements | null {
   const nav = document.querySelector<HTMLElement>("#header-post #nav");
   const actions = document.querySelector<HTMLElement>("#header-post #actions");
   const toc = document.querySelector<HTMLElement>("#header-post #toc-desktop");
+  const tocPanel = document.querySelector<HTMLElement>("#header-post #toc-desktop-panel");
   const shareList = document.querySelector<HTMLElement>("#header-post #share-list");
   const topIconTablet = document.querySelector<HTMLElement>("#header-post #top-icon-tablet");
   const tocIconTablet = document.querySelector<HTMLElement>("#header-post #toc-icon-tablet");
   const shareButton = document.querySelector<HTMLElement>("#header-post #actions #action-share");
 
-  if (!headerPost || !menuIcon || !nav || !actions || !toc || !topIconTablet || !tocIconTablet) {
+  if (!headerPost || !menuIcon || !nav || !actions || !toc || !tocPanel || !topIconTablet || !tocIconTablet) {
     return null;
   }
 
@@ -266,11 +269,12 @@ function getPostHeaderNavElements(): PostHeaderNavElements | null {
     nav,
     actions,
     toc,
+    tocPanel,
     shareList,
     topIconTablet,
     tocIconTablet,
     shareButton,
-    menuContent: [nav, actions, toc],
+    menuContent: [nav, actions, tocPanel],
   };
 }
 
@@ -302,7 +306,7 @@ function reducePostHeaderNavState(state: PostHeaderNavState, event: PostHeaderNa
         ...state,
         intent: {
           isMenuContentOpen,
-          // #nav/#actions/#toc-desktop 收起时同步收起 #share-list，避免分享菜单脱离顶部菜单单独显示。
+          // #nav/#actions/#toc-desktop-panel 收起时同步收起 #share-list，避免分享菜单脱离顶部菜单单独显示。
           isShareOpen: isMenuContentOpen ? state.intent.isShareOpen : false,
         },
       };
@@ -319,7 +323,7 @@ function reducePostHeaderNavState(state: PostHeaderNavState, event: PostHeaderNa
       return {
         environment: event.environment,
         intent: {
-          // 桌面端展开 #nav/#actions/#toc-desktop；平板端和移动端收起 #nav/#actions/#toc-desktop 和 #share-list。
+          // 桌面端展开 #nav/#actions/#toc-desktop-panel；平板端和移动端收起 #nav/#actions/#toc-desktop-panel 和 #share-list。
           isMenuContentOpen: event.environment.viewportMode === "desktop",
           isShareOpen: false,
         },
@@ -331,7 +335,7 @@ function reducePostHeaderNavState(state: PostHeaderNavState, event: PostHeaderNa
           tabletMode: event.tabletMode,
         },
         intent: {
-          // 进入 quickActions 时隐藏 #menu-icon，并强制收起 #nav/#actions/#toc-desktop 和 #share-list。
+          // 进入 quickActions 时隐藏 #menu-icon，并强制收起 #nav/#actions/#toc-desktop-panel 和 #share-list。
           isMenuContentOpen: event.tabletMode === "quickActions" ? false : state.intent.isMenuContentOpen,
           isShareOpen: event.tabletMode === "quickActions" ? false : state.intent.isShareOpen,
         },
@@ -665,7 +669,7 @@ function observePostHeaderArticleAvoidanceChanges(elements: PostHeaderNavElement
 /**
  * 顶部文章导航唯一显隐出口。
  *
- * 只有这里能控制 #menu-icon、#nav、#actions、#toc-desktop、#share-list、#top-icon-tablet、#toc-icon-tablet。
+ * 只有这里能控制 #menu-icon、#nav、#actions、#toc-desktop-panel、#share-list、#top-icon-tablet、#toc-icon-tablet。
  */
 function renderPostHeaderNav(
   state: PostHeaderNavState,
@@ -835,7 +839,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
       bindPostHeaderActionHoverText(postHeaderNavElements);
       renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, { animate: false });
 
-      // 平板端、桌面端顶部菜单按钮 #menu-icon：点击后只切换 #nav/#actions/#toc-desktop 的展开状态。
+      // 平板端、桌面端顶部菜单按钮 #menu-icon：点击后只切换 #nav/#actions/#toc-desktop-panel 的展开状态。
       postHeaderNavElements.menuIcon.addEventListener("click", (e: Event): void => {
         e.preventDefault();
 
@@ -844,7 +848,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
       });
 
       // 平板端、桌面端顶部分享按钮 #action-share：点击后只切换 #share-list 的展开状态。
-      // #share-list 是否实际显示仍由 renderPostHeaderNav 结合 #nav/#actions/#toc-desktop 的展开状态决定。
+      // #share-list 是否实际显示仍由 renderPostHeaderNav 结合 #nav/#actions/#toc-desktop-panel 的展开状态决定。
       postHeaderNavElements.shareButton?.addEventListener("click", (): void => {
         postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, { type: "toggleShare" });
         renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, {
