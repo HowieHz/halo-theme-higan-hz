@@ -10,7 +10,10 @@
 </head>
 <body th:remove="tag">
   <header id="header-component">
-    <a th:href="@{/}">
+    <a
+      th:href="@{/}"
+      th:title="#{common.backToHome}"
+    >
       <th:block
         th:with="styles = ${theme.config?.styles},
                  fallbackLogoAvif = '/themes/howiehz-higan/assets/images/logo.avif',

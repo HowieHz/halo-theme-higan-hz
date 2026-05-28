@@ -1,24 +1,19 @@
 /**
- * Generates a Table of Contents (TOC) from the headings within a specified HTML content element and injects the
- * generated TOC into a target DOM element.
+ * Generates Tables of Contents (TOCs) from the headings within a specified HTML content element and injects the
+ * generated TOCs into target DOM elements.
  *
  * @param contentSelector - CSS selector for the element containing the content from which headings will be retrieved to
  *   construct the TOC.
- * @param tocSelector - CSS selector for the DOM element where the generated TOC should be displayed.
+ * @param tocSelectors - CSS selectors for the DOM elements where the generated TOCs should be displayed.
  * @param headingSelector - A string of heading selectors (e.g., "h1, h2, h3") to select within the contentSelector
  *   element for inclusion in the TOC.
  */
-export function initTOC(contentSelector: string, tocSelector: string, headingSelector = "h1, h2, h3, h4"): void {
+export function initTOCs(contentSelector: string, tocSelectors: string[], headingSelector = "h1, h2, h3, h4"): void {
   const logPrefix = "[Higan Haozi][toc]";
   const contentRootDom = document.querySelector<HTMLElement>(contentSelector);
-  const tocRootDom = document.querySelector<HTMLElement>(tocSelector);
 
   if (!contentRootDom) {
     console.warn(`${logPrefix} Element not found for selector: ${contentSelector}`);
-    return;
-  }
-  if (!tocRootDom) {
-    console.warn(`${logPrefix} Element not found for TOC selector: ${tocSelector}`);
     return;
   }
 
@@ -69,11 +64,6 @@ export function initTOC(contentSelector: string, tocSelector: string, headingSel
   const minLevel = Math.min(...headingLevels);
   const maxLevel = Math.max(...headingLevels);
 
-  // Create the outermost ol#toc-container.toc
-  const tocContainer = document.createElement("ol");
-  tocContainer.id = "toc-container";
-  tocContainer.className = "toc";
-
   // Build TOC tree structure
   interface TOCRoot {
     level: number;
@@ -110,131 +100,151 @@ export function initTOC(contentSelector: string, tocSelector: string, headingSel
     lastNode = node;
   });
 
-  // Render TOC tree as DOM
-  const counters: Record<number, number> = {};
-
   interface StackItem {
     node: TOCNode;
     parentOl: HTMLOListElement;
   }
-  const stack: StackItem[] = [];
-  // Initialize stack with root nodes in reverse order to preserve sequence
-  for (let i = tocTreeRoot.children.length - 1; i >= 0; i--) {
-    stack.push({ node: tocTreeRoot.children[i], parentOl: tocContainer });
-  }
 
-  while (stack.length) {
-    const item = stack.pop() as StackItem;
-    const { node, parentOl } = item;
-    const level = node.level;
-    // Update numbering and reset deeper levels
-    counters[level] = (counters[level] || 0) + 1;
-    for (let lv = level + 1; lv <= maxLevel; lv++) {
-      counters[lv] = 0;
-    }
-    // Build numbering string
-    const numArr: number[] = [];
-    for (let lv = minLevel; lv <= level; lv++) {
-      numArr.push(counters[lv] || 0);
-    }
-    const numStr = numArr.join(".");
+  function createTOCContainer(): HTMLOListElement {
+    // Create the outermost TOC list
+    const tocContainer = document.createElement("ol");
+    tocContainer.className = "toc-container";
 
-    // Create li and a
-    const li = document.createElement("li");
-    li.className = `toc-item toc-level-${level}`;
-
-    const a = document.createElement("a");
-    a.href = `#${node.heading.id}`;
-    a.className = `toc-link toc-link-h${level}`;
-
-    // Numbering span
-    const spanNum = document.createElement("span");
-    spanNum.className = "toc-number";
-    spanNum.textContent = numStr + ".";
-
-    // Text span
-    const spanText = document.createElement("span");
-    spanText.className = "toc-text";
-    spanText.textContent = (node.heading.textContent ?? "").trim();
-
-    a.append(spanNum, spanText);
-    li.appendChild(a);
-
-    // If there are children, create an OL and push them onto the stack
-    if (node.children.length > 0) {
-      const childOl = document.createElement("ol");
-      childOl.className = `toc-child toc-child-${level}`;
-      li.appendChild(childOl);
-      for (let i = node.children.length - 1; i >= 0; i--) {
-        stack.push({ node: node.children[i], parentOl: childOl });
-      }
+    // Render TOC tree as DOM
+    const counters: Record<number, number> = {};
+    const stack: StackItem[] = [];
+    // Initialize stack with root nodes in reverse order to preserve sequence
+    for (let i = tocTreeRoot.children.length - 1; i >= 0; i--) {
+      stack.push({ node: tocTreeRoot.children[i], parentOl: tocContainer });
     }
 
-    parentOl.appendChild(li);
-  }
-
-  // replace
-  tocRootDom.replaceChildren(tocContainer);
-
-  // Cache original headings
-  const reversedOriginalHeadings = Array.from(contentRootDom.querySelectorAll<HTMLElement>(headingSelector)).reverse();
-
-  // Cache corresponding TOC links
-  const tocLinks = reversedOriginalHeadings.map((h) =>
-    tocRootDom.querySelector<HTMLElement>(`.toc-link[href="#${h.id}"]`),
-  ) as HTMLElement[];
-
-  const tocActiveClassName = "toc-active";
-
-  let lastActiveLink: HTMLElement | null = null; // Cache the previously active TOC item
-
-  // toc collapse control
-  function handleTOCScrollHighlight() {
-    let highlighted = false;
-    let activeLink: HTMLElement | null = null;
-
-    for (const [index, heading] of reversedOriginalHeadings.entries()) {
-      if (pageYOffset >= heading.offsetTop - 50) {
-        activeLink = tocLinks[index];
-        highlighted = true;
+    while (true) {
+      const item = stack.pop();
+      if (!item) {
         break;
       }
+      const { node, parentOl } = item;
+      const level = node.level;
+      // Update numbering and reset deeper levels
+      counters[level] = (counters[level] || 0) + 1;
+      for (let lv = level + 1; lv <= maxLevel; lv++) {
+        counters[lv] = 0;
+      }
+      // Build numbering string
+      const numArr: number[] = [];
+      for (let lv = minLevel; lv <= level; lv++) {
+        numArr.push(counters[lv] || 0);
+      }
+      const numStr = numArr.join(".");
+
+      // Create li and a
+      const li = document.createElement("li");
+      li.className = `toc-item toc-level-${level}`;
+
+      const a = document.createElement("a");
+      a.href = `#${node.heading.id}`;
+      a.className = `toc-link toc-link-h${level}`;
+
+      // Numbering span
+      const spanNum = document.createElement("span");
+      spanNum.className = "toc-number";
+      spanNum.textContent = numStr + ".";
+
+      // Text span
+      const spanText = document.createElement("span");
+      spanText.className = "toc-text";
+      spanText.textContent = (node.heading.textContent ?? "").trim();
+
+      a.append(spanNum, spanText);
+      li.appendChild(a);
+
+      // If there are children, create an OL and push them onto the stack
+      if (node.children.length > 0) {
+        const childOl = document.createElement("ol");
+        childOl.className = `toc-child toc-child-${level}`;
+        li.appendChild(childOl);
+        for (let i = node.children.length - 1; i >= 0; i--) {
+          stack.push({ node: node.children[i], parentOl: childOl });
+        }
+      }
+
+      parentOl.appendChild(li);
     }
 
-    // If no heading is highlighted (i.e., the page is at the very top),
-    // highlight the last TOC item (since the traversal order is reversed)
-    if (!highlighted) {
-      activeLink = tocLinks[tocLinks.length - 1];
-    }
-
-    // If the active item has not changed, do nothing
-    if (activeLink === lastActiveLink) {
-      return;
-    }
-
-    // Remove the old one first, then add the new one to avoid the menu collapsing and expanding again.
-    // If you remove the class before adding it, collapsing the TOC will result in a short menu with only the top-level headings.
-    // When you expand it again, the TOC will jump back to the top.
-    if (activeLink) {
-      activeLink.classList.add(tocActiveClassName);
-    }
-    if (lastActiveLink) {
-      lastActiveLink.classList.remove(tocActiveClassName);
-    }
-
-    lastActiveLink = activeLink;
-
-    // Auto-scroll TOC container to keep active item visible (desktop only)
-    if (activeLink && tocRootDom && tocRootDom.id === "toc") {
-      activeLink.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "center",
-      });
-    }
+    return tocContainer;
   }
 
-  handleTOCScrollHighlight();
-  window.addEventListener("scroll", handleTOCScrollHighlight, { passive: true });
+  // Cache original headings
+  const reversedOriginalHeadings = [...originalHeadings].reverse();
+  const tocActiveClassName = "toc-active";
+
+  tocSelectors.forEach((tocSelector) => {
+    const tocRootDom = document.querySelector<HTMLElement>(tocSelector);
+
+    if (!tocRootDom) {
+      console.warn(`${logPrefix} Element not found for TOC selector: ${tocSelector}`);
+      return;
+    }
+    const tocRoot = tocRootDom;
+
+    // replace
+    tocRoot.replaceChildren(createTOCContainer());
+
+    // Cache corresponding TOC links
+    const tocLinks = reversedOriginalHeadings.map((h) =>
+      tocRoot.querySelector<HTMLElement>(`.toc-link[href="#${h.id}"]`),
+    );
+
+    let lastActiveLink: HTMLElement | null = null; // Cache the previously active TOC item
+
+    // toc collapse control
+    function handleTOCScrollHighlight() {
+      let highlighted = false;
+      let activeLink: HTMLElement | null = null;
+
+      for (const [index, heading] of reversedOriginalHeadings.entries()) {
+        if (pageYOffset >= heading.offsetTop - 50) {
+          activeLink = tocLinks[index];
+          highlighted = true;
+          break;
+        }
+      }
+
+      // If no heading is highlighted (i.e., the page is at the very top),
+      // highlight the last TOC item (since the traversal order is reversed)
+      if (!highlighted) {
+        activeLink = tocLinks[tocLinks.length - 1];
+      }
+
+      // If the active item has not changed, do nothing
+      if (activeLink === lastActiveLink) {
+        return;
+      }
+
+      // Remove the old one first, then add the new one to avoid the menu collapsing and expanding again.
+      // If you remove the class before adding it, collapsing the TOC will result in a short menu with only the top-level headings.
+      // When you expand it again, the TOC will jump back to the top.
+      if (activeLink) {
+        activeLink.classList.add(tocActiveClassName);
+      }
+      if (lastActiveLink) {
+        lastActiveLink.classList.remove(tocActiveClassName);
+      }
+
+      lastActiveLink = activeLink;
+
+      // Auto-scroll TOC container to keep active item visible (desktop and tablet only)
+      if (activeLink && ["toc-desktop", "toc-tablet"].includes(tocRoot.id)) {
+        activeLink.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "center",
+        });
+      }
+    }
+
+    handleTOCScrollHighlight();
+    window.addEventListener("scroll", handleTOCScrollHighlight, { passive: true });
+  });
   return;
 }

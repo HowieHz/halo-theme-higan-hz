@@ -50,7 +50,7 @@
           class="active"
           role="button"
           aria-expanded="true"
-          aria-controls="nav actions toc"
+          aria-controls="nav actions toc-desktop-panel"
         >
           <span class="iconify-middle tw:iconify tw:material-symbols--menu"></span>
         </a>
@@ -129,10 +129,12 @@
                                                  title = ${singlePage.spec.title})}"
         ></th:block>
       </div>
-      <div
-        id="toc"
-        class="tw:hidden tw:lg:block"
-      ></div>
+      <div id="toc-desktop-panel">
+        <div
+          id="toc-desktop"
+          class="tw:hidden tw:lg:block"
+        ></div>
+      </div>
     </span>
   </div>
   <div

@@ -16,7 +16,7 @@ const POST_HEADER_ARTICLE_AVOIDANCE_GAP = 16;
 const POST_HEADER_ARTICLE_AVOIDANCE_SHRINK_DURATION = 50;
 const POST_HEADER_ARTICLE_AVOIDANCE_RESTORE_DURATION = 200;
 // 页面滚动滞回阈值：低于 LOW 进入靠近顶部状态，高于 HIGH 进入已滚动状态。
-// 顶部 #header-post 平板 quickActions 和移动端底部 #actions-footer > #top 共用这组阈值，但各自维护自己的导航状态。
+// 顶部 #header-post 平板 quickActions 和移动端底部 #actions-footer > #footer-top 共用这组阈值，但各自维护自己的导航状态。
 const SCROLL_HYSTERESIS_LOW = 50; // px
 const SCROLL_HYSTERESIS_HIGH = 100; // px
 
@@ -31,7 +31,7 @@ type PostHeaderNavEnvironment = {
 };
 
 type PostHeaderNavIntent = {
-  // 用户是否希望展开顶部 #header-post 的 #nav/#actions/#toc。
+  // 用户是否希望展开顶部 #header-post 的 #nav/#actions/#toc-desktop-panel。
   isMenuContentOpen: boolean;
   // 用户是否希望展开顶部 #header-post 的 #share-list。
   isShareOpen: boolean;
@@ -55,8 +55,8 @@ type PostHeaderNavElements = {
   nav: HTMLElement;
   // 顶部操作按钮容器 #header-post #actions。
   actions: HTMLElement;
-  // 顶部桌面端目录容器 #header-post #toc。
-  toc: HTMLElement;
+  // 顶部桌面端目录外层容器。菜单状态机只显隐外层，避免覆盖 #toc-desktop 的 lg 断点类。
+  tocPanel: HTMLElement;
   // 顶部分享列表 #header-post #share-list；配置关闭分享按钮时不存在。
   shareList: HTMLElement | null;
   // 平板端滚动后的回到顶部快捷按钮 #header-post #top-icon-tablet。
@@ -65,7 +65,7 @@ type PostHeaderNavElements = {
   tocIconTablet: HTMLElement;
   // 顶部分享按钮 #header-post #actions #action-share；配置关闭分享按钮时不存在。
   shareButton: HTMLElement | null;
-  // 顶部菜单内容集合：#nav/#actions/#toc。
+  // 顶部菜单内容集合：#nav/#actions/#toc-desktop-panel。
   menuContent: HTMLElement[];
 };
 
@@ -83,9 +83,9 @@ type PostHeaderNavEvent =
   | { type: "tabletScroll"; tabletMode: TabletMode; viewportMode: ViewportMode };
 
 type FooterPostNavEnvironment = {
-  // 当前页面滚动位置，用于判断 #actions-footer > #top 显隐。
+  // 当前页面滚动位置，用于判断 #actions-footer > #footer-top 显隐。
   scrollY: number;
-  // 移动端底部回到顶部按钮 #actions-footer > #top 当前是否显示；scrollY 处于 LOW~HIGH 滞回区间时保持这个值。
+  // 移动端底部回到顶部按钮 #actions-footer > #footer-top 当前是否显示；scrollY 处于 LOW~HIGH 滞回区间时保持这个值。
   isTopActionVisible: boolean;
 };
 
@@ -101,7 +101,7 @@ type FooterPostNavIntent = {
 };
 
 // 移动端底部 #footer-post 导航状态。
-// 状态描述 #nav-footer/#toc-footer/#share-footer 是否展开、#footer-post 是否显示、#actions-footer > #top 是否显示的输入条件。
+// 状态描述 #nav-footer/#toc-footer/#share-footer 是否展开、#footer-post 是否显示、#actions-footer > #footer-top 是否显示的输入条件。
 // 状态不描述具体 DOM display。
 type FooterPostNavState = {
   environment: FooterPostNavEnvironment;
@@ -120,13 +120,13 @@ type RenderFooterPostNavOptions = {
 type FooterPostNavElements = {
   // 移动端底部导航栏容器 #footer-post。
   footerNav: HTMLElement;
-  // 移动端底部菜单按钮 #actions-footer > #menu。
+  // 移动端底部菜单按钮 #actions-footer > #footer-menu。
   footerMenuButton: HTMLElement | null;
-  // 移动端底部目录按钮 #actions-footer > #toc。
+  // 移动端底部目录按钮 #actions-footer > #footer-toc。
   footerTocButton: HTMLElement | null;
-  // 移动端底部分享按钮 #actions-footer > #share；配置关闭分享按钮时不存在。
+  // 移动端底部分享按钮 #actions-footer > #footer-share；配置关闭分享按钮时不存在。
   footerShareButton: HTMLElement | null;
-  // 移动端底部回到顶部按钮 #actions-footer > #top。
+  // 移动端底部回到顶部按钮 #actions-footer > #footer-top。
   footerTopIcon: HTMLElement | null;
   // 移动端底部菜单容器 #nav-footer。
   navFooter: HTMLElement | null;
@@ -194,7 +194,7 @@ function getTabletMode(currentMode: TabletMode): TabletMode {
 function createPostHeaderNavState(): PostHeaderNavState {
   const viewportMode = getViewportMode();
 
-  // 初始化顶部 #header-post：桌面端展开 #nav/#actions/#toc，平板端和移动端折叠 #nav/#actions/#toc，#share-list 始终关闭。
+  // 初始化顶部 #header-post：桌面端展开 #nav/#actions/#toc-desktop-panel，平板端和移动端折叠 #nav/#actions/#toc-desktop-panel，#share-list 始终关闭。
   return {
     environment: {
       viewportMode,
@@ -210,7 +210,7 @@ function createPostHeaderNavState(): PostHeaderNavState {
 function createFooterPostNavState(): FooterPostNavState {
   const scrollY = getTopDistance();
 
-  // 初始化移动端底部 #footer-post：#footer-post 显示，#nav-footer/#toc-footer/#share-footer 收起，#actions-footer > #top 按当前滚动位置显隐。
+  // 初始化移动端底部 #footer-post：#footer-post 显示，#nav-footer/#toc-footer/#share-footer 收起，#actions-footer > #footer-top 按当前滚动位置显隐。
   // scrollY 使用页面当前位置，避免浏览器恢复滚动位置后第一次滚动方向误判。
   return {
     environment: {
@@ -242,13 +242,13 @@ function getPostHeaderNavElements(): PostHeaderNavElements | null {
   const menuIcon = document.querySelector<HTMLElement>("#header-post #menu-icon");
   const nav = document.querySelector<HTMLElement>("#header-post #nav");
   const actions = document.querySelector<HTMLElement>("#header-post #actions");
-  const toc = document.querySelector<HTMLElement>("#header-post #toc");
+  const tocPanel = document.querySelector<HTMLElement>("#header-post #toc-desktop-panel");
   const shareList = document.querySelector<HTMLElement>("#header-post #share-list");
   const topIconTablet = document.querySelector<HTMLElement>("#header-post #top-icon-tablet");
   const tocIconTablet = document.querySelector<HTMLElement>("#header-post #toc-icon-tablet");
   const shareButton = document.querySelector<HTMLElement>("#header-post #actions #action-share");
 
-  if (!headerPost || !menuIcon || !nav || !actions || !toc || !topIconTablet || !tocIconTablet) {
+  if (!headerPost || !menuIcon || !nav || !actions || !tocPanel || !topIconTablet || !tocIconTablet) {
     return null;
   }
 
@@ -265,12 +265,12 @@ function getPostHeaderNavElements(): PostHeaderNavElements | null {
     menuIcon,
     nav,
     actions,
-    toc,
+    tocPanel,
     shareList,
     topIconTablet,
     tocIconTablet,
     shareButton,
-    menuContent: [nav, actions, toc],
+    menuContent: [nav, actions, tocPanel],
   };
 }
 
@@ -283,10 +283,10 @@ function getFooterPostNavElements(): FooterPostNavElements | null {
 
   return {
     footerNav,
-    footerMenuButton: document.querySelector<HTMLElement>("#actions-footer > #menu"),
-    footerTocButton: document.querySelector<HTMLElement>("#actions-footer > #toc"),
-    footerShareButton: document.querySelector<HTMLElement>("#actions-footer > #share"),
-    footerTopIcon: document.querySelector<HTMLElement>("#actions-footer > #top"),
+    footerMenuButton: document.querySelector<HTMLElement>("#actions-footer > #footer-menu"),
+    footerTocButton: document.querySelector<HTMLElement>("#actions-footer > #footer-toc"),
+    footerShareButton: document.querySelector<HTMLElement>("#actions-footer > #footer-share"),
+    footerTopIcon: document.querySelector<HTMLElement>("#actions-footer > #footer-top"),
     navFooter: document.querySelector<HTMLElement>("#nav-footer"),
     tocFooter: document.querySelector<HTMLElement>("#toc-footer"),
     shareFooter: document.querySelector<HTMLElement>("#share-footer"),
@@ -302,7 +302,7 @@ function reducePostHeaderNavState(state: PostHeaderNavState, event: PostHeaderNa
         ...state,
         intent: {
           isMenuContentOpen,
-          // #nav/#actions/#toc 收起时同步收起 #share-list，避免分享菜单脱离顶部菜单单独显示。
+          // #nav/#actions/#toc-desktop-panel 收起时同步收起 #share-list，避免分享菜单脱离顶部菜单单独显示。
           isShareOpen: isMenuContentOpen ? state.intent.isShareOpen : false,
         },
       };
@@ -319,7 +319,7 @@ function reducePostHeaderNavState(state: PostHeaderNavState, event: PostHeaderNa
       return {
         environment: event.environment,
         intent: {
-          // 桌面端展开 #nav/#actions/#toc；平板端和移动端收起 #nav/#actions/#toc 和 #share-list。
+          // 桌面端展开 #nav/#actions/#toc-desktop-panel；平板端和移动端收起 #nav/#actions/#toc-desktop-panel 和 #share-list。
           isMenuContentOpen: event.environment.viewportMode === "desktop",
           isShareOpen: false,
         },
@@ -331,7 +331,7 @@ function reducePostHeaderNavState(state: PostHeaderNavState, event: PostHeaderNa
           tabletMode: event.tabletMode,
         },
         intent: {
-          // 进入 quickActions 时隐藏 #menu-icon，并强制收起 #nav/#actions/#toc 和 #share-list。
+          // 进入 quickActions 时隐藏 #menu-icon，并强制收起 #nav/#actions/#toc-desktop-panel 和 #share-list。
           isMenuContentOpen: event.tabletMode === "quickActions" ? false : state.intent.isMenuContentOpen,
           isShareOpen: event.tabletMode === "quickActions" ? false : state.intent.isShareOpen,
         },
@@ -382,7 +382,7 @@ function reduceFooterPostNavState(state: FooterPostNavState, event: FooterPostNa
       return {
         environment: {
           scrollY: event.scrollY,
-          // 移动端底部回到顶部按钮 #actions-footer > #top：scrollY < LOW 隐藏，scrollY > HIGH 显示，LOW~HIGH 保持当前状态。
+          // 移动端底部回到顶部按钮 #actions-footer > #footer-top：scrollY < LOW 隐藏，scrollY > HIGH 显示，LOW~HIGH 保持当前状态。
           isTopActionVisible: shouldShowFooterTopAction(event.scrollY, state.environment.isTopActionVisible),
         },
         intent: {
@@ -427,6 +427,34 @@ function setElementVisibility(
   }
 }
 
+function setControlledElementAccessibility(element: HTMLElement | HTMLElement[], isShown: boolean): void {
+  if (Array.isArray(element)) {
+    element.forEach((item) => {
+      setControlledElementAccessibility(item, isShown);
+    });
+    return;
+  }
+
+  // 受控展开区域隐藏时，先从无障碍树和 Tab 顺序移除，再播放视觉动画。
+  // 否则 fade/slide 动画期间内容虽然透明或正在收起，仍可能被读屏或键盘焦点访问。
+  if (isShown) {
+    element.removeAttribute("aria-hidden");
+    element.removeAttribute("inert");
+  } else {
+    element.setAttribute("aria-hidden", "true");
+    element.setAttribute("inert", "");
+  }
+}
+
+function setControlledElementVisibility(
+  element: HTMLElement | HTMLElement[],
+  isShown: boolean,
+  options: Required<RenderPostHeaderNavOptions>,
+): void {
+  setControlledElementAccessibility(element, isShown);
+  setElementVisibility(element, isShown, options);
+}
+
 function setSlideElementVisibility(
   element: HTMLElement,
   isShown: boolean,
@@ -445,6 +473,46 @@ function setSlideElementVisibility(
     show(element);
   } else {
     hide(element);
+  }
+}
+
+function setSlideControlledElementVisibility(
+  element: HTMLElement,
+  isShown: boolean,
+  options: Required<Pick<RenderFooterPostNavOptions, "animate" | "duration">>,
+): void {
+  setControlledElementAccessibility(element, isShown);
+  setSlideElementVisibility(element, isShown, options);
+}
+
+function getActiveHTMLElement(): HTMLElement | null {
+  return document.activeElement instanceof HTMLElement ? document.activeElement : null;
+}
+
+function focusElement(element: HTMLElement | null | undefined): void {
+  element?.focus({ preventScroll: true });
+}
+
+function getVisibleFocusFallback(elements: Array<HTMLElement | null>): HTMLElement | null {
+  return elements.find((element): element is HTMLElement => Boolean(element && isVisible(element))) ?? null;
+}
+
+function moveFocusIfWithin(hiddenElements: Array<HTMLElement | null>, fallbackElement: HTMLElement | null): void {
+  const activeElement = getActiveHTMLElement();
+
+  if (!activeElement) {
+    return;
+  }
+
+  const isFocusWithinHiddenElement = hiddenElements.some((element) => element?.contains(activeElement));
+  if (isFocusWithinHiddenElement) {
+    // 只有焦点已经落在即将隐藏的区域里才移动焦点；鼠标用户和区域外键盘焦点不受影响。
+    // 如果视口切换后没有可见回收目标，则只清掉这个即将失效的焦点，避免焦点留在 inert 内容内。
+    if (fallbackElement) {
+      focusElement(fallbackElement);
+    } else {
+      activeElement.blur();
+    }
   }
 }
 
@@ -535,7 +603,7 @@ function getPostHeaderArticleAvoidanceCandidates(elements: PostHeaderNavElements
     elements.nav,
     elements.actions,
     elements.shareList,
-    elements.toc,
+    elements.tocPanel,
     ...infoItems,
   ];
 
@@ -636,7 +704,7 @@ function schedulePostHeaderArticleAvoidance(elements: PostHeaderNavElements, del
 }
 
 function observePostHeaderArticleAvoidanceChanges(elements: PostHeaderNavElements): void {
-  // 桌面端目录 #toc 在 DOMContentLoaded 后生成，hover 文案和分享列表也会改变 #header-post 的实际尺寸。
+  // 桌面端目录 #toc-desktop-panel 在 DOMContentLoaded 后生成内容，hover 文案和分享列表也会改变 #header-post 的实际尺寸。
   // ResizeObserver 捕获这些非点击路径的尺寸变化，再触发 #article-header > h1/.meta 避让重算。
   if (!("ResizeObserver" in window)) {
     return;
@@ -651,7 +719,7 @@ function observePostHeaderArticleAvoidanceChanges(elements: PostHeaderNavElement
     elements.nav,
     elements.actions,
     elements.shareList,
-    elements.toc,
+    elements.tocPanel,
     ...elements.articleAvoidanceTargets.map((target) => target.element),
   ];
 
@@ -665,7 +733,7 @@ function observePostHeaderArticleAvoidanceChanges(elements: PostHeaderNavElement
 /**
  * 顶部文章导航唯一显隐出口。
  *
- * 只有这里能控制 #menu-icon、#nav、#actions、#toc、#share-list、#top-icon-tablet、#toc-icon-tablet。
+ * 只有这里能控制 #menu-icon、#nav、#actions、#toc-desktop-panel、#share-list、#top-icon-tablet、#toc-icon-tablet。
  */
 function renderPostHeaderNav(
   state: PostHeaderNavState,
@@ -686,6 +754,19 @@ function renderPostHeaderNav(
   const isShareListShown = isMenuContentShown && state.intent.isShareOpen;
   const areTabletQuickActionsShown = isQuickActionsMode;
 
+  if (!isMenuContentShown) {
+    // 收起顶部菜单前先回收焦点，再写 aria-hidden/inert 和执行动画。
+    // 平板滚动进入 quickActions 时 #menu-icon 会隐藏，因此优先回收到当前可见的目录快捷按钮。
+    const fallbackElement = getVisibleFocusFallback([
+      isMenuIconShown ? elements.menuIcon : null,
+      areTabletQuickActionsShown ? elements.tocIconTablet : null,
+    ]);
+    moveFocusIfWithin([elements.nav, elements.actions, elements.tocPanel, elements.shareList], fallbackElement);
+  } else if (!isShareListShown) {
+    // 菜单仍展开、仅分享列表收起时，焦点回到分享按钮；菜单整体收起时由上面的分支回到菜单按钮。
+    moveFocusIfWithin([elements.shareList], getVisibleFocusFallback([elements.shareButton]));
+  }
+
   // #menu-icon.active、#menu-icon[aria-expanded]、#action-share[aria-expanded] 表达状态里的展开意图。
   // 不从动画中间态或当前 DOM display 反推，避免状态和界面互相覆盖。
   elements.menuIcon.classList.toggle("active", state.intent.isMenuContentOpen);
@@ -693,12 +774,12 @@ function renderPostHeaderNav(
   elements.shareButton?.setAttribute("aria-expanded", String(state.intent.isShareOpen));
 
   setElementVisibility(elements.menuIcon, isMenuIconShown, renderOptions);
-  setElementVisibility(elements.menuContent, isMenuContentShown, renderOptions);
+  setControlledElementVisibility(elements.menuContent, isMenuContentShown, renderOptions);
   if (elements.shareList) {
     if (renderOptions.shareListAnimation === "slide") {
-      setSlideElementVisibility(elements.shareList, isShareListShown, renderOptions);
+      setSlideControlledElementVisibility(elements.shareList, isShareListShown, renderOptions);
     } else {
-      setElementVisibility(elements.shareList, isShareListShown, renderOptions);
+      setControlledElementVisibility(elements.shareList, isShareListShown, renderOptions);
     }
   }
   setElementVisibility(elements.topIconTablet, areTabletQuickActionsShown, renderOptions);
@@ -712,7 +793,8 @@ function renderPostHeaderNav(
 /**
  * 移动端底部文章导航唯一显隐出口。
  *
- * 只有这里能控制 #footer-post、#actions-footer > #menu/#toc/#share/#top、#nav-footer、#toc-footer、#share-footer。
+ * 只有这里能控制 #footer-post、#actions-footer >
+ * #footer-menu/#footer-toc/#footer-share/#footer-top、#nav-footer、#toc-footer、#share-footer。
  */
 function renderFooterPostNav(
   state: FooterPostNavState,
@@ -728,15 +810,26 @@ function renderFooterPostNav(
   elements.footerTocButton?.setAttribute("aria-expanded", String(state.intent.isTocOpen));
   elements.footerShareButton?.setAttribute("aria-expanded", String(state.intent.isShareOpen));
 
+  // 底部三个子菜单互斥展开。某个子菜单被关闭时，只回收它内部的焦点到对应按钮。
+  if (!state.intent.isMenuOpen) {
+    moveFocusIfWithin([elements.navFooter], getVisibleFocusFallback([elements.footerMenuButton]));
+  }
+  if (!state.intent.isTocOpen) {
+    moveFocusIfWithin([elements.tocFooter], getVisibleFocusFallback([elements.footerTocButton]));
+  }
+  if (!state.intent.isShareOpen) {
+    moveFocusIfWithin([elements.shareFooter], getVisibleFocusFallback([elements.footerShareButton]));
+  }
+
   setSlideElementVisibility(elements.footerNav, state.intent.isFooterVisible, renderOptions);
   if (elements.navFooter) {
-    setSlideElementVisibility(elements.navFooter, state.intent.isMenuOpen, renderOptions);
+    setSlideControlledElementVisibility(elements.navFooter, state.intent.isMenuOpen, renderOptions);
   }
   if (elements.tocFooter) {
-    setSlideElementVisibility(elements.tocFooter, state.intent.isTocOpen, renderOptions);
+    setSlideControlledElementVisibility(elements.tocFooter, state.intent.isTocOpen, renderOptions);
   }
   if (elements.shareFooter) {
-    setSlideElementVisibility(elements.shareFooter, state.intent.isShareOpen, renderOptions);
+    setSlideControlledElementVisibility(elements.shareFooter, state.intent.isShareOpen, renderOptions);
   }
 
   elements.footerTopIcon?.style.setProperty(
@@ -835,7 +928,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
       bindPostHeaderActionHoverText(postHeaderNavElements);
       renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, { animate: false });
 
-      // 平板端、桌面端顶部菜单按钮 #menu-icon：点击后只切换 #nav/#actions/#toc 的展开状态。
+      // 平板端、桌面端顶部菜单按钮 #menu-icon：点击后只切换 #nav/#actions/#toc-desktop-panel 的展开状态。
       postHeaderNavElements.menuIcon.addEventListener("click", (e: Event): void => {
         e.preventDefault();
 
@@ -844,7 +937,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
       });
 
       // 平板端、桌面端顶部分享按钮 #action-share：点击后只切换 #share-list 的展开状态。
-      // #share-list 是否实际显示仍由 renderPostHeaderNav 结合 #nav/#actions/#toc 的展开状态决定。
+      // #share-list 是否实际显示仍由 renderPostHeaderNav 结合 #nav/#actions/#toc-desktop-panel 的展开状态决定。
       postHeaderNavElements.shareButton?.addEventListener("click", (): void => {
         postHeaderNavState = reducePostHeaderNavState(postHeaderNavState, { type: "toggleShare" });
         renderPostHeaderNav(postHeaderNavState, postHeaderNavElements, {
@@ -871,6 +964,16 @@ document.addEventListener("DOMContentLoaded", (): void => {
       const tocOverlayControls = [postHeaderNavElements.tocIconTablet, actionTocTablet, actionTocTabletMenu].filter(
         (control): control is HTMLElement => control !== null,
       );
+      let tocOverlayLastControl: HTMLElement = postHeaderNavElements.tocIconTablet;
+      const tocOverlayRenderOptions: Required<RenderPostHeaderNavOptions> = {
+        animate: true,
+        duration: ANIMATION_DURATION,
+        shareListAnimation: "fade",
+      };
+      const tocOverlayInitialRenderOptions: Required<RenderPostHeaderNavOptions> = {
+        ...tocOverlayRenderOptions,
+        animate: false,
+      };
 
       // 平板端目录浮层控制按钮：#toc-overlay-tablet 打开或关闭时，同步所有入口按钮的 aria-expanded。
       const setTocOverlayControlsExpanded = (isExpanded: boolean): void => {
@@ -886,19 +989,30 @@ document.addEventListener("DOMContentLoaded", (): void => {
         }
 
         setTocOverlayControlsExpanded(false);
-        fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+        // 浮层可能由三个入口打开；关闭时尽量回到最近入口，若入口已经因滚动/断点隐藏，则找当前可见的备用入口。
+        moveFocusIfWithin(
+          [tocOverlayTablet],
+          getVisibleFocusFallback([
+            tocOverlayLastControl,
+            postHeaderNavElements.tocIconTablet,
+            postHeaderNavElements.menuIcon,
+          ]),
+        );
+        setControlledElementVisibility(tocOverlayTablet, false, tocOverlayRenderOptions);
       };
 
       // 平板端目录浮层 #toc-overlay-tablet：由 #toc-icon-tablet、#action-toc-tablet、#action-toc-tablet-menu 共用打开/关闭逻辑。
-      const toggleTocOverlay = (): void => {
+      const toggleTocOverlay = (control: HTMLElement): void => {
         if (!tocOverlayTablet) {
           return;
         }
         if (isVisible(tocOverlayTablet)) {
           closeTocOverlay();
         } else {
+          // 记录实际入口，给关闭按钮、背景点击和目录项点击共用同一套焦点回收逻辑。
+          tocOverlayLastControl = control;
           setTocOverlayControlsExpanded(true);
-          fadeIn(tocOverlayTablet, ANIMATION_DURATION);
+          setControlledElementVisibility(tocOverlayTablet, true, tocOverlayRenderOptions);
 
           // 平板端目录浮层打开后，把当前文章位置对应的 .toc-active 滚到浮层可视区域中间。
           const activeLink = tocOverlayTablet.querySelector<HTMLElement>(".toc-active");
@@ -914,20 +1028,28 @@ document.addEventListener("DOMContentLoaded", (): void => {
         }
       };
 
+      if (tocOverlayTablet) {
+        setControlledElementVisibility(tocOverlayTablet, false, tocOverlayInitialRenderOptions);
+      }
+
       // 平板端滚动后的浮动目录按钮 #toc-icon-tablet：点击打开/关闭 #toc-overlay-tablet。
       postHeaderNavElements.tocIconTablet.addEventListener("click", (): void => {
-        toggleTocOverlay();
+        toggleTocOverlay(postHeaderNavElements.tocIconTablet);
       });
 
       // 平板端顶部 #actions 中的目录按钮 #action-toc-tablet：点击打开/关闭 #toc-overlay-tablet。
-      actionTocTablet?.addEventListener("click", (): void => {
-        toggleTocOverlay();
-      });
+      if (actionTocTablet) {
+        actionTocTablet.addEventListener("click", (): void => {
+          toggleTocOverlay(actionTocTablet);
+        });
+      }
 
       // 平板端顶部菜单中的目录按钮 #action-toc-tablet-menu：点击打开/关闭 #toc-overlay-tablet。
-      actionTocTabletMenu?.addEventListener("click", (): void => {
-        toggleTocOverlay();
-      });
+      if (actionTocTabletMenu) {
+        actionTocTabletMenu.addEventListener("click", (): void => {
+          toggleTocOverlay(actionTocTabletMenu);
+        });
+      }
 
       // 平板端目录浮层关闭按钮 #toc-overlay-close：点击后关闭 #toc-overlay-tablet。
       tocOverlayClose?.addEventListener("click", (): void => {
@@ -982,13 +1104,13 @@ document.addEventListener("DOMContentLoaded", (): void => {
     if (footerPostNavElements) {
       renderFooterPostNav(footerPostNavState, footerPostNavElements, { animate: false });
 
-      // 移动端底部导航栏按钮 #actions-footer > #menu：点击后只切换 #nav-footer 的展开状态。
+      // 移动端底部导航栏按钮 #actions-footer > #footer-menu：点击后只切换 #nav-footer 的展开状态。
       footerPostNavElements.footerMenuButton?.addEventListener("click", (): void => {
         footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "toggleMenu" });
         renderFooterPostNav(footerPostNavState, footerPostNavElements);
       });
 
-      // 移动端底部导航栏按钮 #actions-footer > #toc：点击后只切换 #toc-footer 的展开状态。
+      // 移动端底部导航栏按钮 #actions-footer > #footer-toc：点击后只切换 #toc-footer 的展开状态。
       footerPostNavElements.footerTocButton?.addEventListener("click", (): void => {
         const isOpeningToc = !footerPostNavState.intent.isTocOpen;
 
@@ -996,7 +1118,7 @@ document.addEventListener("DOMContentLoaded", (): void => {
         renderFooterPostNav(footerPostNavState, footerPostNavElements, { scrollActiveTocIntoView: isOpeningToc });
       });
 
-      // 移动端底部导航栏按钮 #actions-footer > #share：点击后只切换 #share-footer 的展开状态。
+      // 移动端底部导航栏按钮 #actions-footer > #footer-share：点击后只切换 #share-footer 的展开状态。
       footerPostNavElements.footerShareButton?.addEventListener("click", (): void => {
         footerPostNavState = reduceFooterPostNavState(footerPostNavState, { type: "toggleShare" });
         renderFooterPostNav(footerPostNavState, footerPostNavElements);
