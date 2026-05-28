@@ -69,10 +69,9 @@ export function initTOC(contentSelector: string, tocSelector: string, headingSel
   const minLevel = Math.min(...headingLevels);
   const maxLevel = Math.max(...headingLevels);
 
-  // Create the outermost ol#toc-container.toc
+  // Create the outermost TOC list
   const tocContainer = document.createElement("ol");
-  tocContainer.id = "toc-container";
-  tocContainer.className = "toc";
+  tocContainer.className = "toc-container";
 
   // Build TOC tree structure
   interface TOCRoot {
