@@ -148,7 +148,7 @@
       import { initHeadingAnchors } from "@runtime/scripts/heading-anchor.ts";
 
       document.addEventListener("DOMContentLoaded", function () {
-        ["#toc", "#toc-tablet", "#toc-footer"].forEach((tocSelector) => {
+        ["#toc-desktop", "#toc-tablet", "#toc-footer"].forEach((tocSelector) => {
           initTOC("article > .content", tocSelector);
         });
         initHeadingAnchors("article > .content");
