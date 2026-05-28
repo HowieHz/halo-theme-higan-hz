@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fixed missing TOCs on post and single pages when viewport width does not match device type, such as narrow desktop, wide mobile, or narrower/wider tablet layouts.
+
 ## [1.66.11] - 2026-05-26
 
 ### 🐛 Bug Fixes
