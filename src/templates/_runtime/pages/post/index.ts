@@ -431,6 +431,34 @@ function setElementVisibility(
   }
 }
 
+function setControlledElementAccessibility(element: HTMLElement | HTMLElement[], isShown: boolean): void {
+  if (Array.isArray(element)) {
+    element.forEach((item) => {
+      setControlledElementAccessibility(item, isShown);
+    });
+    return;
+  }
+
+  // 受控展开区域隐藏时，先从无障碍树和 Tab 顺序移除，再播放视觉动画。
+  // 否则 fade/slide 动画期间内容虽然透明或正在收起，仍可能被读屏或键盘焦点访问。
+  if (isShown) {
+    element.removeAttribute("aria-hidden");
+    element.removeAttribute("inert");
+  } else {
+    element.setAttribute("aria-hidden", "true");
+    element.setAttribute("inert", "");
+  }
+}
+
+function setControlledElementVisibility(
+  element: HTMLElement | HTMLElement[],
+  isShown: boolean,
+  options: Required<RenderPostHeaderNavOptions>,
+): void {
+  setControlledElementAccessibility(element, isShown);
+  setElementVisibility(element, isShown, options);
+}
+
 function setSlideElementVisibility(
   element: HTMLElement,
   isShown: boolean,
@@ -449,6 +477,46 @@ function setSlideElementVisibility(
     show(element);
   } else {
     hide(element);
+  }
+}
+
+function setSlideControlledElementVisibility(
+  element: HTMLElement,
+  isShown: boolean,
+  options: Required<Pick<RenderFooterPostNavOptions, "animate" | "duration">>,
+): void {
+  setControlledElementAccessibility(element, isShown);
+  setSlideElementVisibility(element, isShown, options);
+}
+
+function getActiveHTMLElement(): HTMLElement | null {
+  return document.activeElement instanceof HTMLElement ? document.activeElement : null;
+}
+
+function focusElement(element: HTMLElement | null | undefined): void {
+  element?.focus({ preventScroll: true });
+}
+
+function getVisibleFocusFallback(elements: Array<HTMLElement | null>): HTMLElement | null {
+  return elements.find((element): element is HTMLElement => Boolean(element && isVisible(element))) ?? null;
+}
+
+function moveFocusIfWithin(hiddenElements: Array<HTMLElement | null>, fallbackElement: HTMLElement | null): void {
+  const activeElement = getActiveHTMLElement();
+
+  if (!activeElement) {
+    return;
+  }
+
+  const isFocusWithinHiddenElement = hiddenElements.some((element) => element?.contains(activeElement));
+  if (isFocusWithinHiddenElement) {
+    // 只有焦点已经落在即将隐藏的区域里才移动焦点；鼠标用户和区域外键盘焦点不受影响。
+    // 如果视口切换后没有可见回收目标，则只清掉这个即将失效的焦点，避免焦点留在 inert 内容内。
+    if (fallbackElement) {
+      focusElement(fallbackElement);
+    } else {
+      activeElement.blur();
+    }
   }
 }
 
@@ -690,6 +758,19 @@ function renderPostHeaderNav(
   const isShareListShown = isMenuContentShown && state.intent.isShareOpen;
   const areTabletQuickActionsShown = isQuickActionsMode;
 
+  if (!isMenuContentShown) {
+    // 收起顶部菜单前先回收焦点，再写 aria-hidden/inert 和执行动画。
+    // 平板滚动进入 quickActions 时 #menu-icon 会隐藏，因此优先回收到当前可见的目录快捷按钮。
+    const fallbackElement = getVisibleFocusFallback([
+      isMenuIconShown ? elements.menuIcon : null,
+      areTabletQuickActionsShown ? elements.tocIconTablet : null,
+    ]);
+    moveFocusIfWithin([elements.nav, elements.actions, elements.tocPanel, elements.shareList], fallbackElement);
+  } else if (!isShareListShown) {
+    // 菜单仍展开、仅分享列表收起时，焦点回到分享按钮；菜单整体收起时由上面的分支回到菜单按钮。
+    moveFocusIfWithin([elements.shareList], getVisibleFocusFallback([elements.shareButton]));
+  }
+
   // #menu-icon.active、#menu-icon[aria-expanded]、#action-share[aria-expanded] 表达状态里的展开意图。
   // 不从动画中间态或当前 DOM display 反推，避免状态和界面互相覆盖。
   elements.menuIcon.classList.toggle("active", state.intent.isMenuContentOpen);
@@ -697,12 +778,12 @@ function renderPostHeaderNav(
   elements.shareButton?.setAttribute("aria-expanded", String(state.intent.isShareOpen));
 
   setElementVisibility(elements.menuIcon, isMenuIconShown, renderOptions);
-  setElementVisibility(elements.menuContent, isMenuContentShown, renderOptions);
+  setControlledElementVisibility(elements.menuContent, isMenuContentShown, renderOptions);
   if (elements.shareList) {
     if (renderOptions.shareListAnimation === "slide") {
-      setSlideElementVisibility(elements.shareList, isShareListShown, renderOptions);
+      setSlideControlledElementVisibility(elements.shareList, isShareListShown, renderOptions);
     } else {
-      setElementVisibility(elements.shareList, isShareListShown, renderOptions);
+      setControlledElementVisibility(elements.shareList, isShareListShown, renderOptions);
     }
   }
   setElementVisibility(elements.topIconTablet, areTabletQuickActionsShown, renderOptions);
@@ -732,15 +813,26 @@ function renderFooterPostNav(
   elements.footerTocButton?.setAttribute("aria-expanded", String(state.intent.isTocOpen));
   elements.footerShareButton?.setAttribute("aria-expanded", String(state.intent.isShareOpen));
 
+  // 底部三个子菜单互斥展开。某个子菜单被关闭时，只回收它内部的焦点到对应按钮。
+  if (!state.intent.isMenuOpen) {
+    moveFocusIfWithin([elements.navFooter], getVisibleFocusFallback([elements.footerMenuButton]));
+  }
+  if (!state.intent.isTocOpen) {
+    moveFocusIfWithin([elements.tocFooter], getVisibleFocusFallback([elements.footerTocButton]));
+  }
+  if (!state.intent.isShareOpen) {
+    moveFocusIfWithin([elements.shareFooter], getVisibleFocusFallback([elements.footerShareButton]));
+  }
+
   setSlideElementVisibility(elements.footerNav, state.intent.isFooterVisible, renderOptions);
   if (elements.navFooter) {
-    setSlideElementVisibility(elements.navFooter, state.intent.isMenuOpen, renderOptions);
+    setSlideControlledElementVisibility(elements.navFooter, state.intent.isMenuOpen, renderOptions);
   }
   if (elements.tocFooter) {
-    setSlideElementVisibility(elements.tocFooter, state.intent.isTocOpen, renderOptions);
+    setSlideControlledElementVisibility(elements.tocFooter, state.intent.isTocOpen, renderOptions);
   }
   if (elements.shareFooter) {
-    setSlideElementVisibility(elements.shareFooter, state.intent.isShareOpen, renderOptions);
+    setSlideControlledElementVisibility(elements.shareFooter, state.intent.isShareOpen, renderOptions);
   }
 
   elements.footerTopIcon?.style.setProperty(
@@ -875,6 +967,16 @@ document.addEventListener("DOMContentLoaded", (): void => {
       const tocOverlayControls = [postHeaderNavElements.tocIconTablet, actionTocTablet, actionTocTabletMenu].filter(
         (control): control is HTMLElement => control !== null,
       );
+      let tocOverlayLastControl: HTMLElement = postHeaderNavElements.tocIconTablet;
+      const tocOverlayRenderOptions: Required<RenderPostHeaderNavOptions> = {
+        animate: true,
+        duration: ANIMATION_DURATION,
+        shareListAnimation: "fade",
+      };
+      const tocOverlayInitialRenderOptions: Required<RenderPostHeaderNavOptions> = {
+        ...tocOverlayRenderOptions,
+        animate: false,
+      };
 
       // 平板端目录浮层控制按钮：#toc-overlay-tablet 打开或关闭时，同步所有入口按钮的 aria-expanded。
       const setTocOverlayControlsExpanded = (isExpanded: boolean): void => {
@@ -890,19 +992,30 @@ document.addEventListener("DOMContentLoaded", (): void => {
         }
 
         setTocOverlayControlsExpanded(false);
-        fadeOut(tocOverlayTablet, ANIMATION_DURATION);
+        // 浮层可能由三个入口打开；关闭时尽量回到最近入口，若入口已经因滚动/断点隐藏，则找当前可见的备用入口。
+        moveFocusIfWithin(
+          [tocOverlayTablet],
+          getVisibleFocusFallback([
+            tocOverlayLastControl,
+            postHeaderNavElements.tocIconTablet,
+            postHeaderNavElements.menuIcon,
+          ]),
+        );
+        setControlledElementVisibility(tocOverlayTablet, false, tocOverlayRenderOptions);
       };
 
       // 平板端目录浮层 #toc-overlay-tablet：由 #toc-icon-tablet、#action-toc-tablet、#action-toc-tablet-menu 共用打开/关闭逻辑。
-      const toggleTocOverlay = (): void => {
+      const toggleTocOverlay = (control: HTMLElement): void => {
         if (!tocOverlayTablet) {
           return;
         }
         if (isVisible(tocOverlayTablet)) {
           closeTocOverlay();
         } else {
+          // 记录实际入口，给关闭按钮、背景点击和目录项点击共用同一套焦点回收逻辑。
+          tocOverlayLastControl = control;
           setTocOverlayControlsExpanded(true);
-          fadeIn(tocOverlayTablet, ANIMATION_DURATION);
+          setControlledElementVisibility(tocOverlayTablet, true, tocOverlayRenderOptions);
 
           // 平板端目录浮层打开后，把当前文章位置对应的 .toc-active 滚到浮层可视区域中间。
           const activeLink = tocOverlayTablet.querySelector<HTMLElement>(".toc-active");
@@ -918,20 +1031,28 @@ document.addEventListener("DOMContentLoaded", (): void => {
         }
       };
 
+      if (tocOverlayTablet) {
+        setControlledElementVisibility(tocOverlayTablet, false, tocOverlayInitialRenderOptions);
+      }
+
       // 平板端滚动后的浮动目录按钮 #toc-icon-tablet：点击打开/关闭 #toc-overlay-tablet。
       postHeaderNavElements.tocIconTablet.addEventListener("click", (): void => {
-        toggleTocOverlay();
+        toggleTocOverlay(postHeaderNavElements.tocIconTablet);
       });
 
       // 平板端顶部 #actions 中的目录按钮 #action-toc-tablet：点击打开/关闭 #toc-overlay-tablet。
-      actionTocTablet?.addEventListener("click", (): void => {
-        toggleTocOverlay();
-      });
+      if (actionTocTablet) {
+        actionTocTablet.addEventListener("click", (): void => {
+          toggleTocOverlay(actionTocTablet);
+        });
+      }
 
       // 平板端顶部菜单中的目录按钮 #action-toc-tablet-menu：点击打开/关闭 #toc-overlay-tablet。
-      actionTocTabletMenu?.addEventListener("click", (): void => {
-        toggleTocOverlay();
-      });
+      if (actionTocTabletMenu) {
+        actionTocTabletMenu.addEventListener("click", (): void => {
+          toggleTocOverlay(actionTocTabletMenu);
+        });
+      }
 
       // 平板端目录浮层关闭按钮 #toc-overlay-close：点击后关闭 #toc-overlay-tablet。
       tocOverlayClose?.addEventListener("click", (): void => {
