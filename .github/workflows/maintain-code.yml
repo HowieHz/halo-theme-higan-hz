@@ -33,6 +33,9 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # https://github.com/actions/checkout/releases/tag/v6.0.2
         with:
           ref: ${{ github.head_ref || github.ref }}
+          # Release version inference walks from the latest stable tag to the PR head.
+          # Keep full history here so the autofix sees semantic commits that are already on the PR base.
+          fetch-depth: 0
           # why token is required
           # ref: https://github.com/stefanzweifel/git-auto-commit-action/tree/v7/?tab=readme-ov-file#commits-made-by-this-action-do-not-trigger-new-workflow-runs
           token: ${{ secrets.PR_WORKFLOW_TOKEN || github.token }}
