@@ -233,8 +233,8 @@ export function initTOCs(contentSelector: string, tocSelectors: string[], headin
 
       lastActiveLink = activeLink;
 
-      // Auto-scroll TOC container to keep active item visible (desktop only)
-      if (activeLink && tocRoot.id === "toc-desktop") {
+      // Auto-scroll TOC container to keep active item visible (desktop and tablet only)
+      if (activeLink && ["toc-desktop", "toc-tablet"].includes(tocRoot.id)) {
         activeLink.scrollIntoView({
           behavior: "smooth",
           block: "center",
