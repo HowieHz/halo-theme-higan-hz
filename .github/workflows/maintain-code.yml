@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    types: [opened, synchronize, reopened, labeled]
+    types: [opened, synchronize, reopened]
 
 # 并发控制：
 # - push 到 main 分支：所有推送归入同一组 'maintain-code-main'，新推送取消正在进行的旧运行，
