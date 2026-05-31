@@ -3,7 +3,7 @@ name: Check Release Guard
 on:
   pull_request:
     branches: [main]
-    types: [opened, synchronize, reopened, edited, labeled, unlabeled]
+    types: [opened, synchronize, reopened]
 
 jobs:
   guard:
