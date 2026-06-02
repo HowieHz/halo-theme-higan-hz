@@ -860,8 +860,8 @@ This is another paragraph wrapping around a pullquote on the right. It also need
 ### Table Markdown Syntax
 
 ```markdown
-| Algorithm  | Average Time Complexity | Space Complexity |
-| ---------- | ----------------------- | ---------------- |
+| Algorithm   | Average Time Complexity | Space Complexity |
+| ----------- | ----------------------- | ---------------- |
 | Bubble Sort | O(n^2)                  | O(1)             |
 | Merge Sort  | O(n log n)              | O(n)             |
 | Quick Sort  | O(n log n)              | O(log n)         |
@@ -902,8 +902,8 @@ This is another paragraph wrapping around a pullquote on the right. It also need
 
 <DefaultRender height="200px">
 
-| Algorithm  | Average Time Complexity | Space Complexity |
-| ---------- | ----------------------- | ---------------- |
+| Algorithm   | Average Time Complexity | Space Complexity |
+| ----------- | ----------------------- | ---------------- |
 | Bubble Sort | O(n^2)                  | O(1)             |
 | Merge Sort  | O(n log n)              | O(n)             |
 | Quick Sort  | O(n log n)              | O(log n)         |
@@ -1003,8 +1003,12 @@ This text is visible. <spoiler>This hidden content is revealed on hover, focus, 
 ## Light/Dark Mode Visibility Block <Badge type="tip" text="Post Style" /> <Badge type="warning" text="Extended Style" /> {#light-dark-mode-visibility-block}
 
 ```html
-<div class="light">This content is shown only in light mode or auto mode when the light theme is active. Try switching the page theme.</div>
-<div class="dark">This content is shown only in dark mode or auto mode when the dark theme is active. Try switching the page theme.</div>
+<div class="light">
+  This content is shown only in light mode or auto mode when the light theme is active. Try switching the page theme.
+</div>
+<div class="dark">
+  This content is shown only in dark mode or auto mode when the dark theme is active. Try switching the page theme.
+</div>
 ```
 
 ### Light/Dark Mode Visibility Block Rendering Effect
