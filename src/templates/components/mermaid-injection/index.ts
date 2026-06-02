@@ -2,6 +2,12 @@ import mermaid, { type MermaidConfig, type RenderResult } from "mermaid";
 
 type MermaidRenderThemeMode = "dark" | "light" | null;
 
+type MermaidRenderJob = {
+  sourceElement: HTMLElement;
+  rawContent: string;
+  themes: MermaidRenderThemeMode[];
+};
+
 type ReferenceAttribute = "marker-start" | "marker-mid" | "marker-end" | "xlink:href" | "href";
 
 const MERMAID_CONFIG_HINT =
@@ -70,23 +76,99 @@ function updateAttribute(refElement: Element, attribute: ReferenceAttribute, ori
   }
 }
 
-function renderMermaid(item: HTMLElement, id: string, theme: MermaidRenderThemeMode): Promise<void> {
-  const fallbackContent = item.textContent ?? "";
-  let rawContent = fallbackContent;
-
-  // If the element is a text-diagram mermaid block, read from data-content
-  // to support content inserted by the default editor of the text-diagram plugin.
-  if (item.tagName === "TEXT-DIAGRAM" && item.getAttribute("data-type") === "mermaid") {
-    rawContent = item.getAttribute("data-content") ?? fallbackContent;
+function getMermaidRenderThemes(sourceElement: HTMLElement): MermaidRenderThemeMode[] {
+  if (sourceElement.classList.contains("auto")) {
+    // Auto mode renders both dark and light variants.
+    return ["dark", "light"];
   }
 
+  // Non-auto mode renders only the requested theme variant.
+  if (sourceElement.classList.contains("dark")) {
+    return ["dark"];
+  }
+
+  if (sourceElement.classList.contains("light")) {
+    return ["light"];
+  }
+
+  return [null];
+}
+
+function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
+  const jobs: MermaidRenderJob[] = [];
+
+  Array.from(container.children).forEach((child) => {
+    if (!(child instanceof HTMLElement)) {
+      return;
+    }
+
+    if (child.getAttribute("data-processed") === "true") {
+      return;
+    }
+
+    const fallbackContent = child.textContent ?? "";
+
+    // 来自文本绘图插件 https://www.halo.run/store/apps/app-ahBRi
+    // 特征是 <text-diagram data-type="mermaid" data-content="..."></text-diagram>
+    // 内容在 data-content 属性中
+    // 测试方法：官方编辑器 + 文本绘图插件 + 插入文本绘图提供的组件
+    if (child.localName === "text-diagram" && child.getAttribute("data-type") === "mermaid") {
+      jobs.push({
+        sourceElement: child,
+        rawContent: child.getAttribute("data-content") ?? fallbackContent,
+        themes: [null],
+      });
+      return;
+    }
+
+    // 来自 Vditor 编辑器插件的 Mermaid 代码块 https://www.halo.run/store/apps/app-uBcYw
+    // ```mermaid ... ``` 渲染后特征是 <div class="mermaid">...<div class="language-mermaid">...</div></div>
+    // 内容在其文本内容中
+    // 测试方法: Vditor 编辑器+输入 ```mermaid ... ```
+    const codeElement = child.matches("div.mermaid")
+      ? child.querySelector<HTMLElement>(":scope > div.language-mermaid")
+      : null;
+    if (codeElement) {
+      jobs.push({
+        sourceElement: child,
+        rawContent: codeElement.textContent ?? fallbackContent,
+        themes: getMermaidRenderThemes(child),
+      });
+      return;
+    }
+
+    // 来自官方编辑器的 Mermaid 代码块
+    // 特征是 <pre><code class="language-mermaid">...</code></pre>
+    // 内容在 code 元素的文本内容中
+    // 测试方法: 官方编辑器 + 插入代码块 + 选择 Mermaid 语言
+    const officialCodeElement = child.matches("pre")
+      ? child.querySelector<HTMLElement>(":scope > code.language-mermaid")
+      : null;
+    if (officialCodeElement) {
+      jobs.push({
+        sourceElement: child,
+        rawContent: officialCodeElement.textContent ?? fallbackContent,
+        themes: [null],
+      });
+    }
+  });
+
+  return jobs;
+}
+
+function renderMermaid(
+  sourceElement: HTMLElement,
+  rawContent: string,
+  id: string,
+  theme: MermaidRenderThemeMode,
+): Promise<void> {
   const content = theme === null ? rawContent : `%%{init: { "theme": "${theme}" } }%%\n${rawContent}`;
   const renderId = `${theme}-${id}`;
 
   return mermaid
     .render(renderId, content)
     .then((mermaidData: RenderResult) => {
-      const parentElement = item.parentElement;
+      const parentElement = sourceElement.parentElement;
       if (!parentElement) {
         return;
       }
@@ -99,14 +181,13 @@ function renderMermaid(item: HTMLElement, id: string, theme: MermaidRenderThemeM
 
       div.classList.add(...divClassNames);
       div.innerHTML = mermaidData.svg;
-      parentElement.insertBefore(div, item.nextSibling);
-      div.setAttribute("data-processed", "true");
+      parentElement.insertBefore(div, sourceElement.nextSibling);
 
       // Prefix ids inside each rendered SVG first to avoid collisions before
       // upstream fully addresses the issue: https://github.com/mermaid-js/mermaid/issues/5741
       const svgElement = div.querySelector("svg");
       if (!svgElement) {
-        item.style.display = "none";
+        sourceElement.style.display = "none";
         return;
       }
 
@@ -143,14 +224,14 @@ function renderMermaid(item: HTMLElement, id: string, theme: MermaidRenderThemeM
       });
 
       // Hide the original source element after rendering succeeds.
-      item.style.display = "none";
+      sourceElement.style.display = "none";
     })
     .catch((error: unknown) => {
       const errorMessage = error instanceof Error ? error.message : String(error);
       const errorElement = document.querySelector<HTMLElement>(`#${renderId}`);
       const errorMarkup = errorElement?.outerHTML ?? "";
 
-      item.innerHTML = `${errorMarkup}<br>
+      sourceElement.innerHTML = `${errorMarkup}<br>
 <div style="text-align: left"><small>${errorMessage.replace(/\n/g, "<br>")}</small></div>`;
       errorElement?.parentElement?.remove();
     });
@@ -166,36 +247,22 @@ function initMermaid(): void {
 
   mermaid.initialize(config ?? {});
 
-  document.querySelectorAll<HTMLElement>(selector).forEach((item) => {
-    const rawContent = item.textContent ?? "";
-
-    // Skip elements that are already processed or do not contain content.
-    if (item.getAttribute("data-processed") === "true" || rawContent.trim() === "") {
-      return;
-    }
-
-    // Generate a unique id for each render.
-    const id = `mermaid${genUUID()}`;
-
-    // Non-auto mode renders only the requested theme variant.
-    if (!item.classList.contains("auto")) {
-      if (item.classList.contains("dark")) {
-        void renderMermaid(item, id, "dark");
-      } else if (item.classList.contains("light")) {
-        void renderMermaid(item, id, "light");
-      } else {
-        void renderMermaid(item, id, null);
+  document.querySelectorAll<HTMLElement>(selector).forEach((container) => {
+    collectMermaidRenderJobs(container).forEach((job) => {
+      // Skip elements that are already processed or do not contain content.
+      if (job.sourceElement.getAttribute("data-processed") === "true" || job.rawContent.trim() === "") {
+        return;
       }
 
-      item.setAttribute("data-processed", "true");
-      return;
-    }
+      // Generate a unique id for each render.
+      const id = `mermaid${genUUID()}`;
 
-    // Auto mode renders both dark and light variants.
-    void renderMermaid(item, id, "dark");
-    void renderMermaid(item, id, "light");
+      job.themes.forEach((theme) => {
+        void renderMermaid(job.sourceElement, job.rawContent, id, theme);
+      });
 
-    item.setAttribute("data-processed", "true");
+      job.sourceElement.setAttribute("data-processed", "true");
+    });
   });
 }
 

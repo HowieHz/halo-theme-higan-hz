@@ -766,7 +766,7 @@ Charts can support light/dark theme switching. For specific usage methods, pleas
 
 After enabling, you need to configure the following sub-items:
 
-- Mermaid CSS Selector (Default: `.content .mermaid`)
+- Mermaid CSS Selector (Default: `.content`)
 - Mermaid Config Property (Default: `{ startOnLoad: false }`)
 
 :::

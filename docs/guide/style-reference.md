@@ -1016,12 +1016,19 @@ This is normal text <small>This is small text</small> This is normal text
 ::: details 方法一 <Badge type="tip" text="默认编辑器可用" /> <Badge type="tip" text="Vditor 编辑器可用" />  
 需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
 图表只写一遍，自动生成浅色/深色模式下两种图表。  
-缺点：不兼容 Vditor 编辑器的实时预览。
+缺点：不兼容 Vditor 编辑器的实时预览。  
+注意：
+- 如果使用了类似 [Shiki](https://www.halo.run/store/apps/app-kzloktzn) 的代码高亮类插件，需在其插件配置中排除 Mermaid。
+- 如果使用了类似 [Vditor](https://www.halo.run/store/apps/app-uBcYw) 的自带 Mermaid 支持的插件，需在其插件配置中关闭内置渲染器。
 
 <!-- prettier-ignore-start -->
 ```html
 <div class="mermaid auto">
+
+```mermaid
 [[图表正文]]
+```
+
 </div>
 ```
 <!-- prettier-ignore-end -->
@@ -1029,18 +1036,29 @@ This is normal text <small>This is small text</small> This is normal text
 :::
 ::: details 方法二 <Badge type="tip" text="默认编辑器可用" />  
 需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
-手动管理浅色/深色模式下的图表。
+手动管理浅色/深色模式下的图表。  
+注意：
+- 如果使用了类似 [Shiki](https://www.halo.run/store/apps/app-kzloktzn) 的代码高亮类插件，需在其插件配置中排除 Mermaid。
+- 如果使用了类似 [Vditor](https://www.halo.run/store/apps/app-uBcYw) 的自带 Mermaid 支持的插件，需在其插件配置中关闭内置渲染器。
 
 <!-- prettier-ignore-start -->
 ```html
 <div class="mermaid dark">
+
+```mermaid
 %%{init: { "theme": "dark" } }%%
 [[图表正文]]
+```
+
 </div>
 
 <div class="mermaid light">
+
+```mermaid
 %%{init: { "theme": "light" } }%%
 [[图表正文]]
+```
+
 </div>
 ```
 <!-- prettier-ignore-end -->

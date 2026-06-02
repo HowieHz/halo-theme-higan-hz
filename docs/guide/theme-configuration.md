@@ -760,7 +760,7 @@ const QuickJumpConfig = (props) => {
 
 启用后需要配置以下子项：
 
-- Mermaid CSS 选择器（默认：`.content .mermaid`）
+- Mermaid CSS 选择器（默认：`.content`）
 - Mermaid Config 属性（默认：`{ startOnLoad: false }`）
 
 :::
