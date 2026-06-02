@@ -157,7 +157,7 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     // 来自官方编辑器的 Mermaid 代码块
     // 特征是 <pre><code class="language-mermaid">...</code></pre>
     // 内容在 code 元素的文本内容中
-    // 测试方法: 官方编辑器 + 插入代码块 + 选择 Mermaid 语言
+    // 测试方法：官方编辑器 + 插入代码块 + 选择 Mermaid 语言
     // 效果：自动识别并明暗双倍渲染
     if (candidateElement.matches("code.language-mermaid") && sourceElement.matches("pre")) {
       jobs.push({
@@ -193,7 +193,7 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     // Vditor 特征是 <div class="mermaid xxx"><div class="language-mermaid">...</div></div>
     // HTML 组件内容在 div.mermaid 的文本内容中，Vditor 内容在 language-mermaid 元素的文本内容中
     // 来自 Vditor 编辑器插件的 Mermaid 代码块 https://www.halo.run/store/apps/app-uBcYw
-    // 测试方法: 官方编辑器 + 插入 HTML 组件 + 输入 <div class="mermaid xxx">...</div>；或 Vditor 编辑器+输入 ```mermaid ... ```
+    // 测试方法：官方编辑器 + 插入 HTML 组件 + 输入 <div class="mermaid xxx">...</div>；或 Vditor 编辑器 + 输入 ```mermaid ... ```
     // 效果：按照指定的主题模式渲染
     if (sourceElement.matches("div.mermaid")) {
       const contentElement = sourceElement.querySelector<HTMLElement>(":scope > div.language-mermaid");
@@ -209,7 +209,7 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     // 来自 Vditor 编辑器插件的 Mermaid 代码块 https://www.halo.run/store/apps/app-uBcYw
     // ```mermaid ... ``` 渲染后特征是 <div class="language-mermaid">...</div>
     // 内容在其文本内容中
-    // 测试方法: Vditor 编辑器+输入 ```mermaid ... ```
+    // 测试方法：Vditor 编辑器 + 输入 ```mermaid ... ```
     // 效果：自动识别并明暗双倍渲染
     if (sourceElement.matches("div.language-mermaid") && !sourceElement.parentElement?.matches("div.mermaid")) {
       jobs.push({

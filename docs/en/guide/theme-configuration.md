@@ -6096,7 +6096,8 @@ When enabled, you can configure
 - Character to the right of post count
   - Type: String
   - Default Value:`)`
-    :::
+
+:::
 
 ### Tag Sort Order
 
