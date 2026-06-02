@@ -76,6 +76,29 @@ function updateAttribute(refElement: Element, attribute: ReferenceAttribute, ori
   }
 }
 
+function getFrontMatterEndIndex(rawContent: string): number | null {
+  const frontMatterMatch = rawContent.match(/^---[ \t]*(?:\r?\n)[\s\S]*?(?:\r?\n)---[ \t]*(?:\r?\n|$)/);
+
+  return frontMatterMatch ? frontMatterMatch[0].length : null;
+}
+
+function buildMermaidContent(rawContent: string, theme: MermaidRenderThemeMode): string {
+  if (theme === null) {
+    return rawContent;
+  }
+
+  const initDirective = `%%{init: { "theme": "${theme}" } }%%`;
+  const lineBreak = rawContent.includes("\r\n") ? "\r\n" : "\n";
+  const frontMatterEndIndex = getFrontMatterEndIndex(rawContent);
+
+  if (frontMatterEndIndex === null) {
+    return `${initDirective}${lineBreak}${rawContent}`;
+  }
+
+  // Mermaid frontmatter must stay at the beginning of the diagram.
+  return `${rawContent.slice(0, frontMatterEndIndex)}${initDirective}${lineBreak}${rawContent.slice(frontMatterEndIndex)}`;
+}
+
 function getMermaidRenderThemes(sourceElement: HTMLElement): MermaidRenderThemeMode[] {
   if (sourceElement.classList.contains("auto")) {
     // Auto mode renders both dark and light variants.
@@ -96,27 +119,31 @@ function getMermaidRenderThemes(sourceElement: HTMLElement): MermaidRenderThemeM
 
 function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
   const jobs: MermaidRenderJob[] = [];
+  const candidateElements = container.querySelectorAll<HTMLElement>(
+    "text-diagram, div.mermaid, div.language-mermaid, pre",
+  );
 
-  Array.from(container.children).forEach((child) => {
-    if (!(child instanceof HTMLElement)) {
+  candidateElements.forEach((sourceElement) => {
+    // 跳过已经处理过的元素，避免重复渲染
+    if (sourceElement.getAttribute("data-processed") === "true") {
       return;
     }
 
-    if (child.getAttribute("data-processed") === "true") {
-      return;
-    }
-
-    const fallbackContent = child.textContent ?? "";
+    const fallbackContent = sourceElement.textContent ?? "";
 
     // 来自文本绘图插件 https://www.halo.run/store/apps/app-ahBRi
     // 特征是 <text-diagram data-type="mermaid" data-content="..."></text-diagram>
     // 内容在 data-content 属性中
     // 测试方法：官方编辑器 + 文本绘图插件 + 插入文本绘图提供的组件
-    if (child.localName === "text-diagram" && child.getAttribute("data-type") === "mermaid") {
+    // 效果：自动识别并明暗双倍渲染
+    if (
+      sourceElement.localName.toLowerCase() === "text-diagram" &&
+      sourceElement.getAttribute("data-type") === "mermaid"
+    ) {
       jobs.push({
-        sourceElement: child,
-        rawContent: child.getAttribute("data-content") ?? fallbackContent,
-        themes: [null],
+        sourceElement,
+        rawContent: sourceElement.getAttribute("data-content") ?? fallbackContent,
+        themes: ["light", "dark"],
       });
       return;
     }
@@ -125,14 +152,29 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     // ```mermaid ... ``` 渲染后特征是 <div class="mermaid">...<div class="language-mermaid">...</div></div>
     // 内容在其文本内容中
     // 测试方法: Vditor 编辑器+输入 ```mermaid ... ```
-    const codeElement = child.matches("div.mermaid")
-      ? child.querySelector<HTMLElement>(":scope > div.language-mermaid")
-      : null;
-    if (codeElement) {
+    // 效果：按照指定的主题模式渲染
+    if (sourceElement.matches("div.mermaid")) {
+      const contentElement = sourceElement.querySelector<HTMLElement>(":scope > div.language-mermaid");
+      if (contentElement) {
+        jobs.push({
+          sourceElement,
+          rawContent: contentElement.textContent ?? fallbackContent,
+          themes: getMermaidRenderThemes(sourceElement),
+        });
+        return;
+      }
+    }
+
+    // 来自 Vditor 编辑器插件的 Mermaid 代码块 https://www.halo.run/store/apps/app-uBcYw
+    // ```mermaid ... ``` 渲染后特征是 <div class="language-mermaid">...</div>
+    // 内容在其文本内容中
+    // 测试方法: Vditor 编辑器+输入 ```mermaid ... ```
+    // 效果：自动识别并明暗双倍渲染
+    if (sourceElement.matches("div.language-mermaid") && !sourceElement.parentElement?.matches("div.mermaid")) {
       jobs.push({
-        sourceElement: child,
-        rawContent: codeElement.textContent ?? fallbackContent,
-        themes: getMermaidRenderThemes(child),
+        sourceElement,
+        rawContent: sourceElement.textContent ?? fallbackContent,
+        themes: ["light", "dark"],
       });
       return;
     }
@@ -141,14 +183,15 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     // 特征是 <pre><code class="language-mermaid">...</code></pre>
     // 内容在 code 元素的文本内容中
     // 测试方法: 官方编辑器 + 插入代码块 + 选择 Mermaid 语言
-    const officialCodeElement = child.matches("pre")
-      ? child.querySelector<HTMLElement>(":scope > code.language-mermaid")
+    // 效果：自动识别并明暗双倍渲染
+    const officialCodeElement = sourceElement.matches("pre")
+      ? sourceElement.querySelector<HTMLElement>(":scope > code.language-mermaid")
       : null;
     if (officialCodeElement) {
       jobs.push({
-        sourceElement: child,
+        sourceElement,
         rawContent: officialCodeElement.textContent ?? fallbackContent,
-        themes: [null],
+        themes: ["light", "dark"],
       });
     }
   });
@@ -162,7 +205,7 @@ function renderMermaid(
   id: string,
   theme: MermaidRenderThemeMode,
 ): Promise<void> {
-  const content = theme === null ? rawContent : `%%{init: { "theme": "${theme}" } }%%\n${rawContent}`;
+  const content = buildMermaidContent(rawContent, theme);
   const renderId = `${theme}-${id}`;
 
   return mermaid
@@ -174,6 +217,7 @@ function renderMermaid(
       }
 
       const div = document.createElement("div");
+      // .rendered-mermaid 标记渲染后的 Mermaid 图
       const divClassNames = ["rendered-mermaid"];
       if (theme !== null) {
         divClassNames.push(theme);
