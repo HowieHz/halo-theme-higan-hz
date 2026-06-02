@@ -92,6 +92,9 @@ function buildMermaidContent(rawContent: string, theme: MermaidRenderThemeMode):
   const lineBreak = rawContent.includes("\r\n") ? "\r\n" : "\n";
   const frontMatterEndIndex = getFrontMatterEndIndex(rawContent);
 
+  // %%{ ... }%% 注入需要放在用户输入的 frontmatter 后面，其余内容（其他的 %%{ ... }%%、图表正文）前面。
+  // 如果用户也给了 %%{ ... }%%，Mermaid 会将多个 init 指令会按出现顺序深度合并；同名配置项以后面的为准。
+
   if (frontMatterEndIndex === null) {
     return `${initDirective}${lineBreak}${rawContent}`;
   }
@@ -137,7 +140,7 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
   );
 
   candidateElements.forEach((candidateElement) => {
-    // 一些 Mermaid 代码块的内容在 code 元素中，一些在 pre 元素中，一些在自定义元素的属性中，因此需要根据不同的特征定位到实际包含 Mermaid 内容的元素
+    // 定位到 candidateElements 规则中最外层的元素作为 sourceElement，避免重复渲染。
     const sourceElement =
       candidateElement.matches("code.language-mermaid") && candidateElement.parentElement?.matches("pre")
         ? candidateElement.parentElement
