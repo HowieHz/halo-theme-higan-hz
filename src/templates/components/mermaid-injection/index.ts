@@ -133,10 +133,16 @@ function getMermaidRenderThemes(sourceElement: HTMLElement): MermaidRenderThemeM
 function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
   const jobs: MermaidRenderJob[] = [];
   const candidateElements = container.querySelectorAll<HTMLElement>(
-    "text-diagram, div.mermaid, div.language-mermaid, div.html-edited, pre",
+    'text-diagram[data-type="mermaid"], div.mermaid, div.language-mermaid, pre > code.language-mermaid',
   );
 
-  candidateElements.forEach((sourceElement) => {
+  candidateElements.forEach((candidateElement) => {
+    // 一些 Mermaid 代码块的内容在 code 元素中，一些在 pre 元素中，一些在自定义元素的属性中，因此需要根据不同的特征定位到实际包含 Mermaid 内容的元素
+    const sourceElement =
+      candidateElement.matches("code.language-mermaid") && candidateElement.parentElement?.matches("pre")
+        ? candidateElement.parentElement
+        : candidateElement;
+
     // 跳过已经处理过的元素，避免重复渲染
     if (isMermaidSourceProcessed(sourceElement)) {
       return;
@@ -150,15 +156,13 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     // 内容在 code 元素的文本内容中
     // 测试方法: 官方编辑器 + 插入代码块 + 选择 Mermaid 语言
     // 效果：自动识别并明暗双倍渲染
-    const officialCodeElement = sourceElement.matches("pre")
-      ? sourceElement.querySelector<HTMLElement>(":scope > code.language-mermaid")
-      : null;
-    if (officialCodeElement) {
+    if (candidateElement.matches("code.language-mermaid") && sourceElement.matches("pre")) {
       jobs.push({
         sourceElement,
-        rawContent: officialCodeElement.textContent ?? fallbackContent,
+        rawContent: candidateElement.textContent ?? fallbackContent,
         themes: ["light", "dark"],
       });
+      return;
     }
 
     // 文档方法二
@@ -180,43 +184,25 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
       return;
     }
 
-    // 文档方法三/四
-    // 来自官方编辑器的
-    // 特征是 <div class="html-edited"><div>...</div></div>
-    // 内容在 language-mermaid 元素的文本内容中
-    // 测试方法: 官方编辑器 + 插入 HTML 组件 + 输入 <div class="html-edited">class="mermaid xxx">...</div></div>
-    // 效果：按照指定的主题模式渲染
-    if (sourceElement.matches("div.html-edited")) {
-      const contentElement = sourceElement.querySelector<HTMLElement>(":scope > div.mermaid");
-      if (contentElement) {
-        jobs.push({
-          sourceElement,
-          rawContent: contentElement.textContent ?? fallbackContent,
-          themes: getMermaidRenderThemes(contentElement),
-        });
-        return;
-      }
-    }
-
-    // 文档方法五/六
+    // 文档方法三/四、Vditor 方法一/二
+    // 来自官方编辑器 HTML 组件或 Vditor 编辑器插件的 Mermaid 代码块
+    // HTML 组件特征是 <div class="html-edited"><div class="mermaid xxx">...</div></div>
+    // Vditor 特征是 <div class="mermaid xxx"><div class="language-mermaid">...</div></div>
+    // HTML 组件内容在 div.mermaid 的文本内容中，Vditor 内容在 language-mermaid 元素的文本内容中
     // 来自 Vditor 编辑器插件的 Mermaid 代码块 https://www.halo.run/store/apps/app-uBcYw
-    // ```mermaid ... ``` 渲染后特征是 <div class="mermaid xxx">...<div class="language-mermaid">...</div></div>
-    // 内容在其文本内容中
-    // 测试方法: Vditor 编辑器+输入 ```mermaid ... ```
+    // 测试方法: 官方编辑器 + 插入 HTML 组件 + 输入 <div class="mermaid xxx">...</div>；或 Vditor 编辑器+输入 ```mermaid ... ```
     // 效果：按照指定的主题模式渲染
     if (sourceElement.matches("div.mermaid")) {
       const contentElement = sourceElement.querySelector<HTMLElement>(":scope > div.language-mermaid");
-      if (contentElement) {
-        jobs.push({
-          sourceElement,
-          rawContent: contentElement.textContent ?? fallbackContent,
-          themes: getMermaidRenderThemes(sourceElement),
-        });
-        return;
-      }
+      jobs.push({
+        sourceElement,
+        rawContent: contentElement?.textContent ?? fallbackContent,
+        themes: getMermaidRenderThemes(sourceElement),
+      });
+      return;
     }
 
-    // 文档方法七
+    // 文档 Vditor 方法三
     // 来自 Vditor 编辑器插件的 Mermaid 代码块 https://www.halo.run/store/apps/app-uBcYw
     // ```mermaid ... ``` 渲染后特征是 <div class="language-mermaid">...</div>
     // 内容在其文本内容中
