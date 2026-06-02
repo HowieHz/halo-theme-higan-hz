@@ -13,7 +13,7 @@ Level-3 heading order
 ### 🐛 Bug Fixes
 ### 🔒 Security
 ### 📄 Documentation
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 -->
 
 All notable changes to this project will be documented in this file.
@@ -40,6 +40,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 📄 Documentation
 
 - Fixed remaining Chinese examples and copy in the English style reference.
+
+### 🧹 Miscellaneous Chores
+
+- Updated dependencies.
 
 ## [1.67.0] - 2026-05-28
 
@@ -115,13 +119,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.66.7] - 2026-05-25
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated dependencies.
 
 ## [1.66.6] - 2026-05-15
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated dependencies.
 
@@ -215,7 +219,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Replaced the original template-only implementation of `Random post` under `Style -> Extra Menu Items` with the official Finder API implementation.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated dependencies.
 - Made the `default` and `full` theme packages share the same `full` build output, splitting only at packaging time for the fully precompressed and default variants.
@@ -245,7 +249,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed incorrect rendering in the Moments list and the moment detail page.
 - Fixed an issue where some styles were loaded repeatedly on the moment detail page.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated dependencies.
 
@@ -331,7 +335,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated the "Inline code style" and "Dark content text style" docs with clearer descriptions of their locations, scope, and visible effects.
 - Updated the release and security docs to describe GitHub's reusable-workflow + artifact attestation flow (the SLSA v1 Build Level 3 path) and removed the `multiple.intoto.jsonl` / `slsa-verifier` instructions.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Removed the extra `slsa-github-generator`-based provenance release flow and now performs artifact upload and GitHub Artifact Attestation issuance inside the reusable build workflow.
 - Added a post-release attestation smoke check for both stable and nightly releases, automatically verifying with `--signer-workflow` that artifacts were signed by the expected reusable build workflow.
@@ -346,7 +350,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   posts and single pages. Includes three options: dotted border,
   soft highlight, and theme pill. Multi-line code blocks are unchanged.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Reduced Tailwind CSS scan sources by excluding unnecessary component and docs paths to avoid unused styles.
 - Updated dependencies.
@@ -395,7 +399,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added the [Verify Theme Package Integrity](/en/tutorial/security#verify-theme-package-integrity) section to the [Security Protection](/en/tutorial/security) docs.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Added SLSA L3 provenance generation (`slsa-github-generator`) to
   the release pipeline alongside the existing GitHub Attestation (L2).
@@ -410,7 +414,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed the missing top margin above the footer content and restored the expected spacing.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Upgraded the build tool to Vite 8.
 - Removed the `cheerio` dependency from the documentation build pipeline.
@@ -470,7 +474,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improved configuration option names.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 
@@ -489,7 +493,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed the `<meta name="description">` tag from the tag detail page to align with Halo 2.23.1's built-in SEO description output.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 
@@ -512,7 +516,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a new "Responsive Breakpoints" reference page to standardize mobile, tablet, and desktop breakpoint ranges, with both modern and compatibility syntax examples.
 - Updated the contribution guide with nightly prerelease commit-count rules (time window, stable-tag boundary, and excluded automated commits).
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Refined nightly prerelease trigger checks to count only non-merge commits within
   the previous Asia/Shanghai day window
@@ -546,7 +550,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Relocated changelog and contribution guidelines.
 - Created release process documentation.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Refactored the release workflow.
 - Added artifact attestation (Sigstore provenance) to both stable and nightly prerelease workflows for verifiable zip artifact provenance.
@@ -578,7 +582,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed incorrect second-level heading styles in article items under the home page's rich list layout.
 - Fixed incorrect title style rendering for inline links inside posts.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 
@@ -588,7 +592,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Refactored component implementations.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 - Improved the build workflow.
@@ -623,7 +627,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated the [Security Practices](/en/tutorial/security) docs.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 
@@ -686,7 +690,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed fallback error title still rendering even when the primary error title was available.
 - Fixed a typo in the built-in `Light - Gray Pink` theme filename.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 - Manually reformatted string values inside template `th:if`, `th:unless`, and `th:with` expressions.
@@ -732,7 +736,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Expanded the default Meslo font declarations: added bold, italic, and bold-italic variants.
 - Optimized custom font rendering logic.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 
@@ -749,7 +753,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed unexpected line breaks in footer content and the top menu on post pages in WebKit-based browsers.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 
@@ -776,7 +780,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added more multilingual documentation.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 
@@ -801,7 +805,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed text overflow on the Links page when link descriptions were long and could not wrap.
 - Fixed `Home Page Style - Rich List Excerpt Line Clamp` not working as expected.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 
@@ -858,7 +862,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improved docs and added a new [Browser Compatibility](/en/reference/browser-compatibility) page.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 
@@ -885,7 +889,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed the error page not rendering correctly.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 - Replaced PostCSS with Lightning CSS; build speed roughly doubled.
@@ -897,7 +901,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed `Force footer and pager to stay at page bottom` option not taking effect.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 
@@ -913,7 +917,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed page crashes caused by the random-article feature when no posts were published.
 - Removed an accidentally applied border color.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Refactored the build workflow.
 - Modularized part of the templates.
@@ -951,7 +955,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed incorrect hover style rendering for author names on the Moments page.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Refactored the build workflow.
 - Modularized part of the templates.
@@ -980,7 +984,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed redundant styles appearing in the Moments page list.
 - Fixed incorrect hover style rendering for action-bar buttons on the Moments page.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 
@@ -1008,7 +1012,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - 📉 Gzipped delta: 301.251 KiB (46.88%)
     - 📉 Raw size delta: 292.789 KiB (22.65%)
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 
@@ -1023,7 +1027,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Optimized custom page style size; script and stylesheet bundles were both reduced by [-15%](https://github.com/HowieHz/halo-theme-higan-hz/pull/327#issuecomment-3566640583).
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 
@@ -1038,7 +1042,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - When logged out, the menu shows `Login` and links to `/login`.
     - When logged in, the menu shows the username and links to `/uc`.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies.
 
@@ -1057,7 +1061,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Split part of shared styles out to reduce page size.
 - Optimized descriptions for theme configuration options.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated development dependencies and removed unused dependencies.
 
@@ -1346,7 +1350,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Name, ascending
     - Name, descending
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated dependencies ([#216](https://github.com/HowieHz/halo-theme-higan-hz/pull/216)).
 
@@ -1362,7 +1366,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Revised custom style settings.
 - Revised color scheme settings.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Optimized stylesheet output.
 
@@ -1396,7 +1400,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added documentation for the theme template map.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Optimized stylesheets.
 - Improved toolchain configuration.
@@ -1480,7 +1484,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added support for custom random-sentence text and custom Hitokoto links.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Removed unused components.
 - Updated project dependencies.
@@ -1491,7 +1495,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added support for customizing footer theme information.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Added support for customizing the theme name shown there.
 - Added support for customizing the Halo version label shown there.
@@ -1606,7 +1610,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed incorrect URLs generated by share buttons.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Applied the share buttons in this release to posts and custom pages in both desktop and mobile layouts.
 
@@ -1621,7 +1625,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Reset the default `Add Quote After Blockquote` setting to match the upstream theme.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Optimized theme-toggle logic.
 
@@ -1636,7 +1640,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Formatted text with `autocorrect`.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Merged the upstream change `chore: add annotations app-id`.
 - Merged the upstream change `chore: remove thumbnail for site logo`.
@@ -1665,7 +1669,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added animation to the back-to-top button in the mobile bottom navigation bar.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Improved code efficiency.
 - Reduced page size.
@@ -1751,7 +1755,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Reduced theme package size from 3900 KB to 679 KB for the Chinese package and 677 KB for the English package.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated project dependencies and bundled JavaScript libraries.
 
@@ -1858,7 +1862,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added documentation for the new configuration item.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Corrected inaccurate descriptions in the README.
 
@@ -1872,13 +1876,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added an option to set the character shown after the post count, which defaults to `)` in this release.
 - Added an option to show or hide nested categories.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated project documentation.
 
 ## [1.4.0] - 2024-07-11
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated project documentation.
 
@@ -1897,7 +1901,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Renamed the `RSS - Home Page RSS Display` option.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated project documentation.
 - Improved project structure.
@@ -1912,7 +1916,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   not loaded correctly, as well as styles that were not working as
   intended.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Removed unused styles to reduce final bundle size.
 
@@ -1932,7 +1936,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed stray whitespace that appeared before navigation text. Thanks to @THYUU and @L33Z22L11. [upstream#113](https://github.com/guqing/halo-theme-higan/issues/113)
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Removed deprecated `halo:comment` tag attributes.
 - Fixed issues reported by VS Code inspections.
@@ -1952,7 +1956,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improved the social profile setup guide.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Renamed `v1.1.3.1` to `v1.1.4`.
 
@@ -1972,7 +1976,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved settings labels.
 - Improved the social profile setup guide.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Updated original theme metadata to point to the current branch.
 
@@ -1999,7 +2003,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Hid the `Find me on` text when home page social profiles are empty [#33](https://github.com/HowieHz/halo-theme-higan-hz/issues/33).
 - Fixed incorrect table-of-contents positioning styles [#11](https://github.com/HowieHz/halo-theme-higan-hz/issues/11).
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Reworked inline JavaScript to use Thymeleaf natural templates so files can be formatted correctly.
 - Added an `issues` field to the theme configuration file and removed unused fields.
@@ -2026,7 +2030,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed inline code rendering issues [#24](https://github.com/HowieHz/halo-theme-higan-hz/issues/24).
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Optimized project styles and reduced redundant files.
 - Added missing tags and closed unclosed `img` tags.
@@ -2042,7 +2046,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Increased the height of the `Style - Personal Profile` input box from `100px` to `150px`.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Converted Thymeleaf inline CSS in `templates\\fragments\\layout.html` to natural template syntax to avoid formatting-related breakage.
 - Polished configuration option wording and documentation.
@@ -2079,7 +2083,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - This theme is a customized fork of [halo-theme-higan](https://github.com/guqing/halo-theme-higan) `v2.8.0`.
 
-### 🛠️ Miscellaneous Chores
+### 🧹 Miscellaneous Chores
 
 - Changed the HTML `lang` attribute from `en` to `zh`.
 - Refactored the theme-switching implementation.
