@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.68.0] - 2026-06-03
+
 ### 💥 破坏性变更
 
 - 重构 Mermaid 渲染机制，现在仅保证自动渲染 [Mermaid 适配明暗主题切换](/guide/style-reference#mermaid-适配明暗主题切换) 中列出的几种 Mermaid 写法。**依赖未记录的自定义 HTML 结构或旧版选择器行为的内容需按该段文档调整写法。**
@@ -2006,7 +2008,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.67.0...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.0...HEAD
+[1.68.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.67.0...v1.68.0
 [1.67.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.11...v1.67.0
 [1.66.11]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.10...v1.66.11
 [1.66.10]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.9...v1.66.10
