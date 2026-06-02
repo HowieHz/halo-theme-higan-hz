@@ -94,11 +94,11 @@ spec:
           value: false
           help: 如启用此项，主题将自动加载 Mermaid 脚本，以启用对应支持。
         - $formkit: text
-          name: mermaid_selector
+          name: mermaid_content_scope_selector
           if: "$is_mermaid_enable === true"
-          label: "Mermaid CSS 选择器"
-          help: "CSS 选择器，用于指定 Mermaid 渲染的区域。默认值为 .content .mermaid"
-          value: ".content .mermaid"
+          label: "Mermaid 内容范围选择器"
+          help: "只在这个 CSS 选择器匹配的区域内查找 Mermaid 图表。"
+          value: "main"
         - $formkit: code
           name: mermaid_config
           if: "$is_mermaid_enable === true"

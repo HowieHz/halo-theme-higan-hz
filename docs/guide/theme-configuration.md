@@ -760,7 +760,7 @@ const QuickJumpConfig = (props) => {
 
 启用后需要配置以下子项：
 
-- Mermaid CSS 选择器（默认：`.content .mermaid`）
+- Mermaid 内容范围选择器（默认：`main`）
 - Mermaid Config 属性（默认：`{ startOnLoad: false }`）
 
 :::
@@ -6162,7 +6162,8 @@ HTML 代码也是可以的：
 - 在文章数量右侧的字符
   - 类型：字符串
   - 默认值：`)`
-    :::
+
+:::
 
 ### 标签排序方式
 

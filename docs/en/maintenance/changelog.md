@@ -23,6 +23,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 💥 Breaking Changes
+
+- Refactored Mermaid rendering. Mermaid support now only guarantees automatic rendering for the Mermaid markup patterns documented in
+  [Mermaid Light/Dark Theme Adaptation](/en/guide/style-reference#mermaid-light-dark-theme-adaptation).
+  **Content that relies on undocumented custom HTML structures or old selector behavior must be updated according to that section.**
+
+### 🔧 Code Refactoring
+
+- Refactored Mermaid source collection and rendering.
+
+### 🐛 Bug Fixes
+
+- Fixed Mermaid diagrams with YAML frontmatter potentially failing to render.
+
+### 📄 Documentation
+
+- Fixed remaining Chinese examples and copy in the English style reference.
+
 ## [1.67.0] - 2026-05-28
 
 ### 🚀 Features

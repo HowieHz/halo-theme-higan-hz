@@ -89,7 +89,7 @@ Recommended page matching rules:
 
 ## Mermaid and PlantUML Support
 
-The theme itself provides [Mermaid Support](/en/guide/theme-configuration#mermaid-support), as well as [Mermaid Adaptation for Light/Dark Theme Switching](/en/guide/style-reference#mermaid-adapting-to-lightdark-theme-switching) support.
+The theme itself provides [Mermaid Support](/en/guide/theme-configuration#mermaid-support), as well as [Mermaid Light/Dark Theme Adaptation](/en/guide/style-reference#mermaid-light-dark-theme-adaptation) support.
 
 In addition, you can also install plugin [plugin-text-diagram](https://github.com/halo-sigs/plugin-text-diagram) ([App Store Page](https://www.halo.run/store/apps/app-ahBRi)), which provides Mermaid and PlantUML support.
 

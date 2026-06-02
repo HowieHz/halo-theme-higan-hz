@@ -762,11 +762,11 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Charts can support light/dark theme switching. For specific usage methods, please see: [Mermaid Light/Dark Theme Adaptation](/guide/style-reference#mermaid-light-dark-theme-adaptation)
+Charts can support light/dark theme switching. For specific usage methods, please see: [Mermaid Light/Dark Theme Adaptation](/en/guide/style-reference#mermaid-light-dark-theme-adaptation)
 
 After enabling, you need to configure the following sub-items:
 
-- Mermaid CSS Selector (Default: `.content .mermaid`)
+- Mermaid content scope selector (Default: `main`)
 - Mermaid Config Property (Default: `{ startOnLoad: false }`)
 
 :::
@@ -1210,7 +1210,7 @@ When enabled, you can configure:
 
 Related information:
 
-[Adapting Mermaid to Light/Dark Mode Toggle](/guide/style-reference#adapting-mermaid-to-lightdark-mode-toggle)
+[Mermaid Light/Dark Theme Adaptation](/en/guide/style-reference#mermaid-light-dark-theme-adaptation)
 
 :::
 
@@ -2946,7 +2946,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-For blockquote syntax, please refer to [Writing Style](/guide/style-reference#blockquotes).
+For blockquote syntax, please refer to [Blockquote](/en/guide/style-reference#blockquote).
 
 :::
 
@@ -3112,7 +3112,7 @@ Valid CSS length unit.
 
 ::: info 🎯 Purpose
 
-Set the top margin (`margin-top`) multiplier for [headings](/guide/style-reference#headings).
+Set the top margin (`margin-top`) multiplier for [headings](/en/guide/style-reference#heading).
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3160,7 +3160,7 @@ A value of 1 means use default margin, less than 1 reduces margin, greater than 
 
 ::: info 🎯 Purpose
 
-Set the bottom margin (`margin-bottom`) multiplier for [headings](/guide/style-reference#headings).
+Set the bottom margin (`margin-bottom`) multiplier for [headings](/en/guide/style-reference#heading).
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3203,7 +3203,7 @@ Value range is 0-5
 
 ::: info 🎯 Purpose
 
-Set the top margin multiplier for [paragraphs](/guide/style-reference#paragraphs).
+Set the top margin multiplier for [paragraphs](/en/guide/style-reference#paragraph).
 
 :::
 ::: info 📂 Configuration Item Location
@@ -3246,7 +3246,7 @@ Value range is 0-5
 
 ::: info 🎯 Purpose
 
-Set the bottom margin multiplier for [paragraphs](/guide/style-reference#paragraphs).
+Set the bottom margin multiplier for [paragraphs](/en/guide/style-reference#paragraph).
 
 :::
 ::: info 📂 Configuration Item Location
@@ -6096,7 +6096,8 @@ When enabled, you can configure
 - Character to the right of post count
   - Type: String
   - Default Value:`)`
-    :::
+
+:::
 
 ### Tag Sort Order
 

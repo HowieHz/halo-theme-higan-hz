@@ -1010,55 +1010,131 @@ This is normal text <small>This is small text</small> This is normal text
 
 ### Mermaid 适配明暗主题切换
 
-以下方法均为 HTML 标签写法。  
-相关链接：[如何在编辑器中使用 HTML 写法](#如何在编辑器中使用-html-写法)
+#### 适用于默认编辑器
 
-::: details 方法一 <Badge type="tip" text="默认编辑器可用" /> <Badge type="tip" text="Vditor 编辑器可用" />  
+::: details 方法一 代码块
 需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
-图表只写一遍，自动生成浅色/深色模式下两种图表。  
-缺点：不兼容 Vditor 编辑器的实时预览。
+官方编辑器插入“代码块”（编辑器输入 `/` 然后选择“代码块”），语言设置为 `Mermaid`，正常填写图表正文即可。  
+将会自动生成浅色/深色模式下两种图表。  
+注意：
+
+- 如果使用了类似 [Shiki](https://www.halo.run/store/apps/app-kzloktzn) 的代码高亮类插件，需在其插件配置中排除 Mermaid。
+
+:::
+
+::: details 方法二 文本绘图插件
+需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+需启用 [文本绘图插件](https://www.halo.run/store/apps/app-ahBRi)。  
+官方编辑器插入“文本绘图”块（编辑器输入 `/` 然后选择“文本绘图”），语言设置为 `Mermaid`，正常填写图表正文即可。  
+将会自动生成浅色/深色模式下两种图表。  
+注意：
+
+- 如果使用了类似 [Shiki](https://www.halo.run/store/apps/app-kzloktzn) 的代码高亮类插件，需在其插件配置中排除 Mermaid。
+- 渲染后会自动标注 `data-processed="true"`，文本绘图插件不会进行重复渲染。如果你发现同时显示了两个图表，说明文本绘图插件的处理逻辑发生了变化，可以[报告这个问题](https://github.com/HowieHz/halo-theme-higan-hz/issues/new)。
+
+:::
+
+::: details 方法三 HTML 写法自动渲染明暗主题
+需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+需要使用 HTML 写法，相关链接：[如何在编辑器中使用 HTML 写法](#如何在编辑器中使用-html-写法)。  
+图表只写一遍，自动生成浅色/深色模式下两种图表。
+
+以下是示例：
 
 <!-- prettier-ignore-start -->
 ```html
 <div class="mermaid auto">
-[[图表正文]]
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
 </div>
 ```
 <!-- prettier-ignore-end -->
 
 :::
-::: details 方法二 <Badge type="tip" text="默认编辑器可用" />  
+::: details 方法四 HTML 写法手动管理明暗主题
 需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+需要使用 HTML 写法，相关链接：[如何在编辑器中使用 HTML 写法](#如何在编辑器中使用-html-写法)。  
 手动管理浅色/深色模式下的图表。
+
+以下是示例：
 
 <!-- prettier-ignore-start -->
 ```html
 <div class="mermaid dark">
 %%{init: { "theme": "dark" } }%%
-[[图表正文]]
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
 </div>
 
 <div class="mermaid light">
 %%{init: { "theme": "light" } }%%
-[[图表正文]]
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
 </div>
 ```
 <!-- prettier-ignore-end -->
 
 :::
-::: details 方法三 <Badge type="tip" text="Vditor 编辑器可用" />  
+
+#### 适用于 Vditor 编辑器
+
+需启用 [Vditor 编辑器](https://www.halo.run/store/apps/app-uBcYw)插件，并在文章编辑器切换为 Vditor 编辑器。  
+注意：
+
+- 如果使用了类似 [Shiki](https://www.halo.run/store/apps/app-kzloktzn) 的代码高亮类插件，需在其插件配置中排除 Mermaid。
+- 需在 [Vditor](https://www.halo.run/store/apps/app-uBcYw) 插件配置中关闭内置渲染器。
+
+::: details 方法一 Markdown 写法自动渲染明暗主题
+需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。
+
+以下是示例：
+
+<!-- prettier-ignore-start -->
+````markdown
+```mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+````
+<!-- prettier-ignore-end -->
+
+如上所示，使用 Markdown 代码块语法正常书写即可。
+
+:::
+
+::: details 方法二 HTML 写法自动渲染明暗主题
 需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
-原理：由于主题的 Mermaid 初始化先加载，可在 Vditor 自带的 Mermaid 渲染前抢先渲染生成。  
-缺点：一张图会多被渲染一遍（被 Vditor 自带的 Mermaid 多渲染一遍）。  
-优点：兼容 Vditor 编辑器的实时预览。
-注意：出现的空行不可省略，没出现空行的也不能多添加空行。建议使用分屏预览模式编辑。
+图表只写一遍，自动生成浅色/深色模式下两种图表。
+
+以下是示例：
 
 <!-- prettier-ignore-start -->
 ````html
 <div class="mermaid auto">
 
 ```mermaid
-[[图表正文]]
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
 ```
 
 </div>
@@ -1066,33 +1142,39 @@ This is normal text <small>This is small text</small> This is normal text
 <!-- prettier-ignore-end -->
 
 :::
-::: details 方法四 <Badge type="tip" text="Vditor 编辑器可用" />  
-需关闭 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
-缺点：同样内容要复制粘贴一遍。由于是完全使用 Vditor 自带的渲染，所以主题设置中有关 Mermaid 的设置会失效。会继承上游的 bug，如 [mermaid-js/mermaid@5741](https://github.com/mermaid-js/mermaid/issues/5741)。  
-优点：兼容 Vditor 编辑器的实时预览，兼容性最好。完全使用 Vditor 自带的渲染，和预览表现一致。
+
+::: details 方法三 HTML 写法手动管理明暗主题
+需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+手动管理浅色/深色模式下的图表。
+
+以下是示例：
 
 <!-- prettier-ignore-start -->
 ````html
-<div class="light">
+<div class="mermaid dark">
 
 ```mermaid
----
-title: [[图表标题]]
----
-%%{init: { "theme": "light" } }%%
-[[图表正文]]
+%%{init: { "theme": "dark" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
 ```
 
 </div>
 
-<div class="dark">
+<div class="mermaid light">
 
 ```mermaid
----
-title: [[图表标题]]
----
-%%{init: { "theme": "dark" } }%%
-[[图表正文]]
+%%{init: { "theme": "light" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
 ```
 
 </div>

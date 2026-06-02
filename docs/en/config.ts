@@ -5,7 +5,7 @@ import pkg from "../../package.json" with { type: "json" };
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Higan Haozi",
-  // 首页只显示 title，其他页面才用模板
+  // Show only the title on the home page; use the template on other pages.
   titleTemplate: ":title | Higan Haozi",
   description:
     "Higan Haozi is a responsive, clean, and refreshing personal website theme for Halo CMS. This is the Higan Haozi documentation site, covering key features, configuration instructions, plugin compatibility, and example demonstrations.",
