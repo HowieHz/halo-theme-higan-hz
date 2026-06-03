@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.68.2] - 2026-06-03
+
 ### 🔧 Code Refactoring
 
 - Optimized Mermaid render job selectors and skipped Mermaid code blocks already handled by the Shiki code block component.
@@ -2110,7 +2112,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.2...HEAD
+[1.68.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.1...v1.68.2
 [1.68.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.0...v1.68.1
 [1.68.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.67.0...v1.68.0
 [1.67.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.11...v1.67.0

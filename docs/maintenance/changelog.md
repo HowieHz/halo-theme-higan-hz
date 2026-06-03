@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.68.2] - 2026-06-03
+
 ### 🔧 代码重构
 
 - 优化 Mermaid 渲染任务选择器，并跳过已由 Shiki 代码块组件接管的 Mermaid 代码块。
@@ -2027,7 +2029,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.2...HEAD
+[1.68.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.1...v1.68.2
 [1.68.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.0...v1.68.1
 [1.68.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.67.0...v1.68.0
 [1.67.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.11...v1.67.0
