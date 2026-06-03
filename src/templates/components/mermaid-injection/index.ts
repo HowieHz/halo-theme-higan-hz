@@ -103,7 +103,7 @@ function buildMermaidContent(rawContent: string, theme: MermaidRenderThemeMode):
   return `${rawContent.slice(0, frontMatterEndIndex)}${initDirective}${lineBreak}${rawContent.slice(frontMatterEndIndex)}`;
 }
 
-function isMermaidSourceProcessed(sourceElement: HTMLElement): boolean {
+function getMermaidDataProcessedElement(sourceElement: HTMLElement): HTMLElement {
   // data-processed="true" 是渲染库用来防止重复渲染的运行时状态标记
   //
   // Vditor 插件链路：data-processed 由 Vditor.mermaidRender 在调用 mermaid.render(...)
@@ -113,16 +113,13 @@ function isMermaidSourceProcessed(sourceElement: HTMLElement): boolean {
   //
   // 文本绘图插件默认命中 text-diagram[data-type=mermaid]，所以标记留在外层 text-diagram 上。
   // 动态更新或强制重渲染前需要移除该属性，或重建对应的源节点。
-  if (sourceElement.getAttribute("data-processed") === "true") {
-    return true;
-  }
+  return sourceElement.matches("pre") || sourceElement.matches("div.mermaid")
+    ? (sourceElement.querySelector<HTMLElement>(":scope > .language-mermaid") ?? sourceElement)
+    : sourceElement;
+}
 
-  const vditorLanguageMermaidElement =
-    sourceElement.matches("pre") || sourceElement.matches("div.mermaid")
-      ? sourceElement.querySelector<HTMLElement>(":scope > .language-mermaid")
-      : null;
-
-  return vditorLanguageMermaidElement?.getAttribute("data-processed") === "true";
+function isMermaidDataProcessed(dataProcessedElement: HTMLElement): boolean {
+  return dataProcessedElement.getAttribute("data-processed") === "true";
 }
 
 function markMermaidSourceProcessed(job: MermaidRenderJob): void {
@@ -160,9 +157,10 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
       candidateElement.matches("code.language-mermaid") && candidateElement.parentElement?.matches("pre")
         ? candidateElement.parentElement
         : candidateElement;
+    const dataProcessedElement = getMermaidDataProcessedElement(sourceElement);
 
     // 跳过已经处理过的元素，避免重复渲染
-    if (isMermaidSourceProcessed(sourceElement)) {
+    if (isMermaidDataProcessed(dataProcessedElement)) {
       return;
     }
 
@@ -177,7 +175,7 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     if (candidateElement.matches("code.language-mermaid") && sourceElement.matches("pre")) {
       jobs.push({
         sourceElement,
-        dataProcessedElement: candidateElement,
+        dataProcessedElement,
         rawContent: candidateElement.textContent ?? fallbackContent,
         themes: ["light", "dark"],
       });
@@ -196,7 +194,7 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     ) {
       jobs.push({
         sourceElement,
-        dataProcessedElement: sourceElement,
+        dataProcessedElement,
         rawContent: sourceElement.getAttribute("data-content") ?? fallbackContent,
         themes: ["light", "dark"],
       });
@@ -212,10 +210,13 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     // 测试方法：官方编辑器 + 插入 HTML 组件 + 输入 <div class="mermaid xxx">...</div>；或 Vditor 编辑器 + 输入 ```mermaid ... ```
     // 效果：按照指定的主题模式渲染
     if (sourceElement.matches("div.mermaid")) {
-      const contentElement = sourceElement.querySelector<HTMLElement>(":scope > div.language-mermaid");
+      const contentElement =
+        dataProcessedElement !== sourceElement && dataProcessedElement.matches(".language-mermaid")
+          ? dataProcessedElement
+          : null;
       jobs.push({
         sourceElement,
-        dataProcessedElement: contentElement ?? sourceElement,
+        dataProcessedElement,
         rawContent: contentElement?.textContent ?? fallbackContent,
         themes: getMermaidRenderThemes(sourceElement),
       });
@@ -231,7 +232,7 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     if (sourceElement.matches("div.language-mermaid") && !sourceElement.parentElement?.matches("div.mermaid")) {
       jobs.push({
         sourceElement,
-        dataProcessedElement: sourceElement,
+        dataProcessedElement,
         rawContent: sourceElement.textContent ?? fallbackContent,
         themes: ["light", "dark"],
       });
@@ -335,7 +336,7 @@ function initMermaid(): void {
   document.querySelectorAll<HTMLElement>(selector).forEach((container) => {
     collectMermaidRenderJobs(container).forEach((job) => {
       // Skip elements that are already processed or do not contain content.
-      if (isMermaidSourceProcessed(job.sourceElement) || job.rawContent.trim() === "") {
+      if (isMermaidDataProcessed(job.dataProcessedElement) || job.rawContent.trim() === "") {
         return;
       }
 
