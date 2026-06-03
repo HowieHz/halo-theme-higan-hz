@@ -52,7 +52,7 @@
  * - 插件会后挂到 Vite 内部 `vite:build-import-analysis` 的 `generateBundle`，这样既能拿到最终 HTML，又早于 `vite-plugin-sri3` 计算 `integrity`。
  * - CSS 文件直接使用自己的 bucket 映射。
  * - HTML / JS 文件只会在“自己最终能到达哪些 CSS 文件”这个候选范围内选短名，不再回退到无关组件 bucket。
- * - 其中 HTML 还会按同一个 `class=""` 属性里的 utility 做协同打分，尽量让同一标签上的 class 落到同一个 CSS owner bucket。
+ * - 其中 HTML 还会按同一标签上的 class-like 属性里的 utility 做协同打分，尽量让同一标签上的 class 落到同一个 CSS owner bucket。
  *
  * HTML 选 bucket 的顺序可以直接理解成下面这 4 步：
  *
@@ -62,7 +62,7 @@
  * - 例如 `post.html` 最终能加载 `post`、`post|page-like-post-style`、`post|page-like-post-style|archives`，那这三个 bucket
  *   才有资格参与；一个当前页面根本加载不到的 `page-like-post-style` bucket 会直接出局。
  *
- * 2. 再按单个标签的 `class=""` 分组判断
+ * 2. 再按单个标签上的 class-like 属性分组判断
  *
  * - 这里不是把整个组件文件里的 class 一锅端，而是一个标签一组。
  * - 例如 `<span class="hidden block"></span>` 会单独拿 `hidden + block` 这组 utility 选 bucket；另一个 `<div class="hidden
@@ -92,6 +92,7 @@ import { dirname, extname, relative, resolve } from "node:path";
 
 import { Context, cssHandler, htmlHandler, jsHandler } from "@tailwindcss-mangle/core";
 import { defaultMangleClassFilter } from "@tailwindcss-mangle/shared";
+import { splitCandidateTokens } from "tailwindcss-patch";
 import type { Plugin } from "vite";
 
 interface TailwindcssMangleSignaturesPluginOptions {
@@ -144,13 +145,44 @@ interface BundleAssetLike {
 
 type BundleFileLike = BundleAssetLike | BundleChunkLike;
 
+// `.tw-patch/` 是构建辅助目录，不随主题模板发布；这些文件用于跨步骤传递扫描结果和排查分桶。
 const DEFAULT_CLASS_LIST_FILE = ".tw-patch/tw-class-list.json";
 const DEFAULT_MAPPING_FILE = ".tw-patch/tw-mangle-mapping.json";
+
+// 只处理最终产物中的文本资源。字体、图片等二进制资源必须保持原样。
 const CSS_FILE_EXTENSION = ".css";
 const HTML_FILE_EXTENSION = ".html";
 const JS_FILE_EXTENSIONS = new Set([".js"]);
+
+// 需要挂到 Vite 完成 HTML 转换之后、SRI 计算之前；这个内部插件是当前稳定的插入点。
 const VITE_INTERNAL_ANALYSIS_PLUGIN = "vite:build-import-analysis";
 const UTF8_TEXT_DECODER = new TextDecoder("utf8");
+
+// `splitCandidateTokens()` 会保留部分模板/表达式边界字符；去掉外层包裹后才能和 class-list 精确比对。
+const CANDIDATE_TOKEN_WRAPPER_CHARS = new Set(['"', "'", "`", "(", ")", "{", "}", "|", ",", ";", "<", ">"]);
+
+// 只把捕获组 1 当属性名使用，避免把 `src="..."` 误当成属性名，也避免把 `data-src` 误判成 `src`。
+const HTML_ATTRIBUTE_REGEX = /([^\s"'=<>`/]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/gmu;
+
+// 裸 `x-transition` 通常没有 class 值；这里保留本体匹配能力，
+// 主要用于改写 `x-transition:*` 阶段属性值里的 Tailwind class。
+const FRAMEWORK_CLASS_ATTRIBUTE_NAME_REGEX = /^(?:th:class(?:append)?|x-transition(?::[\w-]+)?)$/u;
+
+// 精确匹配带值的 class-like 属性；`(^|[\s<])` 保证不会命中 `data-th:class` 这类属性名片段。
+// 裸 `x-transition` 没有 `=` 时不会被这条正则改写。
+const FRAMEWORK_CLASS_ATTRIBUTE_REGEX =
+  /(^|[\s<])((?:th:class(?:append)?|x-transition(?::[\w-]+)?))\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/gmu;
+
+// 用于替换时判断 class 边界，避免把短 class 误替换到长 class 内部，例如 `p-1` 命中 `p-10`。
+const CLASS_TOKEN_PART_CHAR_REGEX = /[A-Za-z0-9_:%!#./@\\[\]()-]/u;
+
+// 扫描阶段用 marker 代替真实 mangled class。marker 前缀足够特殊，便于从 handler 改写结果里回收命中项。
+const SCAN_MARKER_PREFIX = "__tw_scan_";
+const SCAN_MARKER_REGEX = /__tw_scan_(\d+)__/gmu;
+
+// 短名只使用小写字母序列，减少 CSS escape 需求并让输出稳定可读：_a, _b, ..., _aa。
+const LOWERCASE_LETTER_COUNT = 26;
+const LOWERCASE_A_CHAR_CODE = "a".charCodeAt(0);
 
 /** 统一路径分隔符，避免 Windows 路径影响后续匹配。 */
 function normalizePathSeparators(value: string): string {
@@ -175,8 +207,8 @@ function getSequenceLabel(index: number): string {
   let result = "";
 
   while (remaining >= 0) {
-    result = String.fromCharCode(97 + (remaining % 26)) + result;
-    remaining = Math.floor(remaining / 26) - 1;
+    result = String.fromCharCode(LOWERCASE_A_CHAR_CODE + (remaining % LOWERCASE_LETTER_COUNT)) + result;
+    remaining = Math.floor(remaining / LOWERCASE_LETTER_COUNT) - 1;
   }
 
   return result;
@@ -195,6 +227,74 @@ function isBundleFileLike(value: unknown): value is BundleFileLike {
 /** 转义普通字符串，供动态正则拼接使用。 */
 function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/** 去掉源码 token 外层的模板/字符串包裹符，保留任意值 class 内部的引号和括号。 */
+function trimCandidateTokenWrappers(token: string): string {
+  let startIndex = 0;
+  let endIndex = token.length;
+
+  while (startIndex < endIndex && CANDIDATE_TOKEN_WRAPPER_CHARS.has(token[startIndex] ?? "")) {
+    startIndex++;
+  }
+
+  while (endIndex > startIndex && CANDIDATE_TOKEN_WRAPPER_CHARS.has(token[endIndex - 1] ?? "")) {
+    endIndex--;
+  }
+
+  return token.slice(startIndex, endIndex);
+}
+
+function isClassTokenPartChar(char: string | undefined): boolean {
+  return char !== undefined && CLASS_TOKEN_PART_CHAR_REGEX.test(char);
+}
+
+/** 替换属性表达式中的已知 Tailwind class，避免把 `p-1` 误替换进 `p-10`。 */
+function replaceClassNameInCandidateText(sourceText: string, className: string, replacement: string): string {
+  let rewrittenText = "";
+  let currentIndex = 0;
+
+  while (currentIndex < sourceText.length) {
+    const matchIndex = sourceText.indexOf(className, currentIndex);
+
+    if (matchIndex === -1) {
+      return rewrittenText + sourceText.slice(currentIndex);
+    }
+
+    const afterIndex = matchIndex + className.length;
+    const previousChar = sourceText[matchIndex - 1];
+    const nextChar = sourceText[afterIndex];
+    const canReplace = !isClassTokenPartChar(previousChar) && !isClassTokenPartChar(nextChar);
+
+    rewrittenText += sourceText.slice(currentIndex, matchIndex);
+    rewrittenText += canReplace ? replacement : sourceText.slice(matchIndex, afterIndex);
+    currentIndex = afterIndex;
+  }
+
+  return rewrittenText;
+}
+
+/** 用 tailwindcss-patch 的候选 token splitter 找出表达式中的静态 class token，再按边界替换。 */
+function rewriteCandidateClassesInText(sourceText: string, mapping: ReadonlyMap<string, string>): string {
+  const classNamesToReplace = new Set<string>();
+
+  for (const token of splitCandidateTokens(sourceText)) {
+    const className = trimCandidateTokenWrappers(token);
+
+    if (mapping.has(className)) {
+      classNamesToReplace.add(className);
+    }
+  }
+
+  return [...classNamesToReplace]
+    .sort((left, right) => right.length - left.length || left.localeCompare(right))
+    .reduce((rewrittenText, className) => {
+      const replacement = mapping.get(className);
+
+      return replacement === undefined
+        ? rewrittenText
+        : replaceClassNameInCandidateText(rewrittenText, className, replacement);
+    }, sourceText);
 }
 
 /** 统一并校验外部传入的 base，保证后续匹配总是以 `/` 结尾。 */
@@ -249,10 +349,8 @@ function normalizeReferencedBundleFileName(reference: string): string {
 /** 统一读取 HTML 属性名，避免把 `data-src` / `data-type` 误判成目标属性。 */
 function collectHtmlAttributeNames(attributesText: string): Set<string> {
   const attributeNames = new Set<string>();
-  const attributeRegex = /([^\s"'=<>`/]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/gmu;
-
-  for (const match of attributesText.matchAll(attributeRegex)) {
-    const [attributeName = ""] = match;
+  for (const match of attributesText.matchAll(HTML_ATTRIBUTE_REGEX)) {
+    const [, attributeName = ""] = match;
 
     if (attributeName !== "") {
       attributeNames.add(attributeName.toLowerCase());
@@ -344,6 +442,24 @@ function stripInlineScriptsFromHtml(sourceText: string): string {
   }
 }
 
+/** 只改写 HTML 脚本标签之外的片段，避免把脚本文本里的 HTML 示例误当成真实标签。 */
+function rewriteHtmlOutsideInlineScripts(sourceText: string, rewriteSegment: (segmentText: string) => string): string {
+  let rewrittenSourceText = "";
+  let currentIndex = 0;
+
+  while (true) {
+    const inlineScriptMatch = findNextInlineScriptTag(sourceText, currentIndex);
+
+    if (inlineScriptMatch === null) {
+      return rewrittenSourceText + rewriteSegment(sourceText.slice(currentIndex));
+    }
+
+    rewrittenSourceText += rewriteSegment(sourceText.slice(currentIndex, inlineScriptMatch.startIndex));
+    rewrittenSourceText += sourceText.slice(inlineScriptMatch.startIndex, inlineScriptMatch.endIndex);
+    currentIndex = inlineScriptMatch.endIndex;
+  }
+}
+
 /** 判断某个 `<script>` 是否属于允许参与改写的两种内联脚本形态。 */
 function isEligibleInlineScript(attributesText: string): boolean {
   const attributeNames = collectHtmlAttributeNames(attributesText);
@@ -365,23 +481,108 @@ function isEligibleInlineScript(attributesText: string): boolean {
   return hasViteIgnore && /\btype\s*=\s*(?:"module"|'module'|module)\b/imu.test(attributesText);
 }
 
-/** 提取 HTML 中每个 `class=""` 属性里的 class 组，供同标签协同选 bucket 使用。 */
+function collectCandidateClassesInText(sourceText: string): string[] {
+  return splitCandidateTokens(sourceText)
+    .map((className) => trimCandidateTokenWrappers(className))
+    .filter((className) => className !== "");
+}
+
+/** 收集单个开始标签上所有 class-like 属性值，作为一个协同打分单元。 */
+function collectHtmlTagClassGroup(tagText: string): string[] {
+  const tagNameMatch = /^<\s*[^\s/>]+/u.exec(tagText);
+
+  if (tagNameMatch === null) {
+    return [];
+  }
+
+  const classNames: string[] = [];
+  const attributesText = tagText.slice(tagNameMatch[0].length, -1);
+
+  for (const match of attributesText.matchAll(HTML_ATTRIBUTE_REGEX)) {
+    const [, rawAttributeName = "", doubleQuotedValue, singleQuotedValue, bareValue] = match;
+    const attributeName = rawAttributeName.toLowerCase();
+
+    if (attributeName !== "class" && !FRAMEWORK_CLASS_ATTRIBUTE_NAME_REGEX.test(attributeName)) {
+      continue;
+    }
+
+    classNames.push(...collectCandidateClassesInText(doubleQuotedValue ?? singleQuotedValue ?? bareValue ?? ""));
+  }
+
+  return classNames;
+}
+
+/** 提取 HTML 中每个开始标签上的 class-like 属性组，供同标签协同选 bucket 使用。 */
 function collectHtmlClassGroups(sourceText: string): string[][] {
   const classGroups: string[][] = [];
   const safeSourceText = stripInlineScriptsFromHtml(sourceText);
-  const classAttributeRegex = /(?:^|[\s<])class\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/gmu;
 
-  for (const match of safeSourceText.matchAll(classAttributeRegex)) {
-    const [, doubleQuotedValue, singleQuotedValue, bareValue] = match;
-    const rawClassValue = doubleQuotedValue ?? singleQuotedValue ?? bareValue ?? "";
-    const classNames = rawClassValue.split(/\s+/u).filter((className) => className !== "");
+  let currentIndex = 0;
+
+  while (currentIndex < safeSourceText.length) {
+    const tagStartIndex = safeSourceText.indexOf("<", currentIndex);
+
+    if (tagStartIndex === -1) {
+      return classGroups;
+    }
+
+    const nextChar = safeSourceText[tagStartIndex + 1];
+
+    if (nextChar === "/" || nextChar === "!" || nextChar === "?") {
+      currentIndex = tagStartIndex + 1;
+      continue;
+    }
+
+    const tagEndIndex = findTagEnd(safeSourceText, tagStartIndex + 1);
+
+    if (tagEndIndex === -1) {
+      // HTML 产物异常时保守停止分组，不影响后续逐 class fallback 改写。
+      return classGroups;
+    }
+
+    const classNames = collectHtmlTagClassGroup(safeSourceText.slice(tagStartIndex, tagEndIndex + 1));
 
     if (classNames.length > 0) {
       classGroups.push(classNames);
     }
+
+    currentIndex = tagEndIndex + 1;
   }
 
   return classGroups;
+}
+
+/** 改写模板/框架 class 表达式属性，补齐官方 HTML handler 不处理的动态 class 字面量。 */
+function rewriteFrameworkClassAttributesInHtml(sourceText: string, mapping: ReadonlyMap<string, string>): string {
+  return rewriteHtmlOutsideInlineScripts(sourceText, (segmentText) => {
+    let rewrittenSegmentText = "";
+    let currentIndex = 0;
+
+    for (const match of segmentText.matchAll(FRAMEWORK_CLASS_ATTRIBUTE_REGEX)) {
+      const matchIndex = match.index;
+
+      if (matchIndex === undefined) {
+        continue;
+      }
+
+      const [rawAttribute = "", prefix = "", attributeName = "", doubleQuotedValue, singleQuotedValue, bareValue] =
+        match;
+      const rawValue = doubleQuotedValue ?? singleQuotedValue ?? bareValue ?? "";
+      const rewrittenValue = rewriteCandidateClassesInText(rawValue, mapping);
+      const rewrittenAttribute =
+        doubleQuotedValue !== undefined
+          ? `${prefix}${attributeName}="${rewrittenValue}"`
+          : singleQuotedValue !== undefined
+            ? `${prefix}${attributeName}='${rewrittenValue}'`
+            : `${prefix}${attributeName}=${rewrittenValue}`;
+
+      rewrittenSegmentText += segmentText.slice(currentIndex, matchIndex);
+      rewrittenSegmentText += rewrittenAttribute;
+      currentIndex = matchIndex + rawAttribute.length;
+    }
+
+    return rewrittenSegmentText + segmentText.slice(currentIndex);
+  });
 }
 
 /** 用官方 `jsHandler` 二次处理 HTML 中符合条件的内联 `<script>`。 */
@@ -588,9 +789,6 @@ function countClassOccurrencesInText(sourceText: string, fileName: string, class
   });
 }
 
-const SCAN_MARKER_PREFIX = "__tw_scan_";
-const SCAN_MARKER_REGEX = /__tw_scan_(\d+)__/gmu;
-
 /** 为扫描阶段生成稳定且可回收的占位类名。 */
 function toScanMarker(index: number): string {
   return `${SCAN_MARKER_PREFIX}${index}__`;
@@ -630,7 +828,7 @@ function createBucketContext(mapping: ReadonlyMap<string, string>): Context {
  *
  * 这样做的意义不是改变 bucket 语义，而是把“怎么安全地改 HTML/CSS/JS”这件事重新交给官方实现：
  *
- * - HTML：先走 `htmlparser2` 改 `class=""`，再补一层符合条件的内联 `<script>` -> `jsHandler`
+ * - HTML：先走 `htmlparser2` 改 `class=""`，再补 Thymeleaf class 表达式和符合条件的内联 `<script>`
  * - CSS：UTWM 官方 CSS handler
  * - JS：Babel AST + `MagicString`
  */
@@ -644,6 +842,7 @@ async function rewriteWithUtwmHandler(
 
   if (fileName.endsWith(HTML_FILE_EXTENSION)) {
     const rewrittenHtml = htmlHandler(sourceText, { ctx, id: fileName }).code;
+    const rewrittenTemplateHtml = rewriteFrameworkClassAttributesInHtml(rewrittenHtml, mapping);
 
     // `@tailwindcss-mangle/core` 的 `htmlHandler` 只会处理 `class=""` 属性，
     // 不会继续进入内联 `<script>`。这里额外补一层，仅处理：
@@ -652,7 +851,7 @@ async function rewriteWithUtwmHandler(
     // - `<script vite-ignore type="module"> ... </script>`
     //
     // 并显式跳过带 `src=` 的脚本标签，避免误改外链资源引用。
-    return rewriteEligibleInlineScriptsInHtml(rewrittenHtml, fileName, mapping);
+    return rewriteEligibleInlineScriptsInHtml(rewrittenTemplateHtml, fileName, mapping);
   }
 
   if (fileName.endsWith(CSS_FILE_EXTENSION)) {
@@ -708,37 +907,6 @@ async function collectClassesWithUtwmHandler(
   }
 
   return classes;
-}
-
-type GenerateBundleHook = NonNullable<Plugin["generateBundle"]>;
-type GenerateBundleHandler = (...args: unknown[]) => Promise<void> | void;
-
-/**
- * 像 `vite-plugin-sri3` 一样，把逻辑后挂到 Vite 内部的 `generateBundle`。
- *
- * 这么做是为了同时满足两个条件：
- *
- * - 能看到 `vite:build-html` 已经产出的最终 HTML 资产
- * - 又必须早于 `vite-plugin-sri3` 的哈希计算
- */
-function hijackGenerateBundle(plugin: Plugin, afterHook: GenerateBundleHandler): void {
-  const hook = plugin.generateBundle;
-
-  if (typeof hook === "object" && hook.handler !== undefined) {
-    const originalHandler = hook.handler;
-    hook.handler = async function (...args) {
-      await originalHandler.apply(this, args);
-      await afterHook.apply(this, args);
-    };
-    return;
-  }
-
-  if (typeof hook === "function") {
-    plugin.generateBundle = async function (...args) {
-      await hook.apply(this, args);
-      await afterHook.apply(this, args);
-    } satisfies GenerateBundleHook;
-  }
 }
 
 type BundleFileContent = string | Uint8Array;
@@ -798,6 +966,37 @@ function isHtmlBundleFile(fileName: string): boolean {
   return fileName.endsWith(HTML_FILE_EXTENSION);
 }
 
+type GenerateBundleHook = NonNullable<Plugin["generateBundle"]>;
+type GenerateBundleHandler = (...args: unknown[]) => Promise<void> | void;
+
+/**
+ * 像 `vite-plugin-sri3` 一样，把逻辑后挂到 Vite 内部的 `generateBundle`。
+ *
+ * 这么做是为了同时满足两个条件：
+ *
+ * - 能看到 `vite:build-html` 已经产出的最终 HTML 资产
+ * - 又必须早于 `vite-plugin-sri3` 的哈希计算
+ */
+function hijackGenerateBundle(plugin: Plugin, afterHook: GenerateBundleHandler): void {
+  const hook = plugin.generateBundle;
+
+  if (typeof hook === "object" && hook.handler !== undefined) {
+    const originalHandler = hook.handler;
+    hook.handler = async function (...args) {
+      await originalHandler.apply(this, args);
+      await afterHook.apply(this, args);
+    };
+    return;
+  }
+
+  if (typeof hook === "function") {
+    plugin.generateBundle = async function (...args) {
+      await hook.apply(this, args);
+      await afterHook.apply(this, args);
+    } satisfies GenerateBundleHook;
+  }
+}
+
 export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMangleSignaturesPluginOptions): Plugin {
   const normalizedBase = normalizeBasePath(options.base);
   const classListFile = resolve(options.projectRoot, options.classListFile ?? DEFAULT_CLASS_LIST_FILE);
@@ -830,6 +1029,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
     const assetGraph = buildAssetGraph(bundle, bundleFileContents, htmlAssetReferenceRegex);
     const fileNamesToRewrite = new Set(bundleFileContents.keys());
 
+    // 阶段 1：从每个 HTML entry 出发传播可达关系，得到“哪个文件会被哪些 entry 加载”。
     for (const [entryKey, outputHtmlFileName] of entryOutputFiles.entries()) {
       if (!bundleFileContents.has(outputHtmlFileName)) {
         continue;
@@ -849,6 +1049,9 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       }
     }
 
+    // 阶段 2：按文件扫描已知 Tailwind class，并把文件归入它的 entry bucket。
+    //
+    // 这里先把 HTML / CSS / JS 都收集进 bucket 候选；真正短名只会分配给有 CSS 规则落盘的 class 实例。
     for (const fileName of fileNamesToRewrite) {
       const sourceText = toTextBundleFileContent(fileName, bundleFileContents.get(fileName));
 
@@ -896,6 +1099,9 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       filesByClassByBucket.set(bucketKey, bucketClassFiles);
     }
 
+    // 阶段 3：给“CSS owner bucket 中真实存在的 class 实例”分配全局唯一短名。
+    //
+    // HTML 里出现但没有任何可达 CSS 产物承载的 class 不会进入这里，避免把运行时仍需原样保留的字符串误改掉。
     const sortedBucketKeys = [...classNameMapByBucket.keys()].sort((left, right) => {
       if (left === globalBucketKey) {
         return -1;
@@ -982,6 +1188,8 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
     }
 
     const reachableCssFilesByFile = new Map<string, string[]>();
+
+    // 阶段 4：为 HTML / JS 消费方预计算可达 CSS 文件，后续只允许从这些 CSS owner bucket 里选短名。
     for (const fileName of fileNamesToRewrite) {
       if (isCssBundleFile(fileName)) {
         continue;
@@ -1053,6 +1261,9 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
 
     const preferredBucketKeyByFileClass = new Map<string, Map<string, string>>();
 
+    // 阶段 5：HTML 额外按同一标签上的 class-like 属性做协同打分。
+    //
+    // 这一步只影响“同一个 class 有多个可达 CSS owner 时选哪个”，不影响扫描和分桶本身。
     for (const [fileName, sourceContent] of bundleFileContents.entries()) {
       if (!isHtmlBundleFile(fileName)) {
         continue;
@@ -1157,7 +1368,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
      * 当前实现不再让 HTML / JS 直接按自己的文件 bucket 私有命名，而是只在当前文件最终可达的 CSS 产物里找 owner bucket：
      *
      * - CSS 文件：继续使用自己的 bucket 映射；
-     * - HTML：先按同一个 `class=""` 分组做协同打分，再回填最终胜出的 CSS owner bucket；
+     * - HTML：先按同一标签上的 class-like 属性分组做协同打分，再回填最终胜出的 CSS owner bucket；
      * - JS：只在当前文件可达的 CSS bucket 里选，不再 fallback 到无关组件 bucket。
      *
      * 一个最小例子：
@@ -1210,6 +1421,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       return undefined;
     };
 
+    // 阶段 6：按当前文件的局部 mapping 改写最终 bundle 内容。
     for (const [fileName, sourceText] of bundleFileContents.entries()) {
       const classes = classesByFile.get(fileName);
 
