@@ -106,12 +106,11 @@ function buildMermaidContent(rawContent: string, theme: MermaidRenderThemeMode):
 function isMermaidDataProcessed(dataProcessedElement: HTMLElement): boolean {
   // data-processed="true" 是渲染库用来防止重复渲染的运行时状态标记
   //
-  // Vditor 插件链路：data-processed 由 Vditor.mermaidRender 在调用 mermaid.render(...)
-  // 后写入，位置是它命中的 .language-mermaid 节点本身，不是 pre 或外层文章容器。
+  // - Vditor 插件链路：data-processed 由 Vditor.mermaidRender 在调用 mermaid.render(...)
+  //   后写入，位置是它命中的 .language-mermaid 节点本身，不是 pre 或外层文章容器。
+  // - Mermaid run/init 链路：data-processed 由 Mermaid 自己写入，位置是 run() 命中的元素。
+  // - 文本绘图插件默认命中 text-diagram[data-type=mermaid]，所以标记留在外层 text-diagram 上。
   //
-  // Mermaid run/init 链路：data-processed 由 Mermaid 自己写入，位置是 run() 命中的元素。
-  //
-  // 文本绘图插件默认命中 text-diagram[data-type=mermaid]，所以标记留在外层 text-diagram 上。
   // 动态更新或强制重渲染前需要移除该属性，或重建对应的源节点。
   return dataProcessedElement.getAttribute("data-processed") === "true";
 }
@@ -150,32 +149,15 @@ function pushMermaidRenderJob(jobs: MermaidRenderJob[], job: MermaidRenderJob): 
 function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
   const jobs: MermaidRenderJob[] = [];
 
-  container.querySelectorAll<HTMLElement>('text-diagram[data-type="mermaid"]').forEach((sourceElement) => {
-    const fallbackContent = sourceElement.textContent ?? "";
-
-    // 文档方法二
-    // 来自文本绘图插件 https://www.halo.run/store/apps/app-ahBRi
-    // 特征是 <text-diagram data-type="mermaid" data-content="..."></text-diagram>
-    // 内容在 data-content 属性中
-    // 测试方法：官方编辑器 + 文本绘图插件 + 插入文本绘图提供的组件
-    // 效果：自动识别并明暗双倍渲染
-    pushMermaidRenderJob(jobs, {
-      sourceElement,
-      dataProcessedElement: sourceElement,
-      rawContent: sourceElement.getAttribute("data-content") ?? fallbackContent,
-      themes: ["light", "dark"],
-    });
-  });
-
+  // 默认编辑器方法一
   container.querySelectorAll<HTMLElement>("pre > code.language-mermaid").forEach((codeElement) => {
     const sourceElement = codeElement.parentElement;
     if (!sourceElement?.matches("pre")) {
       return;
     }
-
-    // 文档方法一
     // 来自官方编辑器的 Mermaid 代码块
     // 特征是 <pre><code class="language-mermaid">...</code></pre>
+    // 渲染标记位是 <pre><code class="language-mermaid" data-processed="true">...</code></pre>
     // 内容在 code 元素的文本内容中
     // 测试方法：官方编辑器 + 插入代码块 + 选择 Mermaid 语言
     // 效果：自动识别并明暗双倍渲染
@@ -187,36 +169,32 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     });
   });
 
-  container.querySelectorAll<HTMLElement>("div.mermaid > div.language-mermaid").forEach((contentElement) => {
-    const sourceElement = contentElement.parentElement;
-    if (!sourceElement?.matches("div.mermaid")) {
-      return;
-    }
-
-    // Vditor 方法一/二
-    // 来自 Vditor 编辑器插件的 Mermaid 代码块 https://www.halo.run/store/apps/app-uBcYw
-    // 特征是 <div class="mermaid xxx"><div class="language-mermaid">...</div></div>
-    // 内容在 language-mermaid 元素的文本内容中
-    // 测试方法：Vditor 编辑器 + 输入 ```mermaid ... ```
-    // 效果：按照指定的主题模式渲染
+  // 默认编辑器方法二
+  container.querySelectorAll<HTMLElement>('text-diagram[data-type="mermaid"]').forEach((sourceElement) => {
+    // 来自文本绘图插件 https://www.halo.run/store/apps/app-ahBRi
+    // 特征是 <text-diagram data-type="mermaid" data-content="..."></text-diagram>
+    // 渲染标记位是 <text-diagram data-type="mermaid" data-content="..." data-processed="true"></text-diagram>
+    // 内容在 data-content 属性中
+    // 测试方法：官方编辑器 + 文本绘图插件 + 插入文本绘图提供的组件
+    // 效果：自动识别并明暗双倍渲染
     pushMermaidRenderJob(jobs, {
       sourceElement,
-      dataProcessedElement: contentElement,
-      rawContent: contentElement.textContent ?? sourceElement.textContent ?? "",
-      themes: getMermaidRenderThemes(sourceElement),
+      dataProcessedElement: sourceElement,
+      rawContent: sourceElement.getAttribute("data-content") ?? "",
+      themes: ["light", "dark"],
     });
   });
 
+  // 默认编辑器方法三/四
   container.querySelectorAll<HTMLElement>("div.mermaid").forEach((sourceElement) => {
     if (sourceElement.childElementCount > 0) {
       return;
     }
-
-    // 文档方法三/四
-    // 来自官方编辑器 HTML 组件的 Mermaid 代码块
+    // 来自默认编辑器 HTML 组件的 Mermaid 代码块
     // 特征是 <div class="html-edited"><div class="mermaid xxx">...</div>(若干个)</div>
+    // 渲染标记位是 <div class="mermaid xxx" data-processed="true">...</div>
     // 内容在 div.mermaid 的文本内容中
-    // 测试方法：官方编辑器 + 插入 HTML 组件 + 输入 <div class="mermaid xxx">...</div>
+    // 测试方法：默认编辑器 + 插入 HTML 组件 + 输入 <div class="mermaid xxx">...</div>
     // 效果：按照指定的主题模式渲染
     pushMermaidRenderJob(jobs, {
       sourceElement,
@@ -226,14 +204,34 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     });
   });
 
+  // Vditor 方法一/二
+  container.querySelectorAll<HTMLElement>("div.mermaid > div.language-mermaid").forEach((contentElement) => {
+    const sourceElement = contentElement.parentElement;
+    if (!sourceElement?.matches("div.mermaid")) {
+      return;
+    }
+    // 来自 Vditor 编辑器插件的 Mermaid 代码块 https://www.halo.run/store/apps/app-uBcYw
+    // 特征是 <div class="mermaid xxx"><div class="language-mermaid">...</div></div>
+    // 渲染标记位是 <div class="mermaid xxx"><div class="language-mermaid" data-processed="true">...</div></div>
+    // 内容在 .language-mermaid 元素的文本内容中
+    // 测试方法：Vditor 编辑器 + 输入 ```mermaid ... ```
+    // 效果：按照指定的主题模式渲染
+    pushMermaidRenderJob(jobs, {
+      sourceElement,
+      dataProcessedElement: contentElement,
+      rawContent: contentElement.textContent ?? "",
+      themes: getMermaidRenderThemes(sourceElement),
+    });
+  });
+
+  // Vditor 编辑器方法三
   container.querySelectorAll<HTMLElement>("div.language-mermaid").forEach((sourceElement) => {
     if (sourceElement.parentElement?.matches("div.mermaid")) {
       return;
     }
-
-    // 文档 Vditor 方法三
     // 来自 Vditor 编辑器插件的 Mermaid 代码块 https://www.halo.run/store/apps/app-uBcYw
-    // ```mermaid ... ``` 渲染后特征是 <div class="language-mermaid">...</div>
+    // ```mermaid ... ``` Markdown 渲染后特征是 <div class="language-mermaid">...</div>
+    // 渲染标记位是 <div class="language-mermaid" data-processed="true">...</div>
     // 内容在其文本内容中
     // 测试方法：Vditor 编辑器 + 输入 ```mermaid ... ```
     // 效果：自动识别并明暗双倍渲染
