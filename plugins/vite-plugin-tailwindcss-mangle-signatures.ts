@@ -52,7 +52,7 @@
  * - 插件会后挂到 Vite 内部 `vite:build-import-analysis` 的 `generateBundle`，这样既能拿到最终 HTML，又早于 `vite-plugin-sri3` 计算 `integrity`。
  * - CSS 文件直接使用自己的 bucket 映射。
  * - HTML / JS 文件只会在“自己最终能到达哪些 CSS 文件”这个候选范围内选短名，不再回退到无关组件 bucket。
- * - 其中 HTML 还会按同一个 `class=""` 属性里的 utility 做协同打分，尽量让同一标签上的 class 落到同一个 CSS owner bucket。
+ * - 其中 HTML 还会按同一标签上的 class-like 属性里的 utility 做协同打分，尽量让同一标签上的 class 落到同一个 CSS owner bucket。
  *
  * HTML 选 bucket 的顺序可以直接理解成下面这 4 步：
  *
@@ -62,7 +62,7 @@
  * - 例如 `post.html` 最终能加载 `post`、`post|page-like-post-style`、`post|page-like-post-style|archives`，那这三个 bucket
  *   才有资格参与；一个当前页面根本加载不到的 `page-like-post-style` bucket 会直接出局。
  *
- * 2. 再按单个标签的 `class=""` 分组判断
+ * 2. 再按单个标签上的 class-like 属性分组判断
  *
  * - 这里不是把整个组件文件里的 class 一锅端，而是一个标签一组。
  * - 例如 `<span class="hidden block"></span>` 会单独拿 `hidden + block` 这组 utility 选 bucket；另一个 `<div class="hidden
@@ -153,6 +153,8 @@ const JS_FILE_EXTENSIONS = new Set([".js"]);
 const VITE_INTERNAL_ANALYSIS_PLUGIN = "vite:build-import-analysis";
 const UTF8_TEXT_DECODER = new TextDecoder("utf8");
 const CANDIDATE_TOKEN_WRAPPER_CHARS = new Set(['"', "'", "`", "(", ")", "{", "}", "|", ",", ";", "<", ">"]);
+const HTML_ATTRIBUTE_REGEX = /([^\s"'=<>`/]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/gmu;
+const FRAMEWORK_CLASS_ATTRIBUTE_NAME_REGEX = /^(?:th:class(?:append)?|x-transition(?::[\w-]+)?)$/u;
 const FRAMEWORK_CLASS_ATTRIBUTE_REGEX =
   /(^|[\s<])((?:th:class(?:append)?|x-transition(?::[\w-]+)?))\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/gmu;
 const CLASS_TOKEN_PART_CHAR_REGEX = /[A-Za-z0-9_:%!#./@\\[\]()-]/u;
@@ -322,10 +324,8 @@ function normalizeReferencedBundleFileName(reference: string): string {
 /** 统一读取 HTML 属性名，避免把 `data-src` / `data-type` 误判成目标属性。 */
 function collectHtmlAttributeNames(attributesText: string): Set<string> {
   const attributeNames = new Set<string>();
-  const attributeRegex = /([^\s"'=<>`/]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/gmu;
-
-  for (const match of attributesText.matchAll(attributeRegex)) {
-    const [attributeName = ""] = match;
+  for (const match of attributesText.matchAll(HTML_ATTRIBUTE_REGEX)) {
+    const [, attributeName = ""] = match;
 
     if (attributeName !== "") {
       attributeNames.add(attributeName.toLowerCase());
@@ -456,22 +456,70 @@ function isEligibleInlineScript(attributesText: string): boolean {
   return hasViteIgnore && /\btype\s*=\s*(?:"module"|'module'|module)\b/imu.test(attributesText);
 }
 
-/** 提取 HTML 中每个 `class=""` 属性里的 class 组，供同标签协同选 bucket 使用。 */
+function collectCandidateClassesInText(sourceText: string): string[] {
+  return splitCandidateTokens(sourceText)
+    .map((className) => trimCandidateTokenWrappers(className))
+    .filter((className) => className !== "");
+}
+
+function collectHtmlTagClassGroup(tagText: string): string[] {
+  const tagNameMatch = /^<\s*[^\s/>]+/u.exec(tagText);
+
+  if (tagNameMatch === null) {
+    return [];
+  }
+
+  const classNames: string[] = [];
+  const attributesText = tagText.slice(tagNameMatch[0].length, -1);
+
+  for (const match of attributesText.matchAll(HTML_ATTRIBUTE_REGEX)) {
+    const [, rawAttributeName = "", doubleQuotedValue, singleQuotedValue, bareValue] = match;
+    const attributeName = rawAttributeName.toLowerCase();
+
+    if (attributeName !== "class" && !FRAMEWORK_CLASS_ATTRIBUTE_NAME_REGEX.test(attributeName)) {
+      continue;
+    }
+
+    classNames.push(...collectCandidateClassesInText(doubleQuotedValue ?? singleQuotedValue ?? bareValue ?? ""));
+  }
+
+  return classNames;
+}
+
+/** 提取 HTML 中每个开始标签上的 class-like 属性组，供同标签协同选 bucket 使用。 */
 function collectHtmlClassGroups(sourceText: string): string[][] {
   const classGroups: string[][] = [];
   const safeSourceText = stripInlineScriptsFromHtml(sourceText);
-  const classAttributeRegex = /(?:^|[\s<])class\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/gmu;
 
-  for (const match of safeSourceText.matchAll(classAttributeRegex)) {
-    const [, doubleQuotedValue, singleQuotedValue, bareValue] = match;
-    const rawClassValue = doubleQuotedValue ?? singleQuotedValue ?? bareValue ?? "";
-    const classNames = splitCandidateTokens(rawClassValue)
-      .map((className) => trimCandidateTokenWrappers(className))
-      .filter((className) => className !== "");
+  let currentIndex = 0;
+
+  while (currentIndex < safeSourceText.length) {
+    const tagStartIndex = safeSourceText.indexOf("<", currentIndex);
+
+    if (tagStartIndex === -1) {
+      return classGroups;
+    }
+
+    const nextChar = safeSourceText[tagStartIndex + 1];
+
+    if (nextChar === "/" || nextChar === "!" || nextChar === "?") {
+      currentIndex = tagStartIndex + 1;
+      continue;
+    }
+
+    const tagEndIndex = findTagEnd(safeSourceText, tagStartIndex + 1);
+
+    if (tagEndIndex === -1) {
+      return classGroups;
+    }
+
+    const classNames = collectHtmlTagClassGroup(safeSourceText.slice(tagStartIndex, tagEndIndex + 1));
 
     if (classNames.length > 0) {
       classGroups.push(classNames);
     }
+
+    currentIndex = tagEndIndex + 1;
   }
 
   return classGroups;
@@ -1284,7 +1332,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
      * 当前实现不再让 HTML / JS 直接按自己的文件 bucket 私有命名，而是只在当前文件最终可达的 CSS 产物里找 owner bucket：
      *
      * - CSS 文件：继续使用自己的 bucket 映射；
-     * - HTML：先按同一个 `class=""` 分组做协同打分，再回填最终胜出的 CSS owner bucket；
+     * - HTML：先按同一标签上的 class-like 属性分组做协同打分，再回填最终胜出的 CSS owner bucket；
      * - JS：只在当前文件可达的 CSS bucket 里选，不再 fallback 到无关组件 bucket。
      *
      * 一个最小例子：
