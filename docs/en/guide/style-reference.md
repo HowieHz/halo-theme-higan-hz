@@ -1099,8 +1099,8 @@ flowchart TD
 Enable the [Vditor Editor plugin](https://www.halo.run/store/apps/app-uBcYw), then switch the post editor to Vditor.
 
 <!-- No need to exclude Mermaid in the Shiki plugin settings.
-Shiki runs at a lower priority than the Vditor editor plugin; if
-the theme's Mermaid support is disabled, Vditor will take over
+Shiki runs at a lower priority than the Vditor editor plugin. If
+the theme's Mermaid support is disabled, Vditor takes over
 rendering. -->
 
 ::: details Method 1: Markdown syntax with automatic light/dark rendering

@@ -1088,7 +1088,7 @@ flowchart TD
 
 需启用 [Vditor 编辑器](https://www.halo.run/store/apps/app-uBcYw)插件，并在文章编辑器切换为 Vditor 编辑器。
 
-<!-- 无需关闭在 shiki 插件配置中排除 Mermaid，shiki 优先级没 vditor 编辑器优先级高，如果主题不开 Mermaid 支持，渲染会被 Vditor 编辑器抢走 -->
+<!-- 无需在 Shiki 插件配置中排除 Mermaid；Shiki 的处理优先级低于 Vditor 编辑器插件。如果主题未启用 Mermaid 支持，Vditor 会接管渲染。 -->
 
 ::: details 方法一 Markdown 写法自动渲染明暗主题
 需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。
