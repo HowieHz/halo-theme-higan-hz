@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Took over the Mermaid renderers built into the Text Diagram and Vditor editor plugins, so their rendering features no longer need to be disabled for the theme's Mermaid adaptation to work normally.
+
 ## [1.68.0] - 2026-06-03
 
 ### 💥 Breaking Changes
