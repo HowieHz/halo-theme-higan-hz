@@ -156,18 +156,18 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
   // 内容在 code 元素的文本内容中
   // 测试方法：官方编辑器 + 插入代码块 + 选择 Mermaid 语言
   // 效果：自动识别并明暗双倍渲染
-  container.querySelectorAll<HTMLElement>("pre > code.language-mermaid").forEach((codeElement) => {
-    const sourceElement = codeElement.parentElement;
-    if (!sourceElement) {
-      return;
-    }
-    pushMermaidRenderJob(jobs, {
-      sourceElement,
-      dataProcessedElement: codeElement,
-      rawContent: codeElement.textContent ?? sourceElement.textContent ?? "",
-      themes: ["light", "dark"],
+  // 如果外层有 shiki-code，变成了 shiki-code > pre > code.language-mermaid，说明已经被 shiki 插件处理过了，跳过处理。
+  // highlight.js 插件不支持 Mermaid 语法高亮，不会生成 pre > code.language-mermaid.hljs[data-highlighted="yes"] 结构。
+  container
+    .querySelectorAll<HTMLElement>("pre:not(shiki-code > pre) > code.language-mermaid")
+    .forEach((codeElement) => {
+      pushMermaidRenderJob(jobs, {
+        sourceElement: codeElement.parentElement!,
+        dataProcessedElement: codeElement,
+        rawContent: codeElement.textContent ?? "",
+        themes: ["light", "dark"],
+      });
     });
-  });
 
   // 默认编辑器方法二
   // 来自文本绘图插件 https://www.halo.run/store/apps/app-ahBRi
@@ -192,10 +192,7 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
   // 内容在 div.mermaid 的文本内容中
   // 测试方法：默认编辑器 + 插入 HTML 组件 + 输入 <div class="mermaid xxx">...</div>
   // 效果：按照指定的主题模式渲染
-  container.querySelectorAll<HTMLElement>("div.mermaid").forEach((sourceElement) => {
-    if (sourceElement.childElementCount > 0) {
-      return;
-    }
+  container.querySelectorAll<HTMLElement>("div.mermaid:not(:has(> *))").forEach((sourceElement) => {
     pushMermaidRenderJob(jobs, {
       sourceElement,
       dataProcessedElement: sourceElement,
@@ -212,15 +209,11 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
   // 测试方法：Vditor 编辑器 + 输入 ```mermaid ... ```
   // 效果：按照指定的主题模式渲染
   container.querySelectorAll<HTMLElement>("div.mermaid > div.language-mermaid").forEach((contentElement) => {
-    const sourceElement = contentElement.parentElement;
-    if (!sourceElement) {
-      return;
-    }
     pushMermaidRenderJob(jobs, {
-      sourceElement,
+      sourceElement: contentElement.parentElement!,
       dataProcessedElement: contentElement,
       rawContent: contentElement.textContent ?? "",
-      themes: getMermaidRenderThemes(sourceElement),
+      themes: getMermaidRenderThemes(contentElement.parentElement!),
     });
   });
 
@@ -231,17 +224,16 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
   // 内容在其文本内容中
   // 测试方法：Vditor 编辑器 + 输入 ```mermaid ... ```
   // 效果：自动识别并明暗双倍渲染
-  container.querySelectorAll<HTMLElement>("div.language-mermaid").forEach((sourceElement) => {
-    if (sourceElement.parentElement?.matches("div.mermaid")) {
-      return;
-    }
-    pushMermaidRenderJob(jobs, {
-      sourceElement,
-      dataProcessedElement: sourceElement,
-      rawContent: sourceElement.textContent ?? "",
-      themes: ["light", "dark"],
+  container
+    .querySelectorAll<HTMLElement>("div.language-mermaid:not(div.mermaid > div.language-mermaid)")
+    .forEach((sourceElement) => {
+      pushMermaidRenderJob(jobs, {
+        sourceElement,
+        dataProcessedElement: sourceElement,
+        rawContent: sourceElement.textContent ?? "",
+        themes: ["light", "dark"],
+      });
     });
-  });
 
   return jobs;
 }
