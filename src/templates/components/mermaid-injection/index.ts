@@ -205,7 +205,7 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
 
     // 文档方法三/四、Vditor 方法一/二
     // 来自官方编辑器 HTML 组件或 Vditor 编辑器插件的 Mermaid 代码块
-    // HTML 组件特征是 <div class="html-edited"><div class="mermaid xxx">...</div></div>
+    // HTML 组件特征是 <div class="html-edited"><div class="mermaid xxx">...</div>(若干个)</div>
     // Vditor 特征是 <div class="mermaid xxx"><div class="language-mermaid">...</div></div>
     // HTML 组件内容在 div.mermaid 的文本内容中，Vditor 内容在 language-mermaid 元素的文本内容中
     // 来自 Vditor 编辑器插件的 Mermaid 代码块 https://www.halo.run/store/apps/app-uBcYw
@@ -242,7 +242,7 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
   return jobs;
 }
 
-function renderMermaid(
+async function renderMermaid(
   sourceElement: HTMLElement,
   rawContent: string,
   id: string,
@@ -251,77 +251,75 @@ function renderMermaid(
   const content = buildMermaidContent(rawContent, theme);
   const renderId = `${theme}-${id}`;
 
-  return mermaid
-    .render(renderId, content)
-    .then((mermaidData: RenderResult) => {
-      const parentElement = sourceElement.parentElement;
-      if (!parentElement) {
+  try {
+    const mermaidData: RenderResult = await mermaid.render(renderId, content);
+    const parentElement = sourceElement.parentElement;
+    if (!parentElement) {
+      return;
+    }
+
+    const div = document.createElement("div");
+    // .rendered-mermaid 标记渲染后的 Mermaid 图
+    const divClassNames = ["rendered-mermaid"];
+    if (theme !== null) {
+      divClassNames.push(theme);
+    }
+
+    div.classList.add(...divClassNames);
+    div.innerHTML = mermaidData.svg;
+    parentElement.insertBefore(div, sourceElement.nextSibling);
+
+    // Prefix ids inside each rendered SVG first to avoid collisions before
+    // upstream fully addresses the issue: https://github.com/mermaid-js/mermaid/issues/5741
+    const svgElement = div.querySelector("svg");
+    if (!svgElement) {
+      sourceElement.style.display = "none";
+      return;
+    }
+
+    // Update ids and all attributes that reference them.
+    svgElement.querySelectorAll("[id]").forEach((element) => {
+      const originalId = element.getAttribute("id");
+      if (!originalId) {
         return;
       }
 
-      const div = document.createElement("div");
-      // .rendered-mermaid 标记渲染后的 Mermaid 图
-      const divClassNames = ["rendered-mermaid"];
-      if (theme !== null) {
-        divClassNames.push(theme);
-      }
+      const newId = `${theme}-${id}-${originalId}`;
+      element.setAttribute("id", newId);
 
-      div.classList.add(...divClassNames);
-      div.innerHTML = mermaidData.svg;
-      parentElement.insertBefore(div, sourceElement.nextSibling);
+      const elementsUsingId = svgElement.querySelectorAll(
+        `[marker-start*="#${originalId}"], [marker-mid*="#${originalId}"], [marker-end*="#${originalId}"], [href*="#${originalId}"], [xlink\\:href*="#${originalId}"]`,
+      );
 
-      // Prefix ids inside each rendered SVG first to avoid collisions before
-      // upstream fully addresses the issue: https://github.com/mermaid-js/mermaid/issues/5741
-      const svgElement = div.querySelector("svg");
-      if (!svgElement) {
-        sourceElement.style.display = "none";
-        return;
-      }
+      // marker references commonly use marker-start, marker-mid, marker-end.
+      // symbol/use references may still rely on deprecated xlink:href, so
+      // both href and xlink:href need to stay in sync.
+      const attributesToUpdate: ReferenceAttribute[] = [
+        "marker-start",
+        "marker-mid",
+        "marker-end",
+        "href",
+        "xlink:href",
+      ];
 
-      // Update ids and all attributes that reference them.
-      svgElement.querySelectorAll("[id]").forEach((element) => {
-        const originalId = element.getAttribute("id");
-        if (!originalId) {
-          return;
-        }
-
-        const newId = `${theme}-${id}-${originalId}`;
-        element.setAttribute("id", newId);
-
-        const elementsUsingId = svgElement.querySelectorAll(
-          `[marker-start*="#${originalId}"], [marker-mid*="#${originalId}"], [marker-end*="#${originalId}"], [href*="#${originalId}"], [xlink\\:href*="#${originalId}"]`,
-        );
-
-        // marker references commonly use marker-start, marker-mid, marker-end.
-        // symbol/use references may still rely on deprecated xlink:href, so
-        // both href and xlink:href need to stay in sync.
-        const attributesToUpdate: ReferenceAttribute[] = [
-          "marker-start",
-          "marker-mid",
-          "marker-end",
-          "href",
-          "xlink:href",
-        ];
-
-        elementsUsingId.forEach((refElement) => {
-          attributesToUpdate.forEach((attribute) => {
-            updateAttribute(refElement, attribute, originalId, newId);
-          });
+      elementsUsingId.forEach((refElement) => {
+        attributesToUpdate.forEach((attribute) => {
+          updateAttribute(refElement, attribute, originalId, newId);
         });
       });
-
-      // Hide the original source element after rendering succeeds.
-      sourceElement.style.display = "none";
-    })
-    .catch((error: unknown) => {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      const errorElement = document.querySelector<HTMLElement>(`#${renderId}`);
-      const errorMarkup = errorElement?.outerHTML ?? "";
-
-      sourceElement.innerHTML = `${errorMarkup}<br>
-<div style="text-align: left"><small>${errorMessage.replace(/\n/g, "<br>")}</small></div>`;
-      errorElement?.parentElement?.remove();
     });
+
+    // Hide the original source element after rendering succeeds.
+    sourceElement.style.display = "none";
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorElement = document.querySelector<HTMLElement>(`#${renderId}`);
+    const errorMarkup = errorElement?.outerHTML ?? "";
+
+    sourceElement.innerHTML = `${errorMarkup}<br>
+<div style="text-align: left"><small>${errorMessage.replace(/\n/g, "<br>")}</small></div>`;
+    errorElement?.parentElement?.remove();
+  }
 }
 
 function initMermaid(): void {
