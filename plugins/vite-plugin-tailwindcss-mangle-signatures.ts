@@ -153,7 +153,8 @@ const JS_FILE_EXTENSIONS = new Set([".js"]);
 const VITE_INTERNAL_ANALYSIS_PLUGIN = "vite:build-import-analysis";
 const UTF8_TEXT_DECODER = new TextDecoder("utf8");
 const CANDIDATE_TOKEN_WRAPPER_CHARS = new Set(['"', "'", "`", "(", ")", "{", "}", "|", ",", ";", "<", ">"]);
-const TEMPLATE_CLASS_ATTRIBUTE_REGEX = /(^|[\s<])(th:class(?:append)?)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/gmu;
+const FRAMEWORK_CLASS_ATTRIBUTE_REGEX =
+  /(^|[\s<])((?:th:class(?:append)?|x-transition(?::[\w-]+)?))\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/gmu;
 const CLASS_TOKEN_PART_CHAR_REGEX = /[A-Za-z0-9_:%!#./@\\[\]()-]/u;
 
 /** 统一路径分隔符，避免 Windows 路径影响后续匹配。 */
@@ -476,13 +477,13 @@ function collectHtmlClassGroups(sourceText: string): string[][] {
   return classGroups;
 }
 
-/** 改写 Thymeleaf 的 class 表达式属性，补齐官方 HTML handler 不处理的动态 class 字面量。 */
-function rewriteTemplateClassAttributesInHtml(sourceText: string, mapping: ReadonlyMap<string, string>): string {
+/** 改写模板/框架 class 表达式属性，补齐官方 HTML handler 不处理的动态 class 字面量。 */
+function rewriteFrameworkClassAttributesInHtml(sourceText: string, mapping: ReadonlyMap<string, string>): string {
   return rewriteHtmlOutsideInlineScripts(sourceText, (segmentText) => {
     let rewrittenSegmentText = "";
     let currentIndex = 0;
 
-    for (const match of segmentText.matchAll(TEMPLATE_CLASS_ATTRIBUTE_REGEX)) {
+    for (const match of segmentText.matchAll(FRAMEWORK_CLASS_ATTRIBUTE_REGEX)) {
       const matchIndex = match.index;
 
       if (matchIndex === undefined) {
@@ -769,7 +770,7 @@ async function rewriteWithUtwmHandler(
 
   if (fileName.endsWith(HTML_FILE_EXTENSION)) {
     const rewrittenHtml = htmlHandler(sourceText, { ctx, id: fileName }).code;
-    const rewrittenTemplateHtml = rewriteTemplateClassAttributesInHtml(rewrittenHtml, mapping);
+    const rewrittenTemplateHtml = rewriteFrameworkClassAttributesInHtml(rewrittenHtml, mapping);
 
     // `@tailwindcss-mangle/core` 的 `htmlHandler` 只会处理 `class=""` 属性，
     // 不会继续进入内联 `<script>`。这里额外补一层，仅处理：

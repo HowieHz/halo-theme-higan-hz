@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🐛 Bug Fixes
 
 - Fixed the post title uppercase setting not taking effect.
+- Fixed open and close transition animations not taking effect for video modals on Moments pages.
 
 ### 🧹 Miscellaneous Chores
 
