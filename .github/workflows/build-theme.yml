@@ -10,7 +10,9 @@ on:
 jobs:
   build:
     name: Build and Upload Theme
-    uses: ./.github/workflows/reusable-build-theme.yml
+    permissions:
+      contents: read
+    uses: ./.github/workflows/reusable-build-theme-untrusted.yml
     with:
       theme_ref: ${{ github.sha }}
       artifact_name: theme-artifact

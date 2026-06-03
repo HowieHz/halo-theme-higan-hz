@@ -1,4 +1,4 @@
-name: Reusable Build Theme
+name: Reusable Build Theme Without Attestation
 
 on:
   workflow_call:
@@ -28,11 +28,8 @@ jobs:
   build:
     name: Build Theme Packages
     runs-on: ubuntu-latest
-    # Only trusted callers should use this workflow because build steps run code from inputs.theme_ref.
     permissions:
       contents: read
-      id-token: write
-      attestations: write
     steps:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # https://github.com/actions/checkout/releases/tag/v6.0.3
@@ -50,8 +47,3 @@ jobs:
         with:
           name: ${{ inputs.artifact_name }}
           path: dist/theme-packages/*
-
-      - name: Attest Artifacts
-        uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26 # https://github.com/actions/attest/releases/tag/v4.1.0
-        with:
-          subject-path: dist/theme-packages/*.zip
