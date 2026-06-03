@@ -27,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Optimized Mermaid render job selectors and skipped Mermaid code blocks already handled by the Shiki code block component.
 
+### 🐛 Bug Fixes
+
+- Fixed the post title uppercase setting not taking effect.
+
 ### 🧹 Miscellaneous Chores
 
 - Updated dependencies.
