@@ -1030,7 +1030,6 @@ This is normal text <small>This is small text</small> This is normal text
 注意：
 
 - 如果使用了类似 [Shiki](https://www.halo.run/store/apps/app-kzloktzn) 的代码高亮类插件，需在其插件配置中排除 Mermaid。
-- 渲染后会自动标注 `data-processed="true"`，文本绘图插件不会进行重复渲染。如果你发现同时显示了两个图表，说明文本绘图插件的处理逻辑发生了变化，可以[报告这个问题](https://github.com/HowieHz/halo-theme-higan-hz/issues/new)。
 
 :::
 
@@ -1094,7 +1093,6 @@ flowchart TD
 注意：
 
 - 如果使用了类似 [Shiki](https://www.halo.run/store/apps/app-kzloktzn) 的代码高亮类插件，需在其插件配置中排除 Mermaid。
-- 需在 [Vditor](https://www.halo.run/store/apps/app-uBcYw) 插件配置中关闭内置渲染器。
 
 ::: details 方法一 Markdown 写法自动渲染明暗主题
 需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。

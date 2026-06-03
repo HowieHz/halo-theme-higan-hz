@@ -4,9 +4,9 @@ type MermaidRenderThemeMode = "dark" | "light" | null;
 
 type MermaidRenderJob = {
   sourceElement: HTMLElement;
+  dataProcessedElement: HTMLElement;
   rawContent: string;
   themes: MermaidRenderThemeMode[];
-  markDataProcessed?: boolean;
 };
 
 type ReferenceAttribute = "marker-start" | "marker-mid" | "marker-end" | "xlink:href" | "href";
@@ -104,15 +104,30 @@ function buildMermaidContent(rawContent: string, theme: MermaidRenderThemeMode):
 }
 
 function isMermaidSourceProcessed(sourceElement: HTMLElement): boolean {
-  return sourceElement.getAttribute("data-processed") === "true" || sourceElement.classList.contains("processed");
+  // data-processed="true" 是渲染库用来防止重复渲染的运行时状态标记
+  //
+  // Vditor 插件链路：data-processed 由 Vditor.mermaidRender 在调用 mermaid.render(...)
+  // 后写入，位置是它命中的 .language-mermaid 节点本身，不是 pre 或外层文章容器。
+  //
+  // Mermaid run/init 链路：data-processed 由 Mermaid 自己写入，位置是 run() 命中的元素。
+  //
+  // 文本绘图插件默认命中 text-diagram[data-type=mermaid]，所以标记留在外层 text-diagram 上。
+  // 动态更新或强制重渲染前需要移除该属性，或重建对应的源节点。
+  if (sourceElement.getAttribute("data-processed") === "true") {
+    return true;
+  }
+
+  const vditorLanguageMermaidElement =
+    sourceElement.matches("pre") || sourceElement.matches("div.mermaid")
+      ? sourceElement.querySelector<HTMLElement>(":scope > .language-mermaid")
+      : null;
+
+  return vditorLanguageMermaidElement?.getAttribute("data-processed") === "true";
 }
 
 function markMermaidSourceProcessed(job: MermaidRenderJob): void {
-  job.sourceElement.classList.add("processed");
-
-  if (job.markDataProcessed) {
-    job.sourceElement.setAttribute("data-processed", "true");
-  }
+  // mermaid.render() 不会写入 data-processed；这里按上游链路的实际标记节点补写。
+  job.dataProcessedElement.setAttribute("data-processed", "true");
 }
 
 function getMermaidRenderThemes(sourceElement: HTMLElement): MermaidRenderThemeMode[] {
@@ -162,6 +177,7 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     if (candidateElement.matches("code.language-mermaid") && sourceElement.matches("pre")) {
       jobs.push({
         sourceElement,
+        dataProcessedElement: candidateElement,
         rawContent: candidateElement.textContent ?? fallbackContent,
         themes: ["light", "dark"],
       });
@@ -180,9 +196,9 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     ) {
       jobs.push({
         sourceElement,
+        dataProcessedElement: sourceElement,
         rawContent: sourceElement.getAttribute("data-content") ?? fallbackContent,
         themes: ["light", "dark"],
-        markDataProcessed: true,
       });
       return;
     }
@@ -199,6 +215,7 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
       const contentElement = sourceElement.querySelector<HTMLElement>(":scope > div.language-mermaid");
       jobs.push({
         sourceElement,
+        dataProcessedElement: contentElement ?? sourceElement,
         rawContent: contentElement?.textContent ?? fallbackContent,
         themes: getMermaidRenderThemes(sourceElement),
       });
@@ -214,6 +231,7 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     if (sourceElement.matches("div.language-mermaid") && !sourceElement.parentElement?.matches("div.mermaid")) {
       jobs.push({
         sourceElement,
+        dataProcessedElement: sourceElement,
         rawContent: sourceElement.textContent ?? fallbackContent,
         themes: ["light", "dark"],
       });
