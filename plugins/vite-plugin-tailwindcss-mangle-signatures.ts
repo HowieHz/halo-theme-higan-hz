@@ -92,6 +92,7 @@ import { dirname, extname, relative, resolve } from "node:path";
 
 import { Context, cssHandler, htmlHandler, jsHandler } from "@tailwindcss-mangle/core";
 import { defaultMangleClassFilter } from "@tailwindcss-mangle/shared";
+import { splitCandidateTokens } from "tailwindcss-patch";
 import type { Plugin } from "vite";
 
 interface TailwindcssMangleSignaturesPluginOptions {
@@ -151,6 +152,9 @@ const HTML_FILE_EXTENSION = ".html";
 const JS_FILE_EXTENSIONS = new Set([".js"]);
 const VITE_INTERNAL_ANALYSIS_PLUGIN = "vite:build-import-analysis";
 const UTF8_TEXT_DECODER = new TextDecoder("utf8");
+const CANDIDATE_TOKEN_WRAPPER_CHARS = new Set(['"', "'", "`", "(", ")", "{", "}", "|", ",", ";", "<", ">"]);
+const TEMPLATE_CLASS_ATTRIBUTE_REGEX = /(^|[\s<])(th:class(?:append)?)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/gmu;
+const CLASS_TOKEN_PART_CHAR_REGEX = /[A-Za-z0-9_:%!#./@\\[\]()-]/u;
 
 /** 统一路径分隔符，避免 Windows 路径影响后续匹配。 */
 function normalizePathSeparators(value: string): string {
@@ -195,6 +199,74 @@ function isBundleFileLike(value: unknown): value is BundleFileLike {
 /** 转义普通字符串，供动态正则拼接使用。 */
 function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/** 去掉源码 token 外层的模板/字符串包裹符，保留任意值 class 内部的引号和括号。 */
+function trimCandidateTokenWrappers(token: string): string {
+  let startIndex = 0;
+  let endIndex = token.length;
+
+  while (startIndex < endIndex && CANDIDATE_TOKEN_WRAPPER_CHARS.has(token[startIndex] ?? "")) {
+    startIndex++;
+  }
+
+  while (endIndex > startIndex && CANDIDATE_TOKEN_WRAPPER_CHARS.has(token[endIndex - 1] ?? "")) {
+    endIndex--;
+  }
+
+  return token.slice(startIndex, endIndex);
+}
+
+function isClassTokenPartChar(char: string | undefined): boolean {
+  return char !== undefined && CLASS_TOKEN_PART_CHAR_REGEX.test(char);
+}
+
+/** 替换属性表达式中的已知 Tailwind class，避免把 `tw:p-1` 误替换进 `tw:p-10`。 */
+function replaceClassNameInCandidateText(sourceText: string, className: string, replacement: string): string {
+  let rewrittenText = "";
+  let currentIndex = 0;
+
+  while (currentIndex < sourceText.length) {
+    const matchIndex = sourceText.indexOf(className, currentIndex);
+
+    if (matchIndex === -1) {
+      return rewrittenText + sourceText.slice(currentIndex);
+    }
+
+    const afterIndex = matchIndex + className.length;
+    const previousChar = sourceText[matchIndex - 1];
+    const nextChar = sourceText[afterIndex];
+    const canReplace = !isClassTokenPartChar(previousChar) && !isClassTokenPartChar(nextChar);
+
+    rewrittenText += sourceText.slice(currentIndex, matchIndex);
+    rewrittenText += canReplace ? replacement : sourceText.slice(matchIndex, afterIndex);
+    currentIndex = afterIndex;
+  }
+
+  return rewrittenText;
+}
+
+/** 用 tailwindcss-patch 的候选 token splitter 找出表达式中的静态 class token，再按边界替换。 */
+function rewriteCandidateClassesInText(sourceText: string, mapping: ReadonlyMap<string, string>): string {
+  const classNamesToReplace = new Set<string>();
+
+  for (const token of splitCandidateTokens(sourceText)) {
+    const className = trimCandidateTokenWrappers(token);
+
+    if (mapping.has(className)) {
+      classNamesToReplace.add(className);
+    }
+  }
+
+  return [...classNamesToReplace]
+    .sort((left, right) => right.length - left.length || left.localeCompare(right))
+    .reduce((rewrittenText, className) => {
+      const replacement = mapping.get(className);
+
+      return replacement === undefined
+        ? rewrittenText
+        : replaceClassNameInCandidateText(rewrittenText, className, replacement);
+    }, sourceText);
 }
 
 /** 统一并校验外部传入的 base，保证后续匹配总是以 `/` 结尾。 */
@@ -344,6 +416,24 @@ function stripInlineScriptsFromHtml(sourceText: string): string {
   }
 }
 
+/** 只改写 HTML 脚本标签之外的片段，避免把脚本文本里的 HTML 示例误当成真实标签。 */
+function rewriteHtmlOutsideInlineScripts(sourceText: string, rewriteSegment: (segmentText: string) => string): string {
+  let rewrittenSourceText = "";
+  let currentIndex = 0;
+
+  while (true) {
+    const inlineScriptMatch = findNextInlineScriptTag(sourceText, currentIndex);
+
+    if (inlineScriptMatch === null) {
+      return rewrittenSourceText + rewriteSegment(sourceText.slice(currentIndex));
+    }
+
+    rewrittenSourceText += rewriteSegment(sourceText.slice(currentIndex, inlineScriptMatch.startIndex));
+    rewrittenSourceText += sourceText.slice(inlineScriptMatch.startIndex, inlineScriptMatch.endIndex);
+    currentIndex = inlineScriptMatch.endIndex;
+  }
+}
+
 /** 判断某个 `<script>` 是否属于允许参与改写的两种内联脚本形态。 */
 function isEligibleInlineScript(attributesText: string): boolean {
   const attributeNames = collectHtmlAttributeNames(attributesText);
@@ -374,7 +464,9 @@ function collectHtmlClassGroups(sourceText: string): string[][] {
   for (const match of safeSourceText.matchAll(classAttributeRegex)) {
     const [, doubleQuotedValue, singleQuotedValue, bareValue] = match;
     const rawClassValue = doubleQuotedValue ?? singleQuotedValue ?? bareValue ?? "";
-    const classNames = rawClassValue.split(/\s+/u).filter((className) => className !== "");
+    const classNames = splitCandidateTokens(rawClassValue)
+      .map((className) => trimCandidateTokenWrappers(className))
+      .filter((className) => className !== "");
 
     if (classNames.length > 0) {
       classGroups.push(classNames);
@@ -382,6 +474,39 @@ function collectHtmlClassGroups(sourceText: string): string[][] {
   }
 
   return classGroups;
+}
+
+/** 改写 Thymeleaf 的 class 表达式属性，补齐官方 HTML handler 不处理的动态 class 字面量。 */
+function rewriteTemplateClassAttributesInHtml(sourceText: string, mapping: ReadonlyMap<string, string>): string {
+  return rewriteHtmlOutsideInlineScripts(sourceText, (segmentText) => {
+    let rewrittenSegmentText = "";
+    let currentIndex = 0;
+
+    for (const match of segmentText.matchAll(TEMPLATE_CLASS_ATTRIBUTE_REGEX)) {
+      const matchIndex = match.index;
+
+      if (matchIndex === undefined) {
+        continue;
+      }
+
+      const [rawAttribute = "", prefix = "", attributeName = "", doubleQuotedValue, singleQuotedValue, bareValue] =
+        match;
+      const rawValue = doubleQuotedValue ?? singleQuotedValue ?? bareValue ?? "";
+      const rewrittenValue = rewriteCandidateClassesInText(rawValue, mapping);
+      const rewrittenAttribute =
+        doubleQuotedValue !== undefined
+          ? `${prefix}${attributeName}="${rewrittenValue}"`
+          : singleQuotedValue !== undefined
+            ? `${prefix}${attributeName}='${rewrittenValue}'`
+            : `${prefix}${attributeName}=${rewrittenValue}`;
+
+      rewrittenSegmentText += segmentText.slice(currentIndex, matchIndex);
+      rewrittenSegmentText += rewrittenAttribute;
+      currentIndex = matchIndex + rawAttribute.length;
+    }
+
+    return rewrittenSegmentText + segmentText.slice(currentIndex);
+  });
 }
 
 /** 用官方 `jsHandler` 二次处理 HTML 中符合条件的内联 `<script>`。 */
@@ -630,7 +755,7 @@ function createBucketContext(mapping: ReadonlyMap<string, string>): Context {
  *
  * 这样做的意义不是改变 bucket 语义，而是把“怎么安全地改 HTML/CSS/JS”这件事重新交给官方实现：
  *
- * - HTML：先走 `htmlparser2` 改 `class=""`，再补一层符合条件的内联 `<script>` -> `jsHandler`
+ * - HTML：先走 `htmlparser2` 改 `class=""`，再补 Thymeleaf class 表达式和符合条件的内联 `<script>`
  * - CSS：UTWM 官方 CSS handler
  * - JS：Babel AST + `MagicString`
  */
@@ -644,6 +769,7 @@ async function rewriteWithUtwmHandler(
 
   if (fileName.endsWith(HTML_FILE_EXTENSION)) {
     const rewrittenHtml = htmlHandler(sourceText, { ctx, id: fileName }).code;
+    const rewrittenTemplateHtml = rewriteTemplateClassAttributesInHtml(rewrittenHtml, mapping);
 
     // `@tailwindcss-mangle/core` 的 `htmlHandler` 只会处理 `class=""` 属性，
     // 不会继续进入内联 `<script>`。这里额外补一层，仅处理：
@@ -652,7 +778,7 @@ async function rewriteWithUtwmHandler(
     // - `<script vite-ignore type="module"> ... </script>`
     //
     // 并显式跳过带 `src=` 的脚本标签，避免误改外链资源引用。
-    return rewriteEligibleInlineScriptsInHtml(rewrittenHtml, fileName, mapping);
+    return rewriteEligibleInlineScriptsInHtml(rewrittenTemplateHtml, fileName, mapping);
   }
 
   if (fileName.endsWith(CSS_FILE_EXTENSION)) {
