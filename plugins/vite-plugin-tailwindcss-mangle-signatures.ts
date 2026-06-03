@@ -221,7 +221,7 @@ function isClassTokenPartChar(char: string | undefined): boolean {
   return char !== undefined && CLASS_TOKEN_PART_CHAR_REGEX.test(char);
 }
 
-/** 替换属性表达式中的已知 Tailwind class，避免把 `tw:p-1` 误替换进 `tw:p-10`。 */
+/** 替换属性表达式中的已知 Tailwind class，避免把 `p-1` 误替换进 `p-10`。 */
 function replaceClassNameInCandidateText(sourceText: string, className: string, replacement: string): string {
   let rewrittenText = "";
   let currentIndex = 0;
