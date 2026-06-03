@@ -103,7 +103,7 @@ function buildMermaidContent(rawContent: string, theme: MermaidRenderThemeMode):
   return `${rawContent.slice(0, frontMatterEndIndex)}${initDirective}${lineBreak}${rawContent.slice(frontMatterEndIndex)}`;
 }
 
-function getMermaidDataProcessedElement(sourceElement: HTMLElement): HTMLElement {
+function isMermaidDataProcessed(dataProcessedElement: HTMLElement): boolean {
   // data-processed="true" 是渲染库用来防止重复渲染的运行时状态标记
   //
   // Vditor 插件链路：data-processed 由 Vditor.mermaidRender 在调用 mermaid.render(...)
@@ -113,12 +113,6 @@ function getMermaidDataProcessedElement(sourceElement: HTMLElement): HTMLElement
   //
   // 文本绘图插件默认命中 text-diagram[data-type=mermaid]，所以标记留在外层 text-diagram 上。
   // 动态更新或强制重渲染前需要移除该属性，或重建对应的源节点。
-  return sourceElement.matches("pre") || sourceElement.matches("div.mermaid")
-    ? (sourceElement.querySelector<HTMLElement>(":scope > .language-mermaid") ?? sourceElement)
-    : sourceElement;
-}
-
-function isMermaidDataProcessed(dataProcessedElement: HTMLElement): boolean {
   return dataProcessedElement.getAttribute("data-processed") === "true";
 }
 
@@ -145,42 +139,19 @@ function getMermaidRenderThemes(sourceElement: HTMLElement): MermaidRenderThemeM
   return [null];
 }
 
+function pushMermaidRenderJob(jobs: MermaidRenderJob[], job: MermaidRenderJob): void {
+  if (isMermaidDataProcessed(job.dataProcessedElement)) {
+    return;
+  }
+
+  jobs.push(job);
+}
+
 function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
   const jobs: MermaidRenderJob[] = [];
-  const candidateElements = container.querySelectorAll<HTMLElement>(
-    'text-diagram[data-type="mermaid"], div.mermaid, div.language-mermaid, pre > code.language-mermaid',
-  );
 
-  candidateElements.forEach((candidateElement) => {
-    // 定位到 candidateElements 规则中最外层的元素作为 sourceElement，避免重复渲染。
-    const sourceElement =
-      candidateElement.matches("code.language-mermaid") && candidateElement.parentElement?.matches("pre")
-        ? candidateElement.parentElement
-        : candidateElement;
-    const dataProcessedElement = getMermaidDataProcessedElement(sourceElement);
-
-    // 跳过已经处理过的元素，避免重复渲染
-    if (isMermaidDataProcessed(dataProcessedElement)) {
-      return;
-    }
-
+  container.querySelectorAll<HTMLElement>('text-diagram[data-type="mermaid"]').forEach((sourceElement) => {
     const fallbackContent = sourceElement.textContent ?? "";
-
-    // 文档方法一
-    // 来自官方编辑器的 Mermaid 代码块
-    // 特征是 <pre><code class="language-mermaid">...</code></pre>
-    // 内容在 code 元素的文本内容中
-    // 测试方法：官方编辑器 + 插入代码块 + 选择 Mermaid 语言
-    // 效果：自动识别并明暗双倍渲染
-    if (candidateElement.matches("code.language-mermaid") && sourceElement.matches("pre")) {
-      jobs.push({
-        sourceElement,
-        dataProcessedElement,
-        rawContent: candidateElement.textContent ?? fallbackContent,
-        themes: ["light", "dark"],
-      });
-      return;
-    }
 
     // 文档方法二
     // 来自文本绘图插件 https://www.halo.run/store/apps/app-ahBRi
@@ -188,38 +159,75 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     // 内容在 data-content 属性中
     // 测试方法：官方编辑器 + 文本绘图插件 + 插入文本绘图提供的组件
     // 效果：自动识别并明暗双倍渲染
-    if (
-      sourceElement.localName.toLowerCase() === "text-diagram" &&
-      sourceElement.getAttribute("data-type") === "mermaid"
-    ) {
-      jobs.push({
-        sourceElement,
-        dataProcessedElement,
-        rawContent: sourceElement.getAttribute("data-content") ?? fallbackContent,
-        themes: ["light", "dark"],
-      });
+    pushMermaidRenderJob(jobs, {
+      sourceElement,
+      dataProcessedElement: sourceElement,
+      rawContent: sourceElement.getAttribute("data-content") ?? fallbackContent,
+      themes: ["light", "dark"],
+    });
+  });
+
+  container.querySelectorAll<HTMLElement>("pre > code.language-mermaid").forEach((codeElement) => {
+    const sourceElement = codeElement.parentElement;
+    if (!sourceElement?.matches("pre")) {
       return;
     }
 
-    // 文档方法三/四、Vditor 方法一/二
-    // 来自官方编辑器 HTML 组件或 Vditor 编辑器插件的 Mermaid 代码块
-    // HTML 组件特征是 <div class="html-edited"><div class="mermaid xxx">...</div>(若干个)</div>
-    // Vditor 特征是 <div class="mermaid xxx"><div class="language-mermaid">...</div></div>
-    // HTML 组件内容在 div.mermaid 的文本内容中，Vditor 内容在 language-mermaid 元素的文本内容中
+    // 文档方法一
+    // 来自官方编辑器的 Mermaid 代码块
+    // 特征是 <pre><code class="language-mermaid">...</code></pre>
+    // 内容在 code 元素的文本内容中
+    // 测试方法：官方编辑器 + 插入代码块 + 选择 Mermaid 语言
+    // 效果：自动识别并明暗双倍渲染
+    pushMermaidRenderJob(jobs, {
+      sourceElement,
+      dataProcessedElement: codeElement,
+      rawContent: codeElement.textContent ?? sourceElement.textContent ?? "",
+      themes: ["light", "dark"],
+    });
+  });
+
+  container.querySelectorAll<HTMLElement>("div.mermaid > div.language-mermaid").forEach((contentElement) => {
+    const sourceElement = contentElement.parentElement;
+    if (!sourceElement?.matches("div.mermaid")) {
+      return;
+    }
+
+    // Vditor 方法一/二
     // 来自 Vditor 编辑器插件的 Mermaid 代码块 https://www.halo.run/store/apps/app-uBcYw
-    // 测试方法：官方编辑器 + 插入 HTML 组件 + 输入 <div class="mermaid xxx">...</div>；或 Vditor 编辑器 + 输入 ```mermaid ... ```
+    // 特征是 <div class="mermaid xxx"><div class="language-mermaid">...</div></div>
+    // 内容在 language-mermaid 元素的文本内容中
+    // 测试方法：Vditor 编辑器 + 输入 ```mermaid ... ```
     // 效果：按照指定的主题模式渲染
-    if (sourceElement.matches("div.mermaid")) {
-      const contentElement =
-        dataProcessedElement !== sourceElement && dataProcessedElement.matches(".language-mermaid")
-          ? dataProcessedElement
-          : null;
-      jobs.push({
-        sourceElement,
-        dataProcessedElement,
-        rawContent: contentElement?.textContent ?? fallbackContent,
-        themes: getMermaidRenderThemes(sourceElement),
-      });
+    pushMermaidRenderJob(jobs, {
+      sourceElement,
+      dataProcessedElement: contentElement,
+      rawContent: contentElement.textContent ?? sourceElement.textContent ?? "",
+      themes: getMermaidRenderThemes(sourceElement),
+    });
+  });
+
+  container.querySelectorAll<HTMLElement>("div.mermaid").forEach((sourceElement) => {
+    if (sourceElement.childElementCount > 0) {
+      return;
+    }
+
+    // 文档方法三/四
+    // 来自官方编辑器 HTML 组件的 Mermaid 代码块
+    // 特征是 <div class="html-edited"><div class="mermaid xxx">...</div>(若干个)</div>
+    // 内容在 div.mermaid 的文本内容中
+    // 测试方法：官方编辑器 + 插入 HTML 组件 + 输入 <div class="mermaid xxx">...</div>
+    // 效果：按照指定的主题模式渲染
+    pushMermaidRenderJob(jobs, {
+      sourceElement,
+      dataProcessedElement: sourceElement,
+      rawContent: sourceElement.textContent ?? "",
+      themes: getMermaidRenderThemes(sourceElement),
+    });
+  });
+
+  container.querySelectorAll<HTMLElement>("div.language-mermaid").forEach((sourceElement) => {
+    if (sourceElement.parentElement?.matches("div.mermaid")) {
       return;
     }
 
@@ -229,15 +237,12 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
     // 内容在其文本内容中
     // 测试方法：Vditor 编辑器 + 输入 ```mermaid ... ```
     // 效果：自动识别并明暗双倍渲染
-    if (sourceElement.matches("div.language-mermaid") && !sourceElement.parentElement?.matches("div.mermaid")) {
-      jobs.push({
-        sourceElement,
-        dataProcessedElement,
-        rawContent: sourceElement.textContent ?? fallbackContent,
-        themes: ["light", "dark"],
-      });
-      return;
-    }
+    pushMermaidRenderJob(jobs, {
+      sourceElement,
+      dataProcessedElement: sourceElement,
+      rawContent: sourceElement.textContent ?? "",
+      themes: ["light", "dark"],
+    });
   });
 
   return jobs;
