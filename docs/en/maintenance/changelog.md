@@ -27,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Optimized Mermaid render job selectors and skipped Mermaid code blocks already handled by the Shiki code block component.
 
+### 🧹 Miscellaneous Chores
+
+- Updated dependencies.
+
 ## [1.68.1] - 2026-06-03
 
 ### 🐛 Bug Fixes
