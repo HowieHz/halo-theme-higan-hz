@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.68.1] - 2026-06-03
+
 ### 🐛 Bug Fixes
 
 - Took over the Mermaid renderers built into the Text Diagram and Vditor editor plugins, so their rendering features no longer need to be disabled for the theme's Mermaid adaptation to work normally.
@@ -2095,7 +2097,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.0...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.1...HEAD
+[1.68.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.0...v1.68.1
 [1.68.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.67.0...v1.68.0
 [1.67.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.11...v1.67.0
 [1.66.11]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.10...v1.66.11

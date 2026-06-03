@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.68.1] - 2026-06-03
+
 ### 🐛 错误修复
 
 - 接管文本绘图插件和 Vditor 编辑器插件的 Mermaid 内置渲染器，无需关闭这些插件的渲染功能即可正常使用主题的 Mermaid 适配。
@@ -2012,7 +2014,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.0...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.1...HEAD
+[1.68.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.0...v1.68.1
 [1.68.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.67.0...v1.68.0
 [1.67.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.11...v1.67.0
 [1.66.11]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.66.10...v1.66.11
