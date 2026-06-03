@@ -1036,10 +1036,7 @@ Notes:
 Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).  
 Enable the [Text Diagram plugin](https://www.halo.run/store/apps/app-ahBRi).  
 In the default editor, insert a Text Diagram block by typing `/` and selecting Text Diagram, set the language to `Mermaid`, and enter the diagram source as usual.  
-The theme automatically generates both light and dark versions of the diagram.  
-Notes:
-
-- If you use a code-highlighting plugin such as [Shiki](https://www.halo.run/store/apps/app-kzloktzn), exclude Mermaid in that plugin's settings.
+The theme automatically generates both light and dark versions of the diagram.
 
 :::
 
@@ -1099,10 +1096,12 @@ flowchart TD
 
 #### Vditor Editor
 
-Enable the [Vditor Editor plugin](https://www.halo.run/store/apps/app-uBcYw), then switch the post editor to Vditor.  
-Notes:
+Enable the [Vditor Editor plugin](https://www.halo.run/store/apps/app-uBcYw), then switch the post editor to Vditor.
 
-- If you use a code-highlighting plugin such as [Shiki](https://www.halo.run/store/apps/app-kzloktzn), exclude Mermaid in that plugin's settings.
+<!-- No need to exclude Mermaid in the Shiki plugin settings.
+Shiki runs at a lower priority than the Vditor editor plugin; if
+the theme's Mermaid support is disabled, Vditor will take over
+rendering. -->
 
 ::: details Method 1: Markdown syntax with automatic light/dark rendering
 Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).

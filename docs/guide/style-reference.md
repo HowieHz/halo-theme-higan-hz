@@ -1026,10 +1026,7 @@ This is normal text <small>This is small text</small> This is normal text
 需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
 需启用 [文本绘图插件](https://www.halo.run/store/apps/app-ahBRi)。  
 官方编辑器插入“文本绘图”块（编辑器输入 `/` 然后选择“文本绘图”），语言设置为 `Mermaid`，正常填写图表正文即可。  
-将会自动生成浅色/深色模式下两种图表。  
-注意：
-
-- 如果使用了类似 [Shiki](https://www.halo.run/store/apps/app-kzloktzn) 的代码高亮类插件，需在其插件配置中排除 Mermaid。
+将会自动生成浅色/深色模式下两种图表。
 
 :::
 
@@ -1089,10 +1086,9 @@ flowchart TD
 
 #### 适用于 Vditor 编辑器
 
-需启用 [Vditor 编辑器](https://www.halo.run/store/apps/app-uBcYw)插件，并在文章编辑器切换为 Vditor 编辑器。  
-注意：
+需启用 [Vditor 编辑器](https://www.halo.run/store/apps/app-uBcYw)插件，并在文章编辑器切换为 Vditor 编辑器。
 
-- 如果使用了类似 [Shiki](https://www.halo.run/store/apps/app-kzloktzn) 的代码高亮类插件，需在其插件配置中排除 Mermaid。
+<!-- 无需关闭在 shiki 插件配置中排除 Mermaid，shiki 优先级没 vditor 编辑器优先级高，如果主题不开 Mermaid 支持，渲染会被 Vditor 编辑器抢走 -->
 
 ::: details 方法一 Markdown 写法自动渲染明暗主题
 需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。
