@@ -145,19 +145,44 @@ interface BundleAssetLike {
 
 type BundleFileLike = BundleAssetLike | BundleChunkLike;
 
+// `.tw-patch/` 是构建辅助目录，不随主题模板发布；这些文件用于跨步骤传递扫描结果和排查分桶。
 const DEFAULT_CLASS_LIST_FILE = ".tw-patch/tw-class-list.json";
 const DEFAULT_MAPPING_FILE = ".tw-patch/tw-mangle-mapping.json";
+
+// 只处理最终产物中的文本资源。字体、图片等二进制资源必须保持原样。
 const CSS_FILE_EXTENSION = ".css";
 const HTML_FILE_EXTENSION = ".html";
 const JS_FILE_EXTENSIONS = new Set([".js"]);
+
+// 需要挂到 Vite 完成 HTML 转换之后、SRI 计算之前；这个内部插件是当前稳定的插入点。
 const VITE_INTERNAL_ANALYSIS_PLUGIN = "vite:build-import-analysis";
 const UTF8_TEXT_DECODER = new TextDecoder("utf8");
+
+// `splitCandidateTokens()` 会保留部分模板/表达式边界字符；去掉外层包裹后才能和 class-list 精确比对。
 const CANDIDATE_TOKEN_WRAPPER_CHARS = new Set(['"', "'", "`", "(", ")", "{", "}", "|", ",", ";", "<", ">"]);
+
+// 只把捕获组 1 当属性名使用，避免把 `src="..."` 误当成属性名，也避免把 `data-src` 误判成 `src`。
 const HTML_ATTRIBUTE_REGEX = /([^\s"'=<>`/]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/gmu;
+
+// 裸 `x-transition` 通常没有 class 值；这里保留本体匹配能力，
+// 主要用于改写 `x-transition:*` 阶段属性值里的 Tailwind class。
 const FRAMEWORK_CLASS_ATTRIBUTE_NAME_REGEX = /^(?:th:class(?:append)?|x-transition(?::[\w-]+)?)$/u;
+
+// 精确匹配带值的 class-like 属性；`(^|[\s<])` 保证不会命中 `data-th:class` 这类属性名片段。
+// 裸 `x-transition` 没有 `=` 时不会被这条正则改写。
 const FRAMEWORK_CLASS_ATTRIBUTE_REGEX =
   /(^|[\s<])((?:th:class(?:append)?|x-transition(?::[\w-]+)?))\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/gmu;
+
+// 用于替换时判断 class 边界，避免把短 class 误替换到长 class 内部，例如 `p-1` 命中 `p-10`。
 const CLASS_TOKEN_PART_CHAR_REGEX = /[A-Za-z0-9_:%!#./@\\[\]()-]/u;
+
+// 扫描阶段用 marker 代替真实 mangled class。marker 前缀足够特殊，便于从 handler 改写结果里回收命中项。
+const SCAN_MARKER_PREFIX = "__tw_scan_";
+const SCAN_MARKER_REGEX = /__tw_scan_(\d+)__/gmu;
+
+// 短名只使用小写字母序列，减少 CSS escape 需求并让输出稳定可读：_a, _b, ..., _aa。
+const LOWERCASE_LETTER_COUNT = 26;
+const LOWERCASE_A_CHAR_CODE = "a".charCodeAt(0);
 
 /** 统一路径分隔符，避免 Windows 路径影响后续匹配。 */
 function normalizePathSeparators(value: string): string {
@@ -182,8 +207,8 @@ function getSequenceLabel(index: number): string {
   let result = "";
 
   while (remaining >= 0) {
-    result = String.fromCharCode(97 + (remaining % 26)) + result;
-    remaining = Math.floor(remaining / 26) - 1;
+    result = String.fromCharCode(LOWERCASE_A_CHAR_CODE + (remaining % LOWERCASE_LETTER_COUNT)) + result;
+    remaining = Math.floor(remaining / LOWERCASE_LETTER_COUNT) - 1;
   }
 
   return result;
@@ -462,6 +487,7 @@ function collectCandidateClassesInText(sourceText: string): string[] {
     .filter((className) => className !== "");
 }
 
+/** 收集单个开始标签上所有 class-like 属性值，作为一个协同打分单元。 */
 function collectHtmlTagClassGroup(tagText: string): string[] {
   const tagNameMatch = /^<\s*[^\s/>]+/u.exec(tagText);
 
@@ -510,6 +536,7 @@ function collectHtmlClassGroups(sourceText: string): string[][] {
     const tagEndIndex = findTagEnd(safeSourceText, tagStartIndex + 1);
 
     if (tagEndIndex === -1) {
+      // HTML 产物异常时保守停止分组，不影响后续逐 class fallback 改写。
       return classGroups;
     }
 
@@ -762,9 +789,6 @@ function countClassOccurrencesInText(sourceText: string, fileName: string, class
   });
 }
 
-const SCAN_MARKER_PREFIX = "__tw_scan_";
-const SCAN_MARKER_REGEX = /__tw_scan_(\d+)__/gmu;
-
 /** 为扫描阶段生成稳定且可回收的占位类名。 */
 function toScanMarker(index: number): string {
   return `${SCAN_MARKER_PREFIX}${index}__`;
@@ -885,37 +909,6 @@ async function collectClassesWithUtwmHandler(
   return classes;
 }
 
-type GenerateBundleHook = NonNullable<Plugin["generateBundle"]>;
-type GenerateBundleHandler = (...args: unknown[]) => Promise<void> | void;
-
-/**
- * 像 `vite-plugin-sri3` 一样，把逻辑后挂到 Vite 内部的 `generateBundle`。
- *
- * 这么做是为了同时满足两个条件：
- *
- * - 能看到 `vite:build-html` 已经产出的最终 HTML 资产
- * - 又必须早于 `vite-plugin-sri3` 的哈希计算
- */
-function hijackGenerateBundle(plugin: Plugin, afterHook: GenerateBundleHandler): void {
-  const hook = plugin.generateBundle;
-
-  if (typeof hook === "object" && hook.handler !== undefined) {
-    const originalHandler = hook.handler;
-    hook.handler = async function (...args) {
-      await originalHandler.apply(this, args);
-      await afterHook.apply(this, args);
-    };
-    return;
-  }
-
-  if (typeof hook === "function") {
-    plugin.generateBundle = async function (...args) {
-      await hook.apply(this, args);
-      await afterHook.apply(this, args);
-    } satisfies GenerateBundleHook;
-  }
-}
-
 type BundleFileContent = string | Uint8Array;
 
 /** 收集 bundle 里所有可改写文件，保留文本和二进制原始类型。 */
@@ -973,6 +966,37 @@ function isHtmlBundleFile(fileName: string): boolean {
   return fileName.endsWith(HTML_FILE_EXTENSION);
 }
 
+type GenerateBundleHook = NonNullable<Plugin["generateBundle"]>;
+type GenerateBundleHandler = (...args: unknown[]) => Promise<void> | void;
+
+/**
+ * 像 `vite-plugin-sri3` 一样，把逻辑后挂到 Vite 内部的 `generateBundle`。
+ *
+ * 这么做是为了同时满足两个条件：
+ *
+ * - 能看到 `vite:build-html` 已经产出的最终 HTML 资产
+ * - 又必须早于 `vite-plugin-sri3` 的哈希计算
+ */
+function hijackGenerateBundle(plugin: Plugin, afterHook: GenerateBundleHandler): void {
+  const hook = plugin.generateBundle;
+
+  if (typeof hook === "object" && hook.handler !== undefined) {
+    const originalHandler = hook.handler;
+    hook.handler = async function (...args) {
+      await originalHandler.apply(this, args);
+      await afterHook.apply(this, args);
+    };
+    return;
+  }
+
+  if (typeof hook === "function") {
+    plugin.generateBundle = async function (...args) {
+      await hook.apply(this, args);
+      await afterHook.apply(this, args);
+    } satisfies GenerateBundleHook;
+  }
+}
+
 export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMangleSignaturesPluginOptions): Plugin {
   const normalizedBase = normalizeBasePath(options.base);
   const classListFile = resolve(options.projectRoot, options.classListFile ?? DEFAULT_CLASS_LIST_FILE);
@@ -1005,6 +1029,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
     const assetGraph = buildAssetGraph(bundle, bundleFileContents, htmlAssetReferenceRegex);
     const fileNamesToRewrite = new Set(bundleFileContents.keys());
 
+    // 阶段 1：从每个 HTML entry 出发传播可达关系，得到“哪个文件会被哪些 entry 加载”。
     for (const [entryKey, outputHtmlFileName] of entryOutputFiles.entries()) {
       if (!bundleFileContents.has(outputHtmlFileName)) {
         continue;
@@ -1024,6 +1049,9 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       }
     }
 
+    // 阶段 2：按文件扫描已知 Tailwind class，并把文件归入它的 entry bucket。
+    //
+    // 这里先把 HTML / CSS / JS 都收集进 bucket 候选；真正短名只会分配给有 CSS 规则落盘的 class 实例。
     for (const fileName of fileNamesToRewrite) {
       const sourceText = toTextBundleFileContent(fileName, bundleFileContents.get(fileName));
 
@@ -1071,6 +1099,9 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       filesByClassByBucket.set(bucketKey, bucketClassFiles);
     }
 
+    // 阶段 3：给“CSS owner bucket 中真实存在的 class 实例”分配全局唯一短名。
+    //
+    // HTML 里出现但没有任何可达 CSS 产物承载的 class 不会进入这里，避免把运行时仍需原样保留的字符串误改掉。
     const sortedBucketKeys = [...classNameMapByBucket.keys()].sort((left, right) => {
       if (left === globalBucketKey) {
         return -1;
@@ -1157,6 +1188,8 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
     }
 
     const reachableCssFilesByFile = new Map<string, string[]>();
+
+    // 阶段 4：为 HTML / JS 消费方预计算可达 CSS 文件，后续只允许从这些 CSS owner bucket 里选短名。
     for (const fileName of fileNamesToRewrite) {
       if (isCssBundleFile(fileName)) {
         continue;
@@ -1228,6 +1261,9 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
 
     const preferredBucketKeyByFileClass = new Map<string, Map<string, string>>();
 
+    // 阶段 5：HTML 额外按同一标签上的 class-like 属性做协同打分。
+    //
+    // 这一步只影响“同一个 class 有多个可达 CSS owner 时选哪个”，不影响扫描和分桶本身。
     for (const [fileName, sourceContent] of bundleFileContents.entries()) {
       if (!isHtmlBundleFile(fileName)) {
         continue;
@@ -1385,6 +1421,7 @@ export default function tailwindcssMangleSignaturesPlugin(options: TailwindcssMa
       return undefined;
     };
 
+    // 阶段 6：按当前文件的局部 mapping 改写最终 bundle 内容。
     for (const [fileName, sourceText] of bundleFileContents.entries()) {
       const classes = classesByFile.get(fileName);
 
