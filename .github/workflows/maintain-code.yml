@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write
+      contents: read
 
     steps:
       - name: Checkout
@@ -36,27 +36,30 @@ jobs:
           # Release version inference walks from the latest stable tag to the PR head.
           # Keep full history here so the autofix sees semantic commits that are already on the PR base.
           fetch-depth: 0
-          # why token is required
-          # ref: https://github.com/stefanzweifel/git-auto-commit-action/tree/v7/?tab=readme-ov-file#commits-made-by-this-action-do-not-trigger-new-workflow-runs
-          token: ${{ secrets.PR_WORKFLOW_TOKEN || github.token }}
+          persist-credentials: false
 
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
 
       - name: Install dependencies
+        id: install
+        continue-on-error: true
         run: pnpm install --frozen-lockfile
 
       - name: Format
         id: format
+        continue-on-error: true
         run: pnpm fmt
 
       - name: Lint
         id: lint
+        continue-on-error: true
         run: pnpm lint
 
       - name: Fix release PR package version
         id: release-version
         if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'release')
+        continue-on-error: true
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
@@ -90,6 +93,7 @@ jobs:
         run: |
           echo "## Format and Lint Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Install: ${{ steps.install.outcome }}" >> $GITHUB_STEP_SUMMARY
           echo "- Format: ${{ steps.format.outcome }}" >> $GITHUB_STEP_SUMMARY
           echo "- Lint: ${{ steps.lint.outcome }}" >> $GITHUB_STEP_SUMMARY
           if [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ contains(github.event.pull_request.labels.*.name, 'release') }}" = "true" ]; then
@@ -101,27 +105,68 @@ jobs:
             fi
           fi
 
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # https://github.com/stefanzweifel/git-auto-commit-action/releases/tag/v7.1.0
-        id: auto-commit-action
-        with:
-          commit_message: |
-            style: auto-format and lint fixes
-
-      - name: "Run if changes have been detected"
-        if: steps.auto-commit-action.outputs.changes_detected == 'true'
-        run: echo "Changes!"
-
-      - name: "Run if no changes have been detected"
-        if: steps.auto-commit-action.outputs.changes_detected == 'false'
-        run: echo "No Changes!"
-
-      - name: Write auto-commit summary
+      - name: Create auto-fix patch
+        id: auto-fix
+        if: always()
         run: |
-          echo "## Auto-commit" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          if [ "${{ steps.auto-commit-action.outputs.changes_detected }}" = "true" ]; then
-            echo "- Changes detected and committed" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "- No changes detected" >> $GITHUB_STEP_SUMMARY
+          mkdir -p .github/maintain-code
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No generated changes."
+            exit 0
           fi
+
+          git diff --binary > .github/maintain-code/maintain-code-fixes.patch
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Upload auto-fix patch
+        if: always() && steps.auto-fix.outputs.changed == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # https://github.com/actions/upload-artifact/releases/tag/v7.0.1
+        with:
+          name: maintain-code-fixes
+          path: .github/maintain-code/maintain-code-fixes.patch
+          if-no-files-found: error
+
+      - name: Write auto-fix patch summary
+        if: always()
+        run: |
+          echo "## Auto-fix patch" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.auto-fix.outputs.changed }}" = "true" ]; then
+            echo "- Generated changes were detected." >> $GITHUB_STEP_SUMMARY
+            echo "- Download the \`maintain-code-fixes\` artifact and apply \`maintain-code-fixes.patch\` locally." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- No generated changes detected." >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Fail on command errors or generated changes
+        if: always()
+        run: |
+          failed=0
+
+          if [ "${{ steps.install.outcome }}" != "success" ]; then
+            echo "Install failed." >&2
+            failed=1
+          fi
+
+          if [ "${{ steps.format.outcome }}" != "success" ]; then
+            echo "Format failed." >&2
+            failed=1
+          fi
+
+          if [ "${{ steps.lint.outcome }}" != "success" ]; then
+            echo "Lint failed." >&2
+            failed=1
+          fi
+
+          if [ "${{ steps.release-version.outcome }}" = "failure" ]; then
+            echo "Release version autofix failed." >&2
+            failed=1
+          fi
+
+          if [ "${{ steps.auto-fix.outputs.changed }}" = "true" ]; then
+            echo "Generated changes detected. Apply the maintain-code-fixes artifact patch and push the result." >&2
+            failed=1
+          fi
+
+          exit "$failed"

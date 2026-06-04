@@ -23,6 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🔒 Security
+
+- Changed PR maintenance checks from committing auto-fixes directly to uploading a `maintain-code-fixes` patch artifact, avoiding write credentials in workflows that run PR code.
+
+### 📄 Documentation
+
+- Updated the contribution guide with a simple flow for applying CI auto-fix patches.
+
 ## [1.68.2] - 2026-06-03
 
 ### 🔧 Code Refactoring

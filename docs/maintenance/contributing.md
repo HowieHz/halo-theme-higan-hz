@@ -108,7 +108,7 @@ CI 会先自动运行 `pnpm fmt`，包含以下格式化步骤：
 
 - `oxfmt`：格式化 JSON、JSONC、YAML、Markdown、CSS、JavaScript、TypeScript、HTML 和 Vue 文件
 
-> 格式化产生的变更会自动提交。
+> 格式化产生的变更不会由 CI 自动提交。CI 会生成 `maintain-code-fixes` 产物，下载后按[应用 CI 自动修复补丁](#应用-ci-自动修复补丁)处理。
 
 #### CI 求疵步骤
 
@@ -128,11 +128,29 @@ CI 会先自动运行 `pnpm fmt`，包含以下格式化步骤：
 - `vue-tsc -b docs/tsconfig.browser.json`：文档站 Vue / Markdown 类型检查
   - **范围**：`docs` 下的 Vue 组件、VitePress Markdown 页面
 
-> 所有求疵步骤都开启了自动修正，若有变更会自动提交。
+> 所有求疵步骤都开启了自动修正。若有变更，CI 会生成 `maintain-code-fixes` 产物，下载后按[应用 CI 自动修复补丁](#应用-ci-自动修复补丁)处理。
+
+#### 应用 CI 自动修复补丁
+
+当 `Maintain Code` 检查因格式化、求疵自动修正或发布版本号修正产生变更而失败时，请按以下流程处理：
+
+1. 打开失败的 `Maintain Code` 工作流运行页面。
+2. 在 `Artifacts` 区域下载 `maintain-code-fixes`。
+3. 解压后，将 `maintain-code-fixes.patch` 放到仓库根目录。
+4. 在仓库根目录运行以下命令应用补丁并复查：
+
+```bash
+git apply maintain-code-fixes.patch
+pnpm install
+pnpm fmt
+pnpm lint
+```
+
+5. 确认变更无误后提交并推送到当前 PR 分支。
 
 #### 版本号与发版约束检查
 
-- 自动修正版本号：`release` 标签的 PR 会由自动修订工作流（`maintain-code.yml`）在格式化与求疵之后自动修正 `package.json` 的 `version`。该修正只在 PR 的 base 是目标分支最新提交时运行，并只修改 `package.json`；如果 base 已落后，则不会自动修改，需先更新 PR 分支。
+- 自动修正版本号：`release` 标签的 PR 会由自动修订工作流（`maintain-code.yml`）在格式化与求疵之后生成 `package.json` 的 `version` 修正补丁。该修正只在 PR 的 base 是目标分支最新提交时生成，并只修改 `package.json`；如果 base 已落后，则不会生成修正，需先更新 PR 分支。
 - 发版约束检查：
   - 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 是否仍然保留 `## [Unreleased]`（如未保留则不通过检查）。
   - 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 末尾的版本对比链接定义是否完整且正确（如缺失或与版本段落不匹配则不通过检查）。
@@ -165,7 +183,7 @@ CI 会先自动运行 `pnpm fmt`，包含以下格式化步骤：
 
 1. 计划合并到本次版本的分支或 PR 都已完成合并。
 2. `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 的 `## [Unreleased]` 下已经补充完整本次版本说明，并且 `## [Unreleased]` 标题没有被删除，以及末尾的版本对比链接定义已保留（发布工作流会自动重建该部分）。
-3. 发布 PR（带 `release` 标签）仅允许 `package.json` 的 `version` 发生变化；该值可由自动修订工作流（`maintain-code.yml`）在 PR base 未落后时自动修正，并将作为正式版目标版本号。
+3. 发布 PR（带 `release` 标签）仅允许 `package.json` 的 `version` 发生变化；该值可由自动修订工作流（`maintain-code.yml`）在 PR base 未落后时生成修正补丁，并在应用补丁后作为正式版目标版本号。
 4. 发布前人工确认 `theme.yaml` 与 `i18n-settings/theme.*.yaml` 中的 `requires` 仍符合目标 Halo CMS 版本要求。
 
 ### 正式版发布方法
@@ -173,7 +191,7 @@ CI 会先自动运行 `pnpm fmt`，包含以下格式化步骤：
 正式版通过带标签的 PR 自动发布：
 
 1. 创建用于正式发布的 PR（或在现有汇总 PR 上发布）。
-2. 为 PR 添加 `release` 标签。自动修订工作流（`maintain-code.yml`）会在 PR base 未落后时自动将 `package.json` 的 `version` 修正为目标语义化版本号。
+2. 为 PR 添加 `release` 标签。自动修订工作流（`maintain-code.yml`）会在 PR base 未落后时生成补丁，将 `package.json` 的 `version` 修正为目标语义化版本号；请按[应用 CI 自动修复补丁](#应用-ci-自动修复补丁)应用该补丁。
 3. 等待 `check-release-guard.yml` 检查通过，并确认摘要中的目标版本号与该 PR 的提交语义规则一致。
 4. 合并 PR 到 `main`。
 

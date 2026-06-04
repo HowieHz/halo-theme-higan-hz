@@ -108,7 +108,7 @@ CI first runs `pnpm fmt`, including the following formatting steps:
 
 - `oxfmt`: Formatting for JSON, JSONC, YAML, Markdown, CSS, JavaScript, TypeScript, HTML, Vue files
 
-> Changes produced by formatting will be automatically committed.
+> Changes produced by formatting are not committed by CI. CI uploads a `maintain-code-fixes` artifact; download it and follow [Applying the CI Auto-fix Patch](#applying-the-ci-auto-fix-patch).
 
 #### CI Linting Steps
 
@@ -128,14 +128,32 @@ After formatting, CI automatically runs `pnpm lint`, including the following che
 - `vue-tsc -b docs/tsconfig.browser.json`: Vue / Markdown type checks for the docs site
   - **Scope**: Vue components and VitePress Markdown pages under `docs`
 
-> All lint steps run with auto-fix enabled. If fixes are applied, the changes are committed automatically.
+> All lint steps run with auto-fix enabled. If fixes are applied, CI uploads a `maintain-code-fixes` artifact; download it and follow [Applying the CI Auto-fix Patch](#applying-the-ci-auto-fix-patch).
+
+#### Applying the CI Auto-fix Patch
+
+When the `Maintain Code` check fails because formatting, lint auto-fixes, or release-version auto-fixes produced changes, use this flow:
+
+1. Open the failed `Maintain Code` workflow run.
+2. Download `maintain-code-fixes` from the `Artifacts` section.
+3. Unzip it and place `maintain-code-fixes.patch` in the repository root.
+4. From the repository root, run:
+
+```bash
+git apply maintain-code-fixes.patch
+pnpm install
+pnpm fmt
+pnpm lint
+```
+
+5. Review the changes, then commit and push them to the current PR branch.
 
 #### Versioning and Release Guard
 
-- Auto-fix versioning: PRs labeled `release` also auto-fix `package.json` `version` through the automatic maintenance workflow (`maintain-code.yml`) after formatting and linting.
-  This fix runs only when the PR base is the latest commit on the target branch,
+- Auto-fix versioning: PRs labeled `release` also get a `package.json` `version` fix patch from the automatic maintenance workflow (`maintain-code.yml`) after formatting and linting.
+  This fix patch is generated only when the PR base is the latest commit on the target branch,
   and it only changes `package.json`; if the base is stale,
-  no version fix is committed and the PR branch must be updated first.
+  no version fix is generated and the PR branch must be updated first.
 - Release guard checks:
   - Verifies that `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` still contain `## [Unreleased]` (fails if missing).
   - Verifies that changelog compare-link definitions at the end of `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` are complete and match release headings (fails if missing or mismatched).
@@ -176,8 +194,8 @@ Before releasing, confirm all of the following:
    compare-link definitions at the end are retained
    (the release workflow will rebuild this section automatically).
 3. In release PRs (with the `release` label), only `package.json` `version` should change.
-   The automatic maintenance workflow (`maintain-code.yml`) can auto-fix it when the PR base is not stale,
-   and that value becomes the target stable version.
+   The automatic maintenance workflow (`maintain-code.yml`) can generate a fix patch when the PR base is not stale,
+   and that value becomes the target stable version after the patch is applied.
 4. Manually verify that the `requires` field in `theme.yaml` and `i18n-settings/theme.*.yaml` still matches the target Halo CMS compatibility range.
 
 ### Stable Release Procedure
@@ -185,7 +203,7 @@ Before releasing, confirm all of the following:
 Stable releases are published automatically from a labeled PR:
 
 1. Create a PR for the release (or use an existing aggregation PR).
-2. Add the `release` label. The automatic maintenance workflow (`maintain-code.yml`) auto-fixes `package.json` `version` to the target semantic version when the PR base is not stale.
+2. Add the `release` label. The automatic maintenance workflow (`maintain-code.yml`) generates a patch that fixes `package.json` `version` to the target semantic version when the PR base is not stale; apply it with [Applying the CI Auto-fix Patch](#applying-the-ci-auto-fix-patch).
 3. Wait for `check-release-guard.yml` to pass and confirm the target version matches the PR's commit-message semantics.
 4. Merge the PR into `main`.
 
