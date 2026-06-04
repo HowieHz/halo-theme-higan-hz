@@ -108,8 +108,8 @@ CI first runs `pnpm fmt`, including the following formatting steps:
 
 - `oxfmt`: Formatting for JSON, JSONC, YAML, Markdown, CSS, JavaScript, TypeScript, HTML, Vue files
 
-> Formatting changes are automatically committed only for PRs from branches in this repository.
-> PRs from external forks keep the check failing and upload `ci-autofix.patch` for contributors to download and apply.
+> Formatting changes are automatically committed only when the PR branch is in this repository.
+> When the PR branch is in a fork, CI keeps the check failing and uploads `ci-autofix.patch` for contributors to download and apply.
 
 #### CI Linting Steps
 
@@ -129,8 +129,8 @@ After formatting, CI automatically runs `pnpm lint`, including the following che
 - `vue-tsc -b docs/tsconfig.browser.json`: Vue / Markdown type checks for the docs site
   - **Scope**: Vue components and VitePress Markdown pages under `docs`
 
-> All lint steps run with auto-fix enabled. If fixes are applied, they are automatically committed only for PRs from branches in this repository.
-> PRs from external forks keep the check failing and upload `ci-autofix.patch` for contributors to download and apply.
+> All lint steps run with auto-fix enabled. If fixes are applied, they are automatically committed only when the PR branch is in this repository.
+> When the PR branch is in a fork, CI keeps the check failing and uploads `ci-autofix.patch` for contributors to download and apply.
 
 #### Versioning and Release Guard
 
@@ -138,7 +138,7 @@ After formatting, CI automatically runs `pnpm lint`, including the following che
   This fix runs only when the PR base is the latest commit on the target branch
   and CI has write access to the PR branch. It only changes `package.json`;  
   if the base is stale, no version fix is produced and the PR branch must be updated first.
-  If the PR comes from an external fork, CI does not push a commit directly,  
+  If the PR branch is in a fork, CI does not push a commit directly,  
   but any generated version fix is included in `ci-autofix.patch` for the contributor to apply and commit.
 - Release guard checks:
   - Verifies that `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` still contain `## [Unreleased]` (fails if missing).
@@ -168,7 +168,7 @@ The current automation generates and uploads only Chromium screenshots for compa
 
 #### Appendix: How to Use the Patch
 
-If an external fork PR has uncommitted changes produced by auto-fixes, copy the patch link from the CI job summary and run the matching commands locally on the PR branch.
+If the PR branch is in a fork and auto-fixes produce uncommitted changes, copy the patch link from the CI job summary and run the matching commands locally on the PR branch.
 
 Linux / macOS:
 

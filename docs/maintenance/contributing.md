@@ -108,8 +108,8 @@ CI 会先自动运行 `pnpm fmt`，包含以下格式化步骤：
 
 - `oxfmt`：格式化 JSON、JSONC、YAML、Markdown、CSS、JavaScript、TypeScript、HTML 和 Vue 文件
 
-> 格式化产生的变更仅会在本仓库分支的 PR 中自动提交。
-> 来自外部 Fork 的 PR 会保留检查失败状态，并上传 `ci-autofix.patch` 供贡献者下载后应用。
+> 格式化产生的变更仅会在 PR 分支位于本仓库时自动提交。
+> PR 分支位于 Fork 仓库时，CI 会保留检查失败状态，并上传 `ci-autofix.patch` 供贡献者下载后应用。
 
 #### CI 求疵步骤
 
@@ -129,15 +129,15 @@ CI 会先自动运行 `pnpm fmt`，包含以下格式化步骤：
 - `vue-tsc -b docs/tsconfig.browser.json`：文档站 Vue / Markdown 类型检查
   - **范围**：`docs` 下的 Vue 组件、VitePress Markdown 页面
 
-> 所有求疵步骤都开启了自动修正；若有变更，仅会在本仓库分支的 PR 中自动提交。
-> 来自外部 Fork 的 PR 会保留检查失败状态，并上传 `ci-autofix.patch` 供贡献者下载后应用。
+> 所有求疵步骤都开启了自动修正；若有变更，仅会在 PR 分支位于本仓库时自动提交。
+> PR 分支位于 Fork 仓库时，CI 会保留检查失败状态，并上传 `ci-autofix.patch` 供贡献者下载后应用。
 
 #### 版本号与发版约束检查
 
 - 自动修正版本号：`release` 标签的 PR 会由自动修订工作流（`maintain-code.yml`）在格式化与求疵之后自动修正 `package.json` 的 `version`。  
   该修正只在 PR 的 base 是目标分支最新提交、且 CI 对 PR 分支具有写入权限时运行，并只修改 `package.json`；  
   如果 base 已落后，则不会自动修正，需先更新 PR 分支；  
-  如果 PR 来自外部 Fork，CI 不会直接推送提交，但已生成的版本修正会包含在 `ci-autofix.patch` 中，需由贡献者应用补丁后提交。
+  如果 PR 分支位于 Fork 仓库，CI 不会直接推送提交，但已生成的版本修正会包含在 `ci-autofix.patch` 中，需由贡献者应用补丁后提交。
 - 发版约束检查：
   - 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 是否仍然保留 `## [Unreleased]`（如未保留则不通过检查）。
   - 检查 `docs/maintenance/changelog.md` 与 `docs/en/maintenance/changelog.md` 末尾的版本对比链接定义是否完整且正确（如缺失或与版本段落不匹配则不通过检查）。
@@ -164,7 +164,7 @@ CI 会先自动运行 `pnpm fmt`，包含以下格式化步骤：
 
 #### 附：如何使用 patch
 
-外部 Fork PR 若因自动修复产生未提交变更，可从 CI Job Summary 复制补丁链接，并在 PR 分支本地运行对应命令：
+PR 分支位于 Fork 仓库且因自动修复产生未提交变更时，可从 CI Job Summary 复制补丁链接，并在 PR 分支本地运行对应命令：
 
 Linux / macOS：
 
