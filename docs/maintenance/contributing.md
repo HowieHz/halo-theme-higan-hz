@@ -172,7 +172,7 @@ Linux / macOS：
 curl -L -o ci-autofix.patch "<ci-autofix.patch 链接>" && git apply ci-autofix.patch
 ```
 
-Windows PowerShell：
+Windows PowerShell:
 
 ```powershell
 Invoke-WebRequest -Uri "<ci-autofix.patch 链接>" -OutFile ci-autofix.patch; git apply ci-autofix.patch
