@@ -108,7 +108,8 @@ CI first runs `pnpm fmt`, including the following formatting steps:
 
 - `oxfmt`: Formatting for JSON, JSONC, YAML, Markdown, CSS, JavaScript, TypeScript, HTML, Vue files
 
-> Changes produced by formatting will be automatically committed.
+> Formatting changes are automatically committed only when the PR branch is in this repository.
+> When the PR branch is in a fork, CI keeps the check failing and uploads `ci-autofix.patch` for contributors to download and apply.
 
 #### CI Linting Steps
 
@@ -128,14 +129,17 @@ After formatting, CI automatically runs `pnpm lint`, including the following che
 - `vue-tsc -b docs/tsconfig.browser.json`: Vue / Markdown type checks for the docs site
   - **Scope**: Vue components and VitePress Markdown pages under `docs`
 
-> All lint steps run with auto-fix enabled. If fixes are applied, the changes are committed automatically.
+> All lint steps run with auto-fix enabled. If fixes are applied, they are automatically committed only when the PR branch is in this repository.
+> When the PR branch is in a fork, CI keeps the check failing and uploads `ci-autofix.patch` for contributors to download and apply.
 
 #### Versioning and Release Guard
 
-- Auto-fix versioning: PRs labeled `release` also auto-fix `package.json` `version` through the automatic maintenance workflow (`maintain-code.yml`) after formatting and linting.
-  This fix runs only when the PR base is the latest commit on the target branch,
-  and it only changes `package.json`; if the base is stale,
-  no version fix is committed and the PR branch must be updated first.
+- Auto-fix versioning: PRs labeled `release` also auto-fix `package.json` `version` through the automatic maintenance workflow (`maintain-code.yml`) after formatting and linting.  
+  This fix runs only when the PR base is the latest commit on the target branch
+  and CI has write access to the PR branch. It only changes `package.json`;  
+  if the base is stale, no version fix is produced and the PR branch must be updated first.
+  If the PR branch is in a fork, CI does not push a commit directly,  
+  but any generated version fix is included in `ci-autofix.patch` for the contributor to apply and commit.
 - Release guard checks:
   - Verifies that `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` still contain `## [Unreleased]` (fails if missing).
   - Verifies that changelog compare-link definitions at the end of `docs/maintenance/changelog.md` and `docs/en/maintenance/changelog.md` are complete and match release headings (fails if missing or mismatched).
@@ -161,6 +165,22 @@ The check runs against the latest commit in the PR and compares page resource si
 To run the visual regression check for the current PR, add a `/visual` comment to the PR conversation (only users with `write`, `maintain`, or `admin` access can trigger it).  
 Playwright captures screenshots of key pages across desktop, tablet, and mobile viewports using Chromium, Firefox, and WebKit, then compares them against the baseline version with Argos CI.  
 The current automation generates and uploads only Chromium screenshots for comparison.
+
+#### Appendix: How to Use the Patch
+
+If the PR branch is in a fork and auto-fixes produce uncommitted changes, copy the patch link from the CI job summary and run the matching commands locally on the PR branch.
+
+Linux / macOS:
+
+```shell
+curl -L -o ci-autofix.patch "<ci-autofix.patch link>" && git apply ci-autofix.patch
+```
+
+Windows PowerShell:
+
+```powershell
+Invoke-WebRequest -Uri "<ci-autofix.patch link>" -OutFile ci-autofix.patch; git apply ci-autofix.patch
+```
 
 ## Release Flow
 

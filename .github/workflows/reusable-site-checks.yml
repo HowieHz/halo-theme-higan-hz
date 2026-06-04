@@ -25,6 +25,10 @@ on:
         required: false
         type: string
         default: "refs/heads/main"
+      theme_repository:
+        required: false
+        type: string
+        default: ""
       ref_name:
         required: true
         type: string
@@ -98,6 +102,7 @@ jobs:
       - name: Checkout ${{ inputs.ref_name }}
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # https://github.com/actions/checkout/releases/tag/v6.0.3
         with:
+          repository: ${{ inputs.theme_repository || github.repository }}
           ref: ${{ inputs.theme_ref }}
 
       - name: Copy latest .github scripts

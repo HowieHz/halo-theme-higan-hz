@@ -32,7 +32,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # https://github.com/actions/checkout/releases/tag/v6.0.3
         with:
-          ref: ${{ github.head_ref || github.ref }}
+          repository: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref }}
           # Release version inference walks from the latest stable tag to the PR head.
           # Keep full history here so the autofix sees semantic commits that are already on the PR base.
           fetch-depth: 0
@@ -61,9 +62,10 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           BASE_REF: ${{ github.event.pull_request.base.ref }}
+          BASE_REPOSITORY: ${{ github.repository }}
         run: |
-          git fetch origin "$BASE_REF:refs/remotes/origin/$BASE_REF" --tags
-          LATEST_BASE_SHA=$(git rev-parse "origin/$BASE_REF")
+          git fetch "https://github.com/$BASE_REPOSITORY.git" "$BASE_REF:refs/remotes/base/$BASE_REF" --tags
+          LATEST_BASE_SHA=$(git rev-parse "refs/remotes/base/$BASE_REF")
           if [ "$BASE_SHA" != "$LATEST_BASE_SHA" ]; then
             echo "skipped=true" >> "$GITHUB_OUTPUT"
             echo "skip_reason=release PR base is not the latest $BASE_REF commit" >> "$GITHUB_OUTPUT"
@@ -102,11 +104,38 @@ jobs:
           fi
 
       - name: Commit changes
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # https://github.com/stefanzweifel/git-auto-commit-action/releases/tag/v7.1.0
         id: auto-commit-action
         with:
           commit_message: |
             style: auto-format and lint fixes
+
+      - name: Create fork PR autofix patch
+        id: fork-autofix-patch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          patch_path="$RUNNER_TEMP/ci-autofix.patch"
+          git add --intent-to-add -- .
+          if git diff --exit-code --quiet; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          git diff --binary > "$patch_path"
+          echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          echo "patch_path=$patch_path" >> "$GITHUB_OUTPUT"
+          git status --short
+
+      - name: Upload fork PR autofix patch
+        id: upload-fork-autofix-patch
+        if: steps.fork-autofix-patch.outputs.has_changes == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # https://github.com/actions/upload-artifact/releases/tag/v7.0.1
+        with:
+          name: ci-autofix.patch
+          path: ${{ steps.fork-autofix-patch.outputs.patch_path }}
+          archive: false
+          if-no-files-found: error
 
       - name: "Run if changes have been detected"
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
@@ -120,8 +149,31 @@ jobs:
         run: |
           echo "## Auto-commit" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          if [ "${{ steps.auto-commit-action.outputs.changes_detected }}" = "true" ]; then
+          if [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ github.event.pull_request.head.repo.full_name }}" != "${{ github.repository }}" ]; then
+            echo "- Skipped because this PR comes from a fork" >> $GITHUB_STEP_SUMMARY
+            if [ "${{ steps.fork-autofix-patch.outputs.has_changes }}" = "true" ]; then
+              echo "- Formatting or lint fixes changed files; download the patch and apply it locally." >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "| System | Commands |" >> $GITHUB_STEP_SUMMARY
+              echo "| --- | --- |" >> $GITHUB_STEP_SUMMARY
+              echo "| Linux/macOS | \`curl -L -o ci-autofix.patch '${{ steps.upload-fork-autofix-patch.outputs.artifact-url }}' && git apply ci-autofix.patch\` |" >> $GITHUB_STEP_SUMMARY
+              echo "| Windows PowerShell | \`Invoke-WebRequest -Uri '${{ steps.upload-fork-autofix-patch.outputs.artifact-url }}' -OutFile ci-autofix.patch; git apply ci-autofix.patch\` |" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo '```text' >> $GITHUB_STEP_SUMMARY
+              echo "${{ steps.upload-fork-autofix-patch.outputs.artifact-url }}" >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+            else
+              echo "- No changes detected" >> $GITHUB_STEP_SUMMARY
+            fi
+          elif [ "${{ steps.auto-commit-action.outputs.changes_detected }}" = "true" ]; then
             echo "- Changes detected and committed" >> $GITHUB_STEP_SUMMARY
           else
             echo "- No changes detected" >> $GITHUB_STEP_SUMMARY
           fi
+
+      - name: Fail fork PR with autofix patch
+        if: steps.fork-autofix-patch.outputs.has_changes == 'true'
+        run: |
+          echo "Formatting or lint fixes changed files, but this PR comes from a fork and CI cannot push fixes back automatically." >&2
+          echo "Download the ci-autofix.patch artifact from the job summary and apply it locally." >&2
+          exit 1
