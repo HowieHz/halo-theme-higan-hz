@@ -32,7 +32,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # https://github.com/actions/checkout/releases/tag/v6.0.3
         with:
-          ref: ${{ github.head_ref || github.ref }}
+          repository: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref }}
           # Release version inference walks from the latest stable tag to the PR head.
           # Keep full history here so the autofix sees semantic commits that are already on the PR base.
           fetch-depth: 0
@@ -61,9 +62,10 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           BASE_REF: ${{ github.event.pull_request.base.ref }}
+          BASE_REPOSITORY: ${{ github.repository }}
         run: |
-          git fetch origin "$BASE_REF:refs/remotes/origin/$BASE_REF" --tags
-          LATEST_BASE_SHA=$(git rev-parse "origin/$BASE_REF")
+          git fetch "https://github.com/$BASE_REPOSITORY.git" "$BASE_REF:refs/remotes/base/$BASE_REF" --tags
+          LATEST_BASE_SHA=$(git rev-parse "refs/remotes/base/$BASE_REF")
           if [ "$BASE_SHA" != "$LATEST_BASE_SHA" ]; then
             echo "skipped=true" >> "$GITHUB_OUTPUT"
             echo "skip_reason=release PR base is not the latest $BASE_REF commit" >> "$GITHUB_OUTPUT"
@@ -102,11 +104,22 @@ jobs:
           fi
 
       - name: Commit changes
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # https://github.com/stefanzweifel/git-auto-commit-action/releases/tag/v7.1.0
         id: auto-commit-action
         with:
           commit_message: |
             style: auto-format and lint fixes
+
+      - name: Check uncommitted changes
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          if ! git diff --exit-code --quiet || [ -n "$(git status --short)" ]; then
+            echo "Formatting or lint fixes changed files, but this PR comes from a fork and CI cannot push fixes back automatically." >&2
+            echo "Please run pnpm fmt and pnpm lint locally, then push the resulting changes to the PR branch." >&2
+            git status --short >&2
+            exit 1
+          fi
 
       - name: "Run if changes have been detected"
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
@@ -120,7 +133,9 @@ jobs:
         run: |
           echo "## Auto-commit" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          if [ "${{ steps.auto-commit-action.outputs.changes_detected }}" = "true" ]; then
+          if [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ github.event.pull_request.head.repo.full_name }}" != "${{ github.repository }}" ]; then
+            echo "- Skipped because this PR comes from a fork" >> $GITHUB_STEP_SUMMARY
+          elif [ "${{ steps.auto-commit-action.outputs.changes_detected }}" = "true" ]; then
             echo "- Changes detected and committed" >> $GITHUB_STEP_SUMMARY
           else
             echo "- No changes detected" >> $GITHUB_STEP_SUMMARY

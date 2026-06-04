@@ -13,6 +13,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/reusable-site-checks.yml
     with:
+      theme_repository: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
       theme_ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
       ref_name: current
       run_lighthouse_ci: true
@@ -28,6 +29,7 @@ jobs:
       contents: read
     uses: ./.github/workflows/reusable-site-checks.yml
     with:
+      theme_repository: ${{ github.repository }}
       theme_ref: ${{ github.event.pull_request.base.sha }}
       ref_name: base
       run_lighthouse_ci: true
