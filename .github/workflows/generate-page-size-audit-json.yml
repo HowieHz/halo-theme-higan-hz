@@ -214,7 +214,7 @@ jobs:
   # Step 3: Collect all reports and create a PR
   collect-and-pr:
     name: Collect Reports and Create PR
-    needs: test-versions
+    needs: [get-versions, test-versions]
     runs-on: ubuntu-latest
 
     steps:
