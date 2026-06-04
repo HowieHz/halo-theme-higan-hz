@@ -101,11 +101,13 @@ jobs:
           ref: ${{ inputs.theme_ref }}
 
       - name: Copy latest .github scripts
+        env:
+          WORKFLOW_BRANCH: ${{ github.head_ref || 'main' }}
         run: |
           # Fetch the latest workflow helpers from the branch that triggered the workflow.
           # Keep the scope narrow so generated report data under .github/ is not pulled into the workspace.
           # For PRs: use head_ref (source branch); otherwise use main
-          BRANCH_NAME="${{ github.head_ref || 'main' }}"
+          BRANCH_NAME="$WORKFLOW_BRANCH"
           echo "Workflow branch: $BRANCH_NAME"
 
           git fetch origin "$BRANCH_NAME"
