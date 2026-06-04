@@ -12,6 +12,7 @@ jobs:
     name: Build and Upload Theme
     permissions:
       contents: read
+    # PR builds execute untrusted branch code, so they must not use the attesting workflow with OIDC permissions.
     uses: ./.github/workflows/reusable-build-theme-untrusted.yml
     with:
       theme_ref: ${{ github.sha }}

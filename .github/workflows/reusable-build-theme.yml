@@ -28,7 +28,8 @@ jobs:
   build:
     name: Build Theme Packages
     runs-on: ubuntu-latest
-    # Only trusted callers should use this workflow because build steps run code from inputs.theme_ref.
+    # Only trusted release callers should use this workflow because build steps run code from inputs.theme_ref.
+    # Do not call this from pull_request workflows; it can request OIDC tokens to issue artifact attestations.
     permissions:
       contents: read
       id-token: write
