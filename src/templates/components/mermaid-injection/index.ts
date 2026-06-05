@@ -198,11 +198,11 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
   const jobs: MermaidRenderJob[] = [];
 
   // 默认编辑器方法一
-  // 来自官方编辑器的 Mermaid 代码块
+  // 来自默认编辑器的 Mermaid 代码块
   // 特征是 <pre><code class="language-mermaid">...</code></pre>
   // 渲染标记位是 <pre><code class="language-mermaid" data-processed="true">...</code></pre>
   // 内容在 code 元素的文本内容中
-  // 测试方法：官方编辑器 + 插入代码块 + 选择 Mermaid 语言
+  // 测试方法：默认编辑器 + 插入代码块 + 选择 Mermaid 语言
   // 效果：自动识别并明暗双倍渲染
   // 如果外层有 shiki-code，变成了 shiki-code > pre > code.language-mermaid，说明已经被 shiki 插件处理过了，跳过处理。
   // highlight.js 插件不支持 Mermaid 语法高亮，不会生成 pre > code.language-mermaid.hljs[data-highlighted="yes"] 结构。
@@ -222,7 +222,7 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
   // 特征是 <text-diagram data-type="mermaid" data-content="..."></text-diagram>
   // 渲染标记位是 <text-diagram data-type="mermaid" data-content="..." data-processed="true"></text-diagram>
   // 内容在 data-content 属性中
-  // 测试方法：官方编辑器 + 文本绘图插件 + 插入文本绘图提供的组件
+  // 测试方法：默认编辑器 + 文本绘图插件 + 插入文本绘图提供的组件
   // 效果：自动识别并明暗双倍渲染
   container.querySelectorAll<HTMLElement>('text-diagram[data-type="mermaid"]').forEach((sourceElement) => {
     pushMermaidRenderJob(jobs, {

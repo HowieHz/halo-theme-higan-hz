@@ -27,6 +27,10 @@
 
 - Mermaid 渲染支持新增额外源元素选择器配置，可将自定义元素按明暗主题规则渲染为 Mermaid 图表。
 
+### 📄 文档
+
+- 更新 Mermaid 明暗主题适配文档，补充 Willow Markdown、ByteMD、StackEdit 编辑器示例与 Shiki 排除说明。
+
 ## [1.68.2] - 2026-06-03
 
 ### 🔧 代码重构
