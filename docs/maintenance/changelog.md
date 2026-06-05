@@ -25,7 +25,7 @@
 
 ### 💥 破坏性变更
 
-- Mermaid 明暗主题 HTML 写法不再支持旧的 `.mermaid auto`、`.mermaid dark`、`.mermaid light` 源元素结构，请改用
+- 默认编辑器的 Mermaid 明暗主题 HTML 写法不再支持旧的 `.mermaid auto`、`.mermaid dark`、`.mermaid light` 源元素结构，请改用
   [Mermaid 适配明暗主题切换](/guide/style-reference#mermaid-light-dark-theme-adaptation) 文档中的
   `div.auto|dark|light > pre > code.language-mermaid` 写法。
 

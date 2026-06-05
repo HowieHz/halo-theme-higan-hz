@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 💥 Breaking Changes
 
-- Mermaid light/dark HTML syntax no longer supports the old `.mermaid auto`,
+- Mermaid light/dark HTML syntax for the default editor no longer supports the old `.mermaid auto`,
   `.mermaid dark`, and `.mermaid light` source element structures. Use the documented
   `div.auto|dark|light > pre > code.language-mermaid` syntax in
   [Mermaid Light/Dark Theme Adaptation](/en/guide/style-reference#mermaid-light-dark-theme-adaptation)
