@@ -144,18 +144,14 @@ function getMermaidRenderThemes(
   return fallbackThemes;
 }
 
-/**
- * 统一加入 Mermaid 渲染任务。
- *
- * 同一个元素可能同时被内置选择器和用户额外选择器命中。这里按 sourceElement 和 dataProcessedElement 去重，避免重复渲染同一份图表。
- */
-function pushMermaidRenderJob(jobs: MermaidRenderJob[], job: MermaidRenderJob): void {
+/** 用户额外选择器可能命中内置选择器已收集的元素。按 sourceElement 和 dataProcessedElement 去重，避免重复渲染同一份图表。 */
+function pushExtraMermaidRenderJob(jobs: MermaidRenderJob[], job: MermaidRenderJob): void {
   const isDuplicate = jobs.some(
     (existingJob) =>
       existingJob.sourceElement === job.sourceElement || existingJob.dataProcessedElement === job.dataProcessedElement,
   );
 
-  if (isMermaidDataProcessed(job.dataProcessedElement) || isDuplicate) {
+  if (isDuplicate) {
     return;
   }
 
@@ -179,7 +175,7 @@ function pushExtraMermaidRenderJobs(
 
   try {
     container.querySelectorAll<HTMLElement>(trimmedSelector).forEach((sourceElement) => {
-      pushMermaidRenderJob(jobs, {
+      pushExtraMermaidRenderJob(jobs, {
         sourceElement,
         dataProcessedElement: sourceElement,
         rawContent: sourceElement.textContent ?? "",
@@ -197,7 +193,25 @@ function pushExtraMermaidRenderJobs(
 function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSelector: string): MermaidRenderJob[] {
   const jobs: MermaidRenderJob[] = [];
 
-  // 默认编辑器方法一
+  // Willow Markdown、ByteMD、StackEdit 编辑器 HTML 写法
+  // 来自外层主题类包裹的 Mermaid Markdown 代码块
+  // 特征是 <div class="auto|dark|light"><pre><code class="language-mermaid">...</code></pre></div>
+  // 渲染标记位是 code.language-mermaid，渲染源是最外层 div，主题模式从最外层 div 读取。
+  // 内容在 code 元素的文本内容中
+  // 测试方法：编辑器 + 输入 <div class="auto">```mermaid ... ```</div>
+  // 效果：按照最外层 div 指定的主题模式渲染
+  container
+    .querySelectorAll<HTMLElement>("div:is(.auto, .dark, .light) > pre:not(shiki-code > pre) > code.language-mermaid")
+    .forEach((codeElement) => {
+      jobs.push({
+        sourceElement: codeElement.parentElement!.parentElement!,
+        dataProcessedElement: codeElement,
+        rawContent: codeElement.textContent ?? "",
+        themes: getMermaidRenderThemes(codeElement.parentElement!.parentElement!, ["light", "dark"]),
+      });
+    });
+
+  // 默认编辑器，Willow Markdown、ByteMD、StackEdit 编辑器方法一
   // 来自默认编辑器的 Mermaid 代码块
   // 特征是 <pre><code class="language-mermaid">...</code></pre>
   // 渲染标记位是 <pre><code class="language-mermaid" data-processed="true">...</code></pre>
@@ -207,9 +221,11 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
   // 如果外层有 shiki-code，变成了 shiki-code > pre > code.language-mermaid，说明已经被 shiki 插件处理过了，跳过处理。
   // highlight.js 插件不支持 Mermaid 语法高亮，不会生成 pre > code.language-mermaid.hljs[data-highlighted="yes"] 结构。
   container
-    .querySelectorAll<HTMLElement>("pre:not(shiki-code > pre) > code.language-mermaid")
+    .querySelectorAll<HTMLElement>(
+      "pre:not(shiki-code > pre):not(div:is(.auto, .dark, .light) > pre) > code.language-mermaid",
+    )
     .forEach((codeElement) => {
-      pushMermaidRenderJob(jobs, {
+      jobs.push({
         sourceElement: codeElement.parentElement!,
         dataProcessedElement: codeElement,
         rawContent: codeElement.textContent ?? "",
@@ -225,7 +241,7 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
   // 测试方法：默认编辑器 + 文本绘图插件 + 插入文本绘图提供的组件
   // 效果：自动识别并明暗双倍渲染
   container.querySelectorAll<HTMLElement>('text-diagram[data-type="mermaid"]').forEach((sourceElement) => {
-    pushMermaidRenderJob(jobs, {
+    jobs.push({
       sourceElement,
       dataProcessedElement: sourceElement,
       rawContent: sourceElement.getAttribute("data-content") ?? "",
@@ -241,7 +257,7 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
   // 测试方法：默认编辑器 + 插入 HTML 组件 + 输入 <div class="mermaid xxx">...</div>
   // 效果：按照指定的主题模式渲染
   container.querySelectorAll<HTMLElement>("div.mermaid:not(:has(> *))").forEach((sourceElement) => {
-    pushMermaidRenderJob(jobs, {
+    jobs.push({
       sourceElement,
       dataProcessedElement: sourceElement,
       rawContent: sourceElement.textContent ?? "",
@@ -257,7 +273,7 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
   // 测试方法：Vditor 编辑器 + 输入 ```mermaid ... ```
   // 效果：按照指定的主题模式渲染
   container.querySelectorAll<HTMLElement>("div.mermaid > div.language-mermaid").forEach((contentElement) => {
-    pushMermaidRenderJob(jobs, {
+    jobs.push({
       sourceElement: contentElement.parentElement!,
       dataProcessedElement: contentElement,
       rawContent: contentElement.textContent ?? "",
@@ -275,7 +291,7 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
   container
     .querySelectorAll<HTMLElement>("div.language-mermaid:not(div.mermaid > div.language-mermaid)")
     .forEach((sourceElement) => {
-      pushMermaidRenderJob(jobs, {
+      jobs.push({
         sourceElement,
         dataProcessedElement: sourceElement,
         rawContent: sourceElement.textContent ?? "",
