@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.69.0] - 2026-06-05
+
 ### 💥 破坏性变更
 
 - 默认编辑器的 Mermaid 明暗主题 HTML 写法不再支持旧的 `.mermaid auto`、`.mermaid dark`、`.mermaid light` 源元素结构，请改用
@@ -2043,7 +2045,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.2...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.0...HEAD
+[1.69.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.2...v1.69.0
 [1.68.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.1...v1.68.2
 [1.68.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.0...v1.68.1
 [1.68.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.67.0...v1.68.0

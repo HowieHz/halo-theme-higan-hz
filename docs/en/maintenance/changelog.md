@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.69.0] - 2026-06-05
+
 ### 💥 Breaking Changes
 
 - Mermaid light/dark HTML syntax for the default editor no longer supports the old `.mermaid auto`,
@@ -2130,7 +2132,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.2...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.0...HEAD
+[1.69.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.2...v1.69.0
 [1.68.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.1...v1.68.2
 [1.68.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.0...v1.68.1
 [1.68.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.67.0...v1.68.0
