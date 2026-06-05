@@ -205,35 +205,39 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
 
   // 默认编辑器方法三/四
   // 来自默认编辑器 HTML 组件的 Mermaid 代码块
-  // 特征是 <div class="html-edited"><div class="mermaid xxx">...</div>(若干个)</div>
-  // 渲染标记位是 <div class="mermaid xxx" data-processed="true">...</div>
-  // 内容在 div.mermaid 的文本内容中
-  // 测试方法：默认编辑器 + 插入 HTML 组件 + 输入 <div class="mermaid xxx">...</div>
+  // 特征是 <div class="html-edited"><div class="auto|dark|light">...</div>(若干个)</div>
+  // 渲染标记位是 <div class="auto|dark|light" data-processed="true">...</div>
+  // 内容在主题类 div 的文本内容中
+  // 测试方法：默认编辑器 + 插入 HTML 组件 + 输入 <div class="auto">...</div>
   // 效果：按照指定的主题模式渲染
-  container.querySelectorAll<HTMLElement>("div.mermaid:not(:has(> *))").forEach((sourceElement) => {
-    jobs.push({
-      sourceElement,
-      dataProcessedElement: sourceElement,
-      rawContent: sourceElement.textContent ?? "",
-      themes: getMermaidRenderThemes(sourceElement),
+  container
+    .querySelectorAll<HTMLElement>("div.html-edited > div:is(.auto, .dark, .light):not(:has(> *))")
+    .forEach((sourceElement) => {
+      jobs.push({
+        sourceElement,
+        dataProcessedElement: sourceElement,
+        rawContent: sourceElement.textContent ?? "",
+        themes: getMermaidRenderThemes(sourceElement),
+      });
     });
-  });
 
   // Vditor 方法一/二
   // 来自 Vditor 编辑器插件的 Mermaid 代码块 https://www.halo.run/store/apps/app-uBcYw
-  // 特征是 <div class="mermaid xxx"><div class="language-mermaid">...</div></div>
-  // 渲染标记位是 <div class="mermaid xxx"><div class="language-mermaid" data-processed="true">...</div></div>
+  // 特征是 <div class="auto|dark|light"><div class="language-mermaid">...</div></div>
+  // 渲染标记位是 <div class="auto|dark|light"><div class="language-mermaid" data-processed="true">...</div></div>
   // 内容在 .language-mermaid 元素的文本内容中
   // 测试方法：Vditor 编辑器 + 输入 ```mermaid ... ```
   // 效果：按照指定的主题模式渲染
-  container.querySelectorAll<HTMLElement>("div.mermaid > div.language-mermaid").forEach((contentElement) => {
-    jobs.push({
-      sourceElement: contentElement.parentElement!,
-      dataProcessedElement: contentElement,
-      rawContent: contentElement.textContent ?? "",
-      themes: getMermaidRenderThemes(contentElement.parentElement!),
+  container
+    .querySelectorAll<HTMLElement>("div:is(.auto, .dark, .light) > div.language-mermaid")
+    .forEach((contentElement) => {
+      jobs.push({
+        sourceElement: contentElement.parentElement!,
+        dataProcessedElement: contentElement,
+        rawContent: contentElement.textContent ?? "",
+        themes: getMermaidRenderThemes(contentElement.parentElement!),
+      });
     });
-  });
 
   // Vditor 编辑器方法三
   // 来自 Vditor 编辑器插件的 Mermaid 代码块 https://www.halo.run/store/apps/app-uBcYw
@@ -243,7 +247,7 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
   // 测试方法：Vditor 编辑器 + 输入 ```mermaid ... ```
   // 效果：自动识别并明暗双倍渲染
   container
-    .querySelectorAll<HTMLElement>("div.language-mermaid:not(div.mermaid > div.language-mermaid)")
+    .querySelectorAll<HTMLElement>("div.language-mermaid:not(div:is(.auto, .dark, .light) > div.language-mermaid)")
     .forEach((sourceElement) => {
       jobs.push({
         sourceElement,

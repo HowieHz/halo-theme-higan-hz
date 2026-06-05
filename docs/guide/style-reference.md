@@ -1045,7 +1045,7 @@ This is normal text <small>This is small text</small> This is normal text
 
 <!-- prettier-ignore-start -->
 ```html
-<div class="mermaid auto">
+<div class="auto">
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
     B --> C{Let me think}
@@ -1066,7 +1066,7 @@ flowchart TD
 
 <!-- prettier-ignore-start -->
 ```html
-<div class="mermaid dark">
+<div class="dark">
 %%{init: { "theme": "dark" } }%%
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
@@ -1076,7 +1076,7 @@ flowchart TD
     C -->|Three| F[fa:fa-car Car]
 </div>
 
-<div class="mermaid light">
+<div class="light">
 %%{init: { "theme": "light" } }%%
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
@@ -1126,7 +1126,7 @@ flowchart TD
 
 <!-- prettier-ignore-start -->
 ````html
-<div class="mermaid auto">
+<div class="auto">
 
 ```mermaid
 flowchart TD
@@ -1151,7 +1151,7 @@ flowchart TD
 
 <!-- prettier-ignore-start -->
 ````html
-<div class="mermaid dark">
+<div class="dark">
 
 ```mermaid
 %%{init: { "theme": "dark" } }%%
@@ -1165,7 +1165,7 @@ flowchart TD
 
 </div>
 
-<div class="mermaid light">
+<div class="light">
 
 ```mermaid
 %%{init: { "theme": "light" } }%%
