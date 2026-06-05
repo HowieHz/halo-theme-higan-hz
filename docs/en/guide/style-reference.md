@@ -46,6 +46,12 @@ Related Documentation: [Template Files and Access Path Mapping](/en/reference/te
 - Usage in Vditor editor:
   1. Need to enable [Vditor Editor Plugin](https://github.com/justice2001/halo-plugin-vditor) ([App Store Page](https://www.halo.run/store/apps/app-uBcYw)), and enter the post edit page, set the post editor to Vditor editor.
   2. Vditor editor natively supports HTML tags, just write directly.
+- Usage in Willow Markdown editor:
+  1. Need to enable [Willow Markdown Editor Plugin](https://github.com/guqing/willow-mde) ([App Store Page](https://www.halo.run/store/apps/app-kqZUw)), and enter the post edit page, set the post editor to Willow Markdown editor.
+  2. Willow Markdown editor natively supports HTML tags, just write directly.
+- Usage in ByteMD editor:
+  1. Need to enable [ByteMD Editor](https://github.com/halo-sigs/plugin-bytemd) ([App Store Page](https://www.halo.run/store/apps/app-HTyhC)), and enter the post edit page, set the post editor to ByteMD editor.
+  2. ByteMD editor natively supports HTML tags, just write directly.
 
 :::
 
@@ -1219,6 +1225,71 @@ As shown above, write the diagram using the standard Markdown code block syntax.
 
 :::
 
+::: details Method 2: HTML syntax with automatic light/dark rendering
+Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).  
+Write the diagram once; the theme automatically generates both light and dark versions.
+
+Example:
+
+<!-- prettier-ignore-start -->
+````html
+<div class="auto">
+
+```mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+````
+<!-- prettier-ignore-end -->
+
+:::
+
+::: details Method 3: HTML syntax with manually managed light/dark diagrams
+Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).  
+Manually maintain separate diagrams for light and dark modes.
+
+Example:
+
+<!-- prettier-ignore-start -->
+````html
+<div class="dark">
+
+```mermaid
+%%{init: { "theme": "dark" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+
+<div class="light">
+
+```mermaid
+%%{init: { "theme": "light" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+````
+<!-- prettier-ignore-end -->
+
+:::
+
 #### ByteMD Editor
 
 Enable the [ByteMD Editor plugin](https://www.halo.run/store/apps/app-HTyhC), then switch the post editor to ByteMD.
@@ -1248,6 +1319,71 @@ flowchart TD
 <!-- prettier-ignore-end -->
 
 As shown above, write the diagram using the standard Markdown code block syntax.
+
+:::
+
+::: details Method 2: HTML syntax with automatic light/dark rendering
+Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).  
+Write the diagram once; the theme automatically generates both light and dark versions.
+
+Example:
+
+<!-- prettier-ignore-start -->
+````html
+<div class="auto">
+
+```mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+````
+<!-- prettier-ignore-end -->
+
+:::
+
+::: details Method 3: HTML syntax with manually managed light/dark diagrams
+Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).  
+Manually maintain separate diagrams for light and dark modes.
+
+Example:
+
+<!-- prettier-ignore-start -->
+````html
+<div class="dark">
+
+```mermaid
+%%{init: { "theme": "dark" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+
+<div class="light">
+
+```mermaid
+%%{init: { "theme": "light" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+````
+<!-- prettier-ignore-end -->
 
 :::
 

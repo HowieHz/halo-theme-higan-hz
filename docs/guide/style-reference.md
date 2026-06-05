@@ -40,6 +40,12 @@ import DefaultRender from '../.vitepress/components/DefaultRender.vue';
 - 在 Vditor 编辑器的使用方法：
   1. 需启用 [Vditor 编辑器插件](https://github.com/justice2001/halo-plugin-vditor)([应用市场页面](https://www.halo.run/store/apps/app-uBcYw))，并进入文章编辑页，将文章编辑器设置为 Vditor 编辑器。
   2. Vditor 编辑器原生支持 HTML 标签，直接编写即可。
+- 在 Willow Markdown 编辑器的使用方法：
+  1. 需启用 [Willow Markdown 编辑器插件](https://github.com/guqing/willow-mde)([应用市场页面](https://www.halo.run/store/apps/app-kqZUw))，并进入文章编辑页，将文章编辑器设置为 Willow Markdown 编辑器。
+  2. Willow Markdown 编辑器原生支持 HTML 标签，直接编写即可。
+- 在 ByteMD 编辑器的使用方法：
+  1. 需启用 [ByteMD 编辑器](https://github.com/halo-sigs/plugin-bytemd)([应用市场页面](https://www.halo.run/store/apps/app-HTyhC))，并进入文章编辑页，将文章编辑器设置为 ByteMD 编辑器。
+  2. ByteMD 编辑器原生支持 HTML 标签，直接编写即可。
 
 :::
 
@@ -1209,6 +1215,71 @@ flowchart TD
 
 :::
 
+::: details 方法二 HTML 写法自动渲染明暗主题
+需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+图表只写一遍，自动生成浅色/深色模式下两种图表。
+
+以下是示例：
+
+<!-- prettier-ignore-start -->
+````html
+<div class="auto">
+
+```mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+````
+<!-- prettier-ignore-end -->
+
+:::
+
+::: details 方法三 HTML 写法手动管理明暗主题
+需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+手动管理浅色/深色模式下的图表。
+
+以下是示例：
+
+<!-- prettier-ignore-start -->
+````html
+<div class="dark">
+
+```mermaid
+%%{init: { "theme": "dark" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+
+<div class="light">
+
+```mermaid
+%%{init: { "theme": "light" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+````
+<!-- prettier-ignore-end -->
+
+:::
+
 #### 适用于 ByteMD 编辑器
 
 需启用 [ByteMD 编辑器](https://www.halo.run/store/apps/app-HTyhC)插件，并在文章编辑器切换为 ByteMD 编辑器。
@@ -1238,6 +1309,71 @@ flowchart TD
 <!-- prettier-ignore-end -->
 
 如上所示，使用 Markdown 代码块语法正常书写即可。
+
+:::
+
+::: details 方法二 HTML 写法自动渲染明暗主题
+需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+图表只写一遍，自动生成浅色/深色模式下两种图表。
+
+以下是示例：
+
+<!-- prettier-ignore-start -->
+````html
+<div class="auto">
+
+```mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+````
+<!-- prettier-ignore-end -->
+
+:::
+
+::: details 方法三 HTML 写法手动管理明暗主题
+需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
+手动管理浅色/深色模式下的图表。
+
+以下是示例：
+
+<!-- prettier-ignore-start -->
+````html
+<div class="dark">
+
+```mermaid
+%%{init: { "theme": "dark" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+
+<div class="light">
+
+```mermaid
+%%{init: { "theme": "light" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+````
+<!-- prettier-ignore-end -->
 
 :::
 
