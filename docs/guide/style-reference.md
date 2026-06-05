@@ -1014,7 +1014,7 @@ This is normal text <small>This is small text</small> This is normal text
 <div class="dark">这段内容只在暗色模式/自动模式 (暗色) 下显示。试试切换页面主题。</div>
 </DefaultRender>
 
-### Mermaid 适配明暗主题切换
+### Mermaid 适配明暗主题切换 {#mermaid-light-dark-theme-adaptation}
 
 #### 适用于默认编辑器
 

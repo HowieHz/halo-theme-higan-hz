@@ -756,7 +756,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-图表可支持明暗切换，具体使用方法请看：[Mermaid 适配明暗主题切换](/guide/style-reference#mermaid-适配明暗主题切换)
+图表可支持明暗切换，具体使用方法请看：[Mermaid 适配明暗主题切换](/guide/style-reference#mermaid-light-dark-theme-adaptation)
 
 启用后需要配置以下子项：
 
@@ -1207,7 +1207,7 @@ const QuickJumpConfig = (props) => {
 
 相关说明：
 
-[Mermaid 适配明暗主题切换](/guide/style-reference#mermaid-适配明暗主题切换)
+[Mermaid 适配明暗主题切换](/guide/style-reference#mermaid-light-dark-theme-adaptation)
 
 :::
 

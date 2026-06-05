@@ -23,13 +23,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 💥 Breaking Changes
+
+- Mermaid light/dark HTML syntax no longer supports the old `.mermaid auto`,
+  `.mermaid dark`, and `.mermaid light` source element structures. Use the documented
+  `div.auto|dark|light > pre > code.language-mermaid` syntax in
+  [Mermaid Light/Dark Theme Adaptation](/en/guide/style-reference#mermaid-light-dark-theme-adaptation)
+  instead.
+
 ### 🚀 Features
 
-- Mermaid rendering support now adds an extra source element selector setting for rendering custom elements as Mermaid diagrams with light/dark theme rules.
+- Added `Mermaid extra source element selector` as a child setting of `Global -> Mermaid Support` for rendering custom elements as Mermaid diagrams with light/dark theme rules.
 
 ### 📄 Documentation
 
-- Updated the Mermaid light/dark theme adaptation docs with Willow Markdown, ByteMD, and StackEdit editor examples and Shiki exclusion notes.
+- Updated the
+  [Mermaid light/dark theme adaptation docs](/en/guide/style-reference#mermaid-light-dark-theme-adaptation)
+  with Willow Markdown, ByteMD, and StackEdit editor examples and Shiki exclusion notes.
 
 ## [1.68.2] - 2026-06-03
 

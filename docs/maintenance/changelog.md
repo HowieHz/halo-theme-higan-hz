@@ -23,13 +23,19 @@
 
 ## [Unreleased]
 
+### 💥 破坏性变更
+
+- Mermaid 明暗主题 HTML 写法不再支持旧的 `.mermaid auto`、`.mermaid dark`、`.mermaid light` 源元素结构，请改用
+  [Mermaid 适配明暗主题切换](/guide/style-reference#mermaid-light-dark-theme-adaptation) 文档中的
+  `div.auto|dark|light > pre > code.language-mermaid` 写法。
+
 ### 🚀 新功能
 
-- Mermaid 渲染支持新增额外源元素选择器配置，可将自定义元素按明暗主题规则渲染为 Mermaid 图表。
+- 新增 `全局 -> Mermaid 支持` 的子配置项 `Mermaid 额外源元素选择器`，可将自定义元素按明暗主题规则渲染为 Mermaid 图表。
 
 ### 📄 文档
 
-- 更新 Mermaid 明暗主题适配文档，补充 Willow Markdown、ByteMD、StackEdit 编辑器示例与 Shiki 排除说明。
+- 更新 [Mermaid 明暗主题适配文档](/guide/style-reference#mermaid-light-dark-theme-adaptation)，补充 Willow Markdown、ByteMD、StackEdit 编辑器示例与 Shiki 排除说明。
 
 ## [1.68.2] - 2026-06-03
 
