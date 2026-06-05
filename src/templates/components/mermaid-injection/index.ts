@@ -144,20 +144,6 @@ function getMermaidRenderThemes(
   return fallbackThemes;
 }
 
-/** 用户额外选择器可能命中内置选择器已收集的元素。按 sourceElement 和 dataProcessedElement 去重，避免重复渲染同一份图表。 */
-function pushExtraMermaidRenderJob(jobs: MermaidRenderJob[], job: MermaidRenderJob): void {
-  const isDuplicate = jobs.some(
-    (existingJob) =>
-      existingJob.sourceElement === job.sourceElement || existingJob.dataProcessedElement === job.dataProcessedElement,
-  );
-
-  if (isDuplicate) {
-    return;
-  }
-
-  jobs.push(job);
-}
-
 /**
  * 按用户配置的额外源元素选择器收集 Mermaid 渲染任务。
  *
@@ -175,7 +161,15 @@ function pushExtraMermaidRenderJobs(
 
   try {
     container.querySelectorAll<HTMLElement>(trimmedSelector).forEach((sourceElement) => {
-      pushExtraMermaidRenderJob(jobs, {
+      const isDuplicate = jobs.some(
+        (job) => job.sourceElement === sourceElement || job.dataProcessedElement === sourceElement,
+      );
+
+      if (isDuplicate) {
+        return;
+      }
+
+      jobs.push({
         sourceElement,
         dataProcessedElement: sourceElement,
         rawContent: sourceElement.textContent ?? "",
