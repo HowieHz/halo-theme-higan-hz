@@ -62,7 +62,7 @@
 
 ### 💥 破坏性变更
 
-- 重构 Mermaid 渲染机制，现在仅保证自动渲染 [Mermaid 适配明暗主题切换](/guide/style-reference#mermaid-适配明暗主题切换) 中列出的几种 Mermaid 写法。**依赖未记录的自定义 HTML 结构或旧版选择器行为的内容需按该段文档调整写法。**
+- 重构 Mermaid 渲染机制，现在仅保证自动渲染 [Mermaid 适配明暗主题切换](/guide/style-reference#mermaid-light-dark-theme-adaptation) 中列出的几种 Mermaid 写法。**依赖未记录的自定义 HTML 结构或旧版选择器行为的内容需按该段文档调整写法。**
 
 ### 🔧 代码重构
 
