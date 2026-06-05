@@ -144,46 +144,6 @@ function getMermaidRenderThemes(
   return fallbackThemes;
 }
 
-/**
- * 按用户配置的额外源元素选择器收集 Mermaid 渲染任务。
- *
- * 命中的元素使用 textContent 作为源码，并用元素本身承载 data-processed 状态。
- */
-function pushExtraMermaidRenderJobs(
-  jobs: MermaidRenderJob[],
-  container: HTMLElement,
-  extraSourceElementSelector: string,
-): void {
-  const trimmedSelector = extraSourceElementSelector.trim();
-  if (!trimmedSelector) {
-    return;
-  }
-
-  try {
-    container.querySelectorAll<HTMLElement>(trimmedSelector).forEach((sourceElement) => {
-      const isDuplicate = jobs.some(
-        (job) => job.sourceElement === sourceElement || job.dataProcessedElement === sourceElement,
-      );
-
-      if (isDuplicate) {
-        return;
-      }
-
-      jobs.push({
-        sourceElement,
-        dataProcessedElement: sourceElement,
-        rawContent: sourceElement.textContent ?? "",
-        themes: getMermaidRenderThemes(sourceElement, ["light", "dark"]),
-      });
-    });
-  } catch (error: unknown) {
-    console.error(`${MERMAID_LOG_PREFIX} Ignored invalid extra Mermaid source element selector.`, {
-      selector: trimmedSelector,
-      error,
-    });
-  }
-}
-
 function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSelector: string): MermaidRenderJob[] {
   const jobs: MermaidRenderJob[] = [];
 
@@ -296,7 +256,32 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
   // 用户自定义额外选择器
   // 命中的元素本身作为渲染源和 data-processed 标记位，内容从 textContent 读取。
   // 主题规则：.auto 渲染 light + dark，.dark 只渲染 dark，.light 只渲染 light，未指定时渲染 light + dark。
-  pushExtraMermaidRenderJobs(jobs, container, extraSourceElementSelector);
+  const trimmedExtraSourceElementSelector = extraSourceElementSelector.trim();
+  if (trimmedExtraSourceElementSelector) {
+    try {
+      container.querySelectorAll<HTMLElement>(trimmedExtraSourceElementSelector).forEach((sourceElement) => {
+        const isDuplicate = jobs.some(
+          (job) => job.sourceElement === sourceElement || job.dataProcessedElement === sourceElement,
+        );
+
+        if (isDuplicate) {
+          return;
+        }
+
+        jobs.push({
+          sourceElement,
+          dataProcessedElement: sourceElement,
+          rawContent: sourceElement.textContent ?? "",
+          themes: getMermaidRenderThemes(sourceElement, ["light", "dark"]),
+        });
+      });
+    } catch (error: unknown) {
+      console.error(`${MERMAID_LOG_PREFIX} Ignored invalid extra Mermaid source element selector.`, {
+        selector: trimmedExtraSourceElementSelector,
+        error,
+      });
+    }
+  }
 
   return jobs;
 }
