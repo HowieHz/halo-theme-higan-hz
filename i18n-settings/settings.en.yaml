@@ -99,6 +99,12 @@ spec:
           label: Mermaid content scope selector
           help: Only look for Mermaid diagrams inside areas matched by this CSS selector.
           value: "main"
+        - $formkit: text
+          name: mermaid_extra_source_element_selector
+          if: "$is_mermaid_enable === true"
+          label: Mermaid extra source element selector
+          help: Use CSS selectors to additionally mark elements that should be rendered as Mermaid diagrams. Matched elements read diagram source from textContent; elements with the auto class render both light and dark variants, elements with the dark class render only the dark variant, elements with the light class render only the light variant, and elements without these classes render both light and dark variants by default.
+          value: ""
         - $formkit: code
           name: mermaid_config
           if: "$is_mermaid_enable === true"

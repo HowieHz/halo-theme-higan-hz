@@ -767,7 +767,10 @@ Charts can support light/dark theme switching. For specific usage methods, pleas
 After enabling, you need to configure the following sub-items:
 
 - Mermaid content scope selector (Default: `main`)
+- Mermaid extra source element selector (Default: empty)
 - Mermaid Config Property (Default: `{ startOnLoad: false }`)
+
+Elements matched by the extra source element selector read diagram source from `textContent`; elements with the `auto` class render both light and dark variants, elements with the `dark` class render only the dark variant, elements with the `light` class render only the light variant, and elements without these classes render both light and dark variants by default.
 
 :::
 

@@ -5,7 +5,8 @@
     th:inline="javascript"
   >
     {
-      "selector": /*[[${theme.config?.global?.mermaid_content_scope_selector}]]*/ "main",
+      "contentScopeSelector": /*[[${theme.config?.global?.mermaid_content_scope_selector}]]*/ "main",
+      "extraSourceElementSelector": /*[[${theme.config?.global?.mermaid_extra_source_element_selector}]]*/ "",
       "config": /*[[${theme.config?.global?.mermaid_config}]]*/ "{startOnLoad: false}"
     }
   </script>

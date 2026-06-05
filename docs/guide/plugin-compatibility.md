@@ -89,7 +89,7 @@ outline: deep
 
 ## Mermaid 和 PlantUML 支持
 
-主题本体提供了 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)，以及 [Mermaid 适配明暗主题切换](/guide/style-reference#mermaid-适配明暗主题切换)支持。
+主题本体提供了 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)，以及 [Mermaid 适配明暗主题切换](/guide/style-reference#mermaid-light-dark-theme-adaptation)支持。
 
 此外，你也可以安装插件 [plugin-text-diagram](https://github.com/halo-sigs/plugin-text-diagram)（[应用市场页面](https://www.halo.run/store/apps/app-ahBRi)），这个插件提供了 Mermaid 和 PlantUML 支持。
 

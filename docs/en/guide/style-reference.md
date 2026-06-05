@@ -46,6 +46,12 @@ Related Documentation: [Template Files and Access Path Mapping](/en/reference/te
 - Usage in Vditor editor:
   1. Need to enable [Vditor Editor Plugin](https://github.com/justice2001/halo-plugin-vditor) ([App Store Page](https://www.halo.run/store/apps/app-uBcYw)), and enter the post edit page, set the post editor to Vditor editor.
   2. Vditor editor natively supports HTML tags, just write directly.
+- Usage in Willow Markdown editor:
+  1. Need to enable [Willow Markdown Editor Plugin](https://github.com/guqing/willow-mde) ([App Store Page](https://www.halo.run/store/apps/app-kqZUw)), and enter the post edit page, set the post editor to Willow Markdown editor.
+  2. Willow Markdown editor natively supports HTML tags, just write directly.
+- Usage in ByteMD editor:
+  1. Need to enable [ByteMD Editor](https://github.com/halo-sigs/plugin-bytemd) ([App Store Page](https://www.halo.run/store/apps/app-HTyhC)), and enter the post edit page, set the post editor to ByteMD editor.
+  2. ByteMD editor natively supports HTML tags, just write directly.
 
 :::
 
@@ -1049,14 +1055,14 @@ Example:
 
 <!-- prettier-ignore-start -->
 ```html
-<div class="mermaid auto">
+<div class="auto"><pre><code class="language-mermaid">
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
     B --> C{Let me think}
     C -->|One| D[Laptop]
     C -->|Two| E[iPhone]
     C -->|Three| F[fa:fa-car Car]
-</div>
+</code></pre></div>
 ```
 <!-- prettier-ignore-end -->
 
@@ -1070,7 +1076,7 @@ Example:
 
 <!-- prettier-ignore-start -->
 ```html
-<div class="mermaid dark">
+<div class="dark"><pre><code class="language-mermaid">
 %%{init: { "theme": "dark" } }%%
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
@@ -1078,9 +1084,9 @@ flowchart TD
     C -->|One| D[Laptop]
     C -->|Two| E[iPhone]
     C -->|Three| F[fa:fa-car Car]
-</div>
+</code></pre></div>
 
-<div class="mermaid light">
+<div class="light"><pre><code class="language-mermaid">
 %%{init: { "theme": "light" } }%%
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
@@ -1088,7 +1094,7 @@ flowchart TD
     C -->|One| D[Laptop]
     C -->|Two| E[iPhone]
     C -->|Three| F[fa:fa-car Car]
-</div>
+</code></pre></div>
 ```
 <!-- prettier-ignore-end -->
 
@@ -1098,10 +1104,7 @@ flowchart TD
 
 Enable the [Vditor Editor plugin](https://www.halo.run/store/apps/app-uBcYw), then switch the post editor to Vditor.
 
-<!-- No need to exclude Mermaid in the Shiki plugin settings.
-Shiki runs at a lower priority than the Vditor editor plugin. If
-the theme's Mermaid support is disabled, Vditor takes over
-rendering. -->
+<!-- Vditor renders Markdown as div.language-mermaid instead of pre > code.language-mermaid, so both the theme and the Vditor editor can take precedence over Shiki rendering. The theme also takes precedence over the Vditor editor, so neither the Vditor editor renderer nor the Shiki exclude setting needs to be enabled. -->
 
 ::: details Method 1: Markdown syntax with automatic light/dark rendering
 Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).
@@ -1133,7 +1136,7 @@ Example:
 
 <!-- prettier-ignore-start -->
 ````html
-<div class="mermaid auto">
+<div class="auto">
 
 ```mermaid
 flowchart TD
@@ -1158,7 +1161,7 @@ Example:
 
 <!-- prettier-ignore-start -->
 ````html
-<div class="mermaid dark">
+<div class="dark">
 
 ```mermaid
 %%{init: { "theme": "dark" } }%%
@@ -1172,7 +1175,7 @@ flowchart TD
 
 </div>
 
-<div class="mermaid light">
+<div class="light">
 
 ```mermaid
 %%{init: { "theme": "light" } }%%
@@ -1187,5 +1190,231 @@ flowchart TD
 </div>
 ````
 <!-- prettier-ignore-end -->
+
+:::
+
+#### Willow Markdown Editor
+
+Enable the [Willow Markdown Editor plugin](https://www.halo.run/store/apps/app-kqZUw), then switch the post editor to Willow Markdown.
+
+Notes:
+
+- If you use a code-highlighting plugin such as [Shiki](https://www.halo.run/store/apps/app-kzloktzn), exclude Mermaid in that plugin's settings.
+
+<!-- Markdown rendering outputs pre > code.hljs.language-mermaid, and the theme cannot take precedence over Shiki. -->
+
+::: details Method 1: Markdown syntax with automatic light/dark rendering
+Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).
+
+Example:
+
+<!-- prettier-ignore-start -->
+````markdown
+```mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+````
+<!-- prettier-ignore-end -->
+
+As shown above, write the diagram using the standard Markdown code block syntax.
+
+:::
+
+::: details Method 2: HTML syntax with automatic light/dark rendering
+Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).  
+Write the diagram once; the theme automatically generates both light and dark versions.
+
+Example:
+
+<!-- prettier-ignore-start -->
+````html
+<div class="auto">
+
+```mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+````
+<!-- prettier-ignore-end -->
+
+:::
+
+::: details Method 3: HTML syntax with manually managed light/dark diagrams
+Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).  
+Manually maintain separate diagrams for light and dark modes.
+
+Example:
+
+<!-- prettier-ignore-start -->
+````html
+<div class="dark">
+
+```mermaid
+%%{init: { "theme": "dark" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+
+<div class="light">
+
+```mermaid
+%%{init: { "theme": "light" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+````
+<!-- prettier-ignore-end -->
+
+:::
+
+#### ByteMD Editor
+
+Enable the [ByteMD Editor plugin](https://www.halo.run/store/apps/app-HTyhC), then switch the post editor to ByteMD.
+
+Notes:
+
+- If you use a code-highlighting plugin such as [Shiki](https://www.halo.run/store/apps/app-kzloktzn), exclude Mermaid in that plugin's settings.
+
+<!-- Markdown rendering outputs pre > code.language-mermaid, and the theme cannot take precedence over Shiki. -->
+
+::: details Method 1: Markdown syntax with automatic light/dark rendering
+Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).
+
+Example:
+
+<!-- prettier-ignore-start -->
+````markdown
+```mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+````
+<!-- prettier-ignore-end -->
+
+As shown above, write the diagram using the standard Markdown code block syntax.
+
+:::
+
+::: details Method 2: HTML syntax with automatic light/dark rendering
+Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).  
+Write the diagram once; the theme automatically generates both light and dark versions.
+
+Example:
+
+<!-- prettier-ignore-start -->
+````html
+<div class="auto">
+
+```mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+````
+<!-- prettier-ignore-end -->
+
+:::
+
+::: details Method 3: HTML syntax with manually managed light/dark diagrams
+Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).  
+Manually maintain separate diagrams for light and dark modes.
+
+Example:
+
+<!-- prettier-ignore-start -->
+````html
+<div class="dark">
+
+```mermaid
+%%{init: { "theme": "dark" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+
+<div class="light">
+
+```mermaid
+%%{init: { "theme": "light" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
+</div>
+````
+<!-- prettier-ignore-end -->
+
+:::
+
+#### StackEdit Editor
+
+Enable the [StackEdit Editor plugin](https://www.halo.run/store/apps/app-hDXMG), then switch the post editor to StackEdit.
+
+Notes:
+
+- If you use a code-highlighting plugin such as [Shiki](https://www.halo.run/store/apps/app-kzloktzn), exclude Mermaid in that plugin's settings.
+
+<!-- Markdown rendering outputs pre > code.prism.language-mermaid, and the theme cannot take precedence over Shiki. -->
+
+::: details Method 1: Markdown syntax with automatic light/dark rendering
+Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).
+
+Example:
+
+<!-- prettier-ignore-start -->
+````markdown
+```mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+````
+<!-- prettier-ignore-end -->
+
+As shown above, write the diagram using the standard Markdown code block syntax.
 
 :::
