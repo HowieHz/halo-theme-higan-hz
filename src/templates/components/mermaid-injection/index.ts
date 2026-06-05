@@ -177,28 +177,21 @@ function pushExtraMermaidRenderJobs(
     return;
   }
 
-  trimmedSelector.split(",").forEach((fragment) => {
-    const sourceElementSelector = fragment.trim();
-    if (!sourceElementSelector) {
-      return;
-    }
-
-    try {
-      container.querySelectorAll<HTMLElement>(sourceElementSelector).forEach((sourceElement) => {
-        pushMermaidRenderJob(jobs, {
-          sourceElement,
-          dataProcessedElement: sourceElement,
-          rawContent: sourceElement.textContent ?? "",
-          themes: getMermaidRenderThemes(sourceElement, ["light", "dark"]),
-        });
+  try {
+    container.querySelectorAll<HTMLElement>(trimmedSelector).forEach((sourceElement) => {
+      pushMermaidRenderJob(jobs, {
+        sourceElement,
+        dataProcessedElement: sourceElement,
+        rawContent: sourceElement.textContent ?? "",
+        themes: getMermaidRenderThemes(sourceElement, ["light", "dark"]),
       });
-    } catch (error: unknown) {
-      console.error(`${MERMAID_LOG_PREFIX} Ignored invalid extra Mermaid source element selector.`, {
-        sourceElementSelector,
-        error,
-      });
-    }
-  });
+    });
+  } catch (error: unknown) {
+    console.error(`${MERMAID_LOG_PREFIX} Ignored invalid extra Mermaid source element selector.`, {
+      selector: trimmedSelector,
+      error,
+    });
+  }
 }
 
 function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSelector: string): MermaidRenderJob[] {
