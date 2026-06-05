@@ -9,6 +9,12 @@ type MermaidRenderJob = {
   themes: MermaidRenderThemeMode[];
 };
 
+type MermaidRuntimeConfig = {
+  contentScopeSelector: string;
+  extraSourceElementSelector: string;
+  config?: MermaidConfig;
+};
+
 type ReferenceAttribute = "marker-start" | "marker-mid" | "marker-end" | "xlink:href" | "href";
 
 const MERMAID_CONFIG_HINT =
@@ -27,7 +33,7 @@ function genUUID(): string {
   });
 }
 
-function getMermaidRuntimeConfig(): { selector: string; config?: MermaidConfig } | null {
+function getMermaidRuntimeConfig(): MermaidRuntimeConfig | null {
   const configElement = document.querySelector<HTMLScriptElement>("#mermaid-config");
   const configText = configElement?.textContent?.trim();
 
@@ -36,7 +42,8 @@ function getMermaidRuntimeConfig(): { selector: string; config?: MermaidConfig }
   }
 
   const runtimeConfig = JSON.parse(configText) as {
-    selector: string;
+    contentScopeSelector: string;
+    extraSourceElementSelector?: string;
     config?: string;
   };
   const trimmedConfig = runtimeConfig.config?.trim();
@@ -65,7 +72,8 @@ function getMermaidRuntimeConfig(): { selector: string; config?: MermaidConfig }
   }
 
   return {
-    selector: runtimeConfig.selector,
+    contentScopeSelector: runtimeConfig.contentScopeSelector,
+    extraSourceElementSelector: runtimeConfig.extraSourceElementSelector ?? "",
     config: parsedConfig,
   };
 }
@@ -115,12 +123,10 @@ function isMermaidDataProcessed(dataProcessedElement: HTMLElement): boolean {
   return dataProcessedElement.getAttribute("data-processed") === "true";
 }
 
-function markMermaidSourceProcessed(job: MermaidRenderJob): void {
-  // mermaid.render() 不会写入 data-processed；这里按上游链路的实际标记节点补写。
-  job.dataProcessedElement.setAttribute("data-processed", "true");
-}
-
-function getMermaidRenderThemes(sourceElement: HTMLElement): MermaidRenderThemeMode[] {
+function getMermaidRenderThemes(
+  sourceElement: HTMLElement,
+  fallbackThemes: MermaidRenderThemeMode[] = [null],
+): MermaidRenderThemeMode[] {
   if (sourceElement.classList.contains("auto")) {
     // Auto mode renders both dark and light variants.
     return ["dark", "light"];
@@ -135,18 +141,67 @@ function getMermaidRenderThemes(sourceElement: HTMLElement): MermaidRenderThemeM
     return ["light"];
   }
 
-  return [null];
+  return fallbackThemes;
 }
 
+/**
+ * 统一加入 Mermaid 渲染任务。
+ *
+ * 同一个元素可能同时被内置选择器和用户额外选择器命中。这里按 sourceElement 和 dataProcessedElement 去重，避免重复渲染同一份图表。
+ */
 function pushMermaidRenderJob(jobs: MermaidRenderJob[], job: MermaidRenderJob): void {
-  if (isMermaidDataProcessed(job.dataProcessedElement)) {
+  const isDuplicate = jobs.some(
+    (existingJob) =>
+      existingJob.sourceElement === job.sourceElement || existingJob.dataProcessedElement === job.dataProcessedElement,
+  );
+
+  if (isMermaidDataProcessed(job.dataProcessedElement) || isDuplicate) {
     return;
   }
 
   jobs.push(job);
 }
 
-function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
+/**
+ * 按用户配置的额外源元素选择器收集 Mermaid 渲染任务。
+ *
+ * 命中的元素使用 textContent 作为源码，并用元素本身承载 data-processed 状态。
+ */
+function pushExtraMermaidRenderJobs(
+  jobs: MermaidRenderJob[],
+  container: HTMLElement,
+  extraSourceElementSelector: string,
+): void {
+  const trimmedSelector = extraSourceElementSelector.trim();
+  if (!trimmedSelector) {
+    return;
+  }
+
+  trimmedSelector.split(",").forEach((fragment) => {
+    const sourceElementSelector = fragment.trim();
+    if (!sourceElementSelector) {
+      return;
+    }
+
+    try {
+      container.querySelectorAll<HTMLElement>(sourceElementSelector).forEach((sourceElement) => {
+        pushMermaidRenderJob(jobs, {
+          sourceElement,
+          dataProcessedElement: sourceElement,
+          rawContent: sourceElement.textContent ?? "",
+          themes: getMermaidRenderThemes(sourceElement, ["light", "dark"]),
+        });
+      });
+    } catch (error: unknown) {
+      console.error(`${MERMAID_LOG_PREFIX} Ignored invalid extra Mermaid source element selector.`, {
+        sourceElementSelector,
+        error,
+      });
+    }
+  });
+}
+
+function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSelector: string): MermaidRenderJob[] {
   const jobs: MermaidRenderJob[] = [];
 
   // 默认编辑器方法一
@@ -234,6 +289,11 @@ function collectMermaidRenderJobs(container: HTMLElement): MermaidRenderJob[] {
         themes: ["light", "dark"],
       });
     });
+
+  // 用户自定义额外选择器
+  // 命中的元素本身作为渲染源和 data-processed 标记位，内容从 textContent 读取。
+  // 主题规则：.auto 渲染 light + dark，.dark 只渲染 dark，.light 只渲染 light，未指定时渲染 light + dark。
+  pushExtraMermaidRenderJobs(jobs, container, extraSourceElementSelector);
 
   return jobs;
 }
@@ -324,12 +384,12 @@ function initMermaid(): void {
     return;
   }
 
-  const { selector, config } = runtimeConfig;
+  const { contentScopeSelector, extraSourceElementSelector, config } = runtimeConfig;
 
   mermaid.initialize(config ?? {});
 
-  document.querySelectorAll<HTMLElement>(selector).forEach((container) => {
-    collectMermaidRenderJobs(container).forEach((job) => {
+  document.querySelectorAll<HTMLElement>(contentScopeSelector).forEach((container) => {
+    collectMermaidRenderJobs(container, extraSourceElementSelector).forEach((job) => {
       // Skip elements that are already processed or do not contain content.
       if (isMermaidDataProcessed(job.dataProcessedElement) || job.rawContent.trim() === "") {
         return;
@@ -342,7 +402,8 @@ function initMermaid(): void {
         void renderMermaid(job.sourceElement, job.rawContent, id, theme);
       });
 
-      markMermaidSourceProcessed(job);
+      // mermaid.render() 不会写入 data-processed；这里按上游链路的实际标记节点补写。
+      job.dataProcessedElement.setAttribute("data-processed", "true");
     });
   });
 }

@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🚀 Features
+
+- Mermaid rendering support now adds an extra source element selector setting for rendering custom elements as Mermaid diagrams with light/dark theme rules.
+
 ## [1.68.2] - 2026-06-03
 
 ### 🔧 Code Refactoring

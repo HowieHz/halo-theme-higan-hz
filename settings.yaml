@@ -99,6 +99,12 @@ spec:
           label: "Mermaid 内容范围选择器"
           help: "只在这个 CSS 选择器匹配的区域内查找 Mermaid 图表。"
           value: "main"
+        - $formkit: text
+          name: mermaid_extra_source_element_selector
+          if: "$is_mermaid_enable === true"
+          label: "Mermaid 额外源元素选择器"
+          help: "用 CSS 选择器额外指定需要渲染为 Mermaid 图表的元素。命中的元素会从 textContent 读取图表源码；带 auto 类时渲染明暗两份，带 dark 类时只渲染暗色，带 light 类时只渲染亮色，否则默认渲染明暗两份。"
+          value: ""
         - $formkit: code
           name: mermaid_config
           if: "$is_mermaid_enable === true"
