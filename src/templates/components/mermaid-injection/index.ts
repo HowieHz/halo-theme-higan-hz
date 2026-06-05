@@ -289,11 +289,11 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
 async function renderMermaid(
   sourceElement: HTMLElement,
   rawContent: string,
-  id: string,
+  baseId: string,
   theme: MermaidRenderThemeMode,
 ): Promise<void> {
   const content = buildMermaidContent(rawContent, theme);
-  const renderId = `${theme}-${id}`;
+  const renderId = `${theme}-${baseId}`;
 
   try {
     const mermaidData: RenderResult = await mermaid.render(renderId, content);
@@ -328,7 +328,7 @@ async function renderMermaid(
         return;
       }
 
-      const newId = `${theme}-${id}-${originalId}`;
+      const newId = `${theme}-${baseId}-${originalId}`;
       element.setAttribute("id", newId);
 
       const elementsUsingId = svgElement.querySelectorAll(
@@ -383,11 +383,11 @@ function initMermaid(): void {
         return;
       }
 
-      // Generate a unique id for each render.
-      const id = `mermaid${genUUID()}`;
+      // Generate a unique base id for each render job.
+      const baseId = `mermaid${genUUID()}`;
 
       job.themes.forEach((theme) => {
-        void renderMermaid(job.sourceElement, job.rawContent, id, theme);
+        void renderMermaid(job.sourceElement, job.rawContent, baseId, theme);
       });
 
       // mermaid.render() 不会写入 data-processed；这里按上游链路的实际标记节点补写。
