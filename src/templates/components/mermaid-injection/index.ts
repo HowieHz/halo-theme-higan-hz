@@ -147,7 +147,7 @@ function getMermaidRenderThemes(
 function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSelector: string): MermaidRenderJob[] {
   const jobs: MermaidRenderJob[] = [];
 
-  // Willow Markdown、ByteMD、StackEdit 编辑器 HTML 写法
+  // 默认编辑器、Willow Markdown、ByteMD、StackEdit 编辑器 HTML 写法
   // 来自外层主题类包裹的 Mermaid Markdown 代码块
   // 特征是 <div class="auto|dark|light"><pre><code class="language-mermaid">...</code></pre></div>
   // 渲染标记位是 code.language-mermaid，渲染源是最外层 div，主题模式从最外层 div 读取。
@@ -202,24 +202,6 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
       themes: ["light", "dark"],
     });
   });
-
-  // 默认编辑器方法三/四
-  // 来自默认编辑器 HTML 组件的 Mermaid 代码块
-  // 特征是 <div class="html-edited"><div class="auto|dark|light">...</div>(若干个)</div>
-  // 渲染标记位是 <div class="auto|dark|light" data-processed="true">...</div>
-  // 内容在主题类 div 的文本内容中
-  // 测试方法：默认编辑器 + 插入 HTML 组件 + 输入 <div class="auto">...</div>
-  // 效果：按照指定的主题模式渲染
-  container
-    .querySelectorAll<HTMLElement>("div.html-edited > div:is(.auto, .dark, .light):not(:has(> *))")
-    .forEach((sourceElement) => {
-      jobs.push({
-        sourceElement,
-        dataProcessedElement: sourceElement,
-        rawContent: sourceElement.textContent ?? "",
-        themes: getMermaidRenderThemes(sourceElement),
-      });
-    });
 
   // Vditor 方法一/二
   // 来自 Vditor 编辑器插件的 Mermaid 代码块 https://www.halo.run/store/apps/app-uBcYw

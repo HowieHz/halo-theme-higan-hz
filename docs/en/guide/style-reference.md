@@ -1055,14 +1055,14 @@ Example:
 
 <!-- prettier-ignore-start -->
 ```html
-<div class="auto">
+<div class="auto"><pre><code class="language-mermaid">
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
     B --> C{Let me think}
     C -->|One| D[Laptop]
     C -->|Two| E[iPhone]
     C -->|Three| F[fa:fa-car Car]
-</div>
+</code></pre></div>
 ```
 <!-- prettier-ignore-end -->
 
@@ -1076,7 +1076,7 @@ Example:
 
 <!-- prettier-ignore-start -->
 ```html
-<div class="dark">
+<div class="dark"><pre><code class="language-mermaid">
 %%{init: { "theme": "dark" } }%%
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
@@ -1084,9 +1084,9 @@ flowchart TD
     C -->|One| D[Laptop]
     C -->|Two| E[iPhone]
     C -->|Three| F[fa:fa-car Car]
-</div>
+</code></pre></div>
 
-<div class="light">
+<div class="light"><pre><code class="language-mermaid">
 %%{init: { "theme": "light" } }%%
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
@@ -1094,7 +1094,7 @@ flowchart TD
     C -->|One| D[Laptop]
     C -->|Two| E[iPhone]
     C -->|Three| F[fa:fa-car Car]
-</div>
+</code></pre></div>
 ```
 <!-- prettier-ignore-end -->
 
