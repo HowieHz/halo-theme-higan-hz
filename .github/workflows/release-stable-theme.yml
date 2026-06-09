@@ -86,6 +86,7 @@ jobs:
       contents: read
       id-token: write
       attestations: write
+      artifact-metadata: write
     uses: ./.github/workflows/reusable-build-theme.yml
     with:
       theme_ref: ${{ needs.prepare.outputs.release_commit_sha }}
