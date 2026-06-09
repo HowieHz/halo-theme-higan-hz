@@ -21,7 +21,7 @@ importers:
     devDependencies:
       '@dreamsicle.io/stylelint-config-tailwindcss':
         specifier: ^1.2.2
-        version: 1.2.2(stylelint@17.12.0)
+        version: 1.2.2(stylelint@17.13.0)
       '@eslint/compat':
         specifier: ^2.1.0
         version: 2.1.0(eslint@10.4.1)
@@ -68,8 +68,8 @@ importers:
         specifier: ^3.13.11
         version: 3.13.11
       '@types/node':
-        specifier: ^25.9.1
-        version: 25.9.1
+        specifier: ^25.9.2
+        version: 25.9.2
       '@typescript-eslint/parser':
         specifier: ^8.60.1
         version: 8.60.1(eslint@10.4.1)(typescript@6.0.3)
@@ -122,32 +122,32 @@ importers:
         specifier: ^0.23.0
         version: 0.23.0
       stylelint:
-        specifier: ^17.12.0
-        version: 17.12.0(typescript@6.0.3)
+        specifier: ^17.13.0
+        version: 17.13.0(typescript@6.0.3)
       stylelint-config-html:
         specifier: ^1.1.0
-        version: 1.1.0(postcss-html@1.8.1)(stylelint@17.12.0)
+        version: 1.1.0(postcss-html@1.8.1)(stylelint@17.13.0)
       stylelint-config-recommended-vue:
         specifier: ^1.6.1
-        version: 1.6.1(postcss-html@1.8.1)(stylelint@17.12.0)
+        version: 1.6.1(postcss-html@1.8.1)(stylelint@17.13.0)
       stylelint-config-standard:
         specifier: ^40.0.0
-        version: 40.0.0(stylelint@17.12.0)
+        version: 40.0.0(stylelint@17.13.0)
       stylelint-order:
         specifier: ^8.1.1
-        version: 8.1.1(stylelint@17.12.0)
+        version: 8.1.1(stylelint@17.13.0)
       tailwindcss:
         specifier: ^4.3.0
         version: 4.3.0
       tailwindcss-patch:
-        specifier: ^9.4.1
-        version: 9.4.1(tailwindcss@4.3.0)
+        specifier: ^9.4.2
+        version: 9.4.2(tailwindcss@4.3.0)
       typescript-eslint:
         specifier: ^8.60.1
         version: 8.60.1(eslint@10.4.1)(typescript@6.0.3)
       vite:
         specifier: ^8.0.16
-        version: 8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
+        version: 8.0.16(@types/node@25.9.2)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
       vite-plugin-compression2:
         specifier: ^2.5.3
         version: 2.5.3(rollup@4.61.0)
@@ -193,7 +193,7 @@ importers:
         version: 1.5.2
       vitepress:
         specifier: 2.0.0-alpha.17
-        version: 2.0.0-alpha.17(@types/node@25.9.1)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(postcss@8.5.15)(typescript@6.0.3)
+        version: 2.0.0-alpha.17(@types/node@25.9.2)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(postcss@8.5.15)(typescript@6.0.3)
       vitepress-plugin-pagefind:
         specifier: ^0.4.20
         version: 0.4.20(pagefind@1.5.2)(vitepress@2.0.0-alpha.17)(vue@3.5.35)
@@ -271,8 +271,8 @@ packages:
     peerDependencies:
       '@csstools/css-tokenizer': ^4.0.0
 
-  '@csstools/css-syntax-patches-for-csstree@1.1.4':
-    resolution: {integrity: sha512-wgsqt92b7C7tQhIdPNxj0n9zuUbQlvAuI1exyzeNrOKOi62SD7ren8zqszmpVREjAOqg8cD2FqYhQfAuKjk4sw==}
+  '@csstools/css-syntax-patches-for-csstree@1.1.5':
+    resolution: {integrity: sha512-oNjBvzLq2GPZtJphCjLqXow/cHySHSgtxvKZb7OqSZ/xHgw6NWNhfad+6AB9cLeVm6eA9d/qMll3JdEHjy6M+A==}
     peerDependencies:
       css-tree: ^3.2.1
     peerDependenciesMeta:
@@ -1484,8 +1484,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@25.9.1':
-    resolution: {integrity: sha512-xfrlY7UD5rMJk3ZVJP8BNzS28J36YJg+xp+LPXV1TdWxr8uMH5A860QNxYDGQe/ylDSgjxE52Q9VnO7p75tJxg==}
+  '@types/node@25.9.2':
+    resolution: {integrity: sha512-G05zqtJhcDLb8uslf5EjCxXg9G1KQxiV8OS0R26IC//Eoyitzqe8z37I7cqvnZlrlSfgocQRfSn/AHBZJJFyGw==}
 
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
@@ -2376,8 +2376,8 @@ packages:
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
 
-  enhanced-resolve@5.22.1:
-    resolution: {integrity: sha512-6QEuw3zoX1SJQc7b87aBXke/no+mG2bTBgw29gWMQonLmpEkWoCAVkl+M49e48AZlWzxiDzDZzYdp6kobcyLww==}
+  enhanced-resolve@5.23.0:
+    resolution: {integrity: sha512-yJN/BOOLxcOW2aQgeif9mSnaUB8KtvmMMp56oA1kx1CRfBKbhZm2pJ+NBY+3eOboHxix8lfjWpHE0Ei5U8RbSA==}
     engines: {node: '>=10.13.0'}
 
   entities@4.5.0:
@@ -3453,6 +3453,11 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  semver@7.8.2:
+    resolution: {integrity: sha512-c8jsqUZm3omBOI66G90z1Dyw5z622G8oLG+omfsHBJf3CWQTlOcwOjvOG6wtiNfW6anKm/eA39LMwMtMez2TiQ==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
     engines: {node: '>=8'}
@@ -3561,8 +3566,8 @@ packages:
     peerDependencies:
       stylelint: ^16.18.0 || ^17.0.0
 
-  stylelint@17.12.0:
-    resolution: {integrity: sha512-KIlzWXMHUvgfPUR0R7TK3H80yCIi0uoivUwf+6Az4yrHJD1Q3c1qIkh/H5Z0i/K3QXgtq/UMEkWyBUSUwnpnOg==}
+  stylelint@17.13.0:
+    resolution: {integrity: sha512-G1WYzMerp7ihOaIe9VJCHLt12MoAD2QLf1AFerYP37+BCRBUK5UCpq8e/mN+zCIaJPKQcaxhE4WlPmqdiOx/gw==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -3600,8 +3605,8 @@ packages:
     resolution: {integrity: sha512-qkqLZB/1Kg0EVrp7QX7KtaiMvx80oj9NzkvVwg1REBr4Z/WGwjEkRkQzD4f6Xg1LqCtcsa/xj9zbqB3aNG+zGA==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
-  tailwindcss-patch@9.4.1:
-    resolution: {integrity: sha512-qC9RaxmhdxkeJzzzBKgrmc3rx1NDcQ03hHpHVtvhmJ9CYTfxRazCNPnVWvc5cHiu48Ffy71RckLVgrTFh1RfSA==}
+  tailwindcss-patch@9.4.2:
+    resolution: {integrity: sha512-JB/VvqHvXnxvcfTH2uggWsM9I2eMp44le5dgXvA0QAYjdkT4PvaSLYXutlrx1GxpdCfmeA2FWB2dPjRdwVk+WQ==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     peerDependencies:
@@ -3982,7 +3987,7 @@ snapshots:
     dependencies:
       '@csstools/css-tokenizer': 4.0.0
 
-  '@csstools/css-syntax-patches-for-csstree@1.1.4(css-tree@3.2.1)':
+  '@csstools/css-syntax-patches-for-csstree@1.1.5(css-tree@3.2.1)':
     optionalDependencies:
       css-tree: 3.2.1
 
@@ -4011,9 +4016,9 @@ snapshots:
 
   '@docsearch/sidepanel-js@4.6.3': {}
 
-  '@dreamsicle.io/stylelint-config-tailwindcss@1.2.2(stylelint@17.12.0)':
+  '@dreamsicle.io/stylelint-config-tailwindcss@1.2.2(stylelint@17.13.0)':
     dependencies:
-      stylelint: 17.12.0(typescript@6.0.3)
+      stylelint: 17.13.0(typescript@6.0.3)
 
   '@emnapi/core@1.10.0':
     dependencies:
@@ -4282,7 +4287,7 @@ snapshots:
   '@nolebase/vitepress-plugin-highlight-targeted-heading@2.18.2(vitepress@2.0.0-alpha.17)':
     dependencies:
       less: 4.6.4
-      vitepress: 2.0.0-alpha.17(@types/node@25.9.1)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(postcss@8.5.15)(typescript@6.0.3)
+      vitepress: 2.0.0-alpha.17(@types/node@25.9.2)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(postcss@8.5.15)(typescript@6.0.3)
 
   '@oxc-project/types@0.133.0': {}
 
@@ -4662,7 +4667,7 @@ snapshots:
   '@tailwindcss/node@4.3.0':
     dependencies:
       '@jridgewell/remapping': 2.3.5
-      enhanced-resolve: 5.22.1
+      enhanced-resolve: 5.23.0
       jiti: 2.7.0
       lightningcss: 1.32.0
       magic-string: 0.30.21
@@ -4725,7 +4730,7 @@ snapshots:
       '@tailwindcss/node': 4.3.0
       '@tailwindcss/oxide': 4.3.0
       tailwindcss: 4.3.0
-      vite: 8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
+      vite: 8.0.16(@types/node@25.9.2)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
 
   '@tybys/wasm-util@0.10.2':
     dependencies:
@@ -4884,7 +4889,7 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@25.9.1':
+  '@types/node@25.9.2':
     dependencies:
       undici-types: 7.24.6
 
@@ -4964,7 +4969,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 8.60.1
       debug: 4.4.3
       minimatch: 10.2.5
-      semver: 7.8.1
+      semver: 7.8.2
       tinyglobby: 0.2.17
       ts-api-utils: 2.5.0(typescript@6.0.3)
       typescript: 6.0.3
@@ -5098,7 +5103,7 @@ snapshots:
   '@vitejs/plugin-vue@6.0.7(vite@7.3.5)(vue@3.5.35)':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
-      vite: 7.3.5(@types/node@25.9.1)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)
+      vite: 7.3.5(@types/node@25.9.2)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)
       vue: 3.5.35(typescript@6.0.3)
 
   '@volar/language-core@2.4.28':
@@ -5223,14 +5228,14 @@ snapshots:
 
   '@whyframe/core@0.2.0(vite@8.0.16)':
     optionalDependencies:
-      vite: 8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
+      vite: 8.0.16(@types/node@25.9.2)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
 
   '@whyframe/vue@0.2.0(@whyframe/core@0.2.0)(vite@8.0.16)':
     dependencies:
       '@vue/compiler-dom': 3.5.35
       '@whyframe/core': 0.2.0(vite@8.0.16)
       magic-string: 0.30.21
-      vite: 8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
+      vite: 8.0.16(@types/node@25.9.2)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
 
   acorn-jsx@5.3.2(acorn@8.16.0):
     dependencies:
@@ -5719,7 +5724,7 @@ snapshots:
 
   emoji-regex@8.0.0: {}
 
-  enhanced-resolve@5.22.1:
+  enhanced-resolve@5.23.0:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.3.3
@@ -6968,6 +6973,8 @@ snapshots:
 
   semver@7.8.1: {}
 
+  semver@7.8.2: {}
+
   shebang-command@2.0.0:
     dependencies:
       shebang-regex: 3.0.0
@@ -7041,39 +7048,39 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  stylelint-config-html@1.1.0(postcss-html@1.8.1)(stylelint@17.12.0):
+  stylelint-config-html@1.1.0(postcss-html@1.8.1)(stylelint@17.13.0):
     dependencies:
       postcss-html: 1.8.1
-      stylelint: 17.12.0(typescript@6.0.3)
+      stylelint: 17.13.0(typescript@6.0.3)
 
-  stylelint-config-recommended-vue@1.6.1(postcss-html@1.8.1)(stylelint@17.12.0):
+  stylelint-config-recommended-vue@1.6.1(postcss-html@1.8.1)(stylelint@17.13.0):
     dependencies:
       postcss-html: 1.8.1
       semver: 7.8.1
-      stylelint: 17.12.0(typescript@6.0.3)
-      stylelint-config-html: 1.1.0(postcss-html@1.8.1)(stylelint@17.12.0)
-      stylelint-config-recommended: 18.0.0(stylelint@17.12.0)
+      stylelint: 17.13.0(typescript@6.0.3)
+      stylelint-config-html: 1.1.0(postcss-html@1.8.1)(stylelint@17.13.0)
+      stylelint-config-recommended: 18.0.0(stylelint@17.13.0)
 
-  stylelint-config-recommended@18.0.0(stylelint@17.12.0):
+  stylelint-config-recommended@18.0.0(stylelint@17.13.0):
     dependencies:
-      stylelint: 17.12.0(typescript@6.0.3)
+      stylelint: 17.13.0(typescript@6.0.3)
 
-  stylelint-config-standard@40.0.0(stylelint@17.12.0):
+  stylelint-config-standard@40.0.0(stylelint@17.13.0):
     dependencies:
-      stylelint: 17.12.0(typescript@6.0.3)
-      stylelint-config-recommended: 18.0.0(stylelint@17.12.0)
+      stylelint: 17.13.0(typescript@6.0.3)
+      stylelint-config-recommended: 18.0.0(stylelint@17.13.0)
 
-  stylelint-order@8.1.1(stylelint@17.12.0):
+  stylelint-order@8.1.1(stylelint@17.13.0):
     dependencies:
       postcss: 8.5.15
       postcss-sorting: 10.0.0(postcss@8.5.15)
-      stylelint: 17.12.0(typescript@6.0.3)
+      stylelint: 17.13.0(typescript@6.0.3)
 
-  stylelint@17.12.0(typescript@6.0.3):
+  stylelint@17.13.0(typescript@6.0.3):
     dependencies:
       '@csstools/css-calc': 3.2.1(@csstools/css-parser-algorithms@4.0.0)(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
-      '@csstools/css-syntax-patches-for-csstree': 1.1.4(css-tree@3.2.1)
+      '@csstools/css-syntax-patches-for-csstree': 1.1.5(css-tree@3.2.1)
       '@csstools/css-tokenizer': 4.0.0
       '@csstools/media-query-list-parser': 5.0.0(@csstools/css-parser-algorithms@4.0.0)(@csstools/css-tokenizer@4.0.0)
       '@csstools/selector-resolve-nested': 4.0.0(postcss-selector-parser@7.1.1)
@@ -7168,7 +7175,7 @@ snapshots:
       jiti: 2.7.0
       lilconfig: 3.1.3
 
-  tailwindcss-patch@9.4.1(tailwindcss@4.3.0):
+  tailwindcss-patch@9.4.2(tailwindcss@4.3.0):
     dependencies:
       '@babel/generator': 7.29.7
       '@babel/parser': 7.29.7
@@ -7184,7 +7191,7 @@ snapshots:
       micromatch: 4.0.8
       pathe: 2.0.3
       postcss: 8.5.15
-      semver: 7.8.1
+      semver: 7.8.2
       tailwindcss-config: 1.1.5
     optionalDependencies:
       tailwindcss: 4.3.0
@@ -7332,9 +7339,9 @@ snapshots:
 
   vite-plugin-sri3@2.0.0(vite@8.0.16):
     dependencies:
-      vite: 8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
+      vite: 8.0.16(@types/node@25.9.2)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
 
-  vite@7.3.5(@types/node@25.9.1)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0):
+  vite@7.3.5(@types/node@25.9.2)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0):
     dependencies:
       esbuild: 0.27.7
       fdir: 6.5.0(picomatch@4.0.4)
@@ -7343,13 +7350,13 @@ snapshots:
       rollup: 4.61.0
       tinyglobby: 0.2.17
     optionalDependencies:
-      '@types/node': 25.9.1
+      '@types/node': 25.9.2
       fsevents: 2.3.3
       jiti: 2.7.0
       less: 4.6.4
       lightningcss: 1.32.0
 
-  vite@8.0.16(@types/node@25.9.1)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4):
+  vite@8.0.16(@types/node@25.9.2)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4):
     dependencies:
       lightningcss: 1.32.0
       picomatch: 4.0.4
@@ -7357,7 +7364,7 @@ snapshots:
       rolldown: 1.0.3
       tinyglobby: 0.2.17
     optionalDependencies:
-      '@types/node': 25.9.1
+      '@types/node': 25.9.2
       esbuild: 0.27.7
       fsevents: 2.3.3
       jiti: 2.7.0
@@ -7369,12 +7376,12 @@ snapshots:
       '@vueuse/core': 14.3.0(vue@3.5.35)
       javascript-stringify: 2.1.0
       pagefind: 1.5.2
-      vitepress: 2.0.0-alpha.17(@types/node@25.9.1)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(postcss@8.5.15)(typescript@6.0.3)
+      vitepress: 2.0.0-alpha.17(@types/node@25.9.2)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(postcss@8.5.15)(typescript@6.0.3)
       vue-command-palette: 0.1.4
     transitivePeerDependencies:
       - vue
 
-  vitepress@2.0.0-alpha.17(@types/node@25.9.1)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(postcss@8.5.15)(typescript@6.0.3):
+  vitepress@2.0.0-alpha.17(@types/node@25.9.2)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(postcss@8.5.15)(typescript@6.0.3):
     dependencies:
       '@docsearch/css': 4.6.3
       '@docsearch/js': 4.6.3
@@ -7393,7 +7400,7 @@ snapshots:
       mark.js: 8.11.1
       minisearch: 7.2.0
       shiki: 3.23.0
-      vite: 7.3.5(@types/node@25.9.1)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)
+      vite: 7.3.5(@types/node@25.9.2)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)
       vue: 3.5.35(typescript@6.0.3)
     optionalDependencies:
       postcss: 8.5.15
