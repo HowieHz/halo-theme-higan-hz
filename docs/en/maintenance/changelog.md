@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.69.1] - 2026-06-09
+
 ### 🐛 Bug Fixes
 
 - Added `key` fields to configuration form items to fix display glitches in the custom color scheme dialog caused by Vue component reuse.
@@ -2140,7 +2142,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.0...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.1...HEAD
+[1.69.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.0...v1.69.1
 [1.69.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.2...v1.69.0
 [1.68.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.1...v1.68.2
 [1.68.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.0...v1.68.1

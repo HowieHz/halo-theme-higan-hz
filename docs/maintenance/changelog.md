@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.69.1] - 2026-06-09
+
 ### 🐛 错误修复
 
 - 为配置表单项补充 `key`，修复自定义配色方案弹窗因 Vue 组件复用导致显示异常的问题。
@@ -2053,7 +2055,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.0...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.1...HEAD
+[1.69.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.0...v1.69.1
 [1.69.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.2...v1.69.0
 [1.68.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.1...v1.68.2
 [1.68.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.68.0...v1.68.1
