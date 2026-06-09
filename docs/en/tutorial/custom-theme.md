@@ -113,16 +113,6 @@ Click the newly created color scheme:
 
 ![tutorial-custom-theme-5.avif](/tutorial-custom-theme-5.avif)
 
-::: tip Note
-
-If you open the color scheme and see something like the image below, try clicking the `Submit`/`Cancel` buttons at the bottom, refreshing the page, etc., until it returns to normal.
-
-![tutorial-custom-theme-6.avif](/tutorial-custom-theme-6.avif)
-
-This is a rendering bug in Halo CMS that cannot be fixed at the moment.
-
-:::
-
 First, select your theme color mode in the red highlighted section at the top. Then paste the CSS variables you just parsed in the red highlighted section below. Finally, click the `Submit` button at the bottom.
 
 ![tutorial-custom-theme-7.avif](/tutorial-custom-theme-7.avif)

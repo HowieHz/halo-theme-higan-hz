@@ -107,16 +107,6 @@ textarea {
 
 ![tutorial-custom-theme-5.avif](/tutorial-custom-theme-5.avif)
 
-::: tip 提示
-
-如果打开刚才的配色方案，如下图所示。出现这个情况请尝试点击下方的 `提交`/`取消` 按钮、刷新页面等操作，直到恢复正常。
-
-![tutorial-custom-theme-6.avif](/tutorial-custom-theme-6.avif)
-
-这是 Halo CMS 的渲染 BUG。暂时无法修复。
-
-:::
-
 先在上方红色框选部分选择您的主题色彩模式。然后在下方红色框选部分粘贴刚才解析得到的 CSS 变量。最后点击底部的`提交`按钮。
 
 ![tutorial-custom-theme-7.avif](/tutorial-custom-theme-7.avif)

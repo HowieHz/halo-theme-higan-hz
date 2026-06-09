@@ -23,6 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Added `key` fields to configuration form items to fix display glitches in the custom color scheme dialog caused by Vue component reuse.
+
+### 📄 Documentation
+
+- Removed the outdated Halo CMS rendering bug note and screenshot from the custom color theme tutorial.
+
 ## [1.69.0] - 2026-06-05
 
 ### 💥 Breaking Changes
