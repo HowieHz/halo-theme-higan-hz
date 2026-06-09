@@ -33,6 +33,7 @@ jobs:
       contents: read
       id-token: write
       attestations: write
+      artifact-metadata: write
     steps:
       - name: Set Up Swap
         run: |
