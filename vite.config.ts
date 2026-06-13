@@ -405,22 +405,6 @@ export default defineConfig((): UserConfig => {
       cssMinify: "lightningcss",
       rolldownOptions: {
         input,
-        output:
-          outputOption === "original"
-            ? undefined
-            : {
-                assetFileNames: (assetInfo) => {
-                  const isFontAsset = assetInfo.names.some((fileName) =>
-                    FONT_ASSET_EXTENSIONS.has(extname(fileName).toLowerCase()),
-                  );
-
-                  if (isFontAsset) {
-                    return "assets/[hash:7][extname]";
-                  }
-
-                  return `assets/[name]-[hash][extname]`;
-                },
-              },
       },
     },
   };
