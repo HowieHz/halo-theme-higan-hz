@@ -420,6 +420,12 @@ export default defineConfig((): UserConfig => {
 
                   return `assets/[name]-[hash][extname]`;
                 },
+                // JS entry files
+                // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+                entryFileNames: `assets/[name]-[hash].js`,
+                // Dynamic chunks
+                // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
+                chunkFileNames: `assets/[name]-[hash].js`,
               },
       },
     },
