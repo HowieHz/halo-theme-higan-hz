@@ -23,6 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🔧 Code Refactoring
+
+- Renamed static assets in build outputs so unchanged files keep stable filenames across versions, improving browser cache reuse efficiency.
+
+### 🧹 Miscellaneous Chores
+
+- Updated dependencies.
+
 ## [1.69.1] - 2026-06-09
 
 ### 🐛 Bug Fixes
