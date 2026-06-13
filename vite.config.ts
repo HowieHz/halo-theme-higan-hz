@@ -418,14 +418,14 @@ export default defineConfig((): UserConfig => {
                     return "assets/[hash:7][extname]";
                   }
 
-                  return `assets/${pkg.version}[hash:7][extname]`;
+                  return `assets/[name]-[hash][extname]`;
                 },
                 // JS entry files
                 // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
-                entryFileNames: `assets/${pkg.version}[hash:7].js`,
+                entryFileNames: `assets/[name]-[hash].js`,
                 // Dynamic chunks
                 // https://cn.rollupjs.org/configuration-options/#output-chunkfilenames
-                chunkFileNames: `assets/${pkg.version}[hash:7].js`,
+                chunkFileNames: `assets/[name]-[hash].js`,
               },
       },
     },
