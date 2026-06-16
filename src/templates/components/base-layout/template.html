@@ -512,15 +512,6 @@
 
         // <!--/* 后面是无 language 参数的时执行 */-->
 
-        // <!--/* 获取配置项默认语言 */-->
-        const defaultPageLanguage = dataset?.defaultPageLanguage || "zh-Hans";
-
-        // <!--/* 获取浏览器语言
-        // navigator.language 适用于现代浏览器
-        // navigator.userLanguage 为非标准属性适用于早期的 IE 浏览器（IE 11 及更早）
-        // */-->
-        const browserLang = navigator.language;
-
         const autoRedirectTargetLanguages = dataset?.autoRedirectTargetLanguages?.split(",").filter(Boolean);
         if (!autoRedirectTargetLanguages?.length) {
           // <!--/* 这里不跳转，但需要同步一次语言 cookie
@@ -530,7 +521,14 @@
           syncLanguageCookieAndReload(document.documentElement.lang);
           return;
         }
+
         const prefixMode = dataset?.prefixMatchMode === "true";
+
+        // <!--/* 获取浏览器语言
+        // navigator.language 适用于现代浏览器
+        // navigator.userLanguage 为非标准属性适用于早期的 IE 浏览器（IE 11 及更早）
+        // */-->
+        const browserLang = navigator.language;
 
         const matchedLang = prefixMode
           ? autoRedirectTargetLanguages.find((lang) => browserLang.startsWith(lang))
@@ -541,6 +539,9 @@
           syncLanguageCookieAndReload(document.documentElement.lang);
           return;
         }
+
+        // <!--/* 获取配置项默认语言 */-->
+        const defaultPageLanguage = dataset?.defaultPageLanguage || "zh-Hans";
 
         // <!--/* 准备跳转到带有浏览器语言参数的当前页面
         // 如果 defaultLang 和 matchedLang 匹配说明无 language 参数页面的语言（html 的 lang）就是目标语言，无需跳转 */-->
