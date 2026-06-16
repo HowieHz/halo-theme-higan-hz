@@ -397,7 +397,7 @@
     <!--/* Dark Content Text Style start */-->
     <th:block th:insert="~{components/dark-content-text-style/template :: head}"></th:block>
     <!--/* Dark Content Text Style end */-->
-    <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script Start */-->
+    <!--/* Anti-Mirror Site Script Start */-->
     <script
       th:if="${theme.config?.global?.anti_mirror_site}"
       th:data-target-url="${theme.config?.global?.target_url}"
@@ -432,8 +432,8 @@
         }
       })(document.currentScript?.dataset);
     </script>
-    <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script End */-->
-    <!--/* Auto Redirect to Browser Language Script Start */-->
+    <!--/* Anti-Mirror Site Script End */-->
+    <!--/* Language Cookie Sync and Browser Language Redirect Script Start */-->
     <script
       th:with="page_language_override=${language},
                requested_language_param=${'' + param.language},
@@ -627,7 +627,7 @@
         window.location.href = url;
       })(document.currentScript?.dataset);
     </script>
-    <!--/* Auto Redirect to Browser Language Script End */-->
+    <!--/* Language Cookie Sync and Browser Language Redirect Script End */-->
     <!--/* browser polyfill for modulepreload start
     https://github.com/vitejs/vite/blob/2436afef044d90f710fdfd714488a71efdd29092/packages/vite/src/node/plugins/modulePreloadPolyfill.ts#L39 
 

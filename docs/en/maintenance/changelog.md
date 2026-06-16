@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed the page language URL query parameter from `?lang=` to `?language=`; `?lang=` is no longer supported.
 - The theme now keeps the `language` cookie aligned with the actual content language as much as possible to avoid inconsistent content languages in subsequent requests.
-- Changed the default page language and multilingual content language defaults from `zh` to `zh-CN`.
+- Changed the default page language and multilingual content language defaults from `zh` to `zh-CN`, aligning with the Halo CMS default.
 - Renamed Chinese i18n language files from `zh_CN.properties` / `zh_TW.properties` to `zh_Hans.properties` / `zh_Hant.properties`.
 
 ### 🐛 Bug Fixes

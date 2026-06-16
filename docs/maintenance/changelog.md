@@ -27,7 +27,7 @@
 
 - 页面语言 URL 查询参数由 `?lang=` 改为 `?language=`，不再支持 `?lang=`。
 - 主题会尽可能让 `language` cookie 与实际内容语言同步，避免后续请求出现内容语言不一致的情况。
-- 默认页面语言和多语言内容语言默认值由 `zh` 改为 `zh-CN`。
+- 默认页面语言和多语言内容语言默认值由 `zh` 改为 `zh-CN`，与 Halo CMS 默认值一致。
 - 中文 i18n 语言文件由 `zh_CN.properties` / `zh_TW.properties` 重命名为 `zh_Hans.properties` / `zh_Hant.properties`。
 
 ### 🐛 错误修复
