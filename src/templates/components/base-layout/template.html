@@ -454,8 +454,8 @@
     >
       (function (dataset) {
         // <!--/* 设计思路：
-        // 1. 如果 ${language} 已经传入（重命名为 ${page_language_override}），也就是已经在元数据强行指定了页面语言，则同步语言 cookie 后不跳转
-        // 2. 如果浏览器已有 language 查询参数，也就是在用户层面强行指定了页面语言，则不跳转
+        // 1. 如果浏览器已有 language 查询参数，也就是在用户层面强行指定了页面语言，则不跳转
+        // 2. 如果 ${language} 已经传入（重命名为 ${page_language_override}），也就是已经在元数据强行指定了页面语言，则同步语言 cookie 后不跳转
         // 3. 如果未启用浏览器按语言自动跳转，则同步语言 cookie 后不跳转
         // 4. 获取主题配置项中的目标语言列表，以及前缀匹配模式开关
         // 5. 获取浏览器语言，生成语言候选列表并匹配目标语言列表
@@ -554,15 +554,6 @@
           return uniqueLanguages([normalizedLanguage, "zh"]);
         }
 
-        // <!--/* 如果 ${language} 已经传入，也就是已经指定了页面语言，则同步语言 cookie 后不跳转
-        // 这个 ${language} 是文章元数据/分类详情页元数据/标签详情页元数据的 language */-->
-        const pageLanguageOverride = dataset?.pageLanguageOverride;
-        if (pageLanguageOverride) {
-          // <!--/* 同步语言 cookie */-->
-          syncLanguageCookieAndReload(pageLanguageOverride);
-          return;
-        }
-
         // <!--/* 如果浏览器已有 language 查询参数，则不跳转
         // param.language 是一个列表，例 []、['zh']、['zh,en']
         // language=zh -> ''+param.language 为 'zh'
@@ -574,6 +565,15 @@
         // 自动返回指定语言内容，所以无需手动修改/刷新页面 */-->
         const requestedLanguageParam = dataset?.requestedLanguageParam;
         if (requestedLanguageParam) {
+          return;
+        }
+
+        // <!--/* 如果 ${language} 已经传入，也就是已经指定了页面语言，则同步语言 cookie 后不跳转
+        // 这个 ${language} 是文章元数据/分类详情页元数据/标签详情页元数据的 language */-->
+        const pageLanguageOverride = dataset?.pageLanguageOverride;
+        if (pageLanguageOverride) {
+          // <!--/* 同步语言 cookie */-->
+          syncLanguageCookieAndReload(pageLanguageOverride);
           return;
         }
 
@@ -592,7 +592,7 @@
 
         const autoRedirectTargetLanguages = dataset?.autoRedirectTargetLanguages
           ?.split(",")
-          .map((language) => language.trim().replaceAll("_", "-").toLowerCase())
+          .map((language) => language.trim().replaceAll("_", "-"))
           .filter(Boolean);
         if (!autoRedirectTargetLanguages?.length) {
           // <!--/* 这里不跳转，但需要同步一次语言 cookie */-->
@@ -611,7 +611,7 @@
           // 例：配置列表为 zh、en，浏览器候选为 zh-hans、zh 时，会命中 zh。
           // 这样站长可以用更通用的语言代码覆盖一组区域或脚本语言。 */-->
           matchedLang = autoRedirectTargetLanguages.find((targetLanguage) =>
-            browserLanguageCandidates.some((candidate) => candidate.startsWith(targetLanguage)),
+            browserLanguageCandidates.some((candidate) => candidate.startsWith(targetLanguage.toLowerCase())),
           );
         } else {
           // <!--/* 精确模式保持浏览器候选优先级。
@@ -619,7 +619,9 @@
           // 如果配置列表同时存在 zh-hans 和 zh-cn，会先命中 zh-hans，
           // 因为它是当前候选规则里更推荐的脚本语言标签。 */-->
           for (const candidate of browserLanguageCandidates) {
-            matchedLang = autoRedirectTargetLanguages.find((targetLanguage) => targetLanguage === candidate);
+            matchedLang = autoRedirectTargetLanguages.find(
+              (targetLanguage) => targetLanguage.toLowerCase() === candidate,
+            );
             if (matchedLang) {
               break;
             }

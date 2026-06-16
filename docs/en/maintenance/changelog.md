@@ -23,6 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fixed an issue where browser language auto redirect could rewrite canonical-cased language codes such as `?language=zh-CN` to all lowercase.
+- Fixed a possible reload loop when the page metadata language differs from the `?language=` query parameter during language Cookie synchronization.
+
 ## [1.70.0] - 2026-06-16
 
 ### 💥 Breaking Changes
