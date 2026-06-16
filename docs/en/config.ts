@@ -104,7 +104,7 @@ function nav(): DefaultTheme.NavItem[] {
         { text: "Template Map", link: "/en/reference/template-map" },
       ],
     },
-    { text: "Demo Site", link: "https://howiehz.top/?lang=en" },
+    { text: "Demo Site", link: "https://howiehz.top/?language=en" },
     {
       text: pkg.version,
       items: [

@@ -5,6 +5,8 @@ settings:
   dedupePeers: true
   excludeLinksFromLockfile: false
 
+packageExtensionsChecksum: sha256-scng1jnGVHvcPjQNjXYdZX0y7V6TLUfst6Cdf/Jia2o=
+
 importers:
 
   .:
@@ -175,7 +177,7 @@ importers:
         version: 0.23.2(markdown-it@14.1.1)
       '@nolebase/vitepress-plugin-highlight-targeted-heading':
         specifier: ^2.18.2
-        version: 2.18.2(vitepress@2.0.0-alpha.17)
+        version: 2.18.2(@vueuse/core@14.3.0)(vitepress@2.0.0-alpha.17)
       '@whyframe/core':
         specifier: ^0.2.0
         version: 0.2.0(vite@8.0.16)
@@ -648,6 +650,7 @@ packages:
   '@nolebase/vitepress-plugin-highlight-targeted-heading@2.18.2':
     resolution: {integrity: sha512-RVrT7FgyjxrnFFR9twc1OJI/5B09+biVbSiO36Yiu2YC+kRMz1Mb553l2DyioLtWJgVNTJ7sj66ZJi40JpDh7g==}
     peerDependencies:
+      '@vueuse/core': '*'
       vitepress: ^1.5.0 || ^2.0.0-alpha.1
 
   '@oxc-project/types@0.133.0':
@@ -4316,8 +4319,9 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.1
 
-  '@nolebase/vitepress-plugin-highlight-targeted-heading@2.18.2(vitepress@2.0.0-alpha.17)':
+  '@nolebase/vitepress-plugin-highlight-targeted-heading@2.18.2(@vueuse/core@14.3.0)(vitepress@2.0.0-alpha.17)':
     dependencies:
+      '@vueuse/core': 14.3.0(vue@3.5.38)
       less: 4.6.4
       vitepress: 2.0.0-alpha.17(@types/node@25.9.3)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(postcss@8.5.15)(typescript@6.0.3)
 

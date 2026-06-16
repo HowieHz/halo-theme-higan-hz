@@ -117,7 +117,7 @@ const QuickJumpConfig = (props) => {
 
 ::: tip 以下举例几个常见类型
 
-- 字符串：一串字符，如 `abc123`、`zh-CN`。
+- 字符串：一串字符，如 `abc123`、`zh-Hans`。
 - 整数：整数，如 `-1`、`0`、`100`。
 - 浮点数：带小数点的数，如 `1.2`、`0.3`、`4.5`。
 - 布尔值：`true` 或 `false`。实际配置项体现为一个开关，打开就是 `true`，关闭就是 `false`。
@@ -197,12 +197,12 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⭐ 默认值
 
-`zh`
+`zh-CN`
 
 :::
 ::: info 💡 示例值
 
-`zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+`zh-CN`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 
 :::
 ::: info ⚠️ 外部约束
@@ -257,6 +257,44 @@ const QuickJumpConfig = (props) => {
 ::: info ℹ️ 补充信息
 
 具体使用方法请参考[前缀匹配模式说明](/tutorial/i18n.md#前缀匹配模式说明)。
+
+:::
+
+### 是否根据页面内容语言同步 Cookie 语言
+
+::: info 🎯 用途
+
+根据页面内容语言同步 `language` Cookie，避免页面的固定文字（由主题提供的）与内容语言不同。
+
+:::
+::: info 📂 配置项位置
+
+全局 -> 是否根据页面内容语言同步 Cookie 语言
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=是否根据页面内容语言同步%20Cookie%20语言" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.global?.is_sync_language_cookie_to_content_language`
+
+:::
+::: info ℹ️ 补充信息
+
+开启后可避免主题提供的固定文字与内容语言不同，但可能导致额外的浏览器刷新。
 
 :::
 
@@ -348,12 +386,12 @@ const QuickJumpConfig = (props) => {
 > :::
 > ::: info ⭐ 默认值
 >
-> `zh`
+> `zh-CN`
 >
 > :::
 > ::: info 💡 示例值
 >
-> `zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+> `zh-CN`、`zh-TW`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 >
 > :::
 > ::: info 🔒 内部约束
@@ -2683,12 +2721,12 @@ HTML 代码也是可以的：
 > :::
 > ::: info ⭐ 默认值
 >
-> `zh`
+> `zh-CN`
 >
 > :::
 > ::: info 💡 示例值
 >
-> `zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+> `zh-CN`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 >
 > :::
 > ::: info 🔒 内部约束
@@ -3576,12 +3614,12 @@ HTML 代码也是可以的：
 > :::
 > ::: info ⭐ 默认值
 >
-> `zh`
+> `zh-CN`
 >
 > :::
 > ::: info 💡 示例值
 >
-> `zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+> `zh-CN`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 >
 > :::
 > ::: info 🔒 内部约束

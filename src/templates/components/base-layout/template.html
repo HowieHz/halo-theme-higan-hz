@@ -9,7 +9,7 @@
            custom_theme_auto_id = ${theme.config?.styles?.custom_theme_auto_id},
            custom_theme_light_id = ${theme.config?.styles?.custom_theme_light_id},
            custom_theme_dark_id = ${theme.config?.styles?.custom_theme_dark_id},
-           page_language=${language ?: ('' + param.lang != '' ? '' + param.lang : (theme.config?.global?.default_page_language ?: 'zh'))},
+           page_language=${language ?: ('' + param.language != '' ? '' + param.language : (theme.config?.global?.default_page_language ?: 'zh-CN'))},
            siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1) == '/'
                        ? #strings.substring(site.url, 0, #strings.length(site.url) - 1)
                        : site.url},
@@ -397,7 +397,7 @@
     <!--/* Dark Content Text Style start */-->
     <th:block th:insert="~{components/dark-content-text-style/template :: head}"></th:block>
     <!--/* Dark Content Text Style end */-->
-    <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script Start */-->
+    <!--/* Anti-Mirror Site Script Start */-->
     <script
       th:if="${theme.config?.global?.anti_mirror_site}"
       th:data-target-url="${theme.config?.global?.target_url}"
@@ -432,12 +432,13 @@
         }
       })(document.currentScript?.dataset);
     </script>
-    <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script End */-->
-    <!--/* Auto Redirect to Browser Language Script Start */-->
+    <!--/* Anti-Mirror Site Script End */-->
+    <!--/* Language Cookie Sync and Browser Language Redirect Script Start */-->
     <script
-      th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}"
       th:with="page_language_override=${language},
-               requested_language_param=${'' + param.lang},
+               requested_language_param=${'' + param.language},
+               is_sync_language_cookie_to_content_language=${theme.config?.global?.is_sync_language_cookie_to_content_language != false},
+               is_auto_redirect_to_browser_language=${theme.config?.global?.is_auto_redirect_to_browser_language},
                default_page_language=${theme.config?.global?.default_page_language},
                auto_redirect_target_languages=${#lists.isEmpty(theme.config?.global?.auto_redirect_target_language_list)
                                                 ? null
@@ -445,84 +446,224 @@
                is_prefix_match_mode=${theme.config?.global?.is_i18n_prefix_match_mode}"
       th:data-page-language-override="${page_language_override}"
       th:data-requested-language-param="${requested_language_param}"
+      th:data-sync-language-cookie-to-content-language="${is_sync_language_cookie_to_content_language}"
+      th:data-auto-redirect-to-browser-language="${is_auto_redirect_to_browser_language}"
       th:data-default-page-language="${default_page_language}"
       th:data-auto-redirect-target-languages="${auto_redirect_target_languages}"
       th:data-prefix-match-mode="${is_prefix_match_mode}"
     >
       (function (dataset) {
         // <!--/* 设计思路：
-        // 1. 如果 ${language} 已经传入，也就是已经在元数据强行指定了页面语言，则不跳转
-        // 2. 如果浏览器已有 lang 查询参数，也就是在用户层面强行指定了页面语言，则不跳转
-        // 3. 获取主题配置项默认语言
-        // 4. 获取浏览器语言
-        // 5. 获取主题配置项中的目标语言列表，以及前缀匹配模式开关
-        // 6. 如果浏览器语言匹配配置项中的目标语言列表，则跳转到带有浏览器语言参数的当前页面
+        // 1. 如果 ${language} 已经传入（重命名为 ${page_language_override}），也就是已经在元数据强行指定了页面语言，则同步语言 cookie 后不跳转
+        // 2. 如果浏览器已有 language 查询参数，也就是在用户层面强行指定了页面语言，则不跳转
+        // 3. 如果未启用浏览器按语言自动跳转，则同步语言 cookie 后不跳转
+        // 4. 获取主题配置项中的目标语言列表，以及前缀匹配模式开关
+        // 5. 获取浏览器语言，生成语言候选列表并匹配目标语言列表
+        // 6. 获取主题配置项默认语言
+        // 7. 如果默认语言未匹配浏览器语言，则跳转到带有浏览器语言参数的当前页面
+        // */-->
 
-        // 核心理念（优先级）是：
+        // <!--/* 核心理念（优先级）是：
         // 1. 用户浏览器查询参数的强制指定
         // 2. 站长在页面元数据的强制指定
         // 3. 根据浏览器语言识别自动跳转（用户浏览器语言刚好在站长配置的允许跳转列表里，那就跳）。
+        // */-->
 
-        // 如果 ${language} 已经传入，也就是已经指定了页面语言，则不跳转
+        // <!--/* 读取 Halo CMS 使用的 language cookie 原始值。
+        // 返回值保持 cookie 中的编码形态，调用方会用 encodeURIComponent(language) 后的值来比较。 */-->
+        function getLanguageCookie() {
+          return document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1];
+        }
+
+        // <!--/* 将 language cookie 同步到当前页面实际内容语言，并在同步成功后刷新一次页面。
+        // 这是为了解决无 language 查询参数访问页面时，cookie 仍停留在上一次语言导致主题固定文字与内容语言不一致的问题。
+        // 如果站长关闭“是否根据页面内容语言同步 Cookie 语言”，或没有可同步的语言值，则直接返回。 */-->
+        function syncLanguageCookieAndReload(language) {
+          if (dataset?.syncLanguageCookieToContentLanguage !== "true") {
+            return;
+          }
+
+          if (!language) {
+            return;
+          }
+
+          const nextLanguageCookie = encodeURIComponent(language);
+          if (getLanguageCookie() === nextLanguageCookie) {
+            return;
+          }
+
+          // <!--/* 设置 language cookie 规则与 Halo CMS 一致 */-->
+          document.cookie = `language=${nextLanguageCookie}; path=/; SameSite=Lax${location.protocol === "https:" ? "; Secure" : ""}`;
+          // <!--/* 确保设置成功才刷新页面，避免无限刷新 */-->
+          if (getLanguageCookie() === nextLanguageCookie) {
+            window.location.reload();
+          }
+        }
+
+        // <!--/* 去掉候选语言列表里的空值和重复项，同时保留原始顺序。
+        // 中文候选路径里可能会出现重复项，例如 zh-CN 会生成 zh-hans-cn、zh-hans、zh-cn、zh，
+        // 而 zh-Hans-CN 会生成 zh-hans-cn、zh-hans、zh；保序去重可以让匹配优先级稳定。 */-->
+        function uniqueLanguages(languages) {
+          return languages.filter((language, index) => language && languages.indexOf(language) === index);
+        }
+
+        // <!--/* 根据浏览器语言或配置语言生成从具体到通用的匹配候选列表。
+        // 返回值会统一转换为小写，并将下划线改为短横线，便于后续只做一次标准化后的比较。
+        //
+        // 非中文语言不做额外推导，只返回标准化后的语言标签。
+        // 中文语言会特化常见区域：
+        // - zh-cn / zh-sg / zh-my -> zh-hans-{region} -> zh-hans -> 原始语言标签 -> zh
+        // - zh-tw / zh-hk / zh-mo -> zh-hant-{region} -> zh-hant -> 原始语言标签 -> zh
+        // - zh-hans-* -> 原始语言标签 -> zh-hans -> zh
+        // - zh-hant-* -> 原始语言标签 -> zh-hant -> zh
+        // - zh -> zh-hans -> zh
+        // 这样站长通常只配置 zh-hans 和 zh-hant，也可以匹配常见中文区域语言标签。 */-->
+        function getLanguageMatchCandidates(language) {
+          const normalizedLanguage = language?.trim().replaceAll("_", "-").toLowerCase();
+          if (!normalizedLanguage) {
+            return [];
+          }
+
+          const languageParts = normalizedLanguage.split("-");
+          if (languageParts[0] !== "zh") {
+            return [normalizedLanguage];
+          }
+
+          const chineseLocale = languageParts[1];
+          if (!chineseLocale) {
+            // <!--/* 未指定区域或脚本时，默认按简体中文候选处理。 */-->
+            return ["zh-hans", "zh"];
+          }
+          if (chineseLocale === "hans") {
+            // <!--/* 已经显式指定简体脚本，保留原始标签后回退到通用简体与 zh。 */-->
+            return uniqueLanguages([normalizedLanguage, "zh-hans", "zh"]);
+          }
+          if (chineseLocale === "hant") {
+            // <!--/* 已经显式指定繁体脚本，保留原始标签后回退到通用繁体与 zh。 */-->
+            return uniqueLanguages([normalizedLanguage, "zh-hant", "zh"]);
+          }
+          if (["cn", "sg", "my"].includes(chineseLocale)) {
+            // <!--/* 简体中文常见区域，优先尝试脚本 + 区域，再回退到脚本、原始区域标签和 zh。 */-->
+            return uniqueLanguages([`zh-hans-${chineseLocale}`, "zh-hans", normalizedLanguage, "zh"]);
+          }
+          if (["tw", "hk", "mo"].includes(chineseLocale)) {
+            // <!--/* 繁体中文常见区域，优先尝试脚本 + 区域，再回退到脚本、原始区域标签和 zh。 */-->
+            return uniqueLanguages([`zh-hant-${chineseLocale}`, "zh-hant", normalizedLanguage, "zh"]);
+          }
+
+          return uniqueLanguages([normalizedLanguage, "zh"]);
+        }
+
+        // <!--/* 如果 ${language} 已经传入，也就是已经指定了页面语言，则同步语言 cookie 后不跳转
         // 这个 ${language} 是文章元数据/分类详情页元数据/标签详情页元数据的 language */-->
         const pageLanguageOverride = dataset?.pageLanguageOverride;
         if (pageLanguageOverride) {
+          // <!--/* 同步语言 cookie */-->
+          syncLanguageCookieAndReload(pageLanguageOverride);
           return;
         }
 
-        // <!--/* 如果浏览器已有 lang 查询参数，则不跳转
-        // param.lang 是一个列表，例 []、['zh']、['zh,en']
-        // lang=zh -> ''+param.lang 为 'zh'
-        // lang=zh,en -> ''+param.lang 为 'zh,en'
-        // 用 (new URL(window.location.href)).searchParams.get("lang") 也差不多
-        // 但我选择尽量预渲染，所以 ${'' + param.lang} */-->
+        // <!--/* 如果浏览器已有 language 查询参数，则不跳转
+        // param.language 是一个列表，例 []、['zh']、['zh,en']
+        // language=zh -> ''+param.language 为 'zh'
+        // language=zh,en -> ''+param.language 为 'zh,en'
+        // 用 (new URL(window.location.href)).searchParams.get("language") 也差不多
+        // 但我选择尽量预渲染，所以 ${'' + param.language}
+        //
+        // 因为用 language 参数，Halo CMS 检测到不一致会自动修改 cookie，
+        // 自动返回指定语言内容，所以无需手动修改/刷新页面 */-->
         const requestedLanguageParam = dataset?.requestedLanguageParam;
         if (requestedLanguageParam) {
           return;
         }
 
-        // <!--/* 获取配置项默认语言 */-->
-        let defaultPageLanguage = dataset?.defaultPageLanguage;
-        if (!defaultPageLanguage) {
-          defaultPageLanguage = "zh";
-        }
+        // <!--/* 后面是无 language 参数的时执行 */-->
 
-        // <!--/* 获取浏览器语言
-        // navigator.language 适用于现代浏览器
-        // navigator.userLanguage 为非标准属性适用于早期的 IE 浏览器（IE 11 及更早）
-        // */-->
-        const browserLang = navigator.language;
-
-        const autoRedirectTargetLanguages = dataset?.autoRedirectTargetLanguages?.split(",").filter(Boolean);
-        if (!autoRedirectTargetLanguages?.length) {
+        if (dataset?.autoRedirectToBrowserLanguage !== "true") {
+          // <!--/* 这里不跳转，但需要同步一次语言 cookie
+          // 例：我先访问了 example.com?language=en 的页面，设置了 cookie 为 en，
+          //     然后访问 example.com 时，需要将 cookie 恢复为页面的 lang=zh-CN
+          //     否则页面会大部分内容中文，小部分内容受 cookie 影响显示为 en */-->
+          syncLanguageCookieAndReload(document.documentElement.lang);
           return;
         }
+
+        // <!--/* 后面是启用了自动重定向时执行 */-->
+
+        const autoRedirectTargetLanguages = dataset?.autoRedirectTargetLanguages
+          ?.split(",")
+          .map((language) => language.trim().replaceAll("_", "-").toLowerCase())
+          .filter(Boolean);
+        if (!autoRedirectTargetLanguages?.length) {
+          // <!--/* 这里不跳转，但需要同步一次语言 cookie */-->
+          syncLanguageCookieAndReload(document.documentElement.lang);
+          return;
+        }
+
         const prefixMode = dataset?.prefixMatchMode === "true";
 
-        const matchedLang = prefixMode
-          ? autoRedirectTargetLanguages.find((lang) => browserLang.startsWith(lang))
-          : autoRedirectTargetLanguages.find((lang) => browserLang === lang);
+        // <!--/* 获取浏览器语言候选列表 */-->
+        const browserLanguageCandidates = getLanguageMatchCandidates(navigator.language);
+
+        let matchedLang;
+        if (prefixMode) {
+          // <!--/* 前缀模式保持配置列表优先级。
+          // 例：配置列表为 zh、en，浏览器候选为 zh-hans、zh 时，会命中 zh。
+          // 这样站长可以用更通用的语言代码覆盖一组区域或脚本语言。 */-->
+          matchedLang = autoRedirectTargetLanguages.find((targetLanguage) =>
+            browserLanguageCandidates.some((candidate) => candidate.startsWith(targetLanguage)),
+          );
+        } else {
+          // <!--/* 精确模式保持浏览器候选优先级。
+          // 例：navigator.language 为 zh-cn 时，候选顺序是 zh-hans-cn、zh-hans、zh-cn、zh。
+          // 如果配置列表同时存在 zh-hans 和 zh-cn，会先命中 zh-hans，
+          // 因为它是当前候选规则里更推荐的脚本语言标签。 */-->
+          for (const candidate of browserLanguageCandidates) {
+            matchedLang = autoRedirectTargetLanguages.find((targetLanguage) => targetLanguage === candidate);
+            if (matchedLang) {
+              break;
+            }
+          }
+        }
         // <!--/* 没有匹配的语言参数，不进行跳转 */-->
         if (!matchedLang) {
+          // <!--/* 这里不跳转，但需要同步一次语言 cookie */-->
+          syncLanguageCookieAndReload(document.documentElement.lang);
           return;
         }
 
+        // <!--/* 不能直接用 getLanguageMatchCandidates() 做等价比较，因为候选列表里有通用回退 zh。
+        // 如果直接比较，zh-Hans -> zh 和 zh-Hant -> zh 会导致简体和繁体因 zh 被误判成等价。
+        // 所以这里会去掉用于等价比较的通用 zh，避免 zh-Hans == zh-Hant。 */-->
+        function getLanguageEquivalenceCandidates(language) {
+          const candidates = getLanguageMatchCandidates(language);
+          return candidates.length > 1 ? candidates.filter((candidate) => candidate !== "zh") : candidates;
+        }
+
+        // <!--/* 获取配置项默认语言 */-->
+        const defaultPageLanguageCandidates = getLanguageEquivalenceCandidates(dataset?.defaultPageLanguage || "zh-CN");
+
         // <!--/* 准备跳转到带有浏览器语言参数的当前页面
-        // 如果 defaultLang 和  matchedLang 匹配说明默认页面语言就是目标语言，无需跳转 */-->
+        // 如果默认语言已匹配 matchedLang 的候选语言，说明无 language 参数页面的语言（html 的 lang）就是目标语言，无需跳转 */-->
         if (
-          (prefixMode && defaultPageLanguage.startsWith(matchedLang)) ||
-          (!prefixMode && defaultPageLanguage === matchedLang)
+          getLanguageEquivalenceCandidates(matchedLang).some((candidate) =>
+            defaultPageLanguageCandidates.some((defaultCandidate) =>
+              prefixMode ? defaultCandidate.startsWith(candidate) : defaultCandidate === candidate,
+            ),
+          )
         ) {
+          // <!--/* 这里不跳转，但需要同步一次语言 cookie */-->
+          syncLanguageCookieAndReload(document.documentElement.lang);
           return;
         }
 
         // <!--/* 进行跳转 */-->
         const url = new URL(window.location);
-        url.searchParams.set("lang", matchedLang);
+        url.searchParams.set("language", matchedLang);
         window.location.href = url;
       })(document.currentScript?.dataset);
     </script>
-    <!--/* Auto Redirect to Browser Language Script End */-->
+    <!--/* Language Cookie Sync and Browser Language Redirect Script End */-->
     <!--/* browser polyfill for modulepreload start
     https://github.com/vitejs/vite/blob/2436afef044d90f710fdfd714488a71efdd29092/packages/vite/src/node/plugins/modulePreloadPolyfill.ts#L39 
 

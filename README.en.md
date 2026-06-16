@@ -13,7 +13,7 @@
 Higan Haozi is a responsive, clean, and refreshing personal website theme designed for [Halo CMS](https://github.com/halo-dev/halo).
 
 Want to learn more? Feel free to visit the [documentation](https://howiehz.top/halo-theme-higan-haozi/en/) to further explore this theme.  
-You can also visit the [demo site](https://howiehz.top/?lang=en) to experience it.
+You can also visit the [demo site](https://howiehz.top/?language=en) to experience it.
 
 > 👉 [Quick Start](https://howiehz.top/halo-theme-higan-haozi/en/guide/getting-started)
 
