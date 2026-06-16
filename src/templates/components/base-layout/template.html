@@ -435,9 +435,9 @@
     <!--/* Anti-Mirror Site and Auto Redirect to Browser Language Script End */-->
     <!--/* Auto Redirect to Browser Language Script Start */-->
     <script
-      th:if="${theme.config?.global?.is_auto_redirect_to_browser_language}"
       th:with="page_language_override=${language},
                requested_language_param=${'' + param.language},
+               is_auto_redirect_to_browser_language=${theme.config?.global?.is_auto_redirect_to_browser_language},
                default_page_language=${theme.config?.global?.default_page_language},
                auto_redirect_target_languages=${#lists.isEmpty(theme.config?.global?.auto_redirect_target_language_list)
                                                 ? null
@@ -445,6 +445,7 @@
                is_prefix_match_mode=${theme.config?.global?.is_i18n_prefix_match_mode}"
       th:data-page-language-override="${page_language_override}"
       th:data-requested-language-param="${requested_language_param}"
+      th:data-auto-redirect-to-browser-language="${is_auto_redirect_to_browser_language}"
       th:data-default-page-language="${default_page_language}"
       th:data-auto-redirect-target-languages="${auto_redirect_target_languages}"
       th:data-prefix-match-mode="${is_prefix_match_mode}"
@@ -453,10 +454,11 @@
         // <!--/* 设计思路：
         // 1. 如果 ${language} 已经传入（重命名为 ${page_language_override}），也就是已经在元数据强行指定了页面语言，则同步语言 cookie 后不跳转
         // 2. 如果浏览器已有 language 查询参数，也就是在用户层面强行指定了页面语言，则不跳转
-        // 3. 获取主题配置项默认语言
-        // 4. 获取浏览器语言
-        // 5. 获取主题配置项中的目标语言列表，以及前缀匹配模式开关
-        // 6. 如果浏览器语言匹配配置项中的目标语言列表，则跳转到带有浏览器语言参数的当前页面
+        // 3. 如果未启用浏览器按语言自动跳转，则同步语言 cookie 后不跳转
+        // 4. 获取主题配置项中的目标语言列表，以及前缀匹配模式开关
+        // 5. 获取浏览器语言并匹配目标语言列表
+        // 6. 获取主题配置项默认语言
+        // 7. 如果默认语言未匹配浏览器语言，则跳转到带有浏览器语言参数的当前页面
         // */-->
 
         // <!--/* 核心理念（优先级）是：
@@ -512,12 +514,20 @@
 
         // <!--/* 后面是无 language 参数的时执行 */-->
 
-        const autoRedirectTargetLanguages = dataset?.autoRedirectTargetLanguages?.split(",").filter(Boolean);
-        if (!autoRedirectTargetLanguages?.length) {
-          // <!--/* 这里不跳转，但需要同步一次语言 cookie
+        if (dataset?.autoRedirectToBrowserLanguage !== "true") {
+          // <!--/* 这里不跳转，但需要同步一次语言 cookie 
           // 例：我先访问了 example.com?language=en 的页面，设置了 cookie 为 en，
           //     然后访问 example.com 时，需要将 cookie 恢复为页面的 lang=zh-Hans
           //     否则页面会大部分内容中文，小部分内容受 cookie 影响显示为 en */-->
+          syncLanguageCookieAndReload(document.documentElement.lang);
+          return;
+        }
+
+        // <!--/* 后面是启用了自动重定向时执行 */-->
+
+        const autoRedirectTargetLanguages = dataset?.autoRedirectTargetLanguages?.split(",").filter(Boolean);
+        if (!autoRedirectTargetLanguages?.length) {
+          // <!--/* 这里不跳转，但需要同步一次语言 cookie */-->
           syncLanguageCookieAndReload(document.documentElement.lang);
           return;
         }
