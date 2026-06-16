@@ -500,31 +500,31 @@
         }
 
         function getLanguageMatchCandidates(language) {
-          const normalizedLanguage = language?.trim().replaceAll("_", "-");
+          const normalizedLanguage = language?.trim().replaceAll("_", "-").toLowerCase();
           if (!normalizedLanguage) {
             return [];
           }
 
-          const languageParts = normalizedLanguage.toLowerCase().split("-");
+          const languageParts = normalizedLanguage.split("-");
           if (languageParts[0] !== "zh") {
             return [normalizedLanguage];
           }
 
           const chineseLocale = languageParts[1];
           if (!chineseLocale) {
-            return ["zh-Hans", "zh"];
+            return ["zh-hans", "zh"];
           }
           if (chineseLocale === "hans") {
-            return uniqueLanguages([normalizedLanguage, "zh-Hans", "zh"]);
+            return uniqueLanguages([normalizedLanguage, "zh-hans", "zh"]);
           }
           if (chineseLocale === "hant") {
-            return uniqueLanguages([normalizedLanguage, "zh-Hant", "zh"]);
+            return uniqueLanguages([normalizedLanguage, "zh-hant", "zh"]);
           }
           if (["cn", "sg", "my"].includes(chineseLocale)) {
-            return uniqueLanguages([`zh-Hans-${chineseLocale.toUpperCase()}`, "zh-Hans", normalizedLanguage, "zh"]);
+            return uniqueLanguages([`zh-hans-${chineseLocale}`, "zh-hans", normalizedLanguage, "zh"]);
           }
           if (["tw", "hk", "mo"].includes(chineseLocale)) {
-            return uniqueLanguages([`zh-Hant-${chineseLocale.toUpperCase()}`, "zh-Hant", normalizedLanguage, "zh"]);
+            return uniqueLanguages([`zh-hant-${chineseLocale}`, "zh-hant", normalizedLanguage, "zh"]);
           }
 
           return uniqueLanguages([normalizedLanguage, "zh"]);
@@ -566,7 +566,10 @@
 
         // <!--/* 后面是启用了自动重定向时执行 */-->
 
-        const autoRedirectTargetLanguages = dataset?.autoRedirectTargetLanguages?.split(",").filter(Boolean);
+        const autoRedirectTargetLanguages = dataset?.autoRedirectTargetLanguages
+          ?.split(",")
+          .map((language) => language.trim().replaceAll("_", "-").toLowerCase())
+          .filter(Boolean);
         if (!autoRedirectTargetLanguages?.length) {
           // <!--/* 这里不跳转，但需要同步一次语言 cookie */-->
           syncLanguageCookieAndReload(document.documentElement.lang);
@@ -576,20 +579,16 @@
         const prefixMode = dataset?.prefixMatchMode === "true";
 
         // <!--/* 获取浏览器语言候选列表 */-->
-        const browserLanguageCandidates = getLanguageMatchCandidates(navigator.language).map((language) =>
-          language.toLowerCase(),
-        );
+        const browserLanguageCandidates = getLanguageMatchCandidates(navigator.language);
 
         let matchedLang;
         if (prefixMode) {
           matchedLang = autoRedirectTargetLanguages.find((targetLanguage) =>
-            browserLanguageCandidates.some((candidate) => candidate.startsWith(targetLanguage.toLowerCase())),
+            browserLanguageCandidates.some((candidate) => candidate.startsWith(targetLanguage)),
           );
         } else {
           for (const candidate of browserLanguageCandidates) {
-            matchedLang = autoRedirectTargetLanguages.find(
-              (targetLanguage) => targetLanguage.toLowerCase() === candidate,
-            );
+            matchedLang = autoRedirectTargetLanguages.find((targetLanguage) => targetLanguage === candidate);
             if (matchedLang) {
               break;
             }
@@ -606,7 +605,7 @@
         // 如果直接比较，zh-Hans -> zh 和 zh-Hant -> zh 会导致简体和繁体因 zh 被误判成等价。
         // 所以这里会去掉用于等价比较的通用 zh，避免 zh-Hans == zh-Hant。 */-->
         function getLanguageEquivalenceCandidates(language) {
-          const candidates = getLanguageMatchCandidates(language).map((candidate) => candidate.toLowerCase());
+          const candidates = getLanguageMatchCandidates(language);
           return candidates.length > 1 ? candidates.filter((candidate) => candidate !== "zh") : candidates;
         }
 
