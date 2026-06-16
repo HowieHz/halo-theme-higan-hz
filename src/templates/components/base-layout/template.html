@@ -543,11 +543,11 @@
             return uniqueLanguages([normalizedLanguage, "zh-hant", "zh"]);
           }
           if (["cn", "sg", "my"].includes(chineseLocale)) {
-            // <!--/* 简体中文常见区域，优先尝试脚本+区域，再回退到脚本、原始区域标签和 zh。 */-->
+            // <!--/* 简体中文常见区域，优先尝试脚本 + 区域，再回退到脚本、原始区域标签和 zh。 */-->
             return uniqueLanguages([`zh-hans-${chineseLocale}`, "zh-hans", normalizedLanguage, "zh"]);
           }
           if (["tw", "hk", "mo"].includes(chineseLocale)) {
-            // <!--/* 繁体中文常见区域，优先尝试脚本+区域，再回退到脚本、原始区域标签和 zh。 */-->
+            // <!--/* 繁体中文常见区域，优先尝试脚本 + 区域，再回退到脚本、原始区域标签和 zh。 */-->
             return uniqueLanguages([`zh-hant-${chineseLocale}`, "zh-hant", normalizedLanguage, "zh"]);
           }
 
