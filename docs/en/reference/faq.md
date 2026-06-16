@@ -63,4 +63,4 @@ The `lang` attribute priority for the site root tag `<html>`:
 1. The `language` metadata explicitly specified in the metadata of [posts](/en/guide/metadata-configuration#post-page-title), [categories](/en/guide/metadata-configuration#category-page-title), [tags](/en/guide/metadata-configuration#tag-metadata), and [pages](/en/guide/metadata-configuration#page-metadata).
 2. URL query parameter `?language=`.
 3. The [default page language](/en/guide/theme-configuration#default-page-language) in theme settings.
-4. If all of the above are empty, it falls back to `zh-Hans`.
+4. If all of the above are empty, it falls back to `zh-CN`.

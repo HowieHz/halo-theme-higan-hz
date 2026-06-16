@@ -203,12 +203,12 @@ String
 :::
 ::: info ⭐ Default Value
 
-`zh-Hans`
+`zh-CN`
 
 :::
 ::: info 💡 Example Values
 
-`zh`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
+`zh-CN`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 
 :::
 ::: info ⚠️ External Constraints
@@ -354,12 +354,12 @@ Empty
 > :::
 > ::: info ⭐ Default Value
 >
-> `zh-Hans`
+> `zh-CN`
 >
 > :::
 > ::: info 💡 Example Values
 >
-> `zh`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
+> `zh-CN`, `zh-TW`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 >
 > :::
 > ::: info 🔒 Internal Constraints
@@ -2689,12 +2689,12 @@ Repeater
 > :::
 > ::: info ⭐ Default Value
 >
-> `zh-Hans`
+> `zh-CN`
 >
 > :::
 > ::: info 💡 Example Values
 >
-> `zh`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
+> `zh-CN`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 >
 > :::
 > ::: info 🔒 Internal Constraints
@@ -3582,12 +3582,12 @@ Repeater
 > :::
 > ::: info ⭐ Default Value
 >
-> `zh-Hans`
+> `zh-CN`
 >
 > :::
 > ::: info 💡 Example Values
 >
-> `zh`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
+> `zh-CN`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 >
 > :::
 > ::: info 🔒 Internal Constraints

@@ -9,7 +9,7 @@
            custom_theme_auto_id = ${theme.config?.styles?.custom_theme_auto_id},
            custom_theme_light_id = ${theme.config?.styles?.custom_theme_light_id},
            custom_theme_dark_id = ${theme.config?.styles?.custom_theme_dark_id},
-           page_language=${language ?: ('' + param.language != '' ? '' + param.language : (theme.config?.global?.default_page_language ?: 'zh-Hans'))},
+           page_language=${language ?: ('' + param.language != '' ? '' + param.language : (theme.config?.global?.default_page_language ?: 'zh-CN'))},
            siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1) == '/'
                        ? #strings.substring(site.url, 0, #strings.length(site.url) - 1)
                        : site.url},
@@ -524,6 +524,11 @@
           return uniqueLanguages([normalizedLanguage, "zh"]);
         }
 
+        function getComparableLanguageCandidates(language) {
+          const candidates = getLanguageMatchCandidates(language).map((candidate) => candidate.toLowerCase());
+          return candidates.length > 1 ? candidates.filter((candidate) => candidate !== "zh") : candidates;
+        }
+
         // <!--/* 如果 ${language} 已经传入，也就是已经指定了页面语言，则同步语言 cookie 后不跳转
         // 这个 ${language} 是文章元数据/分类详情页元数据/标签详情页元数据的 language */-->
         const pageLanguageOverride = dataset?.pageLanguageOverride;
@@ -552,7 +557,7 @@
         if (dataset?.autoRedirectToBrowserLanguage !== "true") {
           // <!--/* 这里不跳转，但需要同步一次语言 cookie
           // 例：我先访问了 example.com?language=en 的页面，设置了 cookie 为 en，
-          //     然后访问 example.com 时，需要将 cookie 恢复为页面的 lang=zh-Hans
+          //     然后访问 example.com 时，需要将 cookie 恢复为页面的 lang=zh-CN
           //     否则页面会大部分内容中文，小部分内容受 cookie 影响显示为 en */-->
           syncLanguageCookieAndReload(document.documentElement.lang);
           return;
@@ -597,15 +602,16 @@
         }
 
         // <!--/* 获取配置项默认语言 */-->
-        const lowerDefaultPageLanguage = (dataset?.defaultPageLanguage || "zh-Hans").toLowerCase();
+        const defaultPageLanguageCandidates = getComparableLanguageCandidates(dataset?.defaultPageLanguage || "zh-CN");
 
         // <!--/* 准备跳转到带有浏览器语言参数的当前页面
         // 如果默认语言已匹配 matchedLang 的候选语言，说明无 language 参数页面的语言（html 的 lang）就是目标语言，无需跳转 */-->
         if (
-          getLanguageMatchCandidates(matchedLang).some((language) => {
-            const candidate = language.toLowerCase();
-            return prefixMode ? lowerDefaultPageLanguage.startsWith(candidate) : lowerDefaultPageLanguage === candidate;
-          })
+          getComparableLanguageCandidates(matchedLang).some((candidate) =>
+            defaultPageLanguageCandidates.some((defaultCandidate) =>
+              prefixMode ? defaultCandidate.startsWith(candidate) : defaultCandidate === candidate,
+            ),
+          )
         ) {
           // <!--/* 这里不跳转，但需要同步一次语言 cookie */-->
           syncLanguageCookieAndReload(document.documentElement.lang);

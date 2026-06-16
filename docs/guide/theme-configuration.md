@@ -197,12 +197,12 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⭐ 默认值
 
-`zh-Hans`
+`zh-CN`
 
 :::
 ::: info 💡 示例值
 
-`zh`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
+`zh-CN`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 
 :::
 ::: info ⚠️ 外部约束
@@ -348,12 +348,12 @@ const QuickJumpConfig = (props) => {
 > :::
 > ::: info ⭐ 默认值
 >
-> `zh-Hans`
+> `zh-CN`
 >
 > :::
 > ::: info 💡 示例值
 >
-> `zh`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
+> `zh-CN`、`zh-TW`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 >
 > :::
 > ::: info 🔒 内部约束
@@ -2683,12 +2683,12 @@ HTML 代码也是可以的：
 > :::
 > ::: info ⭐ 默认值
 >
-> `zh-Hans`
+> `zh-CN`
 >
 > :::
 > ::: info 💡 示例值
 >
-> `zh`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
+> `zh-CN`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 >
 > :::
 > ::: info 🔒 内部约束
@@ -3576,12 +3576,12 @@ HTML 代码也是可以的：
 > :::
 > ::: info ⭐ 默认值
 >
-> `zh-Hans`
+> `zh-CN`
 >
 > :::
 > ::: info 💡 示例值
 >
-> `zh`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
+> `zh-CN`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 >
 > :::
 > ::: info 🔒 内部约束
