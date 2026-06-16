@@ -30,6 +30,10 @@
 - 默认页面语言和多语言内容语言默认值由 `zh` 改为 `zh-Hans`。
 - 中文 i18n 语言文件由 `zh_CN.properties` / `zh_TW.properties` 重命名为 `zh_Hans.properties` / `zh_Hant.properties`。
 
+### 🐛 错误修复
+
+- 修复浏览器按语言自动跳转在精确匹配模式下，常见中文浏览器语言代码无法匹配到 `zh-Hans` / `zh-Hant` 的问题。
+
 ## [1.69.3] - 2026-06-15
 
 ### 🧹 杂项维护
