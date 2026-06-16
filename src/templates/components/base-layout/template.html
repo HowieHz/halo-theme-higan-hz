@@ -457,22 +457,42 @@
         // 4. 获取浏览器语言
         // 5. 获取主题配置项中的目标语言列表，以及前缀匹配模式开关
         // 6. 如果浏览器语言匹配配置项中的目标语言列表，则跳转到带有浏览器语言参数的当前页面
+        // */-->
 
-        // 核心理念（优先级）是：
+        // <!--/* 核心理念（优先级）是：
         // 1. 用户浏览器查询参数的强制指定
         // 2. 站长在页面元数据的强制指定
         // 3. 根据浏览器语言识别自动跳转（用户浏览器语言刚好在站长配置的允许跳转列表里，那就跳）。
+        // */-->
 
-        // 如果 ${language} 已经传入，也就是已经指定了页面语言，则同步语言 cookie 后不跳转
+        function getLanguageCookie() {
+          return document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1];
+        }
+
+        function syncLanguageCookieAndReload(language) {
+          if (!language) {
+            return;
+          }
+
+          const nextLanguageCookie = encodeURIComponent(language);
+          if (getLanguageCookie() === nextLanguageCookie) {
+            return;
+          }
+
+          // <!--/* 设置 language cookie 规则与 Halo CMS 一致 */-->
+          document.cookie = `language=${nextLanguageCookie}; path=/; SameSite=Lax${location.protocol === "https:" ? "; Secure" : ""}`;
+          // <!--/* 确保设置成功才刷新页面，避免无限刷新 */-->
+          if (getLanguageCookie() === nextLanguageCookie) {
+            window.location.reload();
+          }
+        }
+
+        // <!--/* 如果 ${language} 已经传入，也就是已经指定了页面语言，则同步语言 cookie 后不跳转
         // 这个 ${language} 是文章元数据/分类详情页元数据/标签详情页元数据的 language */-->
         const pageLanguageOverride = dataset?.pageLanguageOverride;
         if (pageLanguageOverride) {
-          const nextLanguageCookie = encodeURIComponent(pageLanguageOverride);
-          if (document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1] !== nextLanguageCookie) {
-            // <!--/* 设置 language cookie 规则与 Halo CMS 一致 */-->
-            document.cookie = `language=${nextLanguageCookie}; path=/; SameSite=Lax${location.protocol === "https:" ? "; Secure" : ""}`;
-            window.location.reload();
-          }
+          // <!--/* 同步语言 cookie */-->
+          syncLanguageCookieAndReload(pageLanguageOverride);
           return;
         }
 
@@ -493,10 +513,7 @@
         // <!--/* 后面是无 language 参数的时执行 */-->
 
         // <!--/* 获取配置项默认语言 */-->
-        let defaultPageLanguage = dataset?.defaultPageLanguage;
-        if (!defaultPageLanguage) {
-          defaultPageLanguage = "zh-Hans";
-        }
+        const defaultPageLanguage = dataset?.defaultPageLanguage || "zh-Hans";
 
         // <!--/* 获取浏览器语言
         // navigator.language 适用于现代浏览器
@@ -510,13 +527,7 @@
           // 例：我先访问了 example.com?language=en 的页面，设置了 cookie 为 en，
           //     然后访问 example.com 时，需要将 cookie 恢复为页面的 lang=zh-Hans
           //     否则页面会大部分内容中文，小部分内容受 cookie 影响显示为 en */-->
-          // <!--/* 读取 html 标签的 lang 属性，与 language cookie 进行比较 */-->
-          const nextLanguageCookie = encodeURIComponent(document.documentElement.lang);
-          if (document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1] !== nextLanguageCookie) {
-            // <!--/* 设置 language cookie 规则与 Halo CMS 一致 */-->
-            document.cookie = `language=${nextLanguageCookie}; path=/; SameSite=Lax${location.protocol === "https:" ? "; Secure" : ""}`;
-            window.location.reload();
-          }
+          syncLanguageCookieAndReload(document.documentElement.lang);
           return;
         }
         const prefixMode = dataset?.prefixMatchMode === "true";
@@ -526,37 +537,19 @@
           : autoRedirectTargetLanguages.find((lang) => browserLang === lang);
         // <!--/* 没有匹配的语言参数，不进行跳转 */-->
         if (!matchedLang) {
-          // <!--/* 这里不跳转，但需要同步一次语言 cookie
-          // 例：我先访问了 example.com?language=en 的页面，设置了 cookie 为 en，
-          //     然后访问 example.com 时，需要将 cookie 恢复为页面的 lang=zh-Hans
-          //     否则页面会大部分内容中文，小部分内容受 cookie 影响显示为 en */-->
-          // <!--/* 读取 html 标签的 lang 属性，与 language cookie 进行比较 */-->
-          const nextLanguageCookie = encodeURIComponent(document.documentElement.lang);
-          if (document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1] !== nextLanguageCookie) {
-            // <!--/* 设置 language cookie 规则与 Halo CMS 一致 */-->
-            document.cookie = `language=${nextLanguageCookie}; path=/; SameSite=Lax${location.protocol === "https:" ? "; Secure" : ""}`;
-            window.location.reload();
-          }
+          // <!--/* 这里不跳转，但需要同步一次语言 cookie */-->
+          syncLanguageCookieAndReload(document.documentElement.lang);
           return;
         }
 
         // <!--/* 准备跳转到带有浏览器语言参数的当前页面
-        // 如果 defaultLang 和 matchedLang 匹配说明默认页面语言就是目标语言，无需跳转 */-->
+        // 如果 defaultLang 和 matchedLang 匹配说明无 language 参数页面的语言（html 的 lang）就是目标语言，无需跳转 */-->
         if (
           (prefixMode && defaultPageLanguage.startsWith(matchedLang)) ||
           (!prefixMode && defaultPageLanguage === matchedLang)
         ) {
-          // <!--/* 这里不跳转，但需要同步一次语言 cookie
-          // 例：我先访问了 example.com?language=en 的页面，设置了 cookie 为 en，
-          //     然后访问 example.com 时，需要将 cookie 恢复为页面的 lang=zh-Hans
-          //     否则页面会大部分内容中文，小部分内容受 cookie 影响显示为 en */-->
-          // <!--/* 读取 html 标签的 lang 属性，与 language cookie 进行比较 */-->
-          const nextLanguageCookie = encodeURIComponent(document.documentElement.lang);
-          if (document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1] !== nextLanguageCookie) {
-            // <!--/* 设置 language cookie 规则与 Halo CMS 一致 */-->
-            document.cookie = `language=${nextLanguageCookie}; path=/; SameSite=Lax${location.protocol === "https:" ? "; Secure" : ""}`;
-            window.location.reload();
-          }
+          // <!--/* 这里不跳转，但需要同步一次语言 cookie */-->
+          syncLanguageCookieAndReload(document.documentElement.lang);
           return;
         }
 
