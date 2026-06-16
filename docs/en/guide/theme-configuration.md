@@ -203,7 +203,7 @@ String
 :::
 ::: info ⭐ Default Value
 
-`zh`
+`zh-Hans`
 
 :::
 ::: info 💡 Example Values
@@ -354,7 +354,7 @@ Empty
 > :::
 > ::: info ⭐ Default Value
 >
-> `zh`
+> `zh-Hans`
 >
 > :::
 > ::: info 💡 Example Values
@@ -2689,7 +2689,7 @@ Repeater
 > :::
 > ::: info ⭐ Default Value
 >
-> `zh`
+> `zh-Hans`
 >
 > :::
 > ::: info 💡 Example Values
@@ -3582,7 +3582,7 @@ Repeater
 > :::
 > ::: info ⭐ Default Value
 >
-> `zh`
+> `zh-Hans`
 >
 > :::
 > ::: info 💡 Example Values

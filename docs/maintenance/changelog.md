@@ -27,6 +27,7 @@
 
 - 页面语言 URL 查询参数由 `?lang=` 改为 `?language=`，不再支持 `?lang=`。
 - 页面元数据已指定语言时，会同步 `language` cookie 并刷新一次页面，确保后续请求使用一致的语言。
+- 默认页面语言和多语言内容语言默认值由 `zh` 改为 `zh-Hans`。
 - 中文 i18n 语言文件由 `zh_CN.properties` / `zh_TW.properties` 重命名为 `zh_Hans.properties` / `zh_Hant.properties`。
 
 ## [1.69.3] - 2026-06-15

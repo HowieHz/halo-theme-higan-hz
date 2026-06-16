@@ -197,7 +197,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ⭐ 默认值
 
-`zh`
+`zh-Hans`
 
 :::
 ::: info 💡 示例值
@@ -348,7 +348,7 @@ const QuickJumpConfig = (props) => {
 > :::
 > ::: info ⭐ 默认值
 >
-> `zh`
+> `zh-Hans`
 >
 > :::
 > ::: info 💡 示例值
@@ -2683,7 +2683,7 @@ HTML 代码也是可以的：
 > :::
 > ::: info ⭐ 默认值
 >
-> `zh`
+> `zh-Hans`
 >
 > :::
 > ::: info 💡 示例值
@@ -3576,7 +3576,7 @@ HTML 代码也是可以的：
 > :::
 > ::: info ⭐ 默认值
 >
-> `zh`
+> `zh-Hans`
 >
 > :::
 > ::: info 💡 示例值
