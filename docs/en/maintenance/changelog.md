@@ -23,6 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 💥 Breaking Changes
+
+- Changed the page language URL query parameter from `?lang=` to `?language=`; `?lang=` is no longer supported.
+- When page metadata specifies a language, the theme now syncs the `language` cookie and refreshes the page once so subsequent requests use the same language.
+- Renamed Chinese i18n language files from `zh_CN.properties` / `zh_TW.properties` to `zh_Hans.properties` / `zh_Hant.properties`.
+
 ## [1.69.3] - 2026-06-15
 
 ### 🧹 Miscellaneous Chores

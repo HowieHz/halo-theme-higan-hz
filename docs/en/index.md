@@ -22,7 +22,7 @@ features:
   - icon: 📱
     title: "Responsive Design"
     details: "No matter whether visitors use a phone, tablet, or computer, they will enjoy a comfortable reading experience."
-    link: https://howiehz.top/?lang=en
+    link: https://howiehz.top/?language=en
     linkText: "Try It Out"
   - icon: ⚙️
     title: "Highly Configurable"

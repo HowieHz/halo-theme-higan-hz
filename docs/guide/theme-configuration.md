@@ -117,7 +117,7 @@ const QuickJumpConfig = (props) => {
 
 ::: tip 以下举例几个常见类型
 
-- 字符串：一串字符，如 `abc123`、`zh-CN`。
+- 字符串：一串字符，如 `abc123`、`zh-Hans`。
 - 整数：整数，如 `-1`、`0`、`100`。
 - 浮点数：带小数点的数，如 `1.2`、`0.3`、`4.5`。
 - 布尔值：`true` 或 `false`。实际配置项体现为一个开关，打开就是 `true`，关闭就是 `false`。
@@ -202,7 +202,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info 💡 示例值
 
-`zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+`zh`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 
 :::
 ::: info ⚠️ 外部约束
@@ -353,7 +353,7 @@ const QuickJumpConfig = (props) => {
 > :::
 > ::: info 💡 示例值
 >
-> `zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+> `zh`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 >
 > :::
 > ::: info 🔒 内部约束
@@ -2688,7 +2688,7 @@ HTML 代码也是可以的：
 > :::
 > ::: info 💡 示例值
 >
-> `zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+> `zh`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 >
 > :::
 > ::: info 🔒 内部约束
@@ -3581,7 +3581,7 @@ HTML 代码也是可以的：
 > :::
 > ::: info 💡 示例值
 >
-> `zh`、`zh-CN`、`zh-Hans`、`en`、`en-US`
+> `zh`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 >
 > :::
 > ::: info 🔒 内部约束

@@ -12,7 +12,7 @@ spec:
           key: default_page_language
           label: Default page language
           value: "zh"
-          help: "Default page language, e.g., zh or en. If this field is left empty, zh will be used by default. To switch languages, add ?lang=language_code to the end of the URL, for example: https://example.com/?lang=en"
+          help: "Default page language, e.g., zh or en. If this field is left empty, zh will be used by default. To switch languages, add ?language=language_code to the end of the URL, for example: https://example.com/?language=en"
         - $formkit: switch
           name: is_i18n_prefix_match_mode
           key: is_i18n_prefix_match_mode
@@ -41,7 +41,7 @@ spec:
               key: v
               label: "Region language code"
               validation: "required"
-              help: "e.g. zh, zh_CN, en, en_US"
+              help: "e.g. zh, zh-Hans, zh-Hant, en, en-US"
         - $formkit: switch
           name: is_i18n_menu_show
           key: is_i18n_menu_show

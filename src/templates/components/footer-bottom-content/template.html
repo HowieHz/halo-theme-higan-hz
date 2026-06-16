@@ -23,7 +23,7 @@
     <th:block th:if="not ${theme.config?.global?.is_i18n_prefix_match_mode}">
       <!--/* i18n 页面底部内容 全等匹配模式 */-->
       <th:block th:each="footerContentItem : ${footerContentItems}">
-        <th:block th:if="${#strings.equals(footerContentItem.lang, param.lang)}">
+        <th:block th:if="${#strings.equals(footerContentItem.lang, param.language)}">
           <div
             th:class="${footerBottomClass}"
             th:classappend="${footerBottomClassAppend + ' matched-footer-content'}"
@@ -39,9 +39,9 @@
       <!--/* i18n 页面底部内容 前缀匹配模式 */-->
       <th:block th:each="footerContentItem : ${footerContentItems}">
         <th:block
-          th:if="${param.lang != null
+          th:if="${param.language != null
                            and footerContentItem.lang != null
-                           and #strings.startsWith(param.lang, footerContentItem.lang)}"
+                           and #strings.startsWith(param.language, footerContentItem.lang)}"
         >
           <div
             th:class="${footerBottomClass}"

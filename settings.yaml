@@ -12,7 +12,7 @@ spec:
           key: default_page_language
           label: 默认页面语言
           value: "zh"
-          help: "默认页面语言，例如：zh、en。若此项为空，则默认为 zh。切换语言的方法是在 URL 后添加 ?lang=语言代码，例如：https://example.com/?lang=en"
+          help: "默认页面语言，例如：zh、en。若此项为空，则默认为 zh。切换语言的方法是在 URL 后添加 ?language=语言代码，例如：https://example.com/?language=en"
         - $formkit: switch
           name: is_i18n_prefix_match_mode
           key: is_i18n_prefix_match_mode
@@ -41,7 +41,7 @@ spec:
               key: v
               label: "语言代码"
               validation: "required"
-              help: "如 zh、zh_CN、en、en_US"
+              help: "如 zh、zh-Hans、zh-Hant、en、en-US"
         - $formkit: switch
           name: is_i18n_menu_show
           key: is_i18n_menu_show

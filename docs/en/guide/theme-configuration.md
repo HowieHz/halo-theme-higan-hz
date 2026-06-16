@@ -123,7 +123,7 @@ The value type of this configuration item.
 
 ::: tip Here are some common types
 
-- String: A sequence of characters, such as `abc123`, `zh-CN`.
+- String: A sequence of characters, such as `abc123`, `zh-Hans`.
 - Integer: Whole numbers, such as `-1`, `0`, `100`.
 - Float: Numbers with decimal points, such as `1.2`, `0.3`, `4.5`.
 - Boolean: `true` or `false`. In actual configuration items, it appears as a switch, on is `true`, off is `false`.
@@ -208,7 +208,7 @@ String
 :::
 ::: info 💡 Example Values
 
-`zh`,`zh-CN`,`zh-Hans`,`en`,`en-US`
+`zh`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 
 :::
 ::: info ⚠️ External Constraints
@@ -359,7 +359,7 @@ Empty
 > :::
 > ::: info 💡 Example Values
 >
-> `zh`, `zh-CN`, `zh-Hans`, `en`, `en-US`
+> `zh`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 >
 > :::
 > ::: info 🔒 Internal Constraints
@@ -2694,7 +2694,7 @@ Repeater
 > :::
 > ::: info 💡 Example Values
 >
-> `zh`, `zh-CN`, `zh-Hans`, `en`, `en-US`
+> `zh`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 >
 > :::
 > ::: info 🔒 Internal Constraints
@@ -3587,7 +3587,7 @@ Repeater
 > :::
 > ::: info 💡 Example Values
 >
-> `zh`,`zh-CN`,`zh-Hans`,`en`,`en-US`
+> `zh`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 >
 > :::
 > ::: info 🔒 Internal Constraints
