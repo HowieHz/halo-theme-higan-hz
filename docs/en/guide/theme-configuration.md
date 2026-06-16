@@ -266,6 +266,44 @@ For specific usage methods, please refer to [Prefix Matching Mode Description](/
 
 :::
 
+### Sync Cookie Language Based on Page Content Language
+
+::: info 🎯 Purpose
+
+Synchronize the `language` Cookie based on the page content language to avoid fixed text provided by the theme using a different language from the content.
+
+:::
+::: info 📂 Configuration Item Location
+
+Global -> Sync Cookie Language Based on Page Content Language
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Sync%20Cookie%20Language%20Based%20on%20Page%20Content%20Language" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.global?.is_sync_language_cookie_to_content_language`
+
+:::
+::: info ℹ️ Additional Information
+
+When enabled, this can avoid fixed text provided by the theme using a different language from the content, but it may cause an extra browser refresh.
+
+:::
+
 ### Auto-redirect Based on Browser Language
 
 ::: info 🎯 Purpose

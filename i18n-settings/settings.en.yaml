@@ -20,6 +20,12 @@ spec:
           value: true
           help: "If enabled, the multi-language feature will use prefix match mode. See documentation for details."
         - $formkit: switch
+          name: is_sync_language_cookie_to_content_language
+          key: is_sync_language_cookie_to_content_language
+          label: Sync Cookie language based on page content language
+          value: true
+          help: "When enabled, avoids fixed page text provided by the theme using a different language from the content, but may cause an extra browser refresh."
+        - $formkit: switch
           name: is_auto_redirect_to_browser_language
           key: is_auto_redirect_to_browser_language
           label: Auto redirect to browser language

@@ -260,6 +260,44 @@ const QuickJumpConfig = (props) => {
 
 :::
 
+### 是否根据页面内容语言同步 Cookie 语言
+
+::: info 🎯 用途
+
+根据页面内容语言同步 `language` Cookie，避免页面的固定文字（由主题提供的）与内容语言不同。
+
+:::
+::: info 📂 配置项位置
+
+全局 -> 是否根据页面内容语言同步 Cookie 语言
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=是否根据页面内容语言同步%20Cookie%20语言" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.global?.is_sync_language_cookie_to_content_language`
+
+:::
+::: info ℹ️ 补充信息
+
+开启后可避免主题提供的固定文字与内容语言不同，但可能导致额外的浏览器刷新。
+
+:::
+
 ### 浏览器按语言自动跳转
 
 ::: info 🎯 用途

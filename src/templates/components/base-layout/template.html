@@ -437,6 +437,7 @@
     <script
       th:with="page_language_override=${language},
                requested_language_param=${'' + param.language},
+               is_sync_language_cookie_to_content_language=${theme.config?.global?.is_sync_language_cookie_to_content_language != false},
                is_auto_redirect_to_browser_language=${theme.config?.global?.is_auto_redirect_to_browser_language},
                default_page_language=${theme.config?.global?.default_page_language},
                auto_redirect_target_languages=${#lists.isEmpty(theme.config?.global?.auto_redirect_target_language_list)
@@ -445,6 +446,7 @@
                is_prefix_match_mode=${theme.config?.global?.is_i18n_prefix_match_mode}"
       th:data-page-language-override="${page_language_override}"
       th:data-requested-language-param="${requested_language_param}"
+      th:data-sync-language-cookie-to-content-language="${is_sync_language_cookie_to_content_language}"
       th:data-auto-redirect-to-browser-language="${is_auto_redirect_to_browser_language}"
       th:data-default-page-language="${default_page_language}"
       th:data-auto-redirect-target-languages="${auto_redirect_target_languages}"
@@ -472,6 +474,10 @@
         }
 
         function syncLanguageCookieAndReload(language) {
+          if (dataset?.syncLanguageCookieToContentLanguage !== "true") {
+            return;
+          }
+
           if (!language) {
             return;
           }
