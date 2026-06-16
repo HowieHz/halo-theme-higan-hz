@@ -9,7 +9,7 @@
            custom_theme_auto_id = ${theme.config?.styles?.custom_theme_auto_id},
            custom_theme_light_id = ${theme.config?.styles?.custom_theme_light_id},
            custom_theme_dark_id = ${theme.config?.styles?.custom_theme_dark_id},
-           page_language=${language ?: ('' + param.language != '' ? '' + param.language : (theme.config?.global?.default_page_language ?: 'zh-CN'))},
+           page_language=${'' + param.language != '' ? '' + param.language : (language ?: (theme.config?.global?.default_page_language ?: 'zh-CN'))},
            siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1) == '/'
                        ? #strings.substring(site.url, 0, #strings.length(site.url) - 1)
                        : site.url},
@@ -568,6 +568,8 @@
           return;
         }
 
+        // <!--/* 后面是无 language 参数的时执行 */-->
+
         // <!--/* 如果 ${language} 已经传入，也就是已经指定了页面语言，则同步语言 cookie 后不跳转
         // 这个 ${language} 是文章元数据/分类详情页元数据/标签详情页元数据的 language */-->
         const pageLanguageOverride = dataset?.pageLanguageOverride;
@@ -576,8 +578,6 @@
           syncLanguageCookieAndReload(pageLanguageOverride);
           return;
         }
-
-        // <!--/* 后面是无 language 参数的时执行 */-->
 
         if (dataset?.autoRedirectToBrowserLanguage !== "true") {
           // <!--/* 这里不跳转，但需要同步一次语言 cookie
