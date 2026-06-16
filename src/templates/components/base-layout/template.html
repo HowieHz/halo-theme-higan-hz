@@ -456,7 +456,7 @@
         // 2. 如果浏览器已有 language 查询参数，也就是在用户层面强行指定了页面语言，则不跳转
         // 3. 如果未启用浏览器按语言自动跳转，则同步语言 cookie 后不跳转
         // 4. 获取主题配置项中的目标语言列表，以及前缀匹配模式开关
-        // 5. 获取浏览器语言并匹配目标语言列表
+        // 5. 获取浏览器语言，生成语言候选列表并匹配目标语言列表
         // 6. 获取主题配置项默认语言
         // 7. 如果默认语言未匹配浏览器语言，则跳转到带有浏览器语言参数的当前页面
         // */-->
@@ -487,6 +487,41 @@
           if (getLanguageCookie() === nextLanguageCookie) {
             window.location.reload();
           }
+        }
+
+        function uniqueLanguages(languages) {
+          return languages.filter((language, index) => language && languages.indexOf(language) === index);
+        }
+
+        function getLanguageMatchCandidates(language) {
+          const normalizedLanguage = language?.trim().replaceAll("_", "-");
+          if (!normalizedLanguage) {
+            return [];
+          }
+
+          const languageParts = normalizedLanguage.toLowerCase().split("-");
+          if (languageParts[0] !== "zh") {
+            return [normalizedLanguage];
+          }
+
+          const chineseLocale = languageParts[1];
+          if (!chineseLocale) {
+            return ["zh-Hans", "zh"];
+          }
+          if (chineseLocale === "hans") {
+            return uniqueLanguages([normalizedLanguage, "zh-Hans", "zh"]);
+          }
+          if (chineseLocale === "hant") {
+            return uniqueLanguages([normalizedLanguage, "zh-Hant", "zh"]);
+          }
+          if (["cn", "sg", "my"].includes(chineseLocale)) {
+            return uniqueLanguages([`zh-Hans-${chineseLocale.toUpperCase()}`, "zh-Hans", normalizedLanguage, "zh"]);
+          }
+          if (["tw", "hk", "mo"].includes(chineseLocale)) {
+            return uniqueLanguages([`zh-Hant-${chineseLocale.toUpperCase()}`, "zh-Hant", normalizedLanguage, "zh"]);
+          }
+
+          return uniqueLanguages([normalizedLanguage, "zh"]);
         }
 
         // <!--/* 如果 ${language} 已经传入，也就是已经指定了页面语言，则同步语言 cookie 后不跳转
@@ -534,15 +569,26 @@
 
         const prefixMode = dataset?.prefixMatchMode === "true";
 
-        // <!--/* 获取浏览器语言
-        // navigator.language 适用于现代浏览器
-        // navigator.userLanguage 为非标准属性适用于早期的 IE 浏览器（IE 11 及更早）
-        // */-->
-        const browserLang = navigator.language;
+        // <!--/* 获取浏览器语言候选列表 */-->
+        const browserLanguageCandidates = getLanguageMatchCandidates(navigator.language).map((language) =>
+          language.toLowerCase(),
+        );
 
-        const matchedLang = prefixMode
-          ? autoRedirectTargetLanguages.find((lang) => browserLang.startsWith(lang))
-          : autoRedirectTargetLanguages.find((lang) => browserLang === lang);
+        let matchedLang;
+        if (prefixMode) {
+          matchedLang = autoRedirectTargetLanguages.find((targetLanguage) =>
+            browserLanguageCandidates.some((candidate) => candidate.startsWith(targetLanguage.toLowerCase())),
+          );
+        } else {
+          for (const candidate of browserLanguageCandidates) {
+            matchedLang = autoRedirectTargetLanguages.find(
+              (targetLanguage) => targetLanguage.toLowerCase() === candidate,
+            );
+            if (matchedLang) {
+              break;
+            }
+          }
+        }
         // <!--/* 没有匹配的语言参数，不进行跳转 */-->
         if (!matchedLang) {
           // <!--/* 这里不跳转，但需要同步一次语言 cookie */-->
@@ -551,13 +597,15 @@
         }
 
         // <!--/* 获取配置项默认语言 */-->
-        const defaultPageLanguage = dataset?.defaultPageLanguage || "zh-Hans";
+        const lowerDefaultPageLanguage = (dataset?.defaultPageLanguage || "zh-Hans").toLowerCase();
 
         // <!--/* 准备跳转到带有浏览器语言参数的当前页面
-        // 如果 defaultLang 和 matchedLang 匹配说明无 language 参数页面的语言（html 的 lang）就是目标语言，无需跳转 */-->
+        // 如果默认语言已匹配 matchedLang 的候选语言，说明无 language 参数页面的语言（html 的 lang）就是目标语言，无需跳转 */-->
         if (
-          (prefixMode && defaultPageLanguage.startsWith(matchedLang)) ||
-          (!prefixMode && defaultPageLanguage === matchedLang)
+          getLanguageMatchCandidates(matchedLang).some((language) => {
+            const candidate = language.toLowerCase();
+            return prefixMode ? lowerDefaultPageLanguage.startsWith(candidate) : lowerDefaultPageLanguage === candidate;
+          })
         ) {
           // <!--/* 这里不跳转，但需要同步一次语言 cookie */-->
           syncLanguageCookieAndReload(document.documentElement.lang);
