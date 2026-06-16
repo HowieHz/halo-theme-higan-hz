@@ -9,7 +9,7 @@
            custom_theme_auto_id = ${theme.config?.styles?.custom_theme_auto_id},
            custom_theme_light_id = ${theme.config?.styles?.custom_theme_light_id},
            custom_theme_dark_id = ${theme.config?.styles?.custom_theme_dark_id},
-           page_language=${language ?: ('' + param.language != '' ? '' + param.language : (theme.config?.global?.default_page_language ?: 'zh-CN'))},
+           page_language=${'' + param.language != '' ? '' + param.language : (language ?: (theme.config?.global?.default_page_language ?: 'zh-CN'))},
            siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1) == '/'
                        ? #strings.substring(site.url, 0, #strings.length(site.url) - 1)
                        : site.url},
