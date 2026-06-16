@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.70.0] - 2026-06-16
+
 ### 💥 破坏性变更
 
 - 页面语言 URL 查询参数由 `?lang=` 改为 `?language=`，不再支持 `?lang=`。
@@ -2083,7 +2085,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.3...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.70.0...HEAD
+[1.70.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.3...v1.70.0
 [1.69.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.2...v1.69.3
 [1.69.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.1...v1.69.2
 [1.69.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.0...v1.69.1
