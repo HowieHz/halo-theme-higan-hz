@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.71.0] - 2026-06-17
+
 ### 💥 Breaking Changes
 
 - Renamed the global configuration key from `default_page_language` to `default_content_language`; the old value is no longer compatible. After upgrading, set `Global -> Default Content Language` again.
@@ -2199,7 +2201,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.70.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.0...HEAD
+[1.71.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.70.1...v1.71.0
 [1.70.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.70.0...v1.70.1
 [1.70.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.3...v1.70.0
 [1.69.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.2...v1.69.3

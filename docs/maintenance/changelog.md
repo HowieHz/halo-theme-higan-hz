@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.71.0] - 2026-06-17
+
 ### 💥 破坏性变更
 
 - 将全局配置项 `default_page_language` 重命名为 `default_content_language`，旧配置值不再兼容；升级后请重新设置“全局 -> 默认内容语言”。
@@ -2110,7 +2112,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.70.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.0...HEAD
+[1.71.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.70.1...v1.71.0
 [1.70.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.70.0...v1.70.1
 [1.70.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.3...v1.70.0
 [1.69.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.69.2...v1.69.3
