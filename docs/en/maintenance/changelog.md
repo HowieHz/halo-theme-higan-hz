@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 📄 Documentation
+
+- Corrected the language matching basis in the multilingual menu, page bottom/sidebar content, and announcement tutorials.
+
 ## [1.70.1] - 2026-06-16
 
 ### 🐛 Bug Fixes
