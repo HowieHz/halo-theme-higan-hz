@@ -36,6 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Corrected the language matching basis, default-item matching rules, and Cookie language synchronization notes in the multilingual tutorial and configuration forms.
 
+### 🧹 Miscellaneous Chores
+
+- Updated dependencies.
+
 ## [1.70.1] - 2026-06-16
 
 ### 🐛 Bug Fixes
