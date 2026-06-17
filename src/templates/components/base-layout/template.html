@@ -502,8 +502,8 @@
           const nextLanguageCookie = encodeURIComponent(language);
           const currentLanguageCookie = getLanguageCookie();
           if (
-            currentLanguageCookie
-            && normalizeLanguageTag(decodeLanguageCookie(currentLanguageCookie)) === normalizeLanguageTag(language)
+            currentLanguageCookie &&
+            normalizeLanguageTag(decodeLanguageCookie(currentLanguageCookie)) === normalizeLanguageTag(language)
           ) {
             return;
           }
