@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🐛 Bug Fixes
 
 - Fixed multilingual page bottom/sidebar content not matching against the page `<html>` language.
+- Aligned Chinese candidate generation for browser language auto redirect with Halo CMS backend language resource lookup behavior.
 
 ### 📄 Documentation
 

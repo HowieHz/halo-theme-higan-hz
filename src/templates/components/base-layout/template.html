@@ -550,7 +550,7 @@
 
         // <!--/* 去掉候选语言列表里的空值和重复项，同时保留原始顺序。
         // 中文候选路径里可能会出现重复项，例如 zh-CN 会生成 zh-hans-cn、zh-hans、zh-cn、zh，
-        // 而 zh-Hans-CN 会生成 zh-hans-cn、zh-hans、zh；保序去重可以让匹配优先级稳定。 */-->
+        // 而 zh-Hans-CN 会生成 zh-hans-cn、zh-hans、zh-cn、zh；保序去重可以让匹配优先级稳定。 */-->
         function uniqueLanguages(languages) {
           return languages.filter((language, index) => language && languages.indexOf(language) === index);
         }
@@ -559,13 +559,14 @@
         // 返回值会统一转换为小写，并将下划线改为短横线，便于后续只做一次标准化后的比较。
         //
         // 非中文语言不做额外推导，只返回标准化后的语言标签。
-        // 中文语言会特化常见区域：
-        // - zh-cn / zh-sg / zh-my -> zh-hans-{region} -> zh-hans -> 原始语言标签 -> zh
+        // 中文语言按 Spring/JDK ResourceBundle 的常见候选顺序处理：
+        // - zh-cn / zh-sg -> zh-hans-{region} -> zh-hans -> 原始语言标签 -> zh
         // - zh-tw / zh-hk / zh-mo -> zh-hant-{region} -> zh-hant -> 原始语言标签 -> zh
-        // - zh-hans-* -> 原始语言标签 -> zh-hans -> zh
-        // - zh-hant-* -> 原始语言标签 -> zh-hant -> zh
-        // - zh -> zh-hans -> zh
-        // 这样站长通常只配置 zh-hans 和 zh-hant，也可以匹配常见中文区域语言标签。 */-->
+        // - zh-hans-* -> 原始语言标签 -> zh-hans -> zh-{region} -> zh
+        // - zh-hant-* -> 原始语言标签 -> zh-hant -> zh-{region} -> zh
+        // - zh-hans -> zh-hans -> zh-cn -> zh
+        // - zh-hant -> zh-hant -> zh-tw -> zh
+        // - zh -> zh */-->
         function getLanguageMatchCandidates(language) {
           const normalizedLanguage = language?.trim().replaceAll("_", "-").toLowerCase();
           if (!normalizedLanguage) {
@@ -579,18 +580,19 @@
 
           const chineseLocale = languageParts[1];
           if (!chineseLocale) {
-            // <!--/* 未指定区域或脚本时，默认按简体中文候选处理。 */-->
-            return ["zh-hans", "zh"];
+            return ["zh"];
           }
           if (chineseLocale === "hans") {
-            // <!--/* 已经显式指定简体脚本，保留原始标签后回退到通用简体与 zh。 */-->
-            return uniqueLanguages([normalizedLanguage, "zh-hans", "zh"]);
+            // <!--/* 已经显式指定简体脚本，保留原始标签后回退到通用简体、默认简体区域与 zh。 */-->
+            const region = languageParts[2];
+            return uniqueLanguages([normalizedLanguage, "zh-hans", region ? `zh-${region}` : "zh-cn", "zh"]);
           }
           if (chineseLocale === "hant") {
-            // <!--/* 已经显式指定繁体脚本，保留原始标签后回退到通用繁体与 zh。 */-->
-            return uniqueLanguages([normalizedLanguage, "zh-hant", "zh"]);
+            // <!--/* 已经显式指定繁体脚本，保留原始标签后回退到通用繁体、默认繁体区域与 zh。 */-->
+            const region = languageParts[2];
+            return uniqueLanguages([normalizedLanguage, "zh-hant", region ? `zh-${region}` : "zh-tw", "zh"]);
           }
-          if (["cn", "sg", "my"].includes(chineseLocale)) {
+          if (["cn", "sg"].includes(chineseLocale)) {
             // <!--/* 简体中文常见区域，优先尝试脚本 + 区域，再回退到脚本、原始区域标签和 zh。 */-->
             return uniqueLanguages([`zh-hans-${chineseLocale}`, "zh-hans", normalizedLanguage, "zh"]);
           }
