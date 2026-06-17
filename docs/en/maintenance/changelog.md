@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 📄 Documentation
 
-- Corrected the language matching basis in the multilingual tutorial and added Cookie language synchronization notes.
+- Corrected the language matching basis, default-item matching rules, and Cookie language synchronization notes in the multilingual tutorial and configuration forms.
 
 ## [1.70.1] - 2026-06-16
 
