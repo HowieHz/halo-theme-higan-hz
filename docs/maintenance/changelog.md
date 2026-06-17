@@ -23,6 +23,10 @@
 
 ## [Unreleased]
 
+### 💥 破坏性变更
+
+- 将全局配置项 `default_page_language` 重命名为 `default_content_language`，旧配置值不再兼容；升级后请重新设置“全局 -> 默认内容语言”。
+
 ### 🐛 错误修复
 
 - 修复多语言页面底部/侧边栏内容未按页面 `<html>` 语言匹配的问题。

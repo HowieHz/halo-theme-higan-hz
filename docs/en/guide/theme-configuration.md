@@ -179,21 +179,21 @@ Supplementary information.
 
 ## Global
 
-### Default Page Language
+### Default Content Language
 
 ::: info 🎯 Purpose
 
-Specify the site root tag `<html>` `lang` attribute default value, used to assist accessibility, SEO, and browser/plugin language detection (e.g., whether the browser prompts for page translation).
+Specify the site's default content language and use it as the site root tag `<html>` `lang` attribute default value, used to assist accessibility, SEO, and browser/plugin language detection (e.g., whether the browser prompts for page translation).
 
 :::
 ::: info 📂 Configuration Item Location
 
-Global -> Default Page Language
+Global -> Default Content Language
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Default%20Page%20Language" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Default%20Content%20Language" />
 
 :::
 ::: info 🏷️ Type
@@ -218,7 +218,7 @@ The set value must comply with [BCP 47](https://developer.mozilla.org/en-US/docs
 :::
 ::: info 🧩 Template Variable
 
-`theme.config?.global?.default_page_language`
+`theme.config?.global?.default_content_language`
 
 :::
 ::: info ℹ️ Additional Information
@@ -338,7 +338,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-After enabling this option, if the browser language differs from the Default Page Language and the browser language exists in the [Allowed Target Language Code List for Redirects](#allowed-target-language-code-list-for-redirects), it will automatically redirect to the corresponding page.
+After enabling this option, if the browser language differs from the Default Content Language and the browser language exists in the [Allowed Target Language Code List for Redirects](#allowed-target-language-code-list-for-redirects), it will automatically redirect to the corresponding page.
 
 After enabling, please refer to the [Auto-redirect Based on Browser Language Guide](/tutorial/i18n#auto-redirect-based-on-browser-language-guide) for configuration.
 
@@ -418,7 +418,7 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-After enabling [Auto-redirect Based on Browser Language](#Auto-redirect Based on Browser Language), if the browser language is different from the Default Page Language and the browser language exists in this option, it will automatically redirect to the corresponding page.
+After enabling [Auto-redirect Based on Browser Language](#Auto-redirect Based on Browser Language), if the browser language is different from the Default Content Language and the browser language exists in this option, it will automatically redirect to the corresponding page.
 
 Please refer to the [Auto-redirect Based on Browser Language Usage Guide](/tutorial/i18n#auto-redirect-based-on-browser-language-usage-guide) for configuration.
 

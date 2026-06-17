@@ -124,7 +124,7 @@
   <!--/* 隐藏的默认语言菜单项，在未成功匹配时显示 start */-->
   <th:block th:if="${theme.config?.global?.is_i18n_menu_show}">
     <th:block th:each="menuItem : ${menuItems}">
-      <th:block th:if="${#strings.equals(menuItem.status.displayName, theme.config?.global?.default_page_language)}">
+      <th:block th:if="${#strings.equals(menuItem.status.displayName, theme.config?.global?.default_content_language)}">
         <th:block th:each="menuItemChildren : ${menuItem.children}">
           <li
             style="display: none"

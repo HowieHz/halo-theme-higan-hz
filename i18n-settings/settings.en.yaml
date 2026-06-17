@@ -8,11 +8,11 @@ spec:
       label: Global
       formSchema:
         - $formkit: text
-          name: default_page_language
-          key: default_page_language
-          label: Default page language
+          name: default_content_language
+          key: default_content_language
+          label: Default content language
           value: "zh-CN"
-          help: "Default page language, e.g., zh-CN or en. If this field is left empty, zh-CN will be used by default. To switch languages, add ?language=language_code to the end of the URL, for example: https://example.com/?language=en"
+          help: "Default content language, e.g., zh-CN or en. If this field is left empty, zh-CN will be used by default. To switch languages, add ?language=language_code to the end of the URL, for example: https://example.com/?language=en"
         - $formkit: switch
           name: is_i18n_prefix_match_mode
           key: is_i18n_prefix_match_mode
@@ -30,7 +30,7 @@ spec:
           key: is_auto_redirect_to_browser_language
           label: Auto redirect to browser language
           value: false
-          help: "If enabled, when the browser language is different from the default page language and a corresponding language page exists, it will automatically redirect to the corresponding language page."
+          help: "If enabled, when the browser language is different from the default content language and a corresponding language page exists, it will automatically redirect to the corresponding language page."
         - $formkit: array
           name: auto_redirect_target_language_list
           key: auto_redirect_target_language_list

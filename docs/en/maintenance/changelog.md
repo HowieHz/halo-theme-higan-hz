@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 💥 Breaking Changes
+
+- Renamed the global configuration key from `default_page_language` to `default_content_language`; the old value is no longer compatible. After upgrading, set `Global -> Default Content Language` again.
+
 ### 🐛 Bug Fixes
 
 - Fixed multilingual page bottom/sidebar content not matching against the page `<html>` language.

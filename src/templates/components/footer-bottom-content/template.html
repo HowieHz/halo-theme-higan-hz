@@ -56,7 +56,7 @@
 
     <!--/* i18n 页面底部内容 全等匹配模式 匹配默认页面底部内容 */-->
     <th:block th:each="footerContentItem : ${footerContentItems}">
-      <th:block th:if="${#strings.equals(footerContentItem.lang, theme.config?.global?.default_page_language)}">
+      <th:block th:if="${#strings.equals(footerContentItem.lang, theme.config?.global?.default_content_language)}">
         <div
           th:class="${footerBottomClass}"
           th:classappend="${footerBottomClassAppend + ' default-footer-content'}"

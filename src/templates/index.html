@@ -106,7 +106,7 @@
 
         <!--/* i18n 公告栏 全等匹配模式 匹配默认公告栏 */-->
         <th:block th:each="resumeItem : ${resumeItems}">
-          <th:block th:if="${#strings.equals(resumeItem.lang, theme.config?.global?.default_page_language)}">
+          <th:block th:if="${#strings.equals(resumeItem.lang, theme.config?.global?.default_content_language)}">
             <p
               class="blog-description default-resume"
               style="display: none"

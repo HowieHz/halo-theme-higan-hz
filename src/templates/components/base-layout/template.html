@@ -9,7 +9,7 @@
            custom_theme_auto_id = ${theme.config?.styles?.custom_theme_auto_id},
            custom_theme_light_id = ${theme.config?.styles?.custom_theme_light_id},
            custom_theme_dark_id = ${theme.config?.styles?.custom_theme_dark_id},
-           page_language=${'' + param.language != '' ? '' + param.language : (language ?: (theme.config?.global?.default_page_language ?: 'zh-CN'))},
+           page_language=${'' + param.language != '' ? '' + param.language : (language ?: (theme.config?.global?.default_content_language ?: 'zh-CN'))},
            siteUrl = ${#strings.substring(site.url, #strings.length(site.url) - 1) == '/'
                        ? #strings.substring(site.url, 0, #strings.length(site.url) - 1)
                        : site.url},
@@ -439,7 +439,7 @@
                requested_language_param=${'' + param.language},
                is_sync_language_cookie_to_content_language=${theme.config?.global?.is_sync_language_cookie_to_content_language != false},
                is_auto_redirect_to_browser_language=${theme.config?.global?.is_auto_redirect_to_browser_language},
-               default_page_language=${theme.config?.global?.default_page_language},
+               default_content_language=${theme.config?.global?.default_content_language},
                auto_redirect_target_languages=${#lists.isEmpty(theme.config?.global?.auto_redirect_target_language_list)
                                                 ? null
                                                 : #strings.listJoin(theme.config?.global?.auto_redirect_target_language_list.![v], ',')},
@@ -448,7 +448,7 @@
       th:data-requested-language-param="${requested_language_param}"
       th:data-sync-language-cookie-to-content-language="${is_sync_language_cookie_to_content_language}"
       th:data-auto-redirect-to-browser-language="${is_auto_redirect_to_browser_language}"
-      th:data-default-page-language="${default_page_language}"
+      th:data-default-content-language="${default_content_language}"
       th:data-auto-redirect-target-languages="${auto_redirect_target_languages}"
       th:data-prefix-match-mode="${is_prefix_match_mode}"
     >
@@ -645,13 +645,13 @@
         }
 
         // <!--/* 获取配置项默认语言 */-->
-        const defaultPageLanguageCandidates = getLanguageEquivalenceCandidates(dataset?.defaultPageLanguage || "zh-CN");
+        const defaultContentLanguageCandidates = getLanguageEquivalenceCandidates(dataset?.defaultContentLanguage || "zh-CN");
 
         // <!--/* 准备跳转到带有浏览器语言参数的当前页面
         // 如果默认语言已匹配 matchedLang 的候选语言，说明无 language 参数页面的语言（html 的 lang）就是目标语言，无需跳转 */-->
         if (
           getLanguageEquivalenceCandidates(matchedLang).some((candidate) =>
-            defaultPageLanguageCandidates.some((defaultCandidate) =>
+            defaultContentLanguageCandidates.some((defaultCandidate) =>
               prefixMode ? defaultCandidate.startsWith(candidate) : defaultCandidate === candidate,
             ),
           )
