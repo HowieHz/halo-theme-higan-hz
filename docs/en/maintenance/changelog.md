@@ -23,9 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fixed multilingual page bottom/sidebar content not matching against the page `<html>` language.
+
 ### 📄 Documentation
 
-- Corrected the language matching basis in the multilingual menu, page bottom/sidebar content, and announcement tutorials.
+- Corrected the language matching basis in the multilingual tutorial and added Cookie language synchronization notes.
 
 ## [1.70.1] - 2026-06-16
 

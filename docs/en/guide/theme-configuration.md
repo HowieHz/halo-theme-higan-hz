@@ -300,7 +300,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-When enabled, this can avoid fixed text provided by the theme using a different language from the content, but it may cause an extra browser refresh.
+For more information, see [Sync Cookie Language Based on Page Content Language](/en/tutorial/i18n#sync-cookie-language-based-on-page-content-language).
 
 :::
 
