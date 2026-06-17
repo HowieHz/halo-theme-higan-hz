@@ -77,7 +77,7 @@
         <th:block th:unless="${theme.config?.global?.is_i18n_prefix_match_mode}">
           <!--/* i18n 公告栏 全等匹配模式 */-->
           <th:block th:each="resumeItem : ${resumeItems}">
-            <th:block th:if="${#strings.equals(resumeItem.lang, page_language)}">
+            <th:block th:if="${#strings.equalsIgnoreCase(resumeItem.lang, page_language)}">
               <p
                 class="blog-description matched-resume"
                 th:with="defaultResume = ${#strings.defaultString(site?.seo?.description, '')}"
@@ -93,7 +93,7 @@
             <th:block
               th:if="${page_language != null
                        and resumeItem.lang != null
-                       and #strings.startsWith(page_language, resumeItem.lang)}"
+                       and #strings.startsWith(page_language.toLowerCase(), resumeItem.lang.toLowerCase())}"
             >
               <p
                 class="blog-description matched-resume"
@@ -106,7 +106,7 @@
 
         <!--/* i18n 公告栏 全等匹配模式 匹配默认公告栏 */-->
         <th:block th:each="resumeItem : ${resumeItems}">
-          <th:block th:if="${#strings.equals(resumeItem.lang, theme.config?.global?.default_content_language)}">
+          <th:block th:if="${#strings.equalsIgnoreCase(resumeItem.lang, theme.config?.global?.default_content_language)}">
             <p
               class="blog-description default-resume"
               style="display: none"

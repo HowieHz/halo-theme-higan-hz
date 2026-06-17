@@ -470,9 +470,21 @@
         // */-->
 
         // <!--/* 读取 Halo CMS 使用的 language cookie 原始值。
-        // 返回值保持 cookie 中的编码形态，调用方会用 encodeURIComponent(language) 后的值来比较。 */-->
+        // 返回值保持 cookie 中的编码形态，调用方会按语言标签规则标准化后比较。 */-->
         function getLanguageCookie() {
           return document.cookie.match(/(?:^|;\s*)language=([^;]*)/)?.[1];
+        }
+
+        function decodeCookieValue(value) {
+          try {
+            return decodeURIComponent(value);
+          } catch {
+            return value;
+          }
+        }
+
+        function normalizeLanguageForComparison(language) {
+          return language?.trim().replaceAll("_", "-").toLowerCase();
         }
 
         // <!--/* 将 language cookie 同步到当前页面实际内容语言，并在同步成功后刷新一次页面。
@@ -488,7 +500,12 @@
           }
 
           const nextLanguageCookie = encodeURIComponent(language);
-          if (getLanguageCookie() === nextLanguageCookie) {
+          const currentLanguageCookie = getLanguageCookie();
+          if (
+            currentLanguageCookie
+            && normalizeLanguageForComparison(decodeCookieValue(currentLanguageCookie))
+              === normalizeLanguageForComparison(language)
+          ) {
             return;
           }
 
