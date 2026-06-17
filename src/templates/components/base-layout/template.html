@@ -500,6 +500,54 @@
           }
         }
 
+        // <!--/* 如果浏览器已有 language 查询参数，则不跳转
+        // param.language 是一个列表，例 []、['zh']、['zh,en']
+        // language=zh -> ''+param.language 为 'zh'
+        // language=zh,en -> ''+param.language 为 'zh,en'
+        // 用 (new URL(window.location.href)).searchParams.get("language") 也差不多
+        // 但我选择尽量预渲染，所以 ${'' + param.language}
+        //
+        // 因为用 language 参数，Halo CMS 检测到不一致会自动修改 cookie，
+        // 自动返回指定语言内容，所以无需手动修改/刷新页面 */-->
+        const requestedLanguageParam = dataset?.requestedLanguageParam;
+        if (requestedLanguageParam) {
+          return;
+        }
+
+        // <!--/* 后面是无 language 参数的时执行 */-->
+
+        // <!--/* 如果 ${language} 已经传入，也就是已经指定了页面语言，则同步语言 cookie 后不跳转
+        // 这个 ${language} 是文章元数据/分类详情页元数据/标签详情页元数据的 language */-->
+        const pageLanguageOverride = dataset?.pageLanguageOverride;
+        if (pageLanguageOverride) {
+          // <!--/* 同步语言 cookie */-->
+          syncLanguageCookieAndReload(pageLanguageOverride);
+          return;
+        }
+
+        if (dataset?.autoRedirectToBrowserLanguage !== "true") {
+          // <!--/* 这里不跳转，但需要同步一次语言 cookie
+          // 例：我先访问了 example.com?language=en 的页面，设置了 cookie 为 en，
+          //     然后访问 example.com 时，需要将 cookie 恢复为页面的 lang=zh-CN
+          //     否则页面会大部分内容中文，小部分内容受 cookie 影响显示为 en */-->
+          syncLanguageCookieAndReload(document.documentElement.lang);
+          return;
+        }
+
+        // <!--/* 后面是启用了自动重定向时执行 */-->
+
+        const autoRedirectTargetLanguages = dataset?.autoRedirectTargetLanguages
+          ?.split(",")
+          .map((language) => language.trim().replaceAll("_", "-"))
+          .filter(Boolean);
+        if (!autoRedirectTargetLanguages?.length) {
+          // <!--/* 这里不跳转，但需要同步一次语言 cookie */-->
+          syncLanguageCookieAndReload(document.documentElement.lang);
+          return;
+        }
+
+        const prefixMode = dataset?.prefixMatchMode === "true";
+        
         // <!--/* 去掉候选语言列表里的空值和重复项，同时保留原始顺序。
         // 中文候选路径里可能会出现重复项，例如 zh-CN 会生成 zh-hans-cn、zh-hans、zh-cn、zh，
         // 而 zh-Hans-CN 会生成 zh-hans-cn、zh-hans、zh；保序去重可以让匹配优先级稳定。 */-->
@@ -553,54 +601,6 @@
 
           return uniqueLanguages([normalizedLanguage, "zh"]);
         }
-
-        // <!--/* 如果浏览器已有 language 查询参数，则不跳转
-        // param.language 是一个列表，例 []、['zh']、['zh,en']
-        // language=zh -> ''+param.language 为 'zh'
-        // language=zh,en -> ''+param.language 为 'zh,en'
-        // 用 (new URL(window.location.href)).searchParams.get("language") 也差不多
-        // 但我选择尽量预渲染，所以 ${'' + param.language}
-        //
-        // 因为用 language 参数，Halo CMS 检测到不一致会自动修改 cookie，
-        // 自动返回指定语言内容，所以无需手动修改/刷新页面 */-->
-        const requestedLanguageParam = dataset?.requestedLanguageParam;
-        if (requestedLanguageParam) {
-          return;
-        }
-
-        // <!--/* 后面是无 language 参数的时执行 */-->
-
-        // <!--/* 如果 ${language} 已经传入，也就是已经指定了页面语言，则同步语言 cookie 后不跳转
-        // 这个 ${language} 是文章元数据/分类详情页元数据/标签详情页元数据的 language */-->
-        const pageLanguageOverride = dataset?.pageLanguageOverride;
-        if (pageLanguageOverride) {
-          // <!--/* 同步语言 cookie */-->
-          syncLanguageCookieAndReload(pageLanguageOverride);
-          return;
-        }
-
-        if (dataset?.autoRedirectToBrowserLanguage !== "true") {
-          // <!--/* 这里不跳转，但需要同步一次语言 cookie
-          // 例：我先访问了 example.com?language=en 的页面，设置了 cookie 为 en，
-          //     然后访问 example.com 时，需要将 cookie 恢复为页面的 lang=zh-CN
-          //     否则页面会大部分内容中文，小部分内容受 cookie 影响显示为 en */-->
-          syncLanguageCookieAndReload(document.documentElement.lang);
-          return;
-        }
-
-        // <!--/* 后面是启用了自动重定向时执行 */-->
-
-        const autoRedirectTargetLanguages = dataset?.autoRedirectTargetLanguages
-          ?.split(",")
-          .map((language) => language.trim().replaceAll("_", "-"))
-          .filter(Boolean);
-        if (!autoRedirectTargetLanguages?.length) {
-          // <!--/* 这里不跳转，但需要同步一次语言 cookie */-->
-          syncLanguageCookieAndReload(document.documentElement.lang);
-          return;
-        }
-
-        const prefixMode = dataset?.prefixMatchMode === "true";
 
         // <!--/* 获取浏览器语言候选列表 */-->
         const browserLanguageCandidates = getLanguageMatchCandidates(navigator.language);
