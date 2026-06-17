@@ -37,7 +37,7 @@ spec:
           if: "$is_auto_redirect_to_browser_language === true"
           label: 允许跳转的目标区域语言代码列表
           value: []
-          help: "放在前面的会被优先匹配"
+          help: "未启用多语言功能前缀匹配模式时，按浏览器语言候选路径顺序匹配；启用后，放在前面的会被优先匹配。"
           itemLabels:
             - type: text
               label: $value.v

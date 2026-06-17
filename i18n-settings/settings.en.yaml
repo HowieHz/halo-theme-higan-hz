@@ -37,7 +37,7 @@ spec:
           if: "$is_auto_redirect_to_browser_language === true"
           label: Allowed target region language code list for redirect
           value: []
-          help: "The ones in front will be matched first"
+          help: "When multilingual prefix match mode is disabled, matching follows the browser language candidate path order. When enabled, earlier items are matched first."
           itemLabels:
             - type: text
               label: $value.v

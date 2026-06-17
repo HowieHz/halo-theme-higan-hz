@@ -422,7 +422,7 @@ After enabling [Auto-redirect Based on Browser Language](#auto-redirect-based-on
 
 Please refer to the [Browser Language-Based Auto Redirect Guide](/en/tutorial/i18n#browser-language-based-auto-redirect-guide) for configuration.
 
-Matching order is from top to bottom.
+When [Multilingual Function Prefix Matching Mode](#multilingual-function-prefix-matching-mode) is disabled, matching follows the browser language candidate path order. When enabled, matching follows this list from top to bottom.
 
 :::
 
