@@ -8,11 +8,11 @@ spec:
       label: 全局
       formSchema:
         - $formkit: text
-          name: default_page_language
-          key: default_page_language
-          label: 默认页面语言
+          name: default_content_language
+          key: default_content_language
+          label: 默认内容语言
           value: "zh-CN"
-          help: "默认页面语言，例如：zh-CN、en。若此项为空，则默认为 zh-CN。切换语言的方法是在 URL 后添加 ?language=语言代码，例如：https://example.com/?language=en"
+          help: "默认内容语言，例如：zh-CN、en。若此项为空，则默认为 zh-CN。切换语言的方法是在 URL 后添加 ?language=语言代码，例如：https://example.com/?language=en"
         - $formkit: switch
           name: is_i18n_prefix_match_mode
           key: is_i18n_prefix_match_mode
@@ -30,14 +30,14 @@ spec:
           key: is_auto_redirect_to_browser_language
           label: 浏览器按语言自动跳转
           value: false
-          help: "如启用此项，若当前浏览器语言与默认页面语言不同，且存在对应语言的页面，将自动跳转到对应语言页面。"
+          help: "如启用此项，若当前浏览器语言与默认内容语言不同，且存在对应语言的页面，将自动跳转到对应语言页面。"
         - $formkit: array
           name: auto_redirect_target_language_list
           key: auto_redirect_target_language_list
           if: "$is_auto_redirect_to_browser_language === true"
           label: 允许跳转的目标区域语言代码列表
           value: []
-          help: "放在前面的会被优先匹配"
+          help: "未启用多语言功能前缀匹配模式时，按浏览器语言候选路径顺序匹配；启用后，放在前面的会被优先匹配。"
           itemLabels:
             - type: text
               label: $value.v

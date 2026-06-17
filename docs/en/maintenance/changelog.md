@@ -23,6 +23,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 💥 Breaking Changes
+
+- Renamed the global configuration key from `default_page_language` to `default_content_language`; the old value is no longer compatible. After upgrading, set `Global -> Default Content Language` again.
+
+### 🐛 Bug Fixes
+
+- Fixed multilingual page bottom/sidebar content not matching against the page `<html>` language.
+- Aligned Chinese candidate generation for browser language auto redirect with Halo CMS backend language resource lookup behavior.
+
+### 📄 Documentation
+
+- Corrected the language matching basis, default-item matching rules, and Cookie language synchronization notes in the multilingual tutorial and configuration forms.
+
 ## [1.70.1] - 2026-06-16
 
 ### 🐛 Bug Fixes

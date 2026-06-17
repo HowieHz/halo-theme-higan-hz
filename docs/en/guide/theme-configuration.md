@@ -179,21 +179,21 @@ Supplementary information.
 
 ## Global
 
-### Default Page Language
+### Default Content Language
 
 ::: info 🎯 Purpose
 
-Specify the site root tag `<html>` `lang` attribute default value, used to assist accessibility, SEO, and browser/plugin language detection (e.g., whether the browser prompts for page translation).
+Specify the site's default content language and use it as the site root tag `<html>` `lang` attribute default value, used to assist accessibility, SEO, and browser/plugin language detection (e.g., whether the browser prompts for page translation).
 
 :::
 ::: info 📂 Configuration Item Location
 
-Global -> Default Page Language
+Global -> Default Content Language
 
 :::
 ::: info ⚡ Quick Jump
 
-<QuickJumpConfig to="/console/theme/settings/global#:~:text=Default%20Page%20Language" />
+<QuickJumpConfig to="/console/theme/settings/global#:~:text=Default%20Content%20Language" />
 
 :::
 ::: info 🏷️ Type
@@ -218,13 +218,13 @@ The set value must comply with [BCP 47](https://developer.mozilla.org/en-US/docs
 :::
 ::: info 🧩 Template Variable
 
-`theme.config?.global?.default_page_language`
+`theme.config?.global?.default_content_language`
 
 :::
 ::: info ℹ️ Additional Information
 
 - Security: The set language value will be automatically escaped, no need to worry about XSS injection attacks.
-- Setting priority: Please refer to [page language setting priority](/reference/faq#page-language-setting-priority).
+- Setting priority: Please refer to [page language setting priority](/en/reference/faq#page-language-setting-priority).
 
 :::
 
@@ -262,7 +262,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-For specific usage methods, please refer to [Prefix Matching Mode Description](/tutorial/i18n.md#prefix-matching-mode-description).
+For specific usage methods, please refer to the [Internationalization Support tutorial](/en/tutorial/i18n).
 
 :::
 
@@ -300,7 +300,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-When enabled, this can avoid fixed text provided by the theme using a different language from the content, but it may cause an extra browser refresh.
+For more information, see [Sync Cookie Language Based on Page Content Language](/en/tutorial/i18n#sync-cookie-language-based-on-page-content-language).
 
 :::
 
@@ -338,13 +338,13 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-After enabling this option, if the browser language differs from the Default Page Language and the browser language exists in the [Allowed Target Language Code List for Redirects](#allowed-target-language-code-list-for-redirects), it will automatically redirect to the corresponding page.
+After enabling this option, if the browser language differs from the Default Content Language and the browser language exists in the [Allowed Target Language Code List for Redirects](#allowed-target-language-code-list-for-redirects), it will automatically redirect to the corresponding page.
 
-After enabling, please refer to the [Auto-redirect Based on Browser Language Guide](/tutorial/i18n#auto-redirect-based-on-browser-language-guide) for configuration.
+After enabling, please refer to the [Browser Language-Based Auto Redirect Guide](/en/tutorial/i18n#browser-language-based-auto-redirect-guide) for configuration.
 
 When enabled, you can configure:
 
-- [Allowed Target Language Code List for Redirects](#Allowed Target Language Code List for Redirects)
+- [Allowed Target Language Code List for Redirects](#allowed-target-language-code-list-for-redirects)
 
 :::
 
@@ -357,7 +357,7 @@ Set allowed auto-redirect target languages.
 :::
 ::: info 📂 Configuration Item Location
 
-([Global -> Auto-redirect Based on Browser Language](#Auto-redirect Based on Browser Language) When enabled, will display)
+([Global -> Auto-redirect Based on Browser Language](#auto-redirect-based-on-browser-language) When enabled, will display)
 
 Global -> Allowed Target Language Code List for Redirects
 
@@ -418,11 +418,11 @@ Empty
 :::
 ::: info ℹ️ Additional Information
 
-After enabling [Auto-redirect Based on Browser Language](#Auto-redirect Based on Browser Language), if the browser language is different from the Default Page Language and the browser language exists in this option, it will automatically redirect to the corresponding page.
+After enabling [Auto-redirect Based on Browser Language](#auto-redirect-based-on-browser-language), if the browser language is different from the Default Content Language and the browser language exists in this option, it will automatically redirect to the corresponding page.
 
-Please refer to the [Auto-redirect Based on Browser Language Usage Guide](/tutorial/i18n#auto-redirect-based-on-browser-language-usage-guide) for configuration.
+Please refer to the [Browser Language-Based Auto Redirect Guide](/en/tutorial/i18n#browser-language-based-auto-redirect-guide) for configuration.
 
-Matching order is from top to bottom.
+When [Multilingual Function Prefix Matching Mode](#multilingual-function-prefix-matching-mode) is disabled, matching follows the browser language candidate path order. When enabled, matching follows this list from top to bottom.
 
 :::
 
@@ -460,7 +460,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-After enabling, please refer to the [Multilingual Menu Usage Guide](/tutorial/i18n#multi-language-menu-usage-guide) for configuration.
+After enabling, please refer to the [Multilingual Menu Usage Guide](/en/tutorial/i18n#multilingual-menu-usage-guide) for configuration.
 
 :::
 
@@ -3573,7 +3573,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-After enabling, please refer to the [Multilingual Personal Profile/Announcement Usage Guide](/tutorial/i18n#multilingual-personal-profile-announcement-usage-guide) for configuration
+After enabling, please refer to the [Multilingual Bio/Announcement Usage Guide](/en/tutorial/i18n#multilingual-bio-announcement-usage-guide) for configuration
 
 :::
 
