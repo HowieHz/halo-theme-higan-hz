@@ -256,7 +256,7 @@ const QuickJumpConfig = (props) => {
 :::
 ::: info ℹ️ 补充信息
 
-具体使用方法请参考[前缀匹配模式说明](/tutorial/i18n.md#前缀匹配模式说明)。
+具体使用方法请参考[多语言支持教程](/tutorial/i18n)。
 
 :::
 
