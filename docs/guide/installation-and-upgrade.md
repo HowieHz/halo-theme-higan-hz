@@ -33,7 +33,7 @@ outline: deep
 
 当[Halo 应用市场](https://www.halo.run/store/apps)更新发布新版本时，在 Halo CMS 后台 `/console/theme` 路径下会出现升级按钮，点击升级即可。
 
-::: warning
+::: warning 警告
 
 由于 Halo 应用市场限制，默认更新为第一构建产物，如果您使用的主题包并非 `howiehz-higan-zh-hans.zip`（即简体中文配置文件版本），请前往[市场](https://www.halo.run/store/apps/app-homxf/releases)选择所需版本手动安装。
 

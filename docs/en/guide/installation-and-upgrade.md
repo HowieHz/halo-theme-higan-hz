@@ -41,7 +41,7 @@ You can also obtain the theme package from the GitHub releases page:
 
 When a new version is released on the [Halo App Market](https://www.halo.run/store/apps), an upgrade button will appear in the Halo CMS backend at `/console/theme`. Click the upgrade button to complete the update.
 
-::: warning
+::: warning Warning
 
 Due to Halo App Market limitations, the default update is the first build artifact. If the theme package you are using is not `howiehz-higan-zh-hans.zip` (i.e., the Simplified Chinese configuration file version), please go to the [market](https://www.halo.run/store/apps/app-homxf/releases) to manually select and install the desired version.
 
