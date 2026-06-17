@@ -645,7 +645,9 @@
         }
 
         // <!--/* 获取配置项默认语言 */-->
-        const defaultContentLanguageCandidates = getLanguageEquivalenceCandidates(dataset?.defaultContentLanguage || "zh-CN");
+        const defaultContentLanguageCandidates = getLanguageEquivalenceCandidates(
+          dataset?.defaultContentLanguage || "zh-CN",
+        );
 
         // <!--/* 准备跳转到带有浏览器语言参数的当前页面
         // 如果默认语言已匹配 matchedLang 的候选语言，说明无 language 参数页面的语言（html 的 lang）就是目标语言，无需跳转 */-->
