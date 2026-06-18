@@ -4,9 +4,52 @@ import { dirname, resolve } from "node:path";
 import { styleText } from "node:util";
 
 // import minifyHtml from "@minify-html/node";
+import { minifySync, type MinifyOptions } from "oxc-minify";
 import type { Plugin } from "vite";
 
 const LOG_PREFIX = styleText("cyan", "[thymeleaf-minify]");
+const HTML_ATTRIBUTE_REGEX = /([^\s"'=<>`/]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/gmu;
+const JAVASCRIPT_MIME_TYPES = new Set([
+  "",
+  "application/ecmascript",
+  "application/javascript",
+  "application/x-ecmascript",
+  "application/x-javascript",
+  "text/ecmascript",
+  "text/javascript",
+  "text/javascript1.0",
+  "text/javascript1.1",
+  "text/javascript1.2",
+  "text/javascript1.3",
+  "text/javascript1.4",
+  "text/javascript1.5",
+  "text/jscript",
+  "text/livescript",
+  "text/x-ecmascript",
+  "text/x-javascript",
+]);
+const INLINE_CLASSIC_SCRIPT_MINIFY_OPTIONS = {
+  module: false,
+  compress: {
+    target: "esnext",
+  },
+  mangle: {
+    toplevel: false,
+  },
+  codegen: {
+    removeWhitespace: true,
+    legalComments: "none",
+  },
+  sourcemap: false,
+} satisfies MinifyOptions;
+const THYMELEAF_COMMENT_WRAPPED_SCRIPT_MARKERS = [
+  "/*[[", // 注释包裹的转义内联输出表达式：/*[[...]]*/
+  "/*[(", // 注释包裹的非转义内联输出表达式：/*[(...)]*/
+  "/*[#", // 注释包裹的文本模板元素：/*[# ...]*/
+  "/*[/", // 注释包裹的文本模板闭合元素：/*[/]*/ 或 /*[/name]*/
+  "/*[+", // Thymeleaf 会解除注释的文本原型专用注释块。
+  "/*[-", // Thymeleaf 会移除的文本解析级注释块。
+];
 
 /** Plugin options interface */
 interface ThymeleafMinifyOptions {
@@ -134,6 +177,11 @@ export default function thymeleafMinify(options: ThymeleafMinifyOptions = {}): P
             removedScripts.get(scriptSrc)?.add(ctx.path);
           }
         }
+
+        // Minify executable classic inline scripts after all Thymeleaf-specific
+        // cleanup. Module scripts are handled by Vite; JSON/importmap-like
+        // script data and Thymeleaf inline expressions must stay untouched.
+        html = minifyClassicInlineScripts(html, ctx.path);
 
         // const minifySensitiveMarkers = getMinifySensitiveThymeleafMarkers(html);
 
@@ -414,4 +462,195 @@ function removeNestedThymeleafComments(html: string): string {
 
 function removeInlineEslintDisableNextLineComments(html: string): string {
   return html.replace(/\/\*\s*eslint-disable-next-line\b[\s\S]*?\*\//g, "");
+}
+
+interface InlineScriptTagMatch {
+  attributesText: string;
+  closeTagEndIndex: number;
+  contentText: string;
+  endIndex: number;
+  openTagEndIndex: number;
+}
+
+function minifyClassicInlineScripts(html: string, htmlPath: string): string {
+  let minifiedHtml = "";
+  let currentIndex = 0;
+  let inlineScriptIndex = 0;
+
+  while (true) {
+    const inlineScriptMatch = findNextInlineScriptTag(html, currentIndex);
+
+    if (inlineScriptMatch === null) {
+      return minifiedHtml + html.slice(currentIndex);
+    }
+
+    minifiedHtml += html.slice(currentIndex, inlineScriptMatch.openTagEndIndex + 1);
+    const minifiedScript = minifyClassicInlineScript(
+      inlineScriptMatch.contentText,
+      inlineScriptMatch.attributesText,
+      `${htmlPath}#inline-script-${inlineScriptIndex}.js`,
+    );
+
+    minifiedHtml += minifiedScript ?? inlineScriptMatch.contentText;
+    minifiedHtml += html.slice(
+      inlineScriptMatch.closeTagEndIndex - "</script>".length,
+      inlineScriptMatch.closeTagEndIndex,
+    );
+
+    currentIndex = inlineScriptMatch.endIndex;
+    inlineScriptIndex++;
+  }
+}
+
+function minifyClassicInlineScript(scriptText: string, attributesText: string, filename: string): string | null {
+  if (!isMinifiableClassicInlineScript(attributesText, scriptText)) {
+    return null;
+  }
+
+  const leadingWhitespace = scriptText.match(/^\s*/u)?.[0] ?? "";
+  const trailingWhitespace = scriptText.match(/\s*$/u)?.[0] ?? "";
+  const scriptSource = scriptText.trim();
+
+  try {
+    const result = minifySync(filename, scriptSource, INLINE_CLASSIC_SCRIPT_MINIFY_OPTIONS);
+
+    if (result.errors.length > 0) {
+      console.warn(
+        `${LOG_PREFIX} ${styleText("yellow", "skip")} inline script minify failed: ${filename}: ${result.errors
+          .map((error) => error.message)
+          .join("; ")}`,
+      );
+      return null;
+    }
+
+    return `${leadingWhitespace}${result.code}${trailingWhitespace}`;
+  } catch (error) {
+    console.warn(`${LOG_PREFIX} ${styleText("yellow", "skip")} inline script minify failed: ${filename}: ${error}`);
+    return null;
+  }
+}
+
+function isMinifiableClassicInlineScript(attributesText: string, scriptText: string): boolean {
+  // 空脚本没有可压缩内容，直接跳过。
+  if (scriptText.trim() === "") {
+    return false;
+  }
+
+  const attributeNames = collectHtmlAttributeNames(attributesText);
+
+  // src/data-src 表示外部脚本或延迟加载脚本，不属于内联脚本压缩范围。
+  if (attributeNames.has("src") || attributeNames.has("data-src")) {
+    return false;
+  }
+
+  // th:inline="javascript" 会启用 JavaScript 模板模式，脚本整体都不能交给 Oxc 压缩。
+  if (hasThymeleafInlineJavaScript(attributesText, scriptText)) {
+    return false;
+  }
+
+  // type 为空时按 HTML 规范视为 classic JavaScript；只有 JS MIME 才继续压缩。
+  // module、JSON、importmap 等非 classic JavaScript 类型不会命中这个白名单。
+  const type = getHtmlAttributeValue(attributesText, "type")?.trim().toLowerCase() ?? "";
+  return JAVASCRIPT_MIME_TYPES.has(type);
+}
+
+function hasThymeleafInlineJavaScript(attributesText: string, scriptText: string): boolean {
+  // th:inline="javascript" 会让 Thymeleaf 按 JavaScript 模板模式处理脚本内容。
+  if (/\bth:inline\s*=\s*(?:"javascript"|'javascript'|javascript)\b/imu.test(attributesText)) {
+    return true;
+  }
+
+  // 没写 th:inline 时，裸的 [[...]]、[(...)] 可能只是普通 JS 字符串或数组形态，
+  // 直接匹配会误跳过；这里只拦截 Oxc 会当成普通 JS 注释删除的 Thymeleaf 标记。
+  return THYMELEAF_COMMENT_WRAPPED_SCRIPT_MARKERS.some((marker) => scriptText.includes(marker));
+}
+
+function collectHtmlAttributeNames(attributesText: string): Set<string> {
+  const attributeNames = new Set<string>();
+  for (const match of attributesText.matchAll(HTML_ATTRIBUTE_REGEX)) {
+    const [, attributeName = ""] = match;
+
+    if (attributeName !== "") {
+      attributeNames.add(attributeName.toLowerCase());
+    }
+  }
+
+  return attributeNames;
+}
+
+function getHtmlAttributeValue(attributesText: string, targetAttributeName: string): string | null {
+  for (const match of attributesText.matchAll(HTML_ATTRIBUTE_REGEX)) {
+    const [, attributeName = "", doubleQuotedValue, singleQuotedValue, unquotedValue] = match;
+
+    if (attributeName.toLowerCase() === targetAttributeName.toLowerCase()) {
+      return doubleQuotedValue ?? singleQuotedValue ?? unquotedValue ?? "";
+    }
+  }
+
+  return null;
+}
+
+function findNextInlineScriptTag(sourceText: string, fromIndex: number): InlineScriptTagMatch | null {
+  let searchIndex = fromIndex;
+
+  while (true) {
+    const openTagStartIndex = sourceText.toLowerCase().indexOf("<script", searchIndex);
+
+    if (openTagStartIndex === -1) {
+      return null;
+    }
+
+    const openTagNameEndIndex = openTagStartIndex + "<script".length;
+    const nextChar = sourceText[openTagNameEndIndex];
+    if (nextChar !== undefined && !/[\s>/]/u.test(nextChar)) {
+      searchIndex = openTagNameEndIndex;
+      continue;
+    }
+
+    const openTagEndIndex = findTagEnd(sourceText, openTagNameEndIndex);
+
+    if (openTagEndIndex === -1) {
+      return null;
+    }
+
+    const closeTagStartIndex = sourceText.toLowerCase().indexOf("</script>", openTagEndIndex + 1);
+
+    if (closeTagStartIndex === -1) {
+      return null;
+    }
+
+    return {
+      attributesText: sourceText.slice(openTagNameEndIndex, openTagEndIndex),
+      closeTagEndIndex: closeTagStartIndex + "</script>".length,
+      contentText: sourceText.slice(openTagEndIndex + 1, closeTagStartIndex),
+      endIndex: closeTagStartIndex + "</script>".length,
+      openTagEndIndex,
+    };
+  }
+}
+
+function findTagEnd(sourceText: string, startIndex: number): number {
+  let quote: string | null = null;
+
+  for (let index = startIndex; index < sourceText.length; index++) {
+    const currentChar = sourceText[index];
+
+    if (quote !== null) {
+      if (currentChar === quote) {
+        quote = null;
+      }
+      continue;
+    }
+
+    if (currentChar === "'" || currentChar === '"') {
+      quote = currentChar;
+      continue;
+    }
+
+    if (currentChar === ">") {
+      return index;
+    }
+  }
+
+  return -1;
 }
