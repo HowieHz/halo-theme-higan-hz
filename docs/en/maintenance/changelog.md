@@ -23,9 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### 🔧 Code Refactoring
+### 🧹 Miscellaneous Chores
 
-- Minified classic inline scripts in build output with Oxc while skipping module scripts, script data, and Thymeleaf inline expressions.
+- Used Oxc to minify classic inline scripts in build output while skipping module scripts, script data, and Thymeleaf JavaScript inline templates to optimize HTML document size.
 
 ## [1.71.0] - 2026-06-17
 
