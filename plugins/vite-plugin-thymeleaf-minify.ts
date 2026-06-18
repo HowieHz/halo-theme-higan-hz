@@ -42,6 +42,14 @@ const INLINE_CLASSIC_SCRIPT_MINIFY_OPTIONS = {
   },
   sourcemap: false,
 } satisfies MinifyOptions;
+const THYMELEAF_INLINE_SCRIPT_MARKERS = [
+  "[[", // 转义内联输出表达式：[[...]]
+  "[(", // 非转义内联输出表达式：[(...)]
+  "[#", // 文本模板元素：[# ...]，也覆盖注释包裹的 /*[# ...]*/
+  "[/", // 文本模板闭合元素：[/] 或 [/name]，也覆盖注释包裹的 /*[/]*/
+  "/*[+", // Thymeleaf 会解除注释的文本原型专用注释块。
+  "/*[-", // Thymeleaf 会移除的文本解析级注释块。
+];
 
 /** Plugin options interface */
 interface ThymeleafMinifyOptions {
@@ -523,29 +531,38 @@ function minifyClassicInlineScript(scriptText: string, attributesText: string, f
 }
 
 function isMinifiableClassicInlineScript(attributesText: string, scriptText: string): boolean {
+  // 空脚本没有可压缩内容，直接跳过。
   if (scriptText.trim() === "") {
     return false;
   }
 
   const attributeNames = collectHtmlAttributeNames(attributesText);
+
+  // src/data-src 表示外部脚本或延迟加载脚本，不属于内联脚本压缩范围。
   if (attributeNames.has("src") || attributeNames.has("data-src")) {
     return false;
   }
 
+  // Thymeleaf inline JavaScript 可能包含模板期动态表达式，不能交给 Oxc 压缩。
   if (hasThymeleafInlineJavaScript(attributesText, scriptText)) {
     return false;
   }
 
+  // type 为空时按 HTML 规范视为 classic JavaScript；只有 JS MIME 才继续压缩。
+  // module、JSON、importmap 等非 classic JavaScript 类型不会命中这个白名单。
   const type = getHtmlAttributeValue(attributesText, "type")?.trim().toLowerCase() ?? "";
   return JAVASCRIPT_MIME_TYPES.has(type);
 }
 
 function hasThymeleafInlineJavaScript(attributesText: string, scriptText: string): boolean {
+  // th:inline="javascript" 会让 Thymeleaf 在服务端改写脚本内容，压缩可能破坏模板语义。
   if (/\bth:inline\s*=\s*(?:"javascript"|'javascript'|javascript)\b/imu.test(attributesText)) {
     return true;
   }
 
-  return ["/*[[", "/*[(", "/*[#", "/*[/]", "[[", "[("].some((marker) => scriptText.includes(marker));
+  // 这些标记覆盖 Thymeleaf 文本模板语法；Oxc 可能把注释包裹的表达式或块标记
+  // 当成普通注释删除，导致 Thymeleaf 渲染前动态值或控制块丢失。
+  return THYMELEAF_INLINE_SCRIPT_MARKERS.some((marker) => scriptText.includes(marker));
 }
 
 function collectHtmlAttributeNames(attributesText: string): Set<string> {
