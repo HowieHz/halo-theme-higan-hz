@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🔧 Code Refactoring
+
+- Minified classic inline scripts in build output with Oxc while skipping module scripts, script data, and Thymeleaf inline expressions.
+
 ## [1.71.0] - 2026-06-17
 
 ### 💥 Breaking Changes
