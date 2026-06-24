@@ -25,8 +25,7 @@ function isMermaidConfig(value: unknown): value is MermaidConfig {
 }
 
 function getMermaidRuntimeConfig(): MermaidRuntimeConfig | null {
-  const configElement = document.querySelector<HTMLScriptElement>("#mermaid-config");
-  const configText = configElement?.textContent?.trim();
+  const configText = document.querySelector<HTMLScriptElement>("#mermaid-config")?.textContent?.trim();
 
   if (!configText) {
     return null;
@@ -70,9 +69,8 @@ function getMermaidRuntimeConfig(): MermaidRuntimeConfig | null {
 }
 
 function getFrontMatterEndIndex(rawContent: string): number | null {
-  const frontMatterMatch = rawContent.match(/^---[ \t]*(?:\r?\n)[\s\S]*?(?:\r?\n)---[ \t]*(?:\r?\n|$)/);
-
-  return frontMatterMatch ? frontMatterMatch[0].length : null;
+  // 返回开头 Mermaid frontmatter 结束后的下标；没有 frontmatter 时返回 null。
+  return rawContent.match(/^---[ \t]*(?:\r?\n)[\s\S]*?(?:\r?\n)---[ \t]*(?:\r?\n|$)/)?.[0].length ?? null;
 }
 
 function buildMermaidContent(rawContent: string, theme: MermaidRenderThemeMode): string {
@@ -230,11 +228,7 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
   if (trimmedExtraSourceElementSelector) {
     try {
       container.querySelectorAll<HTMLElement>(trimmedExtraSourceElementSelector).forEach((sourceElement) => {
-        const isDuplicate = jobs.some(
-          (job) => job.sourceElement === sourceElement || job.dataProcessedElement === sourceElement,
-        );
-
-        if (isDuplicate) {
+        if (jobs.some((job) => job.sourceElement === sourceElement || job.dataProcessedElement === sourceElement)) {
           return;
         }
 
@@ -262,10 +256,8 @@ async function renderMermaid(
   renderId: string,
   theme: MermaidRenderThemeMode,
 ): Promise<void> {
-  const content = buildMermaidContent(rawContent, theme);
-
   try {
-    const mermaidData: RenderResult = await mermaid.render(renderId, content);
+    const mermaidData: RenderResult = await mermaid.render(renderId, buildMermaidContent(rawContent, theme));
     const parentElement = sourceElement.parentElement;
     if (!parentElement) {
       return;
@@ -313,8 +305,7 @@ function initMermaid(): void {
       }
 
       job.themes.forEach((theme) => {
-        const renderId = `mermaid-${mermaidRenderId++}-${theme ?? "default"}`;
-        void renderMermaid(job.sourceElement, job.rawContent, renderId, theme);
+        void renderMermaid(job.sourceElement, job.rawContent, `mermaid-${mermaidRenderId++}`, theme);
       });
 
       // mermaid.render() 不会写入 data-processed；这里按上游链路的实际标记节点补写。
