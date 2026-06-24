@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
-import yaml from "js-yaml";
+import { load } from "js-yaml";
 
 import { assertKnownAssets, sortByDisplayOrder } from "./release-asset-order.js";
 
@@ -46,7 +46,7 @@ const readThemeManifest = (assetPath) => {
     encoding: "utf8",
   });
 
-  const manifest = yaml.load(yamlContent);
+  const manifest = load(yamlContent);
   const version = manifest?.spec?.version;
   const requires = manifest?.spec?.requires;
   const appId = manifest?.metadata?.annotations?.["store.halo.run/app-id"];
