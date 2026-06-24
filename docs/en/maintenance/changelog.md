@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🔧 Code Refactoring
+
+- Removed the Mermaid SVG ID collision compatibility rewrite and now rely on Mermaid 11.15.0's built-in unique IDs.
+
 ## [1.71.1] - 2026-06-19
 
 ### 🧹 Miscellaneous Chores
