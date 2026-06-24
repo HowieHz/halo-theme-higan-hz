@@ -15,27 +15,17 @@ type MermaidRuntimeConfig = {
   config?: MermaidConfig;
 };
 
-type ReferenceAttribute = "marker-start" | "marker-mid" | "marker-end" | "xlink:href" | "href";
-
 const MERMAID_CONFIG_HINT =
   "Please provide a Mermaid config as a JS object literal string such as { startOnLoad: false }.";
 const MERMAID_LOG_PREFIX = "[Higan Haozi][mermaid-injection]";
+let mermaidRenderId = 0;
 
 function isMermaidConfig(value: unknown): value is MermaidConfig {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-function genUUID(): string {
-  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c: string) => {
-    const digit = Number(c);
-    const randomValue = crypto.getRandomValues(new Uint8Array(1))[0];
-    return (digit ^ (randomValue & (15 >> (digit / 4)))).toString(16);
-  });
-}
-
 function getMermaidRuntimeConfig(): MermaidRuntimeConfig | null {
-  const configElement = document.querySelector<HTMLScriptElement>("#mermaid-config");
-  const configText = configElement?.textContent?.trim();
+  const configText = document.querySelector<HTMLScriptElement>("#mermaid-config")?.textContent?.trim();
 
   if (!configText) {
     return null;
@@ -78,17 +68,9 @@ function getMermaidRuntimeConfig(): MermaidRuntimeConfig | null {
   };
 }
 
-function updateAttribute(refElement: Element, attribute: ReferenceAttribute, originalId: string, newId: string): void {
-  const value = refElement.getAttribute(attribute);
-  if (value?.includes(`#${originalId}`)) {
-    refElement.setAttribute(attribute, value.replace(`#${originalId}`, `#${newId}`));
-  }
-}
-
 function getFrontMatterEndIndex(rawContent: string): number | null {
-  const frontMatterMatch = rawContent.match(/^---[ \t]*(?:\r?\n)[\s\S]*?(?:\r?\n)---[ \t]*(?:\r?\n|$)/);
-
-  return frontMatterMatch ? frontMatterMatch[0].length : null;
+  // 返回开头 Mermaid frontmatter 结束后的下标；没有 frontmatter 时返回 null。
+  return rawContent.match(/^---[ \t]*(?:\r?\n)[\s\S]*?(?:\r?\n)---[ \t]*(?:\r?\n|$)/)?.[0].length ?? null;
 }
 
 function buildMermaidContent(rawContent: string, theme: MermaidRenderThemeMode): string {
@@ -246,11 +228,7 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
   if (trimmedExtraSourceElementSelector) {
     try {
       container.querySelectorAll<HTMLElement>(trimmedExtraSourceElementSelector).forEach((sourceElement) => {
-        const isDuplicate = jobs.some(
-          (job) => job.sourceElement === sourceElement || job.dataProcessedElement === sourceElement,
-        );
-
-        if (isDuplicate) {
+        if (jobs.some((job) => job.sourceElement === sourceElement || job.dataProcessedElement === sourceElement)) {
           return;
         }
 
@@ -275,14 +253,11 @@ function collectMermaidRenderJobs(container: HTMLElement, extraSourceElementSele
 async function renderMermaid(
   sourceElement: HTMLElement,
   rawContent: string,
-  baseId: string,
+  renderId: string,
   theme: MermaidRenderThemeMode,
 ): Promise<void> {
-  const content = buildMermaidContent(rawContent, theme);
-  const renderId = `${theme}-${baseId}`;
-
   try {
-    const mermaidData: RenderResult = await mermaid.render(renderId, content);
+    const mermaidData: RenderResult = await mermaid.render(renderId, buildMermaidContent(rawContent, theme));
     const parentElement = sourceElement.parentElement;
     if (!parentElement) {
       return;
@@ -298,46 +273,6 @@ async function renderMermaid(
     div.classList.add(...divClassNames);
     div.innerHTML = mermaidData.svg;
     parentElement.insertBefore(div, sourceElement.nextSibling);
-
-    // Prefix ids inside each rendered SVG first to avoid collisions before
-    // upstream fully addresses the issue: https://github.com/mermaid-js/mermaid/issues/5741
-    const svgElement = div.querySelector("svg");
-    if (!svgElement) {
-      sourceElement.style.display = "none";
-      return;
-    }
-
-    // Update ids and all attributes that reference them.
-    svgElement.querySelectorAll("[id]").forEach((element) => {
-      const originalId = element.getAttribute("id");
-      if (!originalId) {
-        return;
-      }
-
-      const newId = `${theme}-${baseId}-${originalId}`;
-      element.setAttribute("id", newId);
-
-      const elementsUsingId = svgElement.querySelectorAll(
-        `[marker-start*="#${originalId}"], [marker-mid*="#${originalId}"], [marker-end*="#${originalId}"], [href*="#${originalId}"], [xlink\\:href*="#${originalId}"]`,
-      );
-
-      // marker references commonly use marker-start, marker-mid, marker-end.
-      // symbol/use references may still rely on deprecated xlink:href, so
-      // both href and xlink:href need to stay in sync.
-      const attributesToUpdate: ReferenceAttribute[] = [
-        "marker-start",
-        "marker-mid",
-        "marker-end",
-        "href",
-        "xlink:href",
-      ];
-
-      elementsUsingId.forEach((refElement) => {
-        attributesToUpdate.forEach((attribute) => {
-          updateAttribute(refElement, attribute, originalId, newId);
-        });
-      });
-    });
 
     // Hide the original source element after rendering succeeds.
     sourceElement.style.display = "none";
@@ -369,11 +304,8 @@ function initMermaid(): void {
         return;
       }
 
-      // Generate a unique base id for each render job.
-      const baseId = `mermaid${genUUID()}`;
-
       job.themes.forEach((theme) => {
-        void renderMermaid(job.sourceElement, job.rawContent, baseId, theme);
+        void renderMermaid(job.sourceElement, job.rawContent, `mermaid-${mermaidRenderId++}`, theme);
       });
 
       // mermaid.render() 不会写入 data-processed；这里按上游链路的实际标记节点补写。
