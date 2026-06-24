@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.71.3] - 2026-06-25
+
 ### 🐛 Bug Fixes
 
 - Fixed release script errors.
@@ -2221,7 +2223,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.2...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.3...HEAD
+[1.71.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.2...v1.71.3
 [1.71.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.1...v1.71.2
 [1.71.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.0...v1.71.1
 [1.71.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.70.1...v1.71.0
