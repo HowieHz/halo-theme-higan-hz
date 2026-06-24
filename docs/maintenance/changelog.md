@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.71.2] - 2026-06-24
+
 ### 🔧 代码重构
 
 - 移除 Mermaid SVG ID 冲突兼容重写逻辑，改为依赖 Mermaid 自 v11.15.0 加入的内建唯一 ID。
@@ -2126,7 +2128,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.2...HEAD
+[1.71.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.1...v1.71.2
 [1.71.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.0...v1.71.1
 [1.71.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.70.1...v1.71.0
 [1.70.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.70.0...v1.70.1

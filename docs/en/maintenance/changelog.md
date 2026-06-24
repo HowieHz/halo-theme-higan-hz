@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.71.2] - 2026-06-24
+
 ### 🔧 Code Refactoring
 
 - Removed the Mermaid SVG ID collision compatibility rewrite and now rely on the built-in unique IDs Mermaid added in v11.15.0.
@@ -2215,7 +2217,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.2...HEAD
+[1.71.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.1...v1.71.2
 [1.71.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.0...v1.71.1
 [1.71.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.70.1...v1.71.0
 [1.70.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.70.0...v1.70.1
