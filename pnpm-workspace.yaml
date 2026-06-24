@@ -4,7 +4,7 @@ packages:
 trustPolicy: no-downgrade
 trustPolicyExclude:
   - "semver@5.7.2"
-  - "@halo-dev/api-client@2.25.1"
+  - "nanoid@3.3.14"
 engineStrict: true # engines.node will be strictly enforced when installing dependencies
 allowBuilds:
   esbuild: true
