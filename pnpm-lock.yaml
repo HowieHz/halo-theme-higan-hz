@@ -70,8 +70,8 @@ importers:
         specifier: ^3.13.11
         version: 3.13.11
       '@types/node':
-        specifier: ^25.9.3
-        version: 25.9.3
+        specifier: ^26.0.1
+        version: 26.0.1
       '@typescript-eslint/parser':
         specifier: ^8.62.0
         version: 8.62.0(eslint@10.6.0)(typescript@6.0.3)
@@ -152,7 +152,7 @@ importers:
         version: 8.62.0(eslint@10.6.0)(typescript@6.0.3)
       vite:
         specifier: ^8.1.0
-        version: 8.1.0(@types/node@25.9.3)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
+        version: 8.1.0(@types/node@26.0.1)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
       vite-plugin-compression2:
         specifier: ^2.5.3
         version: 2.5.3(rollup@4.61.0)
@@ -198,7 +198,7 @@ importers:
         version: 1.5.2
       vitepress:
         specifier: 2.0.0-alpha.17
-        version: 2.0.0-alpha.17(@types/node@25.9.3)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(oxc-minify@0.137.0)(postcss@8.5.15)(typescript@6.0.3)
+        version: 2.0.0-alpha.17(@types/node@26.0.1)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(oxc-minify@0.137.0)(postcss@8.5.15)(typescript@6.0.3)
       vitepress-plugin-pagefind:
         specifier: ^0.4.20
         version: 0.4.20(pagefind@1.5.2)(vitepress@2.0.0-alpha.17)(vue@3.5.39)
@@ -1641,8 +1641,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@25.9.3':
-    resolution: {integrity: sha512-603BddQMv3pUcr4U2dhujk83N2tTDVr/34wII2B6bJy6g+8WD6yUb11jszNs0gdi4PesVWl7ABt8nYMVpnLUcg==}
+  '@types/node@26.0.1':
+    resolution: {integrity: sha512-fc3KiUoBt6kie0N9bIW3E47vZsuaMf0PM2AaUpLCLT0s/LvX1nxAim6Fc049cNxODPpGm6qRAuUOB86SkRuPQw==}
 
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
@@ -3844,8 +3844,8 @@ packages:
   ufo@1.6.4:
     resolution: {integrity: sha512-JFNbkD1Svwe0KvGi8GOeLcP4kAWQ609twvCdcHxq1oSL8svv39ZuSvajcD8B+5D0eL4+s1Is2D/O6KN3qcTeRA==}
 
-  undici-types@7.24.6:
-    resolution: {integrity: sha512-WRNW+sJgj5OBN4/0JpHFqtqzhpbnV0GuB+OozA9gCL7a993SmU+1JBZCzLNxYsbMfIeDL+lTsphD5jN5N+n0zg==}
+  undici-types@8.3.0:
+    resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
 
   unicorn-magic@0.4.0:
     resolution: {integrity: sha512-wH590V9VNgYH9g3lH9wWjTrUoKsjLF6sGLjhR4sH1LWpLmCOH0Zf7PukhDA8BiS7KHe4oPNkcTHqYkj7SOGUOw==}
@@ -4483,7 +4483,7 @@ snapshots:
     dependencies:
       '@vueuse/core': 14.3.0(vue@3.5.39)
       less: 4.6.4
-      vitepress: 2.0.0-alpha.17(@types/node@25.9.3)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(oxc-minify@0.137.0)(postcss@8.5.15)(typescript@6.0.3)
+      vitepress: 2.0.0-alpha.17(@types/node@26.0.1)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(oxc-minify@0.137.0)(postcss@8.5.15)(typescript@6.0.3)
 
   '@oxc-minify/binding-android-arm-eabi@0.137.0':
     optional: true
@@ -4999,7 +4999,7 @@ snapshots:
       '@tailwindcss/node': 4.3.1
       '@tailwindcss/oxide': 4.3.1
       tailwindcss: 4.3.1
-      vite: 8.1.0(@types/node@25.9.3)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
+      vite: 8.1.0(@types/node@26.0.1)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
 
   '@tybys/wasm-util@0.10.2':
     dependencies:
@@ -5163,9 +5163,9 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@25.9.3':
+  '@types/node@26.0.1':
     dependencies:
-      undici-types: 7.24.6
+      undici-types: 8.3.0
 
   '@types/trusted-types@2.0.7': {}
 
@@ -5377,7 +5377,7 @@ snapshots:
   '@vitejs/plugin-vue@6.0.7(vite@7.3.6)(vue@3.5.39)':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
-      vite: 7.3.6(@types/node@25.9.3)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)
+      vite: 7.3.6(@types/node@26.0.1)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)
       vue: 3.5.39(typescript@6.0.3)
 
   '@volar/language-core@2.4.28':
@@ -5519,14 +5519,14 @@ snapshots:
 
   '@whyframe/core@0.2.0(vite@8.1.0)':
     optionalDependencies:
-      vite: 8.1.0(@types/node@25.9.3)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
+      vite: 8.1.0(@types/node@26.0.1)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
 
   '@whyframe/vue@0.2.0(@whyframe/core@0.2.0)(vite@8.1.0)':
     dependencies:
       '@vue/compiler-dom': 3.5.35
       '@whyframe/core': 0.2.0(vite@8.1.0)
       magic-string: 0.30.21
-      vite: 8.1.0(@types/node@25.9.3)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
+      vite: 8.1.0(@types/node@26.0.1)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
 
   acorn-jsx@5.3.2(acorn@8.17.0):
     dependencies:
@@ -7548,7 +7548,7 @@ snapshots:
 
   ufo@1.6.4: {}
 
-  undici-types@7.24.6: {}
+  undici-types@8.3.0: {}
 
   unicorn-magic@0.4.0: {}
 
@@ -7637,9 +7637,9 @@ snapshots:
 
   vite-plugin-sri3@2.0.0(vite@8.1.0):
     dependencies:
-      vite: 8.1.0(@types/node@25.9.3)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
+      vite: 8.1.0(@types/node@26.0.1)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4)
 
-  vite@7.3.6(@types/node@25.9.3)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0):
+  vite@7.3.6(@types/node@26.0.1)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0):
     dependencies:
       esbuild: 0.27.7
       fdir: 6.5.0(picomatch@4.0.4)
@@ -7648,13 +7648,13 @@ snapshots:
       rollup: 4.61.0
       tinyglobby: 0.2.17
     optionalDependencies:
-      '@types/node': 25.9.3
+      '@types/node': 26.0.1
       fsevents: 2.3.3
       jiti: 2.7.0
       less: 4.6.4
       lightningcss: 1.32.0
 
-  vite@8.1.0(@types/node@25.9.3)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4):
+  vite@8.1.0(@types/node@26.0.1)(esbuild@0.27.7)(jiti@2.7.0)(less@4.6.4):
     dependencies:
       lightningcss: 1.32.0
       picomatch: 4.0.4
@@ -7662,7 +7662,7 @@ snapshots:
       rolldown: 1.1.3
       tinyglobby: 0.2.17
     optionalDependencies:
-      '@types/node': 25.9.3
+      '@types/node': 26.0.1
       esbuild: 0.27.7
       fsevents: 2.3.3
       jiti: 2.7.0
@@ -7674,12 +7674,12 @@ snapshots:
       '@vueuse/core': 14.3.0(vue@3.5.39)
       javascript-stringify: 2.1.0
       pagefind: 1.5.2
-      vitepress: 2.0.0-alpha.17(@types/node@25.9.3)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(oxc-minify@0.137.0)(postcss@8.5.15)(typescript@6.0.3)
+      vitepress: 2.0.0-alpha.17(@types/node@26.0.1)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(oxc-minify@0.137.0)(postcss@8.5.15)(typescript@6.0.3)
       vue-command-palette: 0.1.4
     transitivePeerDependencies:
       - vue
 
-  vitepress@2.0.0-alpha.17(@types/node@25.9.3)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(oxc-minify@0.137.0)(postcss@8.5.15)(typescript@6.0.3):
+  vitepress@2.0.0-alpha.17(@types/node@26.0.1)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)(oxc-minify@0.137.0)(postcss@8.5.15)(typescript@6.0.3):
     dependencies:
       '@docsearch/css': 4.6.3
       '@docsearch/js': 4.6.3
@@ -7698,7 +7698,7 @@ snapshots:
       mark.js: 8.11.1
       minisearch: 7.2.0
       shiki: 3.23.0
-      vite: 7.3.6(@types/node@25.9.3)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)
+      vite: 7.3.6(@types/node@26.0.1)(jiti@2.7.0)(less@4.6.4)(lightningcss@1.32.0)
       vue: 3.5.39(typescript@6.0.3)
     optionalDependencies:
       oxc-minify: 0.137.0
