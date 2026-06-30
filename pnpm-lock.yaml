@@ -176,8 +176,8 @@ importers:
         version: 5.3.3(chart.js@4.5.1)(vue@3.5.39)
     devDependencies:
       '@mdit/plugin-footnote':
-        specifier: ^0.23.2
-        version: 0.23.2(markdown-it@14.2.0)
+        specifier: ^1.0.0
+        version: 1.0.0(markdown-it@14.2.0)
       '@nolebase/vitepress-plugin-highlight-targeted-heading':
         specifier: ^2.18.2
         version: 2.18.2(@vueuse/core@14.3.0)(vitepress@2.0.0-alpha.17)
@@ -632,11 +632,11 @@ packages:
   '@kurkle/color@0.3.4':
     resolution: {integrity: sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w==}
 
-  '@mdit/plugin-footnote@0.23.2':
-    resolution: {integrity: sha512-zE2jAx1KX1ZLuF0v4t2VwgrsfSYHRr23n5viRcxyF2tnbBKLJA38Pmk7jrKfKK9akZVD32zRzZWGrRF39TPXqw==}
-    engines: {node: '>= 20'}
+  '@mdit/plugin-footnote@1.0.0':
+    resolution: {integrity: sha512-3aPNfi62yHh6V7ywtR5WLJQTSdBzPuj84/nvlZbMMiEwJIeCMETif8I1406XnEupGZo9jJCjGQ66gpkNro8z7w==}
+    engines: {node: '>=22'}
     peerDependencies:
-      markdown-it: ^14.1.0
+      markdown-it: ^14.2.0
 
   '@mermaid-js/parser@1.2.0':
     resolution: {integrity: sha512-oYPyv8A4As1yH5Bx+04iQEQxXuIQDe0GKCNSRgao6z8AM9jixXIfP0vsppRLvGf+nKIOb9/LdpWA4YuJiVvESA==}
@@ -4441,7 +4441,7 @@ snapshots:
 
   '@kurkle/color@0.3.4': {}
 
-  '@mdit/plugin-footnote@0.23.2(markdown-it@14.2.0)':
+  '@mdit/plugin-footnote@1.0.0(markdown-it@14.2.0)':
     dependencies:
       '@types/markdown-it': 14.1.2
       markdown-it: 14.2.0
