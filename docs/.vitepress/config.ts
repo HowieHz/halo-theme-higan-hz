@@ -182,7 +182,7 @@ export default defineConfig({
             "data-performance": "true",
           },
         ],
-        // <script defer src="https://um.howiehz.top/recorder.js" data-website-id="7b461ac5-155d-45a8-a118-178d0a2936e4" data-domains="howiehz.top" data-sample-rate="1" data-mask-level="moderate" data-max-duration="300000"></script>
+        // <script defer src="https://um.howiehz.top/recorder.js" data-website-id="7b461ac5-155d-45a8-a118-178d0a2936e4" data-domains="howiehz.top" data-sample-rate="0.15" data-mask-level="moderate" data-max-duration="300000"></script>
         [
           "script",
           {
@@ -190,7 +190,7 @@ export default defineConfig({
             src: "https://um.howiehz.top/recorder.js",
             "data-website-id": "7b461ac5-155d-45a8-a118-178d0a2936e4",
             "data-domains": "howiehz.top",
-            "data-sample-rate": "1",
+            "data-sample-rate": "0.15",
             "data-mask-level": "moderate",
             "data-max-duration": "300000",
           },
