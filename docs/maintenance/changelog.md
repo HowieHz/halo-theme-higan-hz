@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.72.0] - 2026-07-04
+
 ### 💥 破坏性变更
 
 - 最低 Halo 版本要求提升至 2.25.0。
@@ -2148,7 +2150,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.4...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.0...HEAD
+[1.72.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.4...v1.72.0
 [1.71.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.3...v1.71.4
 [1.71.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.2...v1.71.3
 [1.71.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.71.1...v1.71.2
