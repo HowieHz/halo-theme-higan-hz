@@ -33,6 +33,12 @@ outline: deep
 
 主题提供了图库页面（`/photos(?group={groupName})`）支持。详情请阅读[图库页样式](/guide/theme-configuration#图库页样式)相关文档。
 
+::: info 提示
+
+推荐搭配[图片灯箱](#图片灯箱)插件使用。
+
+:::
+
 ## 瞬间页
 
 插件 [plugin-moments](https://github.com/halo-sigs/plugin-moments)（[应用市场页面](https://www.halo.run/store/apps/app-SnwWD)）
