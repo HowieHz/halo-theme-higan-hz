@@ -12,9 +12,9 @@ on:
         required: false
         default: "latest"
       halo_version:
-        description: "Halo version (2.23.1 / v2.23.1)"
+        description: "Halo version (2.25.4 / v2.25.4)"
         required: false
-        default: "2.24.1"
+        default: "2.25.4"
       upload_lighthouse_artifact:
         description: "Upload raw Lighthouse .lighthouseci data for debugging?"
         required: true
@@ -60,7 +60,7 @@ jobs:
               if (allowLatest && raw.toLowerCase() === 'latest') return 'latest';
               return `v${raw.replace(/^v/, '')}`;
             };
-            const normalizeHaloVersion = (value) => String(value ?? '').trim().replace(/^v/, '') || '2.24.1';
+            const normalizeHaloVersion = (value) => String(value ?? '').trim().replace(/^v/, '') || '2.25.4';
             const formatVersion = (value) => String(value ?? '').replace(/^v/, '');
 
             if ('${{ github.event_name }}' === 'release') {

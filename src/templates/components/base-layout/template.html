@@ -47,9 +47,9 @@
       th:if="${theme.config?.global?.is_performance_monitor_enable}"
       th:insert="~{components/performance-monitor/template :: head}"
     ></th:block>
-    <!--/* 
-      The <meta name="theme-color"> tag must not be self-closing;
-      otherwise, it will not work on Chrome for Android. 
+    <!--/*
+      The <meta name="theme-color"> tags must not be self-closing;
+      otherwise, they will not work on Chrome for Android.
     */-->
     <th:block th:insert="~{components/meta-theme-color/template :: head}"></th:block>
     <meta
@@ -762,23 +762,32 @@
     <!--/* Mermaid injection end */-->
     <!--/* CSS Variable to Meta Theme-Color Observer Start */-->
     <script type="module">
-      function updateThemeColor() {
-        const color = getComputedStyle(document.documentElement).getPropertyValue("--color-base-100");
-        const themeColorMetaTag = document.querySelector('meta[name="theme-color"]');
-        if (color && themeColorMetaTag) {
-          themeColorMetaTag.setAttribute("content", color);
+      const themeColorMetaTags = document.querySelectorAll('meta[name="theme-color"]');
+
+      if (themeColorMetaTags.length !== 0) {
+        function updateThemeColor() {
+          const color = getComputedStyle(document.documentElement).getPropertyValue("--color-base-100").trim();
+          if (!color) {
+            return;
+          }
+          // <!--/* Calibrate after the theme toggle button mutates html[theme]. */-->
+          for (const themeColorMetaTag of themeColorMetaTags) {
+            themeColorMetaTag.setAttribute("content", color);
+          }
         }
+
+        // <!--/* Initialization */-->
+        updateThemeColor();
+
+        // <!--/* Observe changes to the 'theme' attribute on the html element */-->
+        new MutationObserver(updateThemeColor).observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["theme"],
+        });
+
+        // <!--/* Calibrate when auto themes follow a system light/dark change without mutating html[theme]. */-->
+        window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", updateThemeColor);
       }
-
-      // <!--/* Initialization */-->
-      updateThemeColor();
-
-      // <!--/* Observe changes to the 'theme' attribute on the html element */-->
-      const observer = new MutationObserver(updateThemeColor);
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["theme"],
-      });
     </script>
     <!--/* CSS Variable to Meta Theme-Color Observer End */-->
     <!--/* base-layout component tailwindcss style Start */-->

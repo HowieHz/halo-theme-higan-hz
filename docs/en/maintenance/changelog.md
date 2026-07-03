@@ -23,6 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 💥 Breaking Changes
+
+- Minimum required Halo version bumped to 2.25.0.
+
+### 🚀 Features
+
+- Added light/dark browser color-scheme candidates for `<meta name="theme-color" />`.
+
 ## [1.71.4] - 2026-07-02
 
 ### 🧹 Miscellaneous Chores

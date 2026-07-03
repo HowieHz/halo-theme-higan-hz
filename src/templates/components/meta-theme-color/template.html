@@ -2,22 +2,20 @@
   th:remove="tag"
   th:fragment="head"
 >
+  <!--/*
+    Keep two media-qualified tags so Halo 2.25+ preserves native
+    light/dark theme-color candidates before runtime scripts execute.
+  */-->
   <!--/*/
     <meta
       name="theme-color"
-      content="transparent"
-      th:content="${color_schema == 'custom'
-                    ? 'transparent'
-                    : (color_schema == 'auto'
-                      or color_schema == 'light'
-                      or color_schema == 'auto-blue'
-                      or color_schema == 'light-blue'
-                      or color_schema == 'gray')
-                      ? '#fafafa'
-                      : (color_schema == 'dark'
-                        or color_schema == 'dark-blue')
-                        ? '#212326'
-                        : 'transparent'}"
+      content="#fafafa"
+      media="(prefers-color-scheme: light)"
+    >
+    <meta
+      name="theme-color"
+      content="#212326"
+      media="(prefers-color-scheme: dark)"
     >
   /*/-->
 </head>
