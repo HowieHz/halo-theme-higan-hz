@@ -27,11 +27,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 💥 Breaking Changes
 
-- Minimum required Halo version bumped to 2.25.0.
+- Minimum required Halo version bumped to 2.25.0 to support multiple `<meta name="theme-color">` tags.
 
 ### 🚀 Features
 
-- Added light/dark browser color-scheme candidates for `<meta name="theme-color" />`.
+- Improved browser theme colors (`<meta name="theme-color">`) so the address bar can use matching light/dark colors and stay in sync when the theme changes.
+
+### 🔧 Code Refactoring
+
+- Removed an unused custom color scheme configuration lookup from the light/dark mode toggle script.
+
+### 📄 Documentation
+
+- Added an Image Lightbox recommendation to the photo gallery plugin compatibility docs.
 
 ## [1.71.4] - 2026-07-02
 
