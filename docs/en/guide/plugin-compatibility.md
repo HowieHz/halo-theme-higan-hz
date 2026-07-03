@@ -35,6 +35,12 @@ Plugin [plugin-photos](https://github.com/halo-sigs/plugin-photos) ([App Store P
 
 The theme provides photo gallery page (`/photos(?group={groupName})`) support. Please read [Photo Gallery Page Style](/en/guide/theme-configuration#photo-gallery-page-style) related documentation for details.
 
+::: info Info
+
+Recommended to use together with the [Image Lightbox](#image-lightbox) plugin.
+
+:::
+
 ## Moments Page
 
 Plugin [plugin-moments](https://github.com/halo-sigs/plugin-moments) ([App Store Page](https://www.halo.run/store/apps/app-SnwWD))
