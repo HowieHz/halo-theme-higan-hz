@@ -19,8 +19,8 @@ on:
       halo_version:
         required: false
         type: string
-        default: "2.24.1"
-        description: "Halo version (2.24.1 / v2.24.1)"
+        default: "2.25.4"
+        description: "Halo version (2.25.4 / v2.25.4)"
       theme_ref:
         required: false
         type: string
