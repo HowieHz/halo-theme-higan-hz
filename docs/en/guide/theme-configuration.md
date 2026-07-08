@@ -2575,6 +2575,7 @@ When enabled, you can configure:
 - [Page bottom/sidebar content display mode](#page-bottom-sidebar-content-display-mode)
 - [Sidebar hover opacity](#sidebar-hover-opacity)
 - [Tablet and mobile sidebar display behavior](#tablet-and-mobile-sidebar-display-behavior)
+
 <!-- markdownlint-enable MD051 -->
 
 :::
@@ -2680,6 +2681,7 @@ When enabled, you can configure:
 - [Page bottom/sidebar content display mode](#page-bottom-sidebar-content-display-mode)
 - [Sidebar hover opacity](#sidebar-hover-opacity)
 - [Tablet and mobile sidebar display behavior](#tablet-and-mobile-sidebar-display-behavior)
+
 <!-- markdownlint-enable MD051 -->
 
 :::
@@ -3096,6 +3098,7 @@ When enabled, you can configure:
 <!-- markdownlint-disable MD051 -->
 
 - [Table Row Line Width (Except Header)](#table-row-line-width-except-header)
+
 <!-- markdownlint-enable MD051 -->
 
 :::
