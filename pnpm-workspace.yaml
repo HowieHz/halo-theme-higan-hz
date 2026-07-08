@@ -10,7 +10,3 @@ allowBuilds:
   unrs-resolver: true
 shellEmulator: true
 dedupePeers: true
-packageExtensions:
-  "@nolebase/vitepress-plugin-highlight-targeted-heading@*":
-    peerDependencies:
-      "@vueuse/core": "*"
