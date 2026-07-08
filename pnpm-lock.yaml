@@ -198,8 +198,8 @@ importers:
         specifier: 2.0.0-alpha.17
         version: 2.0.0-alpha.17(@types/node@26.1.0)(jiti@2.7.0)(less@4.6.7)(lightningcss@1.32.0)(oxc-minify@0.139.0)(postcss@8.5.16)(typescript@6.0.3)
       vitepress-plugin-pagefind:
-        specifier: ^0.4.20
-        version: 0.4.20(pagefind@1.5.2)(vitepress@2.0.0-alpha.17)(vue@3.5.39)
+        specifier: ^0.4.22
+        version: 0.4.22(pagefind@1.5.2)(vitepress@2.0.0-alpha.17)(vue@3.5.39)
       vue:
         specifier: ^3.5.39
         version: 3.5.39(typescript@6.0.3)
@@ -2880,10 +2880,6 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
-  fuse.js@6.6.2:
-    resolution: {integrity: sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==}
-    engines: {node: '>=10'}
-
   get-east-asian-width@1.6.0:
     resolution: {integrity: sha512-QRbvDIbx6YklUe6RxeTeleMR0yv3cYH6PsPZHcnVn7xv7zO1BHN8r0XETu8n6Ye3Q+ahtSarc3WgtNWmehIBfA==}
     engines: {node: '>=18'}
@@ -3420,9 +3416,6 @@ packages:
   minisearch@7.2.0:
     resolution: {integrity: sha512-dqT2XBYUOZOiC5t2HRnwADjhNS2cecp9u+TJRiJ1Qp/f5qjkeT5APcGPjHw+bz89Ms8Jp+cG4AlE+QZ/QnDglg==}
 
-  mitt@3.0.1:
-    resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
-
   mlly@1.8.2:
     resolution: {integrity: sha512-d+ObxMQFmbt10sretNDytwt85VrbkhhUA/JBGm1MPaWJ65Cl4wOgLaB1NYvJSZ0Ef03MMEU/0xpPMXUIQ29UfA==}
 
@@ -3439,11 +3432,6 @@ packages:
   nanoid@3.3.15:
     resolution: {integrity: sha512-y7Wygv/7mEOvxTuEQDB8StXdMRBWf1kR/tlhAzBRUFkB2jfcLOAxO/SHmOO2zgz1pVgK29/kyupn059/bCHdjA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
-    hasBin: true
-
-  nanoid@4.0.2:
-    resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
-    engines: {node: ^14 || ^16 || >=18}
     hasBin: true
 
   napi-postinstall@0.3.4:
@@ -4146,8 +4134,8 @@ packages:
       yaml:
         optional: true
 
-  vitepress-plugin-pagefind@0.4.20:
-    resolution: {integrity: sha512-O6mfkPzRV7V2igs51Qll31ptqJnHlNx9bmfo5JRsf6b4QuSVHjTDgtqM73rrCxRNeOSzFygPmJvSbmn7K4jd1A==}
+  vitepress-plugin-pagefind@0.4.22:
+    resolution: {integrity: sha512-/5CUTdDPWZHqT/4jzZRXSN9XlOzg85KjlsjdE1zxqzEgKVsj1fXuRa6qcsvxKZGWlO13Eno8p7k5vyDpw4FPKA==}
     peerDependencies:
       pagefind: ^1.1.0
       vitepress: ^1.0.0-0 || ^2.0.0-0
@@ -4175,9 +4163,6 @@ packages:
     peerDependencies:
       chart.js: ^4.1.1
       vue: ^3.0.0-0 || ^2.7.0
-
-  vue-command-palette@0.1.4:
-    resolution: {integrity: sha512-v9wGV5RG/Qe/GLLP3dJGYEvBOHQAH1kTdfzv7/uDj4v51g9uB0J3dQSaREgsrAvAT7tSj/cSbVrGpaalr8z7tg==}
 
   vue-eslint-parser@10.4.1:
     resolution: {integrity: sha512-Gk6gRDj0n/fkRa3C3l0bBheoBckUq/Rs0F/TvMWIS6nzzx67amAViMe9CkNgsP2tXyQONvGiHQESHwFtZ3aYDA==}
@@ -6478,8 +6463,6 @@ snapshots:
   fsevents@2.3.3:
     optional: true
 
-  fuse.js@6.6.2: {}
-
   get-east-asian-width@1.6.0: {}
 
   get-tsconfig@4.14.0:
@@ -7098,8 +7081,6 @@ snapshots:
 
   minisearch@7.2.0: {}
 
-  mitt@3.0.1: {}
-
   mlly@1.8.2:
     dependencies:
       acorn: 8.17.0
@@ -7114,8 +7095,6 @@ snapshots:
   muggle-string@0.4.1: {}
 
   nanoid@3.3.15: {}
-
-  nanoid@4.0.2: {}
 
   napi-postinstall@0.3.4: {}
 
@@ -7909,14 +7888,13 @@ snapshots:
       jiti: 2.7.0
       less: 4.6.7
 
-  vitepress-plugin-pagefind@0.4.20(pagefind@1.5.2)(vitepress@2.0.0-alpha.17)(vue@3.5.39):
+  vitepress-plugin-pagefind@0.4.22(pagefind@1.5.2)(vitepress@2.0.0-alpha.17)(vue@3.5.39):
     dependencies:
       '@sugarat/theme-shared': 0.0.7
       '@vueuse/core': 14.3.0(vue@3.5.39)
       javascript-stringify: 2.1.0
       pagefind: 1.5.2
       vitepress: 2.0.0-alpha.17(@types/node@26.1.0)(jiti@2.7.0)(less@4.6.7)(lightningcss@1.32.0)(oxc-minify@0.139.0)(postcss@8.5.16)(typescript@6.0.3)
-      vue-command-palette: 0.1.4
     transitivePeerDependencies:
       - vue
 
@@ -7975,12 +7953,6 @@ snapshots:
     dependencies:
       chart.js: 4.5.1
       vue: 3.5.39(typescript@6.0.3)
-
-  vue-command-palette@0.1.4:
-    dependencies:
-      fuse.js: 6.6.2
-      mitt: 3.0.1
-      nanoid: 4.0.2
 
   vue-eslint-parser@10.4.1(eslint@10.6.0):
     dependencies:
