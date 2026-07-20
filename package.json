@@ -43,7 +43,7 @@
     "lint:md": "markdownlint --fix '**/*.md' --ignore-path .gitignore",
     "lint:oxlint+eslint": "oxlint --type-aware --fix && eslint --fix",
     "lint:style": "stylelint --fix '**/*.{css,html,vue}' 'docs/.vitepress/**/*.{css,vue}' --ignore-path .gitignore",
-    "lint:type-check:docs:vue-tsc": "vue-tsc -b docs/tsconfig.browser.json",
+    "lint:type-check:docs:vue-tsc": "pnpm --filter docs-tools type-check",
     "lint:type-check:tsc": "tsc -b",
     "migrate:oxlint": "pnpm dlx @oxlint/migrate --type-aware --with-nursery && pnpm oxfmt -- --write .oxlintrc.json",
     "prebuild": "pnpm run generate:theme-css && tw-patch extract --css src/templates/_runtime/global/styles.css",
@@ -106,8 +106,7 @@
     "vite": "^8.1.4",
     "vite-plugin-compression2": "^2.5.3",
     "vite-plugin-sri3": "^2.0.0",
-    "vue-eslint-parser": "^10.4.1",
-    "vue-tsc": "^3.3.7"
+    "vue-eslint-parser": "^10.4.1"
   },
   "browserslist": [
     "defaults",

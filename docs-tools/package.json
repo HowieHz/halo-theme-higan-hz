@@ -1,0 +1,11 @@
+{
+  "name": "docs-tools",
+  "private": true,
+  "scripts": {
+    "type-check": "vue-tsc -b ../docs/tsconfig.browser.json"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.7"
+  }
+}
