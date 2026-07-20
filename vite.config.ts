@@ -402,7 +402,6 @@ export default defineConfig((): UserConfig => {
         // Only manually injected in src/templates/components/base-layout/template.html
         polyfill: false,
       },
-      cssMinify: "lightningcss",
       rolldownOptions: {
         input,
         output:
