@@ -41,7 +41,7 @@
     "lint": "pnpm run '/^lint:/'",
     "lint:autocorrect": "autocorrect --fix",
     "lint:md": "markdownlint --fix '**/*.md' --ignore-path .gitignore",
-    "lint:oxlint+eslint": "oxlint --type-aware --fix && eslint --fix",
+    "lint:oxlint+eslint": "oxlint --type-aware --report-unused-disable-directives --fix && eslint --fix",
     "lint:style": "stylelint --fix '**/*.{css,html,vue}' 'docs/.vitepress/**/*.{css,vue}' --ignore-path .gitignore",
     "lint:type-check:docs:vue-tsc": "vue-tsc -b docs/tsconfig.browser.json",
     "lint:type-check:tsgo": "tsgo -b",
