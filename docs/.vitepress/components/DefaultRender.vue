@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from "vue";
 
-/* oxlint-disable eslint(no-undef) */
 /**
  * 组件属性定义：
  *
@@ -18,7 +17,6 @@ defineProps({
     default: "100px",
   },
 });
-/* oxlint-enable eslint(no-undef) */
 
 const loading = ref(true);
 </script>
