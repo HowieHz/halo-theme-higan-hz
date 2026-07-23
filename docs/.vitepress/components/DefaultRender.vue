@@ -18,7 +18,6 @@ defineProps({
     default: "100px",
   },
 });
-/* oxlint-enable eslint(no-undef) */
 
 const loading = ref(true);
 </script>
