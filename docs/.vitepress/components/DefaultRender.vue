@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from "vue";
 
-/* oxlint-disable eslint(no-undef) */
 /**
  * 组件属性定义：
  *
