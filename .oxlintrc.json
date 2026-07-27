@@ -269,6 +269,11 @@
         "docs/.vitepress/utils/**/*.ts",
         "src/templates/**/*.html"
       ],
+      "globals": {
+        "AsyncDisposableStack": "readonly",
+        "DisposableStack": "readonly",
+        "SuppressedError": "readonly"
+      },
       "env": {
         "es2026": true,
         "browser": true
@@ -277,6 +282,9 @@
     {
       "files": ["src/templates/public/assets/qrcode.html"],
       "globals": {
+        "AsyncDisposableStack": "readonly",
+        "DisposableStack": "readonly",
+        "SuppressedError": "readonly",
         "QRCode": "readonly"
       },
       "env": {
@@ -286,6 +294,11 @@
     },
     {
       "files": ["docs/.vitepress/components/**/*.vue", "docs/.vitepress/theme/**/*.vue"],
+      "globals": {
+        "AsyncDisposableStack": "readonly",
+        "DisposableStack": "readonly",
+        "SuppressedError": "readonly"
+      },
       "env": {
         "es2026": true,
         "browser": true,
@@ -305,6 +318,11 @@
         "stylelint.config.js",
         ".github/scripts/**/*.{js,ts}"
       ],
+      "globals": {
+        "AsyncDisposableStack": "readonly",
+        "DisposableStack": "readonly",
+        "SuppressedError": "readonly"
+      },
       "env": {
         "es2024": true,
         "node": true
