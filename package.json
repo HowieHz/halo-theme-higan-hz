@@ -37,7 +37,7 @@
     "docs:watch": "pnpm --filter docs watch",
     "fmt": "pnpm run '/^fmt:/'",
     "fmt:oxfmt": "oxfmt --threads 3 '**/*.{json,jsonc,yaml,md,css,js,ts,html,vue}' '.github/**/*.{yml,js,json}'",
-    "lint": "pnpm run '/^lint:/'",
+    "lint": "pnpm run lint:type-check && pnpm run '/^lint:(?!type-check$)/'",
     "lint:autocorrect": "autocorrect --fix",
     "lint:md": "markdownlint --fix '**/*.md' --ignore-path .gitignore",
     "lint:oxlint+eslint": "oxlint --type-aware --report-unused-disable-directives --fix && eslint --fix",
