@@ -124,10 +124,8 @@ After formatting, CI automatically runs `pnpm lint`, including the following che
   - **Scope**: Markdown files
 - `autocorrect`: Automated text corrections
   - **Scope**: [Supported file formats](https://github.com/huacnlee/autocorrect/tree/main/autocorrect/grammar)
-- `tsgo -b`: TypeScript type checks
-  - **Scope**: TypeScript files
-- `vue-tsc -b docs/tsconfig.browser.json`: Vue / Markdown type checks for the docs site
-  - **Scope**: Vue components and VitePress Markdown pages under `docs`
+- `vue-tsc -b`: TypeScript, Vue / Markdown type checks
+  - **Scope**: TypeScript files, Vue components, and VitePress Markdown pages under `docs`
 
 > All lint steps run with auto-fix enabled. If fixes are applied, they are automatically committed only when the PR branch is in this repository.
 > When the PR branch is in a fork, CI keeps the check failing and uploads `ci-autofix.patch` for contributors to download and apply.
