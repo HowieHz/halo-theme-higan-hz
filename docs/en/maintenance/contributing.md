@@ -124,7 +124,7 @@ After formatting, CI automatically runs `pnpm lint`, including the following che
   - **Scope**: Markdown files
 - `autocorrect`: Automated text corrections
   - **Scope**: [Supported file formats](https://github.com/huacnlee/autocorrect/tree/main/autocorrect/grammar)
-- `tsgo -b`: TypeScript type checks
+- `tsc -b`: TypeScript type checks
   - **Scope**: TypeScript files
 - `vue-tsc -b docs/tsconfig.browser.json`: Vue / Markdown type checks for the docs site
   - **Scope**: Vue components and VitePress Markdown pages under `docs`
