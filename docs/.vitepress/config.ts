@@ -256,7 +256,7 @@ export default defineConfig({
       detailsLabel: "详细信息",
     },
     image: {
-      lazyLoading: true,
+      lazyLoad: true,
     },
   },
 
