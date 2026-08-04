@@ -210,7 +210,6 @@ export default defineConfig({
 
   lastUpdated: true,
   cleanUrls: true,
-  metaChunk: true,
 
   base: "/halo-theme-higan-haozi/",
   locales: {
