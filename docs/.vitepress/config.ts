@@ -210,7 +210,6 @@ export default defineConfig({
 
   lastUpdated: true,
   cleanUrls: true,
-  metaChunk: true,
 
   base: "/halo-theme-higan-haozi/",
   locales: {
@@ -256,7 +255,7 @@ export default defineConfig({
       detailsLabel: "详细信息",
     },
     image: {
-      lazyLoading: true,
+      lazyLoad: true,
     },
   },
 
