@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.72.5] - 2026-08-17
+
 ### 🚀 Features
 
 - Added Halo 2.26 page layout contract support so plugin frontend pages can reuse the theme shell.
@@ -2279,7 +2281,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.4...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.5...HEAD
+[1.72.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.4...v1.72.5
 [1.72.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.3...v1.72.4
 [1.72.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.2...v1.72.3
 [1.72.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.1...v1.72.2

@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.72.5] - 2026-08-17
+
 ### 🚀 新功能
 
 - 支持 Halo 2.26 的页面布局契约，使插件前台页面可以复用主题外壳。
@@ -2190,7 +2192,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.4...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.5...HEAD
+[1.72.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.4...v1.72.5
 [1.72.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.3...v1.72.4
 [1.72.3]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.2...v1.72.3
 [1.72.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.1...v1.72.2
