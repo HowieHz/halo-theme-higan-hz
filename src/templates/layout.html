@@ -1,0 +1,21 @@
+<!doctype html>
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:fragment="html(head, content)"
+  th:replace="~{components/base-layout/template :: html(
+    title = ${site.title},
+    head = ~{:: head},
+    content = ${content},
+    header = ~{components/header/template :: body},
+    navbar = ~{},
+    language = ${#locale.toLanguageTag}
+  )}"
+>
+  <head th:remove="tag">
+    <th:block th:insert="~{components/header/template :: head}"></th:block>
+    <th:block
+      th:if="${head != null}"
+      th:replace="${head}"
+    ></th:block>
+  </head>
+</html>

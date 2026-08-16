@@ -23,6 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🚀 Features
+
+- Added Halo 2.26 page layout contract support so plugin frontend pages can reuse the theme shell.
+
+### 🧹 Miscellaneous Chores
+
+- Updated project dependencies.
+
 ## [1.72.4] - 2026-08-06
 
 ### 🧹 Miscellaneous Chores
