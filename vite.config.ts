@@ -57,6 +57,7 @@ function getBuildInputs(extraEntries: BuildEntryMap = {}): BuildEntryMap {
     category: resolve(import.meta.dirname, "src/templates/category.html"),
     index: resolve(import.meta.dirname, "src/templates/index.html"),
     links: resolve(import.meta.dirname, "src/templates/links.html"),
+    layout: resolve(import.meta.dirname, "src/templates/layout.html"),
     moment: resolve(import.meta.dirname, "src/templates/moment.html"),
     moments: resolve(import.meta.dirname, "src/templates/moments.html"),
     page: resolve(import.meta.dirname, "src/templates/page.html"),
