@@ -53,7 +53,7 @@
     "watch:vite": "NODE_OPTIONS=--max-old-space-size=10240 BUILD_MODE=dev vite build --watch"
   },
   "dependencies": {
-    "alpinejs": "^3.16.1",
+    "alpinejs": "^3.16.2",
     "instant.page": "^5.2.0",
     "mermaid": "^11.16.1"
   },
