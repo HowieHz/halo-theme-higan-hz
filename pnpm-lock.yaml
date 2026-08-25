@@ -10,14 +10,14 @@ importers:
   .:
     dependencies:
       alpinejs:
-        specifier: ^3.16.2
-        version: 3.16.2
+        specifier: ^3.16.3
+        version: 3.16.3
       instant.page:
         specifier: ^5.2.0
         version: 5.2.0
       mermaid:
-        specifier: ^11.16.1
-        version: 11.16.1
+        specifier: ^11.17.1
+        version: 11.17.1
     devDependencies:
       '@dreamsicle.io/stylelint-config-tailwindcss':
         specifier: ^1.2.2
@@ -663,8 +663,8 @@ packages:
     peerDependencies:
       markdown-it: ^14.2.0
 
-  '@mermaid-js/parser@1.2.0':
-    resolution: {integrity: sha512-oYPyv8A4As1yH5Bx+04iQEQxXuIQDe0GKCNSRgao6z8AM9jixXIfP0vsppRLvGf+nKIOb9/LdpWA4YuJiVvESA==}
+  '@mermaid-js/parser@1.2.1':
+    resolution: {integrity: sha512-n12NohV3mrUyUL2o93IgG/ifeW9FTyeJn3zDxkhwa8MJ9Fxg3HQMlA3RiGmD/3UnJvheztkjjQAjA2T4LmUcpw==}
 
   '@napi-rs/wasm-runtime@1.1.6':
     resolution: {integrity: sha512-ZLv/JdUfkvOy9eCnnBaGfiO+XimbjebAeO+MRQqD/B+FR1tnRN0tpKSJHRbE8sFfS6aqsXZ67TQjfwfsxULVbg==}
@@ -2150,8 +2150,8 @@ packages:
   alien-signals@3.2.1:
     resolution: {integrity: sha512-I8FjmltrfnDFoZedi5CG8DghVYNhzb/Ijluz7tCSJH0xpd0484Kowhbb1XDYOxfJpU1p5wnM2X54dA+IfGyD1g==}
 
-  alpinejs@3.16.2:
-    resolution: {integrity: sha512-6kbqqrRK7iGPYx5upTfqc8Tcl1xhpcurLCxTdn4/ym2Kb68+cYj+2I5Zji53vUIPf7zj3C1DoIvrDkgrNDCXdA==}
+  alpinejs@3.16.3:
+    resolution: {integrity: sha512-kLIO2JOPs5ZY3mHPH+CHHPzp89Y6Gb2luLRy+RDIb1oG9y6N5Vfc75kkEoaSOPhJqvakuPiAsnd9paNPNSZyVg==}
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -2806,6 +2806,9 @@ packages:
   fast-uri@3.1.4:
     resolution: {integrity: sha512-8JnbkQ4juDyvYs4mgFGQqg4yCYtFDtUtmp2QIQq11ZZe5CFQ5wcqm1rqDgAh/QdMySuBnPzMUiJUNZG5N/AiQw==}
 
+  fastdom@1.0.12:
+    resolution: {integrity: sha512-LB+xjSTEbjHE1cWsxu+tN2Xqr1kpi+V9aADI7sVM5ZMaXyYGPHULQMzpJMYqOTULK/73pUkWVzzObFRBkPr+hg==}
+
   fastest-levenshtein@1.0.16:
     resolution: {integrity: sha512-eRnCtTTtGZFpQCwhJiUOuxPQWRXVKYDn0b2PeHfXL6/Zi53SLAzAHfVhVWK2AryC/WH05kGfxhFIPvTF0SXQzg==}
     engines: {node: '>= 4.9.1'}
@@ -3381,8 +3384,8 @@ packages:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
 
-  mermaid@11.16.1:
-    resolution: {integrity: sha512-TQsq6u22fAn3rek5VOubrhKPo1g5hwC3FXUN9hiyupTckcYiGuuKGkNQrKYwGJkXUxZdojwRG46gsSCFZMDp4g==}
+  mermaid@11.17.1:
+    resolution: {integrity: sha512-G1BP6qU4BRwEGk2SdsxgDk1cSuApimT32Nkb52YRSv+856FrmB8qo28BaNk9Ee8Fvuon3OxpXDJ4L6cD5AykXg==}
 
   micromark-core-commonmark@2.0.3:
     resolution: {integrity: sha512-RDBrHEMSxVFLg6xvnXmb1Ayr2WzLAWjeSATAoxwKYJV94TeNavgoIdA0a9ytzDSVzBy2YKFK+emCPOEibLeCrg==}
@@ -3856,6 +3859,9 @@ packages:
   stable-hash-x@0.2.0:
     resolution: {integrity: sha512-o3yWv49B/o4QZk5ZcsALc6t0+eCelPc44zZsLtCQnZPDwFpDYSWcDnrv2TtMmMbQ7uKo3J0HTURCqckw23czNQ==}
     engines: {node: '>=12.0.0'}
+
+  strictdom@1.0.1:
+    resolution: {integrity: sha512-cEmp9QeXXRmjj/rVp9oyiqcvyocWab/HaoN4+bwFeZ7QzykJD6L3yD4v12K1x0tHpqRqVpJevN3gW7kyM39Bqg==}
 
   string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
@@ -4603,7 +4609,7 @@ snapshots:
     dependencies:
       '@cyberalien/svg-utils': 1.2.16
       '@iconify/types': 2.0.0
-      '@iconify/utils': 3.1.3
+      '@iconify/utils': 3.1.4
       fflate: 0.8.3
       modern-tar: 0.7.6
       pathe: 2.0.3
@@ -4657,7 +4663,7 @@ snapshots:
       '@types/markdown-it': 14.1.2
       markdown-it: 14.3.0
 
-  '@mermaid-js/parser@1.2.0':
+  '@mermaid-js/parser@1.2.1':
     dependencies:
       '@chevrotain/types': 11.1.2
 
@@ -5786,7 +5792,7 @@ snapshots:
 
   alien-signals@3.2.1: {}
 
-  alpinejs@3.16.2:
+  alpinejs@3.16.3:
     dependencies:
       '@vue/reactivity': 3.5.41
 
@@ -6449,6 +6455,10 @@ snapshots:
 
   fast-uri@3.1.4: {}
 
+  fastdom@1.0.12:
+    dependencies:
+      strictdom: 1.0.1
+
   fastest-levenshtein@1.0.16: {}
 
   fastq@1.20.1:
@@ -6965,11 +6975,11 @@ snapshots:
 
   merge2@1.4.1: {}
 
-  mermaid@11.16.1:
+  mermaid@11.17.1:
     dependencies:
       '@braintree/sanitize-url': 7.1.2
       '@iconify/utils': 3.1.4
-      '@mermaid-js/parser': 1.2.0
+      '@mermaid-js/parser': 1.2.1
       '@types/d3': 7.4.3
       '@upsetjs/venn.js': 2.0.0
       cytoscape: 3.34.0
@@ -6981,6 +6991,7 @@ snapshots:
       dayjs: 1.11.21
       dompurify: 3.4.13
       es-toolkit: 1.50.0
+      fastdom: 1.0.12
       katex: 0.16.47
       khroma: 2.1.0
       marked: 16.4.2
@@ -7646,6 +7657,8 @@ snapshots:
   sprintf-js@1.0.3: {}
 
   stable-hash-x@0.2.0: {}
+
+  strictdom@1.0.1: {}
 
   string-width@4.2.3:
     dependencies:
