@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.72.7] - 2026-09-03
+
 ### 🐛 错误修复
 
 - 修复窄屏侧边栏下沉到底部时，开启强制页脚贴底会产生额外滚动条的问题。
@@ -2202,7 +2204,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.6...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.7...HEAD
+[1.72.7]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.6...v1.72.7
 [1.72.6]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.5...v1.72.6
 [1.72.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.4...v1.72.5
 [1.72.4]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.3...v1.72.4
