@@ -62,6 +62,10 @@
       th:insert="~{components/upvote-runtime/template :: head}"
     ></th:block>
     <th:block
+      th:if="${theme.config?.post_styles?.is_post_edit_button_show}"
+      th:insert="~{components/post-edit-button/template :: head}"
+    ></th:block>
+    <th:block
       th:if="${theme.config?.post_styles?.is_show_post_nav_share_button
                or theme.config?.post_styles?.is_show_share_footer}"
       th:insert="~{components/share/template :: head}"
@@ -286,6 +290,11 @@
               >文章字数替换位</span
             >
           </span>
+
+          <th:block
+            th:if="${theme.config?.post_styles?.is_post_edit_button_show}"
+            th:insert="~{components/post-edit-button/template :: body(postName=${post.metadata.name})}"
+          ></th:block>
         </div>
       </header>
 

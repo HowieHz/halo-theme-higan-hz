@@ -5222,6 +5222,44 @@ HTML 代码也是可以的：
 
 :::
 
+### 显示文章编辑按钮
+
+::: info 🎯 用途
+
+在文章页面显示当前文章的编辑入口。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 显示文章编辑按钮
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=显示文章编辑按钮" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_post_edit_button_show`
+
+:::
+::: info ℹ️ 补充信息
+
+未登录用户点击后会先登录，并在成功登录后跳转到当前文章编辑页；已登录用户仅在具有 `system:posts:manage` 权限时显示。实际编辑权限仍由 Halo 后端验证。
+
+:::
+
 ### 桌面端菜单中的分享按钮
 
 ::: info 🎯 用途

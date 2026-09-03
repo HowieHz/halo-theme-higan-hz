@@ -1631,6 +1631,12 @@ spec:
           label: 文章字数统计
           value: false
         - $formkit: switch
+          name: is_post_edit_button_show
+          key: is_post_edit_button_show
+          label: 显示文章编辑按钮
+          value: false
+          help: 启用后，未登录用户登录后将跳转到当前文章编辑页；已登录用户仅在具有文章管理权限时显示此按钮。
+        - $formkit: switch
           name: is_show_post_nav_share_button
           key: is_show_post_nav_share_button
           label: 桌面端菜单中的分享按钮

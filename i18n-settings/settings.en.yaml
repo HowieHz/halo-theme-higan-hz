@@ -1631,6 +1631,12 @@ spec:
           label: Show post word count
           value: false
         - $formkit: switch
+          name: is_post_edit_button_show
+          key: is_post_edit_button_show
+          label: Show post edit button
+          value: false
+          help: When enabled, anonymous users are redirected to the current post editor after signing in; authenticated users see the button only with post management permission.
+        - $formkit: switch
           name: is_show_post_nav_share_button
           key: is_show_post_nav_share_button
           label: Share button in desktop menu

@@ -1,0 +1,40 @@
+<head
+  th:remove="tag"
+  th:fragment="head"
+>
+  <script
+    src="index.ts"
+    type="module"
+  ></script>
+</head>
+<body
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  xmlns:th="https://www.thymeleaf.org"
+  th:remove="tag"
+  th:fragment="body(postName)"
+>
+  <a
+    sec:authorize="isAnonymous()"
+    class="tw:inline-flex tw:items-center tw:gap-x-[0.5ch] tw:align-middle"
+    href="/login"
+    th:attr="data-post-edit-path=|/console/posts/editor?name=${postName}&returnToView=true|"
+    th:title="#{common.edit}"
+    style="background-image: none"
+    onclick="this.href = '/login?redirect_uri=' + encodeURIComponent(this.dataset.postEditPath)"
+  >
+    <span class="tw:iconify tw:mdi--pencil-outline"></span>
+    <span th:text="#{common.edit}"></span>
+  </a>
+  <a
+    sec:authorize="isAuthenticated()"
+    class="tw:inline-flex tw:items-center tw:gap-x-[0.5ch] tw:align-middle"
+    hidden
+    th:href="|/console/posts/editor?name=${postName}&returnToView=true|"
+    data-post-edit-button
+    th:title="#{common.edit}"
+    style="background-image: none"
+  >
+    <span class="tw:iconify tw:mdi--pencil-outline"></span>
+    <span th:text="#{common.edit}"></span>
+  </a>
+</body>

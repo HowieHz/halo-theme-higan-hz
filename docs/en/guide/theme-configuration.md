@@ -5227,6 +5227,44 @@ After enabling the [API Extension](/guide/plugin-compatibility#api-extension) pl
 
 :::
 
+### Show Post Edit Button
+
+::: info 🎯 Purpose
+
+Display an edit entry for the current post on the post page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Post Page Style -> Show post edit button
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show%20post%20edit%20button" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.post_styles?.is_post_edit_button_show`
+
+:::
+::: info ℹ️ Additional Information
+
+Anonymous users sign in before entering the current post editor. Authenticated users see the button only with `system:posts:manage`; Halo backend authorization remains authoritative.
+
+:::
+
 ### Share Button in Desktop Menu
 
 ::: info 🎯 Purpose

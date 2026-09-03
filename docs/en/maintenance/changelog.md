@@ -23,11 +23,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🚀 Features
+
+- Added an optional post edit button that redirects after sign-in and is visible to authenticated users only with post management permission.
+
 ## [1.72.7] - 2026-09-03
 
 ### 🐛 Bug Fixes
 
 - Fixed an extra scrollbar when a sidebar moves to the bottom on narrow screens with force-footer-bottom enabled.
+
+### 🧹 Miscellaneous Chores
+
+- Updated dependencies.
 
 ## [1.72.6] - 2026-08-27
 
