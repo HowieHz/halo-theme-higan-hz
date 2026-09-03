@@ -1981,6 +1981,12 @@ spec:
           label: 页面字数统计
           value: false
         - $formkit: switch
+          name: is_page_edit_button_show
+          key: is_page_edit_button_show
+          label: 显示页面编辑按钮
+          value: false
+          help: 启用后，未登录用户登录后将跳转到当前页面编辑页；已登录用户仅在具有页面管理权限时显示此按钮。
+        - $formkit: switch
           name: is_dividing_line_at_the_end_of_content_show
           key: is_dividing_line_at_the_end_of_content_show
           label: 页面正文内容末尾分隔线

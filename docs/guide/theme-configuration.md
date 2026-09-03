@@ -6811,6 +6811,44 @@ HTML 代码也是可以的：
 
 :::
 
+### 显示页面编辑按钮
+
+::: info 🎯 用途
+
+在页面显示当前页面的编辑入口。
+
+:::
+::: info 📂 配置项位置
+
+自定义页面样式 -> 显示页面编辑按钮
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=显示%20页面编辑按钮" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.custom_page_styles?.is_page_edit_button_show`
+
+:::
+::: info ℹ️ 补充信息
+
+未登录用户点击后会先登录，并在成功登录后跳转到当前页面编辑页；已登录用户仅在具有 `system:singlepages:manage` 权限时显示。实际编辑权限仍由 Halo 后端验证。
+
+:::
+
 ### 页面正文内容末尾分隔线
 
 ::: info 🎯 用途

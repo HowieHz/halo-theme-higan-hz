@@ -1981,6 +1981,12 @@ spec:
           label: Show word count of the article
           value: false
         - $formkit: switch
+          name: is_page_edit_button_show
+          key: is_page_edit_button_show
+          label: Show page edit button
+          value: false
+          help: When enabled, anonymous users are redirected to the current page editor after signing in; authenticated users see the button only with page management permission.
+        - $formkit: switch
           name: is_dividing_line_at_the_end_of_content_show
           key: is_dividing_line_at_the_end_of_content_show
           label: Enable dividing line at the end of the content

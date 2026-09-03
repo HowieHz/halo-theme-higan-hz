@@ -6816,6 +6816,44 @@ After enabling the [API Extension](/guide/plugin-compatibility#api-extension) pl
 
 :::
 
+### Show Page Edit Button
+
+::: info 🎯 Purpose
+
+Display an edit entry for the current page on the page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Custom Page Style -> Show page edit button
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Show%20page%20edit%20button" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.custom_page_styles?.is_page_edit_button_show`
+
+:::
+::: info ℹ️ Additional Information
+
+Anonymous users sign in before entering the current page editor. Authenticated users see the button only with `system:singlepages:manage`; Halo backend authorization remains authoritative.
+
+:::
+
 ### Enable Dividing Line at End of Page Content
 
 ::: info 🎯 Purpose

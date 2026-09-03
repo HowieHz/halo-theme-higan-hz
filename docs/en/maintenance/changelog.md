@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🚀 Features
 
-- Added an optional post edit button that redirects after sign-in and is visible to authenticated users only with post management permission.
+- Added optional post and page edit buttons that redirect after sign-in and are visible to authenticated users only with the corresponding management permission.
 
 ## [1.72.7] - 2026-09-03
 
