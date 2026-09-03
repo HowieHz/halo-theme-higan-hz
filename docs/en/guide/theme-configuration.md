@@ -5261,7 +5261,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Authenticated users see the button only with `system:posts:manage`. The visitor entry is controlled by the Show Post Edit Button to Anonymous Visitors option; Halo backend authorization remains authoritative.
+Shown to authenticated users with `system:posts:manage`.
 
 :::
 
@@ -6890,7 +6890,7 @@ Boolean
 :::
 ::: info ℹ️ Additional Information
 
-Authenticated users see the button only with `system:singlepages:manage`. The visitor entry is controlled by the Show Page Edit Button to Anonymous Visitors option; Halo backend authorization remains authoritative.
+Shown to authenticated users with `system:singlepages:manage`.
 
 :::
 

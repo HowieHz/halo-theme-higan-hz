@@ -1635,7 +1635,7 @@ spec:
           key: is_post_edit_button_show
           label: 显示文章编辑按钮
           value: false
-          help: 启用后，已登录用户仅在具有文章管理权限时显示此按钮；可单独控制是否向访客显示登录入口。
+          help: 启用后，对具有文章管理权限的已登录用户显示编辑按钮。
         - $formkit: switch
           name: is_post_edit_button_show_for_anonymous
           key: is_post_edit_button_show_for_anonymous
@@ -1992,7 +1992,7 @@ spec:
           key: is_page_edit_button_show
           label: 显示页面编辑按钮
           value: false
-          help: 启用后，已登录用户仅在具有页面管理权限时显示此按钮；可单独控制是否向访客显示登录入口。
+          help: 启用后，对具有页面管理权限的已登录用户显示编辑按钮。
         - $formkit: switch
           name: is_page_edit_button_show_for_anonymous
           key: is_page_edit_button_show_for_anonymous

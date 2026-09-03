@@ -5256,7 +5256,7 @@ HTML 代码也是可以的：
 :::
 ::: info ℹ️ 补充信息
 
-已登录用户仅在具有 `system:posts:manage` 权限时显示。访客入口由“对访客显示文章编辑按钮”配置控制；实际编辑权限仍由 Halo 后端验证。
+对具有 `system:posts:manage` 权限的已登录用户显示。
 
 :::
 
@@ -6885,7 +6885,7 @@ HTML 代码也是可以的：
 :::
 ::: info ℹ️ 补充信息
 
-已登录用户仅在具有 `system:singlepages:manage` 权限时显示。访客入口由“对访客显示页面编辑按钮”配置控制；实际编辑权限仍由 Halo 后端验证。
+对具有 `system:singlepages:manage` 权限的已登录用户显示。
 
 :::
 

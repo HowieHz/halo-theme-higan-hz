@@ -1635,7 +1635,7 @@ spec:
           key: is_post_edit_button_show
           label: Show post edit button
           value: false
-          help: When enabled, authenticated users see the button only with post management permission; you can separately control whether anonymous visitors see the sign-in entry.
+          help: When enabled, the edit button is shown to authenticated users with post management permission.
         - $formkit: switch
           name: is_post_edit_button_show_for_anonymous
           key: is_post_edit_button_show_for_anonymous
@@ -1992,7 +1992,7 @@ spec:
           key: is_page_edit_button_show
           label: Show page edit button
           value: false
-          help: When enabled, authenticated users see the button only with page management permission; you can separately control whether anonymous visitors see the sign-in entry.
+          help: When enabled, the edit button is shown to authenticated users with page management permission.
         - $formkit: switch
           name: is_page_edit_button_show_for_anonymous
           key: is_page_edit_button_show_for_anonymous
