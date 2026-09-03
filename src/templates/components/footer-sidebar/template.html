@@ -2,10 +2,13 @@
   th:remove="tag"
   th:fragment="head(isSidebar, isBottomSidebarContent)"
 >
-  <th:block
-    th:if="${isSidebar and isBottomSidebarContent}"
-    th:insert="~{components/style-footer-sidebar/template :: head}"
-  ></th:block>
+  <th:block th:if="${isSidebar and isBottomSidebarContent}">
+    <th:block th:insert="~{components/style-footer-sidebar/template :: head}"></th:block>
+    <th:block
+      th:if="${theme.config?.styles?.is_footer_force_bottom and theme.config?.styles?.footer_content_sidebar_narrow == 'bottom'}"
+      th:insert="~{components/style-footer-force-bottom/template :: head}"
+    ></th:block>
+  </th:block>
 </head>
 <body
   th:remove="tag"
@@ -27,7 +30,6 @@
   <div
     th:if="${isSidebar and isBottomSidebarContent}"
     class="main-with-sidebar"
-    th:classappend="${theme.config?.styles?.is_footer_force_bottom and sidebarNarrow == 'bottom'} ? 'main-with-sidebar--force-footer-bottom' : ''"
   >
     <th:block
       th:if="${isLeftSidebar}"
