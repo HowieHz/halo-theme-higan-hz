@@ -1,8 +1,10 @@
 /**
  * Page size audit JSON extreme compact schema helpers.
  *
- * Protocol only: - root[0]: metadata -> [haloVersion, javaVersion, themeVersion, lhciVersion, generatedAt, publishedAt]
- * - root[1]: flat numbers -> 9 pages * 2 groups * 8 resource types * 2 stats = 288 numbers
+ * Protocol only:
+ *
+ * - Root[0]: metadata -> [haloVersion, javaVersion, themeVersion, lhciVersion, generatedAt, publishedAt]
+ * - Root[1]: flat numbers -> 9 pages * 2 groups * 8 resource types * 2 stats = 288 numbers
  *
  * Fixed page order: /, /archives, /archives/hello-halo, /tags, /tags/halo, /categories, /categories/default,
  * /authors/admin, /about
