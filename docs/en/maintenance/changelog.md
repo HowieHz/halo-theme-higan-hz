@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.73.0] - 2026-09-03
+
 ### 🚀 Features
 
 - Added optional post and page edit buttons that redirect after sign-in and are visible to authenticated users only with the corresponding management permission;
@@ -2302,7 +2304,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.7...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.73.0...HEAD
+[1.73.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.7...v1.73.0
 [1.72.7]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.6...v1.72.7
 [1.72.6]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.5...v1.72.6
 [1.72.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.4...v1.72.5

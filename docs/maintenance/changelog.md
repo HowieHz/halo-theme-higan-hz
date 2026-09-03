@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.73.0] - 2026-09-03
+
 ### 🚀 新功能
 
 - 新增可选的文章和页面编辑按钮，支持登录后跳转到当前内容编辑页，并仅向具有对应管理权限的已登录用户显示；文章和页面按钮均可单独控制是否向访客显示。
@@ -2212,7 +2214,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.7...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.73.0...HEAD
+[1.73.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.7...v1.73.0
 [1.72.7]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.6...v1.72.7
 [1.72.6]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.5...v1.72.6
 [1.72.5]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.4...v1.72.5
