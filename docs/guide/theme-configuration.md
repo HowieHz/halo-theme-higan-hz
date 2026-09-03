@@ -5222,6 +5222,84 @@ HTML 代码也是可以的：
 
 :::
 
+### 显示文章编辑按钮
+
+::: info 🎯 用途
+
+在文章页面显示当前文章的编辑入口。
+
+:::
+::: info 📂 配置项位置
+
+文章页样式 -> 显示文章编辑按钮
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=显示文章编辑按钮" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_post_edit_button_show`
+
+:::
+::: info ℹ️ 补充信息
+
+对具有 `system:posts:manage` 权限的已登录用户显示。
+
+:::
+
+### 对访客显示文章编辑按钮
+
+::: info 🎯 用途
+
+控制是否为未登录访客显示文章编辑按钮。
+
+:::
+::: info 📂 配置项位置
+
+（[文章页样式 -> 显示文章编辑按钮](#显示文章编辑按钮)启用时显示）
+
+文章页样式 -> 对访客显示文章编辑按钮
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=对访客显示文章编辑按钮" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.post_styles?.is_post_edit_button_show_for_anonymous`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后，会向未登录访客显示编辑按钮。未登录访客点击编辑按钮会进入登录页，并在成功登录后跳转到当前文章编辑页。
+
+:::
+
 ### 桌面端菜单中的分享按钮
 
 ::: info 🎯 用途
@@ -6770,6 +6848,84 @@ HTML 代码也是可以的：
 ::: info ℹ️ 补充信息
 
 启用 [API 拓展](/guide/plugin-compatibility#api-扩展)插件后将自动启用更准确的计量方法。
+
+:::
+
+### 显示页面编辑按钮
+
+::: info 🎯 用途
+
+在页面显示当前页面的编辑入口。
+
+:::
+::: info 📂 配置项位置
+
+自定义页面样式 -> 显示页面编辑按钮
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=显示%20页面编辑按钮" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`false`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.custom_page_styles?.is_page_edit_button_show`
+
+:::
+::: info ℹ️ 补充信息
+
+对具有 `system:singlepages:manage` 权限的已登录用户显示。
+
+:::
+
+### 对访客显示页面编辑按钮
+
+::: info 🎯 用途
+
+控制是否为未登录访客显示页面编辑按钮。
+
+:::
+::: info 📂 配置项位置
+
+（[自定义页面样式 -> 显示页面编辑按钮](#显示页面编辑按钮)启用时显示）
+
+自定义页面样式 -> 显示页面编辑按钮 -> 对访客显示页面编辑按钮
+
+:::
+::: info ⚡ 快速跳转
+
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=对访客显示页面编辑按钮" />
+
+:::
+::: info 🏷️ 类型
+
+布尔值
+
+:::
+::: info ⭐ 默认值
+
+`true`
+
+:::
+::: info 🧩 模板变量
+
+`theme.config?.custom_page_styles?.is_page_edit_button_show_for_anonymous`
+
+:::
+::: info ℹ️ 补充信息
+
+启用后，会向未登录访客显示编辑按钮。未登录访客点击编辑按钮会进入登录页，并在成功登录后跳转到当前页面编辑页。
 
 :::
 

@@ -5227,6 +5227,84 @@ After enabling the [API Extension](/guide/plugin-compatibility#api-extension) pl
 
 :::
 
+### Show Post Edit Button
+
+::: info 🎯 Purpose
+
+Display an edit entry for the current post on the post page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Post Page Style -> Show post edit button
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show%20post%20edit%20button" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.post_styles?.is_post_edit_button_show`
+
+:::
+::: info ℹ️ Additional Information
+
+Shown to authenticated users with `system:posts:manage`.
+
+:::
+
+### Show Post Edit Button to Anonymous Visitors
+
+::: info 🎯 Purpose
+
+Control whether to show the post edit button to anonymous visitors.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Shown when [Post Page Style -> Show Post Edit Button](#show-post-edit-button) is enabled)
+
+Post Page Style -> Show Post Edit Button to Anonymous Visitors
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show%20post%20edit%20button%20to%20anonymous%20visitors" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.post_styles?.is_post_edit_button_show_for_anonymous`
+
+:::
+::: info ℹ️ Additional Information
+
+When enabled, the edit button is shown to anonymous visitors. Anonymous visitors who select it are taken to the sign-in page and redirected to the current post editor after signing in.
+
+:::
+
 ### Share Button in Desktop Menu
 
 ::: info 🎯 Purpose
@@ -6775,6 +6853,84 @@ Boolean
 ::: info ℹ️ Additional Information
 
 After enabling the [API Extension](/guide/plugin-compatibility#api-extension) plugin, a more accurate measurement method will be automatically enabled.
+
+:::
+
+### Show Page Edit Button
+
+::: info 🎯 Purpose
+
+Display an edit entry for the current page on the page.
+
+:::
+::: info 📂 Configuration Item Location
+
+Custom Page Style -> Show page edit button
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Show%20page%20edit%20button" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`false`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.custom_page_styles?.is_page_edit_button_show`
+
+:::
+::: info ℹ️ Additional Information
+
+Shown to authenticated users with `system:singlepages:manage`.
+
+:::
+
+### Show Page Edit Button to Anonymous Visitors
+
+::: info 🎯 Purpose
+
+Control whether to show the page edit button to anonymous visitors.
+
+:::
+::: info 📂 Configuration Item Location
+
+(Shown when [Custom Page Style -> Show Page Edit Button](#show-page-edit-button) is enabled)
+
+Custom Page Style -> Show Page Edit Button -> Show Page Edit Button to Anonymous Visitors
+
+:::
+::: info ⚡ Quick Jump
+
+<QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Show%20page%20edit%20button%20to%20anonymous%20visitors" />
+
+:::
+::: info 🏷️ Type
+
+Boolean
+
+:::
+::: info ⭐ Default Value
+
+`true`
+
+:::
+::: info 🧩 Template Variable
+
+`theme.config?.custom_page_styles?.is_page_edit_button_show_for_anonymous`
+
+:::
+::: info ℹ️ Additional Information
+
+When enabled, the edit button is shown to anonymous visitors. Anonymous visitors who select it are taken to the sign-in page and redirected to the current page editor after signing in.
 
 :::
 

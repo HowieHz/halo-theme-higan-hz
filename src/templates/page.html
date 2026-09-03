@@ -20,6 +20,10 @@
       src="@runtime/pages/page/index.ts"
       type="module"
     ></script>
+    <th:block
+      th:if="${theme.config?.custom_page_styles?.is_page_edit_button_show}"
+      th:insert="~{components/page-edit-button/template :: head}"
+    ></th:block>
     <th:block th:insert="~{components/header/template :: head}"></th:block>
     <th:block
       th:if="${theme.config?.custom_page_styles?.is_custom_page_comment_section_show
@@ -92,6 +96,10 @@
               >文章字数替换位</span
             >
           </span>
+          <th:block
+            th:if="${theme.config?.custom_page_styles?.is_page_edit_button_show}"
+            th:insert="~{components/page-edit-button/template :: body(pageName=${singlePage.metadata.name})}"
+          ></th:block>
         </div>
       </header>
 

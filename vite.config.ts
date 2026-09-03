@@ -169,6 +169,14 @@ function getBuildInputs(extraEntries: BuildEntryMap = {}): BuildEntryMap {
       "src/templates/components/dark-content-text-style/template.html",
     ),
     "components-upvote-runtime": resolve(import.meta.dirname, "src/templates/components/upvote-runtime/template.html"),
+    "components-post-edit-button": resolve(
+      import.meta.dirname,
+      "src/templates/components/post-edit-button/template.html",
+    ),
+    "components-page-edit-button": resolve(
+      import.meta.dirname,
+      "src/templates/components/page-edit-button/template.html",
+    ),
     "components-paragraph-first-line-indent-style": resolve(
       import.meta.dirname,
       "src/templates/components/paragraph-first-line-indent-style/template.html",
