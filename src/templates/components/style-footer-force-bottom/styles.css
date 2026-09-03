@@ -1,0 +1,16 @@
+@media (width < 1024px) {
+  .main-with-sidebar {
+    min-height: 100vh;
+
+    & > .max-width {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+
+      & > .content {
+        flex: 1;
+        min-height: auto;
+      }
+    }
+  }
+}

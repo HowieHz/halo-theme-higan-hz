@@ -140,6 +140,10 @@ function getBuildInputs(extraEntries: BuildEntryMap = {}): BuildEntryMap {
       import.meta.dirname,
       "src/templates/components/style-footer-sidebar/template.html",
     ),
+    "components-style-footer-force-bottom": resolve(
+      import.meta.dirname,
+      "src/templates/components/style-footer-force-bottom/template.html",
+    ),
     "components-text-size-small": resolve(
       import.meta.dirname,
       "src/templates/components/text-size-small/template.html",
