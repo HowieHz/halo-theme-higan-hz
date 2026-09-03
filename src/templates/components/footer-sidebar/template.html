@@ -27,6 +27,7 @@
   <div
     th:if="${isSidebar and isBottomSidebarContent}"
     class="main-with-sidebar"
+    th:classappend="${theme.config?.styles?.is_footer_force_bottom and sidebarNarrow == 'bottom'} ? 'main-with-sidebar--force-footer-bottom' : ''"
   >
     <th:block
       th:if="${isLeftSidebar}"
