@@ -15,6 +15,7 @@
 >
   <a
     sec:authorize="isAnonymous()"
+    th:if="${theme.config?.custom_page_styles?.is_page_edit_button_show_for_anonymous}"
     class="tw:inline-flex tw:items-center tw:gap-x-[0.5ch] tw:align-middle"
     href="/login"
     th:attr="data-page-edit-path=|/console/single-pages/editor?name=${pageName}&returnToView=true|"

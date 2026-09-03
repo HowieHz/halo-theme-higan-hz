@@ -15,6 +15,7 @@
 >
   <a
     sec:authorize="isAnonymous()"
+    th:if="${theme.config?.post_styles?.is_post_edit_button_show_for_anonymous}"
     class="tw:inline-flex tw:items-center tw:gap-x-[0.5ch] tw:align-middle"
     href="/login"
     th:attr="data-post-edit-path=|/console/posts/editor?name=${postName}&returnToView=true|"

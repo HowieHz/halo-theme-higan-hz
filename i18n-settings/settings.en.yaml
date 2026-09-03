@@ -1635,7 +1635,14 @@ spec:
           key: is_post_edit_button_show
           label: Show post edit button
           value: false
-          help: When enabled, anonymous users are redirected to the current post editor after signing in; authenticated users see the button only with post management permission.
+          help: When enabled, authenticated users see the button only with post management permission; you can separately control whether anonymous visitors see the sign-in entry.
+        - $formkit: switch
+          name: is_post_edit_button_show_for_anonymous
+          key: is_post_edit_button_show_for_anonymous
+          if: "$is_post_edit_button_show === true"
+          label: Show post edit button to anonymous visitors
+          value: true
+          help: When enabled, the edit button is shown to anonymous visitors. Anonymous visitors who select it are taken to the sign-in page and redirected to the current post editor after signing in.
         - $formkit: switch
           name: is_show_post_nav_share_button
           key: is_show_post_nav_share_button
@@ -1985,7 +1992,14 @@ spec:
           key: is_page_edit_button_show
           label: Show page edit button
           value: false
-          help: When enabled, anonymous users are redirected to the current page editor after signing in; authenticated users see the button only with page management permission.
+          help: When enabled, authenticated users see the button only with page management permission; you can separately control whether anonymous visitors see the sign-in entry.
+        - $formkit: switch
+          name: is_page_edit_button_show_for_anonymous
+          key: is_page_edit_button_show_for_anonymous
+          if: "$is_page_edit_button_show === true"
+          label: Show page edit button to anonymous visitors
+          value: true
+          help: When enabled, the edit button is shown to anonymous visitors. Anonymous visitors who select it are taken to the sign-in page and redirected to the current page editor after signing in.
         - $formkit: switch
           name: is_dividing_line_at_the_end_of_content_show
           key: is_dividing_line_at_the_end_of_content_show

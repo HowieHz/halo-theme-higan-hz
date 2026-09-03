@@ -1635,7 +1635,14 @@ spec:
           key: is_post_edit_button_show
           label: 显示文章编辑按钮
           value: false
-          help: 启用后，未登录用户登录后将跳转到当前文章编辑页；已登录用户仅在具有文章管理权限时显示此按钮。
+          help: 启用后，已登录用户仅在具有文章管理权限时显示此按钮；可单独控制是否向访客显示登录入口。
+        - $formkit: switch
+          name: is_post_edit_button_show_for_anonymous
+          key: is_post_edit_button_show_for_anonymous
+          if: "$is_post_edit_button_show === true"
+          label: 对访客显示文章编辑按钮
+          value: true
+          help: 启用后，会向未登录访客显示编辑按钮。未登录访客点击编辑按钮会进入登录页，并在成功登录后跳转到当前文章编辑页。
         - $formkit: switch
           name: is_show_post_nav_share_button
           key: is_show_post_nav_share_button
@@ -1985,7 +1992,14 @@ spec:
           key: is_page_edit_button_show
           label: 显示页面编辑按钮
           value: false
-          help: 启用后，未登录用户登录后将跳转到当前页面编辑页；已登录用户仅在具有页面管理权限时显示此按钮。
+          help: 启用后，已登录用户仅在具有页面管理权限时显示此按钮；可单独控制是否向访客显示登录入口。
+        - $formkit: switch
+          name: is_page_edit_button_show_for_anonymous
+          key: is_page_edit_button_show_for_anonymous
+          if: "$is_page_edit_button_show === true"
+          label: 对访客显示页面编辑按钮
+          value: true
+          help: 启用后，会向未登录访客显示编辑按钮。未登录访客点击编辑按钮会进入登录页，并在成功登录后跳转到当前页面编辑页。
         - $formkit: switch
           name: is_dividing_line_at_the_end_of_content_show
           key: is_dividing_line_at_the_end_of_content_show
