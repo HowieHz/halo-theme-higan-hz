@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🔧 Code Refactoring
+
+- Simplify the table-of-contents overlay and embedded article media positioning with `inset: 0`.
+
 ## [1.73.0] - 2026-09-03
 
 ### 🚀 Features

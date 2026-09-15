@@ -210,11 +210,8 @@
 
   /* 平板端 TOC Overlay 样式 */
   #toc-overlay-tablet {
-    height: 100%;
-    left: 0;
+    inset: 0;
     position: fixed;
-    top: 0;
-    width: 100%;
     z-index: 60;
 
     @media (width >= 1024px) {
@@ -228,11 +225,8 @@
     & #toc-overlay-backdrop {
       backdrop-filter: blur(4px);
       background: color-mix(in oklab, var(--color-base-100) 50%, transparent);
-      height: 100%;
-      left: 0;
+      inset: 0;
       position: absolute;
-      top: 0;
-      width: 100%;
     }
 
     & #toc-overlay-content {
@@ -544,3 +538,4 @@
 
   /* 文章页正文末尾 推荐文章和相邻导航字体颜色设置 end */
 }
+

@@ -98,12 +98,9 @@ article {
       & iframe,
       & object,
       & embed {
-        height: 100%;
-        left: 0;
+        inset: 0;
         margin-top: 0;
         position: absolute;
-        top: 0;
-        width: 100%;
       }
     }
 
@@ -214,3 +211,4 @@ html[data-color-scheme="dark"] article .content {
 }
 
 /* 明暗控制显示 样式块 结束 */
+
