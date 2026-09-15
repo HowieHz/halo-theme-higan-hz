@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.73.1] - 2026-09-15
+
 ### 🔧 代码重构
 
 - 使用 `inset: 0` 简化文章目录遮罩层及文章内嵌媒体定位样式。
@@ -2218,7 +2220,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.73.0...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.73.1...HEAD
+[1.73.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.73.0...v1.73.1
 [1.73.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.7...v1.73.0
 [1.72.7]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.6...v1.72.7
 [1.72.6]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.5...v1.72.6
