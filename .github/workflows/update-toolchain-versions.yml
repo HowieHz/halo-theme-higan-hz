@@ -29,7 +29,7 @@ jobs:
       - name: Update toolchain versions
         id: update-toolchain
         run: node .github/scripts/update-toolchain-versions.js
-      
+
       - name: Update Lockfile
         if: ${{ steps.update-toolchain.outputs.changed == 'true' }}
         run: pnpm install --no-frozen-lockfile
