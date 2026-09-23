@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.73.2] - 2026-09-23
+
 ### 🐛 Bug Fixes
 
 - Fixed the home page failing to render when the multi post list could not read post content for word count estimation without the [extra-ap](https://www.halo.run/store/apps/app-di1jh8gd) plugin.
@@ -2318,7 +2320,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored the theme-switching implementation.
 - Updated original project links to point to the fork and adjusted metadata to avoid conflicts with the upstream theme.
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.73.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.73.2...HEAD
+[1.73.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.73.1...v1.73.2
 [1.73.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.73.0...v1.73.1
 [1.73.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.7...v1.73.0
 [1.72.7]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.6...v1.72.7

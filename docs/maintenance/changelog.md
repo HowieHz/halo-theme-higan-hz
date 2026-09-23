@@ -23,6 +23,8 @@
 
 ## [Unreleased]
 
+## [1.73.2] - 2026-09-23
+
 ### 🐛 错误修复
 
 - 修复未安装[额外 API](https://www.halo.run/store/apps/app-di1jh8gd) 插件时，多元文章列表因无法读取字数统计所需的正文而导致首页渲染失败的问题。
@@ -2228,7 +2230,8 @@
 - 重构样式切换方式
 - 修改原项目链接指向 fork 后的项目链接，修改元数据避免与原主题冲突
 
-[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.73.1...HEAD
+[Unreleased]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.73.2...HEAD
+[1.73.2]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.73.1...v1.73.2
 [1.73.1]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.73.0...v1.73.1
 [1.73.0]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.7...v1.73.0
 [1.72.7]: https://github.com/HowieHz/halo-theme-higan-hz/compare/v1.72.6...v1.72.7
