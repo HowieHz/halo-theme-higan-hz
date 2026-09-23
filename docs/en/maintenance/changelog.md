@@ -23,6 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🐛 Bug Fixes
+
+- Fixed the home page failing to render when the multi post list could not read post content for word count estimation without the [extra-ap](https://www.halo.run/store/apps/app-di1jh8gd) plugin.
+
+### 🧹 Miscellaneous Chores
+
+- Updated dependencies.
+
 ## [1.73.1] - 2026-09-15
 
 ### 🔧 Code Refactoring
