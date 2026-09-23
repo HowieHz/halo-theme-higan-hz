@@ -142,7 +142,7 @@
                   class="color-time tw:relative tw:z-10 tw:mt-0.5 tw:mb-0 tw:inline-flex tw:items-center tw:gap-x-[1ch] tw:p-0 tw:align-middle tw:text-sm"
                   th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                          ? extraApiStatsFinder.getPostWordCount({name: post.metadata.name})
-                                         : #strings.length(post.content?.content) / 2 }"
+                                         : #strings.length(postFinder.getByName(post.metadata.name).content) / 2 }"
                   th:title="#{page.post.estimated-reading-time(#{common.words(${wordCount})})}"
                 >
                   <span class="tw:iconify tw:mdi--clock-outline"></span>
@@ -159,7 +159,7 @@
                   class="color-time tw:relative tw:z-10 tw:mt-0.5 tw:mb-0 tw:inline-flex tw:items-center tw:gap-x-[1ch] tw:p-0 tw:align-middle tw:text-sm"
                   th:with="wordCount = ${pluginFinder.available('extra-api', '3.*')
                                          ? extraApiStatsFinder.getPostWordCount({name: post.metadata.name})
-                                         : #strings.length(post.content?.content) / 2 }"
+                                         : #strings.length(postFinder.getByName(post.metadata.name).content) / 2 }"
                   th:title="|#{page.post.word-count} #{common.words(${wordCount})}|"
                 >
                   <span class="tw:iconify tw:mdi--format-text"></span>
