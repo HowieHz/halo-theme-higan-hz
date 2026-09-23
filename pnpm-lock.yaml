@@ -199,8 +199,8 @@ importers:
         specifier: ^1.2.4
         version: 1.2.4
       '@iconify-json/material-symbols':
-        specifier: ^1.2.92
-        version: 1.2.92
+        specifier: ^1.2.93
+        version: 1.2.93
       '@iconify-json/mdi':
         specifier: ^1.2.3
         version: 1.2.3
@@ -250,8 +250,8 @@ importers:
         specifier: ^4.17.1
         version: 4.17.1(@typescript-eslint/utils@8.69.0)(eslint@10.10.0)(supports-color@10.2.2)
       eslint-plugin-oxlint:
-        specifier: ^1.84.0
-        version: 1.84.0(oxlint@1.85.0)
+        specifier: ^1.85.0
+        version: 1.85.0(oxlint@1.85.0)
       eslint-plugin-vue:
         specifier: ^10.11.0
         version: 10.11.0(@typescript-eslint/parser@8.70.1)(eslint@10.10.0)(vue-eslint-parser@10.4.1)
@@ -761,8 +761,8 @@ packages:
   '@iconify-json/ic@1.2.4':
     resolution: {integrity: sha512-pzPMmrZrBQuwT7nmtrYdkttun8KalRGgZPIL1Ny9KpF2zjRGIUPN+npTfuD3lrgO/OnSwAoJWuekQwBpt/Cqrw==}
 
-  '@iconify-json/material-symbols@1.2.92':
-    resolution: {integrity: sha512-8DQClJc/77mpdlpNiWyjGXpx81YZuoNklrWNe/6K2rJtLTPU/7kRA7F/F8l5Q0a5yFvNlWuMReGB0m4CQ8cepA==}
+  '@iconify-json/material-symbols@1.2.93':
+    resolution: {integrity: sha512-IfbpRixmEdeBrl2Bc+RtNZGb3NcTnMiPP4WausCParQYpIdezEYYbgMggJC1cYzm1q0f77p53t5tppy9PWsrvQ==}
 
   '@iconify-json/mdi@1.2.3':
     resolution: {integrity: sha512-O3cLwbDOK7NNDf2ihaQOH5F9JglnulNDFV7WprU2dSoZu3h3cWH//h74uQAB87brHmvFVxIOkuBX2sZSzYhScg==}
@@ -2852,10 +2852,10 @@ packages:
       eslint-import-resolver-node:
         optional: true
 
-  eslint-plugin-oxlint@1.84.0:
-    resolution: {integrity: sha512-HgoGYYrrEzEvY4dQgfFeVdBeLlHr0vMWY481w70BxcgIjj0iPwSvXRMpCgf4uyfxoqMk55tCadfT9T0uTI3sfg==}
+  eslint-plugin-oxlint@1.85.0:
+    resolution: {integrity: sha512-ea+6IH4JRVX1le3C6KLNZ181qhCQwGPDO5kTzAZ8OM3joF4656G0RN8OOXaly78L2RAFuREYQEUIlwOjy0YG8A==}
     peerDependencies:
-      oxlint: ~1.84.0
+      oxlint: ~1.85.0
 
   eslint-plugin-vue@10.11.0:
     resolution: {integrity: sha512-fGt38SsaPCZ2FmA3bX/3vOW2qdsPNx0/9x+7Aab6NMX++PhynMtK4LWC4vzXgfQBCqpUAler18H38GA+NBAd0Q==}
@@ -4682,7 +4682,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/material-symbols@1.2.92':
+  '@iconify-json/material-symbols@1.2.93':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -6521,7 +6521,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-oxlint@1.84.0(oxlint@1.85.0):
+  eslint-plugin-oxlint@1.85.0(oxlint@1.85.0):
     dependencies:
       jsonc-parser: 3.3.1
       oxlint: 1.85.0(oxlint-tsgolint@7.0.2002)
