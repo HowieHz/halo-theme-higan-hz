@@ -75,11 +75,13 @@ const QuickJumpConfig = (props) => {
 即可在本文档启用快速跳转链接。
 
 :::
+
 ::: info 站点链接
 
 <input v-model="inputBaseUrl" placeholder="请在此处填写你的 Halo 站点链接。例：https://example.com" style="width:100%" />
 
 :::
+
 <template v-if="canJump">
 
 ::: info 请确保此链接可访问
@@ -98,11 +100,13 @@ const QuickJumpConfig = (props) => {
 说明配置项用途。
 
 :::
+
 ::: info 📂 配置项位置
 
 说明在主题配置项的位置。
 
 :::
+
 ::: info ⚡ 快速跳转
 
 点击即可快速跳转到对应主题配置项。
@@ -148,21 +152,25 @@ const QuickJumpConfig = (props) => {
 再举几个例子便于理解。
 
 :::
+
 ::: info 🔒 内部约束
 
 如果填写的配置值不满足这个要求，将无法保存配置。
 
 :::
+
 ::: info ⚠️ 外部约束
 
 如果填写的配置值不满足这个要求，主题可能无法正常工作。
 
 :::  
+
 ::: info 🧩 模板变量
 
 提供给模板开发者使用的变量，用于读取此配置值。可通过 `${模板变量}` 使用。
 
 :::
+
 ::: info ℹ️ 补充信息
 
 补充说明一些信息。
@@ -183,31 +191,37 @@ const QuickJumpConfig = (props) => {
 设定文章在浏览页的 HTML 标题。如果配置值为空，则 HTML 标题取文章标题。
 
 :::
+
 ::: info 📂 配置项位置
 
 文章元数据 -> 页面标题
 
 :::
+
 ::: info 🏷️ 类型
 
 字符串
 
 :::
+
 ::: info ⭐ 默认值
 
 空
 
 :::
+
 ::: info 💡 示例值
 
 - `Halo 主题指南`
 
 :::
+
 ::: info ⚠️ 外部约束
 
 如果配置值过长，可能影响 SEO 和页面显示效果。
 
 :::
+
 ::: info 🧩 模板变量
 
 `#annotations.get(post, 'higan.howiehz.top/page-title')`
@@ -224,31 +238,37 @@ const QuickJumpConfig = (props) => {
 设定文章在浏览页的页面语言（HTML `lang` 属性）。如果配置值为空，将按[页面语言设定优先级](/reference/faq#页面语言设定优先级)进行回退。
 
 :::
+
 ::: info 📂 配置项位置
 
 文章元数据 -> 页面语言
 
 :::
+
 ::: info 🏷️ 类型
 
 字符串
 
 :::
+
 ::: info ⭐ 默认值
 
 空
 
 :::
+
 ::: info 💡 示例值
 
 `zh`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 
 :::
+
 ::: info ⚠️ 外部约束
 
 设定值需满足 [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82)，否则无效。
 
 :::
+
 ::: info 🧩 模板变量
 
 `#annotations.get(post, 'higan.howiehz.top/page-language')`
@@ -262,21 +282,25 @@ const QuickJumpConfig = (props) => {
 设定文章是否显示在文章列表中（包括[首页](/guide/theme-configuration#首页样式)、[标签详情页](/guide/theme-configuration#标签详情页样式)，[分类详情页](/guide/theme-configuration#分类详情页样式)，[作者详情页](/guide/theme-configuration#作者详情页样式)，[归档页](/guide/theme-configuration#归档页样式)）。
 
 :::
+
 ::: info 📂 配置项位置
 
 文章元数据 -> 显示在文章列表中
 
 :::
+
 ::: info 🏷️ 类型
 
 布尔值
 
 :::
+
 ::: info ⭐ 默认值
 
 `true`
 
 :::
+
 ::: info 🧩 模板变量
 
 `#annotations.getOrDefault(post, 'higan.howiehz.top/show-in-post-list', 'true')`
@@ -296,31 +320,37 @@ const QuickJumpConfig = (props) => {
 设定分类详情页的 HTML 标题。如果配置值为空，则 HTML 标题取分类名。
 
 :::
+
 ::: info 📂 配置项位置
 
 分类元数据 -> 页面标题
 
 :::
+
 ::: info 🏷️ 类型
 
 字符串
 
 :::
+
 ::: info ⭐ 默认值
 
 空
 
 :::
+
 ::: info 💡 示例值
 
 - `Halo 主题指南`
 
 :::
+
 ::: info ⚠️ 外部约束
 
 如果配置值过长，可能影响 SEO 和页面显示效果。
 
 :::
+
 ::: info 🧩 模板变量
 
 `#annotations.get(category, 'higan.howiehz.top/page-title)`
@@ -337,31 +367,37 @@ const QuickJumpConfig = (props) => {
 设定分类详情页的页面语言（HTML `lang` 属性）。如果配置值为空，将按[页面语言设定优先级](/reference/faq#页面语言设定优先级)进行回退。
 
 :::
+
 ::: info 📂 配置项位置
 
 分类元数据 -> 页面语言
 
 :::
+
 ::: info 🏷️ 类型
 
 字符串
 
 :::
+
 ::: info ⭐ 默认值
 
 空
 
 :::
+
 ::: info 💡 示例值
 
 `zh`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 
 :::
+
 ::: info ⚠️ 外部约束
 
 设定值需满足 [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82)，否则无效。
 
 :::
+
 ::: info 🧩 模板变量
 
 `#annotations.get(category, 'higan.howiehz.top/page-language')`
@@ -381,31 +417,37 @@ const QuickJumpConfig = (props) => {
 设定标签详情页的 HTML 标题。如果配置值为空，则 HTML 标题取标签名。
 
 :::
+
 ::: info 📂 配置项位置
 
 标签元数据 -> 页面标题
 
 :::
+
 ::: info 🏷️ 类型
 
 字符串
 
 :::
+
 ::: info ⭐ 默认值
 
 空
 
 :::
+
 ::: info 💡 示例值
 
 - `Halo 主题指南`
 
 :::
+
 ::: info ⚠️ 外部约束
 
 如果配置值过长，可能影响 SEO 和页面显示效果。
 
 :::
+
 ::: info 🧩 模板变量
 
 `#annotations.get(tag, 'higan.howiehz.top/page-title')`
@@ -422,31 +464,37 @@ const QuickJumpConfig = (props) => {
 设定标签详情页的页面语言（HTML `lang` 属性）。如果配置值为空，将按[页面语言设定优先级](/reference/faq#页面语言设定优先级)进行回退。
 
 :::
+
 ::: info 📂 配置项位置
 
 标签元数据 -> 页面语言
 
 :::
+
 ::: info 🏷️ 类型
 
 字符串
 
 :::
+
 ::: info ⭐ 默认值
 
 空
 
 :::
+
 ::: info 💡 示例值
 
 `zh`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 
 :::
+
 ::: info ⚠️ 外部约束
 
 设定值需满足 [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82)，否则无效。
 
 :::
+
 ::: info 🧩 模板变量
 
 `#annotations.get(tag, 'higan.howiehz.top/page-language')`
@@ -469,11 +517,13 @@ const QuickJumpConfig = (props) => {
 让自定义页面使用类似文章页的布局和样式。
 
 :::
+
 ::: info 📂 配置项位置
 
 自定义页面样式 -> 自定义模板
 
 :::
+
 ::: info ℹ️ 补充信息
 
 启用后，自定义页面将使用类似文章页的布局和样式。
@@ -492,31 +542,37 @@ const QuickJumpConfig = (props) => {
 设定页面的 HTML 标题。如果配置值为空，则 HTML 标题取页面标题。
 
 :::
+
 ::: info 📂 配置项位置
 
 页面元数据 -> 页面标题
 
 :::
+
 ::: info 🏷️ 类型
 
 字符串
 
 :::
+
 ::: info ⭐ 默认值
 
 空
 
 :::
+
 ::: info 💡 示例值
 
 - `Halo 主题指南`
 
 :::
+
 ::: info ⚠️ 外部约束
 
 如果配置值过长，可能影响 SEO 和页面显示效果。
 
 :::
+
 ::: info 🧩 模板变量
 
 `#annotations.get(singlePage, 'higan.howiehz.top/page-title')`
@@ -533,31 +589,37 @@ const QuickJumpConfig = (props) => {
 设定页面语言（HTML `lang` 属性）。如果配置值为空，将按[页面语言设定优先级](/reference/faq#页面语言设定优先级)进行回退。
 
 :::
+
 ::: info 📂 配置项位置
 
 页面元数据 -> 页面语言
 
 :::
+
 ::: info 🏷️ 类型
 
 字符串
 
 :::
+
 ::: info ⭐ 默认值
 
 空
 
 :::
+
 ::: info 💡 示例值
 
 `zh`、`zh-Hans`、`zh-Hant`、`en`、`en-US`
 
 :::
+
 ::: info ⚠️ 外部约束
 
 设定值需满足 [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82)，否则无效。
 
 :::
+
 ::: info 🧩 模板变量
 
 `#annotations.get(post, 'higan.howiehz.top/page-language')`

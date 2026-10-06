@@ -915,7 +915,7 @@ This is normal text <small>This is small text</small> This is normal text
 ### Markdown 写法
 
 ```markdown
----
+***
 ```
 
 ### HTML 标签写法
@@ -1044,19 +1044,24 @@ This is normal text <small>This is small text</small> This is normal text
 以下是示例：
 
 <!-- prettier-ignore-start -->
+
 ```html
-<div class="auto"><pre><code class="language-mermaid">
+<div class="auto">
+  <pre><code class="language-mermaid">
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
     B --> C{Let me think}
     C -->|One| D[Laptop]
     C -->|Two| E[iPhone]
     C -->|Three| F[fa:fa-car Car]
-</code></pre></div>
+</code></pre>
+</div>
 ```
+
 <!-- prettier-ignore-end -->
 
 :::
+
 ::: details 方法四 HTML 写法手动管理明暗主题
 需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
 需要使用 HTML 写法，相关链接：[如何在编辑器中使用 HTML 写法](#如何在编辑器中使用-html-写法)。  
@@ -1065,8 +1070,10 @@ flowchart TD
 以下是示例：
 
 <!-- prettier-ignore-start -->
+
 ```html
-<div class="dark"><pre><code class="language-mermaid">
+<div class="dark">
+  <pre><code class="language-mermaid">
 %%{init: { "theme": "dark" } }%%
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
@@ -1074,9 +1081,11 @@ flowchart TD
     C -->|One| D[Laptop]
     C -->|Two| E[iPhone]
     C -->|Three| F[fa:fa-car Car]
-</code></pre></div>
+</code></pre>
+</div>
 
-<div class="light"><pre><code class="language-mermaid">
+<div class="light">
+  <pre><code class="language-mermaid">
 %%{init: { "theme": "light" } }%%
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
@@ -1084,8 +1093,10 @@ flowchart TD
     C -->|One| D[Laptop]
     C -->|Two| E[iPhone]
     C -->|Three| F[fa:fa-car Car]
-</code></pre></div>
+</code></pre>
+</div>
 ```
+
 <!-- prettier-ignore-end -->
 
 :::
@@ -1102,6 +1113,7 @@ flowchart TD
 以下是示例：
 
 <!-- prettier-ignore-start -->
+
 ````markdown
 ```mermaid
 flowchart TD
@@ -1112,6 +1124,7 @@ flowchart TD
     C -->|Three| F[fa:fa-car Car]
 ```
 ````
+
 <!-- prettier-ignore-end -->
 
 如上所示，使用 Markdown 代码块语法正常书写即可。
@@ -1125,20 +1138,14 @@ flowchart TD
 以下是示例：
 
 <!-- prettier-ignore-start -->
+
 ````html
 <div class="auto">
-
-```mermaid
-flowchart TD
-    A[Christmas] -->|Get money| B(Go shopping)
-    B --> C{Let me think}
-    C -->|One| D[Laptop]
-    C -->|Two| E[iPhone]
-    C -->|Three| F[fa:fa-car Car]
-```
-
+  ```mermaid flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me think} C -->|One| D[Laptop] C
+  -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
 </div>
 ````
+
 <!-- prettier-ignore-end -->
 
 :::
@@ -1150,35 +1157,19 @@ flowchart TD
 以下是示例：
 
 <!-- prettier-ignore-start -->
+
 ````html
 <div class="dark">
-
-```mermaid
-%%{init: { "theme": "dark" } }%%
-flowchart TD
-    A[Christmas] -->|Get money| B(Go shopping)
-    B --> C{Let me think}
-    C -->|One| D[Laptop]
-    C -->|Two| E[iPhone]
-    C -->|Three| F[fa:fa-car Car]
-```
-
+  ```mermaid %%{init: { "theme": "dark" } }%% flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me
+  think} C -->|One| D[Laptop] C -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
 </div>
 
 <div class="light">
-
-```mermaid
-%%{init: { "theme": "light" } }%%
-flowchart TD
-    A[Christmas] -->|Get money| B(Go shopping)
-    B --> C{Let me think}
-    C -->|One| D[Laptop]
-    C -->|Two| E[iPhone]
-    C -->|Three| F[fa:fa-car Car]
-```
-
+  ```mermaid %%{init: { "theme": "light" } }%% flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me
+  think} C -->|One| D[Laptop] C -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
 </div>
 ````
+
 <!-- prettier-ignore-end -->
 
 :::
@@ -1199,6 +1190,7 @@ flowchart TD
 以下是示例：
 
 <!-- prettier-ignore-start -->
+
 ````markdown
 ```mermaid
 flowchart TD
@@ -1209,6 +1201,7 @@ flowchart TD
     C -->|Three| F[fa:fa-car Car]
 ```
 ````
+
 <!-- prettier-ignore-end -->
 
 如上所示，使用 Markdown 代码块语法正常书写即可。
@@ -1222,20 +1215,14 @@ flowchart TD
 以下是示例：
 
 <!-- prettier-ignore-start -->
+
 ````html
 <div class="auto">
-
-```mermaid
-flowchart TD
-    A[Christmas] -->|Get money| B(Go shopping)
-    B --> C{Let me think}
-    C -->|One| D[Laptop]
-    C -->|Two| E[iPhone]
-    C -->|Three| F[fa:fa-car Car]
-```
-
+  ```mermaid flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me think} C -->|One| D[Laptop] C
+  -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
 </div>
 ````
+
 <!-- prettier-ignore-end -->
 
 :::
@@ -1247,35 +1234,19 @@ flowchart TD
 以下是示例：
 
 <!-- prettier-ignore-start -->
+
 ````html
 <div class="dark">
-
-```mermaid
-%%{init: { "theme": "dark" } }%%
-flowchart TD
-    A[Christmas] -->|Get money| B(Go shopping)
-    B --> C{Let me think}
-    C -->|One| D[Laptop]
-    C -->|Two| E[iPhone]
-    C -->|Three| F[fa:fa-car Car]
-```
-
+  ```mermaid %%{init: { "theme": "dark" } }%% flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me
+  think} C -->|One| D[Laptop] C -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
 </div>
 
 <div class="light">
-
-```mermaid
-%%{init: { "theme": "light" } }%%
-flowchart TD
-    A[Christmas] -->|Get money| B(Go shopping)
-    B --> C{Let me think}
-    C -->|One| D[Laptop]
-    C -->|Two| E[iPhone]
-    C -->|Three| F[fa:fa-car Car]
-```
-
+  ```mermaid %%{init: { "theme": "light" } }%% flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me
+  think} C -->|One| D[Laptop] C -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
 </div>
 ````
+
 <!-- prettier-ignore-end -->
 
 :::
@@ -1296,6 +1267,7 @@ flowchart TD
 以下是示例：
 
 <!-- prettier-ignore-start -->
+
 ````markdown
 ```mermaid
 flowchart TD
@@ -1306,6 +1278,7 @@ flowchart TD
     C -->|Three| F[fa:fa-car Car]
 ```
 ````
+
 <!-- prettier-ignore-end -->
 
 如上所示，使用 Markdown 代码块语法正常书写即可。
@@ -1319,20 +1292,14 @@ flowchart TD
 以下是示例：
 
 <!-- prettier-ignore-start -->
+
 ````html
 <div class="auto">
-
-```mermaid
-flowchart TD
-    A[Christmas] -->|Get money| B(Go shopping)
-    B --> C{Let me think}
-    C -->|One| D[Laptop]
-    C -->|Two| E[iPhone]
-    C -->|Three| F[fa:fa-car Car]
-```
-
+  ```mermaid flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me think} C -->|One| D[Laptop] C
+  -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
 </div>
 ````
+
 <!-- prettier-ignore-end -->
 
 :::
@@ -1344,35 +1311,19 @@ flowchart TD
 以下是示例：
 
 <!-- prettier-ignore-start -->
+
 ````html
 <div class="dark">
-
-```mermaid
-%%{init: { "theme": "dark" } }%%
-flowchart TD
-    A[Christmas] -->|Get money| B(Go shopping)
-    B --> C{Let me think}
-    C -->|One| D[Laptop]
-    C -->|Two| E[iPhone]
-    C -->|Three| F[fa:fa-car Car]
-```
-
+  ```mermaid %%{init: { "theme": "dark" } }%% flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me
+  think} C -->|One| D[Laptop] C -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
 </div>
 
 <div class="light">
-
-```mermaid
-%%{init: { "theme": "light" } }%%
-flowchart TD
-    A[Christmas] -->|Get money| B(Go shopping)
-    B --> C{Let me think}
-    C -->|One| D[Laptop]
-    C -->|Two| E[iPhone]
-    C -->|Three| F[fa:fa-car Car]
-```
-
+  ```mermaid %%{init: { "theme": "light" } }%% flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me
+  think} C -->|One| D[Laptop] C -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
 </div>
 ````
+
 <!-- prettier-ignore-end -->
 
 :::
@@ -1393,6 +1344,7 @@ flowchart TD
 以下是示例：
 
 <!-- prettier-ignore-start -->
+
 ````markdown
 ```mermaid
 flowchart TD
@@ -1403,6 +1355,7 @@ flowchart TD
     C -->|Three| F[fa:fa-car Car]
 ```
 ````
+
 <!-- prettier-ignore-end -->
 
 如上所示，使用 Markdown 代码块语法正常书写即可。
