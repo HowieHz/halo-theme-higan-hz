@@ -83,11 +83,13 @@ After your site has installed the latest version of the theme, you can fill in y
 This will enable quick jump links in this documentation, jumping to the corresponding configuration item in the backend with one click.
 
 :::
+
 ::: info Site Link
 
 <input v-model="inputBaseUrl" placeholder="Please enter your Halo site link here. Example: https://example.com" style="width:100%" />
 
 :::
+
 <template v-if="canJump">
 
 ::: info Please ensure this link is accessible
@@ -106,11 +108,13 @@ Quick jump links will only work when the above link is accessible.
 Explains the purpose of the configuration item.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Explains the location in the theme configuration.
 
 :::
+
 ::: info ⚡ Quick Jump
 
 Click to quickly jump to the corresponding theme configuration item.
@@ -156,21 +160,25 @@ Go to <QuickJumpConfig to="/console/theme" />, then click the three dots on the 
 A few more examples for better understanding.
 
 :::
+
 ::: info 🔒 Internal Constraints
 
 If the configured value does not meet this requirement, the configuration cannot be saved.
 
 :::
+
 ::: info ⚠️ External Constraints
 
 If the configured value does not meet this requirement, the theme may not work properly.
 
 :::  
+
 ::: info 🧩 Template Variable
 
 Variables provided for template developers to read this configuration value. Can be used via `${template variable}` .
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Supplementary information.
@@ -186,41 +194,49 @@ Supplementary information.
 Specify the site's default content language and use it as the site root tag `<html>` `lang` attribute default value, used to assist accessibility, SEO, and browser/plugin language detection (e.g., whether the browser prompts for page translation).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Global -> Default Content Language
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=Default%20Content%20Language" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 `zh-CN`
 
 :::
+
 ::: info 💡 Example Values
 
 `zh-CN`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 The set value must comply with [BCP 47](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=The%20attribute%20contains%20a%20single%20BCP%2047%20language%20tag), otherwise it will be invalid.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.global?.default_content_language`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 - Security: The set language value will be automatically escaped, no need to worry about XSS injection attacks.
@@ -235,31 +251,37 @@ The set value must comply with [BCP 47](https://developer.mozilla.org/en-US/docs
 Enable the prefix matching mode for multilingual functionality, allowing the theme to match language settings more flexibly.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Global -> Multilingual Function Prefix Matching Mode
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=Multilingual%20Function%20Prefix%20Matching%20Mode" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.global?.is_i18n_prefix_match_mode`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 For specific usage methods, please refer to the [Internationalization Support tutorial](/en/tutorial/i18n).
@@ -273,31 +295,37 @@ For specific usage methods, please refer to the [Internationalization Support tu
 Synchronize the `language` Cookie based on the page content language to avoid fixed text provided by the theme using a different language from the content.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Global -> Sync Cookie Language Based on Page Content Language
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=Sync%20Cookie%20Language%20Based%20on%20Page%20Content%20Language" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.global?.is_sync_language_cookie_to_content_language`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 For more information, see [Sync Cookie Language Based on Page Content Language](/en/tutorial/i18n#sync-cookie-language-based-on-page-content-language).
@@ -311,31 +339,37 @@ For more information, see [Sync Cookie Language Based on Page Content Language](
 Automatically redirect to the corresponding language page based on the browser language settings.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Global -> Auto-redirect Based on Browser Language
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=Auto-redirect%20Based%20on%20Browser%20Language" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.global?.is_auto_redirect_to_browser_language`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling this option, if the browser language differs from the Default Content Language and the browser language exists in the [Allowed Target Language Code List for Redirects](#allowed-target-language-code-list-for-redirects), it will automatically redirect to the corresponding page.
@@ -355,6 +389,7 @@ When enabled, you can configure:
 Set allowed auto-redirect target languages.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Global -> Auto-redirect Based on Browser Language](#auto-redirect-based-on-browser-language) When enabled, will display)
@@ -362,16 +397,19 @@ Set allowed auto-redirect target languages.
 Global -> Allowed Target Language Code List for Redirects
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=Allowed%20Target%20Language%20Code%20List%20for%20Redirects" />
 
 :::
+
 ::: info 🏷️ Type
 
 Repeater
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
@@ -385,26 +423,31 @@ Empty
 > Language Code
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > String
 >
 > :::
+>
 > ::: info ⭐ Default Value
 >
 > `zh-CN`
 >
 > :::
+>
 > ::: info 💡 Example Values
 >
 > `zh-CN`, `zh-TW`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 >
 > :::
+>
 > ::: info 🔒 Internal Constraints
 >
 > Required field
 >
 > :::
+>
 > ::: info ⚠️ External Constraints
 >
 > The set value must comply with [BCP 47](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=The%20attribute%20contains%20a%20single%20BCP%2047%20language%20tag), otherwise it will be invalid.
@@ -416,6 +459,7 @@ Empty
 `theme.config?.global?.auto_redirect_target_language_list`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling [Auto-redirect Based on Browser Language](#auto-redirect-based-on-browser-language), if the browser language is different from the Default Content Language and the browser language exists in this option, it will automatically redirect to the corresponding page.
@@ -433,31 +477,37 @@ When [Multilingual Function Prefix Matching Mode](#multilingual-function-prefix-
 Enable Multilingual Menu Support, allowing the menu to display content in different languages.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Global -> Multilingual Menu Support
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=Multilingual%20Menu%20Support" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.global?.is_i18n_menu_show`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling, please refer to the [Multilingual Menu Usage Guide](/en/tutorial/i18n#multilingual-menu-usage-guide) for configuration.
@@ -471,26 +521,31 @@ After enabling, please refer to the [Multilingual Menu Usage Guide](/en/tutorial
 Automatically upgrade non-redirected insecure resource requests to HTTPS, including the current domain and third-party requests.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Global -> CSP:upgrade-insecure-requests
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=CSP%3Aupgrade%2Dinsecure%2Drequests" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.global?.upgrade_insecure_requests`
@@ -504,31 +559,37 @@ Boolean
 Prevent traffic loss after the site is maliciously mirrored, only allowing access from domains in the whitelist.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Global -> Only Allow Access from Specified Domains
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=Only%20Allow%20Access%20from%20Specified%20Domains" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.global?.anti_mirror_site`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling, please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#enable-only-allow-access-from-specified-domains) for configuration.
@@ -548,6 +609,7 @@ When enabled, you can configure:
 Set the Domain Whitelist.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains) When enabled, will display)
@@ -555,16 +617,19 @@ Set the Domain Whitelist.
 Global -> Domain Whitelist
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=Domain%20Whitelist" />
 
 :::
+
 ::: info 🏷️ Type
 
 Repeater
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
@@ -578,16 +643,19 @@ Empty
 > Base64-encoded domain name
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > String
 >
 > :::
+>
 > ::: info 💡 Example Values
 >
 > `bG9jYWxob3N0`
 >
 > :::
+>
 > ::: info 🔒 Internal Constraints
 >
 > Required field
@@ -599,6 +667,7 @@ Empty
 `theme.config?.global?.allow_site_whitelist`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#enable-only-allow-access-from-specified-domains) for configuration.
@@ -612,6 +681,7 @@ Please refer to [Enable Only Allow Access from Specified Domains](/tutorial/secu
 SetDomain Whitelist.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains) When enabled, will display)
@@ -619,31 +689,37 @@ SetDomain Whitelist.
 Global -> Target Link
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=Target%20Link" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 💡 Example Values
 
 `bG9jYWxob3N0`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.global?.target_url`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#enable-only-allow-access-from-specified-domains) for configuration.
@@ -657,6 +733,7 @@ Please refer to [Enable Only Allow Access from Specified Domains](/tutorial/secu
 Set whether to keep path and query parameters after redirect.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Global -> Only Allow Access from Specified Domains](#Only Allow Access from Specified Domains) When enabled, will display)
@@ -664,26 +741,31 @@ Set whether to keep path and query parameters after redirect.
 Global -> Keep Path and Query Parameters After Redirect
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=Keep%20path%20and%20query" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.global?.is_keep_path_and_query`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Please refer to [Enable Only Allow Access from Specified Domains](/tutorial/security#enable-only-allow-access-from-specified-domains) for configuration.
@@ -702,31 +784,37 @@ Assuming the user accesses the link `http://localhost/a/b?a=1`, and the [Target 
 Controls whether to inject the performance monitor panel script into pages.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Global -> Enable Performance Monitor Panel
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=Enable%20Performance%20Monitor%20Panel" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.global?.is_performance_monitor_enable`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 The panel is disabled by default and injected only when this option is `true`.
@@ -740,26 +828,31 @@ The panel is disabled by default and injected only when this option is `true`.
 Automatically load the instant.page script to preload links and improve page loading speed.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Global -> instant.page Support
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=instant.page%20Support" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.global?.is_instant_page_enable`
@@ -773,31 +866,37 @@ Boolean
 Enable Mermaid chart rendering functionality to support drawing flowcharts, sequence diagrams, etc. in posts.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Global -> Mermaid Support
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=Mermaid%20Support" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.global?.is_mermaid_enable`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Charts can support light/dark theme switching. For specific usage methods, please see: [Mermaid Light/Dark Theme Adaptation](/en/guide/style-reference#mermaid-light-dark-theme-adaptation)
@@ -821,31 +920,37 @@ Elements matched by the extra source element selector read diagram source from `
 Use uploaded custom font files to replace the default fonts.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Enable Custom Font Files
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Enable%20Custom%20Font%20Files" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_custom_font_files_enable`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure:
@@ -862,6 +967,7 @@ When enabled, you can configure:
 Used to select uploaded font files to replace the default font files. Supports `.woff2`/`.woff`/`.ttf`/`.otf`/`.eot`/`.ttc`/`.otc`/`.sfnt` format font files.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([General Styles -> Enable Custom Font Files](#enable-custom-font-files) When enabled, will display)
@@ -869,16 +975,19 @@ Used to select uploaded font files to replace the default font files. Supports `
 General Styles -> Custom Font Files
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20font%20files" />
 
 :::
+
 ::: info 🏷️ Type
 
 Repeater
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.custom_font_configs`
@@ -893,6 +1002,7 @@ After correctly filling in this option, if the user has this font installed loca
 If this option is left empty, even if the user has this font installed locally, the local version will not be used, and the font file will be downloaded from the network.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([General Styles -> Enable Custom Font Files](#enable-custom-font-files) When enabled, will display)
@@ -900,31 +1010,37 @@ If this option is left empty, even if the user has this font installed locally, 
 General Styles -> Font Name (Full Name/PostScript Name)
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Font%20Name" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 💡 Example Values
 
 `My Custom Font Regular`,`MyCustomFont-Regular`
 
 :::
+
 ::: info External Constraints
 
 Corresponds to the "Full font name (`nameID=4`)" or "PostScript name (`nameID=6`)" declared inside the font file.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.custom_font_name`
@@ -938,26 +1054,31 @@ Corresponds to the "Full font name (`nameID=4`)" or "PostScript name (`nameID=6`
 Replace the default cursor set with uploaded custom cursor files.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Style -> Enable Custom Cursor Files
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Enable%20Custom%20Cursor%20Files" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_custom_cursor_files_enable`
@@ -971,26 +1092,31 @@ Boolean
 Set the overall color scheme of the website, supporting multiple built-in themes and custom colors.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Color Scheme
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Color%20scheme" />
 
 :::
+
 ::: info 🏷️ Type
 
 Option
 
 :::
+
 ::: info ⭐ Default Value
 
 `Dark - Green`(internal value `dark`)
 
 :::
+
 ::: info 💡 Other Options
 
 - `Follow System - Green`(internal value `auto`)
@@ -1002,11 +1128,13 @@ Option
 - `Custom Color Scheme`(internal value `custom`)
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.color_schema`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 - For cases where [Light/Dark Mode Toggle Button](#lightdark-mode-toggle-button) is enabled, this determines the default color scheme when the website first loads.
@@ -1021,21 +1149,25 @@ Option
 Set custom color scheme.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Custom Color Scheme
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20Color%20Scheme" />
 
 :::
+
 ::: info 🏷️ Type
 
 Repeater
 
 :::
+
 ::: info ℹ️ Additional Information
 
 For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-theme)
@@ -1049,93 +1181,111 @@ For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-
 > Custom Color Scheme Identifier
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > Number
 >
 > :::
+>
 > ::: info ⭐ Default Value
 >
 > `1`
 >
 > :::
+>
 > ::: info ℹ️ Additional Information
 >
 > Unique identifier, do not duplicate.
 >
 > :::
+>
 > ::: tip 📂 Configuration Item Name
 >
 > Theme Color Mode
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > Option
 >
 > :::
+>
 > ::: info ⭐ Default Value
 >
 > `Dark Mode`(internal value `dark`)
 >
 > :::
+>
 > ::: info 💡 Other Options
 >
 > - `Light Mode`(internal value `light`)
 > - `Auto Mode`(internal value `auto`)
 >
 > :::
+>
 > ::: tip 📂 Configuration Item Name
 >
 > CSS Variable Mode
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > Boolean
 >
 > :::
+>
 > ::: info ⭐ Default Value
 >
 > `false`
 >
 > :::
+>
 > ::: info ℹ️ Additional Information
 >
 > After enabling this option, CSS variables will be used to define the color scheme.
 >
 > :::
+>
 > ::: tip 📂 Configuration Item Name
 >
 > CSS Raw Output Mode
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > Boolean
 >
 > :::
+>
 > ::: info ⭐ Default Value
 >
 > `false`
 >
 > :::
+>
 > ::: info ℹ️ Additional Information
 >
 > After disabling this option, you only need to fill in the Custom CSS Variables part.
 > The output will be automatically placed in the corresponding CSS selector (selector is `html[theme="theme-{identifier}"]`).
 >
 > :::
+>
 > ::: tip 📂 Configuration Item Name
 >
 > Custom CSS Variables
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > Code input box (CSS)
 >
 > :::
+>
 > ::: info ⚠️ External Constraints
 >
 > When `CSS Raw Output Mode` is enabled, the content you fill in must be valid CSS code.
@@ -1148,6 +1298,7 @@ For usage, please refer to the [Tutorial: Custom Color Scheme](/tutorial/custom-
 > ```
 >
 > :::
+>
 > ::: info ℹ️ Additional Information
 >
 > Here are some example CSS variables:
@@ -1213,31 +1364,37 @@ If this option is enabled, a light/dark mode toggle button will be displayed nex
 Toggle logic: Light Mode -> Dark Mode -> Auto Mode -> Light Mode.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Light/Dark Mode Toggle Button
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Light/Dark%20Mode%20Toggle%20Button" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_show_color_scheme_toggle_button`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Selecting the same "Auto Mode Color Scheme" as "Light Mode Color Scheme" will disable auto mode.
@@ -1262,6 +1419,7 @@ Related information:
 Set the color scheme for Auto Mode in the Light/Dark Mode Toggle Button.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (When [General Styles -> Light/Dark Mode Toggle Button](#lightdark-mode-toggle-button) is enabled, will display)
@@ -1269,21 +1427,25 @@ Set the color scheme for Auto Mode in the Light/Dark Mode Toggle Button.
 General Styles -> Auto Mode Color Scheme
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Auto%20Mode%20Color%20Scheme" />
 
 :::
+
 ::: info 🏷️ Type
 
 Option
 
 :::
+
 ::: info ⭐ Default Value
 
 `Follow System - Green`(internal value `auto`)
 
 :::
+
 ::: info 💡 Other Options
 
 - `Light - Green`(internal value `light`)
@@ -1295,11 +1457,13 @@ Option
 - `Custom Color Scheme`(internal value `custom`)
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.theme_auto`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When "Custom Color Scheme" is selected, you need to use it with [Custom Color Scheme](#custom-color-scheme) and fill in the Custom Color Scheme identifier.
@@ -1313,6 +1477,7 @@ When "Custom Color Scheme" is selected, you need to use it with [Custom Color Sc
 Set the color scheme for Light Mode in the Light/Dark Mode Toggle Button.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (When [General Styles -> Light/Dark Mode Toggle Button](#lightdark-mode-toggle-button) is enabled, will display)
@@ -1320,21 +1485,25 @@ Set the color scheme for Light Mode in the Light/Dark Mode Toggle Button.
 General Styles -> Light Mode Color Scheme
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Light%20Mode%20Color%20Scheme" />
 
 :::
+
 ::: info 🏷️ Type
 
 Option
 
 :::
+
 ::: info ⭐ Default Value
 
 `Light - Green`(internal value `light`)
 
 :::
+
 ::: info 💡 Other Options
 
 - `Follow System - Green`(internal value `auto`)
@@ -1346,11 +1515,13 @@ Option
 - `Custom Color Scheme`(internal value `custom`)
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.theme_light`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When "Custom Color Scheme" is selected, you need to use it with [Custom Color Scheme](#custom-color-scheme) and fill in the Custom Color Scheme identifier.
@@ -1364,6 +1535,7 @@ When "Custom Color Scheme" is selected, you need to use it with [Custom Color Sc
 Set the color scheme for Dark Mode in the Light/Dark Mode Toggle Button.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (When [General Styles -> Light/Dark Mode Toggle Button](#lightdark-mode-toggle-button) is enabled, will display)
@@ -1371,21 +1543,25 @@ Set the color scheme for Dark Mode in the Light/Dark Mode Toggle Button.
 General Styles -> Dark Mode Color Scheme
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Dark%20Mode%20Color%20Scheme" />
 
 :::
+
 ::: info 🏷️ Type
 
 Option
 
 :::
+
 ::: info ⭐ Default Value
 
 `Dark - Green`(internal value `dark`)
 
 :::
+
 ::: info 💡 Other Options
 
 - `Follow System - Green`(internal value `auto`)
@@ -1397,11 +1573,13 @@ Option
 - `Custom Color Scheme`(internal value `custom`)
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.theme_dark`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When "Custom Color Scheme" is selected, you need to use it with [Custom Color Scheme](#custom-color-scheme) and fill in the Custom Color Scheme identifier.
@@ -1415,32 +1593,38 @@ When "Custom Color Scheme" is selected, you need to use it with [Custom Color Sc
 Set the overall font size of the site.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Font Size
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Font%20Size" />
 
 :::
+
 ::: info 🏷️ Type
 
 Option
 
 :::
+
 ::: info ⭐ Default Value
 
 `Small` (internal value `small`)
 
 :::
+
 ::: info 💡 Other Options
 
 - `Regular` (internal value `normal`)
 - `Large` (internal value `large`)
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.text_size`
@@ -1454,31 +1638,37 @@ Option
 Selects the global inline code style.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Overall Styles -> Inline code style
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Inline%20code%20style" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 `dotted-border`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.inline_code_style`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Available presets:
@@ -1503,31 +1693,37 @@ The `dotted-border` preset keeps the current dotted-border look, while other pre
 Selects the text style used for dark-mode content text.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Overall Styles -> Dark content text style
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Dark%20content%20text%20style" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 `default`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.dark_content_text_style`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Available options:
@@ -1550,31 +1746,37 @@ It mainly adjusts regular body text inside article content to improve reading co
 Whether to define the Content Area Maximum Width.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Custom Content Area Maximum Width
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20Content%20Area%20Maximum%20Width" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_max_width_settings`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 If you disable this option, the Content Area Maximum Width will change with the page width, but the content may appear to be left-aligned overall.
@@ -1593,6 +1795,7 @@ When enabled, you can configure:
 Set the maximum width of the content area.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([General Styles -> Custom Content Area Maximum Width](#custom-content-area-maximum-width) When enabled, will display)
@@ -1600,31 +1803,37 @@ Set the maximum width of the content area.
 General Styles -> Content Area Maximum Width
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content%20Area%20Maximum%20Width" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 `48rem`
 
 :::
+
 ::: info 💡 Example Values
 
 `20rem`,`300px`,`30vw`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 Valid CSS length unit.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.max_width`
@@ -1638,31 +1847,37 @@ Valid CSS length unit.
 Whether to define Content Area Minimum Width.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Custom Content Area Minimum Width
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20Content%20Area%20Minimum%20Width" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_min_width_settings`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When the window width is less than the set width, the actual window width will be used to avoid horizontal scrollbars.
@@ -1681,6 +1896,7 @@ When enabled, you can configure:
 Set the minimum width of the content area.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([General Styles -> Custom Content Area Minimum Width](#custom-Content Area Minimum Width) When enabled, will display)
@@ -1688,31 +1904,37 @@ Set the minimum width of the content area.
 General Styles -> Content Area Minimum Width
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content%20Area%20Minimum%20Width" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 `48rem`
 
 :::
+
 ::: info 💡 Example Values
 
 `20rem`,`300px`,`30vw`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 Valid CSS length unit.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.min_width`
@@ -1726,6 +1948,7 @@ Valid CSS length unit.
 Controls whether to force apply Content Area Minimum Width.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([General Styles -> Custom Content Area Minimum Width](#custom-Content Area Minimum Width) When enabled, will display)
@@ -1733,26 +1956,31 @@ Controls whether to force apply Content Area Minimum Width.
 General Styles -> Force Apply Content Area Minimum Width
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Force%20Apply%20Content%20Area%20Minimum%20Width" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_force_min_width_settings`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 - When disabled: When the window width is less than the set minimum width, the actual window width will be used to avoid horizontal scrollbars.
@@ -1767,31 +1995,37 @@ Boolean
 Whether to define Content Area Width Property.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Custom Content Area Width Property
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20Content%20Area%20Width%20Property" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_content_width_style_settings`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure:
@@ -1807,6 +2041,7 @@ When enabled, you can configure:
 Determines the content area width style.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([General Styles -> Custom Content Area Width Property](/guide/theme-configuration#CustomContent Area Width Property) When enabled, will display)
@@ -1814,36 +2049,43 @@ Determines the content area width style.
 General Styles -> Content Area Width Style
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content%20Area%20Width%20Style" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 `fit-content`
 
 :::
+
 ::: info 💡 Example Values
 
 `max-content`,`min-content`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 Must conform to the requirements specified in the [documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/width#values).
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.content_width_style`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Default Value effect: Makes the content area width equal to the width of the widest content. (This option actually sets the style value for the `width` property of the content area)
@@ -1857,31 +2099,37 @@ Default Value effect: Makes the content area width equal to the width of the wid
 Controls whether to display avatar in the header.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Header Avatar Display
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Header%20Avatar%20Display" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_show_header_icon`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure:
@@ -1899,6 +2147,7 @@ When enabled, you can configure:
 Used to select an uploaded image as the header avatar. If not set, the default avatar `/themes/howiehz-higan/images/logo.{avif,webp,png}` will be used.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Global -> Header Avatar Display](#header-avatar-display) When enabled, will display)
@@ -1906,16 +2155,19 @@ Used to select an uploaded image as the header avatar. If not set, the default a
 General Styles -> Custom Header Avatar
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20Header%20Avatar" />
 
 :::
+
 ::: info 🏷️ Type
 
 Attachment
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.icon`
@@ -1929,6 +2181,7 @@ Attachment
 Controls whether to force crop the avatar into a circle.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Global -> Header Avatar Display](#header-avatar-display) When enabled, will display)
@@ -1936,21 +2189,25 @@ Controls whether to force crop the avatar into a circle.
 General Styles -> Circular Avatar
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Circular%20Avatar" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.avatar_circle`
@@ -1964,6 +2221,7 @@ Boolean
 Controls whether to force grayscale processing of the avatar.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Global -> Header Avatar Display](#header-avatar-display) When enabled, will display)
@@ -1971,21 +2229,25 @@ Controls whether to force grayscale processing of the avatar.
 General Styles -> Grayscale Avatar
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Grayscale%20Avatar" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.avatar_grayout`
@@ -1999,21 +2261,25 @@ Boolean
 Controls whether to display additional menu items in the menu.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Additional Menu Items
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Additional%20Menu%20Items" />
 
 :::
+
 ::: info 🏷️ Type
 
 Repeater
 
 :::
+
 ::: info ⭐ Default Value
 
 Includes one preset: Search (requires [Search Component Plugin](/guide/plugin-compatibility#search-component)).
@@ -2027,27 +2293,32 @@ Includes one preset: Search (requires [Search Component Plugin](/guide/plugin-co
 > Menu Item Type
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > Option
 >
 > :::
+>
 > ::: info ⭐ Default Value
 >
 > `Search` (requires [Search Component Plugin](/guide/plugin-compatibility#search-component)) (internal value `search`)
 >
 > :::
+>
 > ::: info 💡 Other Options
 >
 > - Random post (internal value `random`)
 > - User Account (internal value `user`)
 >
 > :::
+>
 > ::: info 🔒 Internal Constraints
 >
 > Required field
 >
 > :::
+>
 > ::: info ℹ️ Additional Information
 >
 > For `User Account` type:
@@ -2070,26 +2341,31 @@ Includes one preset: Search (requires [Search Component Plugin](/guide/plugin-co
 Controls whether to display the header menu.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Display Header Menu
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Display%20Header%20Menu" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_show_header_menu`
@@ -2103,26 +2379,31 @@ Boolean
 Controls whether to display page numbers.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Display Page Numbers
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Display%20Page%20Numbers" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_show_page_number`
@@ -2136,31 +2417,37 @@ Boolean
 Controls whether to display site statistics at the page footer.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Site Statistics at Page Bottom
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Site%20Statistics%20at%20Page%20Bottom" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_footer_site_stats_show`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure:
@@ -2176,6 +2463,7 @@ When enabled, you can configure:
 Set statistics items.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Site Statistics at Page Bottom](#site-statistics-at-page-bottom) When enabled, will display)
@@ -2183,16 +2471,19 @@ Set statistics items.
 General Styles -> Statistics Item Settings
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/global#:~:text=Statistics%20Item%20Settings" />
 
 :::
+
 ::: info 🏷️ Type
 
 Repeater
 
 :::
+
 ::: info ⭐ Default Value
 
 Includes multiple preset share buttons: Total Views, Total Posts, Total Likes, Total Comments, Total Categories, Total Words (requires [API Extension Plugin](/guide/plugin-compatibility#api-extension)).
@@ -2206,16 +2497,19 @@ Includes multiple preset share buttons: Total Views, Total Posts, Total Likes, T
 > Statistics Item
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > Option
 >
 > :::
+>
 > ::: info ⭐ Default Value
 >
 > Total Views (internal value `visit`)
 >
 > :::
+>
 > ::: info 💡 Other Options
 >
 > - Total Posts (internal value `post`)
@@ -2225,36 +2519,43 @@ Includes multiple preset share buttons: Total Views, Total Posts, Total Likes, T
 > - Total Words (internal value `wordcount`)
 >
 > :::
+>
 > ::: info 🔒 Internal Constraints
 >
 > Required field
 >
 > :::
+>
 > ::: tip 📂 Configuration Item Name
 >
 > Multilingual text wrapping number
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > Boolean
 >
 > :::
+>
 > ::: info ⭐ Default Value
 >
 > `true`
 >
 > :::
+>
 > ::: tip 📂 Configuration Item Name
 >
 > Icon to the left of text
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > Icon
 >
 > :::
+>
 > ::: info ⭐ Default Value
 >
 > Empty
@@ -2268,31 +2569,37 @@ Includes multiple preset share buttons: Total Views, Total Posts, Total Likes, T
 Controls whether to display theme information at the page footer.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Theme Information at Page Bottom
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Theme%20Information%20at%20Page%20Bottom" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_footer_theme_info_show`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure:
@@ -2309,6 +2616,7 @@ When enabled, you can configure:
 Set the theme name displayed in the page footer theme information.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([General Styles -> Theme Information at Page Bottom](#theme-information-at-page-bottom) When enabled, will display)
@@ -2316,27 +2624,32 @@ Set the theme name displayed in the page footer theme information.
 General Styles -> Custom Attribution in Copyright Information
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Theme%20Name%20Displayed%20in%20Theme%20Information%20at%20Page%20Bottom" />
 
 :::
+
 ::: info 🏷️ Type
 
 Option
 
 :::
+
 ::: info ⭐ Default Value
 
 Higan Haozi (internal value `Higan Haozi`)
 
 :::
+
 ::: info 💡 Other Options
 
 - Higan (internal value `Higan`)
 - 彼岸 (internal value `彼岸`)
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.footer_theme_info_theme_name`
@@ -2350,6 +2663,7 @@ Higan Haozi (internal value `Higan Haozi`)
 Set the Halo version displayed in the page footer theme information.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([General Styles -> Theme Information at Page Bottom](#theme-information-at-page-bottom) When enabled, will display)
@@ -2357,27 +2671,32 @@ Set the Halo version displayed in the page footer theme information.
 General Styles -> Halo Version Displayed in Theme Information at Page Bottom
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Halo%20Version%20Displayed%20in%20Theme%20Information%20at%20Page%20Bottom" />
 
 :::
+
 ::: info 🏷️ Type
 
 Option
 
 :::
+
 ::: info ⭐ Default Value
 
 Halo (internal value `Halo`)
 
 :::
+
 ::: info 💡 Other Options
 
 - Halo Pro (internal value `Halo Pro`)
 - Halo Professional Edition (internal value `Halo Professional Edition`)
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.footer_theme_info_halo_version_name`
@@ -2391,31 +2710,37 @@ Halo (internal value `Halo`)
 Controls whether to display copyright information at the page footer.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Copyright Information at Page Bottom
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Copyright%20Information%20at%20Page%20Bottom" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_footer_copyright_show`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure:
@@ -2431,6 +2756,7 @@ When enabled, you can configure:
 Set the attribution for copyright information at the page footer.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([General Styles -> Copyright Information at Page Bottom](#copyright-information-at-page-bottom) When enabled, will display)
@@ -2438,26 +2764,31 @@ Set the attribution for copyright information at the page footer.
 General Styles -> Custom Attribution in Copyright Information
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20Attribution%20in%20Copyright%20Information" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 💡 Example Values
 
 `HowieHz`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.footer_copyright_custom_name`
@@ -2471,26 +2802,31 @@ Empty
 Controls whether to force the footer to the bottom of the page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Force Footer at Page Bottom
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Force%20Footer%20at%20Page%20Bottom" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_footer_force_bottom`
@@ -2504,26 +2840,31 @@ Boolean
 Controls whether to display the footer menu.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Menu at Page Bottom
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Menu%20at%20Page%20Bottom" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_footer_menu_show`
@@ -2537,31 +2878,37 @@ Boolean
 Controls whether to enable content for page bottom/sidebar.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Add content to page bottom/sidebar
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add%20content%20to%20page%20bottom%2Fsidebar" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_footer_content_show`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 In Halo CMS backend (<QuickJumpConfig to="/console/settings?tab=codeInjection:~:text=Footer" label="Quick Jump" />), injected footer content is displayed above "Theme Information", "Copyright Information", and "Menu at Page Bottom".  
@@ -2587,6 +2934,7 @@ When enabled, you can configure:
 Sets default content for page bottom/sidebar.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 <!-- markdownlint-disable MD051 -->
@@ -2598,21 +2946,25 @@ Sets default content for page bottom/sidebar.
 General Styles -> Page bottom/sidebar content
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Page%20bottom%2Fsidebar%20content" />
 
 :::
+
 ::: info 🏷️ Type
 
 Code input box (HTML)
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 💡 Example Values
 
 ```html
@@ -2626,11 +2978,13 @@ HTML code is also allowed:
 ```
 
 :::
+
 ::: info ⚠️ External Constraints
 
 Valid HTML code.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.footer_content`
@@ -2644,31 +2998,37 @@ Valid HTML code.
 Controls whether to enable multi-language page bottom/sidebar content support.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Multi-language page bottom/sidebar content support
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Multi-language%20page%20bottom%2Fsidebar%20content%20support" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_18n_footer_content_show`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling, please refer to [Multilingual Page Bottom/Sidebar Content Usage Guide](/en/tutorial/i18n#multilingual-page-bottom-sidebar-content-usage-guide) for configuration.
@@ -2693,6 +3053,7 @@ When enabled, you can configure:
 Sets multi-language page bottom/sidebar content.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 <!-- markdownlint-disable MD051 -->
@@ -2704,11 +3065,13 @@ Sets multi-language page bottom/sidebar content.
 General Styles -> Custom multi-language page bottom/sidebar content
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Custom%20multi-language%20page%20bottom%2Fsidebar%20content" />
 
 :::
+
 ::: info 🏷️ Type
 
 Repeater
@@ -2722,46 +3085,55 @@ Repeater
 > Language code
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > String
 >
 > :::
+>
 > ::: info ⭐ Default Value
 >
 > `zh-CN`
 >
 > :::
+>
 > ::: info 💡 Example Values
 >
 > `zh-CN`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 >
 > :::
+>
 > ::: info 🔒 Internal Constraints
 >
 > Required field
 >
 > :::
+>
 > ::: info ⚠️ External Constraints
 >
 > The value must comply with [BCP 47](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang), otherwise it is invalid.
 >
 > :::
+>
 > ::: tip 📂 Configuration Item Name
 >
 > Page bottom/sidebar content
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > Code input box (HTML)
 >
 > :::
+>
 > ::: info ⭐ Default Value
 >
 > Empty
 >
 > :::
+>
 > ::: info 💡 Example Values
 >
 > ```html
@@ -2775,6 +3147,7 @@ Repeater
 > ```
 >
 > :::
+>
 > ::: info ⚠️ External Constraints
 >
 > Valid HTML code.
@@ -2794,6 +3167,7 @@ Repeater
 Sets whether content is displayed at the page bottom (inline) or as a floating corner sidebar.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 <!-- markdownlint-disable MD051 -->
@@ -2805,21 +3179,25 @@ Sets whether content is displayed at the page bottom (inline) or as a floating c
 General Styles -> Content display mode
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Content%20display%20mode" />
 
 :::
+
 ::: info 🏷️ Type
 
 Option
 
 :::
+
 ::: info ⭐ Default Value
 
 `Inline (page bottom)` (internal value `inline`)
 
 :::
+
 ::: info 💡 Other Options
 
 - `Bottom-left` (internal value `bottom-left`)
@@ -2828,6 +3206,7 @@ Option
 - `Top-right` (internal value `top-right`)
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.footer_content_sidebar_position`
@@ -2841,6 +3220,7 @@ Option
 Sets hover opacity of floating sidebar content.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 <!-- markdownlint-disable MD051 -->
@@ -2852,26 +3232,31 @@ Sets hover opacity of floating sidebar content.
 General Styles -> Sidebar hover opacity
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Sidebar%20hover%20opacity" />
 
 :::
+
 ::: info 🏷️ Type
 
 Float
 
 :::
+
 ::: info ⭐ Default Value
 
 `1`
 
 :::
+
 ::: info 🔒 Internal Constraints
 
 Range `0` to `1`, step `0.05`.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.footer_content_sidebar_opacity`
@@ -2885,6 +3270,7 @@ Range `0` to `1`, step `0.05`.
 Sets display behavior for floating sidebar content when viewport width is less than `1024px` (tablet and mobile).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 <!-- markdownlint-disable MD051 -->
@@ -2896,26 +3282,31 @@ Sets display behavior for floating sidebar content when viewport width is less t
 General Styles -> Tablet and mobile sidebar display behavior
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Tablet%20and%20mobile%20sidebar%20display%20behavior" />
 
 :::
+
 ::: info 🏷️ Type
 
 Option
 
 :::
+
 ::: info ⭐ Default Value
 
 `Hide` (internal value `hide`)
 
 :::
+
 ::: info 💡 Other Options
 
 - `Move to page bottom` (internal value `bottom`)
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.footer_content_sidebar_narrow`
@@ -2929,26 +3320,31 @@ Option
 When enabled, display underline decoration below third-level headings (h3) to make the headings more prominent.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Add Underline to H3 Headings
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add%20underline%20to%20H3%20headings" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_h3_underline`
@@ -2962,31 +3358,37 @@ Boolean
 Preserve empty lines in block quotes; otherwise, empty lines in block quotes will be automatically removed.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Preserve Empty Lines in Block Quotes
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Preserve%20Empty%20Lines%20in%20Block%20Quotes" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_preserve_empty_lines_in_blockquote`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 For blockquote syntax, please refer to [Blockquote](/en/guide/style-reference#blockquote).
@@ -3000,26 +3402,31 @@ For blockquote syntax, please refer to [Blockquote](/en/guide/style-reference#bl
 Add quotation mark before block quote.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Add Quotation Mark Before Block Quote
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add%20quotation%20mark%20before%20block%20quote" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_show_the_quote_before_blockquote`
@@ -3033,26 +3440,31 @@ Boolean
 Add quotation mark after block quote.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Add Quotation Mark After Block Quote
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Add%20quotation%20mark%20after%20block%20quote" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_show_the_quote_after_blockquote`
@@ -3066,31 +3478,37 @@ Boolean
 Whether to add table lines at the bottom of each table row (except header).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Table Row Lines (Excluding Header)
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Table%20row%20lines" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.is_show_the_table_bottom_border`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure:
@@ -3110,6 +3528,7 @@ When enabled, you can configure:
 Set the width of table lines added at the bottom of each table row (except header).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 <!-- markdownlint-disable MD051 -->
@@ -3121,31 +3540,37 @@ Set the width of table lines added at the bottom of each table row (except heade
 General Styles -> Table Row Line Width (Excluding Header)
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Table%20row%20line%20width" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 `8px`
 
 :::
+
 ::: info 💡 Example Values
 
 `0px`,`5px`,`10%`,`1rem`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 Valid CSS length unit.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.table_bottom_border_width`
@@ -3159,41 +3584,49 @@ Valid CSS length unit.
 Set the top margin (`margin-top`) multiplier for [headings](/en/guide/style-reference#heading).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Heading Top Margin Multiplier
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Heading%20top%20margin%20multiplier" />
 
 :::
+
 ::: info 🏷️ Type
 
 Float/Integer
 
 :::
+
 ::: info ⭐ Default Value
 
 `1`
 
 :::
+
 ::: info 💡 Example Values
 
 `0.5`,`1`,`1.5`,`2`
 
 :::
+
 ::: info 🔒 Internal Constraints
 
 Value range is 0-5
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.heading_margin_top_multiplier`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 A value of 1 means use default margin, less than 1 reduces margin, greater than 1 increases margin.
@@ -3207,36 +3640,43 @@ A value of 1 means use default margin, less than 1 reduces margin, greater than 
 Set the bottom margin (`margin-bottom`) multiplier for [headings](/en/guide/style-reference#heading).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Heading Bottom Margin Multiplier
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Heading%20bottom%20margin%20multiplier" />
 
 :::
+
 ::: info 🏷️ Type
 
 Float/Integer
 
 :::
+
 ::: info ⭐ Default Value
 
 `1`
 
 :::
+
 ::: info 💡 Example Values
 
 `0.5`,`1`,`1.5`,`2`
 
 :::
+
 ::: info 🔒 Internal Constraints
 
 Value range is 0-5
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.heading_margin_bottom_multiplier`
@@ -3250,36 +3690,43 @@ Value range is 0-5
 Set the top margin multiplier for [paragraphs](/en/guide/style-reference#paragraph).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Paragraph Top Margin Multiplier
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Paragraph%20top%20margin%20multiplier" />
 
 :::
+
 ::: info 🏷️ Type
 
 Float/Integer
 
 :::
+
 ::: info ⭐ Default Value
 
 `1`
 
 :::
+
 ::: info 💡 Example Values
 
 `0.5`,`1`,`1.5`,`2`
 
 :::
+
 ::: info 🔒 Internal Constraints
 
 Value range is 0-5
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.paragraph_margin_top_multiplier`
@@ -3293,36 +3740,43 @@ Value range is 0-5
 Set the bottom margin multiplier for [paragraphs](/en/guide/style-reference#paragraph).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 General Styles -> Paragraph Bottom Margin Multiplier
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/styles#:~:text=Paragraph%20bottom%20margin%20multiplier" />
 
 :::
+
 ::: info 🏷️ Type
 
 Float/Integer
 
 :::
+
 ::: info ⭐ Default Value
 
 `1`
 
 :::
+
 ::: info 💡 Example Values
 
 `0.5`,`1`,`1.5`,`2`
 
 :::
+
 ::: info 🔒 Internal Constraints
 
 Value range is 0-5
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.styles?.paragraph_margin_bottom_multiplier`
@@ -3340,36 +3794,43 @@ Application Range: [`/(page/{page})`](</reference/template-map#:~:text=/(page/%7
 Customize the HTML title for the homepage (will be displayed in the browser tab).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Home Page Style -> Homepage HTML Title
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Homepage%20HTML%20title" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info ⚠️ External Constraints
 
 If the configuration value is too long, it may affect SEO and page display effects.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.page_html_title`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 If left empty, the value will be taken from Halo CMS backend (<QuickJumpConfig to="/console/settings:~:text=Site%20title" label="Quick Jump" />) site title setting.
@@ -3383,26 +3844,31 @@ If left empty, the value will be taken from Halo CMS backend (<QuickJumpConfig t
 Controls whether to output a `<link rel="canonical">` tag in the homepage `<head>`.
 
 :::
+
 ::: info 📂 Configuration Location
 
 Homepage Style -> Output canonical link tag
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Output%20canonical%20link%20tag" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_enable_canonical_link`
@@ -3416,31 +3882,37 @@ Boolean
 Whether to display quote content fetched from a plain-text endpoint on the homepage.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Home Page Style -> Quote fetcher
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Quote%20fetcher" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.quote`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -3461,31 +3933,37 @@ When enabled, you can configure
 Whether to randomly display a sentence on the homepage.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Home Page Style -> Custom Random Display Quote
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Custom%20Random%20Display%20Quote" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_random_sentence_show`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -3501,31 +3979,37 @@ When enabled, you can configure
 Display personal profile or announcement content on the homepage.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Home Page Style -> Personal Profile/Announcement
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Personal%20profile/Announcement" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_resume_show`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -3543,6 +4027,7 @@ When enabled, you can configure
 Controls whether to enable multilingual personal profile/announcement support.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 <!-- markdownlint-disable MD051 -->
@@ -3554,26 +4039,31 @@ Controls whether to enable multilingual personal profile/announcement support.
 Home Page Style -> Multi-language Personal Profile/Announcement Support
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Multi-language%20personal%20profile/announcement%20support" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_i18n_resume_show`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling, please refer to the [Multilingual Bio/Announcement Usage Guide](/en/tutorial/i18n#multilingual-bio-announcement-usage-guide) for configuration
@@ -3587,6 +4077,7 @@ After enabling, please refer to the [Multilingual Bio/Announcement Usage Guide](
 Set multilingual announcement content.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 <!-- markdownlint-disable MD051 -->
@@ -3598,11 +4089,13 @@ Set multilingual announcement content.
 Home Page Style -> Custom Multi-language Announcement Content
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Personal%20profile/Announcement%20content" />
 
 :::
+
 ::: info 🏷️ Type
 
 Repeater
@@ -3616,46 +4109,55 @@ Repeater
 > Language Code
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > String
 >
 > :::
+>
 > ::: info ⭐ Default Value
 >
 > `zh-CN`
 >
 > :::
+>
 > ::: info 💡 Example Values
 >
 > `zh-CN`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 >
 > :::
+>
 > ::: info 🔒 Internal Constraints
 >
 > Required field
 >
 > :::
+>
 > ::: info ⚠️ External Constraints
 >
 > The set value must comply with [BCP 47](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang), otherwise it will be invalid.
 >
 > :::
+>
 > ::: tip 📂 Configuration Item Name
 >
 > Personal Profile/Announcement Content
 >
 > :::
+>
 > ::: info 🏷️ Type
 >
 > Code input box (HTML)
 >
 > :::
+>
 > ::: info ⭐ Default Value
 >
 > Empty
 >
 > :::
+>
 > ::: info 💡 Example Values
 >
 > ```html
@@ -3669,6 +4171,7 @@ Repeater
 > ```
 >
 > :::
+>
 > ::: info ⚠️ External Constraints
 >
 > Valid HTML code.
@@ -3688,26 +4191,31 @@ Repeater
 Controls whether to display text to the left of social profile icons on the homepage.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Home Page Style -> Display Text on the Left Side of Social Media Icons
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20Text%20on%20the%20Left%20Side%20of%20Social%20Media%20Icons" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_find_me_left_text`
@@ -3721,26 +4229,31 @@ Boolean
 Controls whether to display the title of the homepage post list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Home Page Style -> Home Page Post List Title
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Enable%20post%20list%20title" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_index_post_list_title`
@@ -3754,26 +4267,31 @@ Boolean
 Select the display style for the homepage post list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Home Page Style -> Home Page List Layout
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Home%20page%20post%20list%20layout" />
 
 :::
+
 ::: info 🏷️ Type
 
 Option
 
 :::
+
 ::: info ⭐ Default Value
 
 `Simple Post List` (internal value `simple-post-list`)
 
 :::
+
 ::: info 💡 Other Options
 
 - `Multi-element Post List` (internal value `post-list-summary`)
@@ -3781,11 +4299,13 @@ Option
 - `Friends List` (internal value `friends-list-summary`)
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.list_layout`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 - "Moments List" requires the [Moments](/guide/plugin-compatibility#moments-page) plugin to be enabled.
@@ -3842,6 +4362,7 @@ When Friends List is enabled, you can configure
 Controls whether to display the publication date of posts in the simple list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Simple Post List")
@@ -3849,21 +4370,25 @@ Controls whether to display the publication date of posts in the simple list.
 Home Page Style -> Display Publish Date in Simple List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20publish%20date%20in%20simple%20post%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_post_pubdate_in_simple_post_list`
@@ -3877,6 +4402,7 @@ Boolean
 Controls whether to display post view count in the simple list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Simple Post List")
@@ -3884,21 +4410,25 @@ Controls whether to display post view count in the simple list.
 Home Page Style -> Display Post Views in Simple List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20Post%20Views%20in%20Simple%20List" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_post_views_in_simple_post_list`
@@ -3912,6 +4442,7 @@ Boolean
 Controls whether to display the publication date of posts in the post list summary.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Rich Post List")
@@ -3919,21 +4450,25 @@ Controls whether to display the publication date of posts in the post list summa
 Home Page Style -> Display Publish Date in Post List Summary
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20publish%20date%20in%20post%20list%20summary" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_post_pubdate_in_post_list_summary`
@@ -3947,6 +4482,7 @@ Boolean
 Controls whether to display post categories in the multi-element list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
@@ -3954,20 +4490,24 @@ Controls whether to display post categories in the multi-element list.
 Home Page Style -> Display Post Categories in Post List Summary
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20Post%20Categories%20in%20Post%20List%20Summary" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_post_categories_in_post_list_summary`
@@ -3981,6 +4521,7 @@ Boolean
 Controls whether to display post tags in the multi-element list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
@@ -3988,21 +4529,25 @@ Controls whether to display post tags in the multi-element list.
 Home Page Style -> Display Post Tags in Post List Summary
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20Post%20Tags%20in%20Post%20List%20Summary" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_post_tags_in_post_list_summary`
@@ -4016,6 +4561,7 @@ Boolean
 Controls whether to display post view count in the multi-element list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
@@ -4023,21 +4569,25 @@ Controls whether to display post view count in the multi-element list.
 Home Page Style -> Display Post Views in Post List Summary
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20Post%20Views%20in%20Post%20List%20Summary" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_post_views_in_post_list_summary`
@@ -4051,6 +4601,7 @@ Boolean
 Controls whether to display estimated reading time in the multi-element list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
@@ -4058,26 +4609,31 @@ Controls whether to display estimated reading time in the multi-element list.
 Home Page Style -> Display Post Estimated Reading Time in Post List Summary
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20post%20estimated%20reading%20time%20in%20post%20list%20summary" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_post_estimated_reading_time_in_post_list_summary`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling the [API Extension](/guide/plugin-compatibility#api-extension) plugin, a more accurate measurement method will be automatically enabled.
@@ -4091,6 +4647,7 @@ After enabling the [API Extension](/guide/plugin-compatibility#api-extension) pl
 Controls whether to display post word count in the multi-element list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
@@ -4098,26 +4655,31 @@ Controls whether to display post word count in the multi-element list.
 Home Page Style -> Display Post Word Count in Post List Summary
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20post%20word%20count%20in%20post%20list%20summary" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_post_word_count_in_post_list_summary`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling the [API Extension](/guide/plugin-compatibility#api-extension) plugin, a more accurate measurement method will be automatically enabled.
@@ -4131,6 +4693,7 @@ After enabling the [API Extension](/guide/plugin-compatibility#api-extension) pl
 Controls whether to display post excerpt in the multi-element list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
@@ -4138,21 +4701,25 @@ Controls whether to display post excerpt in the multi-element list.
 Home Page Style -> Display Post Excerpt in Post List Summary
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20post%20excerpt%20in%20post%20list%20summary" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_post_excerpt_in_post_list_summary`
@@ -4166,6 +4733,7 @@ Boolean
 Set the maximum number of lines for post excerpt in the multi-element list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
@@ -4173,26 +4741,31 @@ Set the maximum number of lines for post excerpt in the multi-element list.
 Home Page Style -> Maximum Lines for Post Excerpt in Post List Summary
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Maximum%20number%20of%20lines%20in%20the%20post%20list%20summary" />
 
 :::
+
 ::: info 🏷️ Type
 
 Integer
 
 :::
+
 ::: info ⭐ Default Value
 
 `3`
 
 :::
+
 ::: info 🔒 Internal Constraints
 
 Range 1-5
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.post_excerpt_max_lines`
@@ -4206,6 +4779,7 @@ Range 1-5
 Controls whether to display the prompt text for the post link in the multi-element list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
@@ -4213,26 +4787,31 @@ Controls whether to display the prompt text for the post link in the multi-eleme
 Home Page Style -> Link Text for Post List Summary
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20the%20text%20of%20the%20post%20list%20permalink" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_index_post_list_permalink_text`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 If this option is disabled, the post items in the homepage post list will not display the link text
@@ -4246,6 +4825,7 @@ If this option is disabled, the post items in the homepage post list will not di
 Controls whether to display post cover in the multi-element list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Multi-element Post List")
@@ -4253,21 +4833,25 @@ Controls whether to display post cover in the multi-element list.
 Home Page Style -> Display Post Cover in Post List Summary
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Display%20Post%20Cover%20in%20Post%20List%20Summary" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_post_cover_in_post_list_summary`
@@ -4281,6 +4865,7 @@ Boolean
 Set the number of items displayed in the moments list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Moments List")
@@ -4288,21 +4873,25 @@ Set the number of items displayed in the moments list.
 Home Page Style -> Number of Moments Per Page
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Number%20of%20Moments%20Per%20Page" />
 
 :::
+
 ::: info 🏷️ Type
 
 Integer
 
 :::
+
 ::: info ⭐ Default Value
 
 `10`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.moment_list_page_size`
@@ -4316,6 +4905,7 @@ Integer
 Controls whether to display the author avatar in the moments list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Moments List")
@@ -4323,21 +4913,25 @@ Controls whether to display the author avatar in the moments list.
 Home Page Style -> Show Author Avatar in Moment List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20Author%20Avatar%20in%20Moment%20List" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_moment_avatar`
@@ -4351,6 +4945,7 @@ Boolean
 Controls whether to display the author nickname in the moments list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Home Page Style -> Home Page List Layout](#home-page-list-layout) Displayed when set to "Moments List")
@@ -4358,21 +4953,25 @@ Controls whether to display the author nickname in the moments list.
 Home Page Style -> Show Author Nickname in Moment List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20Author%20Nickname%20in%20Moment%20List" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_moment_nickname`
@@ -4386,6 +4985,7 @@ Boolean
 Control whether to display the post publication date in the moment list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Displayed when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Moment List")
@@ -4393,21 +4993,25 @@ Control whether to display the post publication date in the moment list.
 Home Page Style -> Show Post Publication Date in Moment List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20Post%20Publication%20Date%20in%20Moment%20List" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_moment_pubdate`
@@ -4421,6 +5025,7 @@ Boolean
 Control whether to display the estimated reading time in the moment list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Displayed when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Moment List")
@@ -4428,26 +5033,31 @@ Control whether to display the estimated reading time in the moment list.
 Home Page Style -> Show Estimated Reading Time in Moment List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20Estimated%20Reading%20Time%20in%20Moment%20List" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_moment_estimated_reading_time`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling the [API Extension](/guide/plugin-compatibility#api-extension) plugin, a more accurate measurement method will be automatically enabled.
@@ -4461,6 +5071,7 @@ After enabling the [API Extension](/guide/plugin-compatibility#api-extension) pl
 Control whether to display the word count in the moment list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Displayed when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Moment List")
@@ -4468,26 +5079,31 @@ Control whether to display the word count in the moment list.
 Home Page Style -> Show Word Count in Moment List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20Word%20Count%20in%20Moment%20List" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_moment_word_count`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling the [API Extension](/guide/plugin-compatibility#api-extension) plugin, a more accurate measurement method will be automatically enabled.
@@ -4501,6 +5117,7 @@ After enabling the [API Extension](/guide/plugin-compatibility#api-extension) pl
 Control whether to enable the upvote button in the moment list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Displayed when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Moment List")
@@ -4508,21 +5125,25 @@ Control whether to enable the upvote button in the moment list.
 Home Page Style -> Enable Upvote Button in Moment List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Enable%20Upvote%20Button%20in%20Moment%20List" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_moment_upvote_button_show`
@@ -4536,6 +5157,7 @@ Boolean
 Control whether to enable the comment section in the moment list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Displayed when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Moment List")
@@ -4543,21 +5165,25 @@ Control whether to enable the comment section in the moment list.
 Home Page Style -> Enable Comment Section in Moment List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Enable%20Comment%20Section%20in%20Moment%20List" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_moment_comment_section_show`
@@ -4571,6 +5197,7 @@ Boolean
 Set the number of friends posts to display per page on the homepage.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List")
@@ -4578,21 +5205,25 @@ Set the number of friends posts to display per page on the homepage.
 Home Page Style -> Number of items to display in friends list
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Number%20of%20items%20to%20display%20in%20friends%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Number
 
 :::
+
 ::: info ⭐ Default Value
 
 `10`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.friends_list_page_size`
@@ -4606,6 +5237,7 @@ Number
 Controls whether to display the publication date of posts in the friends list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List")
@@ -4613,21 +5245,25 @@ Controls whether to display the publication date of posts in the friends list.
 Home Page Style -> Show publish date in friends list
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20publish%20date%20in%20friends%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_friend_pubdate`
@@ -4641,6 +5277,7 @@ Boolean
 Controls whether to display author information (including avatar and name) in the friends list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List")
@@ -4648,21 +5285,25 @@ Controls whether to display author information (including avatar and name) in th
 Home Page Style -> Show author information in friends list
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20author%20information%20in%20friends%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_friend_author`
@@ -4676,6 +5317,7 @@ Boolean
 Controls whether to display the author avatar in the friends list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List" and [Show Author Information in Friends List](#show-author-information-in-friends-list) is enabled)
@@ -4683,21 +5325,25 @@ Controls whether to display the author avatar in the friends list.
 Home Page Style -> Show author avatar in friends list
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20author%20avatar%20in%20friends%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_friend_author_avatar`
@@ -4711,6 +5357,7 @@ Boolean
 Controls whether to display the author name in the friends list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List" and [Show Author Information in Friends List](#show-author-information-in-friends-list) is enabled)
@@ -4718,21 +5365,25 @@ Controls whether to display the author name in the friends list.
 Home Page Style -> Show author name in friends list
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20author%20name%20in%20friends%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_friend_author_name`
@@ -4746,6 +5397,7 @@ Boolean
 Controls whether to display post descriptions in the friends list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List")
@@ -4753,21 +5405,25 @@ Controls whether to display post descriptions in the friends list.
 Home Page Style -> Show post description in friends list
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20post%20description%20in%20friends%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_friend_description`
@@ -4781,6 +5437,7 @@ Boolean
 Set the maximum number of lines for post descriptions in the friends list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List" and [Show Post Description in Friends List](#show-post-description-in-friends-list) is enabled)
@@ -4788,21 +5445,25 @@ Set the maximum number of lines for post descriptions in the friends list.
 Home Page Style -> Maximum lines for post description in friends list
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Maximum%20lines%20for%20post%20description%20in%20friends%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Number (1-5)
 
 :::
+
 ::: info ⭐ Default Value
 
 `3`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.friend_description_max_lines`
@@ -4816,6 +5477,7 @@ Number (1-5)
 Controls whether to display the link text in friends list posts.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Shown when [Home Page Style -> Home Page List Layout](#home-page-list-layout) is set to "Friends List")
@@ -4823,21 +5485,25 @@ Controls whether to display the link text in friends list posts.
 Home Page Style -> Show link text in friends list
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Show%20link%20text%20in%20friends%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_show_friend_permalink_text`
@@ -4851,31 +5517,37 @@ Boolean
 Display a special icon for pinned posts in the post list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Home Page Style -> Top Icon Display on Post List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/index_styles#:~:text=Top%20Icon%20Display%20on%20Post%20List" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.index_styles?.is_pin_icon_show`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -4895,26 +5567,31 @@ Application Range: [`/archives/{slug}`](/reference/template-map#:~:text=/archive
 Controls whether to output a `<link rel="canonical">` tag in the post page `<head>`.
 
 :::
+
 ::: info 📂 Configuration Location
 
 Post Page Style -> Output canonical link tag
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Output%20canonical%20link%20tag" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_enable_canonical_link`
@@ -4928,31 +5605,37 @@ Boolean
 Add minimum height to post content paragraphs to display empty lines.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Optimize Post Paragraph Empty Line Display
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Optimize%20Post%20Paragraph%20Spacing%20Display" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_optimize_content_paragraph_spacing`
 
 :::
+
 ::: details ℹ️ Additional Information
 
 Different Markdown editors use different parsers, so this configuration item may have different effects on the final rendering result.
@@ -4967,31 +5650,37 @@ Related link: [babelmark3](https://babelmark.github.io/) is a website that compa
 Add indentation style to the first line of post content paragraphs.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Paragraph First-line Indent
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable%20paragraph%20first-line%20indent" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_enable_paragraph_first_line_indent`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -5012,26 +5701,31 @@ Convert characters in post titles to uppercase.
 Such as: `a` converts to `A`.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Post Title Uppercase
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Post%20title%20uppercase" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.post_title_uppper`
@@ -5045,31 +5739,37 @@ Boolean
 Display the post publication time at the top of the post page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Post Publication Time
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Post%20Publish%20Time" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_show_post_publish_time`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -5085,31 +5785,37 @@ When enabled, you can configure
 Display the post last update time at the top of the post page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Post Update Time
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Post%20Update%20Time" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_show_post_updated_time`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -5125,26 +5831,31 @@ When enabled, you can configure
 Display post view count statistics on the post page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Post View Count
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show%20post%20views" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_show_post_views`
@@ -5158,31 +5869,37 @@ Boolean
 Display estimated reading time based on post word count on the post page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Post Estimated Reading Time
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show%20Estimated%20Reading%20Time%20of%20Post" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_show_post_estimated_reading_time`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling the [API Extension](/guide/plugin-compatibility#api-extension) plugin, a more accurate measurement method will be automatically enabled.
@@ -5196,31 +5913,37 @@ After enabling the [API Extension](/guide/plugin-compatibility#api-extension) pl
 Display the total word count of the post on the post page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Post Word Count
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show%20post%20word%20count" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_show_post_word_count`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling the [API Extension](/guide/plugin-compatibility#api-extension) plugin, a more accurate measurement method will be automatically enabled.
@@ -5234,31 +5957,37 @@ After enabling the [API Extension](/guide/plugin-compatibility#api-extension) pl
 Display an edit entry for the current post on the post page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Show post edit button
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show%20post%20edit%20button" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_post_edit_button_show`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Shown to authenticated users with `system:posts:manage`.
@@ -5272,6 +6001,7 @@ Shown to authenticated users with `system:posts:manage`.
 Control whether to show the post edit button to anonymous visitors.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Shown when [Post Page Style -> Show Post Edit Button](#show-post-edit-button) is enabled)
@@ -5279,26 +6009,31 @@ Control whether to show the post edit button to anonymous visitors.
 Post Page Style -> Show Post Edit Button to Anonymous Visitors
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Show%20post%20edit%20button%20to%20anonymous%20visitors" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_post_edit_button_show_for_anonymous`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, the edit button is shown to anonymous visitors. Anonymous visitors who select it are taken to the sign-in page and redirected to the current post editor after signing in.
@@ -5312,26 +6047,31 @@ When enabled, the edit button is shown to anonymous visitors. Anonymous visitors
 Controls whether to display the share button in the menu on the desktop post page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Share Button in Desktop Menu
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Share%20button%20in%20desktop%20menu" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_show_post_nav_share_button`
@@ -5345,36 +6085,43 @@ Boolean
 Customize the symbol displayed before heading anchor links in posts and single pages, overriding the default `#`.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Heading anchor symbol
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Heading%20anchor%20symbol" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 💡 Example Values
 
 `#`, `§`, `¶`, `🔗`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.heading_anchor_symbol`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Leave empty to use the default `#`. Supports any string. This setting works by injecting the `--heading-anchor-symbol` CSS custom property. This setting is overridden when a heading anchor icon is configured below.
@@ -5388,31 +6135,37 @@ Leave empty to use the default `#`. Supports any string. This setting works by i
 When enabled, the "Heading anchor symbol" value above is written directly as the CSS `--heading-anchor-symbol` variable value without quoting. Intended for users familiar with [CSS `content` property syntax](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/content#syntax).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Heading anchor symbol raw output
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Heading%20anchor%20symbol%20raw%20output" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_heading_anchor_symbol_raw`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When disabled, the symbol value is automatically quoted as a CSS string (e.g. `"#"`). When enabled, the value is output as-is, allowing valid CSS `content` values such as `url("data:image/svg+xml,...")`.
@@ -5426,31 +6179,37 @@ When disabled, the symbol value is automatically quoted as a CSS string (e.g. `"
 Use an icon from the Iconify icon library as the heading anchor in posts and single pages. Takes precedence over the "Heading anchor symbol" setting. The icon color automatically follows the theme's primary color.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Heading anchor icon
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Heading%20anchor%20icon" />
 
 :::
+
 ::: info 🏷️ Type
 
 Icon
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.heading_anchor_svg`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Leave empty to fall back to the "Heading anchor symbol" setting.
@@ -5466,31 +6225,37 @@ When enabled, you can configure
 - Maximum width of the sidebar table of contents on the post page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Custom Sidebar Table of Contents Maximum Width
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Custom%20Sidebar%20Table%20of%20Contents%20Maximum%20Width" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_custom_toc_max_width`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -5509,26 +6274,31 @@ When enabled, you can configure
 Controls whether to display the separator at the end of the post.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Post End Separator
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable%20dividing%20line%20at%20the%20end%20of%20the%20post" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_dividing_line_at_the_end_of_post_show`
@@ -5542,31 +6312,37 @@ Boolean
 Controls whether to display the like button at the bottom of the post.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Post Bottom Like Button
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Upvote%20button%20at%20the%20bottom%20of%20the%20post" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_post_upvote_button_show`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -5593,31 +6369,37 @@ Controls whether to display recommended post list at the bottom of the post.
 Principle: Reads the **first category** of the current post and randomly outputs some posts from it.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Recommended Posts at Post Bottom
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Recommended%20articles%20at%20the%20bottom%20of%20the%20post" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_post_recommended_articles_show`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 If the current post is in the random list it will be excluded, so the actual number of recommended posts may be less than the set "Recommended Post Count".  
@@ -5637,26 +6419,31 @@ When enabled, you can configure
 When enabled, navigation links to the previous and next posts will be displayed at the bottom of the post.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Adjacent Post Navigation at Post Bottom
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Adjacent%20article%20navigation%20at%20the%20bottom%20of%20the%20post" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_post_prev_next_navigation_show`
@@ -5670,26 +6457,31 @@ Boolean
 Controls whether to display the comment section on the post page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Post Comment Section
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable%20comment%20section" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_post_comment_section_show`
@@ -5703,31 +6495,37 @@ Boolean
 Controls whether to display the navigation bar at the bottom of the mobile post page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Page Style -> Mobile Bottom Navigation Bar
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Mobile%20footer%20navigation" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_show_footer_nav`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -5744,6 +6542,7 @@ When enabled, you can configure
 Controls whether to display the Home button in the mobile footer navigation on post and single pages.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Post Page Style -> Mobile Bottom Navigation Bar](#mobile-bottom-navigation-bar) must be enabled)
@@ -5751,21 +6550,25 @@ Controls whether to display the Home button in the mobile footer navigation on p
 Post Page Style -> Home Button in the Mobile Footer Navigation
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Home%20button%20in%20the%20mobile%20footer%20navigation" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_show_home_footer`
@@ -5779,6 +6582,7 @@ Boolean
 Controls whether to display the share button in the mobile footer navigation on post and single pages.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Post Page Style -> Mobile Bottom Navigation Bar](#mobile-bottom-navigation-bar) must be enabled)
@@ -5786,21 +6590,25 @@ Controls whether to display the share button in the mobile footer navigation on 
 Post Page Style -> Share Buttons in the Mobile Footer Navigation
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Share%20buttons%20in%20the%20mobile%20footer%20navigation" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.post_styles?.is_show_share_footer`
@@ -5818,31 +6626,37 @@ Application Range: [`/categories`](/reference/template-map#:~:text=/categories).
 Used to customize the HTML `<meta name="description">` content for this page, convenient for setting SEO descriptions.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Categories Page Style -> Page Description
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Page%20description%20(meta%20description)" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.categories_page_styles?.description`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site%20description" />)
@@ -5856,26 +6670,31 @@ If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig 
 Controls whether to output a `<link rel="canonical">` tag in the category collection page `<head>`.
 
 :::
+
 ::: info 📂 Configuration Location
 
 Category Page Style -> Output canonical link tag
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Output%20canonical%20link%20tag" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.categories_page_styles?.is_enable_canonical_link`
@@ -5889,31 +6708,37 @@ Boolean
 Controls whether to display the number of posts in each category in the category list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Categories Page Style -> Display Number of Posts Per Category
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Display%20Number%20of%20Posts%20Per%20Category" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.categories_page_styles?.is_show_the_number_of_articles_per_category`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -5934,26 +6759,31 @@ When enabled, you can configure
 Controls whether to display subcategories on the category page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Categories Page Style -> Display Multi-layer Categories
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/categories_page_styles#:~:text=Display%20multi-layer%20categories" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.categories_page_styles?.is_show_multi_layer_categories`
@@ -5971,26 +6801,31 @@ Application Range: [`/categories/{slug}`](/reference/template-map#:~:text=/categ
 Controls whether to output a `<link rel="canonical">` tag in the category details page `<head>`.
 
 :::
+
 ::: info 📂 Configuration Location
 
 Category details page style -> Output canonical link tag
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Output%20canonical%20link%20tag" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.category_page_styles?.is_enable_canonical_link`
@@ -6004,31 +6839,37 @@ Boolean
 Display RSS subscription button on the category detail page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Category Detail Page Style -> Category RSS Subscription Button
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Show%20RSS%20subscription%20button" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.category_page_styles?.is_show_rss_button`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscription-plugin) to be enabled.
@@ -6042,26 +6883,31 @@ Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscript
 Display the post publish date in the post list on the category detail page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Category Detail Page Style -> Display Post Publish Date in Post List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Display%20post%20publish%20date%20in%20post%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.category_page_styles?.is_show_post_pubdate_in_post_list`
@@ -6075,26 +6921,31 @@ Boolean
 Display post view count on the category detail page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Category Detail Page Style -> Display Post View Count in Post List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/category_page_styles#:~:text=Display%20post%20views%20in%20post%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.category_page_styles?.is_show_post_views_in_post_list`
@@ -6112,31 +6963,37 @@ Application Range: [`/tags`](/reference/template-map#:~:text=/tags).
 Used to customize the HTML `<meta name="description">` content for this page, convenient for setting SEO descriptions.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Tags Page Style -> Page Description
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Page%20description%20(meta%20description)" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.tags_page_styles?.description`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site%20description" />)
@@ -6150,26 +7007,31 @@ If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig 
 Controls whether to output a `<link rel="canonical">` tag in the tag collection page `<head>`.
 
 :::
+
 ::: info 📂 Configuration Location
 
 Tag Collection Page Style -> Output canonical link tag
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Output%20canonical%20link%20tag" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.tags_page_styles?.is_enable_canonical_link`
@@ -6183,31 +7045,37 @@ Boolean
 Controls whether to display the number of posts in each tag in the tag list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Tags Page Style -> Display Number of Posts Per Tag
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Display%20Number%20of%20Posts%20Per%20Tag" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.tags_page_styles?.is_show_the_number_of_posts_per_tag`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -6228,26 +7096,31 @@ When enabled, you can configure
 Set the sorting method for tags on the tag collection page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Tags Page Style -> Tag Sort Order
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/tags_page_styles#:~:text=Tag%20sort%20order" />
 
 :::
+
 ::: info 🏷️ Type
 
 Option
 
 :::
+
 ::: info ⭐ Default Value
 
 Default (internal value `default`)
 
 :::
+
 ::: info 💡 Other Options
 
 - By post count descending (internal value `count_desc`)
@@ -6256,6 +7129,7 @@ Default (internal value `default`)
 - By name descending (internal value `name_desc`)
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.tags_page_styles?.tags_sort_order`
@@ -6273,26 +7147,31 @@ Application Range: [`/tags/{slug}`](/reference/template-map#:~:text=/tags/%7Bslu
 Controls whether to output a `<link rel="canonical">` tag in the tag details page `<head>`.
 
 :::
+
 ::: info 📂 Configuration Location
 
 Tag details page style -> Output canonical link tag
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Output%20canonical%20link%20tag" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.tag_page_styles?.is_enable_canonical_link`
@@ -6306,31 +7185,37 @@ Boolean
 Display RSS subscription button on the tag detail page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Tag Detail Page Style -> Display Tag RSS Subscription Button
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Show%20RSS%20subscription%20button" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.tag_page_styles?.is_show_rss_button`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscription-plugin) to be enabled.
@@ -6344,26 +7229,31 @@ Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscript
 Display post publication date in the post list on the tag detail page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Tag Detail Page Style -> Display post publish date in post list
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Display%20post%20publish%20date%20in%20post%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.tag_page_styles?.is_show_post_pubdate_in_post_list`
@@ -6377,26 +7267,31 @@ Boolean
 Display post view count on the tag detail page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Tag Detail Page Style -> Display Post View Count in Post List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/tag_page_styles#:~:text=Display%20post%20views%20in%20post%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.tag_page_styles?.is_show_post_views_in_post_list`
@@ -6414,26 +7309,31 @@ Application Range: [`/authors/{name}`](/reference/template-map#:~:text=/authors/
 Controls whether to output a `<link rel="canonical">` tag in the author details page `<head>`.
 
 :::
+
 ::: info 📂 Configuration Location
 
 Author details page style -> Output canonical link tag
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=Output%20canonical%20link%20tag" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.author_page_styles?.is_enable_canonical_link`
@@ -6447,31 +7347,37 @@ Boolean
 Display RSS subscription button on the author detail page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Author Detail Page Style -> Show Author RSS Subscription Button
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=Show%20RSS%20subscription%20button" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.author_page_styles?.is_show_rss_button`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscription-plugin) to be enabled.
@@ -6485,26 +7391,31 @@ Requires the [RSS Subscription Plugin](/guide/plugin-compatibility#rss-subscript
 Display post publish date in the post list on the author detail page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Author Detail Page Style -> Display post publish date in post list
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/author_page_styles#:~:text=Display%20post%20publish%20date%20in%20post%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.author_page_styles?.is_show_post_pubdate_in_post_list`
@@ -6522,31 +7433,37 @@ Application Range: [`/archives(/{year}(/{month}))`](</reference/template-map#:~:
 Used to customize the HTML `<meta name="description">` content for this page, convenient for setting SEO descriptions.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Archives Page Style -> Page Description
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=Page%20description%20(meta%20description)" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.archives_page_styles?.description`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig to="/console/settings?tab=seo#:~:text=Site%20description" />)
@@ -6560,26 +7477,31 @@ If left empty, will fall back to site description (Quick Jump: <QuickJumpConfig 
 Controls whether to output a `<link rel="canonical">` tag in the archives page `<head>`.
 
 :::
+
 ::: info 📂 Configuration Location
 
 Archives page style -> Output canonical link tag
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=Output%20canonical%20link%20tag" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.archives_page_styles?.is_enable_canonical_link`
@@ -6593,26 +7515,31 @@ Boolean
 Display the post publish date in the post list on the archives page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Archives Page Style -> Display Post Publish Date in Post List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=Display%20post%20publish%20date%20in%20post%20list" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.archives_page_styles?.is_show_post_pubdate_in_post_list`
@@ -6626,31 +7553,37 @@ Boolean
 In the archive page, collapse and display the post list by year and month of post publication.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Archives Page Style -> Collapse Post List by Publication Year and Month
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/archives_page_styles#:~:text=Collapse%20post%20list%20by%20publication%20year%20and%20month" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.archives_page_styles?.is_collapse_post_list_by_publication_year_and_month`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -6672,26 +7605,31 @@ Application Range: [`/{slug}`](/reference/template-map#:~:text=/%7Bslug%7D).
 Controls whether to output a `<link rel="canonical">` tag in the custom page `<head>`.
 
 :::
+
 ::: info 📂 Configuration Location
 
 Custom page style -> Output canonical link tag
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Output%20canonical%20link%20tag" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.custom_page_styles?.is_enable_canonical_link`
@@ -6705,31 +7643,37 @@ Boolean
 Add minimum height to custom page content paragraphs to display empty lines.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Custom Page Style -> Optimize Paragraph Empty Line Display
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Optimize%20Paragraph%20Spacing%20Display" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.custom_page_styles?.is_optimize_content_paragraph_spacing`
 
 :::
+
 ::: details ℹ️ Additional Information
 
 Different Markdown editors use different parsers, so this configuration item may have different effects on the final rendering result.
@@ -6744,31 +7688,37 @@ Related link: [babelmark3](https://babelmark.github.io/) is a website that compa
 Add indentation style to the first line of content paragraphs.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Custom Page Style -> Paragraph First-line Indent
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Enable%20paragraph%20first-line%20indent" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.custom_page_styles?.is_enable_paragraph_first_line_indent`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -6787,31 +7737,37 @@ When enabled, you can configure
 Display estimated reading time based on post word count on the page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Custom Page Style -> Page Estimated Reading Time
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Show%20Estimated%20Reading%20Time%20of%20Page" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.custom_page_styles?.is_show_post_estimated_reading_time`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling the [API Extension](/guide/plugin-compatibility#api-extension) plugin, a more accurate measurement method will be automatically enabled.
@@ -6825,31 +7781,37 @@ After enabling the [API Extension](/guide/plugin-compatibility#api-extension) pl
 Display the total word count of the post on the page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Custom Page Style -> Page Word Count
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Show%20Word%20Count%20of%20Page" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.custom_page_styles?.is_show_post_word_count`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling the [API Extension](/guide/plugin-compatibility#api-extension) plugin, a more accurate measurement method will be automatically enabled.
@@ -6863,31 +7825,37 @@ After enabling the [API Extension](/guide/plugin-compatibility#api-extension) pl
 Display an edit entry for the current page on the page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Custom Page Style -> Show page edit button
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Show%20page%20edit%20button" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.custom_page_styles?.is_page_edit_button_show`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Shown to authenticated users with `system:singlepages:manage`.
@@ -6901,6 +7869,7 @@ Shown to authenticated users with `system:singlepages:manage`.
 Control whether to show the page edit button to anonymous visitors.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 (Shown when [Custom Page Style -> Show Page Edit Button](#show-page-edit-button) is enabled)
@@ -6908,26 +7877,31 @@ Control whether to show the page edit button to anonymous visitors.
 Custom Page Style -> Show Page Edit Button -> Show Page Edit Button to Anonymous Visitors
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Show%20page%20edit%20button%20to%20anonymous%20visitors" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.custom_page_styles?.is_page_edit_button_show_for_anonymous`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, the edit button is shown to anonymous visitors. Anonymous visitors who select it are taken to the sign-in page and redirected to the current page editor after signing in.
@@ -6941,26 +7915,31 @@ When enabled, the edit button is shown to anonymous visitors. Anonymous visitors
 Controls whether to display the separator at the end of the page content.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Custom Page Style -> Page Content End Separator
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/post_styles#:~:text=Enable%20Dividing%20Line%20at%20End%20of%20Page%20Content" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.custom_page_styles?.is_dividing_line_at_the_end_of_content_show`
@@ -6974,26 +7953,31 @@ Boolean
 Controls whether to display the comment section on the page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Custom Page Style -> Page Comment Section
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/custom_page_styles#:~:text=Enable%20Comment%20Section" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.custom_page_styles?.is_custom_page_comment_section_show`
@@ -7009,31 +7993,37 @@ Boolean
 Automatically redirect to a specified page on error pages (such as `404`).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Error Page Style -> Page Auto Redirect
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/error_page_styles#:~:text=Page%20Auto%20Redirect" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.error_page_styles?.is_auto_redirect`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -7057,31 +8047,37 @@ When enabled, you can configure
 Display social media links and RSS subscription information on the homepage.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Social Profile/RSS -> Homepage Social Profile Display
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/sns#:~:text=Home%20page%20social%20profile%20display" />
 
 :::
+
 ::: info 🏷️ Type
 
 Array (can repeatedly add multiple social profiles)
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.sns?.sns_list`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 - Supports multiple preset social platforms: RSS, BiliBili, Dribbble, Email, Facebook, GitHub, Instagram, QQ, Reddit, Stack Overflow, Telegram, X(Twitter), YouTube, Douban, NetEase Cloud Music, Weibo, Zhihu, etc.
@@ -7098,31 +8094,37 @@ Empty
 Define your own social profile to be used in the homepage social profile display.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Social Profile/RSS -> Set Custom Profile
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/sns#:~:text=Social%20media%20settings" />
 
 :::
+
 ::: info 🏷️ Type
 
 Repeater
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.sns?.custom_sns`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Provides preset values for mainstream platforms, only requires filling in the corresponding platform identifier to add.
@@ -7147,31 +8149,37 @@ Each custom profile requires configuration:
 Configure the display and order of share buttons on post pages, supporting multiple preset sharing methods and custom buttons.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Custom Share Buttons -> Share Button List
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/share#:~:text=Share%20Button%20List" />
 
 :::
+
 ::: info 🏷️ Type
 
 Array (can repeatedly add multiple share buttons)
 
 :::
+
 ::: info ⭐ Default Value
 
 All preset types are enabled by default.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.share?.share_list`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 - Links and icons for preset types are built into the theme, no manual input required; optionally fill in the icon field to override the default icon
@@ -7187,31 +8195,37 @@ All preset types are enabled by default.
 Define custom share buttons for use in the list above.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Custom Share Buttons -> Custom Share Buttons
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/share#:~:text=Custom%20Share%20Buttons" />
 
 :::
+
 ::: info 🏷️ Type
 
 Repeater
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.share?.custom_share`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 - `@URL` and `@TITLE` are placeholders that will be replaced with the actual page address and title when used
@@ -7231,26 +8245,31 @@ Requires the [Links Management Plugin](/guide/plugin-compatibility#links-page) t
 Controls whether to output a `<link rel="canonical">` tag in the links page `<head>`.
 
 :::
+
 ::: info 📂 Configuration Location
 
 Links page style -> Output canonical link tag
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/links_page_styles#:~:text=Output%20canonical%20link%20tag" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.links_page_styles?.is_enable_canonical_link`
@@ -7264,31 +8283,37 @@ Boolean
 When enabled, the links page will use a grid layout that emphasizes avatars, displaying up to three links per row, suitable for scenarios that require highlighting link site avatars.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Links Page Style -> Avatar-First Style
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/links_page_styles#:~:text=Avatar-First%20Style" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.links_page_styles?.is_head_first_style`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 - **Default Style**: When disabled, uses traditional horizontal list layout with smaller avatars and information arranged to the right of the avatar
@@ -7308,6 +8333,7 @@ Boolean
 Set the maximum number of lines for link descriptions.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 ([Links Page Style -> Avatar-First Style](#avatar-first-style) When enabled, will display)
@@ -7315,26 +8341,31 @@ Set the maximum number of lines for link descriptions.
 Links Page Style -> Link Description Line Limit
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/links_page_styles#:~:text=Link%20Description%20Maximum%20Lines" />
 
 :::
+
 ::: info 🏷️ Type
 
 Integer
 
 :::
+
 ::: info ⭐ Default Value
 
 `3`
 
 :::
+
 ::: info 🔒 Internal Constraints
 
 Range 1-5
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.links_page_styles?.link_description_max_lines`
@@ -7352,26 +8383,31 @@ Requires the [Gallery Management Plugin](/guide/plugin-compatibility#gallery-pag
 Controls whether to output a `<link rel="canonical">` tag in the photo gallery page `<head>`.
 
 :::
+
 ::: info 📂 Configuration Location
 
 Gallery page style -> Output canonical link tag
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Output%20canonical%20link%20tag" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.photos_styles?.is_enable_canonical_link`
@@ -7385,36 +8421,43 @@ Boolean
 Set the border radius width of images in the gallery page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Gallery Page Style -> Image Border Radius Width
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Image%20border%20radius" />
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 `8px`
 
 :::
+
 ::: info 💡 Example Values
 
 `0px`,`5px`,`10%`,`1rem`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 Valid CSS length unit.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.photos_styles?.img_border_radius`
@@ -7428,31 +8471,37 @@ Valid CSS length unit.
 Set the fade-in animation duration for images in the gallery page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Gallery Page Style -> Image Fade-In Animation Duration
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Image%20Fade-in%20Animation%20Duration" />
 
 :::
+
 ::: info 🏷️ Type
 
 Integer/Float (Unit: seconds)
 
 :::
+
 ::: info ⭐ Default Value
 
 `0.2`
 
 :::
+
 ::: info 💡 Example Values
 
 `1`,`0`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.photos_styles?.img_transition_duration_after_load`
@@ -7466,31 +8515,37 @@ Integer/Float (Unit: seconds)
 Control whether to display group titles on the gallery page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Gallery Page Style -> Display Group Titles
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Group%20title" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.photos_styles?.is_show_photo_group_name`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 - When the [masonry layout](#enable-masonry-layout) is enabled:
@@ -7506,31 +8561,37 @@ Boolean
 Use waterfall layout to display images in the gallery page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Gallery Page Style -> Enable Waterfall Layout
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/photos_styles#:~:text=Enable%20Masonry%20Layout" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.photos_styles?.is_enable_masonry_layout`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, you can configure
@@ -7556,26 +8617,31 @@ Requires the [Moments Management Plugin](/guide/plugin-compatibility#moments-pag
 Controls whether to output a `<link rel="canonical">` tag in the moments page `<head>`.
 
 :::
+
 ::: info 📂 Configuration Location
 
 Moments page style -> Output canonical link tag
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Output%20canonical%20link%20tag" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.moments_styles?.is_enable_canonical_link`
@@ -7589,26 +8655,31 @@ Boolean
 Control whether to display the post publication date in the moment list on the moments page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Moments Page Style -> Show Post Publication Date
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Show%20Post%20Publication%20Date" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.moments_styles?.is_show_post_pubdate`
@@ -7622,31 +8693,37 @@ Boolean
 Display estimated reading time based on word count at the beginning of the moment.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Moments Page Style -> Show Estimated Reading Time of Moment
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Show%20Estimated%20Reading%20Time%20of%20Moment" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.moments_styles?.is_show_post_estimated_reading_time`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling the [API Extension](/guide/plugin-compatibility#api-extension) plugin, a more accurate measurement method will be automatically enabled.
@@ -7660,31 +8737,37 @@ After enabling the [API Extension](/guide/plugin-compatibility#api-extension) pl
 Display the total word count of the post at the beginning of the moment.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Moments Page Style -> Show Word Count of Moment
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Show%20Word%20Count%20of%20Moment" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `false`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.moments_styles?.is_show_post_word_count`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 After enabling the [API Extension](/guide/plugin-compatibility#api-extension) plugin, a more accurate measurement method will be automatically enabled.
@@ -7698,26 +8781,31 @@ After enabling the [API Extension](/guide/plugin-compatibility#api-extension) pl
 Display the like button on the moments page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Moments Page Style -> Enable Upvote Button
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Enable%20upvote%20button" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.moments_styles?.is_moment_upvote_button_show`
@@ -7731,26 +8819,31 @@ Boolean
 Controls whether to display the comment section on the moments page.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Moments Page Style -> Enable Comment Section
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/moments_styles#:~:text=Enable%20comment%20section" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.moments_styles?.is_moment_comment_section_show`
@@ -7768,26 +8861,31 @@ Requires the [Friends Plugin](/en/guide/plugin-compatibility#moments-feed-subscr
 Controls whether to output a `<link rel="canonical">` tag in the friends circle page `<head>`.
 
 :::
+
 ::: info 📂 Configuration Location
 
 Friends circle page style -> Output canonical link tag
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Output%20canonical%20link%20tag" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.friends_page_styles?.is_enable_canonical_link`
@@ -7801,26 +8899,31 @@ Boolean
 Display the publication date of posts in the friends list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Friends Page Style -> Show Publish Date
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show%20publish%20date" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.friends_page_styles?.is_show_friend_pubdate`
@@ -7834,26 +8937,31 @@ Boolean
 Display the author's avatar and name in the friends list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Friends Page Style -> Show Author Information
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show%20author%20information" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.friends_page_styles?.is_show_friend_author`
@@ -7867,31 +8975,37 @@ Boolean
 Display the author's avatar in the friends list. Clicking the avatar will navigate to the author's website.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Friends Page Style -> Show Author Avatar
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show%20author%20avatar" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.friends_page_styles?.is_show_friend_author_avatar`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Only takes effect when "Show Author Information" option is enabled.
@@ -7905,31 +9019,37 @@ Only takes effect when "Show Author Information" option is enabled.
 Display the author's name in the friends list. Clicking the name will navigate to the author's website.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Friends Page Style -> Show Author Name
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show%20author%20name" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.friends_page_styles?.is_show_friend_author_name`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Only takes effect when "Show Author Information" option is enabled.
@@ -7943,26 +9063,31 @@ Only takes effect when "Show Author Information" option is enabled.
 Display the post description/excerpt in the friends list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Friends Page Style -> Show Post Description
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show%20post%20description" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.friends_page_styles?.is_show_friend_description`
@@ -7976,31 +9101,37 @@ Boolean
 Control the maximum number of lines displayed for post descriptions in the friends list.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Friends Page Style -> Maximum Lines for Post Description
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Maximum%20lines%20for%20post%20description" />
 
 :::
+
 ::: info 🏷️ Type
 
 Number (1-5)
 
 :::
+
 ::: info ⭐ Default Value
 
 `3`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.friends_page_styles?.friend_description_max_lines`
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Only takes effect when "Show Post Description" option is enabled.
@@ -8014,26 +9145,31 @@ Only takes effect when "Show Post Description" option is enabled.
 Display link text (such as "Read original") in friends list items.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Friends Page Style -> Show Link Text
 
 :::
+
 ::: info ⚡ Quick Jump
 
 <QuickJumpConfig to="/console/theme/settings/friends_page_styles#:~:text=Show%20link%20text" />
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `theme.config?.friends_page_styles?.is_show_friend_permalink_text`

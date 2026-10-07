@@ -81,11 +81,13 @@ After your site has installed the latest version of the theme, you can fill in y
 This will enable quick jump links in this documentation.
 
 :::
+
 ::: info Site Link
 
 <input v-model="inputBaseUrl" placeholder="Please enter your Halo site link here. Example: https://example.com" style="width:100%" />
 
 :::
+
 <template v-if="canJump">
 
 ::: info Please ensure this link is accessible
@@ -104,11 +106,13 @@ Quick jump links will only work when the above link is accessible.
 Explains the purpose of the configuration item.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Explains the location in the theme configuration.
 
 :::
+
 ::: info ⚡ Quick Jump
 
 Click to quickly jump to the corresponding theme configuration item.
@@ -154,21 +158,25 @@ Go to <QuickJumpConfig to="/console/theme" />, then click the three dots on the 
 A few more examples for better understanding.
 
 :::
+
 ::: info 🔒 Internal Constraints
 
 If the configured value does not meet this requirement, the configuration cannot be saved.
 
 :::
+
 ::: info ⚠️ External Constraints
 
 If the configured value does not meet this requirement, the theme may not work properly.
 
 :::  
+
 ::: info 🧩 Template Variable
 
 Variables provided for template developers to read this configuration value. Can be used via `${template variable}`.
 
 :::
+
 ::: info ℹ️ Additional Information
 
 Supplementary information.
@@ -189,31 +197,37 @@ How to find the settings for a post's metadata:
 Sets the HTML title of the post on the browse page. If the configured value is empty, the HTML title will take the post title.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Metadata -> Page Title
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 💡 Example Values
 
 - `Halo Theme Guide`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 If the configured value is too long, it may affect SEO and page display.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `#annotations.get(post, 'higan.howiehz.top/page-title')`
@@ -230,31 +244,37 @@ Fallback to post title when empty:
 Sets the page language (HTML `lang` attribute) of the post on the browse page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#page-language-setting-priority).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Metadata -> Page Language
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 💡 Example Values
 
 `zh`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 The set value must comply with [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82), otherwise it is invalid.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `#annotations.get(post, 'higan.howiehz.top/page-language')`
@@ -268,21 +288,25 @@ The set value must comply with [BCP 47](https://developer.mozilla.org/zh-CN/docs
 Sets whether the post is displayed in the post list (including [Home](/guide/theme-configuration#home-page-style), [Tag Detail Page](/guide/theme-configuration#tag-detail-page-style), [Category Detail Page](/guide/theme-configuration#category-detail-page-style), [Author Detail Page](/guide/theme-configuration#author-detail-page-style), [Archive Page](/guide/theme-configuration#archives-page-style)).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Post Metadata -> Show in Post List
 
 :::
+
 ::: info 🏷️ Type
 
 Boolean
 
 :::
+
 ::: info ⭐ Default Value
 
 `true`
 
 :::
+
 ::: info 🧩 Template Variable
 
 `#annotations.getOrDefault(post, 'higan.howiehz.top/show-in-post-list', 'true')`
@@ -302,31 +326,37 @@ How to find the settings for a category's metadata:
 Sets the HTML title of the category detail page. If the configured value is empty, the HTML title will take the category name.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Category Metadata -> Page Title
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 💡 Example Values
 
 - `Halo Theme Guide`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 If the configured value is too long, it may affect SEO and page display.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `#annotations.get(category, 'higan.howiehz.top/page-title)`
@@ -343,31 +373,37 @@ Fallback to category name when empty:
 Sets the page language (HTML `lang` attribute) of the category detail page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#page-language-setting-priority).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Category Metadata -> Page Language
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 💡 Example Values
 
 `zh`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 The set value must comply with [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82), otherwise it is invalid.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `#annotations.get(category, 'higan.howiehz.top/page-language')`
@@ -387,31 +423,37 @@ How to find the settings for a tag's metadata:
 Sets the HTML title of the tag detail page. If the configured value is empty, the HTML title will take the tag name.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Tag Metadata -> Page Title
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 💡 Example Values
 
 - `Halo Theme Guide`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 If the configured value is too long, it may affect SEO and page display.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `#annotations.get(tag, 'higan.howiehz.top/page-title')`
@@ -428,31 +470,37 @@ Fallback to site title when empty:
 Sets the page language (HTML `lang` attribute) of the tag detail page. If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#page-language-setting-priority).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Tag Metadata -> Page Language
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 💡 Example Values
 
 `zh`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 The set value must comply with [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82), otherwise it is invalid.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `#annotations.get(tag, 'higan.howiehz.top/page-language')`
@@ -475,11 +523,13 @@ How to find the settings for a page's metadata:
 Make custom pages use a layout and style similar to post pages.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Custom Page Style -> Custom Template
 
 :::
+
 ::: info ℹ️ Additional Information
 
 When enabled, custom pages will use a layout and style similar to post pages.
@@ -498,31 +548,37 @@ Mainly reflected in:
 Sets the HTML title of the page. If the configured value is empty, the HTML title will take the page title.
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Page Metadata -> Page Title
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 💡 Example Values
 
 - `Halo Theme Guide`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 If the configured value is too long, it may affect SEO and page display.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `#annotations.get(singlePage, 'higan.howiehz.top/page-title')`
@@ -539,31 +595,37 @@ Fallback to site title when empty:
 Sets the page language (HTML `lang` attribute). If the configured value is empty, it will fall back according to [page language setting priority](/reference/faq#page-language-setting-priority).
 
 :::
+
 ::: info 📂 Configuration Item Location
 
 Page Metadata -> Page Language
 
 :::
+
 ::: info 🏷️ Type
 
 String
 
 :::
+
 ::: info ⭐ Default Value
 
 Empty
 
 :::
+
 ::: info 💡 Example Values
 
 `zh`, `zh-Hans`, `zh-Hant`, `en`, `en-US`
 
 :::
+
 ::: info ⚠️ External Constraints
 
 The set value must comply with [BCP 47](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Global_attributes/lang#:~:text=%E5%A6%82%E6%9E%9C%E6%A0%87%E7%AD%BE%E5%86%85%E5%AE%B9%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%8C%E6%A0%B9%E6%8D%AE%20BCP47%EF%BC%8C%E5%AE%83%E5%B0%B1%E8%AE%BE%E4%B8%BA%E6%97%A0%E6%95%88%E3%80%82), otherwise it is invalid.
 
 :::
+
 ::: info 🧩 Template Variable
 
 `#annotations.get(post, 'higan.howiehz.top/page-language')`
