@@ -329,8 +329,8 @@ importers:
         version: 5.3.4(chart.js@4.5.1)(vue@3.5.43)
     devDependencies:
       '@mdit/plugin-footnote':
-        specifier: ^1.0.2
-        version: 1.1.2(markdown-it@15.0.2)
+        specifier: 1.0.2
+        version: 1.0.2(markdown-it@14.3.2)
       '@nolebase/vitepress-plugin-highlight-targeted-heading':
         specifier: ^2.18.2
         version: 2.18.2(supports-color@10.2.2)(vitepress@2.0.0-alpha.20)
@@ -653,20 +653,11 @@ packages:
   '@kurkle/color@0.3.4':
     resolution: {integrity: sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w==}
 
-  '@mdit/helper@1.1.2':
-    resolution: {integrity: sha512-xZywQ7aXrmkRCuGvFXguXVKeiQ7kHCxPkjtR+nK/n31YiSPPi/Rmb/ll+CYt0LdyeXR0Y1I16da7gxDT4/VXWg==}
+  '@mdit/plugin-footnote@1.0.2':
+    resolution: {integrity: sha512-G7pzoczbzVph9s9eyLuG9T24//ub9vK7A8jFCESQIzZj83ZJF3BHs7r/wcQx4KzmH+kDpLiAbhvzT/Y3+7OUig==}
     engines: {node: '>=22'}
     peerDependencies:
-      markdown-it: ^15.0.2
-    peerDependenciesMeta:
-      markdown-it:
-        optional: true
-
-  '@mdit/plugin-footnote@1.1.2':
-    resolution: {integrity: sha512-pFn0+6oqPaX/YUGR6ITwreFiFW5hyPPLj2vJCkuyEmo1kCjnOOWaRl48tD4O03Fq6Cl9YROaHzcyQIUrAthQ8A==}
-    engines: {node: '>=22'}
-    peerDependencies:
-      markdown-it: ^15.0.2
+      markdown-it: ^14.2.0
 
   '@mermaid-js/parser@2.0.1':
     resolution: {integrity: sha512-j37dj/h6p6pots1L7pLPPNuABEEu9WP4OYg9pW1g+nYG331j0+3canE9OagtYdytYvdSAMG+2fKU5cxep6LgjA==}
@@ -1930,9 +1921,6 @@ packages:
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
 
-  argparse@3.0.2:
-    resolution: {integrity: sha512-mFdDM6WqWKraGLsVb+C9CahPnzTXOefAOLq3jYcca2YZ8bEWpr++Tzj+zSaKW9+X9L5uSxcm1AZ3Y6aZJ09OhQ==}
-
   aria-query@5.3.1:
     resolution: {integrity: sha512-Z/ZeOgVl7bcSYZ/u/rh0fOpvEpq//LZmdbkXyc7syVzjPAhfOa9ebsdTSjEBDU4vs5nC98Kfduj1uFo0qyET3g==}
     engines: {node: '>= 0.4'}
@@ -3075,9 +3063,6 @@ packages:
   linkify-it@5.0.2:
     resolution: {integrity: sha512-ONTm2jCMAVZjgQa/Fy1kScXsuOoF5NPTsoFBdE1KVIZ2vAh/r9+Bqo+0jINCBYnavTPQZz38QzFTme79ENoN3Q==}
 
-  linkify-it@6.1.0:
-    resolution: {integrity: sha512-wJ/TwpSDTLepCrQoYWYIExIKg5Zchex2Nn5yk2mFnB+6PtdkHtyLx742md9csRjjOnGkKIS/RrbY7l8D6gT9Vw==}
-
   local-pkg@1.2.1:
     resolution: {integrity: sha512-++gUqRDEvcnN6Zhqrr+y/CkVEHhlrR96vZn3nZZPYzMcBUyBtTKzB9NadClFIsIVSsu+3i9tfk/erqy9kAmt7Q==}
     engines: {node: '>=14'}
@@ -3113,10 +3098,6 @@ packages:
 
   markdown-it@14.3.2:
     resolution: {integrity: sha512-sHHjZ5fJKlgrG4qns2YwVcdNep35h5fERrfkD2YNsb9UFk0UIHarbiTaHKVMlPuWAoiilyK8Fv/jAm11slsY7Q==}
-    hasBin: true
-
-  markdown-it@15.0.2:
-    resolution: {integrity: sha512-q4IGxMv56jCqT4OCRCADBoDP3LO4MhmTXjFbphHPXs4g3j9Xg5RDnxqN8IF/3vIWEU+VCnUq+7JUg/cfy2E6Qw==}
     hasBin: true
 
   markdownlint-cli@0.49.1:
@@ -3790,9 +3771,6 @@ packages:
   uc.micro@2.1.0:
     resolution: {integrity: sha512-ARDJmphmdvUk6Glw7y9DQ2bFkKBHwQHLi2lsaH6PPmz/Ka9sFOBsBluozhDltWmnv9u/cF6Rt87znRTPV+yp/A==}
 
-  uc.micro@3.0.0:
-    resolution: {integrity: sha512-U3PppEkleoTnIfi8BozMx3yju3qc/L6SwqWo2Sw+54PX+PX0q9I+r1Um5HCmqD7n9VDX5/v3vQH/AjA6deDdtw==}
-
   ufo@1.6.4:
     resolution: {integrity: sha512-JFNbkD1Svwe0KvGi8GOeLcP4kAWQ609twvCdcHxq1oSL8svv39ZuSvajcD8B+5D0eL4+s1Is2D/O6KN3qcTeRA==}
 
@@ -4283,14 +4261,10 @@ snapshots:
 
   '@kurkle/color@0.3.4': {}
 
-  '@mdit/helper@1.1.2(markdown-it@15.0.2)':
-    optionalDependencies:
-      markdown-it: 15.0.2
-
-  '@mdit/plugin-footnote@1.1.2(markdown-it@15.0.2)':
+  '@mdit/plugin-footnote@1.0.2(markdown-it@14.3.2)':
     dependencies:
-      '@mdit/helper': 1.1.2(markdown-it@15.0.2)
-      markdown-it: 15.0.2
+      '@types/markdown-it': 14.2.0
+      markdown-it: 14.3.2
 
   '@mermaid-js/parser@2.0.1':
     dependencies:
@@ -5284,8 +5258,6 @@ snapshots:
       sprintf-js: 1.0.3
 
   argparse@2.0.1: {}
-
-  argparse@3.0.2: {}
 
   aria-query@5.3.1: {}
 
@@ -6335,10 +6307,6 @@ snapshots:
     dependencies:
       uc.micro: 2.1.0
 
-  linkify-it@6.1.0:
-    dependencies:
-      uc.micro: 3.0.0
-
   local-pkg@1.2.1:
     dependencies:
       mlly: 1.8.2
@@ -6379,15 +6347,6 @@ snapshots:
       mdurl: 2.1.0
       punycode.js: 2.3.1
       uc.micro: 2.1.0
-
-  markdown-it@15.0.2:
-    dependencies:
-      argparse: 3.0.2
-      entities: 8.1.0
-      linkify-it: 6.1.0
-      mdurl: 2.1.0
-      punycode.js: 2.3.1
-      uc.micro: 3.0.0
 
   markdownlint-cli@0.49.1(supports-color@10.2.2):
     dependencies:
@@ -7304,8 +7263,6 @@ snapshots:
   typescript@6.0.3: {}
 
   uc.micro@2.1.0: {}
-
-  uc.micro@3.0.0: {}
 
   ufo@1.6.4: {}
 
