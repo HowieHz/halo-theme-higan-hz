@@ -921,7 +921,7 @@ This is another paragraph wrapping around a pullquote on the right. It also need
 ### Horizontal Divider Markdown Syntax
 
 ```markdown
-***
+---
 ```
 
 ### Horizontal Divider HTML Tag Syntax
@@ -1054,24 +1054,19 @@ Write the diagram once; the theme automatically generates both light and dark ve
 Example:
 
 <!-- prettier-ignore-start -->
-
 ```html
-<div class="auto">
-  <pre><code class="language-mermaid">
+<div class="auto"><pre><code class="language-mermaid">
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
     B --> C{Let me think}
     C -->|One| D[Laptop]
     C -->|Two| E[iPhone]
     C -->|Three| F[fa:fa-car Car]
-</code></pre>
-</div>
+</code></pre></div>
 ```
-
 <!-- prettier-ignore-end -->
 
 :::
-
 ::: details Method 4: HTML syntax with manually managed light/dark diagrams
 Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).  
 This method uses HTML syntax. See [How to Use HTML Syntax in the Editor](#how-to-use-html-syntax-in-the-editor).  
@@ -1080,10 +1075,8 @@ Manually maintain separate diagrams for light and dark modes.
 Example:
 
 <!-- prettier-ignore-start -->
-
 ```html
-<div class="dark">
-  <pre><code class="language-mermaid">
+<div class="dark"><pre><code class="language-mermaid">
 %%{init: { "theme": "dark" } }%%
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
@@ -1091,11 +1084,9 @@ flowchart TD
     C -->|One| D[Laptop]
     C -->|Two| E[iPhone]
     C -->|Three| F[fa:fa-car Car]
-</code></pre>
-</div>
+</code></pre></div>
 
-<div class="light">
-  <pre><code class="language-mermaid">
+<div class="light"><pre><code class="language-mermaid">
 %%{init: { "theme": "light" } }%%
 flowchart TD
     A[Christmas] -->|Get money| B(Go shopping)
@@ -1103,10 +1094,8 @@ flowchart TD
     C -->|One| D[Laptop]
     C -->|Two| E[iPhone]
     C -->|Three| F[fa:fa-car Car]
-</code></pre>
-</div>
+</code></pre></div>
 ```
-
 <!-- prettier-ignore-end -->
 
 :::
@@ -1123,7 +1112,6 @@ Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).
 Example:
 
 <!-- prettier-ignore-start -->
-
 ````markdown
 ```mermaid
 flowchart TD
@@ -1134,7 +1122,6 @@ flowchart TD
     C -->|Three| F[fa:fa-car Car]
 ```
 ````
-
 <!-- prettier-ignore-end -->
 
 As shown above, write the diagram using the standard Markdown code block syntax.
@@ -1148,14 +1135,20 @@ Write the diagram once; the theme automatically generates both light and dark ve
 Example:
 
 <!-- prettier-ignore-start -->
-
 ````html
 <div class="auto">
-  ```mermaid flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me think} C -->|One| D[Laptop] C
-  -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
+
+```mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
 </div>
 ````
-
 <!-- prettier-ignore-end -->
 
 :::
@@ -1167,19 +1160,35 @@ Manually maintain separate diagrams for light and dark modes.
 Example:
 
 <!-- prettier-ignore-start -->
-
 ````html
 <div class="dark">
-  ```mermaid %%{init: { "theme": "dark" } }%% flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me
-  think} C -->|One| D[Laptop] C -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
+
+```mermaid
+%%{init: { "theme": "dark" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
 </div>
 
 <div class="light">
-  ```mermaid %%{init: { "theme": "light" } }%% flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me
-  think} C -->|One| D[Laptop] C -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
+
+```mermaid
+%%{init: { "theme": "light" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
 </div>
 ````
-
 <!-- prettier-ignore-end -->
 
 :::
@@ -1200,7 +1209,6 @@ Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).
 Example:
 
 <!-- prettier-ignore-start -->
-
 ````markdown
 ```mermaid
 flowchart TD
@@ -1211,7 +1219,6 @@ flowchart TD
     C -->|Three| F[fa:fa-car Car]
 ```
 ````
-
 <!-- prettier-ignore-end -->
 
 As shown above, write the diagram using the standard Markdown code block syntax.
@@ -1225,14 +1232,20 @@ Write the diagram once; the theme automatically generates both light and dark ve
 Example:
 
 <!-- prettier-ignore-start -->
-
 ````html
 <div class="auto">
-  ```mermaid flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me think} C -->|One| D[Laptop] C
-  -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
+
+```mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
 </div>
 ````
-
 <!-- prettier-ignore-end -->
 
 :::
@@ -1244,19 +1257,35 @@ Manually maintain separate diagrams for light and dark modes.
 Example:
 
 <!-- prettier-ignore-start -->
-
 ````html
 <div class="dark">
-  ```mermaid %%{init: { "theme": "dark" } }%% flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me
-  think} C -->|One| D[Laptop] C -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
+
+```mermaid
+%%{init: { "theme": "dark" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
 </div>
 
 <div class="light">
-  ```mermaid %%{init: { "theme": "light" } }%% flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me
-  think} C -->|One| D[Laptop] C -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
+
+```mermaid
+%%{init: { "theme": "light" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
 </div>
 ````
-
 <!-- prettier-ignore-end -->
 
 :::
@@ -1277,7 +1306,6 @@ Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).
 Example:
 
 <!-- prettier-ignore-start -->
-
 ````markdown
 ```mermaid
 flowchart TD
@@ -1288,7 +1316,6 @@ flowchart TD
     C -->|Three| F[fa:fa-car Car]
 ```
 ````
-
 <!-- prettier-ignore-end -->
 
 As shown above, write the diagram using the standard Markdown code block syntax.
@@ -1302,14 +1329,20 @@ Write the diagram once; the theme automatically generates both light and dark ve
 Example:
 
 <!-- prettier-ignore-start -->
-
 ````html
 <div class="auto">
-  ```mermaid flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me think} C -->|One| D[Laptop] C
-  -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
+
+```mermaid
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
 </div>
 ````
-
 <!-- prettier-ignore-end -->
 
 :::
@@ -1321,19 +1354,35 @@ Manually maintain separate diagrams for light and dark modes.
 Example:
 
 <!-- prettier-ignore-start -->
-
 ````html
 <div class="dark">
-  ```mermaid %%{init: { "theme": "dark" } }%% flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me
-  think} C -->|One| D[Laptop] C -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
+
+```mermaid
+%%{init: { "theme": "dark" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
 </div>
 
 <div class="light">
-  ```mermaid %%{init: { "theme": "light" } }%% flowchart TD A[Christmas] -->|Get money| B(Go shopping) B --> C{Let me
-  think} C -->|One| D[Laptop] C -->|Two| E[iPhone] C -->|Three| F[fa:fa-car Car] ```
+
+```mermaid
+%%{init: { "theme": "light" } }%%
+flowchart TD
+    A[Christmas] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```
+
 </div>
 ````
-
 <!-- prettier-ignore-end -->
 
 :::
@@ -1354,7 +1403,6 @@ Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).
 Example:
 
 <!-- prettier-ignore-start -->
-
 ````markdown
 ```mermaid
 flowchart TD
@@ -1365,7 +1413,6 @@ flowchart TD
     C -->|Three| F[fa:fa-car Car]
 ```
 ````
-
 <!-- prettier-ignore-end -->
 
 As shown above, write the diagram using the standard Markdown code block syntax.
