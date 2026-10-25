@@ -53,9 +53,9 @@
     "watch:vite": "NODE_OPTIONS=--max-old-space-size=10240 BUILD_MODE=dev vite build --watch"
   },
   "dependencies": {
-    "alpinejs": "^3.17.4",
+    "alpinejs": "^3.17.5",
     "instant.page": "^5.2.0",
-    "mermaid": "^12.1.0"
+    "mermaid": "^12.2.0"
   },
   "devDependencies": {
     "@dreamsicle.io/stylelint-config-tailwindcss": "^1.2.2",
