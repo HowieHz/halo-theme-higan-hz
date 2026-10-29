@@ -921,7 +921,7 @@ This is another paragraph wrapping around a pullquote on the right. It also need
 ### Horizontal Divider Markdown Syntax
 
 ```markdown
----
+***
 ```
 
 ### Horizontal Divider HTML Tag Syntax
@@ -1067,6 +1067,7 @@ flowchart TD
 <!-- prettier-ignore-end -->
 
 :::
+
 ::: details Method 4: HTML syntax with manually managed light/dark diagrams
 Enable [Mermaid Support](/en/guide/theme-configuration#mermaid-support).  
 This method uses HTML syntax. See [How to Use HTML Syntax in the Editor](#how-to-use-html-syntax-in-the-editor).  
