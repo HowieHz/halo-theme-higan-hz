@@ -915,7 +915,7 @@ This is normal text <small>This is small text</small> This is normal text
 ### Markdown 写法
 
 ```markdown
----
+***
 ```
 
 ### HTML 标签写法
@@ -1057,6 +1057,7 @@ flowchart TD
 <!-- prettier-ignore-end -->
 
 :::
+
 ::: details 方法四 HTML 写法手动管理明暗主题
 需启用 [Mermaid 支持](/guide/theme-configuration#mermaid-支持)。  
 需要使用 HTML 写法，相关链接：[如何在编辑器中使用 HTML 写法](#如何在编辑器中使用-html-写法)。  
