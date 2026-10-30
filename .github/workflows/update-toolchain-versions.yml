@@ -36,6 +36,15 @@ jobs:
         id: update-toolchain
         run: node .github/scripts/update-toolchain-versions.js
 
+      # The updater may raise engines.node above the Node.js version installed above, and
+      # pnpm-workspace.yaml sets engineStrict. Regenerate the lockfile on the runtime that the
+      # repository now requires instead of the one this job started with.
+      - name: Install resolved Node.js
+        if: ${{ steps.update-toolchain.outputs.changed == 'true' }}
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # https://github.com/actions/setup-node/releases/tag/v7.1.0
+        with:
+          node-version: ${{ steps.update-toolchain.outputs.node_major }}
+
       - name: Update Lockfile
         if: ${{ steps.update-toolchain.outputs.changed == 'true' }}
         run: pnpm install --no-frozen-lockfile
