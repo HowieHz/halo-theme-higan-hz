@@ -353,8 +353,8 @@ importers:
         specifier: 2.0.0-alpha.21
         version: 2.0.0-alpha.21(@types/node@26.6.6)(jiti@2.7.0)(less@4.9.1)(postcss@8.5.31)(typescript@6.0.3)
       vitepress-plugin-pagefind:
-        specifier: ^0.4.25
-        version: 0.4.25(pagefind@1.5.2)(vitepress@2.0.0-alpha.21)(vue@3.5.44)
+        specifier: ^0.4.26
+        version: 0.4.26(pagefind@1.5.2)(vitepress@2.0.0-alpha.21)(vue@3.5.44)
       vue:
         specifier: ^3.5.44
         version: 3.5.44(typescript@6.0.3)
@@ -3888,8 +3888,8 @@ packages:
       yaml:
         optional: true
 
-  vitepress-plugin-pagefind@0.4.25:
-    resolution: {integrity: sha512-hlKGCyVXjjtMYM7V6PcP9NVrahzskPrahi2U2zjnWewSaZFHNbjh3kZr9ThQZ+m+y8zFp9v65ooyHZX58mBhkQ==}
+  vitepress-plugin-pagefind@0.4.26:
+    resolution: {integrity: sha512-nq54lTL51lqdPiLpSBFkAK44K44pWaKA0uORUmNdaFGZqw5GoTUxaN3b6sPn1AHUFE+Le64/cb7hTzLSJj+CGQ==}
     peerDependencies:
       pagefind: ^1.1.0
       vitepress: ^1.0.0-0 || ^2.0.0-0
@@ -7393,7 +7393,7 @@ snapshots:
       jiti: 2.7.0
       less: 4.9.1(supports-color@10.2.2)
 
-  vitepress-plugin-pagefind@0.4.25(pagefind@1.5.2)(vitepress@2.0.0-alpha.21)(vue@3.5.44):
+  vitepress-plugin-pagefind@0.4.26(pagefind@1.5.2)(vitepress@2.0.0-alpha.21)(vue@3.5.44):
     dependencies:
       '@sugarat/theme-shared': 0.1.0
       '@vueuse/core': 15.0.0(vue@3.5.44)
